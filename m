@@ -1,199 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-4499-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4500-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB789810983
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 06:44:22 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E4468109A1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 06:51:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 288BF1C20A63
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 05:44:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AC9791C20A60
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 05:51:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 236CDC8EE;
-	Wed, 13 Dec 2023 05:44:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DF81CA59;
+	Wed, 13 Dec 2023 05:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="byiPWoGT"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TZiiiMrN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90D90D3;
-	Tue, 12 Dec 2023 21:44:13 -0800 (PST)
-Received: from authenticated-user (box.trvn.ru [194.87.146.52])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-	(No client certificate requested)
-	by box.trvn.ru (Postfix) with ESMTPSA id 79749401B5;
-	Wed, 13 Dec 2023 10:44:10 +0500 (+05)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-	t=1702446250; bh=vMUS9nUEC9yE8MKSq7Q13xga7SNG1itLZJttw52Z/VA=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=byiPWoGTBddnLJgT1lIYVljWak+C42MLwkWPAfbknpNISrJiKc0FfQK4+b6vNWQwc
-	 rsIkFQLik/EdiCeNu39VqF7OI2SWevr4sjoxdGG5wns1RshCoo8WWy/7n76Y8ecC4Y
-	 85+nuPKsESb2AH7oDkhA/y2TGcaF9AcF7G0n98hqHu+EyxV4hQET7LroLeQeQnWexB
-	 dNwpVN3nBB9sLV3hkO9z4I/f4hdQLO7eWsYSXD7gJkgBV0ms+FV8gGfMAkFuttx6hz
-	 rCxvPcpQ7nKwkw1UZI7RvcqqVc1p84oNLlVU6WIEwoeIyolpxa3vwuT63dWTU8zp7X
-	 dHOecFLC9Hg4Q==
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77D528E;
+	Tue, 12 Dec 2023 21:51:09 -0800 (PST)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-5d33574f64eso66442097b3.3;
+        Tue, 12 Dec 2023 21:51:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1702446668; x=1703051468; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=cuCbUQb5WegONcfx1OBAUOwkSNfrcmV4RrW5gKHhwH4=;
+        b=TZiiiMrNdupuOEKUD+OTjC3OSHDF9KnPZZLhrHVLmdTFHfd0E9dprZCBwJxvjv3z58
+         jjrhLlzF1iqW6iGkVJgoWz9d6BSazMCOETDwjrS+/wTJPdiYdl+qoliV/oC9IKTp+Eqy
+         fIJMqzRDLQ3iKAPUj3bgnJk7BRj6TcnN91p9nigAIRkIsO78pSwxa/C2yB+5A57y9Z6c
+         IUZNU14FMocqtlaLws/fdquNSOmSD7hJGfHAIzcdsDDTqYQ2h+9pnxB+6Q3IETY8oY5l
+         QjcXxknqo4nNurBUy7fHrWvrymQG6SVOnezBFW44KRjPyr3C4q9BTwqAFufKH98jmUy3
+         oU1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702446668; x=1703051468;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cuCbUQb5WegONcfx1OBAUOwkSNfrcmV4RrW5gKHhwH4=;
+        b=TXptA94io4KfzFKVwVOVjEBhf3q+uEzegYMMU8kZ8XJ5ms3E1CxRsHXA+mwgRnKDJC
+         Re6dRtX8FPFGLcADcl0t4bT1e2sgdcLUVXejfmbAv2eb4deltnR1dXto4PgKHCwXrGpb
+         UDRqE3QC6cqtpvdP5IjXJyOLRtA4qoqML20VGAnCYc/VD4gqFd66ebWG5hafx/rJYWaX
+         +WN891pLYMzX/2QKrGRzrpXDHfrXgU7/YWMqQmzKoNTpH/rZE802xoi8POazVQOYnX3j
+         4dnrTsBBQAiS8Dn2LZKD8W7x8Z0Im24nj3qT9oaWYTR426ojl/sXLeAy5cshFfluzyd7
+         ADRA==
+X-Gm-Message-State: AOJu0Yy54KwWLmaXmhtDEv18Hf98RotUfBu/Kp65uDKLMzQTWBogfFeE
+	J7LKcaXQAcMiorlbbasZ4PDGRArfSUSKEA==
+X-Google-Smtp-Source: AGHT+IGHJG5AwQ6ERukPWZk9JkCzGueszXfxLlvKzK6e/M2zt812hcssOa+hOXZob7k4FVv2WFZlEw==
+X-Received: by 2002:a81:af66:0:b0:5e2:5d4:6f17 with SMTP id x38-20020a81af66000000b005e205d46f17mr1884372ywj.43.1702446668472;
+        Tue, 12 Dec 2023 21:51:08 -0800 (PST)
+Received: from google.com ([2620:15c:9d:2:96c1:256f:67e0:c0db])
+        by smtp.gmail.com with ESMTPSA id o4-20020a170902d4c400b001cfd049528esm9573609plg.110.2023.12.12.21.51.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Dec 2023 21:51:07 -0800 (PST)
+Date: Tue, 12 Dec 2023 21:51:04 -0800
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: devicetree@vger.kernel.org, Lee Jones <lee@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-arm-msm@vger.kernel.org, Jonathan Cameron <jic23@kernel.org>,
+	Lars-Peter Clausen <lars@metafoo.de>, linux-iio@vger.kernel.org,
+	linux-input@vger.kernel.org, Pavel Machek <pavel@ucw.cz>,
+	linux-leds@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v5 01/37] dt-bindings: input: qcom,pm8921-keypad: convert
+ to YAML format
+Message-ID: <ZXlGSPTnineYmTyN@google.com>
+References: <20230827132525.951475-1-dmitry.baryshkov@linaro.org>
+ <20230827132525.951475-2-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 13 Dec 2023 10:44:09 +0500
-From: Nikita Travkin <nikita@trvn.ru>
-To: Conor Dooley <conor@kernel.org>
-Cc: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley
- <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org, Andy Gross
- <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio
- <konrad.dybcio@linaro.org>, linux-pm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] dt-bindings: power: supply: Add Acer Aspire 1 EC
-In-Reply-To: <20231212-wasp-overcoat-cf2bd1383670@spud>
-References: <20231212-aspire1-ec-v2-0-ca495ea0a7ac@trvn.ru>
- <20231212-aspire1-ec-v2-1-ca495ea0a7ac@trvn.ru>
- <20231212-wasp-overcoat-cf2bd1383670@spud>
-Message-ID: <d79b9a017644004f6d6a3e182935b0f5@trvn.ru>
-X-Sender: nikita@trvn.ru
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230827132525.951475-2-dmitry.baryshkov@linaro.org>
 
-Conor Dooley писал(а) 12.12.2023 22:24:
-> Hey,
+On Sun, Aug 27, 2023 at 04:24:49PM +0300, Dmitry Baryshkov wrote:
+> Convert the bindings for the keypad subdevices of Qualcomm PM8921 and
+> PM8058 PMICs from text to YAML format.
 > 
-> On Tue, Dec 12, 2023 at 05:49:09PM +0500, Nikita Travkin wrote:
->> Add binding for the EC found in the Acer Aspire 1 laptop.
->>
->> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
->> ---
->>  .../bindings/power/supply/acer,aspire1-ec.yaml     | 67 ++++++++++++++++++++++
->>  1 file changed, 67 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/power/supply/acer,aspire1-ec.yaml b/Documentation/devicetree/bindings/power/supply/acer,aspire1-ec.yaml
->> new file mode 100644
->> index 000000000000..1fbf1272a00f
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/power/supply/acer,aspire1-ec.yaml
->> @@ -0,0 +1,67 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/power/supply/acer,aspire1-ec.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Acer Aspire 1 Embedded Controller
->> +
->> +maintainers:
->> +  - Nikita Travkin <nikita@trvn.ru>
->> +
->> +description:
->> +  The Acer Aspire 1 laptop uses an embedded controller to control battery
->> +  and charging as well as to provide a set of misc features such as the
->> +  laptop lid status and HPD events for the USB Type-C DP alt mode.
->> +
->> +properties:
->> +  compatible:
->> +    const: acer,aspire1-ec
->> +
->> +  reg:
->> +    const: 0x76
->> +
->> +  interrupts:
->> +    maxItems: 1
->> +
->> +  acer,media-keys-on-top:
->> +    description: Configure the keyboard layout to use media features of
->> +      the fn row when the fn key is not pressed. The firmware may choose
->> +      to add this property when user selects the fn mode in the firmware
->> +      setup utility.
+> While doing the conversion also drop the linux,keypad-no-autorepeat
+> The property was never used by DT files. Both input and DT binding
+> maintainers consider that bindings should switch to assertive
+> (linux,autorepeat) instead of negating (no-autorepeat) property.
 > 
-> I'm not a huge fan of the property name/description here.
-> For the description, I'm not sure from reading this what the default
-> behaviour is and how the fn row works when the fn key is pressed.
-> Is the default behaviour that pressing the fn key enables the media keys
-> and the row by default provides the fn functionality? And then when this
-> option is set in firmware the behaviour is inverted?
-> 
+> Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Yes. By default pressing i.e. F11 would create F11, Fn+F11 would be vol+.
-With this option set, the default for F11 would be vol+ and Fn+f11 would
-be F11.
+Applied, thank you.
 
-Perhaps this description would be better?
-
-  Configure the keyboard layout to invert the Fn key. By default the
-  function row of the keyboard inputs function keys (i.e F11) when
-  Fn is not pressed. With this option set, pressing the key without
-  Fn would input media keys (i.e. Vol-Up). Firmware may (...) 
-
-> For the name, the "on-top" bit seems a bit weird. I would prefer it to
-> be reworded in terms of the behavioural change of the fn key. The media
-> keys are physically at the top of the keyboard whether or not this
-> option is enabled, hence the "on-top" seeming a bit weird to me.
-> 
-
-I was trying to be unambiguous with this name without making
-it too long. The implied meaning of "on-top" was "On the top
-keyboard layer" (in the opposition of the "Fn" layer). Perhaps
-"acer,media-keys-on-top-layer" would have been better then?
-
-I was trying to define this property via the word "media"
-since using "fn" is somewhat ambiguous (fn row key vs F(1..12) key
-vs Fn key), and something like `inverted-fn-key" would not reflect
-what is the impact on the layout. Using "fn-selects-function-keys"
-also felt a bit ambiguous to me.
-
-FWIW I can also invert the default and make it
-"fn-selects-media-keys" which would be clear. I haven't yet
-written the firmware that would pass this property from the
-setup so it shouldn't be a problem from the DT POV, but this
-is not the "reset" default for the EC.
-
-Do any of those suggestions sound better to you?
-
-Nikita
-
-> Thanks,
-> Conor.
-> 
->> +    type: boolean
->> +
->> +  connector:
->> +    $ref: /schemas/connector/usb-connector.yaml#
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - interrupts
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  - |+
->> +    #include <dt-bindings/interrupt-controller/irq.h>
->> +    i2c {
->> +        #address-cells = <1>;
->> +        #size-cells = <0>;
->> +
->> +        embedded-controller@76 {
->> +            compatible = "acer,aspire1-ec";
->> +            reg = <0x76>;
->> +
->> +            interrupts-extended = <&tlmm 30 IRQ_TYPE_LEVEL_LOW>;
->> +
->> +            connector {
->> +                compatible = "usb-c-connector";
->> +
->> +                port {
->> +                    ec_dp_in: endpoint {
->> +                        remote-endpoint = <&mdss_dp_out>;
->> +                    };
->> +                };
->> +            };
->> +        };
->> +    };
->>
->> --
->> 2.43.0
->>
+-- 
+Dmitry
 
