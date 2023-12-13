@@ -1,128 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-4513-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83113810DAF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 10:50:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C0FF7810DB9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 10:54:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B6DEA1C208F0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 09:50:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F38601C2090A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 09:54:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B3742111F;
-	Wed, 13 Dec 2023 09:50:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9B1E21359;
+	Wed, 13 Dec 2023 09:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="l1nNiEFj"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="RuvoDMyV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.151])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69F0F83;
-	Wed, 13 Dec 2023 01:50:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1702461036; x=1733997036;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=WSNjhf6+NOvKNhbkz0t8UQYThMGcCwC7Ahj7dZyAh5k=;
-  b=l1nNiEFj3yCKu/dlzLsegeYtLt/DHMCtH2489IB5n7ffAZNbceBtSIjW
-   piiVXDrr/noCnCekJwilzY/WZFBm42Q5KQa8cPEwtuRH3eZiJumdXRQ1+
-   4Iy1kHucNa6+9g019pFr5Wt7BjRMtQ21dP+72z2D2uz/9nyNVrpnb7m6e
-   TlkUIdhEX0Opi1RcJpzwr1Z8GVbxpqwfHfKdpzl5if11Rk7FojU7bfm7g
-   O1+Y7BRaC7LO9AJV/UbSN2dQiKc3pMXlsuS0om4G872LcjZzJoViIYBl9
-   P4UjddevkfzEe4tSQZulNua1NdvuL7c8pG25lfniE7fawdIbGSOKa7ac1
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10922"; a="375093395"
-X-IronPort-AV: E=Sophos;i="6.04,272,1695711600"; 
-   d="scan'208";a="375093395"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2023 01:50:29 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10922"; a="808095897"
-X-IronPort-AV: E=Sophos;i="6.04,272,1695711600"; 
-   d="scan'208";a="808095897"
-Received: from oostoia-mobl.ger.corp.intel.com (HELO localhost) ([10.252.50.15])
-  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2023 01:50:27 -0800
-From: Jani Nikula <jani.nikula@intel.com>
-To: Jani Nikula <jani.nikula@intel.com>,
-	linux-sound@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2] ASoC: hdmi-codec: drop drm/drm_edid.h include
-Date: Wed, 13 Dec 2023 11:50:23 +0200
-Message-Id: <20231213095023.3928703-1-jani.nikula@intel.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231212143038.3828691-1-jani.nikula@intel.com>
-References: <20231212143038.3828691-1-jani.nikula@intel.com>
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAB11E8;
+	Wed, 13 Dec 2023 01:54:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=7F13S8FLoutiZ3CalADES9Ypom9LrrGw6pCO4/ixxqw=; b=RuvoDMyVMMqqs1yxb8x0Hv1lR0
+	MgvpCopZwbFbh/IJm/HmhiDSH5+was538qxsXbKTUCGvI1RgOdw3EukXbMtf4pwwf9A84COngxvsk
+	1BE9R0UJ0+69oMZogGPSJ6B9j/7kgyya2bTz0TOfJerchu+fUph//fKvnOTIkCtIR4sQ=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1rDLwI-002nrP-E7; Wed, 13 Dec 2023 10:54:02 +0100
+Date: Wed, 13 Dec 2023 10:54:02 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Sneh Shah <quic_snehshah@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	kernel@quicinc.com, Andrew Halaney <ahalaney@redhat.com>,
+	andersson@kernel.org
+Subject: Re: [PATCH net-next] net: stmmac: qcom-ethqos: Add sysfs nodes for
+ qcom ethqos
+Message-ID: <428bba44-c0b9-48b2-b4fc-feba3e2245ae@lunn.ch>
+References: <20231204084854.31543-1-quic_snehshah@quicinc.com>
+ <3e4a1b9c-ed0f-466e-ba11-fc5b7ef308a1@lunn.ch>
+ <5d5f3955-fc30-428c-99f4-42f9b7580a84@quicinc.com>
+ <0c966845-2bbc-4196-806d-6a33e435bf7d@lunn.ch>
+ <dd585977-50c4-40a4-a664-0ecb5a84807a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <dd585977-50c4-40a4-a664-0ecb5a84807a@quicinc.com>
 
-hdmi-codec.h does not appear to directly need drm/drm_edid.h for
-anything. Remove it.
+> >> We need to route vlan traffic of a specific Priority to GVM Queue
+> >> (Ethernet queue 5) via programming a MAC register. The MAC register
+> >> is not accessible in GVM and has to be programmed from PVM. stmmac
+> >> already has TC OPS to program this routing via vlan
+> >> priority. However, as PVM has only 4 queues enabled, TC tool will
+> >> not take 5th queue as input. Hence, these nodes were added to
+> >> conifure the MAC register to route specific vlan packets to 5th
+> >> queue in GVM.
+> >  
+> >> Note: The queues mentioned above are HW MTL Queues and DMA
+> >> Channels. The routing can be done in the HW itself based on vlan pcp
+> >> before the packets reach to driver.
+> > 
+> > Is the normal way you would do this is like this:
+> > 
+> > tc qdisc add dev eth1 parent root handle 100 \
+> > mqprio num_tc 4 \
+> > map 0 1 2 3 0 0 0 0 0 0 0 0 0 0 0 0 \
+> > queues 1@0 1@1 1@2 1@3 \
+> > hw 1
+> > 
+> > But you are saying that you cannot extend this to 5 queues?
+> > 
+> >     Andrew
+> 
 
-There are some files that get drm/edid.h by proxy; include it where
-needed.
+> Yes this can't extend to 5 queues. Because, stmmac in primary
+> virtual machine will only have 4 netdev queues. So TC won't take
+> input for 5th queue.
 
-v2: Fix build (kernel test robot <lkp@intel.com>)
+I still don't understand your architecture. How can you have 5 queues
+if the physical hardware only has 4?
 
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Is there any documentation for all this? Any datasheet?
 
----
-
-I'm pretty sure I haven't compiled everything that might implicitly
-depend on the include. However, the right thing to do is to include
-drm_edid.h where needed, not from somewhat random intermediate
-headers. I hope this uncovers anything I missed.
----
- drivers/gpu/drm/msm/dp/dp_display.c | 1 +
- drivers/gpu/drm/vc4/vc4_hdmi.c      | 1 +
- include/sound/hdmi-codec.h          | 1 -
- 3 files changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 1b88fb52726f..766c8d01e6b3 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -11,6 +11,7 @@
- #include <linux/of_irq.h>
- #include <linux/delay.h>
- #include <drm/display/drm_dp_aux_bus.h>
-+#include <drm/drm_edid.h>
- 
- #include "msm_drv.h"
- #include "msm_kms.h"
-diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
-index 25c9c71256d3..d35d8a531cfc 100644
---- a/drivers/gpu/drm/vc4/vc4_hdmi.c
-+++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
-@@ -35,6 +35,7 @@
- #include <drm/display/drm_scdc_helper.h>
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_drv.h>
-+#include <drm/drm_edid.h>
- #include <drm/drm_probe_helper.h>
- #include <drm/drm_simple_kms_helper.h>
- #include <linux/clk.h>
-diff --git a/include/sound/hdmi-codec.h b/include/sound/hdmi-codec.h
-index 9b162ac1e08e..5e1a9eafd10f 100644
---- a/include/sound/hdmi-codec.h
-+++ b/include/sound/hdmi-codec.h
-@@ -12,7 +12,6 @@
- 
- #include <linux/of_graph.h>
- #include <linux/hdmi.h>
--#include <drm/drm_edid.h>
- #include <sound/asoundef.h>
- #include <sound/soc.h>
- #include <uapi/sound/asound.h>
--- 
-2.39.2
-
+   Andrew
 
