@@ -1,58 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-4529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3CEF811940
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 17:26:01 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D56DE811941
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 17:26:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7AB981C20E90
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 16:25:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D0F661C20F93
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 16:26:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3336835EF3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A822C33CF7;
 	Wed, 13 Dec 2023 16:25:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pzuNlUOh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IRjoeVM2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3256EA
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 08:25:44 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-54cd2281ccbso9304043a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 08:25:44 -0800 (PST)
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1809FF2
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 08:25:46 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-a1f8a1e9637so829272166b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 08:25:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702484743; x=1703089543; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1702484744; x=1703089544; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=uDQI7CGNXE5QtDrGTA7vjhneNjlnGJyq3B8Gpd+RnjY=;
-        b=pzuNlUOhIoTE4WWFVONCAdtW6UTIvY2igyhxfa08zkdkKM+BAjSBHODmWqaIU+iXcb
-         6BnHlv64y7fq50Wn286F5ME9RGmDLbLojh4we1hF2gB+zd0lij1dSWRwZpnq7Wb3DNyX
-         NF3nyrE+OH7VljP4LBlyg6Y24cL6QcpCEntCIFCMqnb3rzzd+8S6xKDRPUDRrvf8fofQ
-         wWDg+H4ZNGW40RIhmhaCHafBwmmt82LuW2Fjb7o0kLlzSeAhB17gNYJiiSe4fs8eZg7B
-         RGA+55w2qEJw1jvjqybp32MLflhvQIDkCmDQ+tMEQj02vzFsOTyayAMGr8uwQQNPyW6A
-         0HFg==
+        bh=HKKYqdbc3N4hC1UQxae75xN4voBqyRjMYCSX3oX7340=;
+        b=IRjoeVM21R50j1yLy4kKukHS9xBIp55PFTv5n2NJ5jVAs2ihEIzk2K0bsKKXU/ivOk
+         CzLqgRosjcL1ahA0KgIt9/bE78pIdsks3PwivTIE06LDuWYhk6YM344kmHLbuXKmgsFh
+         KEKxrHldvqMPZnBMMzAVdEE7gW6vavWPQLZWNn4GaV6hyDM2IcNUeQB0yfDixqdHn7sa
+         FykaFqlZx1WfLsjACx2NCnFBpmtbWHlGV+nt1ndW2kAqe+JQoIY7JV9YuXkiofFzbWSk
+         IaPDA+nMCAGqr8FxCVSkvY6BS4bcrrAUzkElRDvR5HGPb0mMSeiTDWoV2H4oMlKn+j3J
+         rOOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702484743; x=1703089543;
+        d=1e100.net; s=20230601; t=1702484744; x=1703089544;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=uDQI7CGNXE5QtDrGTA7vjhneNjlnGJyq3B8Gpd+RnjY=;
-        b=LI2iZtrA1Yb6VlDq4JQ9hNKs0+GAOy54j5pStfpxpYfpbD8GNUTtZ4qlesl60zNZz7
-         auDKuWBwLrUaopI/Y5uau5zWV/t/6iEB3DxjFYZC3ev1khs9Cjp7wSdDr51rL9FeQNHh
-         3C/qeeS0ZE/Wfsbl9ikWkedNULEk/XKaLa6aUV1/VLUDWBc9dMNJrYeK0UhBmCkoLxGP
-         MFPSZeS3TvTxuoEWhfGSgAHElcv/EfBHOokHKunOq4L8ZM+mIMUNZzqiMKzikuqNyfvG
-         WFVDGmyW2YrXVX9rcNVYcjvVEjYc8pqq6obdCEmkSd2Zuto+66dh2MoGoB+Eg6gURlL8
-         b61w==
-X-Gm-Message-State: AOJu0YyWAFzMNAQe76j7JtHifdqtm9JyGIaMk/6VKhNyNesfEBHczFxM
-	cTB5Em1rl+3xvC1/bm4uMd5a4w==
-X-Google-Smtp-Source: AGHT+IFYR8rsO1VF//8r3xp61FMiOmVTtJhWR3SeKc7XhW8dyZuYFpYd2aa1O950RUJUMP4pn9sS4A==
-X-Received: by 2002:a17:906:c30a:b0:a1e:26ae:3ac5 with SMTP id s10-20020a170906c30a00b00a1e26ae3ac5mr4881307ejz.39.1702484743452;
-        Wed, 13 Dec 2023 08:25:43 -0800 (PST)
+        bh=HKKYqdbc3N4hC1UQxae75xN4voBqyRjMYCSX3oX7340=;
+        b=b5VvqKJKTTEA+RkWLuur5znLQVXYspWTWCw6df9tbgw0uBoY99NKf2+mkkgT5etn/c
+         0K5SYlwjg1fmPi8K9/LQlYaDz18Y9yRBI5CyOX3PVH1pNa75Hon5p+054aKSlE4OS65C
+         ohlbthxUSWdpyW/KyNS3to/2jm5G+gQTqTqSB1TH5Us4RBqdq2UJyLeQPkun3MafcL2a
+         E5KNVnE/Bm3f/ADRi+cDhlIdxty7L2qBD2nPukKpg8iq0jH9j6AfqqvNe8qlf7Q2NChJ
+         FRLRlGPKGzm8Lp7eRKgf7IKLjESCsa4QFTUmvyZQD3Dp3SPsQBitZAmNtBgEL1iX8nHT
+         7IUw==
+X-Gm-Message-State: AOJu0YwodNy1AXW7PyYivrDnLPASJNMkMAlngyRMq0bViiKOqSvQZNdi
+	IT1o3Mgom4L86y3GquspDvaBzoIKY4yDgXbtBUY=
+X-Google-Smtp-Source: AGHT+IHFG0Jl0N1DKFBn/+nExVQ68zOY5N449WKqehTKJtP9936qUdH+d5NImFZgsBsH6Okeu2Dl4A==
+X-Received: by 2002:a17:907:270f:b0:a1e:a558:748c with SMTP id w15-20020a170907270f00b00a1ea558748cmr8642392ejk.18.1702484744603;
+        Wed, 13 Dec 2023 08:25:44 -0800 (PST)
 Received: from krzk-bin.. ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id kv18-20020a17090778d200b00a1dfc541282sm8048914ejc.225.2023.12.13.08.25.42
+        by smtp.gmail.com with ESMTPSA id kv18-20020a17090778d200b00a1dfc541282sm8048914ejc.225.2023.12.13.08.25.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Dec 2023 08:25:43 -0800 (PST)
+        Wed, 13 Dec 2023 08:25:44 -0800 (PST)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To: Andy Gross <agross@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
@@ -64,9 +64,9 @@ To: Andy Gross <agross@kernel.org>,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
 Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 3/4] arm64: dts: qcom: sm8550: move Soundwire pinctrl to its nodes
-Date: Wed, 13 Dec 2023 17:25:35 +0100
-Message-Id: <20231213162536.171475-4-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 4/4] arm64: dts: qcom: sm8550: drop unneeded assigned-clocks from codec macros
+Date: Wed, 13 Dec 2023 17:25:36 +0100
+Message-Id: <20231213162536.171475-5-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20231213162536.171475-1-krzysztof.kozlowski@linaro.org>
 References: <20231213162536.171475-1-krzysztof.kozlowski@linaro.org>
@@ -78,101 +78,67 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Pin configuration for Soundwire bus should be set in Soundwire
-controller nodes, not in the associated macro codec node.  This
-placement change should not have big impact in general, because macro
-codec is a clock provider for Soundwire controller, thus its devices is
-probed first.  However it will have impact for disabled Soundwire buses,
-e.g. WSA2, because after this change the pins will be left in default
-state.
-
-We also follow similar approach in newer SoCs, like Qualcomm SM8650.
+The MCLK clocks of codec macros have fixed 19.2 MHz frequency and
+assigning clock rates is redundant.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 14 --------------
+ 1 file changed, 14 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 1f06fd33d1ce..d8f79b5895f5 100644
+index d8f79b5895f5..68b05ab5f65f 100644
 --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -2050,8 +2050,6 @@ lpass_wsa2macro: codec@6aa0000 {
+@@ -2045,8 +2045,6 @@ lpass_wsa2macro: codec@6aa0000 {
+ 				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+ 				 <&lpass_vamacro>;
+ 			clock-names = "mclk", "macro", "dcodec", "fsgen";
+-			assigned-clocks = <&q6prmcc LPASS_CLK_ID_WSA2_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+-			assigned-clock-rates = <19200000>;
  
  			#clock-cells = <0>;
  			clock-output-names = "wsa2-mclk";
--			pinctrl-names = "default";
--			pinctrl-0 = <&wsa2_swr_active>;
+@@ -2092,9 +2090,6 @@ lpass_rxmacro: codec@6ac0000 {
+ 				 <&lpass_vamacro>;
+ 			clock-names = "mclk", "macro", "dcodec", "fsgen";
+ 
+-			assigned-clocks = <&q6prmcc LPASS_CLK_ID_RX_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+-			assigned-clock-rates = <19200000>;
+-
+ 			#clock-cells = <0>;
+ 			clock-output-names = "mclk";
  			#sound-dai-cells = <1>;
- 		};
- 
-@@ -2063,6 +2061,9 @@ swr3: soundwire-controller@6ab0000 {
- 			clock-names = "iface";
- 			label = "WSA2";
- 
-+			pinctrl-0 = <&wsa2_swr_active>;
-+			pinctrl-names = "default";
-+
- 			qcom,din-ports = <4>;
- 			qcom,dout-ports = <9>;
- 
-@@ -2096,8 +2097,6 @@ lpass_rxmacro: codec@6ac0000 {
+@@ -2138,9 +2133,6 @@ lpass_txmacro: codec@6ae0000 {
+ 				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+ 				 <&lpass_vamacro>;
+ 			clock-names = "mclk", "macro", "dcodec", "fsgen";
+-			assigned-clocks = <&q6prmcc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+-
+-			assigned-clock-rates = <19200000>;
  
  			#clock-cells = <0>;
  			clock-output-names = "mclk";
--			pinctrl-names = "default";
--			pinctrl-0 = <&rx_swr_active>;
- 			#sound-dai-cells = <1>;
- 		};
+@@ -2156,9 +2148,6 @@ lpass_wsamacro: codec@6b00000 {
+ 				 <&lpass_vamacro>;
+ 			clock-names = "mclk", "macro", "dcodec", "fsgen";
  
-@@ -2109,6 +2108,9 @@ swr1: soundwire-controller@6ad0000 {
- 			clock-names = "iface";
- 			label = "RX";
- 
-+			pinctrl-0 = <&rx_swr_active>;
-+			pinctrl-names = "default";
-+
- 			qcom,din-ports = <1>;
- 			qcom,dout-ports = <11>;
- 
-@@ -2142,8 +2144,6 @@ lpass_txmacro: codec@6ae0000 {
- 
+-			assigned-clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+-			assigned-clock-rates = <19200000>;
+-
  			#clock-cells = <0>;
  			clock-output-names = "mclk";
--			pinctrl-names = "default";
--			pinctrl-0 = <&tx_swr_active>;
  			#sound-dai-cells = <1>;
- 		};
+@@ -2233,9 +2222,6 @@ lpass_vamacro: codec@6d44000 {
+ 				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+ 			clock-names = "mclk", "macro", "dcodec";
  
-@@ -2161,8 +2161,6 @@ lpass_wsamacro: codec@6b00000 {
- 
+-			assigned-clocks = <&q6prmcc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+-			assigned-clock-rates = <19200000>;
+-
  			#clock-cells = <0>;
- 			clock-output-names = "mclk";
--			pinctrl-names = "default";
--			pinctrl-0 = <&wsa_swr_active>;
+ 			clock-output-names = "fsgen";
  			#sound-dai-cells = <1>;
- 		};
- 
-@@ -2174,6 +2172,9 @@ swr0: soundwire-controller@6b10000 {
- 			clock-names = "iface";
- 			label = "WSA";
- 
-+			pinctrl-0 = <&wsa_swr_active>;
-+			pinctrl-names = "default";
-+
- 			qcom,din-ports = <4>;
- 			qcom,dout-ports = <9>;
- 
-@@ -2203,6 +2204,9 @@ swr2: soundwire-controller@6d30000 {
- 			clock-names = "iface";
- 			label = "TX";
- 
-+			pinctrl-0 = <&tx_swr_active>;
-+			pinctrl-names = "default";
-+
- 			qcom,din-ports = <4>;
- 			qcom,dout-ports = <0>;
- 			qcom,ports-sinterval-low =	/bits/ 8 <0x01 0x01 0x03 0x03>;
 -- 
 2.34.1
 
