@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-4502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4503-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 232AA810B44
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 08:15:55 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CF2C810B4F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 08:17:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CCEBF1F21468
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 07:15:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AC5441F21135
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 07:17:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08779179A5;
-	Wed, 13 Dec 2023 07:15:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49F1AC14F;
+	Wed, 13 Dec 2023 07:17:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pcq0pfR0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xdKf1x8V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11091D3
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 23:15:48 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-a1ef2f5ed02so713601966b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 23:15:47 -0800 (PST)
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C9D1D5
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 23:17:04 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-a1f8f470903so440557266b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 23:17:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702451746; x=1703056546; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1702451823; x=1703056623; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=tMTwt7L6rgKnu3PUy8qh8FUCF9fFCzjsiWdGKd+O9a4=;
-        b=pcq0pfR0y1hcqMtgToMZYxK2f9BkZFZg07gT1bLleAhKLU8HxgjgkqS3cC0MfyytQP
-         z7tgY5jDRYcCJmtOkxyW8+nuZH8vdW/D8VoHpsIzfyd2FyHtOQCXVO4T09LmJfzl70aN
-         sahsIGJjCIEeQEYM6J7C9sYYK69E9Za7agPICKTYXDUdOh5LjT7C+qSLa1UO62lz24NM
-         GBA6X2YHp7iiQqm40kshkZbz+L4a32euWONXU4D+msBS7RJYedPutkZnZqsguhDTZkxR
-         enruOmO3KDpf/2Ykg9iKhs8320BRXjbG/IoRb6wUd+XAZMpYUahhJiEeWyK0WxkuZl0A
-         d0dQ==
+        bh=rbI29hN0MRs/ULrtjzAshzwAyu7DKD+fBjVTXyykoSY=;
+        b=xdKf1x8Vu5bIDsF6blsS8bwyt6NQlxCTlWKnFssiletcOTD6W78Wo7W0L5sJcKHJog
+         Api4xlwSyzo9ThMxJNobYQJV5+r2DlLkAA8QRwHPhIKc7b3hAl49AkS/Dhs+sKLyISX/
+         4Rj5t92+QUt+OJip8VsSjmESdCm6b93zM/KQk/ZgZT0+zkcCS4YL0GPm1KFAKrMWXJpG
+         23ZrvTnIHkFMEED4JAbuEcgc03tmUmwhdIib6PQ8wgGPxf583OdM2yCrpCydbagBSkl6
+         aKcWZUDuoJFaSig4cfGKrfQHvmXa+JfL/3eMhL7Zg0jMJKPw8K4eZPbntulIvqC4qr5Q
+         U2ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702451746; x=1703056546;
+        d=1e100.net; s=20230601; t=1702451823; x=1703056623;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tMTwt7L6rgKnu3PUy8qh8FUCF9fFCzjsiWdGKd+O9a4=;
-        b=Ytr4FubsVHQUSDn8qSQILPvEc7dBzLkbCISdBknikATpVqB0ZOJZSxbmQQzs+UC96Q
-         1wek7wYD1w3WKqhzYrY/nCDg6tJQ6S3fbQ83qzmn3Jd9U8HLn8z/A7//SvoqHobfG+hn
-         6zrrzb7GCQjotNVXJzHfv5o9jf4qu/TQvDO1qj6zVBtAA0homKTTX7iglMNCJWtwxgUC
-         HKD4cuGfLuTp2JE0aREoZUk3Qatfd7F2oEmDLeI9ZeFQNFB5FYL1nCUcjhOMJKXVrfHu
-         Ih1zNb9SEqdfiOYa92FOXrnn7zUATCBsPs5fn+KjJvdRa/drORU9dFYZeD/c02lklVOg
-         Ojog==
-X-Gm-Message-State: AOJu0Yx4D/DzD3xpBrLIl9XoH1zIs5tAnLatg7q39QRcb5+LXP8g08iM
-	8Oecj5ko3HqA1s3kM8061LrW6w==
-X-Google-Smtp-Source: AGHT+IGsrKBnPBDqJ4VH7yA/4zgFx/jx29FZ3j6NGsplz0s+1Bb3O0BwU6x9CkfwnMlKKrFhbWUseg==
-X-Received: by 2002:a17:906:5ace:b0:a1e:82b2:e2fc with SMTP id x14-20020a1709065ace00b00a1e82b2e2fcmr3715564ejs.120.1702451746469;
-        Tue, 12 Dec 2023 23:15:46 -0800 (PST)
+        bh=rbI29hN0MRs/ULrtjzAshzwAyu7DKD+fBjVTXyykoSY=;
+        b=aKuvvoDQE1d1QEwXbfkttoRrsx+CUciRpjAMAK3/61pwyOJwFBZBLZtazf/+wHxFBq
+         mhrWn1Jl4Kq9izj0gaVKFoc+ZUKnw2hMexcy5U5l3zCa3teZuaZRNPZeZfZKuoalpxhO
+         U3nZ/xSxa1GRRSSGZBchxPIFUObiTkuRJmKfPhNMPOEycSrFCPITJx6MCRgwDIbTvYtM
+         bTKiD8NZHNM3d6Y6I5j3QBbzxZYnRRTfPo7qukr+/3FIHnb78xHe3DkYAIUjLWA84GFn
+         Yq6D2JBCXluugbkFRBi9JZyMnZhWl8rWv6WrdFqa9A2IJ4AhzPHpyAgYX96tHc5A8D3y
+         iBpw==
+X-Gm-Message-State: AOJu0Yw8yvN6Q6dR/tbUVTJuan66TREe3aUroB5v08Qac/1A5CrYS1r6
+	YbFTEdotAO7+LcyAjz69H46gJQ==
+X-Google-Smtp-Source: AGHT+IFslMYuBdeMTycTM4nxfMbVWt5MWAvRc8eJnO6gBhXVkQAszfSN7QMQO82ijfr/dbv3yCX3KA==
+X-Received: by 2002:a17:906:c30a:b0:a1e:26ae:3ac5 with SMTP id s10-20020a170906c30a00b00a1e26ae3ac5mr4427537ejz.39.1702451823049;
+        Tue, 12 Dec 2023 23:17:03 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id hu19-20020a170907a09300b00a0ad580e1b6sm7196336ejc.48.2023.12.12.23.15.44
+        by smtp.gmail.com with ESMTPSA id hu19-20020a170907a09300b00a0ad580e1b6sm7196336ejc.48.2023.12.12.23.17.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Dec 2023 23:15:45 -0800 (PST)
-Message-ID: <24fb0b25-0139-4370-864c-839ae931f847@linaro.org>
-Date: Wed, 13 Dec 2023 08:15:43 +0100
+        Tue, 12 Dec 2023 23:17:02 -0800 (PST)
+Message-ID: <af3d9ed7-1807-48e6-b8cc-c9d3f6d59136@linaro.org>
+Date: Wed, 13 Dec 2023 08:17:01 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,22 +62,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] dt-bindings: usb: dwc3: Clean up hs_phy_irq in
- bindings
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: Fix hs_phy_irq for QUSB2 targets
 Content-Language: en-US
 To: Krishna Kurapati <quic_kriskura@quicinc.com>,
- Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
  Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
  Wesley Cheng <quic_wcheng@quicinc.com>, Johan Hovold <johan@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- quic_ppratap@quicinc.com, quic_jackp@quicinc.com
-References: <20231211121124.4194-1-quic_kriskura@quicinc.com>
- <20231211121124.4194-2-quic_kriskura@quicinc.com>
+ Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, quic_ppratap@quicinc.com, quic_jackp@quicinc.com
+References: <20231211121611.6765-1-quic_kriskura@quicinc.com>
+ <20231211121611.6765-2-quic_kriskura@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -123,56 +119,54 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231211121124.4194-2-quic_kriskura@quicinc.com>
+In-Reply-To: <20231211121611.6765-2-quic_kriskura@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/12/2023 13:11, Krishna Kurapati wrote:
-> The high speed related interrupts present on QC targets are as follows:
+On 11/12/2023 13:16, Krishna Kurapati wrote:
+> On several QUSB2 Targets, the hs_phy_irq mentioned is actually
+> qusb2_phy interrupt specific to QUSB2 PHY's. Rename hs_phy_irq
+> to qusb2_phy for such targets.
 > 
-> dp/dm irq's
-> These IRQ's directly reflect changes on the DP/DM pads of the SoC. These
-> are used as wakeup interrupts only on SoCs with non-QUSB2 targets with
-> exception of SDM670/SDM845/SM6350.
+> In actuality, the hs_phy_irq is also present in these targets, but
+> kept in for debug purposes in hw test environments. This is not
+> triggered by default and its functionality is mutually exclusive
+> to that of qusb2_phy interrupt.
 > 
-> qusb2_phy irq
-> SoCs with QUSB2 PHY do not have separate DP/DM IRQs and expose only a
-> single IRQ whose behavior can be modified by the QUSB2PHY_INTR_CTRL
-> register. The required DPSE/DMSE configuration is done in
-> QUSB2PHY_INTR_CTRL register of phy address space.
-> 
-> hs_phy_irq
-> This is completely different from the above two and is present on all
-> targets with exception of a few IPQ ones. The interrupt is not enabled by
-> default and its functionality is mutually exclusive of qusb2_phy on QUSB
-> targets and DP/DM on femto phy targets.
-> 
-> The DTs of several QUSB2 PHY based SoCs incorrectly define "hs_phy_irq"
-> when they should have been "qusb2_phy_irq". On Femto phy targets, the
-> "hs_phy_irq" mentioned is either the actual "hs_phy_irq" or "pwr_event",
-> neither of which would never be triggered directly are non-functional
-> currently. The implementation tries to clean up this issue by addressing
-> the discrepencies involved and fixing the hs_phy_irq's in respective DT's.
-> 
-> Classiffy SoC's into four groups based on whether qusb2_phy interrupt
-> or {dp/dm}_hs_phy_irq is used for wakeup in high speed and whether the
-> SoCs have hs_phy_irq present in them or not.
-> 
-> The ss_phy_irq is optional interrupt because there are mutliple SoC's
-> which either support only High Speed or there are multiple controllers
-> within same Soc and the secondary controller is High Speed only capable.
-> 
-> This breaks ABI on targets running older kernels, but since the interrupt
-> definitions are given wrong on many targets and to establish proper rules
-> for usage of DWC3 interrupts on Qualcomm platforms, DT binding update is
-> necessary.
 
-This still does not explain why missing property has to be added as
-first one, causing huge reordering of everything here and in DTS.
+...
 
-If pwr_event is required and we already break the ABI, reduce the impact
-of the change by putting it after all required interrupts. Otherwise
-please explain here and in commit msg why different approach is taken.
+>  
+> +			interrupts-extended = <GIC_SPI 128 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <GIC_SPI 225 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "pwr_event",
+> +					  "qusb2_phy",
+> +					  "ss_phy_irq";
+> +
+>  			power-domains = <&gcc USB1_GDSC>;
+>  
+>  			resets = <&gcc GCC_USB1_BCR>;
+> diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi b/arch/arm64/boot/dts/qcom/msm8953.dtsi
+> index e7de7632669a..29a6f9ad3df3 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
+> @@ -1118,9 +1118,12 @@ usb3: usb@70f8800 {
+>  			#size-cells = <1>;
+>  			ranges;
+>  
+> -			interrupts = <GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>,
+> +			interrupts = <GIC_SPI 134 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>,
+>  				     <GIC_SPI 220 IRQ_TYPE_LEVEL_HIGH>;
+> -			interrupt-names = "hs_phy_irq", "ss_phy_irq";
+> +			interrupt-names = "pwr_event",
+
+Please do not take this patchset till we resolve discussion in the
+bindings (shortly: "I don't understand why pwr_even has to be put at
+first position, causing re-ordering of all interrupts").
+
+
 
 Best regards,
 Krzysztof
