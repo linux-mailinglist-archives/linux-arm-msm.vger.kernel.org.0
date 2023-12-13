@@ -1,220 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-4506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4366E810BFC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 09:06:21 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A40A4810C0D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 09:10:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ADD6DB20A70
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 08:06:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4510BB20A7A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 08:10:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20EF31CA90;
-	Wed, 13 Dec 2023 08:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EACE11CF8C;
+	Wed, 13 Dec 2023 08:10:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wBcyXsS3"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mRM1Lsxh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5BA0F4
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 00:06:10 -0800 (PST)
-Received: by mail-oo1-xc34.google.com with SMTP id 006d021491bc7-59082c4aadaso3348146eaf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 00:06:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702454770; x=1703059570; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=J9mdWEzAG/9B8MCr9zuWWWlq43lPTrGVYB8WYYi38CU=;
-        b=wBcyXsS3VLLMZzv6mh2T6+9UP9DbW22sYycB2IGiwfFltk3f1QtcQwm4kg/eaCbpfK
-         6a853NgEUCQww3GbYSMDYvUirWHYUFNUYQiw3KHHAx++3DXEJ78oWHcTTsaJOTdundpe
-         jeDy6zL3LKVQeD6b23UgDa6+3HgE7UAoD5LanXoZTK2t2su4xgprwML9mWnJidWVeSwv
-         /t6id/RUiTpp6e29g693iZ3YMUnU2NOM/Vn4B3PZWohunN3N6Gd3zWmCdW2HvOW2kx3J
-         YfK/HqHmxn6YChzN4ZbG9lw72Sw5iOracIR5v/O52DS84pmu37aHGYkD4dtJpWDRQJ3t
-         U1tA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702454770; x=1703059570;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=J9mdWEzAG/9B8MCr9zuWWWlq43lPTrGVYB8WYYi38CU=;
-        b=ItCwcb9bFZaRoZlKyCCb0kAWyI05kwmfCItwiOxhJUvyQsolfirETYLrZStID7pqvl
-         Uwm4Xhg5yKyfRGNl21NFuJFYV7bYWJEBxuacaXyueo1zV8/fop6ANGb5a0EgWgJgZXm9
-         cn/Q6WM5DV9qdJSn3xjpx/P9jI6blKmrOuvq0RzW3Swz4BzP3WkZArtDsXozMDRv7est
-         X+6jvuTSwzNvTNsLVRZHxyhcNe6r74F4IdvEygl+bylPqd4nwpLDQW4EOnh5fA1mM5LA
-         jjzBIsPsJs4/V9mFXPTHeGAi/ljq4Dgh1knOqh2RkJrDrN9W+HXtUGf43BxehaiwRGd4
-         HAoA==
-X-Gm-Message-State: AOJu0YxDDiB5SfkDYu26Uw9JokUp/o/y8aCqI7mBStY7Zk6OE2Wik6LD
-	oZP/Ga5U5THfn95y07InXNsEKTkUVEnKH0s/3jvv4A==
-X-Google-Smtp-Source: AGHT+IGPgs3V4zKi7zlA4zBph0PJYT5cticd6roWHX31QolvnAMu5tV34TepBxpazBzOHiCzl+aZKfaUZeUBEZiKtP8=
-X-Received: by 2002:a05:6359:6006:b0:170:2013:c8f5 with SMTP id
- rw6-20020a056359600600b001702013c8f5mr3758020rwb.53.1702454769816; Wed, 13
- Dec 2023 00:06:09 -0800 (PST)
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAF60DC;
+	Wed, 13 Dec 2023 00:10:25 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BD7SKZ7024094;
+	Wed, 13 Dec 2023 08:10:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=gvSnVn+LDgma7p84JhK3TqLX+SbuVfd4ulOdi+AG5ls=; b=mR
+	M1Lsxha8xoStNL56pDQdJTMm61pw5LvotZ4bfCfFOk4MjufmVlwJMRtD+8aPwsko
+	qsP3UODWYHZ6kCs3DDhWFqY46Jy59KZZM6r5jZr4VujSVcBwYGfCKgd/UtlvyIYM
+	2U5gMI2gdb5LaRjZBr2cn+tdjXQ1MHOLioUchIZkM8WbVzqSxTvYvNw2nWWSXC1t
+	rtvMA10mFBW4mLn5hXDVPn6Ta03qZCcX3lNsGx9EVX+xmYYhWtu1I3irOqLBJGaT
+	eEqcIGa9f0B7L9PwHK5t0eZszZFwSwtUUzM12B0yZ+WYo8hFFjQ5lz52lzn9BAxi
+	AHB/ZcIx+gRqK10RwkUw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uxkc833gm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Dec 2023 08:10:02 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BD8A1Ml022698
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Dec 2023 08:10:01 GMT
+Received: from [10.253.13.71] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 13 Dec
+ 2023 00:09:55 -0800
+Message-ID: <b7b0ab99-7277-4618-9037-a878d7b899a9@quicinc.com>
+Date: Wed, 13 Dec 2023 16:09:53 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231212142730.998913-1-vincent.guittot@linaro.org>
- <20231212142730.998913-2-vincent.guittot@linaro.org> <20231213071722.u6n2fokrfs7hf3nb@vireshk-i7>
-In-Reply-To: <20231213071722.u6n2fokrfs7hf3nb@vireshk-i7>
-From: Vincent Guittot <vincent.guittot@linaro.org>
-Date: Wed, 13 Dec 2023 09:05:57 +0100
-Message-ID: <CAKfTPtC=C3ERO_RDUxxe_Nvq1NuLcNsCsdj=G=vinXmhfpUQZw@mail.gmail.com>
-Subject: Re: [PATCH 1/4] cpufreq: Add a cpufreq pressure feedback for the scheduler
-To: Viresh Kumar <viresh.kumar@linaro.org>
-Cc: catalin.marinas@arm.com, will@kernel.org, sudeep.holla@arm.com, 
-	rafael@kernel.org, agross@kernel.org, andersson@kernel.org, 
-	konrad.dybcio@linaro.org, mingo@redhat.com, peterz@infradead.org, 
-	juri.lelli@redhat.com, dietmar.eggemann@arm.com, rostedt@goodmis.org, 
-	bsegall@google.com, mgorman@suse.de, bristot@redhat.com, vschneid@redhat.com, 
-	lukasz.luba@arm.com, rui.zhang@intel.com, mhiramat@kernel.org, 
-	daniel.lezcano@linaro.org, amit.kachhap@gmail.com, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-trace-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/5] net: mdio: ipq4019: configure CMN PLL clock for
+ ipq5332
+Content-Language: en-US
+To: Maxime Chevallier <maxime.chevallier@bootlin.com>
+CC: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <andrew@lunn.ch>, <hkallweit1@gmail.com>, <linux@armlinux.org.uk>,
+        <robert.marko@sartura.hr>, <linux-arm-msm@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_srichara@quicinc.com>
+References: <20231212115151.20016-1-quic_luoj@quicinc.com>
+ <20231212115151.20016-4-quic_luoj@quicinc.com>
+ <20231212135417.67ece4d0@device.home>
+From: Jie Luo <quic_luoj@quicinc.com>
+In-Reply-To: <20231212135417.67ece4d0@device.home>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 4n-DhV8VrtmRKksbV9Qioh9e0CRFd6OV
+X-Proofpoint-ORIG-GUID: 4n-DhV8VrtmRKksbV9Qioh9e0CRFd6OV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ priorityscore=1501 mlxlogscore=999 suspectscore=0 bulkscore=0
+ malwarescore=0 adultscore=0 impostorscore=0 spamscore=0 mlxscore=0
+ phishscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312130058
 
-On Wed, 13 Dec 2023 at 08:17, Viresh Kumar <viresh.kumar@linaro.org> wrote:
->
-> On 12-12-23, 15:27, Vincent Guittot wrote:
-> > Provide to the scheduler a feedback about the temporary max available
-> > capacity. Unlike arch_update_thermal_pressure, this doesn't need to be
-> > filtered as the pressure will happen for dozens ms or more.
-> >
-> > Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
-> > ---
-> >  drivers/cpufreq/cpufreq.c | 48 +++++++++++++++++++++++++++++++++++++++
-> >  include/linux/cpufreq.h   | 10 ++++++++
-> >  2 files changed, 58 insertions(+)
-> >
-> > diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-> > index 44db4f59c4cc..7d5f71be8d29 100644
-> > --- a/drivers/cpufreq/cpufreq.c
-> > +++ b/drivers/cpufreq/cpufreq.c
-> > @@ -2563,6 +2563,50 @@ int cpufreq_get_policy(struct cpufreq_policy *policy, unsigned int cpu)
-> >  }
-> >  EXPORT_SYMBOL(cpufreq_get_policy);
-> >
-> > +DEFINE_PER_CPU(unsigned long, cpufreq_pressure);
-> > +EXPORT_PER_CPU_SYMBOL_GPL(cpufreq_pressure);
-> > +
-> > +/**
-> > + * cpufreq_update_pressure() - Update cpufreq pressure for CPUs
-> > + * @cpus        : The related CPUs for which max capacity has been reduced
-> > + * @capped_freq : The maximum allowed frequency that CPUs can run at
-> > + *
-> > + * Update the value of cpufreq pressure for all @cpus in the mask. The
-> > + * cpumask should include all (online+offline) affected CPUs, to avoid
-> > + * operating on stale data when hot-plug is used for some CPUs. The
-> > + * @capped_freq reflects the currently allowed max CPUs frequency due to
-> > + * freq_qos capping. It might be also a boost frequency value, which is bigger
-> > + * than the internal 'capacity_freq_ref' max frequency. In such case the
-> > + * pressure value should simply be removed, since this is an indication that
-> > + * there is no capping. The @capped_freq must be provided in kHz.
-> > + */
-> > +static void cpufreq_update_pressure(const struct cpumask *cpus,
->
-> Since this is defined as 'static', why not just pass policy here ?
 
-Mainly because we only need the cpumask and also because this follows
-the same pattern as other place like arch_topology.c
 
->
-> > +                                   unsigned long capped_freq)
-> > +{
-> > +     unsigned long max_capacity, capacity, pressure;
-> > +     u32 max_freq;
-> > +     int cpu;
-> > +
-> > +     cpu = cpumask_first(cpus);
-> > +     max_capacity = arch_scale_cpu_capacity(cpu);
->
-> This anyway expects all of them to be from the same policy ..
->
-> > +     max_freq = arch_scale_freq_ref(cpu);
-> > +
-> > +     /*
-> > +      * Handle properly the boost frequencies, which should simply clean
-> > +      * the thermal pressure value.
-> > +      */
-> > +     if (max_freq <= capped_freq)
-> > +             capacity = max_capacity;
-> > +     else
-> > +             capacity = mult_frac(max_capacity, capped_freq, max_freq);
-> > +
-> > +     pressure = max_capacity - capacity;
-> > +
->
-> Extra blank line here.
->
-> > +
-> > +     for_each_cpu(cpu, cpus)
-> > +             WRITE_ONCE(per_cpu(cpufreq_pressure, cpu), pressure);
-> > +}
-> > +
-> >  /**
-> >   * cpufreq_set_policy - Modify cpufreq policy parameters.
-> >   * @policy: Policy object to modify.
-> > @@ -2584,6 +2628,7 @@ static int cpufreq_set_policy(struct cpufreq_policy *policy,
-> >  {
-> >       struct cpufreq_policy_data new_data;
-> >       struct cpufreq_governor *old_gov;
-> > +     struct cpumask *cpus;
-> >       int ret;
-> >
-> >       memcpy(&new_data.cpuinfo, &policy->cpuinfo, sizeof(policy->cpuinfo));
-> > @@ -2618,6 +2663,9 @@ static int cpufreq_set_policy(struct cpufreq_policy *policy,
-> >       policy->max = __resolve_freq(policy, policy->max, CPUFREQ_RELATION_H);
-> >       trace_cpu_frequency_limits(policy);
-> >
-> > +     cpus = policy->related_cpus;
->
-> You don't need the extra variable anyway, but lets just pass policy
-> instead to the routine.
+On 12/12/2023 8:54 PM, Maxime Chevallier wrote:
+> Hello,
+> 
+> I have some more minor comments for yoi :)
+> 
+> On Tue, 12 Dec 2023 19:51:48 +0800
+> Luo Jie <quic_luoj@quicinc.com> wrote:
+> 
+>> The reference clock of CMN PLL block is selectable, the internal
+>> 48MHZ is used by default.
+>>
+>> The output clock of CMN PLL block is for providing the clock
+>> source of ethernet device(such as qca8084), there are 1 * 25MHZ
+>> and 3 * 50MHZ output clocks available for the ethernet devices.
+>>
+>> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+>> ---
+> 
+> [...]
+> 
+>> +/* For the CMN PLL block, the reference clock can be configured according to
+>> + * the device tree property "cmn-reference-clock", the internal 48MHZ is used
+>> + * by default on the ipq533 platform.
+>> + *
+>> + * The output clock of CMN PLL block is provided to the ethernet devices,
+>> + * threre are 4 CMN PLL output clocks (1*25MHZ + 3*50MHZ) enabled by default.
+>> + *
+>> + * Such as the output 50M clock for the qca8084 ethernet PHY.
+>> + */
+>> +static int ipq_cmn_clock_config(struct mii_bus *bus)
+>> +{
+>> +	int ret;
+>> +	u32 reg_val, src_sel, ref_clk;
+>> +	struct ipq4019_mdio_data *priv;
+> 
+> Here you should also use reverse christmas-tree notation
 
-In fact I have followed what was done in cpufreq_cooling.c with
-arch_update_thermal_pressure().
+Ok, will correct this, thanks.
 
-Will remove it
+> 
+> [...]
+> 
+>> @@ -317,6 +441,17 @@ static int ipq4019_mdio_probe(struct platform_device *pdev)
+>>   		}
+>>   	}
+>>   
+>> +	/* The CMN block resource is for providing clock source to ethernet,
+>> +	 * which can be optionally configured on the platform ipq9574 and
+>> +	 * ipq5332.
+>> +	 */
+>> +	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "cmn_blk");
+>> +	if (res) {
+>> +		priv->cmn_membase = devm_ioremap_resource(&pdev->dev, res);
+>> +		if (IS_ERR(priv->cmn_membase))
+>> +			return PTR_ERR(priv->cmn_membase);
+>> +	}
+>> +
+> 
+> And here you can simplify a bit by using
+> devm_platform_ioremap_resource_byname()
+> 
+> Thanks,
+> 
+> Maxime
+> 
+As Russell mentioned, since this resource is optional,
+so devm_platform_ioremap_resource_byname can't be used here.
 
->
-> > +     cpufreq_update_pressure(cpus, policy->max);
-> > +
-> >       policy->cached_target_freq = UINT_MAX;
-> >
-> >       pr_debug("new min and max freqs are %u - %u kHz\n",
-> > diff --git a/include/linux/cpufreq.h b/include/linux/cpufreq.h
-> > index afda5f24d3dd..b1d97edd3253 100644
-> > --- a/include/linux/cpufreq.h
-> > +++ b/include/linux/cpufreq.h
-> > @@ -241,6 +241,12 @@ struct kobject *get_governor_parent_kobj(struct cpufreq_policy *policy);
-> >  void cpufreq_enable_fast_switch(struct cpufreq_policy *policy);
-> >  void cpufreq_disable_fast_switch(struct cpufreq_policy *policy);
-> >  bool has_target_index(void);
-> > +
-> > +DECLARE_PER_CPU(unsigned long, cpufreq_pressure);
-> > +static inline unsigned long cpufreq_get_pressure(int cpu)
-> > +{
-> > +     return per_cpu(cpufreq_pressure, cpu);
-> > +}
-> >  #else
-> >  static inline unsigned int cpufreq_get(unsigned int cpu)
-> >  {
-> > @@ -263,6 +269,10 @@ static inline bool cpufreq_supports_freq_invariance(void)
-> >       return false;
-> >  }
-> >  static inline void disable_cpufreq(void) { }
-> > +static inline unsigned long cpufreq_get_pressure(int cpu)
-> > +{
-> > +     return 0;
-> > +}
-> >  #endif
-> >
-> >  #ifdef CONFIG_CPU_FREQ_STAT
-> > --
-> > 2.34.1
->
-> --
-> viresh
 
