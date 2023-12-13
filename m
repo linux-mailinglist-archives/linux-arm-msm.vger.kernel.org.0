@@ -1,387 +1,91 @@
-Return-Path: <linux-arm-msm+bounces-4594-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4596-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC29F81201B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 21:40:32 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3061C812025
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 21:44:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0901F1C20D13
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 20:40:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E254C2827DF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 20:44:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 884295D4AA;
-	Wed, 13 Dec 2023 20:40:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33DA57E569;
+	Wed, 13 Dec 2023 20:44:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="scCp2sm0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-X-Greylist: delayed 137 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 13 Dec 2023 12:40:24 PST
-Received: from smtprelay04.ispgateway.de (smtprelay04.ispgateway.de [80.67.31.38])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56F109C;
-	Wed, 13 Dec 2023 12:40:24 -0800 (PST)
-Received: from [92.206.191.209] (helo=note-book.lan)
-	by smtprelay04.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96.1)
-	(envelope-from <git@apitzsch.eu>)
-	id 1rDVw3-0004Kq-1w;
-	Wed, 13 Dec 2023 21:34:27 +0100
-From: =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
-Date: Wed, 13 Dec 2023 21:33:58 +0100
-Subject: [PATCH 2/2] ARM: dts: qcom: msm8926-motorola-peregrine: Add
- initial device tree
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41E9EDC
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 12:44:33 -0800 (PST)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2cc3dd2d897so8111811fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 12:44:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702500271; x=1703105071; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=791SIM/Dhvb8Ir1xD+lGgMjeSCLDTpnAuXXKKBGGfXM=;
+        b=scCp2sm0xN+fUSCUAmpef9JPEiqasoceuJBC7uuWbi13tXHIBN7jilKBOzujq/M2Ik
+         RVBrZSdbEyPRfKPsA5e6kSXmepZAep5kyap9WPnY12ZXL2yDOGA1YHgNOcGG0+vAwdsC
+         K0RGZmlimA5MoubfHqD5vttj56tzHYajYw7VKROp3RusDdw89aMvmEbB04BjOpoRcXFg
+         yyGv8YmP2iW3EznlDw+xnB79N03hfSPcgPRycQ5+qCqWyrpTSywTD3v+0iDHII9cX1Sn
+         MbpJcAmV9vdivonRb9Km3mKpJv9P4uR89LUrnEiYqXEVYJ6fLxVSnEFUwEMtqxiz3XD0
+         CAjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702500271; x=1703105071;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=791SIM/Dhvb8Ir1xD+lGgMjeSCLDTpnAuXXKKBGGfXM=;
+        b=ZDbxDesTIdR74N7E8BDk9u3UIh+mgA2ZsiXIHBM1Tg16JDNr75L6/41LpZbtJWJPpV
+         XxB3YRePd46tvN4ebOBr5sZOSYmQXR2OSqomcz3FgoYLRL1sLLnPLBYX6iGe3VxY11CM
+         nJKKgK8qzPwvRp/IoM3QGMuB5s/SceMRgGM2y2qJEhg11+F47ULdA0wmLF0Zy+Bfo6Ju
+         Wg2Q/ML2fOC7HHVse2atkk/owBk9oV6s5yIoJXuhLjlSlHN2QjHZjhs+BQ2UKiNM981c
+         JcSooYf3qtsLqivX4rj/iiTQTJADlfXFXpy3E09118nolpadFOi04BdRnioToUilqJSo
+         hBiQ==
+X-Gm-Message-State: AOJu0YyKMXS9gHMes4YH984w/tyCXfpM0/Ju+JmsltRhAteRRIvikM9R
+	NFi9jod/DprlW8Ml0aQS1DRVFJwvmleohuRBFDqm5PfK
+X-Google-Smtp-Source: AGHT+IGBcCefJRle6Hyu6jtgfQoSzKaAQzBDmyPvdwsrfJHXq/qI3IxXTgfVdwGdurr8E0qLZIqlnw==
+X-Received: by 2002:a05:651c:b07:b0:2cc:1c25:83e0 with SMTP id b7-20020a05651c0b0700b002cc1c2583e0mr3375130ljr.39.1702500271376;
+        Wed, 13 Dec 2023 12:44:31 -0800 (PST)
+Received: from [172.30.204.126] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id z11-20020a2e964b000000b002cc41ec2576sm1946ljh.61.2023.12.13.12.44.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Dec 2023 12:44:30 -0800 (PST)
+Message-ID: <e7f8e4bf-080d-4bb4-99ca-727d2d00f55d@linaro.org>
+Date: Wed, 13 Dec 2023 21:44:28 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20231213-peregrine-v1-2-5229e21bca3f@apitzsch.eu>
-References: <20231213-peregrine-v1-0-5229e21bca3f@apitzsch.eu>
-In-Reply-To: <20231213-peregrine-v1-0-5229e21bca3f@apitzsch.eu>
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] ARM: dts: qcom: msm8926-motorola-peregrine: Add
+ initial device tree
+To: =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
  Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
- ~postmarketos/upstreaming@lists.sr.ht, 
- =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
-X-Mailer: b4 0.12.4
-X-Df-Sender: YW5kcmVAYXBpdHpzY2guZXU=
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+ ~postmarketos/upstreaming@lists.sr.ht
+References: <20231213-peregrine-v1-0-5229e21bca3f@apitzsch.eu>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20231213-peregrine-v1-0-5229e21bca3f@apitzsch.eu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Level: *
 
-This dts adds support for Motorola Moto G 4G released in 2013.
 
-Add a device tree with initial support for:
 
-- GPIO keys
-- Hall sensor
-- SDHCI
-- Vibrator
+On 12/13/23 21:33, André Apitzsch wrote:
+> This dts adds support for Motorola Moto G 4G released in 2013.
+I have a similar one in my drawer.. not the 4g kind, titan IIRC?
+Wasn't this one codenamed thea?
 
-Signed-off-by: André Apitzsch <git@apitzsch.eu>
----
- arch/arm/boot/dts/qcom/Makefile                    |   1 +
- .../dts/qcom/qcom-msm8926-motorola-peregrine.dts   | 297 +++++++++++++++++++++
- 2 files changed, 298 insertions(+)
-
-diff --git a/arch/arm/boot/dts/qcom/Makefile b/arch/arm/boot/dts/qcom/Makefile
-index 0cb272f4fa45..9cc1e14e6cd0 100644
---- a/arch/arm/boot/dts/qcom/Makefile
-+++ b/arch/arm/boot/dts/qcom/Makefile
-@@ -35,6 +35,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
- 	qcom-msm8926-htc-memul.dtb \
- 	qcom-msm8926-microsoft-superman-lte.dtb \
- 	qcom-msm8926-microsoft-tesla.dtb \
-+	qcom-msm8926-motorola-peregrine.dtb \
- 	qcom-msm8960-cdp.dtb \
- 	qcom-msm8960-samsung-expressatt.dtb \
- 	qcom-msm8974-lge-nexus5-hammerhead.dtb \
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-motorola-peregrine.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-motorola-peregrine.dts
-new file mode 100644
-index 000000000000..3c5256120502
---- /dev/null
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8926-motorola-peregrine.dts
-@@ -0,0 +1,297 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+
-+/dts-v1/;
-+
-+#include "qcom-msm8226.dtsi"
-+#include "pm8226.dtsi"
-+
-+/delete-node/ &smem_region;
-+
-+/ {
-+	model = "Motorola Moto G 4G";
-+	compatible = "motorola,peregrine", "qcom,msm8926", "qcom,msm8226";
-+	chassis-type = "handset";
-+
-+	aliases {
-+		mmc0 = &sdhc_1; /* SDC1 eMMC slot */
-+		mmc1 = &sdhc_2; /* SDC2 SD card slot */
-+	};
-+
-+	chosen {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		ranges;
-+
-+		framebuffer0: framebuffer@3200000 {
-+			compatible = "simple-framebuffer";
-+			reg = <0x03200000 0x800000>;
-+			width = <720>;
-+			height = <1280>;
-+			stride = <(720 * 3)>;
-+			format = "r8g8b8";
-+		};
-+	};
-+
-+	gpio-hall-sensor {
-+		compatible = "gpio-keys";
-+
-+		label = "GPIO Hall Effect Sensor";
-+
-+		event-hall-sensor {
-+			label = "Hall Effect Sensor";
-+			gpios = <&tlmm 51 GPIO_ACTIVE_LOW>;
-+			linux,input-type = <EV_SW>;
-+			linux,code = <SW_LID>;
-+			linux,can-disable;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		key-volume-up {
-+			label = "Volume Up";
-+			gpios = <&tlmm 106 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			debounce-interval = <15>;
-+		};
-+	};
-+
-+	reserved-memory {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		ranges;
-+
-+		framebuffer@3200000 {
-+			reg = <0x03200000 0x800000>;
-+			no-map;
-+		};
-+
-+		smem_region: smem@fa00000 {
-+			reg = <0x0fa00000 0x100000>;
-+			no-map;
-+		};
-+	};
-+};
-+
-+&blsp1_i2c3 {
-+	status = "okay";
-+
-+	sensor@48 {
-+		compatible = "ti,tmp108";
-+		reg = <0x48>;
-+	};
-+};
-+
-+&blsp1_uart3 {
-+	status = "okay";
-+};
-+
-+&pm8226_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+	status = "okay";
-+};
-+
-+&pm8226_vib {
-+	status = "okay";
-+};
-+
-+&rpm_requests {
-+	regulators {
-+		compatible = "qcom,rpm-pm8226-regulators";
-+
-+		pm8226_s3: s3 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1300000>;
-+		};
-+
-+		pm8226_s4: s4 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2200000>;
-+		};
-+
-+		pm8226_s5: s5 {
-+			regulator-min-microvolt = <1150000>;
-+			regulator-max-microvolt = <1150000>;
-+		};
-+
-+		pm8226_l1: l1 {
-+			regulator-min-microvolt = <1225000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+
-+		pm8226_l2: l2 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8226_l3: l3 {
-+			regulator-min-microvolt = <750000>;
-+			regulator-max-microvolt = <1337500>;
-+		};
-+
-+		pm8226_l4: l4 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8226_l5: l5 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8226_l6: l6 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		pm8226_l7: l7 {
-+			regulator-min-microvolt = <1850000>;
-+			regulator-max-microvolt = <1850000>;
-+		};
-+
-+		pm8226_l8: l8 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8226_l9: l9 {
-+			regulator-min-microvolt = <2050000>;
-+			regulator-max-microvolt = <2050000>;
-+		};
-+
-+		pm8226_l10: l10 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8226_l12: l12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8226_l14: l14 {
-+			regulator-min-microvolt = <2750000>;
-+			regulator-max-microvolt = <2750000>;
-+		};
-+
-+		pm8226_l15: l15 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+		};
-+
-+		pm8226_l16: l16 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3350000>;
-+		};
-+
-+		pm8226_l17: l17 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8226_l18: l18 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8226_l19: l19 {
-+			regulator-min-microvolt = <2850000>;
-+			regulator-max-microvolt = <2850000>;
-+		};
-+
-+		pm8226_l20: l20 {
-+			regulator-min-microvolt = <3075000>;
-+			regulator-max-microvolt = <3075000>;
-+		};
-+
-+		pm8226_l21: l21 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		pm8226_l22: l22 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8226_l23: l23 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8226_l24: l24 {
-+			regulator-min-microvolt = <1300000>;
-+			regulator-max-microvolt = <1350000>;
-+		};
-+
-+		pm8226_l25: l25 {
-+			regulator-min-microvolt = <1775000>;
-+			regulator-max-microvolt = <2125000>;
-+		};
-+
-+		pm8226_l26: l26 {
-+			regulator-min-microvolt = <1225000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+
-+		pm8226_l27: l27 {
-+			regulator-min-microvolt = <2050000>;
-+			regulator-max-microvolt = <2050000>;
-+		};
-+
-+		pm8226_l28: l28 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3400000>;
-+			regulator-boot-on;
-+		};
-+
-+		pm8226_lvs1: lvs1 {
-+			/* Pull-up for I2C lines */
-+			regulator-always-on;
-+		};
-+	};
-+};
-+
-+&sdhc_1 {
-+	vmmc-supply = <&pm8226_l17>;
-+	vqmmc-supply = <&pm8226_l6>;
-+
-+	bus-width = <8>;
-+	non-removable;
-+
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	vmmc-supply = <&pm8226_l18>;
-+	vqmmc-supply = <&pm8226_l21>;
-+
-+	bus-width = <4>;
-+	cd-gpios = <&tlmm 115 GPIO_ACTIVE_HIGH>;
-+
-+	status = "okay";
-+};
-+
-+&smbb {
-+	qcom,fast-charge-safe-current = <2000000>;
-+	qcom,fast-charge-current-limit = <1900000>;
-+	qcom,fast-charge-safe-voltage = <4400000>;
-+	qcom,minimum-input-voltage = <4300000>;
-+
-+	status = "okay";
-+};
-+
-+&usb {
-+	extcon = <&smbb>;
-+	dr_mode = "peripheral";
-+	status = "okay";
-+};
-+
-+&usb_hs_phy {
-+	extcon = <&smbb>;
-+	v1p8-supply = <&pm8226_l10>;
-+	v3p3-supply = <&pm8226_l20>;
-+};
-
--- 
-2.43.0
-
+Konrad
 
