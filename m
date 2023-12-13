@@ -1,131 +1,258 @@
-Return-Path: <linux-arm-msm+bounces-4592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21058811F4F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 20:48:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D40C2811F6D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 20:51:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 54ADAB2115C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 19:48:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2D4A0B21115
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 19:51:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73F3768294;
-	Wed, 13 Dec 2023 19:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65A7B7A238;
+	Wed, 13 Dec 2023 19:51:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UYs4BEp1"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kM4I4WwH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BA429C;
-	Wed, 13 Dec 2023 11:48:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1702496923; x=1734032923;
-  h=message-id:subject:from:reply-to:to:cc:date:in-reply-to:
-   references:content-transfer-encoding:mime-version;
-  bh=aA4k2O4QxXBzZN4A6Xdv+7/OCMnepuyXKc9VbGVRZF4=;
-  b=UYs4BEp19kcR+yRy4vlWPCepMONrNnvgdWQxqvAroSEIsnlpwUNM7yjB
-   fK8QwVvVbNnToOWmAxThBEBYZzBUcsNuE5fkW4teXDbDStqlKgbu4GzT0
-   mqDF+vXKGFMUSwtLUXx33CkkgB1oBKXJ7MNJzuQv/7xADOYqbHssuxAwW
-   3hE8T7xLHCM4woBfHZcYf7nn4dDughXWE2o6tbDjYhtpZ8JXOfcR/YiGr
-   L9pBhuoY0TqQg3L1MJNcCkV6zcDdirnz8LsS/BwF57Z7kHxdnq9kt4cRB
-   ZV588yHRZb1+6NM7fbc7EDlYcTyPJLHTapsjehjYjn0z5oPCl0cl2XcKA
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10923"; a="8412616"
-X-IronPort-AV: E=Sophos;i="6.04,273,1695711600"; 
-   d="scan'208";a="8412616"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2023 11:48:43 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10923"; a="864730997"
-X-IronPort-AV: E=Sophos;i="6.04,273,1695711600"; 
-   d="scan'208";a="864730997"
-Received: from linux.intel.com ([10.54.29.200])
-  by FMSMGA003.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2023 11:48:42 -0800
-Received: from acharris-mobl.amr.corp.intel.com (unknown [10.255.228.183])
-	by linux.intel.com (Postfix) with ESMTP id DFF9B580DA9;
-	Wed, 13 Dec 2023 11:48:41 -0800 (PST)
-Message-ID: <970144d9b5c3d36dbd0d50f01c1c4355cd42de89.camel@linux.intel.com>
-Subject: Re: [PATCH v2 1/6] PCI/ASPM: Add locked helper for enabling link
- state
-From: "David E. Box" <david.e.box@linux.intel.com>
-Reply-To: david.e.box@linux.intel.com
-To: Bjorn Helgaas <helgaas@kernel.org>, Kai-Heng Feng
-	 <kai.heng.feng@canonical.com>
-Cc: Johan Hovold <johan+linaro@kernel.org>, Lorenzo Pieralisi
- <lpieralisi@kernel.org>, Krzysztof =?UTF-8?Q?Wilczy=C5=84ski?=
- <kw@linux.com>,  Bjorn Helgaas <bhelgaas@google.com>, Andy Gross
- <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,  Konrad Dybcio
- <konrad.dybcio@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>, Rob
- Herring <robh@kernel.org>,  Nirmal Patel <nirmal.patel@linux.intel.com>,
- Jonathan Derrick <jonathan.derrick@linux.dev>, 
- linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
- linux-kernel@vger.kernel.org, stable@vger.kernel.org, Manivannan Sadhasivam
- <manivannan.sadhasivam@linaro.org>
-Date: Wed, 13 Dec 2023 11:48:41 -0800
-In-Reply-To: <20231212212707.GA1021099@bhelgaas>
-References: <20231212212707.GA1021099@bhelgaas>
-Organization: David E. Box
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.4-0ubuntu2 
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07CE1111;
+	Wed, 13 Dec 2023 11:51:37 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BD9Lnup013669;
+	Wed, 13 Dec 2023 19:51:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=M4JcSL3sMHXUln2gLHpJ17WoyQYr/B8H7hcqzLgeJp4=; b=kM
+	4I4WwHtIDnNkE2KKgOhZ5XyhepctJxuYl2pS3CHBgaDBZ/MMtItLKABB43gcdhFC
+	z78j2l/FqycplsCUUe1rZF+y0BiPLJxomkj3reC3xsiLf8u56TdXmNjj3RDmf2iu
+	O6GNbF0ApidtbkOxOeUEE5+jyRElVATLHd53s7fI0hwgmY5fFoATWMjsIZ2+l+iP
+	koV95TDZr1ym7QEVldJMopYJcTBahURhudDiTD7RiIXb/7eKBY1SkPpwPt7hFQyH
+	nO//Q+RdgN2o6chwhbz7zgVkeEpqlkPQT4ufm8jAeNrVtsx8cQV+nmEhj1+PoU3l
+	tHtdspm+zfvonYSlKkpA==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uy5tu23tt-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Dec 2023 19:51:28 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BDJpRWo022953
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Dec 2023 19:51:27 GMT
+Received: from [10.110.0.246] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 13 Dec
+ 2023 11:51:26 -0800
+Message-ID: <4a1caaae-f0c1-47d2-a74f-8c17fc5da2bd@quicinc.com>
+Date: Wed, 13 Dec 2023 11:51:25 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] drm/msm/dpu: Set input_sel bit for INTF
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "Marijn
+ Suijten" <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20231130-encoder-fixup-v1-0-585c54cd046e@quicinc.com>
+ <20231130-encoder-fixup-v1-2-585c54cd046e@quicinc.com>
+ <CAA8EJpqeu18q4jN82fUvsEdBRmEjG_mYLQQUWD+LDxjiQQQPsg@mail.gmail.com>
+ <a076fced-f4b9-804e-eb73-1fbb510c4951@quicinc.com>
+ <77c229fd-5414-49ad-bccd-7a5732345695@linaro.org>
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <77c229fd-5414-49ad-bccd-7a5732345695@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 6fPQbmM28-0-uHXhtlllX2_k_eK9msb7
+X-Proofpoint-GUID: 6fPQbmM28-0-uHXhtlllX2_k_eK9msb7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
+ impostorscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
+ phishscore=0 priorityscore=1501 malwarescore=0 clxscore=1015
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312130141
 
-On Tue, 2023-12-12 at 15:27 -0600, Bjorn Helgaas wrote:
-> On Tue, Dec 12, 2023 at 11:48:27AM +0800, Kai-Heng Feng wrote:
-> > On Fri, Dec 8, 2023 at 4:47=E2=80=AFAM Bjorn Helgaas <helgaas@kernel.or=
-g> wrote:
-> > ...
->=20
-> > > I hope we can obsolete this whole idea someday.=C2=A0 Using pci_walk_=
-bus()
-> > > in qcom and vmd to enable ASPM is an ugly hack to work around this
-> > > weird idea that "the OS isn't allowed to enable more ASPM states than
-> > > the BIOS did because the BIOS might have left ASPM disabled because i=
-t
-> > > knows about hardware issues."=C2=A0 More history at
-> > > https://lore.kernel.org/linux-pci/20230615070421.1704133-1-kai.heng.f=
-eng@canonical.com/T/#u
-> > >=20
-> > > I think we need to get to a point where Linux enables all supported
-> > > ASPM features by default.=C2=A0 If we really think x86 BIOS assumes a=
-n
-> > > implicit contract that the OS will never enable ASPM more
-> > > aggressively, we might need some kind of arch quirk for that.
-> >=20
-> > The reality is that PC ODM toggles ASPM to workaround hardware
-> > defects, assuming that OS will honor what's set by the BIOS.
-> > If ASPM gets enabled for all devices, many devices will break.
->=20
-> That's why I mentioned some kind of arch quirk.=C2=A0 Maybe we're forced =
-to
-> do that for x86, for instance.=C2=A0 But even that is a stop-gap.
->=20
-> The idea that the BIOS ASPM config is some kind of handoff protocol is
-> really unsupportable.
 
-To be clear, you are not talking about a situation where ACPI_FADT_NO_ASPM =
-or
-_OSC PCIe disallow OS ASPM control, right? Everyone agrees that this should=
- be
-honored? The question is what to do by default when the OS is not restricte=
-d by
-these mechanisms?
 
-Reading the mentioned thread, I too think that using the BIOS config as the
-default would be the safest option, but only to avoid breaking systems, not
-because of an implied contract between the BIOS and OS. However, enabling a=
-ll
-capable ASPM features is the ideal option. If the OS isn't limited by
-ACPI_FADT_NO_ASPM or _OSC PCIe, then ASPM enabling is fully under its contr=
-ol.
-If this doesn't work for some devices then they are broken and need a quirk=
-.
+On 12/2/2023 11:54 AM, Dmitry Baryshkov wrote:
+> On 01/12/2023 23:29, Abhinav Kumar wrote:
+>>
+>>
+>> On 11/30/2023 11:36 PM, Dmitry Baryshkov wrote:
+>>> On Fri, 1 Dec 2023 at 03:31, Jessica Zhang 
+>>> <quic_jesszhan@quicinc.com> wrote:
+>>>>
+>>>> Set the input_sel bit for encoders as it was missed in the initial
+>>>> implementation.
+>>>>
+>>>> Reported-by: Rob Clark <robdclark@gmail.com>
+>>>> Fixes: 91143873a05d ("drm/msm/dpu: Add MISR register support for 
+>>>> interface")
+>>>> Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/39
+>>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>>>> ---
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 2 +-
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c   | 2 +-
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c | 7 ++++++-
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h | 4 +++-
+>>>>   4 files changed, 11 insertions(+), 4 deletions(-)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c 
+>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>>>> index 3442cf65b86f..d0884997ecb7 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>>>> @@ -320,7 +320,7 @@ static u32 dpu_hw_intf_get_line_count(struct 
+>>>> dpu_hw_intf *intf)
+>>>>
+>>>>   static void dpu_hw_intf_setup_misr(struct dpu_hw_intf *intf)
+>>>>   {
+>>>> -       dpu_hw_setup_misr(&intf->hw, INTF_MISR_CTRL);
+>>>> +       dpu_hw_setup_misr(&intf->hw, INTF_MISR_CTRL, true);
+>>>>   }
+>>>>
+>>>>   static int dpu_hw_intf_collect_misr(struct dpu_hw_intf *intf, u32 
+>>>> *misr_value)
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c 
+>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+>>>> index f38473e68f79..77b14107c84a 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+>>>> @@ -83,7 +83,7 @@ static void dpu_hw_lm_setup_border_color(struct 
+>>>> dpu_hw_mixer *ctx,
+>>>>
+>>>>   static void dpu_hw_lm_setup_misr(struct dpu_hw_mixer *ctx)
+>>>>   {
+>>>> -       dpu_hw_setup_misr(&ctx->hw, LM_MISR_CTRL);
+>>>> +       dpu_hw_setup_misr(&ctx->hw, LM_MISR_CTRL, false);
+>>>>   }
+>>>>
+>>>>   static int dpu_hw_lm_collect_misr(struct dpu_hw_mixer *ctx, u32 
+>>>> *misr_value)
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c 
+>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+>>>> index a8a0a4e76b94..f441df47fdde 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+>>>> @@ -481,7 +481,8 @@ void _dpu_hw_setup_qos_lut(struct 
+>>>> dpu_hw_blk_reg_map *c, u32 offset,
+>>>>                        cfg->danger_safe_en ? 
+>>>> QOS_QOS_CTRL_DANGER_SAFE_EN : 0);
+>>>>   }
+>>>>
+>>>> -void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c, u32 
+>>>> misr_ctrl_offset)
+>>>> +void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c, u32 
+>>>> misr_ctrl_offset,
+>>>> +               bool set_input_sel)
+>>>>   {
+>>>>          u32 config = 0;
+>>>>
+>>>> @@ -491,6 +492,10 @@ void dpu_hw_setup_misr(struct 
+>>>> dpu_hw_blk_reg_map *c, u32 misr_ctrl_offset)
+>>>>          wmb();
+>>>>
+>>>>          config = MISR_FRAME_COUNT | MISR_CTRL_ENABLE | 
+>>>> MISR_CTRL_FREE_RUN_MASK;
+>>>> +
+>>>> +       if (set_input_sel)
+>>>> +               config |= MISR_CTRL_INPUT_SEL;
+>>>> +
+>>>>          DPU_REG_WRITE(c, misr_ctrl_offset, config);
+>>>>   }
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h 
+>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+>>>> index bb496ebe283b..793670d62414 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+>>>> @@ -17,6 +17,7 @@
+>>>>   #define MISR_CTRL_ENABLE                BIT(8)
+>>>>   #define MISR_CTRL_STATUS                BIT(9)
+>>>>   #define MISR_CTRL_STATUS_CLEAR          BIT(10)
+>>>> +#define MISR_CTRL_INPUT_SEL             BIT(24)
+>>>
+>>> The public apq8916 TRM documents this as a 4-bit field. I think this
+>>> was followed into the later generations. Can we please document it
+>>> correctly and use an uint instead of just bool for set_input_sel?
+>>>
+>>
+>> Can you pls point us to this document you are referring?
+> 
+> I have this link in my bookmarks, which doesn't seem to work no longer:
+> 
+> https://developer.qualcomm.com/download/sd410/snapdragon-410e-technical-reference-manual.pdf?referrer=node/29241
+> 
+> 96boards forum has several links and mentions of this doc.
+> 
+>>
+>> I was not aware that bit level details are revealed in external 
+>> documents :)
+>>
+>> Even though its a 4-bit field, it only takes a 0 or 1 as others are 
+>> undefined.
+>>
+>> Exposing all the bits will only cause more confusion like it did for 
+>> others thinking that input select is actually configurable when its not.
+>>
+>> I think what we should do is just pass "misr_type" to this API to tell 
+>> whether its lm misr or intf misr and set BIT(24) based on that.
+> 
+> This would be another simplification. Can we instead just use values 0 
+> and 1 instead and maybe document that by default everybody should use 0.
 
-David
+Hi Dmitry,
+
+Acked. Will change the input_sel parameter to a u8 and add a note that 
+it should be 0x0 by default with an exception for encoders.
+
+Thanks,
+
+Jessica Zhang
+
+> 
+>>
+>>
+>>>>   #define MISR_CTRL_FREE_RUN_MASK         BIT(31)
+>>>>
+>>>>   /*
+>>>> @@ -357,7 +358,8 @@ void _dpu_hw_setup_qos_lut(struct 
+>>>> dpu_hw_blk_reg_map *c, u32 offset,
+>>>>                             bool qos_8lvl,
+>>>>                             const struct dpu_hw_qos_cfg *cfg);
+>>>>
+>>>> -void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c, u32 
+>>>> misr_ctrl_offset);
+>>>> +void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c, u32 
+>>>> misr_ctrl_offset,
+>>>> +                      bool set_input_sel);
+>>>>
+>>>>   int dpu_hw_collect_misr(struct dpu_hw_blk_reg_map *c,
+>>>>                  u32 misr_ctrl_offset,
+>>>>
+>>>> -- 
+>>>> 2.43.0
+>>>>
+>>>
+>>>
+> 
+> -- 
+> With best wishes
+> Dmitry
+> 
 
