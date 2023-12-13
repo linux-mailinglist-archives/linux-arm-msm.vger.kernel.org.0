@@ -1,150 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-4609-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4610-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25944812094
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 22:20:10 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7549C812097
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 22:20:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B9CDAB210D0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 21:20:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7B5571C20971
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 21:20:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB1BF7E799;
-	Wed, 13 Dec 2023 21:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC8855B5DC;
+	Wed, 13 Dec 2023 21:20:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OiJNzYLv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="X2euGlk2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF823B9
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 13:20:00 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BDLJEf1015198;
-	Wed, 13 Dec 2023 21:19:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=+kkSxIJCZE/SbiYxg7MLmURie5ZyUmCYx0/YazUpf8k=; b=Oi
-	JNzYLvFgc5zjwVNoyj6QizLqsYzVA0aYJ6Y8nk6x33IvOoMq6KyN5ElfY1fpapa0
-	lq6ZcFs2Er5zQK3GENGcKTdKssXIkr0Y7FX0V+NKL+YDgp1VMxolJGn/wUjvvcRr
-	cEMjFNhu6psBZ1EiiweXwP1jQhWdICyQi/ZPxG6vmnVryY/xGclXvq3MBC5u9Pgj
-	gaYmxQHtUaaR8d8u5u/t9uvYwgjIqZDnb6h1CgZwfK5so3LDElaY6Axfoj4zxlo7
-	hR93VQ0tdLRfa4Eb7+iyjFnscXm7ELEM9bZbFRDO2it/0HKFlzZl9YciTQj731ZF
-	DSemQhLOq+9kcQDUgrAw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uy5tu290a-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Dec 2023 21:19:51 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BDLJojD018191
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Dec 2023 21:19:50 GMT
-Received: from [10.71.109.77] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 13 Dec
- 2023 13:19:49 -0800
-Message-ID: <ab5b2c71-94cb-dea9-2ab7-f9d440323288@quicinc.com>
-Date: Wed, 13 Dec 2023 13:19:48 -0800
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71AFAE0
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 13:20:30 -0800 (PST)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-5e2cfece112so10466917b3.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 13:20:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702502429; x=1703107229; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=FqXQr8abf4Sh2kGebNrfb5oJyMJpF6xCUKnEE12XH/Q=;
+        b=X2euGlk2KYiKPYXeuHgb4Jak78J6YJBeCek0ZLpQRNXxVlDzaaTdjp8eXSFcltE5BO
+         IG69q0FP7SySyPxgPoWj2pb/bQFz7c9tyG/rDTmKTMsWgUIFHzFU4VNhkKwIB0W1UJxG
+         SMlMjYqYZ2P6b7gLdrcyvriSSuJZHDkR6B0gxqIiXGocLdFpSGqiWWzA2FQ0l106eDv3
+         0/XE+Y99J9Ag61NdOE0yju0fFUFYs1b10hnNULVPFMW4BwjE5g5bonRfPF2c5NAoXgZC
+         ockDEQmjFFSk770VtZ7I0Ov3eCYCzFAOixHwBw6BPD6Cnpdkvn/Z1h0q/SgG0Im7iyWR
+         Ugxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702502429; x=1703107229;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FqXQr8abf4Sh2kGebNrfb5oJyMJpF6xCUKnEE12XH/Q=;
+        b=pttoUUs3dW/CMJFD6Pkzb1c2s8Xm8Y7a13UE4bpGcBWt0Sz4FuG+RYxMoAfJWkIHzZ
+         HFyJBuQv/quKCWRHkqw6yY+HIsgGmP1sYiXKe/tdu/taWkcUC/sL61TStDq1Hlb/yoXF
+         TmlxJ1cxuRou8fDhtMGlmiE8R9GdcHPrQgd3sQGLvSqblv79RZV9QyVJVMIqXS3Jb8aP
+         sYCI+YEIM7qOfLfBnquXpSBjYYHYjT/wk7BG4AoHDOxf+KO131a7yov4gJG0+D7EwwLf
+         7JuYbfPF216+IDVy/o9zwWqumLeVCM9UudlDvzuTpc+pN/676ob2b0+8WMoJ4/9YrRpX
+         bj4w==
+X-Gm-Message-State: AOJu0YwfYSr/nijbgBiWPjdvkl+ESiTNC5C/xzqK9Oc6oW0lMoEOroMk
+	kFNaygSRTDcyCXV/E/CDDX0USs5uRApx7bCrnnaIfA==
+X-Google-Smtp-Source: AGHT+IHeo1UY1ULCcNk0KgK5peeMfa7CxbPjWoOoAA82PaXMtiZ9blILD4Z6ZOVhguzGfUKhUFB2iVcj8GUGo2GD07g=
+X-Received: by 2002:a81:6582:0:b0:5d3:cd07:4c05 with SMTP id
+ z124-20020a816582000000b005d3cd074c05mr6091652ywb.0.1702502429619; Wed, 13
+ Dec 2023 13:20:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [RFT PATCH v2 3/4] drm/msm/dpu: enable writeback on SM6125
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>
-CC: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20231203003203.1293087-1-dmitry.baryshkov@linaro.org>
- <20231203003203.1293087-4-dmitry.baryshkov@linaro.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20231203003203.1293087-4-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: -B-EPQf2am-StMn0vhROlqIzb5C0z0SY
-X-Proofpoint-GUID: -B-EPQf2am-StMn0vhROlqIzb5C0z0SY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
- impostorscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
- phishscore=0 priorityscore=1501 malwarescore=0 clxscore=1015
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312130150
+References: <20231213-encoder-fixup-v2-0-b11a4ad35e5e@quicinc.com> <20231213-encoder-fixup-v2-1-b11a4ad35e5e@quicinc.com>
+In-Reply-To: <20231213-encoder-fixup-v2-1-b11a4ad35e5e@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 13 Dec 2023 23:20:18 +0200
+Message-ID: <CAA8EJpqr0akUZoDYR1Q2+WBC4vvAgp_xfjBSq2ZTuoS4HLxnUQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] drm/msm/dpu: Set input_sel bit for INTF
+To: Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, quic_abhinavk@quicinc.com, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-
-
-On 12/2/2023 4:32 PM, Dmitry Baryshkov wrote:
-> Enable WB2 hardware block, enabling writeback support on this platform.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Wed, 13 Dec 2023 at 22:51, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
+>
+> Set the input_sel bit for encoders as it was missed in the initial
+> implementation.
+>
+> Reported-by: Rob Clark <robdclark@gmail.com>
+> Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/39
+> Fixes: 91143873a05d ("drm/msm/dpu: Add MISR register support for interface")
+> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 > ---
->   .../drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h | 18 ++++++++++++++++++
->   1 file changed, 18 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
-> index cec7af6667dc..79fca229df18 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
-> @@ -27,6 +27,7 @@ static const struct dpu_mdp_cfg sm6125_mdp = {
->   		[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
->   		[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
->   		[DPU_CLK_CTRL_DMA1] = { .reg_off = 0x2b4, .bit_off = 8 },
-> +		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x2bc, .bit_off = 16 },
->   	},
->   };
->   
-> @@ -139,6 +140,21 @@ static const struct dpu_pingpong_cfg sm6125_pp[] = {
->   	},
->   };
->   
-> +static const struct dpu_wb_cfg sm6125_wb[] = {
-> +	{
-> +		.name = "wb_2", .id = WB_2,
-> +		.base = 0x65000, .len = 0x2c8,
-> +		.features = WB_SDM845_MASK,
-> +		.format_list = wb2_formats,
-> +		.num_formats = ARRAY_SIZE(wb2_formats),
-> +		.clk_ctrl = DPU_CLK_CTRL_WB2,
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c |  2 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c   |  2 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c | 10 ++++++++--
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h |  3 ++-
+>  4 files changed, 12 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+> index 0b6a0a7dcc39..226133af7840 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+> @@ -322,7 +322,7 @@ static u32 dpu_hw_intf_get_line_count(struct dpu_hw_intf *intf)
+>
+>  static void dpu_hw_intf_setup_misr(struct dpu_hw_intf *intf, bool enable, u32 frame_count)
+>  {
+> -       dpu_hw_setup_misr(&intf->hw, INTF_MISR_CTRL, enable, frame_count);
+> +       dpu_hw_setup_misr(&intf->hw, INTF_MISR_CTRL, enable, frame_count, 0x1);
+>  }
+>
+>  static int dpu_hw_intf_collect_misr(struct dpu_hw_intf *intf, u32 *misr_value)
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+> index 25af52ab602f..bbc9756ecde9 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+> @@ -85,7 +85,7 @@ static void dpu_hw_lm_setup_border_color(struct dpu_hw_mixer *ctx,
+>
+>  static void dpu_hw_lm_setup_misr(struct dpu_hw_mixer *ctx, bool enable, u32 frame_count)
+>  {
+> -       dpu_hw_setup_misr(&ctx->hw, LM_MISR_CTRL, enable, frame_count);
+> +       dpu_hw_setup_misr(&ctx->hw, LM_MISR_CTRL, enable, frame_count, 0x0);
+>  }
+>
+>  static int dpu_hw_lm_collect_misr(struct dpu_hw_mixer *ctx, u32 *misr_value)
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+> index 0b05061e3e62..87716a60332e 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+> @@ -477,7 +477,8 @@ void _dpu_hw_setup_qos_lut(struct dpu_hw_blk_reg_map *c, u32 offset,
+>
+>  void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c,
+>                 u32 misr_ctrl_offset,
+> -               bool enable, u32 frame_count)
+> +               bool enable, u32 frame_count,
+> +               u32 input_sel)
+>  {
+>         u32 config = 0;
+>
+> @@ -487,8 +488,13 @@ void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c,
+>         wmb();
+>
+>         if (enable) {
+> +               /*
+> +                * note: Aside from encoders, input_sel should be
+> +                * set to 0x0 by default
+> +                */
+
+Even if it is not a proper kernedoc, please move this comment before
+the function.
+
+>                 config = (frame_count & MISR_FRAME_COUNT_MASK) |
+> -                       MISR_CTRL_ENABLE | MISR_CTRL_FREE_RUN_MASK;
+> +                       MISR_CTRL_ENABLE | MISR_CTRL_FREE_RUN_MASK |
+> +                       ((input_sel & 0xF) << 24);
+>
+>                 DPU_REG_WRITE(c, misr_ctrl_offset, config);
+>         } else {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+> index fe083b2e5696..761056be272b 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+> @@ -357,7 +357,8 @@ void _dpu_hw_setup_qos_lut(struct dpu_hw_blk_reg_map *c, u32 offset,
+>  void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c,
+>                 u32 misr_ctrl_offset,
+>                 bool enable,
+> -               u32 frame_count);
+> +               u32 frame_count,
+> +               u32 input_sel);
+>
+>  int dpu_hw_collect_misr(struct dpu_hw_blk_reg_map *c,
+>                 u32 misr_ctrl_offset,
+>
+> --
+> 2.43.0
+>
 
 
-This should now be wb2_formats_rgb.
-
-With that fixed,
-
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-
-> +		.xin_id = 6,
-> +		.vbif_idx = VBIF_RT,
-> +		.maxlinewidth = 2160,
-> +		.intr_wb_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 4),
-> +	},
-> +};
-> +
->   static const struct dpu_intf_cfg sm6125_intf[] = {
->   	{
->   		.name = "intf_0", .id = INTF_0,
-> @@ -210,6 +226,8 @@ const struct dpu_mdss_cfg dpu_sm6125_cfg = {
->   	.dspp = sm6125_dspp,
->   	.pingpong_count = ARRAY_SIZE(sm6125_pp),
->   	.pingpong = sm6125_pp,
-> +	.wb_count = ARRAY_SIZE(sm6125_wb),
-> +	.wb = sm6125_wb,
->   	.intf_count = ARRAY_SIZE(sm6125_intf),
->   	.intf = sm6125_intf,
->   	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+-- 
+With best wishes
+Dmitry
 
