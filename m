@@ -1,118 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-4588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4589-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D3E2811DDC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 20:01:38 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D05C4811EB9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 20:20:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EE30D2829FB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 19:01:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 84CAC1F21A33
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 19:20:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D8E660EC9;
-	Wed, 13 Dec 2023 19:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FBBE67B7F;
+	Wed, 13 Dec 2023 19:20:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V6TbtTBY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NL1y6ZXg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54AF7DD
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 11:01:33 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-50bee606265so7789633e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 11:01:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702494091; x=1703098891; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3zkodmR2UxFPx03GluxRmK5wVljS7D1ydfe2a4+d6LQ=;
-        b=V6TbtTBYrv0B8o5sjhuXAjuRYdAS7pXjqvqzChUPwFri4EbyOVe5J/JkPnKqjFxXAv
-         g3YcA8W8V4hEDVMHxrsfTkpD/OL/TmG7eiYwBUyN4yd165Vc66QKfuvkuV2Nc658o8Vd
-         pz5OL2Nzzc3M7PBx7SFd3MOLS4HD0JHbd7G9Fu0kPJoSAVNj670/oDmDo+5kJlFJ0Pjy
-         msTlJm/HmNBMllFUf0ALFNSvq7UH8mP+7S/DnCXqiOlarTrlSsAz407K4gNrE0yKsZ9x
-         erZ9QS2n6wagELoij03oHi/dY06ZutcGdZafnay7NKwLc8y/OnuGub6XTKbsNcj0fDO3
-         ujiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702494091; x=1703098891;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3zkodmR2UxFPx03GluxRmK5wVljS7D1ydfe2a4+d6LQ=;
-        b=t8XNjtQQU+nEb9VN0BvVMRS7GC+Esq5xUNuffhX94SwFdwi2oDKxbY8jED7zGJCdJl
-         rViyNgiJAD4lftInvYUJS5HunP9Hu5Yc1wz4Vkw7shtg5w1bDDxlm9crsow5a0yYksQk
-         Dx3FQxcjgWf0VZ0qEVgNRvFZ8456fm2ijiLgQSjwUlRd0LhB1r6YDJx2YvEkSFfTpxsV
-         JZpTGMt8AnJWesKWOtHYrb4Cafu5Qjs81EXbVFLIoRI8+hDr/0na34h5BCdS5CZle3Z5
-         0O6S26s4tf/3rYw72NuVUBgY1B2CgdkEv2xbkdYpyag2wrNycE8ONllOLKX9MqmjzUzb
-         RcLA==
-X-Gm-Message-State: AOJu0YzXjN8zoDOG1O5+4HZjhsq/bGn1mNqqNuQKDh5qlllMPaT/nzSC
-	sHbQYctHJTlDI/3l5MPQJV+dDg==
-X-Google-Smtp-Source: AGHT+IEHI18lmeRYalqAJaY5ttdR3u/fUEx8TECEk1raQLBwDSVAmYcwHwmnBr823IU9BWrLLask6w==
-X-Received: by 2002:ac2:4e13:0:b0:50d:faa9:2df1 with SMTP id e19-20020ac24e13000000b0050dfaa92df1mr3211718lfr.82.1702494091617;
-        Wed, 13 Dec 2023 11:01:31 -0800 (PST)
-Received: from [172.30.204.126] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id u4-20020a05651206c400b005009c4ba3f0sm1680336lff.72.2023.12.13.11.01.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Dec 2023 11:01:31 -0800 (PST)
-Message-ID: <e2c5d7ba-15c0-45ea-ae45-2a6deffde04e@linaro.org>
-Date: Wed, 13 Dec 2023 20:01:28 +0100
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF9167B56;
+	Wed, 13 Dec 2023 19:20:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 192ACC433C8;
+	Wed, 13 Dec 2023 19:20:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1702495216;
+	bh=pvOifwzmhzVpqy1B65sXqWWUfUoqN1GPpaLpMOsu7M4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=NL1y6ZXgRJFSI8gechwwAiu4XkPxMrQCZ3LQNQoh+duY2ym7IXeYgeVkjmO2P1Zbp
+	 hDB4oqmrb5FVjrgp7O203jYtSPqIGDoV9OS1/Jbw9Pm5ip8FfSqnjsP3MIsKZDrBGu
+	 YEgcG/fnfM+jv2gl1iv6i4nPkj0CyWYn80MYGVmGbS+geBXWsswLAJ0tNb6cKFCrVV
+	 flEZrv8+fHhFUjfVj5zJUxJ5DFdyyf8jl1rMuqrzWJFEZsL0DWeFuJy6wM7WghLieX
+	 wYSBun4sk1TjGGVYkzyvgslg0iWFnwrQQgInI+Cc4cE4XgUtkpXL/nkWz2ovZm43vk
+	 Iso4DkVscs6Kg==
+Date: Wed, 13 Dec 2023 19:20:09 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Banajit Goswami <bgoswami@quicinc.com>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+	linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+	linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 5/5] ASoC: codecs: Add WCD939x Codec driver
+Message-ID: <4dae5296-9984-4c3b-803a-f6024edd0dd9@sirena.org.uk>
+References: <20231207-topic-sm8650-upstream-wcd939x-codec-v3-0-6df9585ec7c8@linaro.org>
+ <20231207-topic-sm8650-upstream-wcd939x-codec-v3-5-6df9585ec7c8@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/7] arm64: dts: qcom: aim300: add AIM300 AIoT
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Tengfei Fan <quic_tengfan@quicinc.com>, agross@kernel.org,
- andersson@kernel.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
- conor+dt@kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Neil Armstrong <neil.armstrong@linaro.org>, Abel Vesa
- <abel.vesa@linaro.org>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com,
- Qiang Yu <quic_qianyu@quicinc.com>, Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-References: <20231207092801.7506-1-quic_tengfan@quicinc.com>
- <20231207092801.7506-8-quic_tengfan@quicinc.com>
- <02be9f46-2187-45d0-9929-31f6a2c18b35@linaro.org>
- <11257e57-693f-46db-8f97-09e5d4c20238@linaro.org>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <11257e57-693f-46db-8f97-09e5d4c20238@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="QxFQz7KiJT5hHtQy"
+Content-Disposition: inline
+In-Reply-To: <20231207-topic-sm8650-upstream-wcd939x-codec-v3-5-6df9585ec7c8@linaro.org>
+X-Cookie: One size fits all.
 
 
+--QxFQz7KiJT5hHtQy
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On 12/13/23 15:04, Krzysztof Kozlowski wrote:
-> On 11/12/2023 11:33, Krzysztof Kozlowski wrote:
->>> @@ -0,0 +1,579 @@
->>> +// SPDX-License-Identifier: BSD-3-Clause
->>> +/*
->>> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
->>> + */
->>> +
->>> +/dts-v1/;
->>> +
->>> +#include <dt-bindings/leds/common.h>
->>> +#include "qcs8550-aim300.dtsi"
->>
->> Which includes sm8550.dtsi thus I think this is compatible with sm8550.
->> You even use sm8550 compatibles here, which is one more hint for that
->> compatibility.
->>
->> We followed this convention for RB5, although not for QRU/QDU1000 boards.
->>
->> Anyway, if you add here new SoC compatible, I would expect to see new
->> SoC DTSI.
->>
->> I don't have in my notes any previous consensus or decision in these
->> matters, so let's discuss now.
->> +CC few Linaro folks
-> 
-> After some talks, the idea is to create qcs8550.dtsi, which will include
-> sm8550.dtsi, and add top level compatible for qcs8550 using sm8550 fallback.
-To the board device tree? Otherwise it'll get overwritten.
+On Thu, Dec 07, 2023 at 11:28:08AM +0100, Neil Armstrong wrote:
 
-Konrad
+> +static int wcd939x_rx_hph_mode_put(struct snd_kcontrol *kcontrol,
+> +				   struct snd_ctl_elem_value *ucontrol)
+> +{
+> +	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
+> +	struct wcd939x_priv *wcd939x = snd_soc_component_get_drvdata(component);
+> +	u32 mode_val;
+> +
+> +	mode_val = ucontrol->value.enumerated.item[0];
+> +
+> +	if (wcd939x->variant == WCD9390) {
+> +		if (mode_val == CLS_H_HIFI || mode_val == CLS_AB_HIFI) {
+> +			dev_dbg(component->dev, "%s: Invalid HPH Mode\n", __func__);
+> +			return -EINVAL;
+> +		}
+> +	}
+> +	if (mode_val == CLS_H_NORMAL) {
+> +		dev_dbg(component->dev, "%s: Unsupported HPH Mode\n", __func__);
+> +		return -EINVAL;
+> +	}
+> +
+> +	wcd939x->hph_mode = mode_val;
+
+This seems strange - the code will accept any value other than a small
+number of specifically enumerated ones?  I would have expected us to
+check a defined list of modes and reject anything that isn't in that
+list.  This also means that the get() function can return out of bounds
+values which is buggy.  Please use the mixer-test selftest on a card
+with this driver running, it should identify at least that issue.
+
+> +
+> +	return 1;
+> +}
+
+This will also unconditionally report that the value of the mux changed,
+the function should return 0 if the value written is the control value
+hasn't changed.
+
+--QxFQz7KiJT5hHtQy
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmV6A+kACgkQJNaLcl1U
+h9BJKQf/U5px02gwHeH7uG4m5GauMpoUmEDiaVVF7tWk02l3M27zveuoN30yDTA1
+pfCa5jV8hUInQwgNXtIOyUZCfHkQN1+OHlvIdkse8NRlLja7PoAXNgu/iw6U0j66
+zSqNGkvYePeMg+AJV/ZGJKfNKFomFc33V3EUC1iVKSWgsDBFjfQqau4TA9/smuaU
+CT6RN5au6S7c5hg1Xyl2AK7RPadJM9rmmxJggOqNUYhYjmFMT7VWYhTta5yQXKak
+Q/2L1+p91ZUr/HYHhVXzY8x/ptX3G7+w2nbIlXkOPuvdw41wGLdAPgpFw9oRmswK
+OERs69V+GdvlY6g8PFruUFeS80qYgQ==
+=FDxZ
+-----END PGP SIGNATURE-----
+
+--QxFQz7KiJT5hHtQy--
 
