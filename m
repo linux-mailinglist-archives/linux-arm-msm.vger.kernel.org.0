@@ -1,100 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-4620-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4621-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91FD6812131
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 23:07:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9DB5181213A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 23:11:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4D4A3282284
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 22:07:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 835121C20EA2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 22:11:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 177D37FBC8;
-	Wed, 13 Dec 2023 22:07:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lx7cLn9N"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 144747FBD4;
+	Wed, 13 Dec 2023 22:11:30 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18CD8AF
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 14:06:59 -0800 (PST)
-Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-5c85e8fdd2dso72978077b3.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 14:06:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702505218; x=1703110018; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=IiZLeydFv0dQoVsgTLSTJeU50o5YR4HggKIDBADvvDw=;
-        b=lx7cLn9NdZt9/bqftOe4XWKSKIHu7IpyaeHvgAJ3gDzGuViTRgwVdycjSw2HtSVIj+
-         ygOR15I45/tubqZmdKN0C26uPQZ/pb03iDVMN5X9Y1xsQpCZIPVY++zmQXlmnvRYbUE8
-         uI8CztcZcSKSkUMTuBhmsVYQpjKjlDJfIdW5Lmlx24t8f6NAOOPWs58miXMF4YGnE8Gs
-         L3+upSEGq0sYQ0dQ8bTTQN65lS2FdbBhvGbe3d1ACFC+uxkUsYBnfUOLxU8kn5dfkodg
-         bWOuLVrj+gFbi8jdjMukaKmlWYsMUDJkwBmA+gmKv7zOQrkXUV5ujqT2qiIlrof3ZNOD
-         kHjw==
+Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D9D29C;
+	Wed, 13 Dec 2023 14:11:27 -0800 (PST)
+Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-3ba2dd905f9so313433b6e.2;
+        Wed, 13 Dec 2023 14:11:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702505218; x=1703110018;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IiZLeydFv0dQoVsgTLSTJeU50o5YR4HggKIDBADvvDw=;
-        b=mk6dl9qoTqn5QQVJsF8ZQDRpCvpIVHCaSMhxmJcyMaN5YyJ2jElJmZSoif0NTj4lya
-         TyUwte8Avk6JXGKRhxp3PZhj04bS47m06NG7/5pd+fBIZ5+E1sPTiqiZ4kt5DGk4ofPs
-         SCnw6cpHetSW0UIhPl7EQ9l+UuO5eb5DpO2TE0DAO2mcOKRMwEWPURRSIY86ujPGQ8dC
-         EHzWmUXYt7c4a8FbW64MLHPzqMqpt7og0bf/AdYA2GTA/gxqrThB+OJWszSUpkd+SPOa
-         +345n5bFZePJXsDAcAfiZhkaakF1l0cFA6N76lrLXVSJ5sWhECnowYgcZdP0E4TuPgg5
-         KPiA==
-X-Gm-Message-State: AOJu0Yx9DnNaQjlSqU7aLocQUSZhW8a8Mv16bSMVVeHv6YgdCwZ3+cSJ
-	LDAFCKyjWA6XsaAt+JSnu1qPMwtahFCgCPe3F3lkHQ==
-X-Google-Smtp-Source: AGHT+IEr68TyT/QvLeseprICEqjDcN/rRoj0lk5BxuC5payzc9s1YVNN9YYwQvjCujY3WsP7jPO/aXoRaDtxmbQXGKo=
-X-Received: by 2002:a81:5ec2:0:b0:5d3:977b:d632 with SMTP id
- s185-20020a815ec2000000b005d3977bd632mr8471435ywb.6.1702505218315; Wed, 13
- Dec 2023 14:06:58 -0800 (PST)
+        d=1e100.net; s=20230601; t=1702505487; x=1703110287;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AgTgho1a4LA/XjrrePxUmui9LuYj0rwstzK1KGu7248=;
+        b=IMOdCTBYRRbRReNvThP/IthfKDyEycuBWJ2p5+YXsrp6tIPSvBf1h4tn3PPsU2obm7
+         UpTMqDdTQTW5MmKHd6Wo0FCc/O6JLWLVruzay5/RxcI9R1FfbGZ3oRi6+uIAQChboBIl
+         2aKolWYZQXhD0aK3W4mTou0lyLy9JQhQN05xk+XOE7toUrc4pa8usbnqI8zNs9Ye21Dt
+         fIABmmUfThbUT0YTunzXrzJ5G3oOempjphTxm/Z+jlIC+ZnAPBn8NwTnn3XQ317CPC/x
+         kjnp3Dz97l/rSuQpycw2PVcAKZ8b8psKCN3QEucCIq8Kh47X9qKkyO4hKvFyOznEXQgw
+         hVsw==
+X-Gm-Message-State: AOJu0YyHyH+Hc8OFkS2RtWR5Zz0F8PLl4ABVbKUmEcvgplWCFFo9+5Pm
+	ZB3JHFt3pTmCiJjq1RHSCQ==
+X-Google-Smtp-Source: AGHT+IHX5L5W/V5kcRHCZGCX9tUxlzQHF1lIwCR9ERJ7ag6EqOQsYnbBD4efejagEgtQrlmcp0mZLw==
+X-Received: by 2002:a05:6808:6493:b0:3ba:667:9e4f with SMTP id fh19-20020a056808649300b003ba06679e4fmr7673479oib.113.1702505486877;
+        Wed, 13 Dec 2023 14:11:26 -0800 (PST)
+Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id bh20-20020a056808181400b003b83c516e62sm3102354oib.51.2023.12.13.14.11.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Dec 2023 14:11:26 -0800 (PST)
+Received: (nullmailer pid 2156812 invoked by uid 1000);
+	Wed, 13 Dec 2023 22:11:24 -0000
+Date: Wed, 13 Dec 2023 16:11:24 -0600
+From: Rob Herring <robh@kernel.org>
+To: Mark Hasemeyer <markhas@chromium.org>
+Cc: LKML <linux-kernel@vger.kernel.org>, Raul Rangel <rrangel@chromium.org>, 
+	Alim Akhtar <alim.akhtar@samsung.com>, Andre Przywara <andre.przywara@arm.com>, 
+	Andy Gross <agross@kernel.org>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Baruch Siach <baruch@tkos.co.il>, 
+	Bjorn Andersson <andersson@kernel.org>, Claudiu Beznea <claudiu.beznea@microchip.com>, 
+	Conor Dooley <conor+dt@kernel.org>, Heiko Stuebner <heiko@sntech.de>, 
+	Jesper Nilsson <jesper.nilsson@axis.com>, Jisheng Zhang <jszhang@kernel.org>, 
+	Jonathan Hunter <jonathanh@nvidia.com>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, Michal Simek <michal.simek@amd.com>, 
+	Paul Barker <paul.barker@sancloud.com>, Sudeep Holla <sudeep.holla@arm.com>, 
+	Thierry Reding <thierry.reding@gmail.com>, cros-qcom-dts-watchers@chromium.org, 
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
+	linux-rockchip@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
+	linux-tegra@vger.kernel.org
+Subject: Re: [PATCH v1 2/6] arm: arm64: dts: Enable cros-ec-spi as wake source
+Message-ID: <20231213221124.GB2115075-robh@kernel.org>
+References: <20231213110009.v1.1.Ifd0903f1c351e84376d71dbdadbd43931197f5ea@changeid>
+ <20231213110009.v1.2.I274b2d2255eb539cc9d251c9d65a385cc4014c79@changeid>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231213-encoder-fixup-v4-0-6da6cd1bf118@quicinc.com> <20231213-encoder-fixup-v4-2-6da6cd1bf118@quicinc.com>
-In-Reply-To: <20231213-encoder-fixup-v4-2-6da6cd1bf118@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 14 Dec 2023 00:06:47 +0200
-Message-ID: <CAA8EJprcH22ouehetL4uNwUuroRUc9q6swGZo1GjuGuCRZDv=A@mail.gmail.com>
-Subject: Re: [PATCH v4 2/2] drm/msm/dpu: Drop enable and frame_count
- parameters from dpu_hw_setup_misr()
-To: Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, quic_abhinavk@quicinc.com, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231213110009.v1.2.I274b2d2255eb539cc9d251c9d65a385cc4014c79@changeid>
 
-On Wed, 13 Dec 2023 at 23:30, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
->
-> Drop the enable and frame_count parameters from dpu_hw_setup_misr() as they
-> are always set to the same values.
->
-> In addition, replace MISR_FRAME_COUNT_MASK with MISR_FRAME_COUNT as
-> frame_count is always set to the same value.
->
-> Fixes: 7b37523fb1d1 ("drm/msm/dpu: Move MISR methods to dpu_hw_util")
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  4 ++--
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  4 ++--
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c |  6 +++---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h |  4 ++--
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c   |  6 +++---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h   |  3 ++-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c | 19 +++++--------------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h |  9 +++------
->  8 files changed, 22 insertions(+), 33 deletions(-)
+On Wed, Dec 13, 2023 at 11:00:20AM -0700, Mark Hasemeyer wrote:
+> The cros_ec driver currently assumes that cros-ec-spi compatible device
+> nodes are a wakeup-source even though the wakeup-source property is not
+> defined.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+If a device knows it is wakeup capable, why do you need a property too?
+I haven't looked closely enough, but it smells like after patch 6, these 
+properties would be required for wakeup? That would be an ABI break.
 
--- 
-With best wishes
-Dmitry
+Rob
 
