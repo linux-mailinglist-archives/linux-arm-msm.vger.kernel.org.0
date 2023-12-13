@@ -1,107 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-4585-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4561-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5ED16811DCE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 20:00:27 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6638811C8C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 19:31:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9A9E91C20BE7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 19:00:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4A3EFB20B4C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 18:31:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63C276415B;
-	Wed, 13 Dec 2023 19:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E83E2555C;
+	Wed, 13 Dec 2023 18:31:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="HKaHHKc0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-X-Greylist: delayed 1976 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 13 Dec 2023 11:00:15 PST
-Received: from out03.mta.xmission.com (out03.mta.xmission.com [166.70.13.233])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35A0D99;
-	Wed, 13 Dec 2023 11:00:14 -0800 (PST)
-Received: from in01.mta.xmission.com ([166.70.13.51]:50630)
-	by out03.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.93)
-	(envelope-from <ebiederm@xmission.com>)
-	id 1rDTwx-000ZKP-6d; Wed, 13 Dec 2023 11:27:15 -0700
-Received: from ip68-227-168-167.om.om.cox.net ([68.227.168.167]:38540 helo=email.froward.int.ebiederm.org.xmission.com)
-	by in01.mta.xmission.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.93)
-	(envelope-from <ebiederm@xmission.com>)
-	id 1rDTww-007q8r-4s; Wed, 13 Dec 2023 11:27:14 -0700
-From: "Eric W. Biederman" <ebiederm@xmission.com>
-To: Matthew Wilcox <willy@infradead.org>
-Cc: Maria Yu <quic_aiquny@quicinc.com>,  kernel@quicinc.com,
-  quic_pkondeti@quicinc.com,  keescook@chromium.or,
-  viro@zeniv.linux.org.uk,  brauner@kernel.org,  oleg@redhat.com,
-  dhowells@redhat.com,  jarkko@kernel.org,  paul@paul-moore.com,
-  jmorris@namei.org,  serge@hallyn.com,  linux-mm@kvack.org,
-  linux-fsdevel@vger.kernel.org,  linux-kernel@vger.kernel.org,
-  keyrings@vger.kernel.org,  linux-security-module@vger.kernel.org,
-  linux-arm-msm@vger.kernel.org
-References: <20231213101745.4526-1-quic_aiquny@quicinc.com>
-	<ZXnaNSrtaWbS2ivU@casper.infradead.org>
-Date: Wed, 13 Dec 2023 12:27:05 -0600
-In-Reply-To: <ZXnaNSrtaWbS2ivU@casper.infradead.org> (Matthew Wilcox's message
-	of "Wed, 13 Dec 2023 16:22:13 +0000")
-Message-ID: <87o7eu7ybq.fsf@email.froward.int.ebiederm.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [IPv6:2a00:1098:ed:100::25])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAC92D4A;
+	Wed, 13 Dec 2023 10:30:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1702492214;
+	bh=siA7LXSw/cWZOr3eONb6GU7+2W3xc0vUDDvqYVEXHo4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=HKaHHKc0GUtMtMwGqB+JhK/Vd2s7zl9h17X37TcWvqJ0glMkrpvUvtD8ZM5zP8oTb
+	 Oj4pz9a2wJo3jO39ryXI/U1WQnYL+fCTObQZwpY+LyftemSP7OKFByncn0wiOqL0kC
+	 /R1gMJO5f0fFI42K/EPxi5SXCGcG2Xw4aifPcDczViY3hkFFI1nPp0pYsRjl4YWwCG
+	 ag3BhjF/myOaupGXZQYNhPbCmDhTDYQuojNMX3AFXDhFkgl+6ltnI1kbYK8l8ZDfzW
+	 kfTH6jskaTJOYZBhR6GtJsxacD1N9KrTqBgrdxzKkZTo8fXUZJeiEstd75yGdAhLHg
+	 7Svf5ssqsr+0g==
+Received: from [100.95.196.25] (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: koike)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 95141378149B;
+	Wed, 13 Dec 2023 18:30:10 +0000 (UTC)
+Message-ID: <dd153cf3-541b-40c8-b33c-ce9e7074cc37@collabora.com>
+Date: Wed, 13 Dec 2023 15:30:07 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-XM-SPF: eid=1rDTww-007q8r-4s;;;mid=<87o7eu7ybq.fsf@email.froward.int.ebiederm.org>;;;hst=in01.mta.xmission.com;;;ip=68.227.168.167;;;frm=ebiederm@xmission.com;;;spf=pass
-X-XM-AID: U2FsdGVkX1/VU39+2YW8c791zJoSkh67aCTXIOvQAFw=
-X-SA-Exim-Connect-IP: 68.227.168.167
-X-SA-Exim-Mail-From: ebiederm@xmission.com
-X-Spam-Level: 
-X-Spam-DCC: XMission; sa07 1397; Body=1 Fuz1=1 Fuz2=1 
-X-Spam-Combo: ;Matthew Wilcox <willy@infradead.org>
-X-Spam-Relay-Country: 
-X-Spam-Timing: total 465 ms - load_scoreonly_sql: 0.06 (0.0%),
-	signal_user_changed: 11 (2.4%), b_tie_ro: 10 (2.1%), parse: 0.85
-	(0.2%), extract_message_metadata: 11 (2.3%), get_uri_detail_list: 0.81
-	(0.2%), tests_pri_-2000: 11 (2.4%), tests_pri_-1000: 2.5 (0.5%),
-	tests_pri_-950: 1.16 (0.3%), tests_pri_-900: 1.01 (0.2%),
-	tests_pri_-90: 193 (41.5%), check_bayes: 189 (40.7%), b_tokenize: 6
-	(1.3%), b_tok_get_all: 63 (13.5%), b_comp_prob: 3.3 (0.7%),
-	b_tok_touch_all: 114 (24.5%), b_finish: 0.94 (0.2%), tests_pri_0: 221
-	(47.5%), check_dkim_signature: 0.53 (0.1%), check_dkim_adsp: 2.6
-	(0.6%), poll_dns_idle: 0.46 (0.1%), tests_pri_10: 2.0 (0.4%),
-	tests_pri_500: 7 (1.6%), rewrite_mail: 0.00 (0.0%)
-Subject: Re: [PATCH] kernel: Introduce a write lock/unlock wrapper for
- tasklist_lock
-X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
-X-SA-Exim-Scanned: Yes (on in01.mta.xmission.com)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 00/10] drm: ci: fixes
+To: Vignesh Raman <vignesh.raman@collabora.com>, airlied@gmail.com,
+ daniel@ffwll.ch
+Cc: daniels@collabora.com, emma@anholt.net, gustavo.padovan@collabora.com,
+ linux-arm-msm@vger.kernel.org, guilherme.gallo@collabora.com,
+ sergi.blanch.torne@collabora.com, linux-kernel@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, virtualization@lists.linux-foundation.org,
+ david.heidelberg@collabora.com, linux-mediatek@lists.infradead.org
+References: <20231207091831.660054-1-vignesh.raman@collabora.com>
+Content-Language: en-US
+From: Helen Koike <helen.koike@collabora.com>
+In-Reply-To: <20231207091831.660054-1-vignesh.raman@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Matthew Wilcox <willy@infradead.org> writes:
 
-> On Wed, Dec 13, 2023 at 06:17:45PM +0800, Maria Yu wrote:
->> +static inline void write_lock_tasklist_lock(void)
->> +{
->> +	while (1) {
->> +		local_irq_disable();
->> +		if (write_trylock(&tasklist_lock))
->> +			break;
->> +		local_irq_enable();
->> +		cpu_relax();
->
-> This is a bad implementation though.  You don't set the _QW_WAITING flag
-> so readers don't know that there's a pending writer.  Also, I've seen
-> cpu_relax() pessimise CPU behaviour; putting it into a low-power mode
-> that takes a while to wake up from.
->
-> I think the right way to fix this is to pass a boolean flag to
-> queued_write_lock_slowpath() to let it know whether it can re-enable
-> interrupts while checking whether _QW_WAITING is set.
 
-Yes.  It seems to make sense to distinguish between write_lock_irq and
-write_lock_irqsave and fix this for all of write_lock_irq.
+On 07/12/2023 06:18, Vignesh Raman wrote:
+> The patch series contains improvements, enabling new ci jobs which
+> enables testing for Mediatek MT8173, Qualcomm APQ 8016 and VirtIO GPU,
+> fixing issues with the ci jobs and updating the expectation files.
+> 
+> v2:
+>    - Use fdtoverlay command to merge overlay dtbo with the base dtb instead of modifying the kernel sources
+>    - Reworded the commit message for enabling jobs
+>    - Added a new patch in the series to use scripts/config to enable/disable configs
+> 
+> v3:
+>    - New patch in the series to add device tree overlay in arch/arm64/boot/dts/qcom
+>    - drm-ci scripts to use device tree overlay from arch/arm64/boot/dts/qcom and compile base device tree with overlay support
+>    - New patch in the series to enable CONFIG_REGULATOR_DA9211 in defconfig
+>    - Remove CONFIG_RTC_DRV_MT6397=y as it is already enabled in defconfig
+> 
+> v4:
+>    - Drop 'enable CONFIG_REGULATOR_DA9211 in defconfig' patch as it is sent upstream as a seperate patch
+>    - Use apq8016-sbc-usb-host.dtb which allows the USB controllers to work in host mode.
+>      This patch depends on https://lore.kernel.org/lkml/20230911161518.650726-1-vignesh.raman@collabora.com/
+> 
+> v5:
+>    - Added a new patch in the series to set IGT_FORCE_DRIVER to 'mediatek' for mt8173
+>    - Added a new patch in the series to make artifacts available for virtio jobs
+>    - Added a new patch in the series to add pipeline url to fails and flakes files
+>    - Generate fails and flakes file with the updated xfails script - https://www.spinics.net/lists/kernel/msg4959630.html
+>    - Drop 'virtio: Update ci variables' patch as the tests which causes the malloc issue are skipped
+> 
+> v6:
+>    - Updated commit message for enable DA9211 regulator fix
+>    - Use GPU_VERSION instead of CI_JOB_NAME to check if it is mt8173 while setting IGT_FORCE_DRIVER
+>    - Added a new patch in the series to uprev IGT to fix memory corruption
+>    - Added a new patch in the series to update drm ci documentation
+>    - Generate fails file with drm-misc-next
+> 
+> v7:
+>    - Fix checkpatch style problems in commit message
+>    - Rework mt8173 IGT_FORCE_DRIVER fix and reword the commit message
+> 
+> Vignesh Raman (10):
+>    drm: ci: igt_runner: Remove todo
+>    drm: ci: Force db410c to host mode
+>    drm: ci: arm64.config: Enable DA9211 regulator
+>    drm: ci: Enable new jobs
+>    drm: ci: Use scripts/config to enable/disable configs
+>    drm: ci: mt8173: Do not set IGT_FORCE_DRIVER to panfrost
+>    drm: ci: virtio: Make artifacts available
+>    drm: ci: uprev IGT
+>    drm/doc: ci: Add IGT version details for flaky tests
+>    drm: ci: Update xfails
+> 
+>   Documentation/gpu/automated_testing.rst       |  7 +--
+>   drivers/gpu/drm/ci/arm64.config               |  1 +
+>   drivers/gpu/drm/ci/build.sh                   | 16 +++----
+>   drivers/gpu/drm/ci/gitlab-ci.yml              |  2 +-
+>   drivers/gpu/drm/ci/igt_runner.sh              | 10 +++-
+>   drivers/gpu/drm/ci/test.yml                   | 13 ++----
+>   .../drm/ci/xfails/mediatek-mt8173-fails.txt   | 13 ++++--
+>   .../gpu/drm/ci/xfails/msm-apq8016-fails.txt   |  5 ++
+>   .../drm/ci/xfails/virtio_gpu-none-fails.txt   | 46 +++++++++++++++++++
+>   9 files changed, 86 insertions(+), 27 deletions(-)
+> 
 
-Either that or someone can put in the work to start making the
-tasklist_lock go away.
 
-Eric
+Applied to drm/drm-misc (drm-misc-next).
+
+Thanks!
+Helen
 
 
