@@ -1,91 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-4596-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3061C812025
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 21:44:43 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2780381202A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 21:45:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E254C2827DF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 20:44:41 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B976EB21011
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 20:45:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33DA57E569;
-	Wed, 13 Dec 2023 20:44:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2EE17E55E;
+	Wed, 13 Dec 2023 20:45:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="scCp2sm0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jU0biiVw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41E9EDC
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 12:44:33 -0800 (PST)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2cc3dd2d897so8111811fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 12:44:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702500271; x=1703105071; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=791SIM/Dhvb8Ir1xD+lGgMjeSCLDTpnAuXXKKBGGfXM=;
-        b=scCp2sm0xN+fUSCUAmpef9JPEiqasoceuJBC7uuWbi13tXHIBN7jilKBOzujq/M2Ik
-         RVBrZSdbEyPRfKPsA5e6kSXmepZAep5kyap9WPnY12ZXL2yDOGA1YHgNOcGG0+vAwdsC
-         K0RGZmlimA5MoubfHqD5vttj56tzHYajYw7VKROp3RusDdw89aMvmEbB04BjOpoRcXFg
-         yyGv8YmP2iW3EznlDw+xnB79N03hfSPcgPRycQ5+qCqWyrpTSywTD3v+0iDHII9cX1Sn
-         MbpJcAmV9vdivonRb9Km3mKpJv9P4uR89LUrnEiYqXEVYJ6fLxVSnEFUwEMtqxiz3XD0
-         CAjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702500271; x=1703105071;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=791SIM/Dhvb8Ir1xD+lGgMjeSCLDTpnAuXXKKBGGfXM=;
-        b=ZDbxDesTIdR74N7E8BDk9u3UIh+mgA2ZsiXIHBM1Tg16JDNr75L6/41LpZbtJWJPpV
-         XxB3YRePd46tvN4ebOBr5sZOSYmQXR2OSqomcz3FgoYLRL1sLLnPLBYX6iGe3VxY11CM
-         nJKKgK8qzPwvRp/IoM3QGMuB5s/SceMRgGM2y2qJEhg11+F47ULdA0wmLF0Zy+Bfo6Ju
-         Wg2Q/ML2fOC7HHVse2atkk/owBk9oV6s5yIoJXuhLjlSlHN2QjHZjhs+BQ2UKiNM981c
-         JcSooYf3qtsLqivX4rj/iiTQTJADlfXFXpy3E09118nolpadFOi04BdRnioToUilqJSo
-         hBiQ==
-X-Gm-Message-State: AOJu0YyKMXS9gHMes4YH984w/tyCXfpM0/Ju+JmsltRhAteRRIvikM9R
-	NFi9jod/DprlW8Ml0aQS1DRVFJwvmleohuRBFDqm5PfK
-X-Google-Smtp-Source: AGHT+IGBcCefJRle6Hyu6jtgfQoSzKaAQzBDmyPvdwsrfJHXq/qI3IxXTgfVdwGdurr8E0qLZIqlnw==
-X-Received: by 2002:a05:651c:b07:b0:2cc:1c25:83e0 with SMTP id b7-20020a05651c0b0700b002cc1c2583e0mr3375130ljr.39.1702500271376;
-        Wed, 13 Dec 2023 12:44:31 -0800 (PST)
-Received: from [172.30.204.126] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id z11-20020a2e964b000000b002cc41ec2576sm1946ljh.61.2023.12.13.12.44.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Dec 2023 12:44:30 -0800 (PST)
-Message-ID: <e7f8e4bf-080d-4bb4-99ca-727d2d00f55d@linaro.org>
-Date: Wed, 13 Dec 2023 21:44:28 +0100
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA65A5C084;
+	Wed, 13 Dec 2023 20:45:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0203C433C8;
+	Wed, 13 Dec 2023 20:45:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1702500314;
+	bh=CctU/GXFsJ6lkzjLDWKmTw9Q8WHFXHMPsA3fF1u3ins=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=jU0biiVwBqqCmMPRcXhKvCDlf5/4gMNy06byWaEFkVgA+mOoYcSVBKhWycLe60QTE
+	 dPvQSQLQjGzSLvS8QGPNwrQeuVTpyPReHAkMKGJHFmX3rdhvv+dELhJDUMEAfJ+HLk
+	 GfQEns7Arnq4/Oi6o4IGLO3QDuXI/fTGO4yFdypXzodmQkGQ9fsdMFqWZxhmnRbq4G
+	 kqD/6D/kkoyBkuYABDuS1FFHFSZVuQ9ijv9eyXeC9LaJF++Bh6LghOcFJNzH783MG3
+	 TAmWPGpxmnmCqlnxz7pJfrPrJYSqJ1EnfQw2WlUR5D2ABvELju644Ai3BM7nvbUoc+
+	 NiS6BH/jeSW0g==
+Date: Wed, 13 Dec 2023 14:45:12 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: "David E. Box" <david.e.box@linux.intel.com>
+Cc: Kai-Heng Feng <kai.heng.feng@canonical.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Bjorn Helgaas <bhelgaas@google.com>, Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Nirmal Patel <nirmal.patel@linux.intel.com>,
+	Jonathan Derrick <jonathan.derrick@linux.dev>,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: Re: [PATCH v2 1/6] PCI/ASPM: Add locked helper for enabling link
+ state
+Message-ID: <20231213204512.GA1056289@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] ARM: dts: qcom: msm8926-motorola-peregrine: Add
- initial device tree
-To: =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
- ~postmarketos/upstreaming@lists.sr.ht
-References: <20231213-peregrine-v1-0-5229e21bca3f@apitzsch.eu>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231213-peregrine-v1-0-5229e21bca3f@apitzsch.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Level: *
+In-Reply-To: <970144d9b5c3d36dbd0d50f01c1c4355cd42de89.camel@linux.intel.com>
 
+On Wed, Dec 13, 2023 at 11:48:41AM -0800, David E. Box wrote:
+> On Tue, 2023-12-12 at 15:27 -0600, Bjorn Helgaas wrote:
+> > On Tue, Dec 12, 2023 at 11:48:27AM +0800, Kai-Heng Feng wrote:
+> > > On Fri, Dec 8, 2023 at 4:47 AM Bjorn Helgaas <helgaas@kernel.org> wrote:
+> > > ...
+> > 
+> > > > I hope we can obsolete this whole idea someday.  Using pci_walk_bus()
+> > > > in qcom and vmd to enable ASPM is an ugly hack to work around this
+> > > > weird idea that "the OS isn't allowed to enable more ASPM states than
+> > > > the BIOS did because the BIOS might have left ASPM disabled because it
+> > > > knows about hardware issues."  More history at
+> > > > https://lore.kernel.org/linux-pci/20230615070421.1704133-1-kai.heng.feng@canonical.com/T/#u
+> > > > 
+> > > > I think we need to get to a point where Linux enables all supported
+> > > > ASPM features by default.  If we really think x86 BIOS assumes an
+> > > > implicit contract that the OS will never enable ASPM more
+> > > > aggressively, we might need some kind of arch quirk for that.
+> > > 
+> > > The reality is that PC ODM toggles ASPM to workaround hardware
+> > > defects, assuming that OS will honor what's set by the BIOS.
+> > > If ASPM gets enabled for all devices, many devices will break.
+> > 
+> > That's why I mentioned some kind of arch quirk.  Maybe we're forced to
+> > do that for x86, for instance.  But even that is a stop-gap.
+> > 
+> > The idea that the BIOS ASPM config is some kind of handoff protocol is
+> > really unsupportable.
+> 
+> To be clear, you are not talking about a situation where
+> ACPI_FADT_NO_ASPM or _OSC PCIe disallow OS ASPM control, right?
+> Everyone agrees that this should be honored? The question is what to
+> do by default when the OS is not restricted by these mechanisms?
 
+Exactly.  The OS should respect ACPI_FADT_NO_ASPM and _OSC.
 
-On 12/13/23 21:33, André Apitzsch wrote:
-> This dts adds support for Motorola Moto G 4G released in 2013.
-I have a similar one in my drawer.. not the 4g kind, titan IIRC?
-Wasn't this one codenamed thea?
+I think there are a couple exceptions where we want to disable ASPM
+even if the platform said the OS shouldn't touch ASPM at all, but
+that's a special case.
 
-Konrad
+> Reading the mentioned thread, I too think that using the BIOS config
+> as the default would be the safest option, but only to avoid
+> breaking systems, not because of an implied contract between the
+> BIOS and OS. However, enabling all capable ASPM features is the
+> ideal option. If the OS isn't limited by ACPI_FADT_NO_ASPM or _OSC
+> PCIe, then ASPM enabling is fully under its control.  If this
+> doesn't work for some devices then they are broken and need a quirk.
+
+Agreed.  It may not be practical to identify such devices, so we may
+need a broader arch-based and/or date-based quirk.
+
+I'd be shocked if Windows treated the BIOS config as a "do not exceed
+this" situation, so my secret hope is that some of these "broken"
+devices are really caused by defects in the Linux ASPM support or the
+driver, and that we can fix them if we find out about them.
+
+But I have no details about any of these alleged broken devices, so
+it's hard to make progress on them.  Maybe we should log a debug note
+if the device advertises ASPM support that BIOS didn't enable.
+
+Bjorn
 
