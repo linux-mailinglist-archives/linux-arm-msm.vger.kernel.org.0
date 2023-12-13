@@ -1,109 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-4494-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADE428107F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 03:07:05 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A60F810835
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 03:25:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 72C852818B2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 02:07:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CA7AB2823FB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 02:25:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED8B010EA;
-	Wed, 13 Dec 2023 02:07:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D90B11844;
+	Wed, 13 Dec 2023 02:25:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="MREF7QEX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out30-97.freemail.mail.aliyun.com (out30-97.freemail.mail.aliyun.com [115.124.30.97])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBA2BAA;
-	Tue, 12 Dec 2023 18:06:58 -0800 (PST)
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R151e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018046059;MF=guanjun@linux.alibaba.com;NM=1;PH=DS;RN=7;SR=0;TI=SMTPD_---0VyO8iev_1702433215;
-Received: from smtpclient.apple(mailfrom:guanjun@linux.alibaba.com fp:SMTPD_---0VyO8iev_1702433215)
-          by smtp.aliyun-inc.com;
-          Wed, 13 Dec 2023 10:06:56 +0800
-Content-Type: text/plain;
-	charset=utf-8
+Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07EAAA0
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 18:25:31 -0800 (PST)
+Received: from epcas1p3.samsung.com (unknown [182.195.41.47])
+	by mailout1.samsung.com (KnoxPortal) with ESMTP id 20231213022527epoutp01fde2e1a234c05720cd08217470a5ff33~gQwA8BZfA2345023450epoutp01T
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 02:25:27 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20231213022527epoutp01fde2e1a234c05720cd08217470a5ff33~gQwA8BZfA2345023450epoutp01T
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1702434327;
+	bh=llvFRz0oCIQGbziuHlF3lamYUb4g/Mx7VDSl7Hr2w70=;
+	h=From:To:Cc:Subject:Date:References:From;
+	b=MREF7QEXKe+dQZ+lY1apYWdgC1csNidjjpTUwXMhX0irDESLtcqQrYmeHkRW8gJU4
+	 yTSSXcfmrnAIX0xsH8g9ctcoYP5ZRBHnvcKAuUrMegg141wB3MUaZmxaxWGOFVbvb9
+	 UYKfruGoJpFrwqVC0Z+jstWRx/1+2UGkcW4gfQWU=
+Received: from epsnrtp3.localdomain (unknown [182.195.42.164]) by
+	epcas1p2.samsung.com (KnoxPortal) with ESMTP id
+	20231213022526epcas1p2768b522dbed430c04325c5b3cbf83748~gQwAMzc1f2140721407epcas1p2U;
+	Wed, 13 Dec 2023 02:25:26 +0000 (GMT)
+Received: from epsmges1p1.samsung.com (unknown [182.195.36.222]) by
+	epsnrtp3.localdomain (Postfix) with ESMTP id 4SqfTf1kQzz4x9Px; Wed, 13 Dec
+	2023 02:25:26 +0000 (GMT)
+Received: from epcas1p1.samsung.com ( [182.195.41.45]) by
+	epsmges1p1.samsung.com (Symantec Messaging Gateway) with SMTP id
+	C0.46.09744.61619756; Wed, 13 Dec 2023 11:25:26 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+	epcas1p2.samsung.com (KnoxPortal) with ESMTPA id
+	20231213022525epcas1p219483a7572a12394c5852cd53a367da4~gQv-VaPJX2004720047epcas1p2x;
+	Wed, 13 Dec 2023 02:25:25 +0000 (GMT)
+Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
+	epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+	20231213022525epsmtrp16b95d43d02cf2ec71c1652b30a3c6ee1~gQv-UfYN22117621176epsmtrp1m;
+	Wed, 13 Dec 2023 02:25:25 +0000 (GMT)
+X-AuditID: b6c32a35-107fa70000002610-2a-657916166080
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+	epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+	FD.34.08755.51619756; Wed, 13 Dec 2023 11:25:25 +0900 (KST)
+Received: from localhost.localdomain (unknown [10.253.100.232]) by
+	epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+	20231213022525epsmtip24ac15f90dc60a39a5845e2e7522a8a28~gQv-E9HGZ0163101631epsmtip27;
+	Wed, 13 Dec 2023 02:25:25 +0000 (GMT)
+From: Chanwoo Lee <cw9316.lee@samsung.com>
+To: mani@kernel.org, agross@kernel.org, andersson@kernel.org,
+	konrad.dybcio@linaro.org, jejb@linux.ibm.com, martin.petersen@oracle.com,
+	p.zabel@pengutronix.de, linux-arm-msm@vger.kernel.org,
+	linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: grant.jung@samsung.com, jt77.jang@samsung.com, dh0421.hwang@samsung.com,
+	sh043.lee@samsung.com, ChanWoo Lee <cw9316.lee@samsung.com>
+Subject: [PATCH] scsi: ufs: qcom: Re-fix for error handling
+Date: Wed, 13 Dec 2023 11:25:00 +0900
+Message-Id: <20231213022500.9011-1-cw9316.lee@samsung.com>
+X-Mailer: git-send-email 2.29.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.40.0.1.81\))
-Subject: Re: [PATCH 1/1] soc: qcom: Fix compile error caused by uncorrectable
- definition of TRACE_INCLUDE_PATH
-From: guanjun <guanjun@linux.alibaba.com>
-In-Reply-To: <kulysgxsa2lazwpbmovqtide3kvt6qq2dwtxmmi3ugznteo233@67ayvx2lduhi>
-Date: Wed, 13 Dec 2023 10:06:54 +0800
-Cc: neil.armstrong@linaro.org,
- agross@kernel.org,
- andersson@kernel.org,
- konrad.dybcio@linaro.org,
- linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <3C315830-A476-4B85-A132-6BEC7E1983AD@linux.alibaba.com>
-References: <20231209074716.2689401-1-guanjun@linux.alibaba.com>
- <kulysgxsa2lazwpbmovqtide3kvt6qq2dwtxmmi3ugznteo233@67ayvx2lduhi>
-To: Andrew Halaney <ahalaney@redhat.com>
-X-Mailer: Apple Mail (2.3693.40.0.1.81)
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEJsWRmVeSWpSXmKPExsWy7bCmrq6YWGWqQccmbotzj3+zWGzrsLGY
+	caqN1WLftZPsFr/+rme3WHRjG5PFjudn2C06Jm9nsZi4/yy7xeVdc9gsuq/vYLM48GEVo8Xy
+	4/+YLO7eO8Fi0fRnH4sDv8emVZ1sHneu7WHzmLDoAKPHx6e3WDz6/xp49G1ZxejxeZNcAHtU
+	tk1GamJKapFCal5yfkpmXrqtkndwvHO8qZmBoa6hpYW5kkJeYm6qrZKLT4CuW2YO0NlKCmWJ
+	OaVAoYDE4mIlfTubovzSklSFjPziElul1IKUnAKzAr3ixNzi0rx0vbzUEitDAwMjU6DChOyM
+	tgXnWAue8lcsbJzB1MD4naeLkZNDQsBE4vShq8wgtpDADkaJ/y8luxi5gOxPjBL717UyQzjf
+	GCWe/drHDNPxc1cnG0RiL6PE5nMLoZwvjBIrP58Hcjg42AS0JG4f8waJiwj8ZZRYfKaLEcRh
+	FuhilPh1sIsFZJSwgLXEjLdr2UBsFgFViZYPjxlBbF4BK4l53x9CrZOX+HO/hxkiLihxcuYT
+	sF5moHjz1tlg90kIzOSQ2N90mR2iwUXi3qMnbBC2sMSr41ug4lISL/vb2CEamhklFr45DtU9
+	gVHiy8fbUB32Es2tzWA/MAtoSqzfpQ8RVpTY+XsuI8RmPol3X3tYQUokBHglOtqEIEpUJOZ0
+	nWOD2fXxxmNWCNtD4s7vKeyQEI6V+Pi+l20Co/wsJP/MQvLPLITFCxiZVzGKpRYU56anFhsW
+	GMLjNTk/dxMjOPFqme5gnPj2g94hRiYOxkOMEhzMSiK8J3eUpwrxpiRWVqUW5ccXleakFh9i
+	NAWG8ERmKdHkfGDqzyuJNzSxNDAxMzKxMLY0NlMS5z1zpSxVSCA9sSQ1OzW1ILUIpo+Jg1Oq
+	genEjS7nw9VHT1rcXReypvIqv0H0tdDNRWYGf+cc+l364sIu+WtvQxWtdtmsqXZ963dE3KvJ
+	srGhXuPjh6Lbs57Vtk562fh636ejvr/C2v1VHl5Ju/wwwHT5tUa5c88qBYUshPUjinYZPf99
+	yHv9P6XWmVaxD9zb5zooxiYmrDfquMqxZ+HptGURzPP8jmSeTb9QXV/sNveRQvt2ay7rrR11
+	e7Tzt91NXB6Sdjma9b9f1EPdnn9V6d+Py96+9qTA4pb+6s0sU9fYK92ysOVcwLKg/ZC5lttM
+	6b2qD5wPryn1D2edO8l2Gcf1K6v+mG9iunG8e1vcls/lty3y7VcWvCpiP37Od+H9z+c27rqQ
+	OnmNEktxRqKhFnNRcSIA88H7vUUEAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrPLMWRmVeSWpSXmKPExsWy7bCSvK6oWGWqwZOpyhbnHv9msdjWYWMx
+	41Qbq8W+ayfZLX79Xc9usejGNiaLHc/PsFt0TN7OYjFx/1l2i8u75rBZdF/fwWZx4MMqRovl
+	x/8xWdy9d4LFounPPhYHfo9NqzrZPO5c28PmMWHRAUaPj09vsXj0/zXw6NuyitHj8ya5APYo
+	LpuU1JzMstQifbsEroy2BedYC57yVyxsnMHUwPidp4uRk0NCwETi565Oti5GLg4hgd2MEhMe
+	7GWESEhJ7N5/HijBAWQLSxw+XAxR84lRYtP5O4wgcTYBLYnbx7xB4iICnUwSq6Z+YAVxmAUm
+	MEosvvKWGWSQsIC1xIy3a9lAbBYBVYmWD4/BFvAKWEnM+/6QGWKZvMSf+z3MEHFBiZMzn7CA
+	2MxA8eats5knMPLNQpKahSS1gJFpFaNkakFxbnpusWGBYV5quV5xYm5xaV66XnJ+7iZGcBxo
+	ae5g3L7qg94hRiYOxkOMEhzMSiK8J3eUpwrxpiRWVqUW5ccXleakFh9ilOZgURLnFX/RmyIk
+	kJ5YkpqdmlqQWgSTZeLglGpg2mBQ7uCgV5VwPSxCq+hkonPy4w230vdf/bbvx2Ptg5NmXLaX
+	9jkkt5J7w8TXOYace4v49saphzApPpqsqyJw8FVwRe4h8dS/rok96QFveiJM/3o8/XuVb3vH
+	x44NdW/XOcy2C1T7lX390O5FTEnJ6m32DJwn/Xsc0mqfzFtqwxBaIvT+f67Kqu7FhXOufred
+	9iPz/VkL7/9eHmdyrqwz+bnqtIyZjvvdG3t8Nde4uVfOTvh//15zB49IeF7mI41j7D7Hvk5Y
+	/ro4VVT7/U/m2qLADUtmnD0kaeYz88KCE0nnXCskHy1dwuIn3LvPOue/wcbpWZ2397zyLAwx
+	j0sqOmu2MWVb2h+x1a/2n2Pcr8RSnJFoqMVcVJwIAD9GZU/yAgAA
+X-CMS-MailID: 20231213022525epcas1p219483a7572a12394c5852cd53a367da4
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: SVC_REQ_APPROVE
+CMS-TYPE: 101P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20231213022525epcas1p219483a7572a12394c5852cd53a367da4
+References: <CGME20231213022525epcas1p219483a7572a12394c5852cd53a367da4@epcas1p2.samsung.com>
 
+From: ChanWoo Lee <cw9316.lee@samsung.com>
 
+I modified the code to handle errors.
 
-> 2023=E5=B9=B412=E6=9C=8812=E6=97=A5 =E4=B8=8B=E5=8D=8810:44=EF=BC=8CAndr=
-ew Halaney <ahalaney@redhat.com> =E5=86=99=E9=81=93=EF=BC=9A
->=20
-> On Sat, Dec 09, 2023 at 03:47:16PM +0800, 'Guanjun' wrote:
->> From: Guanjun <guanjun@linux.alibaba.com>
->>=20
->> Compiler reports the error message when compiling the file =
-drivers/soc/qcom/pmic_pdcharger_ulog.c:
->>  - ./include/trace/define_trace.h:95:42: fatal error: =
-./pmic_pdcharger_ulog.h: No such file or directory
->>      95 | #include TRACE_INCLUDE(TRACE_INCLUDE_FILE)
->>=20
->> TRACE_INCLUDE_PATH shoule be relative to the path =
-include/trace/define_trace.h, not
->> the file including it. Fix it.
->>=20
->> Fixes: 086fdb48bc65d(soc: qcom: add ADSP PDCharger ULOG driver)
->> Signed-off-by: Guanjun <guanjun@linux.alibaba.com>
->=20
-> For what it is worth I sent a similar patch (which handled this by =
-using
-> the CFLAG -I recommendation) over here about a week ago:
->=20
->    =
-https://lore.kernel.org/linux-arm-msm/20231205-pmicpdcharger-ulog-fixups-v=
-1-1-71c95162cb84@redhat.com/
+The error handling code has been changed from the patch below.
+-'commit 031312dbc695 ("scsi: ufs: ufs-qcom: Remove unnecessary goto statements")'
 
-Sorry. I didn=E2=80=99t check you have already sent the fixed patch. =
-Please ignore this email
+What I have confirmed are three cases.
+1) ufs_qcom_host_reset -> 'reset_control_deassert' error -> return 0;
+2) ufs_qcom_clk_scale_notify -> 'ufs_qcom_clk_scale_up_/down_pre_change' error -> return 0;
+3) ufs_qcom_init_lane_clks -> 'ufs_qcom_host_clk_get(tx_lane1_sync_clk)' error -> return 0;
 
->=20
-> I keep disabling this driver locally when developing (or picking up =
-that
-> patch) until something gets scooped up.
->=20
->> ---
->> drivers/soc/qcom/pmic_pdcharger_ulog.h | 2 +-
->> 1 file changed, 1 insertion(+), 1 deletion(-)
->>=20
->> diff --git a/drivers/soc/qcom/pmic_pdcharger_ulog.h =
-b/drivers/soc/qcom/pmic_pdcharger_ulog.h
->> index 9d5d9af4fbe4..3ac994d160bd 100644
->> --- a/drivers/soc/qcom/pmic_pdcharger_ulog.h
->> +++ b/drivers/soc/qcom/pmic_pdcharger_ulog.h
->> @@ -28,7 +28,7 @@ TRACE_EVENT(pmic_pdcharger_ulog_msg,
->> /* This part must be outside protection */
->>=20
->> #undef TRACE_INCLUDE_PATH
->> -#define TRACE_INCLUDE_PATH .
->> +#define TRACE_INCLUDE_PATH ../../../drivers/soc/qcom/
->>=20
->> #undef TRACE_INCLUDE_FILE
->> #define TRACE_INCLUDE_FILE pmic_pdcharger_ulog
->> --=20
->> 2.39.3
->>=20
->>=20
+It is unknown whether the above commit was intended to change error handling.
+However, if it is not an intended fix, a patch may be needed.
+
+Signed-off-by: ChanWoo Lee <cw9316.lee@samsung.com>
+---
+ drivers/ufs/host/ufs-qcom.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 96cb8b5b4e66..8a93d93ab08f 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -313,6 +313,8 @@ static int ufs_qcom_init_lane_clks(struct ufs_qcom_host *host)
+ 
+ 		err = ufs_qcom_host_clk_get(dev, "tx_lane1_sync_clk",
+ 			&host->tx_l1_sync_clk, true);
++		if (err)
++			return err;
+ 	}
+ 
+ 	return 0;
+@@ -404,9 +406,11 @@ static int ufs_qcom_host_reset(struct ufs_hba *hba)
+ 	usleep_range(200, 210);
+ 
+ 	ret = reset_control_deassert(host->core_reset);
+-	if (ret)
++	if (ret) {
+ 		dev_err(hba->dev, "%s: core_reset deassert failed, err = %d\n",
+ 				 __func__, ret);
++		return ret;
++	}
+ 
+ 	usleep_range(1000, 1100);
+ 
+@@ -415,7 +419,7 @@ static int ufs_qcom_host_reset(struct ufs_hba *hba)
+ 		hba->is_irq_enabled = true;
+ 	}
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static u32 ufs_qcom_get_hs_gear(struct ufs_hba *hba)
+@@ -1535,7 +1539,7 @@ static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba,
+ 		ufshcd_uic_hibern8_exit(hba);
+ 	}
+ 
+-	return 0;
++	return err;
+ }
+ 
+ static void ufs_qcom_enable_test_bus(struct ufs_qcom_host *host)
+-- 
+2.29.0
 
 
