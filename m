@@ -1,82 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-4716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6C66812B84
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 10:20:22 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A355812BB5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 10:29:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8F93C1F218CF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 09:20:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D54BB1F21BC0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 09:29:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A9582E3E0;
-	Thu, 14 Dec 2023 09:20:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01CF52E842;
+	Thu, 14 Dec 2023 09:29:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="L4ZLzvjb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTP id B373EA6;
-	Thu, 14 Dec 2023 01:20:13 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id AEA7DC15;
-	Thu, 14 Dec 2023 01:20:58 -0800 (PST)
-Received: from [10.57.85.242] (unknown [10.57.85.242])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B14D53F762;
-	Thu, 14 Dec 2023 01:20:08 -0800 (PST)
-Message-ID: <af7b67d1-c4a3-44e3-a632-5f0a4ea6eb25@arm.com>
-Date: Thu, 14 Dec 2023 09:21:11 +0000
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75B4B1A1;
+	Thu, 14 Dec 2023 01:29:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1702546147; x=1734082147;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=ym6r9xLfSQXQR38T2QPlxeuiIFQ1e3Eir7XYGVFm++0=;
+  b=L4ZLzvjbQ7BKPjZYZKJA+GSmZD9KnNLnw+WSduqQQNHaTZyJOUZswsoZ
+   tvGMC/U9NmI8KhOkF11r1y89g/qbuEKwHqhk0Cx99j2VlBxQuIvZq3RKe
+   ukKA/7er21qB2L6SmeoY7N/vVF9qe0/PLvXDqj4ksHGst/lp2DltCb6b3
+   S2N4+kQ+oAoNzN1ZC59Wk56h3Qaj+jZFo89Q5UpYXw/PlH1h6+ti2EIAu
+   k60AuUdqAEmg4yrsGR4XdFW6hJGPYWeBe773softg10SGarGDaoxCstVV
+   m0dEQ/JG1hXVhKW5SU6bBcrWmrIlnXEkCgTfkt7zSJ9XRtXKeNau98UKz
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10923"; a="2174510"
+X-IronPort-AV: E=Sophos;i="6.04,275,1695711600"; 
+   d="scan'208";a="2174510"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Dec 2023 01:29:06 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10923"; a="777831513"
+X-IronPort-AV: E=Sophos;i="6.04,275,1695711600"; 
+   d="scan'208";a="777831513"
+Received: from mdemezzi-mobl.ger.corp.intel.com (HELO localhost) ([10.252.32.166])
+  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Dec 2023 01:29:00 -0800
+From: Jani Nikula <jani.nikula@intel.com>
+To: Jani Nikula <jani.nikula@intel.com>,
+	linux-sound@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH v3] ASoC: hdmi-codec: drop drm/drm_edid.h include
+Date: Thu, 14 Dec 2023 11:28:56 +0200
+Message-Id: <20231214092856.4019251-1-jani.nikula@intel.com>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20231213095023.3928703-1-jani.nikula@intel.com>
+References: <20231213095023.3928703-1-jani.nikula@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] cpufreq: Add a cpufreq pressure feedback for the
- scheduler
-Content-Language: en-US
-To: Vincent Guittot <vincent.guittot@linaro.org>
-References: <20231212142730.998913-1-vincent.guittot@linaro.org>
- <20231212142730.998913-2-vincent.guittot@linaro.org>
-Cc: catalin.marinas@arm.com, will@kernel.org, daniel.lezcano@linaro.org,
- mhiramat@kernel.org, rui.zhang@intel.com, vschneid@redhat.com,
- bristot@redhat.com, bsegall@google.com, dietmar.eggemann@arm.com,
- juri.lelli@redhat.com, peterz@infradead.org, mingo@redhat.com,
- linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, agross@kernel.org,
- konrad.dybcio@linaro.org, andersson@kernel.org, viresh.kumar@linaro.org,
- sudeep.holla@arm.com, rafael@kernel.org, rostedt@goodmis.org,
- mgorman@suse.de, amit.kachhap@gmail.com, linux-kernel@vger.kernel.org,
- linux-trace-kernel@vger.kernel.org
-From: Lukasz Luba <lukasz.luba@arm.com>
-In-Reply-To: <20231212142730.998913-2-vincent.guittot@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+Content-Transfer-Encoding: 8bit
 
+hdmi-codec.h does not appear to directly need drm/drm_edid.h for
+anything. Remove it.
 
+There are some files that get drm/edid.h by proxy; include it where
+needed.
 
-On 12/12/23 14:27, Vincent Guittot wrote:
-> Provide to the scheduler a feedback about the temporary max available
-> capacity. Unlike arch_update_thermal_pressure, this doesn't need to be
-> filtered as the pressure will happen for dozens ms or more.
-> 
-> Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
-> ---
->   drivers/cpufreq/cpufreq.c | 48 +++++++++++++++++++++++++++++++++++++++
->   include/linux/cpufreq.h   | 10 ++++++++
->   2 files changed, 58 insertions(+)
-> 
-> diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-> index 44db4f59c4cc..7d5f71be8d29 100644
-> --- a/drivers/cpufreq/cpufreq.c
-> +++ b/drivers/cpufreq/cpufreq.c
-> @@ -2563,6 +2563,50 @@ int cpufreq_get_policy(struct cpufreq_policy *policy, unsigned int cpu)
->   }
->   EXPORT_SYMBOL(cpufreq_get_policy);
->   
-> +DEFINE_PER_CPU(unsigned long, cpufreq_pressure);
-> +EXPORT_PER_CPU_SYMBOL_GPL(cpufreq_pressure);
+v2-v3: Fix build (kernel test robot <lkp@intel.com>)
 
-Why do we export this variable when we have get/update functions?
-Do we expect modules would manipulate those per-cpu variables
-independently and not like we do per-cpumask in the update func.?
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+
+---
+
+I'm pretty sure I haven't compiled everything that might implicitly
+depend on the include. However, the right thing to do is to include
+drm_edid.h where needed, not from somewhat random intermediate
+headers. I hope this uncovers anything I missed.
+---
+ drivers/gpu/drm/bridge/lontium-lt9611.c    | 1 +
+ drivers/gpu/drm/bridge/lontium-lt9611uxc.c | 1 +
+ drivers/gpu/drm/msm/dp/dp_display.c        | 1 +
+ drivers/gpu/drm/vc4/vc4_hdmi.c             | 1 +
+ include/sound/hdmi-codec.h                 | 1 -
+ 5 files changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/bridge/lontium-lt9611.c b/drivers/gpu/drm/bridge/lontium-lt9611.c
+index 9663601ce098..b9205d14d943 100644
+--- a/drivers/gpu/drm/bridge/lontium-lt9611.c
++++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
+@@ -18,6 +18,7 @@
+ 
+ #include <drm/drm_atomic_helper.h>
+ #include <drm/drm_bridge.h>
++#include <drm/drm_edid.h>
+ #include <drm/drm_mipi_dsi.h>
+ #include <drm/drm_of.h>
+ #include <drm/drm_print.h>
+diff --git a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
+index e971b75e90ad..f3f130c1ef0a 100644
+--- a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
++++ b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
+@@ -21,6 +21,7 @@
+ 
+ #include <drm/drm_atomic_helper.h>
+ #include <drm/drm_bridge.h>
++#include <drm/drm_edid.h>
+ #include <drm/drm_mipi_dsi.h>
+ #include <drm/drm_print.h>
+ #include <drm/drm_probe_helper.h>
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 1b88fb52726f..766c8d01e6b3 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -11,6 +11,7 @@
+ #include <linux/of_irq.h>
+ #include <linux/delay.h>
+ #include <drm/display/drm_dp_aux_bus.h>
++#include <drm/drm_edid.h>
+ 
+ #include "msm_drv.h"
+ #include "msm_kms.h"
+diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
+index f05e2c95a60d..34f807ed1c31 100644
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -35,6 +35,7 @@
+ #include <drm/display/drm_scdc_helper.h>
+ #include <drm/drm_atomic_helper.h>
+ #include <drm/drm_drv.h>
++#include <drm/drm_edid.h>
+ #include <drm/drm_probe_helper.h>
+ #include <drm/drm_simple_kms_helper.h>
+ #include <linux/clk.h>
+diff --git a/include/sound/hdmi-codec.h b/include/sound/hdmi-codec.h
+index 9b162ac1e08e..5e1a9eafd10f 100644
+--- a/include/sound/hdmi-codec.h
++++ b/include/sound/hdmi-codec.h
+@@ -12,7 +12,6 @@
+ 
+ #include <linux/of_graph.h>
+ #include <linux/hdmi.h>
+-#include <drm/drm_edid.h>
+ #include <sound/asoundef.h>
+ #include <sound/soc.h>
+ #include <uapi/sound/asound.h>
+-- 
+2.39.2
+
 
