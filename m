@@ -1,129 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-4633-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4634-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62AB28124DB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 02:57:32 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B0C9812519
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 03:14:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7671B1C20B6E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 01:57:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 85A0E2823D1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 02:14:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EC8865B;
-	Thu, 14 Dec 2023 01:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 743FFECB;
+	Thu, 14 Dec 2023 02:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Aujyp5mV"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="d4gQcron"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 390C2E3;
-	Wed, 13 Dec 2023 17:57:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1702519044; x=1734055044;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=WOZigPxVQFl9wag0R+0M2h5FThcmE4i9MS0ylTEsJHg=;
-  b=Aujyp5mVgMZYw50kueaGLX3PDLPK9aWW5FftpYy00koa2c6Uh0yOLSkw
-   YHY16XNRDaaineO/HwczTsjEhq+j6ev1mmBtrzy6+863MTsW8xCPF6la5
-   1tpFUGrV0BsQ9oFQsmkBQmcsrtm1boh08o5/KD/PvIgnDDPEJR2xAg2pi
-   Wic5BBjwyT1pbj45iTzRNw3tBELmiAMxwAX7hfkcF2fqT74MIOg1OugfO
-   p32QgGAkiPbIaKIH/SmcnI6hfO2F/fX2NdjaIh6CHDSNVsgAtGy6Po88r
-   D5YwJ8tNXZFF+57rX7tfP5hr20kPjZfxkXLNDmT95Yhu+PNvEFjMlsVo+
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10923"; a="8450348"
-X-IronPort-AV: E=Sophos;i="6.04,274,1695711600"; 
-   d="scan'208";a="8450348"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2023 17:57:24 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10923"; a="844534205"
-X-IronPort-AV: E=Sophos;i="6.04,274,1695711600"; 
-   d="scan'208";a="844534205"
-Received: from lkp-server02.sh.intel.com (HELO b07ab15da5fe) ([10.239.97.151])
-  by fmsmga004.fm.intel.com with ESMTP; 13 Dec 2023 17:57:21 -0800
-Received: from kbuild by b07ab15da5fe with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1rDayV-000LPL-1y;
-	Thu, 14 Dec 2023 01:57:19 +0000
-Date: Thu, 14 Dec 2023 09:56:37 +0800
-From: kernel test robot <lkp@intel.com>
-To: Jani Nikula <jani.nikula@intel.com>, linux-sound@vger.kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	Takashi Iwai <tiwai@suse.com>, dri-devel@lists.freedesktop.org,
-	Jaroslav Kysela <perex@perex.cz>
-Subject: Re: [PATCH v2] ASoC: hdmi-codec: drop drm/drm_edid.h include
-Message-ID: <202312140917.YddZdAlJ-lkp@intel.com>
-References: <20231213095023.3928703-1-jani.nikula@intel.com>
+Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58C6BE3
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 18:14:11 -0800 (PST)
+Received: from epcas1p1.samsung.com (unknown [182.195.41.45])
+	by mailout3.samsung.com (KnoxPortal) with ESMTP id 20231214021407epoutp03fb26c41ea9e8e53bee8fd5b92a7a1d58~gkPZhIr-21911619116epoutp03O
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 02:14:07 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20231214021407epoutp03fb26c41ea9e8e53bee8fd5b92a7a1d58~gkPZhIr-21911619116epoutp03O
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1702520047;
+	bh=b5/GFqSR2OKWfDwUZwg7iNYOv07a+Rk2uyiw5sDY0+M=;
+	h=From:To:Cc:Subject:Date:References:From;
+	b=d4gQcronWbN8/7aqED+PRixLmI09AR9Zv4LTeIsAQFuJXKxUghhC8WW1eTLXqqr9b
+	 9Zmh+CqyT8PeLSPdAG4cC3qMq1+vU4gNJaDEOpWn0a7FLlPs3H/ExuzsI5ZTr6W2wd
+	 OiFv+FDRJcX0kFxqQrmFzPAWhYRfJGz8VJvZd+yw=
+Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
+	epcas1p4.samsung.com (KnoxPortal) with ESMTP id
+	20231214021406epcas1p4ea5a807d4b6edc0fe361344a50ff6c4d~gkPY1dQSG0793307933epcas1p4Q;
+	Thu, 14 Dec 2023 02:14:06 +0000 (GMT)
+Received: from epsmgec1p1.samsung.com (unknown [182.195.38.242]) by
+	epsnrtp1.localdomain (Postfix) with ESMTP id 4SrGB56ShFz4x9Q2; Thu, 14 Dec
+	2023 02:14:05 +0000 (GMT)
+Received: from epcas1p3.samsung.com ( [182.195.41.47]) by
+	epsmgec1p1.samsung.com (Symantec Messaging Gateway) with SMTP id
+	F2.5E.09731.DE46A756; Thu, 14 Dec 2023 11:14:05 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+	epcas1p3.samsung.com (KnoxPortal) with ESMTPA id
+	20231214021405epcas1p3cef80b85df56b7bead7f2f2ebd52f4ac~gkPYDUQ9o1539715397epcas1p3t;
+	Thu, 14 Dec 2023 02:14:05 +0000 (GMT)
+Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
+	epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+	20231214021405epsmtrp12e3823d82bec7125fe1f9a4df51f9f69~gkPYCGKgn1831318313epsmtrp1d;
+	Thu, 14 Dec 2023 02:14:05 +0000 (GMT)
+X-AuditID: b6c32a36-2ef8ea8000002603-3b-657a64edf331
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+	epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
+	C1.86.08817.DE46A756; Thu, 14 Dec 2023 11:14:05 +0900 (KST)
+Received: from localhost.localdomain (unknown [10.253.100.232]) by
+	epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+	20231214021405epsmtip144edfc6369f29825e45063e1b1e10619~gkPXx8rdv3127431274epsmtip1Z;
+	Thu, 14 Dec 2023 02:14:05 +0000 (GMT)
+From: Chanwoo Lee <cw9316.lee@samsung.com>
+To: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+	mani@kernel.org, jejb@linux.ibm.com, martin.petersen@oracle.com,
+	p.zabel@pengutronix.de, linux-arm-msm@vger.kernel.org,
+	linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: grant.jung@samsung.com, jt77.jang@samsung.com, dh0421.hwang@samsung.com,
+	sh043.lee@samsung.com, ChanWoo Lee <cw9316.lee@samsung.com>, Andrew Halaney
+	<ahalaney@redhat.com>
+Subject: [PATCH v2] scsi: ufs: qcom: Re-fix for error handling
+Date: Thu, 14 Dec 2023 11:14:01 +0900
+Message-Id: <20231214021401.26474-1-cw9316.lee@samsung.com>
+X-Mailer: git-send-email 2.29.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231213095023.3928703-1-jani.nikula@intel.com>
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Te0xbVRzHOb2Xey/DkkvH8KQkGzYjZhig5VFuFTaT4dIEWFAzSZaYckPP
+	oFLa2tsyB9HMIYUBsYwmbrw2JbBlzIWsMl7bKBalMBGdICBPyViIpMhAng6cpS26/36/3/l+
+	zvf3Ow8KE9wnhJRKY0B6DasWEfvw1p4jURGLynwkrl0RM4OPn+HM0he9gGktSWCuPDT5Ml0j
+	/STz904zydSPtfKY9vkBkimxtOHMJduPJDPUWUswZaPtBNP9tAkwNxz/8Jip6T6cubDdhb9J
+	y61NFwn55Mh9Ql5R3w3ky0/Gcbl5Ryxf6vqVkH/e0gTkf1kPplGncxKyEatE+lCkydQqVZqs
+	RFHyu4rjijipWBIhkTHxolANm4sSRUkpaREnVGrXAKLQPFZtdJXSWI4TRR1N0GuNBhSareUM
+	iSKkU6p1Ul0kx+ZyRk1WpAYZXpeIxdFxLmFGTvbd6UJSZ+N/tDKzBc6Db/xLgR8F6Vh4caEN
+	KwX7KAHdDuAFRx/uSVYALC1zkp5kHUCnZdx3D7n9QxnPs/AAwK3y3738KoA9G/NEKaAogg6H
+	E73Ju0AQvQOgeSpgV4PRVgDrawfcO+2nj8LNh5vYbozTYdDeuIbvxnz6Dbi62Ep63A7B7Zly
+	zFMPhP1Vc24N5qoX3q1xG0O6kYLXHRuEB0iCFmuNt9X9cMHR4t1ICP8wm0gPUAjgV06Hl64A
+	cHV5wksfg4VFhe4RMPoIbO6M8pRfgR3P6oDHOQD+uVbuuyuBNB+WmAQeyWFYWzpI7Hktjz32
+	9iCHpvVv3aiAfh+O3anCK8Ch6hfmqX5hnur/jb8EWBMIRjouNwtxEl30f/eaqc21AvczDpe2
+	g8rFp5F2wKOAHUAKEwXx+9vPIgFfyZ7LR3qtQm9UI84O4lwnfAkTHsjUuv6BxqCQxMrEsdLo
+	WCZGFiMVvcwfGM5DAjqLNaAchHRIv8fxKD/heV7I0q1rc4KbPh3rzZOXLa+qz8z3HVMG2IsC
+	Z4wPQMFo3Fv1OY9Sv+f6rDcantS9pO1dSlcqUjfCnD224cCQ9GR/bG52M4RcS0+pzIhv+FQS
+	4Oy/2kUiM1kdM/lxQYXq9GFN3Wxb6LTPvYbir98elL13Uliw2fFOcWc1fyin5NpikO7ezxuz
+	eOAJ/5+Kun/J+HBgftK4YLCcKmNem2r0q8k6aLpz9gNF/3Stfsunap0zP7/iP7z0SJyf/8ko
+	/8COI0+hih+qHG9xrh5v87v1fPs7YVjX9RFTm+m3k0IoOZc0bjvz2eWh4LibRewpbWrwbURN
+	2FJ0ydsyY7FtR6pLtk+LcC6blYRjeo79F2KkgRNPBAAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrBLMWRmVeSWpSXmKPExsWy7bCSnO7blKpUg4OzhSzOPf7NYvF+2jFG
+	i20dNhYzTrWxWuy7dpLd4tff9ewWi25sY7LY8fwMu0XH5O0sFhP3n2W3uLxrDptF9/UdbBYH
+	PqxitFh+/B+Txd17J1gsmv7sY3EQ8Ni0qpPN4861PWweExYdYPT4+PQWi0f/XwOP9/uusnn0
+	bVnF6PF5k1wARxSXTUpqTmZZapG+XQJXxtZ7zewF+3krPt3/ydjAuJm7i5GTQ0LARGLt6W6m
+	LkYuDiGB3YwSbSvbWCASUhK7959n62LkALKFJQ4fLoao+cQosfXVDLA4m4CWxO1j3iBxEYFO
+	Jom7B2aB9TIL7GCUuNLECGILC9hJ/Dj1gxnEZhFQlTi09CtYDa+AtcSXt9vYIXbJS/y538MM
+	EReUODnzCdQceYnmrbOZJzDyzUKSmoUktYCRaRWjZGpBcW56brFhgVFearlecWJucWleul5y
+	fu4mRnBkaGntYNyz6oPeIUYmDsZDjBIczEoivCd3lKcK8aYkVlalFuXHF5XmpBYfYpTmYFES
+	5/32ujdFSCA9sSQ1OzW1ILUIJsvEwSnVwCR46Upy+6/HldfzbHcwTJJgPjepQurNK8/5vX4P
+	zgosvt0y97ToqeVXN7hXnlhk6tZpqiMzqS6rcNr53LnTvHrWNqyWfv/i+KEmu0nbU4quycz8
+	c+6FtNmL9QX3JEINz9rdStqZnGVX1vzqkper2HnOxSp2ai8unQt/ufSq81ouo0m9Ieb7J+6K
+	ensp8a2tla+1bs76mddeX8jepGg/r6Kq87buCv0nsU1f11y9+KhZNOxtzVVd+7A/scXx/v4N
+	xnmHVJ9tnrOSTfRu5flt+VMW5O++O7dvQ/Rt45VdC+uqZ2QsTv1nZ3RFMDGJ+fKWHSxG2Tmm
+	T7XZkudWPLCQXaT2pfnCwUSLuqh5XUbXRU4osRRnJBpqMRcVJwIAGRtIxvsCAAA=
+X-CMS-MailID: 20231214021405epcas1p3cef80b85df56b7bead7f2f2ebd52f4ac
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: SVC_REQ_APPROVE
+CMS-TYPE: 101P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20231214021405epcas1p3cef80b85df56b7bead7f2f2ebd52f4ac
+References: <CGME20231214021405epcas1p3cef80b85df56b7bead7f2f2ebd52f4ac@epcas1p3.samsung.com>
 
-Hi Jani,
+From: ChanWoo Lee <cw9316.lee@samsung.com>
 
-kernel test robot noticed the following build warnings:
+I modified the code to handle errors.
 
-[auto build test WARNING on drm-misc/drm-misc-next]
-[also build test WARNING on tiwai-sound/for-next tiwai-sound/for-linus drm-tip/drm-tip linus/master v6.7-rc5 next-20231213]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+The error handling code has been changed from the patch below.
+-'commit 031312dbc695 ("scsi: ufs: ufs-qcom: Remove unnecessary goto statements")'
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Jani-Nikula/ASoC-hdmi-codec-drop-drm-drm_edid-h-include/20231213-175633
-base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
-patch link:    https://lore.kernel.org/r/20231213095023.3928703-1-jani.nikula%40intel.com
-patch subject: [PATCH v2] ASoC: hdmi-codec: drop drm/drm_edid.h include
-config: i386-randconfig-006-20231214 (https://download.01.org/0day-ci/archive/20231214/202312140917.YddZdAlJ-lkp@intel.com/config)
-compiler: gcc-7 (Ubuntu 7.5.0-6ubuntu2) 7.5.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231214/202312140917.YddZdAlJ-lkp@intel.com/reproduce)
+This is the case I checked.
+* ufs_qcom_clk_scale_notify -> 'ufs_qcom_clk_scale_up_/down_pre_change' error -> return 0;
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202312140917.YddZdAlJ-lkp@intel.com/
+It is unknown whether the above commit was intended to change error handling.
+However, if it is not an intended fix, a patch may be needed.
 
-All warnings (new ones prefixed by >>):
+Signed-off-by: ChanWoo Lee <cw9316.lee@samsung.com>
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+---
+v1->v2: Remove things already in progress
+ 1) ufs_qcom_host_reset -> 'reset_control_deassert' error -> return 0;
+   -> https://lore.kernel.org/linux-arm-msm/20231208065902.11006-8-manivannan.sadhasivam@linaro.org/#t
+ 2) ufs_qcom_init_lane_clks -> 'ufs_qcom_host_clk_get(tx_lane1_sync_clk)' error -> return 0;
+   -> https://lore.kernel.org/linux-arm-msm/20231208065902.11006-2-manivannan.sadhasivam@linaro.org/
+---
+---
+ drivers/ufs/host/ufs-qcom.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-   drivers/gpu/drm/bridge/lontium-lt9611.c: In function 'lt9611_hdmi_set_infoframes':
-   drivers/gpu/drm/bridge/lontium-lt9611.c:346:8: error: implicit declaration of function 'drm_hdmi_avi_infoframe_from_display_mode'; did you mean 'hdmi_avi_infoframe_pack_only'? [-Werror=implicit-function-declaration]
-     ret = drm_hdmi_avi_infoframe_from_display_mode(&infoframe.avi,
-           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-           hdmi_avi_infoframe_pack_only
-   drivers/gpu/drm/bridge/lontium-lt9611.c:359:8: error: implicit declaration of function 'drm_hdmi_vendor_infoframe_from_display_mode'; did you mean 'hdmi_vendor_infoframe_pack_only'? [-Werror=implicit-function-declaration]
-     ret = drm_hdmi_vendor_infoframe_from_display_mode(&infoframe.vendor.hdmi,
-           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-           hdmi_vendor_infoframe_pack_only
-   drivers/gpu/drm/bridge/lontium-lt9611.c: In function 'lt9611_bridge_get_edid':
-   drivers/gpu/drm/bridge/lontium-lt9611.c:855:9: error: implicit declaration of function 'drm_do_get_edid'; did you mean 'drm_bridge_get_edid'? [-Werror=implicit-function-declaration]
-     return drm_do_get_edid(connector, lt9611_get_edid_block, lt9611);
-            ^~~~~~~~~~~~~~~
-            drm_bridge_get_edid
->> drivers/gpu/drm/bridge/lontium-lt9611.c:855:9: warning: return makes pointer from integer without a cast [-Wint-conversion]
-     return drm_do_get_edid(connector, lt9611_get_edid_block, lt9611);
-            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   cc1: some warnings being treated as errors
-
-
-vim +855 drivers/gpu/drm/bridge/lontium-lt9611.c
-
-23278bf54afe18 Vinod Koul 2020-07-23  848  
-23278bf54afe18 Vinod Koul 2020-07-23  849  static struct edid *lt9611_bridge_get_edid(struct drm_bridge *bridge,
-23278bf54afe18 Vinod Koul 2020-07-23  850  					   struct drm_connector *connector)
-23278bf54afe18 Vinod Koul 2020-07-23  851  {
-23278bf54afe18 Vinod Koul 2020-07-23  852  	struct lt9611 *lt9611 = bridge_to_lt9611(bridge);
-23278bf54afe18 Vinod Koul 2020-07-23  853  
-23278bf54afe18 Vinod Koul 2020-07-23  854  	lt9611_power_on(lt9611);
-23278bf54afe18 Vinod Koul 2020-07-23 @855  	return drm_do_get_edid(connector, lt9611_get_edid_block, lt9611);
-23278bf54afe18 Vinod Koul 2020-07-23  856  }
-23278bf54afe18 Vinod Koul 2020-07-23  857  
-
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 96cb8b5b4e66..17e24270477d 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -1516,9 +1516,11 @@ static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba,
+ 			err = ufs_qcom_clk_scale_up_pre_change(hba);
+ 		else
+ 			err = ufs_qcom_clk_scale_down_pre_change(hba);
+-		if (err)
+-			ufshcd_uic_hibern8_exit(hba);
+ 
++		if (err) {
++			ufshcd_uic_hibern8_exit(hba);
++			return err;
++		}
+ 	} else {
+ 		if (scale_up)
+ 			err = ufs_qcom_clk_scale_up_post_change(hba);
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.29.0
+
 
