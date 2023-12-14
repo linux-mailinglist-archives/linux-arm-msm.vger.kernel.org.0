@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-4673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BDA15812906
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 08:23:12 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D0E7E812962
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 08:32:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 680201F2112E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 07:23:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0EBA91C214C5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 07:32:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E56CDF5C;
-	Thu, 14 Dec 2023 07:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8097E125C7;
+	Thu, 14 Dec 2023 07:32:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Nx8A5Cj4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="beTI7OUX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F0CE125
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 23:23:03 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-33635d11d92so1416478f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 23:23:03 -0800 (PST)
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22545126
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 23:32:28 -0800 (PST)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2c9f4bb2e5eso107871971fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 23:32:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702538581; x=1703143381; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1702539147; x=1703143947; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=QgvQhhxVq/mUdmmBeJBOxvDW1o7cO+i18dm4xGgW5TI=;
-        b=Nx8A5Cj4Nqp48p99bnhDFgonIKAvZnsJ9C7HNEzNk2mdBC5q7NzhK+yNR1EhURDkpC
-         /aaZBC4h2dYKwA2ArS5F65SjSVfUaafmLMKk4Z2eTi3nEx1VfoHgrmyRwn2m4FglCHdH
-         M7lOkmZkeuDPO4BT019wfBXiODiGHX0V3AtLBDneaFjOqr4n48tca9KOM5sSUZK3MMlJ
-         E1kuLB4OoPBiGkq00DiMQsTv5r15PdPxFxH+lnIVJK63kn0ixLXlkHks3Wqq6L89DVrz
-         CSujYxH9xXlBW2so/4YVUUvuD+4X9mCGegTHCecwTt9NwvNV5Ce5lWvz6XZYHLL6jvOQ
-         XNdg==
+        bh=k/PAmxKTt/vlKZJUmu2M1PwUYlBOKUz4q+UdfunK0I0=;
+        b=beTI7OUXRgiHhtX71jY/QZmQtiFgre9NtTBXxpnCjRr07DvRqqQOV2qGvHa8lVgWnl
+         UNUq1//HttPbTe+O8s0A3DOe/M0QGmoYs8HcJ162zrCj5IIQ6D0nBKuYG8DaPmeGjuBI
+         6l1Btfb515SKtmsL9NYSMH00W2y2dw9nsLiJ8NrTiQJe5KUqM/jKYsaV19uFLU8xG2vJ
+         R3QBlATMCAeJN+agf5USANk4BBz7jkmRZldUZvI8jLSTyLgiYYJMZ6zM4u2tlcQYYXJx
+         AGEhbeYq2i6fAHWov9uCZN4lOg1NsTsUeldb0nCchLevwhpGVWwJ41x3lY6V31ER9qEc
+         OieA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702538581; x=1703143381;
+        d=1e100.net; s=20230601; t=1702539147; x=1703143947;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QgvQhhxVq/mUdmmBeJBOxvDW1o7cO+i18dm4xGgW5TI=;
-        b=toNtGCJagy+vc0HWFHM6fPSiMoDf3BsOK/wLmEtqs0TnnvvCpAgUTdsawPiry3cycH
-         aegWUjMBSqp4JofkSpwSl57FPy+QuKSSTd7qDOMxkG9kS6J+NsxDGjxuREOMy4NH2ojF
-         1Jy14uNzJJ5s5WQJxSbdjgejPPgsM/NRK/PXRm8PRyxpYK/HAM7cr/oiKq1O9xhOnaz4
-         t9RZnFKYQuU0u2FV65tvdgjq4WOdDmcaEZ9DyJnetMhGGq07zX8wHyGyMoqHelPzwArS
-         XlDvke0lUXE5qAcNSPoESzs1qIwy1YDmvbwGCNMYg8ctl5meuEH4Hz+coURgqWTr3NsR
-         0tmw==
-X-Gm-Message-State: AOJu0YylCigGU60kKr5yAige1Ny08xv36EolA3H7iAiJwoYbaOsr+nkG
-	72OtvfpvD07AYNjZV0OC3yTwsw==
-X-Google-Smtp-Source: AGHT+IGSp4qFL5vXSo3hXTm7XdpZrqVe73+sMA7C+igGEQ4ys0GpJsk6QOTo670+HQ82YYGdr5v0fg==
-X-Received: by 2002:adf:e485:0:b0:336:38cd:9aff with SMTP id i5-20020adfe485000000b0033638cd9affmr1207889wrm.104.1702538581276;
-        Wed, 13 Dec 2023 23:23:01 -0800 (PST)
+        bh=k/PAmxKTt/vlKZJUmu2M1PwUYlBOKUz4q+UdfunK0I0=;
+        b=SUnERkApXsCL4OMX4u6up71TyfiIlotqLxGRk7YYfHqwogFCt5Bnn6DSgXD16p5fWP
+         8DavfHKTTkjOo9U8nkBR6Q0DW9SFvylEeMCsJwhlAsQGyGQaDLw/VD8gcRKmOf0qVWCx
+         65G3zft09Rc8uCQF96LGg2lYEWYJt7xqcxgLwkCckCgZ4TauGJ7RnRfXDNHTEwQQFPWq
+         MzHdCSr8PL+usmqvoSdv3colDXbysacmu+gTNkRIjJpDHz3Jmh/hlKnICcdhWSxNRRCG
+         8ua6iHTsrm/MJDIPBBLSJbVRF7oFwXpE8zvyjr9jBSHZV8ThMXEAmPW2bjkKEJ/KxMgC
+         LZHg==
+X-Gm-Message-State: AOJu0Yx5iVHffX1+RLK3JmD2kcKcH4cWSQVXn+LIs25UKG6y+1ehIBLt
+	rY3HMz8NuGFerAD5oiSvtuSS/A==
+X-Google-Smtp-Source: AGHT+IHYh58b0nXjYfmT3kG3MmD8bgAUQ+eiy/kh0CKTjn9yx9k9zV9SL+/7ggt2S7m15i0XKJl49g==
+X-Received: by 2002:a2e:a103:0:b0:2cc:1c8a:466a with SMTP id s3-20020a2ea103000000b002cc1c8a466amr5656478ljl.13.1702539147129;
+        Wed, 13 Dec 2023 23:32:27 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id m1-20020adfa3c1000000b003364ad1c20esm74776wrb.0.2023.12.13.23.22.59
+        by smtp.gmail.com with ESMTPSA id bd18-20020a056402207200b00542db304680sm6440491edb.63.2023.12.13.23.32.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Dec 2023 23:23:00 -0800 (PST)
-Message-ID: <5bc96a31-8869-483c-9427-1f4a90263874@linaro.org>
-Date: Thu, 14 Dec 2023 08:22:59 +0100
+        Wed, 13 Dec 2023 23:32:26 -0800 (PST)
+Message-ID: <45ef5560-3013-4c63-8bb2-92969504b70e@linaro.org>
+Date: Thu, 14 Dec 2023 08:32:25 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,19 +62,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 2/2] arm64: dts: qcom: sc7280: add QCrypto nodes
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Add Motorola Moto G 4G
 Content-Language: en-US
-To: Om Prakash Singh <quic_omprsing@quicinc.com>
-Cc: neil.armstrong@linaro.org, konrad.dybcio@linaro.org, agross@kernel.org,
- andersson@kernel.org, conor+dt@kernel.org, davem@davemloft.net,
- devicetree@vger.kernel.org, herbert@gondor.apana.org.au,
- krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
- linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org,
- marijn.suijten@somainline.org, robh+dt@kernel.org, vkoul@kernel.org
-References: <20231212133247.1366698-1-quic_omprsing@quicinc.com>
- <20231212133247.1366698-3-quic_omprsing@quicinc.com>
- <c848f874-3748-4d59-8e78-9ae044fb760a@linaro.org>
- <6b79c66d-7591-443b-92e5-beeff6c93ae4@quicinc.com>
+To: =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+ ~postmarketos/upstreaming@lists.sr.ht
+References: <20231213-peregrine-v1-0-5229e21bca3f@apitzsch.eu>
+ <20231213-peregrine-v1-1-5229e21bca3f@apitzsch.eu>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -120,58 +119,17 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <6b79c66d-7591-443b-92e5-beeff6c93ae4@quicinc.com>
+In-Reply-To: <20231213-peregrine-v1-1-5229e21bca3f@apitzsch.eu>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 14/12/2023 06:41, Om Prakash Singh wrote:
+On 13/12/2023 21:33, André Apitzsch wrote:
+> Document the compatible for the MSM8926-based Motorola Moto G 4G smartphone.
 > 
-> 
-> On 12/12/2023 8:32 PM, Krzysztof Kozlowski wrote:
->> On 12/12/2023 14:32, Om Prakash Singh wrote:
->>> Add the QCE and Crypto BAM DMA nodes.
->>>
->>> Signed-off-by: Om Prakash Singh <quic_omprsing@quicinc.com>
->>> ---
->>>
->>> Changes in V2:
->>>    - Update DT node sequence as per register ascending order
->>
->> Hm, I don't see it...
->>
->>>    - Fix DT node properties as per convention
->>>
->>>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 22 ++++++++++++++++++++++
->>>   1 file changed, 22 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->>> index 66f1eb83cca7..7b705df21f4e 100644
->>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->>> @@ -2272,6 +2272,28 @@ ipa: ipa@1e40000 {
->>>   			status = "disabled";
->>>   		};
->>>   
->>> +		cryptobam: dma-controller@1dc4000 {
->>
->> It still looks like not correctly ordered by unit address against other
->> nodes in the file.
->>
-> 
-> Hi Krzysztof,
-> Probably I am missing something basic here. I am trying to put entries 
-> addresses that are sorted wrt their current adjacent.
-> 
-> And it looks fine to me.
-> 
-> 1c0e000 (current exist)
-> 1dc4000 (newly added)
-> 1dfa000	(newly added)
-> 1e40000	(current exist)
+> Signed-off-by: André Apitzsch <git@apitzsch.eu>
+> ---
 
-Then why the diff shows:
-@@ -2272,6 +2272,28 @@ ipa: ipa@1e40000 {
-above your changes?
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
