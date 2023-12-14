@@ -1,129 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-4757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56114812F90
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 12:59:15 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD5C0812FA2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 13:05:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0CC681F22093
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 11:59:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 042351C20A03
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 12:05:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D6C441215;
-	Thu, 14 Dec 2023 11:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7697041221;
+	Thu, 14 Dec 2023 12:05:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b0YEhtqb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MK7PEfFl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C086011A
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 03:59:08 -0800 (PST)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2cb21afa6c1so98809041fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 03:59:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702555147; x=1703159947; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MBNHMT7LqHLUU6LGBqOeadsJyO5Y3oN/Q3Spl99QuKQ=;
-        b=b0YEhtqbm7ZJJYQs3SMtwEhmgmOMf5FH2SSRFIxxNwgcWS5p3ZA65MIr1i6n9B2gIT
-         1i2VvFDKGLYbSxnPy6IrJpa1G8eIVtQw9QUM4vG+gExYPrjVtEr9lHG1KNRoefKw/iEL
-         p63MtTveRv0UH+87k6AXTRtl4owkz1hXG0dvZ0F7sChtP2AQhURgfVcIIpRFbNcjGFlI
-         QioIG8+Mot1y+Vs4rm1k7AXcVsH6rn6Kx3gmvMCSut35SG8D36JDMMFqI13RuRFazpq1
-         58vaZEATd0wY/pg+QhVxY1eGpocxiyuKv0Z72ECgnM7bMPn4my777JiB9jjbEMROM9mx
-         vrAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702555147; x=1703159947;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MBNHMT7LqHLUU6LGBqOeadsJyO5Y3oN/Q3Spl99QuKQ=;
-        b=TOJcKp2sPXvg4vExjd6eJ54YUQtQchrWnuV/QYzGc8KAkOkub041BAEQeVLoIiPT30
-         T76OU3sQll6BRTQeLPcIK/Xg2DsldVtqXff+C4G5prPRY4kP/rMI+I7dFQfRfK4Gwh74
-         U9xAVlAmATSqc511aO4CnNeLlyu8jioCU5mwJJLzVnQ76Po9nhdRCc28ILIZb/1MgZmn
-         37SS/yq1vHSYlrlVELxVJhakSpQl38ril3mYrVTyFEvvyXrMrQxKnQI0FbVZiX3JBfPm
-         PT5uLFOeAjtT7yYFUTwM7AN5BemEjuIpmenaU5RVFj8UQU9tGdWRkCb6EaQCcTO+N9dq
-         FZgQ==
-X-Gm-Message-State: AOJu0Yzl7mRppgcVegviQR+EIoXDgXrE3cQEH8Ia2chY3ugA9M/dnAB7
-	VNGUgbu5RQ+RG0Wi4RT6qRSo9g==
-X-Google-Smtp-Source: AGHT+IF8sQq2hCKWuHAD9trXlrokL4kEzbH8TJA/EFxemSgc5XKtke2dKBh9a2f1+Ry3QihsMAdJzQ==
-X-Received: by 2002:a2e:a7c8:0:b0:2cc:41d4:1c58 with SMTP id x8-20020a2ea7c8000000b002cc41d41c58mr627354ljp.66.1702555147028;
-        Thu, 14 Dec 2023 03:59:07 -0800 (PST)
-Received: from [172.30.204.158] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id y2-20020a05651c106200b002ca0cb6f476sm2037042ljm.60.2023.12.14.03.59.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Dec 2023 03:59:06 -0800 (PST)
-Message-ID: <be7fe545-3a5f-4af3-89f6-c22326689465@linaro.org>
-Date: Thu, 14 Dec 2023 12:59:06 +0100
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D2C3F8ED;
+	Thu, 14 Dec 2023 12:05:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FAD3C433C8;
+	Thu, 14 Dec 2023 12:05:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1702555514;
+	bh=PoZg7dwthRu54cxelOx2fInbC9KQc4SVNLq1rSG4o6M=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=MK7PEfFlMM0ZUC6BHHY/7ZKtMjLkVdjBB0rIoWzcS960SBIFx1aio99zaaXMow0CW
+	 wFS11QMbL5aie76SfTiI4hF/lzG4s3XaBDskL8VTDbPz7UZN3pbsskt5VDufjW0csG
+	 QLRWUMAOu0ZgjOz52xiBXi9cLIMVCKTey3Eb51KG+cmgPE65Yn8c6xWpXJNFMTs7s2
+	 6UU+aADoti+YI0Y5nSw8JOvfVcLtU27DPxaN+lZXUqK6K2owF3F5vRSPfThPE5DCMp
+	 y1aKFI7Q0i6GcbkdptK+qHOHTenDerzKRVUrciC2zg1kLvJ/rCluQ2qkoN9PG23Ajg
+	 b5M6OQT/8SYRA==
+Date: Thu, 14 Dec 2023 17:34:59 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Chanwoo Lee <cw9316.lee@samsung.com>
+Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+	jejb@linux.ibm.com, martin.petersen@oracle.com,
+	p.zabel@pengutronix.de, linux-arm-msm@vger.kernel.org,
+	linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+	grant.jung@samsung.com, jt77.jang@samsung.com,
+	dh0421.hwang@samsung.com, sh043.lee@samsung.com,
+	Andrew Halaney <ahalaney@redhat.com>
+Subject: Re: [PATCH v2] scsi: ufs: qcom: Re-fix for error handling
+Message-ID: <20231214120459.GD48078@thinkpad>
+References: <CGME20231214021405epcas1p3cef80b85df56b7bead7f2f2ebd52f4ac@epcas1p3.samsung.com>
+ <20231214021401.26474-1-cw9316.lee@samsung.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] soc: qcom: stats: don't crash if DDR offset contains
- invalid data
-Content-Language: en-US
-To: Doug Anderson <dianders@chromium.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- Stephen Boyd <swboyd@chromium.org>
-References: <20231209215601.3543895-1-dmitry.baryshkov@linaro.org>
- <20231209215601.3543895-2-dmitry.baryshkov@linaro.org>
- <3ba4da84-a17e-47ae-8958-2484cd6cbea0@linaro.org>
- <CAD=FV=XX4wLg1NNVL15RK4D4tLvuSzZyUv=k_tS4bSb3=7QJzQ@mail.gmail.com>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAD=FV=XX4wLg1NNVL15RK4D4tLvuSzZyUv=k_tS4bSb3=7QJzQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Level: *
+In-Reply-To: <20231214021401.26474-1-cw9316.lee@samsung.com>
 
+On Thu, Dec 14, 2023 at 11:14:01AM +0900, Chanwoo Lee wrote:
+> From: ChanWoo Lee <cw9316.lee@samsung.com>
+> 
+> I modified the code to handle errors.
+> 
+> The error handling code has been changed from the patch below.
+> -'commit 031312dbc695 ("scsi: ufs: ufs-qcom: Remove unnecessary goto statements")'
+> 
+> This is the case I checked.
+> * ufs_qcom_clk_scale_notify -> 'ufs_qcom_clk_scale_up_/down_pre_change' error -> return 0;
+> 
+> It is unknown whether the above commit was intended to change error handling.
+> However, if it is not an intended fix, a patch may be needed.
+> 
 
+Fixes: 031312dbc695 ("scsi: ufs: ufs-qcom: Remove unnecessary goto statements")
 
-On 12/14/23 01:59, Doug Anderson wrote:
-> Hi,
-> 
-> On Mon, Dec 11, 2023 at 1:11 AM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->> On 9.12.2023 22:55, Dmitry Baryshkov wrote:
->>> The stats ram on sm8150 platform contains invalid data at the
->>> DDR_DYNAMIC_OFFSET. Most likely this is because the platform didn't
->>> support DDR sleep stats.
->> Interesting. Can you read back DDR_DYNAMIC_OFFSET on 8350/8280 and
->> see if 8150 has correct data in there?
->>
->>> However this platform uses generic
->>> "qcom,rpmh-stats" compatible, which implies presense of the DDR data.
->>> Add safety net to prevent old DTB files from crashing the
->>> qcom,rpmh-stats driver.
->> Yeah I'dve never thought there would be garbage in there..
->>
->> I'd advocate for simply not doing anything wrt sleep stats if DDR
->> stats are unavailable though. The QMP handle can stay, as there
->> may (I don't know) be more data available that we want to export
->> through this driver.
-> 
-> FWIW, I'm getting a crash on sc7180-trogdor like this too. In kgdb it
-> says I'm on line:
-> 
-> key = readl(ddrd->base);
-> 
-> ...and
-> 
-> (gdb) print ddrd->base
-> $1 = (void *) 0xffffffc0833a3149
-> (gdb) print reg
-> $2 = (void *) 0xffffffc0833a3000
-> 
-> ...so I guess my "stats_offset" must have been 0x149.
-> 
-> Can we get a fix landed or a revert? Thanks! :-)
-Right, I guess we may want to revert it and I'll try to get more
-info from Qualcomm folks..
+> Signed-off-by: ChanWoo Lee <cw9316.lee@samsung.com>
 
-Konrad
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+Thanks for spotting and fixing the issue! This is one of the reasons why the
+error path should directly return instead of slipping.
+
+- Mani
+
+> Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+> ---
+> v1->v2: Remove things already in progress
+>  1) ufs_qcom_host_reset -> 'reset_control_deassert' error -> return 0;
+>    -> https://lore.kernel.org/linux-arm-msm/20231208065902.11006-8-manivannan.sadhasivam@linaro.org/#t
+>  2) ufs_qcom_init_lane_clks -> 'ufs_qcom_host_clk_get(tx_lane1_sync_clk)' error -> return 0;
+>    -> https://lore.kernel.org/linux-arm-msm/20231208065902.11006-2-manivannan.sadhasivam@linaro.org/
+> ---
+> ---
+>  drivers/ufs/host/ufs-qcom.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 96cb8b5b4e66..17e24270477d 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -1516,9 +1516,11 @@ static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba,
+>  			err = ufs_qcom_clk_scale_up_pre_change(hba);
+>  		else
+>  			err = ufs_qcom_clk_scale_down_pre_change(hba);
+> -		if (err)
+> -			ufshcd_uic_hibern8_exit(hba);
+>  
+> +		if (err) {
+> +			ufshcd_uic_hibern8_exit(hba);
+> +			return err;
+> +		}
+>  	} else {
+>  		if (scale_up)
+>  			err = ufs_qcom_clk_scale_up_post_change(hba);
+> -- 
+> 2.29.0
+> 
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
