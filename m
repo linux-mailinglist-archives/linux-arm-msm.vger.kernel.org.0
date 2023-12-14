@@ -1,135 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-4741-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4752-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97020812E8F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 12:30:59 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D7941812F02
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 12:43:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3D3E91F217C0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 11:30:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8C4881F21438
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 11:43:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAA683FE59;
-	Thu, 14 Dec 2023 11:30:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D8F04AF74;
+	Thu, 14 Dec 2023 11:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V4XPPGfs"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Bqjbd6Hj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941DE3FE54;
-	Thu, 14 Dec 2023 11:30:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F7E6C433C7;
-	Thu, 14 Dec 2023 11:30:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702553449;
-	bh=Fk0lWlyniz2h5a3rEQxROF0ImdCpeMxK4CdTL7O7dQc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=V4XPPGfs7RCX22aO8nbSp3XIZux1Lb2jKnmSf9SHDPgFiZMu5zgYkzmzL4PgIOH4t
-	 QuZ0eCyXprrpyBJQQgTMltqZ8ZVyWj4uTJDAphoVJ8oFckdNACOC0WGNKn9r04t2oq
-	 xltWlehbXiB67ZMAQWnrQoVj+DiZFHN+NBfjuvU1NjyfB2Ddu2aM8iXCgFRBLDoYay
-	 g16QEPXF4AC9zWT9gmFiFBsI33WYK0hPLPOcUfOEHPmaactnayJJez1VEVBtwiNR9Y
-	 JXNF0ItDpZyc3IIfSo37+EWJEtomFXaWoVDWCwsbw7IKpOoNzZjlXdqVxDxK0o7E4d
-	 aB6mka1O0ln2A==
-Received: from johan by xi.lan with local (Exim 4.96.2)
-	(envelope-from <johan@kernel.org>)
-	id 1rDjvR-0008HE-0v;
-	Thu, 14 Dec 2023 12:30:46 +0100
-Date: Thu, 14 Dec 2023 12:30:45 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Manivannan Sadhasivam <mani@kernel.org>, andersson@kernel.org,
-	konrad.dybcio@linaro.org, vkoul@kernel.org, sboyd@kernel.org,
-	mturquette@baylibre.com, robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Shazad Hussain <quic_shazhuss@quicinc.com>, quic_cang@quicinc.com
-Subject: Re: [PATCH 00/16] Fix Qcom UFS PHY clocks
-Message-ID: <ZXrnZeDYOsteY5zT@hovoldconsulting.com>
-References: <20231214091101.45713-1-manivannan.sadhasivam@linaro.org>
- <ZXrVxmxY6wZprbBa@hovoldconsulting.com>
- <20231214103907.GL2938@thinkpad>
- <ZXrgWK5wZz6dAkKP@hovoldconsulting.com>
- <20231214111409.GB48078@thinkpad>
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AE16B2;
+	Thu, 14 Dec 2023 03:43:00 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BE5tKH8000547;
+	Thu, 14 Dec 2023 11:42:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding; s=qcppdkim1; bh=UaPkvFvrgs/7Kiutb4T2
+	XzNFd/EKJ1AzPTC8kfhBZE4=; b=Bqjbd6HjqtgfwrN1X32fHLW4lG/+8MoxpPLR
+	OAN2yEqCqRZ0maPPBtcLj9e5zDYXyWofXUs5y5L7YRVFtbAuQXSKXH/z7/gdZs1X
+	rVH6hZMyPhoDv6hy1llB5vbhAjhhRttYuKUJt8EO4ybVOwJrSKOf1aKjz81ou/Ci
+	4l+F/akw6y5+FELOnIo20+dly7fNQvMlYJr9c8gk+AHyOX6eDCBofok6w9anYUUI
+	P6GaQfqECGrTYX18Nkbo0f8t1ZDHyYQ4ddwQ2PD5o8G9rV9sTfdhT5TXHWp5qgTC
+	vkLs12idH3QSI8fEUWDiT7ygfHOQ6yCuMXKbFV5ni2F414Izag==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uyp0p9a38-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Dec 2023 11:42:48 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3BEBgh38003053;
+	Thu, 14 Dec 2023 11:42:43 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3uvhaktcgh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Dec 2023 11:42:43 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3BEBghom002916;
+	Thu, 14 Dec 2023 11:42:43 GMT
+Received: from hu-devc-blr-u22-a.qualcomm.com (hu-mdalam-blr.qualcomm.com [10.131.36.157])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3BEBghj5002826
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Dec 2023 11:42:43 +0000
+Received: by hu-devc-blr-u22-a.qualcomm.com (Postfix, from userid 466583)
+	id 81C9D414B7; Thu, 14 Dec 2023 17:12:42 +0530 (+0530)
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+To: thara.gopinath@gmail.com, herbert@gondor.apana.org.au, davem@davemloft.net,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        vkoul@kernel.org, linux-crypto@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dmaengine@vger.kernel.org, quic_srichara@quicinc.com,
+        quic_varada@quicinc.com
+Cc: quic_mdalam@quicinc.com
+Subject: [PATCH 00/11] Add cmd descriptor support
+Date: Thu, 14 Dec 2023 17:12:28 +0530
+Message-Id: <20231214114239.2635325-1-quic_mdalam@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231214111409.GB48078@thinkpad>
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: tqziVHUzaBsXNm0zfwIgwYP9Qqh9ElzM
+X-Proofpoint-GUID: tqziVHUzaBsXNm0zfwIgwYP9Qqh9ElzM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=491 mlxscore=0 priorityscore=1501 phishscore=0 impostorscore=0
+ clxscore=1015 malwarescore=0 lowpriorityscore=0 adultscore=0 bulkscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312140080
 
-On Thu, Dec 14, 2023 at 04:44:09PM +0530, Manivannan Sadhasivam wrote:
-> + Can
-> 
-> On Thu, Dec 14, 2023 at 12:00:40PM +0100, Johan Hovold wrote:
-> > [ +CC: Shazad ]
-> > 
-> > On Thu, Dec 14, 2023 at 04:09:07PM +0530, Manivannan Sadhasivam wrote:
-> > > On Thu, Dec 14, 2023 at 11:15:34AM +0100, Johan Hovold wrote:
-> > > > On Thu, Dec 14, 2023 at 02:40:45PM +0530, Manivannan Sadhasivam wrote:
+This series of patches will add command descriptor
+support to read/write crypto engine register via
+BAM/DMA
 
-> > Unless the PHY consumes CXO directly, it should not be included in the
-> > binding as you are suggesting here.
-> 
-> PHY is indeed directly consuming CXO. That's why I included it in the binding.
+We need this support because if there is multiple EE's
+(Execution Environment) accessing the same CE even with
+different BAM pipe , then there will be race condition.
+To avoid this race condition BAM HW having LOCK/UNLOCK 
+feature on BAM pipes and this LOCK/UNLOCK will be set
+via command descriptor only.
 
-Ok, good. It's a bit frustrating that people can even seem to agree on
-answers to direct questions about that.
- 
-> > We discussed this at some length at the time with Bjorn and Shazad who
-> > had access to the documentation and the conclusion was that, at least on
-> > sc8280xp, the PHY does not use CXO directly and instead it should be
-> > described as a parent to the UFS refclocks in the clock driver:
-> > 
-> > 	https://lore.kernel.org/lkml/Y2OEjNAPXg5BfOxH@hovoldconsulting.com/
-> > 
-> > The downstream devicetrees have a bad habit of including parent clocks
-> > directly in the consumer node instead of modelling this in clock driver
-> > also for other peripherals.
-> >  
-> 
-> No, I can assure that you got the wrong info. UFS PHY consumes the clock
-> directly from RPMh. It took me several days to dig through the UFS and PHY docs
-> and special thanks to Can Guo from UFS team, who provided much valuable
-> information about these clocks.
+Since each EE's having their dedicated BAM pipe, BAM allows
+Locking and Unlocking on BAM pipe. So if one EE's requesting
+for CE5 access then that EE's first has to LOCK the BAM pipe
+while setting LOCK bit on command descriptor and then access
+it. After finishing the request EE's has to UNLOCK the BAM pipe
+so in this way we race condition will not happen.
 
-Sounds like you've done your research.
+Md Sadre Alam (11):
+  crypto: qce - Add support for crypto address read
+  crypto: qce - Add bam dma support for crypto register r/w
+  crypto: qce - Convert register r/w for skcipher via BAM/DMA
+  crypto: qce - Convert register r/w for sha via BAM/DMA
+  crypto: qce - Convert register r/w for aead via BAM/DMA
+  drivers: bam_dma: Add LOCK & UNLOCK flag support
+  crypto: qce - Add LOCK and UNLOCK flag support
+  crypto: qce - Add support for lock aquire,lock release api.
+  crypto: qce - Add support for lock/unlock in skcipher
+  crypto: qce - Add support for lock/unlock in sha
+  crypto: qce - Add support for lock/unlock in aead
 
-> > What exactly is wrong with those commits? We know that the controller
-> > does not consume GCC_UFS_REF_CLKREF_CLK directly, but describing that as
-> > such for now was a deliberate choice:
-> > 
-> > 	GCC_UFS_REF_CLKREF_CLK is the clock to the devices, but as we
-> > 	don't represent the memory device explicitly it seems suitable
-> > 	to use as "ref_clk" in the ufshc nodes - which would then match
-> > 	the special handling of the "link clock" in the UFS driver.
-> >  
-> 
-> No, GCC_UFS_REF_CLKREF_CLK is _not_ the clock to UFS devices. I haven't found
-> information about this specific register in GCC. Initially I thought this is for
-> enabling QREF clocks for the UFS MEM phy, but I haven't found the answer yet.
+ drivers/crypto/qce/aead.c        |  16 +++
+ drivers/crypto/qce/common.c      | 144 +++++++++++++------
+ drivers/crypto/qce/core.c        |   9 ++
+ drivers/crypto/qce/core.h        |  12 ++
+ drivers/crypto/qce/dma.c         | 238 +++++++++++++++++++++++++++++++
+ drivers/crypto/qce/dma.h         |  26 +++-
+ drivers/crypto/qce/sha.c         |  16 +++
+ drivers/crypto/qce/skcipher.c    |  16 +++
+ drivers/dma/qcom/bam_dma.c       |  10 ++
+ include/linux/dma/qcom_bam_dma.h |   2 +
+ 10 files changed, 447 insertions(+), 42 deletions(-)
 
-Just quoting Bjorn.
+-- 
+2.34.1
 
-> But as I said earlier, reference clock to UFS devices comes directly from the
-> controller and there is a specfic register for controlling that. Starting from
-> SM8550, reference clock comes from RPMh.
-
-Sure, but that was only part of what those commits did or claimed. Bjorn
-also explicitly stated that those refclocks were sourced from CXO, even
-though I now see a claim from Shazad in that thread claiming the
-opposite:
-
-	https://lore.kernel.org/all/Y2Imnf1+v5j5CH9r@hovoldconsulting.com/
-
-Without access to docs I can only ask questions and try to do tedious
-inferences from incomplete open sources (e.g. downstream devicetrees).
-
-Johan
 
