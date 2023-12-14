@@ -1,231 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-4627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94AEE81239C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 00:57:25 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD7B38123F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 01:36:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A496D1C209EF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 23:57:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 41DC8B20D04
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 00:36:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 787A079E23;
-	Wed, 13 Dec 2023 23:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2476339C;
+	Thu, 14 Dec 2023 00:35:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lTz9xpNN"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="dows6p8m"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.151])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB5AFC9;
-	Wed, 13 Dec 2023 15:57:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1702511838; x=1734047838;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=poej8h3DeJjMomXJaNE+bWPiFUbNVUg3Mkr1BfGUJOQ=;
-  b=lTz9xpNNyc/rAyVfGJx3cuZPI2UAaghQFUg9VFGomX0PASatLrBd84TU
-   zmJVOvObUoStGcK2ATZiFcb+n9hFXzC/YKRnuAmeQLfkCvmhVI0z9jQ+Z
-   s25oMwbF1r/GENa17a68c50KccDBUPlQh67Bhj27H7+ziLSSS8eyEdBDn
-   6fiZNivthJPhaTBmYTITGN/Chpi6jD0Wkg+nT5iltbzzjRjTtEzP0ye7A
-   a7sztBxUwG2MFsSW0ORw1sraANE9JfIuRw4Z0aVEHIGe6eaKfl/7QjJFD
-   ajZgdg8p5ZDNwL7nvw/Ot7Xbirgr8AVijFkNRRK3+9uaXTmwYejZzwUjq
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10923"; a="375197738"
-X-IronPort-AV: E=Sophos;i="6.04,274,1695711600"; 
-   d="scan'208";a="375197738"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2023 15:57:18 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10923"; a="844504622"
-X-IronPort-AV: E=Sophos;i="6.04,274,1695711600"; 
-   d="scan'208";a="844504622"
-Received: from lkp-server02.sh.intel.com (HELO b07ab15da5fe) ([10.239.97.151])
-  by fmsmga004.fm.intel.com with ESMTP; 13 Dec 2023 15:57:15 -0800
-Received: from kbuild by b07ab15da5fe with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1rDZ6H-000LIZ-1s;
-	Wed, 13 Dec 2023 23:57:13 +0000
-Date: Thu, 14 Dec 2023 07:56:16 +0800
-From: kernel test robot <lkp@intel.com>
-To: Jani Nikula <jani.nikula@intel.com>, linux-sound@vger.kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	Takashi Iwai <tiwai@suse.com>, dri-devel@lists.freedesktop.org,
-	Jaroslav Kysela <perex@perex.cz>
-Subject: Re: [PATCH v2] ASoC: hdmi-codec: drop drm/drm_edid.h include
-Message-ID: <202312140733.2qj4HH0f-lkp@intel.com>
-References: <20231213095023.3928703-1-jani.nikula@intel.com>
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBEE8DD
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 16:35:53 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id 98e67ed59e1d1-28b0016d989so651655a91.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 16:35:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1702514153; x=1703118953; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=i/9vhns2rh5wNRAmTF+7unWvvWQlEhzdv4Zy/TsV5A0=;
+        b=dows6p8mXur/wQfnC2iMggrm2+iC6D64PXF1sAfvsbWuSFFWhYoBySauIfISJ/rL57
+         Kxojgw/YFXNYQ7bQBLzau7t+nEvmpwRzNX4UBozdB9RYsaXNYuueaWcDowrd8j53YXC+
+         kIaUq5y1v16T886wbKGZcdxNAYD6bRywzasdc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702514153; x=1703118953;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=i/9vhns2rh5wNRAmTF+7unWvvWQlEhzdv4Zy/TsV5A0=;
+        b=NIWjb6FWvAaMsDdVuEiWRPkZoLVGt5pg9I4Ib4eZoujO5DboCjIZNjyOpz7WIROflL
+         5EmvUjS6Rq6VlmR7X+mlvVguvNE4SW4sGlKVrQ0VRVL2d/zwKhHo2gP2qj9SHKq0AEaJ
+         DvOE3nR2tXOo848u6DCzQ+eMEc+Dn9i9IsflhuC+G5u1rjfPEPdMeFuGyXSIsFjpCpoo
+         BPpiNLuJhIX12qYYTCFXdBCIXAbXnzyQPf2lDEJuiYMCvbHlEBTZqxxRHuguzX7kpZhK
+         u3ByhUSJCFrdX3oLxJe2chYluBwdbAVBjxwTImoY5+TXKSwV9L/GSMQGx2ScEc5fT8A+
+         oheg==
+X-Gm-Message-State: AOJu0YxQl55Krf5AvsMKERLkSK5EM/Mg+cKxsdhBa+wDiDhh6JevPkbw
+	ZNhg11iW9CZwwD2T5Zdip2Q6CQ==
+X-Google-Smtp-Source: AGHT+IE/V1gvqFNTDzqqMA4JhqSbG/LhKExowWOW95PGLRoZTgWORK8uZ5xecK/IINEs9HhgjSZDqA==
+X-Received: by 2002:a17:90a:ba85:b0:28a:fd40:1650 with SMTP id t5-20020a17090aba8500b0028afd401650mr719467pjr.25.1702514153413;
+        Wed, 13 Dec 2023 16:35:53 -0800 (PST)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:f03:a4cc:c5f:7040])
+        by smtp.gmail.com with ESMTPSA id sk13-20020a17090b2dcd00b002864c14063fsm11879981pjb.20.2023.12.13.16.35.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Dec 2023 16:35:52 -0800 (PST)
+From: Douglas Anderson <dianders@chromium.org>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Stephen Boyd <swboyd@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Andy Gross <agross@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Hsin-Yi Wang <hsinyi@chromium.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org,
+	devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sc7180: Switch pompom to the generic edp-panel
+Date: Wed, 13 Dec 2023 16:35:02 -0800
+Message-ID: <20231213163501.1.I8c20f926d15c9ddc12e423e07df1e89db1105d93@changeid>
+X-Mailer: git-send-email 2.43.0.472.g3155946c3a-goog
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231213095023.3928703-1-jani.nikula@intel.com>
+Content-Transfer-Encoding: 8bit
 
-Hi Jani,
+Pompom has several sources for its panel. Let's switch it to the
+generic edp-panel compatible string to account for this.
 
-kernel test robot noticed the following build errors:
+This fixes a problem where the panel wouldn't come up on some pompon
+devices after commit fb3f43d50d9b ("drm/panel-edp: Avoid adding
+multiple preferred modes"). Specifically, some models of pompom have a
+1920x1080 panel which is _very_ different than the 1366x768 panel
+specified in the dts. Before the recent panel-edp fix on Linux things
+kinda/sorta worked because the panel-edp driver would include both the
+hardcoded and probed mode, AKA:
 
-[auto build test ERROR on drm-misc/drm-misc-next]
-[also build test ERROR on tiwai-sound/for-next tiwai-sound/for-linus drm-tip/drm-tip linus/master v6.7-rc5 next-20231213]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+* #0 1920x1080
+  60.00 1920 1944 1960 2000 1080 1083 1088 1111 133320
+  flags: nhsync, nvsync; type: preferred, driver
+* #1 1366x768
+  60.00 1366 1406 1438 1500 768 773 778 900 81000
+  flags: nhsync, nvsync; type: preferred, driver
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Jani-Nikula/ASoC-hdmi-codec-drop-drm-drm_edid-h-include/20231213-175633
-base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
-patch link:    https://lore.kernel.org/r/20231213095023.3928703-1-jani.nikula%40intel.com
-patch subject: [PATCH v2] ASoC: hdmi-codec: drop drm/drm_edid.h include
-config: hexagon-randconfig-r063-20231213 (https://download.01.org/0day-ci/archive/20231214/202312140733.2qj4HH0f-lkp@intel.com/config)
-compiler: clang version 15.0.7 (https://github.com/llvm/llvm-project.git 8dfdcc7b7bf66834a761bd8de445840ef68e4d1a)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231214/202312140733.2qj4HH0f-lkp@intel.com/reproduce)
+...and, at least on ChromeOS, the userspace was consistently picking
+the first mode even though both were marked as "preferred". Now that
+the Linux driver is fixed we only get the hardcoded mode. That means
+we end up trying to drive a 1920x1080 panel at 1366x768 and it doesn't
+work so well.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202312140733.2qj4HH0f-lkp@intel.com/
+Let's switch over to the generic panel-edp.
 
-All errors (new ones prefixed by >>):
+Fixes: fb3f43d50d9b ("drm/panel-edp: Avoid adding multiple preferred modes")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+Techhnically we could put a "Fixes" in for the commits that added the
+pompom device tree, but that gets a little weird. Specifically the
+pompom device tree predates the introduction of the generic edp-panel
+bindings. Older pompom hardware always had 1366x768 compatible panels
+and worked fine so techncially those old commits weren't really
+"broken" per say and thus don't need to be "fixed".
 
-   In file included from drivers/gpu/drm/bridge/lontium-lt9611.c:8:
-   In file included from include/linux/i2c.h:19:
-   In file included from include/linux/regulator/consumer.h:35:
-   In file included from include/linux/suspend.h:5:
-   In file included from include/linux/swap.h:9:
-   In file included from include/linux/memcontrol.h:13:
-   In file included from include/linux/cgroup.h:26:
-   In file included from include/linux/kernel_stat.h:9:
-   In file included from include/linux/interrupt.h:11:
-   In file included from include/linux/hardirq.h:11:
-   In file included from ./arch/hexagon/include/generated/asm/hardirq.h:1:
-   In file included from include/asm-generic/hardirq.h:17:
-   In file included from include/linux/irq.h:20:
-   In file included from include/linux/io.h:13:
-   In file included from arch/hexagon/include/asm/io.h:337:
-   include/asm-generic/io.h:547:31: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           val = __raw_readb(PCI_IOBASE + addr);
-                             ~~~~~~~~~~ ^
-   include/asm-generic/io.h:560:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           val = __le16_to_cpu((__le16 __force)__raw_readw(PCI_IOBASE + addr));
-                                                           ~~~~~~~~~~ ^
-   include/uapi/linux/byteorder/little_endian.h:37:51: note: expanded from macro '__le16_to_cpu'
-   #define __le16_to_cpu(x) ((__force __u16)(__le16)(x))
-                                                     ^
-   In file included from drivers/gpu/drm/bridge/lontium-lt9611.c:8:
-   In file included from include/linux/i2c.h:19:
-   In file included from include/linux/regulator/consumer.h:35:
-   In file included from include/linux/suspend.h:5:
-   In file included from include/linux/swap.h:9:
-   In file included from include/linux/memcontrol.h:13:
-   In file included from include/linux/cgroup.h:26:
-   In file included from include/linux/kernel_stat.h:9:
-   In file included from include/linux/interrupt.h:11:
-   In file included from include/linux/hardirq.h:11:
-   In file included from ./arch/hexagon/include/generated/asm/hardirq.h:1:
-   In file included from include/asm-generic/hardirq.h:17:
-   In file included from include/linux/irq.h:20:
-   In file included from include/linux/io.h:13:
-   In file included from arch/hexagon/include/asm/io.h:337:
-   include/asm-generic/io.h:573:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           val = __le32_to_cpu((__le32 __force)__raw_readl(PCI_IOBASE + addr));
-                                                           ~~~~~~~~~~ ^
-   include/uapi/linux/byteorder/little_endian.h:35:51: note: expanded from macro '__le32_to_cpu'
-   #define __le32_to_cpu(x) ((__force __u32)(__le32)(x))
-                                                     ^
-   In file included from drivers/gpu/drm/bridge/lontium-lt9611.c:8:
-   In file included from include/linux/i2c.h:19:
-   In file included from include/linux/regulator/consumer.h:35:
-   In file included from include/linux/suspend.h:5:
-   In file included from include/linux/swap.h:9:
-   In file included from include/linux/memcontrol.h:13:
-   In file included from include/linux/cgroup.h:26:
-   In file included from include/linux/kernel_stat.h:9:
-   In file included from include/linux/interrupt.h:11:
-   In file included from include/linux/hardirq.h:11:
-   In file included from ./arch/hexagon/include/generated/asm/hardirq.h:1:
-   In file included from include/asm-generic/hardirq.h:17:
-   In file included from include/linux/irq.h:20:
-   In file included from include/linux/io.h:13:
-   In file included from arch/hexagon/include/asm/io.h:337:
-   include/asm-generic/io.h:584:33: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           __raw_writeb(value, PCI_IOBASE + addr);
-                               ~~~~~~~~~~ ^
-   include/asm-generic/io.h:594:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           __raw_writew((u16 __force)cpu_to_le16(value), PCI_IOBASE + addr);
-                                                         ~~~~~~~~~~ ^
-   include/asm-generic/io.h:604:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           __raw_writel((u32 __force)cpu_to_le32(value), PCI_IOBASE + addr);
-                                                         ~~~~~~~~~~ ^
->> drivers/gpu/drm/bridge/lontium-lt9611.c:346:8: error: call to undeclared function 'drm_hdmi_avi_infoframe_from_display_mode'; ISO C99 and later do not support implicit function declarations [-Werror,-Wimplicit-function-declaration]
-           ret = drm_hdmi_avi_infoframe_from_display_mode(&infoframe.avi,
-                 ^
->> drivers/gpu/drm/bridge/lontium-lt9611.c:359:8: error: call to undeclared function 'drm_hdmi_vendor_infoframe_from_display_mode'; ISO C99 and later do not support implicit function declarations [-Werror,-Wimplicit-function-declaration]
-           ret = drm_hdmi_vendor_infoframe_from_display_mode(&infoframe.vendor.hdmi,
-                 ^
->> drivers/gpu/drm/bridge/lontium-lt9611.c:855:9: error: call to undeclared function 'drm_do_get_edid'; ISO C99 and later do not support implicit function declarations [-Werror,-Wimplicit-function-declaration]
-           return drm_do_get_edid(connector, lt9611_get_edid_block, lt9611);
-                  ^
-   drivers/gpu/drm/bridge/lontium-lt9611.c:855:9: note: did you mean 'drm_bridge_get_edid'?
-   include/drm/drm_bridge.h:891:14: note: 'drm_bridge_get_edid' declared here
-   struct edid *drm_bridge_get_edid(struct drm_bridge *bridge,
-                ^
-   drivers/gpu/drm/bridge/lontium-lt9611.c:855:9: error: incompatible integer to pointer conversion returning 'int' from a function with result type 'struct edid *' [-Wint-conversion]
-           return drm_do_get_edid(connector, lt9611_get_edid_block, lt9611);
-                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   6 warnings and 4 errors generated.
+For now, I've marked this a fixing the Linux driver commit that broke
+ChromeOS userspace.
 
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-vim +/drm_hdmi_avi_infoframe_from_display_mode +346 drivers/gpu/drm/bridge/lontium-lt9611.c
-
-23278bf54afe18 Vinod Koul       2020-07-23  334  
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  335  static void lt9611_hdmi_set_infoframes(struct lt9611 *lt9611,
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  336  				       struct drm_connector *connector,
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  337  				       struct drm_display_mode *mode)
-23278bf54afe18 Vinod Koul       2020-07-23  338  {
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  339  	union hdmi_infoframe infoframe;
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  340  	ssize_t len;
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  341  	u8 iframes = 0x0a; /* UD1 infoframe */
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  342  	u8 buf[32];
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  343  	int ret;
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  344  	int i;
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  345  
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18 @346  	ret = drm_hdmi_avi_infoframe_from_display_mode(&infoframe.avi,
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  347  						       connector,
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  348  						       mode);
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  349  	if (ret < 0)
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  350  		goto out;
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  351  
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  352  	len = hdmi_infoframe_pack(&infoframe, buf, sizeof(buf));
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  353  	if (len < 0)
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  354  		goto out;
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  355  
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  356  	for (i = 0; i < len; i++)
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  357  		regmap_write(lt9611->regmap, 0x8440 + i, buf[i]);
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  358  
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18 @359  	ret = drm_hdmi_vendor_infoframe_from_display_mode(&infoframe.vendor.hdmi,
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  360  							  connector,
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  361  							  mode);
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  362  	if (ret < 0)
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  363  		goto out;
-23278bf54afe18 Vinod Koul       2020-07-23  364  
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  365  	len = hdmi_infoframe_pack(&infoframe, buf, sizeof(buf));
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  366  	if (len < 0)
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  367  		goto out;
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  368  
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  369  	for (i = 0; i < len; i++)
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  370  		regmap_write(lt9611->regmap, 0x8474 + i, buf[i]);
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  371  
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  372  	iframes |= 0x20;
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  373  
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  374  out:
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  375  	regmap_write(lt9611->regmap, 0x843d, iframes); /* UD1 infoframe */
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  376  }
-84cf74d99f88bc Dmitry Baryshkov 2023-01-18  377  
-
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
+index 0be62331f982..067813f5f437 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
+@@ -141,7 +141,7 @@ CROS_STD_MAIN_KEYMAP
+ };
+ 
+ &panel {
+-	compatible = "kingdisplay,kd116n21-30nv-a010";
++	compatible = "edp-panel";
+ };
+ 
+ &pen_insert {
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.43.0.472.g3155946c3a-goog
+
 
