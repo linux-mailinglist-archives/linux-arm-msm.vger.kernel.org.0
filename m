@@ -1,120 +1,303 @@
-Return-Path: <linux-arm-msm+bounces-4822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4823-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99F67813A11
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 19:36:56 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5720F813A65
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 19:56:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CB2B31C20C32
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 18:36:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0F9D41F21678
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 18:56:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59B73433C1;
-	Thu, 14 Dec 2023 18:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D7B168B97;
+	Thu, 14 Dec 2023 18:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YdVCRKG8"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oG2VrGHo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CA9410E
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 10:36:49 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-50e0ba402b4so4579547e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 10:36:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702579007; x=1703183807; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=E2agBAQIISiGm5BjQKQDZLX7+yyTNUH3OxJ2AW1m180=;
-        b=YdVCRKG899iNweKUAeh3gBh7CoD2htMTRTawc6xAaDRYh1ZI6H4s9zvHdThihTpcSb
-         CwgUF1/DAVgd8lgNazxq1fa6C8iNQI95X6cyZkSm5cKxuZALTNraqQtgma2nXPPqr1U6
-         GYr1vYB9Xz03IvaQjlZdV8x/IYFVH/wtmLD3NRTFTBfRqkzsLputmcjbGkzf8POaCESx
-         3nLk6x+g53/rFbtBY781C+tpNPCilkzyO3reXLfyL5aCyJS16xniQ78ITApjDuxWhAIS
-         WYgGQxQQuVe4/uYgiUGB267wQ3uGKDeLBpdxA0AKbAxeqtBcyAWzGd0KU39ix+qok6ko
-         CDKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702579007; x=1703183807;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=E2agBAQIISiGm5BjQKQDZLX7+yyTNUH3OxJ2AW1m180=;
-        b=L/ZFAdz+Jlxikg16GrlctY07v9hJ95ZcAUzGgDWdXWuCybBg17wB/5oK1tZ1+nwOBK
-         iryzepVfUwjCEjnpguY4ArBziXLfthkDc07dllxH26mdwL29C6dQ+/swLEb8hFgceDoM
-         4Z/7FwRgXII+Pqp4MvfB90eP5ln6lh6wrq3w6d6hQwA87fgcwhc8ikyZjHysZdUvxDjV
-         ZruapCx4RFo6BHz2P0KY3BMvUZpv4ZSoLTE2t/eQ0xQ/nxYkcalY/I0l4j24FhvtVBt/
-         y015duWt2NCCLkC1XkI0xF4S0vqMpIdR6fbbxWODGbG+aaqG9NjgrQYSkBKwyTvwbiJi
-         ujqg==
-X-Gm-Message-State: AOJu0Yye494/nRdXquyTRP0ni6c18vgREw/XyU/agLSR1IiAIf20FDWf
-	eC7cSuMiUlyPcAzrZNSv8AQkuWpNAc2DJxc3YUpquw==
-X-Google-Smtp-Source: AGHT+IGQMIUz/OELOVckBLP40+nDk50xRpbqd8QsbgXNin9cwtwb49ZEcf8JzeGg38O4QPZGSyTpiw==
-X-Received: by 2002:a05:6512:4db:b0:50b:ed58:584c with SMTP id w27-20020a05651204db00b0050bed58584cmr4541681lfq.124.1702579007106;
-        Thu, 14 Dec 2023 10:36:47 -0800 (PST)
-Received: from [127.0.1.1] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id k11-20020ac24f0b000000b0050ab2d4d7cbsm1943828lfr.19.2023.12.14.10.36.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Dec 2023 10:36:46 -0800 (PST)
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Thu, 14 Dec 2023 19:36:41 +0100
-Subject: [PATCH] interconnect: qcom: sm6115: Fix up includes
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62EE610E;
+	Thu, 14 Dec 2023 10:56:36 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BEIqFRH030905;
+	Thu, 14 Dec 2023 18:56:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version:content-type; s=
+	qcppdkim1; bh=PSVG6EZC7eLoqwshMI1KmuV+2bbF2KZMwrQE3OvelYs=; b=oG
+	2VrGHo9e0Pu49Mz7c+9yOHMoPHYApL4RTk8VuDWd1Jpy3tuJAUJiUpHM6Ii/oaQq
+	ts6tjy+2ckaQcGegoXIGkJYlam5mVVwehWQNlSI21dodnJAfnK9YgB/6nX2hTAFS
+	qLGdeOyxXOdl1ZYi8510zpiNdUc9yGBCWeUWuB8dtY9bcCrf9wVPErV3qWOy7Grl
+	Do/V0lv7eiOMv8KN5pDf0UUQZEy06rtJy3bPKc32TntJ3njwb/YLkecQaJSYm0Mu
+	mXO3I0gJMPpyP9KGFY7KhbcdKKHffF85OdgQmsKp5vL+me29k1lWSpT2cwipXuUS
+	sdiav/5lDgV29rTzNacg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v07c600hv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Dec 2023 18:56:24 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BEIuNBP023216
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Dec 2023 18:56:23 GMT
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Thu, 14 Dec 2023 10:56:22 -0800
+From: Kuogee Hsieh <quic_khsieh@quicinc.com>
+To: <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <andersson@kernel.org>
+CC: Kuogee Hsieh <quic_khsieh@quicinc.com>, <quic_abhinavk@quicinc.com>,
+        <quic_jesszhan@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <marijn.suijten@somainline.org>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v6] drm/msm/dpu: improve DSC allocation
+Date: Thu, 14 Dec 2023 10:56:12 -0800
+Message-ID: <1702580172-30606-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231214-topic-6115iccfix-v1-1-9ad999683a7d@linaro.org>
-X-B4-Tracking: v=1; b=H4sIADhLe2UC/x2MQQqAMAzAviI9W7BzCvMr4kFr1V5UNhFh+HeLx
- wSSDEmiSoKuyBDl1qTHbkBlAbyN+yqoszG4ytXkyON1nMrYEjXKvOiD7eIbCqEKkxBYdkYx/S/
- 74X0/kqmUOmIAAAA=
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Georgi Djakov <djakov@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.13-dev-0438c
-X-Spam-Level: *
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: _he9aTSxhhLMeMJGZ-F2wLO58Q_mdWmv
+X-Proofpoint-ORIG-GUID: _he9aTSxhhLMeMJGZ-F2wLO58Q_mdWmv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxlogscore=810
+ mlxscore=0 priorityscore=1501 malwarescore=0 suspectscore=0 bulkscore=0
+ spamscore=0 phishscore=0 adultscore=0 impostorscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
+ definitions=main-2312140134
 
-Remove some unnecessary includes and get rid of the abusive of_platform
-in favor of the correct headers.
+At DSC V1.1 DCE (Display Compression Engine) contains a DSC encoder.
+However, at DSC V1.2 DCE consists of two DSC encoders, one has an odd
+index and another one has an even index. Each encoder can work
+independently. But only two DSC encoders from same DCE can be paired
+to work together to support DSC merge mode at DSC V1.2. For DSC V1.1
+two consecutive DSC encoders (start with even index) have to be paired
+to support DSC merge mode.  In addition, the DSC with even index have
+to be mapped to even PINGPONG index and DSC with odd index have to be
+mapped to odd PINGPONG index at its data path in regardless of DSC
+V1.1 or V1.2. This patch improves DSC allocation mechanism with
+consideration of those factors.
 
-Reported-by: Rob Herring <robh+dt@kernel.org>
-Reported-by: Georgi Djakov <djakov@kernel.org>
-Fixes: 2eab57b131bd ("interconnect: qcom: Add SM6115 interconnect provider driver")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Changes in V6:
+-- rename _dpu_rm_reserve_dsc_single to _dpu_rm_dsc_alloc
+-- rename _dpu_rm_reserve_dsc_pair to _dpu_rm_dsc_alloc_pair
+-- pass global_state to _dpu_rm_pingpong_next_index()
+-- remove pp_max
+-- fix for loop condition check at _dpu_rm_dsc_alloc()
+
+Changes in V5:
+-- delete dsc_id[]
+-- update to global_state->dsc_to_enc_id[] directly
+-- replace ndx with idx
+-- fix indentation at function declaration
+-- only one for loop at _dpu_rm_reserve_dsc_single()
+
+Changes in V4:
+-- rework commit message
+-- use reserved_by_other()
+-- add _dpu_rm_pingpong_next_index()
+-- revise _dpu_rm_pingpong_dsc_check()
+
+Changes in V3:
+-- add dpu_rm_pingpong_dsc_check()
+-- for pair allocation use i += 2 at for loop
+
+Changes in V2:
+    -- split _dpu_rm_reserve_dsc() into _dpu_rm_reserve_dsc_single() and
+       _dpu_rm_reserve_dsc_pair()
+
+Fixes: f2803ee91a41 ("drm/msm/disp/dpu1: Add DSC support in RM")
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 ---
- drivers/interconnect/qcom/sm6115.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 154 +++++++++++++++++++++++++++++----
+ 1 file changed, 139 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/interconnect/qcom/sm6115.c b/drivers/interconnect/qcom/sm6115.c
-index c49a83c87739..88b67634aa2f 100644
---- a/drivers/interconnect/qcom/sm6115.c
-+++ b/drivers/interconnect/qcom/sm6115.c
-@@ -6,16 +6,12 @@
-  */
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+index f9215643..0ce2a25 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+@@ -461,29 +461,153 @@ static int _dpu_rm_reserve_ctls(
+ 	return 0;
+ }
  
- #include <dt-bindings/interconnect/qcom,sm6115.h>
--#include <linux/clk.h>
- #include <linux/device.h>
- #include <linux/interconnect-provider.h>
--#include <linux/io.h>
-+#include <linux/mod_devicetable.h>
- #include <linux/module.h>
--#include <linux/of_device.h>
--#include <linux/of_platform.h>
- #include <linux/platform_device.h>
- #include <linux/regmap.h>
--#include <linux/slab.h>
+-static int _dpu_rm_reserve_dsc(struct dpu_rm *rm,
+-			       struct dpu_global_state *global_state,
+-			       struct drm_encoder *enc,
+-			       const struct msm_display_topology *top)
++static int _dpu_rm_pingpong_next_index(struct dpu_global_state *global_state,
++				       int start,
++				       uint32_t enc_id)
+ {
+-	int num_dsc = top->num_dsc;
+ 	int i;
  
- #include "icc-rpm.h"
+-	/* check if DSC required are allocated or not */
+-	for (i = 0; i < num_dsc; i++) {
+-		if (!rm->dsc_blks[i]) {
+-			DPU_ERROR("DSC %d does not exist\n", i);
+-			return -EIO;
++	for (i = start; i < (PINGPONG_MAX - PINGPONG_0); i++) {
++		if (global_state->pingpong_to_enc_id[i] == enc_id)
++			return i;
++	}
++
++	return -ENAVAIL;
++}
++
++static int _dpu_rm_pingpong_dsc_check(int dsc_idx, int pp_idx)
++{
++	/*
++	 * DSC with even index must be used with the PINGPONG with even index
++	 * DSC with odd index must be used with the PINGPONG with odd index
++	 */
++	if ((dsc_idx & 0x01) != (pp_idx & 0x01))
++		return -ENAVAIL;
++
++	return 0;
++}
++
++static int _dpu_rm_dsc_alloc(struct dpu_rm *rm,
++			     struct dpu_global_state *global_state,
++			     uint32_t enc_id,
++			     const struct msm_display_topology *top)
++{
++	int num_dsc = 0;
++	int pp_idx = 0;
++	int dsc_idx;
++	int ret;
++
++	for (dsc_idx = 0; dsc_idx < ARRAY_SIZE(rm->dsc_blks) &&
++	     num_dsc < top->num_dsc; dsc_idx++) {
++		if (!rm->dsc_blks[dsc_idx])
++			continue;
++
++		if (reserved_by_other(global_state->dsc_to_enc_id, dsc_idx, enc_id))
++			continue;
++
++		pp_idx = _dpu_rm_pingpong_next_index(global_state, pp_idx, enc_id);
++		if (pp_idx < 0)
++			return -ENAVAIL;
++
++		ret = _dpu_rm_pingpong_dsc_check(dsc_idx, pp_idx);
++		if (ret)
++			return -ENAVAIL;
++
++		global_state->dsc_to_enc_id[dsc_idx] = enc_id;
++		num_dsc++;
++		pp_idx++;
++	}
++
++	if (num_dsc < top->num_dsc) {
++		DPU_ERROR("DSC allocation failed num_dsc=%d required=%d\n",
++			   num_dsc, top->num_dsc);
++		return -ENAVAIL;
++	}
++
++	return 0;
++}
++
++static int _dpu_rm_dsc_alloc_pair(struct dpu_rm *rm,
++				  struct dpu_global_state *global_state,
++				  uint32_t enc_id,
++				  const struct msm_display_topology *top)
++{
++	int num_dsc = 0;
++	int dsc_idx, pp_idx = 0;
++	int ret;
++
++	/* only start from even dsc index */
++	for (dsc_idx = 0; dsc_idx < ARRAY_SIZE(rm->dsc_blks) &&
++	     num_dsc < top->num_dsc; dsc_idx += 2) {
++		if (!rm->dsc_blks[dsc_idx] ||
++		    !rm->dsc_blks[dsc_idx + 1])
++			continue;
++
++		/* consective dsc index to be paired */
++		if (reserved_by_other(global_state->dsc_to_enc_id, dsc_idx, enc_id) ||
++		    reserved_by_other(global_state->dsc_to_enc_id, dsc_idx + 1, enc_id))
++			continue;
++
++		pp_idx = _dpu_rm_pingpong_next_index(global_state, pp_idx, enc_id);
++		if (pp_idx < 0)
++			return -ENAVAIL;
++
++		ret = _dpu_rm_pingpong_dsc_check(dsc_idx, pp_idx);
++		if (ret) {
++			pp_idx = 0;
++			continue;
+ 		}
  
-
----
-base-commit: 11651f8cb2e88372d4ed523d909514dc9a613ea3
-change-id: 20231214-topic-6115iccfix-6f4519909be1
-
-Best regards,
+-		if (global_state->dsc_to_enc_id[i]) {
+-			DPU_ERROR("DSC %d is already allocated\n", i);
+-			return -EIO;
++		pp_idx = _dpu_rm_pingpong_next_index(global_state, pp_idx + 1, enc_id);
++		if (pp_idx < 0)
++			return -ENAVAIL;
++
++		ret = _dpu_rm_pingpong_dsc_check(dsc_idx + 1, pp_idx);
++		if (ret) {
++			pp_idx = 0;
++			continue;
+ 		}
++
++		global_state->dsc_to_enc_id[dsc_idx] = enc_id;
++		global_state->dsc_to_enc_id[dsc_idx + 1] = enc_id;
++		num_dsc += 2;
++		pp_idx++;	/* start for next pair */
+ 	}
+ 
+-	for (i = 0; i < num_dsc; i++)
+-		global_state->dsc_to_enc_id[i] = enc->base.id;
++	if (num_dsc < top->num_dsc) {
++		DPU_ERROR("DSC allocation failed num_dsc=%d required=%d\n",
++			   num_dsc, top->num_dsc);
++		return -ENAVAIL;
++	}
++
++	return 0;
++}
++
++static int _dpu_rm_reserve_dsc(struct dpu_rm *rm,
++			       struct dpu_global_state *global_state,
++			       struct drm_encoder *enc,
++			       const struct msm_display_topology *top)
++{
++	uint32_t enc_id = enc->base.id;
++
++	if (!top->num_dsc || !top->num_intf)
++		return 0;
++
++	/*
++	 * Facts:
++	 * 1) no pingpong split (two layer mixers shared one pingpong)
++	 * 2) DSC pair starts from even index, such as index(0,1), (2,3), etc
++	 * 3) even PINGPONG connects to even DSC
++	 * 4) odd PINGPONG connects to odd DSC
++	 * 5) pair: encoder +--> pp_idx_0 --> dsc_idx_0
++	 *                  +--> pp_idx_1 --> dsc_idx_1
++	 */
++
++	/* num_dsc should be either 1, 2 or 4 */
++	if (top->num_dsc > top->num_intf)	/* merge mode */
++		return _dpu_rm_dsc_alloc_pair(rm, global_state, enc_id, top);
++	else
++		return _dpu_rm_dsc_alloc(rm, global_state, enc_id, top);
+ 
+ 	return 0;
+ }
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+2.7.4
 
 
