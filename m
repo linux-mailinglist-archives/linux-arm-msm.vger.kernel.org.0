@@ -1,356 +1,230 @@
-Return-Path: <linux-arm-msm+bounces-4797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B10EE8137BC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 18:11:56 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BEB08137CD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 18:13:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D586C1C208C2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 17:11:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CB5DE1F21264
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 17:13:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F205F60BA6;
-	Thu, 14 Dec 2023 17:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2945A65EAA;
+	Thu, 14 Dec 2023 17:12:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="B5HGk11Y"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n9sZrVGq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD54A131;
-	Thu, 14 Dec 2023 09:11:49 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BE7Rh5N003416;
-	Thu, 14 Dec 2023 17:11:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=+rZapPt9WbacdJFkI+AbBPDUwZgMyB0gAFuy9ycSzlE=; b=B5
-	HGk11YkJeo9EFLgHc+NZmgtZe2EGE5/xJNK0EU0/l1q5O38G4ktrVIMK8N2PXuI/
-	YtTa80etgXC2LFJAoHnOQYoTV3Avl5CwJ4oej+wr8UYNt5MpxEopnYOycDBJGWlK
-	Rk1F3Ne6ZHfUESCJq2lSSmenmy9Y8FmhlO0S9bMI+WsFKYOqXHq20/tSoAHoI6PJ
-	OZSefg/WfzHz7iKWDybJNUggNsdrTw0NvJRGqXPQEZwjixlRxaljtKA5pawOtiEy
-	9rBcMr1YGUdXtMHzvuhJZL8Ya5uwNVSAR6A49aCHrLyDjX1Gb5Vcv4A2bf3273ew
-	0ZWyacigbddRjreo6/0A==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uynre228b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Dec 2023 17:11:35 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BEHBYdm011501
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Dec 2023 17:11:34 GMT
-Received: from [10.110.80.224] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 14 Dec
- 2023 09:11:33 -0800
-Message-ID: <35b8005d-c4a5-66fa-5158-e48109210864@quicinc.com>
-Date: Thu, 14 Dec 2023 09:11:32 -0800
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0166D65EA7;
+	Thu, 14 Dec 2023 17:12:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8716C433C8;
+	Thu, 14 Dec 2023 17:12:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1702573977;
+	bh=BAELR7PAtgbHJ26Por16QtKzX2s0QDtbvfohshpvT7k=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=n9sZrVGqgBfPqr4iuqNawJmRCH6DZnjo9xEv9sc8Jb8tUM5X0p2lHGToKbQ71HmoH
+	 44fCZG2jogO+9MP9i+gwLpTOOeyiyU8jAzQ1KbHVHCCGg37M6IvFcsH49fsWo4Bj9r
+	 9YCpvO79dr6domzMwMFfmpRS9yzXx9Pzq5ie9+Pp33xnWN/ahxK5Y3byWThrLVIRzL
+	 lQbkm57hE1G71W7o7ddnMWQuxFYqhvBVWMz1Y9yTRr89wMBuQ0tvGE9pbIGLfT80zN
+	 VwNv612w0mqTSyIyJzwwQEthaIO3/MOA2kJ/6s8cYTWUsqwlbnGiZx4yeCY6098KxZ
+	 sCIYaCsJeKvOA==
+Date: Thu, 14 Dec 2023 17:12:51 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Jie Luo <quic_luoj@quicinc.com>
+Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+	pabeni@redhat.com, robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+	andrew@lunn.ch, hkallweit1@gmail.com, linux@armlinux.org.uk,
+	robert.marko@sartura.hr, linux-arm-msm@vger.kernel.org,
+	netdev@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_srichara@quicinc.com
+Subject: Re: [PATCH v2 5/5] dt-bindings: net: ipq4019-mdio: Document ipq5332
+ platform
+Message-ID: <20231214-outshine-shush-8a11c68607cd@spud>
+References: <20231212115151.20016-1-quic_luoj@quicinc.com>
+ <20231212115151.20016-6-quic_luoj@quicinc.com>
+ <20231212-caution-improvise-ed3cc6a1d305@spud>
+ <11ffc985-3f2b-46b9-ae0b-911f7abe98d1@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v5] drm/msm/dpu: improve DSC allocation
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1702493883-30148-1-git-send-email-quic_khsieh@quicinc.com>
- <CAA8EJppypE-0tUfVD-24YMOQ+3cP+_D1BZYju0K7qzaUE_RnKA@mail.gmail.com>
-From: Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <CAA8EJppypE-0tUfVD-24YMOQ+3cP+_D1BZYju0K7qzaUE_RnKA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: m7aBbiOugR-fg1CfLEE_ofxIdejSBrOp
-X-Proofpoint-GUID: m7aBbiOugR-fg1CfLEE_ofxIdejSBrOp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=738
- suspectscore=0 impostorscore=0 phishscore=0 bulkscore=0 spamscore=0
- malwarescore=0 priorityscore=1501 lowpriorityscore=0 clxscore=1015
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312140122
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="LYJ0ceWwoY8jlvlx"
+Content-Disposition: inline
+In-Reply-To: <11ffc985-3f2b-46b9-ae0b-911f7abe98d1@quicinc.com>
 
 
-On 12/13/2023 3:00 PM, Dmitry Baryshkov wrote:
-> On Wed, 13 Dec 2023 at 20:58, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
->> At DSC V1.1 DCE (Display Compression Engine) contains a DSC encoder.
->> However, at DSC V1.2 DCE consists of two DSC encoders, one has an odd
->> index and another one has an even index. Each encoder can work
->> independently. But only two DSC encoders from same DCE can be paired
->> to work together to support DSC merge mode at DSC V1.2. For DSC V1.1
->> two consecutive DSC encoders (start with even index) have to be paired
->> to support DSC merge mode.  In addition, the DSC with even index have
->> to be mapped to even PINGPONG index and DSC with odd index have to be
->> mapped to odd PINGPONG index at its data path in regardless of DSC
->> V1.1 or V1.2. This patch improves DSC allocation mechanism with
->> consideration of those factors.
->>
->> Changes in V5:
->> -- delete dsc_id[]
->> -- update to global_state->dsc_to_enc_id[] directly
->> -- replace ndx with idx
->> -- fix indentation at function declaration
->> -- only one for loop at _dpu_rm_reserve_dsc_single()
->>
->> Changes in V4:
->> -- rework commit message
->> -- use reserved_by_other()
->> -- add _dpu_rm_pingpong_next_index()
->> -- revise _dpu_rm_pingpong_dsc_check()
->>
->> Changes in V3:
->> -- add dpu_rm_pingpong_dsc_check()
->> -- for pair allocation use i += 2 at for loop
->>
->> Changes in V2:
->>      -- split _dpu_rm_reserve_dsc() into _dpu_rm_reserve_dsc_single() and
->>         _dpu_rm_reserve_dsc_pair()
->>
->> Fixes: f2803ee91a41 ("drm/msm/disp/dpu1: Add DSC support in RM")
->> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 162 +++++++++++++++++++++++++++++----
->>   1 file changed, 146 insertions(+), 16 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
->> index f9215643..7c7a88f 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
->> @@ -461,29 +461,159 @@ static int _dpu_rm_reserve_ctls(
->>          return 0;
->>   }
->>
->> -static int _dpu_rm_reserve_dsc(struct dpu_rm *rm,
->> -                              struct dpu_global_state *global_state,
->> -                              struct drm_encoder *enc,
->> -                              const struct msm_display_topology *top)
->> +static int _dpu_rm_pingpong_next_index(int start,
->> +                                      uint32_t enc_id,
->> +                                      uint32_t *pp_to_enc_id,
->> +                                      int pp_max)
->>   {
->> -       int num_dsc = top->num_dsc;
->>          int i;
->>
->> -       /* check if DSC required are allocated or not */
->> -       for (i = 0; i < num_dsc; i++) {
->> -               if (!rm->dsc_blks[i]) {
->> -                       DPU_ERROR("DSC %d does not exist\n", i);
->> -                       return -EIO;
->> -               }
->> +       for (i = start; i < pp_max; i++) {
->> +               if (pp_to_enc_id[i] == enc_id)
->> +                       return i;
->> +       }
->> +
->> +       return -ENAVAIL;
->> +}
->> +
->> +static int _dpu_rm_pingpong_dsc_check(int dsc_idx, int pp_idx)
->> +{
->> +
-> CHECK: Blank lines aren't necessary after an open brace '{'
-> #85: FILE: drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c:481:
->
->> +       /*
->> +        * DSC with even index must be used with the PINGPONG with even index
->> +        * DSC with odd index must be used with the PINGPONG with odd index
->> +        */
->> +       if ((dsc_idx & 0x01) != (pp_idx & 0x01))
->> +               return -ENAVAIL;
->> +
->> +       return 0;
->> +}
->> +
->> +static int _dpu_rm_reserve_dsc_single(struct dpu_rm *rm,
->> +                                     struct dpu_global_state *global_state,
->> +                                     uint32_t enc_id,
->> +                                     const struct msm_display_topology *top)
->> +{
->> +       int num_dsc = 0;
->> +       uint32_t *pp_to_enc_id = global_state->pingpong_to_enc_id;
->> +       uint32_t *dsc_enc_id = global_state->dsc_to_enc_id;
->> +       int pp_max = PINGPONG_MAX - PINGPONG_0;
->> +       int pp_idx;
->> +       int dsc_idx;
->> +       int ret;
->> +
->> +       for (dsc_idx = 0; dsc_idx < ARRAY_SIZE(rm->dsc_blks) &&
->> +                         num_dsc < 1; dsc_idx++) {
-> The condition is wrong here. Also it is misaligned.
->
->> +               if (!rm->dsc_blks[dsc_idx])
->> +                       continue;
->> +
->> +               if (reserved_by_other(dsc_enc_id, dsc_idx, enc_id))
->> +                       continue;
->> +
->> +               pp_idx = _dpu_rm_pingpong_next_index(0, enc_id,
-> And this is wrong too. You should start relatively to your previous PP index.
->
->> +                                                    pp_to_enc_id, pp_max);
->> +               if (pp_idx < 0)
->> +                       return -ENAVAIL;
->> +
->> +               ret = _dpu_rm_pingpong_dsc_check(dsc_idx, pp_idx);
->> +               if (ret)
->> +                       return -ENAVAIL;
->> +
->> +               dsc_enc_id[dsc_idx] = enc_id;
->> +               num_dsc++;
->> +       }
->> +
->> +       if (!num_dsc) {
->> +               DPU_ERROR("DSC allocation failed num_dsc=%d\n", num_dsc);
->> +               return -ENAVAIL;
->> +       }
->>
->> -               if (global_state->dsc_to_enc_id[i]) {
->> -                       DPU_ERROR("DSC %d is already allocated\n", i);
->> -                       return -EIO;
->> +       return 0;
->> +}
->> +
->> +static int _dpu_rm_reserve_dsc_pair(struct dpu_rm *rm,
->> +                                   struct dpu_global_state *global_state,
->> +                                   uint32_t enc_id,
->> +                                   const struct msm_display_topology *top)
->> +{
->> +       int num_dsc = 0;
->> +       uint32_t *pp_to_enc_id = global_state->pingpong_to_enc_id;
->> +       uint32_t *dsc_enc_id = global_state->dsc_to_enc_id;
-> No need for these anymore. Please inline them. Or simply pass
-> global_state to _dpu_rm_pingpong_next_index().
-> Other functions in dpu_rm.c don't define local variables for these
-> arrays. I don't see why this patch should deviate from that.
->
->> +       int pp_max = PINGPONG_MAX - PINGPONG_0;
->> +       int start_pp_idx = 0;
->> +       int dsc_idx, pp_idx;
->> +       int ret;
->> +
->> +       /* only start from even dsc index */
->> +       for (dsc_idx = 0; dsc_idx < ARRAY_SIZE(rm->dsc_blks) &&
->> +                         num_dsc < top->num_dsc; dsc_idx += 2) {
-> Misaligned
->
->> +               if (!rm->dsc_blks[dsc_idx] ||
->> +                   !rm->dsc_blks[dsc_idx + 1])
->> +                       continue;
->> +
->> +               /* consective dsc index to be paired */
->> +               if (reserved_by_other(dsc_enc_id, dsc_idx, enc_id) ||
->> +                   reserved_by_other(dsc_enc_id, dsc_idx + 1, enc_id))
->> +                       continue;
->> +
->> +               pp_idx = _dpu_rm_pingpong_next_index(start_pp_idx, enc_id,
->> +                                                    pp_to_enc_id, pp_max);
->> +               if (pp_idx < 0)
->> +                       return -ENAVAIL;
->> +
->> +               ret = _dpu_rm_pingpong_dsc_check(dsc_idx, pp_idx);
->> +               if (ret) {
->> +                       pp_idx = 0;
->> +                       continue;
->>                  }
->> +
->> +               pp_idx = _dpu_rm_pingpong_next_index(pp_idx + 1, enc_id,
->> +                                                    pp_to_enc_id, pp_max);
->> +               if (pp_idx < 0)
->> +                       return -ENAVAIL;
-> Fresh pp_idx has to be checked against dsc_idx + 1.
->
-> Let me also have a suggestion for you. The pp_max is a constant. You
-> don't have to pass it to _dpu_rm_pingpong_next_index() at all! Also if
-> you change the function to accept enum dpu_pingpong, you can start
-> with PINGPONG_NONE and move +1 into the function, making the callers
-> simpler, removing the need or start_pp_idx (which I asked to do in v4)
-> etc.
->
->> +
->> +               dsc_enc_id[dsc_idx] = enc_id;
->> +               dsc_enc_id[dsc_idx + 1] = enc_id;
->> +               num_dsc += 2;
->> +
->> +               start_pp_idx = pp_idx + 1;      /* start for next pair */
->>          }
->>
->> -       for (i = 0; i < num_dsc; i++)
->> -               global_state->dsc_to_enc_id[i] = enc->base.id;
->> +       if (num_dsc < top->num_dsc) {
->> +               DPU_ERROR("DSC allocation failed num_dsc=%d required=%d\n",
->> +                                               num_dsc, top->num_dsc);
-> Misaligned
->
->> +               return -ENAVAIL;
->> +       }
->> +
->> +       return 0;
->> +}
->> +
->> +static int _dpu_rm_reserve_dsc(struct dpu_rm *rm,
->> +                              struct dpu_global_state *global_state,
->> +                              struct drm_encoder *enc,
->> +                              const struct msm_display_topology *top)
->> +{
->> +       uint32_t enc_id = enc->base.id;
->> +
->> +       if (!top->num_dsc || !top->num_intf)
->> +               return 0;
->> +
->> +       /*
->> +        * Facts:
->> +        * 1) DSCs ouput to an interface
-> WARNING: 'ouput' may be misspelled - perhaps 'output'?
->
-> Also, what does it bring to us?
->
->> +        * 2) no pingpong split (two layer mixers shared one pingpong)
->> +        * 3) DSC pair start from even index, such as index(0,1), (2,3), etc
-> starts
->
->> +        * 4) even PINGPONG connects to even DSC
->> +        * 5) odd PINGPONG connects to odd DSC
->> +        * 6) pair: encoder +--> pp_idx_0 --> dsc_idx_0
->> +        *                  +--> pp_idx_1 --> dsc_idx_1
->> +        */
->> +
->> +       /* num_dsc should be either 1, 2 or 4 */
->> +       if (top->num_dsc > top->num_intf)       /* merge mode */
->> +               return _dpu_rm_reserve_dsc_pair(rm, global_state, enc_id, top);
->> +       else
->> +               return _dpu_rm_reserve_dsc_single(rm, global_state, enc_id, top);
->>
->>          return 0;
->>   }
->> --
->> 2.7.4
->>
-> Kuogee, we value your patches. But could you please fix your editor
-> settings to properly align C statements? E.g. Vim has the "set
-> cino=(0" setting, which does most of the work. I suspect that your
-> code editor should also have a similar setting. Also could you please
-> establish a practice of using checkpatch.pl at least until we stop
-> hitting obvious issues there?
+--LYJ0ceWwoY8jlvlx
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-1) yes, i have "set cino=(0" seeting t my vim editor
+On Wed, Dec 13, 2023 at 04:26:56PM +0800, Jie Luo wrote:
+>=20
+>=20
+> On 12/13/2023 12:06 AM, Conor Dooley wrote:
+> > On Tue, Dec 12, 2023 at 07:51:50PM +0800, Luo Jie wrote:
+> > > Update the yaml file for the new DTS properties.
+> > >=20
+> > > 1. cmn-reference-clock for the CMN PLL source clock select.
+> > > 2. clock-frequency for MDIO clock frequency config.
+> > > 3. add uniphy AHB & SYS GCC clocks.
+> > > 4. add reset-gpios for MDIO bus level reset.
+> > >=20
+> > > Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+> > > ---
+> > >   .../bindings/net/qcom,ipq4019-mdio.yaml       | 157 +++++++++++++++=
+++-
+> > >   1 file changed, 153 insertions(+), 4 deletions(-)
+> > >=20
+> > > diff --git a/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.=
+yaml b/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
+> > > index 3407e909e8a7..9546a6ad7841 100644
+> > > --- a/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
+> > > +++ b/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
+> > > @@ -20,6 +20,8 @@ properties:
+> > >             - enum:
+> > >                 - qcom,ipq6018-mdio
+> > >                 - qcom,ipq8074-mdio
+> > > +              - qcom,ipq9574-mdio
+> > > +              - qcom,ipq5332-mdio
+> > >             - const: qcom,ipq4019-mdio
+> > >     "#address-cells":
+> > > @@ -30,19 +32,71 @@ properties:
+> > >     reg:
+> > >       minItems: 1
+> > > -    maxItems: 2
+> > > +    maxItems: 5
+> > >       description:
+> > > -      the first Address and length of the register set for the MDIO =
+controller.
+> > > -      the second Address and length of the register for ethernet LDO=
+, this second
+> > > -      address range is only required by the platform IPQ50xx.
+> > > +      the first Address and length of the register set for the MDIO =
+controller,
+> > > +      the optional second, third and fourth address and length of th=
+e register
+> > > +      for ethernet LDO, these three address range are required by th=
+e platform
+> > > +      IPQ50xx/IPQ5332/IPQ9574, the last address and length is for th=
+e CMN clock
+> > > +      to select the reference clock.
+> > > +
+> > > +  reg-names:
+> > > +    minItems: 1
+> > > +    maxItems: 5
+> > >     clocks:
+> > > +    minItems: 1
+> > >       items:
+> > >         - description: MDIO clock source frequency fixed to 100MHZ
+> > > +      - description: UNIPHY0 AHB clock source frequency fixed to 100=
+MHZ
+> > > +      - description: UNIPHY1 AHB clock source frequency fixed to 100=
+MHZ
+> > > +      - description: UNIPHY0 SYS clock source frequency fixed to 24M=
+HZ
+> > > +      - description: UNIPHY1 SYS clock source frequency fixed to 24M=
+HZ
+> > >     clock-names:
+> > > +    minItems: 1
+> > >       items:
+> > >         - const: gcc_mdio_ahb_clk
+> > > +      - const: gcc_uniphy0_ahb_clk
+> > > +      - const: gcc_uniphy1_ahb_clk
+> > > +      - const: gcc_uniphy0_sys_clk
+> > > +      - const: gcc_uniphy1_sys_clk
+> >=20
+> > > +  cmn-reference-clock:
+> > > +    oneOf:
+> > > +      - items:
+> > > +          - enum:
+> > > +              - 0   # CMN PLL reference internal 48MHZ
+> > > +              - 1   # CMN PLL reference external 25MHZ
+> > > +              - 2   # CMN PLL reference external 31250KHZ
+> > > +              - 3   # CMN PLL reference external 40MHZ
+> > > +              - 4   # CMN PLL reference external 48MHZ
+> > > +              - 5   # CMN PLL reference external 50MHZ
+> > > +              - 6   # CMN PLL reference internal 96MHZ
+> >=20
+> > Why is this not represented by an element of the clocks property?
+>=20
+> This property is for the reference clock source selection of CMN PLL,
+> CMN PLL generates the different clock rates for the different Ethernet
+> blocks, this CMN PLL configuration is not located in the GCC, so the
+> clock framework can't be used, which is the general hardware register
+> instead of RCG register for GCC.
 
-2)  i had run checkpaych.pl at previous patches, I will make sure run 
-checkpatch.pl for every patch from now on
+I don't see how the clock being provided by the "GCC" (whatever that is)
+or by some other clock controller or fixed clock makes a difference.
+Why can't the other clock provider be represented in the devicetree?
 
+> > > +  clock-frequency:
+> > > +    oneOf:
+> > > +      - items:
+> > > +          - enum:
+> > > +              - 12500000
+> > > +              - 6250000
+> > > +              - 3125000
+> > > +              - 1562500
+> > > +              - 781250
+> > > +              - 390625
+> > > +    description:
+> > > +      The MDIO bus clock that must be output by the MDIO bus hardwar=
+e,
+> > > +      only the listed frequecies above can be configured, other freq=
+uency
+> > > +      will cause malfunction. If absent, the default hardware value =
+is used.
+> >=20
+> > Likewise.
+> >=20
+> > Your commit message contains a bullet point list of what you are doing,
+> > but there's no explanation here for why custom properties are required
+> > to provide clock information.
+
+> This property clock-frequency is optional to configure the MDIO working
+> clock rate, and this is the MDIO general DT property, since the hardware
+> default clock rate is 390625HZ, there is requirement for higher clock rate
+> in the normal working case, i will update this information in the
+> next patch set.
+
+I'm just realising that this particular one is not a custom property,
+the unusual `oneOf: - items: - enum:` structure here threw me. This can
+just be
+  clock-frequency:
+    enum:
+      - 12500000
+      - 6250000
+      - 3125000
+      - 1562500
+      - 781250
+      - 390625
+
+but you're missing a default, given your commit about the last element
+in that list being one.
+
+Thanks,
+Conor.
+
+--LYJ0ceWwoY8jlvlx
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZXs3kwAKCRB4tDGHoIJi
+0vu7APsHtU2RskKEI44XxHTB9wAjvT2zciB0zeCci/YTbg5d6gEAqM9G7uRaWzhA
+33QIM6/PicVe6pC2JOVaFUlBDKnW0gM=
+=Cypi
+-----END PGP SIGNATURE-----
+
+--LYJ0ceWwoY8jlvlx--
 
