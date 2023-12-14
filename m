@@ -1,110 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-4664-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 937F9812833
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 07:33:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B82808128CA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 08:09:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3155F1F21AC3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 06:33:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6B7681F21747
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 07:09:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4ADB4D285;
-	Thu, 14 Dec 2023 06:33:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3BF9DDC2;
+	Thu, 14 Dec 2023 07:09:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DvBunkzR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Jrg0onkE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD33BF4
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 22:33:41 -0800 (PST)
-Received: by mail-il1-x12d.google.com with SMTP id e9e14a558f8ab-35f833adaa6so29445ab.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 22:33:41 -0800 (PST)
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EDD7F5
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 23:09:17 -0800 (PST)
+Received: by mail-yb1-xb2f.google.com with SMTP id 3f1490d57ef6-dbcd9af2428so243179276.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 23:09:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702535621; x=1703140421; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=DQa3Oh83Y7BJ5yvT1MB3NL690VGSVlOorSazsJGg8O8=;
-        b=DvBunkzR3aTXEws5zejCNZYt1dYO8HtNv22PpeD6BZKmjD3eCmS2gsZcsK+FCMSpNb
-         QS8k2g9Z/aROFkkN6BnY14YNekty0/5l1xGNxGO8EhvXOGrstspSFxWTH4A+zvTVeNQX
-         ddp6QzKJ2HIh72VkQS49DM8JLBZGnlhsln2b/UPTx4iJI7cFrm3RaHr2zH1kfyuFaHLP
-         CTzk3hfIXFofXherSmYH5jbKYjpSmUuChlAw5RCe3HjNi6pOWBfnnrTNKgtIZ2o/Qr8C
-         E5Ox8aAYefsHXyyeGqzoEMbb4p0l2CPZOs9xkm1cuTOEvAsuRQarmwSElYU9rjTfgSb2
-         z6Zw==
+        d=linaro.org; s=google; t=1702537756; x=1703142556; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=9O1GnUq4pw6hl4a/GhVKNLNjzNzEUMAMJcd0utEyLiE=;
+        b=Jrg0onkEW7cZmLkXpgpixdbps3bf+3816C8u1ryDdu8/S6ggiSXCSaFC6mMW8w0mRq
+         UCcapzzEQkiotnyscr46KOGVMADBNQB8Lk0O4I3sPvYR42qwV2NiiTCYUHIyDSOcTj5J
+         KX67eBXfhmTtxwdOYnl58EhYT6avc+qjXpC8Lc6lidtfiTh31pPeBoZSAeblwtB8ienX
+         D7n7IPRZXu3ERL9Ux/PnxTgMeiQKctPlssDqgCrNd80J91KRbtFFuEjbnPOEHugVglUe
+         SPoqk+sChWeCYtEb89exiKxuTfeNxPHlG/ZNy83rxHQUcsWUPgu+fbnKQtjyMoLrYAO/
+         cqWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702535621; x=1703140421;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1702537756; x=1703142556;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=DQa3Oh83Y7BJ5yvT1MB3NL690VGSVlOorSazsJGg8O8=;
-        b=cit8caBGBmaMBr1p0dpnCGiWtyOBGbnhYMzPS3NhE9VyBGxB50JyvXPo59XJmafoyd
-         795gUKNEk83TpX6RrSnh42Fh+vNHC5Cj6xkHLypfMJxxkbrXxJJNaIyrduHDH3qdbChf
-         KvGgdNC5pNaSH3FIZdk81Aru8QZ2YtCa4ZNZZtMvZGBNmneO+nsqTVRx/SxfIt1mQ7HP
-         WVSLreRGQYEe7A3lEXsy8Y06tH+vkTUqUcSKiszhXVDkkbvx53lKEjqr3GxF7+JtdjvN
-         jYQE5+mwV7rMO12B8t33eF+EwUls3qsTadYbvNJ90oLM/FhuAnrorYxseE/PTBqDTIg0
-         z2nQ==
-X-Gm-Message-State: AOJu0YyOgMiHznkeew15Du7lLvGcQDqZnqJi4ul1HtVpHMKF/2K1dczy
-	i53iPbPkDnOXU/cG99gWQI4v
-X-Google-Smtp-Source: AGHT+IEz9WJYleLURMpZ+fxmZXd0E4sPrwuGGZyApaPAAwDEgLTtswTy+mHFNCYGonBLoIypIEFaLQ==
-X-Received: by 2002:a05:6e02:184b:b0:35d:6d53:5439 with SMTP id b11-20020a056e02184b00b0035d6d535439mr14590043ilv.11.1702535621114;
-        Wed, 13 Dec 2023 22:33:41 -0800 (PST)
-Received: from localhost.localdomain ([117.213.102.12])
-        by smtp.gmail.com with ESMTPSA id q19-20020a170902bd9300b001cc2ebd2c2csm11639491pls.256.2023.12.13.22.33.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Dec 2023 22:33:40 -0800 (PST)
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: lpieralisi@kernel.org,
-	kw@linux.com,
-	bhelgaas@google.com
-Cc: kishon@kernel.org,
-	mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH] PCI: epf-mhi: Fix the DMA data direction of dma_unmap_single()
-Date: Thu, 14 Dec 2023 12:03:28 +0530
-Message-Id: <20231214063328.40657-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        bh=9O1GnUq4pw6hl4a/GhVKNLNjzNzEUMAMJcd0utEyLiE=;
+        b=kDB5tYUdFwkoA427bOPiF+/QhELuD14hkz0GFaO32nDpR6S9w+XWHm0IGDJTGG34P5
+         G7YdBwCB+fmMUFle072vy+5NEzYlqHLFSNpRXYq8W6MzrBGembJeJbaIvsBE22k+TjBy
+         LuYojNakEU9KkGbpuAD7YinUwOSOKR7TX8+sHOAp1okM77vEWAQli8ALHl8YKaqRXeSu
+         5g5kxFss/Pda3+zJexOv7xGu4PlDBIDSzXqX0GfY/OBB3P3ezJS5pMBjsp0cvVitjLLN
+         Di4AWqurUPH7ADqNOzdzWrCkk9bCUhRvt0riSH8sBjHwgwA5ysepnca3YZaX2lXaiFFs
+         FK1g==
+X-Gm-Message-State: AOJu0Yx7QnZz1n8YlAkKCKtxfN0SxTk2NKPxNhtEc+KXeDJiB2YUP8E8
+	Mx2jaSRRRbJjj5eszoz6UalcBQJcJjVlzRQT4jCNZDw+cyC0oXLIZfU=
+X-Google-Smtp-Source: AGHT+IG078aMdmbmisgdnRLiC9BHttQaRKTw1dmngc8Uzuyuor0vsPrA1eyS3c5KPIlT0ZUu4886PyAXYBHaW+v9aKM=
+X-Received: by 2002:a25:8041:0:b0:dbc:ddf4:4b14 with SMTP id
+ a1-20020a258041000000b00dbcddf44b14mr1157789ybn.50.1702537756642; Wed, 13 Dec
+ 2023 23:09:16 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20231214062847.2215542-1-quic_ipkumar@quicinc.com> <20231214062847.2215542-3-quic_ipkumar@quicinc.com>
+In-Reply-To: <20231214062847.2215542-3-quic_ipkumar@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 14 Dec 2023 09:09:05 +0200
+Message-ID: <CAA8EJpr61JuznqfdMG96mjrqquf2Qbfe=potB5vzk43XexWj2w@mail.gmail.com>
+Subject: Re: [PATCH 02/10] clk: qcom: ipq5332: Add separate clocks for PCIe
+ and USB for Combo PHY
+To: Praveenkumar I <quic_ipkumar@quicinc.com>
+Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, 
+	mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org, 
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, bhelgaas@google.com, 
+	lpieralisi@kernel.org, kw@linux.com, vkoul@kernel.org, kishon@kernel.org, 
+	mani@kernel.org, quic_nsekar@quicinc.com, quic_srichara@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-pci@vger.kernel.org, linux-phy@lists.infradead.org, 
+	quic_varada@quicinc.com, quic_devipriy@quicinc.com, quic_kathirav@quicinc.com, 
+	quic_anusha@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
-In the error path of pci_epf_mhi_edma_write() function, the DMA data
-direction passed (DMA_FROM_DEVICE) doesn't match the actual direction used
-for the data transfer. Fix it by passing the correct one (DMA_TO_DEVICE).
+On Thu, 14 Dec 2023 at 08:29, Praveenkumar I <quic_ipkumar@quicinc.com> wrote:
+>
+> Qualcomm IPQ5332 has a combo PHY for PCIe and USB. Either one of the
+> interface (PCIe/USB) can use this combo PHY and the PHY drivers are
+> different for PCIe and USB. Hence separate the PCIe and USB pipe clock
+> source from DT, and individual driver node can be used as a clock source
+> separately in the gcc. Add separate enum for PCIe and USB pipe clock and
+> change the parent in corresponding structures.
+>
+> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
 
-Fixes: 7b99aaaddabb ("PCI: epf-mhi: Add eDMA support")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
+Please use your full name for the git authorship and or the S-o-B
+tags. This applies to the whole series.
 
-Bjorn, Krzysztof, I'd like to apply this patch to MHI tree on top of eDMA
-async patches due to dependency:
-https://lore.kernel.org/linux-pci/20231127124529.78203-1-manivannan.sadhasivam@linaro.org/
+Other than that:
 
- drivers/pci/endpoint/functions/pci-epf-mhi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-index 472bc489b754..d3d6a1054036 100644
---- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-@@ -424,7 +424,7 @@ static int pci_epf_mhi_edma_write(struct mhi_ep_cntrl *mhi_cntrl,
- 	}
- 
- err_unmap:
--	dma_unmap_single(dma_dev, src_addr, buf_info->size, DMA_FROM_DEVICE);
-+	dma_unmap_single(dma_dev, src_addr, buf_info->size, DMA_TO_DEVICE);
- err_unlock:
- 	mutex_unlock(&epf_mhi->lock);
- 
+> ---
+>  drivers/clk/qcom/gcc-ipq5332.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/clk/qcom/gcc-ipq5332.c b/drivers/clk/qcom/gcc-ipq5332.c
+> index f98591148a97..aa0f616c3b1b 100644
+> --- a/drivers/clk/qcom/gcc-ipq5332.c
+> +++ b/drivers/clk/qcom/gcc-ipq5332.c
+> @@ -25,7 +25,8 @@ enum {
+>         DT_SLEEP_CLK,
+>         DT_PCIE_2LANE_PHY_PIPE_CLK,
+>         DT_PCIE_2LANE_PHY_PIPE_CLK_X1,
+> -       DT_USB_PCIE_WRAPPER_PIPE_CLK,
+> +       DT_PCIE_WRAPPER_PIPE_CLK,
+> +       DT_USB_WRAPPER_PIPE_CLK,
+>  };
+>
+>  enum {
+> @@ -728,7 +729,7 @@ static struct clk_regmap_phy_mux gcc_pcie3x1_0_pipe_clk_src = {
+>                 .hw.init = &(struct clk_init_data) {
+>                         .name = "gcc_pcie3x1_0_pipe_clk_src",
+>                         .parent_data = &(const struct clk_parent_data) {
+> -                               .index = DT_USB_PCIE_WRAPPER_PIPE_CLK,
+> +                               .index = DT_PCIE_WRAPPER_PIPE_CLK,
+>                         },
+>                         .num_parents = 1,
+>                         .ops = &clk_regmap_phy_mux_ops,
+> @@ -1072,7 +1073,7 @@ static struct clk_regmap_phy_mux gcc_usb0_pipe_clk_src = {
+>                 .hw.init = &(struct clk_init_data) {
+>                         .name = "gcc_usb0_pipe_clk_src",
+>                         .parent_data = &(const struct clk_parent_data) {
+> -                               .index = DT_USB_PCIE_WRAPPER_PIPE_CLK,
+> +                               .index = DT_USB_WRAPPER_PIPE_CLK,
+>                         },
+>                         .num_parents = 1,
+>                         .ops = &clk_regmap_phy_mux_ops,
+> --
+> 2.34.1
+>
+>
 
-base-commit: f5668f251e29292326e45a022f933c15740a8af2
+
 -- 
-2.25.1
-
+With best wishes
+Dmitry
 
