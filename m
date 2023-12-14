@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-4851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4852-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C532813E4F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 00:35:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 29A69813E56
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 00:37:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1851B280D6B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 23:35:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DB825281378
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 23:37:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96FDC6C6E7;
-	Thu, 14 Dec 2023 23:35:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 352E96C6E7;
+	Thu, 14 Dec 2023 23:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PJfJZvW+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gNvqmDHn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5796C6DC
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 23:35:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998066C6EC
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 23:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-50be9e6427dso44471e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 15:35:09 -0800 (PST)
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-40c3ceded81so1109885e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 15:37:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702596908; x=1703201708; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1702597063; x=1703201863; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=cCjCAeBnLwqYq+PKXSQZ5D5FxgW5MIAlMxJR3IBerbU=;
-        b=PJfJZvW+2NvbXinnTSXjYUyDTRqjO6mxjgRrYu3QNUuRORMDGc8YBu58hRi/ENuimx
-         CnQFcNgUERt08cS4MCurdmvH6djM0ijAieZb4iA5/JuSKkSs6I/We8Hg3W/7Wu0FHfar
-         s05ScHPQDzR2BamiRMTZsBcKJl5Zq4GFDkJ+hXDs2fDzseXsw2eUyhp5Zo5L+ZDpNwbZ
-         /+5eUH3dWo9W7p1tlzEyadUy5Yyg6ljjeMtc/Jk7ugABknDQXIPMn+1/e7YYE+QfGlQx
-         5yqwpfdv7VKKzGXEtJyjgXo6eM/hY/w1gGCaNUKe79c04KN+9ZF59U9FswCJ/yWQC6S8
-         9eIw==
+        bh=7VVO89L9VZTI3O6OBS8Xb5DAR6WYttB1FJb4u0vyyCs=;
+        b=gNvqmDHnjciakuczgS9s0H+VShnwqyzKY2n/vKDg5BNFE/qyvp9zYA0JZAYiv4PHC4
+         s/4lsex5L2Wqohr7/yzFuYUgu21PlH3rOliZacLb7pa5IL2eM2iJpgzsX++FDkEVA6Q3
+         aI7D49bYa+he3WTuMFqSytOzEQX8Mt5Po9r5+dt17wfYWEx5aWiUGDfN+sFVfJ7NoI70
+         c/wQeewZK68jpd4xpkMzoYe0AEQRughb4rtyu3rV5/fWiKotdCg8nn5w7D1m1BcDKlQ6
+         UmxGgIYvurvbjvrtD4QNBbv4MeQtgJ73xF3ddosHy7Db134uFbluNXMa4FlcmWTE3Wr8
+         9NxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702596908; x=1703201708;
+        d=1e100.net; s=20230601; t=1702597063; x=1703201863;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cCjCAeBnLwqYq+PKXSQZ5D5FxgW5MIAlMxJR3IBerbU=;
-        b=fGPngrsYbIWnivZId9im9roTiz4tyz8wb6BKnzvlHGUSpyQ9CkZW+hj9IZcY3kyVYj
-         yX6eveDCNV1YuYsMTa62fYU29peEEk+yP0kKz2Ax8LIeVuQtFR+b/A+kU31YY67cY2//
-         5mjDKo48tbH8SeEvkfPLYjo6yyKIx8XG5xVYTYxCEgambqkaw2f+k1fnhrBUoo2yys+X
-         1IJakh4xfjMyT+rQj2RsCFVWqG6cjn2O+itP8klKcOXL7nc+82cNDi9GL75exuFVdVYw
-         xBHHLvBAafHBe51IJBtM2N5Wf7X+/PxWqwGGmnVwxyGAKEew4+2Fh+cg1BqKw9xdkBa8
-         9nIA==
-X-Gm-Message-State: AOJu0YwMm89IfpX7HKlQv1MXym6EEisxX0lZKxGH0dVjTfQGUAzXlPqm
-	cGKYd/PbuC0hYSZD9s4iS3716Q==
-X-Google-Smtp-Source: AGHT+IHk+V6E99wOnwH3LpIHxgY+FvlXwtTYIC2FOlq6dWQcB/783FD0Qdz7i/m4qDfKpGhUFp+ZuA==
-X-Received: by 2002:ac2:457a:0:b0:50c:180:2169 with SMTP id k26-20020ac2457a000000b0050c01802169mr4724617lfm.70.1702596907901;
-        Thu, 14 Dec 2023 15:35:07 -0800 (PST)
+        bh=7VVO89L9VZTI3O6OBS8Xb5DAR6WYttB1FJb4u0vyyCs=;
+        b=sqXaKKjEv2J6Q0Bp9alvrr5cer6IuYmt9A/HesiRk998HpIVHTgk1xtDWD50KZ8/F5
+         /YU5upvu6Psq1bBLEpwUBWsaHGnt+2uNkGz8gqL2JLJPlmaK5OP0qA90aHBIGY33jM85
+         Aq6FA2SmzR0zapRozcuyoNC8K3Y7kh1+P4kIjNsSFfOX4h2SUfOCk9AGuZqM0b7hipfc
+         6Y3wh4o21YG/eRdfDwN2Y99t4Bff3GY8w9io6q2l6p+lxHgT8tQySapqTrEw/YCUVxvt
+         f5ZDldIyx7Ir0N6eIkKHZgfAiwNNYSEDBlJNxRLSVc1noSx4wlW+j+RJQn35Gfcv4gGm
+         YXmA==
+X-Gm-Message-State: AOJu0YwJa42yPNFF1DrsTzhFH12XYN6cfG52ic0Muga7DgFh3I8qMlwO
+	+hVKRCSOF2atsTIvaaQKjK36u0r3Kmc5NjTmgFk0pQ==
+X-Google-Smtp-Source: AGHT+IEIw6fODakxs+SDKFkkOz22erjEWVpm1FcZcPyyqFr5OfNKp0LxnOkROs9ikxtK6hyVPI59WQ==
+X-Received: by 2002:a05:6512:3408:b0:50b:fa1d:aecc with SMTP id i8-20020a056512340800b0050bfa1daeccmr4627770lfr.29.1702597042079;
+        Thu, 14 Dec 2023 15:37:22 -0800 (PST)
 Received: from [172.30.205.72] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id z15-20020a195e4f000000b0050be0049075sm2016600lfi.251.2023.12.14.15.35.06
+        by smtp.gmail.com with ESMTPSA id f33-20020a0565123b2100b0050be242f50esm1981318lfv.58.2023.12.14.15.37.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Dec 2023 15:35:07 -0800 (PST)
-Message-ID: <77d93be8-0455-493e-9ffe-2cfe9b38d855@linaro.org>
-Date: Fri, 15 Dec 2023 00:35:06 +0100
+        Thu, 14 Dec 2023 15:37:21 -0800 (PST)
+Message-ID: <f6eb7bf1-7592-4313-9fe0-a3a8b8039ab5@linaro.org>
+Date: Fri, 15 Dec 2023 00:37:20 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,68 +66,50 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: x1e80100-crd: Enable more
- support
+Subject: Re: [PATCH v2 2/2] ARM: dts: qcom: msm8926-motorola-peregrine: Add
+ initial device tree
 Content-Language: en-US
-To: Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+To: =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
  Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Sibi Sankar <quic_sibis@quicinc.com>,
- Rajendra Nayak <quic_rjendra@quicinc.com>
-References: <20231215-x1e80100-dts-missing-nodes-v3-0-c4e8d186adf2@linaro.org>
- <20231215-x1e80100-dts-missing-nodes-v3-2-c4e8d186adf2@linaro.org>
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+ ~postmarketos/upstreaming@lists.sr.ht
+References: <20231214-peregrine-v2-0-a35102268442@apitzsch.eu>
+ <20231214-peregrine-v2-2-a35102268442@apitzsch.eu>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231215-x1e80100-dts-missing-nodes-v3-2-c4e8d186adf2@linaro.org>
+In-Reply-To: <20231214-peregrine-v2-2-a35102268442@apitzsch.eu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
 
 
-On 12/14/23 23:48, Abel Vesa wrote:
-> Enable touchscreen, touchpad, keyboard, display, pcie and usb
-> support.
+On 12/14/23 21:59, André Apitzsch wrote:
+> This dts adds support for Motorola Moto G 4G released in 2013.
 > 
-> Co-developed-by: Sibi Sankar <quic_sibis@quicinc.com>
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> Co-developed-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Add a device tree with initial support for:
+> 
+> - GPIO keys
+> - Hall sensor
+> - SDHCI
+> - Vibrator
+> 
+> Signed-off-by: André Apitzsch <git@apitzsch.eu>
 > ---
->   arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 221 ++++++++++++++++++++++++++++++
->   1 file changed, 221 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> index 7532d8eca2de..d44898453315 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> @@ -401,10 +401,144 @@ vreg_l3j_0p8: ldo3 {
->   	};
->   };
->   
-> +&i2c0 {
-> +	clock-frequency = <400000>;
-> +
-> +	status = "okay";
-> +
-> +	touchpad@15 {
-> +		compatible = "hid-over-i2c";
-> +		reg = <0x15>;
-> +
-> +		hid-descr-addr = <0x1>;
-> +		interrupts-extended = <&tlmm 3 IRQ_TYPE_LEVEL_LOW>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&tpad_default>;
-property-n
-property-names
-
-patch-wide
-
-otherwise
+Excellent, thanks!
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+[...]
+
+> +		pm8226_lvs1: lvs1 {
+> +			/* Pull-up for I2C lines */
+> +			regulator-always-on;
+> +		};
+just one q: is this intended to stay a-on, or will it be bound
+to some i2c host (presumably camera)?
 
 Konrad
 
