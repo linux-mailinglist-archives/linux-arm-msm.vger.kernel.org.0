@@ -1,69 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-4645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 306EA8126B8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 05:58:56 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69CDD8126CB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 06:10:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1455B1C21115
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 04:58:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 70EBA1C211B3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 05:10:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 249C5610C;
-	Thu, 14 Dec 2023 04:58:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CF72610B;
+	Thu, 14 Dec 2023 05:09:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EnsrM9Yt"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="muls9Ixx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B2CDD0
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 20:58:47 -0800 (PST)
-Received: by mail-oi1-x235.google.com with SMTP id 5614622812f47-3b9dbbaa9a9so6417604b6e.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 20:58:47 -0800 (PST)
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8A7D114
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 21:09:50 -0800 (PST)
+Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-6ceb2501f1bso6780818b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 21:09:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702529926; x=1703134726; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1702530590; x=1703135390; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=M/eDbBnSAkVRJUrxqWp2z02YHOKbVeP2jj9zgSj9Xq0=;
-        b=EnsrM9YtjgUetkpf59lJhmRG1lSG0q3gUnrjecsuAGyHIH4cCBgamD4rO6c7oQUrII
-         dFFRiuvKsvS3XIGEm8SVbgoLd2zNF2aSfCzvYD42W75BdP6inzOQZxWM4kNB3Um/zCvv
-         I/UZeELcCUWZ8j6VKZgimMXVokcOjGruzqUjcTOcfe3QAo4x6lA320cmUXIlHHVgENCG
-         j4jpBoQEGzauCQxdOgj4drFtl87ORy7hbZ3xekgBVDX60MHuivcHfBkIjvlBsUXPlm3G
-         +MGqNeMcrMjyd5z07bsXhPyLa92ll9m9v1kWmJofQFJnVAnBfnYoNGH1Lrq6amhzqJ7W
-         9a8Q==
+        bh=HRQN/5Gl+E+Y/YwiwR7f4dgjP1vz1MfNF5W9YJDw5ro=;
+        b=muls9IxxcvhgabpJnsNRrjQqVmbLHeRx9Z19ijPtLKdd6DTHqLeN9szmdTQFEwpc2o
+         XvWXG/Ug7BQ5NCowzMWQXhdGAqdRSQ36nmPSem1r+rFZ6QjmZjkKoTjzblD+7jb/p5uC
+         uRil78WewuDF5wHA3/X+olXRHjfQLDe676duAZpmEtBMxC+uigAe0ZAJn4KR78fAvoNQ
+         C7Cf4W7AyFuHOJNjS08euBGaoDXQ4HOkNnYB0mxGQPk+NLfLDFxl9rOPAIQ1BCdCqr3c
+         SWA2IVRpgQ3eAtZJ0YE+qYtkrdo430yg5lzdw6mGQGnoXhTAI9aCXdi9xelC674BykLY
+         TMtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702529926; x=1703134726;
+        d=1e100.net; s=20230601; t=1702530590; x=1703135390;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=M/eDbBnSAkVRJUrxqWp2z02YHOKbVeP2jj9zgSj9Xq0=;
-        b=vzZgBhO5bodZzYfYM2m2LH57pWGNewL+uhpURMxBqJRFA5nfkqxb9JX2hA/cJu+1cU
-         or3EeSja6DCx27O8EJtSyTi/d2IP3jkNQ1JDvyC24URQ2EmGJfrslB/0X1GUJlXB25gU
-         qtg7o/AcEJw/0v+1QZZa/KVapHpxRw3viJRxGb3GckO6CwwynXvKIjAo1PzcXD40A9P8
-         nXim/iry559g33glBL0t+RNfs7XS7n+bfr2UF/tTA8tcKe2BlQQkxX/qqn2Hljk4dS0+
-         XxCZdUAC/aX+aw5mRuarth4bmuUAJKvvXrwlVjRC659o2nimPl+2YVnp5Bt0tjV7EjqO
-         ASug==
-X-Gm-Message-State: AOJu0YzOpmr7yv1aRW4MCoJBxcJwVwwLhQS/LEpZ1aCmWgnGGcQThluF
-	p8i0hXU2VeGyv2wetfKtB/S8
-X-Google-Smtp-Source: AGHT+IEsGjbaCX0celZ3IskU0RM8rY0gp0k/KHnbnZcAJOW0IfN7a0QoV+GxEx1NCpC9se2uHBGbng==
-X-Received: by 2002:a05:6808:1509:b0:3b8:5fec:5d6 with SMTP id u9-20020a056808150900b003b85fec05d6mr11796197oiw.27.1702529926128;
-        Wed, 13 Dec 2023 20:58:46 -0800 (PST)
+        bh=HRQN/5Gl+E+Y/YwiwR7f4dgjP1vz1MfNF5W9YJDw5ro=;
+        b=WbGk9X1NgKixpoMyovUopfnuLq9F2cC64pzq9ZVIAHKL3ZTr9FzHvqqz/OGJJJaLQp
+         f0LIzc3XK4QIhdMgoXnGrHFXajh1DDFoR+21gAOxPhseQsWwRzFso7V0GFqlrAGxDc0r
+         oZol/9Kksm/N/pjpcjDvp1aEuq8A2arraBSeVypcAJxJPALI118DFcf0Fvg494JtXMEJ
+         60ykKWsiMsFO0ZJUYWnbP6goO/aFs9lJ4BkagLQuOLU6Ap8gj3ZvlhLo2pBZbzqW1c2l
+         IBN2wolBejVdpBE54+CC7IufU+6JRoJQ7Q8KJ5NZNR8Mg3zJ5jljs0xed8j3TcVlMAx7
+         Sxjg==
+X-Gm-Message-State: AOJu0Yzog/RiV7Uf+p1lEP/eBb5fGJAkhNnrpYueT+mhMaKSyWN1fFLH
+	HsGPlkjYJFkScu5awwUUIhX3sLCWBkcBeGadYg==
+X-Google-Smtp-Source: AGHT+IFoiD3gBR12SGaJPAivjdmpPvziAoacTLgEk0cWcQakHmt7CoNZ8PQ69964IUM6048brgNieg==
+X-Received: by 2002:a05:6a20:1604:b0:190:3b35:5999 with SMTP id l4-20020a056a20160400b001903b355999mr12233369pzj.9.1702530590210;
+        Wed, 13 Dec 2023 21:09:50 -0800 (PST)
 Received: from thinkpad ([117.213.102.12])
-        by smtp.gmail.com with ESMTPSA id c14-20020aa781ce000000b006d082dd8086sm7041845pfn.214.2023.12.13.20.58.43
+        by smtp.gmail.com with ESMTPSA id z17-20020a17090ab11100b0028a69db1f51sm7950911pjq.30.2023.12.13.21.09.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Dec 2023 20:58:45 -0800 (PST)
-Date: Thu, 14 Dec 2023 10:28:39 +0530
+        Wed, 13 Dec 2023 21:09:49 -0800 (PST)
+Date: Thu, 14 Dec 2023 10:39:43 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: jejb@linux.ibm.com, andersson@kernel.org, konrad.dybcio@linaro.org,
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: martin.petersen@oracle.com, jejb@linux.ibm.com, andersson@kernel.org,
 	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
 	linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
 	ahalaney@redhat.com, quic_nitirawa@quicinc.com
 Subject: Re: [PATCH v2 00/17] scsi: ufs: qcom: Code cleanups
-Message-ID: <20231214045839.GB2938@thinkpad>
+Message-ID: <20231214050943.GC2938@thinkpad>
 References: <20231208065902.11006-1-manivannan.sadhasivam@linaro.org>
- <yq1zfydfmqu.fsf@ca-mkp.ca.oracle.com>
+ <b2d6853e-2de7-4e12-85f8-c130d9a745a4@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,29 +73,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <yq1zfydfmqu.fsf@ca-mkp.ca.oracle.com>
+In-Reply-To: <b2d6853e-2de7-4e12-85f8-c130d9a745a4@linaro.org>
 
-On Wed, Dec 13, 2023 at 11:10:41PM -0500, Martin K. Petersen wrote:
-> 
-> Manivannan,
-> 
+On Sat, Dec 09, 2023 at 06:42:31PM +0100, Konrad Dybcio wrote:
+> On 8.12.2023 07:58, Manivannan Sadhasivam wrote:
+> > Hello,
+> > 
 > > This series has code some cleanups to the Qcom UFS driver. No functional
 > > change. In this version, I've removed code supporting legacy controllers
 > > ver < 2.0, as the respective platforms were never supported in upstream.
-> >
+> > 
 > > Tested on: RB5 development board based on Qcom SM8250 SoC.
+> > 
+> > - Mani
+> > 
+> > Changes in v2:
+> > 
+> > * Collected review tags
+> > * Fixed the comments from Andrew
+> > * Added a few more patches, most notably one removing the code for old
+> >   controllers (ver < v2.0)
+> FWIW i found this snipped from a downstream commit from 2014:
 > 
-> Applied to 6.8/scsi-staging, thanks!
+> 8084 : 1.1.1
+> 8994v1 : 1.2.0
+> 8994v2 : 1.3.0
+> 
+> I'm yet to see any 8994 production device utilizing UFS (it wasn't
+> very good or affordable in 2014/15 IIRC), so I think it's gtg.
 > 
 
-Thanks Martin! Andrew spotted an issue on patch 16/17 and I'm going to submit a
-patch fixing that. Please either squash it or apply it separately at your own
-convenience.
+Thanks for digging! I was told that SoCs based on UFS 1.x controllers were not
+widely used in production, though I don't know why.
 
 - Mani
 
-> -- 
-> Martin K. Petersen	Oracle Linux Engineering
+> Konrad
 
 -- 
 மணிவண்ணன் சதாசிவம்
