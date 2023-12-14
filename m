@@ -1,40 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-4680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 324F08129A7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 08:43:53 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 857C581299E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 08:43:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 93554B211BF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 07:43:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B74271C214AC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 07:43:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A95314AAC;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EEA113AE9;
 	Thu, 14 Dec 2023 07:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="osFoWmK9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SsqxBolG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475F513AC5;
-	Thu, 14 Dec 2023 07:43:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BECA3C433C8;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23EA412E6F;
+	Thu, 14 Dec 2023 07:43:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7EAEC433C7;
 	Thu, 14 Dec 2023 07:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1702539819;
-	bh=OEMk/nxMTR+a3ksA2UJ1yTut+dCnmQnWva7ppIneGCc=;
-	h=From:To:Cc:Subject:Date:From;
-	b=osFoWmK9rwckrPYfephyKYoWACTfSb/oyYSpzZ71wSgHuVd5F+y0II14i2SQ4SLRQ
-	 3N3GPkj7/NQMtXu/JbC+z8gFSjlBufcTnavtSou6wrB1CutW29Jk8d6axLfuMgreFF
-	 I5qVRxdgkmgnCq9IHdiGWWZ01QuQM5hz+bcax6GrPzuDWqjuSl+nROJPBj+RixWP97
-	 QRGQBObLS7S7G77H4+hBMxkNvNyrwgKzc2WOtNVchvG7wcGYUPzJO78UST0I3oWVb+
-	 OG2GEkef9Cz32wddWMrqn0aV4eXSYK8ihOlCGMX1kAvBfr2XZLCXuNrQLyLKCQzVTJ
-	 ODq5tQBWGGOpA==
+	bh=Yl2x7eLhM78aBJkayHAzBhB3fDnzcX22imLrs5W4058=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=SsqxBolGwNn2WnFESjwwmEsD54cH3Z9K77vTR8cTgI2DXnvMZ1nALvvOulJJJtnNe
+	 ikisnu2cwX6pz4NPDFO8vXhVYy0ilA52gzBMjmB+fwLq89tvqfZPARYPxzdKU5c4Km
+	 SjjmWGErk0sq4lAGnMSphoGYi3pPcYMRyXFnhVNYffJzKavKW48yMlVVHVg0Dt+pPF
+	 apzjFgtMtMTYHfNy6vl3YC1zFif9FhfJreUf95DCvX7sff2JNHXRM6WkwYEPWBg23o
+	 ffKecZ70VB9xsgpSzvDf4MeF4MXiGZidX4d/Hei6+UQt3+rTPfhLyqjBQiu8Qh4Aku
+	 hMh3I0+qGy6eg==
 Received: from johan by xi.lan with local (Exim 4.96.2)
 	(envelope-from <johan+linaro@kernel.org>)
-	id 1rDgNe-0002s4-1A;
+	id 1rDgNf-0002s6-0Y;
 	Thu, 14 Dec 2023 08:43:39 +0100
 From: Johan Hovold <johan+linaro@kernel.org>
 To: Bjorn Andersson <andersson@kernel.org>
@@ -47,11 +47,15 @@ Cc: Andy Gross <agross@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 0/3] arm64: dts: qcom: fix USB wakeup interrupts again (pt 2)
-Date: Thu, 14 Dec 2023 08:43:16 +0100
-Message-ID: <20231214074319.11023-1-johan+linaro@kernel.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	stable@vger.kernel.org,
+	Richard Acayan <mailingradian@gmail.com>
+Subject: [PATCH 1/3] arm64: dts: qcom: sdm670: fix USB DP/DM HS PHY interrupts
+Date: Thu, 14 Dec 2023 08:43:17 +0100
+Message-ID: <20231214074319.11023-2-johan+linaro@kernel.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20231214074319.11023-1-johan+linaro@kernel.org>
+References: <20231214074319.11023-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,30 +74,34 @@ interrupt provider as required. This leads to the current Linux driver
 failing to probe instead of printing an error during suspend and USB
 wakeup not working as intended.
 
-While at it, fix also the SS PHY interrupt so that it too can be used to
-wakeup the system up.
+Fixes: de3b3de30999 ("arm64: dts: qcom: sdm670: fix USB wakeup interrupt types")
+Fixes: 07c8ded6e373 ("arm64: dts: qcom: add sdm670 and pixel 3a device trees")
+Cc: stable@vger.kernel.org      # 6.2
+Cc: Richard Acayan <mailingradian@gmail.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+---
+ arch/arm64/boot/dts/qcom/sdm670.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Thanks to Konrad and Krishna for providing the sdm670 PDC interrupts
-numbers. The sc8180x SS PHY vectors I inferred from sdm670/sdm845/sm8150
-which appear to use the name configuration.
-
-After this series, only sm6375 remains to be fixed and I believe Bjorn
-is trying to dig out the corresponding vectors.
-
-Also note that these patches have only been compile tested.
-
-Johan
-
-
-Johan Hovold (3):
-  arm64: dts: qcom: sdm670: fix USB DP/DM HS PHY interrupts
-  arm64: dts: qcom: sdm670: fix USB SS wakeup
-  arm64: dts: qcom: sc8180x: fix USB SS wakeup
-
- arch/arm64/boot/dts/qcom/sc8180x.dtsi | 4 ++--
- arch/arm64/boot/dts/qcom/sdm670.dtsi  | 8 ++++----
- 2 files changed, 6 insertions(+), 6 deletions(-)
-
+diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+index c873560ae9d5..fe4067c012a0 100644
+--- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+@@ -1295,10 +1295,10 @@ usb_1: usb@a6f8800 {
+ 					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
+ 			assigned-clock-rates = <19200000>, <150000000>;
+ 
+-			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 488 IRQ_TYPE_EDGE_BOTH>,
+-				     <GIC_SPI 489 IRQ_TYPE_EDGE_BOTH>;
++			interrupts-extended = <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
++					      <&intc GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
++					      <&pdc 8 IRQ_TYPE_EDGE_BOTH>,
++					      <&pdc 9 IRQ_TYPE_EDGE_BOTH>;
+ 			interrupt-names = "hs_phy_irq", "ss_phy_irq",
+ 					  "dm_hs_phy_irq", "dp_hs_phy_irq";
+ 
 -- 
 2.41.0
 
