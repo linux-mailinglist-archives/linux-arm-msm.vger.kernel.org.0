@@ -1,62 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-4786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FF0D8136BB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 17:50:16 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7728C8136B9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 17:50:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D1B5C1C20AD0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 16:50:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2D1A12813B9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 16:50:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FCF461FC8;
-	Thu, 14 Dec 2023 16:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D066560BB3;
+	Thu, 14 Dec 2023 16:50:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mOAGoNiw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UcwtWV+W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64F5F114
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 08:50:00 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-a22deb95d21so470676766b.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 08:50:00 -0800 (PST)
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B62E811D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 08:50:01 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-a1c7b20f895so968753166b.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 08:50:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702572599; x=1703177399; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=yBhzbmAj67WH53W1wvQDKaWskYMMj2BHh/tnbYgx8HA=;
-        b=mOAGoNiwOHxsd8JB+n9ovqwYriBIEUBbqg9vqq3SCFrNBoZtTDv+HJvOZSZv7Pbj+X
-         rvBtXZMpTZoXyJsFLwhCSijebGqxz1std20Ge6QqEh+5A6y3cS+SW4o9A8wejp3CPToh
-         a3r16lmddrrJICgPbtUjWUORcbQ53nSEPD1ijohQfk1ZzvSVZcdUU7nGopzmJsSeuIFx
-         tkmUO0vcbarDwrIv+FnDhMDDTKa6w8vr/fxoUu8yHx4Feo19D3aKrvWOMirQ2sy9Fn04
-         rItLmfNk2xGmq2A27lCtvbaiCQdj5RD6yn/Ek+5E9AuEwOl3/gQT/yjQAQ4o/6xsbiLG
-         EGxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702572599; x=1703177399;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1702572600; x=1703177400; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=yBhzbmAj67WH53W1wvQDKaWskYMMj2BHh/tnbYgx8HA=;
-        b=hfeA5+Li0p3BaddM/gLwkwIjZVehsXuauYTt8Sdp8DbKpdzxnnEgpfJtprm5zhjHyx
-         IGAE5odwnMqwf0TcRJ9Tukj11tbGjAxvEx+XrjzU+L51lF+kPg54fqgu4vj5WfBoWH0J
-         9xvDZZneLLVDSiMfll27KpRPFuzG/RwlzCjgcyVeTJ5zVnwjvYGf1g7FoJNDER3LTNhJ
-         STNFWp4FNpwpwVZxllvG1CvtfW+e0HtXWxDEDS9XhnICIUKL0vRYx2OLytSbDRtO4hb0
-         j+7+VRc8IK1wZJDoexspDCp72dPXMSko1E0f84+Eo8De5qZxEE5F7QLOrcGzLpWiEK3Z
-         qfMQ==
-X-Gm-Message-State: AOJu0YyktkKiti+MEbokpX2lk3Cj8vjJQrM7D1aUaI9sZxr/42M9Lbyn
-	RzrPnAv1W2f3hmGUNudKDcnucw==
-X-Google-Smtp-Source: AGHT+IEvlVXD+BSI5/aZy9yOj/uDy7WD6GyGewOVWoXdC/Vg7Bjyvvpaal1WJyslGbxYqdbpy2OG8Q==
-X-Received: by 2002:a17:906:cf99:b0:a1b:d9d4:26db with SMTP id um25-20020a170906cf9900b00a1bd9d426dbmr5302654ejb.124.1702572598826;
-        Thu, 14 Dec 2023 08:49:58 -0800 (PST)
+        bh=K2Wt9fAXkZ3ocbSZ++hiJKJPMhMtN2kMdg9DBtyKus4=;
+        b=UcwtWV+WdTMGR7I1zeia9qz89u1Tqwpuq0w8TDU8jeNV4CVsE5whVdEiyrWP2URiFg
+         LGSKghcysSV5MbK0ttLgcqjwSUFTmoh/7WZ98M+Q0buhy84Md7WZIqc9QKDKbW/1DKYD
+         6Tor/KI93QHGBjzBZ1mru+1ZWNSw6GGFYZsNcnPtsxx/jTEiHuDYZ8T7r9uDid+v9ja+
+         088CszN5bSTNUa6XcS+aP3JBaGtosqY5+ARyGmnrUY1ABjlhLByuBibOGE9pvqhvSFaH
+         X0lJer7J6u2a3LKAhVzAyr6n4AqkFJ8DVddn7GpM+ETfPXSb/EuqzuSK68eUz6gjHc5t
+         Rd9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702572600; x=1703177400;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=K2Wt9fAXkZ3ocbSZ++hiJKJPMhMtN2kMdg9DBtyKus4=;
+        b=JDsuPeuDDtkMbdZJPzeAhmt6VScC3j1tauIIT+H353OrtqU3axvi6C4DcgLHCcqflu
+         pFA4kRG7DU5g6yrSNdGfGT9mVWYcxkQ22J2J8XY6wHIlL1GrDWZ22rYj8nEc++2KUysw
+         1F7xl5YemSReeRJ69bYxLz0iTB68z9Ou3iC/GsTOLNhQEmiHgqj0EWLi47iNtef56jjd
+         ohD5dPpM+jDYT4X3RidMgjOWIN9DY3HKccdXKpLgzhpEg3xtPjM3HRQh2wt3oz/NPLQq
+         x1w1FVYSNBtaV/WkZ+s6J1z3W+UO4pNlg3PJGBtiAqsmkMuuVut0AP67O+h2mnGWFnVB
+         Or2A==
+X-Gm-Message-State: AOJu0YwLIQ1REYX7oK9KWCpunkMqofWpz9d88KecE/0fd/qtvSuyibi3
+	PxVcVKt6NeUhvpju6fk1FbLaxw==
+X-Google-Smtp-Source: AGHT+IGCOWJbqlqngxCwGXaFWU9O5TAVF+RVt3/auwMWynGWlG+iIA/H/qnW0PI1zApZu74LyvoKrA==
+X-Received: by 2002:a17:907:3c1f:b0:a1d:511c:5be6 with SMTP id gh31-20020a1709073c1f00b00a1d511c5be6mr4231295ejc.76.1702572600221;
+        Thu, 14 Dec 2023 08:50:00 -0800 (PST)
 Received: from [127.0.1.1] ([79.115.23.25])
-        by smtp.gmail.com with ESMTPSA id tn9-20020a170907c40900b00a1f7ab65d3fsm8530308ejc.131.2023.12.14.08.49.57
+        by smtp.gmail.com with ESMTPSA id tn9-20020a170907c40900b00a1f7ab65d3fsm8530308ejc.131.2023.12.14.08.49.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Dec 2023 08:49:58 -0800 (PST)
+        Thu, 14 Dec 2023 08:49:59 -0800 (PST)
 From: Abel Vesa <abel.vesa@linaro.org>
-Subject: [PATCH v2 00/10] clk: qcom: Add TCSR, GPU, CAM and DISP clock
- controllers for X1E80100
-Date: Thu, 14 Dec 2023 18:49:29 +0200
-Message-Id: <20231214-x1e80100-clock-controllers-v2-0-2b0739bebd27@linaro.org>
+Date: Thu, 14 Dec 2023 18:49:30 +0200
+Subject: [PATCH v2 01/10] dt-bindings: clock: Drop the SM8650 DISPCC
+ dedicated schema
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,10 +65,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIABoye2UC/32OwQ6CMBBEf8X07GpbIBJP/ofh0JYFGpuu2TYEQ
- /h3AY1Hj28mM3mzSMgek7geZsE4+uQprqCPB+EGE3sE364stNSF0lLBpLCWSkpwgdwDHMXMFAJ
- yAmtKbWV1qbraiPXAmoRg2UQ3bBe2PP/Gn4ooQyZIA4awDZ6MnZ92m3uz8uBTJn7tcqPa0q+H0
- v88RgUSZIvKdGXZOlvcgo+G6UTci2ZZljf8YecQ9gAAAA==
+Message-Id: <20231214-x1e80100-clock-controllers-v2-1-2b0739bebd27@linaro.org>
+References: <20231214-x1e80100-clock-controllers-v2-0-2b0739bebd27@linaro.org>
+In-Reply-To: <20231214-x1e80100-clock-controllers-v2-0-2b0739bebd27@linaro.org>
 To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>, 
  Michael Turquette <mturquette@baylibre.com>, 
@@ -81,80 +80,170 @@ To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
  linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
  Abel Vesa <abel.vesa@linaro.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Rajendra Nayak <quic_rjendra@quicinc.com>
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2719; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=fDc7jNsxXmWiN6uOG3HqR3oI5jwPPS7PFpI2HpA1eCo=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlezIhJL1X51PSlMCB0E3W8d+cHeusP/x4jN51a
- Pu/aDtizFSJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZXsyIQAKCRAbX0TJAJUV
- Vjl9D/sG1Ocp0l6Q0S9oWZ6AX/EIqzpnywTOTbr//TLLXg89UBDvLspficbZYaxDZIyf1S3GLyt
- p2aMsrilQWxGv+0DEvVzZpPnJ9bSSy/PJI4KzVtddidEo+aj3seZURcME/9UyMtvFI+/ANpGNaP
- P3Ao1ttqmcV9GzZ895vs918GzAiKRzgW9OorlKf9/6sXJ7spXEmlfpMSq7bVPlcXrTJUhuQxzsL
- 3+ivzQQiMLZSfKrt9mp5y5s4b+2On5Ua/qqTOo+koCYU/ntrx729PvyxyjWbLjugq6t4nSd4/Jg
- OMXKTLf/iwR1VMUODn7cC5dSx7y3kp2Zfp4YLWOEdtwnO/HxJGU0s8LimUOQ11Y7w4AbKjSVP4Z
- QR8SZVq2q86hSYFplVZBvD7J9y2jLpkSKB0rCxECNAJnFwoegeAp6fUYSqCDXYAtpP0qmdyW+IU
- roybwyr2U4vKkuWUiazFcexXhzSrH43oUvGnw7t2V04LN8vV0VwVAID10oVO6arU9Rv3EazLfJ1
- 2kCaLJyIoA3VUpGFdinlUM/lQ87j5NKcsSBd75rghyAiuq3H8GTwj79CdWVu88+7uiGsCqGk1ts
- BY5Y2BWrg6iYJBdfJB5ibDnZf0G3MCxWpkee4mW0l8RoQAEzom0nLKrRhI1MlAJK2s31kg5wTwF
- qM2KZq+JoNmy05A==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4633; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=k///e1KzpDnCc228R66xHigJDPcNt/klKkR8uId+QKc=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlezIonPrJMBNrKMCJqB+0lmi+JqU/fXmsIWFHe
+ SbaGkuJyNaJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZXsyKAAKCRAbX0TJAJUV
+ VjCPEACUp+0G5HjLrMxsKcYQw+1fo/IR4w6vFfABGxo5OGkzIhFViTu9i8JupyKGhHrdTTyl232
+ kpfAjE1RPoKI4CSu0bxwMj80P+yZv3qVrBM+jwKfvJbkqL/PSxFeO4qb0lVDFADANxGcSn6zZZI
+ iPu9Q2zeQnk34PE6iSH4Vg3FiL7Mhf++BF5tVgOs2gIAgucrk4sbPnf7xDaUd93Ed2DluJ8DCSX
+ EOOf4XetOXp+nVZKX/3L/5UrOs4z30Zw/zJMBoCa6B5bGSRKF9dQizw4ga0pY+GzFTz347cjgGX
+ Ic1F7y1C9LEiNdxEz4JkRyvQBbG4dzcP4NQv3Jam1JsL0uYZxtlPAnlm5RUhwfRxJZu0mKW5N2Z
+ atqY6lwHu2Y5XW/BVUiEit5wNSYUEau3qyqqXPNJgH619ZnsIb0kLZgfcnt9sV5Wh4dHYyOuvsi
+ zisI++iyR4pVGItSw7V0tAtzpFwt86Sy3Nwd6oSbmFkBjGsIg+3IXKxHpHJuprUviLHQsn8Iszb
+ encfELGYlo5BbUgftxxDuNEzz7VH72y/r4AeNpsdMvADDXZiUqjdvY6cRyVKlDRFxMzC0GGRlSd
+ 1qBznSZ1XjEe8i1mshe/rBAJAB8x24uGDqwb88me0R4Y45tMG6n+Zw68YQ4i2OLDW5EHdFhOsCD
+ kb0v3XlqhZ/TkWg==
 X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
  fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-This patchset adds all the missing clock controllers for Qualcomm X1E80100
-platform. Another important change is the dropping of the dedicated
-schema of the SM8650 DISP CC as a preparatory work for documenting the
-DISP CC compatible for X1E801800.
+The block is the same between these platforms, at least from devicetree
+point of view. So drop the dedicated schema and use the SM8550 one instead.
 
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
-Changes in v2:
-- Added Krzysztof's R-b tag to patches no. 1, 3, 4 and 5
-- Added Dmitry's R-b tag to patch 7
-- Reordered Signed-off-by tags in patch 6
-- Lower-cased hex values in patch 6, 8 and 10
-- Link to v1: https://lore.kernel.org/r/20231212-x1e80100-clock-controllers-v1-0-0de1af44dcb3@linaro.org
+ .../bindings/clock/qcom,sm8550-dispcc.yaml         |   5 +-
+ .../bindings/clock/qcom,sm8650-dispcc.yaml         | 106 ---------------------
+ 2 files changed, 4 insertions(+), 107 deletions(-)
 
----
-Abel Vesa (3):
-      dt-bindings: clock: Drop the SM8650 DISPCC dedicated schema
-      dt-bindings: clock: qcom: Document the X1E80100 TCSR Clock Controller
-      clk: qcom: Add TCSR clock driver for x1e80100
+diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml
+index c129f8c16b50..369a0491f8d6 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml
+@@ -14,12 +14,15 @@ description: |
+   Qualcomm display clock control module provides the clocks, resets and power
+   domains on SM8550.
+ 
+-  See also:: include/dt-bindings/clock/qcom,sm8550-dispcc.h
++  See also:
++  - include/dt-bindings/clock/qcom,sm8550-dispcc.h
++  - include/dt-bindings/clock/qcom,sm8650-dispcc.h
+ 
+ properties:
+   compatible:
+     enum:
+       - qcom,sm8550-dispcc
++      - qcom,sm8650-dispcc
+ 
+   clocks:
+     items:
+diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8650-dispcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8650-dispcc.yaml
+deleted file mode 100644
+index 5e0c45c380f5..000000000000
+--- a/Documentation/devicetree/bindings/clock/qcom,sm8650-dispcc.yaml
++++ /dev/null
+@@ -1,106 +0,0 @@
+-# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+-%YAML 1.2
+----
+-$id: http://devicetree.org/schemas/clock/qcom,sm8650-dispcc.yaml#
+-$schema: http://devicetree.org/meta-schemas/core.yaml#
+-
+-title: Qualcomm Display Clock & Reset Controller for SM8650
+-
+-maintainers:
+-  - Bjorn Andersson <andersson@kernel.org>
+-  - Neil Armstrong <neil.armstrong@linaro.org>
+-
+-description: |
+-  Qualcomm display clock control module provides the clocks, resets and power
+-  domains on SM8650.
+-
+-  See also:: include/dt-bindings/clock/qcom,sm8650-dispcc.h
+-
+-properties:
+-  compatible:
+-    enum:
+-      - qcom,sm8650-dispcc
+-
+-  clocks:
+-    items:
+-      - description: Board XO source
+-      - description: Board Always On XO source
+-      - description: Display's AHB clock
+-      - description: sleep clock
+-      - description: Byte clock from DSI PHY0
+-      - description: Pixel clock from DSI PHY0
+-      - description: Byte clock from DSI PHY1
+-      - description: Pixel clock from DSI PHY1
+-      - description: Link clock from DP PHY0
+-      - description: VCO DIV clock from DP PHY0
+-      - description: Link clock from DP PHY1
+-      - description: VCO DIV clock from DP PHY1
+-      - description: Link clock from DP PHY2
+-      - description: VCO DIV clock from DP PHY2
+-      - description: Link clock from DP PHY3
+-      - description: VCO DIV clock from DP PHY3
+-
+-  '#clock-cells':
+-    const: 1
+-
+-  '#reset-cells':
+-    const: 1
+-
+-  '#power-domain-cells':
+-    const: 1
+-
+-  reg:
+-    maxItems: 1
+-
+-  power-domains:
+-    description:
+-      A phandle and PM domain specifier for the MMCX power domain.
+-    maxItems: 1
+-
+-  required-opps:
+-    description:
+-      A phandle to an OPP node describing required MMCX performance point.
+-    maxItems: 1
+-
+-required:
+-  - compatible
+-  - reg
+-  - clocks
+-  - '#clock-cells'
+-  - '#reset-cells'
+-  - '#power-domain-cells'
+-
+-additionalProperties: false
+-
+-examples:
+-  - |
+-    #include <dt-bindings/clock/qcom,sm8650-gcc.h>
+-    #include <dt-bindings/clock/qcom,rpmh.h>
+-    #include <dt-bindings/power/qcom-rpmpd.h>
+-    #include <dt-bindings/power/qcom,rpmhpd.h>
+-    clock-controller@af00000 {
+-      compatible = "qcom,sm8650-dispcc";
+-      reg = <0x0af00000 0x10000>;
+-      clocks = <&rpmhcc RPMH_CXO_CLK>,
+-               <&rpmhcc RPMH_CXO_CLK_A>,
+-               <&gcc GCC_DISP_AHB_CLK>,
+-               <&sleep_clk>,
+-               <&dsi0_phy 0>,
+-               <&dsi0_phy 1>,
+-               <&dsi1_phy 0>,
+-               <&dsi1_phy 1>,
+-               <&dp0_phy 0>,
+-               <&dp0_phy 1>,
+-               <&dp1_phy 0>,
+-               <&dp1_phy 1>,
+-               <&dp2_phy 0>,
+-               <&dp2_phy 1>,
+-               <&dp3_phy 0>,
+-               <&dp3_phy 1>;
+-      #clock-cells = <1>;
+-      #reset-cells = <1>;
+-      #power-domain-cells = <1>;
+-      power-domains = <&rpmhpd RPMHPD_MMCX>;
+-      required-opps = <&rpmhpd_opp_low_svs>;
+-    };
+-...
 
-Rajendra Nayak (7):
-      dt-bindings: clock: qcom: Document the X1E80100 Display Clock Controller
-      dt-bindings: clock: qcom: Document the X1E80100 GPU Clock Controller
-      dt-bindings: clock: qcom: Document the X1E80100 Camera Clock Controller
-      clk: qcom: clk-alpha-pll: Add support for zonda ole pll configure
-      clk: qcom: Add dispcc clock driver for x1e80100
-      clk: qcom: Add GPU clock driver for x1e80100
-      clk: qcom: Add camcc clock driver for x1e80100
-
- .../bindings/clock/qcom,sm8450-camcc.yaml          |    2 +
- .../bindings/clock/qcom,sm8450-gpucc.yaml          |    2 +
- .../bindings/clock/qcom,sm8550-dispcc.yaml         |    7 +-
- .../bindings/clock/qcom,sm8550-tcsr.yaml           |    1 +
- .../bindings/clock/qcom,sm8650-dispcc.yaml         |  106 -
- drivers/clk/qcom/Kconfig                           |   35 +
- drivers/clk/qcom/Makefile                          |    4 +
- drivers/clk/qcom/camcc-x1e80100.c                  | 2489 ++++++++++++++++++++
- drivers/clk/qcom/clk-alpha-pll.c                   |   26 +
- drivers/clk/qcom/clk-alpha-pll.h                   |    4 +
- drivers/clk/qcom/dispcc-x1e80100.c                 | 1699 +++++++++++++
- drivers/clk/qcom/gpucc-x1e80100.c                  |  659 ++++++
- drivers/clk/qcom/tcsrcc-x1e80100.c                 |  285 +++
- include/dt-bindings/clock/qcom,x1e80100-camcc.h    |  135 ++
- include/dt-bindings/clock/qcom,x1e80100-dispcc.h   |   98 +
- include/dt-bindings/clock/qcom,x1e80100-gpucc.h    |   41 +
- include/dt-bindings/clock/qcom,x1e80100-tcsr.h     |   23 +
- include/dt-bindings/reset/qcom,x1e80100-gpucc.h    |   19 +
- 18 files changed, 5528 insertions(+), 107 deletions(-)
----
-base-commit: 7b0e611dc474ffa67d3a6ea235085bf423ee5f2a
-change-id: 20231201-x1e80100-clock-controllers-ba42b0575f8a
-
-Best regards,
 -- 
-Abel Vesa <abel.vesa@linaro.org>
+2.34.1
 
 
