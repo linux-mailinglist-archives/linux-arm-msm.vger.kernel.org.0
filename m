@@ -1,154 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-4717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A355812BB5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 10:29:51 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A3D8812BD7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 10:40:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D54BB1F21BC0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 09:29:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2B2AD1C21361
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 09:40:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01CF52E842;
-	Thu, 14 Dec 2023 09:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7AD8130D1F;
+	Thu, 14 Dec 2023 09:40:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="L4ZLzvjb"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ie4VzWtI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75B4B1A1;
-	Thu, 14 Dec 2023 01:29:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1702546147; x=1734082147;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=ym6r9xLfSQXQR38T2QPlxeuiIFQ1e3Eir7XYGVFm++0=;
-  b=L4ZLzvjbQ7BKPjZYZKJA+GSmZD9KnNLnw+WSduqQQNHaTZyJOUZswsoZ
-   tvGMC/U9NmI8KhOkF11r1y89g/qbuEKwHqhk0Cx99j2VlBxQuIvZq3RKe
-   ukKA/7er21qB2L6SmeoY7N/vVF9qe0/PLvXDqj4ksHGst/lp2DltCb6b3
-   S2N4+kQ+oAoNzN1ZC59Wk56h3Qaj+jZFo89Q5UpYXw/PlH1h6+ti2EIAu
-   k60AuUdqAEmg4yrsGR4XdFW6hJGPYWeBe773softg10SGarGDaoxCstVV
-   m0dEQ/JG1hXVhKW5SU6bBcrWmrIlnXEkCgTfkt7zSJ9XRtXKeNau98UKz
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10923"; a="2174510"
-X-IronPort-AV: E=Sophos;i="6.04,275,1695711600"; 
-   d="scan'208";a="2174510"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Dec 2023 01:29:06 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10923"; a="777831513"
-X-IronPort-AV: E=Sophos;i="6.04,275,1695711600"; 
-   d="scan'208";a="777831513"
-Received: from mdemezzi-mobl.ger.corp.intel.com (HELO localhost) ([10.252.32.166])
-  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Dec 2023 01:29:00 -0800
-From: Jani Nikula <jani.nikula@intel.com>
-To: Jani Nikula <jani.nikula@intel.com>,
-	linux-sound@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH v3] ASoC: hdmi-codec: drop drm/drm_edid.h include
-Date: Thu, 14 Dec 2023 11:28:56 +0200
-Message-Id: <20231214092856.4019251-1-jani.nikula@intel.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231213095023.3928703-1-jani.nikula@intel.com>
-References: <20231213095023.3928703-1-jani.nikula@intel.com>
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85E53B7;
+	Thu, 14 Dec 2023 01:40:24 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BE5BZ8V000884;
+	Thu, 14 Dec 2023 09:40:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=ylZKeaeVio8dJQPPzUpdLFA/Xy9jSrZkzVN2dfqdK5Y=; b=ie
+	4VzWtIoTJoKnZ2KCiiOUtdJ+HqaBrVgvcFVkqPUEHX7pLjRVxtHJ5Q2/GR7iCvDb
+	hF9EDnCYy446BswYuIqpSrwcG2cqoqNB+6IS8ovUI0XJuMe9HxQWlygIpWJ9ZAt2
+	Q0csHlUTnMm4J3VZkk1ArttF5Y4lSahwneHT0cf8F5LJSzJzAzfe4kH1jG9+8iCO
+	ArS00x0vj9RqwidIV8/C4SeviPUzY72ZkxJ8/8iJTgGnE3ez1DDbxWcjObKmPckr
+	xRINraZXDrfWE3Ht/aHDdmRRjv6/JeFj0o4qBGmtk9JNieMrW3ICCanlC1zu7ArQ
+	P8Ip6AuWZsjyVx/fky0g==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uyq2try5r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Dec 2023 09:40:09 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BE9e8Tf026735
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Dec 2023 09:40:08 GMT
+Received: from [10.217.219.216] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 14 Dec
+ 2023 01:40:05 -0800
+Message-ID: <feb4ed1b-ed74-aebe-0ab8-dec123fe0a31@quicinc.com>
+Date: Thu, 14 Dec 2023 15:10:01 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH 6/9] PCI: epf-mhi: Enable MHI async read/write support
+Content-Language: en-US
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        <lpieralisi@kernel.org>, <kw@linux.com>
+CC: <kishon@kernel.org>, <bhelgaas@google.com>, <mhi@lists.linux.dev>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20231127124529.78203-1-manivannan.sadhasivam@linaro.org>
+ <20231127124529.78203-7-manivannan.sadhasivam@linaro.org>
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <20231127124529.78203-7-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: D4LrvjH_ipBuxno5YuE7y02tarNOxuc5
+X-Proofpoint-ORIG-GUID: D4LrvjH_ipBuxno5YuE7y02tarNOxuc5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ phishscore=0 clxscore=1011 mlxlogscore=818 priorityscore=1501
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 bulkscore=0 adultscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312140062
 
-hdmi-codec.h does not appear to directly need drm/drm_edid.h for
-anything. Remove it.
 
-There are some files that get drm/edid.h by proxy; include it where
-needed.
+On 11/27/2023 6:15 PM, Manivannan Sadhasivam wrote:
+> Now that both eDMA and iATU are prepared to support async transfer, let's
+> enable MHI async read/write by supplying the relevant callbacks.
+>
+> In the absence of eDMA, iATU will be used for both sync and async
+> operations.
+>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>   drivers/pci/endpoint/functions/pci-epf-mhi.c | 7 ++++---
+>   1 file changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+> index 3d09a37e5f7c..d3d6a1054036 100644
+> --- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
+> +++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+> @@ -766,12 +766,13 @@ static int pci_epf_mhi_link_up(struct pci_epf *epf)
+>   	mhi_cntrl->raise_irq = pci_epf_mhi_raise_irq;
+>   	mhi_cntrl->alloc_map = pci_epf_mhi_alloc_map;
+>   	mhi_cntrl->unmap_free = pci_epf_mhi_unmap_free;
+> +	mhi_cntrl->read_sync = mhi_cntrl->read_async = pci_epf_mhi_iatu_read;
+> +	mhi_cntrl->write_sync = mhi_cntrl->write_async = pci_epf_mhi_iatu_write;
+>   	if (info->flags & MHI_EPF_USE_DMA) {
+>   		mhi_cntrl->read_sync = pci_epf_mhi_edma_read;
+>   		mhi_cntrl->write_sync = pci_epf_mhi_edma_write;
+> -	} else {
+> -		mhi_cntrl->read_sync = pci_epf_mhi_iatu_read;
+> -		mhi_cntrl->write_sync = pci_epf_mhi_iatu_write;
+> +		mhi_cntrl->read_async = pci_epf_mhi_edma_read_async;
+> +		mhi_cntrl->write_async = pci_epf_mhi_edma_write_async;
 
-v2-v3: Fix build (kernel test robot <lkp@intel.com>)
+I think the read_async & write async should be updated inside the if 
+condition where MHI_EPF_USE_DMA flag is set.
 
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+- Krishna Chaitanya.
 
----
-
-I'm pretty sure I haven't compiled everything that might implicitly
-depend on the include. However, the right thing to do is to include
-drm_edid.h where needed, not from somewhat random intermediate
-headers. I hope this uncovers anything I missed.
----
- drivers/gpu/drm/bridge/lontium-lt9611.c    | 1 +
- drivers/gpu/drm/bridge/lontium-lt9611uxc.c | 1 +
- drivers/gpu/drm/msm/dp/dp_display.c        | 1 +
- drivers/gpu/drm/vc4/vc4_hdmi.c             | 1 +
- include/sound/hdmi-codec.h                 | 1 -
- 5 files changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/bridge/lontium-lt9611.c b/drivers/gpu/drm/bridge/lontium-lt9611.c
-index 9663601ce098..b9205d14d943 100644
---- a/drivers/gpu/drm/bridge/lontium-lt9611.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
-@@ -18,6 +18,7 @@
- 
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_bridge.h>
-+#include <drm/drm_edid.h>
- #include <drm/drm_mipi_dsi.h>
- #include <drm/drm_of.h>
- #include <drm/drm_print.h>
-diff --git a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-index e971b75e90ad..f3f130c1ef0a 100644
---- a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-@@ -21,6 +21,7 @@
- 
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_bridge.h>
-+#include <drm/drm_edid.h>
- #include <drm/drm_mipi_dsi.h>
- #include <drm/drm_print.h>
- #include <drm/drm_probe_helper.h>
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 1b88fb52726f..766c8d01e6b3 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -11,6 +11,7 @@
- #include <linux/of_irq.h>
- #include <linux/delay.h>
- #include <drm/display/drm_dp_aux_bus.h>
-+#include <drm/drm_edid.h>
- 
- #include "msm_drv.h"
- #include "msm_kms.h"
-diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
-index f05e2c95a60d..34f807ed1c31 100644
---- a/drivers/gpu/drm/vc4/vc4_hdmi.c
-+++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
-@@ -35,6 +35,7 @@
- #include <drm/display/drm_scdc_helper.h>
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_drv.h>
-+#include <drm/drm_edid.h>
- #include <drm/drm_probe_helper.h>
- #include <drm/drm_simple_kms_helper.h>
- #include <linux/clk.h>
-diff --git a/include/sound/hdmi-codec.h b/include/sound/hdmi-codec.h
-index 9b162ac1e08e..5e1a9eafd10f 100644
---- a/include/sound/hdmi-codec.h
-+++ b/include/sound/hdmi-codec.h
-@@ -12,7 +12,6 @@
- 
- #include <linux/of_graph.h>
- #include <linux/hdmi.h>
--#include <drm/drm_edid.h>
- #include <sound/asoundef.h>
- #include <sound/soc.h>
- #include <uapi/sound/asound.h>
--- 
-2.39.2
-
+>   	}
+>   
+>   	/* Register the MHI EP controller */
 
