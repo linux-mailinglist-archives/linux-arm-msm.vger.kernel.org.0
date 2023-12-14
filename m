@@ -1,137 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-4674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4675-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0E7E812962
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 08:32:49 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60ACF812965
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 08:33:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0EBA91C214C5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 07:32:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E45B5B21041
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 07:33:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8097E125C7;
-	Thu, 14 Dec 2023 07:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB20E12E52;
+	Thu, 14 Dec 2023 07:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="beTI7OUX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HfZql0JF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22545126
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 23:32:28 -0800 (PST)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2c9f4bb2e5eso107871971fa.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 23:32:28 -0800 (PST)
+Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0346E185
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 23:33:13 -0800 (PST)
+Received: by mail-qt1-x82f.google.com with SMTP id d75a77b69052e-42594f0ca09so39290361cf.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 23:33:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702539147; x=1703143947; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=k/PAmxKTt/vlKZJUmu2M1PwUYlBOKUz4q+UdfunK0I0=;
-        b=beTI7OUXRgiHhtX71jY/QZmQtiFgre9NtTBXxpnCjRr07DvRqqQOV2qGvHa8lVgWnl
-         UNUq1//HttPbTe+O8s0A3DOe/M0QGmoYs8HcJ162zrCj5IIQ6D0nBKuYG8DaPmeGjuBI
-         6l1Btfb515SKtmsL9NYSMH00W2y2dw9nsLiJ8NrTiQJe5KUqM/jKYsaV19uFLU8xG2vJ
-         R3QBlATMCAeJN+agf5USANk4BBz7jkmRZldUZvI8jLSTyLgiYYJMZ6zM4u2tlcQYYXJx
-         AGEhbeYq2i6fAHWov9uCZN4lOg1NsTsUeldb0nCchLevwhpGVWwJ41x3lY6V31ER9qEc
-         OieA==
+        d=linaro.org; s=google; t=1702539193; x=1703143993; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=pD0FCZ0EPDMJ3nRws8kwPInwEm37ac/pfVSgH1LgqOo=;
+        b=HfZql0JFFRIuMDVLQYZYiEk9ZD+uJDiooV8ThOXjd6AkH1CY8ucjYWEZfF1+Thg9Fp
+         zt/NnYFJ9AuD8+LCYlYw8h99Tyi6DH7mxiqKgns5gtGkYXHFn5S8MPgd6XnhMc0s8+Rt
+         qpNuQYt8p1jeb0lED3Q171p6pU7cV6Kn6QSm6xUpfmVAlc8/a1p/w2X+UT+itrtLtRr3
+         RGF1AiNBourVQlC0WHG+ebZuVu0yVxePzn+z2p3dAFvKaBFGdcycFW3pdnsjfdb4qxfd
+         Yej6RFNbsUFG2xw/s4KIdXt1ZOchjeBX8QTPRxA6DzEK53+eb55rUuJxQn1p9C/CX83Q
+         wE/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702539147; x=1703143947;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1702539193; x=1703143993;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=k/PAmxKTt/vlKZJUmu2M1PwUYlBOKUz4q+UdfunK0I0=;
-        b=SUnERkApXsCL4OMX4u6up71TyfiIlotqLxGRk7YYfHqwogFCt5Bnn6DSgXD16p5fWP
-         8DavfHKTTkjOo9U8nkBR6Q0DW9SFvylEeMCsJwhlAsQGyGQaDLw/VD8gcRKmOf0qVWCx
-         65G3zft09Rc8uCQF96LGg2lYEWYJt7xqcxgLwkCckCgZ4TauGJ7RnRfXDNHTEwQQFPWq
-         MzHdCSr8PL+usmqvoSdv3colDXbysacmu+gTNkRIjJpDHz3Jmh/hlKnICcdhWSxNRRCG
-         8ua6iHTsrm/MJDIPBBLSJbVRF7oFwXpE8zvyjr9jBSHZV8ThMXEAmPW2bjkKEJ/KxMgC
-         LZHg==
-X-Gm-Message-State: AOJu0Yx5iVHffX1+RLK3JmD2kcKcH4cWSQVXn+LIs25UKG6y+1ehIBLt
-	rY3HMz8NuGFerAD5oiSvtuSS/A==
-X-Google-Smtp-Source: AGHT+IHYh58b0nXjYfmT3kG3MmD8bgAUQ+eiy/kh0CKTjn9yx9k9zV9SL+/7ggt2S7m15i0XKJl49g==
-X-Received: by 2002:a2e:a103:0:b0:2cc:1c8a:466a with SMTP id s3-20020a2ea103000000b002cc1c8a466amr5656478ljl.13.1702539147129;
-        Wed, 13 Dec 2023 23:32:27 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id bd18-20020a056402207200b00542db304680sm6440491edb.63.2023.12.13.23.32.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Dec 2023 23:32:26 -0800 (PST)
-Message-ID: <45ef5560-3013-4c63-8bb2-92969504b70e@linaro.org>
-Date: Thu, 14 Dec 2023 08:32:25 +0100
+        bh=pD0FCZ0EPDMJ3nRws8kwPInwEm37ac/pfVSgH1LgqOo=;
+        b=OsHuDLwcs2XNgnTNtlauFp+blimX3wVZpHHp7VdV/PQT/QDsjxmOywRvlqc8zCvRl5
+         Zap7Iyz5TO8Adcy+zePYzQG5hMfpdP0U+DL7JJapXujto9JyKUUcYk8iM8hITFwObaxr
+         v3tTz+KSUUDPf4WmB4+ycEhEKp0Y2M36SAXhrziuc4MzpiUiixmFd6Ma9cZEA4wvAfxu
+         yaLKs6kB6UAfwa+x9fJVsAC4EH1Hmu2G5LXg0xHp4o0OSSj//n5qRjmot34AMi1mllsv
+         O5amTIgEBo1/tzsuRrcF6cL8dUbuwdSLTePGOjDnBiYqKNqVwhsU9yG/xkJKJ4PEtKHS
+         MdyA==
+X-Gm-Message-State: AOJu0YwxNDA0ZcENAvK8DOMXM4yzcy9x0CAsSGQQmJKrY2oDm3kf8A6E
+	z6OjSuwLRO3kdr3IHKAHoRIF
+X-Google-Smtp-Source: AGHT+IGgp/3lSkFQD6Hrz7dtYYIJdq0NZpJ96MNKXxBvC74rabqBEsD01nmLhWNc+9oyvzOqj8iQbg==
+X-Received: by 2002:ac8:7d50:0:b0:425:4043:8d2a with SMTP id h16-20020ac87d50000000b0042540438d2amr9146338qtb.69.1702539193114;
+        Wed, 13 Dec 2023 23:33:13 -0800 (PST)
+Received: from thinkpad ([117.213.102.12])
+        by smtp.gmail.com with ESMTPSA id eh9-20020a05622a578900b00425d18d50e8sm2842852qtb.30.2023.12.13.23.33.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Dec 2023 23:33:12 -0800 (PST)
+Date: Thu, 14 Dec 2023 13:03:03 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Nitin Rawat <quic_nitirawa@quicinc.com>
+Cc: martin.petersen@oracle.com, jejb@linux.ibm.com, andersson@kernel.org,
+	konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
+	linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_cang@quicinc.com, ahalaney@redhat.com
+Subject: Re: [PATCH v2 05/17] scsi: ufs: qcom: Remove the warning message
+ when core_reset is not available
+Message-ID: <20231214073303.GH2938@thinkpad>
+References: <20231208065902.11006-1-manivannan.sadhasivam@linaro.org>
+ <20231208065902.11006-6-manivannan.sadhasivam@linaro.org>
+ <7472fe73-e7a0-5c8c-6e85-655db028a5c3@quicinc.com>
+ <20231208102832.GA3008@thinkpad>
+ <190651ad-6aeb-69eb-89c5-ed18221b5a7a@quicinc.com>
+ <54e882ba-4758-1283-1a52-1f12201e1836@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Add Motorola Moto G 4G
-Content-Language: en-US
-To: =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
- ~postmarketos/upstreaming@lists.sr.ht
-References: <20231213-peregrine-v1-0-5229e21bca3f@apitzsch.eu>
- <20231213-peregrine-v1-1-5229e21bca3f@apitzsch.eu>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231213-peregrine-v1-1-5229e21bca3f@apitzsch.eu>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <54e882ba-4758-1283-1a52-1f12201e1836@quicinc.com>
 
-On 13/12/2023 21:33, André Apitzsch wrote:
-> Document the compatible for the MSM8926-based Motorola Moto G 4G smartphone.
+On Thu, Dec 14, 2023 at 12:43:02PM +0530, Nitin Rawat wrote:
 > 
-> Signed-off-by: André Apitzsch <git@apitzsch.eu>
-> ---
+> 
+> On 12/8/2023 6:59 PM, Nitin Rawat wrote:
+> > 
+> > 
+> > On 12/8/2023 3:58 PM, Manivannan Sadhasivam wrote:
+> > > On Fri, Dec 08, 2023 at 02:55:21PM +0530, Nitin Rawat wrote:
+> > > > 
+> > > > 
+> > > > On 12/8/2023 12:28 PM, Manivannan Sadhasivam wrote:
+> > > > > core_reset is optional, so there is no need to warn the user
+> > > > > if it is not
+> > > > > available.
+> > > > > 
+> > > > > Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+> > > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > > > ---
+> > > > >    drivers/ufs/host/ufs-qcom.c | 4 +---
+> > > > >    1 file changed, 1 insertion(+), 3 deletions(-)
+> > > > > 
+> > > > > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> > > > > index dc93b1c5ca74..d474de0739e4 100644
+> > > > > --- a/drivers/ufs/host/ufs-qcom.c
+> > > > > +++ b/drivers/ufs/host/ufs-qcom.c
+> > > > > @@ -296,10 +296,8 @@ static int ufs_qcom_host_reset(struct
+> > > > > ufs_hba *hba)
+> > > > >        struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> > > > >        bool reenable_intr;
+> > > > > -    if (!host->core_reset) {
+> > > > > -        dev_warn(hba->dev, "%s: reset control not set\n", __func__);
+> > > > > +    if (!host->core_reset)
+> > > > >            return 0;
+> > > > > -    }
+> > > > >        reenable_intr = hba->is_irq_enabled;
+> > > > >        disable_irq(hba->irq);
+> > > > 
+> > > > 
+> > > > Hi Mani,
+> > > > 
+> > > > I think core reset is not frequent. It happen during only probe ,error
+> > > > handler.
+> > > > 
+> > > > core reset is needed in kernel to cleanup UFS phy and controller
+> > > > configuration before UFS HLOS operation starts as per HPG.
+> > > > 
+> > > 
+> > > This sounds like core reset is not an optional property but a
+> > > required one. I
+> > > just checked the upstream DT files for all SoCs, and looks like
+> > > pretty much all
+> > > of them support core reset.
+> > > 
+> > > Only MSM8996 doesn't have the reset property, but the reset is
+> > > available in GCC.
+> > > So we should be able to use it in dtsi.
+> > > 
+> > > I also skimmed through the HPG and looks like core reset is not
+> > > optional. Please
+> > > confirm.
+> > > 
+> > > - Mani
+> > 
+> > 
+> > Hi Mani,
+> > 
+> > Yes Core_reset is part of HPG sequence and is needed.
+> > 
+> > Regards,
+> > Nitin
+> 
+> 
+> Hi Mani,
+> 
+> I see this patch series is merged . So planning to keep the warn message
+> based on above discussion.
+> 
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+No, you should not add that warning back. As per our discussion, we concluded
+that core_reset is not optional, so devm_reset_control_get_exclusive() should be
+used to acquire the reset.
 
-Best regards,
-Krzysztof
+If the reset property is not present in DT, then ufs_qcom_init() will fail. This
+also means that we should fix the binding and DT of SoCs missing the reset
+property.
 
+- Mani
+
+> Regards,
+> Nitin
+> > 
+> > 
+> > > 
+> > > > Having existing warn print can be used to to debug or atleast know
+> > > > core_reset is missed in device tree to give indication complete
+> > > > reset hasn't
+> > > > been done and we could still be operating in bootloader configuration.
+> > > > 
+> > > > 
+> > > > Regards,
+> > > > Nitin
+> > > > 
+> > > 
+> > 
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
