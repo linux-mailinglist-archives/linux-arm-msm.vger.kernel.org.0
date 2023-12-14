@@ -1,156 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-4734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A00FE812DCD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 11:55:06 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C68D2812DD7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 11:55:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8F4D01C21558
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 10:55:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6080A282BD4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 10:55:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7AC523D98E;
-	Thu, 14 Dec 2023 10:55:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02DCB3D986;
+	Thu, 14 Dec 2023 10:55:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Sp5Z1ktH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eV2lu8zH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17E672701;
-	Thu, 14 Dec 2023 02:54:37 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BE7RhsK003416;
-	Thu, 14 Dec 2023 10:54:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=Jq9tItOHZlH2X8gqs3hdSyS9l+yd89wqJgN3sEKM/tw=; b=Sp
-	5Z1ktHPBs7IETYg1+nR4M0efD6WHNl/bUw/GqwzsotZhSM2njM+3zeeXg8rGWcon
-	fRIp44Qnc9nFngxfpQzxu8VAXfxG8h1byo0k+u7Ae1jwJAEvMVazt70hbGuaceAU
-	mhtetye7AVyzUv0RIthjPX4ZTUeJnQwa2ZFDjN8rhIAbkQPFlBgYtRarrrCGngw9
-	OiDO5mP7icT0xo8TiQenetH7cxTpsaCIo8Diq8oaqvL4F/hRG5Rohwf8GBpvzepO
-	uSVcLq1EIMbQMAQTtPDcyuxVcyrG3DJ7CIt3OGMCt//s/7oBUNOXbKA/ECWAMTeJ
-	B1XlVHvX1ebLRh7hekXA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uynre171t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Dec 2023 10:54:28 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BEAsRNF019652
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Dec 2023 10:54:27 GMT
-Received: from [10.217.219.216] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 14 Dec
- 2023 02:54:24 -0800
-Message-ID: <117b4ff5-f125-06a3-69c4-6746a394de26@quicinc.com>
-Date: Thu, 14 Dec 2023 16:24:21 +0530
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 703CD123
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 02:55:14 -0800 (PST)
+Received: by mail-oi1-x233.google.com with SMTP id 5614622812f47-3b9d8bfe845so6219155b6e.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 02:55:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702551314; x=1703156114; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=IfG/ysGevH7N1+fittwEeggjkDoQ9clr+IHO2E1aJ/Y=;
+        b=eV2lu8zHrNORcFeXmgxQb2QFeyr/GSPmcwMPHWAMh2GUyiaTAYXpdF/5b2Faq2n2v0
+         4GIpUAh5Iq7AZOugR75bFsvikFYpgn0SVQYLA+lOtU62Do8tNKQXyHbdf/elMLa/dQld
+         ZfIuMFltbSIf5xoaWZxUTL8U5a3lpW/YNS1BSuEs09fJ+0dFXojQVOVNnbMASCzhCGuD
+         GxTe3+4KECYO1NAGSJ40S4qMVNsR5mPB3IA6P3uSyHvDC694ebQZMfjdKYf6EJksqE+N
+         28ZCWJLGKvdbbtoBGB34DLq0UU0wRF9S2FvKXVWjvikLFkEUYOGV5uCh8iMNm0zZCVE7
+         fwYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702551314; x=1703156114;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IfG/ysGevH7N1+fittwEeggjkDoQ9clr+IHO2E1aJ/Y=;
+        b=abBTEb3UDMhKs5DdWzX5tuBsTc/AixHFsCh2ri0jmygMGZi1C9sDMtIa9m+az+izj8
+         DP5cq34nX7W7VXri5t+Eu6ve2fAtECYhJCNlNN8m5Yf9DUgDpHGYaNZd9/KoKcnP+6Mi
+         E2W9QWEpsJPhuqNrWq9szam6DGmQeteY1z6V+64TV1b3gTaQ+Ayau7qBboQqJUH8TaT9
+         9Rn2CUumf4Nj9FaUOcKouWYplPJ2GRix+PnfEAzMHjgVW5h5Qc7FBRQigCORLPT4oSxz
+         evKZmqQZ8cH894ieGq4Nzw+RPoKFQw+CcfYfYEZfNMggfwfOYYCLlZ6ndfTITXaElVi/
+         Enng==
+X-Gm-Message-State: AOJu0Yz2D5DPRnlHRfiJyqUhrZyAHn6cGHs+iS/+zTeJCOK18DLjZ9rc
+	plNndy86En9tFO4+vLHil6FSLAxAMRPVYtAI0g==
+X-Google-Smtp-Source: AGHT+IH9dKZ7weDdopz65PuRKkbO/Mp6K8kuMEeI2h6VFnM6F5xt5c41hlBPLlHFALw9Ax8DidTESA==
+X-Received: by 2002:a05:6808:1690:b0:3ba:3234:a068 with SMTP id bb16-20020a056808169000b003ba3234a068mr970504oib.110.1702551313755;
+        Thu, 14 Dec 2023 02:55:13 -0800 (PST)
+Received: from thinkpad ([117.216.120.87])
+        by smtp.gmail.com with ESMTPSA id g25-20020aa78759000000b006d0951e74cbsm6780784pfo.178.2023.12.14.02.55.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Dec 2023 02:55:13 -0800 (PST)
+Date: Thu, 14 Dec 2023 16:25:06 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: lpieralisi@kernel.org, kw@linux.com
+Cc: kishon@kernel.org, bhelgaas@google.com, mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/9] bus: mhi: ep: Add async read/write support
+Message-ID: <20231214105506.GA48078@thinkpad>
+References: <20231127124529.78203-1-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH 6/9] PCI: epf-mhi: Enable MHI async read/write support
-Content-Language: en-US
-To: Manivannan Sadhasivam <mani@kernel.org>
-CC: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        <lpieralisi@kernel.org>, <kw@linux.com>, <kishon@kernel.org>,
-        <bhelgaas@google.com>, <mhi@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20231127124529.78203-1-manivannan.sadhasivam@linaro.org>
- <20231127124529.78203-7-manivannan.sadhasivam@linaro.org>
- <feb4ed1b-ed74-aebe-0ab8-dec123fe0a31@quicinc.com>
- <20231214100936.GI2938@thinkpad>
- <8929dcd0-af98-5b18-2d90-aad7b5928578@quicinc.com>
- <20231214104719.GM2938@thinkpad>
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20231214104719.GM2938@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 552HfYYgMJaJGj_A7_HIe-v4Vvj2q5Gg
-X-Proofpoint-GUID: 552HfYYgMJaJGj_A7_HIe-v4Vvj2q5Gg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
- suspectscore=0 impostorscore=0 phishscore=0 bulkscore=0 spamscore=0
- malwarescore=0 priorityscore=1501 lowpriorityscore=0 clxscore=1015
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312140073
+In-Reply-To: <20231127124529.78203-1-manivannan.sadhasivam@linaro.org>
 
+On Mon, Nov 27, 2023 at 06:15:20PM +0530, Manivannan Sadhasivam wrote:
+> Hi,
+> 
+> This series add async read/write support for the MHI endpoint stack by
+> modifying the MHI ep stack and the MHI EPF (controller) driver.
+> 
+> Currently, only sync read/write operations are supported by the stack,
+> this resulting in poor data throughput as the transfer is halted until
+> receiving the DMA completion. So this series adds async support such
+> that the MHI transfers can continue without waiting for the transfer
+> completion. And once the completion happens, host is notified by sending
+> the transfer completion event.
+> 
+> This series brings iperf throughput of ~4Gbps on SM8450 based dev platform,
+> where previously 1.6Gbps was achieved with sync operation.
+> 
 
-On 12/14/2023 4:17 PM, Manivannan Sadhasivam wrote:
-> On Thu, Dec 14, 2023 at 03:44:21PM +0530, Krishna Chaitanya Chundru wrote:
->> On 12/14/2023 3:39 PM, Manivannan Sadhasivam wrote:
->>> On Thu, Dec 14, 2023 at 03:10:01PM +0530, Krishna Chaitanya Chundru wrote:
->>>> On 11/27/2023 6:15 PM, Manivannan Sadhasivam wrote:
->>>>> Now that both eDMA and iATU are prepared to support async transfer, let's
->>>>> enable MHI async read/write by supplying the relevant callbacks.
->>>>>
->>>>> In the absence of eDMA, iATU will be used for both sync and async
->>>>> operations.
->>>>>
->>>>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->>>>> ---
->>>>>     drivers/pci/endpoint/functions/pci-epf-mhi.c | 7 ++++---
->>>>>     1 file changed, 4 insertions(+), 3 deletions(-)
->>>>>
->>>>> diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
->>>>> index 3d09a37e5f7c..d3d6a1054036 100644
->>>>> --- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
->>>>> +++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
->>>>> @@ -766,12 +766,13 @@ static int pci_epf_mhi_link_up(struct pci_epf *epf)
->>>>>     	mhi_cntrl->raise_irq = pci_epf_mhi_raise_irq;
->>>>>     	mhi_cntrl->alloc_map = pci_epf_mhi_alloc_map;
->>>>>     	mhi_cntrl->unmap_free = pci_epf_mhi_unmap_free;
->>>>> +	mhi_cntrl->read_sync = mhi_cntrl->read_async = pci_epf_mhi_iatu_read;
->>>>> +	mhi_cntrl->write_sync = mhi_cntrl->write_async = pci_epf_mhi_iatu_write;
->>>>>     	if (info->flags & MHI_EPF_USE_DMA) {
->>>>>     		mhi_cntrl->read_sync = pci_epf_mhi_edma_read;
->>>>>     		mhi_cntrl->write_sync = pci_epf_mhi_edma_write;
->>>>> -	} else {
->>>>> -		mhi_cntrl->read_sync = pci_epf_mhi_iatu_read;
->>>>> -		mhi_cntrl->write_sync = pci_epf_mhi_iatu_write;
->>>>> +		mhi_cntrl->read_async = pci_epf_mhi_edma_read_async;
->>>>> +		mhi_cntrl->write_async = pci_epf_mhi_edma_write_async;
->>>> I think the read_async & write async should be updated inside the if
->>>> condition where MHI_EPF_USE_DMA flag is set.
->>>>
->>> That's what being done here. Am I missing anything?
->>>
->>> - Mani
->> It should be like this as edma sync & aysnc read write should be update only
->> if DMA is supported, in the patch I see async function pointers are being
->> updated with the edma function pointers for IATU operations.
->>
->>                  if (info->flags & MHI_EPF_USE_DMA) {
->>
->>    		mhi_cntrl->read_sync = pci_epf_mhi_edma_read;
->>    		mhi_cntrl->write_sync = pci_epf_mhi_edma_write;
->> 		mhi_cntrl->read_async = pci_epf_mhi_edma_read_async;
->> 		mhi_cntrl->write_async = pci_epf_mhi_edma_write_async;
->> 	}
-> Are you reading the patch correctly? Please take a look at this commit:
-> https://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git/tree/drivers/pci/endpoint/functions/pci-epf-mhi.c?h=mhi-next&id=d1c6f4ba4746ed41fde8269cb5fea88bddb60504#n771
->
+Applied to mhi-next with reviews from Bjorn and Krzysztof for PCI EPF patches.
+
+- Mani
+
 > - Mani
+> 
+> Manivannan Sadhasivam (9):
+>   bus: mhi: ep: Pass mhi_ep_buf_info struct to read/write APIs
+>   bus: mhi: ep: Rename read_from_host() and write_to_host() APIs
+>   bus: mhi: ep: Introduce async read/write callbacks
+>   PCI: epf-mhi: Simulate async read/write using iATU
+>   PCI: epf-mhi: Add support for DMA async read/write operation
+>   PCI: epf-mhi: Enable MHI async read/write support
+>   bus: mhi: ep: Add support for async DMA write operation
+>   bus: mhi: ep: Add support for async DMA read operation
+>   bus: mhi: ep: Add checks for read/write callbacks while registering
+>     controllers
+> 
+>  drivers/bus/mhi/ep/internal.h                |   1 +
+>  drivers/bus/mhi/ep/main.c                    | 256 +++++++++------
+>  drivers/bus/mhi/ep/ring.c                    |  41 +--
+>  drivers/pci/endpoint/functions/pci-epf-mhi.c | 314 ++++++++++++++++---
+>  include/linux/mhi_ep.h                       |  33 +-
+>  5 files changed, 485 insertions(+), 160 deletions(-)
+> 
+> -- 
+> 2.25.1
+> 
 
-Sorry for the noise, I didn't notice else is also removed.
-
-- Krishna Chaitanya.
-
->> - Krishna Chaitanya.
->>
->>>> - Krishna Chaitanya.
->>>>
->>>>>     	}
->>>>>     	/* Register the MHI EP controller */
+-- 
+மணிவண்ணன் சதாசிவம்
 
