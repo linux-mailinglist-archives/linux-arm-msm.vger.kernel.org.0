@@ -1,153 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-4754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4755-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B6C2812F61
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 12:50:21 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23C27812F7A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 12:53:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3108B1F21F93
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 11:50:21 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9EEEDB218C1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 11:53:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DFAA405D5;
-	Thu, 14 Dec 2023 11:50:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F855405E4;
+	Thu, 14 Dec 2023 11:53:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uVct52cU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dUcRY+xc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0574B3FE25;
-	Thu, 14 Dec 2023 11:50:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18BF7C433C7;
-	Thu, 14 Dec 2023 11:50:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702554615;
-	bh=gBxMWK/BJQIfktDOXVActk5N+GeQbJZMHW0htfkV+oc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uVct52cUOIceKATlABivrxGspm4zxEeI7nJUoPLdOQZrR2QVcd0QbZRuQbc+4/NoO
-	 mmlP9blb5sOixsg+eUYJQjaTb9kGqxE5/2q6nw4QaEyTcJvbXPsr1QdJNkMQXFldoW
-	 o1hc+4HwmRMMMLCbE8vxfX3Mv2fD6FvdaP6nWmMp6p+n7I4UMcbv/TYOtW4xBrLS7N
-	 B/7MCCGYwOQ6coCLo7L5ub/dgdSQIkSGBpuyPTpRnVBaTmrnFxXyo4G53qzLlpGr9i
-	 YsQs90tkpRJbXQ3+15OR/d6CdZoeBmpKwrXxNd4f6p5qHTgz/UR9zsbF2Go9UHIIMc
-	 PJ1YM/zUZBkDg==
-Date: Thu, 14 Dec 2023 17:19:59 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
-	sboyd@kernel.org, mturquette@baylibre.com, robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Shazad Hussain <quic_shazhuss@quicinc.com>, quic_cang@quicinc.com
-Subject: Re: [PATCH 00/16] Fix Qcom UFS PHY clocks
-Message-ID: <20231214114959.GC48078@thinkpad>
-References: <20231214091101.45713-1-manivannan.sadhasivam@linaro.org>
- <ZXrVxmxY6wZprbBa@hovoldconsulting.com>
- <20231214103907.GL2938@thinkpad>
- <ZXrgWK5wZz6dAkKP@hovoldconsulting.com>
- <20231214111409.GB48078@thinkpad>
- <ZXrnZeDYOsteY5zT@hovoldconsulting.com>
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BC9EF5
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 03:53:36 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-50c05ea5805so9462474e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 03:53:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702554814; x=1703159614; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=KttnO4PIiCaAGSytE92u74iuSMSOKJ5regNQ/EC5WuQ=;
+        b=dUcRY+xcez7rKlURdw2AFGWcNBBuRihJ9ggWBlAMEw9RizFwTpyX8PyDEezOXkPFub
+         Xkg/t2pA8rxDeWbxrP8RnPS5Y/2yre721nd1j/1cFbhQC+P3jrTx8ZuBn8+oeyT3NSkE
+         lxsBqMDvhPASxFGvS1IusI72EXuYJdFrSHeGhTv+cLyiPXLKZz+082IjfqZWVgxQczWa
+         Z1kx6ONvpsCF49wx1usk/VJmAMiDltXf1pn4Hh+idWI1V8CcGnQtO2s4uWwJVTnKu1XA
+         P6n8gakR5YKuPSTLNCNPqz+DUNA2XTktgPFzrhZqeTa8at/pER4a0RV4TWwBazoywj2x
+         MD8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702554814; x=1703159614;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KttnO4PIiCaAGSytE92u74iuSMSOKJ5regNQ/EC5WuQ=;
+        b=Zonh/hMoHAETY3j9CQXXHDq/s0fcWG8GYEUz4UbF1QaljgTDlpvQBWt6kUGKYAtPa1
+         hUJFE6zCi/CSsU41PLkKkbDSJ7eRs9URMfTgXOcuhOSAQYbLNGbiY/LPPcfGXGHebuW2
+         X317WmvqC3uwLx4E/zKLVhzC/B8Gx+6MTRO0F16J4xEYhzAMUp4iJO+OykYFDM/XteKb
+         JgdjLY+PNeyRaaNpxYX0wxZYz7tgd6XSv/n0/ljxmAe9XC1Hz+NchhSdKUaWXRR1gO0f
+         Ipc8Axh5sqxH2KJJALVS9i47qemiJfDGYBvmOnS2mbPAWdWHSTfyn9guER/OEUqBbhoG
+         pcFQ==
+X-Gm-Message-State: AOJu0Yynj7upSNeHmAwn4Ba3gEwjzSMABTA4VcqemUbaNCWabd4Tja7P
+	rw9YP+uQwdkwpxCim0N90csf8Q==
+X-Google-Smtp-Source: AGHT+IFKAUpNpfuAuwpUiHGvkKtTTxlNLOoY8GwwQiOzDKup6y8DvTMvl5/GS7Uobt3Q4SD5/EbY3A==
+X-Received: by 2002:ac2:4219:0:b0:50b:f305:7802 with SMTP id y25-20020ac24219000000b0050bf3057802mr3932763lfh.129.1702554814419;
+        Thu, 14 Dec 2023 03:53:34 -0800 (PST)
+Received: from [172.30.204.158] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id y14-20020ac2446e000000b0050e1633748dsm183444lfl.206.2023.12.14.03.53.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Dec 2023 03:53:34 -0800 (PST)
+Message-ID: <2890ae71-aed0-451d-a7fb-7db30c30b72b@linaro.org>
+Date: Thu, 14 Dec 2023 12:53:30 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/6] arm: arm64: dts: Enable cros-ec-spi as wake source
+To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Mark Hasemeyer <markhas@chromium.org>, LKML <linux-kernel@vger.kernel.org>
+Cc: Raul Rangel <rrangel@chromium.org>, Alim Akhtar
+ <alim.akhtar@samsung.com>, Andre Przywara <andre.przywara@arm.com>,
+ Andy Gross <agross@kernel.org>, Baruch Siach <baruch@tkos.co.il>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Claudiu Beznea <claudiu.beznea@microchip.com>,
+ Conor Dooley <conor+dt@kernel.org>, Heiko Stuebner <heiko@sntech.de>,
+ Jesper Nilsson <jesper.nilsson@axis.com>, Jisheng Zhang
+ <jszhang@kernel.org>, Jonathan Hunter <jonathanh@nvidia.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ Michal Simek <michal.simek@amd.com>, Paul Barker <paul.barker@sancloud.com>,
+ Rob Herring <robh+dt@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>,
+ Thierry Reding <thierry.reding@gmail.com>,
+ cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linux-tegra@vger.kernel.org
+References: <20231213110009.v1.1.Ifd0903f1c351e84376d71dbdadbd43931197f5ea@changeid>
+ <20231213110009.v1.2.I274b2d2255eb539cc9d251c9d65a385cc4014c79@changeid>
+ <e5625051-e9e2-4a75-a11a-cf5b40606fa4@collabora.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <e5625051-e9e2-4a75-a11a-cf5b40606fa4@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZXrnZeDYOsteY5zT@hovoldconsulting.com>
+X-Spam-Level: *
 
-On Thu, Dec 14, 2023 at 12:30:45PM +0100, Johan Hovold wrote:
-> On Thu, Dec 14, 2023 at 04:44:09PM +0530, Manivannan Sadhasivam wrote:
-> > + Can
-> > 
-> > On Thu, Dec 14, 2023 at 12:00:40PM +0100, Johan Hovold wrote:
-> > > [ +CC: Shazad ]
-> > > 
-> > > On Thu, Dec 14, 2023 at 04:09:07PM +0530, Manivannan Sadhasivam wrote:
-> > > > On Thu, Dec 14, 2023 at 11:15:34AM +0100, Johan Hovold wrote:
-> > > > > On Thu, Dec 14, 2023 at 02:40:45PM +0530, Manivannan Sadhasivam wrote:
-> 
-> > > Unless the PHY consumes CXO directly, it should not be included in the
-> > > binding as you are suggesting here.
-> > 
-> > PHY is indeed directly consuming CXO. That's why I included it in the binding.
-> 
-> Ok, good. It's a bit frustrating that people can even seem to agree on
-> answers to direct questions about that.
->  
 
-I can understand that.
 
-> > > We discussed this at some length at the time with Bjorn and Shazad who
-> > > had access to the documentation and the conclusion was that, at least on
-> > > sc8280xp, the PHY does not use CXO directly and instead it should be
-> > > described as a parent to the UFS refclocks in the clock driver:
-> > > 
-> > > 	https://lore.kernel.org/lkml/Y2OEjNAPXg5BfOxH@hovoldconsulting.com/
-> > > 
-> > > The downstream devicetrees have a bad habit of including parent clocks
-> > > directly in the consumer node instead of modelling this in clock driver
-> > > also for other peripherals.
-> > >  
-> > 
-> > No, I can assure that you got the wrong info. UFS PHY consumes the clock
-> > directly from RPMh. It took me several days to dig through the UFS and PHY docs
-> > and special thanks to Can Guo from UFS team, who provided much valuable
-> > information about these clocks.
+On 12/14/23 11:55, AngeloGioacchino Del Regno wrote:
+> Il 13/12/23 19:00, Mark Hasemeyer ha scritto:
+>> The cros_ec driver currently assumes that cros-ec-spi compatible device
+>> nodes are a wakeup-source even though the wakeup-source property is not
+>> defined.
+>>
+>> Add the wakeup-source property to all cros-ec-spi compatible device
+>> nodes to match expected behavior.
+>>
+>> Signed-off-by: Mark Hasemeyer <markhas@chromium.org>
 > 
-> Sounds like you've done your research.
+> I received only patch [2/6] - please send the entire series to the relevant
+> maintainers, as otherwise it's difficult to understand what's going on.
 > 
-> > > What exactly is wrong with those commits? We know that the controller
-> > > does not consume GCC_UFS_REF_CLKREF_CLK directly, but describing that as
-> > > such for now was a deliberate choice:
-> > > 
-> > > 	GCC_UFS_REF_CLKREF_CLK is the clock to the devices, but as we
-> > > 	don't represent the memory device explicitly it seems suitable
-> > > 	to use as "ref_clk" in the ufshc nodes - which would then match
-> > > 	the special handling of the "link clock" in the UFS driver.
-> > >  
-> > 
-> > No, GCC_UFS_REF_CLKREF_CLK is _not_ the clock to UFS devices. I haven't found
-> > information about this specific register in GCC. Initially I thought this is for
-> > enabling QREF clocks for the UFS MEM phy, but I haven't found the answer yet.
-> 
-> Just quoting Bjorn.
-> 
-> > But as I said earlier, reference clock to UFS devices comes directly from the
-> > controller and there is a specfic register for controlling that. Starting from
-> > SM8550, reference clock comes from RPMh.
-> 
-> Sure, but that was only part of what those commits did or claimed. Bjorn
-> also explicitly stated that those refclocks were sourced from CXO, even
-> though I now see a claim from Shazad in that thread claiming the
-> opposite:
-> 
-> 	https://lore.kernel.org/all/Y2Imnf1+v5j5CH9r@hovoldconsulting.com/
+> As for this patch alone:
+>   1. arch/arm stuff goes to a different commit
+>   2. I would prefer if you split per-arch and per-SoC.
++1, otherwise *somebody* will get merge conflicts that - even
+if trivial - take additional time to resolve :(
 
-To clarify further, what Shazad said about GCC_UFS_REF_CLKREF_CLK is correct.
-This clock is not directly sourced by CXO, so it should be voted by the
-_PHY_ driver separately along with CXO (which still feeds PHY). That's what I
-represented in the binding.
-
-> 
-> Without access to docs I can only ask questions and try to do tedious
-> inferences from incomplete open sources (e.g. downstream devicetrees).
-> 
-
-That's the life for most of us :) Even with access to internal docs, it is
-difficult to find the information we are looking for. Because, a very few people
-know where the information is buried.
-
-- Mani
-
-> Johan
-
--- 
-மணிவண்ணன் சதாசிவம்
+Konrad
 
