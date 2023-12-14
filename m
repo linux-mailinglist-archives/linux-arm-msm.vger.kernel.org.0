@@ -1,138 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-4737-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4738-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E688F812DF1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 12:00:50 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 54EE5812E0E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 12:05:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9B16A1F2178C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 11:00:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0346D282174
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 11:05:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4025E3DB98;
-	Thu, 14 Dec 2023 11:00:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81DFC3E47D;
+	Thu, 14 Dec 2023 11:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ogYv/BY8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WIXHXeqN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12CE03D978;
-	Thu, 14 Dec 2023 11:00:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73183C433C8;
-	Thu, 14 Dec 2023 11:00:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702551644;
-	bh=7yvbMVFBoOU0OI0FWqy3sbSDeL+03VBIkmMdqGb8y1Q=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ogYv/BY8KjwpLoUv98i4AbfwNhxdm/I1XuoOWIHLNEC150LI+SNaUFxa4qcv+Bbxh
-	 jlgbSpDlMjyxdJ4oEXAN3tUK4QwUFNaeO7TESAV9D6TJM9G+V6dkgWcUtV2kxjND7Z
-	 kJ9U9fFg73ioIRp5DluSNU5ZAvrkl+cXa9y/hOPLnP8BtW2bUUREmNKgsAtcxDxIwh
-	 iPHjAcFdb8ObYptpIXvqLplA6ESG6Yoh+sDC0FG7sK4l602q9jnzREssYsYS8iZF9M
-	 +tm1nSztqlo/fq43/CQsuoh1RK+R07teCawbnDvm+6NOnk0NUIWEbdnnhsXbXzA2IP
-	 a2RirpniqQ6RA==
-Received: from johan by xi.lan with local (Exim 4.96.2)
-	(envelope-from <johan@kernel.org>)
-	id 1rDjSK-00088x-0r;
-	Thu, 14 Dec 2023 12:00:40 +0100
-Date: Thu, 14 Dec 2023 12:00:40 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
-	sboyd@kernel.org, mturquette@baylibre.com, robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Shazad Hussain <quic_shazhuss@quicinc.com>
-Subject: Re: [PATCH 00/16] Fix Qcom UFS PHY clocks
-Message-ID: <ZXrgWK5wZz6dAkKP@hovoldconsulting.com>
-References: <20231214091101.45713-1-manivannan.sadhasivam@linaro.org>
- <ZXrVxmxY6wZprbBa@hovoldconsulting.com>
- <20231214103907.GL2938@thinkpad>
+Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5CFA121
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 03:04:55 -0800 (PST)
+Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-5e36848f6c6so6942907b3.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 03:04:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702551895; x=1703156695; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=k4LjNhjVor5/6wirmCLkKeqg2J9GNr9MNYI9kwcT2bQ=;
+        b=WIXHXeqNdWjdIrnmUNajxyol2FFxOqMnha/j8SYxxbnJcg1iSl+So08BNI+ghxeMjD
+         5RbhGm5r9BI/1K9jvVSvg/xewbzZgbJ7GmRruOXTj1LgzdZU/p4OUdepOD+L7NZy3OvU
+         AmUmbXBos5lXlvojfEZvKxs35A+u+WD2VBJcgbbFOFH0mjDdwyNRvjaYRchsWzAl5khn
+         EukQuPChIJG3Ho2MwF414KGfzEzd9PzOI50BQqxLIfJrNtB3wIs67zdbSWJ+ANjES8Uw
+         V2EYd/dnhR4SWFtAT4G4/kaFjSpLtXr8ugI9XrsfUPOM7RwYK/68PtpmMy70CD2WijWJ
+         so4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702551895; x=1703156695;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=k4LjNhjVor5/6wirmCLkKeqg2J9GNr9MNYI9kwcT2bQ=;
+        b=iyXBlc9oYZUHwetT5r6p4Hwl2GCOtIplFgmZjZOP6BWtuV2pzJmURQAA4gfPEDQmY4
+         SqnjYwSTH+puYGQLqRSp8tLLTtMkf8TPjsNBCnIdSgGQMFwzd4WdnuOVnykEdiLNI3oA
+         LQc0zWt9rulBSFxV6jHvpXP303kp301SuA7/npOCiw+Zh4sxUn7h/oQX6k0ibD8DRN2c
+         Ad+zL6tbezahXvxmzS1qOZtkQ1Zea8QnSd+p6n9y4gAXky/1PQgIq2YdtXmA5yJityIf
+         Pq8Cy2TV55T5bnAe2Mig6qgwd59gtQrOVkPRVu2ZOJePl29S0rMGKA/JWZoJFbe6t4dQ
+         2qoQ==
+X-Gm-Message-State: AOJu0YzF15GjfSCSI2Dmr+g+ZxdNUZdceyE2yyw3zVWqHIOt2wIUBLoj
+	3y1e2g/dJdy/woPQ9X990JSfc4n/W0rzxBj3/EAGRQ==
+X-Google-Smtp-Source: AGHT+IG1aVfgGukkmoWFZ26DkxbhMt3gFHTO1lxEdG4EQYpm8eoQSZ2vaSwJ0MuCmhGGwTkFAPs+C/QBMZ6dBUPpQgg=
+X-Received: by 2002:a0d:ca0a:0:b0:59d:d85e:795d with SMTP id
+ m10-20020a0dca0a000000b0059dd85e795dmr7736662ywd.51.1702551894820; Thu, 14
+ Dec 2023 03:04:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231214103907.GL2938@thinkpad>
+References: <20231213210644.8702-1-robdclark@gmail.com> <ZXqr0RFw9KsP876v@hovoldconsulting.com>
+In-Reply-To: <ZXqr0RFw9KsP876v@hovoldconsulting.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 14 Dec 2023 13:04:43 +0200
+Message-ID: <CAA8EJpoSvaq9imP-dT4p=4jveZyFmh=OoWOP7jWGo4OYkHQDTA@mail.gmail.com>
+Subject: Re: [PATCH] soc: qcom: pmic_glink: Fix boot when QRTR=m
+To: Johan Hovold <johan@kernel.org>
+Cc: Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org, 
+	Rob Clark <robdclark@chromium.org>, Andy Gross <agross@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-[ +CC: Shazad ]
-
-On Thu, Dec 14, 2023 at 04:09:07PM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Dec 14, 2023 at 11:15:34AM +0100, Johan Hovold wrote:
-> > On Thu, Dec 14, 2023 at 02:40:45PM +0530, Manivannan Sadhasivam wrote:
-> > 
-> > > This series fixes the clocks supplied to QMP PHY IPs in the Qcom SoCs. All
-> > > of the Qcom SoCs except MSM8996 require 3 clocks for QMP UFS:
-> > > 
-> > > * ref - 19.2MHz reference clock from RPM/RPMh
-> > > * ref_aux - Auxiliary reference clock from GCC
-> > > * qref - QREF clock from GCC or TCSR (TCSR since SM8550)
-> > > 
-> > > MSM8996 only requires 'ref' and 'qref' clocks.
-> > > 
-> > > Hence, this series fixes the binding, DT and GCC driver to reflect the
-> > > actual clock topology.
-> > 
-> > Is this based on documentation for all the SoCs or on inference from the
-> > current (upstream and downstream) devicetrees?
-> 
-> It is based on the internal documentation. Even downstream devicetrees are
-> wrong. I should've mentioned it in the cover letter.
-> 
-> > Are you sure that you should not just describe that some of these UFS
-> > reference clocks are sourced from CXO in the clock driver instead?
-> 
-> I don't get your comment fully. Could you please elaborate?
-
-Unless the PHY consumes CXO directly, it should not be included in the
-binding as you are suggesting here.
-
-We discussed this at some length at the time with Bjorn and Shazad who
-had access to the documentation and the conclusion was that, at least on
-sc8280xp, the PHY does not use CXO directly and instead it should be
-described as a parent to the UFS refclocks in the clock driver:
-
-	https://lore.kernel.org/lkml/Y2OEjNAPXg5BfOxH@hovoldconsulting.com/
-
-The downstream devicetrees have a bad habit of including parent clocks
-directly in the consumer node instead of modelling this in clock driver
-also for other peripherals.
- 
-> > Take a look at commits
-> > 
-> > 	f446022b932a ("arm64: dts: qcom: sc8280xp: fix UFS reference clocks")
-> > 	f6abcc21d943 ("clk: qcom: gcc-sc8280xp: add cxo as parent for three ufs ref clks")
-> 
-> Btw, these commits are not accurate. In all the SoCs before SM8550, reference
-> clock for the UFS device comes from the UFS controller. There is a dedicated
-> register in UFSHC memory map that is being toggled by the driver to
-> enable/disable reference clock for the UFS device.
+On Thu, 14 Dec 2023 at 09:16, Johan Hovold <johan@kernel.org> wrote:
 >
-> Since SM8550, reference clock is directly sourced from RPMh. I'm preparing a
-> series to fix it.
+> On Wed, Dec 13, 2023 at 01:06:43PM -0800, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > We need to bail out before adding/removing devices, if we are going
+> > to -EPROBE_DEFER.  Otherwise boot will get stuck forever at
+> > deferred_probe_initcall().
+>
+> Can please you expand on why this is a problem here in the commit
+> message?
+>
+> The aux devices appear to be tore down correctly in the probe error
+> paths so how exactly does that lead to deferred_probe_initcall() being
+> stuck? This sounds like we may have a problem elsewhere which this patch
+> is papering over.
 
-What exactly is wrong with those commits? We know that the controller
-does not consume GCC_UFS_REF_CLKREF_CLK directly, but describing that as
-such for now was a deliberate choice:
+This is a known problem. Successful probes during the probe deferral
+loop causes the whole loop to be reiterated. Creating child devices
+usually results in  a successful probe. Aso I thought that just
+creating new device also causes a reprobe, but I can not find any
+evidence now.
 
-	GCC_UFS_REF_CLKREF_CLK is the clock to the devices, but as we
-	don't represent the memory device explicitly it seems suitable
-	to use as "ref_clk" in the ufshc nodes - which would then match
-	the special handling of the "link clock" in the UFS driver.
- 
-> Unfortunately, this information is not depicted correctly in the downstream
-> devicetrees.
+>
+> Also where does the probe deferral come from in your case?
+> pdr_handle_alloc()?
+>
+> If this is a correct fix, I'd also expect there to be a Fixes and
+> CC-stable tag.
+>
+> Johan
+>
 
-I was hoping the information that those commits are based on would be
-correct as it came from Qualcomm and Bjorn. I have no illusions about
-the downstream devicetrees being correct. :)
 
-Johan
+-- 
+With best wishes
+Dmitry
 
