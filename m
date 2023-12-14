@@ -1,113 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-4836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4837-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8741A813CAF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 22:36:02 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB05C813CB2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 22:36:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 310451F2150B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 21:36:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6F1FA1F2273F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 21:36:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3A4F5F1E2;
-	Thu, 14 Dec 2023 21:35:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="R1rDkWw5"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CE266ABA6;
+	Thu, 14 Dec 2023 21:36:05 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E23B7282E9
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 21:35:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1702589758; x=1734125758;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=NqfYZN78B3hVHP2Dit/8JqwIzCyrej/6W8WjTK/vVLc=;
-  b=R1rDkWw5fAhysaQHjgR6ZhuPYPM4zm8qlXpyc3n23QrmHhcJG9UqVyM0
-   Y+hCNiB2R7WGKqbXapXaq1/x+6RC/LY8d7PSulumcFoIKVNU6HeopV0K/
-   8NNaThLnkwj4+CAUuTZYqCAV6w0IPckDNPvDaaOd68eP66AZn9wBCWmmE
-   bYPgYOHLlDzQqT+o52BYecGTGAf19+ZL86YKVGtATS2cclzwXFk/O3JYd
-   2YTmbwy6uOKykAtB7uKO7+Kvk/B74GBDDsjwzWO89Arilk+uPBOoBaeng
-   92alJsxULUWO6BoveWZ2O7bQiD3AoNegUVsTDGqmwmfc9fTTJMwKB/+Fa
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10924"; a="2010158"
-X-IronPort-AV: E=Sophos;i="6.04,276,1695711600"; 
-   d="scan'208";a="2010158"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Dec 2023 13:35:57 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10924"; a="808730983"
-X-IronPort-AV: E=Sophos;i="6.04,276,1695711600"; 
-   d="scan'208";a="808730983"
-Received: from kialmah1-desk5.jf.intel.com ([10.23.15.170])
-  by orsmga001.jf.intel.com with ESMTP; 14 Dec 2023 13:35:56 -0800
-From: Khaled Almahallawy <khaled.almahallawy@intel.com>
-To: dri-devel@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org
-Cc: intel-gfx@lists.freedesktop.org,
-	Khaled Almahallawy <khaled.almahallawy@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Sean Paul <sean@poorly.run>
-Subject: [PATCH] drm/display/dp: Update the name of bit#4 of DPCD TEST_REQUEST
-Date: Thu, 14 Dec 2023 13:35:55 -0800
-Message-Id: <20231214213555.3643327-1-khaled.almahallawy@intel.com>
-X-Mailer: git-send-email 2.34.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3C35F1E2;
+	Thu, 14 Dec 2023 21:36:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-5913b73b53eso40364eaf.0;
+        Thu, 14 Dec 2023 13:36:03 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702589762; x=1703194562;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dOfIXMQdmVXtw/LaT+kEhtAy+i/QDIyW7XZdUFyrkYc=;
+        b=oBqqr8rwbL1nYnJk0iB64rjFYHcUSEmJM5VCetWd0N2GiQ7zQki6qokVjTs9+XE99K
+         tMVDc8iO97kmVnUwZqp6i8klOxQxAB79YXucbiatBMisx4i64ij3SUuZ0ZlJAdpG37td
+         d4iLHVWSHidOc5+8SpYLJNtk1K/degl5A+KJBD+T/7NuDlbVgjUDWAvdjOo6XnR7NXaR
+         IEUqW4Rm1VfWoYt73H6FI1h8SLOFwQpVQQYz0DmppvurdwTQl3CxbtJAATnr+4I43nkt
+         VSLqcZYD6Kq16PopWuWCbyS0/TP3ElFCp32s/tYxi48L6TftRqfKKZ6QYGcWzHiA1ASf
+         NYHg==
+X-Gm-Message-State: AOJu0Yz4EkAHYBbR8mQA9avziBphsHzn+C9scJ3MECXagp9M3Ab0wfB5
+	aQ7VBNC+K6e5W94xCPdxyw==
+X-Google-Smtp-Source: AGHT+IGQwAEAEsXKwPod/9C7p+UERtNGBRBhXv6kCpyQfnL61ttM0xzFs0wx/qtEEGJNigaSx/FJbw==
+X-Received: by 2002:a05:6820:1c88:b0:58e:272a:7da1 with SMTP id ct8-20020a0568201c8800b0058e272a7da1mr10570842oob.2.1702589762638;
+        Thu, 14 Dec 2023 13:36:02 -0800 (PST)
+Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id az2-20020a056830458200b006d87b9d84bfsm3359255otb.12.2023.12.14.13.36.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Dec 2023 13:36:02 -0800 (PST)
+Received: (nullmailer pid 978584 invoked by uid 1000);
+	Thu, 14 Dec 2023 21:36:00 -0000
+Date: Thu, 14 Dec 2023 15:36:00 -0600
+From: Rob Herring <robh@kernel.org>
+To: Conor Dooley <conor@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org, linux-sound@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/4] ASoC: dt-bindings: qcom,lpass-rx-macro: Add X1E80100
+ LPASS RX
+Message-ID: <20231214213600.GA975481-robh@kernel.org>
+References: <20231211123104.72963-1-krzysztof.kozlowski@linaro.org>
+ <20231211-cardstock-elevator-3e19f9d41ac2@spud>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231211-cardstock-elevator-3e19f9d41ac2@spud>
 
-DP_TEST_LINK_FAUX_PATTERN is deprecated since DP1.3 Spec.
-Update to the latest definition in DP2.1 spec to reflect its true
-usage in the code.
+On Mon, Dec 11, 2023 at 05:29:50PM +0000, Conor Dooley wrote:
+> On Mon, Dec 11, 2023 at 01:31:01PM +0100, Krzysztof Kozlowski wrote:
+> > Add bindings for Qualcomm X1E80100 SoC Low Power Audio SubSystem (LPASS)
+> > RX macro codec, which looks like compatible with earlier SM8550.
+> > 
+> > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> I wish you'd send cover letters when you send series of trivial patches
+> like this that could be acked in one go.
 
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Sean Paul <sean@poorly.run>
-Signed-off-by: Khaled Almahallawy <khaled.almahallawy@intel.com>
----
- drivers/gpu/drm/msm/dp/dp_link.c | 2 +-
- include/drm/display/drm_dp.h     | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Or just one patch because it's basically all the same changes and it's 
+all going to 1 tree and the same set of people that will care to look 
+at it.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-index 98427d45e9a7..b7d16c1afb5a 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.c
-+++ b/drivers/gpu/drm/msm/dp/dp_link.c
-@@ -664,7 +664,7 @@ static int dp_link_parse_request(struct dp_link_private *link)
- 		return rlen;
- 	}
- 
--	if (!data || (data == DP_TEST_LINK_FAUX_PATTERN)) {
-+	if (!data || (data == DP_TEST_PHY_TEST_CHANNEL_CODING_TYPE)) {
- 		drm_dbg_dp(link->drm_dev, "link 0x%x not supported\n", data);
- 		goto end;
- 	}
-diff --git a/include/drm/display/drm_dp.h b/include/drm/display/drm_dp.h
-index 3731828825bd..3ccbc9eb9289 100644
---- a/include/drm/display/drm_dp.h
-+++ b/include/drm/display/drm_dp.h
-@@ -807,7 +807,7 @@
- # define DP_TEST_LINK_VIDEO_PATTERN	    (1 << 1)
- # define DP_TEST_LINK_EDID_READ		    (1 << 2)
- # define DP_TEST_LINK_PHY_TEST_PATTERN	    (1 << 3) /* DPCD >= 1.1 */
--# define DP_TEST_LINK_FAUX_PATTERN	    (1 << 4) /* DPCD >= 1.2 */
-+# define DP_TEST_PHY_TEST_CHANNEL_CODING_TYPE	    (1 << 4)
- # define DP_TEST_LINK_AUDIO_PATTERN         (1 << 5) /* DPCD >= 1.2 */
- # define DP_TEST_LINK_AUDIO_DISABLED_VIDEO  (1 << 6) /* DPCD >= 1.2 */
- 
--- 
-2.34.1
-
+Rob
 
