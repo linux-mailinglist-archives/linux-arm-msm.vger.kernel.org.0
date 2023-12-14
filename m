@@ -1,40 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-4677-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 976FC81299B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 08:43:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D8F68129A1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 08:43:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9D8511C2128D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 07:43:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D01851C2128D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 07:43:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44B0312E7F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F0881401B;
 	Thu, 14 Dec 2023 07:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="segCU/dy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JAiIqQTZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E7212E6B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23EE312E78;
 	Thu, 14 Dec 2023 07:43:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA32CC433C9;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC456C433CA;
 	Thu, 14 Dec 2023 07:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1702539819;
-	bh=Sc0pqUtVynzYzW0IftIloM3hEVD+unGr2FUCTQzhLy4=;
+	bh=l55zeFifKbWF2oDn+P1nsRBo9MUetHUzY3iyTXVZNo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=segCU/dyx/0xze9h4ZDo4dEJjHirIemXGin/5vpbxKyqw3lvHyo87C2zJEqCgizUA
-	 mhcXfSzuRQTz3H2Bts5osXxIORZeHgJaNn9+SCcjDnF+YbwQOhg9srT41ShKaG2PpR
-	 3imCZeFfgsnFtM8iRhBq9pAYxQe/u+/ng0edJM85xKiQx4gd6Zak64vDcshzVANmnY
-	 ZIuL+gjUZdp7Cy4yQepmO3JYhJVWOxotNUYMu588HUMgbRJSMoECrPm54YWTsqxaF8
-	 YWR6r/Q2iJBalL+JhqK0fRX6KeTlW4BRXFg+E8Tw/pX9tMv7AId78AKuOV9DVCSLVP
-	 FhPz067eN4lSA==
+	b=JAiIqQTZBc9pQiGXERJe4aqi8/+2XYvgN/+3b8ZZQDxRd7HamMCXO/GC8SzDfvX3R
+	 StzBUroTXkpgIs7tvpQ5B9T8CIlFfKM3xxgiNaLp8p6u9sjscfJGrwISWUgCSI6K+C
+	 pcKUqUa7FjgjA/FH+ht77vAFh2q1rU2PD8bbf3kRzFYmZLq6TURu/I2T3wwGhys/0E
+	 ghTOSWCEwvey6PQgZtswFsyqHOBTh7cwOs9zHFlFQpkmdDtIBtow9lZwok9etn2wa2
+	 5SfT7uvIWBgYshvY7YTznt1oAOr01k+8wDhB8n1Eo7iVfhXMSi31rzdo0q7v0gd37l
+	 BhCxZ0bXaHovw==
 Received: from johan by xi.lan with local (Exim 4.96.2)
 	(envelope-from <johan+linaro@kernel.org>)
-	id 1rDgNf-0002s8-0p;
+	id 1rDgNf-0002sA-18;
 	Thu, 14 Dec 2023 08:43:39 +0100
 From: Johan Hovold <johan+linaro@kernel.org>
 To: Bjorn Andersson <andersson@kernel.org>
@@ -49,10 +49,10 @@ Cc: Andy Gross <agross@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	Johan Hovold <johan+linaro@kernel.org>,
 	stable@vger.kernel.org,
-	Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH 2/3] arm64: dts: qcom: sdm670: fix USB SS wakeup
-Date: Thu, 14 Dec 2023 08:43:18 +0100
-Message-ID: <20231214074319.11023-3-johan+linaro@kernel.org>
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 3/3] arm64: dts: qcom: sc8180x: fix USB SS wakeup
+Date: Thu, 14 Dec 2023 08:43:19 +0100
+Message-ID: <20231214074319.11023-4-johan+linaro@kernel.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20231214074319.11023-1-johan+linaro@kernel.org>
 References: <20231214074319.11023-1-johan+linaro@kernel.org>
@@ -68,26 +68,35 @@ The USB SS PHY interrupt needs to be provided by the PDC interrupt
 controller in order to be able to wake the system up from low-power
 states.
 
-Fixes: 07c8ded6e373 ("arm64: dts: qcom: add sdm670 and pixel 3a device trees")
-Cc: stable@vger.kernel.org      # 6.2
-Cc: Richard Acayan <mailingradian@gmail.com>
+Fixes: b080f53a8f44 ("arm64: dts: qcom: sc8180x: Add remoteprocs, wifi and usb nodes")
+Cc: stable@vger.kernel.org      # 6.5
+Cc: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm670.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-index fe4067c012a0..730c8351bcaa 100644
---- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-@@ -1296,7 +1296,7 @@ usb_1: usb@a6f8800 {
- 			assigned-clock-rates = <19200000>, <150000000>;
- 
+diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+index 8f95779c75fa..7a53d6d18498 100644
+--- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+@@ -2549,7 +2549,7 @@ usb_prim: usb@a6f8800 {
+ 			compatible = "qcom,sc8180x-dwc3", "qcom,dwc3";
+ 			reg = <0 0x0a6f8800 0 0x400>;
  			interrupts-extended = <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
 -					      <&intc GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
 +					      <&pdc 6 IRQ_TYPE_LEVEL_HIGH>,
  					      <&pdc 8 IRQ_TYPE_EDGE_BOTH>,
  					      <&pdc 9 IRQ_TYPE_EDGE_BOTH>;
+ 			interrupt-names = "hs_phy_irq",
+@@ -2623,7 +2623,7 @@ usb_sec: usb@a8f8800 {
+ 			resets = <&gcc GCC_USB30_SEC_BCR>;
+ 			power-domains = <&gcc USB30_SEC_GDSC>;
+ 			interrupts-extended = <&intc GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>,
+-					      <&intc GIC_SPI 487 IRQ_TYPE_LEVEL_HIGH>,
++					      <&pdc 7 IRQ_TYPE_LEVEL_HIGH>,
+ 					      <&pdc 10 IRQ_TYPE_EDGE_BOTH>,
+ 					      <&pdc 11 IRQ_TYPE_EDGE_BOTH>;
  			interrupt-names = "hs_phy_irq", "ss_phy_irq",
 -- 
 2.41.0
