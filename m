@@ -1,180 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-4668-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4669-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD8E88128DA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 08:13:28 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E857A8128E9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 08:16:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 935BD1F216F2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 07:13:28 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7A065B20DBC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 07:16:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1F1BD53B;
-	Thu, 14 Dec 2023 07:13:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAB0312E60;
+	Thu, 14 Dec 2023 07:15:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RTr6hH6p"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HW2dUlKu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B00E6107;
-	Wed, 13 Dec 2023 23:13:19 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BE2wi5i004126;
-	Thu, 14 Dec 2023 07:13:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:from:to:cc:references
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=VmqZYjMx0vgFysXJdO/GGgQWXfWPrqIdMa2UVbw3zwY=; b=RT
-	r6hH6pnKUNFE5A9SOfH6UW3XurQOgJeUpE+5nvfcZdqLlzXjtUcRktkYHqtqPKa2
-	R6z9NV7lFeNneJW+GEbIF0XN+GtP8HPlsBIe5rG0YNQtqYjIk8BkW9PNY4pd0+mB
-	k6URBSiIDudlBVNl1zRWN3+9WAExNcrPdoNkgLE8Z1c5NavW2kJkgC7YxNO1rB8J
-	ODZeXKzn/exYaVvHDp+M2JygLAuNZB7F1kZpPMOR5UJW7nzYV2xZii8NUhRutQ+y
-	7y+TIbFjf1B/G6KDMIQzIZ8Uu9iDp6H3+aa0T4y4zd6gbmc6XD7TpCg7Xnr9QP7U
-	ZdmqCDIANd8HmIZ13i9w==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uyq9t0ntn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Dec 2023 07:13:10 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BE7D9tH001194
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Dec 2023 07:13:09 GMT
-Received: from [10.50.15.223] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 13 Dec
- 2023 23:13:06 -0800
-Message-ID: <54e882ba-4758-1283-1a52-1f12201e1836@quicinc.com>
-Date: Thu, 14 Dec 2023 12:43:02 +0530
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24714E8
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 23:15:57 -0800 (PST)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-5e248b40c97so22632697b3.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 23:15:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702538156; x=1703142956; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Hyuj6L4AEIo77b1y5Vbh5MTrD0n68EvFYvH7xGhCjqA=;
+        b=HW2dUlKuh5ESUmOaYRbiyzbvaDRcmFw2QlVR3dGYxoYY67WfLWhwJkf9aMmGkWyTp4
+         wsNFeQinxl3D9mBay7BhlCy2dJ1NaVz9AZrFIPikHQeeSKbXfe1fEyDWI5ssjI41YmUa
+         yNTIVS/g043RyNT0CLAQkdE2OmqTMuvqsOGX71IqOI51+YPiafFSHg2KfqdN9INXqu5S
+         jTS+rFJoSyHZLb1R9tr32CJQe4NuFjNSmwZoPH8+8GicVX12jPv+dr3mO+FsHgrkiU5v
+         0EvAoyrZIreVSge7g8N60KOjR1RlNW4Wx0JBYdrubeoRK3HqT6DQpDhyg3YNLA63WjdR
+         3nQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702538156; x=1703142956;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Hyuj6L4AEIo77b1y5Vbh5MTrD0n68EvFYvH7xGhCjqA=;
+        b=pNMT7dHWS8uIvLfO1EojiDw5Zb2rxW7f3PR15pV5eg2ATwn+5+GHEiu/FucDnAbqOg
+         mQM7FbFcRFxL2qpueHTNmynMocKN2EIr4PJ7mZ3inSurgdIkMh0ydhPr6kvCc2Twlvj2
+         +d8Cai8YZTGxv54Rr4s0FZLs2nJYGWpCUdhCOlznrhuIf9KtBZJeNgrFuyEsY2vpHMkj
+         GavF+tUezDJVRsri7vTWOJA2lJVXqhHattz8rap+2qWynReZmwfOX44SvwQuWfs+AnHE
+         2u9eGtHOpd8EsFWna/YCy8JfsiO3seBmug7+iktGAA0Av4TYXd3gOAT6ycb9zlzjlgNW
+         3Sjw==
+X-Gm-Message-State: AOJu0YyhBJ9FK5QsegzDkdYBvrMc5zTJAMTktWVbexqpkzIRj6EYE5J8
+	OEwV4y/Yu1fb+3KxbUGmDW1V6gxD/zJbl6TcgB3sIA==
+X-Google-Smtp-Source: AGHT+IH3+Sw3exQcLiS7Au2pmyJWOiOy946o670EL9T8G4UD/WLVLtSaMDRzk5R+ja2Q0rT5BFDKfRPi9nleUY6Lf3Q=
+X-Received: by 2002:a81:c30e:0:b0:5e3:9b5f:e3f with SMTP id
+ r14-20020a81c30e000000b005e39b5f0e3fmr358653ywk.59.1702538156139; Wed, 13 Dec
+ 2023 23:15:56 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Subject: Re: [PATCH v2 05/17] scsi: ufs: qcom: Remove the warning message when
- core_reset is not available
-From: Nitin Rawat <quic_nitirawa@quicinc.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC: <martin.petersen@oracle.com>, <jejb@linux.ibm.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-scsi@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_cang@quicinc.com>, <ahalaney@redhat.com>
-References: <20231208065902.11006-1-manivannan.sadhasivam@linaro.org>
- <20231208065902.11006-6-manivannan.sadhasivam@linaro.org>
- <7472fe73-e7a0-5c8c-6e85-655db028a5c3@quicinc.com>
- <20231208102832.GA3008@thinkpad>
- <190651ad-6aeb-69eb-89c5-ed18221b5a7a@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <190651ad-6aeb-69eb-89c5-ed18221b5a7a@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: W2zM5WfzVBaFH0jkMVrp6SDQahMuyZ3Q
-X-Proofpoint-GUID: W2zM5WfzVBaFH0jkMVrp6SDQahMuyZ3Q
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- mlxlogscore=999 suspectscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
- malwarescore=0 impostorscore=0 priorityscore=1501 phishscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
- definitions=main-2312140045
+References: <20231214062847.2215542-1-quic_ipkumar@quicinc.com> <20231214062847.2215542-8-quic_ipkumar@quicinc.com>
+In-Reply-To: <20231214062847.2215542-8-quic_ipkumar@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 14 Dec 2023 09:15:45 +0200
+Message-ID: <CAA8EJppyd5-TQmvzRB3rBhRQtMLdu=6u5aQd5rWHitRuaJXzpA@mail.gmail.com>
+Subject: Re: [PATCH 07/10] dt-bindings: PCI: qcom: Add IPQ5332 SoC
+To: Praveenkumar I <quic_ipkumar@quicinc.com>
+Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, 
+	mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org, 
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, bhelgaas@google.com, 
+	lpieralisi@kernel.org, kw@linux.com, vkoul@kernel.org, kishon@kernel.org, 
+	mani@kernel.org, quic_nsekar@quicinc.com, quic_srichara@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-pci@vger.kernel.org, linux-phy@lists.infradead.org, 
+	quic_varada@quicinc.com, quic_devipriy@quicinc.com, quic_kathirav@quicinc.com, 
+	quic_anusha@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+
+On Thu, 14 Dec 2023 at 08:30, Praveenkumar I <quic_ipkumar@quicinc.com> wrote:
+>
+> Add support for the PCIe controller on the Qualcomm
+> IPQ5332 SoC to the bindings.
+>
+> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> ---
+>  .../devicetree/bindings/pci/qcom,pcie.yaml    | 36 +++++++++++++++++++
+>  1 file changed, 36 insertions(+)
+>
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> index eadba38171e1..af5e67d2a984 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> @@ -21,6 +21,7 @@ properties:
+>            - qcom,pcie-apq8064
+>            - qcom,pcie-apq8084
+>            - qcom,pcie-ipq4019
+> +          - qcom,pcie-ipq5332
+>            - qcom,pcie-ipq6018
+>            - qcom,pcie-ipq8064
+>            - qcom,pcie-ipq8064-v2
+> @@ -170,6 +171,7 @@ allOf:
+>          compatible:
+>            contains:
+>              enum:
+> +              - qcom,pcie-ipq5332
+>                - qcom,pcie-ipq6018
+>                - qcom,pcie-ipq8074-gen3
+>      then:
+> @@ -332,6 +334,39 @@ allOf:
+>              - const: ahb # AHB reset
+>              - const: phy_ahb # PHY AHB reset
+>
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,pcie-ipq5332
+
+As you seem to be depending on the ipq9574, could you please reuse the
+DT entry too?
+
+> +    then:
+> +      properties:
+> +        clocks:
+> +          minItems: 6
+> +          maxItems: 6
+> +        clock-names:
+> +          items:
+> +            - const: ahb # AHB clock
+> +            - const: aux # Auxiliary clock
+> +            - const: axi_m # AXI Master clock
+> +            - const: axi_s # AXI Slave clock
+> +            - const: axi_bridge # AXI bridge clock
+> +            - const: rchng
+> +        resets:
+> +          minItems: 8
+> +          maxItems: 8
+> +        reset-names:
+> +          items:
+> +            - const: pipe # PIPE reset
+> +            - const: sticky # Core sticky reset
+> +            - const: axi_m_sticky # AXI master sticky reset
+> +            - const: axi_m # AXI master reset
+> +            - const: axi_s_sticky # AXI slave sticky reset
+> +            - const: axi_s # AXI slave reset
+> +            - const: ahb # AHB reset
+> +            - const: aux # AUX reset
+> +
+>    - if:
+>        properties:
+>          compatible:
+> @@ -790,6 +825,7 @@ allOf:
+>                enum:
+>                  - qcom,pcie-apq8064
+>                  - qcom,pcie-ipq4019
+> +                - qcom,pcie-ipq5332
+>                  - qcom,pcie-ipq8064
+>                  - qcom,pcie-ipq8064v2
+>                  - qcom,pcie-ipq8074
+> --
+> 2.34.1
+>
+>
 
 
-
-On 12/8/2023 6:59 PM, Nitin Rawat wrote:
-> 
-> 
-> On 12/8/2023 3:58 PM, Manivannan Sadhasivam wrote:
->> On Fri, Dec 08, 2023 at 02:55:21PM +0530, Nitin Rawat wrote:
->>>
->>>
->>> On 12/8/2023 12:28 PM, Manivannan Sadhasivam wrote:
->>>> core_reset is optional, so there is no need to warn the user if it 
->>>> is not
->>>> available.
->>>>
->>>> Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
->>>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->>>> ---
->>>>    drivers/ufs/host/ufs-qcom.c | 4 +---
->>>>    1 file changed, 1 insertion(+), 3 deletions(-)
->>>>
->>>> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
->>>> index dc93b1c5ca74..d474de0739e4 100644
->>>> --- a/drivers/ufs/host/ufs-qcom.c
->>>> +++ b/drivers/ufs/host/ufs-qcom.c
->>>> @@ -296,10 +296,8 @@ static int ufs_qcom_host_reset(struct ufs_hba 
->>>> *hba)
->>>>        struct ufs_qcom_host *host = ufshcd_get_variant(hba);
->>>>        bool reenable_intr;
->>>> -    if (!host->core_reset) {
->>>> -        dev_warn(hba->dev, "%s: reset control not set\n", __func__);
->>>> +    if (!host->core_reset)
->>>>            return 0;
->>>> -    }
->>>>        reenable_intr = hba->is_irq_enabled;
->>>>        disable_irq(hba->irq);
->>>
->>>
->>> Hi Mani,
->>>
->>> I think core reset is not frequent. It happen during only probe ,error
->>> handler.
->>>
->>> core reset is needed in kernel to cleanup UFS phy and controller
->>> configuration before UFS HLOS operation starts as per HPG.
->>>
->>
->> This sounds like core reset is not an optional property but a required 
->> one. I
->> just checked the upstream DT files for all SoCs, and looks like pretty 
->> much all
->> of them support core reset.
->>
->> Only MSM8996 doesn't have the reset property, but the reset is 
->> available in GCC.
->> So we should be able to use it in dtsi.
->>
->> I also skimmed through the HPG and looks like core reset is not 
->> optional. Please
->> confirm.
->>
->> - Mani
-> 
-> 
-> Hi Mani,
-> 
-> Yes Core_reset is part of HPG sequence and is needed.
-> 
-> Regards,
-> Nitin
-
-
-Hi Mani,
-
-I see this patch series is merged . So planning to keep the warn message
-based on above discussion.
-
-Regards,
-Nitin
-> 
-> 
->>
->>> Having existing warn print can be used to to debug or atleast know
->>> core_reset is missed in device tree to give indication complete reset 
->>> hasn't
->>> been done and we could still be operating in bootloader configuration.
->>>
->>>
->>> Regards,
->>> Nitin
->>>
->>
-> 
+-- 
+With best wishes
+Dmitry
 
