@@ -1,144 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-4667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4668-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 314FB8128D8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 08:13:03 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD8E88128DA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 08:13:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 93EE9B21240
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 07:13:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 935BD1F216F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 07:13:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29528DDD1;
-	Thu, 14 Dec 2023 07:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1F1BD53B;
+	Thu, 14 Dec 2023 07:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dfzg5m5c"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RTr6hH6p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 316DE107
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 23:12:51 -0800 (PST)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-5b383b4184fso70583647b3.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 23:12:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702537970; x=1703142770; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=93QX/jgZBqRf6fwN+rr8BYXawe/tGzkWINFxkuFYXG4=;
-        b=dfzg5m5cRX7sJEbzHZkDU1RpFdYfhM9dqpHmaRCh9PD7VuxEib1ezVAoSwiaq6rreV
-         sizhc+8uHaMbd+0784yyeK0ic77oeRl99O79Iyr34nKGtN5KMw2wWQDpqVoRC0l8RAG8
-         /J9SVHewGzhyX3jNErvlN9OiRYGz4JKSmlJ8UtLZnoLHZR31VBPxJiwJme98bV3rYLkw
-         LtOMIImPKnGyTwzKayLExy9OFzXFFUh2vU2PmR9nPBp/gxpGVfLFfXvROuoot4xz52LL
-         A57MfkS+6SNteP8vkGj/bmdcs3SPCGHn1zpV8KZUUmTUghmqIzEQXv4iAzaZGNRuSsZA
-         3Tkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702537970; x=1703142770;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=93QX/jgZBqRf6fwN+rr8BYXawe/tGzkWINFxkuFYXG4=;
-        b=hr6AWC+zzT7uywoN101NkcBjo9cm+HZenvSAg/zngu2F1+68FcYNgKToT9xgIz2bzs
-         jNXUqpefucWuPBmFdkhVktBTinERtO2oafkvgFqkGLZAeCHzIfYfVFCqdqw6DPyzWpZd
-         lqm65Dc0Z3Wyo0/629hGa4v3bAQQfcP1pVDcVJtWmFYVP+63A8DCxercQMFBqYVFOm6E
-         lvOiXt2zgEgR2QtNAU1L+H7pFdP+zugx6s1tRmHuOhgW4QSI8qNfGKdi4mQE80LYFA7W
-         YQ3MsHhhJOafUkN+3NTEv2vIT2ls2TBASLR2S66JhlgMCv+q3NboP24t07OFgIlURXG4
-         tckQ==
-X-Gm-Message-State: AOJu0YxBAFkjsZEtJHrqVy/xAynp2goJpKIOre8UF0mN8kqGRMsTcDhF
-	UMCOcj3WxCXxvctQvKIdHK2uAdTa9xZX8GLnsUIRaw==
-X-Google-Smtp-Source: AGHT+IGhCYJ6oqVzy6LbBhSToBcgh/7Ie6zjhhlYJRcHkOc+QFWGJAo1D/JpyUKQrMnIvCrzM0Nb9dc+JGLDE73Mp5g=
-X-Received: by 2002:a81:49c8:0:b0:5de:93b6:7045 with SMTP id
- w191-20020a8149c8000000b005de93b67045mr8139176ywa.39.1702537970292; Wed, 13
- Dec 2023 23:12:50 -0800 (PST)
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B00E6107;
+	Wed, 13 Dec 2023 23:13:19 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BE2wi5i004126;
+	Thu, 14 Dec 2023 07:13:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:from:to:cc:references
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=VmqZYjMx0vgFysXJdO/GGgQWXfWPrqIdMa2UVbw3zwY=; b=RT
+	r6hH6pnKUNFE5A9SOfH6UW3XurQOgJeUpE+5nvfcZdqLlzXjtUcRktkYHqtqPKa2
+	R6z9NV7lFeNneJW+GEbIF0XN+GtP8HPlsBIe5rG0YNQtqYjIk8BkW9PNY4pd0+mB
+	k6URBSiIDudlBVNl1zRWN3+9WAExNcrPdoNkgLE8Z1c5NavW2kJkgC7YxNO1rB8J
+	ODZeXKzn/exYaVvHDp+M2JygLAuNZB7F1kZpPMOR5UJW7nzYV2xZii8NUhRutQ+y
+	7y+TIbFjf1B/G6KDMIQzIZ8Uu9iDp6H3+aa0T4y4zd6gbmc6XD7TpCg7Xnr9QP7U
+	ZdmqCDIANd8HmIZ13i9w==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uyq9t0ntn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Dec 2023 07:13:10 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BE7D9tH001194
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Dec 2023 07:13:09 GMT
+Received: from [10.50.15.223] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 13 Dec
+ 2023 23:13:06 -0800
+Message-ID: <54e882ba-4758-1283-1a52-1f12201e1836@quicinc.com>
+Date: Thu, 14 Dec 2023 12:43:02 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231214062847.2215542-1-quic_ipkumar@quicinc.com> <20231214062847.2215542-5-quic_ipkumar@quicinc.com>
-In-Reply-To: <20231214062847.2215542-5-quic_ipkumar@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 14 Dec 2023 09:12:39 +0200
-Message-ID: <CAA8EJppV1UnC_Howfn1_4Ox-jftrRRF63QesFzqCSX+tC4c6FQ@mail.gmail.com>
-Subject: Re: [PATCH 04/10] phy: qcom: Add support for Pipe clock rate from
- device data
-To: Praveenkumar I <quic_ipkumar@quicinc.com>
-Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, 
-	mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org, 
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, bhelgaas@google.com, 
-	lpieralisi@kernel.org, kw@linux.com, vkoul@kernel.org, kishon@kernel.org, 
-	mani@kernel.org, quic_nsekar@quicinc.com, quic_srichara@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pci@vger.kernel.org, linux-phy@lists.infradead.org, 
-	quic_varada@quicinc.com, quic_devipriy@quicinc.com, quic_kathirav@quicinc.com, 
-	quic_anusha@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-
-On Thu, 14 Dec 2023 at 08:29, Praveenkumar I <quic_ipkumar@quicinc.com> wrote:
->
-> Qualcomm IPQ5332 has the same PCIe UNIPHY PHY with different pipe
-> clock rate. Add support to define the pipe clock rate in device
-> data.
->
-> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-
-With the name fixed:
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-> ---
-> This patch depends on the below series which adds PCIe support in
-> Qualcomm IPQ5018
-> https://lore.kernel.org/all/20231003120846.28626-1-quic_nsekar@quicinc.com/
->
->  drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c b/drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c
-> index 5ef6ae7276cf..9f9a03faf6fa 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c
-> @@ -54,6 +54,7 @@ struct uniphy_pcie_data {
->         unsigned int phy_type;
->         const struct uniphy_regs *init_seq;
->         unsigned int init_seq_num;
-> +       unsigned int pipe_clk_rate;
->  };
->
->  struct qcom_uniphy_pcie {
-> @@ -117,6 +118,7 @@ static const struct uniphy_pcie_data ipq5018_2x2_data = {
->         .phy_type       = PHY_TYPE_PCIE_GEN2,
->         .init_seq       = ipq5018_regs,
->         .init_seq_num   = ARRAY_SIZE(ipq5018_regs),
-> +       .pipe_clk_rate  = 125000000,
->  };
->
->  static void qcom_uniphy_pcie_init(struct qcom_uniphy_pcie *phy)
-> @@ -232,6 +234,7 @@ static int qcom_uniphy_pcie_get_resources(struct platform_device *pdev,
->  static int phy_pipe_clk_register(struct qcom_uniphy_pcie  *phy,
->                                  struct device_node *np)
->  {
-> +       const struct uniphy_pcie_data *data = phy->data;
->         struct clk_fixed_rate *fixed;
->         struct clk_init_data init = { };
->         int ret;
-> @@ -247,7 +250,7 @@ static int phy_pipe_clk_register(struct qcom_uniphy_pcie  *phy,
->                 return -ENOMEM;
->
->         init.ops = &clk_fixed_rate_ops;
-> -       fixed->fixed_rate = 125000000;
-> +       fixed->fixed_rate = data->pipe_clk_rate;
->         fixed->hw.init = &init;
->
->         ret = devm_clk_hw_register(phy->dev, &fixed->hw);
-> --
-> 2.34.1
->
->
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: [PATCH v2 05/17] scsi: ufs: qcom: Remove the warning message when
+ core_reset is not available
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: <martin.petersen@oracle.com>, <jejb@linux.ibm.com>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-scsi@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_cang@quicinc.com>, <ahalaney@redhat.com>
+References: <20231208065902.11006-1-manivannan.sadhasivam@linaro.org>
+ <20231208065902.11006-6-manivannan.sadhasivam@linaro.org>
+ <7472fe73-e7a0-5c8c-6e85-655db028a5c3@quicinc.com>
+ <20231208102832.GA3008@thinkpad>
+ <190651ad-6aeb-69eb-89c5-ed18221b5a7a@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <190651ad-6aeb-69eb-89c5-ed18221b5a7a@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: W2zM5WfzVBaFH0jkMVrp6SDQahMuyZ3Q
+X-Proofpoint-GUID: W2zM5WfzVBaFH0jkMVrp6SDQahMuyZ3Q
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ mlxlogscore=999 suspectscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
+ malwarescore=0 impostorscore=0 priorityscore=1501 phishscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
+ definitions=main-2312140045
 
 
--- 
-With best wishes
-Dmitry
+
+On 12/8/2023 6:59 PM, Nitin Rawat wrote:
+> 
+> 
+> On 12/8/2023 3:58 PM, Manivannan Sadhasivam wrote:
+>> On Fri, Dec 08, 2023 at 02:55:21PM +0530, Nitin Rawat wrote:
+>>>
+>>>
+>>> On 12/8/2023 12:28 PM, Manivannan Sadhasivam wrote:
+>>>> core_reset is optional, so there is no need to warn the user if it 
+>>>> is not
+>>>> available.
+>>>>
+>>>> Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+>>>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>>>> ---
+>>>>    drivers/ufs/host/ufs-qcom.c | 4 +---
+>>>>    1 file changed, 1 insertion(+), 3 deletions(-)
+>>>>
+>>>> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+>>>> index dc93b1c5ca74..d474de0739e4 100644
+>>>> --- a/drivers/ufs/host/ufs-qcom.c
+>>>> +++ b/drivers/ufs/host/ufs-qcom.c
+>>>> @@ -296,10 +296,8 @@ static int ufs_qcom_host_reset(struct ufs_hba 
+>>>> *hba)
+>>>>        struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>>>>        bool reenable_intr;
+>>>> -    if (!host->core_reset) {
+>>>> -        dev_warn(hba->dev, "%s: reset control not set\n", __func__);
+>>>> +    if (!host->core_reset)
+>>>>            return 0;
+>>>> -    }
+>>>>        reenable_intr = hba->is_irq_enabled;
+>>>>        disable_irq(hba->irq);
+>>>
+>>>
+>>> Hi Mani,
+>>>
+>>> I think core reset is not frequent. It happen during only probe ,error
+>>> handler.
+>>>
+>>> core reset is needed in kernel to cleanup UFS phy and controller
+>>> configuration before UFS HLOS operation starts as per HPG.
+>>>
+>>
+>> This sounds like core reset is not an optional property but a required 
+>> one. I
+>> just checked the upstream DT files for all SoCs, and looks like pretty 
+>> much all
+>> of them support core reset.
+>>
+>> Only MSM8996 doesn't have the reset property, but the reset is 
+>> available in GCC.
+>> So we should be able to use it in dtsi.
+>>
+>> I also skimmed through the HPG and looks like core reset is not 
+>> optional. Please
+>> confirm.
+>>
+>> - Mani
+> 
+> 
+> Hi Mani,
+> 
+> Yes Core_reset is part of HPG sequence and is needed.
+> 
+> Regards,
+> Nitin
+
+
+Hi Mani,
+
+I see this patch series is merged . So planning to keep the warn message
+based on above discussion.
+
+Regards,
+Nitin
+> 
+> 
+>>
+>>> Having existing warn print can be used to to debug or atleast know
+>>> core_reset is missed in device tree to give indication complete reset 
+>>> hasn't
+>>> been done and we could still be operating in bootloader configuration.
+>>>
+>>>
+>>> Regards,
+>>> Nitin
+>>>
+>>
+> 
 
