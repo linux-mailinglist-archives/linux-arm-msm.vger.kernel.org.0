@@ -1,76 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-4684-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4685-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FBA0812A29
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 09:18:56 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4DDBF812A36
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 09:21:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 139391F21659
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 08:18:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7EB2B1C2116E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 08:21:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C510F168AC;
-	Thu, 14 Dec 2023 08:18:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D612A171B1;
+	Thu, 14 Dec 2023 08:21:20 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtprelay01.ispgateway.de (smtprelay01.ispgateway.de [80.67.31.35])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C242FB9;
-	Thu, 14 Dec 2023 00:18:46 -0800 (PST)
-Received: from [92.206.191.209] (helo=note-book.lan)
-	by smtprelay01.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96.1)
-	(envelope-from <git@apitzsch.eu>)
-	id 1rDgvb-00033X-0C;
-	Thu, 14 Dec 2023 09:18:43 +0100
-Message-ID: <1d5de5547d5980da6040bf1c9bfc7fc3c32de88c.camel@apitzsch.eu>
-Subject: Re: [PATCH 0/2] ARM: dts: qcom: msm8926-motorola-peregrine: Add
- initial device tree
-From: =?ISO-8859-1?Q?Andr=E9?= Apitzsch <git@apitzsch.eu>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross
- <agross@kernel.org>,  Bjorn Andersson <andersson@kernel.org>, Rob Herring
- <robh+dt@kernel.org>, Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
-	~postmarketos/upstreaming@lists.sr.ht
-Date: Thu, 14 Dec 2023 09:18:41 +0100
-In-Reply-To: <e7f8e4bf-080d-4bb4-99ca-727d2d00f55d@linaro.org>
-References: <20231213-peregrine-v1-0-5229e21bca3f@apitzsch.eu>
-	 <e7f8e4bf-080d-4bb4-99ca-727d2d00f55d@linaro.org>
-Autocrypt: addr=git@apitzsch.eu; prefer-encrypt=mutual;
- keydata=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
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.50.2 
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTP id A3AA8E0;
+	Thu, 14 Dec 2023 00:21:12 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0371CC15;
+	Thu, 14 Dec 2023 00:21:58 -0800 (PST)
+Received: from [10.57.85.242] (unknown [10.57.85.242])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id EF95D3F5A1;
+	Thu, 14 Dec 2023 00:21:07 -0800 (PST)
+Message-ID: <47b4cbcb-d33d-4699-a148-0108cf734e23@arm.com>
+Date: Thu, 14 Dec 2023 08:22:10 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Df-Sender: YW5kcmVAYXBpdHpzY2guZXU=
-X-Spam-Level: *
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] Rework system pressure interface to the scheduler
+Content-Language: en-US
+To: Vincent Guittot <vincent.guittot@linaro.org>
+References: <20231212142730.998913-1-vincent.guittot@linaro.org>
+Cc: catalin.marinas@arm.com, will@kernel.org,
+ linux-trace-kernel@vger.kernel.org, amit.kachhap@gmail.com,
+ daniel.lezcano@linaro.org, mhiramat@kernel.org, vschneid@redhat.com,
+ bristot@redhat.com, mgorman@suse.de, bsegall@google.com,
+ juri.lelli@redhat.com, peterz@infradead.org, mingo@redhat.com,
+ linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ konrad.dybcio@linaro.org, andersson@kernel.org, agross@kernel.org,
+ rui.zhang@intel.com, viresh.kumar@linaro.org, rafael@kernel.org,
+ sudeep.holla@arm.com, dietmar.eggemann@arm.com, rostedt@goodmis.org,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+From: Lukasz Luba <lukasz.luba@arm.com>
+In-Reply-To: <20231212142730.998913-1-vincent.guittot@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Am Mittwoch, dem 13.12.2023 um 21:44 +0100 schrieb Konrad Dybcio:
->=20
->=20
-> On 12/13/23 21:33, Andr=C3=A9 Apitzsch wrote:
-> > This dts adds support for Motorola Moto G 4G released in 2013.
-> I have a similar one in my drawer.. not the 4g kind, titan IIRC?
-> Wasn't this one codenamed thea?
->=20
-> Konrad
+Hi Vincent,
 
-Yes, thea is the 2nd generation of Moto G 4G, released in 2014.
-pregrine is the first generation, from 2013.
+I've been waiting for this feature, thanks!
 
-Should
-> model =3D "Motorola Moto G 4G";
-be updated, to reflect that it is 1st gen or should only "thea" (if it
-is added at all) have an addition in the model name?
 
-Andr=C3=A9
+On 12/12/23 14:27, Vincent Guittot wrote:
+> Following the consolidation and cleanup of CPU capacity in [1], this serie
+> reworks how the scheduler gets the pressures on CPUs. We need to take into
+> account all pressures applied by cpufreq on the compute capacity of a CPU
+> for dozens of ms or more and not only cpufreq cooling device or HW
+> mitigiations. we split the pressure applied on CPU's capacity in 2 parts:
+> - one from cpufreq and freq_qos
+> - one from HW high freq mitigiation.
+> 
+> The next step will be to add a dedicated interface for long standing
+> capping of the CPU capacity (i.e. for seconds or more) like the
+> scaling_max_freq of cpufreq sysfs. The latter is already taken into
+> account by this serie but as a temporary pressure which is not always the
+> best choice when we know that it will happen for seconds or more.
+> 
+> [1] https://lore.kernel.org/lkml/20231211104855.558096-1-vincent.guittot@linaro.org/
+> 
+> Vincent Guittot (4):
+>    cpufreq: Add a cpufreq pressure feedback for the scheduler
+>    sched: Take cpufreq feedback into account
+>    thermal/cpufreq: Remove arch_update_thermal_pressure()
+>    sched: Rename arch_update_thermal_pressure into
+>      arch_update_hw_pressure
+> 
+>   arch/arm/include/asm/topology.h               |  6 +--
+>   arch/arm64/include/asm/topology.h             |  6 +--
+>   drivers/base/arch_topology.c                  | 26 ++++-----
+>   drivers/cpufreq/cpufreq.c                     | 48 +++++++++++++++++
+>   drivers/cpufreq/qcom-cpufreq-hw.c             |  4 +-
+>   drivers/thermal/cpufreq_cooling.c             |  3 --
+>   include/linux/arch_topology.h                 |  8 +--
+>   include/linux/cpufreq.h                       | 10 ++++
+>   include/linux/sched/topology.h                |  8 +--
+>   .../{thermal_pressure.h => hw_pressure.h}     | 14 ++---
+>   include/trace/events/sched.h                  |  2 +-
+>   init/Kconfig                                  | 12 ++---
+>   kernel/sched/core.c                           |  8 +--
+>   kernel/sched/fair.c                           | 53 ++++++++++---------
+>   kernel/sched/pelt.c                           | 18 +++----
+>   kernel/sched/pelt.h                           | 16 +++---
+>   kernel/sched/sched.h                          |  4 +-
+>   17 files changed, 152 insertions(+), 94 deletions(-)
+>   rename include/trace/events/{thermal_pressure.h => hw_pressure.h} (55%)
+> 
+
+I would like to test it, but something worries me. Why there is 0/5 in
+this subject and only 4 patches?
+
+Could you tell me your base branch that I can apply this, please?
+
+Regards,
+Lukasz
 
