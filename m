@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-4815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDBED8139CD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 19:18:34 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id EDAB98139D3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 19:19:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 43E9BB20AE0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 18:18:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7D76B1F21F3D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 18:19:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96D1568B68;
-	Thu, 14 Dec 2023 18:18:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1E8768B62;
+	Thu, 14 Dec 2023 18:19:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kAgstMJo"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mVqJ7OoX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4410C114
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 10:18:24 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-50c04ebe1bbso917920e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 10:18:24 -0800 (PST)
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E89410E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 10:19:27 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-50bdec453c8so9945757e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 10:19:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702577902; x=1703182702; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=linaro.org; s=google; t=1702577966; x=1703182766; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=aUXxNIE0oyhaGNjYhqDm71JIvcw2/l7lxWAlHlBLujc=;
-        b=kAgstMJo59Uulo15INN4HDJUpYM5JnIK6OhLAqGBKXFXoFlG5KzO0OKnGvj4x4U1Bt
-         99U6Uvg4F/Zk1hRyp2EmW80qYBzV5GpZEbazT3cPB6GdhyfI2vcVP+4zQfavpPs0nE7M
-         U8V/ngLyCpW8C5xBQEv5+IExNEGawEBMITF0FyCrq919AnehwLZsPVTQVUUdGk7IOuTK
-         sAPpyuluR7T+QQxIqxbKHFT0N0boAPJXS83QT5uW5RDGvkZl2sRO3pNENlzq/BNMDq/Z
-         eiweJL7VX7z7LWsbTokpTJTJuaLxe6UQYEDWr7d4GJKkbUuBsI1XmZmhuatJ0aPW+SKA
-         mdLw==
+        bh=Tz5zZ7XIhwY6/jPHZIwEJj6SU1xu1mLTCKyQZuGvubA=;
+        b=mVqJ7OoXorBTSHC1C3WvAANP/QMRPfPY+/CNl9lcad0WJFfG5R/pGboc0eJhFcG7dn
+         UgtpBFLALm5/rwO0N60QzcY1ECsXs2FQ8yi7lDSdAsubvgR4fZ+5f24oXocK7VJ/E3fU
+         6AM6ZqwtpkGxhRudj7tkNcBWHV2Pk9xCaaA5Q9vsMBIOfhvJlCsGGQmkWs6JluBeBldt
+         ILiCYQQ7LUJiTWlL91LfNAodHWgHJwqrjcnDNr7TmF/QQh4NolgPHRnCzkLm3fxt3X0B
+         5Mwrp29LFzpxCqntdEQFVe2BxBjc3zVM/xfisGJkmAInbNJ8PzxuxWFLfKh2Gmryb0mz
+         q7Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702577902; x=1703182702;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20230601; t=1702577966; x=1703182766;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aUXxNIE0oyhaGNjYhqDm71JIvcw2/l7lxWAlHlBLujc=;
-        b=fegPa4rHJsQxkXzq3t8kaiVn3qcFeqZA8beWPT7hEZu9dIE8GFl1WgWb4RQHTLXLPp
-         DPOqZTDyooTMoLSJGL7q2Ihn7S7m9WrFxFWLw7xeUGKlJAKCJc0aUJRgUFdJsoSWS+dP
-         NTa2vy9iRNhbr6cWcWY0hq4OESP9TGKlw3HAe7pJTJbAM82BPI8MlukcVM3DMLiXmMxG
-         tD4Wm3sSl9a+2v1zuHbBEb/boTKtMK7I2brc8aWP195+xmVH8YQGydoeBCZhj8twtEWW
-         29A95AURpzhtQpwTR78eJnru5Set6sPISZVqnC/BdAPpsXQkTnW+M0yyIHGploYiRhQm
-         WjhQ==
-X-Gm-Message-State: AOJu0YywfTMiQiKZoEIVTvNMj8sWS1D2tEkV+TLdtBYBmit8WVJ2UujA
-	Soc7bwLMeCzhzYqsqbuLdfqCdw==
-X-Google-Smtp-Source: AGHT+IHPvoFv9KvPlT+AD1GWaLtelWYGlfY72peH/oBCnqzIcbZPrWCVcWP96N2Eo12F9Pm8pvzRCA==
-X-Received: by 2002:a05:6512:398f:b0:50e:15de:9931 with SMTP id j15-20020a056512398f00b0050e15de9931mr1257549lfu.24.1702577902567;
-        Thu, 14 Dec 2023 10:18:22 -0800 (PST)
+        bh=Tz5zZ7XIhwY6/jPHZIwEJj6SU1xu1mLTCKyQZuGvubA=;
+        b=u+gjH6uoiJN2s/MlKObF4eWYhZjvE2CpvFn6i6qvZ9I0F2eKiS8t5jfCx6unpgRFia
+         w8wHAEFjXVXIxJJ3QyglTqDJbFJy6P66wsjmjqwHBkwk31c3vvOp5mjNzWs/yhP//JxJ
+         RYFJsVAnueDmZxAk4MaApWGlPP7zvcYoNPiQsIGUoGBiV1ABnGGeiOqMcEIldWXW5UEv
+         JhXoGgLpCMIehKGe3Dg/IBpgfE1VMNasw1ucS0eM8amGP3U342fkrC2ynY1RoAwy7KZ6
+         A5NOq7fbAVPwl5hU5D0rbq9sP5xky2MjPXdLymtl5UcYbWP4NU9OR727KOocfcg4f7Vp
+         NNKw==
+X-Gm-Message-State: AOJu0YzSV4s+W0WE63fxuSs/w1XbCWFXO4vazfHh46fUkNyo3yCvdwYB
+	9ussRef6f/YtzbSdXiVb5gD+5g==
+X-Google-Smtp-Source: AGHT+IEd5rUmE9vj32IaKUVYaG62tPWwUyOBhODyj7oW0ZYA15iE8Fd2X6aaVro/u0c/wMRU9t2dwQ==
+X-Received: by 2002:a05:6512:1294:b0:50e:19f3:9615 with SMTP id u20-20020a056512129400b0050e19f39615mr705537lfs.39.1702577965691;
+        Thu, 14 Dec 2023 10:19:25 -0800 (PST)
 Received: from [172.30.205.72] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id c16-20020a056512105000b0050d1a0e7129sm1659686lfb.291.2023.12.14.10.18.19
+        by smtp.gmail.com with ESMTPSA id c16-20020a056512105000b0050d1a0e7129sm1659686lfb.291.2023.12.14.10.19.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Dec 2023 10:18:22 -0800 (PST)
-Message-ID: <92e9039b-a0e3-4f93-aaa8-226ef9e8b613@linaro.org>
-Date: Thu, 14 Dec 2023 19:18:19 +0100
+        Thu, 14 Dec 2023 10:19:25 -0800 (PST)
+Message-ID: <718fb4a7-9a1c-4e4d-8c36-935b766499cb@linaro.org>
+Date: Thu, 14 Dec 2023 19:19:23 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,87 +62,62 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 7/8] arm64: dts: qcom: ipq5332: add support for the
- NSSCC
+Subject: Re: [PATCH v3 2/4] dt-bindings: PCI: qcom: correct clocks for SC8180x
 Content-Language: en-US
-To: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
  Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Bjorn Helgaas <bhelgaas@google.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Richard Cochran <richardcochran@gmail.com>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-References: <20231211-ipq5332-nsscc-v3-0-ad13bef9b137@quicinc.com>
- <20231211-ipq5332-nsscc-v3-7-ad13bef9b137@quicinc.com>
- <c4034715-53a5-468e-914a-3f19d0618c42@linaro.org>
- <8cc2a8ec-632e-4e3b-b13b-d1523a61c136@quicinc.com>
+ Conor Dooley <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231208105155.36097-1-krzysztof.kozlowski@linaro.org>
+ <20231208105155.36097-2-krzysztof.kozlowski@linaro.org>
+ <7f890553-5278-4bc3-9f72-a5a60d9596ea@linaro.org>
+ <68a12f8b-3941-4555-a2a8-3f4f3409d8fd@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <8cc2a8ec-632e-4e3b-b13b-d1523a61c136@quicinc.com>
+In-Reply-To: <68a12f8b-3941-4555-a2a8-3f4f3409d8fd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Level: *
 
 
 
-On 12/11/23 14:28, Kathiravan Thirumoorthy wrote:
-> 
-> 
-> On 12/11/2023 4:02 PM, Konrad Dybcio wrote:
->> On 11.12.2023 04:37, Kathiravan Thirumoorthy wrote:
->>> Describe the NSS clock controller node and it's relevant external
->>> clocks.
+On 12/11/23 11:04, Krzysztof Kozlowski wrote:
+> On 09/12/2023 18:38, Konrad Dybcio wrote:
+>> On 8.12.2023 11:51, Krzysztof Kozlowski wrote:
+>>> PCI node in Qualcomm SC8180x DTS has 8 clocks:
 >>>
->>> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+>>>    sc8180x-primus.dtb: pci@1c00000: 'oneOf' conditional failed, one must be fixed:
+>>>      ['pipe', 'aux', 'cfg', 'bus_master', 'bus_slave', 'slave_q2a', 'ref', 'tbu'] is too short
+>>>
+>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>
 >>> ---
->>>   arch/arm64/boot/dts/qcom/ipq5332.dtsi | 28 ++++++++++++++++++++++++++++
->>>   1 file changed, 28 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
->>> index 42e2e48b2bc3..a1504f6c40c1 100644
->>> --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
->>> @@ -15,6 +15,18 @@ / {
->>>       #size-cells = <2>;
->>>       clocks {
->>> +        cmn_pll_nss_200m_clk: cmn-pll-nss-200m-clk {
->>> +            compatible = "fixed-clock";
->>> +            clock-frequency = <200000000>;
->>> +            #clock-cells = <0>;
->>> +        };
->>> +
->>> +        cmn_pll_nss_300m_clk: cmn-pll-nss-300m-clk {
->>> +            compatible = "fixed-clock";
->>> +            clock-frequency = <300000000>;
->>> +            #clock-cells = <0>;
->>> +        };
->>> +
->>>           sleep_clk: sleep-clk {
->>>               compatible = "fixed-clock";
->>>               #clock-cells = <0>;
->>> @@ -473,6 +485,22 @@ frame@b128000 {
->>>                   status = "disabled";
->>>               };
->>>           };
->>> +
->>> +        nsscc: clock-controller@39b00000{
->> Missing space between the opening curly brace
-> 
-> My bad :( will fix it in next spin.
-> 
+>> [...]
 >>
->>> +            compatible = "qcom,ipq5332-nsscc";
->>> +            reg = <0x39b00000 0x80000>;
->> the regmap_config in the clk driver has .max_register = 0x800, is this
->> correct?
+>>> +          items:
+>>> +            - const: pipe # PIPE clock
+>>> +            - const: aux # Auxiliary clock
+>>> +            - const: cfg # Configuration clock
+>>> +            - const: bus_master # Master AXI clock
+>>> +            - const: bus_slave # Slave AXI clock
+>>> +            - const: slave_q2a # Slave Q2A clock
+>>> +            - const: ref # REFERENCE clock
+>>> +            - const: tbu # PCIe TBU clock
+>> Are we sure this one is actually necessary? Or is it just for the
+>> SMMU debug peripheral? [1] Would be nice to test if it works
+>> normally (unused clk shutdown / forced shutdown of this one might
+>> be necessary in case it's on from XBL) and during a PCIe-related
+>> SMMU fault.
 > 
-> As per the memory map, 512KB is the size of this block. However the last register in that region is at the offset 0x800. Shall I update the max_register also to 512KB to keep it consistency?
-No, it's fine, I just wanted to know if it's intentional :)
-
-Thanks!
+> I did not validate whether the list is actually correct with datasheets,
+> but aligned it to DTS. I don't have the hardware to test.
+While I can't test suspend yet, the PCIe itself works fine
+without these clocks. Mani, can we get rid of it?
 
 Konrad
 
