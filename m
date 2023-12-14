@@ -1,134 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-4652-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4653-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 477568127CF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 07:15:05 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B93E8127FA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 07:29:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7AC931C20757
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 06:15:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2F4BAB21069
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 06:29:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AB88CA72;
-	Thu, 14 Dec 2023 06:15:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E8A1D262;
+	Thu, 14 Dec 2023 06:29:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XVxO+6Mw"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aV03J+iM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B7B0B9;
-	Wed, 13 Dec 2023 22:14:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1702534498; x=1734070498;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=5t1LOiuEJntWFHQdvSiRvrUMe36npW7QzBe/Pw7UNS4=;
-  b=XVxO+6MwXr2S+67QLvegjiDEkpqVSjG9MK7OZwmELrPMdXmz+7dftr9u
-   TULhU7hcvHw1o4yK2DJQ6xjq4OZSb2QuhqKqiz8Rmg9x++lgN9BJINgEa
-   YZx7LqMygtX8kz1sUoRkGkmh93uf42cufdsFW4a8K7YDfbM1aoQBscVFL
-   YWGCc/4uMsDPMsHquZAL9pVOyq/k3tkEOy24PGaGhNp8gV2ZFiaotoow8
-   uNut121D5Cgl+hS6gZ84fOWXrqyA3at6UY03pkpKWpOmOR7HyUlKuW1v3
-   QYpKBqzeX4HnarwhgQ+DLZOAUa1WjPq23vOgQPA2fAD3bfHJc66raJYIF
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10923"; a="16622481"
-X-IronPort-AV: E=Sophos;i="6.04,274,1695711600"; 
-   d="scan'208";a="16622481"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2023 22:14:58 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10923"; a="723950203"
-X-IronPort-AV: E=Sophos;i="6.04,274,1695711600"; 
-   d="scan'208";a="723950203"
-Received: from lkp-server02.sh.intel.com (HELO b07ab15da5fe) ([10.239.97.151])
-  by orsmga003.jf.intel.com with ESMTP; 13 Dec 2023 22:14:55 -0800
-Received: from kbuild by b07ab15da5fe with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1rDezk-000Lfb-1F;
-	Thu, 14 Dec 2023 06:14:52 +0000
-Date: Thu, 14 Dec 2023 14:14:42 +0800
-From: kernel test robot <lkp@intel.com>
-To: Jani Nikula <jani.nikula@intel.com>, linux-sound@vger.kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	Takashi Iwai <tiwai@suse.com>, dri-devel@lists.freedesktop.org,
-	Jaroslav Kysela <perex@perex.cz>
-Subject: Re: [PATCH v2] ASoC: hdmi-codec: drop drm/drm_edid.h include
-Message-ID: <202312141302.SBNAHryl-lkp@intel.com>
-References: <20231213095023.3928703-1-jani.nikula@intel.com>
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68985A6;
+	Wed, 13 Dec 2023 22:29:20 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BE3Rr5P026065;
+	Thu, 14 Dec 2023 06:29:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=ODCJhiY
+	BeWEU03LHMRasSH8E7YzOuqTWK5pYz/IOpl4=; b=aV03J+iML9O2FRcdASCnAOc
+	upOAvs05PL7uyoSHooUXoaiglVD7ehYw1oVPFX6q7O9FQiIDJDfd6DuEmMY0gvNu
+	nTNVUOZGAL2YC7o7WYYkOcooYO1RRqX9LQdY9j2WzNxPu6DdTrPJyYq5QKuDPffl
+	ndK2MnXzBkvMtwf51ccr7vdt/u3ILD2zXU0HGSaNujK2sDsqx2lYTwm2ic2ZR+Y4
+	pWnVGzKQnZXjUrvWfLOGqMvU01mYRTEHd6X5XGyVWFBni4C66gTdvvjJM+385txG
+	d9wvJDKw1jLRLnr7hmqlh/MWBqFgJi/nTIOOUDsdUEypLcxarRs2Xl52TZxq8Vg=
+	=
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uyqd50k36-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Dec 2023 06:29:09 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BE6T8p0006439
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Dec 2023 06:29:08 GMT
+Received: from hu-ipkumar-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Wed, 13 Dec 2023 22:29:01 -0800
+From: Praveenkumar I <quic_ipkumar@quicinc.com>
+To: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <bhelgaas@google.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
+        <vkoul@kernel.org>, <kishon@kernel.org>, <mani@kernel.org>,
+        <quic_nsekar@quicinc.com>, <quic_srichara@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <linux-phy@lists.infradead.org>
+CC: <quic_varada@quicinc.com>, <quic_devipriy@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>
+Subject: [PATCH 00/10] Add PCIe support for Qualcomm IPQ5332
+Date: Thu, 14 Dec 2023 11:58:37 +0530
+Message-ID: <20231214062847.2215542-1-quic_ipkumar@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231213095023.3928703-1-jani.nikula@intel.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: v719Z6pncc-Lc86gqsgsO87urvOt3rkD
+X-Proofpoint-ORIG-GUID: v719Z6pncc-Lc86gqsgsO87urvOt3rkD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
+ adultscore=0 clxscore=1011 suspectscore=0 phishscore=0 bulkscore=0
+ malwarescore=0 mlxlogscore=754 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312140039
 
-Hi Jani,
+Patch series adds support for enabling the PCIe controller and
+UNIPHY found on Qualcomm IPQ5332 platform. PCIe0 is Gen3 X1 and
+PCIe1 is Gen3 X2 are added.
 
-kernel test robot noticed the following build warnings:
+UNIPHY changes depends on
+https://lore.kernel.org/all/20231003120846.28626-1-quic_nsekar@quicinc.com/
+PCIe driver change depends on
+https://lore.kernel.org/all/20230519090219.15925-1-quic_devipriy@quicinc.com/
 
-[auto build test WARNING on drm-misc/drm-misc-next]
-[also build test WARNING on tiwai-sound/for-next tiwai-sound/for-linus drm-tip/drm-tip linus/master v6.7-rc5 next-20231213]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Praveenkumar I (10):
+  dt-bindings: clock: Add separate clocks for PCIe and USB for Combo PHY
+  clk: qcom: ipq5332: Add separate clocks for PCIe and USB for Combo PHY
+  arm64: dts: qcom: ipq5332: Add separate entry for USB pipe clock
+  phy: qcom: Add support for Pipe clock rate from device data
+  dt-bindings: phy: qcom,uniphy-pcie: Add ipq5332 bindings
+  phy: qcom: ipq5332: Add support for g3x1 and g3x2 PCIe PHYs
+  dt-bindings: PCI: qcom: Add IPQ5332 SoC
+  pci: qcom: Add support for IPQ5332
+  arm64: dts: qcom: ipq5332: Add PCIe related nodes
+  arm64: dts: qcom: ipq5332: Enable PCIe phys and controllers
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Jani-Nikula/ASoC-hdmi-codec-drop-drm-drm_edid-h-include/20231213-175633
-base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
-patch link:    https://lore.kernel.org/r/20231213095023.3928703-1-jani.nikula%40intel.com
-patch subject: [PATCH v2] ASoC: hdmi-codec: drop drm/drm_edid.h include
-config: i386-randconfig-002-20231214 (https://download.01.org/0day-ci/archive/20231214/202312141302.SBNAHryl-lkp@intel.com/config)
-compiler: gcc-7 (Ubuntu 7.5.0-6ubuntu2) 7.5.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231214/202312141302.SBNAHryl-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202312141302.SBNAHryl-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   drivers/gpu/drm/bridge/lontium-lt9611uxc.c: In function 'lt9611uxc_connector_get_modes':
-   drivers/gpu/drm/bridge/lontium-lt9611uxc.c:301:10: error: implicit declaration of function 'drm_add_edid_modes'; did you mean 'drm_bridge_get_modes'? [-Werror=implicit-function-declaration]
-     count = drm_add_edid_modes(connector, edid);
-             ^~~~~~~~~~~~~~~~~~
-             drm_bridge_get_modes
-   drivers/gpu/drm/bridge/lontium-lt9611uxc.c: In function 'lt9611uxc_bridge_get_edid':
-   drivers/gpu/drm/bridge/lontium-lt9611uxc.c:512:9: error: implicit declaration of function 'drm_do_get_edid'; did you mean 'drm_bridge_get_edid'? [-Werror=implicit-function-declaration]
-     return drm_do_get_edid(connector, lt9611uxc_get_edid_block, lt9611uxc);
-            ^~~~~~~~~~~~~~~
-            drm_bridge_get_edid
->> drivers/gpu/drm/bridge/lontium-lt9611uxc.c:512:9: warning: return makes pointer from integer without a cast [-Wint-conversion]
-     return drm_do_get_edid(connector, lt9611uxc_get_edid_block, lt9611uxc);
-            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   cc1: some warnings being treated as errors
-
-
-vim +512 drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-
-0cbbd5b1a012cd Dmitry Baryshkov 2020-11-02  496  
-0cbbd5b1a012cd Dmitry Baryshkov 2020-11-02  497  static struct edid *lt9611uxc_bridge_get_edid(struct drm_bridge *bridge,
-0cbbd5b1a012cd Dmitry Baryshkov 2020-11-02  498  					      struct drm_connector *connector)
-0cbbd5b1a012cd Dmitry Baryshkov 2020-11-02  499  {
-0cbbd5b1a012cd Dmitry Baryshkov 2020-11-02  500  	struct lt9611uxc *lt9611uxc = bridge_to_lt9611uxc(bridge);
-0cbbd5b1a012cd Dmitry Baryshkov 2020-11-02  501  	int ret;
-0cbbd5b1a012cd Dmitry Baryshkov 2020-11-02  502  
-0cbbd5b1a012cd Dmitry Baryshkov 2020-11-02  503  	ret = lt9611uxc_wait_for_edid(lt9611uxc);
-0cbbd5b1a012cd Dmitry Baryshkov 2020-11-02  504  	if (ret < 0) {
-0cbbd5b1a012cd Dmitry Baryshkov 2020-11-02  505  		dev_err(lt9611uxc->dev, "wait for EDID failed: %d\n", ret);
-1bb7ab402da44e Dmitry Baryshkov 2021-01-22  506  		return NULL;
-1bb7ab402da44e Dmitry Baryshkov 2021-01-22  507  	} else if (ret == 0) {
-1bb7ab402da44e Dmitry Baryshkov 2021-01-22  508  		dev_err(lt9611uxc->dev, "wait for EDID timeout\n");
-1bb7ab402da44e Dmitry Baryshkov 2021-01-22  509  		return NULL;
-0cbbd5b1a012cd Dmitry Baryshkov 2020-11-02  510  	}
-0cbbd5b1a012cd Dmitry Baryshkov 2020-11-02  511  
-0cbbd5b1a012cd Dmitry Baryshkov 2020-11-02 @512  	return drm_do_get_edid(connector, lt9611uxc_get_edid_block, lt9611uxc);
-0cbbd5b1a012cd Dmitry Baryshkov 2020-11-02  513  }
-0cbbd5b1a012cd Dmitry Baryshkov 2020-11-02  514  
+ .../bindings/clock/qcom,ipq5332-gcc.yaml      |   6 +-
+ .../devicetree/bindings/pci/qcom,pcie.yaml    |  36 ++++
+ .../bindings/phy/qcom,uniphy-pcie-28lp.yaml   |  65 +++++-
+ arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts   |  74 +++++++
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi         | 188 +++++++++++++++++-
+ drivers/clk/qcom/gcc-ipq5332.c                |   7 +-
+ drivers/pci/controller/dwc/pcie-qcom.c        |   1 +
+ .../phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c  |  49 ++++-
+ 8 files changed, 412 insertions(+), 14 deletions(-)
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.34.1
+
 
