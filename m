@@ -1,106 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-4829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19AD5813B03
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 20:51:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A9CC5813BEC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 21:45:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 93021B21839
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 19:51:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 66836281162
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 20:45:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B90646A021;
-	Thu, 14 Dec 2023 19:51:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C61338DE3;
+	Thu, 14 Dec 2023 20:44:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yCefnvKK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RBdcEXaV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC86A697B4
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 19:51:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-336447100e9so1414557f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 11:51:16 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685382112;
+	Thu, 14 Dec 2023 20:44:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-50c0f13ea11so10074943e87.3;
+        Thu, 14 Dec 2023 12:44:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702583475; x=1703188275; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=f33MOLhgSxj0L7stEkHGOZ/2ZSoJY4toq105HJFrUUg=;
-        b=yCefnvKKaD7oix7HzSTJS+tybbk8cukASMJdE3/b7koXi+K0g5bMW4Y2402SRtCdak
-         pE8fLHRx7Ndc9Wu1TAGCquC+BNJkRmVDxrhJXnv+UmGRmdne3FtVwxYQzFe8rNAKNdif
-         jcVQk+ybsD0sXGpqW1qOLQVUE+bBAHTcpoXRvq5urX1xfoxaDIp5jU7lTkggeMUAYHyA
-         2iG7R5Yu3mY2bDVzW4VHJD16oieses8hnK7KlBXbIYIwq/U0ZfugEXSRaRLDZ8E2PU3Q
-         3GL3VoXFZzWvoVmGBUvTYoZ1WDokVp3Dr+YLNq26o0UaVm9faI2KapFyvyWVe80LpIQ7
-         tfcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702583475; x=1703188275;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1702586662; x=1703191462; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=f33MOLhgSxj0L7stEkHGOZ/2ZSoJY4toq105HJFrUUg=;
-        b=Eug7PBTc5EGCQydosS85bAyNGjwlYgypHWA/zGHKTAdATxPzL0XNmyYv17D1O8XH/V
-         m8M3hm7CSrSVzwbeQ4B33/n7lADKE0s6x8JKQ825tCl10P0OyFeUElDHXqnkrX1F3iUz
-         oFveE1vJ8tTVs3kk0ob+O139ZkuZzYb1pSjlKEKwVAzotlcfpnCJPTnCzEBVwh/QOzQT
-         mnZr5QAxggq6I5njAv/CzL/V6DdBpuRfyK2ANEn2XA0lcbjQrqxui6mpDsQluKH5eyfc
-         iBXF3g5gOqSViaqpV56CpzWk/dTb/VO9XRRtAoCGloChpkgw8C5vllLVqIGTHAVXkDja
-         jvLQ==
-X-Gm-Message-State: AOJu0YwO9pWWjpNxVp2J/iGS8rhl0k43sFBuvKq41FQk24xH6fwb0+mA
-	Gud6v8QyoFQJTVcXavyzK+kucw==
-X-Google-Smtp-Source: AGHT+IEkkYiApiWausYKn5Xv/P4LEe9lTaxkqYf+El1g0RB2qW1Zv4b7Nd1+0MpoiuA5B/BcTkQJYQ==
-X-Received: by 2002:a1c:4b10:0:b0:40c:32d5:18df with SMTP id y16-20020a1c4b10000000b0040c32d518dfmr5188548wma.182.1702583474711;
-        Thu, 14 Dec 2023 11:51:14 -0800 (PST)
-Received: from linaro.org ([79.115.23.25])
-        by smtp.gmail.com with ESMTPSA id mm19-20020a1709077a9300b00a18c2737203sm9913085ejc.109.2023.12.14.11.51.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Dec 2023 11:51:14 -0800 (PST)
-Date: Thu, 14 Dec 2023 21:51:13 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-crd: Fix supplies for some
- LDOs in PM8550
-Message-ID: <ZXtcsfbxl++KO0HM@linaro.org>
-References: <20231214-x1e80100-dts-fix-pm8550-regulators-supplies-v1-1-6b5830dc337e@linaro.org>
- <b578a34a-0e7f-4175-8051-3d2340861700@linaro.org>
+        bh=Tj5QgxOwhDWBvTm9vxK5Z1lgrdLIjZvRtMGMPF+PgGc=;
+        b=RBdcEXaVp1bTfjkiw6RraKhJgmQXXMf72PwfUpj2G4g1Q4FJ9stlcZqzaFlLBixjnt
+         qH+VvE0QMPaWtYpLHBmeIHUxa0Pst4iXUc/ENQmrtnULU/X866jLhQHL903BRWADc31Q
+         yoGwb3zoei8pHSaaKDMzoZ/gYa2fd++ihHdW7mLBoOZOhoq2+K6p+SWpP2X677tz3/20
+         p6lF+j3du71pbT9g85QRCIh+yZqPXv/7kXDebVYZfIEdlmsfd+P0iEuMRaAdCIlHj65e
+         As2GHPid3s8NYoNa0w8VR22w8tR1P9UWsQlLi2wnYqHkgrsegFxzH5fU78tNybQQ2uEK
+         EYcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702586662; x=1703191462;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Tj5QgxOwhDWBvTm9vxK5Z1lgrdLIjZvRtMGMPF+PgGc=;
+        b=GnOqn42Pec5NHjLmRh/Q4z/gOqYR8ELS7ZNQk+FYFfom792st/uxMD/8reXjw+4Q2o
+         f32YOUrRdt3uvEsA7yG3945z7rVIfqyxF2ZM1s5UD/hUNwglOzrawNVwS5UuhxsWmQk9
+         jerEYMcgaAbUB1JWkZCIZFhCAb4dLSWCXhUKvZ7lRb0IGRS/O2U25KUOt07xP4YYV3zk
+         jNvSUlpQDDUsbJwE7cq2U2wpmCLG8Y5q6EqtvXqdeQIJRxY3O2C8QlECj2Zk3vpAIhJo
+         0hV16ma2ZD/xXzj9wM6gKwn5tej1EtN8qsGvlimIRXNmw13k035c8EPCN0HfOVxto+Ko
+         k2Hg==
+X-Gm-Message-State: AOJu0YxsCr0j0EjZZfXURx05myikk1o9JoM6+sy2NiHxMOh1cVcliTnA
+	DLa00ZVIW0fbOsW5OGGFnM/dKp3PgIFe1o3Dzhg=
+X-Google-Smtp-Source: AGHT+IGBqIAtb6+8VTNfpHR6FGCc/cZYdZbYmzN3hSytXmOJqgzRF8e7YKVJvSJgDhI+ImDcoEYEldUEhOQKSREYATk=
+X-Received: by 2002:a05:6512:308e:b0:50b:fd6f:1e2b with SMTP id
+ z14-20020a056512308e00b0050bfd6f1e2bmr6127000lfd.3.1702586662163; Thu, 14 Dec
+ 2023 12:44:22 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b578a34a-0e7f-4175-8051-3d2340861700@linaro.org>
+References: <20231213210644.8702-1-robdclark@gmail.com> <ZXqr0RFw9KsP876v@hovoldconsulting.com>
+ <CAA8EJpoSvaq9imP-dT4p=4jveZyFmh=OoWOP7jWGo4OYkHQDTA@mail.gmail.com>
+ <ZXsKzsij3Xb50Ap9@hovoldconsulting.com> <CAA8EJpqBstKyAfUcBPzoF2CitTwWBZ9Xhd28Y+FCo14OoBqkxw@mail.gmail.com>
+ <ZXsMoFiivUCWA0yr@hovoldconsulting.com> <ZXshe83quTE0jO_Z@hovoldconsulting.com>
+ <ZXsojADuspUVLbIn@hovoldconsulting.com>
+In-Reply-To: <ZXsojADuspUVLbIn@hovoldconsulting.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Thu, 14 Dec 2023 12:44:10 -0800
+Message-ID: <CAF6AEGtQ-73voz3Wc6YkQ-UipbM9JsmZ06C_W_zKH4Qy8v-biQ@mail.gmail.com>
+Subject: Re: [PATCH] soc: qcom: pmic_glink: Fix boot when QRTR=m
+To: Johan Hovold <johan@kernel.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	Rob Clark <robdclark@chromium.org>, Andy Gross <agross@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 23-12-14 20:31:46, Konrad Dybcio wrote:
-> 
-> 
-> On 12/14/23 20:24, Abel Vesa wrote:
-> > The LDOs 1, 4 and 10 from PM8550 share the same supply, the SMPS 4
-> > from PM8550ve. This needs to be done through shared supply approach
-> > otherwise the bindings check fails.
-> Not only that, but Linux also doesn't parse it :D
+On Thu, Dec 14, 2023 at 8:08=E2=80=AFAM Johan Hovold <johan@kernel.org> wro=
+te:
+>
+> On Thu, Dec 14, 2023 at 04:38:35PM +0100, Johan Hovold wrote:
+>
+> > I took a closer look at this and indeed we do have code that triggers a
+> > reprobe of a device in case there was a successful probe while the
+> > device was probing.
+> >
+> > This was introduced by commit 58b116bce136 ("drivercore: deferral race
+> > condition fix") and the workaround for the reprobe-loop bug that hack
+> > led to is to not return -EPROBE_DEFER after registering child devices a=
+s
+> > no one managed to come up with a proper fix. This was documented here:
+> >
+> >       fbc35b45f9f6 ("Add documentation on meaning of -EPROBE_DEFER")
+> >
+> > But please spell this out in some more detail in the commit message, an=
+d
+> > add a Fixes and CC stable tag.
+>
+> And please update the commit summary as I've been booting with QRTR=3Dm
+> all along just fine. I guess the issue is if you have pmic_glink
+> built-in or in the initramfs but forgot to include qrtr or similar?
 
-Good thing they are not used by any consumer (yet) then. ;)
+I do have both QRTR=3Dm and QCOM_GLINK=3Dm.  I'm honestly not sure what
+started triggering this issue for me.. it seemed to have started after
+merging msm-next + drm-misc-next on top of your
+jhovold/wip/sc8280xp-v6.7-rc5 (the merged branches were based on -rc3
+so this shouldn't have really brought in random non-drm things).
+Maybe there is a timing element to it?  I felt like the problem was
+obvious enough, and the exact details of why I started hitting this
+were not important enough to spend time tracking down.
 
-> > 
-> > Fixes: bd50b1f5b6f3 ("arm64: dts: qcom: x1e80100: Add Compute Reference Device")
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+BR,
+-R
 
-Thanks!
-
-> 
-> Konrad
+> Johan
 
