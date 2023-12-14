@@ -1,101 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-4683-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4684-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D3918129D5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 08:57:38 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FBA0812A29
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 09:18:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0D4AFB21254
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 07:57:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 139391F21659
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 08:18:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 654571401A;
-	Thu, 14 Dec 2023 07:57:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pLRY7/iP"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C510F168AC;
+	Thu, 14 Dec 2023 08:18:50 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97FF0113
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 23:57:26 -0800 (PST)
-Received: by mail-pf1-x42b.google.com with SMTP id d2e1a72fcca58-6ce33234fd7so4284306b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 23:57:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702540646; x=1703145446; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=0d8h/X+8AJFqMWZqP9wn96fliaxprL1waPmEflLUD64=;
-        b=pLRY7/iPobQt8nc/XA/Lr3Uj3wYFQMDpqZMrDv9trjYqrFRNT0Qvx8xpOSwywYqmoM
-         TiDc0cqFx06eUlQRG38RgSix7R4SGPrJwwuq4sJRFRBb6XOX1CwX4mXgaFHlzkFFIqV2
-         jSroyziipH+xBENtpTH2Qq1/JlbHGlriL92QeWbhFeQ0fE0FH5S5Ri5NONCcmvgtU2R8
-         Kw4EMwXYaSpfgyPN4qE5uw9dKjofIzbOV0kNRuvHo5Ib9qdwPb+b6uexzVTbsFSrZHpO
-         DO3lxPEy+gjPu005kUYaIsk0XnroXVUM48AgoTUan0kNaRIoJMQBx4QTnn480HXAfQ67
-         Z2Tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702540646; x=1703145446;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0d8h/X+8AJFqMWZqP9wn96fliaxprL1waPmEflLUD64=;
-        b=lz5z3AzLRTcm9+O4KX//21yD3LE2Q9K0TvzR5cgbYOP8iJ/rCTtvM+uR9We9D7jH+1
-         pW0ojs/2ZGi1U6XxsrMMZmMIN+TYwbbvaCT8f/1RJe9wz0oaY+tfSsRGD/oVEfDyZlSN
-         5cdivdrJB9fR0WT4loAzGI4Xw22Tk9VdubpMdOlvlHYArnUvgQWTkSE2uuYUfrShqJ/N
-         xxxAMNUE9wbb8isyk/jHq/W+hDCRpPPgLXBUqBD/V5B0M4eotyALPUAbNPHKUPPBQRcE
-         CLt1GfabnAiVPppChaLi3Rv0kF+BE0gC8gPGTDD4yYCimoKscAoLmAURyq/X0nPp9omS
-         FL1Q==
-X-Gm-Message-State: AOJu0Yy9MfixDcE9VgXBjiocNsH8PmEzCY8gIPuXjj9iLN+84D2ErPyN
-	T83RnwBCy24cDezrebo2FFQa5BleuGzklSQksbhfNQ==
-X-Google-Smtp-Source: AGHT+IH5msB4lU5jvSKJG7KJS2c617v2cRX1YY8AQGHuGj64nDRHWqiH3MAFEuK6zjh/HPsVVTafJEwFkKzRP1G3l/M=
-X-Received: by 2002:a05:6a00:b8e:b0:6ce:751c:c943 with SMTP id
- g14-20020a056a000b8e00b006ce751cc943mr4858088pfj.7.1702540645901; Wed, 13 Dec
- 2023 23:57:25 -0800 (PST)
+Received: from smtprelay01.ispgateway.de (smtprelay01.ispgateway.de [80.67.31.35])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C242FB9;
+	Thu, 14 Dec 2023 00:18:46 -0800 (PST)
+Received: from [92.206.191.209] (helo=note-book.lan)
+	by smtprelay01.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96.1)
+	(envelope-from <git@apitzsch.eu>)
+	id 1rDgvb-00033X-0C;
+	Thu, 14 Dec 2023 09:18:43 +0100
+Message-ID: <1d5de5547d5980da6040bf1c9bfc7fc3c32de88c.camel@apitzsch.eu>
+Subject: Re: [PATCH 0/2] ARM: dts: qcom: msm8926-motorola-peregrine: Add
+ initial device tree
+From: =?ISO-8859-1?Q?Andr=E9?= Apitzsch <git@apitzsch.eu>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross
+ <agross@kernel.org>,  Bjorn Andersson <andersson@kernel.org>, Rob Herring
+ <robh+dt@kernel.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
+	~postmarketos/upstreaming@lists.sr.ht
+Date: Thu, 14 Dec 2023 09:18:41 +0100
+In-Reply-To: <e7f8e4bf-080d-4bb4-99ca-727d2d00f55d@linaro.org>
+References: <20231213-peregrine-v1-0-5229e21bca3f@apitzsch.eu>
+	 <e7f8e4bf-080d-4bb4-99ca-727d2d00f55d@linaro.org>
+Autocrypt: addr=git@apitzsch.eu; prefer-encrypt=mutual;
+ keydata=mQINBFZtkcEBEADF2OvkhLgFvPPShI0KqafRlTDlrZw5H7pGDHUCxh0Tnxsj7r1V6N7M8L2ck9GBhoQ9uSNeer9sYJV3QCMs6uIJD8XV60fsLrGZxSnZejYxAmT5IMp7hHZ6EXtgbRBwPUUymfKpMJ55pmyNFBkxWxQA6E33X/rH0ddtGmAsw+g6tOHBY+byBDZrsAZ7MLKqGVaW7IZCQAk4yzO7cLnLVHS2Pk4EOaG+XR/NYQ+jTfMtszD/zSW6hwskGZ6RbADHzCbV01105lnh61jvzpKPXMNTJ31L13orLJyaok1PUfyH0KZp8xki8+cXUxy+4m0QXVJemnnBNW5DG3YEpQ59jXn3I7Eu2pzn2N+NcjqK8sjOffXSccIyz8jwYdhASL5psEvQqZ6t60fvkwQw7++IZvs2BPmaCiQRo415/jZrEkBBE3xi1qdb3HEmpeASVaxkinM5O44bmQdsWTyamuuUOqziHZc9MO0lR0M1vUwnnQ3sZBu2lPx/HBLGWWOyzeERalqkXQz1w2p487Gc+fC8ZLXp7oknfX0Mo1hwTQ+2g2bf78xdsIhqH15KgRE/QiazM87mkaIcHz7UE+ikkffODyjtzGuaqDHQIUqpKIiXGKXoKzENFJel71Wb2FoSMXJfMNE/zEOE5ifufDkBGlwEqEUmkHzu7BbSPootR0GUInzm5QARAQABtCNBbmRyw6kgQXBpdHpzY2ggPGFuZHJlQGFwaXR6c2NoLmV1PokCVwQTAQoAQQIbAwIeAQIXgAULCQgHAgYVCgkICwIEFgIDAQIZARYhBGs5YOi9bIzbfpKzQoJ34hc2fkk7BQJjw9ROBQkPVdDvAAoJEIJ34hc2fkk7wkQP/RK8za0mwjXC0N3H3LG8b2dL9xvPNxOllbduGZ2VGypD4inCT/9bC7XXWr9aUqjfiNrZRf5DTUQeHf0hxeFndfjsJFODToQnnPDoZVIlEX7wS31MPYTpB
+	Gdkq687RJrHc4A7u/304OXaj4iXk3hmZDI4ax2XeFdj1Lt/PrfazCdtI8E6FvUBL5bcBdZsygeNWt5Jk3r2Gk4Gn+iuw1rxALfcBNIFD7dZiz7/KYycNJV6/ZQKXWWkHJZ8/MSwKhv6bJcAu5zkPKVnT3A/vZ/7bUWSXxR5Dy0i3Rbu2/DVGBBx/JRlmKy06KyE1Y9KmSt35NPJSimA7l4ITktfHiE3o6VXgvRX88h65RNiCi0zLl8jRCDTGkwv+DKFV1KcJTINgdbp310rZvMOaK0r16wzrWrTGmOiUv2ZTr8ZOJ+F9M2AxYwANrl72txyw9r6QKyIaHnbUeQjmnz28WtoxzVPHytuq7GIjn2YnJYeJnGC/12gmnRmq6jMiOhbA9kTCt5+gZONLk+D4AhBTIG71Z4e65mrGhoYYef8N4F0DAPhQgyoBxZuGmYQMPTV0VZc5EjLcAbXQeC1Gvhf/Kjc2T4uSAUGQq3zweRIdTOLDXmWTj9290aTiE12ZPXCrby103oTLyCdrC/5dAjlk0S+sgJm0dMr5uHcvl3W/Gt9sTejseOOtCFBbmRyw6kgQXBpdHpzY2ggPGdpdEBhcGl0enNjaC5ldT6JAlQEEwEKAD4CGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQRrOWDovWyM236Ss0KCd+IXNn5JOwUCY8PUTgUJD1XQ7wAKCRCCd+IXNn5JOy04EACmk3rjyBGaELCMdi9Ijv2P25nBhhWKHnY+w7UWvJ3QjkqFslYIwXTFqeue7yw+jeEEuqW0415e1SN8UKi8gkmlxSI5gahvmu3TA6sipBmiEhci2lli0jdz6scL85H4UIdnYrLqSP+liJmPv2tTChgJzPaOs/anyYGNom6+SYl3LdpWp5PjFxWkz4ERC5UDfhJa8fHzCw1xkadkxgz8ihBULzMfrea8crLF4W64qewrF032h4T4yCBqjqtARVFtikqAUvyxhGXmeU
+	Of5hPifLqjlzsIpszJOwGh32ggK2WxqqAB20aRyuCXKc2MshyD+ANUj4hZGYFp0hT1q0E1KLFoRhy+CAZ+DBGMSI3MlES/NNvm3wRVlc4lr2RkaPUmM6PyQtmbtM4xbgQGD29Q4D44tPoLLgh0jK6c05EA/ZSjA8KTj2HNL3lUSMXdEDBTql1ccFXDqPvl5YiTfcK6r72H8Zz20qFgxNOAYPEf7xCfoWJTpAPYNY5rJyAJWzEYFEqZolJXP768n3ObVVtJq0Q5cYf46IbtTXDHFOIFUvQVXzFh9eAyv1tN4ZlZAm/oyWYChgzOIoymFz8S9i8a4A07m3Zhgxa80vmMvlhQntd9Wc1OMkjnxLIl+4WZUKH4PLwccQGysSXC7UVWiO8ZtofyMOqYY7BwzMllhWoyoXwulbkCDQRWbZHBARAA35+q2gnCcqTJm3MCqTsGGfsKIpGSn7qnr7l7C+jomiQSfg84SP0f4GclhBfSghpgUqBFiIgv3BzJREDrziSaJLwRp+NKILkZ2QW41JccushDEcUCVWnZpViUF1als6PU4M8uHmfzoNXZtAaeTKpA3eeOyUPUuNm4lSZH9Aq20BeCNDy9puzCnjpKWemI2oVC5J0eNQ+tw3sOtO7GeOWZiDh/eciJAEF08H1FnJ+4Gs04NQUjAKiZobQIqJI2PuRWPUs2Ijjx7mp7SPNU/rmKXFWXT3o83WMxo41QLoyJoMnaocM7AeTT4PVv3Fnl7o9S36joAaFVZ7zTp86JluQavNK74y35sYTiDTSSeqpmOlcyGIjrqtOyCXoxHpwIL56YkHmsJ9b4zriFS/CplQJ5aXaUDiDNfbt+9Zm7KI4g6J59h5tQGVwz/4pmre02NJFh1yiILCfOkGtAr1uJAemk0P1E/5SmrTMSj5/zpuHV+wsUjMpRKoREWYBgHzypaJC93h9N+Wl2KjDdwfg7cBboKBKTjbjaofhkG6f4noKagB7IAEKf14EUg1e
+	r5/Xx0McgWkIzYEvmRJspoPoSH5DLSd05QwJmMjXoLsq74iRUf0Y8glNEquc7u8aDtfORxxzfcY2WuL6WsOy7YrKHpinrlODwgI1/zUXQirPIGdFV9MsAEQEAAYkCPAQYAQoAJgIbDBYhBGs5YOi9bIzbfpKzQoJ34hc2fkk7BQJjw9RjBQkPVdDvAAoJEIJ34hc2fkk7PMcP/3ew9uNxXMYPMs292yuromvRxUXcsryyT4sTcsQ/w/V+12teaZZemU/hf9rhyd/Op8osIKenTQYcUb0BrKYn7bEQRYXjIR8AkfkePmNYGqhs37SB7uqnz9u7twk2lvRmMV0lW25g3EHzveV5CrMpSsBZ6M5Pe0rMs/lT5ws5P7atgFUYmmpijIBi1pzT8OLKhsoGwMayB4Cctt2YU1tpAoFjFcB2i9cyfoxGyjqXBJ/0u+6V6EocSeJbpI8T07GlFRNQok9NvImqBfOvMKk7eSSNJVYRu9FkbFFVxFQKh5wbAZelGItQLr6yrVIKmZmi+DLQHPGKmvoSatwPKsKIqvNHdWJQyvhrkQnzxnbQsixH/InWhJ/qbPhWKWNAq+fGkAVVXlZW91RW9h3r+ZIH95dCBnYNgi0ehVftqf0AEHXWRZgtKToYrG9kfkUdxft0fpilIG5aK0r242OKtQcGESyCltiwGakQ4qytf7kQ4SUYiJ8YQ2E2QU19zUrOkmjq32Be4C3QUYRBloU2l2VyGghZxdShJvNIZvup0ID0BFhcs0+4dWS4Loz8HW7FBWcmsUsti3mUBuBb6PN+jRoIYBbsUGDffbxz2/tHF3mckCS4qVtwiD7noU0l69FqZm/aOOUbwZ7UiTuuYgZ0HvQBMEb9PiiC0qjrTIST/U6zqLs4
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.50.2 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231212142730.998913-1-vincent.guittot@linaro.org>
- <20231212142730.998913-2-vincent.guittot@linaro.org> <20231214054307.axl33gagxacidjbn@vireshk-i7>
-In-Reply-To: <20231214054307.axl33gagxacidjbn@vireshk-i7>
-From: Vincent Guittot <vincent.guittot@linaro.org>
-Date: Thu, 14 Dec 2023 08:57:14 +0100
-Message-ID: <CAKfTPtDam5eQO1DHxALsCaU53Rtawbfrvswy+z2unnV_eXeVLA@mail.gmail.com>
-Subject: Re: [PATCH 1/4] cpufreq: Add a cpufreq pressure feedback for the scheduler
-To: Viresh Kumar <viresh.kumar@linaro.org>
-Cc: catalin.marinas@arm.com, will@kernel.org, sudeep.holla@arm.com, 
-	rafael@kernel.org, agross@kernel.org, andersson@kernel.org, 
-	konrad.dybcio@linaro.org, mingo@redhat.com, peterz@infradead.org, 
-	juri.lelli@redhat.com, dietmar.eggemann@arm.com, rostedt@goodmis.org, 
-	bsegall@google.com, mgorman@suse.de, bristot@redhat.com, vschneid@redhat.com, 
-	lukasz.luba@arm.com, rui.zhang@intel.com, mhiramat@kernel.org, 
-	daniel.lezcano@linaro.org, amit.kachhap@gmail.com, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-trace-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-Df-Sender: YW5kcmVAYXBpdHpzY2guZXU=
+X-Spam-Level: *
 
-On Thu, 14 Dec 2023 at 06:43, Viresh Kumar <viresh.kumar@linaro.org> wrote:
->
-> On 12-12-23, 15:27, Vincent Guittot wrote:
-> > @@ -2618,6 +2663,9 @@ static int cpufreq_set_policy(struct cpufreq_policy *policy,
-> >       policy->max = __resolve_freq(policy, policy->max, CPUFREQ_RELATION_H);
-> >       trace_cpu_frequency_limits(policy);
-> >
-> > +     cpus = policy->related_cpus;
-> > +     cpufreq_update_pressure(cpus, policy->max);
-> > +
-> >       policy->cached_target_freq = UINT_MAX;
->
-> One more question, why are you doing this from cpufreq_set_policy ? If
-> due to cpufreq cooling or from userspace, we end up limiting the
-> maximum possible frequency, will this routine always get called ?
+Am Mittwoch, dem 13.12.2023 um 21:44 +0100 schrieb Konrad Dybcio:
+>=20
+>=20
+> On 12/13/23 21:33, Andr=C3=A9 Apitzsch wrote:
+> > This dts adds support for Motorola Moto G 4G released in 2013.
+> I have a similar one in my drawer.. not the 4g kind, titan IIRC?
+> Wasn't this one codenamed thea?
+>=20
+> Konrad
 
-Yes, any update of a FREQ_QOS_MAX ends up calling cpufreq_set_policy()
-to update the policy->max
+Yes, thea is the 2nd generation of Moto G 4G, released in 2014.
+pregrine is the first generation, from 2013.
 
+Should
+> model =3D "Motorola Moto G 4G";
+be updated, to reflect that it is 1st gen or should only "thea" (if it
+is added at all) have an addition in the model name?
 
->
-> --
-> viresh
+Andr=C3=A9
 
