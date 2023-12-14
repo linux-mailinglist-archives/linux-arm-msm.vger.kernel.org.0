@@ -1,128 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-4744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9113812EE2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 12:43:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B6C2812F61
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 12:50:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 850FE1F21471
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 11:43:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3108B1F21F93
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 11:50:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8A584120E;
-	Thu, 14 Dec 2023 11:43:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DFAA405D5;
+	Thu, 14 Dec 2023 11:50:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="a3LN9IpL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uVct52cU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE4A0F5;
-	Thu, 14 Dec 2023 03:42:56 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BE9MMDE032328;
-	Thu, 14 Dec 2023 11:42:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding; s=qcppdkim1; bh=3BBK0cA
-	16vlGVM1ePtMVzo9Y00CXkV7qW3NiffbeC10=; b=a3LN9IpLfqHuOnAceCYKilX
-	wNPhgY4ss7cX0v1vg7Htvo0/tBdiYK54CMcpTBMnwN7qc83HRXD6Dw6GQJVBGoIl
-	/cPqV3l4f6UihQVeO64106ZyAqwsTVtuvakCRqDL4R2nKGXV1NKP9HVG5C5IZdxK
-	RIlobXDVUH4FpjajEDbazXxy/BdBY2wDPcmQ4Lp6PlXV+P4OX8jLnIY8NJRXf6Mx
-	W+nrYoPpPscWJAwsLi0fnNVGZ3xQdpPz3x+/+Qnwz0nVeGsXOG/p9ynWYeChBEfd
-	/pXWHhAKJxIG3eofqy2xHAq8XOs1Jk58YLVkXZor9Rz4oGaJHjSZZOnpIiy1lVw=
-	=
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uyq66h690-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Dec 2023 11:42:48 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3BEBgiA4003251;
-	Thu, 14 Dec 2023 11:42:44 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3uvhaktchj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Dec 2023 11:42:44 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3BEBgiaL003237;
-	Thu, 14 Dec 2023 11:42:44 GMT
-Received: from hu-devc-blr-u22-a.qualcomm.com (hu-mdalam-blr.qualcomm.com [10.131.36.157])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3BEBgiHc003207
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Dec 2023 11:42:44 +0000
-Received: by hu-devc-blr-u22-a.qualcomm.com (Postfix, from userid 466583)
-	id A639F41682; Thu, 14 Dec 2023 17:12:42 +0530 (+0530)
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-To: thara.gopinath@gmail.com, herbert@gondor.apana.org.au, davem@davemloft.net,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        vkoul@kernel.org, linux-crypto@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dmaengine@vger.kernel.org, quic_srichara@quicinc.com,
-        quic_varada@quicinc.com
-Cc: quic_mdalam@quicinc.com
-Subject: [PATCH 11/11] crypto: qce - Add support for lock/unlock in aead
-Date: Thu, 14 Dec 2023 17:12:39 +0530
-Message-Id: <20231214114239.2635325-12-quic_mdalam@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231214114239.2635325-1-quic_mdalam@quicinc.com>
-References: <20231214114239.2635325-1-quic_mdalam@quicinc.com>
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0574B3FE25;
+	Thu, 14 Dec 2023 11:50:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18BF7C433C7;
+	Thu, 14 Dec 2023 11:50:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1702554615;
+	bh=gBxMWK/BJQIfktDOXVActk5N+GeQbJZMHW0htfkV+oc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=uVct52cUOIceKATlABivrxGspm4zxEeI7nJUoPLdOQZrR2QVcd0QbZRuQbc+4/NoO
+	 mmlP9blb5sOixsg+eUYJQjaTb9kGqxE5/2q6nw4QaEyTcJvbXPsr1QdJNkMQXFldoW
+	 o1hc+4HwmRMMMLCbE8vxfX3Mv2fD6FvdaP6nWmMp6p+n7I4UMcbv/TYOtW4xBrLS7N
+	 B/7MCCGYwOQ6coCLo7L5ub/dgdSQIkSGBpuyPTpRnVBaTmrnFxXyo4G53qzLlpGr9i
+	 YsQs90tkpRJbXQ3+15OR/d6CdZoeBmpKwrXxNd4f6p5qHTgz/UR9zsbF2Go9UHIIMc
+	 PJ1YM/zUZBkDg==
+Date: Thu, 14 Dec 2023 17:19:59 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
+	sboyd@kernel.org, mturquette@baylibre.com, robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Shazad Hussain <quic_shazhuss@quicinc.com>, quic_cang@quicinc.com
+Subject: Re: [PATCH 00/16] Fix Qcom UFS PHY clocks
+Message-ID: <20231214114959.GC48078@thinkpad>
+References: <20231214091101.45713-1-manivannan.sadhasivam@linaro.org>
+ <ZXrVxmxY6wZprbBa@hovoldconsulting.com>
+ <20231214103907.GL2938@thinkpad>
+ <ZXrgWK5wZz6dAkKP@hovoldconsulting.com>
+ <20231214111409.GB48078@thinkpad>
+ <ZXrnZeDYOsteY5zT@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Wq7F7IUxFM9cgXcVeUgi--HxMwPjmT56
-X-Proofpoint-ORIG-GUID: Wq7F7IUxFM9cgXcVeUgi--HxMwPjmT56
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- impostorscore=0 bulkscore=0 spamscore=0 mlxscore=0 lowpriorityscore=0
- priorityscore=1501 adultscore=0 phishscore=0 malwarescore=0
- mlxlogscore=999 clxscore=1015 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2311290000 definitions=main-2312140080
+In-Reply-To: <ZXrnZeDYOsteY5zT@hovoldconsulting.com>
 
-Add support for lock/unlock on bam pipe in aead.
-If multiple EE's(Execution Environment) try to access
-the same crypto engine then before accessing the crypto
-engine EE's has to lock the bam pipe and then submit the
-request to crypto engine. Once request done then EE's has
-to unlock the bam pipe so that others EE's can access the
-crypto engine.
+On Thu, Dec 14, 2023 at 12:30:45PM +0100, Johan Hovold wrote:
+> On Thu, Dec 14, 2023 at 04:44:09PM +0530, Manivannan Sadhasivam wrote:
+> > + Can
+> > 
+> > On Thu, Dec 14, 2023 at 12:00:40PM +0100, Johan Hovold wrote:
+> > > [ +CC: Shazad ]
+> > > 
+> > > On Thu, Dec 14, 2023 at 04:09:07PM +0530, Manivannan Sadhasivam wrote:
+> > > > On Thu, Dec 14, 2023 at 11:15:34AM +0100, Johan Hovold wrote:
+> > > > > On Thu, Dec 14, 2023 at 02:40:45PM +0530, Manivannan Sadhasivam wrote:
+> 
+> > > Unless the PHY consumes CXO directly, it should not be included in the
+> > > binding as you are suggesting here.
+> > 
+> > PHY is indeed directly consuming CXO. That's why I included it in the binding.
+> 
+> Ok, good. It's a bit frustrating that people can even seem to agree on
+> answers to direct questions about that.
+>  
 
-Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
----
- drivers/crypto/qce/aead.c | 4 ++++
- 1 file changed, 4 insertions(+)
+I can understand that.
 
-diff --git a/drivers/crypto/qce/aead.c b/drivers/crypto/qce/aead.c
-index c03600f396be..0948c30ea515 100644
---- a/drivers/crypto/qce/aead.c
-+++ b/drivers/crypto/qce/aead.c
-@@ -42,6 +42,8 @@ static void qce_aead_done(void *data)
- 	dir_src = diff_dst ? DMA_TO_DEVICE : DMA_BIDIRECTIONAL;
- 	dir_dst = diff_dst ? DMA_FROM_DEVICE : DMA_BIDIRECTIONAL;
- 
-+	qce_bam_release_lock(qce);
-+
- 	error = qce_dma_terminate_all(&qce->dma);
- 	if (error)
- 		dev_dbg(qce->dev, "aead dma termination error (%d)\n",
-@@ -445,6 +447,8 @@ qce_aead_async_req_handle(struct crypto_async_request *async_req)
- 	else
- 		rctx->assoclen = req->assoclen;
- 
-+	qce_bam_acquire_lock(qce);
-+
- 	diff_dst = (req->src != req->dst) ? true : false;
- 	dir_src = diff_dst ? DMA_TO_DEVICE : DMA_BIDIRECTIONAL;
- 	dir_dst = diff_dst ? DMA_FROM_DEVICE : DMA_BIDIRECTIONAL;
+> > > We discussed this at some length at the time with Bjorn and Shazad who
+> > > had access to the documentation and the conclusion was that, at least on
+> > > sc8280xp, the PHY does not use CXO directly and instead it should be
+> > > described as a parent to the UFS refclocks in the clock driver:
+> > > 
+> > > 	https://lore.kernel.org/lkml/Y2OEjNAPXg5BfOxH@hovoldconsulting.com/
+> > > 
+> > > The downstream devicetrees have a bad habit of including parent clocks
+> > > directly in the consumer node instead of modelling this in clock driver
+> > > also for other peripherals.
+> > >  
+> > 
+> > No, I can assure that you got the wrong info. UFS PHY consumes the clock
+> > directly from RPMh. It took me several days to dig through the UFS and PHY docs
+> > and special thanks to Can Guo from UFS team, who provided much valuable
+> > information about these clocks.
+> 
+> Sounds like you've done your research.
+> 
+> > > What exactly is wrong with those commits? We know that the controller
+> > > does not consume GCC_UFS_REF_CLKREF_CLK directly, but describing that as
+> > > such for now was a deliberate choice:
+> > > 
+> > > 	GCC_UFS_REF_CLKREF_CLK is the clock to the devices, but as we
+> > > 	don't represent the memory device explicitly it seems suitable
+> > > 	to use as "ref_clk" in the ufshc nodes - which would then match
+> > > 	the special handling of the "link clock" in the UFS driver.
+> > >  
+> > 
+> > No, GCC_UFS_REF_CLKREF_CLK is _not_ the clock to UFS devices. I haven't found
+> > information about this specific register in GCC. Initially I thought this is for
+> > enabling QREF clocks for the UFS MEM phy, but I haven't found the answer yet.
+> 
+> Just quoting Bjorn.
+> 
+> > But as I said earlier, reference clock to UFS devices comes directly from the
+> > controller and there is a specfic register for controlling that. Starting from
+> > SM8550, reference clock comes from RPMh.
+> 
+> Sure, but that was only part of what those commits did or claimed. Bjorn
+> also explicitly stated that those refclocks were sourced from CXO, even
+> though I now see a claim from Shazad in that thread claiming the
+> opposite:
+> 
+> 	https://lore.kernel.org/all/Y2Imnf1+v5j5CH9r@hovoldconsulting.com/
+
+To clarify further, what Shazad said about GCC_UFS_REF_CLKREF_CLK is correct.
+This clock is not directly sourced by CXO, so it should be voted by the
+_PHY_ driver separately along with CXO (which still feeds PHY). That's what I
+represented in the binding.
+
+> 
+> Without access to docs I can only ask questions and try to do tedious
+> inferences from incomplete open sources (e.g. downstream devicetrees).
+> 
+
+That's the life for most of us :) Even with access to internal docs, it is
+difficult to find the information we are looking for. Because, a very few people
+know where the information is buried.
+
+- Mani
+
+> Johan
+
 -- 
-2.34.1
-
+மணிவண்ணன் சதாசிவம்
 
