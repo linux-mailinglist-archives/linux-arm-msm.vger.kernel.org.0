@@ -1,111 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-4805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4806-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99668813914
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 18:48:53 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D8DD1813946
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 19:00:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4E5C51F216C7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 17:48:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 950DF282640
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 18:00:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35E27675D5;
-	Thu, 14 Dec 2023 17:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D782C67E69;
+	Thu, 14 Dec 2023 18:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="QMX77YNk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XGKsI3FT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F2F0A6
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 09:48:46 -0800 (PST)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2cc43f9e744so12022821fa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 09:48:46 -0800 (PST)
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 051D0128
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 10:00:01 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-50bf26b677dso8240587e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 10:00:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1702576123; x=1703180923; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NjzqvPNodJ+AYwzDBCkKXGHQ6gaMigpuT4ZV+tVtwn0=;
-        b=QMX77YNkSHZTpggSQrIC5N4wr+OHe1IQP5U81JUUZFQJ1OpjhW7nASj9ckutE2M99X
-         bSnHg95vFOJLS95EY+AuIcJi5GBrASccia9+X1lRDSTvpoPPnSej5yGQsrXFTZVVZ2V5
-         CKXzHiCHaSKlNrDEGT2S7vhue8x5iIwVWALVU=
+        d=linaro.org; s=google; t=1702576799; x=1703181599; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RNzrB1u5cdRIIUK1CjwOMqB3675QEed56fbMDtEebUE=;
+        b=XGKsI3FT7JIi0JWcFzEFUbQPJvzz75eMCPzpKa4UvycGG277rzUtsMeK3PzZjkWbiE
+         j1WiH5j5/s2RpnqoHg0jOQREJpZOH4iEL/kD3S4OM3P6CnwJbGqzLTZDJhv0TK5ra19E
+         ccIkwNspOxm16VzP8blEk+7ISvIacIeUiTrxE0sy01+kgXxFXntIa1QSgkMeVemHEMgi
+         ms3vnywwHktq/9EJnC99pZ1zfpFfJbXQ15qPy7CLVEPC9vHyJm1omMn35nzquNKQRySL
+         NJDxhWGOsucxXZyYOxXuwrYloKgr5XDmwtZn42weLqpp3WFYCGgoMg4Qe3YwSSy9uPdS
+         vdMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702576123; x=1703180923;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NjzqvPNodJ+AYwzDBCkKXGHQ6gaMigpuT4ZV+tVtwn0=;
-        b=SMQ4wT9+P1MzPk3xpBQXTD1jwhNrP5xIFAu8i0ELXyI+CfmD9R3fm286jlOaU6vNUO
-         sMrTpAdsdTobuWDl4SEpkri7v4MY41cXJv9bINurL+ED8Yq9y28OR8aelXr+0oknKez0
-         LdWY6AD6LuaRi1g2vDpz61WshhTYQfw5HwZzJHZJKGcwHaXoWrjU2xqpOpZqiRP+AE1K
-         jzC7sAfyG8yoteOoyy++OhNKr3sulgCuRTiepSGFfc4kOa5zgc0+U5ohirPjjDAxkLNk
-         7PiCNUOxZ3/tIjGA4dTFhNA5hHa3NIK79w0XQ68IsXfOrg9dYNGUo1VhbbNNvaxaWw1p
-         8+0Q==
-X-Gm-Message-State: AOJu0YwkVUaHvUUQeBDUJ9hDEOjbTX03vRzwe6i/Sosou9EVQdYWSf71
-	1r7cosZxn9RY7Na5HfTsA/zqo0FvDZg/rHAFFnVCvakN
-X-Google-Smtp-Source: AGHT+IEKrvE+ICJJPfWEGCiA83SsmMSMIOxARbne1LtvUReAhKpPFJcPG7he513fQUvncZr4umw+hg==
-X-Received: by 2002:a2e:5c49:0:b0:2cb:2847:877e with SMTP id q70-20020a2e5c49000000b002cb2847877emr4486212ljb.0.1702576122964;
-        Thu, 14 Dec 2023 09:48:42 -0800 (PST)
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com. [209.85.128.45])
-        by smtp.gmail.com with ESMTPSA id l12-20020a50cbcc000000b0054b53aacd86sm6857248edi.65.2023.12.14.09.48.42
-        for <linux-arm-msm@vger.kernel.org>
+        d=1e100.net; s=20230601; t=1702576799; x=1703181599;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RNzrB1u5cdRIIUK1CjwOMqB3675QEed56fbMDtEebUE=;
+        b=f8dy9klcAlbXRkcgOcXebAOHGCkh6bbo/56IxDS/Yu2dRtGyLy8g2o8IZpTPtybI5p
+         wo3KgEm4BmtUnkZUfepcNjUUXbH2sx+HTA1WHH+NXIFX8GpIBD3Tad0V6QTlwDUohkaY
+         fBx+yWMJZP7/P53ywW2GXC2T0AR1Si9OvY4RFSZ20GesC7wVXwHqeszyYiUw/9QY30mZ
+         xkxPqV7uJaSbqkWEBT8ZZ2QknBn0XyCsMVQL/jVFk3YvySEJVnG6sptV2ipkloGmIm2W
+         oyXnDLcaqdYfg7HmSHDhTkra5bky423y8dv089rgB1TsibKQe78kKyToXU/yrXV5vScB
+         rofQ==
+X-Gm-Message-State: AOJu0YzgWXfvXNTg0veGHe7L+DWZGzbhI3LaW51FSKV7tBDW8r87YizO
+	oWrUUlk2E0tu7nEy8RvUF8dB2g==
+X-Google-Smtp-Source: AGHT+IHR/BseF81sooOcwETh42XcEmC8wRC2CR5cbiuzH8kZrhbG0bSYS5JqYImuWrYkNYE76VTFMg==
+X-Received: by 2002:a05:6512:3d9e:b0:50b:f269:64df with SMTP id k30-20020a0565123d9e00b0050bf26964dfmr4185701lfv.105.1702576799237;
+        Thu, 14 Dec 2023 09:59:59 -0800 (PST)
+Received: from [172.30.205.72] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id k13-20020ac257cd000000b0050bff2648b9sm1919173lfo.203.2023.12.14.09.59.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Dec 2023 09:48:42 -0800 (PST)
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-40c32bea30dso1735e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 09:48:42 -0800 (PST)
-X-Received: by 2002:a05:600c:600a:b0:40a:483f:f828 with SMTP id
- az10-20020a05600c600a00b0040a483ff828mr554730wmb.4.1702576121615; Thu, 14 Dec
- 2023 09:48:41 -0800 (PST)
+        Thu, 14 Dec 2023 09:59:58 -0800 (PST)
+Message-ID: <bba0160e-e495-45a3-8958-fba380e5a98c@linaro.org>
+Date: Thu, 14 Dec 2023 18:59:56 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231214-topic-undo_ddr_stats-v1-1-1fe32c258e56@linaro.org>
-In-Reply-To: <20231214-topic-undo_ddr_stats-v1-1-1fe32c258e56@linaro.org>
-From: Doug Anderson <dianders@chromium.org>
-Date: Thu, 14 Dec 2023 09:48:24 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=W5V7XO-h7DXxQgqEYcN0R2oHTJ_3G06bY8tKGtjKySRg@mail.gmail.com>
-Message-ID: <CAD=FV=W5V7XO-h7DXxQgqEYcN0R2oHTJ_3G06bY8tKGtjKySRg@mail.gmail.com>
-Subject: Re: [PATCH] Revert "soc: qcom: stats: Add DDR sleep stats"
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/5] arm64: dts: qcom: sc8180x: fix USB DP/DM HS PHY
+ interrupts
+Content-Language: en-US
+To: Johan Hovold <johan+linaro@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+ Vinod Koul <vkoul@kernel.org>
+References: <20231213173403.29544-1-johan+linaro@kernel.org>
+ <20231213173403.29544-2-johan+linaro@kernel.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20231213173403.29544-2-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Level: *
 
-Hi,
 
-On Thu, Dec 14, 2023 at 4:25=E2=80=AFAM Konrad Dybcio <konrad.dybcio@linaro=
-.org> wrote:
->
-> After recent reports ([1], [2]) of older platforms (particularly 8150 and
-> 7180) breaking after DDR sleep stats introduction, revert the following:
->
-> Commit 73380e2573c3 ("soc: qcom: stats: fix 64-bit division")
-> Commit e84e61bdb97c ("soc: qcom: stats: Add DDR sleep stats")
->
-> The feature itself is rather useful for debugging DRAM power management,
-> however it looks like the shared RPMh stats data structures differ on
-> previous SoCs.
->
-> Revert its addition for now to un-break booting on these earlier SoCs,
-> while I try to come up with a better way to enable it conditionally.
->
-> [1] https://lore.kernel.org/linux-arm-msm/20231209215601.3543895-2-dmitry=
-.baryshkov@linaro.org/
-> [2] https://lore.kernel.org/linux-arm-msm/CAD=3DFV=3DXX4wLg1NNVL15RK4D4tL=
-vuSzZyUv=3Dk_tS4bSb3=3D7QJzQ@mail.gmail.com/
->
-> Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reported-by: Doug Anderson <dianders@chromium.org>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+On 12/13/23 18:33, Johan Hovold wrote:
+> The USB DP/DM HS PHY interrupts need to be provided by the PDC interrupt
+> controller in order to be able to wake the system up from low-power
+> states and to be able to detect disconnect events, which requires
+> triggering on falling edges.
+> 
+> A recent commit updated the trigger type but failed to change the
+> interrupt provider as required. This leads to the current Linux driver
+> failing to probe instead of printing an error during suspend and USB
+> wakeup not working as intended.
+> 
+> Fixes: 0dc0f6da3d43 ("arm64: dts: qcom: sc8180x: fix USB wakeup interrupt types")
+> Fixes: b080f53a8f44 ("arm64: dts: qcom: sc8180x: Add remoteprocs, wifi and usb nodes")
+> Cc: stable@vger.kernel.org      # 6.5
+> Cc: Vinod Koul <vkoul@kernel.org>
+> Reported-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->  drivers/soc/qcom/qcom_stats.c | 187 +-----------------------------------=
-------
->  1 file changed, 1 insertion(+), 186 deletions(-)
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Tested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Tested-by: Douglas Anderson <dianders@chromium.org>
+Konrad
 
