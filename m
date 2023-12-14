@@ -1,124 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-4718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4719-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A3D8812BD7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 10:40:30 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2EC4812BDA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 10:40:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2B2AD1C21361
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 09:40:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B29F01C214E9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 09:40:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7AD8130D1F;
-	Thu, 14 Dec 2023 09:40:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ie4VzWtI"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72F6430F96;
+	Thu, 14 Dec 2023 09:40:44 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85E53B7;
-	Thu, 14 Dec 2023 01:40:24 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BE5BZ8V000884;
-	Thu, 14 Dec 2023 09:40:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=ylZKeaeVio8dJQPPzUpdLFA/Xy9jSrZkzVN2dfqdK5Y=; b=ie
-	4VzWtIoTJoKnZ2KCiiOUtdJ+HqaBrVgvcFVkqPUEHX7pLjRVxtHJ5Q2/GR7iCvDb
-	hF9EDnCYy446BswYuIqpSrwcG2cqoqNB+6IS8ovUI0XJuMe9HxQWlygIpWJ9ZAt2
-	Q0csHlUTnMm4J3VZkk1ArttF5Y4lSahwneHT0cf8F5LJSzJzAzfe4kH1jG9+8iCO
-	ArS00x0vj9RqwidIV8/C4SeviPUzY72ZkxJ8/8iJTgGnE3ez1DDbxWcjObKmPckr
-	xRINraZXDrfWE3Ht/aHDdmRRjv6/JeFj0o4qBGmtk9JNieMrW3ICCanlC1zu7ArQ
-	P8Ip6AuWZsjyVx/fky0g==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uyq2try5r-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Dec 2023 09:40:09 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BE9e8Tf026735
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Dec 2023 09:40:08 GMT
-Received: from [10.217.219.216] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 14 Dec
- 2023 01:40:05 -0800
-Message-ID: <feb4ed1b-ed74-aebe-0ab8-dec123fe0a31@quicinc.com>
-Date: Thu, 14 Dec 2023 15:10:01 +0530
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63ED2127;
+	Thu, 14 Dec 2023 01:40:41 -0800 (PST)
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-6d9db2f1ddfso1264409a34.0;
+        Thu, 14 Dec 2023 01:40:41 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702546840; x=1703151640;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=a1OZx1A3Thw17UWY5/qaKbogEfyh83NOJGFEXrtiXrE=;
+        b=WIFVJjQRw7nVqUy4zaojWvKTi/iCqJ5zS69Q5sxAlC1nhPOfTJEkSpTWawsKJZNBBf
+         gX9hN/oHRCzu0HUW1HfzK5aN/3mC3ndVTYyBnJJoO4+xfaEIyobkTAlB08L7yQCt7Lks
+         wF/Tc+uSK/GPuqpsJe8XYPI6UHgVmSQlsWeaxN869lta71kXbsB/FTqx7CSLqFuFlRQi
+         a3naNAo2wUMT2lzMuOhpJKaI+bN9dAZvd8SvB4K2NgZuc+HKOx0hK7bMopbhJsw3ckSe
+         PNL5yLq3VS2qj/NNV9Jg9tXFCATiNdBHY/XU80ginIuOaprDjgwzyTSmdAyFjwWACBGM
+         u/jg==
+X-Gm-Message-State: AOJu0YyLpR04YY3OR1pyCZ2AVK6BnHa5Uqq+Jkua7F6L46YVeUtE+9xr
+	nhHzzfErC8JNKsf1ZopvHeKspmz9r9NF6gLdjJ0=
+X-Google-Smtp-Source: AGHT+IGHUduXQcHD2O5Tng3Q5UnNHqP8yiF83sJrBsdRPOlYb/JA4vb81uPB/5nIxcAvk34aTsUzHaD4Afvhx3kow3s=
+X-Received: by 2002:a05:6871:2284:b0:1fb:648:5207 with SMTP id
+ sd4-20020a056871228400b001fb06485207mr17709011oab.2.1702546840564; Thu, 14
+ Dec 2023 01:40:40 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH 6/9] PCI: epf-mhi: Enable MHI async read/write support
-Content-Language: en-US
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        <lpieralisi@kernel.org>, <kw@linux.com>
-CC: <kishon@kernel.org>, <bhelgaas@google.com>, <mhi@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20231127124529.78203-1-manivannan.sadhasivam@linaro.org>
- <20231127124529.78203-7-manivannan.sadhasivam@linaro.org>
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20231127124529.78203-7-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: D4LrvjH_ipBuxno5YuE7y02tarNOxuc5
-X-Proofpoint-ORIG-GUID: D4LrvjH_ipBuxno5YuE7y02tarNOxuc5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- phishscore=0 clxscore=1011 mlxlogscore=818 priorityscore=1501
- lowpriorityscore=0 malwarescore=0 suspectscore=0 bulkscore=0 adultscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312140062
+References: <20231212142730.998913-1-vincent.guittot@linaro.org>
+ <20231212142730.998913-2-vincent.guittot@linaro.org> <20231214054307.axl33gagxacidjbn@vireshk-i7>
+ <CAKfTPtDam5eQO1DHxALsCaU53Rtawbfrvswy+z2unnV_eXeVLA@mail.gmail.com> <54f3b98c-1f7d-4205-9e3c-a4a19ad3d941@arm.com>
+In-Reply-To: <54f3b98c-1f7d-4205-9e3c-a4a19ad3d941@arm.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Thu, 14 Dec 2023 10:40:28 +0100
+Message-ID: <CAJZ5v0gD-utGhM3vN7JmPia1CVcSQa6RPnk2xMBXXc6asRTn=g@mail.gmail.com>
+Subject: Re: [PATCH 1/4] cpufreq: Add a cpufreq pressure feedback for the scheduler
+To: Lukasz Luba <lukasz.luba@arm.com>
+Cc: Vincent Guittot <vincent.guittot@linaro.org>, Viresh Kumar <viresh.kumar@linaro.org>, 
+	catalin.marinas@arm.com, will@kernel.org, sudeep.holla@arm.com, 
+	rafael@kernel.org, agross@kernel.org, andersson@kernel.org, 
+	konrad.dybcio@linaro.org, mingo@redhat.com, peterz@infradead.org, 
+	juri.lelli@redhat.com, dietmar.eggemann@arm.com, rostedt@goodmis.org, 
+	bsegall@google.com, mgorman@suse.de, bristot@redhat.com, vschneid@redhat.com, 
+	rui.zhang@intel.com, mhiramat@kernel.org, daniel.lezcano@linaro.org, 
+	amit.kachhap@gmail.com, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-trace-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-On 11/27/2023 6:15 PM, Manivannan Sadhasivam wrote:
-> Now that both eDMA and iATU are prepared to support async transfer, let's
-> enable MHI async read/write by supplying the relevant callbacks.
+On Thu, Dec 14, 2023 at 10:07=E2=80=AFAM Lukasz Luba <lukasz.luba@arm.com> =
+wrote:
 >
-> In the absence of eDMA, iATU will be used for both sync and async
-> operations.
+> On 12/14/23 07:57, Vincent Guittot wrote:
+> > On Thu, 14 Dec 2023 at 06:43, Viresh Kumar <viresh.kumar@linaro.org> wr=
+ote:
+> >>
+> >> On 12-12-23, 15:27, Vincent Guittot wrote:
+> >>> @@ -2618,6 +2663,9 @@ static int cpufreq_set_policy(struct cpufreq_po=
+licy *policy,
+> >>>        policy->max =3D __resolve_freq(policy, policy->max, CPUFREQ_RE=
+LATION_H);
+> >>>        trace_cpu_frequency_limits(policy);
+> >>>
+> >>> +     cpus =3D policy->related_cpus;
+> >>> +     cpufreq_update_pressure(cpus, policy->max);
+> >>> +
+> >>>        policy->cached_target_freq =3D UINT_MAX;
+> >>
+> >> One more question, why are you doing this from cpufreq_set_policy ? If
+> >> due to cpufreq cooling or from userspace, we end up limiting the
+> >> maximum possible frequency, will this routine always get called ?
+> >
+> > Yes, any update of a FREQ_QOS_MAX ends up calling cpufreq_set_policy()
+> > to update the policy->max
+> >
 >
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->   drivers/pci/endpoint/functions/pci-epf-mhi.c | 7 ++++---
->   1 file changed, 4 insertions(+), 3 deletions(-)
+> Agree, cpufreq sysfs scaling_max_freq is also important to handle
+> in this new design. Currently we don't reflect that as reduced CPU
+> capacity in the scheduler. There was discussion when I proposed to feed
+> that CPU frequency reduction into thermal_pressure [1].
 >
-> diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> index 3d09a37e5f7c..d3d6a1054036 100644
-> --- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> +++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> @@ -766,12 +766,13 @@ static int pci_epf_mhi_link_up(struct pci_epf *epf)
->   	mhi_cntrl->raise_irq = pci_epf_mhi_raise_irq;
->   	mhi_cntrl->alloc_map = pci_epf_mhi_alloc_map;
->   	mhi_cntrl->unmap_free = pci_epf_mhi_unmap_free;
-> +	mhi_cntrl->read_sync = mhi_cntrl->read_async = pci_epf_mhi_iatu_read;
-> +	mhi_cntrl->write_sync = mhi_cntrl->write_async = pci_epf_mhi_iatu_write;
->   	if (info->flags & MHI_EPF_USE_DMA) {
->   		mhi_cntrl->read_sync = pci_epf_mhi_edma_read;
->   		mhi_cntrl->write_sync = pci_epf_mhi_edma_write;
-> -	} else {
-> -		mhi_cntrl->read_sync = pci_epf_mhi_iatu_read;
-> -		mhi_cntrl->write_sync = pci_epf_mhi_iatu_write;
-> +		mhi_cntrl->read_async = pci_epf_mhi_edma_read_async;
-> +		mhi_cntrl->write_async = pci_epf_mhi_edma_write_async;
+> The same applies for the DTPM which is missing currently the proper
+> impact to the CPU reduced capacity in the scheduler.
+>
+> IMHO any limit set into FREQ_QOS_MAX should be visible in this
+> new design of capacity reduction signaling.
+>
+> [1] https://lore.kernel.org/lkml/20220930094821.31665-2-lukasz.luba@arm.c=
+om/
 
-I think the read_async & write async should be updated inside the if 
-condition where MHI_EPF_USE_DMA flag is set.
-
-- Krishna Chaitanya.
-
->   	}
->   
->   	/* Register the MHI EP controller */
+Actually, freq_qos_read_value(&policy->constraints, FREQ_QOS_MAX) will
+return the requisite limit.
 
