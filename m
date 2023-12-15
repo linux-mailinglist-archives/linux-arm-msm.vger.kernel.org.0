@@ -1,54 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-4924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25AE98147ED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 13:21:47 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98516814834
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 13:38:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A493A1F21131
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 12:21:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5525E2833C7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 12:38:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F018A2C68A;
-	Fri, 15 Dec 2023 12:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D863B2DB6D;
+	Fri, 15 Dec 2023 12:38:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cyIezjeD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sKRRPT+e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C6128E0D;
-	Fri, 15 Dec 2023 12:21:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BFCLHUs006049;
-	Fri, 15 Dec 2023 12:21:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=D8IECnkP5UMUt1GUYadC2sWYWXV82PiGO7AWI+tUga0=; b=cy
-	IezjeD7oVtqfYvvO0lTSrYBozoEAuJnBja702Gw3CK8AIwe8j/2YZ5V8pFKt/66Z
-	HiUfOQTfcrsJKfUe8YsWFHLO/JMpaWtDSVhwlVdfMD0qYphaWCISPzIW9AJUZv8M
-	41KpEcKQi3fqgtF4HfBuozOvuIejpOImj+La6VILafzuXOeE7bLBF94X46kGkDro
-	dXPEg4NIXH/y7lN4bW1izlUvBTSi9siAF/WOarAmHgr/5LenEsYPWq0ziua7R3Kp
-	IFLzmlyKIRJDLB6fn2KibJ6s7dknCWN8ufqOo2V7IJvq6ARtJOFcgNsviQ7+klQZ
-	RYhBawhX1M1CR1bWtt+A==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v0pqvr008-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 15 Dec 2023 12:21:17 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BFCLFlC030377
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 15 Dec 2023 12:21:15 GMT
-Received: from [10.214.66.253] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 15 Dec
- 2023 04:21:09 -0800
-Message-ID: <c9493c5f-ccf8-4e21-b00c-5fbc2a5f2edb@quicinc.com>
-Date: Fri, 15 Dec 2023 17:50:52 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5C12DB75
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 12:38:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-40c256ffdbcso7056545e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 04:38:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702643885; x=1703248685; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=BsXmPIAmJl60XYRsMDSLfbrKydUJT24PwhIFCDJUrBM=;
+        b=sKRRPT+ebjBOmZ8vzfuyi8AjPStVXjOHsM3CkR8AFc4Tet5py47NCGi6qZYyZIog3C
+         cmdQKtTLKiPJpx6/Er6IItlVAIWDn6zS9oTb5sNV9zfTCTFn6fuJ06l/KPGXw2FIPfOD
+         8BVsJgOHr13cknpKnXAXuG9rYnNBwudKjtptYaitsxgoyd+FQhOfDp5pX5k6WjuY+bmD
+         IuNnHE1B4g8ng4ed+HpvForAKQ/lrbG32l8hyFjVPfGs20V9w5Nz2GxAIAlEsh/IWGAa
+         1mq8NWnbSlYw3z86MT3fP1dHmhiXsnahsq8y4moW7hByFyBmhruTbu8JvynXOvFFfTHW
+         lTiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702643885; x=1703248685;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BsXmPIAmJl60XYRsMDSLfbrKydUJT24PwhIFCDJUrBM=;
+        b=m1amRMqbUpV2nWQ49oA9jsvTDllJeXOcrc9bmPJy35IjzNtx3aylCL3SdQ5ih8rsD0
+         yP5n+G/AJQcS2of9tDV/6RgJuKOQ2ODWiJn1csWzQldcpEgSXWMcUFDQDlC2Q3R6vNTF
+         09lVO9T6hgxp7RWevcOMnuRg6LwHh3JwlzhSjP/YFvdsgsLT9bfolZVej4TzoH2KmHkV
+         V5i7uQoMCe+sLtOD+9hFI3iI1hVYEG6smfVYDCn3+vYQU0yoIIynJzRVa1ivDJwfwamL
+         4MnAvlaqrh8gx7LLdK10XqOn8GgBbRZIzQl8dLAl5PJZyXYCSP3oxTl63aSAg1UNu/OW
+         nQwA==
+X-Gm-Message-State: AOJu0Yw+Hn8pfKcIMkJ3m2+ecWnUsCn5ifhCV0twPX1aaLDb9MlF2lrB
+	J/350uHIJuWqQExYL8WPvV74Og==
+X-Google-Smtp-Source: AGHT+IHBxBMgBiBWpwXzUIkpbdwQ+qcVVdthMh7pL80QCiPqI0Z2+8i9M1xYjMIM103e8Rksoud9LA==
+X-Received: by 2002:a05:600c:2804:b0:40c:3eab:d987 with SMTP id m4-20020a05600c280400b0040c3eabd987mr5514403wmb.125.1702643884813;
+        Fri, 15 Dec 2023 04:38:04 -0800 (PST)
+Received: from [192.168.100.102] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id g10-20020a05600c4eca00b0040c11fbe581sm28680591wmq.27.2023.12.15.04.38.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Dec 2023 04:38:04 -0800 (PST)
+Message-ID: <bf4abdf4-a61c-422c-8042-69a53e62dff4@linaro.org>
+Date: Fri, 15 Dec 2023 12:38:03 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,190 +66,62 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/5] iommu/arm-smmu: add ACTLR data and support for
- SM8550
+Subject: Re: [PATCH v2 10/10] clk: qcom: Add camcc clock driver for x1e80100
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
-        <konrad.dybcio@linaro.org>, <jsnitsel@redhat.com>,
-        <quic_bjorande@quicinc.com>, <mani@kernel.org>,
-        <quic_eberman@quicinc.com>, <robdclark@chromium.org>,
-        <u.kleine-koenig@pengutronix.de>, <robh@kernel.org>,
-        <vladimir.oltean@nxp.com>, <quic_pkondeti@quicinc.com>,
-        <quic_molvera@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
-        <linux-kernel@vger.kernel.org>, <qipl.kernel.upstream@quicinc.com>
-References: <20231215101827.30549-1-quic_bibekkum@quicinc.com>
- <20231215101827.30549-4-quic_bibekkum@quicinc.com>
- <CAA8EJppcsr1sbeD1fK0nZ+rASABNcetBK3yMvaP7OiA4JPwskw@mail.gmail.com>
-From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-In-Reply-To: <CAA8EJppcsr1sbeD1fK0nZ+rASABNcetBK3yMvaP7OiA4JPwskw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+ Rajendra Nayak <quic_rjendra@quicinc.com>
+References: <20231214-x1e80100-clock-controllers-v2-0-2b0739bebd27@linaro.org>
+ <20231214-x1e80100-clock-controllers-v2-10-2b0739bebd27@linaro.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20231214-x1e80100-clock-controllers-v2-10-2b0739bebd27@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: YCkf_at4sJ7ud4oyJ1RfAYk5BOY_tmvy
-X-Proofpoint-ORIG-GUID: YCkf_at4sJ7ud4oyJ1RfAYk5BOY_tmvy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- spamscore=0 malwarescore=0 priorityscore=1501 impostorscore=0 bulkscore=0
- adultscore=0 suspectscore=0 clxscore=1015 mlxscore=0 mlxlogscore=999
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312150082
+
+On 14/12/2023 16:49, Abel Vesa wrote:
+> From: Rajendra Nayak <quic_rjendra@quicinc.com>
+> 
+> Add the camcc clock driver for x1e80100
+> 
+> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 
 
+> ---
+		.name = "cam_cc-x1e80100",
 
-On 12/15/2023 4:14 PM, Dmitry Baryshkov wrote:
-> On Fri, 15 Dec 2023 at 12:19, Bibek Kumar Patro
-> <quic_bibekkum@quicinc.com> wrote:
->>
->> Add ACTLR data table for SM8550 along with support for
->> same including SM8550 specific implementation operations.
->>
->> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
->> ---
->>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 89 ++++++++++++++++++++++
->>   1 file changed, 89 insertions(+)
->>
->> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->> index cb49291f5233..d2006f610243 100644
->> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->> @@ -20,6 +20,85 @@ struct actlr_config {
->>          u32 actlr;
->>   };
->>
->> +/*
->> + * SMMU-500 TRM defines BIT(0) as CMTLB (Enable context caching in the
->> + * macro TLB) and BIT(1) as CPRE (Enable context caching in the prefetch
->> + * buffer). The remaining bits are implementation defined and vary across
->> + * SoCs.
->> + */
->> +
->> +#define PREFETCH_DEFAULT       0
->> +#define PREFETCH_SHALLOW       BIT(8)
->> +#define PREFETCH_MODERATE      BIT(9)
->> +#define PREFETCH_DEEP          (BIT(9) | BIT(8))
-> 
-> I thin the following might be more correct:
-> 
-> #include <linux/bitfield.h>
-> 
-> #define PREFETCH_MASK GENMASK(9, 8)
-> #define PREFETCH_DEFAULT FIELD_PREP(PREFETCH_MASK, 0)
-> #define PREFETCH_SHALLOW FIELD_PREP(PREFETCH_MASK, 1)
-> #define PREFETCH_MODERATE FIELD_PREP(PREFETCH_MASK, 2)
-> #define PREFETCH_DEEP FIELD_PREP(PREFETCH_MASK, 3)
-> 
+This is some very akward naming here.
 
-Ack, thanks for this suggestion. Let me try this out using
-GENMASK. Once tested, will take care of this in next version.
+"camcc-x1e80100"
 
-Thanks,
-Bibek
+Same comment with the defines not "CAM_CC_THING" just "CAMCC_THING"
 
->> +#define PREFETCH_SWITCH_GFX    (BIT(5) | BIT(3))
->> +#define CPRE                   BIT(1)
->> +#define CMTLB                  BIT(0)
->> +
->> +static const struct actlr_config sm8550_apps_actlr_cfg[] = {
->> +       { 0x18a0, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
->> +       { 0x18e0, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
->> +       { 0x0800, 0x0020, PREFETCH_DEFAULT | CMTLB },
->> +       { 0x1800, 0x00c0, PREFETCH_DEFAULT | CMTLB },
->> +       { 0x1820, 0x0000, PREFETCH_DEFAULT | CMTLB },
->> +       { 0x1860, 0x0000, PREFETCH_DEFAULT | CMTLB },
->> +       { 0x0c01, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x0c02, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x0c03, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x0c04, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x0c05, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x0c06, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x0c07, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x0c08, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x0c09, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x0c0c, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x0c0d, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x0c0e, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x0c0f, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x1961, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x1962, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x1963, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x1964, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x1965, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x1966, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x1967, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x1968, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x1969, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x196c, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x196d, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x196e, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x196f, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x19c1, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x19c2, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x19c3, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x19c4, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x19c5, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x19c6, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x19c7, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x19c8, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x19c9, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x19cc, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x19cd, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x19ce, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x19cf, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
->> +       { 0x1c00, 0x0002, PREFETCH_SHALLOW | CPRE | CMTLB },
->> +       { 0x1c01, 0x0000, PREFETCH_DEFAULT | CMTLB },
->> +       { 0x1920, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
->> +       { 0x1923, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
->> +       { 0x1924, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
->> +       { 0x1940, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
->> +       { 0x1941, 0x0004, PREFETCH_SHALLOW | CPRE | CMTLB },
->> +       { 0x1943, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
->> +       { 0x1944, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
->> +       { 0x1947, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
->> +       {},
->> +};
->> +
->> +static const struct actlr_config sm8550_gfx_actlr_cfg[] = {
->> +       { 0x0000, 0x03ff, PREFETCH_SWITCH_GFX | PREFETCH_DEEP | CPRE | CMTLB },
->> +       {},
->> +};
->> +
->>   static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
->>   {
->>          return container_of(smmu, struct qcom_smmu, smmu);
->> @@ -549,6 +628,15 @@ static const struct qcom_smmu_match_data sdm845_smmu_500_data = {
->>          /* Also no debug configuration. */
->>   };
->>
->> +
->> +static const struct qcom_smmu_match_data sm8550_smmu_500_impl0_data = {
->> +       .impl = &qcom_smmu_500_impl,
->> +       .adreno_impl = &qcom_adreno_smmu_500_impl,
->> +       .cfg = &qcom_smmu_impl0_cfg,
->> +       .actlrcfg = sm8550_apps_actlr_cfg,
->> +       .actlrcfg_gfx = sm8550_gfx_actlr_cfg,
->> +};
->> +
->>   static const struct qcom_smmu_match_data qcom_smmu_500_impl0_data = {
->>          .impl = &qcom_smmu_500_impl,
->>          .adreno_impl = &qcom_adreno_smmu_500_impl,
->> @@ -583,6 +671,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
->>          { .compatible = "qcom,sm8250-smmu-500", .data = &qcom_smmu_500_impl0_data },
->>          { .compatible = "qcom,sm8350-smmu-500", .data = &qcom_smmu_500_impl0_data },
->>          { .compatible = "qcom,sm8450-smmu-500", .data = &qcom_smmu_500_impl0_data },
->> +       { .compatible = "qcom,sm8550-smmu-500", .data = &sm8550_smmu_500_impl0_data },
->>          { .compatible = "qcom,smmu-500", .data = &qcom_smmu_500_impl0_data },
->>          { }
->>   };
->> --
->> 2.17.1
->>
-> 
-> 
+With those two nits fixed.
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
+
+> +		.of_match_table = cam_cc_x1e80100_match_table,
+> +	},
+> +};
+> +
+> +module_platform_driver(cam_cc_x1e80100_driver);
+> +
+> +MODULE_DESCRIPTION("QTI CAM_CC x1e80100 Driver");
+
+Again with the "CAM_CC" this should be -> "QTI Camera Clock Controller"
+
+---
+bod
 
