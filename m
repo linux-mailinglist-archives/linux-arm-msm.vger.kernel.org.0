@@ -1,190 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-4856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8EB68813E81
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 01:02:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 78653813E95
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 01:12:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 19256B22178
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 00:01:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E7617B21CCC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 00:12:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A02941C14;
-	Fri, 15 Dec 2023 00:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1B1CEC0;
+	Fri, 15 Dec 2023 00:12:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VoUPVUuS"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XTNK8xXg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBBB6C6FB
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 00:01:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2c9f4bb2e5eso960811fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Dec 2023 16:01:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702598479; x=1703203279; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DvYIncA4M4SGSh5JTnjhgY5sZtR0+qJcMKUor4G9V+0=;
-        b=VoUPVUuSDhXbqWVprsKVMVdwCM9dTgMUGB1hhWaOl/xM76oroa/KHCkpw4qj18dyFC
-         7jpoYLNBYOvBfNiqrsaXR7nyqfFMFKByikiWqbqFns64o1lPVj5wJeCP84ax41OArm6P
-         alQ0rrBSBfOBHBzCA7bCnw5nhnnFsGmE0pAlAm11CKxmV0l7a4AAoDzwirZD4WNcAyEW
-         3c+RXxwWj9hTVI0EgCBz5sUZz7tvbPEpJEjIbTpwMW/jS+zso6J9FLD6b2e3BONEn26i
-         NOeXDs50TRW4F/3yUgbvauTKyTehq5zJIZ/dqLs0n5TszErAKDlJzqGfjWu0lsNESN4h
-         fMMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702598479; x=1703203279;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DvYIncA4M4SGSh5JTnjhgY5sZtR0+qJcMKUor4G9V+0=;
-        b=IRehZWwIEPUGYr3xoVlChuSTuFyX7mmjLP9BNFTC467zCONWZGrf+8pQDlpXk5L///
-         Z7SJnFHgxKTC2bOFEriSqIiibmdb73MVPQz4FBYd0MrdzxHK+mrIUfWq+O6Wa1JIkDJ0
-         eDr76hMRJTJGECtfBSUTqVqyp577uitXcweZzXIU9RP2tlcH5kIMTESPvgnt/JZqBUi8
-         Y7fvcSHjG124qCdDyFC7QrJIv3A1LbxPZFsVwQYSbiE0vruxlm67/GTebZh+e/NA3TYP
-         G0OvCnRNG72hcJ628sETSx60p+nGYCPHqRudAqC3Nf4xJ475WEp80kKDlafwV3cocBfY
-         maew==
-X-Gm-Message-State: AOJu0YzhzPi1ykGPKUv2abERHsZwqwEzOK+UZoUlaW6JZ5l/L5MyrOdb
-	Dqb18yLJWgK+i9XatwV+1k6M3A==
-X-Google-Smtp-Source: AGHT+IFAHnBdYUR0+GTVfwY42CyzywNVvhh2x5WnkY31cQX8R3pIf0jwI2wauK1oBewOAmIJsg3csQ==
-X-Received: by 2002:a05:651c:220b:b0:2cc:304d:c3ee with SMTP id y11-20020a05651c220b00b002cc304dc3eemr2847351ljq.67.1702598479156;
-        Thu, 14 Dec 2023 16:01:19 -0800 (PST)
-Received: from [127.0.1.1] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id v6-20020a2e2f06000000b002c9f939598csm2184518ljv.70.2023.12.14.16.01.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Dec 2023 16:01:18 -0800 (PST)
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Fri, 15 Dec 2023 01:01:10 +0100
-Subject: [PATCH 3/3] arm64: dts: qcom: qcm2290: Hook up MPM
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92789EBF;
+	Fri, 15 Dec 2023 00:12:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1702599169; x=1734135169;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=LoCKoEMTXvBDPQWtkdfBuHckUE9e5g/vm6kupeuuk8w=;
+  b=XTNK8xXg87URC3rpnYDLg25Um31kfou09AxblKzC5Zr4kvzbXg48/eIR
+   kUFvtZ2htLITakk8acZNiJVmcnBb6sB4xp2Xo1VWq6tWoYJ/1GMglDrIj
+   1JmTMDsnDIdd9FGHlVWQsjt15OB0neSNMAzUbN14swDjFJYePwxi4elDM
+   TJOb2fscgvAXXviBuzN5tmcSG9WdchZ7Lr5CY5ilftrxOC3DWb6igtG10
+   vj9h8iidmIMfTaPaZ1pRdwZDVu8wKMWoiUVsQQVmWBR0Vc1Ni+s+Lx4ml
+   X92xU+5d/5FwOjBpdMeedY9214y5HzTB3fLHE8m9dYvHoa+3ciBS4YuXp
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10924"; a="8607220"
+X-IronPort-AV: E=Sophos;i="6.04,277,1695711600"; 
+   d="scan'208";a="8607220"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Dec 2023 16:12:49 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10924"; a="1105922790"
+X-IronPort-AV: E=Sophos;i="6.04,277,1695711600"; 
+   d="scan'208";a="1105922790"
+Received: from lkp-server02.sh.intel.com (HELO b07ab15da5fe) ([10.239.97.151])
+  by fmsmga005.fm.intel.com with ESMTP; 14 Dec 2023 16:12:44 -0800
+Received: from kbuild by b07ab15da5fe with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1rDvoo-000MqL-0e;
+	Fri, 15 Dec 2023 00:12:42 +0000
+Date: Fri, 15 Dec 2023 08:11:48 +0800
+From: kernel test robot <lkp@intel.com>
+To: Md Sadre Alam <quic_mdalam@quicinc.com>, thara.gopinath@gmail.com,
+	herbert@gondor.apana.org.au, davem@davemloft.net, agross@kernel.org,
+	andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
+	linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
+	quic_srichara@quicinc.com, quic_varada@quicinc.com
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	quic_mdalam@quicinc.com
+Subject: Re: [PATCH 02/11] crypto: qce - Add bam dma support for crypto
+ register r/w
+Message-ID: <202312150743.EugqdZaA-lkp@intel.com>
+References: <20231214114239.2635325-3-quic_mdalam@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231215-topic-mpm_dt-v1-3-c6636fc75ce3@linaro.org>
-References: <20231215-topic-mpm_dt-v1-0-c6636fc75ce3@linaro.org>
-In-Reply-To: <20231215-topic-mpm_dt-v1-0-c6636fc75ce3@linaro.org>
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@somainline.org>, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.13-dev-0438c
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231214114239.2635325-3-quic_mdalam@quicinc.com>
 
-Wire up MPM and the interrupts it provides.
+Hi Md,
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/qcm2290.dtsi | 42 +++++++++++++++++++++++++++++------
- 1 file changed, 35 insertions(+), 7 deletions(-)
+kernel test robot noticed the following build errors:
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-index ce04d0acdede..0911fb08ed63 100644
---- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-@@ -199,6 +199,7 @@ CPU_PD3: power-domain-cpu3 {
- 
- 		CLUSTER_PD: power-domain-cpu-cluster {
- 			#power-domain-cells = <0>;
-+			power-domains = <&mpm>;
- 			domain-idle-states = <&CLUSTER_SLEEP>;
- 		};
- 	};
-@@ -266,6 +267,24 @@ rpmpd_opp_turbo_plus: opp8 {
- 				};
- 			};
- 		};
-+
-+		mpm: interrupt-controller {
-+			compatible = "qcom,mpm";
-+			qcom,rpm-msg-ram = <&apss_mpm>;
-+			interrupts = <GIC_SPI 197 IRQ_TYPE_EDGE_RISING>;
-+			mboxes = <&apcs_glb 1>;
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+			#power-domain-cells = <0>;
-+			interrupt-parent = <&intc>;
-+			qcom,mpm-pin-count = <96>;
-+			qcom,mpm-pin-map = <2 275>,  /* TSENS0 uplow */
-+					   <5 296>,  /* Soundwire master_irq */
-+					   <12 422>, /* DWC3 ss_phy_irq */
-+					   <24 79>,  /* Soundwire wake_irq */
-+					   <86 183>, /* MPM wake, SPMI */
-+					   <90 260>; /* QUSB2_PHY DP+DM */
-+		};
- 	};
- 
- 	reserved_memory: reserved-memory {
-@@ -429,6 +448,7 @@ tlmm: pinctrl@500000 {
- 			interrupts = <GIC_SPI 227 IRQ_TYPE_LEVEL_HIGH>;
- 			gpio-controller;
- 			gpio-ranges = <&tlmm 0 0 127>;
-+			wakeup-parent = <&mpm>;
- 			#gpio-cells = <2>;
- 			interrupt-controller;
- 			#interrupt-cells = <2>;
-@@ -778,7 +798,7 @@ spmi_bus: spmi@1c40000 {
- 				    "obsrvr",
- 				    "intr",
- 				    "cnfg";
--			interrupts = <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts-extended = <&mpm 86 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "periph_irq";
- 			qcom,ee = <0>;
- 			qcom,channel = <0>;
-@@ -793,8 +813,8 @@ tsens0: thermal-sensor@4411000 {
- 			reg = <0x0 0x04411000 0x0 0x1ff>,
- 			      <0x0 0x04410000 0x0 0x8>;
- 			#qcom,sensors = <10>;
--			interrupts = <GIC_SPI 275 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 190 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts-extended = <&mpm 2 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&intc GIC_SPI 190 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "uplow", "critical";
- 			#thermal-sensor-cells = <1>;
- 		};
-@@ -813,8 +833,15 @@ bimc: interconnect@4480000 {
- 		};
- 
- 		rpm_msg_ram: sram@45f0000 {
--			compatible = "qcom,rpm-msg-ram";
-+			compatible = "qcom,rpm-msg-ram", "mmio-sram";
- 			reg = <0x0 0x045f0000 0x0 0x7000>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			ranges = <0 0x0 0x045f0000 0x7000>;
-+
-+			apss_mpm: sram@1b8 {
-+				reg = <0x1b8 0x48>;
-+			};
- 		};
- 
- 		sram@4690000 {
-@@ -1293,9 +1320,10 @@ &qup_virt SLAVE_QUP_CORE_0 RPM_ALWAYS_TAG>,
- 		usb: usb@4ef8800 {
- 			compatible = "qcom,qcm2290-dwc3", "qcom,dwc3";
- 			reg = <0x0 0x04ef8800 0x0 0x400>;
--			interrupts = <GIC_SPI 260 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "hs_phy_irq", "ss_phy_irq";
-+			interrupts-extended = <&intc GIC_SPI 260 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&mpm 12 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hs_phy_irq",
-+					  "ss_phy_irq";
- 
- 			clocks = <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
- 				 <&gcc GCC_USB30_PRIM_MASTER_CLK>,
+[auto build test ERROR on herbert-cryptodev-2.6/master]
+[also build test ERROR on vkoul-dmaengine/next linus/master v6.7-rc5 next-20231214]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Md-Sadre-Alam/crypto-qce-Add-support-for-crypto-address-read/20231214-194404
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/herbert/cryptodev-2.6.git master
+patch link:    https://lore.kernel.org/r/20231214114239.2635325-3-quic_mdalam%40quicinc.com
+patch subject: [PATCH 02/11] crypto: qce - Add bam dma support for crypto register r/w
+config: arm-randconfig-004-20231215 (https://download.01.org/0day-ci/archive/20231215/202312150743.EugqdZaA-lkp@intel.com/config)
+compiler: clang version 16.0.4 (https://github.com/llvm/llvm-project.git ae42196bc493ffe877a7e3dff8be32035dea4d07)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231215/202312150743.EugqdZaA-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202312150743.EugqdZaA-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   In file included from drivers/crypto/qce/dma.c:11:
+>> drivers/crypto/qce/core.h:32:24: error: field has incomplete type 'struct tasklet_struct'
+           struct tasklet_struct done_tasklet;
+                                 ^
+   drivers/crypto/qce/core.h:32:9: note: forward declaration of 'struct tasklet_struct'
+           struct tasklet_struct done_tasklet;
+                  ^
+   drivers/crypto/qce/dma.c:44:17: warning: implicit conversion from enumeration type 'enum dma_transfer_direction' to different enumeration type 'enum dma_data_direction' [-Wenum-conversion]
+                           qce_sgl_cnt, dir)) {
+                           ~~~~~~~~~~~~~^~~~
+   include/linux/dma-mapping.h:419:58: note: expanded from macro 'dma_map_sg'
+   #define dma_map_sg(d, s, n, r) dma_map_sg_attrs(d, s, n, r, 0)
+                                  ~~~~~~~~~~~~~~~~          ^
+   drivers/crypto/qce/dma.c:53:52: warning: implicit conversion from enumeration type 'enum dma_transfer_direction' to different enumeration type 'enum dma_data_direction' [-Wenum-conversion]
+                   dma_unmap_sg(qce->dev, qce_bam_sgl, qce_sgl_cnt, dir);
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~
+   include/linux/dma-mapping.h:420:62: note: expanded from macro 'dma_unmap_sg'
+   #define dma_unmap_sg(d, s, n, r) dma_unmap_sg_attrs(d, s, n, r, 0)
+                                    ~~~~~~~~~~~~~~~~~~          ^
+   2 warnings and 1 error generated.
+
+
+vim +32 drivers/crypto/qce/core.h
+
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  10  
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  11  /**
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  12   * struct qce_device - crypto engine device structure
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  13   * @queue: crypto request queue
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  14   * @lock: the lock protects queue and req
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  15   * @done_tasklet: done tasklet object
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  16   * @req: current active request
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  17   * @result: result of current transform
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  18   * @base: virtual IO base
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  19   * @dev: pointer to device structure
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  20   * @core: core device clock
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  21   * @iface: interface clock
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  22   * @bus: bus clock
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  23   * @dma: pointer to dma data
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  24   * @burst_size: the crypto burst size
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  25   * @pipe_pair_id: which pipe pair id the device using
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  26   * @async_req_enqueue: invoked by every algorithm to enqueue a request
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  27   * @async_req_done: invoked by every algorithm to finish its request
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  28   */
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  29  struct qce_device {
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  30  	struct crypto_queue queue;
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  31  	spinlock_t lock;
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25 @32  	struct tasklet_struct done_tasklet;
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  33  	struct crypto_async_request *req;
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  34  	int result;
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  35  	void __iomem *base;
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  36  	struct device *dev;
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  37  	struct clk *core, *iface, *bus;
+694ff00c9bb387 Thara Gopinath    2023-02-22  38  	struct icc_path *mem_path;
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  39  	struct qce_dma_data dma;
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  40  	int burst_size;
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  41  	unsigned int pipe_pair_id;
+f666e78afa2c49 Md Sadre Alam     2023-12-14  42  	dma_addr_t base_dma;
+74826d774de8a8 Md Sadre Alam     2023-12-14  43  	__le32 *reg_read_buf;
+74826d774de8a8 Md Sadre Alam     2023-12-14  44  	dma_addr_t reg_buf_phys;
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  45  	int (*async_req_enqueue)(struct qce_device *qce,
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  46  				 struct crypto_async_request *req);
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  47  	void (*async_req_done)(struct qce_device *qce, int ret);
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  48  };
+ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  49  
 
 -- 
-2.40.1
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
