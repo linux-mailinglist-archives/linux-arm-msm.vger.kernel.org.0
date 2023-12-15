@@ -1,65 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-4898-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A4C6814550
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 11:19:22 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA8C381456A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 11:22:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 51DDB28501E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 10:19:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A01932850CF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 10:22:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D24F9199C2;
-	Fri, 15 Dec 2023 10:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28E1E19469;
+	Fri, 15 Dec 2023 10:22:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hd4aRYCY"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="A6TuLD4H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C00C19441
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 10:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F0102DB7D
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 10:21:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-54c5ed26cf6so539662a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 02:19:10 -0800 (PST)
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-54f4f7d082cso596437a12.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 02:21:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702635549; x=1703240349; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=p1Q1QP/WpFw2JXhAJ3ohmGioA22m7GqI6q9jsMAzzjY=;
-        b=hd4aRYCYEY2pbqGnxr6QD7rnKJvvVvnwlFAwxo/i5AOBIZpVfRDyYroEHgGAvEKmzF
-         DMtfIJkKBOUKJXPhd3Ci5+Ti7Hat/HE3G6M65R/ys0aGDU3pULjUV97WYH+CIoK1SRRg
-         ajs+yv5PPb8m/FLZBxROqEzhgVCES/ixBNlw8eTcWhX5Y2pPT+O4oAJ72WNnx8sFbez+
-         I8XA+1DG50C2fJ7ZFV4rXRueYeLFG5483y0ulmLay4WDoeR2v9fPDSwNSXcQfahTtK9U
-         XCovWBaUKshRPJNyKaVNTGGs5Z3HCgjESIba9hs3Gc8yTG60Jil0tCAvY6AaTTrxnmbB
-         p5og==
+        d=linaro.org; s=google; t=1702635717; x=1703240517; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zxSZf1ld5t8Yko2g6KhmX2WkAgLz/+p2GmwCYQ2zsHo=;
+        b=A6TuLD4Hl2gBMf0YA3Y48BI4BZTSwUyfBHZ80n6qenD9EAFdjjsbGJ/okzxRNrn9WO
+         g+qxphnYmy4YfD8CBkgmf0vT/mLvq8vduXculg1kQJZZ4wd8QmP6b/CGtgYYzFcn2aZ2
+         Nm0N+u/l7ZLLQ1z6Sepnx2pys9xGY5Ve04+SH273zmv6PjWsUyQHo65NAKGEJIFgG9+I
+         tQvynfH5qX5UJtunhg0NZO0gD9ZN5PiRTV+TtacJWT+sEpIrPmmW+DmpTMrfp5N/oaZD
+         nTplI90ncZlVXeXB7Hz+FlUfAEm8I/d0T1uDbtXeWdSSH+YrPu1y+codOLqLeqIESg2f
+         aljQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702635549; x=1703240349;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=p1Q1QP/WpFw2JXhAJ3ohmGioA22m7GqI6q9jsMAzzjY=;
-        b=qYlJYwMiUE855e7nhZ1rIFUh6A/32UNFo9MzYDtFy8r7EDic5UDX0PQStjLWou1u3q
-         fAqedY0dCWNYQ7m07AmAud4Q7dTGFm60re88Dst6NxzU2wOKyDY+Z7TlRgG7RKVSJeLf
-         FjiKS2ZgVfsAG3cWdVR8pnESyhq0cYs8S5IEu7U9eCdPEUUCHUuMDiUcdbI0jDmpXlCv
-         UboeYAHnnEHM3wiDWKQQ+uDN9jQxvB1PbLCyuAJUCTwvaW/5a7YG3QBkTlLPh4dyS06J
-         NyPCLxBNjkhU7eqb9IeAxoZDG5HyB5GrzMUaOxVoTMU9K88ywI6QzBOQN62dF745gAl4
-         9CLQ==
-X-Gm-Message-State: AOJu0YznwxZ/TZkrLIMlVAGemaW6MqPLlGp7DuDr5okJyQElASOqHqdL
-	YXLDvFIgHlTmR+2f8/uy9fLt2w==
-X-Google-Smtp-Source: AGHT+IHq0OOFE4RzU/dwkfBqeiV3Aexft61SAg2Y0awUCBxDoz8+nvuj/gD08Z+VsGddwCYrD2SLbA==
-X-Received: by 2002:a17:907:7673:b0:a19:a19b:55fa with SMTP id kk19-20020a170907767300b00a19a19b55famr5758572ejc.138.1702635549387;
-        Fri, 15 Dec 2023 02:19:09 -0800 (PST)
+        d=1e100.net; s=20230601; t=1702635717; x=1703240517;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zxSZf1ld5t8Yko2g6KhmX2WkAgLz/+p2GmwCYQ2zsHo=;
+        b=ro7uWR90Ap5blPQ4kQ9QNtuuH3pmeoHEN7ilwegwYtgZn4KcljJpAu8NQsm1xqHteF
+         4F13hkByCE1AW1PVrWoSM7D+fEV4v53CxHndvXwjXuDacFtX28ODI9lKfeUJXxQ00CiY
+         lAT3vZqHnBOwXSt6z8iwJMksRHeYLo4mU97t2zbWeX5zGPedzuD+ymp474fGpMWPCByS
+         vUzFgU6EKPtOx/sC1I6PHYcQfGkQei47HR34hqpXFrT9OYlBWrAZTncuN3iIxL+SzVBX
+         jU0zB0unVULJPDARuwulKfjD5xWxAmOIPHRZWAA9Hqx7qG/bjrL6QoKY/MOT7y+3YfCu
+         D41A==
+X-Gm-Message-State: AOJu0Yw9rNJpQ0keeP/4jqnCYQ2bEse0mcdrUnWqbZcXL4a4bN348s8l
+	9Ypp+IA+9gxEwp1APQUzKY7GpQ==
+X-Google-Smtp-Source: AGHT+IF+OcKLgYSuNDJMC71lpO4xOtNfQ9q8Z3N51o5+Qjk45mFRksqE5vAMWkZMYvdYnH+ZyybdDw==
+X-Received: by 2002:a17:906:6a19:b0:9d8:78f2:7ea2 with SMTP id qw25-20020a1709066a1900b009d878f27ea2mr7789943ejc.54.1702635717167;
+        Fri, 15 Dec 2023 02:21:57 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id re13-20020a170907a2cd00b00a1d13fccec4sm10554860ejc.159.2023.12.15.02.19.06
+        by smtp.gmail.com with ESMTPSA id tl18-20020a170907c31200b00a1da2c9b06asm10575697ejc.42.2023.12.15.02.21.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Dec 2023 02:19:08 -0800 (PST)
-Message-ID: <26c8b0b1-5ea9-45cc-adf3-0d0b03a1284d@linaro.org>
-Date: Fri, 15 Dec 2023 11:19:05 +0100
+        Fri, 15 Dec 2023 02:21:56 -0800 (PST)
+Message-ID: <1fa2d219-63d7-45cf-9e05-b85dbce24076@linaro.org>
+Date: Fri, 15 Dec 2023 11:21:53 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,26 +66,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] dt-bindings: net: ipq4019-mdio: Document ipq5332
+Subject: Re: [PATCH v3 5/5] dt-bindings: net: ipq4019-mdio: Document ipq5332
  platform
-To: Jie Luo <quic_luoj@quicinc.com>, Conor Dooley <conor@kernel.org>
-Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
- davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- pabeni@redhat.com, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
- conor+dt@kernel.org, andrew@lunn.ch, hkallweit1@gmail.com,
- linux@armlinux.org.uk, robert.marko@sartura.hr,
- linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+Content-Language: en-US
+To: Jie Luo <quic_luoj@quicinc.com>, agross@kernel.org, andersson@kernel.org,
+ konrad.dybcio@linaro.org, davem@davemloft.net, edumazet@google.com,
+ kuba@kernel.org, pabeni@redhat.com, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, andrew@lunn.ch,
+ hkallweit1@gmail.com, linux@armlinux.org.uk, robert.marko@sartura.hr
+Cc: linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  quic_srichara@quicinc.com
-References: <20231212115151.20016-1-quic_luoj@quicinc.com>
- <20231212115151.20016-6-quic_luoj@quicinc.com>
- <20231212-caution-improvise-ed3cc6a1d305@spud>
- <11ffc985-3f2b-46b9-ae0b-911f7abe98d1@quicinc.com>
- <20231214-outshine-shush-8a11c68607cd@spud>
- <c5123ce7-6fdc-43c7-ac07-251c39196e66@quicinc.com>
- <a1e5ffec-a20d-4389-83f9-ee09bd9d733d@linaro.org>
- <a84a36af-69f8-46af-967e-b06d028597a3@quicinc.com>
-Content-Language: en-US
+References: <20231214090304.16884-1-quic_luoj@quicinc.com>
+ <20231214090304.16884-6-quic_luoj@quicinc.com>
+ <1e4c55c8-8ed6-4f2e-8328-8a173f09b62f@linaro.org>
+ <3c8e33b4-6ebc-476f-a00f-15cc8a1ad9e4@quicinc.com>
+ <b89abf8c-57f8-46a6-a071-b1591340fbdf@linaro.org>
+ <3de98516-9a28-4f58-8951-2a7752621fee@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -132,134 +128,73 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <a84a36af-69f8-46af-967e-b06d028597a3@quicinc.com>
+In-Reply-To: <3de98516-9a28-4f58-8951-2a7752621fee@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 15/12/2023 10:49, Jie Luo wrote:
-> 
-> 
-> On 12/15/2023 3:29 PM, Krzysztof Kozlowski wrote:
->> On 15/12/2023 07:46, Jie Luo wrote:
->>>
->>>
->>> On 12/15/2023 1:12 AM, Conor Dooley wrote:
->>>> On Wed, Dec 13, 2023 at 04:26:56PM +0800, Jie Luo wrote:
->>>>>
->>>>>
->>>>> On 12/13/2023 12:06 AM, Conor Dooley wrote:
->>>>>> On Tue, Dec 12, 2023 at 07:51:50PM +0800, Luo Jie wrote:
->>>>>>> Update the yaml file for the new DTS properties.
->>>>>>>
->>>>>>> 1. cmn-reference-clock for the CMN PLL source clock select.
->>>>>>> 2. clock-frequency for MDIO clock frequency config.
->>>>>>> 3. add uniphy AHB & SYS GCC clocks.
->>>>>>> 4. add reset-gpios for MDIO bus level reset.
->>>>>>>
->>>>>>> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
->>>>>>> ---
->>>>>>>     .../bindings/net/qcom,ipq4019-mdio.yaml       | 157 +++++++++++++++++-
->>>>>>>     1 file changed, 153 insertions(+), 4 deletions(-)
->>>>>>>
->>>>>>> diff --git a/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml b/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
->>>>>>> index 3407e909e8a7..9546a6ad7841 100644
->>>>>>> --- a/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
->>>>>>> +++ b/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
->>>>>>> @@ -20,6 +20,8 @@ properties:
->>>>>>>               - enum:
->>>>>>>                   - qcom,ipq6018-mdio
->>>>>>>                   - qcom,ipq8074-mdio
->>>>>>> +              - qcom,ipq9574-mdio
->>>>>>> +              - qcom,ipq5332-mdio
->>>>>>>               - const: qcom,ipq4019-mdio
->>>>>>>       "#address-cells":
->>>>>>> @@ -30,19 +32,71 @@ properties:
->>>>>>>       reg:
->>>>>>>         minItems: 1
->>>>>>> -    maxItems: 2
->>>>>>> +    maxItems: 5
->>>>>>>         description:
->>>>>>> -      the first Address and length of the register set for the MDIO controller.
->>>>>>> -      the second Address and length of the register for ethernet LDO, this second
->>>>>>> -      address range is only required by the platform IPQ50xx.
->>>>>>> +      the first Address and length of the register set for the MDIO controller,
->>>>>>> +      the optional second, third and fourth address and length of the register
->>>>>>> +      for ethernet LDO, these three address range are required by the platform
->>>>>>> +      IPQ50xx/IPQ5332/IPQ9574, the last address and length is for the CMN clock
->>>>>>> +      to select the reference clock.
->>>>>>> +
->>>>>>> +  reg-names:
->>>>>>> +    minItems: 1
->>>>>>> +    maxItems: 5
->>>>>>>       clocks:
->>>>>>> +    minItems: 1
->>>>>>>         items:
->>>>>>>           - description: MDIO clock source frequency fixed to 100MHZ
->>>>>>> +      - description: UNIPHY0 AHB clock source frequency fixed to 100MHZ
->>>>>>> +      - description: UNIPHY1 AHB clock source frequency fixed to 100MHZ
->>>>>>> +      - description: UNIPHY0 SYS clock source frequency fixed to 24MHZ
->>>>>>> +      - description: UNIPHY1 SYS clock source frequency fixed to 24MHZ
->>>>>>>       clock-names:
->>>>>>> +    minItems: 1
->>>>>>>         items:
->>>>>>>           - const: gcc_mdio_ahb_clk
->>>>>>> +      - const: gcc_uniphy0_ahb_clk
->>>>>>> +      - const: gcc_uniphy1_ahb_clk
->>>>>>> +      - const: gcc_uniphy0_sys_clk
->>>>>>> +      - const: gcc_uniphy1_sys_clk
->>>>>>
->>>>>>> +  cmn-reference-clock:
->>>>>>> +    oneOf:
->>>>>>> +      - items:
->>>>>>> +          - enum:
->>>>>>> +              - 0   # CMN PLL reference internal 48MHZ
->>>>>>> +              - 1   # CMN PLL reference external 25MHZ
->>>>>>> +              - 2   # CMN PLL reference external 31250KHZ
->>>>>>> +              - 3   # CMN PLL reference external 40MHZ
->>>>>>> +              - 4   # CMN PLL reference external 48MHZ
->>>>>>> +              - 5   # CMN PLL reference external 50MHZ
->>>>>>> +              - 6   # CMN PLL reference internal 96MHZ
->>>>>>
->>>>>> Why is this not represented by an element of the clocks property?
->>>>>
->>>>> This property is for the reference clock source selection of CMN PLL,
->>>>> CMN PLL generates the different clock rates for the different Ethernet
->>>>> blocks, this CMN PLL configuration is not located in the GCC, so the
->>>>> clock framework can't be used, which is the general hardware register
->>>>> instead of RCG register for GCC.
+On 15/12/2023 11:03, Jie Luo wrote:
+>>>>> +  cmn-reference-clock:
+>>>>> +    $ref: /schemas/types.yaml#/definitions/uint32
 >>>>
->>>> I don't see how the clock being provided by the "GCC" (whatever that is)
->>>> or by some other clock controller or fixed clock makes a difference.
->>>> Why can't the other clock provider be represented in the devicetree?
->>>>
+>>>> Nothing improved here
 >>>
->>> cmn-reference-clock is for selecting the reference clock source for the
->>> whole Ethernet block, which is just the standalone configure register.
+>>> With this change, the warning is not reported when i run
+>>> dt_binding_check, looks the new added property needs
+>>> the type ref to avoid the warning reported.
 >>
->> Sure, you are aware though that all clocks are just configure registers?
->>
->> Which clocks are these mentioned in the property? From where do they come?
->>
->> Anyway, property is in existing form is not correct - this is not a
->> generic property.
->>
+>> Nothing improved in the property name, nor its style, nor in the actual
+>> contents/values.
 > 
-> This property cmn-reference-clock is just the hardware register 
-> configuration, since the different IPQ platform needs to select
-> the different reference clock source for the CMN PLL block that
-> provides the various clock outputs to the all kinds of Ethernet
-> devices, which is not from GCC provider.
+> This property is for CMN PLL block reference clock configuration,
+> so i use this property name.
+> 
+> it will be appreciated if you can suggest a suitable name, thanks.
 
-AGAIN: where do the clocks come from? Which device generates them?
+See example-schema about naming. Read writing-bindings. You need vendor
+prefix for custom properties.
 
 > 
-> This is indeed not a generic property, which is the Ethernet
-> function configs same as clock-frequency.
+>>
+>> ...
+>>
+>>>>> +  reset-gpios:
+>>>>> +    maxItems: 1
+>>>>> +
+>>>>> +  reset-assert-us:
+>>>>> +    maxItems: 1
+>>>>
+>>>> This does not look related to ipq5332.
+>>>
+>>> The reset gpio properties are needed on ipq5332, since qca8084 phy is
+>>> connected, which uses the MDIO bus level gpio reset.
+>>
+>> I am talking about this property, not these properties.
+> 
+> ok.
+> 
+>>
+>>>
+>>> Without declaring these gpio properties, the warning will be reported
+>>> by dt_binding_check.
+>>
+>> How is it even possible to have warnings if there is no such node in
+>> DTS? We do not care about warnings in your downstream code.
+>>
+>>
+>> Best regards,
+>> Krzysztof
+>>
+> 
+> If i do not declare the property "reset-assert-us" and 
+> "reset-deassert-us", the warning will be reported by "make 
+> dt_binding_check" since i
+> add a example in this file.
 
+This argument does not make sense, sorry. Obviously if property is not
+allowed, it should be removed.
 
-Then it should not be made as a generic property...
-
-
+Provide rationale, in terms of hardware, why this property must be added
+and why it cannot be deduced from the compatible.
 
 Best regards,
 Krzysztof
