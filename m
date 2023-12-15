@@ -1,101 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-4958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4BAE814FA6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 19:24:00 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22704814FAF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 19:27:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CAD771C23A7C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 18:23:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 736E91F247F1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 18:27:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39D573011E;
-	Fri, 15 Dec 2023 18:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79CA93FE43;
+	Fri, 15 Dec 2023 18:27:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="J9zMamcC"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WDql3P5U"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0F241841;
-	Fri, 15 Dec 2023 18:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180403FE40;
+	Fri, 15 Dec 2023 18:27:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BFIDlsE018866;
-	Fri, 15 Dec 2023 18:23:53 GMT
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BFIDXRU018255;
+	Fri, 15 Dec 2023 18:26:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=cWdUXwpzV+VA3O0sS2vlYrQ97X4HVSi9NyhxCaNhYmg=; b=J9
-	zMamcCErsQqC16RoQoXhNYjKz5meI4ZW9Tqn95r8kXMnZtNn0E0SGFsH3KML/CkH
-	5GLm7jFAZzBDGscQLg4NjpXwBaaDxnJh+Cn2HWII4vNWyKIyBqS2HVA1fHx7+X15
-	3mxPJuMjDjKymGYdGwYCCUxPTEzTMbDBp9BDc48atf7Oh0Erw+CAJphdoJor4JVA
-	HTS3mVMgXFmn33kQExMfaPgrnNvZXOBZ3CG2WiEntlpXRgB29vogr1xAoacffMNZ
-	K40C6mYAsCpJMFdP8NyhtDL9gWwVDRIKc28fQHipCM0VhYMrl9B55aVTpbLA/FBH
-	JWFBmJt/9V7xyc6IBPVA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v0up201k9-1
+	from:date:subject:mime-version:content-type
+	:content-transfer-encoding:message-id:to:cc; s=qcppdkim1; bh=t6s
+	jwTTEMurBtYFGKNA1rJneCPYBdA2fvAB/fMn1cDk=; b=WDql3P5Uu4yoQSjEmkp
+	jvL2HXRLgC0lbOC0inGuRz0rKgUYswXgtJWhEmSv5NwRllAyFlN0tAt0TlUC1qw/
+	2J4J9qEMN439hpHYG+RYY608nTR5GgJyUHEIwQPHG6y3WBoAh4OAMbu2zpxpD2Z0
+	ALCVo9bYrjnEAWQlGb7rqgKQOoodMVKP77T/A8LK3Uz67p5HGNqosVeH8XkpCzUT
+	vf1CNfiJBgiKj8EmFHtQBvdZqOWtq76Dzq9GJurkJhF67upf9twp9HnudegCDVZk
+	Y085iGCaVahUFmy7snP/XS22dUjK2F7DwQXT8WVUQXT2AFZw/Bsx65IFugh7FvVU
+	usQ==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v0up201sm-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 15 Dec 2023 18:23:53 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BFINql3004272
+	Fri, 15 Dec 2023 18:26:55 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BFIQtrd001897
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 15 Dec 2023 18:23:52 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+	Fri, 15 Dec 2023 18:26:55 GMT
+Received: from [169.254.0.1] (10.49.16.6) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 15 Dec
- 2023 10:23:51 -0800
-Message-ID: <da3c4c7f-f84b-57f0-4ab7-84675fd954b6@quicinc.com>
-Date: Fri, 15 Dec 2023 11:23:51 -0700
+ 2023 10:26:54 -0800
+From: Elliot Berman <quic_eberman@quicinc.com>
+Date: Fri, 15 Dec 2023 10:26:40 -0800
+Subject: [PATCH] scripts/decode_stacktrace.sh: Use LLVM environment
+ variable
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v5 2/2] bus: mhi: host: Drop chan lock before queuing
- buffers
-Content-Language: en-US
-To: Qiang Yu <quic_qianyu@quicinc.com>, <mani@kernel.org>
-CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
-        <quic_mrana@quicinc.com>
-References: <1702276972-41296-1-git-send-email-quic_qianyu@quicinc.com>
- <1702276972-41296-3-git-send-email-quic_qianyu@quicinc.com>
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <1702276972-41296-3-git-send-email-quic_qianyu@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Message-ID: <20231215-llvm-decode-stacktrace-v1-1-201cb86f4879@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAF+afGUC/4WNTQ6CMBBGr0JmbU1/VKgr72FY4HSUidBqi42Gc
+ HcrF3D5XvK9b4ZEkSnBsZohUubEwRdQmwqw7/yNBLvCoKU2SqudGIY8CkcYHIk0dXifYockpN2
+ bxtZWyoODMn5EuvJ7DZ/bwj2nKcTP+pPVz/5NZiWUaKy+1Abrxhp9er4Y2eMWwwjtsixfUfICO
+ L4AAAA=
+To: Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers
+	<ndesaulniers@google.com>,
+        Bill Wendling <morbo@google.com>,
+        Justin Stitt
+	<justinstitt@google.com>,
+        Manuel Traut <manut@linutronix.de>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <llvm@lists.linux.dev>, Elliot Berman <quic_eberman@quicinc.com>
+X-Mailer: b4 0.13-dev
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 1_u18HEpdg9l0T19LQ1qzMD5DX3VY7LA
-X-Proofpoint-ORIG-GUID: 1_u18HEpdg9l0T19LQ1qzMD5DX3VY7LA
+X-Proofpoint-GUID: 63bvn7dcg4qWbRItjJ2-hdFyotm5vUcs
+X-Proofpoint-ORIG-GUID: 63bvn7dcg4qWbRItjJ2-hdFyotm5vUcs
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- mlxscore=0 phishscore=0 adultscore=0 suspectscore=0 mlxlogscore=692
- impostorscore=0 priorityscore=1501 clxscore=1015 malwarescore=0
+ mlxscore=0 phishscore=0 adultscore=0 suspectscore=0 mlxlogscore=427
+ impostorscore=0 priorityscore=1501 clxscore=1011 malwarescore=0
  lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2311290000 definitions=main-2312150129
 
-On 12/10/2023 11:42 PM, Qiang Yu wrote:
-> Ensure read and write locks for the channel are not taken in succession by
-> dropping the read lock from parse_xfer_event() such that a callback given
-> to client can potentially queue buffers and acquire the write lock in that
-> process. Any queueing of buffers should be done without channel read lock
-> acquired as it can result in multiple locks and a soft lockup.
-> 
-> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+When using LLVM as the compiler, decode_stacktrace should also use
+llvm-addr2line. Check if LLVM is set and add the appropriate
+suffix/prefix.
 
-Seems to work fine for AIC100
+Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+---
+ scripts/decode_stacktrace.sh | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+diff --git a/scripts/decode_stacktrace.sh b/scripts/decode_stacktrace.sh
+index 564c5632e1a2..189b00f4e120 100755
+--- a/scripts/decode_stacktrace.sh
++++ b/scripts/decode_stacktrace.sh
+@@ -16,6 +16,16 @@ elif type c++filt >/dev/null 2>&1 ; then
+ 	cppfilt_opts=-i
+ fi
+ 
++if [[ "${LLVM}" == "1" ]] ; then
++	addr2line="llvm-addr2line"
++elif [[ "${LLVM}" == */ ]] ; then
++	addr2line="${LLVM}llvm-addr2line"
++elif [[ "${LLVM}" == -* ]] ; then
++	addr2line="llvm-addr2line${LLVM}"
++else
++	addr2line="${CROSS_COMPILE}addr2line"
++fi
++
+ if [[ $1 == "-r" ]] ; then
+ 	vmlinux=""
+ 	basepath="auto"
+@@ -169,7 +179,7 @@ parse_symbol() {
+ 	if [[ $aarray_support == true && "${cache[$module,$address]+isset}" == "isset" ]]; then
+ 		local code=${cache[$module,$address]}
+ 	else
+-		local code=$(${CROSS_COMPILE}addr2line -i -e "$objfile" "$address" 2>/dev/null)
++		local code=$(${addr2line} -i -e "$objfile" "$address" 2>/dev/null)
+ 		if [[ $aarray_support == true ]]; then
+ 			cache[$module,$address]=$code
+ 		fi
+
+---
+base-commit: 3f7168591ebf7bbdb91797d02b1afaf00a4289b1
+change-id: 20231214-llvm-decode-stacktrace-09538979006d
+
+Best regards,
+-- 
+Elliot Berman <quic_eberman@quicinc.com>
+
 
