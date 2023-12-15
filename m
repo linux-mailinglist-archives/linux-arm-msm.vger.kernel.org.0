@@ -1,64 +1,31 @@
-Return-Path: <linux-arm-msm+bounces-4928-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3393814860
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 13:45:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 89AD1814889
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 13:54:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 62AAC1F24950
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 12:45:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 185661F23447
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 12:54:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DB622C6AB;
-	Fri, 15 Dec 2023 12:45:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tCiA6SMa"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E76092C6B6;
+	Fri, 15 Dec 2023 12:54:49 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4BBB2D7A7
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 12:45:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-40c4846847eso6659895e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 04:45:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702644313; x=1703249113; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=M8qMxxO2sTgOsnMtfrSl6kmtLRCDScORkkwQtbVzK9A=;
-        b=tCiA6SMaMCpqjMpGTrE2NLWn+cejEX17ZWoG4oxpDDRfiCnZKBI0N8M5njiQI2Lvt/
-         J9Yx/LznOhEE8dBqGGeDF0kaCfJqOZ23Lp7y271p61x0PyOnv3/+xhBZ9w/d7eDET08s
-         uzk3HGgZJ/efvJSQFrKr0OBAj+zWrAq1Lj6i2LbjcaJ06unhHrWl8iY7KEjs4YGx87xz
-         6IyxZ1zqGTr8HXRgBS0j40bu1LCNoSArVEQTD7DC6jFbKly3ybC9OhJTBj0wXDnOVM53
-         SbQLC43Vaaemt1y3OvirlrpawqySzqAZz9TqcqHJcbEriRKAshhZi9Hdoyhp7DQxVxpa
-         cWUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702644313; x=1703249113;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=M8qMxxO2sTgOsnMtfrSl6kmtLRCDScORkkwQtbVzK9A=;
-        b=f9QC58L+kjxmWemDheU4rElxzcDJEKEacCdNkNxQ4Wx0ft4CsE2lhTYcC5cF4thBV6
-         zt07bb8MPoaGh4yQvG24M6GwaZv9erOtNbz3quR+29RH0ZM8+YwWuIoecgmjmHv9vDQc
-         n0Ob1yuLR8LnnaGS1aKkOcaZyck89ojx3YOO3q8H8VVYQZrelI6H9r6uotC6AhR0fpiW
-         K0nXXq++6k86RJ6VByBX9BKkMnGqyY4RJtM5IrBaiBrdM9o9IxUdHjRe0e/hJN3v8Wsp
-         zZ4guQ3HkKs1ol+hZvc6Swjs/PLRALb7WbRiVmbQ65Hmuw/GBytvY4SvmstT4ppbhxQQ
-         Z+Rw==
-X-Gm-Message-State: AOJu0Yy7ya8JRWpEHQ9ADTZgt/ggnnoArskrlDgsNojV1EUiIyrF1NF1
-	scAwoJW/5uPR9OhfzFiRWqqjQg==
-X-Google-Smtp-Source: AGHT+IGVZ5Ll48i4ZjJg6LkbXdr6ZbwNTBA6pOQht94m0MrCE+V3SKYwEW73wLOsIBF5OOHAxBk+gg==
-X-Received: by 2002:a05:600c:601f:b0:40c:33d9:6998 with SMTP id az31-20020a05600c601f00b0040c33d96998mr6284905wmb.132.1702644313109;
-        Fri, 15 Dec 2023 04:45:13 -0800 (PST)
-Received: from [192.168.100.102] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id f9-20020a05600c154900b0040c4be1af17sm17495803wmg.21.2023.12.15.04.45.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Dec 2023 04:45:12 -0800 (PST)
-Message-ID: <27cc9438-d31f-41af-b012-adb77dd4da5a@linaro.org>
-Date: Fri, 15 Dec 2023 12:45:11 +0000
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07A412C68D;
+	Fri, 15 Dec 2023 12:54:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9BBDDC15;
+	Fri, 15 Dec 2023 04:55:31 -0800 (PST)
+Received: from [10.57.86.13] (unknown [10.57.86.13])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 7B8503F738;
+	Fri, 15 Dec 2023 04:54:43 -0800 (PST)
+Message-ID: <b7f2bbf9-fb5a-430d-aa32-3a220b46c2f0@arm.com>
+Date: Fri, 15 Dec 2023 12:54:41 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,75 +33,202 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/10] clk: qcom: Add dispcc clock driver for x1e80100
-Content-Language: en-US
-To: Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+Subject: Re: [PATCH v4 3/5] iommu/arm-smmu: add ACTLR data and support for
+ SM8550
+Content-Language: en-GB
+To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>,
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
- Rajendra Nayak <quic_rjendra@quicinc.com>
-References: <20231214-x1e80100-clock-controllers-v2-0-2b0739bebd27@linaro.org>
- <20231214-x1e80100-clock-controllers-v2-7-2b0739bebd27@linaro.org>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20231214-x1e80100-clock-controllers-v2-7-2b0739bebd27@linaro.org>
+Cc: will@kernel.org, joro@8bytes.org, konrad.dybcio@linaro.org,
+ jsnitsel@redhat.com, quic_bjorande@quicinc.com, mani@kernel.org,
+ quic_eberman@quicinc.com, robdclark@chromium.org,
+ u.kleine-koenig@pengutronix.de, robh@kernel.org, vladimir.oltean@nxp.com,
+ quic_pkondeti@quicinc.com, quic_molvera@quicinc.com,
+ linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
+ qipl.kernel.upstream@quicinc.com
+References: <20231215101827.30549-1-quic_bibekkum@quicinc.com>
+ <20231215101827.30549-4-quic_bibekkum@quicinc.com>
+ <CAA8EJppcsr1sbeD1fK0nZ+rASABNcetBK3yMvaP7OiA4JPwskw@mail.gmail.com>
+ <c9493c5f-ccf8-4e21-b00c-5fbc2a5f2edb@quicinc.com>
+From: Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <c9493c5f-ccf8-4e21-b00c-5fbc2a5f2edb@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 14/12/2023 16:49, Abel Vesa wrote:
-> From: Rajendra Nayak <quic_rjendra@quicinc.com>
+On 2023-12-15 12:20 pm, Bibek Kumar Patro wrote:
 > 
-> Add the dispcc clock driver for x1e80100.
 > 
-> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
-
-> +static struct platform_driver disp_cc_x1e80100_driver = {
-> +	.probe = disp_cc_x1e80100_probe,
-> +	.driver = {
-> +		.name = "disp_cc-x1e80100",
-> +		.of_match_table = disp_cc_x1e80100_match_table,
-> +	},
-> +};
-> +
-> +static int __init disp_cc_x1e80100_init(void)
-> +{
-> +	return platform_driver_register(&disp_cc_x1e80100_driver);
-> +}
-> +subsys_initcall(disp_cc_x1e80100_init);
-> +
-> +static void __exit disp_cc_x1e80100_exit(void)
-> +{
-> +	platform_driver_unregister(&disp_cc_x1e80100_driver);
-> +}
-> +module_exit(disp_cc_x1e80100_exit);
-> +
-> +MODULE_DESCRIPTION("QTI DISPCC X1E80100 Driver");
-> +MODULE_LICENSE("GPL");
+> On 12/15/2023 4:14 PM, Dmitry Baryshkov wrote:
+>> On Fri, 15 Dec 2023 at 12:19, Bibek Kumar Patro
+>> <quic_bibekkum@quicinc.com> wrote:
+>>>
+>>> Add ACTLR data table for SM8550 along with support for
+>>> same including SM8550 specific implementation operations.
+>>>
+>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+>>> ---
+>>>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 89 ++++++++++++++++++++++
+>>>   1 file changed, 89 insertions(+)
+>>>
+>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c 
+>>> b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>> index cb49291f5233..d2006f610243 100644
+>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>> @@ -20,6 +20,85 @@ struct actlr_config {
+>>>          u32 actlr;
+>>>   };
+>>>
+>>> +/*
+>>> + * SMMU-500 TRM defines BIT(0) as CMTLB (Enable context caching in the
+>>> + * macro TLB) and BIT(1) as CPRE (Enable context caching in the 
+>>> prefetch
+>>> + * buffer). The remaining bits are implementation defined and vary 
+>>> across
+>>> + * SoCs.
+>>> + */
+>>> +
+>>> +#define PREFETCH_DEFAULT       0
+>>> +#define PREFETCH_SHALLOW       BIT(8)
+>>> +#define PREFETCH_MODERATE      BIT(9)
+>>> +#define PREFETCH_DEEP          (BIT(9) | BIT(8))
+>>
+>> I thin the following might be more correct:
+>>
+>> #include <linux/bitfield.h>
+>>
+>> #define PREFETCH_MASK GENMASK(9, 8)
+>> #define PREFETCH_DEFAULT FIELD_PREP(PREFETCH_MASK, 0)
+>> #define PREFETCH_SHALLOW FIELD_PREP(PREFETCH_MASK, 1)
+>> #define PREFETCH_MODERATE FIELD_PREP(PREFETCH_MASK, 2)
+>> #define PREFETCH_DEEP FIELD_PREP(PREFETCH_MASK, 3)
+>>
 > 
+> Ack, thanks for this suggestion. Let me try this out using
+> GENMASK. Once tested, will take care of this in next version.
 
-And we don't even do the odd underscore insertion consistently. For 
-whatever reason "DISPCC" instead of "DISP_CC"
+FWIW the more typical usage would be to just define the named macros for 
+the raw field values, then put the FIELD_PREP() at the point of use. 
+However in this case that's liable to get pretty verbose, so although 
+I'm usually a fan of bitfield.h, the most readable option here might 
+actually be to stick with simpler definitions of "(0 << 8)", "(1 << 8)", 
+etc. However it's not really a big deal either way, and I defer to 
+whatever Dmitry and Konrad prefer, since they're the ones looking after 
+arm-smmu-qcom the most :)
 
-Just to reiterate the underscores should be dropped from these clock 
-controller names and defines entirely, they just eat up bytes in databases.
+Thanks,
+Robin.
 
-.name = "dispcc-x1e80100"
-
-("QTI DISPCC X1E80100 Driver"); better but IMO we could just a complete 
-word here
-
-"Display Clock Controller" there's no need to abbreviate.
-
----
-bod
+> 
+> Thanks,
+> Bibek
+> 
+>>> +#define PREFETCH_SWITCH_GFX    (BIT(5) | BIT(3))
+>>> +#define CPRE                   BIT(1)
+>>> +#define CMTLB                  BIT(0)
+>>> +
+>>> +static const struct actlr_config sm8550_apps_actlr_cfg[] = {
+>>> +       { 0x18a0, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+>>> +       { 0x18e0, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+>>> +       { 0x0800, 0x0020, PREFETCH_DEFAULT | CMTLB },
+>>> +       { 0x1800, 0x00c0, PREFETCH_DEFAULT | CMTLB },
+>>> +       { 0x1820, 0x0000, PREFETCH_DEFAULT | CMTLB },
+>>> +       { 0x1860, 0x0000, PREFETCH_DEFAULT | CMTLB },
+>>> +       { 0x0c01, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x0c02, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x0c03, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x0c04, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x0c05, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x0c06, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x0c07, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x0c08, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x0c09, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x0c0c, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x0c0d, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x0c0e, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x0c0f, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x1961, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x1962, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x1963, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x1964, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x1965, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x1966, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x1967, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x1968, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x1969, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x196c, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x196d, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x196e, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x196f, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x19c1, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x19c2, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x19c3, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x19c4, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x19c5, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x19c6, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x19c7, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x19c8, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x19c9, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x19cc, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x19cd, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x19ce, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x19cf, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>> +       { 0x1c00, 0x0002, PREFETCH_SHALLOW | CPRE | CMTLB },
+>>> +       { 0x1c01, 0x0000, PREFETCH_DEFAULT | CMTLB },
+>>> +       { 0x1920, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+>>> +       { 0x1923, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+>>> +       { 0x1924, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+>>> +       { 0x1940, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+>>> +       { 0x1941, 0x0004, PREFETCH_SHALLOW | CPRE | CMTLB },
+>>> +       { 0x1943, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+>>> +       { 0x1944, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+>>> +       { 0x1947, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+>>> +       {},
+>>> +};
+>>> +
+>>> +static const struct actlr_config sm8550_gfx_actlr_cfg[] = {
+>>> +       { 0x0000, 0x03ff, PREFETCH_SWITCH_GFX | PREFETCH_DEEP | CPRE 
+>>> | CMTLB },
+>>> +       {},
+>>> +};
+>>> +
+>>>   static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
+>>>   {
+>>>          return container_of(smmu, struct qcom_smmu, smmu);
+>>> @@ -549,6 +628,15 @@ static const struct qcom_smmu_match_data 
+>>> sdm845_smmu_500_data = {
+>>>          /* Also no debug configuration. */
+>>>   };
+>>>
+>>> +
+>>> +static const struct qcom_smmu_match_data sm8550_smmu_500_impl0_data = {
+>>> +       .impl = &qcom_smmu_500_impl,
+>>> +       .adreno_impl = &qcom_adreno_smmu_500_impl,
+>>> +       .cfg = &qcom_smmu_impl0_cfg,
+>>> +       .actlrcfg = sm8550_apps_actlr_cfg,
+>>> +       .actlrcfg_gfx = sm8550_gfx_actlr_cfg,
+>>> +};
+>>> +
+>>>   static const struct qcom_smmu_match_data qcom_smmu_500_impl0_data = {
+>>>          .impl = &qcom_smmu_500_impl,
+>>>          .adreno_impl = &qcom_adreno_smmu_500_impl,
+>>> @@ -583,6 +671,7 @@ static const struct of_device_id __maybe_unused 
+>>> qcom_smmu_impl_of_match[] = {
+>>>          { .compatible = "qcom,sm8250-smmu-500", .data = 
+>>> &qcom_smmu_500_impl0_data },
+>>>          { .compatible = "qcom,sm8350-smmu-500", .data = 
+>>> &qcom_smmu_500_impl0_data },
+>>>          { .compatible = "qcom,sm8450-smmu-500", .data = 
+>>> &qcom_smmu_500_impl0_data },
+>>> +       { .compatible = "qcom,sm8550-smmu-500", .data = 
+>>> &sm8550_smmu_500_impl0_data },
+>>>          { .compatible = "qcom,smmu-500", .data = 
+>>> &qcom_smmu_500_impl0_data },
+>>>          { }
+>>>   };
+>>> -- 
+>>> 2.17.1
+>>>
+>>
+>>
 
