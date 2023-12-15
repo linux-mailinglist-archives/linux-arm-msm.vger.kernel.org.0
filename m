@@ -1,117 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-4937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60B758149E5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 15:02:51 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2266A814AE3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 15:44:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1E58528471E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 14:02:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 47CFF1C232A4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 14:44:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2D6031A73;
-	Fri, 15 Dec 2023 13:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1AF636AEF;
+	Fri, 15 Dec 2023 14:44:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YszneM0I"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C43735F03
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 13:59:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1rE8iz-0002qG-KU; Fri, 15 Dec 2023 14:59:33 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1rE8iz-00G2aE-5u; Fri, 15 Dec 2023 14:59:33 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1rE8iy-003cD5-SO; Fri, 15 Dec 2023 14:59:32 +0100
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>
-Cc: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 16/18] perf: qcom_l2: Convert to platform remove callback returning void
-Date: Fri, 15 Dec 2023 14:59:16 +0100
-Message-ID:  <a2587688c54834482d68fe2a44f415a649ad6477.1702648125.git.u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <cover.1702648124.git.u.kleine-koenig@pengutronix.de>
-References: <cover.1702648124.git.u.kleine-koenig@pengutronix.de>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753B136AE9;
+	Fri, 15 Dec 2023 14:44:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BFCWNg6016704;
+	Fri, 15 Dec 2023 14:44:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:from:to:cc:references
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=tO1B3XpYtxcwM9eXmTzeGrDkk113ZhQQlZKUmP51M40=; b=Ys
+	zneM0IrQNkc8pGMGZokS/jcHSYzU1MYx9o5vQSTz5bpZBZKhwYysE8sVlrFH39UQ
+	lVvuB1/20mCx4pBjhIFtDVbludTa35Do3bo/6Z37rML86gG/aWMYeichSEUECYMK
+	eZ3NOnLWfMbLZ9JFf9uB5j+jBnHUP6iwdqnLXCCY9nViENIbrV6S+WhEJxOPXM9V
+	BtY9HsZyF4AvOJr6olfEcjoyEqAVsHajgq+pAFfNghBGPnTXkvfCJnYS/cLOY15D
+	UszYdeRkAzSSE/fceD+uWYq0X9JpkuotSS/hnTVMNf2aQ2X4l5HDBJV1wtO6qKAi
+	yPmYGunW1vqEpbJr1ITg==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v0hqch6n3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 15 Dec 2023 14:44:15 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BFEiFWg004516
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 15 Dec 2023 14:44:15 GMT
+Received: from [10.216.43.184] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 15 Dec
+ 2023 06:44:12 -0800
+Message-ID: <f9231017-0c4c-6ddc-91e8-92dcc0ea5b9e@quicinc.com>
+Date: Fri, 15 Dec 2023 20:14:09 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1931; i=u.kleine-koenig@pengutronix.de; h=from:subject:message-id; bh=VICxICa9rzVcpxd4YQzS3q7MnqlVMsOIGitfxpEhihs=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlfFu3p7ogtYGPBuZCsFnYFvOZg9wLXH6J7bohW JxjI9JrbLSJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZXxbtwAKCRCPgPtYfRL+ ThOdB/4mmPoWmDYG5uyMcSwzK1WP92WjeDvUiQQBHkp31CnYoCZDmYf3AJ1RZgzA71ftT89NP2i J+cLLxvsIKrjQ3U3i0G19YYMR1Tglb6sueG4oEkAqW70R7o6o2/itPnTZ9Q2R+Wq8Q7ekDdxYxq BlW1X0FE2Izyor49KMINVvrLnQCBfeKqsVBvnYBuOjX2muGy9hthfxsi0aSuNDLaXcGFwf20U8i OKcHR08eDXQNS1ZDJIe9ol6PJaN9B5cQIq+nwg8Ao6rAHqjRzJjvUVKUZs8U652FRvkQUIs1vy+ I9Z5fboAp0nA9MFJcfavCbIjfX49SP1CiF6xwTbJN6LALack
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v10 0/4] Misc SCM driver changes
+Content-Language: en-US
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+To: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <linus.walleij@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <1698945247-16033-1-git-send-email-quic_mojha@quicinc.com>
+ <653abe51-cc6a-7bb0-6a10-6dc33389cb68@quicinc.com>
+In-Reply-To: <653abe51-cc6a-7bb0-6a10-6dc33389cb68@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: RQqkOauX4Ue_JGBgtyyLzPZjIKzjFJ0Y
+X-Proofpoint-GUID: RQqkOauX4Ue_JGBgtyyLzPZjIKzjFJ0Y
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 mlxscore=0
+ phishscore=0 adultscore=0 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 mlxlogscore=999 clxscore=1015 suspectscore=0
+ spamscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312150101
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+On 11/28/2023 1:20 AM, Mukesh Ojha wrote:
+> Bjorn,
+> 
+> Any comments on these patches?
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/perf/qcom_l2_pmu.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+Just a reminder., in case it got missed.
 
-diff --git a/drivers/perf/qcom_l2_pmu.c b/drivers/perf/qcom_l2_pmu.c
-index 3f9a98c17a89..148df5ae8ef8 100644
---- a/drivers/perf/qcom_l2_pmu.c
-+++ b/drivers/perf/qcom_l2_pmu.c
-@@ -965,7 +965,7 @@ static int l2_cache_pmu_probe(struct platform_device *pdev)
- 	return err;
- }
- 
--static int l2_cache_pmu_remove(struct platform_device *pdev)
-+static void l2_cache_pmu_remove(struct platform_device *pdev)
- {
- 	struct l2cache_pmu *l2cache_pmu =
- 		to_l2cache_pmu(platform_get_drvdata(pdev));
-@@ -973,7 +973,6 @@ static int l2_cache_pmu_remove(struct platform_device *pdev)
- 	perf_pmu_unregister(&l2cache_pmu->pmu);
- 	cpuhp_state_remove_instance(CPUHP_AP_PERF_ARM_QCOM_L2_ONLINE,
- 				    &l2cache_pmu->node);
--	return 0;
- }
- 
- static struct platform_driver l2_cache_pmu_driver = {
-@@ -983,7 +982,7 @@ static struct platform_driver l2_cache_pmu_driver = {
- 		.suppress_bind_attrs = true,
- 	},
- 	.probe = l2_cache_pmu_probe,
--	.remove = l2_cache_pmu_remove,
-+	.remove_new = l2_cache_pmu_remove,
- };
- 
- static int __init register_l2_cache_pmu_driver(void)
--- 
-2.42.0
+-Mukesh
 
+> 
+> -Mukesh
+> 
+> On 11/2/2023 10:44 PM, Mukesh Ojha wrote:
+>> First two changes changes are needed to enable download mode on
+>> chipset like IPQ9574 and IPQ5332 SoCs as for these targets others
+>> bits in download mode registers are used for different purpose
+>> and earlier kernel code was mistakenly overwrite the other bits.
+>>
+>> First three changes(1/4-3/4) are SCM driver specific while 4/4 from
+>> pinctrl try to use the introduced API(1/3).
+>>
+>> Changes from v9: 
+>> https://lore.kernel.org/lkml/1698648967-974-1-git-send-email-quic_mojha@quicinc.com/
+>>   - Added 3/4 new patch.
+>>   - commit subject modification.
+>>
+>> Change from v8: 
+>> https://lore.kernel.org/lkml/1698235506-16993-1-git-send-email-quic_mojha@quicinc.com/
+>>   - Introduce enum for dload mode constants as per suggestion from 
+>> [Elliot].
+>>   - Rebased on linux-next.
+>>
+>> Changes from v7: 
+>> https://lore.kernel.org/lkml/1696440338-12561-1-git-send-email-quic_mojha@quicinc.com/
+>>   - Rebased it on next-20231025.
+>>   - Added reviewed-by tag and take care of comment made about
+>>     commit text should be in imperative mode.
+>>   - Modified the name of the API to qcom_scm_io_rmw() as per suggestion
+>>     made by [Dmitry]
+>>   - Moved spinlock inside qcom_scm structure.
+>>   - Corrected the patch order as per subsystem SCM first then pinctrl.
+>>
+>> Change from 
+>> minidump-v5(13/17-15/17):https://lore.kernel.org/lkml/1694429639-21484-1-git-send-email-quic_mojha@quicinc.com/ - Removed mistakenly added macros.
+>>     
+>> https://lore.kernel.org/lkml/9da888dc-401a-4cbb-b616-b4654fa79e35@quicinc.com/
+>>   - Added Acked-by tag from Linus.w to 2/3.
+>> Change from 
+>> minidump-v5(13/17-15/17):https://lore.kernel.org/lkml/1694429639-21484-1-git-send-email-quic_mojha@quicinc.com/
+>>   - Removed mistakenly added macros.
+>>     
+>> https://lore.kernel.org/lkml/9da888dc-401a-4cbb-b616-b4654fa79e35@quicinc.com/
+>>   - Added Acked-by tag from Linus.w to 2/3.
+>>
+>> Changes in v6: 
+>> https://lore.kernel.org/lkml/1680076012-10785-1-git-send-email-quic_mojha@quicinc.com/
+>>   - Rebased it on latest tag available on linux-next
+>>   - Added missed Poovendhan sign-off on 15/17 and tested-by tag from
+>>     Kathiravan. Thanks to him for testing and reminding me of missing 
+>> sign-off.
+>>   - Addressed comments made on dload mode patch v6 version
+>>
+>> Changes in v5: 
+>> https://lore.kernel.org/lkml/1680017869-22421-1-git-send-email-quic_mojha@quicinc.com/
+>>    - Tried to fix the issue reported by kernel test robot
+>>      https://lore.kernel.org/lkml/202303280535.acb66sQT-lkp@intel.com/
+>>
+>>    - Applied some of the improvement suggested by [Bjorn.andersson]
+>>
+>>      . Dropped 'both' instead support full,mini or mini,full for 
+>> setting download
+>>      mode to collect both minidump and full dump.
+>>
+>>      . logging improvement.
+>>
+>> Changes in v4: 
+>> https://lore.kernel.org/lkml/1679935281-18445-1-git-send-email-quic_mojha@quicinc.com/
+>>    - val should be shifted within the function [srinivas.kandagatla]
+>>      i.e new = (old & ~mask) | (val << ffs(mask) - 1);
+>>    - Added Acked-by [linus.walleij] on pinctrl change.
+>>
+>> Changes in v3 : 
+>> https://lore.kernel.org/lkml/1679070482-8391-1-git-send-email-quic_mojha@quicinc.com/
+>>   - Removed [1] from the series and sent as a separate patch[2], 
+>> although this series
+>>     should be applied on top [2].
+>>    [1] 
+>> https://lore.kernel.org/lkml/1677664555-30191-2-git-send-email-quic_mojha@quicinc.com/
+>>    [2] 
+>> https://lore.kernel.org/lkml/1678979666-551-1-git-send-email-quic_mojha@quicinc.com/
+>>   - Introduce new exported symbol on suggestion from 
+>> [srinivas.kandagatla]
+>>   - Use the symbol from drivers/pinctrl/qcom/pinctrl-msm.c.
+>>   - Addressed comment given by [dmitry.baryshkov]
+>>   - Converted non-standard Originally-by to Signed-off-by.
+>>
+>> Changes in v2: 
+>> https://lore.kernel.org/lkml/1677664555-30191-1-git-send-email-quic_mojha@quicinc.com/
+>>   - Addressed comment made by [bjorn]
+>>   - Added download mask.
+>>   - Passed download mode as parameter
+>>   - Accept human accepatable download mode string.
+>>   - enable = !!dload_mode
+>>   - Shifted module param callback to somewhere down in
+>>     the file so that it no longer need to know the
+>>     prototype of qcom_scm_set_download_mode()
+>>   - updated commit text.
+>>
+>>
+>> Mukesh Ojha (4):
+>>    firmware: qcom: scm: provide a read-modify-write function
+>>    firmware: qcom: scm: Modify only the download bits in TCSR register
+>>    firmware: qcom: scm: Rework dload mode availability check
+>>    pinctrl: qcom: Use qcom_scm_io_rmw() function
+>>
+>>   drivers/firmware/qcom/qcom_scm.c       | 50 
+>> ++++++++++++++++++++++++++++------
+>>   drivers/pinctrl/qcom/pinctrl-msm.c     | 10 +++----
+>>   include/linux/firmware/qcom/qcom_scm.h |  1 +
+>>   3 files changed, 47 insertions(+), 14 deletions(-)
+>>
 
