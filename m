@@ -1,53 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-4935-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4936-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56B67814974
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 14:39:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6788A81497E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 14:41:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7D7C21C23440
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 13:39:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D31A1C23C85
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 13:41:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C7752DB9D;
-	Fri, 15 Dec 2023 13:39:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2AECC2DF9D;
+	Fri, 15 Dec 2023 13:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="wFh8KTDa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BAbLq0a4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0230818C2F;
-	Fri, 15 Dec 2023 13:39:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=wtwSbmM7l1ab40jpBtWJLq9UlQFmWrKdHhgxv86nFSE=; b=wFh8KTDajmYxCZQ+++PVkwX39F
-	BAZJl6fIM/4Ff6l4Nlmxirf6s+mhZ1nETZCaQrz/KkUhhmcf0sMyrlR13ZbN7LWJoX5UD+TyrqYx0
-	u1Kf7VCqiDUKEdF3CYjSPy3ZIcmg08xaI+D/5saClC+cR8sCtpM3B2Amw3hU9TEwPGp4=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1rE8Pe-0031iW-Sy; Fri, 15 Dec 2023 14:39:34 +0100
-Date: Fri, 15 Dec 2023 14:39:34 +0100
-From: Andrew Lunn <andrew@lunn.ch>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0439C2DF97;
+	Fri, 15 Dec 2023 13:41:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B574C433C8;
+	Fri, 15 Dec 2023 13:41:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1702647704;
+	bh=ofCPvhE3rPFrA60eGlM3ABSTLtZ1mI9JLqdMqmvW9mY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=BAbLq0a4k8KxFFquNN34idVISj8/qphcRB/0zIg2gLy223GHS4OSCkrm2M0x/+q0x
+	 7b8r9THOzs0M6mzYX3LHbNsrL9TJn3+BxVqyCopjz6pe/nAgDh7aiPAWgoHfvHN3OE
+	 q6A3anYQ+c/1CytuIyuCOQVuDnxXK/Tegkc1PVAHXMsTsngIos6IIWdDgRNPoZ1ntE
+	 mDVje97TaV5JHyLx5oyh04CqXYGGWFz5WH1hPQsGg1UcwZSZdZNy5SbrwnPLiRfJKl
+	 UcCeyjO9BppBSPOgOmwex+qNQbSnGyeb61bvgINSCj1+EbNafYodkOBjrE7dIMiE7c
+	 Eem1jJWp4fRZg==
+Date: Fri, 15 Dec 2023 13:41:38 +0000
+From: Conor Dooley <conor@kernel.org>
 To: Jie Luo <quic_luoj@quicinc.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Conor Dooley <conor@kernel.org>, agross@kernel.org,
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, agross@kernel.org,
 	andersson@kernel.org, konrad.dybcio@linaro.org, davem@davemloft.net,
 	edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
 	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org, hkallweit1@gmail.com, linux@armlinux.org.uk,
-	robert.marko@sartura.hr, linux-arm-msm@vger.kernel.org,
-	netdev@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_srichara@quicinc.com
+	conor+dt@kernel.org, andrew@lunn.ch, hkallweit1@gmail.com,
+	linux@armlinux.org.uk, robert.marko@sartura.hr,
+	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_srichara@quicinc.com
 Subject: Re: [PATCH v2 5/5] dt-bindings: net: ipq4019-mdio: Document ipq5332
  platform
-Message-ID: <3d89a725-ce81-4d13-b5e3-75198c408f78@lunn.ch>
+Message-ID: <20231215-gauze-sprinkled-172729f22b6c@spud>
 References: <a1e5ffec-a20d-4389-83f9-ee09bd9d733d@linaro.org>
  <a84a36af-69f8-46af-967e-b06d028597a3@quicinc.com>
  <26c8b0b1-5ea9-45cc-adf3-0d0b03a1284d@linaro.org>
@@ -64,34 +63,113 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="TU1olG04/N/WRNt5"
 Content-Disposition: inline
 In-Reply-To: <f656d1c7-ea86-405a-9165-9eb079ea6f2a@quicinc.com>
 
+
+--TU1olG04/N/WRNt5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Dec 15, 2023 at 08:40:20PM +0800, Jie Luo wrote:
+>=20
+>=20
+> On 12/15/2023 8:19 PM, Krzysztof Kozlowski wrote:
+> > On 15/12/2023 12:42, Jie Luo wrote:
+> > > > > > > > > > Which clocks are these mentioned in the property? From =
+where do they come?
+> > > > > > > > > >=20
+> > > > > > > > > > Anyway, property is in existing form is not correct - t=
+his is not a
+> > > > > > > > > > generic property.
+> > > > > > > > > >=20
+> > > > > > > > >=20
+> > > > > > > > > This property cmn-reference-clock is just the hardware re=
+gister
+> > > > > > > > > configuration, since the different IPQ platform needs to =
+select
+> > > > > > > > > the different reference clock source for the CMN PLL bloc=
+k that
+> > > > > > > > > provides the various clock outputs to the all kinds of Et=
+hernet
+> > > > > > > > > devices, which is not from GCC provider.
+> > > > > > > >=20
+> > > > > > > > AGAIN: where do the clocks come from? Which device generate=
+s them?
+> > > > > > >=20
+> > > > > > > Oh, OK, the reference clock is from wifi that provides 48MHZ =
+to
+> > > > > > > Ethernet block.
+> > > > > >=20
+> > > > > > Then WiFi should be providing you the clock and this device sho=
+uld be
+> > > > > > clock consumer, right?
+> > > > >=20
+> > > > > Yes, wifi provides 48MHz clock to CMM PLL block, there is no GCC
+> > > > > for this 48MHZ clock output, it is the hardware PIN connection.
+> > > >=20
+> > > > All clocks are some hardware pin connections.
+> > > >=20
+> > > > Best regards,
+> > > > Krzysztof
+> > > >=20
+> > >=20
+> > > Yes, all reference clocks here are from hardware pin connection.
+> >=20
 > > You keep answering with short sentences without touching the root of the
 > > problem. I don't know exactly why, but I feel this discussion leads
 > > nowhere. After long discussion you finally admitted that clocks came
 > > from another device - Wifi. It took us like 6 emails?
-> > 
+> >=20
 > > So last statement: if you have clock provider and clock consumer, you
 > > must represent it in the bindings or provide rationale why it should not
 > > or must not be represented in the bindings. So far I do not see any of
 > > such arguments.
-> > 
+> >=20
 > > If you use arguments like:
 > > "My driver....": sorry, bindings are not about drivers
 > > "I don't have clock driver for WiFi": sorry, it does not matter if you
 > > can write one, right?
-> > 
+> >=20
 > > Please reach internally your colleagues to solve these problems and make
 > > review process smoother.
 
-Yes, i strongly agree with this. Its not our job as maintainers to
-educate big companies like Qualcomm how to write Linux drivers. There
-are more experienced driver writer within Qualcomm, you need to make
-contact with them, and get them to help you. Or you need to outsource
-the driver development to one of the companies which write mainline
-Linux drivers.
+> These reference clocks source do not need the hardware configuration,
+> that is the reason why the clock provider is not needed, some reference
+> clock source are even from external crystal.
 
-	Andrew
+I fail to understand how that makes this clock different to the clocks
+on any other platform. Clocks from external crystals are present in many
+many systems. See for example fixed-clock.yaml.
+
+> There is also no enable control for the reference clocks since it is
+> inputted by the hardware PIN connection, i will update these description
+> in the DT to make it more clear.
+
+Again, this does not justify having custom properties for this clock,
+as it is no different to other platforms. As far as I can tell, the only
+thing that a standard "clocks" property cannot convey here is the
+internal reference. I would suggest that since there is only one
+internal clock frequency, the absence of this particular clock in the
+"clocks" property can be used to determine that the reference is the
+internal one.
+
+Thanks,
+Conor.
+
+--TU1olG04/N/WRNt5
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZXxXjgAKCRB4tDGHoIJi
+0ktnAQDXBBwhZHLj4sCIUSdyx4+oOH09y7pvBGaGOqmUTOcvqAEAzJuNBZWAf+Y6
+Z4suZfbVe+CoDxDWfXUAiedmYQY7kgA=
+=tykB
+-----END PGP SIGNATURE-----
+
+--TU1olG04/N/WRNt5--
 
