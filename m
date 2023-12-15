@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-4888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4889-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E33B38143BF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 09:37:03 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC3B68143D3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 09:40:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 11C2D1C22743
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 08:37:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7439F284CC7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 08:40:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B062415AC2;
-	Fri, 15 Dec 2023 08:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EB9A14F6D;
+	Fri, 15 Dec 2023 08:39:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Leb/BHI7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WgfahVL3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB8712E72
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 08:36:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490571802E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 08:39:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-54cb4fa667bso446607a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 00:36:49 -0800 (PST)
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-50bf3efe2cbso381419e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 00:39:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702629408; x=1703234208; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1702629595; x=1703234395; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=hYJTQeGviqxV0+wlbBbT+zL/h3oRcie5GyoUe3f4G08=;
-        b=Leb/BHI7VAeNSyVIyNrHG1HJfQ3nszVTHIPTcovUE25Il8fGLiJFAjGbnytOzpMvZH
-         INz3jvBB17MSTvOqtfAI2bmvDxjQoBpoY1R02JhgCRf1YdKd8GE3+9rAX11HbTc5GiBW
-         VbfiyfD+3TRQ/FwpmoX0cQJvtbjN38S8XSBh+iTEXoNKUr99d5l/O3FzKg6HHlq3nA0d
-         GHMOaKcQbHUP1QDvZV7Pm/dRSgopJ2I+yZJ0o79CTBnzoxbW2/TlPUVFSUdF92FoAia2
-         1CjZqQ+53MTLgIaUBlwYcaKfFJ0vNa0Bsp/54P7SCtUsc8/1i9689TzJKeFIzQOVPXIT
-         OXsA==
+        bh=UD+PsiouIGjnHw+qN+1OZcdDEWTILWyx3Ef0CxvyJaI=;
+        b=WgfahVL3vMJo0OaWKtdtD5du/e21olnLq2L+wwaD3Bu2f689B3hiIKSPodX9kAxJEp
+         EzqG5WWXT64RcenDgV3nhAPwb+gsDUJXiXEm3cCx3ZOYytdKhHETBKUsyuUw6N0s7GtF
+         FfnRf2X2g01cyF3H7Y0loEoiwcbgNuQ7yD183XryYUJOT/PHpjSZ82vq/ZbvkyAXYK28
+         0tjsmtI4KWJD3M/+VO7s1CAzG/O+q7y4ou/0ATWZgU9FB3rEzy2aUZydN+IX/FLRhj2A
+         zdfvq+6/7HNj9rbwIBf1eetufWuS/2KxJ7Y1HT8PHdGlyAws4JLNudMYg86JwUwYQ9Wy
+         j8Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702629408; x=1703234208;
+        d=1e100.net; s=20230601; t=1702629595; x=1703234395;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hYJTQeGviqxV0+wlbBbT+zL/h3oRcie5GyoUe3f4G08=;
-        b=dPp7r16ms8ILzFCzurUc0/3BJZQcWGjZ7eKMHFFMNUa3iKdvCUsdiKRZ4QyJuhbl24
-         uZFuJkpa1/MOQIbRnHfnfd52Cg2zb9ZyLhmlCB6uPGhKhYnryJijk8MaDV3Ikp5kN8te
-         76iqdxUIwaT8HvAe6IikBSTd6rgjyIGDUXxB2EuN3TqeszUwJtnqwvHUC08SS8qGCsEP
-         v0QRwgB09mbcASITnCL7XESBcVAyCAbn4QtzPCI8RDr9JMVespBBmqD3edN3SMHAHeuI
-         DrCfoiwF1X/IfKW1jVMoC5AGOE0KJq1zv/yzKkp/RO6f/BEZsI8OrvFP2bDsnW40oQZl
-         etHw==
-X-Gm-Message-State: AOJu0Yxi7gmEUqi55snZbYQdDVfggBTrQLZHl5A438Fc116OBas9rMGa
-	tzMOfIOm2VcLBPT/c1BMRq8Seg==
-X-Google-Smtp-Source: AGHT+IHcYAuFRklHIOXfO0mKpZIahGq1+K0wHuz4DnBlDmcJXYp4ADbUUkmYVUtrbHX97M0/67RBJg==
-X-Received: by 2002:a17:906:c7cf:b0:a00:772c:c879 with SMTP id dc15-20020a170906c7cf00b00a00772cc879mr5730276ejb.38.1702629408215;
-        Fri, 15 Dec 2023 00:36:48 -0800 (PST)
+        bh=UD+PsiouIGjnHw+qN+1OZcdDEWTILWyx3Ef0CxvyJaI=;
+        b=JM4nk58sgQeOchWrL3sn3/cbRchQ++SEzPdxf5NAEdDAOIgAKxFi8KxD9ctyyL5Vl+
+         B6XLjoPLelHep/GwEqt8shubiJ4a5EMxA8vAof8fCalI4v98Achn1lDl0xpAzo2TlDWt
+         HgIM58saSCLLI1sFjnyu4HASuJmBx9ysPjzywwsxof2qn4taZQIi+XvuG1wMazg5Ewjk
+         WIWoC4dSx6vOad3vGOp/0ASy/NB/OCOVmTGWvuRoqKdUhzCqnuIoT6jwMx2HKw+VF4zv
+         gswh8TMGmXxq+LinmzqYPHy9I0cN/udqJTyiCD1lzAokvHY4bTXj3XcUpldhaYNtq3Hh
+         4xcA==
+X-Gm-Message-State: AOJu0Yzd5dR+3BbqAadcaAAnCFlX/aeKdQ4BAZvWTBXiq2oOF1267X2Z
+	hca6qXSTZMvE5WerMzKWzD+PbA==
+X-Google-Smtp-Source: AGHT+IGZN9eh1H7VUq+iWRymK7eL4uSs3y4FVHoORS2jf2PpsmkKm2hg5g96DD1Dqyp4BOJRJ1gjiA==
+X-Received: by 2002:a05:6512:ac3:b0:50b:fe80:7858 with SMTP id n3-20020a0565120ac300b0050bfe807858mr3410200lfu.148.1702629595350;
+        Fri, 15 Dec 2023 00:39:55 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id mb8-20020a170906eb0800b00a1de512fa1fsm10401976ejb.186.2023.12.15.00.36.45
+        by smtp.gmail.com with ESMTPSA id vk5-20020a170907cbc500b00a1ce56f7b16sm10520851ejc.71.2023.12.15.00.39.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Dec 2023 00:36:47 -0800 (PST)
-Message-ID: <0f39e9b9-63f9-4267-a5f7-94bca9626964@linaro.org>
-Date: Fri, 15 Dec 2023 09:36:45 +0100
+        Fri, 15 Dec 2023 00:39:54 -0800 (PST)
+Message-ID: <b89abf8c-57f8-46a6-a071-b1591340fbdf@linaro.org>
+Date: Fri, 15 Dec 2023 09:39:52 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,21 +66,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/10] arm64: dts: qcom: ipq5332: Add PCIe related nodes
+Subject: Re: [PATCH v3 5/5] dt-bindings: net: ipq4019-mdio: Document ipq5332
+ platform
 Content-Language: en-US
-To: Praveenkumar I <quic_ipkumar@quicinc.com>, agross@kernel.org,
- andersson@kernel.org, konrad.dybcio@linaro.org, mturquette@baylibre.com,
- sboyd@kernel.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
- conor+dt@kernel.org, bhelgaas@google.com, lpieralisi@kernel.org,
- kw@linux.com, vkoul@kernel.org, kishon@kernel.org, mani@kernel.org,
- quic_nsekar@quicinc.com, quic_srichara@quicinc.com,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+To: Jie Luo <quic_luoj@quicinc.com>, agross@kernel.org, andersson@kernel.org,
+ konrad.dybcio@linaro.org, davem@davemloft.net, edumazet@google.com,
+ kuba@kernel.org, pabeni@redhat.com, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, andrew@lunn.ch,
+ hkallweit1@gmail.com, linux@armlinux.org.uk, robert.marko@sartura.hr
+Cc: linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pci@vger.kernel.org, linux-phy@lists.infradead.org
-Cc: quic_varada@quicinc.com, quic_devipriy@quicinc.com,
- quic_kathirav@quicinc.com, quic_anusha@quicinc.com
-References: <20231214062847.2215542-1-quic_ipkumar@quicinc.com>
- <20231214062847.2215542-10-quic_ipkumar@quicinc.com>
+ quic_srichara@quicinc.com
+References: <20231214090304.16884-1-quic_luoj@quicinc.com>
+ <20231214090304.16884-6-quic_luoj@quicinc.com>
+ <1e4c55c8-8ed6-4f2e-8328-8a173f09b62f@linaro.org>
+ <3c8e33b4-6ebc-476f-a00f-15cc8a1ad9e4@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -126,29 +126,115 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231214062847.2215542-10-quic_ipkumar@quicinc.com>
+In-Reply-To: <3c8e33b4-6ebc-476f-a00f-15cc8a1ad9e4@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 14/12/2023 07:28, Praveenkumar I wrote:
-> Add phy and controller nodes for pcie0_x1 and pcie1_x2.
+On 15/12/2023 09:28, Jie Luo wrote:
 > 
-> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/ipq5332.dtsi | 189 +++++++++++++++++++++++++-
->  1 file changed, 187 insertions(+), 2 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> index f0d92effb783..367641ab4938 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> @@ -166,6 +166,58 @@ usbphy0: phy@7b000 {
->  			status = "disabled";
->  		};
->  
-> +		pcie0_phy: phy@4b0000{
+> On 12/15/2023 3:27 PM, Krzysztof Kozlowski wrote:
+>> On 14/12/2023 10:03, Luo Jie wrote:
+>>> Update the yaml file for the new DTS properties.
+>>>
+>>> 1. cmn-reference-clock for the CMN PLL source clock select.
+>>> 2. clock-frequency for MDIO clock frequency config.
+>>> 3. add uniphy AHB & SYS GCC clocks.
+>>> 4. add reset-gpios for MDIO bus level reset.
+>>>
+>>> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+>>> ---
+>>>   .../bindings/net/qcom,ipq4019-mdio.yaml       | 143 +++++++++++++++++-
+>>>   1 file changed, 139 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml b/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
+>>> index 3407e909e8a7..79f8513739e7 100644
+>>> --- a/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
+>>> +++ b/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
+>>> @@ -20,6 +20,8 @@ properties:
+>>>             - enum:
+>>>                 - qcom,ipq6018-mdio
+>>>                 - qcom,ipq8074-mdio
+>>> +              - qcom,ipq9574-mdio
+>>> +              - qcom,ipq5332-mdio
 
-Nodes look like put in random place.
+Why do you add entries to the end of the list? In reversed order?
+
+>>>             - const: qcom,ipq4019-mdio
+>>>   
+>>>     "#address-cells":
+>>> @@ -30,19 +32,77 @@ properties:
+>>>   
+>>>     reg:
+>>>       minItems: 1
+>>> -    maxItems: 2
+>>> +    maxItems: 5
+>>>       description:
+>>> -      the first Address and length of the register set for the MDIO controller.
+>>> -      the second Address and length of the register for ethernet LDO, this second
+>>> -      address range is only required by the platform IPQ50xx.
+>>> +      the first Address and length of the register set for the MDIO controller,
+>>> +      the optional second, third and fourth address and length of the register
+>>> +      for ethernet LDO, these three address range are required by the platform
+>>> +      IPQ50xx/IPQ5332, the last address and length is for the CMN clock to
+>>> +      select the reference clock.
+>>> +
+>>> +  reg-names:
+>>> +    minItems: 1
+>>> +    maxItems: 5
+>>>   
+>>>     clocks:
+>>> +    minItems: 1
+>>>       items:
+>>>         - description: MDIO clock source frequency fixed to 100MHZ
+>>> +      - description: UNIPHY0 AHB clock source frequency fixed to 100MHZ
+>>> +      - description: UNIPHY1 AHB clock source frequency fixed to 100MHZ
+>>> +      - description: UNIPHY0 SYS clock source frequency fixed to 24MHZ
+>>> +      - description: UNIPHY1 SYS clock source frequency fixed to 24MHZ
+>>>   
+>>>     clock-names:
+>>> +    minItems: 1
+>>>       items:
+>>>         - const: gcc_mdio_ahb_clk
+>>> +      - const: uniphy0_ahb
+>>> +      - const: uniphy1_ahb
+>>> +      - const: uniphy0_sys
+>>> +      - const: uniphy1_sys
+>>> +
+>>> +  cmn-reference-clock:
+>>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>>
+>> Nothing improved here
+> 
+> With this change, the warning is not reported when i run
+> dt_binding_check, looks the new added property needs
+> the type ref to avoid the warning reported.
+
+Nothing improved in the property name, nor its style, nor in the actual
+contents/values.
+
+...
+
+>>> +  reset-gpios:
+>>> +    maxItems: 1
+>>> +
+>>> +  reset-assert-us:
+>>> +    maxItems: 1
+>>
+>> This does not look related to ipq5332.
+> 
+> The reset gpio properties are needed on ipq5332, since qca8084 phy is
+> connected, which uses the MDIO bus level gpio reset.
+
+I am talking about this property, not these properties.
+
+> 
+> Without declaring these gpio properties, the warning will be reported
+> by dt_binding_check.
+
+How is it even possible to have warnings if there is no such node in
+DTS? We do not care about warnings in your downstream code.
+
 
 Best regards,
 Krzysztof
