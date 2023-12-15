@@ -1,313 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-5011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD92581548D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 00:32:20 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id AAF52815496
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 00:36:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 78EC1282AF0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 23:32:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C0BCC1C23FB1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 23:36:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A57318ED6;
-	Fri, 15 Dec 2023 23:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B273E18ED8;
+	Fri, 15 Dec 2023 23:35:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="gwz+pYhN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N44rzKSk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-89-177-23-149.bb.vodafone.cz [89.177.23.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4685048CD9;
-	Fri, 15 Dec 2023 23:32:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [10.0.0.200] (unknown [10.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 3FF25162D3F;
-	Sat, 16 Dec 2023 00:32:11 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1702683131;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=ElzvIEehOe2/hH4JuDtY9mqYy+h20zjv7jvoQyP7RQU=;
-	b=gwz+pYhNktEttX2XjSBSMTTCBsrqsRpYhSajNabzebjQRn3h7XM3Q4ukBvL+RvgZKp7moZ
-	DhVuhUmk/nlzv2iuBsDg9Jm/X3FsXVsMSv/IJDCAUHZMYrbx3uSTAxJTj0u9nXfJXCLpy/
-	fJMZ8QAGzD6TILV1UHZ7uv5jNm+CRSM=
-Message-ID: <7416d373-15c0-44d6-9008-d5d093ba8752@ixit.cz>
-Date: Sat, 16 Dec 2023 00:32:11 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2B045C0E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 23:35:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2ca0715f0faso15479331fa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 15:35:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702683355; x=1703288155; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=YBG7vJ0wQQ9pJwBsGA7yTbbvPq6lJZZywu38DBk+C5o=;
+        b=N44rzKSk2/Py3oKQwqvnOLRhZpn5jEhsnLjpGHPYy26AGIvMnV/jU3g/ISBADfYsav
+         wYwj+lUTCUxheqGkX2y8DxvZhyOLvJfRUGmHQ89doQhQWetJ5by5bFcOYWgmB/X9oCkb
+         KgoGMK22JLb5jUAoAnoYp7l2IRm+sBWbN09dOgVkTuaNtbuPWVVNMnbQ1PEuKbI39zUp
+         axv4waudgtaWQUuROT8HUISfqBSK/Sfb4PzpJ1fXZLtbhCArRJenhU4fmT1IMtWvxCPL
+         zbZGmFMTgm0b1wyvh0oB8LIRabYysCg9+7B84KkQtBnKyCwLXTcKwZE8wwhuWJ1Dq0b+
+         vf8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702683355; x=1703288155;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YBG7vJ0wQQ9pJwBsGA7yTbbvPq6lJZZywu38DBk+C5o=;
+        b=J4/RzcwfWtZs9GrhKvQvVqDg62NzIA9wRkdZ1j9dtoiFgStEiTA4xeJcR7xnVhNLZS
+         jR7SxZzXbhdqfV4TnOrKvZvooXVQBMf3O4/87Rq4Jq7ApwdZk/2nQCc+Hd/UCltTJUwb
+         t4J7BaiWLiT0FD7Tcfw+KWXcIv/ncwCFqZOvyJvaPuxlanAQemFwZkkiVc9iLQYo1ShK
+         zuLjfZuRiHGNrQAew96OjrfZLp1hxRbnaT4ieBY7gy1WQT5xrxMbcMAzQtNGfJF/GvA0
+         SMqvSb1ytNz7jXU2JPmvbYJQhHBiNyPVjqtR8aToslDyi0KFdraYWoBwB32d7aZZiPLP
+         ttww==
+X-Gm-Message-State: AOJu0YyKLKzWMY/PABhegEmTDy7ujfI5f0ntK5yfFaCzCQWp2+ek76C2
+	RXQQkTGBRx/Lpj9Ii0dffeSZGQ==
+X-Google-Smtp-Source: AGHT+IHjPSx49Ek10kxZQdEL4+jDoPGZhx6kHsjSpzOCqfBvuol4kaHrFaMXnjTktyfv2xXNNmlTXg==
+X-Received: by 2002:a05:651c:b10:b0:2cc:4b4a:50 with SMTP id b16-20020a05651c0b1000b002cc4b4a0050mr1099892ljr.84.1702683355138;
+        Fri, 15 Dec 2023 15:35:55 -0800 (PST)
+Received: from [192.168.199.59] (178235179137.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.137])
+        by smtp.gmail.com with ESMTPSA id ez1-20020a056402450100b00551ca461bd7sm3725606edb.48.2023.12.15.15.35.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Dec 2023 15:35:54 -0800 (PST)
+Message-ID: <e4329952-34ac-4458-a63c-1f64e288614c@linaro.org>
+Date: Sat, 16 Dec 2023 00:35:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH v3] dt-bindings: iommu: Convert msm,iommu-v0 to yaml
-To: Rob Herring <robh@kernel.org>
-Cc: Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson
- <bjorn.andersson@linaro.org>, ~okias/devicetree@lists.sr.ht,
- iommu@lists.linux-foundation.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20220108184143.69479-1-david@ixit.cz>
- <Yd44NhcBWh1c4vuV@robh.at.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/5] iommu/arm-smmu: add ACTLR data and support for
+ SM8550
 Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <Yd44NhcBWh1c4vuV@robh.at.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>, will@kernel.org,
+ robin.murphy@arm.com, joro@8bytes.org, dmitry.baryshkov@linaro.org,
+ jsnitsel@redhat.com, quic_bjorande@quicinc.com, mani@kernel.org,
+ quic_eberman@quicinc.com, robdclark@chromium.org,
+ u.kleine-koenig@pengutronix.de, robh@kernel.org, vladimir.oltean@nxp.com,
+ quic_pkondeti@quicinc.com, quic_molvera@quicinc.com,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
+ qipl.kernel.upstream@quicinc.com
+References: <20231215101827.30549-1-quic_bibekkum@quicinc.com>
+ <20231215101827.30549-4-quic_bibekkum@quicinc.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20231215101827.30549-4-quic_bibekkum@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Thank you, sent V4.
-David
+On 15.12.2023 11:18, Bibek Kumar Patro wrote:
+> Add ACTLR data table for SM8550 along with support for
+> same including SM8550 specific implementation operations.
+> 
+> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+> ---
+[...]
 
-On 12/01/2022 03:08, Rob Herring wrote:
-> On Sat, Jan 08, 2022 at 07:41:42PM +0100, David Heidelberg wrote:
->> Convert Qualcomm IOMMU v0 implementation to yaml format.
->>
->> Signed-off-by: David Heidelberg <david@ixit.cz>
->> ---
->> v2:
->>   - fix wrong path in binding $id
->>   - comment qcom,mdp4 node example (we don't want to validate it yet)
->>
->> v3:
->>   - I kept the name as -v0, since we have other binding -v1 and it look
->>     good, I can change thou in v4 if requested.
-> The preference is to use compatible strings for filenames. There's
-> little reason not to do that here.
->
->>   - dropped non-existent smmu_clk part (and adjusted example, which was
->>     using it)
->>   - dropped iommu description
->>   - moved iommu-cells description to the property #iommu-cells
->> Signed-off-by: David Heidelberg <david@ixit.cz>
->> ---
->>   .../bindings/iommu/msm,iommu-v0.txt           | 64 -------------
->>   .../bindings/iommu/qcom,iommu-v0.yaml         | 91 +++++++++++++++++++
->>   2 files changed, 91 insertions(+), 64 deletions(-)
->>   delete mode 100644 Documentation/devicetree/bindings/iommu/msm,iommu-v0.txt
->>   create mode 100644 Documentation/devicetree/bindings/iommu/qcom,iommu-v0.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/iommu/msm,iommu-v0.txt b/Documentation/devicetree/bindings/iommu/msm,iommu-v0.txt
->> deleted file mode 100644
->> index 20236385f26e..000000000000
->> --- a/Documentation/devicetree/bindings/iommu/msm,iommu-v0.txt
->> +++ /dev/null
->> @@ -1,64 +0,0 @@
->> -* QCOM IOMMU
->> -
->> -The MSM IOMMU is an implementation compatible with the ARM VMSA short
->> -descriptor page tables. It provides address translation for bus masters outside
->> -of the CPU, each connected to the IOMMU through a port called micro-TLB.
->> -
->> -Required Properties:
->> -
->> -  - compatible: Must contain "qcom,apq8064-iommu".
->> -  - reg: Base address and size of the IOMMU registers.
->> -  - interrupts: Specifiers for the MMU fault interrupts. For instances that
->> -    support secure mode two interrupts must be specified, for non-secure and
->> -    secure mode, in that order. For instances that don't support secure mode a
->> -    single interrupt must be specified.
->> -  - #iommu-cells: The number of cells needed to specify the stream id. This
->> -		  is always 1.
->> -  - qcom,ncb:	  The total number of context banks in the IOMMU.
->> -  - clocks	: List of clocks to be used during SMMU register access. See
->> -		  Documentation/devicetree/bindings/clock/clock-bindings.txt
->> -		  for information about the format. For each clock specified
->> -		  here, there must be a corresponding entry in clock-names
->> -		  (see below).
->> -
->> -  - clock-names	: List of clock names corresponding to the clocks specified in
->> -		  the "clocks" property (above).
->> -		  Should be "smmu_pclk" for specifying the interface clock
->> -		  required for iommu's register accesses.
->> -		  Should be "smmu_clk" for specifying the functional clock
->> -		  required by iommu for bus accesses.
->> -
->> -Each bus master connected to an IOMMU must reference the IOMMU in its device
->> -node with the following property:
->> -
->> -  - iommus: A reference to the IOMMU in multiple cells. The first cell is a
->> -	    phandle to the IOMMU and the second cell is the stream id.
->> -	    A single master device can be connected to more than one iommu
->> -	    and multiple contexts in each of the iommu. So multiple entries
->> -	    are required to list all the iommus and the stream ids that the
->> -	    master is connected to.
->> -
->> -Example: mdp iommu and its bus master
->> -
->> -                mdp_port0: iommu@7500000 {
->> -			compatible = "qcom,apq8064-iommu";
->> -			#iommu-cells = <1>;
->> -			clock-names =
->> -			    "smmu_pclk",
->> -			    "smmu_clk";
->> -			clocks =
->> -			    <&mmcc SMMU_AHB_CLK>,
->> -			    <&mmcc MDP_AXI_CLK>;
->> -			reg = <0x07500000 0x100000>;
->> -			interrupts =
->> -			    <GIC_SPI 63 0>,
->> -			    <GIC_SPI 64 0>;
->> -			qcom,ncb = <2>;
->> -		};
->> -
->> -		mdp: qcom,mdp@5100000 {
->> -			compatible = "qcom,mdp";
->> -			...
->> -			iommus = <&mdp_port0 0
->> -				  &mdp_port0 2>;
->> -		};
->> diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu-v0.yaml b/Documentation/devicetree/bindings/iommu/qcom,iommu-v0.yaml
->> new file mode 100644
->> index 000000000000..a506e8ad8902
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/iommu/qcom,iommu-v0.yaml
->> @@ -0,0 +1,91 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +
->> +$id: "http://devicetree.org/schemas/iommu/qcom,iommu-v0.yaml#"
->> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
->> +
->> +title: Qualcomm IOMMU for APQ8064
->> +
->> +maintainers:
->> +  - Will Deacon <will@kernel.org>
->> +
->> +description: >
->> +  The MSM IOMMU is an implementation compatible with the ARM VMSA short
->> +  descriptor page tables. It provides address translation for bus masters
->> +  outside of the CPU, each connected to the IOMMU through a port called micro-TLB.
->> +
->> +properties:
->> +  compatible:
->> +    const: qcom,apq8064-iommu
->> +
->> +  clocks:
->> +    items:
->> +      - description: interface clock for register accesses
->> +      - description: functional clock for bus accesses
->> +
->> +  clock-names:
->> +    items:
->> +      - const: smmu_pclk
->> +      - const: iommu_clk
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  interrupts:
->> +    description: Specifiers for the MMU fault interrupts.
->> +    minItems: 1
->> +    items:
->> +      - description: non-secure mode interrupt
->> +      - description: secure mode interrupt (for instances which supports it)
->> +
->> +  "#iommu-cells":
->> +    const: 1
->> +    description: |
->> +      The first cell is a phandle to the IOMMU and
->> +      the second cell is the stream id.
->> +      A single master device can be connected to more than one iommu
->> +      and multiple contexts in each of the iommu.
->> +      So multiple entries are required to list all the iommus and
->> +      the stream ids that the master is connected to.
->> +
->> +  qcom,ncb:
->> +    $ref: /schemas/types.yaml#/definitions/uint32
->> +    description: The total number of context banks in the IOMMU.
->> +
->> +required:
->> +  - clocks
->> +  - clock-names
->> +  - reg
->> +  - interrupts
->> +  - qcom,ncb
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/clock/qcom,mmcc-msm8960.h>
->> +
->> +    mdp_port0: iommu@7500000 {
->> +            compatible = "qcom,apq8064-iommu";
->> +            #iommu-cells = <1>;
->> +            clock-names =
->> +                "smmu_pclk",
->> +                "iommu_clk";
->> +            clocks =
->> +                <&clk SMMU_AHB_CLK>,
->> +                <&clk MDP_AXI_CLK>;
->> +            reg = <0x07500000 0x100000>;
->> +            interrupts =
->> +                <0 63 0>,
->> +                <0 64 0>;
->> +            qcom,ncb = <2>;
->> +    };
->> +
->> +    /* mdp: mdp@5100000 {
->> +            compatible = "qcom,mdp4";
->> +            ...
->> +
->> +            iommus = <&mdp_port0 0
->> +                      &mdp_port0 2>;
->> +    };*/
->> -- 
->> 2.34.1
->>
->>
--- 
-David Heidelberg
+> +static const struct qcom_smmu_match_data sm8550_smmu_500_impl0_data = {
+> +	.impl = &qcom_smmu_500_impl,
+> +	.adreno_impl = &qcom_adreno_smmu_500_impl,
+> +	.cfg = &qcom_smmu_impl0_cfg,
+> +	.actlrcfg = sm8550_apps_actlr_cfg,
+> +	.actlrcfg_gfx = sm8550_gfx_actlr_cfg,
+There are platforms that feature more than just APPS and Adreno SMMUs,
+this implementation seems to assume there's only these two :/
 
+I suppose the only way to solve this would be to introduce new compatibles
+for each one of them.. Krzysztof, do you think that's reasonable? E.g.
+MSM8996 has at least 5 instances, 8998 has at least 4 etc.
+
+Konrad
 
