@@ -1,143 +1,243 @@
-Return-Path: <linux-arm-msm+bounces-4893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B36DE8144D5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 10:47:23 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A7708144D8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 10:50:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 697BE1F2366B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 09:47:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BD75C1C226A2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 09:50:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D8C9182C3;
-	Fri, 15 Dec 2023 09:47:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9E55182CC;
+	Fri, 15 Dec 2023 09:50:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lNPKVf7v"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RgWfEKNt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021021A27A;
-	Fri, 15 Dec 2023 09:47:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 685EEC433C8;
-	Fri, 15 Dec 2023 09:47:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702633637;
-	bh=UplJWH4Q/tqUK9lL0NeQ0i3KjWIEOgUf4v3sM9Fc79Q=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=lNPKVf7v2cnu27ZcpyO4bQM6FKX7jw9BMpAZorhmoXzAaSEXvTqMjXysELQs4tKGF
-	 EVEjrNJ2bcHxLNK9PhBPSXHDVD2AcxVLgajBlj5LJsnLJ03/e/jDdLqn/T8bJKDUQ6
-	 ByaPiISZPWI1fz0I2L9mkPxfD6shTR4mO4Y6qnJP/CRosOBUrD1463aynQ6Wg2P4Sz
-	 iZRmLWULYk9YGyYgzdPbzVwf3fQOSG90KwcHPdGdkJTN1YCpu/UULJFnq6QsQ4XulZ
-	 pXoOMIqrr7ZkTBpxLPpfc1FS3n76My/oyuk4EKSZm1nm3fE++7CCSaT6vhcJuoca7A
-	 xP6fZKPQdIvLQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4744EC4167B;
-	Fri, 15 Dec 2023 09:47:17 +0000 (UTC)
-From: Hui Liu via B4 Relay <devnull+quic_huliu.quicinc.com@kernel.org>
-Date: Fri, 15 Dec 2023 17:33:32 +0800
-Subject: [PATCH v3] arm64: dts: qcom: qcs6490-idp: Add definition for three
- LEDs.
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2753D182CA;
+	Fri, 15 Dec 2023 09:50:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BF5VRwn002763;
+	Fri, 15 Dec 2023 09:49:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=gfyAeUwdG3kWmiG3zDIkkFIHvBG2DgV0KYTjf8nFcfI=; b=Rg
+	WfEKNtiyGOEfZnSZOI4vMjBbQe69Uoq+PGUvLdqUcAN8hbhoMsiGuDQc1fSTZvLr
+	Hp82GVaCS3w8dE7NGXsaEwIA5df96BWCjwZPhbMWfb5r9Umsf9MbfrB8a56HJfbL
+	Qoo/0PCGwMuZ2XprvfSrxqW9nZtGm9rSBYEBK6pTRjmNkXR0kgbKhL8SxMIFK6dL
+	ZooBIGxCVvoAQeYWwCsZPKGJoNVAfOTLpO4UekVYecnlayawuSzboBVJDLWBcMAJ
+	GAT+Wej7/5Wiws4mczbs4S0SKYOEirHdupBLdJQ4I3iCf8ADiK2PVrj9GoCC8t2L
+	KR3CMZh9iVJaX8YKMqTw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v0a37hren-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 15 Dec 2023 09:49:43 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BF9ng6q009472
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 15 Dec 2023 09:49:42 GMT
+Received: from [10.253.13.71] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 15 Dec
+ 2023 01:49:36 -0800
+Message-ID: <a84a36af-69f8-46af-967e-b06d028597a3@quicinc.com>
+Date: Fri, 15 Dec 2023 17:49:33 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/5] dt-bindings: net: ipq4019-mdio: Document ipq5332
+ platform
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Conor Dooley
+	<conor@kernel.org>
+CC: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <andrew@lunn.ch>, <hkallweit1@gmail.com>, <linux@armlinux.org.uk>,
+        <robert.marko@sartura.hr>, <linux-arm-msm@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_srichara@quicinc.com>
+References: <20231212115151.20016-1-quic_luoj@quicinc.com>
+ <20231212115151.20016-6-quic_luoj@quicinc.com>
+ <20231212-caution-improvise-ed3cc6a1d305@spud>
+ <11ffc985-3f2b-46b9-ae0b-911f7abe98d1@quicinc.com>
+ <20231214-outshine-shush-8a11c68607cd@spud>
+ <c5123ce7-6fdc-43c7-ac07-251c39196e66@quicinc.com>
+ <a1e5ffec-a20d-4389-83f9-ee09bd9d733d@linaro.org>
+From: Jie Luo <quic_luoj@quicinc.com>
+In-Reply-To: <a1e5ffec-a20d-4389-83f9-ee09bd9d733d@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231215-lpg-v3-1-4e2db0c6df5f@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAHAdfGUC/0XMQQ6CMBCF4auQWTuGaUGNK+9hjBnaASYBCq0SE
- 8Ldbdy4/JL/vQ2SRJUE12KDKKsmDVOGPRTgep46QfXZYEpjyVCNw9xhxey9PVcXIoZczlFa/fx
- e7o/sNoYRX30U/m+JSlxcGJ+D+ISrQULr2FPbNO5U8215q9PJHXMC+/4FmQQtqJgAAAA=
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Hui Liu <quic_huliu@quicinc.com>
-X-Mailer: b4 0.13-dev-83828
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1702633636; l=1646;
- i=quic_huliu@quicinc.com; s=20230823; h=from:subject:message-id;
- bh=jkgKPcTHB0LvObnOdM+JMFH2yGRqbzzTL1fwXf6UZho=;
- b=8cRQyf8GFCz6G7Lm8RUia1YB/uRkxLY/eTLY+R57RE12nYTwiZcxIu40k7vqcqHeR5rBPK33r
- b4+KOeOABaKCoioDKb2XNu2GP83ffvmeGQobZ0KgCb0vzcXQ2u/SMUz
-X-Developer-Key: i=quic_huliu@quicinc.com; a=ed25519;
- pk=1z+A50UnTuKe/FdQv2c0W3ajDsJOYddwIHo2iivhTTA=
-X-Endpoint-Received:
- by B4 Relay for quic_huliu@quicinc.com/20230823 with auth_id=80
-X-Original-From: Hui Liu <quic_huliu@quicinc.com>
-Reply-To: <quic_huliu@quicinc.com>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: OT9xVU3sVdR7qO0SnfVKInj3WAR011_h
+X-Proofpoint-ORIG-GUID: OT9xVU3sVdR7qO0SnfVKInj3WAR011_h
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
+ malwarescore=0 clxscore=1015 bulkscore=0 adultscore=0 mlxlogscore=999
+ spamscore=0 phishscore=0 impostorscore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312150066
 
-From: Hui Liu <quic_huliu@quicinc.com>
 
-Add definition for three LEDs to make sure they can
-be enabled base on QCOM LPG LED driver.
 
-Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
----
-Changes in v3:
-- Rephrased commit text and updated the nodes to qcm6490-idp board file.
-- Link to v2: https://lore.kernel.org/all/20231110-qcom_leds-v2-1-3cad1fbbc65a@quicinc.com/
+On 12/15/2023 3:29 PM, Krzysztof Kozlowski wrote:
+> On 15/12/2023 07:46, Jie Luo wrote:
+>>
+>>
+>> On 12/15/2023 1:12 AM, Conor Dooley wrote:
+>>> On Wed, Dec 13, 2023 at 04:26:56PM +0800, Jie Luo wrote:
+>>>>
+>>>>
+>>>> On 12/13/2023 12:06 AM, Conor Dooley wrote:
+>>>>> On Tue, Dec 12, 2023 at 07:51:50PM +0800, Luo Jie wrote:
+>>>>>> Update the yaml file for the new DTS properties.
+>>>>>>
+>>>>>> 1. cmn-reference-clock for the CMN PLL source clock select.
+>>>>>> 2. clock-frequency for MDIO clock frequency config.
+>>>>>> 3. add uniphy AHB & SYS GCC clocks.
+>>>>>> 4. add reset-gpios for MDIO bus level reset.
+>>>>>>
+>>>>>> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+>>>>>> ---
+>>>>>>     .../bindings/net/qcom,ipq4019-mdio.yaml       | 157 +++++++++++++++++-
+>>>>>>     1 file changed, 153 insertions(+), 4 deletions(-)
+>>>>>>
+>>>>>> diff --git a/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml b/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
+>>>>>> index 3407e909e8a7..9546a6ad7841 100644
+>>>>>> --- a/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
+>>>>>> +++ b/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
+>>>>>> @@ -20,6 +20,8 @@ properties:
+>>>>>>               - enum:
+>>>>>>                   - qcom,ipq6018-mdio
+>>>>>>                   - qcom,ipq8074-mdio
+>>>>>> +              - qcom,ipq9574-mdio
+>>>>>> +              - qcom,ipq5332-mdio
+>>>>>>               - const: qcom,ipq4019-mdio
+>>>>>>       "#address-cells":
+>>>>>> @@ -30,19 +32,71 @@ properties:
+>>>>>>       reg:
+>>>>>>         minItems: 1
+>>>>>> -    maxItems: 2
+>>>>>> +    maxItems: 5
+>>>>>>         description:
+>>>>>> -      the first Address and length of the register set for the MDIO controller.
+>>>>>> -      the second Address and length of the register for ethernet LDO, this second
+>>>>>> -      address range is only required by the platform IPQ50xx.
+>>>>>> +      the first Address and length of the register set for the MDIO controller,
+>>>>>> +      the optional second, third and fourth address and length of the register
+>>>>>> +      for ethernet LDO, these three address range are required by the platform
+>>>>>> +      IPQ50xx/IPQ5332/IPQ9574, the last address and length is for the CMN clock
+>>>>>> +      to select the reference clock.
+>>>>>> +
+>>>>>> +  reg-names:
+>>>>>> +    minItems: 1
+>>>>>> +    maxItems: 5
+>>>>>>       clocks:
+>>>>>> +    minItems: 1
+>>>>>>         items:
+>>>>>>           - description: MDIO clock source frequency fixed to 100MHZ
+>>>>>> +      - description: UNIPHY0 AHB clock source frequency fixed to 100MHZ
+>>>>>> +      - description: UNIPHY1 AHB clock source frequency fixed to 100MHZ
+>>>>>> +      - description: UNIPHY0 SYS clock source frequency fixed to 24MHZ
+>>>>>> +      - description: UNIPHY1 SYS clock source frequency fixed to 24MHZ
+>>>>>>       clock-names:
+>>>>>> +    minItems: 1
+>>>>>>         items:
+>>>>>>           - const: gcc_mdio_ahb_clk
+>>>>>> +      - const: gcc_uniphy0_ahb_clk
+>>>>>> +      - const: gcc_uniphy1_ahb_clk
+>>>>>> +      - const: gcc_uniphy0_sys_clk
+>>>>>> +      - const: gcc_uniphy1_sys_clk
+>>>>>
+>>>>>> +  cmn-reference-clock:
+>>>>>> +    oneOf:
+>>>>>> +      - items:
+>>>>>> +          - enum:
+>>>>>> +              - 0   # CMN PLL reference internal 48MHZ
+>>>>>> +              - 1   # CMN PLL reference external 25MHZ
+>>>>>> +              - 2   # CMN PLL reference external 31250KHZ
+>>>>>> +              - 3   # CMN PLL reference external 40MHZ
+>>>>>> +              - 4   # CMN PLL reference external 48MHZ
+>>>>>> +              - 5   # CMN PLL reference external 50MHZ
+>>>>>> +              - 6   # CMN PLL reference internal 96MHZ
+>>>>>
+>>>>> Why is this not represented by an element of the clocks property?
+>>>>
+>>>> This property is for the reference clock source selection of CMN PLL,
+>>>> CMN PLL generates the different clock rates for the different Ethernet
+>>>> blocks, this CMN PLL configuration is not located in the GCC, so the
+>>>> clock framework can't be used, which is the general hardware register
+>>>> instead of RCG register for GCC.
+>>>
+>>> I don't see how the clock being provided by the "GCC" (whatever that is)
+>>> or by some other clock controller or fixed clock makes a difference.
+>>> Why can't the other clock provider be represented in the devicetree?
+>>>
+>>
+>> cmn-reference-clock is for selecting the reference clock source for the
+>> whole Ethernet block, which is just the standalone configure register.
+> 
+> Sure, you are aware though that all clocks are just configure registers?
+> 
+> Which clocks are these mentioned in the property? From where do they come?
+> 
+> Anyway, property is in existing form is not correct - this is not a
+> generic property.
+> 
 
-Changes in v2:
-- Rephrased commit text and updated the nodes to board file.
-- Link to v1: https://lore.kernel.org/r/20231108-qcom_leds-v1-1-c3e1c8572cb0@quicinc.com
----
- arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+This property cmn-reference-clock is just the hardware register 
+configuration, since the different IPQ platform needs to select
+the different reference clock source for the CMN PLL block that
+provides the various clock outputs to the all kinds of Ethernet
+devices, which is not from GCC provider.
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-index 37c91fdf3ab9..f801144a1556 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-@@ -5,6 +5,7 @@
- 
- /dts-v1/;
- 
-+#include <dt-bindings/leds/common.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include "sc7280.dtsi"
- #include "pm7325.dtsi"
-@@ -414,6 +415,30 @@ vreg_bob_3p296: bob {
- 	};
- };
- 
-+&pm8350c_pwm {
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	status = "okay";
-+
-+	led@1 {
-+		reg = <1>;
-+		color = <LED_COLOR_ID_RED>;
-+		label = "red";
-+	};
-+
-+	led@2 {
-+		reg = <2>;
-+		color = <LED_COLOR_ID_GREEN>;
-+		label = "green";
-+	};
-+
-+	led@3 {
-+		reg = <3>;
-+		color = <LED_COLOR_ID_BLUE>;
-+		label = "blue";
-+	};
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
+This is indeed not a generic property, which is the Ethernet
+function configs same as clock-frequency.
 
----
-base-commit: 17cb8a20bde66a520a2ca7aad1063e1ce7382240
-change-id: 20231215-lpg-4aadd374811a
-
-Best regards,
--- 
-Hui Liu <quic_huliu@quicinc.com>
-
+> 
+>> however the clock provider has the logical register distribution, such
+>> as for one clock tree, there is RCG, DIVIDER and branch registers in
+>> the qcom soc chip.
+>>
+>> The clock consumer defines the clock IDs of device tree to reference the
+>> clocks provided by the clock controller, and these clock IDs are
+>> provided by the header file of clock provider.
+>>
+>> like this,
+>> clocks = <&gcc GCC_MDIO_AHB_CLK>,
+>>
+>>            <&gcc GCC_UNIPHY0_AHB_CLK>,
+>>
+>>            <&gcc GCC_UNIPHY1_AHB_CLK>,
+>>
+>>            <&gcc GCC_UNIPHY0_SYS_CLK>,
+>>
+>>            <&gcc GCC_UNIPHY1_SYS_CLK>;
+>>
+>> gcc is the device node of clock provider, and GCC_MDIO_AHB_CLK is the
+>> clock ID.
+> 
+> 
+> 
+> Best regards,
+> Krzysztof
+> 
 
