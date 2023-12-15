@@ -1,246 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-4919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CBFDF814738
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 12:46:03 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E726C814798
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 13:04:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 82368284CFD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 11:46:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 250F71C21624
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 12:04:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 106A32555A;
-	Fri, 15 Dec 2023 11:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29228288B6;
+	Fri, 15 Dec 2023 12:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UixfFdht"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WkKIP2Mg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB00625546
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 11:45:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3333074512bso951362f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 03:45:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702640755; x=1703245555; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9JhELWJ0W9NFLq+9Rk9JL6k3c2c7+f6wthL7iMiCLTE=;
-        b=UixfFdhtIdxkQ3LkugI3dsm1GTwCMrVUO3/3S/efIBZlXb8as9p/Kji5kQ58LIPOne
-         RWbDIZtSr3KhqFea1YyQqFTE7qxUMpLLHUTQNdz0h65vdBgmXrglp0R/o8rg17HkIwlh
-         NtiMhszQ+EID0nxwgZIT6FTIJyLijQIv/lyzdpq2H2Mg9CVqBxgeuhL1IKZmUiE1VvQN
-         8af/7G4zn+rKQzLaxAVEmgEVGddoiqPvjip+Up0ZkPaZa3359uVJs1c3BNRu4+eoI7on
-         ZuHG/G7hSRle6YR81OQkHmMdgOT5Qn+yuwe8N7r7KetG2zVuf5S4rElHevIjB1/aylw5
-         CIWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702640755; x=1703245555;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9JhELWJ0W9NFLq+9Rk9JL6k3c2c7+f6wthL7iMiCLTE=;
-        b=obma3+Oh73ufEkptDV675V02CQiQ2vIlZGShWtnOhwO036iEbBRzBxcWcrdejrEUvO
-         NMuKhWeDJyhYdVyzSj+/mJC5INNOcPhqBhX7TFby9rqwKYSTPiPlA8Y/9H1xBoP2HVMm
-         YBpTB8dLkaBGqKMGQLgx/Pfuig2PG35XWgch3hvTkHmFu8C+kcmLcQkgYF6dhBcnSAv+
-         p8S7mo/Q+MMg1CaVSuRRa3oAKyg1UJWa2Gox0++SQiGA5ZuuF8JN52CwvgSa+7PMOI/a
-         sEiyAqPSyn1/NobqJYpgtHYbpV3E45fMMaqAbMW/LKqzRK0x3+3Jylw2yXDmsAaY/7FE
-         oNLg==
-X-Gm-Message-State: AOJu0YxdxyOA5WVBzOaskUxAye1qtUbHCROLqz30kXmj+dm+wz1FoRf9
-	oxQqQ+6KFwSnGzfW7yKeVqksUg==
-X-Google-Smtp-Source: AGHT+IHwPk+SmYaJSAr4+TwumGT5b8Gb+pcOKb6ZrDfJTg0L77bED39wKBT0vsudQHE3GhGWisRMUg==
-X-Received: by 2002:a7b:ca4a:0:b0:40c:3cc0:8612 with SMTP id m10-20020a7bca4a000000b0040c3cc08612mr5796018wml.94.1702640754792;
-        Fri, 15 Dec 2023 03:45:54 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id h12-20020a05600c314c00b0040c45cabc34sm20257687wmo.17.2023.12.15.03.45.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Dec 2023 03:45:54 -0800 (PST)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Fri, 15 Dec 2023 12:45:53 +0100
-Subject: [PATCH] arm64: dts: qcom: sm8650: add fastrpc-compute-cb nodes
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52BD2575D;
+	Fri, 15 Dec 2023 12:03:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BFBZ5Yt024275;
+	Fri, 15 Dec 2023 12:03:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=aE0c1EkjLW/+RUIzVcz6aNx+2hD6djlO8gcFyOrHy7s=; b=Wk
+	KIP2MgSQtTV0PA+MRvtTe1J1N6LEWkbxRCMlQxMNtoaLGz+Re2Z89P9O5Xa/zI1O
+	TfT/E4DM8aUThABs6f9uhEz/fQA8SW6ZWjFiq22Z2o4ZbUgpSJWkVUMLEjTYDYIN
+	fYZ81dGcRia1/0A1ULNgmbDFlDTCrGpskLdMKIlrUd6EYgK07ya9WPP5bTRygmyT
+	dkYh5jBNCEQWUud8IvNEkh/gDqFCdqzLKUUFwBpoDxM2GoSy3dhPprYeD6ILNrCC
+	l10ZuR54/p9DObkpHG9kTXCR4paXoFPcrLPHoox6AJOkwM6/X+wqTGdlJNaagIci
+	bGrT98YwEgJhdym6dyCg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v0p1001kv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 15 Dec 2023 12:03:37 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BFC3ZGE010291
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 15 Dec 2023 12:03:35 GMT
+Received: from [10.253.13.71] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 15 Dec
+ 2023 04:03:27 -0800
+Message-ID: <f16dfe78-2e31-45fb-b2fe-f72b7e6c51a5@quicinc.com>
+Date: Fri, 15 Dec 2023 20:03:23 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 5/5] dt-bindings: net: ipq4019-mdio: Document ipq5332
+ platform
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <andrew@lunn.ch>, <hkallweit1@gmail.com>, <linux@armlinux.org.uk>,
+        <robert.marko@sartura.hr>
+CC: <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_srichara@quicinc.com>
+References: <20231214090304.16884-1-quic_luoj@quicinc.com>
+ <20231214090304.16884-6-quic_luoj@quicinc.com>
+ <1e4c55c8-8ed6-4f2e-8328-8a173f09b62f@linaro.org>
+ <3c8e33b4-6ebc-476f-a00f-15cc8a1ad9e4@quicinc.com>
+ <b89abf8c-57f8-46a6-a071-b1591340fbdf@linaro.org>
+ <3de98516-9a28-4f58-8951-2a7752621fee@quicinc.com>
+ <1fa2d219-63d7-45cf-9e05-b85dbce24076@linaro.org>
+From: Jie Luo <quic_luoj@quicinc.com>
+In-Reply-To: <1fa2d219-63d7-45cf-9e05-b85dbce24076@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231215-topic-sm8650-upstream-dt-fastrpc-v1-1-5016f685ab5a@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAHA8fGUC/x2NQQqEMAwAvyI5b8BWquJXlj2ENtUc1NJ0RRD/b
- vE2c5m5QDkLK0zNBZkPUdm3KubTgF9omxklVAfb2s5Y47DsSTzqOvauxX/SkplWDAUjVU4eY0f
- B9JHcSAPUTMoc5XwX3999P1KExKZyAAAA
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3696;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=ZNA7omWDjESiICNkiTbM/AH6p20okSBr7s87BXrfOJw=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlfDxx6hZmc6HFHJIO7owTrbF7IUpy2N+D6BPxKuOY
- MzJRdkyJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZXw8cQAKCRB33NvayMhJ0cSvD/
- 9Z9jxuvDlwvwPcg0cBlf82piPV84R2uxzuEQ0RywMfJB1lkSWjNBSQs0IqjCc1i2waIazsC876a3lw
- 65OqcOK3niUITeKuVb3JBoHEkLm1FBeNTe3U+yw85oPuSDDGvY1uMISnIIBb35oc+bd62EkWnlL4Ia
- f4M4+LppgL8AMLWgXhIJmnqX+7KRgMCBK9KNwWSBk9dXjHqs/aOr1ctUJvEKrtcsrbYvNPHH498rzP
- 2EC5tnCdwS5tIuPBPJNYZoIFkC6IwG6whlFbWZdTwzeQoMwAeFAOaJwbU7096z6MEFvPw2eLGUYzuX
- umrIixCA+sljgsTcGzKlCTFrKOottQDw6j+cr+1C0GVU5KuNHLcXrSbPlK8ZXBbYQCzPQr56FMRGXL
- ViuAifdLemT9Pdx4+p58VEVEweKAE55gKPFWNznQZE5ppyzH6ohetGRyzvd7Gu/hOtXNeXs9Uli2Zu
- olayRQuJ2nRQ1e7oPSYtt8ReLaMsBfiJM3PQ1rqiE6FoTIPbm2aV6CLJwVhohCGAu5uw1tAUug0HMl
- fQ4oBN6fJNdG/PY6N65m086enOTsxA9Zs+rclkWXpwn3BWC6iThIyrSJNbAezrRBghbk02kFyaL9Zr
- IzXOBWE5saVTogVXhl9ltQrT0jrTsIJ8UPEImtpomt6b702QEvHGHWSx/LYA==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: YTWMcRTNNJL9kwHQLhgDz2vXrZzLq2Fq
+X-Proofpoint-ORIG-GUID: YTWMcRTNNJL9kwHQLhgDz2vXrZzLq2Fq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
+ spamscore=0 bulkscore=0 mlxlogscore=925 lowpriorityscore=0
+ priorityscore=1501 phishscore=0 malwarescore=0 impostorscore=0
+ clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312150080
 
-Add the missing aDSP and cDSP fastrpc compute-cb nodes for the SM8650 SoC.
 
-Fixes: 10e024671295 ("arm64: dts: qcom: sm8650: add interconnect dependent device nodes")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 113 +++++++++++++++++++++++++++++++++++
- 1 file changed, 113 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index 425e1e50d945..978b46aba886 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -4804,6 +4804,47 @@ fastrpc {
- 
- 					#address-cells = <1>;
- 					#size-cells = <0>;
-+
-+					compute-cb@3 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <3>;
-+
-+						iommus = <&apps_smmu 0x1003 0x80>,
-+							 <&apps_smmu 0x1043 0x20>;
-+					};
-+
-+					compute-cb@4 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <4>;
-+
-+						iommus = <&apps_smmu 0x1004 0x80>,
-+							 <&apps_smmu 0x1044 0x20>;
-+					};
-+
-+					compute-cb@5 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <5>;
-+
-+						iommus = <&apps_smmu 0x1005 0x80>,
-+							 <&apps_smmu 0x1045 0x20>;
-+					};
-+
-+					compute-cb@6 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <6>;
-+
-+						iommus = <&apps_smmu 0x1006 0x80>,
-+							 <&apps_smmu 0x1046 0x20>;
-+					};
-+
-+					compute-cb@7 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <7>;
-+
-+						iommus = <&apps_smmu 0x1007 0x40>,
-+							 <&apps_smmu 0x1067 0x0>,
-+							 <&apps_smmu 0x1087 0x0>;
-+					};
- 				};
- 
- 				gpr {
-@@ -4915,6 +4956,78 @@ fastrpc {
- 
- 					#address-cells = <1>;
- 					#size-cells = <0>;
-+
-+					compute-cb@1 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <1>;
-+
-+						iommus = <&apps_smmu 0x1961 0x0>,
-+							 <&apps_smmu 0x0c01 0x20>,
-+							 <&apps_smmu 0x19c1 0x0>;
-+					};
-+
-+					compute-cb@2 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <2>;
-+
-+						iommus = <&apps_smmu 0x1962 0x0>,
-+							 <&apps_smmu 0x0c02 0x20>,
-+							 <&apps_smmu 0x19c2 0x0>;
-+					};
-+
-+					compute-cb@3 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <3>;
-+
-+						iommus = <&apps_smmu 0x1963 0x0>,
-+							 <&apps_smmu 0x0c03 0x20>,
-+							 <&apps_smmu 0x19c3 0x0>;
-+					};
-+
-+					compute-cb@4 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <4>;
-+
-+						iommus = <&apps_smmu 0x1964 0x0>,
-+							 <&apps_smmu 0x0c04 0x20>,
-+							 <&apps_smmu 0x19c4 0x0>;
-+					};
-+
-+					compute-cb@5 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <5>;
-+
-+						iommus = <&apps_smmu 0x1965 0x0>,
-+							 <&apps_smmu 0x0c05 0x20>,
-+							 <&apps_smmu 0x19c5 0x0>;
-+					};
-+
-+					compute-cb@6 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <6>;
-+
-+						iommus = <&apps_smmu 0x1966 0x0>,
-+							 <&apps_smmu 0x0c06 0x20>,
-+							 <&apps_smmu 0x19c6 0x0>;
-+					};
-+
-+					compute-cb@7 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <7>;
-+
-+						iommus = <&apps_smmu 0x1967 0x0>,
-+							 <&apps_smmu 0x0c07 0x20>,
-+							 <&apps_smmu 0x19c7 0x0>;
-+					};
-+
-+					compute-cb@8 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <8>;
-+
-+						iommus = <&apps_smmu 0x1968 0x0>,
-+							 <&apps_smmu 0x0c08 0x20>,
-+							 <&apps_smmu 0x19c8 0x0>;
-+					};
- 				};
- 			};
- 		};
+On 12/15/2023 6:21 PM, Krzysztof Kozlowski wrote:
+> On 15/12/2023 11:03, Jie Luo wrote:
+>>>>>> +  cmn-reference-clock:
+>>>>>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>>>>>
+>>>>> Nothing improved here
+>>>>
+>>>> With this change, the warning is not reported when i run
+>>>> dt_binding_check, looks the new added property needs
+>>>> the type ref to avoid the warning reported.
+>>>
+>>> Nothing improved in the property name, nor its style, nor in the actual
+>>> contents/values.
+>>
+>> This property is for CMN PLL block reference clock configuration,
+>> so i use this property name.
+>>
+>> it will be appreciated if you can suggest a suitable name, thanks.
+> 
+> See example-schema about naming. Read writing-bindings. You need vendor
+> prefix for custom properties.
 
----
-base-commit: 11651f8cb2e88372d4ed523d909514dc9a613ea3
-change-id: 20231215-topic-sm8650-upstream-dt-fastrpc-f3ad16fa58a7
+Ok, thanks.
 
-Best regards,
--- 
-Neil Armstrong <neil.armstrong@linaro.org>
+> 
+>>
+>>>
+>>> ...
+>>>
+>>>>>> +  reset-gpios:
+>>>>>> +    maxItems: 1
+>>>>>> +
+>>>>>> +  reset-assert-us:
+>>>>>> +    maxItems: 1
+>>>>>
+>>>>> This does not look related to ipq5332.
+>>>>
+>>>> The reset gpio properties are needed on ipq5332, since qca8084 phy is
+>>>> connected, which uses the MDIO bus level gpio reset.
+>>>
+>>> I am talking about this property, not these properties.
+>>
+>> ok.
+>>
+>>>
+>>>>
+>>>> Without declaring these gpio properties, the warning will be reported
+>>>> by dt_binding_check.
+>>>
+>>> How is it even possible to have warnings if there is no such node in
+>>> DTS? We do not care about warnings in your downstream code.
+>>>
+>>>
+>>> Best regards,
+>>> Krzysztof
+>>>
+>>
+>> If i do not declare the property "reset-assert-us" and
+>> "reset-deassert-us", the warning will be reported by "make
+>> dt_binding_check" since i
+>> add a example in this file.
+> 
+> This argument does not make sense, sorry. Obviously if property is not
+> allowed, it should be removed.
+> 
+> Provide rationale, in terms of hardware, why this property must be added
+> and why it cannot be deduced from the compatible.
+> 
+> Best regards,
+> Krzysztof
+> 
 
+So i can remove "reset-assert-us" and "reset-deassert-us" from the added
+example to avoid the dt check warning? even these two properties are
+needed to be defined in the device tree to make this driver working
+correctly.
 
