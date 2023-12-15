@@ -1,166 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-4858-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4859-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E824D813EB2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 01:24:57 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 95E7D813ECD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 01:45:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 95BC4283EB2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 00:24:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BA4B61C21C3D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 00:45:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFFAB36F;
-	Fri, 15 Dec 2023 00:24:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C75AFEBF;
+	Fri, 15 Dec 2023 00:45:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Gfir7HKR"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="XQdT6vv0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963DA7FC;
-	Fri, 15 Dec 2023 00:24:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1702599890; x=1734135890;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=EOXDnLezHvp+UiDY/7mkYoXNOd7E6rY6LHj0YTRlehI=;
-  b=Gfir7HKRuYrwlOocCePEdyOScasIgVEOmFDOehnhdwwPtoDZ4pEP2blP
-   4+JE7lN9ydq5qglT/qRItdq0ciu7laK7DQg/1YvucSAxT+rBMMJ7ps7eO
-   NSOXop0wGjZN2HjYdeLugBUWUZDCPSDBIG00J1fKpRknJTbfpMNlvlOgJ
-   Bx9qCW0VOosrsI7fz5nmkJy3UXToc/bb50N09xGYMvwGqAdPly8sV2MIU
-   SoLfGiABB+RtNzc+QrRlbgPlv1n+jWJSh/R1DkxWlxcvmYZ5NfJr8qqT0
-   DPyutxDRRpEj8h4Kz+u2RxaDhlCcH0r1Ye9cbcMR6gkChfI+Gp3UTwSyQ
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10924"; a="2366456"
-X-IronPort-AV: E=Sophos;i="6.04,277,1695711600"; 
-   d="scan'208";a="2366456"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Dec 2023 16:24:50 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.04,277,1695711600"; 
-   d="scan'208";a="22629518"
-Received: from lkp-server02.sh.intel.com (HELO b07ab15da5fe) ([10.239.97.151])
-  by orviesa001.jf.intel.com with ESMTP; 14 Dec 2023 16:24:45 -0800
-Received: from kbuild by b07ab15da5fe with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1rDw0Q-000Mr3-1m;
-	Fri, 15 Dec 2023 00:24:42 +0000
-Date: Fri, 15 Dec 2023 08:23:56 +0800
-From: kernel test robot <lkp@intel.com>
-To: Md Sadre Alam <quic_mdalam@quicinc.com>, thara.gopinath@gmail.com,
-	herbert@gondor.apana.org.au, davem@davemloft.net, agross@kernel.org,
-	andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
-	linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
-	quic_srichara@quicinc.com, quic_varada@quicinc.com
-Cc: oe-kbuild-all@lists.linux.dev, quic_mdalam@quicinc.com
-Subject: Re: [PATCH 02/11] crypto: qce - Add bam dma support for crypto
- register r/w
-Message-ID: <202312150856.hFSqQCnr-lkp@intel.com>
-References: <20231214114239.2635325-3-quic_mdalam@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E014EC8
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 00:45:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from epcas1p3.samsung.com (unknown [182.195.41.47])
+	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20231215003819epoutp04446e7b309c3c925355cbea496f756e4f~g2lCx4G8E1144311443epoutp047
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 00:38:19 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20231215003819epoutp04446e7b309c3c925355cbea496f756e4f~g2lCx4G8E1144311443epoutp047
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1702600699;
+	bh=95AfQQIEWcWv/QpLd8Ep2JX/E1UWLzdDdHMdPDHDoZE=;
+	h=From:To:Cc:Subject:Date:References:From;
+	b=XQdT6vv0VKChkQq7oSdh0eTAIr/rx8UFjX26rAguEtMy7KDZx+oPMGBfEFZhU6quh
+	 MnQTGmhTAHtTWTKKWmmzHIfIrHtktrNy1G34oE+Bm5JzTfQSyODFgbpyxCPhryxu7p
+	 9fJdOe9Cf2p6GREvYd5Jko1zgL4eBzPlq/Qk5ag8=
+Received: from epsnrtp4.localdomain (unknown [182.195.42.165]) by
+	epcas1p3.samsung.com (KnoxPortal) with ESMTP id
+	20231215003818epcas1p3a5a7e40fd23cd0e8544cbe5299f540e2~g2lCK4Lrm1238312383epcas1p32;
+	Fri, 15 Dec 2023 00:38:18 +0000 (GMT)
+Received: from epsmges1p3.samsung.com (unknown [182.195.38.250]) by
+	epsnrtp4.localdomain (Postfix) with ESMTP id 4Srr160fjtz4x9QB; Fri, 15 Dec
+	2023 00:38:18 +0000 (GMT)
+Received: from epcas1p2.samsung.com ( [182.195.41.46]) by
+	epsmges1p3.samsung.com (Symantec Messaging Gateway) with SMTP id
+	8A.52.09739.9FF9B756; Fri, 15 Dec 2023 09:38:17 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+	epcas1p2.samsung.com (KnoxPortal) with ESMTPA id
+	20231215003817epcas1p21127357982772ebe0e84b86f20115186~g2lBKmio10420204202epcas1p29;
+	Fri, 15 Dec 2023 00:38:17 +0000 (GMT)
+Received: from epsmgmc1p1new.samsung.com (unknown [182.195.42.40]) by
+	epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+	20231215003817epsmtrp28f83b67b849d79d1faf42f44a0a81b1e~g2lBJsW-A3262332623epsmtrp2o;
+	Fri, 15 Dec 2023 00:38:17 +0000 (GMT)
+X-AuditID: b6c32a37-487afa800000260b-10-657b9ff990b8
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+	epsmgmc1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+	A4.7F.07368.9FF9B756; Fri, 15 Dec 2023 09:38:17 +0900 (KST)
+Received: from localhost.localdomain (unknown [10.253.100.232]) by
+	epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+	20231215003817epsmtip1de03178a9f04a44053f1d2574f24ab6a~g2lA6fCjv0592405924epsmtip1D;
+	Fri, 15 Dec 2023 00:38:17 +0000 (GMT)
+From: Chanwoo Lee <cw9316.lee@samsung.com>
+To: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+	mani@kernel.org, jejb@linux.ibm.com, martin.petersen@oracle.com,
+	quic_asutoshd@quicinc.com, dmitry.baryshkov@linaro.org, ahalaney@redhat.com,
+	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: grant.jung@samsung.com, jt77.jang@samsung.com, dh0421.hwang@samsung.com,
+	sh043.lee@samsung.com, ChanWoo Lee <cw9316.lee@samsung.com>, Manivannan
+	Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3] scsi: ufs: qcom: Return ufs_qcom_clk_scale_*() errors in
+ ufs_qcom_clk_scale_notify()
+Date: Fri, 15 Dec 2023 09:38:12 +0900
+Message-Id: <20231215003812.29650-1-cw9316.lee@samsung.com>
+X-Mailer: git-send-email 2.29.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231214114239.2635325-3-quic_mdalam@quicinc.com>
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrJJsWRmVeSWpSXmKPExsWy7bCmnu7P+dWpBldmWlmce/ybxeL9tGOM
+	Fts6bCxmnGpjtdh37SS7xcTzP9ksfv1dz26x6MY2Josdz8+wW3RM3s5iMXH/WXaLy7vmsFl0
+	X9/BZnHgwypGi7stnawWy4//Y7JY2DGXxaLpzz4WByGPTas62TzuXNvD5jFh0QFGj49Pb7F4
+	TNxT5/F+31U2j74tqxg9Pm+SC+CIyrbJSE1MSS1SSM1Lzk/JzEu3VfIOjneONzUzMNQ1tLQw
+	V1LIS8xNtVVy8QnQdcvMAXpFSaEsMacUKBSQWFyspG9nU5RfWpKqkJFfXGKrlFqQklNgVqBX
+	nJhbXJqXrpeXWmJlaGBgZApUmJCdMWXCScaCnzwVH7p7WBsYv3N1MXJySAiYSHw/tIUdxBYS
+	2MEosWwnZxcjF5D9iVFix8Q/7BDON0aJt63P2GA67vYeZYZI7GWUOPv6FxuE84VR4s2Jb0xd
+	jBwcbAJaErePeYPERQS2MElcmTePGaSbWeAYo8T7D4kgtrBAlsTzH12sIDaLgKrEhrv7wDbw
+	ClhL7O+cyAixTV7iz/0eZoi4oMTJmU9YIObISzRvnQ12hYTADg6J2Wu3skI0uEh8XNnGDGEL
+	S7w6DvGchICUxOd3e9kgGpoZJRa+OQ7VPYFR4svH21DP2Us0tzazgbzALKApsX6XPsQ2Pol3
+	X3tYQcISArwSHW1CENUqEnO6zrHBzP944zHUDR4Sby/tY4YEaqzE2/bjzBMY5WYh+WEWkh9m
+	ISxbwMi8ilEstaA4Nz212LDAGB6Vyfm5mxjBaVjLfAfjtLcf9A4xMnEwHmKU4GBWEuE9uaM8
+	VYg3JbGyKrUoP76oNCe1+BCjKTBUJzJLiSbnAzNBXkm8oYmlgYmZkYmFsaWxmZI475krZalC
+	AumJJanZqakFqUUwfUwcnFINTKzCDp5p7z5Eml5fqzd9B8N8t/tP7t215eg9dMZ8f4NWefsm
+	P64Uu+MyN5dLBlvIBv2PsQgt/Lv3k43mWdHvRqtYHmyWmXZzdbpWRuzWslN+Da4sN33P9q7a
+	sa9eleHZQrGSm0vdEuesNPZl3vVkApvy0fDMj4Eqf9a8Prx5QUFX/Kpgbm0+Cw99qeiQR/d+
+	68mEypdOmtq9PonlqVW8a/2D0wrPZhxa0fx6D0/hJ83A9PcV0Yov5q3dHvh0/8Q09wX2+pG9
+	MRdlPvyRfL9jY0N854Jf+3rY938qMzj2Qd5tzu05u0Tfb4nfkaT15k60w7ujWV7tnaHuOQ0r
+	U9mtll7oPNXH/HeVVnzqCgmFg0osxRmJhlrMRcWJAAcX8zVMBAAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrMLMWRmVeSWpSXmKPExsWy7bCSnO7P+dWpBn82Slice/ybxeL9tGOM
+	Fts6bCxmnGpjtdh37SS7xcTzP9ksfv1dz26x6MY2Josdz8+wW3RM3s5iMXH/WXaLy7vmsFl0
+	X9/BZnHgwypGi7stnawWy4//Y7JY2DGXxaLpzz4WByGPTas62TzuXNvD5jFh0QFGj49Pb7F4
+	TNxT5/F+31U2j74tqxg9Pm+SC+CI4rJJSc3JLEst0rdL4MqYMuEkY8FPnooP3T2sDYzfuboY
+	OTkkBEwk7vYeZe5i5OIQEtjNKNH/6jwrREJKYvf+82xdjBxAtrDE4cPFEDWfGCUWfdnHAhJn
+	E9CSuH3MGyQuInCISWLxk3WsIA6zwBlGiQVT25hBBgkLZEgsOXOXBcRmEVCV2HB3HxuIzStg
+	LbG/cyIjxDJ5iT/3e5gh4oISJ2c+AatnBoo3b53NPIGRbxaS1CwkqQWMTKsYJVMLinPTc5MN
+	CwzzUsv1ihNzi0vz0vWS83M3MYLjRUtjB+O9+f/0DjEycTAeYpTgYFYS4T25ozxViDclsbIq
+	tSg/vqg0J7X4EKM0B4uSOK/hjNkpQgLpiSWp2ampBalFMFkmDk6pBiZVh+1NUpuSo9ZL8S/Z
+	yHvmwxeTnlIlv/k1y+fF+D5QcEmLinHmeu/MJ7ckaOrF0sW3XrOFbOES3LCddYelZGdytsCz
+	+n2SLwTShUN2SYQdSN9ygyk2eGu/TYxVecKlkB1rl3Qt8jBwseQ5FDYxRETFe/6UXHardxVd
+	57Yr35VUZSy2PTR1m+C7hAX/L6Xanig2OXiii6HuRqraSp30uomp00+8P7lEh+XolEwH3W15
+	IsVNkz2krKrvM3Ey2mtGt5VIGoia8MXP0c7MvmnVHsHXkMw+Ly1te/Y15h9pYVe5q64pLAmx
+	uKx3yso9tlUz9Zrb3tLGF9e7OaK9HO1ZRDXfXV/GLDK3rFxlwm0lluKMREMt5qLiRAAa+GcI
+	BgMAAA==
+X-CMS-MailID: 20231215003817epcas1p21127357982772ebe0e84b86f20115186
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 101P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20231215003817epcas1p21127357982772ebe0e84b86f20115186
+References: <CGME20231215003817epcas1p21127357982772ebe0e84b86f20115186@epcas1p2.samsung.com>
 
-Hi Md,
+From: ChanWoo Lee <cw9316.lee@samsung.com>
 
-kernel test robot noticed the following build errors:
+In commit 031312dbc695 ("scsi: ufs: ufs-qcom: Remove unnecessary goto statements")
+the error handling was accidentally changed, resulting in the error of
+ufs_qcom_clk_scale_*() calls not being returned.
 
-[auto build test ERROR on herbert-cryptodev-2.6/master]
-[also build test ERROR on vkoul-dmaengine/next linus/master v6.7-rc5 next-20231214]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+This is the case I checked.
+* ufs_qcom_clk_scale_notify -> 'ufs_qcom_clk_scale_up_/down_pre_change' error -> return 0;
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Md-Sadre-Alam/crypto-qce-Add-support-for-crypto-address-read/20231214-194404
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/herbert/cryptodev-2.6.git master
-patch link:    https://lore.kernel.org/r/20231214114239.2635325-3-quic_mdalam%40quicinc.com
-patch subject: [PATCH 02/11] crypto: qce - Add bam dma support for crypto register r/w
-config: m68k-allmodconfig (https://download.01.org/0day-ci/archive/20231215/202312150856.hFSqQCnr-lkp@intel.com/config)
-compiler: m68k-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231215/202312150856.hFSqQCnr-lkp@intel.com/reproduce)
+Let's make sure those errors are properly returned.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202312150856.hFSqQCnr-lkp@intel.com/
+Fixes: 031312dbc695 ("scsi: ufs: ufs-qcom: Remove unnecessary goto statements")
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: ChanWoo Lee <cw9316.lee@samsung.com>
+---
+* v2->v3: Change title and description
+  v2 :
+     https://patchwork.kernel.org/project/linux-scsi/patch/20231214021401.26474-1-cw9316.lee@samsung.com/
 
-All error/warnings (new ones prefixed by >>):
+* v1->v2: Remove things already in progress
+  v1 :
+     https://patchwork.kernel.org/project/linux-scsi/patch/20231213022500.9011-1-cw9316.lee@samsung.com/
+---
+---
+ drivers/ufs/host/ufs-qcom.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-   In file included from drivers/crypto/qce/dma.c:11:
->> drivers/crypto/qce/core.h:32:31: error: field 'done_tasklet' has incomplete type
-      32 |         struct tasklet_struct done_tasklet;
-         |                               ^~~~~~~~~~~~
-   In file included from drivers/crypto/qce/dma.c:7:
-   drivers/crypto/qce/dma.c: In function 'qce_dma_prep_cmd_sg':
->> drivers/crypto/qce/dma.c:44:38: warning: implicit conversion from 'enum dma_transfer_direction' to 'enum dma_data_direction' [-Wenum-conversion]
-      44 |                         qce_sgl_cnt, dir)) {
-         |                                      ^~~
-   include/linux/dma-mapping.h:419:58: note: in definition of macro 'dma_map_sg'
-     419 | #define dma_map_sg(d, s, n, r) dma_map_sg_attrs(d, s, n, r, 0)
-         |                                                          ^
-   drivers/crypto/qce/dma.c:53:66: warning: implicit conversion from 'enum dma_transfer_direction' to 'enum dma_data_direction' [-Wenum-conversion]
-      53 |                 dma_unmap_sg(qce->dev, qce_bam_sgl, qce_sgl_cnt, dir);
-         |                                                                  ^~~
-   include/linux/dma-mapping.h:420:62: note: in definition of macro 'dma_unmap_sg'
-     420 | #define dma_unmap_sg(d, s, n, r) dma_unmap_sg_attrs(d, s, n, r, 0)
-         |                                                              ^
-
-
-vim +/done_tasklet +32 drivers/crypto/qce/core.h
-
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  10  
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  11  /**
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  12   * struct qce_device - crypto engine device structure
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  13   * @queue: crypto request queue
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  14   * @lock: the lock protects queue and req
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  15   * @done_tasklet: done tasklet object
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  16   * @req: current active request
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  17   * @result: result of current transform
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  18   * @base: virtual IO base
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  19   * @dev: pointer to device structure
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  20   * @core: core device clock
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  21   * @iface: interface clock
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  22   * @bus: bus clock
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  23   * @dma: pointer to dma data
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  24   * @burst_size: the crypto burst size
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  25   * @pipe_pair_id: which pipe pair id the device using
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  26   * @async_req_enqueue: invoked by every algorithm to enqueue a request
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  27   * @async_req_done: invoked by every algorithm to finish its request
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  28   */
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  29  struct qce_device {
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  30  	struct crypto_queue queue;
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  31  	spinlock_t lock;
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25 @32  	struct tasklet_struct done_tasklet;
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  33  	struct crypto_async_request *req;
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  34  	int result;
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  35  	void __iomem *base;
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  36  	struct device *dev;
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  37  	struct clk *core, *iface, *bus;
-694ff00c9bb387 Thara Gopinath    2023-02-22  38  	struct icc_path *mem_path;
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  39  	struct qce_dma_data dma;
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  40  	int burst_size;
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  41  	unsigned int pipe_pair_id;
-f666e78afa2c49 Md Sadre Alam     2023-12-14  42  	dma_addr_t base_dma;
-74826d774de8a8 Md Sadre Alam     2023-12-14  43  	__le32 *reg_read_buf;
-74826d774de8a8 Md Sadre Alam     2023-12-14  44  	dma_addr_t reg_buf_phys;
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  45  	int (*async_req_enqueue)(struct qce_device *qce,
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  46  				 struct crypto_async_request *req);
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  47  	void (*async_req_done)(struct qce_device *qce, int ret);
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  48  };
-ec8f5d8f6f76b9 Stanimir Varbanov 2014-06-25  49  
-
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 96cb8b5b4e66..17e24270477d 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -1516,9 +1516,11 @@ static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba,
+ 			err = ufs_qcom_clk_scale_up_pre_change(hba);
+ 		else
+ 			err = ufs_qcom_clk_scale_down_pre_change(hba);
+-		if (err)
+-			ufshcd_uic_hibern8_exit(hba);
+ 
++		if (err) {
++			ufshcd_uic_hibern8_exit(hba);
++			return err;
++		}
+ 	} else {
+ 		if (scale_up)
+ 			err = ufs_qcom_clk_scale_up_post_change(hba);
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.29.0
+
 
