@@ -1,96 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-4862-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B5691813F68
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 02:47:04 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B9DA814104
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 05:39:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6D8B9283F06
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 01:47:03 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8E96BB21799
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 04:39:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B3D4650;
-	Fri, 15 Dec 2023 01:46:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2838D1C13;
+	Fri, 15 Dec 2023 04:39:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B75kz4pc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="C1A0ef93"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20042A3F;
-	Fri, 15 Dec 2023 01:46:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-67efd2cde42so10639256d6.0;
-        Thu, 14 Dec 2023 17:46:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702604817; x=1703209617; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zc5Tt4cjVQn6MSgiYjudGcIVio807ZWzbJuPs2L7F3M=;
-        b=B75kz4pckbcGyj0zHaNjl/+U24061qx+9udSSNsIwvAzXo1jz6PrA1sIJ314MqZeT4
-         hgciU1GSDkRbNCSuT7G741fzDes/Yps2idge2FSd2xWO5D9Kw2PJ7NCIaDiPTmqv2all
-         +0fPDGRrxDM55VBnbTEnGLbcuBUKwYJlO9oqoqGUl540U6RsZFsUXLScyO0g0qTjLx3s
-         zf/ghcSrVPYktWwDkU22ZYWxeoeNZFeDtt97elVUOlNjwNMPgA5wchmWuXiIi8d7Z4uf
-         SvFehVhIJsV5oVKlZcx7fPcNPk95Q7mGU78maGqqrRDcpBO+W7o+7phxfnjDqg2xsK2X
-         s8Wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702604817; x=1703209617;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zc5Tt4cjVQn6MSgiYjudGcIVio807ZWzbJuPs2L7F3M=;
-        b=aC4nYYmF52TG4eXOsMZZfL5OQn6AAY6a6j/V6xz4upf/mbl3qUo8vtm21iTK2zR4Ky
-         PzwhZZLcBzs28NsNNgzCCK+q983f+X4bNSeIJGrCbUsgkjtPhp2KovZSYnqEjn6A0RKw
-         BkNiSNoj/NlYvlLT89FfMNRAwCO1VMaFxv1zhhNX2pnaFXkAWTMOkxnRR17HC9DNuSFj
-         GbL6xdVC5e+01sNQLwj0DcRYbsBlEc4CMaVQc1FsClnUp/w6+RstVZPMIvpoPLwy3gLU
-         xdsPnbPzzCxLSkHKz9EgHUru4VtVlyIU/Q0g6ZW9tSlU8oLGFbXQ+kt8/t21A402Qrtt
-         TDdw==
-X-Gm-Message-State: AOJu0Yz9rrH2Jsx84E3ExPRa1Ep0bCpGjmnUCm7Ly+b4oZCgm1v+KT6o
-	3AH3S2epY+oLczX0VkU+5x4YU7yhdC/y8w==
-X-Google-Smtp-Source: AGHT+IHemwIjbi9IJKMvNOOoGsS8XZb+vIcqTOdqZhejlHWxJ3n6iVhnITtvarq/RT5tbHcCTlqXyg==
-X-Received: by 2002:a0c:e805:0:b0:67f:1ca:8c38 with SMTP id y5-20020a0ce805000000b0067f01ca8c38mr3660984qvn.52.1702604817000;
-        Thu, 14 Dec 2023 17:46:57 -0800 (PST)
-Received: from localhost ([2607:fea8:529e:7800::a768])
-        by smtp.gmail.com with ESMTPSA id du5-20020a05621409a500b0067ef2e0ee43sm2217973qvb.81.2023.12.14.17.46.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Dec 2023 17:46:56 -0800 (PST)
-Date: Thu, 14 Dec 2023 20:46:54 -0500
-From: Richard Acayan <mailingradian@gmail.com>
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sdm670: fix USB SS wakeup
-Message-ID: <ZXuwDtPQZR1waaC7@radian>
-References: <20231214074319.11023-1-johan+linaro@kernel.org>
- <20231214074319.11023-3-johan+linaro@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BEAF53BA;
+	Fri, 15 Dec 2023 04:39:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BF2TX7M028392;
+	Fri, 15 Dec 2023 04:39:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=fZbnhIpJaK2fgilpaTx88
+	zv3506kRqZ00devt7lchuk=; b=C1A0ef93gx/utOfiCZjXAphy4x9+oE/U2Jin4
+	Msu/3zCIXf5xiGFpHDR/asKLf0NteERe+klEpBbZHuiK04OuQj/mJ6QevTB8FpP9
+	fd4wWruwBx9dbyWF2COgQApxT1v4uTSitvNsbzcGbzuLJvFLtm6epo+EB1qDAQ5y
+	jZVHSQtW1TdaaNx+KjOAbketXmGiroadKEuhPMjEh+uq+M+gPG7KYa91y/EIXaQF
+	S9u/k0Hfzx5efzV4eTIWdtxkqMn+QHLzKDmuKuZ/qcqIuhjaRicbsIK+e1yFLNLz
+	qdDvjR9GRgvuDTX1Y0wIT4G97L3OytkfXSXjYbD8RhmUkTOow==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uynjac7tu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 15 Dec 2023 04:39:38 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BF4dbJO030231
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 15 Dec 2023 04:39:37 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Thu, 14 Dec 2023 20:39:34 -0800
+Date: Fri, 15 Dec 2023 10:09:30 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+CC: <agross@kernel.org>, <andersson@kernel.org>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
+Subject: Re: [PATCH] regulator: qcom_smd: Add LDO5 MP5496 regulator
+Message-ID: <ZXvYgmB/NRtZZb8f@hu-varada-blr.qualcomm.com>
+References: <20231214104052.3267039-1-quic_varada@quicinc.com>
+ <93bec6b7-78c3-4064-9775-b27c5ac511fb@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20231214074319.11023-3-johan+linaro@kernel.org>
+In-Reply-To: <93bec6b7-78c3-4064-9775-b27c5ac511fb@linaro.org>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: n2lVb3VfLE-ANA8UnoUHzw3lh2KVXzoy
+X-Proofpoint-ORIG-GUID: n2lVb3VfLE-ANA8UnoUHzw3lh2KVXzoy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=14 malwarescore=0 adultscore=0
+ impostorscore=0 spamscore=14 priorityscore=1501 mlxlogscore=80 mlxscore=14
+ clxscore=1015 lowpriorityscore=0 bulkscore=0 suspectscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
+ definitions=main-2312150031
 
-On Thu, Dec 14, 2023 at 08:43:18AM +0100, Johan Hovold wrote:
-> The USB SS PHY interrupt needs to be provided by the PDC interrupt
-> controller in order to be able to wake the system up from low-power
-> states.
+On Thu, Dec 14, 2023 at 07:26:24PM +0100, Konrad Dybcio wrote:
 >
-> Fixes: 07c8ded6e373 ("arm64: dts: qcom: add sdm670 and pixel 3a device trees")
-> Cc: stable@vger.kernel.org      # 6.2
-> Cc: Richard Acayan <mailingradian@gmail.com>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
+>
+> On 12/14/23 11:40, Varadarajan Narayanan wrote:
+> > Add support for LDO5 regulator. This is used by IPQ9574 USB.
+> >
+> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> > ---
+> Why did you remove the bindings since the last revision?
+>
+> https://lore.kernel.org/linux-arm-msm/cover.1701160842.git.varada@hu-varada-blr.qualcomm.com/
 
-Tested-by: Richard Acayan <mailingradian@gmail.com>
+Oops! Sorry. Sent the wrong patch.
+Will send the correct one.
+
+Varada
 
