@@ -1,72 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-4938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B3558149ED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 15:04:29 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60B758149E5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 15:02:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8EF4A1F22E57
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 14:04:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1E58528471E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 14:02:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C0873DBB0;
-	Fri, 15 Dec 2023 14:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2D6031A73;
+	Fri, 15 Dec 2023 13:59:42 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF143DBBE
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 14:00:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C43735F03
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 13:59:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
 	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
 	(Exim 4.92)
 	(envelope-from <ukl@pengutronix.de>)
-	id 1rE8iy-0002lK-KK; Fri, 15 Dec 2023 14:59:32 +0100
+	id 1rE8iz-0002qG-KU; Fri, 15 Dec 2023 14:59:33 +0100
 Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
 	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.94.2)
 	(envelope-from <ukl@pengutronix.de>)
-	id 1rE8it-00G2ZD-Fu; Fri, 15 Dec 2023 14:59:27 +0100
+	id 1rE8iz-00G2aE-5u; Fri, 15 Dec 2023 14:59:33 +0100
 Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
 	(envelope-from <ukl@pengutronix.de>)
-	id 1rE8it-003cBz-4n; Fri, 15 Dec 2023 14:59:27 +0100
+	id 1rE8iy-003cD5-SO; Fri, 15 Dec 2023 14:59:32 +0100
 From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
 To: Will Deacon <will@kernel.org>,
 	Mark Rutland <mark.rutland@arm.com>
-Cc: Shuai Xue <xueshuai@linux.alibaba.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Jiucheng Xu <jiucheng.xu@amlogic.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	linux-amlogic@lists.infradead.org,
-	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Besar Wicaksono <bwicaksono@nvidia.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Raag Jadav <raag.jadav@intel.com>,
-	Frank Li <Frank.li@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	NXP Linux Team <linux-imx@nxp.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Andy Gross <agross@kernel.org>,
+Cc: Andy Gross <agross@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	linux-arm-msm@vger.kernel.org,
-	Khuong Dinh <khuong@os.amperecomputing.com>
-Subject: [PATCH 00/18] perf: Convert to platform remove callback returning void
-Date: Fri, 15 Dec 2023 14:59:00 +0100
-Message-ID: <cover.1702648124.git.u.kleine-koenig@pengutronix.de>
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 16/18] perf: qcom_l2: Convert to platform remove callback returning void
+Date: Fri, 15 Dec 2023 14:59:16 +0100
+Message-ID:  <a2587688c54834482d68fe2a44f415a649ad6477.1702648125.git.u.kleine-koenig@pengutronix.de>
 X-Mailer: git-send-email 2.42.0
+In-Reply-To: <cover.1702648124.git.u.kleine-koenig@pengutronix.de>
+References: <cover.1702648124.git.u.kleine-koenig@pengutronix.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,7 +55,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3618; i=u.kleine-koenig@pengutronix.de; h=from:subject:message-id; bh=QIF36TPLiswSJ7BGiTaGhS7zuJ523QsVTA+4ETPdeHY=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlfFukmiA7JF09OlxcCekWHX8K7N+brb2dL8yu1 L79tE8736eJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZXxbpAAKCRCPgPtYfRL+ Thd3B/9bi37yHbyCmxtoBnTyzghErF03a3MQ2kLvT2WmB6Vq6D8LnRwzOn4qBxY8ZfeDwdwKqld VmyWYR4z12b2U0+t6+ECIYcIjWxvDKcBiUJSS79pIL6fT0UeHQ4H2od/hSZnok7vIJ6fJa6XtqM Zl+rLWPBfpQmhBkomYlmL8hSpsWm+NSe3gKOlCV6mjshMhP9BUbBTKxrfHgYWlBrvaBZMZ2pLPL ZqQvKMYTRYvzctEkxL+nfaZrX+/Hd3Z2fsxNMGprvpEDQQcQJjPId5k36TG+jic7RZVP3M93Oh2 /DnXMSYbdraUhMvDc20qEUTd8vLV2/RzXtBaIw/o0ZZplz3k
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1931; i=u.kleine-koenig@pengutronix.de; h=from:subject:message-id; bh=VICxICa9rzVcpxd4YQzS3q7MnqlVMsOIGitfxpEhihs=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlfFu3p7ogtYGPBuZCsFnYFvOZg9wLXH6J7bohW JxjI9JrbLSJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZXxbtwAKCRCPgPtYfRL+ ThOdB/4mmPoWmDYG5uyMcSwzK1WP92WjeDvUiQQBHkp31CnYoCZDmYf3AJ1RZgzA71ftT89NP2i J+cLLxvsIKrjQ3U3i0G19YYMR1Tglb6sueG4oEkAqW70R7o6o2/itPnTZ9Q2R+Wq8Q7ekDdxYxq BlW1X0FE2Izyor49KMINVvrLnQCBfeKqsVBvnYBuOjX2muGy9hthfxsi0aSuNDLaXcGFwf20U8i OKcHR08eDXQNS1ZDJIe9ol6PJaN9B5cQIq+nwg8Ao6rAHqjRzJjvUVKUZs8U652FRvkQUIs1vy+ I9Z5fboAp0nA9MFJcfavCbIjfX49SP1CiF6xwTbJN6LALack
 X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
@@ -82,74 +63,54 @@ X-SA-Exim-Mail-From: ukl@pengutronix.de
 X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
 X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 
-Hello,
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-this series converts all drivers below drivers/perf to use
-.remove_new(). See commit 5c5a7680e67b ("platform: Provide a remove
-callback that returns no value") for an extended explanation and the
-eventual goal. The TL;DR; is to make it harder for driver authors to
-leak resources without noticing.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-I based the patches on today's next, I had to revert commits 
-3115ee021bfb ("arm64: perf: Include threshold control fields in
-PMEVTYPER mask") and 816c26754447 ("arm64: perf: Add support for event
-counting threshold") to compile test on ARCH=arm (this is a problem in
-next, not in my patch series).
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-This is merge window material. All patches are pairwise independent of
-each other so they can be applied individually. Still it would be great
-to let them go in all together.
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+---
+ drivers/perf/qcom_l2_pmu.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-Best regards
-Uwe
-
-Uwe Kleine-König (18):
-  perf: alibaba_uncore_drw: Convert to platform remove callback
-    returning void
-  perf: amlogic: Convert to platform remove callback returning void
-  perf: arm-cci: Convert to platform remove callback returning void
-  perf: arm-ccn: Convert to platform remove callback returning void
-  perf: arm-cmn: Convert to platform remove callback returning void
-  perf: arm_cspmu: Convert to platform remove callback returning void
-  perf: arm_dmc620: Convert to platform remove callback returning void
-  perf: arm_dsu: Convert to platform remove callback returning void
-  perf: arm_smmuv3: Convert to platform remove callback returning void
-  perf: arm_spe: Convert to platform remove callback returning void
-  perf: fsl_imx8_ddr: Convert to platform remove callback returning void
-  perf: fsl_imx9_ddr: Convert to platform remove callback returning void
-  perf: hisilicon: Convert to platform remove callback returning void
-  perf: marvell_cn10k_ddr: Convert to platform remove callback returning void
-  perf: marvell_cn10k_tad: Convert to platform remove callback returning void
-  perf: qcom_l2: Convert to platform remove callback returning void
-  perf: thunderx2: Convert to platform remove callback returning void
-  perf: xgene: Convert to platform remove callback returning void
-
- drivers/perf/alibaba_uncore_drw_pmu.c         | 6 ++----
- drivers/perf/amlogic/meson_g12_ddr_pmu.c      | 6 ++----
- drivers/perf/arm-cci.c                        | 8 +++-----
- drivers/perf/arm-ccn.c                        | 6 ++----
- drivers/perf/arm-cmn.c                        | 5 ++---
- drivers/perf/arm_cspmu/arm_cspmu.c            | 6 ++----
- drivers/perf/arm_dmc620_pmu.c                 | 6 ++----
- drivers/perf/arm_dsu_pmu.c                    | 6 ++----
- drivers/perf/arm_smmuv3_pmu.c                 | 6 ++----
- drivers/perf/arm_spe_pmu.c                    | 5 ++---
- drivers/perf/fsl_imx8_ddr_perf.c              | 5 ++---
- drivers/perf/fsl_imx9_ddr_perf.c              | 6 ++----
- drivers/perf/hisilicon/hisi_uncore_cpa_pmu.c  | 5 ++---
- drivers/perf/hisilicon/hisi_uncore_ddrc_pmu.c | 5 ++---
- drivers/perf/hisilicon/hisi_uncore_hha_pmu.c  | 5 ++---
- drivers/perf/hisilicon/hisi_uncore_l3c_pmu.c  | 5 ++---
- drivers/perf/hisilicon/hisi_uncore_pa_pmu.c   | 5 ++---
- drivers/perf/hisilicon/hisi_uncore_sllc_pmu.c | 5 ++---
- drivers/perf/marvell_cn10k_ddr_pmu.c          | 5 ++---
- drivers/perf/marvell_cn10k_tad_pmu.c          | 6 ++----
- drivers/perf/qcom_l2_pmu.c                    | 5 ++---
- drivers/perf/thunderx2_pmu.c                  | 5 ++---
- drivers/perf/xgene_pmu.c                      | 6 ++----
- 23 files changed, 47 insertions(+), 81 deletions(-)
-
-base-commit: 17cb8a20bde66a520a2ca7aad1063e1ce7382240
+diff --git a/drivers/perf/qcom_l2_pmu.c b/drivers/perf/qcom_l2_pmu.c
+index 3f9a98c17a89..148df5ae8ef8 100644
+--- a/drivers/perf/qcom_l2_pmu.c
++++ b/drivers/perf/qcom_l2_pmu.c
+@@ -965,7 +965,7 @@ static int l2_cache_pmu_probe(struct platform_device *pdev)
+ 	return err;
+ }
+ 
+-static int l2_cache_pmu_remove(struct platform_device *pdev)
++static void l2_cache_pmu_remove(struct platform_device *pdev)
+ {
+ 	struct l2cache_pmu *l2cache_pmu =
+ 		to_l2cache_pmu(platform_get_drvdata(pdev));
+@@ -973,7 +973,6 @@ static int l2_cache_pmu_remove(struct platform_device *pdev)
+ 	perf_pmu_unregister(&l2cache_pmu->pmu);
+ 	cpuhp_state_remove_instance(CPUHP_AP_PERF_ARM_QCOM_L2_ONLINE,
+ 				    &l2cache_pmu->node);
+-	return 0;
+ }
+ 
+ static struct platform_driver l2_cache_pmu_driver = {
+@@ -983,7 +982,7 @@ static struct platform_driver l2_cache_pmu_driver = {
+ 		.suppress_bind_attrs = true,
+ 	},
+ 	.probe = l2_cache_pmu_probe,
+-	.remove = l2_cache_pmu_remove,
++	.remove_new = l2_cache_pmu_remove,
+ };
+ 
+ static int __init register_l2_cache_pmu_driver(void)
 -- 
 2.42.0
 
