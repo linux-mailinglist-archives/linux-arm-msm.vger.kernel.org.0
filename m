@@ -1,25 +1,25 @@
-Return-Path: <linux-arm-msm+bounces-4934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4935-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49C7F81495E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 14:35:13 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56B67814974
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 14:39:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DD764B20E37
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 13:35:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7D7C21C23440
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 13:39:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 684162DB81;
-	Fri, 15 Dec 2023 13:35:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C7752DB9D;
+	Fri, 15 Dec 2023 13:39:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="bNZEm07B"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="wFh8KTDa"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CB72DB78;
-	Fri, 15 Dec 2023 13:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0230818C2F;
+	Fri, 15 Dec 2023 13:39:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
@@ -27,16 +27,17 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
 	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
 	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=5y1ia7oRbdSD4fUrEMlezsZFcNEy3zWEND9kRt4dvuw=; b=bNZEm07BYacmWsRZeP4QS/Ug9b
-	3aAk0DlLpVeRUAQ20+xFQQMv0z8EIRaL2uRX1gY+8RGtr0kq2km9hHrxdwTluiDUIRSkZV1uqgjPo
-	MbAdtefUc4NaeilPCP8Mc6aL0RwsVGZ0Ey7WJHeWJ+XovpW44odrcMtOJFilB/mhm/5U=;
+	bh=wtwSbmM7l1ab40jpBtWJLq9UlQFmWrKdHhgxv86nFSE=; b=wFh8KTDajmYxCZQ+++PVkwX39F
+	BAZJl6fIM/4Ff6l4Nlmxirf6s+mhZ1nETZCaQrz/KkUhhmcf0sMyrlR13ZbN7LWJoX5UD+TyrqYx0
+	u1Kf7VCqiDUKEdF3CYjSPy3ZIcmg08xaI+D/5saClC+cR8sCtpM3B2Amw3hU9TEwPGp4=;
 Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
 	(envelope-from <andrew@lunn.ch>)
-	id 1rE8LA-0031gt-F5; Fri, 15 Dec 2023 14:34:56 +0100
-Date: Fri, 15 Dec 2023 14:34:56 +0100
+	id 1rE8Pe-0031iW-Sy; Fri, 15 Dec 2023 14:39:34 +0100
+Date: Fri, 15 Dec 2023 14:39:34 +0100
 From: Andrew Lunn <andrew@lunn.ch>
 To: Jie Luo <quic_luoj@quicinc.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, agross@kernel.org,
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Conor Dooley <conor@kernel.org>, agross@kernel.org,
 	andersson@kernel.org, konrad.dybcio@linaro.org, davem@davemloft.net,
 	edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
 	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
@@ -44,19 +45,19 @@ Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, agross@kernel.org,
 	robert.marko@sartura.hr, linux-arm-msm@vger.kernel.org,
 	netdev@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org, quic_srichara@quicinc.com
-Subject: Re: [PATCH v3 5/5] dt-bindings: net: ipq4019-mdio: Document ipq5332
+Subject: Re: [PATCH v2 5/5] dt-bindings: net: ipq4019-mdio: Document ipq5332
  platform
-Message-ID: <83ea51ac-e976-44b6-ad5c-f11661646671@lunn.ch>
-References: <20231214090304.16884-1-quic_luoj@quicinc.com>
- <20231214090304.16884-6-quic_luoj@quicinc.com>
- <1e4c55c8-8ed6-4f2e-8328-8a173f09b62f@linaro.org>
- <3c8e33b4-6ebc-476f-a00f-15cc8a1ad9e4@quicinc.com>
- <b89abf8c-57f8-46a6-a071-b1591340fbdf@linaro.org>
- <3de98516-9a28-4f58-8951-2a7752621fee@quicinc.com>
- <1fa2d219-63d7-45cf-9e05-b85dbce24076@linaro.org>
- <f16dfe78-2e31-45fb-b2fe-f72b7e6c51a5@quicinc.com>
- <6acecb29-2a6c-40af-a5a3-bec3e7286df7@linaro.org>
- <6e5b6ab5-fc89-4986-894a-62af08343859@quicinc.com>
+Message-ID: <3d89a725-ce81-4d13-b5e3-75198c408f78@lunn.ch>
+References: <a1e5ffec-a20d-4389-83f9-ee09bd9d733d@linaro.org>
+ <a84a36af-69f8-46af-967e-b06d028597a3@quicinc.com>
+ <26c8b0b1-5ea9-45cc-adf3-0d0b03a1284d@linaro.org>
+ <4b9c56b8-3b29-4861-a3d5-2da26fbc14b4@quicinc.com>
+ <2e77e3b1-00b6-46b9-bfed-7cae3ffa15e9@linaro.org>
+ <7bae46fd-63fd-4b86-9a56-73052cf0ea95@quicinc.com>
+ <5a8095e6-b6a6-4d11-b006-31519e8d8622@linaro.org>
+ <7466b655-2b7e-44f2-a510-6e0cc1b95248@quicinc.com>
+ <602759ce-c93d-4111-9272-1dce7e4a170a@linaro.org>
+ <f656d1c7-ea86-405a-9165-9eb079ea6f2a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,20 +66,32 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6e5b6ab5-fc89-4986-894a-62af08343859@quicinc.com>
+In-Reply-To: <f656d1c7-ea86-405a-9165-9eb079ea6f2a@quicinc.com>
 
-> These properties "reset-assert-us" and "reset-deassert-us" are the
-> general properties from mdio.yaml, which are used when the MDIO
-> bus driver is registered by the MDIO framework.
-> The general DT property already supports to do the correct config,
-> then compatible string is not needed to be checked for doing the
-> configs.
+> > You keep answering with short sentences without touching the root of the
+> > problem. I don't know exactly why, but I feel this discussion leads
+> > nowhere. After long discussion you finally admitted that clocks came
+> > from another device - Wifi. It took us like 6 emails?
+> > 
+> > So last statement: if you have clock provider and clock consumer, you
+> > must represent it in the bindings or provide rationale why it should not
+> > or must not be represented in the bindings. So far I do not see any of
+> > such arguments.
+> > 
+> > If you use arguments like:
+> > "My driver....": sorry, bindings are not about drivers
+> > "I don't have clock driver for WiFi": sorry, it does not matter if you
+> > can write one, right?
+> > 
+> > Please reach internally your colleagues to solve these problems and make
+> > review process smoother.
 
-Given the complexity of your device, i doubt you can make it work
-without using a compatible containing the ID register values. That
-will get your driver loaded, and the probe method called which can
-then deal with all the clocks and resets in whatever way it wants.
+Yes, i strongly agree with this. Its not our job as maintainers to
+educate big companies like Qualcomm how to write Linux drivers. There
+are more experienced driver writer within Qualcomm, you need to make
+contact with them, and get them to help you. Or you need to outsource
+the driver development to one of the companies which write mainline
+Linux drivers.
 
-    Andrew
-
+	Andrew
 
