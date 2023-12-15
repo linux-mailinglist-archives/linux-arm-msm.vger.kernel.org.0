@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-5012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5013-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id AAF52815496
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 00:36:16 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B88868154AB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 00:55:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C0BCC1C23FB1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 23:36:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DDF9B1C2438A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 23:55:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B273E18ED8;
-	Fri, 15 Dec 2023 23:35:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F16C36AEE;
+	Fri, 15 Dec 2023 23:55:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N44rzKSk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HBOdAaWZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2B045C0E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 23:35:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73DF048CF2
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 23:54:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2ca0715f0faso15479331fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 15:35:56 -0800 (PST)
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a22eba5a290so144368666b.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 15:54:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702683355; x=1703288155; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1702684497; x=1703289297; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=YBG7vJ0wQQ9pJwBsGA7yTbbvPq6lJZZywu38DBk+C5o=;
-        b=N44rzKSk2/Py3oKQwqvnOLRhZpn5jEhsnLjpGHPYy26AGIvMnV/jU3g/ISBADfYsav
-         wYwj+lUTCUxheqGkX2y8DxvZhyOLvJfRUGmHQ89doQhQWetJ5by5bFcOYWgmB/X9oCkb
-         KgoGMK22JLb5jUAoAnoYp7l2IRm+sBWbN09dOgVkTuaNtbuPWVVNMnbQ1PEuKbI39zUp
-         axv4waudgtaWQUuROT8HUISfqBSK/Sfb4PzpJ1fXZLtbhCArRJenhU4fmT1IMtWvxCPL
-         zbZGmFMTgm0b1wyvh0oB8LIRabYysCg9+7B84KkQtBnKyCwLXTcKwZE8wwhuWJ1Dq0b+
-         vf8g==
+        bh=BmSdErHsr1zbuomX2DsSYiMRXQ5ZJPIl91wZ8zgMNQI=;
+        b=HBOdAaWZWvhxUk5pWV4L0p26J8rs1OUaDr0Y5xnalciUpctDdLlF2QY021nrNlNUDt
+         4DTUbKbqACTZkoWZWp3ive5LyA0s8aNsRib26DbgWZjX7nUbNdZuYNJEmbuln+4IeHqr
+         fnWHF8d3hUHrfwYTaHRxmH4ZUR/pUC/s0GttQyxQ8eF1QnVcnqTzc5CnOTKQcMHtEzSo
+         7pU8K4ICThxSiKIsbg0gvj5ZHH5n7X7idv+dNYADLpEQssbfy1wgNOTMfd3GlJWC6tJz
+         9lTSRw7nRiy1KryGAOMSI3SkIE+rv1rkLU2l8YxENTXmo8+DleqEPitd5ZrgHawOAZxo
+         2iog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702683355; x=1703288155;
+        d=1e100.net; s=20230601; t=1702684497; x=1703289297;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YBG7vJ0wQQ9pJwBsGA7yTbbvPq6lJZZywu38DBk+C5o=;
-        b=J4/RzcwfWtZs9GrhKvQvVqDg62NzIA9wRkdZ1j9dtoiFgStEiTA4xeJcR7xnVhNLZS
-         jR7SxZzXbhdqfV4TnOrKvZvooXVQBMf3O4/87Rq4Jq7ApwdZk/2nQCc+Hd/UCltTJUwb
-         t4J7BaiWLiT0FD7Tcfw+KWXcIv/ncwCFqZOvyJvaPuxlanAQemFwZkkiVc9iLQYo1ShK
-         zuLjfZuRiHGNrQAew96OjrfZLp1hxRbnaT4ieBY7gy1WQT5xrxMbcMAzQtNGfJF/GvA0
-         SMqvSb1ytNz7jXU2JPmvbYJQhHBiNyPVjqtR8aToslDyi0KFdraYWoBwB32d7aZZiPLP
-         ttww==
-X-Gm-Message-State: AOJu0YyKLKzWMY/PABhegEmTDy7ujfI5f0ntK5yfFaCzCQWp2+ek76C2
-	RXQQkTGBRx/Lpj9Ii0dffeSZGQ==
-X-Google-Smtp-Source: AGHT+IHjPSx49Ek10kxZQdEL4+jDoPGZhx6kHsjSpzOCqfBvuol4kaHrFaMXnjTktyfv2xXNNmlTXg==
-X-Received: by 2002:a05:651c:b10:b0:2cc:4b4a:50 with SMTP id b16-20020a05651c0b1000b002cc4b4a0050mr1099892ljr.84.1702683355138;
-        Fri, 15 Dec 2023 15:35:55 -0800 (PST)
+        bh=BmSdErHsr1zbuomX2DsSYiMRXQ5ZJPIl91wZ8zgMNQI=;
+        b=aLiCoB1qKfnQMu+FxhBucU/aUP46dk7MymB2KEA6T71wgXep5B0dCvnURlrWMenxeU
+         ugoNLlQT4/neryYcCqmPRlms+Vm/JCor5qfrgDEC4uXr2YB7aNuHUvVsiVi2V9C9p+ig
+         sPiBYLX/hsVqHn1Bkd0T+5Q4MDBAdmbm4lFPBxLngEFR3i9/OsRVChy8IEgmzPd19DMf
+         BGlDeISmMuvoUIQBgC8xfgz4SF0gz4wVryy34IMb74acRE4xTYX7RyXxYZ9CqUk9ZytC
+         IZdpb9jVYeYTnigjNcm/Iop1UUEzF4jDDpQQC235II0piTgTs4+hY22jg9ijZKcFt5UX
+         aGZw==
+X-Gm-Message-State: AOJu0YzdXwHnSpiI9BVOuVDkYkW/kYbBrP2hqtINHVUVJZuBe/U2jegX
+	3VcDCfDwOo5iIQZ8g+JLXdrZeQ==
+X-Google-Smtp-Source: AGHT+IH4v3xngaVt3yd1odymJDcdKLFuUIZTg3xffMi+MVG4yX+awGAjWpiiizyjykH9t1C4wXVbFg==
+X-Received: by 2002:a17:906:41:b0:a23:b67:cb1b with SMTP id 1-20020a170906004100b00a230b67cb1bmr2019929ejg.17.1702684496604;
+        Fri, 15 Dec 2023 15:54:56 -0800 (PST)
 Received: from [192.168.199.59] (178235179137.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.137])
-        by smtp.gmail.com with ESMTPSA id ez1-20020a056402450100b00551ca461bd7sm3725606edb.48.2023.12.15.15.35.52
+        by smtp.gmail.com with ESMTPSA id tz4-20020a170907c78400b00a1aad4d92dbsm11210558ejc.123.2023.12.15.15.54.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Dec 2023 15:35:54 -0800 (PST)
-Message-ID: <e4329952-34ac-4458-a63c-1f64e288614c@linaro.org>
-Date: Sat, 16 Dec 2023 00:35:51 +0100
+        Fri, 15 Dec 2023 15:54:56 -0800 (PST)
+Message-ID: <3c7b8c2c-7174-4ced-8954-5a249f792c1e@linaro.org>
+Date: Sat, 16 Dec 2023 00:54:52 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,21 +66,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/5] iommu/arm-smmu: add ACTLR data and support for
- SM8550
+Subject: Re: [PATCH v4 5/5] iommu/arm-smmu: re-enable context caching in smmu
+ reset operation
 Content-Language: en-US
 To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>, will@kernel.org,
  robin.murphy@arm.com, joro@8bytes.org, dmitry.baryshkov@linaro.org,
  jsnitsel@redhat.com, quic_bjorande@quicinc.com, mani@kernel.org,
  quic_eberman@quicinc.com, robdclark@chromium.org,
  u.kleine-koenig@pengutronix.de, robh@kernel.org, vladimir.oltean@nxp.com,
- quic_pkondeti@quicinc.com, quic_molvera@quicinc.com,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+ quic_pkondeti@quicinc.com, quic_molvera@quicinc.com
 Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
  iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
  qipl.kernel.upstream@quicinc.com
 References: <20231215101827.30549-1-quic_bibekkum@quicinc.com>
- <20231215101827.30549-4-quic_bibekkum@quicinc.com>
+ <20231215101827.30549-6-quic_bibekkum@quicinc.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -117,30 +116,56 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231215101827.30549-4-quic_bibekkum@quicinc.com>
+In-Reply-To: <20231215101827.30549-6-quic_bibekkum@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 15.12.2023 11:18, Bibek Kumar Patro wrote:
-> Add ACTLR data table for SM8550 along with support for
-> same including SM8550 specific implementation operations.
+> Default MMU-500 reset operation disables context caching in
+> prefetch buffer. It is however expected for context banks using
+> the ACTLR register to retain their prefetch value during reset
+> and runtime suspend.
+> 
+> Replace default MMU-500 reset operation with Qualcomm specific reset
+> operation which envelope the default reset operation and re-enables
+> context caching in prefetch buffer for Qualcomm SoCs.
 > 
 > Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
 > ---
-[...]
+This probably deserves a fixes tag, but I can't find a good commit for
+it, so I guess not having it is fine as well.
 
-> +static const struct qcom_smmu_match_data sm8550_smmu_500_impl0_data = {
-> +	.impl = &qcom_smmu_500_impl,
-> +	.adreno_impl = &qcom_adreno_smmu_500_impl,
-> +	.cfg = &qcom_smmu_impl0_cfg,
-> +	.actlrcfg = sm8550_apps_actlr_cfg,
-> +	.actlrcfg_gfx = sm8550_gfx_actlr_cfg,
-There are platforms that feature more than just APPS and Adreno SMMUs,
-this implementation seems to assume there's only these two :/
+Also, since it seems to be independent from the rest of the patches, please
+reorder it to become patch 1 in the next spin, so that it can perhaps be
+easily picked up independently of the rest.
 
-I suppose the only way to solve this would be to introduce new compatibles
-for each one of them.. Krzysztof, do you think that's reasonable? E.g.
-MSM8996 has at least 5 instances, 8998 has at least 4 etc.
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 23 +++++++++++++++++++---
+>  1 file changed, 20 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> index c8f5dd4186b7..70d2a5d43993 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -516,11 +516,28 @@ static int qcom_smmu_def_domain_type(struct device *dev)
+>  	return match ? IOMMU_DOMAIN_IDENTITY : 0;
+>  }
+> 
+> +static int qcom_smmu500_reset(struct arm_smmu_device *smmu)
+> +{
+> +	int i;
+> +	u32 reg;
+That's rather nitty/codestyle-y, but:
+
+- reverse Christmas tree would be nice (it's in a week! :D)
+- "reg" to me sounds like "register address", "val" is used widely for
+  register values
+
+> +
+> +	arm_mmu500_reset(smmu);
+We should check the return value here, in case the function is modified
+some day in a way that makes it return something else than 0
+
+LGTM otherwise!
 
 Konrad
 
