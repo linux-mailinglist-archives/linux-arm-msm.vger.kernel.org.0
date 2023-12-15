@@ -1,162 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-4864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47ED081414A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 06:34:59 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3224481415D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 06:38:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7A0361C22352
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 05:34:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 64F311C22485
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 05:38:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 023C8612B;
-	Fri, 15 Dec 2023 05:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBB1E63CB;
+	Fri, 15 Dec 2023 05:38:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="o3fE8TcR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="R2F2SG2a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C7F63A6;
-	Fri, 15 Dec 2023 05:34:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
-Received: from authenticated-user (box.trvn.ru [194.87.146.52])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-	(No client certificate requested)
-	by box.trvn.ru (Postfix) with ESMTPSA id EF824403BF;
-	Fri, 15 Dec 2023 10:29:22 +0500 (+05)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-	t=1702618164; bh=wJhGZlFfjScpdy3VQmLDEEdsC0w0gtsbyZa72g/IvsY=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=o3fE8TcRvkhGpHFeYdMIue4Mt4Kudw+bq2DbbqgM7ZhrtJqW+H7RIx4T0uuhp+X53
-	 NAEbsqOJ6AGxLt7Rk+zbNR18lceA04szHgpiSXNGo3qpkjtacX1Z5qoKQ3FgMGAmFK
-	 ZbMOWI9CiVYcEKla9G9w6WDc5kgaBR89pQfbderarbz9C1Cn9hsvhXTf9I/JZw/wLy
-	 +sVXB+w1ZHDcF4W4Ck3cPm3AVlquMGrzczT+ELzy9wR+pn/vLFqVyXTgPunOQOLFsJ
-	 QwQPJO8T+cPDeoTWieDsysBljdx1OCBep3ZvzIlvFQ+WIhMHWmVyL0AuzumCvtCtBT
-	 4QvoIXfXN4iQA==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43531D266;
+	Fri, 15 Dec 2023 05:38:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BF3lJnQ016521;
+	Fri, 15 Dec 2023 05:38:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=lHZOFCL
+	1XMoQlQectvGN5zz3xe/B+fTXqI7DHa4UZJk=; b=R2F2SG2aMQVwlziWh/P05E5
+	HlwyTXQf10NbdjPDspS0T7Bao/tGPiks9Ve1IFP/cAciQ5E1EJZRZORQJoLr/SMv
+	mLl6JqXs3wuH/NPf1zBOfZ5ZfrRTeSwLcQCKo0nlugd/6821qLAdN7QdaIoszlxA
+	Vu32e94Th6Jhr87ffmO1VTb3Os3P6Q9ne/HX+ubMEO2fYJkS8GAgKmRnn5p5OGXS
+	rtTSLs6f+NuslBN5MeORR9cxXd2jG6VxW1Tt+3EdOzUdFfL2xGxOx2wdh08QMtyf
+	R8OHG6VwV7TRXlV3GkN1ArG5cBwFW7Cu3WhSaqv74AZRCmEmAT5AKT0vVypZPyA=
+	=
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v0a37h05t-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 15 Dec 2023 05:38:08 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BF5c7WR018937
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 15 Dec 2023 05:38:07 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Thu, 14 Dec 2023 21:38:04 -0800
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+CC: Varadarajan Narayanan <quic_varada@quicinc.com>
+Subject: [PATCH v1 0/2] Add LDO5 MP5496 regulator
+Date: Fri, 15 Dec 2023 11:07:02 +0530
+Message-ID: <cover.1702618483.git.quic_varada@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 15 Dec 2023 10:29:22 +0500
-From: Nikita Travkin <nikita@trvn.ru>
-To: Rob Herring <robh@kernel.org>
-Cc: Sebastian Reichel <sre@kernel.org>, Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
- cros-qcom-dts-watchers@chromium.org, Andy Gross <agross@kernel.org>, Bjorn
- Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
- linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] dt-bindings: power: supply: Add Acer Aspire 1 EC
-In-Reply-To: <20231214220210.GA988134-robh@kernel.org>
-References: <20231212-aspire1-ec-v2-0-ca495ea0a7ac@trvn.ru>
- <20231212-aspire1-ec-v2-1-ca495ea0a7ac@trvn.ru>
- <20231214220210.GA988134-robh@kernel.org>
-Message-ID: <207edefe4e8eac9679cd8966d28820cd@trvn.ru>
-X-Sender: nikita@trvn.ru
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: UrMv3_maKsm-_WwdHQaTCaE89Y4obiAI
+X-Proofpoint-ORIG-GUID: UrMv3_maKsm-_WwdHQaTCaE89Y4obiAI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
+ malwarescore=0 bulkscore=0 mlxlogscore=231 adultscore=0 spamscore=0
+ phishscore=0 impostorscore=0 lowpriorityscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2311290000
+ definitions=main-2312150033
 
-Rob Herring писал(а) 15.12.2023 03:02:
-> On Tue, Dec 12, 2023 at 05:49:09PM +0500, Nikita Travkin wrote:
->> Add binding for the EC found in the Acer Aspire 1 laptop.
->>
->> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
->> ---
->>  .../bindings/power/supply/acer,aspire1-ec.yaml     | 67 ++++++++++++++++++++++
->>  1 file changed, 67 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/power/supply/acer,aspire1-ec.yaml b/Documentation/devicetree/bindings/power/supply/acer,aspire1-ec.yaml
->> new file mode 100644
->> index 000000000000..1fbf1272a00f
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/power/supply/acer,aspire1-ec.yaml
->> @@ -0,0 +1,67 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/power/supply/acer,aspire1-ec.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Acer Aspire 1 Embedded Controller
->> +
->> +maintainers:
->> +  - Nikita Travkin <nikita@trvn.ru>
->> +
->> +description:
->> +  The Acer Aspire 1 laptop uses an embedded controller to control battery
->> +  and charging as well as to provide a set of misc features such as the
->> +  laptop lid status and HPD events for the USB Type-C DP alt mode.
->> +
->> +properties:
->> +  compatible:
->> +    const: acer,aspire1-ec
->> +
->> +  reg:
->> +    const: 0x76
->> +
->> +  interrupts:
->> +    maxItems: 1
->> +
->> +  acer,media-keys-on-top:
->> +    description: Configure the keyboard layout to use media features of
->> +      the fn row when the fn key is not pressed. The firmware may choose
->> +      to add this property when user selects the fn mode in the firmware
->> +      setup utility.
->> +    type: boolean
-> 
-> Besides the naming, this isn't really a property of the EC, but really 
-> part of the keyboard layout. It seems you just stuck it here because 
-> this is part of the specific device.
-> 
+Splitting the earlier patchset https://lore.kernel.org/linux-arm-msm/cover.1701160842.git.varada@hu-varada-blr.qualcomm.com/
+and including the dt-bindings update (per https://lore.kernel.org/linux-arm-msm/e6f77480-749b-4ffb-93dd-764451e3f5fb@linaro.org/).
+Had to split since the regulator driver change and the USB driver
+change were dependent. If the USB driver change gets merged before
+the regulator driver change it could break the kernel boot up.
 
-The EC on this device is also a keyboard controller, but the keyboard
-part has a dedicated i2c bus with hid-over-i2c. Since this is the
-"management" bus of the same device, I decided that it fits here.
+The earlier patch ec4f047679d5, incorrectly used 'l2'
+as the vdda-pll-supply. However, 'l5' is the correct
+ldo that supplies power to the USB PHY.
 
-> It is also hardly a feature unique to this device. I'm typing this from 
-> a device with the exact same thing (M1 Macbook Pro). Actually, all 3 
-> laptops I have in front of me have the same thing. The other 2 have 
-> a Fnlock (Fn+ESC) though.  On the M1, it's just a module param which I 
-> set as persistent. Though I now wonder if the Fnlock could be 
-> implemented on it too. Being able to switch whenever I want would be 
-> nice. That would probably have to be in Linux where as these other 
-> laptops probably implement this in their EC/firmware?
-> 
-> What I'm getting at is controlling changing this in firmware is not a 
-> great experience and this should all be common.
-> 
+Following checks passed:
+make W=1 ARCH=arm64 -j 16 CHECK_DTBS=y DT_SCHEMA_FILES=qcom dtbs_check
+make W=1 ARCH=arm64 -j 16 DT_CHECKER_FLAGS='-v -m' dt_binding_check DT_SCHEMA_FILES=qcom
 
-You may be right, however my goal here is to support the original
-firmware feature that is lost when we use DT.
+Varadarajan Narayanan (2):
+  regulator: qcom_smd: Add l2, l5 sub-node to mp5496 regulator
+  regulator: qcom_smd: Add LDO5 MP5496 regulator
 
-This is a WoA laptop with UEFI/ACPI and, as usual for "Windows"
-machines, there is a setting in the firmware setup utility ("bios") to
-set the fn behavior. But it works by setting an ACPI value, and for
-Snapdragon devices we can't use that now.
+ .../devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml   | 2 +-
+ drivers/regulator/qcom_smd-regulator.c                          | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-Long term I want to have a EFI driver that would automatically
-detect/load DT and my plan is to handle things like this (and i.e. mac
-address, different touchpad vendor, etc) there. Thus I'm adding this
-property already, as an equivalent of that weird acpi bit that original
-firmware sets.
+-- 
+2.34.1
 
-If we only provide a module param, the "intended by OEM" way of setting
-the fn mode will be broken, and one would need to know how to write a
-magic special config file to set a kernel module param. I think it's not
-the best UX. (and just adds to the silly "arm/dt bad, x86/uefi/acpi
-"just works"" argument many people sadly have)
-
-If you think I shouldn't use DT to pass this info, feel free to say so.
-I will drop this property and see if there is something else I can do
-to still support this without relying on Linux cooperation.
-
-Looking forward to your opinion,
-Nikita
-
-> Rob
 
