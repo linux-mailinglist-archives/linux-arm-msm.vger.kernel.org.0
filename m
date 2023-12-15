@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-4869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4870-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36070814174
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 06:45:41 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C14981418A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 06:52:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5B5411C223E2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 05:45:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9C4661C22380
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 05:52:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67BDF6AA7;
-	Fri, 15 Dec 2023 05:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0F1DDDA6;
+	Fri, 15 Dec 2023 05:52:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="doaWFc66"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="osIOs18x"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF10C6AA6;
-	Fri, 15 Dec 2023 05:45:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C470DDA8;
+	Fri, 15 Dec 2023 05:52:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BF4rG17012803;
-	Fri, 15 Dec 2023 05:45:25 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BF3tA23030077;
+	Fri, 15 Dec 2023 05:52:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=OIvgiwV5IcUa6vyzIxMJliZLEIyS2TSOj3fE8+EY3XE=; b=do
-	aWFc66C+Cka3jzquchaIjPGX5S6kGgRGigusUZ+FTk7ZqnDey2I4/aU0oPn+rsws
-	iGndWwCRfgHcovc+lUPyJD6Z+yGWCUOAEGQE4ALkeOlu5Rc6tAsTnqBfDYFT0N5a
-	yEKv0zmU3HzxbHfdn71YbLlH6nBSmDJLQBU1Nsnak3nerfoylqy17Smq0pM3HrcV
-	oV/ruW9zqCaZ2bbYnj2EBsJUjzdAo41vkfMuWz/d70xMSCPFp9A9pjiDZ1hXiGNR
-	RF+HQVcOd3ey2QY8uYvf2LozDXU31XMedVL/EC8+h6iHFq3h3D0/jLGFbnl6320N
-	Hgfw/apPJGrbFvipNirg==
+	qcppdkim1; bh=WwhbnCJ/fvj1pBHTsPcikQpwh3p9fizJJVTCR0bzuCo=; b=os
+	IOs18xp/yBTZqmdQzVbjlJTRbFjICiHbu9cijQ0MNmMnxMm0nE88Ap3eyc222Y/B
+	n1RFlSredGasfpyvHZiA5cRJrQ41j1cGUYTf8N7AcnSFBJZQd5BYVrWmmUZXJpHo
+	OvDCjCWCFF8tqtKb2JdefmfpHEDY4cAtDfrVThmNNPiQHm7pmF6JOaRxOY/Znppe
+	k0yxmOzsADwRB54Nu0VD6lnhZydUlgecvtpb4H6UAruSxXTxfNGwYGi4rueVo0KE
+	Rm6kQqu550Rl2EJZLDN51Kgbuc5GSEgZFEtGs13R0Bay3rmqbxh/0Vhpk8d2dLte
+	xADAHzfUcPaEoElYgAuQ==
 Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v0a37h0nv-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uyp0pb79r-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 15 Dec 2023 05:45:24 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BF5jNRg013681
+	Fri, 15 Dec 2023 05:52:25 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BF5qOFd024341
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 15 Dec 2023 05:45:23 GMT
-Received: from [10.201.3.91] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+	Fri, 15 Dec 2023 05:52:24 GMT
+Received: from [10.239.132.150] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 14 Dec
- 2023 21:45:16 -0800
-Message-ID: <aeaf0b2a-7fdf-4e23-97bc-7bfc3fd05f41@quicinc.com>
-Date: Fri, 15 Dec 2023 11:15:16 +0530
+ 2023 21:52:16 -0800
+Message-ID: <75de85ae-ebcb-4f86-8cbf-749708cb3668@quicinc.com>
+Date: Fri, 15 Dec 2023 13:52:14 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,148 +56,80 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/10] phy: qcom: ipq5332: Add support for g3x1 and g3x2
- PCIe PHYs
+Subject: Re: [PATCH] kernel: Introduce a write lock/unlock wrapper for
+ tasklist_lock
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <bhelgaas@google.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
-        <vkoul@kernel.org>, <kishon@kernel.org>, <mani@kernel.org>,
-        <quic_nsekar@quicinc.com>, <quic_srichara@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <quic_varada@quicinc.com>, <quic_devipriy@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>
-References: <20231214062847.2215542-1-quic_ipkumar@quicinc.com>
- <20231214062847.2215542-7-quic_ipkumar@quicinc.com>
- <CAA8EJppSXeV9LSv8VAwYSP9nDzq+uHTvbiEzD4PebEHoOJySNg@mail.gmail.com>
-From: Praveenkumar I <quic_ipkumar@quicinc.com>
-In-Reply-To: <CAA8EJppSXeV9LSv8VAwYSP9nDzq+uHTvbiEzD4PebEHoOJySNg@mail.gmail.com>
+To: "Eric W. Biederman" <ebiederm@xmission.com>,
+        Matthew Wilcox
+	<willy@infradead.org>
+CC: <kernel@quicinc.com>, <quic_pkondeti@quicinc.com>, <keescook@chromium.or>,
+        <viro@zeniv.linux.org.uk>, <brauner@kernel.org>, <oleg@redhat.com>,
+        <dhowells@redhat.com>, <jarkko@kernel.org>, <paul@paul-moore.com>,
+        <jmorris@namei.org>, <serge@hallyn.com>, <linux-mm@kvack.org>,
+        <linux-fsdevel@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <keyrings@vger.kernel.org>, <linux-security-module@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20231213101745.4526-1-quic_aiquny@quicinc.com>
+ <ZXnaNSrtaWbS2ivU@casper.infradead.org>
+ <87o7eu7ybq.fsf@email.froward.int.ebiederm.org>
+From: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>
+In-Reply-To: <87o7eu7ybq.fsf@email.froward.int.ebiederm.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: vkojKA8BInIcdHfbqwabzdky8Fhz3Wux
-X-Proofpoint-ORIG-GUID: vkojKA8BInIcdHfbqwabzdky8Fhz3Wux
+X-Proofpoint-ORIG-GUID: 9L7uaS1JyabO0j9O4o1SCZxK4G0IVJ0o
+X-Proofpoint-GUID: 9L7uaS1JyabO0j9O4o1SCZxK4G0IVJ0o
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- malwarescore=0 bulkscore=0 mlxlogscore=999 adultscore=0 spamscore=0
- phishscore=0 impostorscore=0 lowpriorityscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.19.0-2311290000
- definitions=main-2312150033
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=543 mlxscore=0 phishscore=0 impostorscore=0 malwarescore=0
+ lowpriorityscore=0 adultscore=0 bulkscore=0 spamscore=0 classifier=spam
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
+ definitions=main-2312150034
 
 
 
-On 12/14/2023 12:42 PM, Dmitry Baryshkov wrote:
-> On Thu, 14 Dec 2023 at 08:30, Praveenkumar I <quic_ipkumar@quicinc.com> wrote:
->> Add support for single-lane and dual-lane PCIe UNIPHY found on
->> Qualcomm IPQ5332 platform. This UNIPHY is similar to the one
->> present in Qualcomm IPQ5018.
+On 12/14/2023 2:27 AM, Eric W. Biederman wrote:
+> Matthew Wilcox <willy@infradead.org> writes:
+> 
+>> On Wed, Dec 13, 2023 at 06:17:45PM +0800, Maria Yu wrote:
+>>> +static inline void write_lock_tasklist_lock(void)
+>>> +{
+>>> +	while (1) {
+>>> +		local_irq_disable();
+>>> +		if (write_trylock(&tasklist_lock))
+>>> +			break;
+>>> +		local_irq_enable();
+>>> +		cpu_relax();
 >>
->> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->> ---
->> This patch depends on the below series which adds PCIe support in
->> Qualcomm IPQ5018
->> https://lore.kernel.org/all/20231003120846.28626-1-quic_nsekar@quicinc.com/
+>> This is a bad implementation though.  You don't set the _QW_WAITING flag
+Any better ideas and suggestions are welcomed. :)
+>> so readers don't know that there's a pending writer.  Also, I've see >> cpu_relax() pessimise CPU behaviour; putting it into a low-power mode
+>> that takes a while to wake up from.
 >>
->>   .../phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c  | 44 +++++++++++++++++++
->>   1 file changed, 44 insertions(+)
->>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c b/drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c
->> index 9f9a03faf6fa..aa71b85eb50e 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c
->> @@ -34,6 +34,10 @@
->>   #define SSCG_CTRL_REG_6                0xb0
->>   #define PCS_INTERNAL_CONTROL_2 0x2d8
->>
->> +#define PHY_CFG_PLLCFG                         0x220
->> +#define PHY_CFG_EIOS_DTCT_REG                  0x3e4
->> +#define PHY_CFG_GEN3_ALIGN_HOLDOFF_TIME                0x3e8
->> +
->>   #define PHY_MODE_FIXED         0x1
->>
->>   enum qcom_uniphy_pcie_type {
->> @@ -112,6 +116,21 @@ static const struct uniphy_regs ipq5018_regs[] = {
->>          },
->>   };
->>
->> +static const struct uniphy_regs ipq5332_regs[] = {
->> +       {
->> +               .offset = PHY_CFG_PLLCFG,
->> +               .val = 0x30,
->> +       },
->> +       {
->> +               .offset = PHY_CFG_EIOS_DTCT_REG,
->> +               .val = 0x53ef,
->> +       },
->> +       {
->> +               .offset = PHY_CFG_GEN3_ALIGN_HOLDOFF_TIME,
->> +               .val = 0xCf,
->> +       },
->> +};
->> +
->>   static const struct uniphy_pcie_data ipq5018_2x2_data = {
->>          .lanes          = 2,
->>          .lane_offset    = 0x800,
->> @@ -121,6 +140,23 @@ static const struct uniphy_pcie_data ipq5018_2x2_data = {
->>          .pipe_clk_rate  = 125000000,
->>   };
->>
->> +static const struct uniphy_pcie_data ipq5332_x2_data = {
->> +       .lanes          = 2,
->> +       .lane_offset    = 0x800,
->> +       .phy_type       = PHY_TYPE_PCIE_GEN3,
->> +       .init_seq       = ipq5332_regs,
->> +       .init_seq_num   = ARRAY_SIZE(ipq5332_regs),
->> +       .pipe_clk_rate  = 250000000,
->> +};
->> +
->> +static const struct uniphy_pcie_data ipq5332_x1_data = {
->> +       .lanes          = 1,
->> +       .phy_type       = PHY_TYPE_PCIE_GEN3,
->> +       .init_seq       = ipq5332_regs,
->> +       .init_seq_num   = ARRAY_SIZE(ipq5332_regs),
->> +       .pipe_clk_rate  = 250000000,
->> +};
-> Please keep structs sorted out.
-sure, will address in next patch set.
->
->> +
->>   static void qcom_uniphy_pcie_init(struct qcom_uniphy_pcie *phy)
->>   {
->>          const struct uniphy_pcie_data *data = phy->data;
->> @@ -270,6 +306,14 @@ static const struct of_device_id qcom_uniphy_pcie_id_table[] = {
->>                  .compatible = "qcom,ipq5018-uniphy-pcie-gen2x2",
->>                  .data = &ipq5018_2x2_data,
->>          },
->> +       {
->> +               .compatible = "qcom,ipq5332-uniphy-pcie-gen3x2",
->> +               .data = &ipq5332_x2_data,
->> +       },
->> +       {
->> +               .compatible = "qcom,ipq5332-uniphy-pcie-gen3x1",
->> +               .data = &ipq5332_x1_data,
-> The entries here should be sorted out.
-will take care.
->
->> +       },
->>          { /* Sentinel */ },
->>   };
->>   MODULE_DEVICE_TABLE(of, qcom_uniphy_pcie_id_table);
->> --
->> 2.34.1
->>
->>
->
---
-Thanks,
-Praveenkumar
+>> I think the right way to fix this is to pass a boolean flag to
+>> queued_write_lock_slowpath() to let it know whether it can re-enable
+>> interrupts while checking whether _QW_WAITING is set.
+> 
+> Yes.  It seems to make sense to distinguish between write_lock_irq and
+> write_lock_irqsave and fix this for all of write_lock_irq.
+> 
+Let me think about this.
+It seems a possible because there is a special behavior from reader side 
+when in interrupt it will directly get the lock regardless of the 
+pending writer.
+
+> Either that or someone can put in the work to start making the
+> tasklist_lock go away.
+> 
+> Eric
+> 
+
+-- 
+Thx and BRs,
+Aiqun(Maria) Yu
 
