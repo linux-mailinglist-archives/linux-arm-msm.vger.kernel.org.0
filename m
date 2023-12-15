@@ -1,62 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-4861-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4862-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BCC36813F63
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 02:46:39 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5691813F68
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 02:47:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6789D1F2359F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 01:46:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6D8B9283F06
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Dec 2023 01:47:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D41DB650;
-	Fri, 15 Dec 2023 01:46:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B3D4650;
+	Fri, 15 Dec 2023 01:46:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iUdsPdk3"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B75kz4pc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65AB720E0;
-	Fri, 15 Dec 2023 01:46:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20042A3F;
+	Fri, 15 Dec 2023 01:46:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-425baafa3c3so1409771cf.0;
-        Thu, 14 Dec 2023 17:46:32 -0800 (PST)
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-67efd2cde42so10639256d6.0;
+        Thu, 14 Dec 2023 17:46:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702604791; x=1703209591; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1702604817; x=1703209617; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dVWHvDHZz3AvJMZltvNUlCGBm1+VXWDUHdZCGNSWeV4=;
-        b=iUdsPdk3tlUeE+LQ9ha/na4pcCIjp8iDDa4szqTS2AFOJS21llIosh+t2RajE9DvX/
-         Cwhl3yOTAdzodPgk8rPW7qlZWYUpzysxlLCmI8UBPtvW46oBtjQUORsXcDjkGhZoNVie
-         9Et5lXCx5LgLhXbThIskD01eNtU3OYuRR8Cr6ZhBnxudkpcyqvS+DtPAc/oSi7NckKXJ
-         7SRAFJXOOfU8op11BfiFJ6n6qber3JGVq88eAUEpQvdx8c0eF1Xzbruv1BTCg05khT8V
-         SchPUAFxZgpiBUMHkf1197hcVDAoLrSYtvbMxErcvFTr70bgUgc0WYDVFtGW8ONg5KK3
-         s4EQ==
+        bh=zc5Tt4cjVQn6MSgiYjudGcIVio807ZWzbJuPs2L7F3M=;
+        b=B75kz4pckbcGyj0zHaNjl/+U24061qx+9udSSNsIwvAzXo1jz6PrA1sIJ314MqZeT4
+         hgciU1GSDkRbNCSuT7G741fzDes/Yps2idge2FSd2xWO5D9Kw2PJ7NCIaDiPTmqv2all
+         +0fPDGRrxDM55VBnbTEnGLbcuBUKwYJlO9oqoqGUl540U6RsZFsUXLScyO0g0qTjLx3s
+         zf/ghcSrVPYktWwDkU22ZYWxeoeNZFeDtt97elVUOlNjwNMPgA5wchmWuXiIi8d7Z4uf
+         SvFehVhIJsV5oVKlZcx7fPcNPk95Q7mGU78maGqqrRDcpBO+W7o+7phxfnjDqg2xsK2X
+         s8Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702604791; x=1703209591;
+        d=1e100.net; s=20230601; t=1702604817; x=1703209617;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dVWHvDHZz3AvJMZltvNUlCGBm1+VXWDUHdZCGNSWeV4=;
-        b=ox/SLj4RLV9nZ6knZCSrJngsCfQNkltHMR316H8PgvMXyK9Px+6ilmTdXrf13YPN3Z
-         OP8TbQF8iOe56V6m98ktrZrJD2hFGDdFbdzGvPJTAz1KYnYWn0C1eBWuXf436K7JIX3U
-         7M+4ZTNCm3BY/ats4NWiQbo/EQzjEgufth6aS+d+pCS8SqoCYL7FA7zwmFEwf/iaYO6f
-         QXX8SEnvgK2IC3DTq5QNpUvHJ8L3tSRdrOCKSDJKBDBIrWfsm57VdriUnkM2e9zxDL8F
-         4h+Bqf7vNEwuborplp3DN8JqoqCSmw8jUsZE02OinlSDpZJruZiZgSbM5nTFS7ImIfBE
-         ZRMw==
-X-Gm-Message-State: AOJu0Yxi4EUC3mB178rFeM/D6SW3S8kYARXftxNfIMsNmoo4SaLRc85a
-	QBFxv1/MPz3k+GOuXiscfs3P2Nrn7goJGQ==
-X-Google-Smtp-Source: AGHT+IGuWqtIDX/gQoLrm4a1Y3PUAD7mxodkVbztEA+x0E/VQdQrJnxhZjSGkZYHCzPIRgoBu2dNKw==
-X-Received: by 2002:a05:622a:28e:b0:425:a84d:bccc with SMTP id z14-20020a05622a028e00b00425a84dbcccmr14695740qtw.137.1702604791271;
-        Thu, 14 Dec 2023 17:46:31 -0800 (PST)
+        bh=zc5Tt4cjVQn6MSgiYjudGcIVio807ZWzbJuPs2L7F3M=;
+        b=aC4nYYmF52TG4eXOsMZZfL5OQn6AAY6a6j/V6xz4upf/mbl3qUo8vtm21iTK2zR4Ky
+         PzwhZZLcBzs28NsNNgzCCK+q983f+X4bNSeIJGrCbUsgkjtPhp2KovZSYnqEjn6A0RKw
+         BkNiSNoj/NlYvlLT89FfMNRAwCO1VMaFxv1zhhNX2pnaFXkAWTMOkxnRR17HC9DNuSFj
+         GbL6xdVC5e+01sNQLwj0DcRYbsBlEc4CMaVQc1FsClnUp/w6+RstVZPMIvpoPLwy3gLU
+         xdsPnbPzzCxLSkHKz9EgHUru4VtVlyIU/Q0g6ZW9tSlU8oLGFbXQ+kt8/t21A402Qrtt
+         TDdw==
+X-Gm-Message-State: AOJu0Yz9rrH2Jsx84E3ExPRa1Ep0bCpGjmnUCm7Ly+b4oZCgm1v+KT6o
+	3AH3S2epY+oLczX0VkU+5x4YU7yhdC/y8w==
+X-Google-Smtp-Source: AGHT+IHemwIjbi9IJKMvNOOoGsS8XZb+vIcqTOdqZhejlHWxJ3n6iVhnITtvarq/RT5tbHcCTlqXyg==
+X-Received: by 2002:a0c:e805:0:b0:67f:1ca:8c38 with SMTP id y5-20020a0ce805000000b0067f01ca8c38mr3660984qvn.52.1702604817000;
+        Thu, 14 Dec 2023 17:46:57 -0800 (PST)
 Received: from localhost ([2607:fea8:529e:7800::a768])
-        by smtp.gmail.com with ESMTPSA id c12-20020ac86e8c000000b004255183b1a4sm6209114qtv.64.2023.12.14.17.46.29
+        by smtp.gmail.com with ESMTPSA id du5-20020a05621409a500b0067ef2e0ee43sm2217973qvb.81.2023.12.14.17.46.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Dec 2023 17:46:30 -0800 (PST)
-Date: Thu, 14 Dec 2023 20:46:27 -0500
+        Thu, 14 Dec 2023 17:46:56 -0800 (PST)
+Date: Thu, 14 Dec 2023 20:46:54 -0500
 From: Richard Acayan <mailingradian@gmail.com>
 To: Johan Hovold <johan+linaro@kernel.org>
 Cc: Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>,
@@ -67,11 +67,10 @@ Cc: Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>,
 	Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
 	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: sdm670: fix USB DP/DM HS PHY
- interrupts
-Message-ID: <ZXuv8zgm4kl3fwZV@radian>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sdm670: fix USB SS wakeup
+Message-ID: <ZXuwDtPQZR1waaC7@radian>
 References: <20231214074319.11023-1-johan+linaro@kernel.org>
- <20231214074319.11023-2-johan+linaro@kernel.org>
+ <20231214074319.11023-3-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,20 +79,13 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231214074319.11023-2-johan+linaro@kernel.org>
+In-Reply-To: <20231214074319.11023-3-johan+linaro@kernel.org>
 
-On Thu, Dec 14, 2023 at 08:43:17AM +0100, Johan Hovold wrote:
-> The USB DP/DM HS PHY interrupts need to be provided by the PDC interrupt
+On Thu, Dec 14, 2023 at 08:43:18AM +0100, Johan Hovold wrote:
+> The USB SS PHY interrupt needs to be provided by the PDC interrupt
 > controller in order to be able to wake the system up from low-power
-> states and to be able to detect disconnect events, which requires
-> triggering on falling edges.
+> states.
 >
-> A recent commit updated the trigger type but failed to change the
-> interrupt provider as required. This leads to the current Linux driver
-> failing to probe instead of printing an error during suspend and USB
-> wakeup not working as intended.
->
-> Fixes: de3b3de30999 ("arm64: dts: qcom: sdm670: fix USB wakeup interrupt types")
 > Fixes: 07c8ded6e373 ("arm64: dts: qcom: add sdm670 and pixel 3a device trees")
 > Cc: stable@vger.kernel.org      # 6.2
 > Cc: Richard Acayan <mailingradian@gmail.com>
@@ -101,8 +93,4 @@ On Thu, Dec 14, 2023 at 08:43:17AM +0100, Johan Hovold wrote:
 > ---
 
 Tested-by: Richard Acayan <mailingradian@gmail.com>
-
-On a Pixel 3a, plugging in a USB cable doesn't wake up the device
-(presumably because there is no wakeup-source property) but this gets
-USB working again on linux-next.
 
