@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-5018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB2138154CC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 01:03:36 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 366978154CE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 01:04:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F04271C240C4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 00:03:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E4329283B66
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 00:04:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D8BCD51F;
-	Sat, 16 Dec 2023 00:03:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 800CF154A9;
+	Sat, 16 Dec 2023 00:04:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="keP7zMa3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="k1/T57Pr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 325A46127
-	for <linux-arm-msm@vger.kernel.org>; Sat, 16 Dec 2023 00:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4B315493
+	for <linux-arm-msm@vger.kernel.org>; Sat, 16 Dec 2023 00:04:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-552ff8d681aso65606a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 16:03:11 -0800 (PST)
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a1f8510883aso159199666b.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Dec 2023 16:04:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702684990; x=1703289790; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1702685046; x=1703289846; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=bZ7CYe2npAANXdtUrU9jI0jn87kP/74n2PFavC5qkjA=;
-        b=keP7zMa334g3VSGO1E8TmeeLfp+xpquCo6E4wOrshfytQUtQmjWifbUL8Zq8GPL+fU
-         w/7BA/BbSh/OFP06WjbjyeQUvuyUx6ziSaeDXCyBfVcAfsbAFToGpRHhQfpQ4msBnjmF
-         oL3mn9Em1Lr6hux+pmCXdlNpPwbZobsiFBpHU+M9A2lM7tjBehMU0a5xVLwN6b8AKHVP
-         5XaMXrv1MK3+5R/bn3F+EzGrwTwOeyhEHYLqM2AanZFyT7X4fWnWly+gLOwqrae8G9dJ
-         CI89jHYscFl9iT8k58/dtlnzlyAynvjphgTM2Qtgodxnrb+0dGUd9iX9oucPfDMnMF42
-         VzvQ==
+        bh=nNgeSAH5q0OtOCzk+H3FSYuqGN2SuWi6yBqSzeQWIGQ=;
+        b=k1/T57PrRRpbO0WxZAtg+UaldD/fNLNdIg+j1hUGyAUYhzrqS02t4YZX3bIyTC3Jom
+         qVw31xYtP3wC7giKhnPRekBzW4yyp2hkA/e1vCKBLZj2nkXT72YviWtg3/XH47ycfrB3
+         qiKe7jnnxZ7EAhRDe8YbC4OI9Ui7yOWxTAb71Ta1pbpKS1QQ+MS+3xe1TaW0Vzt8gJoF
+         Bp5zlTIRlPlBkhCY5v+cG4mbjMQfNzXTuzA6tTM/caewmxBeEJWCICwvUsRhYedgjQ4n
+         WI2RQvq2hha+lv2NFB0g+iAXG5dPH+1xAIyuy1HayptR3bn9ZlsHO+qraOHDVov81+C8
+         N/+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702684990; x=1703289790;
+        d=1e100.net; s=20230601; t=1702685046; x=1703289846;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bZ7CYe2npAANXdtUrU9jI0jn87kP/74n2PFavC5qkjA=;
-        b=quhf8mHIKolfJRWliYmA3ERJgk6KsOCEICHQnpJtpYdkrfwBNbaV18pgAhDIsMcOKY
-         rmL2FL1qH0s8KE7su47Q6NrX0OjvomW1qWR9D8HiEWEtlTWYwW+mkAFRYbAHrGADbYYK
-         WwUTOlF6m2p9iWdxDf4ZRP4L6bCqbwZiiZVVFWjb/7Qjo8qAVVb1lUhj1RMal+9VnZWd
-         cJ6VLSvPg1O9W7T4b05zoHhoFUOrbW7zVKrtZlPjzvHW8viJjB9IdLtLAa336THNa02i
-         4Qn9CY0fApj+Cv5+mzjhYc9Mi8raPsrWzP7dI6LlwYHvYBU23hBzdg2tY/VaAm82Z8bv
-         7auw==
-X-Gm-Message-State: AOJu0YzEEoqzyHY9gaJTg535x7LC6PCTy0DvwTXX2mWAPt3DHIQkFzKO
-	YcK+X95tO/5fYVrBPUxtOBBzww==
-X-Google-Smtp-Source: AGHT+IFFLbaw5X4Tftfj22SLofa2om+UIAlecqqdrks7DNY0JT7P+X493M9L3tWYA/1rhgG6AVIN0A==
-X-Received: by 2002:a17:906:55:b0:a1b:7700:2c0b with SMTP id 21-20020a170906005500b00a1b77002c0bmr13876599ejg.19.1702684990512;
-        Fri, 15 Dec 2023 16:03:10 -0800 (PST)
+        bh=nNgeSAH5q0OtOCzk+H3FSYuqGN2SuWi6yBqSzeQWIGQ=;
+        b=GmX3dxMMAu8rbkd9vsBtv6eRgD4yAbOVVqDZWx4Tixto0iOkZ4iOanP7KdgVipfuw6
+         WJZXaUHQk+RfK4l1nsLBEZqDrT8HuJ1RXlx3eVffhdawwk8ehaugBlqv/YGwPexPB0kE
+         y3jouF1wbxRB0/vsRhbw1zfabbWSRZz1I8BMCnJYlKIfSGa9EreJUihFPBvkfS6F0Kvs
+         DvCPLcZb796VBSXvNRGx2sjtml37s4pUfkj1e9LQsjLPHDHHw30cTfhC7m2dzB7q3O7T
+         L4JjrE/dSiQtKtCHHyBsvOqUHrcnRIDuuYmHDuzUF52sk/nTuS+P7OkjdvNFlgxuaGE7
+         qcjQ==
+X-Gm-Message-State: AOJu0Yx0n81u0juDSMB99Re0v1zub4yguh95CDzTQSs3pAYTmKC5mxuo
+	kGzjhi8rp9bhzxq3wUNWV838+A==
+X-Google-Smtp-Source: AGHT+IGrjMUr9+21sdvFU6X/qCsgRoQhMmqzkuES7zatJFOCOcVgweBY7d7P+eUnglypIRG1AVGw/w==
+X-Received: by 2002:a17:906:bf41:b0:a1d:86c0:7be1 with SMTP id ps1-20020a170906bf4100b00a1d86c07be1mr3622095ejb.251.1702685046208;
+        Fri, 15 Dec 2023 16:04:06 -0800 (PST)
 Received: from [192.168.199.59] (178235179137.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.137])
-        by smtp.gmail.com with ESMTPSA id tm6-20020a170907c38600b00a1ca6f5f189sm11420733ejc.179.2023.12.15.16.03.08
+        by smtp.gmail.com with ESMTPSA id tm6-20020a170907c38600b00a1ca6f5f189sm11420733ejc.179.2023.12.15.16.04.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Dec 2023 16:03:10 -0800 (PST)
-Message-ID: <1eee8bae-59f0-4066-9d04-8c3a5f750d3a@linaro.org>
-Date: Sat, 16 Dec 2023 01:03:07 +0100
+        Fri, 15 Dec 2023 16:04:05 -0800 (PST)
+Message-ID: <f355630b-4010-4785-a9c9-5f65ef016db0@linaro.org>
+Date: Sat, 16 Dec 2023 01:04:04 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,24 +66,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/5] iommu/arm-smmu: add ACTLR data and support for
- SM8550
+Subject: Re: [PATCH] pinctrl: qcom: lpass-lpi: remove duplicated include
 Content-Language: en-US
-To: Robin Murphy <robin.murphy@arm.com>,
- Bibek Kumar Patro <quic_bibekkum@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: will@kernel.org, joro@8bytes.org, jsnitsel@redhat.com,
- quic_bjorande@quicinc.com, mani@kernel.org, quic_eberman@quicinc.com,
- robdclark@chromium.org, u.kleine-koenig@pengutronix.de, robh@kernel.org,
- vladimir.oltean@nxp.com, quic_pkondeti@quicinc.com,
- quic_molvera@quicinc.com, linux-arm-msm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
- linux-kernel@vger.kernel.org, qipl.kernel.upstream@quicinc.com
-References: <20231215101827.30549-1-quic_bibekkum@quicinc.com>
- <20231215101827.30549-4-quic_bibekkum@quicinc.com>
- <CAA8EJppcsr1sbeD1fK0nZ+rASABNcetBK3yMvaP7OiA4JPwskw@mail.gmail.com>
- <c9493c5f-ccf8-4e21-b00c-5fbc2a5f2edb@quicinc.com>
- <b7f2bbf9-fb5a-430d-aa32-3a220b46c2f0@arm.com>
+To: Wang Jinchao <wangjinchao@xfusion.com>,
+ Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>,
+ Linus Walleij <linus.walleij@linaro.org>, linux-arm-msm@vger.kernel.org,
+ linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: stone.xulei@xfusion.com
+References: <202312151810+0800-wangjinchao@xfusion.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -120,75 +110,18 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <b7f2bbf9-fb5a-430d-aa32-3a220b46c2f0@arm.com>
+In-Reply-To: <202312151810+0800-wangjinchao@xfusion.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 15.12.2023 13:54, Robin Murphy wrote:
-> On 2023-12-15 12:20 pm, Bibek Kumar Patro wrote:
->>
->>
->> On 12/15/2023 4:14 PM, Dmitry Baryshkov wrote:
->>> On Fri, 15 Dec 2023 at 12:19, Bibek Kumar Patro
->>> <quic_bibekkum@quicinc.com> wrote:
->>>>
->>>> Add ACTLR data table for SM8550 along with support for
->>>> same including SM8550 specific implementation operations.
->>>>
->>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
->>>> ---
->>>>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 89 ++++++++++++++++++++++
->>>>   1 file changed, 89 insertions(+)
->>>>
->>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>> index cb49291f5233..d2006f610243 100644
->>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>> @@ -20,6 +20,85 @@ struct actlr_config {
->>>>          u32 actlr;
->>>>   };
->>>>
->>>> +/*
->>>> + * SMMU-500 TRM defines BIT(0) as CMTLB (Enable context caching in the
->>>> + * macro TLB) and BIT(1) as CPRE (Enable context caching in the prefetch
->>>> + * buffer). The remaining bits are implementation defined and vary across
->>>> + * SoCs.
->>>> + */
->>>> +
->>>> +#define PREFETCH_DEFAULT       0
->>>> +#define PREFETCH_SHALLOW       BIT(8)
->>>> +#define PREFETCH_MODERATE      BIT(9)
->>>> +#define PREFETCH_DEEP          (BIT(9) | BIT(8))
->>>
->>> I thin the following might be more correct:
->>>
->>> #include <linux/bitfield.h>
->>>
->>> #define PREFETCH_MASK GENMASK(9, 8)
->>> #define PREFETCH_DEFAULT FIELD_PREP(PREFETCH_MASK, 0)
->>> #define PREFETCH_SHALLOW FIELD_PREP(PREFETCH_MASK, 1)
->>> #define PREFETCH_MODERATE FIELD_PREP(PREFETCH_MASK, 2)
->>> #define PREFETCH_DEEP FIELD_PREP(PREFETCH_MASK, 3)
->>>
->>
->> Ack, thanks for this suggestion. Let me try this out using
->> GENMASK. Once tested, will take care of this in next version.
+On 15.12.2023 11:11, Wang Jinchao wrote:
+> remove the second #include <linux/seq_file.h>
 > 
-> FWIW the more typical usage would be to just define the named macros for the raw field values, then put the FIELD_PREP() at the point of use. However in this case that's liable to get pretty verbose, so although I'm usually a fan of bitfield.h, the most readable option here might actually be to stick with simpler definitions of "(0 << 8)", "(1 << 8)", etc. However it's not really a big deal either way, and I defer to whatever Dmitry and Konrad prefer, since they're the ones looking after arm-smmu-qcom the most :)
-My 5 cents would be to just use the "common" style of doing this, so:
+> Signed-off-by: Wang Jinchao <wangjinchao@xfusion.com>
+> ---
+Lol, nice find
 
-#define ACTRL_PREFETCH	GENMASK(9, 8)
- #define PREFETCH_DEFAULT 0
- #define PREFETCH_SHALLOW 1
- #define PREFETCH_MODERATE 2
- #define PREFETCH_DEEP 3
-
-and then use 
-
-| FIELD_PREP(ACTRL_PREFETCH, PREFETCH_x)
-
-it can get verbose, but.. arguably that's good, since you really want
-to make sure the right bits are set here
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
