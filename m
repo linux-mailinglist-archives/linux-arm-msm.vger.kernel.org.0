@@ -1,138 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-5080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35B2C815A2C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 17:27:18 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4AD9F815B19
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 19:40:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B5DF2B238A3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 16:27:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D3E581F224FA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 18:40:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D43913065B;
-	Sat, 16 Dec 2023 16:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DD6D1E485;
+	Sat, 16 Dec 2023 18:40:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FRyuzb4l"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ckOQxn2c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FCE63035F
-	for <linux-arm-msm@vger.kernel.org>; Sat, 16 Dec 2023 16:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A74F1E482
+	for <linux-arm-msm@vger.kernel.org>; Sat, 16 Dec 2023 18:40:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-50e1112b95cso1729059e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Dec 2023 08:27:04 -0800 (PST)
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-40c2c65e6aaso21283335e9.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Dec 2023 10:40:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702744023; x=1703348823; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=u5ZLFRFzD1CGy334KNd57yMYTCMD3u82eZUZ6VE2QPA=;
-        b=FRyuzb4lf7Euwwz4CSxmuGs6Wc7K1NFR9ZwsMbM01VefBHXuvHm9Ln8FbkgPCIFtXU
-         vOSFGKhxomBJKiabhmGMk9X3791CvhL1RrqZWefDncsUcCdko3aUYxqaax0qXFrTT3jU
-         1bhIfNbIEP+cz/zqqgBJngn32elnPTXnwW6JPjyzEhs7jgwMookKWUAqrjpvnhegYydw
-         hY/QYad8RmZzQl07qs0tR9SuWsqoXgUMuhYNm7HFc7zlEmYuDNB/8fnynNnG9lYLVtO0
-         vubi2NEYwtMzlTMa3T2vCcIW2OqdoSowemh23esR+tgHbQbNiSfn3qa2urNTWDHXtCSl
-         oPcw==
+        d=linaro.org; s=google; t=1702751998; x=1703356798; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=1KUtAGMqqIUkAaz6E0SIG7Zf7AtwqKOASLidvCHNXPM=;
+        b=ckOQxn2cVGyuigquB2pYS9+2FZ8fGNPJxsqkAFS/BK0cJ0gjSnRJErupJ28TpwJIhS
+         joQ+BC2IogVYf1g2OuUOTLDac26E1YcphPcneNUe/1MYxN9smQN3TsSw0MkYI/WRHfr6
+         OYoG8QHb89zXjmRcTz42O0hOfw5kzSc0kujvWWLyhYNwt9Pgwx8Cm68VjjPsezNa0XjN
+         8pAZrQsq/iBbt8oujWqmH57Y8XcNQCBMrR13cw7Pz0UQrIpnnBKRxbxtwnxqaM0FexUN
+         mkey21LKmgnrcHkIjNvyW9b1U4EzRZcNcCZyzgrOUDSCtaSa6ULVOnn3aDNyGF9nwnHS
+         t9Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702744023; x=1703348823;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=u5ZLFRFzD1CGy334KNd57yMYTCMD3u82eZUZ6VE2QPA=;
-        b=RxjKfjnJ0qGtwgrCAUdsnSsINBTsOZa+57eJqmUK5zB3137cK3N5RnkVjZNQeewAvi
-         xFJbYgesXKZBlk2q+QQQrvhDUeKqlM+oX8UqixVgmSppPk3BW0IMoB0XA0gzxMUNYSer
-         LLgcVi8mx7a5sUxzGgef4OtCapnZ0HiKXfOAhq9KYJERVHsqzl9M2gN2nvm4KsITBAkT
-         6BjmYthqRLbP6tJ5Xs2R7l7fQqhJ58dWZC0fi9wtus1ZYLqlcu1tzoqh6qRI570EfUz2
-         vLOsa6otWqZsFZiHascuAHjAw+w3QPDWixMXuxmaJUZoii5pz4PEYTM5/LrqnkDuv2yH
-         DwOg==
-X-Gm-Message-State: AOJu0YyOcCX5PbO9YX+8qrHw0ffWF+8bBShx/KrLb5HVrqJ6Dp0t5b/E
-	aibwEth40JIVvb9JAV3leaJsoA==
-X-Google-Smtp-Source: AGHT+IEdlLjha0pDKVzgZ8VedXq3zwTQeBW66gbUelSUrCVVlVfnjfOPU+pT4taKuf9PB4jXLPRiNQ==
-X-Received: by 2002:a05:6512:15a0:b0:50b:f84a:539d with SMTP id bp32-20020a05651215a000b0050bf84a539dmr4674856lfb.19.1702744023345;
-        Sat, 16 Dec 2023 08:27:03 -0800 (PST)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id u19-20020a197913000000b0050e304d437dsm69229lfc.223.2023.12.16.08.27.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 Dec 2023 08:27:02 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Joerg Roedel <joro@8bytes.org>,
-	Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>
-Cc: linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	iommu@lists.linux.dev,
-	Russell King <linux@armlinux.org.uk>
-Subject: [PATCH v2 3/3] ARM: qcom: merge remaining subplatforms into sensible Kconfig entry
-Date: Sat, 16 Dec 2023 18:27:00 +0200
-Message-Id: <20231216162700.863456-4-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231216162700.863456-1-dmitry.baryshkov@linaro.org>
-References: <20231216162700.863456-1-dmitry.baryshkov@linaro.org>
+        d=1e100.net; s=20230601; t=1702751998; x=1703356798;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1KUtAGMqqIUkAaz6E0SIG7Zf7AtwqKOASLidvCHNXPM=;
+        b=XsJBlvm5Rsq2RJ+Kuczkdk+0YgwOonZHGws+HsdnchfJoMMlQm/N53OL7uYbniEETh
+         fvs0YfQoaXfRb1YF7Kw8YBD6s12wAp9iKpp1Ac8l8swuCZ+4kTBmmSqfzYzGgVTB819r
+         cpcXwc+otyjHmYT/4Ux55pG2pM2BNMBfcVT7aJhGUQyU8BVy0kb2xCfUISJPdurExV+Q
+         U8GOZKWMF91vn91s+b7+rbSL0eDmvMLj6k86h4t+L2I2qSCd1YoMvZSTNTiqbN3jY4bl
+         FC/FHZE2tDRfEZm9g3S0KX2tQlLOgVzDaz/pypn3pk22u0CfCdtN3vzuWIV7wgoEVIUS
+         P0Vg==
+X-Gm-Message-State: AOJu0YwykbO1DUb6g+xRtKS4BjG39uy0OLi5sfS+U2jJayiLCPNanMXr
+	TiSD71Qnrdgk2/SAtBh5ObXocq4O1aafmVtAjdo=
+X-Google-Smtp-Source: AGHT+IEQn2NQopN437dQYBs97niYLPAMDxRmV5lHxm1edSyDF36wNposye+RqIPj/4kPbYSz7QduSg==
+X-Received: by 2002:a05:600c:4fd6:b0:40b:5e1f:6fe5 with SMTP id o22-20020a05600c4fd600b0040b5e1f6fe5mr6646936wmq.58.1702751998560;
+        Sat, 16 Dec 2023 10:39:58 -0800 (PST)
+Received: from [192.168.199.59] (178235179137.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.137])
+        by smtp.gmail.com with ESMTPSA id tb19-20020a1709078b9300b00a1cd30d06d1sm12354797ejc.14.2023.12.16.10.39.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 16 Dec 2023 10:39:58 -0800 (PST)
+Message-ID: <3160e0b5-7209-46ea-8ff5-48daefcd2d89@linaro.org>
+Date: Sat, 16 Dec 2023 19:39:55 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] iommu/msm-iommu: don't limit the driver too much
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+ Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>
+Cc: linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ iommu@lists.linux.dev, Russell King <linux@armlinux.org.uk>,
+ Joerg Roedel <jroedel@suse.de>
+References: <20231216162700.863456-1-dmitry.baryshkov@linaro.org>
+ <20231216162700.863456-2-dmitry.baryshkov@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20231216162700.863456-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Three remaining Qualcomm platforms have special handling of the
-TEXT_OFFSET to reserve the memory at the beginnig of the system RAM, see
-the commit 9e775ad19f52 ("ARM: 7012/1: Set proper TEXT_OFFSET for newer
-MSMs"). This is required for older platforms like IPQ40xx, MSM8x60,
-MSM8960 and APQ8064 and is compatible with other 32-bit Qualcomm
-platforms.
+On 16.12.2023 17:26, Dmitry Baryshkov wrote:
+> In preparation of dropping most of ARCH_QCOM subtypes, stop limiting the
+> driver just to those machines. Allow it to be built for any 32-bit
+> Qualcomm platform (ARCH_QCOM).
+> 
+> Acked-by: Robin Murphy <robin.murphy@arm.com>
+> Acked-by: Joerg Roedel <jroedel@suse.de>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm/Makefile          |  4 +---
- arch/arm/mach-qcom/Kconfig | 13 +++++--------
- 2 files changed, 6 insertions(+), 11 deletions(-)
-
-diff --git a/arch/arm/Makefile b/arch/arm/Makefile
-index 5ba42f69f8ce..95216a508d80 100644
---- a/arch/arm/Makefile
-+++ b/arch/arm/Makefile
-@@ -158,9 +158,7 @@ textofs-$(CONFIG_ARCH_REALTEK)  := 0x00108000
- ifeq ($(CONFIG_ARCH_SA1100),y)
- textofs-$(CONFIG_SA1111) := 0x00208000
- endif
--textofs-$(CONFIG_ARCH_IPQ40XX) := 0x00208000
--textofs-$(CONFIG_ARCH_MSM8X60) := 0x00208000
--textofs-$(CONFIG_ARCH_MSM8960) := 0x00208000
-+textofs-$(CONFIG_ARCH_QCOM_RESERVE_SMEM) := 0x00208000
- textofs-$(CONFIG_ARCH_MESON) := 0x00208000
- textofs-$(CONFIG_ARCH_AXXIA) := 0x00308000
- 
-diff --git a/arch/arm/mach-qcom/Kconfig b/arch/arm/mach-qcom/Kconfig
-index 27d5ca0043be..f4765be1b2a0 100644
---- a/arch/arm/mach-qcom/Kconfig
-+++ b/arch/arm/mach-qcom/Kconfig
-@@ -15,13 +15,10 @@ menuconfig ARCH_QCOM
- 
- if ARCH_QCOM
- 
--config ARCH_IPQ40XX
--	bool "Enable support for IPQ40XX"
--
--config ARCH_MSM8X60
--	bool "Enable support for MSM8X60"
--
--config ARCH_MSM8960
--	bool "Enable support for MSM8960"
-+config ARCH_QCOM_RESERVE_SMEM
-+	bool "Reserve SMEM at the beginning of RAM"
-+	help
-+	  Reserve 2MB at the beginning of the System RAM for shared mem.
-+	  This is required on IPQ40xx, MSM8x60 and MSM8960 platforms.
- 
- endif
--- 
-2.39.2
-
+Konrad
 
