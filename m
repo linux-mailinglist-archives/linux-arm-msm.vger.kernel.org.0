@@ -1,123 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-5062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A0E18157BF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 06:26:47 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id EFB5281586A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 09:18:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0D9BAB240C7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 05:26:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 208101C24B0C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 08:18:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28575111A6;
-	Sat, 16 Dec 2023 05:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4980613FF1;
+	Sat, 16 Dec 2023 08:18:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ofEErLlT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="P2mcD+70"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21D210A12;
-	Sat, 16 Dec 2023 05:26:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDAFC433C8;
-	Sat, 16 Dec 2023 05:26:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702704400;
-	bh=k+HLfjiotNDdVkHZHPA8yO2hBIysL09Q2lJMiNnUa44=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ofEErLlT+b+m/fmlepLCT++JDLi3yPPnJyCUphwt7syqNT/9ZhptTJGovAn0CKNkE
-	 09qrbA4RafIeeCltUNVbYhqDRiBSifBC9kb7lzoHfeU7m+LOPgjPexkfjRyLjwgM2F
-	 O3s+eX/TuWHlE7XhlcLHWBx0gSYcwm5oRVKTiNeIEsgqvevb+MBnpt77K/RT33xSoS
-	 8uBFQMuK0qFYrRh+fuRakGmXws5zyStAtQ6JQDjOUJSVfv7pqbTfB43Ca0dQ/MptTc
-	 3TkfMAOqON19cFJe0VC8QDEq2mHns6yqvVdZ8LwTC8nIwW4NEcbVjTeomfwYYTbNKc
-	 RQyvjbFlBNb9w==
-Date: Fri, 15 Dec 2023 23:26:37 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
-	Joerg Roedel <joro@8bytes.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Clark <robdclark@gmail.com>, Vinod Koul <vkoul@kernel.org>, 
-	Sai Prakash Ranjan <quic_saipraka@quicinc.com>, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev, devicetree@vger.kernel.org, 
-	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 3/3] ARM: qcom: merge remaining subplatforms into
- sensible Kconfig entry
-Message-ID: <hhaf3ocpnejsxpkg6mfodwnkbjttyb2h5p3qsifbyukosvsavj@rwdpgzsovwak>
-References: <20231207125500.3322229-1-dmitry.baryshkov@linaro.org>
- <20231207125500.3322229-4-dmitry.baryshkov@linaro.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EAA13AED;
+	Sat, 16 Dec 2023 08:18:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BG8AlnW011556;
+	Sat, 16 Dec 2023 08:15:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=UrutHSPGcLDRLLUpSzQn97qPAwY9DBQLxCjQ9z93DWs=; b=P2
+	mcD+70T0TpAXVrwTaecPrUvY+EWWkwBu4MIT0j4DciDLrbngCVypQxXrEz8EW1Ev
+	Fol2HOa2iQp54LLF3T8GXZHMqUBXdzSIUt/bn56b1z/WJpEB582DL2VntRr5KzT0
+	Qv2djQvJ7mqROMv7lIkNXx1urqlqug0xttGL4ks+KAXN2CEirAVKPHHuV4RIfgrG
+	/y0VisQtm1ara5PT+tcR4Lmj/8ChbSY+zXy5/JpLZyh8XEYEsN4Hhi9Gct2DCSVY
+	iZ7tOlEHVGSv7YDFN9WVz3Php6Ury7U1ZIGjfuueaJakfV1GfPyM9Wyjc82N/j0T
+	X2S8QUAY2kICJHHPJZGw==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v14vjg7vw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 16 Dec 2023 08:15:22 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BG8FLdL011863
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 16 Dec 2023 08:15:21 GMT
+Received: from [10.216.47.123] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sat, 16 Dec
+ 2023 00:15:17 -0800
+Message-ID: <89ca6eb2-9a33-c37e-14ae-6181edb8626c@quicinc.com>
+Date: Sat, 16 Dec 2023 13:45:14 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231207125500.3322229-4-dmitry.baryshkov@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH] power: reset: msm: Process register_restart_handler()
+ error
+Content-Language: en-US
+To: Nikita Kiryushin <kiryushin@ancud.ru>, Andy Gross <agross@kernel.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Sebastian Reichel <sre@kernel.org>,
+        Stephen Boyd
+	<sboyd@codeaurora.org>,
+        Pramod Gurav <pramod.gurav@smartplayin.com>,
+        Guenter
+ Roeck <linux@roeck-us.net>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <lvc-project@linuxtesting.org>
+References: <feeb1a89-59bd-4fd6-81a5-1d828f95b0f0@ancud.ru>
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <feeb1a89-59bd-4fd6-81a5-1d828f95b0f0@ancud.ru>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: iPeTEqpyHD1CYQFA_s5Qs3YqJqvzId4w
+X-Proofpoint-GUID: iPeTEqpyHD1CYQFA_s5Qs3YqJqvzId4w
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ bulkscore=0 clxscore=1011 malwarescore=0 lowpriorityscore=0 spamscore=0
+ adultscore=0 mlxlogscore=999 mlxscore=0 priorityscore=1501 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
+ definitions=main-2312160062
 
-On Thu, Dec 07, 2023 at 03:55:00PM +0300, Dmitry Baryshkov wrote:
-> Three remaining Qualcomm platforms have special handling of the
-> TEXT_OFFSET to reserve the memory at the beginnig of the system RAM, see
-> the commit 9e775ad19f52 ("ARM: 7012/1: Set proper TEXT_OFFSET for newer
-> MSMs"). This is required for older platforms like IPQ40xx, MSM8x60,
-> MSM8960 and APQ8064 and is compatible with other 32-bit Qualcomm
-> platforms.
+
+
+On 11/8/2023 10:57 PM, Nikita Kiryushin wrote:
+> If registering restart handler fails for msm-restart result is not checked.
+> It may be irrelevant now (as stated in comment to register_restart_handler,
+> the function currently always returns zero), but if the behavior changes
+> in the future, an error at registration of handler will be silently 
+> skipped.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Add return error code and print error message too debug log in case of
+> non-zero result of register_restart_handler.
+> 
+> Found by Linux Verification Center (linuxtesting.org) with SVACE.
+> 
+> Fixes: 18a702e0de98 ("power: reset: use restart_notifier mechanism for 
+> msm-poweroff")
+> 
+> Signed-off-by: Nikita Kiryushin <kiryushin@ancud.ru>
 > ---
->  arch/arm/Makefile          |  4 +---
->  arch/arm/mach-qcom/Kconfig | 13 +++++--------
->  2 files changed, 6 insertions(+), 11 deletions(-)
+>   drivers/power/reset/msm-poweroff.c | 7 ++++++-
+>   1 file changed, 6 insertions(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm/Makefile b/arch/arm/Makefile
-> index 5ba42f69f8ce..45fa8ac001c5 100644
-> --- a/arch/arm/Makefile
-> +++ b/arch/arm/Makefile
-> @@ -158,9 +158,7 @@ textofs-$(CONFIG_ARCH_REALTEK)  := 0x00108000
->  ifeq ($(CONFIG_ARCH_SA1100),y)
->  textofs-$(CONFIG_SA1111) := 0x00208000
->  endif
-> -textofs-$(CONFIG_ARCH_IPQ40XX) := 0x00208000
-> -textofs-$(CONFIG_ARCH_MSM8X60) := 0x00208000
-> -textofs-$(CONFIG_ARCH_MSM8960) := 0x00208000
-> +textofs-$(CONFIG_ARCH_QCOM_SMEM) := 0x00208000
->  textofs-$(CONFIG_ARCH_MESON) := 0x00208000
->  textofs-$(CONFIG_ARCH_AXXIA) := 0x00308000
->  
-> diff --git a/arch/arm/mach-qcom/Kconfig b/arch/arm/mach-qcom/Kconfig
-> index 27d5ca0043be..0c99d0a746d4 100644
-> --- a/arch/arm/mach-qcom/Kconfig
-> +++ b/arch/arm/mach-qcom/Kconfig
-> @@ -15,13 +15,10 @@ menuconfig ARCH_QCOM
->  
->  if ARCH_QCOM
->  
-> -config ARCH_IPQ40XX
-> -	bool "Enable support for IPQ40XX"
-> -
-> -config ARCH_MSM8X60
-> -	bool "Enable support for MSM8X60"
-> -
-> -config ARCH_MSM8960
-> -	bool "Enable support for MSM8960"
-> +config ARCH_QCOM_SMEM
+> diff --git a/drivers/power/reset/msm-poweroff.c 
+> b/drivers/power/reset/msm-poweroff.c
+> index b9a401bd280b..5877a1ba2778 100644
+> --- a/drivers/power/reset/msm-poweroff.c
+> +++ b/drivers/power/reset/msm-poweroff.c
+> @@ -35,11 +35,16 @@ static void do_msm_poweroff(void)
+>    static int msm_restart_probe(struct platform_device *pdev)
+>   {
+> +    int ret = -EINVAL;
 
-How about expanding this to ARCH_QCOM_RESERVE_SMEM or similar, to make
-it more descriptive and less similar to the existing QCOM_SMEM option?
+This does not add up anything., no need to initialize.
 
-Regards,
-Bjorn
+-Mukesh
 
 
-> +	bool "Reserve SMEM at the beginning of RAM"
-> +	help
-> +	  Reserve 2MB at the beginning of the System RAM for shared mem.
-> +	  This is required on IPQ40xx, MSM8x60 and MSM8960 platforms.
->  
->  endif
-> -- 
-> 2.39.2
+>       msm_ps_hold = devm_platform_ioremap_resource(pdev, 0);
+>       if (IS_ERR(msm_ps_hold))
+>           return PTR_ERR(msm_ps_hold);
+>   -    register_restart_handler(&restart_nb);
+> +    ret = register_restart_handler(&restart_nb);
+> +    if (ret) {
+> +        dev_err(&pdev->dev, "unable to register restart handler, %d\n", 
+> ret);
+> +        return ret;
+> +    }
+>        pm_power_off = do_msm_poweroff;
+>   -- 2.34.1
 > 
 
