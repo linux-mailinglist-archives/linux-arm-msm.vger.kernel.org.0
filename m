@@ -1,145 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-5063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EFB5281586A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 09:18:26 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0005981592E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 14:07:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 208101C24B0C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 08:18:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8D760283A68
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 13:07:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4980613FF1;
-	Sat, 16 Dec 2023 08:18:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 052291EA80;
+	Sat, 16 Dec 2023 13:07:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="P2mcD+70"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TYm9Kvc3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EAA13AED;
-	Sat, 16 Dec 2023 08:18:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BG8AlnW011556;
-	Sat, 16 Dec 2023 08:15:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=UrutHSPGcLDRLLUpSzQn97qPAwY9DBQLxCjQ9z93DWs=; b=P2
-	mcD+70T0TpAXVrwTaecPrUvY+EWWkwBu4MIT0j4DciDLrbngCVypQxXrEz8EW1Ev
-	Fol2HOa2iQp54LLF3T8GXZHMqUBXdzSIUt/bn56b1z/WJpEB582DL2VntRr5KzT0
-	Qv2djQvJ7mqROMv7lIkNXx1urqlqug0xttGL4ks+KAXN2CEirAVKPHHuV4RIfgrG
-	/y0VisQtm1ara5PT+tcR4Lmj/8ChbSY+zXy5/JpLZyh8XEYEsN4Hhi9Gct2DCSVY
-	iZ7tOlEHVGSv7YDFN9WVz3Php6Ury7U1ZIGjfuueaJakfV1GfPyM9Wyjc82N/j0T
-	X2S8QUAY2kICJHHPJZGw==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v14vjg7vw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 16 Dec 2023 08:15:22 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BG8FLdL011863
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 16 Dec 2023 08:15:21 GMT
-Received: from [10.216.47.123] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sat, 16 Dec
- 2023 00:15:17 -0800
-Message-ID: <89ca6eb2-9a33-c37e-14ae-6181edb8626c@quicinc.com>
-Date: Sat, 16 Dec 2023 13:45:14 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC931EA7A
+	for <linux-arm-msm@vger.kernel.org>; Sat, 16 Dec 2023 13:07:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a1d2f89ddabso179909466b.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Dec 2023 05:07:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702732060; x=1703336860; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=2yA9PABcuRMl+k8vv8i6eJb42f3opY6mv6a7XyGuueg=;
+        b=TYm9Kvc3OD6leysSDZziMCLnhtlaAV/4cezs+YEoLSOlqyuaTpx0XsjtpnKSmqNFC7
+         klQ3ZvfGHJlXU+s9zHTeKthDgYch4zUMnih46oW1rV+KlAb0/O7kBBNQtqVUjkX1TwfV
+         2iL8H49Mxf3WgEa/NJYeVcCo6sYPoi4v+xuDAICpQuQPS/pTWoAwBIMo2/a2tVpU3O/E
+         HaMiiaxZ+L5fke8y3oyRVjjCDiUIUpC5G4OAD+cF+JSycNOSgK35xoncprAMHPvigioM
+         hI2uhbi9J4crLMM1rq9yX9w1AiX91w43NKuHMJF9fxM3ibWFua3sn9CgvijV3KOHcVFb
+         Te2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702732060; x=1703336860;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2yA9PABcuRMl+k8vv8i6eJb42f3opY6mv6a7XyGuueg=;
+        b=NXyN6wwhPQGF6+DByoqtCynM0fJaE6RjUlGPl7xSctBQBOn2fX110VNUbPrAL7DvYG
+         IGWDYlO8YcA/+zlOjJ1nFMy3cBDv36lhVkJ6NUm4JIPk6lNTOnZv1BpeByj97hexzkLj
+         EXIJReTYvgufG7jKPSBU4kJBDkSwx6TxUkHLC7gdvryHt8fgqERB8UwS74rEf9bTokdS
+         0O9qMbbvCWarni+soY9Xj5WbDIKV8UEuULhXPgSQNtihvmhcoiFU7yjUqu6tPMnSCJ4I
+         TKEKBsGy2verYjjXh0w3mNJFbVfW2kMt6FzkT+0SmfnJ+nDNwec3wTOTod/bg0bnGDYF
+         Nr+Q==
+X-Gm-Message-State: AOJu0Yy62kppHENVWsqYhCULvnO+ZZgTe5/NHJuIlsoEi5m0iEA1+Zxf
+	9DJbQAqWCw/Gx5SL8Kieq146jVz7ZQtJo+oy6FQ=
+X-Google-Smtp-Source: AGHT+IHKzd64b//nSjEz4XXrjdfd7+xFridS8WhZpcSHDh1a982Ueg8I13+ni5UKdeY1Y7iZN7L22A==
+X-Received: by 2002:a17:906:3f14:b0:a23:f50:60f7 with SMTP id c20-20020a1709063f1400b00a230f5060f7mr2282633ejj.102.1702732060525;
+        Sat, 16 Dec 2023 05:07:40 -0800 (PST)
+Received: from [192.168.199.59] (178235179137.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.137])
+        by smtp.gmail.com with ESMTPSA id vk2-20020a170907cbc200b00a1f76acb08fsm11042828ejc.134.2023.12.16.05.07.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 16 Dec 2023 05:07:40 -0800 (PST)
+Message-ID: <7530d783-00e7-4196-b18f-3eb372df8325@linaro.org>
+Date: Sat, 16 Dec 2023 14:07:38 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH] power: reset: msm: Process register_restart_handler()
- error
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Revert "soc: qcom: stats: Add DDR sleep stats"
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Doug Anderson <dianders@chromium.org>
+References: <20231214-topic-undo_ddr_stats-v1-1-1fe32c258e56@linaro.org>
+ <4472fd8e-73a6-44b6-a1d0-c5ebc55d4211@linaro.org>
+ <cxrw3fc4jxd2zee655g4gi2eshqnwquhezcehnvwjuyt4qkihr@ganx5uwzc35r>
 Content-Language: en-US
-To: Nikita Kiryushin <kiryushin@ancud.ru>, Andy Gross <agross@kernel.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Stephen Boyd
-	<sboyd@codeaurora.org>,
-        Pramod Gurav <pramod.gurav@smartplayin.com>,
-        Guenter
- Roeck <linux@roeck-us.net>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <lvc-project@linuxtesting.org>
-References: <feeb1a89-59bd-4fd6-81a5-1d828f95b0f0@ancud.ru>
-From: Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <feeb1a89-59bd-4fd6-81a5-1d828f95b0f0@ancud.ru>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: iPeTEqpyHD1CYQFA_s5Qs3YqJqvzId4w
-X-Proofpoint-GUID: iPeTEqpyHD1CYQFA_s5Qs3YqJqvzId4w
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- bulkscore=0 clxscore=1011 malwarescore=0 lowpriorityscore=0 spamscore=0
- adultscore=0 mlxlogscore=999 mlxscore=0 priorityscore=1501 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
- definitions=main-2312160062
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <cxrw3fc4jxd2zee655g4gi2eshqnwquhezcehnvwjuyt4qkihr@ganx5uwzc35r>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-
-
-On 11/8/2023 10:57 PM, Nikita Kiryushin wrote:
-> If registering restart handler fails for msm-restart result is not checked.
-> It may be irrelevant now (as stated in comment to register_restart_handler,
-> the function currently always returns zero), but if the behavior changes
-> in the future, an error at registration of handler will be silently 
-> skipped.
+On 16.12.2023 05:35, Bjorn Andersson wrote:
+> On Sat, Dec 16, 2023 at 01:05:53AM +0100, Konrad Dybcio wrote:
+>> On 14.12.2023 13:25, Konrad Dybcio wrote:
+>>> After recent reports ([1], [2]) of older platforms (particularly 8150 and
+>>> 7180) breaking after DDR sleep stats introduction, revert the following:
+>>>
+>>> Commit 73380e2573c3 ("soc: qcom: stats: fix 64-bit division")
+>>> Commit e84e61bdb97c ("soc: qcom: stats: Add DDR sleep stats")
+>>>
+>>> The feature itself is rather useful for debugging DRAM power management,
+>>> however it looks like the shared RPMh stats data structures differ on
+>>> previous SoCs.
+>>>
+>>> Revert its addition for now to un-break booting on these earlier SoCs,
+>>> while I try to come up with a better way to enable it conditionally.
+>>>
+>>> [1] https://lore.kernel.org/linux-arm-msm/20231209215601.3543895-2-dmitry.baryshkov@linaro.org/
+>>> [2] https://lore.kernel.org/linux-arm-msm/CAD=FV=XX4wLg1NNVL15RK4D4tLvuSzZyUv=k_tS4bSb3=7QJzQ@mail.gmail.com/
+>>>
+>>> Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> Reported-by: Doug Anderson <dianders@chromium.org>
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> ---
+>> Arnd, since Bjorn seems to be MIA, could you please pick this directly
+>> so that it gets into the next RC? Un-breaking booting on some platforms
+>> would be very welcome :D
+>>
 > 
-> Add return error code and print error message too debug log in case of
-> non-zero result of register_restart_handler.
-> 
-> Found by Linux Verification Center (linuxtesting.org) with SVACE.
-> 
-> Fixes: 18a702e0de98 ("power: reset: use restart_notifier mechanism for 
-> msm-poweroff")
-> 
-> Signed-off-by: Nikita Kiryushin <kiryushin@ancud.ru>
-> ---
->   drivers/power/reset/msm-poweroff.c | 7 ++++++-
->   1 file changed, 6 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/power/reset/msm-poweroff.c 
-> b/drivers/power/reset/msm-poweroff.c
-> index b9a401bd280b..5877a1ba2778 100644
-> --- a/drivers/power/reset/msm-poweroff.c
-> +++ b/drivers/power/reset/msm-poweroff.c
-> @@ -35,11 +35,16 @@ static void do_msm_poweroff(void)
->    static int msm_restart_probe(struct platform_device *pdev)
->   {
-> +    int ret = -EINVAL;
+> I'm confused, the two offending commits are staged for v6.8. Which -rc
+> do you want this applied in?! And you posted this patch yesterday...
+Uh right, sorry, I should think twice before sending such emails late
+into the night..
 
-This does not add up anything., no need to initialize.
-
--Mukesh
-
-
->       msm_ps_hold = devm_platform_ioremap_resource(pdev, 0);
->       if (IS_ERR(msm_ps_hold))
->           return PTR_ERR(msm_ps_hold);
->   -    register_restart_handler(&restart_nb);
-> +    ret = register_restart_handler(&restart_nb);
-> +    if (ret) {
-> +        dev_err(&pdev->dev, "unable to register restart handler, %d\n", 
-> ret);
-> +        return ret;
-> +    }
->        pm_power_off = do_msm_poweroff;
->   -- 2.34.1
-> 
+Konrad
 
