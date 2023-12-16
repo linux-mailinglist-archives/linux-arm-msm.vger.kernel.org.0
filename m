@@ -1,77 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-5055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E366381566D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 03:35:05 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DFF5C815782
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 05:35:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0D4228689B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 02:35:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7FAD11F25BB8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 04:35:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A917417E8;
-	Sat, 16 Dec 2023 02:34:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1B6E6FBA;
+	Sat, 16 Dec 2023 04:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SZQI4qUQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="adlewkaq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35492812;
-	Sat, 16 Dec 2023 02:34:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-67f16446498so8727046d6.1;
-        Fri, 15 Dec 2023 18:34:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702694097; x=1703298897; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lNlfUS9v3pfkTO0w/8Oq2nDjf4pESr7zqgOW0Dmjp2E=;
-        b=SZQI4qUQtIxHAcM/o3HztmRkqM5MtREMSsm1DbnndvaHeqxd+nxPAjVleZ1vuq5n0I
-         IZaDmqlNF+kV96+cf//yGvUdWKiZAZF149DEZAiC675zFOOoCu9InH2P3KUXYFBW2yPT
-         lPu27embmUiaU3u9tp+7Cj/SjXOtEIU8zo3MGwIeq8FrdBjkEP5rFds7rRzdFK5ZkM6b
-         7spBX2AyfUm9KGQxhchhXp+/P87QPPXoWzhJ4bTbQ8e901slEak2VLCgGKh39TOSrInw
-         YO6qWCASrT5aJdNE1a5IngyPrcwBF11+QRIt1D7F/IhSDiAg/9xPmQa9Xp4777Ggwa08
-         9BwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702694097; x=1703298897;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lNlfUS9v3pfkTO0w/8Oq2nDjf4pESr7zqgOW0Dmjp2E=;
-        b=SiSGoiNbbPjgAOp5mA0nCO93Yir5N3IrcvB2NtJkM6n6eIc6pdPXsEhl3Sl3qGgTDQ
-         KrpzUHQetGPOuQRrZw+2F9ey7FAl3eU4qTIDT6scPFzHSaB1w/q7OGdJ7KE3M/523Uiu
-         zfAXVemht+Ksd/CB0PBthx+8hVsAxR5nno86aSOebvbyAXLGrIrA8mOSzfidCZIo9qlX
-         H0HTSr+NGBznyRa05VJHk0gxICao4hnHA5v9GxNoVcw6Z86CIxSd9ubBKEYb6J5E6Gu5
-         nRIDubADDJI01yBQKm+C8OT8Nv8PqgObUwwnDIVVE0nS5tnmrSkWbwF2V8KFvn61Lrw+
-         69kg==
-X-Gm-Message-State: AOJu0Yz/JtdRmuBIB5GojZqGwiN3eGz+kGkHqNsqAYZxEoDl2O42ywiY
-	SdSkmQPN3v6kPSMkU9hfqCw=
-X-Google-Smtp-Source: AGHT+IE+UUMI/+B/RdPUlDebfLff6Bo0TPgbhcY5nw7DhwN6KqQx9zmak9JXsj5B2YgpwxCNu1MZYA==
-X-Received: by 2002:ad4:5c6f:0:b0:67f:86b:72f5 with SMTP id i15-20020ad45c6f000000b0067f086b72f5mr5480739qvh.102.1702694097079;
-        Fri, 15 Dec 2023 18:34:57 -0800 (PST)
-Received: from localhost ([2607:fea8:529e:7800::a768])
-        by smtp.gmail.com with ESMTPSA id q2-20020a0ce202000000b0067a93291d3dsm7340689qvl.78.2023.12.15.18.34.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Dec 2023 18:34:56 -0800 (PST)
-Date: Fri, 15 Dec 2023 21:34:53 -0500
-From: Richard Acayan <mailingradian@gmail.com>
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: sdm670: fix USB DP/DM HS PHY
- interrupts
-Message-ID: <ZX0MzT5jX_s_m_1Y@radian>
-References: <20231214074319.11023-1-johan+linaro@kernel.org>
- <20231214074319.11023-2-johan+linaro@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40DB539E;
+	Sat, 16 Dec 2023 04:35:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F695C433C8;
+	Sat, 16 Dec 2023 04:35:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1702701306;
+	bh=yKomdcJ7yz8oOjAGsZLlvVacjnOwqWgzQX+Yh00wFj4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=adlewkaqL9FMU8YRkQNQt7gD8jn00g+8OJ2lEqsY7bvAqGgnZesPuWGSuRyT+6nxW
+	 nkl+em9j/Oq2gnybDLX0WVR3NydkUV4IPx2cU3u/Bg4vLGh9+HitFWzJY9LcTnilEl
+	 P0z1PDsrlevWCuvR8gfAe+MPZRK1/DwyDnIoGfQZjju8K9YqITW/BSbT9ejT3OJdLr
+	 V1rbr+6dTtJ9gg5UJf++ZXLk0nvGMDFmOBkl/urGHPXBLst5hwG2BOD2stMX+VJvMA
+	 4ZIOsVFy9h1pJJnAKp0xBcbSDmaC+e2P7e8nYAOQbaA1Uo8ddXeuRfsVlsEssbfdkx
+	 M7xnlZFV/rrEw==
+Date: Fri, 15 Dec 2023 22:35:03 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Doug Anderson <dianders@chromium.org>
+Subject: Re: [PATCH] Revert "soc: qcom: stats: Add DDR sleep stats"
+Message-ID: <cxrw3fc4jxd2zee655g4gi2eshqnwquhezcehnvwjuyt4qkihr@ganx5uwzc35r>
+References: <20231214-topic-undo_ddr_stats-v1-1-1fe32c258e56@linaro.org>
+ <4472fd8e-73a6-44b6-a1d0-c5ebc55d4211@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,53 +50,38 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231214074319.11023-2-johan+linaro@kernel.org>
+In-Reply-To: <4472fd8e-73a6-44b6-a1d0-c5ebc55d4211@linaro.org>
 
-On Thu, Dec 14, 2023 at 08:43:17AM +0100, Johan Hovold wrote:
-> The USB DP/DM HS PHY interrupts need to be provided by the PDC interrupt
-> controller in order to be able to wake the system up from low-power
-> states and to be able to detect disconnect events, which requires
-> triggering on falling edges.
->
-> A recent commit updated the trigger type but failed to change the
-> interrupt provider as required. This leads to the current Linux driver
-> failing to probe instead of printing an error during suspend and USB
-> wakeup not working as intended.
->
-> Fixes: de3b3de30999 ("arm64: dts: qcom: sdm670: fix USB wakeup interrupt types")
-> Fixes: 07c8ded6e373 ("arm64: dts: qcom: add sdm670 and pixel 3a device trees")
-> Cc: stable@vger.kernel.org      # 6.2
+On Sat, Dec 16, 2023 at 01:05:53AM +0100, Konrad Dybcio wrote:
+> On 14.12.2023 13:25, Konrad Dybcio wrote:
+> > After recent reports ([1], [2]) of older platforms (particularly 8150 and
+> > 7180) breaking after DDR sleep stats introduction, revert the following:
+> > 
+> > Commit 73380e2573c3 ("soc: qcom: stats: fix 64-bit division")
+> > Commit e84e61bdb97c ("soc: qcom: stats: Add DDR sleep stats")
+> > 
+> > The feature itself is rather useful for debugging DRAM power management,
+> > however it looks like the shared RPMh stats data structures differ on
+> > previous SoCs.
+> > 
+> > Revert its addition for now to un-break booting on these earlier SoCs,
+> > while I try to come up with a better way to enable it conditionally.
+> > 
+> > [1] https://lore.kernel.org/linux-arm-msm/20231209215601.3543895-2-dmitry.baryshkov@linaro.org/
+> > [2] https://lore.kernel.org/linux-arm-msm/CAD=FV=XX4wLg1NNVL15RK4D4tLvuSzZyUv=k_tS4bSb3=7QJzQ@mail.gmail.com/
+> > 
+> > Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Reported-by: Doug Anderson <dianders@chromium.org>
+> > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > ---
+> Arnd, since Bjorn seems to be MIA, could you please pick this directly
+> so that it gets into the next RC? Un-breaking booting on some platforms
+> would be very welcome :D
+> 
 
-I almost forgot to mention, both SDM670 patches seem to depend on
-b51ee205dc4f ("arm64: dts: qcom: sdm670: Add PDC") in 6.6 to compile
-properly.
+I'm confused, the two offending commits are staged for v6.8. Which -rc
+do you want this applied in?! And you posted this patch yesterday...
 
-> Cc: Richard Acayan <mailingradian@gmail.com>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->  arch/arm64/boot/dts/qcom/sdm670.dtsi | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> index c873560ae9d5..fe4067c012a0 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> @@ -1295,10 +1295,10 @@ usb_1: usb@a6f8800 {
->  					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
->  			assigned-clock-rates = <19200000>, <150000000>;
->  
-> -			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
-> -				     <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
-> -				     <GIC_SPI 488 IRQ_TYPE_EDGE_BOTH>,
-> -				     <GIC_SPI 489 IRQ_TYPE_EDGE_BOTH>;
-> +			interrupts-extended = <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&intc GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&pdc 8 IRQ_TYPE_EDGE_BOTH>,
-> +					      <&pdc 9 IRQ_TYPE_EDGE_BOTH>;
->  			interrupt-names = "hs_phy_irq", "ss_phy_irq",
->  					  "dm_hs_phy_irq", "dp_hs_phy_irq";
->  
-> -- 
-> 2.41.0
->
+Regards,
+Bjorn
 
