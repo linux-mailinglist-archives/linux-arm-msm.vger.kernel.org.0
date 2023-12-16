@@ -1,538 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-5082-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5083-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3869815B2D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 20:00:40 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82082815BBF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 21:46:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8DBB1B23C48
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 19:00:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 393C4284A5E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 20:46:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3605328A6;
-	Sat, 16 Dec 2023 19:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 421811DFDA;
+	Sat, 16 Dec 2023 20:46:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Q5gjwLzh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="M63y+nqf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE15328A2;
-	Sat, 16 Dec 2023 19:00:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BGJ0D51015126;
-	Sat, 16 Dec 2023 19:00:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=bvlk/9qtEMVAepuiNyaBJlqUGz8MCCPfE1zt4TcIcEE=; b=Q5
-	gjwLzh28boUyqGUsxEzDWUSyfUhE7FNkhBYjN+R9XkZZK7Hg5TUKjDzemq6XPqQf
-	iXmXI8yPJHsEZoLlGek1MQ+GTp7i8dQEd/eKyJ69yuXvYJisd+9Vld2zGuz1btR9
-	T2+mUTsIM+jEkNg5DBl7O5aMaujqdI25XH9MDyPcVaE27ZC7RX7rXZHUQwinrjyl
-	QFf1Km2ttBXOD36utdX/GxFdfLXPNOGjEeheLUbMzFdMmtDnCdFXI+/131qKoSHO
-	35uu5VlOXScA2uI5lszXUWETpzSNqzCVmGhXj+rqHZbLLTCRXXdO5tYa0ecAtL4/
-	L/6jHGZux+xJfWYpQHXw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v152q90et-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 16 Dec 2023 19:00:16 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BGJ0Fo2027068
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 16 Dec 2023 19:00:15 GMT
-Received: from [10.216.0.181] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sat, 16 Dec
- 2023 11:00:08 -0800
-Message-ID: <aec86af5-1170-4fc4-9986-879c61fc8633@quicinc.com>
-Date: Sun, 17 Dec 2023 00:29:56 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5351171F
+	for <linux-arm-msm@vger.kernel.org>; Sat, 16 Dec 2023 20:46:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-6d9e993d94dso1477849a34.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Dec 2023 12:46:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702759579; x=1703364379; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=n9GkBJ1VV03XlaGkUS0RDZJ+XNHbVvs8o895NNxcixI=;
+        b=M63y+nqfuyTGQXZ85+BS1MLsugwC0B2NwFjCa8oHRwShC8bYznFIJl8Dyjs0wiIgi9
+         rUdriWUo5gRPa8DJ1BUF3CJbNgR43g0CUmcbMhAt/PcK0f6/shxrXZZ/ybIE89sp2ZGe
+         OKu4cWqxeK0+xYpwEPvLpU6d50Kapnzjo0zoRLildYFAxdI0cZK/okzuNu2z8nKO/bX1
+         1VaHE7Dz01vAK4Lw/OIetYiIKQJpyuykoburmu2vbkT7tA16FXoQ5bfbN+syJvUlS/tB
+         2O9GMm+O29iHbH5diKOwRG1wCu5KyaRVDyFez98eSRD/W5DPwTtd4xqi+wFBhb5cnPW3
+         ko8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702759579; x=1703364379;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=n9GkBJ1VV03XlaGkUS0RDZJ+XNHbVvs8o895NNxcixI=;
+        b=XQk2bKuD9/NOmSJUNT266+YSm/lvZ4MOCnRWbB4l8SS8gC1erabAHOzMubQFE6dxib
+         ZEvK3vj5Vdxc7gWM0Oun8aClkR4L+dZ7n4drFaKTcj2xcFEgSCqh4u3NPGIg1ND8adtL
+         Ku+G1fcnctfSsxl5nPue0PiLsXIT3Pde9vIPOmpqIFG94zwLdlEQk7qY7m06Og7HobH3
+         dDnkda8W4LpPJTc/x8YESkIvhF319kz8m1KBZdlf/TNWdlGKcGbrMiO1hYy/eQdOawz7
+         znnDL0YaWmN+wtDtYa+y3d0SrzV79D1n8/1f3Z++78kQLwCL2FanE5yKL9rxaxDdUgSv
+         tULw==
+X-Gm-Message-State: AOJu0YwA4bYvZDqaGLqHFHtUILniPOpTc6Ptp9WUpRmDgjXWkc4GO988
+	WSH0p7Cm14MLKxDivz9b00AlISxO3fwI7Eq+4a7TrFmDVM5xtZBvvnM=
+X-Google-Smtp-Source: AGHT+IFAMahZs15ODyUaBARhKOt7W65Qa+q9VajWW68UUmWl77hlRI7vRcPFruqJRqo3SW8FzMfSqA8KbOkORZoo85U=
+X-Received: by 2002:a05:6830:20b:b0:6da:1a47:136c with SMTP id
+ em11-20020a056830020b00b006da1a47136cmr9448495otb.72.1702759579493; Sat, 16
+ Dec 2023 12:46:19 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 02/13] firmware: qcom: add a dedicated TrustZone buffer
- allocator
-Content-Language: en-US
-To: Bartosz Golaszewski <brgl@bgdev.pl>, Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Guru Das Srinagesh
-	<quic_gurus@quicinc.com>,
-        Andrew Halaney <ahalaney@redhat.com>,
-        "Maximilian
- Luz" <luzmaximilian@gmail.com>,
-        Alex Elder <elder@linaro.org>,
-        "Srini
- Kandagatla" <srinivas.kandagatla@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <kernel@quicinc.com>,
-        "Bartosz
- Golaszewski" <bartosz.golaszewski@linaro.org>
-References: <20231127141600.20929-1-brgl@bgdev.pl>
- <20231127141600.20929-3-brgl@bgdev.pl>
-From: Om Prakash Singh <quic_omprsing@quicinc.com>
-In-Reply-To: <20231127141600.20929-3-brgl@bgdev.pl>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: JkGTh7Y17o2GPV2akbWlBsAMszaGhK8b
-X-Proofpoint-GUID: JkGTh7Y17o2GPV2akbWlBsAMszaGhK8b
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 phishscore=0 suspectscore=0 mlxscore=0 lowpriorityscore=0
- bulkscore=0 adultscore=0 clxscore=1011 malwarescore=0 mlxlogscore=999
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312160146
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Sat, 16 Dec 2023 22:46:08 +0200
+Message-ID: <CAA8EJpouGKzc5ed_8Sex82oqx-0ch8FAuouyF6xd3O9DmLkTJQ@mail.gmail.com>
+Subject: sm8250: lpass_gfm lockdep trace
+To: Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+	"open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+
+Hello,
+
+Running linux-next on RB5 with lockdep enabled results in the
+following backtrace:
+
+[   37.461373] ======================================================
+[   37.461376] WARNING: possible circular locking dependency detected
+[   37.461379] 6.7.0-rc5-next-20231215-gdaf36fffbb8a-dirty #1313
+Tainted: G     U
+[   37.482615] ------------------------------------------------------
+[   37.482617] kworker/3:0/31 is trying to acquire lock:
+[   37.482621] ffffcaf2f5d71d68 (prepare_lock){+.+.}-{3:3}, at:
+clk_prepare_lock+0x4c/0xa8
+[   37.494216]
+[   37.494216] but task is already holding lock:
+[   37.494219] ffff579f5b149db0 (&psd->clock_mutex){+.+.}-{3:3}, at:
+pm_clk_op_lock+0x70/0xd4
+[   37.494236]
+[   37.494236] which lock already depends on the new lock.
+[   37.494236]
+[   37.494239]
+[   37.494239] the existing dependency chain (in reverse order) is:
+[   37.494241]
+[   37.494241] -> #1 (&psd->clock_mutex){+.+.}-{3:3}:
+[   37.494251]        __mutex_lock+0xa0/0x77c
+[   37.494261]        mutex_lock_nested+0x24/0x30
+[   37.494269]        pm_clk_op_lock+0x70/0xd4
+[   37.494275]        pm_clk_resume+0x50/0x17c
+[   37.494281]        pm_generic_runtime_resume+0x2c/0x44
+[   37.494288]        __rpm_callback+0x48/0x1ec
+[   37.494294]        rpm_callback+0x6c/0x78
+[   37.494300]        rpm_resume+0x4f0/0x754
+[   37.494306]        __pm_runtime_resume+0x58/0xb8
+[   37.494313]        clk_pm_runtime_get.part.0.isra.0+0x1c/0x88
+[   37.494322]        __clk_register+0x4e8/0x8b4
+[   37.494328]        devm_clk_hw_register+0x5c/0xd8
+[   37.494334]        lpass_gfm_clk_driver_probe+0xf8/0x154
+[   37.494343]        platform_probe+0x68/0xc0
+[   37.494352]        really_probe+0x148/0x2ac
+[   37.494360]        __driver_probe_device+0x78/0x12c
+[   37.494366]        driver_probe_device+0x3c/0x160
+[   37.494372]        __device_attach_driver+0xb8/0x138
+[   37.494379]        bus_for_each_drv+0x80/0xdc
+[   37.494386]        __device_attach+0x9c/0x188
+[   37.494393]        device_initial_probe+0x14/0x20
+[   37.494400]        bus_probe_device+0xac/0xb0
+[   37.494407]        deferred_probe_work_func+0x8c/0xc8
+[   37.494413]        process_one_work+0x1ec/0x51c
+[   37.494422]        worker_thread+0x1ec/0x3e4
+[   37.494429]        kthread+0x120/0x124
+[   37.494436]        ret_from_fork+0x10/0x20
+[   37.494443]
+[   37.494443] -> #0 (prepare_lock){+.+.}-{3:3}:
+[   37.494453]        __lock_acquire+0x12c4/0x1ebc
+[   37.494461]        lock_acquire+0x1ec/0x314
+[   37.679841]        __mutex_lock+0xa0/0x77c
+[   37.684081]        mutex_lock_nested+0x24/0x30
+[   37.684089]        clk_prepare_lock+0x4c/0xa8
+[   37.684095]        clk_unprepare+0x24/0x44
+[   37.684100]        pm_clk_suspend+0xa0/0x140
+[   37.684106]        pm_generic_runtime_suspend+0x2c/0x44
+[   37.684112]        __rpm_callback+0x48/0x1ec
+[   37.684117]        rpm_callback+0x6c/0x78
+[   37.684123]        rpm_suspend+0x138/0x638
+[   37.684129]        pm_runtime_work+0xc4/0xc8
+[   37.684134]        process_one_work+0x1ec/0x51c
+[   37.684141]        worker_thread+0x1ec/0x3e4
+[   37.684148]        kthread+0x120/0x124
+[   37.684154]        ret_from_fork+0x10/0x20
+[   37.684159]
+[   37.684159] other info that might help us debug this:
+[   37.684159]
+[   37.684163]  Possible unsafe locking scenario:
+[   37.684163]
+[   37.684165]        CPU0                    CPU1
+[   37.684168]        ----                    ----
+[   37.684170]   lock(&psd->clock_mutex);
+[   37.684176]                                lock(prepare_lock);
+[   37.684181]                                lock(&psd->clock_mutex);
+[   37.684187]   lock(prepare_lock);
+[   37.684192]
+[   37.684192]  *** DEADLOCK ***
+[   37.684192]
+[   37.684194] 3 locks held by kworker/3:0/31:
+[   37.684198]  #0: ffff579f40d98338 ((wq_completion)pm){+.+.}-{0:0},
+at: process_one_work+0x14c/0x51c
+[   37.684217]  #1: ffff800080293de0
+((work_completion)(&dev->power.work)){+.+.}-{0:0}, at:
+process_one_work+0x14c/0x51c
+[   37.684235]  #2: ffff579f5b149db0 (&psd->clock_mutex){+.+.}-{3:3},
+at: pm_clk_op_lock+0x70/0xd4
+[   37.684252]
+[   37.684252] stack backtrace:
+[   37.684255] CPU: 3 PID: 31 Comm: kworker/3:0 Tainted: G     U
+      6.7.0-rc5-next-20231215-gdaf36fffbb8a-dirty #1313
+[   37.684262] Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
+[   37.684268] Workqueue: pm pm_runtime_work
+[   37.684277] Call trace:
+[   37.684279]  dump_backtrace+0x98/0xf0
+[   37.684285]  show_stack+0x18/0x24
+[   37.684290]  dump_stack_lvl+0x60/0xac
+[   37.684299]  dump_stack+0x18/0x24
+[   37.684305]  print_circular_bug+0x288/0x368
+[   37.684311]  check_noncircular+0x158/0x16c
+[   37.684316]  __lock_acquire+0x12c4/0x1ebc
+[   37.684322]  lock_acquire+0x1ec/0x314
+[   37.684327]  __mutex_lock+0xa0/0x77c
+[   37.684334]  mutex_lock_nested+0x24/0x30
+[   37.684340]  clk_prepare_lock+0x4c/0xa8
+[   37.684346]  clk_unprepare+0x24/0x44
+[   37.684351]  pm_clk_suspend+0xa0/0x140
+[   37.684357]  pm_generic_runtime_suspend+0x2c/0x44
+[   37.909043]  __rpm_callback+0x48/0x1ec
+[   37.912918]  rpm_callback+0x6c/0x78
+[   37.912925]  rpm_suspend+0x138/0x638
+[   37.912931]  pm_runtime_work+0xc4/0xc8
+[   37.912937]  process_one_work+0x1ec/0x51c
+[   37.912944]  worker_thread+0x1ec/0x3e4
+[   37.912950]  kthread+0x120/0x124
+[   37.912956]  ret_from_fork+0x10/0x20
+[   37.933142] wsa881x-codec sdw:1:0:0217:2110:00:4: nonexclusive
+access to GPIO for powerdown
+[   37.951383] qcom-soundwire 3250000.soundwire: Qualcomm Soundwire
+controller v1.5.1 Registered
+[   37.978677] input: Qualcomm-RB5-WSA8815-Speakers-D Headset Jack as
+/devices/platform/sound/sound/card0/input2
 
 
-
-On 11/27/2023 7:45 PM, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> We have several SCM calls that require passing buffers to the TrustZone
-> on top of the SMC core which allocates memory for calls that require
-> more than 4 arguments.
-> 
-> Currently every user does their own thing which leads to code
-> duplication. Many users call dma_alloc_coherent() for every call which
-> is terribly unperformant (speed- and size-wise).
-> 
-> Provide a set of library functions for creating and managing pool of
-> memory which is suitable for sharing with the TrustZone, that is:
-> page-aligned, contiguous and non-cachable as well as provides a way of
-> mapping of kernel virtual addresses to physical space.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
-> Tested-by: Andrew Halaney <ahalaney@redhat.com> # sc8280xp-lenovo-thinkpad-x13s
-> ---
->   drivers/firmware/qcom/Kconfig            |  19 ++
->   drivers/firmware/qcom/Makefile           |   1 +
->   drivers/firmware/qcom/qcom_tzmem.c       | 302 +++++++++++++++++++++++
->   drivers/firmware/qcom/qcom_tzmem.h       |  13 +
->   include/linux/firmware/qcom/qcom_tzmem.h |  28 +++
->   5 files changed, 363 insertions(+)
->   create mode 100644 drivers/firmware/qcom/qcom_tzmem.c
->   create mode 100644 drivers/firmware/qcom/qcom_tzmem.h
->   create mode 100644 include/linux/firmware/qcom/qcom_tzmem.h
-> 
-> diff --git a/drivers/firmware/qcom/Kconfig b/drivers/firmware/qcom/Kconfig
-> index 3f05d9854ddf..b80269a28224 100644
-> --- a/drivers/firmware/qcom/Kconfig
-> +++ b/drivers/firmware/qcom/Kconfig
-> @@ -9,6 +9,25 @@ menu "Qualcomm firmware drivers"
->   config QCOM_SCM
->   	tristate
->   
-> +config QCOM_TZMEM
-> +	tristate
-> +
-> +choice
-> +	prompt "TrustZone interface memory allocator mode"
-> +	default QCOM_TZMEM_MODE_DEFAULT
-> +	help
-> +	  Selects the mode of the memory allocator providing memory buffers of
-> +	  suitable format for sharing with the TrustZone. If in doubt, select
-> +	  'Default'.
-> +
-> +config QCOM_TZMEM_MODE_DEFAULT
-> +	bool "Default"
-> +	help
-> +	  Use the default allocator mode. The memory is page-aligned, non-cachable
-> +	  and contiguous.
-> +
-> +endchoice
-> +
->   config QCOM_SCM_DOWNLOAD_MODE_DEFAULT
->   	bool "Qualcomm download mode enabled by default"
->   	depends on QCOM_SCM
-> diff --git a/drivers/firmware/qcom/Makefile b/drivers/firmware/qcom/Makefile
-> index c9f12ee8224a..0be40a1abc13 100644
-> --- a/drivers/firmware/qcom/Makefile
-> +++ b/drivers/firmware/qcom/Makefile
-> @@ -5,5 +5,6 @@
->   
->   obj-$(CONFIG_QCOM_SCM)		+= qcom-scm.o
->   qcom-scm-objs += qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
-> +obj-$(CONFIG_QCOM_TZMEM)	+= qcom_tzmem.o
->   obj-$(CONFIG_QCOM_QSEECOM)	+= qcom_qseecom.o
->   obj-$(CONFIG_QCOM_QSEECOM_UEFISECAPP) += qcom_qseecom_uefisecapp.o
-> diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qcom/qcom_tzmem.c
-> new file mode 100644
-> index 000000000000..44a062f2abd4
-> --- /dev/null
-> +++ b/drivers/firmware/qcom/qcom_tzmem.c
-> @@ -0,0 +1,302 @@
-> +// SPDX-License-Identifier: GPL-2.0-or-later
-> +/*
-> + * Memory allocator for buffers shared with the TrustZone.
-> + *
-> + * Copyright (C) 2023 Linaro Ltd.
-> + */
-> +
-> +#include <linux/bug.h>
-> +#include <linux/cleanup.h>
-> +#include <linux/dma-mapping.h>
-> +#include <linux/err.h>
-> +#include <linux/firmware/qcom/qcom_tzmem.h>
-> +#include <linux/genalloc.h>
-> +#include <linux/gfp.h>
-> +#include <linux/mm.h>
-> +#include <linux/radix-tree.h>
-> +#include <linux/slab.h>
-> +#include <linux/spinlock.h>
-> +#include <linux/types.h>
-> +
-> +#include "qcom_tzmem.h"
-> +
-> +struct qcom_tzmem_pool {
-> +	void *vbase;
-> +	dma_addr_t pbase;
-> +	size_t size;
-> +	struct gen_pool *pool;
-> +	void *priv;
-priv is not being using any where.
-> +};
-> +
-> +struct qcom_tzmem_chunk {
-> +	phys_addr_t paddr;
-> +	size_t size;
-> +	struct qcom_tzmem_pool *owner;
-Is it okay to use "pool" for this data member?
-> +};
-> +
-> +static struct device *qcom_tzmem_dev;
-> +static RADIX_TREE(qcom_tzmem_chunks, GFP_ATOMIC);
-> +static DEFINE_SPINLOCK(qcom_tzmem_chunks_lock);
-> +
-> +#if IS_ENABLED(CONFIG_QCOM_TZMEM_MODE_DEFAULT)
-> +
-> +static int qcom_tzmem_init(void)
-> +{
-> +	return 0;
-> +}
-> +
-> +static int qcom_tzmem_init_pool(struct qcom_tzmem_pool *pool)
-> +{
-> +	return 0;
-> +}
-> +
-> +static void qcom_tzmem_cleanup_pool(struct qcom_tzmem_pool *pool)
-> +{
-> +
-> +}
-> +
-> +#endif /* CONFIG_QCOM_TZMEM_MODE_DEFAULT */
-> +
-> +/**
-> + * qcom_tzmem_pool_new() - Create a new TZ memory pool.
-> + * @size: Size of the new pool in bytes.
-> + *
-> + * Create a new pool of memory suitable for sharing with the TrustZone.
-> + *
-> + * Must not be used in atomic context.
-> + *
-> + * Returns:
-> + * New memory pool address or ERR_PTR() on error.
-> + */
-> +struct qcom_tzmem_pool *qcom_tzmem_pool_new(size_t size)
-> +{
-> +	struct qcom_tzmem_pool *pool;
-> +	int ret = -ENOMEM;
-> +
-> +	if (!size)
-> +		return ERR_PTR(-EINVAL);
-> +
-> +	size = PAGE_ALIGN(size);
-> +
-> +	pool = kzalloc(sizeof(*pool), GFP_KERNEL);
-> +	if (!pool)
-> +		return ERR_PTR(-ENOMEM);
-> +
-> +	pool->size = size;
-> +
-> +	pool->vbase = dma_alloc_coherent(qcom_tzmem_dev, size, &pool->pbase,
-> +					 GFP_KERNEL);
-> +	if (!pool->vbase)
-> +		goto err_kfree_pool;
-> +
-> +	pool->pool = gen_pool_create(PAGE_SHIFT, -1);
-> +	if (!pool)
-> +		goto err_dma_free;
-> +
-> +	gen_pool_set_algo(pool->pool, gen_pool_best_fit, NULL);
-> +
-> +	ret = gen_pool_add_virt(pool->pool, (unsigned long)pool->vbase,
-> +				(phys_addr_t)pool->pbase, size, -1);
-> +	if (ret)
-> +		goto err_destroy_genpool;
-> +
-> +	ret = qcom_tzmem_init_pool(pool);
-> +	if (ret)
-> +		goto err_destroy_genpool;
-> +
-> +	return pool;
-> +
-> +err_destroy_genpool:
-> +	gen_pool_destroy(pool->pool);
-> +err_dma_free:
-> +	dma_free_coherent(qcom_tzmem_dev, size, pool->vbase, pool->pbase);
-> +err_kfree_pool:
-> +	kfree(pool);
-> +	return ERR_PTR(ret);
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_tzmem_pool_new);
-> +
-> +/**
-> + * qcom_tzmem_pool_free() - Destroy a TZ memory pool and free all resources.
-> + * @pool: Memory pool to free.
-> + *
-> + * Must not be called if any of the allocated chunks has not been freed.
-> + * Must not be used in atomic context.
-> + */
-> +void qcom_tzmem_pool_free(struct qcom_tzmem_pool *pool)
-> +{
-> +	struct qcom_tzmem_chunk *chunk;
-> +	struct radix_tree_iter iter;
-> +	bool non_empty = false;
-> +	void __rcu **slot;
-> +
-> +	if (!pool)
-> +		return;
-> +
-> +	qcom_tzmem_cleanup_pool(pool);
-> +
-> +	scoped_guard(spinlock_irqsave, &qcom_tzmem_chunks_lock) {
-> +		radix_tree_for_each_slot(slot, &qcom_tzmem_chunks, &iter, 0) {
-> +			chunk = radix_tree_deref_slot_protected(slot,
-> +						&qcom_tzmem_chunks_lock);
-> +
-> +			if (chunk->owner == pool)
-> +				non_empty = true;
-> +		}
-> +	}
-> +
-> +	WARN(non_empty, "Freeing TZ memory pool with memory still allocated");
-> +
-> +	gen_pool_destroy(pool->pool);
-> +	dma_free_coherent(qcom_tzmem_dev, pool->size, pool->vbase, pool->pbase);
-> +	kfree(pool);
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_tzmem_pool_free);
-> +
-> +static void devm_qcom_tzmem_pool_free(void *data)
-> +{
-> +	struct qcom_tzmem_pool *pool = data;
-> +
-> +	qcom_tzmem_pool_free(pool);
-> +}
-> +
-> +/**
-> + * devm_qcom_tzmem_pool_new() - Managed variant of qcom_tzmem_pool_new().
-> + * @dev: Device managing this resource.
-> + * @size: Size of the pool in bytes.
-> + *
-> + * Must not be used in atomic context.
-> + *
-> + * Returns:
-> + * Address of the managed pool or ERR_PTR() on failure.
-> + */
-> +struct qcom_tzmem_pool *
-> +devm_qcom_tzmem_pool_new(struct device *dev, size_t size)
-> +{
-> +	struct qcom_tzmem_pool *pool;
-> +	int ret;
-> +
-> +	pool = qcom_tzmem_pool_new(size);
-> +	if (IS_ERR(pool))
-> +		return pool;
-> +
-> +	ret = devm_add_action_or_reset(dev, devm_qcom_tzmem_pool_free, pool);
-> +	if (ret)
-> +		return ERR_PTR(ret);
-> +
-> +	return pool;
-> +}
-> +
-> +/**
-> + * qcom_tzmem_alloc() - Allocate a memory chunk suitable for sharing with TZ.
-> + * @pool: TZ memory pool from which to allocate memory.
-> + * @size: Number of bytes to allocate.
-> + * @gfp: GFP flags.
-> + *
-> + * Can be used in any context.
-> + *
-> + * Returns:
-> + * Address of the allocated buffer or NULL if no more memory can be allocated.
-> + * The buffer must be released using qcom_tzmem_free().
-> + */
-> +void *qcom_tzmem_alloc(struct qcom_tzmem_pool *pool, size_t size, gfp_t gfp)
-> +{
-> +	struct qcom_tzmem_chunk *chunk;
-> +	unsigned long vaddr;
-> +	int ret;
-> +
-> +	if (!size)
-> +		return NULL;
-> +
-> +	size = PAGE_ALIGN(size);
-> +
-> +	chunk = kzalloc(sizeof(*chunk), gfp);
-> +	if (!chunk)
-> +		return NULL;
-> +
-> +	vaddr = gen_pool_alloc(pool->pool, size);
-> +	if (!vaddr) {
-> +		kfree(chunk);
-> +		return NULL;
-> +	}
-> +
-> +	chunk->paddr = gen_pool_virt_to_phys(pool->pool, vaddr);
-> +	chunk->size = size;
-> +	chunk->owner = pool;
-> +
-> +	scoped_guard(spinlock_irqsave, &qcom_tzmem_chunks_lock) {
-> +		ret = radix_tree_insert(&qcom_tzmem_chunks, vaddr, chunk);
-> +		if (ret) {
-> +			gen_pool_free(pool->pool, vaddr, size);
-> +			kfree(chunk);
-> +			return NULL;
-> +		}
-> +	}
-> +
-> +	return (void *)vaddr;
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_tzmem_alloc);
-> +
-> +/**
-> + * qcom_tzmem_free() - Release a buffer allocated from a TZ memory pool.
-> + * @vaddr: Virtual address of the buffer.
-> + *
-> + * Can be used in any context.
-> + */
-> +void qcom_tzmem_free(void *vaddr)
-> +{
-> +	struct qcom_tzmem_chunk *chunk;
-> +
-> +	scoped_guard(spinlock_irqsave, &qcom_tzmem_chunks_lock)
-> +		chunk = radix_tree_delete_item(&qcom_tzmem_chunks,
-> +					       (unsigned long)vaddr, NULL);
-> +
-> +	if (!chunk) {
-> +		WARN(1, "Virtual address %p not owned by TZ memory allocator",
-> +		     vaddr);
-> +		return;
-> +	}
-> +
-> +	gen_pool_free(chunk->owner->pool, (unsigned long)vaddr, chunk->size);
-> +	kfree(chunk);
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_tzmem_free);
-> +
-> +/**
-> + * qcom_tzmem_to_phys() - Map the virtual address of a TZ buffer to physical.
-> + * @vaddr: Virtual address of the buffer allocated from a TZ memory pool.
-> + *
-> + * Can be used in any context. The address must have been returned by a call
-> + * to qcom_tzmem_alloc().
-> + *
-> + * Returns:
-> + * Physical address of the buffer.
-> + */
-> +phys_addr_t qcom_tzmem_to_phys(void *vaddr)
-> +{
-> +	struct qcom_tzmem_chunk *chunk;
-> +
-> +	guard(spinlock_irqsave)(&qcom_tzmem_chunks_lock);
-> +
-> +	chunk = radix_tree_lookup(&qcom_tzmem_chunks, (unsigned long)vaddr);
-> +	if (!chunk)
-> +		return 0;
-> +
-> +	return chunk->paddr;
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_tzmem_to_phys);
-> +
-> +int qcom_tzmem_enable(struct device *dev)
-> +{
-> +	if (qcom_tzmem_dev)
-> +		return -EBUSY;
-> +
-> +	qcom_tzmem_dev = dev;
-> +
-> +	return qcom_tzmem_init();
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_tzmem_enable);
-> +
-> +MODULE_DESCRIPTION("TrustZone memory allocator for Qualcomm firmware drivers");
-> +MODULE_AUTHOR("Bartosz Golaszewski <bartosz.golaszewski@linaro.org>");
-> +MODULE_LICENSE("GPL");
-> diff --git a/drivers/firmware/qcom/qcom_tzmem.h b/drivers/firmware/qcom/qcom_tzmem.h
-> new file mode 100644
-> index 000000000000..f82f5dc5b7b1
-> --- /dev/null
-> +++ b/drivers/firmware/qcom/qcom_tzmem.h
-> @@ -0,0 +1,13 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> +/*
-> + * Copyright (C) 2023 Linaro Ltd.
-> + */
-> +
-> +#ifndef __QCOM_TZMEM_PRIV_H
-> +#define __QCOM_TZMEM_PRIV_H
-> +
-> +struct device;
-> +
-> +int qcom_tzmem_enable(struct device *dev);
-> +
-> +#endif /* __QCOM_TZMEM_PRIV_H */
-> diff --git a/include/linux/firmware/qcom/qcom_tzmem.h b/include/linux/firmware/qcom/qcom_tzmem.h
-> new file mode 100644
-> index 000000000000..8e7fddab8cb4
-> --- /dev/null
-> +++ b/include/linux/firmware/qcom/qcom_tzmem.h
-> @@ -0,0 +1,28 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> +/*
-> + * Copyright (C) 2023 Linaro Ltd.
-> + */
-> +
-> +#ifndef __QCOM_TZMEM_H
-> +#define __QCOM_TZMEM_H
-> +
-> +#include <linux/cleanup.h>
-> +#include <linux/gfp.h>
-> +#include <linux/types.h>
-> +
-> +struct device;
-> +struct qcom_tzmem_pool;
-qcom_tzmem_pool stucture definition should be moved to header file.
-> +
-> +struct qcom_tzmem_pool *qcom_tzmem_pool_new(size_t size);
-> +void qcom_tzmem_pool_free(struct qcom_tzmem_pool *pool);
-> +struct qcom_tzmem_pool *
-> +devm_qcom_tzmem_pool_new(struct device *dev, size_t size);
-> +
-> +void *qcom_tzmem_alloc(struct qcom_tzmem_pool *pool, size_t size, gfp_t gfp);
-> +void qcom_tzmem_free(void *ptr);
-> +
-> +DEFINE_FREE(qcom_tzmem, void *, if (_T) qcom_tzmem_free(_T));
-> +
-> +phys_addr_t qcom_tzmem_to_phys(void *ptr);
-> +
-> +#endif /* __QCOM_TZMEM */
+-- 
+With best wishes
+Dmitry
 
