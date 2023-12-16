@@ -1,65 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-5064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0005981592E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 14:07:46 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D12DC815939
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 14:17:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8D760283A68
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 13:07:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BB27BB22359
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 13:17:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 052291EA80;
-	Sat, 16 Dec 2023 13:07:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C92581A29D;
+	Sat, 16 Dec 2023 13:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TYm9Kvc3"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AThlbtCL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC931EA7A
-	for <linux-arm-msm@vger.kernel.org>; Sat, 16 Dec 2023 13:07:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a1d2f89ddabso179909466b.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Dec 2023 05:07:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702732060; x=1703336860; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=2yA9PABcuRMl+k8vv8i6eJb42f3opY6mv6a7XyGuueg=;
-        b=TYm9Kvc3OD6leysSDZziMCLnhtlaAV/4cezs+YEoLSOlqyuaTpx0XsjtpnKSmqNFC7
-         klQ3ZvfGHJlXU+s9zHTeKthDgYch4zUMnih46oW1rV+KlAb0/O7kBBNQtqVUjkX1TwfV
-         2iL8H49Mxf3WgEa/NJYeVcCo6sYPoi4v+xuDAICpQuQPS/pTWoAwBIMo2/a2tVpU3O/E
-         HaMiiaxZ+L5fke8y3oyRVjjCDiUIUpC5G4OAD+cF+JSycNOSgK35xoncprAMHPvigioM
-         hI2uhbi9J4crLMM1rq9yX9w1AiX91w43NKuHMJF9fxM3ibWFua3sn9CgvijV3KOHcVFb
-         Te2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702732060; x=1703336860;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2yA9PABcuRMl+k8vv8i6eJb42f3opY6mv6a7XyGuueg=;
-        b=NXyN6wwhPQGF6+DByoqtCynM0fJaE6RjUlGPl7xSctBQBOn2fX110VNUbPrAL7DvYG
-         IGWDYlO8YcA/+zlOjJ1nFMy3cBDv36lhVkJ6NUm4JIPk6lNTOnZv1BpeByj97hexzkLj
-         EXIJReTYvgufG7jKPSBU4kJBDkSwx6TxUkHLC7gdvryHt8fgqERB8UwS74rEf9bTokdS
-         0O9qMbbvCWarni+soY9Xj5WbDIKV8UEuULhXPgSQNtihvmhcoiFU7yjUqu6tPMnSCJ4I
-         TKEKBsGy2verYjjXh0w3mNJFbVfW2kMt6FzkT+0SmfnJ+nDNwec3wTOTod/bg0bnGDYF
-         Nr+Q==
-X-Gm-Message-State: AOJu0Yy62kppHENVWsqYhCULvnO+ZZgTe5/NHJuIlsoEi5m0iEA1+Zxf
-	9DJbQAqWCw/Gx5SL8Kieq146jVz7ZQtJo+oy6FQ=
-X-Google-Smtp-Source: AGHT+IHKzd64b//nSjEz4XXrjdfd7+xFridS8WhZpcSHDh1a982Ueg8I13+ni5UKdeY1Y7iZN7L22A==
-X-Received: by 2002:a17:906:3f14:b0:a23:f50:60f7 with SMTP id c20-20020a1709063f1400b00a230f5060f7mr2282633ejj.102.1702732060525;
-        Sat, 16 Dec 2023 05:07:40 -0800 (PST)
-Received: from [192.168.199.59] (178235179137.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.137])
-        by smtp.gmail.com with ESMTPSA id vk2-20020a170907cbc200b00a1f76acb08fsm11042828ejc.134.2023.12.16.05.07.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 16 Dec 2023 05:07:40 -0800 (PST)
-Message-ID: <7530d783-00e7-4196-b18f-3eb372df8325@linaro.org>
-Date: Sat, 16 Dec 2023 14:07:38 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182811798A;
+	Sat, 16 Dec 2023 13:17:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BGCusMZ023628;
+	Sat, 16 Dec 2023 13:17:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=2SfPfALXU4yqzSwxzdMVtnOks/hM5pO+mVLBhFP6kGI=; b=AT
+	hlbtCLY7tV6MhBAa4guZYb4XjKvsoerjeb21Mzqy7LB54mV6H14JcSxvdSpYDxCm
+	3dLTFoOBoMkTq15oIqiZcC3QHl/vHeHzqaIsqHjUV1+YFaYxeFZPKLstDxzmFgmM
+	bWOGtNu9bR14eqC98bxVmxBtxjOUyx1J0unRai+9/NcbptobBhe0642EquDXxRic
+	15+AGsnOiGEE1cIKNmRihoBHwi1DLpLDh62/6SPQ5yVERSCR4lFbLb7sk+UhruoN
+	MQjbdkpNmbZdl2tZDzk/giZ9EmUMBH0ziERMafZyLCc7ZnF8dNswYU25k/K6T3to
+	MWyELTyaawn32Wci4zgw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v14vjgm7b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 16 Dec 2023 13:17:13 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BGDH3Ks006942
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 16 Dec 2023 13:17:03 GMT
+Received: from [10.253.9.247] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sat, 16 Dec
+ 2023 05:16:58 -0800
+Message-ID: <9eab958e-d91f-4f3c-aadd-6b34eaed2cef@quicinc.com>
+Date: Sat, 16 Dec 2023 21:16:49 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,88 +56,152 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Revert "soc: qcom: stats: Add DDR sleep stats"
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@kernel.org>,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Doug Anderson <dianders@chromium.org>
-References: <20231214-topic-undo_ddr_stats-v1-1-1fe32c258e56@linaro.org>
- <4472fd8e-73a6-44b6-a1d0-c5ebc55d4211@linaro.org>
- <cxrw3fc4jxd2zee655g4gi2eshqnwquhezcehnvwjuyt4qkihr@ganx5uwzc35r>
+Subject: Re: [PATCH v2 5/5] dt-bindings: net: ipq4019-mdio: Document ipq5332
+ platform
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <cxrw3fc4jxd2zee655g4gi2eshqnwquhezcehnvwjuyt4qkihr@ganx5uwzc35r>
-Content-Type: text/plain; charset=UTF-8
+To: Conor Dooley <conor@kernel.org>
+CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <andrew@lunn.ch>, <hkallweit1@gmail.com>, <linux@armlinux.org.uk>,
+        <robert.marko@sartura.hr>, <linux-arm-msm@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_srichara@quicinc.com>
+References: <a1e5ffec-a20d-4389-83f9-ee09bd9d733d@linaro.org>
+ <a84a36af-69f8-46af-967e-b06d028597a3@quicinc.com>
+ <26c8b0b1-5ea9-45cc-adf3-0d0b03a1284d@linaro.org>
+ <4b9c56b8-3b29-4861-a3d5-2da26fbc14b4@quicinc.com>
+ <2e77e3b1-00b6-46b9-bfed-7cae3ffa15e9@linaro.org>
+ <7bae46fd-63fd-4b86-9a56-73052cf0ea95@quicinc.com>
+ <5a8095e6-b6a6-4d11-b006-31519e8d8622@linaro.org>
+ <7466b655-2b7e-44f2-a510-6e0cc1b95248@quicinc.com>
+ <602759ce-c93d-4111-9272-1dce7e4a170a@linaro.org>
+ <f656d1c7-ea86-405a-9165-9eb079ea6f2a@quicinc.com>
+ <20231215-gauze-sprinkled-172729f22b6c@spud>
+From: Jie Luo <quic_luoj@quicinc.com>
+In-Reply-To: <20231215-gauze-sprinkled-172729f22b6c@spud>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 6WlShIglOSXKjAsX6GBFZLc1qCF7bQTW
+X-Proofpoint-GUID: 6WlShIglOSXKjAsX6GBFZLc1qCF7bQTW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ bulkscore=0 clxscore=1015 malwarescore=0 lowpriorityscore=0 spamscore=0
+ adultscore=0 mlxlogscore=999 mlxscore=0 priorityscore=1501 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
+ definitions=main-2312160103
 
-On 16.12.2023 05:35, Bjorn Andersson wrote:
-> On Sat, Dec 16, 2023 at 01:05:53AM +0100, Konrad Dybcio wrote:
->> On 14.12.2023 13:25, Konrad Dybcio wrote:
->>> After recent reports ([1], [2]) of older platforms (particularly 8150 and
->>> 7180) breaking after DDR sleep stats introduction, revert the following:
->>>
->>> Commit 73380e2573c3 ("soc: qcom: stats: fix 64-bit division")
->>> Commit e84e61bdb97c ("soc: qcom: stats: Add DDR sleep stats")
->>>
->>> The feature itself is rather useful for debugging DRAM power management,
->>> however it looks like the shared RPMh stats data structures differ on
->>> previous SoCs.
->>>
->>> Revert its addition for now to un-break booting on these earlier SoCs,
->>> while I try to come up with a better way to enable it conditionally.
->>>
->>> [1] https://lore.kernel.org/linux-arm-msm/20231209215601.3543895-2-dmitry.baryshkov@linaro.org/
->>> [2] https://lore.kernel.org/linux-arm-msm/CAD=FV=XX4wLg1NNVL15RK4D4tLvuSzZyUv=k_tS4bSb3=7QJzQ@mail.gmail.com/
->>>
->>> Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> Reported-by: Doug Anderson <dianders@chromium.org>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> ---
->> Arnd, since Bjorn seems to be MIA, could you please pick this directly
->> so that it gets into the next RC? Un-breaking booting on some platforms
->> would be very welcome :D
+
+
+On 12/15/2023 9:41 PM, Conor Dooley wrote:
+> On Fri, Dec 15, 2023 at 08:40:20PM +0800, Jie Luo wrote:
 >>
+>>
+>> On 12/15/2023 8:19 PM, Krzysztof Kozlowski wrote:
+>>> On 15/12/2023 12:42, Jie Luo wrote:
+>>>>>>>>>>> Which clocks are these mentioned in the property? From where do they come?
+>>>>>>>>>>>
+>>>>>>>>>>> Anyway, property is in existing form is not correct - this is not a
+>>>>>>>>>>> generic property.
+>>>>>>>>>>>
+>>>>>>>>>>
+>>>>>>>>>> This property cmn-reference-clock is just the hardware register
+>>>>>>>>>> configuration, since the different IPQ platform needs to select
+>>>>>>>>>> the different reference clock source for the CMN PLL block that
+>>>>>>>>>> provides the various clock outputs to the all kinds of Ethernet
+>>>>>>>>>> devices, which is not from GCC provider.
+>>>>>>>>>
+>>>>>>>>> AGAIN: where do the clocks come from? Which device generates them?
+>>>>>>>>
+>>>>>>>> Oh, OK, the reference clock is from wifi that provides 48MHZ to
+>>>>>>>> Ethernet block.
+>>>>>>>
+>>>>>>> Then WiFi should be providing you the clock and this device should be
+>>>>>>> clock consumer, right?
+>>>>>>
+>>>>>> Yes, wifi provides 48MHz clock to CMM PLL block, there is no GCC
+>>>>>> for this 48MHZ clock output, it is the hardware PIN connection.
+>>>>>
+>>>>> All clocks are some hardware pin connections.
+>>>>>
+>>>>> Best regards,
+>>>>> Krzysztof
+>>>>>
+>>>>
+>>>> Yes, all reference clocks here are from hardware pin connection.
+>>>
+>>> You keep answering with short sentences without touching the root of the
+>>> problem. I don't know exactly why, but I feel this discussion leads
+>>> nowhere. After long discussion you finally admitted that clocks came
+>>> from another device - Wifi. It took us like 6 emails?
+>>>
+>>> So last statement: if you have clock provider and clock consumer, you
+>>> must represent it in the bindings or provide rationale why it should not
+>>> or must not be represented in the bindings. So far I do not see any of
+>>> such arguments.
+>>>
+>>> If you use arguments like:
+>>> "My driver....": sorry, bindings are not about drivers
+>>> "I don't have clock driver for WiFi": sorry, it does not matter if you
+>>> can write one, right?
+>>>
+>>> Please reach internally your colleagues to solve these problems and make
+>>> review process smoother.
 > 
-> I'm confused, the two offending commits are staged for v6.8. Which -rc
-> do you want this applied in?! And you posted this patch yesterday...
-Uh right, sorry, I should think twice before sending such emails late
-into the night..
+>> These reference clocks source do not need the hardware configuration,
+>> that is the reason why the clock provider is not needed, some reference
+>> clock source are even from external crystal.
+> 
+> I fail to understand how that makes this clock different to the clocks
+> on any other platform. Clocks from external crystals are present in many
+> many systems. See for example fixed-clock.yaml.
 
-Konrad
+Hi Conor,
+The reference clock rate has no meaning to the CMN PLL block, since the
+software can't control the behavior of CMN PLL, and various output
+clocks of CMN PLL block are fixed, adding this custom property is just
+for selecting the different reference clock source, since different
+IPQ platform needs to be configured the different reference clock source
+for the CMN PLL block.
+
+let's say if we register 48MHZ reference clock as the fix clock, we
+can't distinguish it is internal 48MHZ or external 48MHZ, for these
+two reference clock sources, there are different hardware configuration
+of CMN PLL block, and this reference clock selection is not applicable
+for the IPQ4019 platform.
+
+> 
+>> There is also no enable control for the reference clocks since it is
+>> inputted by the hardware PIN connection, i will update these description
+>> in the DT to make it more clear.
+> 
+> Again, this does not justify having custom properties for this clock,
+> as it is no different to other platforms. As far as I can tell, the only
+> thing that a standard "clocks" property cannot convey here is the
+> internal reference. I would suggest that since there is only one
+> internal clock frequency, the absence of this particular clock in the
+> "clocks" property can be used to determine that the reference is the
+> internal one.
+> 
+> Thanks,
+> Conor.
+
+Yes, we can get the clock rate of the clocks property if we register
+these as the fix clock to distinguish the different clock source.
+
+Since the reference clock rate value has no matter with the CMN clock
+configuration, it is just the reference clock source selection, so
+i did not use the fix clock for this.
+
+Thanks for this suggestion, i will verify the fix clock register solution.
+
+
 
