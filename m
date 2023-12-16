@@ -1,48 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-5060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 460848157B8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 06:19:27 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3AE718157BC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 06:21:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EEF4E1F25C87
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 05:19:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D0175B22EA0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 05:21:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5B911118E;
-	Sat, 16 Dec 2023 05:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A45A1111B2;
+	Sat, 16 Dec 2023 05:21:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D8Rwtikr"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="of3V1Q8I"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9C910A2B;
-	Sat, 16 Dec 2023 05:19:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85618C433C8;
-	Sat, 16 Dec 2023 05:19:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F011119B;
+	Sat, 16 Dec 2023 05:21:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E5F8C433C7;
+	Sat, 16 Dec 2023 05:21:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702703961;
-	bh=geWMBLcp6sf1ms/3Xd1oNOeH2gSFO3bsbIdjbrF8pBU=;
+	s=k20201202; t=1702704105;
+	bh=3eaa/Z7yDUXKlQqwD+4l93z2758pfkfkFBK1mutDW8U=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=D8RwtikrCgR7IeIf7effE0TXN2gDjVDQjkMDLuYViPS7qJV/Q5yClH/ecL+nhocjc
-	 dH7gc6QhfrFKI7Auns+lzUfAQm8tqkWphKmEsXaIfpGP/8WxZiIJLdVgSa3LDz+jLY
-	 l9lUGVTUyVUj7UJhnYJrDeIxRQjZgl7DDuIEWApuLzN8/6xzwKunEKlj6xxiKGVD29
-	 oKDguXIFl9sPRsWLUK1XNgsfcd+mMl8CGUMcji03D8Cn1jqolY4eNNyaL/XHQBNwzb
-	 AGMeNDg1RSJSOB3HeBlAJuHLgglU/W9W4xhiD97bqdK3StzdbMNBPppOu39ez7Ors6
-	 ILzEUHamsW2JA==
-Date: Sat, 16 Dec 2023 10:49:08 +0530
+	b=of3V1Q8Ieqf/wmPZydE4Ev1mmMm+yb1yeoOt4xDu4H9NExwvYjJ5qW2ZSKZlQDbY4
+	 sGMP9CgOAffy+NmeQDJbzj27bMcAeyXl1JiH/MoRm0ASEw2i0OXcXCKfqQUbB7BYnt
+	 41dXYD6Wb/WtL2KzWf9WZb1umHJZnCz+d3y/yST8GlZQiAwMSfSx/2p3rmVpvnlnRl
+	 VzbD+PFhGENXHgNP+r5SPEKbx66285mGLR44OMglNzvR45GYyENUZb64WZTHHFCirB
+	 O6U1VppT2IRoLVMl/lyftqEHiUlAA625jzmX4oeoicQKqC5CDQiM08eom5sImlJCFU
+	 eHaq5eIZDFD8g==
+Date: Sat, 16 Dec 2023 10:51:32 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
 To: Qiang Yu <quic_qianyu@quicinc.com>
 Cc: quic_jhugo@quicinc.com, mhi@lists.linux.dev,
 	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
 	quic_cang@quicinc.com, quic_mrana@quicinc.com
-Subject: Re: [PATCH v5 2/2] bus: mhi: host: Drop chan lock before queuing
- buffers
-Message-ID: <20231216051908.GB3405@thinkpad>
+Subject: Re: [PATCH v5 0/2] bus: mhi: host: Add lock to avoid race when
+ ringing channel DB
+Message-ID: <20231216052132.GC3405@thinkpad>
 References: <1702276972-41296-1-git-send-email-quic_qianyu@quicinc.com>
- <1702276972-41296-3-git-send-email-quic_qianyu@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,51 +51,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1702276972-41296-3-git-send-email-quic_qianyu@quicinc.com>
+In-Reply-To: <1702276972-41296-1-git-send-email-quic_qianyu@quicinc.com>
 
-On Mon, Dec 11, 2023 at 02:42:52PM +0800, Qiang Yu wrote:
-> Ensure read and write locks for the channel are not taken in succession by
-> dropping the read lock from parse_xfer_event() such that a callback given
-> to client can potentially queue buffers and acquire the write lock in that
-> process. Any queueing of buffers should be done without channel read lock
-> acquired as it can result in multiple locks and a soft lockup.
+On Mon, Dec 11, 2023 at 02:42:50PM +0800, Qiang Yu wrote:
+> 
+> 1. We need a write lock in mhi_gen_tre otherwise there is race of the WP
+> used for ringing channel DB between mhi_queue and M0 transition.
+> 2. We can not invoke local_bh_enable() when irqs are disabled, so move
+> read_lock_irqsave() under the mhi_gen_tre() since we add write_lock_bh() in
+> mhi_gen_tre().
+> 3. Unlock xfer_cb to prevent potential lockup
 > 
 
-Cc: <stable@vger.kernel.org> # 5.7
-Fixes: 1d3173a3bae7 ("bus: mhi: core: Add support for processing events from client device")
-
-> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Applied to mhi-next!
 
 - Mani
 
-> ---
->  drivers/bus/mhi/host/main.c | 4 ++++
->  1 file changed, 4 insertions(+)
+> v1 -> v2:
+> Added write_unlock_bh(&mhi_chan->lock) in mhi_gen_tre() before return
+> because of error process.
 > 
-> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> index 32021fe..25f98d6 100644
-> --- a/drivers/bus/mhi/host/main.c
-> +++ b/drivers/bus/mhi/host/main.c
-> @@ -642,6 +642,8 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
->  			mhi_del_ring_element(mhi_cntrl, tre_ring);
->  			local_rp = tre_ring->rp;
->  
-> +			read_unlock_bh(&mhi_chan->lock);
-> +
->  			/* notify client */
->  			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
->  
-> @@ -667,6 +669,8 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
->  					kfree(buf_info->cb_buf);
->  				}
->  			}
-> +
-> +			read_lock_bh(&mhi_chan->lock);
->  		}
->  		break;
->  	} /* CC_EOT */
+> v2 -> v3:
+> 1. split protecting WP and unlocking xfer_cb into two patches
+> 2. Add a new patch to stop processing buffer and eventof a disabled or
+> stopped channel.
+> 
+> v3 -> v4:
+> 1. Modify commit message
+> 2. Add unlock operation before return error
+> 
+> v4 -> v5:
+> 1. Squash "protecting WP" and "Take irqsave lock" into one patch
+> 2. Drop patch 3/4 of patch v4
+> 
+> Bhaumik Bhatt (1):
+>   bus: mhi: host: Add spinlock to protect WP access when queueing TREs
+> 
+> Qiang Yu (1):
+>   bus: mhi: host: Drop chan lock before queuing buffers
+> 
+>  drivers/bus/mhi/host/main.c | 26 +++++++++++++++++---------
+>  1 file changed, 17 insertions(+), 9 deletions(-)
+> 
 > -- 
 > 2.7.4
 > 
