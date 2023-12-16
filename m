@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-5070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3FE3181595C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 14:37:06 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC3F6815962
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 14:40:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C116C1F21893
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 13:37:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EC3EC1C216D3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 13:40:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F272F3010E;
-	Sat, 16 Dec 2023 13:37:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BFF32D02B;
+	Sat, 16 Dec 2023 13:39:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="E2Rk4zgB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Mvg833Vk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716AF30108
-	for <linux-arm-msm@vger.kernel.org>; Sat, 16 Dec 2023 13:37:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC9E2C69C
+	for <linux-arm-msm@vger.kernel.org>; Sat, 16 Dec 2023 13:39:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a1db99cd1b2so193668066b.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Dec 2023 05:37:00 -0800 (PST)
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-55114c073b8so1896648a12.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Dec 2023 05:39:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702733819; x=1703338619; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1702733992; x=1703338792; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=gTxrdmzMhx+e3qmVGNMBR5C6/7xIPi2dPVSW7Pyo3yc=;
-        b=E2Rk4zgB8p0jwsQEaaBwQiWUmIt2XpLwYRRJMHlS7EY7c+xMqN73d7gri8GGJkzM76
-         buNaNjEl43VoaZltxQsHJ6JWGFVQYVJBLoFIgGPYnPX8BMbiM8y2AqWn9DiQwE+hLeOw
-         tOLpARVy8UmNp9U3boNQfZrdaTbUpJTmbVeKO6POkDTJX5jk4VO/MLgnLQEabBjqlE+F
-         zbG+dUtMbM+wgw0cRkf5EdezlgiHhvPEvNPeJ0o60jpfna7Wukt85FeL7X8IHdg0BugH
-         z8xKvIczgynMoh4N0Z4nu+coapTFe036j2Gdu7M6qXhKR9Qj+MDqeOFXhU9PjaoEKKsP
-         B+lQ==
+        bh=CgQAUQAM8cELSeW2IEx5byiUzC+z8jup1PU8Zejs1w4=;
+        b=Mvg833Vk0ockkKydGh+VB8upA5B0YAz+npyfm9270wgdfORDvil/uy3gzRaI7ol8o3
+         QtXAla0LVcoURehtc3am36IO6SyHeQ5qGim6TwZeR5xLEFYyCC14YMuADR8AuCkPm78l
+         AXB3NtsdXMSvSUU+S2qlpBbcVdvb//sWEKZ2ja3Zg1nrlOlu3FJ4wdyUK0EeTxlXAVrL
+         cZ7aclGMLZioDGlfWeJjS64S2rJ+qI6Y8PPVgaPe4N2sGg8zLA+AN0XeNIL9xZqsvEzI
+         S+aB1w7gaUC5//Tx95Dt1LygQ+zLG2PtwZEHfF9e7Nby1HBKkr3ycyOe4NOUnf8415zO
+         MIQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702733819; x=1703338619;
+        d=1e100.net; s=20230601; t=1702733992; x=1703338792;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gTxrdmzMhx+e3qmVGNMBR5C6/7xIPi2dPVSW7Pyo3yc=;
-        b=N03ou8W2hkLDCCHrhWgrGH1/13DjvltpPA5tVIA8TwVrj3H3ZsPG9hQt2YB8gwL9nS
-         asEwlyGYsZNvuEL6iOWJBbiHYoUAHtYzdew279/ctk8Hb0/0JhWQ8cHwwIEOyBfVc+uF
-         SYrm92Kk1Ls8iXgh0HOt8Isw2txUXpHypaWzN5xoJYtwPBxSspkVbu7wiQKgQ2WXitqt
-         D4uuKr89DM6yUuPe6WXXVVNCeYB9o3XLeqS1HtbypGGzkjjpxIXQnz9UC+b547vUdk+F
-         0SxlzOKDGE+npnCePJNaM58/vUJ+wY0c4W0bvlrE0rINrfUCurM4TcFg3Ku8Sku34D+D
-         lDWg==
-X-Gm-Message-State: AOJu0Yw+rKFJj+xpgM3/3kZzWCqOlMdok1jEDHnZn/B4qkqbYrlJdi2t
-	YqhjfifFwV8MnhUQ39cwhUvZew==
-X-Google-Smtp-Source: AGHT+IFjGht9uTCYss7cNMzqqeisz2WsXjNaesQq8vVHVAkXwEBHjAW0nAHHwgwBextUMIbMw3dkBQ==
-X-Received: by 2002:a17:906:b251:b0:a1e:9769:2e94 with SMTP id ce17-20020a170906b25100b00a1e97692e94mr3941231ejb.114.1702733818709;
-        Sat, 16 Dec 2023 05:36:58 -0800 (PST)
+        bh=CgQAUQAM8cELSeW2IEx5byiUzC+z8jup1PU8Zejs1w4=;
+        b=juvKFNrVAfASo65MbptCmoXq/OCczklp4bYGSZIxkGBl/mgxDMjtkPmVfDOyP27IC/
+         OmnKMKkfyXS56e9SN1vgANX4Zsdi+QgOQWi7STEP86VagKUvdgdoq/WJzMOjSKjkvGX5
+         5mNcWshJ/mjcIWSKKfVSWI0YSoNssA3YwapW5Pqe0kHgnQcJimqxvoyGLgyfFUZEn0Lv
+         hOeqQ5+AprjsTJ18smqyw5/mHe99tTdJc5LQgkWGIsUAxZTkKEaNENmWZ9+AeosuSEyU
+         kLi45qjl55vOg7mCB3614jdDPIyUZ40wNAPlYRDgxHKk4h0ryLcC0tAG08NU6nVZ4ut3
+         wWQw==
+X-Gm-Message-State: AOJu0Yy9Yh61HmHP9GTQeJisjXd3G7ciNhBb/xfibYDYHgr6TWpDFBAH
+	8QNGEtvDkKp1A/VmNenhVTsyQw==
+X-Google-Smtp-Source: AGHT+IFYB1M8R3wvsMNKoLyy0AsneBl4eh9KcPa5J/F4WKNAh7jqD8UTkHNVMF82Jx0fUkjHsuuMYQ==
+X-Received: by 2002:a50:99d2:0:b0:552:a7e3:6e6a with SMTP id n18-20020a5099d2000000b00552a7e36e6amr1150338edb.107.1702733991678;
+        Sat, 16 Dec 2023 05:39:51 -0800 (PST)
 Received: from [192.168.199.59] (178235179137.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.137])
-        by smtp.gmail.com with ESMTPSA id tq24-20020a170907c51800b00a1f9543a540sm9191936ejc.160.2023.12.16.05.36.56
+        by smtp.gmail.com with ESMTPSA id 28-20020a508e5c000000b0054b686e5b3bsm8928082edx.68.2023.12.16.05.39.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 16 Dec 2023 05:36:58 -0800 (PST)
-Message-ID: <c034afc0-eb1f-42b7-820a-f018cf4453eb@linaro.org>
-Date: Sat, 16 Dec 2023 14:36:56 +0100
+        Sat, 16 Dec 2023 05:39:51 -0800 (PST)
+Message-ID: <624956b6-d7ea-43da-bb8d-32d9166a0272@linaro.org>
+Date: Sat, 16 Dec 2023 14:39:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,7 +66,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/10] clk: qcom: Add TCSR clock driver for x1e80100
+Subject: Re: [PATCH v2 10/10] clk: qcom: Add camcc clock driver for x1e80100
 Content-Language: en-US
 To: Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
  Bjorn Andersson <andersson@kernel.org>,
@@ -78,9 +78,10 @@ To: Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
  Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+ Rajendra Nayak <quic_rjendra@quicinc.com>
 References: <20231214-x1e80100-clock-controllers-v2-0-2b0739bebd27@linaro.org>
- <20231214-x1e80100-clock-controllers-v2-9-2b0739bebd27@linaro.org>
+ <20231214-x1e80100-clock-controllers-v2-10-2b0739bebd27@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -117,18 +118,51 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231214-x1e80100-clock-controllers-v2-9-2b0739bebd27@linaro.org>
+In-Reply-To: <20231214-x1e80100-clock-controllers-v2-10-2b0739bebd27@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 14.12.2023 17:49, Abel Vesa wrote:
-> The TCSR clock controller found on X1E80100 provides refclks
-> for PCIE, USB and UFS. Add clock driver for it.
+> From: Rajendra Nayak <quic_rjendra@quicinc.com>
 > 
+> Add the camcc clock driver for x1e80100
+> 
+> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
 > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+[...]
+
+> +enum {
+> +	DT_BI_TCXO,
+> +	DT_BI_TCXO_AO,
+> +	DT_SLEEP_CLK,
+> +};
+> +
+> +enum {
+> +	P_BI_TCXO,
+Please don't overload this define with DT_BI_TCXO_AO, add a new one
+for the active-only clock. Please also do this in other drivers in
+this series.
+
+[...]
+
+> +	clk_lucid_ole_pll_configure(&cam_cc_pll0, regmap, &cam_cc_pll0_config);
+> +	clk_lucid_ole_pll_configure(&cam_cc_pll1, regmap, &cam_cc_pll1_config);
+> +	clk_rivian_evo_pll_configure(&cam_cc_pll2, regmap, &cam_cc_pll2_config);
+> +	clk_lucid_ole_pll_configure(&cam_cc_pll3, regmap, &cam_cc_pll3_config);
+> +	clk_lucid_ole_pll_configure(&cam_cc_pll4, regmap, &cam_cc_pll4_config);
+> +	clk_lucid_ole_pll_configure(&cam_cc_pll6, regmap, &cam_cc_pll6_config);
+> +	clk_lucid_ole_pll_configure(&cam_cc_pll8, regmap, &cam_cc_pll8_config);
+Do we know whether these configure calls are actually necessary?
+> +
+> +	/*
+> +	 * Keep clocks always enabled:
+> +	 *	cam_cc_gdsc_clk
+> +	 *	cam_cc_sleep_clk
+> +	 */
+> +	regmap_update_bits(regmap, 0x13a9c, BIT(0), BIT(0));
+> +	regmap_update_bits(regmap, 0x13ab8, BIT(0), BIT(0));
+Please make the comments inline with each line
 
 Konrad
 
