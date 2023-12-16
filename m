@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-5056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DFF5C815782
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 05:35:10 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C06048157A9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 06:11:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7FAD11F25BB8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 04:35:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ED9A91C23EA1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Dec 2023 05:11:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1B6E6FBA;
-	Sat, 16 Dec 2023 04:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E436134AD;
+	Sat, 16 Dec 2023 05:11:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="adlewkaq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UsIIViTQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40DB539E;
-	Sat, 16 Dec 2023 04:35:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F695C433C8;
-	Sat, 16 Dec 2023 04:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED6D134A0;
+	Sat, 16 Dec 2023 05:11:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5556CC433C7;
+	Sat, 16 Dec 2023 05:11:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702701306;
-	bh=yKomdcJ7yz8oOjAGsZLlvVacjnOwqWgzQX+Yh00wFj4=;
+	s=k20201202; t=1702703484;
+	bh=nrLNbAsUZT8Uv50zbveLnUslPF3P+bLBh/z97ozm5N8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=adlewkaqL9FMU8YRkQNQt7gD8jn00g+8OJ2lEqsY7bvAqGgnZesPuWGSuRyT+6nxW
-	 nkl+em9j/Oq2gnybDLX0WVR3NydkUV4IPx2cU3u/Bg4vLGh9+HitFWzJY9LcTnilEl
-	 P0z1PDsrlevWCuvR8gfAe+MPZRK1/DwyDnIoGfQZjju8K9YqITW/BSbT9ejT3OJdLr
-	 V1rbr+6dTtJ9gg5UJf++ZXLk0nvGMDFmOBkl/urGHPXBLst5hwG2BOD2stMX+VJvMA
-	 4ZIOsVFy9h1pJJnAKp0xBcbSDmaC+e2P7e8nYAOQbaA1Uo8ddXeuRfsVlsEssbfdkx
-	 M7xnlZFV/rrEw==
-Date: Fri, 15 Dec 2023 22:35:03 -0600
+	b=UsIIViTQ5dWEj8H/9CrZbwpUGxXN0uSAQfdTCm4Ggvse9FMGY+AqJFAy4UC9YaiWc
+	 uzlV1IXRl1OpD9IdOXVVIYR92jDazp3AEC5ZZ6KXd2/+lz5h0Zdc8Ie9kpKwIOy3T7
+	 Z6UGSYVqnmvyqqdfuUmuu36AIBc5Ri1m+p2Yrz2b+qykOfSjvVKpRwBxl4uwOETwOP
+	 XgXheK5NkJxVLHOXX9fhkTZETBZiFIFJDQZTAagRie74f9BKxf9yCmsCxAGZyBVYt0
+	 aPgAXT3hiCwbvb3SOK0BIkMasor7AWKsCY4d0/xukkeQjwNxa4eiLyOBmv3vBqo/CX
+	 rGeOV6TSIld4A==
+Date: Fri, 15 Dec 2023 23:11:22 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Doug Anderson <dianders@chromium.org>
-Subject: Re: [PATCH] Revert "soc: qcom: stats: Add DDR sleep stats"
-Message-ID: <cxrw3fc4jxd2zee655g4gi2eshqnwquhezcehnvwjuyt4qkihr@ganx5uwzc35r>
-References: <20231214-topic-undo_ddr_stats-v1-1-1fe32c258e56@linaro.org>
- <4472fd8e-73a6-44b6-a1d0-c5ebc55d4211@linaro.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: defconfig: enable GPU clock controller for
+ SM8[45]50
+Message-ID: <5kkk7j6425wshf2bmmhrh26jwc3rstcrm6kgxyyzowq2qqrfw2@u2mgm6qefxvk>
+References: <20231204-topic-sm8x50-upstream-gpucc-defconfig-v1-1-e615df0c4af9@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,38 +50,44 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <4472fd8e-73a6-44b6-a1d0-c5ebc55d4211@linaro.org>
+In-Reply-To: <20231204-topic-sm8x50-upstream-gpucc-defconfig-v1-1-e615df0c4af9@linaro.org>
 
-On Sat, Dec 16, 2023 at 01:05:53AM +0100, Konrad Dybcio wrote:
-> On 14.12.2023 13:25, Konrad Dybcio wrote:
-> > After recent reports ([1], [2]) of older platforms (particularly 8150 and
-> > 7180) breaking after DDR sleep stats introduction, revert the following:
-> > 
-> > Commit 73380e2573c3 ("soc: qcom: stats: fix 64-bit division")
-> > Commit e84e61bdb97c ("soc: qcom: stats: Add DDR sleep stats")
-> > 
-> > The feature itself is rather useful for debugging DRAM power management,
-> > however it looks like the shared RPMh stats data structures differ on
-> > previous SoCs.
-> > 
-> > Revert its addition for now to un-break booting on these earlier SoCs,
-> > while I try to come up with a better way to enable it conditionally.
-> > 
-> > [1] https://lore.kernel.org/linux-arm-msm/20231209215601.3543895-2-dmitry.baryshkov@linaro.org/
-> > [2] https://lore.kernel.org/linux-arm-msm/CAD=FV=XX4wLg1NNVL15RK4D4tLvuSzZyUv=k_tS4bSb3=7QJzQ@mail.gmail.com/
-> > 
-> > Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Reported-by: Doug Anderson <dianders@chromium.org>
-> > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > ---
-> Arnd, since Bjorn seems to be MIA, could you please pick this directly
-> so that it gets into the next RC? Un-breaking booting on some platforms
-> would be very welcome :D
+On Mon, Dec 04, 2023 at 02:01:47PM +0100, Neil Armstrong wrote:
+> Enable GPU Clock Controller for SM8450 and SM8550 to allow using
+> Adreno GPU on these SoCs.
 > 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  arch/arm64/configs/defconfig | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index 5ad2b841aafc..56aebbdcdd40 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -1266,6 +1266,8 @@ CONFIG_SM_TCSRCC_8550=y
+>  CONFIG_SM_GPUCC_6115=m
+>  CONFIG_SM_GPUCC_8150=y
+>  CONFIG_SM_GPUCC_8250=y
+> +CONFIG_SM_GPUCC_8450=y
+> +CONFIG_SM_GPUCC_8550=y
 
-I'm confused, the two offending commits are staged for v6.8. Which -rc
-do you want this applied in?! And you posted this patch yesterday...
+I don't think these needs to be builtin, and if they do I'd like to see
+the reason captured in the commit message.
 
 Regards,
 Bjorn
+
+>  CONFIG_SM_VIDEOCC_8250=y
+>  CONFIG_QCOM_HFPLL=y
+>  CONFIG_CLK_GFM_LPASS_SM8250=m
+> 
+> ---
+> base-commit: 9046d05c6ad632a271fc4173624e26f396975a80
+> change-id: 20231204-topic-sm8x50-upstream-gpucc-defconfig-3e3dc264be08
+> 
+> Best regards,
+> -- 
+> Neil Armstrong <neil.armstrong@linaro.org>
+> 
 
