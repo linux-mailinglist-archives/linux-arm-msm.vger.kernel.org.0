@@ -1,90 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-5088-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5089-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23854815CE8
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Dec 2023 02:05:06 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2486D816028
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Dec 2023 16:34:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 289CCB231F9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Dec 2023 01:05:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 54FED1C21B44
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Dec 2023 15:34:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE7577FA;
-	Sun, 17 Dec 2023 01:04:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C85145014;
+	Sun, 17 Dec 2023 15:34:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="nyURErXz"
+	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="eC+oae7O"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131187F4
-	for <linux-arm-msm@vger.kernel.org>; Sun, 17 Dec 2023 01:04:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-50e277b272bso766221e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Dec 2023 17:04:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1702775096; x=1703379896; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hl782NtFmKPulrM6nPcx+9M9EkIbH3sXgzxwfUjhxxY=;
-        b=nyURErXzBUnouIv8PEWeI+P546ELIriR97qBAAL/y/ErU6MPmwQ9kTXSnsHhWTPEqo
-         KEGrfsKpQu8BSuFFjueEdSRfHNvWP91GE7ZoDkmOOb0kYHyE0JkVUq61I67s+DQ/ZhK5
-         EkBYIw9FNJVeuwZ6i+hg3Qv8JrbPw5B6OaA6Y=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702775096; x=1703379896;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hl782NtFmKPulrM6nPcx+9M9EkIbH3sXgzxwfUjhxxY=;
-        b=dHFK1CBWUcLM7eHlgP0ONMX7PF6X0VN5BwEfEteHAmZv5f8pfVOSh3nRolw5X0Aju0
-         48Yqtv1gNgNHPRtu+Bj1N7O5gPNR227yDI9gThKa+DYM7ILYMf072Ne+x3LIZudUN1gH
-         DCDZO8NHbSLaUcC7WFL3mBiSzqSRyE3xpilJmlG6fmN8jiTJ2quXATema3ypkySAeKGd
-         wXvISxtfLDKYR52vc7pr+3OCBkpNV7T9dYooUvs8oTHBdYumT8Dpj7FzJVRuprH1xQBq
-         cT53YUPY5cK3tuxbIjHnW8GCTqBqkd5SCCB3Vu7iQK9y9153SufNVfEsWex+UqvsZjOe
-         cGwQ==
-X-Gm-Message-State: AOJu0YwBF89K4JrQJwucyq91Av9fAiQ3F6fGB+IYOBfk36yoPaTL7sef
-	dN8Gq2/S0CjcIFEvuVgy/+aDuhNQtr0qYXW0C43DbQ==
-X-Google-Smtp-Source: AGHT+IGI/qIxJ+tAk/PNQNrLNhT7HuVcrrKpVt70q44XRpAb37rhW3MUD7pq1ZTc5wUOEpLk5A4wOU9udQLAHzJod+c=
-X-Received: by 2002:a05:6512:b95:b0:50c:2177:f184 with SMTP id
- b21-20020a0565120b9500b0050c2177f184mr9901201lfv.17.1702775095723; Sat, 16
- Dec 2023 17:04:55 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 17 Dec 2023 01:04:55 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95AF328D8;
+	Sun, 17 Dec 2023 15:34:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=z3ntu.xyz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
+	t=1702826610; bh=1qTrHHazQEMLaXCU3zsLP84Kqg9GTIgZYgOj0bYFXjU=;
+	h=From:Subject:Date:To:Cc;
+	b=eC+oae7Oso2GlL+oecm+gIgcB2vCRN02VcvtOkToxRJpAYvBhUnjuL+G5n+xQQIiN
+	 3dRanNUMFS7CzJKj9x/x79CIV5nWtmmAN/HTvsbh57NWnVjhq68Zkz6pHRvH1JYpb3
+	 WMY+eePaLFCMjUO1tRcjF+ZBXcTmogLktgACRk9s=
+From: Luca Weiss <luca@z3ntu.xyz>
+Subject: [PATCH 0/3] Several smaller msm8974 fixes
+Date: Sun, 17 Dec 2023 16:22:52 +0100
+Message-Id: <20231217-msm8974-misc-v1-0-bece1ba2667d@z3ntu.xyz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20231217000158.912062-1-dmitry.baryshkov@linaro.org>
-References: <20231217000158.912062-1-dmitry.baryshkov@linaro.org>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Sun, 17 Dec 2023 01:04:55 +0000
-Message-ID: <CAE-0n52PqzgUJjvFZdURKvFCN9imR-bGxqadtphwkBf5XKJZDA@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dpu: drop obsolete documentation for dpu_encoder_virt
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Rob Clark <robdclark@gmail.com>, 
-	Sean Paul <sean@poorly.run>
-Cc: David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	kernel test robot <lkp@intel.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEwSf2UC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI2NDI0Nz3dziXAtLcxPd3MziZF3TFFMLM0NTI6PEFEMloJaCotS0zAqwcdG
+ xtbUAWmiQGF4AAAA=
+To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Samuel Pascua <pascua.samuel.14@gmail.com>, Iskren Chernev <me@iskren.info>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@somainline.org>, 
+ Alexey Minnekhanov <alexeymin@postmarketos.org>, 
+ Luca Weiss <luca@z3ntu.xyz>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=966; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=1qTrHHazQEMLaXCU3zsLP84Kqg9GTIgZYgOj0bYFXjU=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBlfxJZPyTALCN1nMz9iyBgmUAkIu92eM21O94CS
+ v3Jf0f01zaJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZX8SWQAKCRBy2EO4nU3X
+ VssHEAC4sSQ0hKcSTbUGjLzrtQJzPakIUCghs0yH9aEz2FoI2qp3r659M71tAsQYYqdesuVoHM5
+ jugA7KBzuyYpCUHyjt4SHR88Pp6slI7x/8PLlWO1WCJHLN0Q9odxddYAyoUUlwOs8k+GQbmG6md
+ O+F7oaeXCrebPA7yrR+NhRfy8YUskr1vvtlq50/opk/59yplQcs4bY3rpa3Psxb/82d1IHmo4+R
+ 0ctgm+pjpIYLw32LNf1bQNte47A5XhWej4meGw6wbRcVQbJ8I02m+LFrfzS/mbqCk6c+CblxhFv
+ RE34NlOwlMapZRO4iYKxooPd5Ib7uHABC6OO6x/U0oYMpz+17c0AE39dHMN0mA5ga0DCMJ4hJge
+ gdPFhOXBoPR1Vv6XlThpRAWxh21FK7urATxtfmKlLwTWDDetSiIXlwdGjDjQgF90rTHp87KkG1h
+ NhEHU4Mh98ZVe43Ke8U9neiCJYjVauJXdpObd2n6PpRk3fsSlwe7XPyLorUunb3sUYv8gEHPS8Q
+ cv17i66uL7oCofwJysTK+agraMF63iM5lktAl5mKaznNYmNusH0zM0cG+SyDsc8jT6soZJovBej
+ kEf4PqNcD2xd/eCSka8IPPyh5RPfWW1OQFQU2k2GJw+gBDAmV+koKWnYY5815ahj5DInyo5o1jo
+ zbq4LGVdMbTsZmg==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 
-Quoting Dmitry Baryshkov (2023-12-16 16:01:58)
-> Drop obsolete kerneldoc for several fields in struct dpu_encoder_virt
->
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202312170641.5exlvQQx-lkp@intel.com/
-> Fixes: 62d35629da80 ("drm/msm/dpu: move encoder status to standard encoder debugfs dir")
-> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+Send some smaller fixes that have been sitting around in my tree for
+some time.
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+Alexey Minnekhanov (1):
+      ARM: dts: qcom: msm8974-klte: Remove unused property
+
+Luca Weiss (2):
+      ARM: dts: qcom: msm8974: Remove bogus cd-gpio pinctrl
+      ARM: dts: qcom: msm8974*: Re-enable remoteprocs on various boards
+
+ arch/arm/boot/dts/qcom/qcom-msm8974-lge-nexus5-hammerhead.dts      | 2 ++
+ arch/arm/boot/dts/qcom/qcom-msm8974-sony-xperia-rhine.dtsi         | 2 ++
+ arch/arm/boot/dts/qcom/qcom-msm8974.dtsi                           | 7 -------
+ arch/arm/boot/dts/qcom/qcom-msm8974pro-samsung-klte.dts            | 1 -
+ .../boot/dts/qcom/qcom-msm8974pro-sony-xperia-shinano-castor.dts   | 2 ++
+ 5 files changed, 6 insertions(+), 8 deletions(-)
+---
+base-commit: de06a4144d8e2c0923d08cab7c24958c28ddf17f
+change-id: 20231217-msm8974-misc-5d5861522ad1
+
+Best regards,
+-- 
+Luca Weiss <luca@z3ntu.xyz>
+
 
