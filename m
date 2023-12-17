@@ -1,50 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-5113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5114-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D25D8160ED
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Dec 2023 18:26:09 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D91C8160F0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Dec 2023 18:26:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C2376B21ABE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Dec 2023 17:26:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 801FA1C20A60
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Dec 2023 17:26:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35F3446545;
-	Sun, 17 Dec 2023 17:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D528C4F1E2;
+	Sun, 17 Dec 2023 17:21:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cXtgNQnh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nRsl0kLt"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188C84E1D5;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB954EB53;
+	Sun, 17 Dec 2023 17:21:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A6D2C433C9;
 	Sun, 17 Dec 2023 17:21:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377F7C433C8;
-	Sun, 17 Dec 2023 17:21:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702833716;
-	bh=3jB1OAj2fC/I9zwK4vJbuYebYVPXsF3XN1a6d6ipEek=;
+	s=k20201202; t=1702833718;
+	bh=dOIViLxZMDjs20JQvpRvlEhn5M+B5/Qyt56y3cRULtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cXtgNQnhM8m0MmdktgUAlY3pxd8B3sl0sGeyFKrEt/ccZCR6I9kd9CAX+72guU5i6
-	 sQXFXLqW83HazA5vJTywmb6ql+vLf/luBUBBH9ObqGbY8NZPoYLY7rujABWZfGDFmH
-	 4VNcZN9wa7zW0+5Gjw7bVLZyc3yB3jmrqj2/4ujYwMa1l+vEBqmaDHZgPgu5kRM+jx
-	 05Ni5K5BF2kmvS42v+8xDRCJ4hCw8zzE6wd+qAHV7ewWA6rSDW/vg9Mb4sq1oujqiD
-	 +OC2Lj1ioTpvz25pm+eTJHHmjoR43Pd/UVmghucGDCJNUy/X1bOV5wGvVP4NkRAn4n
-	 ZqwucovouwvIQ==
+	b=nRsl0kLtCHTllI/3n86ZN3x/Cki2M9daoJJ5shClqLmdog/2/sHKpv+GSrK6ZnnsK
+	 GE0K1EypaZp+kstmA5vp1IxFHP+gnAcpfbL6JPfjPD7b1hB+hawWzV0aME2eOlFIiD
+	 OlMu7gCpwFqqsmQVZjr5rmSgQN/N9amzteCEf1SHGQ3emGaS/bVAwjAmj7K3Xj++Hp
+	 S/76PsAG0ZqTZEp8sj2VpwqlB8eXE0EUjPmRXKPvzf18AJji1wUZLpxnY1lYCCZ0A5
+	 wx//CUdVpRAXAHAOkIp9tfI1vhJJUPun9+ajsTYZB6YT4fv15JV74LLWlCK7XPmEOF
+	 e9xxTmiJLMuNw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Andy Gross <agross@kernel.org>,
+To: Will Deacon <will@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Joerg Roedel <joro@8bytes.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Andy Gross <agross@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Doug Anderson <dianders@chromium.org>
-Subject: Re: [PATCH] Revert "soc: qcom: stats: Add DDR sleep stats"
-Date: Sun, 17 Dec 2023 11:21:11 -0600
-Message-ID: <170283349403.66089.17185049148396961506.b4-ty@kernel.org>
+	linux-arm-kernel@lists.infradead.org,
+	iommu@lists.linux.dev,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: (subset) [PATCH v2 0/6] SM8450 / SM8550 Adreno
+Date: Sun, 17 Dec 2023 11:21:12 -0600
+Message-ID: <170283349413.66089.744756231960843910.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231214-topic-undo_ddr_stats-v1-1-1fe32c258e56@linaro.org>
-References: <20231214-topic-undo_ddr_stats-v1-1-1fe32c258e56@linaro.org>
+In-Reply-To: <20231127-topic-a7xx_dt-v2-0-2a437588e563@linaro.org>
+References: <20231127-topic-a7xx_dt-v2-0-2a437588e563@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,23 +66,26 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 14 Dec 2023 13:25:15 +0100, Konrad Dybcio wrote:
-> After recent reports ([1], [2]) of older platforms (particularly 8150 and
-> 7180) breaking after DDR sleep stats introduction, revert the following:
+On Mon, 04 Dec 2023 13:55:19 +0100, Konrad Dybcio wrote:
+> Following the merging of related bindings, driver and mesa changes, enable
+> the GPU on both of these platforms.
 > 
-> Commit 73380e2573c3 ("soc: qcom: stats: fix 64-bit division")
-> Commit e84e61bdb97c ("soc: qcom: stats: Add DDR sleep stats")
+> P1 for Will/iommu, rest for qcom
 > 
-> The feature itself is rather useful for debugging DRAM power management,
-> however it looks like the shared RPMh stats data structures differ on
-> previous SoCs.
 > 
-> [...]
 
 Applied, thanks!
 
-[1/1] Revert "soc: qcom: stats: Add DDR sleep stats"
-      commit: a7dc6343519752eb6d86bfa78378a8af5da1f475
+[2/6] arm64: dts: qcom: sm8450: Add GPU nodes
+      commit: 9810647a043678638f3b98ab48ee030bc00c8270
+[3/6] arm64: dts: qcom: sm8550: Add GPU nodes
+      commit: ef19923ae103b527e6762a63024dc7f0b1055546
+[4/6] arm64: dts: qcom: sm8550-qrd: Enable the A740 GPU
+      commit: c9f785d7d546c3f38c2e0308fa91e27ae7ec3fda
+[5/6] arm64: dts: qcom: sm8550-mtp: Enable the A740 GPU
+      commit: e877f075a52c485742cfd170f5557fc49972979e
+[6/6] arm64: dts: qcom: sm8450-hdk: Enable the A730 GPU
+      commit: 0f6f5a220543d1239dc7fc04c9f8f8885fa05637
 
 Best regards,
 -- 
