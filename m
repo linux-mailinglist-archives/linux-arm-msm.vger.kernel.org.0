@@ -1,57 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-5140-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BEB1816234
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Dec 2023 21:53:07 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5CCA1816248
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Dec 2023 22:06:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E89AAB20BE4
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Dec 2023 20:53:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C7F681C20E9C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Dec 2023 21:06:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59025481C2;
-	Sun, 17 Dec 2023 20:52:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1C3C482FF;
+	Sun, 17 Dec 2023 21:06:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e7DURiy/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LKXdpEHu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 330D248CC0;
-	Sun, 17 Dec 2023 20:52:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9852BC433C8;
-	Sun, 17 Dec 2023 20:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92EC2482C7;
+	Sun, 17 Dec 2023 21:06:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CCA2C433C9;
+	Sun, 17 Dec 2023 21:06:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702846378;
-	bh=XnN89dq9R6U1naT/n9Kt7ry8jTpdJCDrRjlHDdMfS1E=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e7DURiy/WzO4Lp96oorYcHdgguR9INkr6h8DV6F41J0R52aB6uC6rVZUqpHZdoiQC
-	 3AfFPm3nKyMmTj7Qmy1h55yAkWtVo8y2ZC1Z0lhsj1UJqgLD/SRqW8RzFhv10NuCc0
-	 0bj9BXPm48nBotKz4w9+GonpmRl4IulIdHFMhZfWWygdTU4YJ4TrhlMK3Agn/fjism
-	 TOXHhnoT4qvfdfqiMGMozKKa3vj4O+bwtWTtjnojiTBDbR8U9uisWjel39T4gwAFII
-	 MqX4YcrG9w97YE9/guaiwmHujlQOJBn/vhg9kpWr6wbHN6IkqePm2uOaL8UQepQi/J
-	 HyupLcU99f/fg==
+	s=k20201202; t=1702847170;
+	bh=1GHVArQI/I2o104sYcABaTbfwOYpIu7WAXvx1z3OIGI=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=LKXdpEHuVNem/xKInFYGeoPwEr1DxPwV587tmcsNryhgaCdfir2nUbQjibPkc3OV+
+	 JnpTgBZ0C4hzSIkn+Zt+P4bWDcK7ry/hhvQR7rYctfx5O4cssUXeUioyxGVqnadr4e
+	 0RUpNigzshaWiN4x9mxj6MQ/XIAcHrotPed86djMD/uedsB/z/Ud3S/DnrZflrqOVe
+	 AMvgA1fPqa6goQpWZTZqplnGSX3+2Xl3BsJDXK0f9V+2tA0OGdPeUALz8tJWDXEQfk
+	 n1WLhHZga/BwKI4xZLMJsxIl3vAKpz95zhgId6YCYMN91Pu5beTAxfj+ucLOz0agdb
+	 0EkyKC/lhHOGg==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Andy Gross <agross@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Maximilian Luz <luzmaximilian@gmail.com>,
-	Gustave Monce <gustave.monce@outlook.com>
-Subject: Re: (subset) [PATCH 0/6] SC8180X fixes
-Date: Sun, 17 Dec 2023 14:52:55 -0600
-Message-ID: <170284637112.76512.17093508259000450416.b4-ty@kernel.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH RESEND] arm64: defconfig: enable newer Qualcomm sound drivers
+Date: Sun, 17 Dec 2023 15:06:06 -0600
+Message-ID: <170284716297.78529.7971341363459719102.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231214-topic-sc8180_fixes-v1-0-421904863006@linaro.org>
-References: <20231214-topic-sc8180_fixes-v1-0-421904863006@linaro.org>
+In-Reply-To: <20231106073048.24553-1-krzysztof.kozlowski@linaro.org>
+References: <20231106073048.24553-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,31 +54,17 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 14 Dec 2023 19:13:37 +0100, Konrad Dybcio wrote:
-> 8180 has quite a big of bugs, this series fixes some of them.
-> clk_ignore_unused & d_ignore_unused are no longer necessary (at least
-> as far as I could test, through remote console access..)
+On Mon, 06 Nov 2023 08:30:48 +0100, Krzysztof Kozlowski wrote:
+> Enable the sound machine driver for Qualcomm SC8280xp soundcard (used on
+> Lenovo Thinkpad X13s laptop), Qualcomm WSA883x (speakers on X13s) and
+> Qualcomm WSA884x (speakers on boards with Qualcomm SM8550 like QRD8550).
 > 
-> p1 for Georgi, rest for qcom
 > 
-> The keen-eyed among you (hi Krzysztof) will notice that there are no
-> bindings updates, mostly because half of 8180x is undocumented.. I
-> intend to help fix that up in a separate series, hopefully soon :)
-> 
-> [...]
 
 Applied, thanks!
 
-[2/6] arm64: dts: qcom: sc8180x: Add UFS GDSC
-      commit: 2564209891a436f71c6c8a245d3b56cf4382d65d
-[3/6] arm64: dts: qcom: sc8180x: Add missing MDP clocks
-      commit: 4978dfde89b1f454c88bc5519dc996cc5b58d72e
-[4/6] arm64: dts: qcom: sc8180x: Add interconnects to UFS
-      commit: 384ea2aa2066d27c20257550ba91418401b91199
-[5/6] arm64: dts: qcom: sc8180x: Describe the GIC redistributor
-      commit: c879ee11791adf7e29d2fb615bf176504ed51465
-[6/6] arm64: dts: qcom: sc8180x-primus: Allow UFS regulators load/mode setting
-      commit: b7b9a6aa7aea2bcba2d35d65e4ce2913115485a3
+[1/1] arm64: defconfig: enable newer Qualcomm sound drivers
+      commit: 48a9ba5eb4d720c6e21c6e4d2a6fb6e1a97f5f2a
 
 Best regards,
 -- 
