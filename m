@@ -1,139 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-5292-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5293-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64008817B88
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 20:58:39 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 12374817CA2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 22:32:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1117A28563E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 19:58:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 929EE1F24324
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 21:32:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE7F672046;
-	Mon, 18 Dec 2023 19:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C01BC74E01;
+	Mon, 18 Dec 2023 21:32:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OR2h4lEM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YPytoR8U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492581DDFC;
-	Mon, 18 Dec 2023 19:58:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BII7awl009072;
-	Mon, 18 Dec 2023 19:58:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=t0bpCimWvMhWfdI+TsPYGoHOoVAQBV1OEIZbPnpfoak=; b=OR
-	2h4lEM4dBzCsLd+KqD8zxpFrlQcglcplmQPVD6bBdBUEtesGx8DRYqcbadwSyAX5
-	jmEiOQcHKgdSvekkRMgu9/U7x2Li4Pfk0oD+VytunYIV4/Zu9CzuGNsd64EHQGHx
-	0h/KLdwKGOZ1bxSjn740snWNNAyIdoFnB0R0rlP4H309nRNyae940OtHLcoDVNFR
-	9kwAtUEG8ocQ1EmG9hIUXLQc6xsBO0xwZ4lTk7GSRi4anORUkKffrYR7LsalsFhK
-	6kPH+oFrTklJRRu9hpxsGH7MOU+qSRZ48m1HJpCUP9NU3z8d6oyGYbIL8Y4A5DvK
-	9AY1uv0JExp/EJLocjBw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v2mfe1euh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Dec 2023 19:58:09 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BIJw8YC027591
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Dec 2023 19:58:08 GMT
-Received: from [10.110.97.107] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 18 Dec
- 2023 11:58:06 -0800
-Message-ID: <0a3a6277-62f6-2d6c-d36a-46a442c89b67@quicinc.com>
-Date: Mon, 18 Dec 2023 11:58:02 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E279242361
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 21:32:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2cc61d4e5aeso27761661fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 13:32:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702935120; x=1703539920; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=BSXNxdoZhofQ5RCoswX0f1+//hwvnN3EjdXTFtoy2HI=;
+        b=YPytoR8UoXXL5CGUcl3dfCdIiBvwg6cv8N9QJ1ZrnuxwfYhVI+fQCxLtSjas1k3fMa
+         dQSj5awbalo7vQ+36AI1X8F5cFYniL39UP1LqmBtfa2LV0yvMIHXsOOAm1jOu3H81FhM
+         FaRlOAA65obniearn1MSBnImUrhJM7rGMnia5ABUqfkbVdty9TK/Hwn0nkVlVEmwmrFh
+         P3Y5iW3pqbOYxMb1RT6LqECTLm7b382KNKOh87nHTw6cit8j4VYO1OtNIbLk7N0nEwQA
+         7XWp7Ts8E8S+b1bMvEO/m1FA7hSAerod1ude64Cuv/cddqnfcoakG82l9aGFQq3pLsN5
+         UTkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702935120; x=1703539920;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BSXNxdoZhofQ5RCoswX0f1+//hwvnN3EjdXTFtoy2HI=;
+        b=b82mL4WIAXoD4qkyDy2cvoSc1kfIHIv9nzaVsgze9gd0VcWZV7jb7WTrfl7qXulUob
+         jqDQKiHyyNcE7FztoUFkhbXynBo9r8dbEm+sWKEZcBdPHKjp3tIRO86xbLGVUo5HrsVn
+         FAFHVUAOtpfGIWKi+3cFZX+CzjKSRXIlkCBkvrS8GnRowiD+GglQjm5s23F+McqCsxz5
+         /BZZuCUTjm4B8U+w/DP/cj3XFVFp8RTcFVttmvbT0Zzfi7sKDMvBfdRkGinaHs0tYz3c
+         sUYN/ynpUE5aOyKiD6EElq0aUsHDBH4H0HUz5aKUMThkEanWw/13GFBDz6TkpqeYYwYD
+         aZ2g==
+X-Gm-Message-State: AOJu0YxeJcFIQ7RBdNOvavHwwvqMeyT/rM152GutCdxxXr1Zb6876vDD
+	LBArZNVGTONfcBdo/OOYy2z7ng==
+X-Google-Smtp-Source: AGHT+IGb9L/7IjmEK6JBuwbQuFPw/cgebNIiMG+aI27+Ezg3cWXCBXy+3+3B2cUOYWuEJ4oyHG7dOg==
+X-Received: by 2002:a05:651c:2009:b0:2cc:63e4:884c with SMTP id s9-20020a05651c200900b002cc63e4884cmr1666186ljo.50.1702935119890;
+        Mon, 18 Dec 2023 13:31:59 -0800 (PST)
+Received: from [172.30.205.119] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id w22-20020a2e9bd6000000b002cc710614besm507393ljj.0.2023.12.18.13.31.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 Dec 2023 13:31:59 -0800 (PST)
+Message-ID: <15d2bd66-29f3-435b-8494-d82ec4036413@linaro.org>
+Date: Mon, 18 Dec 2023 22:31:57 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v10 18/41] ALSA: usb-audio: qcom: Add USB QMI definitions
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 10/12] arm64: dts: qcom: sm8550: Switch UFS from
+ opp-table-hz to opp-v2
+To: Nitin Rawat <quic_nitirawa@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>, Georgi Djakov <djakov@kernel.org>,
+ Abel Vesa <abel.vesa@linaro.org>, Michael Turquette
+ <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>,
+ Taniya Das <quic_tdas@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring
+ <robh+dt@kernel.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
+ Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20231218-topic-8550_fixes-v1-0-ce1272d77540@linaro.org>
+ <20231218-topic-8550_fixes-v1-10-ce1272d77540@linaro.org>
+ <62f0c623-3819-f6be-115f-6b471ab79a58@quicinc.com>
 Content-Language: en-US
-To: Jeff Johnson <quic_jjohnson@quicinc.com>, <srinivas.kandagatla@linaro.org>,
-        <mathias.nyman@intel.com>, <perex@perex.cz>, <conor+dt@kernel.org>,
-        <corbet@lwn.net>, <gregkh@linuxfoundation.org>, <lgirdwood@gmail.com>,
-        <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <konrad.dybcio@linaro.org>, <Thinh.Nguyen@synopsys.com>,
-        <broonie@kernel.org>, <bgoswami@quicinc.com>, <tiwai@suse.com>,
-        <robh+dt@kernel.org>, <agross@kernel.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>
-References: <20231215214955.12110-1-quic_wcheng@quicinc.com>
- <20231215214955.12110-19-quic_wcheng@quicinc.com>
- <80111881-13dd-4b05-876a-a97eb3889726@quicinc.com>
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <80111881-13dd-4b05-876a-a97eb3889726@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: P-tbYw2YI5KNM16_-dyXNk1fYgg76NOe
-X-Proofpoint-GUID: P-tbYw2YI5KNM16_-dyXNk1fYgg76NOe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- clxscore=1015 suspectscore=0 malwarescore=0 lowpriorityscore=0 mlxscore=0
- mlxlogscore=999 phishscore=0 adultscore=0 impostorscore=0 spamscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312180148
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <62f0c623-3819-f6be-115f-6b471ab79a58@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi Jeff,
 
-On 12/15/2023 2:38 PM, Jeff Johnson wrote:
-> On 12/15/2023 1:49 PM, Wesley Cheng wrote:
->> The Qualcomm USB audio offload driver utilizes the QMI protocol to
->> communicate with the audio DSP.  Add the necessary QMI header and field
->> definitions, so the QMI interface driver is able to route the QMI packet
->> received to the USB audio offload driver.
+
+On 12/18/23 17:35, Nitin Rawat wrote:
+> 
+> 
+> On 12/18/2023 9:32 PM, Konrad Dybcio wrote:
+>> Now that the non-legacy form of OPP is supported within the UFS driver,
+>> go ahead and switch to it, adding support for more intermediate freq/power
+>> states.
 >>
->> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+>> In doing so, add the CX RPMhPD under GCC to make sure at least some of
+>> the power state requirements are *actually* propagated up the stack.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 >> ---
->>   sound/usb/qcom/usb_audio_qmi_v01.c | 892 +++++++++++++++++++++++++++++
->>   sound/usb/qcom/usb_audio_qmi_v01.h | 162 ++++++
->>   2 files changed, 1054 insertions(+)
->>   create mode 100644 sound/usb/qcom/usb_audio_qmi_v01.c
->>   create mode 100644 sound/usb/qcom/usb_audio_qmi_v01.h
+>>   arch/arm64/boot/dts/qcom/sm8550.dtsi | 50 +++++++++++++++++++++++++++++-------
+>>   1 file changed, 41 insertions(+), 9 deletions(-)
 >>
->> diff --git a/sound/usb/qcom/usb_audio_qmi_v01.c b/sound/usb/qcom/usb_audio_qmi_v01.c
->> new file mode 100644
->> index 000000000000..bdfd67d980eb
->> --- /dev/null
->> +++ b/sound/usb/qcom/usb_audio_qmi_v01.c
->> @@ -0,0 +1,892 @@
->> +// SPDX-License-Identifier: GPL-2.0
->> +/*
->> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+>> index d707d15cea5b..d6edd54f3ad3 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+>> @@ -1930,6 +1930,7 @@ ufs_mem_hc: ufs@1d84000 {
+>>               iommus = <&apps_smmu 0x60 0x0>;
+>>               dma-coherent;
+>> +            operating-points-v2 = <&ufs_opp_table>;
+>>               interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mc_virt SLAVE_EBI1 0>,
+>>                       <&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
+>> @@ -1950,18 +1951,49 @@ ufs_mem_hc: ufs@1d84000 {
+>>                    <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+>>                    <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
+>>                    <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
+>> -            freq-table-hz =
+>> -                <75000000 300000000>,
+>> -                <0 0>,
+>> -                <0 0>,
+>> -                <75000000 300000000>,
+>> -                <100000000 403000000>,
+>> -                <0 0>,
+>> -                <0 0>,
+>> -                <0 0>;
+>>               qcom,ice = <&ice>;
+>>               status = "disabled";
 >> +
->> +#include <linux/soc/qcom/qmi.h>
+>> +            ufs_opp_table: opp-table {
+>> +                compatible = "operating-points-v2";
 >> +
->> +#include "usb_audio_qmi_v01.h"
+>> +                opp-75000000 {
+>> +                    opp-hz = /bits/ 64 <75000000>,
+>> +                         /bits/ 64 <0>,
+>> +                         /bits/ 64 <0>,
+>> +                         /bits/ 64 <75000000>,
+>> +                         /bits/ 64 <100000000>,
+>> +                         /bits/ 64 <0>,
+>> +                         /bits/ 64 <0>,
+>> +                         /bits/ 64 <0>;
+>> +                    required-opps = <&rpmhpd_opp_low_svs>;
+>> +                };
 >> +
->> +static struct qmi_elem_info mem_info_v01_ei[] = {
+>> +                opp-150000000 {
+>> +                    opp-hz = /bits/ 64 <150000000>,
+>> +                         /bits/ 64 <0>,
+>> +                         /bits/ 64 <0>,
+>> +                         /bits/ 64 <150000000>,
+>> +                         /bits/ 64 <100000000> > +                         /bits/ 64 <0>,
+>> +                         /bits/ 64 <0>,
+>> +                         /bits/ 64 <0>;
+>> +                    required-opps = <&rpmhpd_opp_svs>;
+>> +                };
+>> +
+>> +                opp-300000000 {
+>> +                    opp-hz = /bits/ 64 <300000000>,
+>> +                         /bits/ 64 <0>,
+>> +                         /bits/ 64 <0>,
+>> +                         /bits/ 64 <300000000>,
+>> +                         /bits/ 64 <100000000>,
+> Hi Konrad,
 > 
-> I believe all of the struct qmi_elem_info arrays can be const.
-> 
-> At least that was the goal of commit ff6d365898d4 ("soc: qcom: qmi: use
-> const for struct qmi_elem_info")
-> 
+> This entry is for ICE clock ? Shouldn't the entry be 403000000 ?
+> Same for svs as well ?
+Hi Nitin,
 
-Thanks for the review.  Will fix this.
+this entry is for the TCSR_UFS_PAD_CLKREF_EN/"ref_clk" clock,
+which doesn't support ratesetting, so it should probably be 0
+(or its actual value if we know it - I assumed it was 100 MHz
+as it was there before).
 
-Thanks
-Wesley Cheng
+The ICE clock is handled separately by the crypto@1d88000 node.
+
+Thinking about it again, the original submission probably included
+the ICE clock within the UFS node and when TCSRCC was created,
+somebody might have omitted the wrong rate value.
+
+Konrad
 
