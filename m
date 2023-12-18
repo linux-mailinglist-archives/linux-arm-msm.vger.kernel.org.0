@@ -1,108 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-5213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E251D816D25
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 12:58:27 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2F96816D38
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 13:01:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 96F861F214D4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 11:58:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 531C21F2420E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 12:01:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF662200D6;
-	Mon, 18 Dec 2023 11:49:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C80ZJkxi"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27B4A1A27E;
+	Mon, 18 Dec 2023 11:56:24 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474DC3714D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 11:49:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-5cd51c0e8ebso972281a12.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 03:49:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702900147; x=1703504947; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=WFiECuxQKf4bQHzOWrQB9O9iOx/6SZrLhJKr/Z2J67E=;
-        b=C80ZJkxiwR9Zm0ZsEKM8BmKcnvSLYCkhtK1dQvnDmoi9wbVvIeHxftsgmgH0afTE7u
-         tv86Bo8M8rIqdWJYLKfhlF5aJeO4RaxULPRK75GlvL7OpGIe7LDthzkcV6e73mekVU+K
-         eG0YxNCQ7FYoSsNsMCb41ntmlKlvGjbHxQM/W0tDIxGbG/wYPKt380CkOa1ZGzZkJu6P
-         yqa73Vg7lgWCGGbwj8f3fEOTg8Y8lEhhERQSkXuIB6xlzRlXrXNec9PpvtVmP9U7r6LO
-         EqEawO8Cry1p56dNMBPbO31C9vlWGCiOn/NA7T4Lid2Pi+4cJCeM0Q3VGXhWAqyPgGuw
-         pBLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702900147; x=1703504947;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WFiECuxQKf4bQHzOWrQB9O9iOx/6SZrLhJKr/Z2J67E=;
-        b=o7j4BCVtsUCqyuSvetrQYJCUP1bQCzcqsJrep7ko45gl+F6fZAIU4g9pRmHPk8AUvp
-         37IVHneZ2BJaWp6A+2X1+M/WlTlShTHMKSdDEp3+NnceU2f+8ir1oHP+AVxQr1Feu0Um
-         4MRp6veUxihKzmVXGRpWvuIeBK5dO91fZUZ1ep1v7b/jc+A/6qhIab3c3P8S1IPoYTFe
-         h2u8+Ah4w0vy/hjN8eBrVh5oJDwqXC97tgtnlDmUiHvSOw7Rx2xN3CazR+CIrspOZ7Ea
-         f5yhTEUJ7AWMXHSjTgWmL0Qyz9d8GRHpSKLHHIOpd/aHZhgpZZUZcQo7YhKUe3idKWgC
-         Tpqg==
-X-Gm-Message-State: AOJu0Yxg5T75IjgZoKG/XaFqrbY8v5Ry96AMcwG0qeaUzP+CaCHx1OIZ
-	8baQdPd/hDCGvaltoqxfB16g
-X-Google-Smtp-Source: AGHT+IFNm7vnn6dj9ZJCS5JUQjewTTJwImMcXsK4yzYDnO65BIHPMtdEVIr3bR2Db4u/3gv4EFWJDQ==
-X-Received: by 2002:a05:6a20:3d81:b0:190:c314:35f8 with SMTP id s1-20020a056a203d8100b00190c31435f8mr7847690pzi.46.1702900147590;
-        Mon, 18 Dec 2023 03:49:07 -0800 (PST)
-Received: from thinkpad ([117.207.27.21])
-        by smtp.gmail.com with ESMTPSA id ha9-20020a17090af3c900b0028b8bb9e5cbsm1526025pjb.25.2023.12.18.03.49.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Dec 2023 03:49:07 -0800 (PST)
-Date: Mon, 18 Dec 2023 17:18:58 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Rob Herring <robh@kernel.org>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
-	sboyd@kernel.org, mturquette@baylibre.com,
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH 01/16] dt-bindings: phy: qmp-ufs: Fix PHY clocks
-Message-ID: <20231218114858.GA2900@thinkpad>
-References: <20231214091101.45713-1-manivannan.sadhasivam@linaro.org>
- <20231214091101.45713-2-manivannan.sadhasivam@linaro.org>
- <20231214172051.GA611674-robh@kernel.org>
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3955322324;
+	Mon, 18 Dec 2023 11:56:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C06511FB;
+	Mon, 18 Dec 2023 03:57:05 -0800 (PST)
+Received: from [10.57.46.32] (unknown [10.57.46.32])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B349C3F64C;
+	Mon, 18 Dec 2023 03:56:18 -0800 (PST)
+Message-ID: <ca624e71-c487-4004-abc4-126442b92f33@arm.com>
+Date: Mon, 18 Dec 2023 11:56:17 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20231214172051.GA611674-robh@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 7/8] dt-bindings: arm: Add support for TPDM CMB MSR
+ register
+Content-Language: en-GB
+To: Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Tao Zhang <quic_taozha@quicinc.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Konrad Dybcio <konradybcio@gmail.com>, Mike Leach <mike.leach@linaro.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: Jinlong Mao <quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, coresight@lists.linaro.org,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Trilok Soni <quic_tsoni@quicinc.com>, Song Chai <quic_songchai@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, andersson@kernel.org
+References: <1700533494-19276-1-git-send-email-quic_taozha@quicinc.com>
+ <1700533494-19276-8-git-send-email-quic_taozha@quicinc.com>
+ <e5fbbfab-02bf-4eda-8353-87c54c307af1@linaro.org>
+ <1d57590d-2ecf-4bf6-9c8f-2a9d1ba08aaa@arm.com>
+ <caa424d3-7af0-43e6-8e13-e87cde0c4f67@quicinc.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <caa424d3-7af0-43e6-8e13-e87cde0c4f67@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Dec 14, 2023 at 11:20:51AM -0600, Rob Herring wrote:
-> On Thu, Dec 14, 2023 at 02:40:46PM +0530, Manivannan Sadhasivam wrote:
-> > All QMP UFS PHYs except MSM8996 require 3 clocks:
-> > 
-> > * ref - 19.2MHz reference clock from RPMh
-> > * ref_aux - Auxiliary reference clock from GCC
-> > * qref - QREF clock from GCC or TCSR (since SM8550)
-> > 
-> > MSM8996 only requires 'ref' and 'qref' clocks. Hence, fix the binding to
-> > reflect the actual clock topology.
+Hi Tingwei Zhang
+
+On 18/12/2023 11:23, Tingwei Zhang wrote:
+> On 12/18/2023 6:47 PM, Suzuki K Poulose wrote:
+>> Tao Zhang,
+>>
+>> On 21/11/2023 07:24, Krzysztof Kozlowski wrote:
+>>> On 21/11/2023 03:24, Tao Zhang wrote:
+>>>> Add property "qcom,cmb_msr_num" to support CMB MSR(mux select register)
+>>>> for TPDM. It specifies the number of CMB MSR registers supported by
+>>>> the TDPM.
+>>>>
+>>>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>>>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+>>>> ---
+>>>
+>>> I prefer not to take any new Qualcomm Coresight bindings or Qualcomm SoC
+>>> DTS nodes with Coresight till we fix all existing warnings. I don't know
+>>> how to fix them, so I need help with them. No such fixing happened so
+>>> far from Qcom, so pushback is my only way to get any attention.
+>>>
+>>> I already commented on this in other email thread.
+>>
+>> Are you addressing this ?
+> The DT warning is fixed in 
+> https://lore.kernel.org/linux-arm-msm/20231210072633.4243-1-quic_jinlmao@quicinc.com/.
+> It's applied to linux-arm-msm yesterday.
+
+How are you supporting remote-etm ? We haven't merged the support for it 
+in drivers ? We haven't even reviewed the remote-etm support patches ? 
+Why weren't the coresight maintainers Cc ed on the "new" binding support ?
+
+Suzuki
+
+
+
+>>
+>> Suzuki
+>>
+>>>
+>>> Best regards,
+>>> Krzysztof
+>>>
+>>
 > 
-> Breaking the ABI is okay because...? Please explain in the commit msg.
-> 
 
-I will update the commit message in v2.
-
-- Mani
-
-> Rob
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
 
