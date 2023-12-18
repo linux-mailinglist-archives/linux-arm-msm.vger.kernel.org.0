@@ -1,54 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-5158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E477816A63
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 11:00:22 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F4A2816A93
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 11:10:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 998761F22D1E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 10:00:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 04C2F1F224DC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 10:10:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88294125C0;
-	Mon, 18 Dec 2023 10:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73AC5134B0;
+	Mon, 18 Dec 2023 10:10:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aIxOzsgT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JF0b82/A"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C573512B9D;
-	Mon, 18 Dec 2023 10:00:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BI8otZX001804;
-	Mon, 18 Dec 2023 09:59:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=C8jKSD0wlQGupBE4Dhy2cxrVBb7opOfFw9Tu/10EJUo=; b=aI
-	xOzsgTHEGns63pqQ2RQRLg14J4LXSD3kSc/VB6Ve16Kx3HHZZnZbmB7sXD1v76/M
-	psDaTKSpvaBxChiKopKMGNyIDJzcbMKnpMpOUh5UM2ftM6A4frmrkHNVyUfyl4Mb
-	yiRxlGvQcspo9CRxY/jTBV4rNoXRr/FQkZ0NnBnh1p6A8l3VxqPGv1+LTErTyK3/
-	GdjuUTmN8wIUQlybPFTnckR+LxDu7xhPaQHWnjwnCWR5NrP+c6fsmNgERf5cfHbI
-	CC+3i4565J2VbhTOYbM+R6Eo8+J9SG+ymMd0tT53VrmDH+vdXZQQYZ5in5YmZW+v
-	tj7YfDe/V6FZvsEz/ybw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v2jx0g507-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Dec 2023 09:59:56 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BI9xqjN009464
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Dec 2023 09:59:55 GMT
-Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 18 Dec
- 2023 01:59:49 -0800
-Message-ID: <e00b2c5a-cd79-40ed-b78b-0aa8c5b33fa0@quicinc.com>
-Date: Mon, 18 Dec 2023 17:59:47 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DD4134A1
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 10:09:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-40c824b199fso17675655e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 02:09:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702894197; x=1703498997; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yk43Q72iETuPthnLG45NM2SPpQ2a0jDA3/fdMy7aOrk=;
+        b=JF0b82/AJtAVNF7lFknKK1shMD9EoFMsP+6ZUZibj3xGXmC9ZR2tt1fho7vnKgp3jt
+         J/z+hDNMwpmFPJmYTBp2c4dHl7qE40IZdMM+wgZin+N28OlLxOHvmRDT7pYW24Vmpwxz
+         rGPFeA2Y9u398q2t+R+gKfMAugEAnT1fBnoX8x1FB9pS1EZymUd/TkNQvkg6UYUZ4pwq
+         mJjelJ01Yb238+qYJhhOXbRsPC8jMSq7ArpLllP+5x0DveEckY2tC5QUMnf2oLwc3nF2
+         N4Nd6uCh+ZVXOKsWaRbYP+zyAWLN+JdcYi6X2ggOhWJ52sUwIGZYE6VRQjRM11sgJcEy
+         GTig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702894197; x=1703498997;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=yk43Q72iETuPthnLG45NM2SPpQ2a0jDA3/fdMy7aOrk=;
+        b=nrNYWPf87Og/w4FYGaaSRTtXhYnNBvRpcwTnyOzH6o99N8XYR9Oe5Pmea7nx+/qbeL
+         8a+mvOqmt5LsW4XaAhh8fAszFoHjAFi78LxUB4S1z1pCg+OGY4S184jV3Hmtjige2ci0
+         whOmKMJ76DbsT4LYY2a5mZfHTI3lY1FDFUNHes2dDPaE1IjWtvQnQrJK4a78g/io+Vdb
+         6SXHPLs0MyYl4+ZVHcMaErsrpRHi68zWzfkSNxJ6zpYqtzbtnJJXO5wjN8FQWlzz1ua1
+         L71jtBoCa34moh7VzeTnQAolXNbbN1wmDW9MTYm/V5SyKKcahx4zpTpq4O+ol0Ic+4vD
+         wXuQ==
+X-Gm-Message-State: AOJu0YwHt2L7aw455CSYFLeFLsVLi3ohCOeUsiYH3BT8CUPtEfhLSevD
+	HwP0LU6IYZ4PXglFhF45O7FTroZvjqr+Lbs9qYlnf9VH
+X-Google-Smtp-Source: AGHT+IEvLiv5uIxBczewJQUxj3fyC40lQRJ6wj3sekEPYc6kDhXo4TU081kFJ09+vbAPnCAWateKBQ==
+X-Received: by 2002:a05:600c:4509:b0:40c:2518:687c with SMTP id t9-20020a05600c450900b0040c2518687cmr8146291wmo.61.1702894196975;
+        Mon, 18 Dec 2023 02:09:56 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:b425:da5d:c0cf:a505? ([2a01:e0a:982:cbb0:b425:da5d:c0cf:a505])
+        by smtp.gmail.com with ESMTPSA id m27-20020a05600c3b1b00b0040b38292253sm43664215wms.30.2023.12.18.02.09.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 Dec 2023 02:09:56 -0800 (PST)
+Message-ID: <34b07b10-a70c-4599-8ae2-304e386fe9b2@linaro.org>
+Date: Mon, 18 Dec 2023 11:09:55 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,62 +68,91 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/7] arm64: dts: qcom: sm8550: remove
- address/size-cells from mdss_dsi1
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
-References: <20231207092801.7506-1-quic_tengfan@quicinc.com>
- <20231207092801.7506-4-quic_tengfan@quicinc.com>
- <9cf61b7b-199a-4535-a701-10851959b940@linaro.org>
-From: Tengfei Fan <quic_tengfan@quicinc.com>
-In-Reply-To: <9cf61b7b-199a-4535-a701-10851959b940@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 7yruj2pYRWqv1NpP_ybZG9fClLusQeXR
-X-Proofpoint-GUID: 7yruj2pYRWqv1NpP_ybZG9fClLusQeXR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
- phishscore=0 priorityscore=1501 suspectscore=0 impostorscore=0
- lowpriorityscore=0 adultscore=0 mlxscore=0 malwarescore=0 spamscore=0
- mlxlogscore=725 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312180071
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH] arm64: defconfig: enable GPU clock controller for
+ SM8[45]50
+Content-Language: en-US, fr
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org
+References: <20231204-topic-sm8x50-upstream-gpucc-defconfig-v1-1-e615df0c4af9@linaro.org>
+ <5kkk7j6425wshf2bmmhrh26jwc3rstcrm6kgxyyzowq2qqrfw2@u2mgm6qefxvk>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <5kkk7j6425wshf2bmmhrh26jwc3rstcrm6kgxyyzowq2qqrfw2@u2mgm6qefxvk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-
-
-在 12/11/2023 6:25 PM, Krzysztof Kozlowski 写道:
-> On 07/12/2023 10:27, Tengfei Fan wrote:
->> Address/size-cells will cause dtbs check warning, because mdss_dsi1 node
->> have not ranges and child also have not reg, so remove address/size-cells.
-> 
-> Paste the excerpt of warning.
-Sure, I will paste the excerpt of warning.
-> 
+On 16/12/2023 06:11, Bjorn Andersson wrote:
+> On Mon, Dec 04, 2023 at 02:01:47PM +0100, Neil Armstrong wrote:
+>> Enable GPU Clock Controller for SM8450 and SM8550 to allow using
+>> Adreno GPU on these SoCs.
 >>
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 >> ---
+>>   arch/arm64/configs/defconfig | 2 ++
+>>   1 file changed, 2 insertions(+)
+>>
+>> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+>> index 5ad2b841aafc..56aebbdcdd40 100644
+>> --- a/arch/arm64/configs/defconfig
+>> +++ b/arch/arm64/configs/defconfig
+>> @@ -1266,6 +1266,8 @@ CONFIG_SM_TCSRCC_8550=y
+>>   CONFIG_SM_GPUCC_6115=m
+>>   CONFIG_SM_GPUCC_8150=y
+>>   CONFIG_SM_GPUCC_8250=y
+>> +CONFIG_SM_GPUCC_8450=y
+>> +CONFIG_SM_GPUCC_8550=y
 > 
-> I am not sure if this is correct. The address/size cells are there for
-> panels. We have multiple of such warnings, so I would like to have here
-> consensus for all of them.
-Currently these address/size cells lead to dtc W=1 warning, so these 
-should be dropped. These can be re-added if needed at a later date.
-> 
-> Best regards,
-> Krzysztof
-> 
+> I don't think these needs to be builtin, and if they do I'd like to see
+> the reason captured in the commit message.
 
--- 
-Thx and BRs,
-Tengfei Fan
+I don't have any good reasons... I'll resend with modules
+since in my tests it worked fine as modules.
+
+Neil
+
+> 
+> Regards,
+> Bjorn
+> 
+>>   CONFIG_SM_VIDEOCC_8250=y
+>>   CONFIG_QCOM_HFPLL=y
+>>   CONFIG_CLK_GFM_LPASS_SM8250=m
+>>
+>> ---
+>> base-commit: 9046d05c6ad632a271fc4173624e26f396975a80
+>> change-id: 20231204-topic-sm8x50-upstream-gpucc-defconfig-3e3dc264be08
+>>
+>> Best regards,
+>> -- 
+>> Neil Armstrong <neil.armstrong@linaro.org>
+>>
+
 
