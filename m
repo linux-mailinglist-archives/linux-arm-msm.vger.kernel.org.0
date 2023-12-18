@@ -1,66 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-5168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E01A6816B21
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 11:29:27 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FFA6816B2F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 11:31:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 56AFCB20BC6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 10:29:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0A4F81F2371D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 10:31:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7501617988;
-	Mon, 18 Dec 2023 10:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8404E1426E;
+	Mon, 18 Dec 2023 10:30:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="L45Kmsk6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="D3atk2b7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522DF1427A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 10:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE49D14F74
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 10:30:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-40b5155e154so34498915e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 02:28:18 -0800 (PST)
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-40c31f18274so34823745e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 02:30:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702895296; x=1703500096; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zMHQ7FxowXR5FFIdGfBk5jzb/m9p5t8DcpQDDoewRFI=;
-        b=L45Kmsk6go84ASzMYFtO/B1ZGpOYaRres4/vkled7tk+2hLJ2bhUpe6lgfzSK78QXo
-         Hion2y6FHravOj9bhjdlEVwcBNemn+rVj73MfYrow+bWotHY4B/lFjyJmMx7XK5hiWub
-         b3ODzQ8kz1kelcJHzgMX9WFE5gUb6C4XjHXePslCwm5Mp9uUOgB9Mel+vrrLCeKu1W39
-         SyAdIxbDxxVBB0SZ0Pta4DojovSmgqo6bQ2l+gVG6eSDixzPh4AZFsFmNeve/H068u+1
-         pdI4gtyOn5f9o+yU5VxVaFZAATo7qSwYR6mhyKn61VaX0DpEWPwZzHZGee0L7vZMVsw8
-         C70g==
+        d=linaro.org; s=google; t=1702895425; x=1703500225; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iU1lhXR5gZm4tFUOyUKe/ySso0cBl9UN6mf5vn/m5Rw=;
+        b=D3atk2b7Jn92JP711cNMKnwxPfSyCrvzuBbuCaFBQsZj2cFPKwdNiPIu8N1SMzLgy8
+         8Gz2n8EuL+94uJfoO4xaHjJo4rs5H/rA81/z2fgDx9u7+UNThlmn5gjiUTj+Lad6gF0X
+         0QTE6Pb3JdkxNCK2TghsZCZUxZXP6spfCtWBvZecpOS6syCvp7LW+lxnLBiGl6w/Lt4g
+         ooqeCHLSjVt5Q00Vt1MB8g9tGsQBmBCm4fN7k/FsTmP4bOqDwHRJw/NNeKj6FAjhctRK
+         aI84b/s37uJRoYxjXguyyFafRfKBM888auflRg0SibujzOiCw6HSUu/PuvwaxUVJlZQK
+         J/iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702895296; x=1703500096;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zMHQ7FxowXR5FFIdGfBk5jzb/m9p5t8DcpQDDoewRFI=;
-        b=NurE0HRYUmkcWmdUFuMaIhimuQExSoFjmmzWsQBBu7eyilWKzqLlv67WNJkKcvPBU9
-         LJc1EsvIK6Hn2jaA+Z2SmkNf5iWw9tyDcQD+dmiITda4xLG6hpi2lAOfwZJn5TvZ4VM0
-         PpDPQZ2DIzgebSbV0LhidHQ0vV7a89lRmZ5h392/XWaDlyjkClzBZZn0/eEWLZgUm5bo
-         MXDfHROUBsxX1yN6dElOgjXHpfgMtpdb5IDAwKUsAMFAQVNPHsbxnm/9WJmc1lDD8UjK
-         G3DF8iPMsbqu/86kQlixbXXGyujD0OZ3R0oh05Xi6UolPXACyJRbMqJvoYRARjT9NtgO
-         ZLMg==
-X-Gm-Message-State: AOJu0YzVfwvaoB6XicmeoofGRJsZ1NDmFizKHHifJhHS8R9xJcZmowRq
-	ENQtoobAlUqvhooIVChKamJUiw==
-X-Google-Smtp-Source: AGHT+IFNqdVjTsVfqg55j2HNpFNzKNlJ2ojJ/0gzSRJsrU1bgBZJvUCsm0dU6AGb0FSUTSXUYerbtQ==
-X-Received: by 2002:a05:600c:30d2:b0:40c:4378:f111 with SMTP id h18-20020a05600c30d200b0040c4378f111mr6666736wmn.80.1702895296475;
-        Mon, 18 Dec 2023 02:28:16 -0800 (PST)
+        d=1e100.net; s=20230601; t=1702895425; x=1703500225;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iU1lhXR5gZm4tFUOyUKe/ySso0cBl9UN6mf5vn/m5Rw=;
+        b=dawT+dIH4vgksz36+gURqCOpiHSXr7L0iEl7VnUITJTIWBvnpYNewVYqZbNslyeFv0
+         dVk+wuA7ColYgd2dn4xeuNxbwerug1YJsrQpmMpaUFXq5fR6+yEsnnAVPs3sxjLPVQxZ
+         pll+dIoJ28LeMgmhefWi4KsQVl1JMV+28K/3Pn37ciRzZIF7DpSpeiMzJgrurMbzA6en
+         pS3ZdfyED2sMUTvk/rP2GbHGLoMwyideQFuRWuT4hAbq82r8TPeHqR5zRmjRBzSMxXTP
+         ouAlgG+WQrpwkkNNkSwXhvYg6jGUajZfypkVHO+BOXJlCrA50sWUK5P6xji40Hlu8CeS
+         pMtA==
+X-Gm-Message-State: AOJu0YwooFJgpvBZiwAfeBWr12fhjUck8YLGSovW6r4MPDWCOB1DWcXC
+	rDTeQScFPovxWSwWO3D4P3fN8w==
+X-Google-Smtp-Source: AGHT+IGPseYqfva1RIExZdMNDFkLibsv9Q7zJDn2klSr+VO/6FVtBHoOUoOsHkGucbiEaLLTM96I2g==
+X-Received: by 2002:a05:600c:3103:b0:40c:4b3e:bd08 with SMTP id g3-20020a05600c310300b0040c4b3ebd08mr5864134wmo.92.1702895425111;
+        Mon, 18 Dec 2023 02:30:25 -0800 (PST)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id ay35-20020a05600c1e2300b0040b2b38a1fasm41857967wmb.4.2023.12.18.02.28.15
+        by smtp.gmail.com with ESMTPSA id x6-20020a5d6506000000b00336505c4ef1sm9157600wru.75.2023.12.18.02.30.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Dec 2023 02:28:16 -0800 (PST)
+        Mon, 18 Dec 2023 02:30:24 -0800 (PST)
 From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Mon, 18 Dec 2023 11:28:11 +0100
-Subject: [PATCH v6 3/3] remoteproc: qcom: pas: Add SM8650 remoteproc
- support
+Date: Mon, 18 Dec 2023 11:30:23 +0100
+Subject: [PATCH v2] arm64: defconfig: enable GPU clock controller for
+ SM8[45]50
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,115 +68,66 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231218-topic-sm8650-upstream-remoteproc-v6-3-3d16b37f154b@linaro.org>
-References: <20231218-topic-sm8650-upstream-remoteproc-v6-0-3d16b37f154b@linaro.org>
-In-Reply-To: <20231218-topic-sm8650-upstream-remoteproc-v6-0-3d16b37f154b@linaro.org>
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Mathieu Poirier <mathieu.poirier@linaro.org>, 
- Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-Id: <20231218-topic-sm8x50-upstream-gpucc-defconfig-v2-1-e5892470a10b@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAD4fgGUC/5XNSw6DIBSF4a0Yxr0N4CO2o+6jcUDhgjepQECNj
+ XHvpe6gw/8MzrezjIkws3u1s4QrZQq+hLxUTI/KOwQypZnkshaSNzCHSBry1G8thyXmOaGawMV
+ FazBodfCWHNRYGy275oW8Z+UrJrS0nc5zKD1SnkP6nOwqfuu/wipAAHaiNZbrRtnb401epXANy
+ bHhOI4vkVc+DdsAAAA=
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2548;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1075;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=dRIOpHbtn+6YYLWqsr39smtxV2/mprbkVvuZ9tMTQvg=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlgB67IsYHxNVpjconBvtj59V1HQ9zeRFPORhCOYk2
- phvMO3yJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZYAeuwAKCRB33NvayMhJ0f9nD/
- 93SMhaFuOPVVU1Er3kqOX598KiaKIl32niAIr2osSGkIxuxenuZvX24Tcn9PztF48p8U6ufxy/O2+0
- +wcC+WtpkpEsjOSgrRBFLQejJwU2ubRcX1IWRaTYsMpb3wY0STsjgAZGkxoZL9ddQlGD1Jyf1011Sx
- 68R2ht4e3csATJtSqje0XwoItD1dJlLMzzHOvbh3qEZAcJpDpvV8mfE+1E4d7f1x9un9tl5Bq8MNRE
- jfMmAh788ZSbYVGu5InJnXVoSM4KRWNamYQtD7Qj93HNTqnxGHNcT1ejCiJSvYp9RxfWloazROERD5
- yp3vTin8wWCqtpirSAMbqJGdr7yNz7iFUjMAkdYz4QCZLBtXkznQ8mLYT522yQWHlmYLEH67dcujwr
- SRfeGb7qWBZXWalL7jHbxNT8MjE0uHRso9+9Vfd6FVss9alvX+1esxTnGB1VZaC1XIgZuDmigNaW6Z
- 85jCws4ah3yUmuBvRLMZy/zoStmMo/JHF1+Fv3r6vNeC/OAJ0pT6GWfq/6TC9eykVZVI7hXc2FdI0h
- RQaM3dFYk+J+glMhDoVvLRSDZZ4iGDwLL4iz6BsJ1ZlP94E4ET9262Quof01Em1tVT0JaYuURNAk/5
- c1eKxDQ9DsWeF2NgIQtJwQyxipomq8tvG0UGlAF/CMlJU0f6nByYWwHytSNA==
+ bh=NArf2Llfo0fGUpngpSXnVQbG686zND4st1NpA4HTQGw=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlgB8/taJ0l3Y77Rt+Q7vvhGJCYNn9YDtmuaZbo00f
+ iz/rKw2JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZYAfPwAKCRB33NvayMhJ0d3LEA
+ Cjaj449t5/p6riKNUL5qqpWt++YrLGtjexgL6OVZ9mbmsYzY7edT13rPEx9Ly2CKA8O/qO2uCX+iVO
+ VxNqoKKnUnzsZHsIEaYpVBa6kn1wY7o77ZrI/GB0cd4B+r+yoh8r4TZT6SKpp6PqURy+Urfu8ZZKTw
+ U1fFQQwzTz15Fybn0gDSUp8UOdgmzRB4f3VCMsVefrpJ5tBk5YwAzko0klP1fbg/lSsc4ZhTanXgty
+ 53+82PCnbXjPzqbWesLevVcCuX17PCKT+1l4JTV6EAVSA3Ss/hNUb3+18qqCbDoF8+mP0tUGYuB8iK
+ 22BHJqK2tMF/kNj3evayAkJUdLbbkpW3qcT87hxsYeHXaDWf3SZJEuSZ9/KxANSalJZwYYUb5djVYx
+ QoSKxzTSF5BoY44AlzRLaZ8G+KCa/Y+BaymjPOR8RMRp9wyfU4ilPhOHBviWFDZJjUse4+aEJa717A
+ k8OTTVYSXGEKZ45eK1jX4maS2WGjfFSYjtozY9jhT0XAlbx2VL2bL6kE2QrvHCXxrQDq4GIw7z5HJW
+ xl2ZM+3rEY6Bm8fNieuH1l0VPP1d2vpm7P6teAjZ7BfrBzluDuOF930++RJFvjQY6j6YHb4HwRDjNk
+ NSFm6d5zA7bh01XLNmXGVqseCYcflPcOXaGCveuXd0M9F5aCY2q8uBs7NDSg==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-Add DSP Peripheral Authentication Service support for the SM8650 platform.
+Enable GPU Clock Controller for SM8450 and SM8550 to allow using
+Adreno GPU on these SoCs.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- drivers/remoteproc/qcom_q6v5_pas.c | 50 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 50 insertions(+)
+Changes in v2:
+- Switched to =m since there's no reason to keep them built-in
+- Link to v1: https://lore.kernel.org/r/20231204-topic-sm8x50-upstream-gpucc-defconfig-v1-1-e615df0c4af9@linaro.org
+---
+ arch/arm64/configs/defconfig | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index e90783fd1129..f7967a25ecdb 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -1213,6 +1213,53 @@ static const struct adsp_data sc7280_wpss_resource = {
- 	.ssctl_id = 0x19,
- };
- 
-+static const struct adsp_data sm8650_cdsp_resource = {
-+	.crash_reason_smem = 601,
-+	.firmware_name = "cdsp.mdt",
-+	.dtb_firmware_name = "cdsp_dtb.mdt",
-+	.pas_id = 18,
-+	.dtb_pas_id = 0x25,
-+	.minidump_id = 7,
-+	.auto_boot = true,
-+	.proxy_pd_names = (char*[]){
-+		"cx",
-+		"mxc",
-+		"nsp",
-+		NULL
-+	},
-+	.load_state = "cdsp",
-+	.ssr_name = "cdsp",
-+	.sysmon_name = "cdsp",
-+	.ssctl_id = 0x17,
-+	.region_assign_idx = 2,
-+	.region_assign_count = 1,
-+	.region_assign_shared = true,
-+	.region_assign_vmid = QCOM_SCM_VMID_CDSP,
-+};
-+
-+static const struct adsp_data sm8650_mpss_resource = {
-+	.crash_reason_smem = 421,
-+	.firmware_name = "modem.mdt",
-+	.dtb_firmware_name = "modem_dtb.mdt",
-+	.pas_id = 4,
-+	.dtb_pas_id = 0x26,
-+	.minidump_id = 3,
-+	.auto_boot = false,
-+	.decrypt_shutdown = true,
-+	.proxy_pd_names = (char*[]){
-+		"cx",
-+		"mss",
-+		NULL
-+	},
-+	.load_state = "modem",
-+	.ssr_name = "mpss",
-+	.sysmon_name = "modem",
-+	.ssctl_id = 0x12,
-+	.region_assign_idx = 2,
-+	.region_assign_count = 2,
-+	.region_assign_vmid = QCOM_SCM_VMID_MSS_MSA,
-+};
-+
- static const struct of_device_id adsp_of_match[] = {
- 	{ .compatible = "qcom,msm8226-adsp-pil", .data = &adsp_resource_init},
- 	{ .compatible = "qcom,msm8953-adsp-pil", .data = &msm8996_adsp_resource},
-@@ -1268,6 +1315,9 @@ static const struct of_device_id adsp_of_match[] = {
- 	{ .compatible = "qcom,sm8550-adsp-pas", .data = &sm8550_adsp_resource},
- 	{ .compatible = "qcom,sm8550-cdsp-pas", .data = &sm8550_cdsp_resource},
- 	{ .compatible = "qcom,sm8550-mpss-pas", .data = &sm8550_mpss_resource},
-+	{ .compatible = "qcom,sm8650-adsp-pas", .data = &sm8550_adsp_resource},
-+	{ .compatible = "qcom,sm8650-cdsp-pas", .data = &sm8650_cdsp_resource},
-+	{ .compatible = "qcom,sm8650-mpss-pas", .data = &sm8650_mpss_resource},
- 	{ },
- };
- MODULE_DEVICE_TABLE(of, adsp_of_match);
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 5ad2b841aafc..fd59c9ba5983 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -1266,6 +1266,8 @@ CONFIG_SM_TCSRCC_8550=y
+ CONFIG_SM_GPUCC_6115=m
+ CONFIG_SM_GPUCC_8150=y
+ CONFIG_SM_GPUCC_8250=y
++CONFIG_SM_GPUCC_8450=m
++CONFIG_SM_GPUCC_8550=m
+ CONFIG_SM_VIDEOCC_8250=y
+ CONFIG_QCOM_HFPLL=y
+ CONFIG_CLK_GFM_LPASS_SM8250=m
 
+---
+base-commit: 9046d05c6ad632a271fc4173624e26f396975a80
+change-id: 20231204-topic-sm8x50-upstream-gpucc-defconfig-3e3dc264be08
+
+Best regards,
 -- 
-2.34.1
+Neil Armstrong <neil.armstrong@linaro.org>
 
 
