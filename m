@@ -1,211 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-5275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43DBA81778F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 17:31:53 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11EDD8177A5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 17:37:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B4134B22A61
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 16:31:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 68594B20BF4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 16:37:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68A521E520;
-	Mon, 18 Dec 2023 16:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4579498AE;
+	Mon, 18 Dec 2023 16:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="IKEEIwxz"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Sy8DltGQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82F4498BD
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 16:31:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1702917075;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=gyklUaQH9+w5u3EWbqqNdNPWrEzxqS/e6qwVBUpXKmQ=;
-	b=IKEEIwxzu00zl/NQcalNrJCYOO2jNthdwjURLLcDA6nngtoXnJZC0BjwRtJXs29Qz2XEg6
-	ZqQxYYi9FhOSNScCZlBDaRwC2JfQQKquu/azDpb15AVihILjUCCsAoCD+tkGLTSDpn7hQ/
-	OOl8C9ow3kNr0IDLoqgh1AI+3wsOta4=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-688-nKa-Fjq3PWSmpEFzTsHQMA-1; Mon, 18 Dec 2023 11:31:08 -0500
-X-MC-Unique: nKa-Fjq3PWSmpEFzTsHQMA-1
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-67f351b971bso28418606d6.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 08:31:08 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702917068; x=1703521868;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gyklUaQH9+w5u3EWbqqNdNPWrEzxqS/e6qwVBUpXKmQ=;
-        b=k2ywKg5nQRpCMFlsdpShEPkX4RYz8ul/ozxCaUh1KGINfwAAGJEgVI6RDxiJdGamTa
-         OPlqkfro9VlIIepMypDSdQLkCHvM4zG5RyWybIWqHbo4j8zFtq3ILboi4vRvxuOWwS9c
-         +cWyy9xzbQtksb0jOveD7iz1dOCSYw7RnUwN7QmKJoyzKDPyLL9KCb8su+MopRtWrdpA
-         NsjXkCS/d8QP50ogm16sydWSTLoGmSfTklsDfW9OkHN8bP2R1zEZsiEi/gHUSggB3Gut
-         iMXHCHFEvLrKH0sFSUvEoY4OSuEnMWW4rrtJYJTn+7+o/9abS8se7mg/i6Wjv5IDTqEI
-         qWPA==
-X-Gm-Message-State: AOJu0YxGuJsjZ8/yEo2sfj56lSCOtyfhXre+2MjmJmyazE3w2deSDUzd
-	7e0gQYQxxUAC0WiMkI80K8a5pRqiStSJlQ4q+IzBnwvwmrGcJE9mV0T+SLqQAjFTlxZ+Fnrc/YC
-	XeqZkHuRo2T1wUK1NnbBR8QhCpw==
-X-Received: by 2002:a05:6214:2262:b0:67f:4c0:59f0 with SMTP id gs2-20020a056214226200b0067f04c059f0mr13283877qvb.77.1702917068349;
-        Mon, 18 Dec 2023 08:31:08 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHYtPAkjW+suWvwLO6oqUyWkHoZlf2OBTm+xBUTH5nyvhqcUjD5pspfwg2Sp3Pu/DNpwnTBEA==
-X-Received: by 2002:a05:6214:2262:b0:67f:4c0:59f0 with SMTP id gs2-20020a056214226200b0067f04c059f0mr13283848qvb.77.1702917068034;
-        Mon, 18 Dec 2023 08:31:08 -0800 (PST)
-Received: from fedora ([2600:1700:1ff0:d0e0::37])
-        by smtp.gmail.com with ESMTPSA id bu19-20020ad455f3000000b0067f46605191sm1019502qvb.56.2023.12.18.08.31.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Dec 2023 08:31:07 -0800 (PST)
-Date: Mon, 18 Dec 2023 10:31:04 -0600
-From: Andrew Halaney <ahalaney@redhat.com>
-To: Sneh Shah <quic_snehshah@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>, 
-	Bhupesh Sharma <bhupesh.sharma@linaro.org>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Jose Abreu <joabreu@synopsys.com>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
-	Paolo Abeni <pabeni@redhat.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
-	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, kernel@quicinc.com
-Subject: Re: [PATCH net-next] net: stmmac: dwmac-qcom-ethqos: Add support for
- 2.5G SGMII
-Message-ID: <pdoedu3n7rdl6ifrfyugoa7pbjougqj4cg6mxyerhu5udf4e2h@unjqgqjt7odi>
-References: <20231218071118.21879-1-quic_snehshah@quicinc.com>
- <4zbf5fmijxnajk7kygcjrcusf6tdnuzsqqboh23nr6f3rb3c4g@qkfofhq7jmv6>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C091E486;
+	Mon, 18 Dec 2023 16:36:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BIFOOuJ003249;
+	Mon, 18 Dec 2023 16:36:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=IHfTQFFYLuLy3cTDmFjjPBUfltLSx/Aj2CKesx6gsbk=; b=Sy
+	8DltGQFUuEQbss79u3fqU0GdSLM2yPD1nMqRfPA7b+DJZ4OjGqoOQYhvdFn1yT2B
+	KsqL94sBLP+XoBdxHpO+CPwQycBZPqKAlaEaenrp/nmbkPxwyGSNexwHHU8CVDLf
+	C1Mq/d+r/zI/lax6eqHKeYtlk/dhJ5I2UyF2Me/tLMeJJmlXmHkN/cbqOj1Div2F
+	mGPZPDb0X6ntkx+rYIZ9H/TZVOS3t8itOiRShcQaXeFx3r1Vrb1yLvW5KQOAt8fb
+	myZRlrGr3AzYlGnMrGusidwvmU+0YLJ9WunEHnumzCcIVBhPvTg+KYZ3tzuAG3eS
+	SDkioQkBOkl5fewVJAWw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v2gw0sdgu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 18 Dec 2023 16:36:15 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BIGYhZF004722
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 18 Dec 2023 16:36:13 GMT
+Received: from [10.218.45.181] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 18 Dec
+ 2023 08:35:42 -0800
+Message-ID: <62f0c623-3819-f6be-115f-6b471ab79a58@quicinc.com>
+Date: Mon, 18 Dec 2023 22:05:39 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4zbf5fmijxnajk7kygcjrcusf6tdnuzsqqboh23nr6f3rb3c4g@qkfofhq7jmv6>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: [PATCH 10/12] arm64: dts: qcom: sm8550: Switch UFS from
+ opp-table-hz to opp-v2
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>, Abel Vesa
+	<abel.vesa@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Stephen
+ Boyd" <sboyd@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+        Jagadeesh Kona
+	<quic_jkona@quicinc.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        "Rob
+ Herring" <robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Sai
+ Prakash Ranjan" <quic_saipraka@quicinc.com>
+CC: Marijn Suijten <marijn.suijten@somainline.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+References: <20231218-topic-8550_fixes-v1-0-ce1272d77540@linaro.org>
+ <20231218-topic-8550_fixes-v1-10-ce1272d77540@linaro.org>
+Content-Language: en-US
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
+In-Reply-To: <20231218-topic-8550_fixes-v1-10-ce1272d77540@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: aGzfgsGo_ofvxbl9o9p8Z-YLf-qIgeU8
+X-Proofpoint-ORIG-GUID: aGzfgsGo_ofvxbl9o9p8Z-YLf-qIgeU8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
+ mlxscore=0 adultscore=0 malwarescore=0 suspectscore=0 spamscore=0
+ clxscore=1011 lowpriorityscore=0 mlxlogscore=999 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312180122
 
-On Mon, Dec 18, 2023 at 10:20:03AM -0600, Andrew Halaney wrote:
-> On Mon, Dec 18, 2023 at 12:41:18PM +0530, Sneh Shah wrote:
-> > Serdes phy needs to operate at 2500 mode for 2.5G speed and 1000
-> > mode for 1G/100M/10M speed.
-> > Added changes to configure serdes phy and mac based on link speed.
-> > 
-> > Signed-off-by: Sneh Shah <quic_snehshah@quicinc.com>
-> > ---
-> >  .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 31 +++++++++++++++++--
-> >  1 file changed, 29 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> > index d3bf42d0fceb..b3a28dc19161 100644
-> > --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> > +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> > @@ -21,6 +21,7 @@
-> >  #define RGMII_IO_MACRO_CONFIG2		0x1C
-> >  #define RGMII_IO_MACRO_DEBUG1		0x20
-> >  #define EMAC_SYSTEM_LOW_POWER_DEBUG	0x28
-> > +#define ETHQOS_MAC_AN_CTRL		0xE0
-> >  
-> >  /* RGMII_IO_MACRO_CONFIG fields */
-> >  #define RGMII_CONFIG_FUNC_CLK_EN		BIT(30)
-> > @@ -78,6 +79,10 @@
-> >  #define ETHQOS_MAC_CTRL_SPEED_MODE		BIT(14)
-> >  #define ETHQOS_MAC_CTRL_PORT_SEL		BIT(15)
-> >  
-> > +/*ETHQOS_MAC_AN_CTRL bits */
-> > +#define ETHQOS_MAC_AN_CTRL_RAN			BIT(9)
-> > +#define ETHQOS_MAC_AN_CTRL_ANE			BIT(12)
-> > +
-> 
-> nit: space please add a space before ETHQOS_MAC_AN_CTRL
-> 
-> >  struct ethqos_emac_por {
-> >  	unsigned int offset;
-> >  	unsigned int value;
-> > @@ -109,6 +114,7 @@ struct qcom_ethqos {
-> >  	unsigned int num_por;
-> >  	bool rgmii_config_loopback_en;
-> >  	bool has_emac_ge_3;
-> > +	unsigned int serdes_speed;
-> >  };
-> >  
-> >  static int rgmii_readl(struct qcom_ethqos *ethqos, unsigned int offset)
-> > @@ -600,27 +606,47 @@ static int ethqos_configure_rgmii(struct qcom_ethqos *ethqos)
-> >  
-> >  static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos)
-> >  {
-> > -	int val;
-> > -
-> > +	int val, mac_an_value;
-> >  	val = readl(ethqos->mac_base + MAC_CTRL_REG);
-> > +	mac_an_value = readl(ethqos->mac_base + ETHQOS_MAC_AN_CTRL);
-> >  
-> >  	switch (ethqos->speed) {
-> > +	case SPEED_2500:
-> > +		val &= ~ETHQOS_MAC_CTRL_PORT_SEL;
-> > +		rgmii_updatel(ethqos, RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
-> > +			      RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
-> > +			      RGMII_IO_MACRO_CONFIG2);
-> > +		if (ethqos->serdes_speed != SPEED_2500)
-> > +			phy_set_speed(ethqos->serdes_phy, ethqos->speed);
 
-Also, please capture the return value here and propagate the error as
-appropriate.
 
-> > +		mac_an_value &= ~ETHQOS_MAC_AN_CTRL_ANE;
-> > +		break;
-> >  	case SPEED_1000:
-> >  		val &= ~ETHQOS_MAC_CTRL_PORT_SEL;
-> >  		rgmii_updatel(ethqos, RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
-> >  			      RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
-> >  			      RGMII_IO_MACRO_CONFIG2);
-> > +		if (ethqos->serdes_speed != SPEED_1000)
-> > +			phy_set_speed(ethqos->serdes_phy, ethqos->speed);
-> > +		mac_an_value |= ETHQOS_MAC_AN_CTRL_RAN | ETHQOS_MAC_AN_CTRL_ANE;
-> >  		break;
-> >  	case SPEED_100:
-> >  		val |= ETHQOS_MAC_CTRL_PORT_SEL | ETHQOS_MAC_CTRL_SPEED_MODE;
-> > +		if (ethqos->serdes_speed != SPEED_1000)
-> > +			phy_set_speed(ethqos->serdes_phy, ethqos->speed);
-> > +		mac_an_value |= ETHQOS_MAC_AN_CTRL_RAN | ETHQOS_MAC_AN_CTRL_ANE;
-> >  		break;
-> >  	case SPEED_10:
-> >  		val |= ETHQOS_MAC_CTRL_PORT_SEL;
-> >  		val &= ~ETHQOS_MAC_CTRL_SPEED_MODE;
-> > +		if (ethqos->serdes_speed != SPEED_1000)
-> > +			phy_set_speed(ethqos->serdes_phy, ethqos->speed);
-> > +		mac_an_value |= ETHQOS_MAC_AN_CTRL_RAN | ETHQOS_MAC_AN_CTRL_ANE;
-> >  		break;
-> >  	}
-> >  
-> >  	writel(val, ethqos->mac_base + MAC_CTRL_REG);
-> > +	writel(mac_an_value, ethqos->mac_base + ETHQOS_MAC_AN_CTRL);
-> > +	ethqos->serdes_speed = ethqos->speed;
+On 12/18/2023 9:32 PM, Konrad Dybcio wrote:
+> Now that the non-legacy form of OPP is supported within the UFS driver,
+> go ahead and switch to it, adding support for more intermediate freq/power
+> states.
 > 
-> I see these bits are generic and there's some functions in stmmac_pcs.h
-> that muck with these...
+> In doing so, add the CX RPMhPD under GCC to make sure at least some of
+> the power state requirements are *actually* propagated up the stack.
 > 
-> Could you help me understand if this really should be Qualcomm specific,
-> or if this is something that should be considered for the more core bits
-> of the driver? I feel in either case we should take advantage of the
-> common definitions in that file if possible.
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>   arch/arm64/boot/dts/qcom/sm8550.dtsi | 50 +++++++++++++++++++++++++++++-------
+>   1 file changed, 41 insertions(+), 9 deletions(-)
 > 
-> >  
-> >  	return val;
-> >  }
-> > @@ -789,6 +815,7 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
-> >  				     "Failed to get serdes phy\n");
-> >  
-> >  	ethqos->speed = SPEED_1000;
-> > +	ethqos->serdes_speed = SPEED_1000;
-> >  	ethqos_update_link_clk(ethqos, SPEED_1000);
-> >  	ethqos_set_func_clk_en(ethqos);
-> >  
-> > -- 
-> > 2.17.1
-> > 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> index d707d15cea5b..d6edd54f3ad3 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> @@ -1930,6 +1930,7 @@ ufs_mem_hc: ufs@1d84000 {
+>   			iommus = <&apps_smmu 0x60 0x0>;
+>   			dma-coherent;
+>   
+> +			operating-points-v2 = <&ufs_opp_table>;
+>   			interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mc_virt SLAVE_EBI1 0>,
+>   					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
+>   
+> @@ -1950,18 +1951,49 @@ ufs_mem_hc: ufs@1d84000 {
+>   				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+>   				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
+>   				 <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
+> -			freq-table-hz =
+> -				<75000000 300000000>,
+> -				<0 0>,
+> -				<0 0>,
+> -				<75000000 300000000>,
+> -				<100000000 403000000>,
+> -				<0 0>,
+> -				<0 0>,
+> -				<0 0>;
+>   			qcom,ice = <&ice>;
+>   
+>   			status = "disabled";
+> +
+> +			ufs_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
+> +
+> +				opp-75000000 {
+> +					opp-hz = /bits/ 64 <75000000>,
+> +						 /bits/ 64 <0>,
+> +						 /bits/ 64 <0>,
+> +						 /bits/ 64 <75000000>,
+> +						 /bits/ 64 <100000000>,
+> +						 /bits/ 64 <0>,
+> +						 /bits/ 64 <0>,
+> +						 /bits/ 64 <0>;
+> +					required-opps = <&rpmhpd_opp_low_svs>;
+> +				};
+> +
+> +				opp-150000000 {
+> +					opp-hz = /bits/ 64 <150000000>,
+> +						 /bits/ 64 <0>,
+> +						 /bits/ 64 <0>,
+> +						 /bits/ 64 <150000000>,
+> +						 /bits/ 64 <100000000> > +						 /bits/ 64 <0>,
+> +						 /bits/ 64 <0>,
+> +						 /bits/ 64 <0>;
+> +					required-opps = <&rpmhpd_opp_svs>;
+> +				};
+> +
+> +				opp-300000000 {
+> +					opp-hz = /bits/ 64 <300000000>,
+> +						 /bits/ 64 <0>,
+> +						 /bits/ 64 <0>,
+> +						 /bits/ 64 <300000000>,
+> +						 /bits/ 64 <100000000>,
+Hi Konrad,
 
+This entry is for ICE clock ? Shouldn't the entry be 403000000 ?
+Same for svs as well ?
+
+> +						 /bits/ 64 <0>,
+> +						 /bits/ 64 <0>,
+> +						 /bits/ 64 <0>;
+> +					required-opps = <&rpmhpd_opp_nom>;
+> +				};
+> +			};
+>   		};
+>   
+>   		ice: crypto@1d88000 {
+> 
+
+Regards,
+Nitin
 
