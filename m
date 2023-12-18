@@ -1,65 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-5249-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5250-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CCC058174D6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 16:09:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E36E8174E0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 16:12:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 40CC21F20FCB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 15:09:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F3F0D282DDB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 15:12:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A4263D57D;
-	Mon, 18 Dec 2023 15:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 949C03A1C0;
+	Mon, 18 Dec 2023 15:12:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Pk+tFcji"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IDX325ow"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E0B3A1C7
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 15:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA261D137
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 15:12:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a233bf14cafso191840266b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 07:09:04 -0800 (PST)
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-54cb4fa667bso3873682a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 07:12:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702912142; x=1703516942; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=bgQmz8t1GBIjgiSotCqtrsnCSidXviMtymxQF/RD8ok=;
-        b=Pk+tFcji9a07Oz2ZyKX556cQ6SOcslk2+oIZ3M2mdH+GAX3qXKjKqcd+ddRtfojmzH
-         dn/KN6sBp1lTJX2Vz++SO7enNAZ97Tj5w3wU6WlsdjdJ/wnJvhahv5jvJuI+w20Y0LLq
-         rg6QnKxY1cjs3UEHBeSd+ygSBOAz+WgGk+U3NJyqTrMTJqSy1kxcuuZvKtfSvYpvtrcM
-         f1og2i3FrFu5/5e3UvpHPQDzj+zCDn7WA7OsvQFSNOeMpqCJ+Tb66BAUde8LyHd93T68
-         BNR902O5QoSybkoa34KatcMI0zvVmzk9Cd1qidmFxQbJunXahhNj/NYCBVApuP9KuU/I
-         uJPw==
+        d=linaro.org; s=google; t=1702912347; x=1703517147; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kNCh566U4dzvgMQx53mPBPowlXYCFUMx2v0O1FP/VcU=;
+        b=IDX325owt71LGMefx2HkOW8Hn0IasrKdwLPp7/VcBcVWy4oU2jPu5R7oN5DRhqWT+e
+         2HeTgb82CYVbtfXJb+eczRQDSCa/4B9X2mwDaBTg1WugveTsp/XLktOnZthcpM+Q07wm
+         RbIqGTh8DBXgi+MMwzha5j1XsyXM0Hw3iCTurk3xPWNoYUs513T/IdGJFIULQlsGvuFc
+         05WieAwktZ9MYS/7QhMrf6P7W7jxYBQQY1PvkkDq1WNF9z3CnG4HevpWQZSnt/jSLM5S
+         ASXz1FO92a3+wrNoVWseOYZgp9jPF4U2Pc1/Z4p4ITtAdU1+N/z1+V+qzJTNNF3pb1i+
+         iOXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702912142; x=1703516942;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bgQmz8t1GBIjgiSotCqtrsnCSidXviMtymxQF/RD8ok=;
-        b=tXrMKZd7HqezfkxFkyNxlYtNDc1km+SvhCqcnFK8LzGKnmhTUMxKA2/6UHv80vjSH0
-         AcMdHm2qKa4szWEe2sXZXHsGC9bo8zCyWHSlidfXkypcALakUv0enUIVl+IJ0ewZMRAc
-         OMsxFKvH5m8UJq4m9F1pWnPixlrKIulmnBm5Trh0670cqp1RRV6MPwcJcfRaWQYLHaS/
-         AKtlYkMhUSTqfUtGGLpd7g0zJ0yRC5OTmtpWVhwjJsDoCMCJm38+7cGnGFYBWR13O3wD
-         SQY0pM7Cf0QptzpSZXmN7KySt56K7oQJ4992mTFm7hCZmqVPg1CAceOa1G7mup5BQm5V
-         buRQ==
-X-Gm-Message-State: AOJu0Yy2rgtM2wj9BKPca2UcGfnvK4XcH6sNv/Da3h7Z221GxWSEhgVu
-	yXznyOMd6P8RhWVzXdcE2jh/5PZl++dIUA/nP98=
-X-Google-Smtp-Source: AGHT+IEM/4dJ8JsMs3NF0LnYKFomqSOUVeXrx/p7qr04OFjJEYMJLYfdKlq2Q9gdpIwiXfw3sW0lCA==
-X-Received: by 2002:a17:906:2207:b0:a1f:b467:9b93 with SMTP id s7-20020a170906220700b00a1fb4679b93mr6006306ejs.78.1702912142538;
-        Mon, 18 Dec 2023 07:09:02 -0800 (PST)
+        d=1e100.net; s=20230601; t=1702912347; x=1703517147;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kNCh566U4dzvgMQx53mPBPowlXYCFUMx2v0O1FP/VcU=;
+        b=pA3xi77jfw4NKoug0isxVqsg70C8hHwRehxJ19yxVhFpBYgAwOES9ZQCwkpfVvnvvl
+         lYpCy0OKgLNsaFW1FjLeWrGC1hKFCfR4DnTg2xEHfQuq0rM3vQRpSbfOB+q6ZSFsOb52
+         sTmGSzwv3lAUMRkaf/CQAAwQKGHpycNRylFL9HANKbXaoSHQB1W/Nn8zvKMEXxa0zkVm
+         FOCZX8Bfan51QTMw09l9rrITWsq2MI/97fW+dK3T9qHR9DPNU5t6lCTPrXq4IdGYGyYd
+         3jQN++xZZhQBwaXSeef218/hsId1MpHddGV2ID6g6yM018ildLlIPO7If66jZSQB6v9L
+         DQEA==
+X-Gm-Message-State: AOJu0YzaLbu5avAMI32VvyfAYJxFfegYaADVCO/wCEuJzdt8kgYPkc/D
+	PU425d9n839/ZJayAzNE2ldOLQ==
+X-Google-Smtp-Source: AGHT+IFZOiXeIpbakcxNraH5RS062FvqX2/5uSCQwZBVbvdbdnOU7qJgkUQ9JebnkrgrfdZYvKrWAg==
+X-Received: by 2002:a17:906:4559:b0:a18:8b15:4d3d with SMTP id s25-20020a170906455900b00a188b154d3dmr8344331ejq.77.1702912343575;
+        Mon, 18 Dec 2023 07:12:23 -0800 (PST)
 Received: from [192.168.199.59] (178235179137.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.137])
-        by smtp.gmail.com with ESMTPSA id ll9-20020a170907190900b00a1da2f7c1d8sm14201700ejc.77.2023.12.18.07.09.01
+        by smtp.gmail.com with ESMTPSA id hz23-20020a1709072cf700b00a236193fe3dsm767479ejc.182.2023.12.18.07.12.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Dec 2023 07:09:02 -0800 (PST)
-Message-ID: <6c2e7cac-6f3d-42f0-84de-72a14e8f9ef5@linaro.org>
-Date: Mon, 18 Dec 2023 16:09:00 +0100
+        Mon, 18 Dec 2023 07:12:23 -0800 (PST)
+Message-ID: <8ba3b50f-3367-4f4b-80e0-17809cc266fc@linaro.org>
+Date: Mon, 18 Dec 2023 16:12:21 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,15 +66,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/34] media: iris: initialize power resources
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
- linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
- stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com, agross@kernel.org,
- andersson@kernel.org, mchehab@kernel.org, bryan.odonoghue@linaro.org
-Cc: linux-arm-msm@vger.kernel.org, quic_abhinavk@quicinc.com
-References: <1702899149-21321-1-git-send-email-quic_dikshita@quicinc.com>
- <1702899149-21321-8-git-send-email-quic_dikshita@quicinc.com>
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: align mem timer size cells
+ with bindings
 Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
+ Rajendra Nayak <quic_rjendra@quicinc.com>, Abel Vesa <abel.vesa@linaro.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20231218150656.72892-1-krzysztof.kozlowski@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -112,188 +113,23 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <1702899149-21321-8-git-send-email-quic_dikshita@quicinc.com>
+In-Reply-To: <20231218150656.72892-1-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 18.12.2023 12:32, Dikshita Agarwal wrote:
-> Add support for initializing Iris "resources", which are clocks,
-> interconnects, power domains, reset clocks, and clock frequencies
-> used for Iris hardware.
+On 18.12.2023 16:06, Krzysztof Kozlowski wrote:
+> The ARMv7 memory mapped architected timer bindings expect MMIO sizes up
+> to 32-bit.  Keep 64-bit addressing but change the size of memory mapping
+> to 32-bit (size-cells=1) and adjust the ranges to match this.
 > 
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> This fixes dtbs_check warnings like:
+> 
+>   x1e80100-qcp.dtb: timer@17800000: #size-cells:0:0: 1 was expected
+> 
+> Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
-[...]
-
-> +	ret = init_resources(core);
-> +	if (ret) {
-> +		dev_err_probe(core->dev, ret,
-> +			      "%s: init resource failed with %d\n", __func__, ret);
-> +		return ret;
-You're supposed to return dev_err_probe, it propagates the errors
-this way
-
-Also, I think __func__ is excessive, throughout the code. You can
-very quickly grep for the error messages, which are quite unique.
-
-[...]
-
-> +
-> +static const struct bus_info plat_bus_table[] = {
-> +	{ NULL, "iris-cnoc", 1000, 1000     },
-> +	{ NULL, "iris-ddr",  1000, 15000000 },
-> +};
-> +
-> +static const char * const plat_pd_table[] = { "iris-ctl", "vcodec", NULL };
-> +#define PD_COUNT 2
-> +
-> +static const char * const plat_opp_pd_table[] = { "mxc", "mmcx", NULL };
-> +#define OPP_PD_COUNT 2
-> +
-> +static const struct clock_info plat_clk_table[] = {
-> +	{ NULL, "gcc_video_axi0", GCC_VIDEO_AXI0_CLK, 0, 0 },
-> +	{ NULL, "core_clk",       VIDEO_CC_MVS0C_CLK, 0, 0 },
-> +	{ NULL, "vcodec_core",    VIDEO_CC_MVS0_CLK,  1, 0 },
-> +};
-> +
-> +static const char * const plat_clk_reset_table[] = { "video_axi_reset", NULL };
-> +#define RESET_COUNT 1
-Are you sure this won't change between platforms?
-[...]
-
-> +static int init_bus(struct iris_core *core)
-> +{
-> +	struct bus_info *binfo = NULL;
-> +	u32 i = 0;
-no need to initialize
-
-[...]
-
-> +static int init_clocks(struct iris_core *core)
-> +{
-> +	struct clock_info *cinfo = NULL;
-> +	u32 i;
-> +
-> +	core->clk_count = ARRAY_SIZE(plat_clk_table);
-> +	core->clock_tbl = devm_kzalloc(core->dev,
-> +				       sizeof(struct clock_info) * core->clk_count,
-> +				       GFP_KERNEL);
-> +	if (!core->clock_tbl)
-> +		return -ENOMEM;
-> +
-> +	for (i = 0; i < core->clk_count; i++) {
-> +		cinfo = &core->clock_tbl[i];
-> +		cinfo->name = plat_clk_table[i].name;
-> +		cinfo->clk_id = plat_clk_table[i].clk_id;
-> +		cinfo->has_scaling = plat_clk_table[i].has_scaling;
-> +		cinfo->clk = devm_clk_get(core->dev, cinfo->name);
-> +		if (IS_ERR(cinfo->clk)) {
-> +			dev_err(core->dev,
-> +				"%s: failed to get clock: %s\n", __func__, cinfo->name);
-> +			return PTR_ERR(cinfo->clk);
-> +		}
-> +	}
-Are you not going to use OPP for scaling the main RPMhPD with the core
-clock?
-
-> +
-> +	return 0;
-> +}
-> +
-> +static int init_reset_clocks(struct iris_core *core)
-init_resets
-
-'reset clocks' is an old downstream concept
-
-> +{
-> +	struct reset_info *rinfo = NULL;
-> +	u32 i = 0;
-unnecessary initializations
-
-[...]
-
-> +
-> +int init_resources(struct iris_core *core)
-> +{
-> +	int ret;
-> +
-> +	ret = init_bus(core);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = init_power_domains(core);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = init_clocks(core);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = init_reset_clocks(core);
-> +
-> +	return ret;
-return init_reset_clocks(core);
-
-> +}
-> diff --git a/drivers/media/platform/qcom/vcodec/iris/resources.h b/drivers/media/platform/qcom/vcodec/iris/resources.h
-> new file mode 100644
-> index 0000000..d21bcc7e
-> --- /dev/null
-> +++ b/drivers/media/platform/qcom/vcodec/iris/resources.h
-> @@ -0,0 +1,36 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#ifndef _RESOURCES_H_
-> +#define _RESOURCES_H_
-> +
-> +struct bus_info {
-> +	struct icc_path		*icc;
-> +	const char		*name;
-> +	u32			bw_min_kbps;
-> +	u32			bw_max_kbps;
-u64?
-
-> +};
-> +
-> +struct power_domain_info {
-> +	struct device	*genpd_dev;
-> +	const char	*name;
-> +};
-> +
-> +struct clock_info {
-> +	struct clk	*clk;
-> +	const char	*name;
-I'm not sure why you need it
-
-> +	u32		clk_id;
-Or this
-
-> +	bool		has_scaling;
-Or this
-
-you could probably do something like this:
-
-struct big_iris_struct {
-	[...]
-	struct clk *core_clk;
-	struct clk *memory_clk;
-	struct clk *some_important_scaled_clock;
-	struct clk_bulk_data less_important_nonscaling_clocks[X]
-}
-
-and then make use of all of the great common upstream APIs to manage
-them!
-
-> +	u64		prev;
-> +};
-> +
-> +struct reset_info {
-> +	struct reset_control	*rst;
-> +	const char		*name;
-this seems a bit excessive as well
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
