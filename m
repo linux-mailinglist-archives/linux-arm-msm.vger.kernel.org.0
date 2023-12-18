@@ -1,156 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-5154-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05E5F8168AF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 09:51:27 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FD5F8169AC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 10:18:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3828C1C20900
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 08:51:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C0D6128172A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 09:18:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB8E61094F;
-	Mon, 18 Dec 2023 08:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1D59125A7;
+	Mon, 18 Dec 2023 09:18:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="1CQ47HSs"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="laIeTV1c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7F810945
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 08:51:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-4b2cef60577so363953e0c.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 00:51:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1702889480; x=1703494280; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LKpt8Cq8/8CYoMLLlNbLUZ/tUYkrUXGfZfIGERTWREk=;
-        b=1CQ47HSswRPRukgyWabJB2UXpYw00oKS4h6vxAg3CDYHoh0ZlLqgo6LDSnTjRR7yDX
-         KP16TjesNJwoiIjTpMmwj24zF3awRlfTngZdImyGL+6KgjIPXH1kteAKKpFbgGG/+jv+
-         cA7A5ELX9xBpd3Sn4jFkhDxEzeB6cPpmS2DfNMIFYct/eq4CalrHUqIp+0LTqnQ/yllu
-         faRmP2vuaO0OABaaXxgncPufGI+0KvyQZA3yl+c+twNAoXHJo4lWXQfU7YIW1oqp1bd9
-         PSsIlcMULKEmQqs5jpaaluGLRE825i9ERaNzcMmlNvjBDZSXfAcrEZmIsTZGBQl/Bey0
-         LQ8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702889480; x=1703494280;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LKpt8Cq8/8CYoMLLlNbLUZ/tUYkrUXGfZfIGERTWREk=;
-        b=udS/7nOOH9gV7qraTn+SK5qmL2luG+u/rDhlMicBN9Lb6aZmUcNE0OEih+Jm7NRVjH
-         m1qSxCGgksaBJVu9dS1U98MCBOOoL4FRImHtE9kzB2JrBWVdT4AvQtaldAq+njE3/pI7
-         sO1yqeBiIG6Z+kbwgVTlLfYX4HecGQgEJWi0GxABT+pUiIi2FhuLq7eOgII35FBMMuVt
-         8kgk7elVbKsk47fyQxTjkNJsokP4trATaSiXC4REKKVCRBjrwwUMlo6DDzscn89HIWPX
-         /9sW8neZXD31VLi/1Qp1Jswy/fUO3cQkp/I1Fb5id+RZrxtazt/fIsLZ6au9xhU9FBio
-         lWmA==
-X-Gm-Message-State: AOJu0YwSkjUNoBvKVvlEc0YWXRiWIk76u34wk4+s2WaKmrlVEK3v/ukN
-	jNg534OFBSiO9OfMuEYLA3EqZswKBTUPb4BEt8lHtA==
-X-Google-Smtp-Source: AGHT+IF2/8Yg6PgRIEjihn18nTksKl3RHuLlPtHVt6WC5JxCFQpUCC1xaOCXtJnUs7dnvCv7m4h53joQfpw/JdFMR0M=
-X-Received: by 2002:a05:6122:2fa:b0:4b6:b685:a0a9 with SMTP id
- b26-20020a05612202fa00b004b6b685a0a9mr834286vko.33.1702889480614; Mon, 18 Dec
- 2023 00:51:20 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A728111C91
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 09:18:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1702891073;
+	bh=Nnj8pwz+fpNa9QDBex3iHeuPyjLLQIPz2CB3ijyOfLA=;
+	h=From:To:Cc:Subject:Date:From;
+	b=laIeTV1cw97pXPZh9qk6I1gPrTJRzk8ZLgbzeVZzl9V9vETbHbSd5Wk/dpr9IyJtU
+	 dpkhdvjOZN5yPnyJOQTuKQXrsL6A4oHRawRtbk+DeQ19KQJwUkHhVZ40qT8t7qWQNH
+	 xqXH+w0VOrFWMmQsblWsT6ltxdNHIV8sP83hSky6bvMEc1T3Okq3CFvskAoYyM8nvc
+	 nSiNUxJ7odYzPncUx/tD1aQtvsCeXflkW1D8TCYPljZh/iitLa7PpDAP58r71d/s4+
+	 7xOoVswcA1CFwzZffpmQPhwtPkzO74K+tWi4dsOj1VS2y7/lueosM1yFV9VmIZNePq
+	 APWmP5fT7QC7Q==
+Received: from localhost.localdomain (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: laura.nao)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 7652537811D8;
+	Mon, 18 Dec 2023 09:17:53 +0000 (UTC)
+From: Laura Nao <laura.nao@collabora.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Douglas Anderson <dianders@chromium.org>,
+	linux-arm-msm@vger.kernel.org,
+	kernel@collabora.com
+Subject: sc7180 kernel hang with linux-next
+Date: Mon, 18 Dec 2023 10:18:06 +0100
+Message-Id: <20231218091806.7155-1-laura.nao@collabora.com>
+X-Mailer: git-send-email 2.30.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231127141600.20929-1-brgl@bgdev.pl> <20231127141600.20929-3-brgl@bgdev.pl>
- <aec86af5-1170-4fc4-9986-879c61fc8633@quicinc.com>
-In-Reply-To: <aec86af5-1170-4fc4-9986-879c61fc8633@quicinc.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Mon, 18 Dec 2023 09:51:09 +0100
-Message-ID: <CAMRc=MfWtepi6m2xLdg7BhWSLp2=EY7z5KjxkFJFr9LC1Y4ALA@mail.gmail.com>
-Subject: Re: [PATCH v6 02/13] firmware: qcom: add a dedicated TrustZone buffer allocator
-To: Om Prakash Singh <quic_omprsing@quicinc.com>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Elliot Berman <quic_eberman@quicinc.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	Guru Das Srinagesh <quic_gurus@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>, 
-	Maximilian Luz <luzmaximilian@gmail.com>, Alex Elder <elder@linaro.org>, 
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	kernel@quicinc.com, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sat, Dec 16, 2023 at 8:00=E2=80=AFPM Om Prakash Singh
-<quic_omprsing@quicinc.com> wrote:
->
->
->
-> On 11/27/2023 7:45 PM, Bartosz Golaszewski wrote:
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > We have several SCM calls that require passing buffers to the TrustZone
-> > on top of the SMC core which allocates memory for calls that require
-> > more than 4 arguments.
-> >
-> > Currently every user does their own thing which leads to code
-> > duplication. Many users call dma_alloc_coherent() for every call which
-> > is terribly unperformant (speed- and size-wise).
-> >
-> > Provide a set of library functions for creating and managing pool of
-> > memory which is suitable for sharing with the TrustZone, that is:
-> > page-aligned, contiguous and non-cachable as well as provides a way of
-> > mapping of kernel virtual addresses to physical space.
-> >
-> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
-> > Tested-by: Andrew Halaney <ahalaney@redhat.com> # sc8280xp-lenovo-think=
-pad-x13s
-> > ---
+Hello,
 
-[snip]
+KernelCI has reported a regression on some sc7180 based platforms (lazor
+and kingoftown Chromebooks) for linux-next: the kernel seems to hang
+after initializing the SDHCI controller (~2 seconds in the boot),
+nothing is reported on the console after unused clocks are disabled:
 
-> > +
-> > +#include "qcom_tzmem.h"
-> > +
-> > +struct qcom_tzmem_pool {
-> > +     void *vbase;
-> > +     dma_addr_t pbase;
-> > +     size_t size;
-> > +     struct gen_pool *pool;
-> > +     void *priv;
-> priv is not being using any where.
+[    2.241767] mmc1: Command Queue Engine enabled
+[    2.257574] dwc3 a600000.usb: Adding to iommu group 9
+[    2.261398] mmc1: new HS400 Enhanced strobe MMC card at address 0001
+[    2.270452] msm_dsi ae94000.dsi: supply refgen not found, using dummy
+regulator
+[    2.274496] mmcblk1: mmc1:0001 DA4064 58.2 GiB
+[    2.294482]  mmcblk1: p1 p2 p3 p4 p5 p6 p7 p8 p9 p10 p11 p12
+[    2.301798] mmcblk1boot0: mmc1:0001 DA4064 4.00 MiB
+[    2.307847] mmcblk1boot1: mmc1:0001 DA4064 4.00 MiB
+[    2.313799] mmcblk1rpmb: mmc1:0001 DA4064 16.0 MiB, chardev (507:0)
+[   14.899579] clk: Disabling unused clocks
+ 
+This was observed on next-20231123 first and is still present on
+next-20231218.
 
-It's here for other implementations of the TZMem pools to store
-private data under. SHM Bridge uses it in one of the later patches in
-this series but it makes more logical sense to put it here.
+Full kernel log from a couple examples:
+- next-20231205:
+  https://storage.kernelci.org/next/master/next-20231205/arm64/defconfig+arm64-chromebook+videodec/gcc-10/lab-collabora/baseline-nfs-sc7180-trogdor-kingoftown.html
+- next-20231215:
+  https://storage.kernelci.org/next/master/next-20231215/arm64/defconfig+arm64-chromebook+videodec/gcc-10/lab-collabora/v4l2-decoder-conformance-h265-sc7180-trogdor-lazor-limozeen.html
 
-[snip]
+Sometimes the kernel is able to get past that point, but crashes a bit
+later - here's an example from a decoder conformance tests, the kernel
+boots fine but crashes shortly afterwards:
+- next-20231214:
+  https://storage.kernelci.org/next/master/next-20231214/arm64/defconfig+arm64-chromebook+videodec/gcc-10/lab-collabora/v4l2-decoder-conformance-h265-sc7180-trogdor-kingoftown.html
 
-> > diff --git a/include/linux/firmware/qcom/qcom_tzmem.h b/include/linux/f=
-irmware/qcom/qcom_tzmem.h
-> > new file mode 100644
-> > index 000000000000..8e7fddab8cb4
-> > --- /dev/null
-> > +++ b/include/linux/firmware/qcom/qcom_tzmem.h
-> > @@ -0,0 +1,28 @@
-> > +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> > +/*
-> > + * Copyright (C) 2023 Linaro Ltd.
-> > + */
-> > +
-> > +#ifndef __QCOM_TZMEM_H
-> > +#define __QCOM_TZMEM_H
-> > +
-> > +#include <linux/cleanup.h>
-> > +#include <linux/gfp.h>
-> > +#include <linux/types.h>
-> > +
-> > +struct device;
-> > +struct qcom_tzmem_pool;
-> qcom_tzmem_pool stucture definition should be moved to header file.
+Any idea on what might be causing this issue?
 
-No, why would you do this?
+Thanks,
 
-Bart
+Laura
 
-[snip]
 
