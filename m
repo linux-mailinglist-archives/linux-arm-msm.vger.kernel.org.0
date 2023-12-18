@@ -1,200 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-5276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11EDD8177A5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 17:37:39 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 09C2E8177AB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 17:38:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 68594B20BF4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 16:37:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 71F1F285395
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 16:38:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4579498AE;
-	Mon, 18 Dec 2023 16:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8442A5D74D;
+	Mon, 18 Dec 2023 16:36:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Sy8DltGQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rYAwltur"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C091E486;
-	Mon, 18 Dec 2023 16:36:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BIFOOuJ003249;
-	Mon, 18 Dec 2023 16:36:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=IHfTQFFYLuLy3cTDmFjjPBUfltLSx/Aj2CKesx6gsbk=; b=Sy
-	8DltGQFUuEQbss79u3fqU0GdSLM2yPD1nMqRfPA7b+DJZ4OjGqoOQYhvdFn1yT2B
-	KsqL94sBLP+XoBdxHpO+CPwQycBZPqKAlaEaenrp/nmbkPxwyGSNexwHHU8CVDLf
-	C1Mq/d+r/zI/lax6eqHKeYtlk/dhJ5I2UyF2Me/tLMeJJmlXmHkN/cbqOj1Div2F
-	mGPZPDb0X6ntkx+rYIZ9H/TZVOS3t8itOiRShcQaXeFx3r1Vrb1yLvW5KQOAt8fb
-	myZRlrGr3AzYlGnMrGusidwvmU+0YLJ9WunEHnumzCcIVBhPvTg+KYZ3tzuAG3eS
-	SDkioQkBOkl5fewVJAWw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v2gw0sdgu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Dec 2023 16:36:15 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BIGYhZF004722
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Dec 2023 16:36:13 GMT
-Received: from [10.218.45.181] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 18 Dec
- 2023 08:35:42 -0800
-Message-ID: <62f0c623-3819-f6be-115f-6b471ab79a58@quicinc.com>
-Date: Mon, 18 Dec 2023 22:05:39 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B545A846
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 16:36:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-40c2c65e6aaso42128505e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 08:36:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702917405; x=1703522205; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gEiQXLxdqBICDnY79OHSv3Sv47jiKw8LbCcpfTgH4AA=;
+        b=rYAwlturr+bIMqMBYOyTwtLqEsayxtxFdwk18m/lDSyCXh1s6+KXm6LvfY0dKH4mOK
+         B+/FDrdu3OeTWD2irdRWBgTOnf6LiILkdHJhiOptG1ncJuVLEh+4RHUiuBSP5endswuI
+         J/QKH2H0Tg8OTMT2gsBrcyg3BUlNUK4EQeQIR28ZEFhw4cyvbElUQ5EfTUG1hj9vYOQi
+         wciLta28AwOBfBA7k2jYEFeAppt+ZsurvDXsxYIffgq+xSBPZLn/GIYp8/uz0iS6ukiz
+         JCP2VNOgVsrwGjcYf0cy8qAk1SJnJc5C8dY7IyF7U7OpwsXi1E81rK8blOk4ngNw/4xb
+         jTyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702917405; x=1703522205;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gEiQXLxdqBICDnY79OHSv3Sv47jiKw8LbCcpfTgH4AA=;
+        b=P7ze6yzH+jzbCbb3IO9hcAuvqMO8uRovHJD2pg5gI+qUeLV4cuZIS+c9Q2QF9mblfo
+         tHLsMobjRzu+lt6rDmbVMU+PVebOPFu82tPWkFD60L54dZX8/mlcwf0izZkaLc6dGVEB
+         AXtU+jJcFCoc0aldmEaLOciligk4nwBiVPVLMRxwIzNXVyTe9SEA/6XWhaXqiG00MVx3
+         EoA0lCaby5/zynQwbzyeR8T1KM3lQPat9/M0wL4v+7zw3zNFB/0pwIS5gYFol9p+y6F0
+         CK8LNNy0RcDMGoO8FQaXYkn8KRtBNia1DTSZIEWpMQsAHTvIKMxbzAQIAqhHkCW8EnII
+         WHog==
+X-Gm-Message-State: AOJu0Ywb7STofzJg063MQm0zg8DTgCTMierINHYrZcjr3WhxoucE66hu
+	75ZepDbZCcClJ1G+QMVePpmiuw==
+X-Google-Smtp-Source: AGHT+IGcR59A5Bj1YcHV7wLTQuxeAEf6nNsIf2gMifDZJ7RvLX6KX0t1OUKr656X8kPMPXJYtBhlxQ==
+X-Received: by 2002:a05:600c:4454:b0:40c:6af0:ccea with SMTP id v20-20020a05600c445400b0040c6af0cceamr3046238wmn.223.1702917405037;
+        Mon, 18 Dec 2023 08:36:45 -0800 (PST)
+Received: from [127.0.1.1] ([79.115.23.25])
+        by smtp.gmail.com with ESMTPSA id fc17-20020a05600c525100b0040c42681fcesm35836936wmb.15.2023.12.18.08.36.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Dec 2023 08:36:44 -0800 (PST)
+From: Abel Vesa <abel.vesa@linaro.org>
+Date: Mon, 18 Dec 2023 18:36:40 +0200
+Subject: [PATCH] arm64: dts: qcom: x1e80100-qcp: Fix supplies for some LDOs
+ in PM8550
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Subject: Re: [PATCH 10/12] arm64: dts: qcom: sm8550: Switch UFS from
- opp-table-hz to opp-v2
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>, Abel Vesa
-	<abel.vesa@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Stephen
- Boyd" <sboyd@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
-        Jagadeesh Kona
-	<quic_jkona@quicinc.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        "Rob
- Herring" <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Sai
- Prakash Ranjan" <quic_saipraka@quicinc.com>
-CC: Marijn Suijten <marijn.suijten@somainline.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-References: <20231218-topic-8550_fixes-v1-0-ce1272d77540@linaro.org>
- <20231218-topic-8550_fixes-v1-10-ce1272d77540@linaro.org>
-Content-Language: en-US
-From: Nitin Rawat <quic_nitirawa@quicinc.com>
-In-Reply-To: <20231218-topic-8550_fixes-v1-10-ce1272d77540@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: aGzfgsGo_ofvxbl9o9p8Z-YLf-qIgeU8
-X-Proofpoint-ORIG-GUID: aGzfgsGo_ofvxbl9o9p8Z-YLf-qIgeU8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
- mlxscore=0 adultscore=0 malwarescore=0 suspectscore=0 spamscore=0
- clxscore=1011 lowpriorityscore=0 mlxlogscore=999 phishscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312180122
+Message-Id: <20231218-x1e80100-qcp-dts-fix-pm8550-regulators-supplies-v1-1-0a313ce87745@linaro.org>
+X-B4-Tracking: v=1; b=H4sIABd1gGUC/x2NQQqDMBAAvyJ77sJugiX0K6WH1Kw2YDXNahHEv
+ 7t4nMPM7KBSsyg8mh2q/LPmeTLgWwPdJ06DYE7G4Mh5dhxwYwnERPjrCqZFsc8blm9oW8Iqwzr
+ GZa6KupYyWhjJJ36L78ndI1i1VDHjOj5fx3EC8amMG4EAAAA=
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Abel Vesa <abel.vesa@linaro.org>, 
+ Sibi Sankar <quic_sibis@quicinc.com>, 
+ Rajendra Nayak <quic_rjendra@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1502; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=Cl7h63hRqbdjD8FcBXVyS7ODnGEJNkYQ9rmoYCPxuEI=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlgHUaVLNVexMcAhqX6L+thj8elYSTNMwz5ezpi
+ k/tIpAcuxSJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZYB1GgAKCRAbX0TJAJUV
+ VqJSEAC5J89LYaPgxDvV0RCxay2Vbk3bACk7uXnEbEoKbLjeNrB01LDgfcRRf3GS3bri0nKitnd
+ 3fSggNdcNLFN34f1F2v1rm6WIU8uHMe+biLnCwL+n4CAU/AcCAoMt8Te6mGO6stfIRu4kuzMRTK
+ UPAr2jjSNwl3jpbpbyw+zFugqFiVuq5gkmC1EJBEJeKLJKsKBtSXLDfanC23S00AiQtpG5LvHlO
+ UKHVsfxhykUGJgbFLmUS5wv2p+8+sn3FpR2OyxJZqTimRP/7ZuxL79QpS3JM2Pxrq2KKDudaH1V
+ 056Z/GMhM3dTuciPekcj3YbqPCHts6DqsfrO6s6U+86vCo1G453lx4NU4XON/lWVNclTeNkvo+/
+ 6g80OmpRXOXt9S5SmEPnRvmk2G54mLKJo6YIT8GikU2ZaSXkyWB8k1TlqCpWW8WXCzZvbyv/9R2
+ MRxBoSpOyBkJnor0903mZLkhYRvGQBn8Ei8/i2jxR5IRK+4/AF3wAjyEj0gP2q7pCEOmfmb2rwC
+ v+Wp04tqo+6JAktjIDCnV/ii8hQpX8pl6DOrkQV83tHv37Yeb+0FcTV+pIVB4wk5IuN08sYEcNv
+ QmDUME4ntIXfl3KJ6BZYSV4al31v5KcDA77sALTH+Brylw0mhxjQcgVoe49UEyWmxkZ8kzYAEDM
+ uMorS+bVjjjZP8g==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
+The LDOs 1, 4 and 10 from PM8550 share the same supply, the SMPS 4
+from PM8550ve. This needs to be done through shared supply approach
+otherwise the parsing will fail. Also fix a bindings check failure.
 
+Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+Looks like I forgot to do the same thing for the QCP board.
 
-On 12/18/2023 9:32 PM, Konrad Dybcio wrote:
-> Now that the non-legacy form of OPP is supported within the UFS driver,
-> go ahead and switch to it, adding support for more intermediate freq/power
-> states.
-> 
-> In doing so, add the CX RPMhPD under GCC to make sure at least some of
-> the power state requirements are *actually* propagated up the stack.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/sm8550.dtsi | 50 +++++++++++++++++++++++++++++-------
->   1 file changed, 41 insertions(+), 9 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index d707d15cea5b..d6edd54f3ad3 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -1930,6 +1930,7 @@ ufs_mem_hc: ufs@1d84000 {
->   			iommus = <&apps_smmu 0x60 0x0>;
->   			dma-coherent;
->   
-> +			operating-points-v2 = <&ufs_opp_table>;
->   			interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mc_virt SLAVE_EBI1 0>,
->   					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
->   
-> @@ -1950,18 +1951,49 @@ ufs_mem_hc: ufs@1d84000 {
->   				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
->   				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
->   				 <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
-> -			freq-table-hz =
-> -				<75000000 300000000>,
-> -				<0 0>,
-> -				<0 0>,
-> -				<75000000 300000000>,
-> -				<100000000 403000000>,
-> -				<0 0>,
-> -				<0 0>,
-> -				<0 0>;
->   			qcom,ice = <&ice>;
->   
->   			status = "disabled";
-> +
-> +			ufs_opp_table: opp-table {
-> +				compatible = "operating-points-v2";
-> +
-> +				opp-75000000 {
-> +					opp-hz = /bits/ 64 <75000000>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <75000000>,
-> +						 /bits/ 64 <100000000>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>;
-> +					required-opps = <&rpmhpd_opp_low_svs>;
-> +				};
-> +
-> +				opp-150000000 {
-> +					opp-hz = /bits/ 64 <150000000>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <150000000>,
-> +						 /bits/ 64 <100000000> > +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>;
-> +					required-opps = <&rpmhpd_opp_svs>;
-> +				};
-> +
-> +				opp-300000000 {
-> +					opp-hz = /bits/ 64 <300000000>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <300000000>,
-> +						 /bits/ 64 <100000000>,
-Hi Konrad,
+Sorry about that.
+---
+ arch/arm64/boot/dts/qcom/x1e80100-qcp.dts | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-This entry is for ICE clock ? Shouldn't the entry be 403000000 ?
-Same for svs as well ?
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
+index 3746e1de3623..a37ad9475c90 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
+@@ -40,13 +40,11 @@ regulators-0 {
+ 
+ 		vdd-bob1-supply = <&vph_pwr>;
+ 		vdd-bob2-supply = <&vph_pwr>;
+-		vdd-l1-supply = <&vreg_s4c_1p8>;
++		vdd-l1-l4-l10-supply = <&vreg_s4c_1p8>;
+ 		vdd-l2-l13-l14-supply = <&vreg_bob1>;
+-		vdd-l4-supply = <&vreg_s4c_1p8>;
+ 		vdd-l5-l16-supply = <&vreg_bob1>;
+ 		vdd-l6-l7-supply = <&vreg_bob2>;
+ 		vdd-l8-l9-supply = <&vreg_bob1>;
+-		vdd-l10-supply = <&vreg_s4c_1p8>;
+ 		vdd-l12-supply = <&vreg_s5j_1p2>;
+ 		vdd-l15-supply = <&vreg_s4c_1p8>;
+ 		vdd-l17-supply = <&vreg_bob2>;
 
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>;
-> +					required-opps = <&rpmhpd_opp_nom>;
-> +				};
-> +			};
->   		};
->   
->   		ice: crypto@1d88000 {
-> 
+---
+base-commit: 48e8992e33abf054bcc0bb2e77b2d43bb899212e
+change-id: 20231218-x1e80100-qcp-dts-fix-pm8550-regulators-supplies-03d1be3f026a
 
-Regards,
-Nitin
+Best regards,
+-- 
+Abel Vesa <abel.vesa@linaro.org>
+
 
