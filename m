@@ -1,273 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-5244-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5A598173EC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 15:42:05 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B30A1817433
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 15:51:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4D35F28199C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 14:42:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2414EB21A7C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 14:51:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 731C91D146;
-	Mon, 18 Dec 2023 14:41:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF7E937889;
+	Mon, 18 Dec 2023 14:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ehDwO2IC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RWWLYhXv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC08200A4
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 14:41:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2672037863
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 14:50:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-50e1d61b657so3736352e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 06:41:56 -0800 (PST)
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a2343c31c4bso182723066b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 06:50:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702910515; x=1703515315; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=EC790w2wBtofMurLZCa3vCoI4IR1rVBptqvIo5PdSdA=;
-        b=ehDwO2ICdTRht7kIi0uWYg934PVEmWfOw3SlYUDh8pOpTITEdX6ZAP8/0j7ZjvHa/j
-         CRCeHIZvsH6r81ouscSd+bwr8i312HofPBZ55cVRFfc/r35DGemKp4mb10BHc7wNmbuC
-         nT0GnY7Kv2J5YsSZ+KcXXfWSZA3ih3wqxWWQj+VoJjeQtrqElN5LrUUt8z8Fpj5RSkUQ
-         /rjG187eEsLOtGQMrZ7MK9vOi7DiWSNI9dxnIc2YdkbRg8jz1FHDOEdLw7iqKZ89fHPi
-         74Pae8hEKXMRCTHf7gAeMU7dtzJXcp5UwK+97KO9KxfUJbl+kr3RjJKLw7jAFVJIsjCO
-         fHdA==
+        d=linaro.org; s=google; t=1702911053; x=1703515853; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PwZoYkBYNDGbxdHHhhA9ml9eCEXVo/RzvZajHy3nCT4=;
+        b=RWWLYhXvOnlitXarVbHz88iJHhdEoHrBW23sn7AJSjc0pcfGJz+LVGsI+gGqa/gxhc
+         hvgWDKwaV0r3LRV3nY6g568HWxxuC4zfFJGzqrBs/58HU8J8vA/4H4sG36lTopkIDnS3
+         A6wAR42hhuFeJXGYViQgYtBEqq5IbUO528C48WSeYF21hV6Y4Bj9cVObIWzCkswE5S7H
+         dgtiVgeFMKRkmTFd/mTYD0DR8J6Sg1HuElXJex4pVy9TfVwsfDqiYg3Q7LIuo6s1rbcM
+         WG32oVGyU7yBSfzwq2NN66mfmSHGF3FWmWuJhy1wIDBtmHY8dOyXoAe6FxNLOCRIelH7
+         6cyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702910515; x=1703515315;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1702911053; x=1703515853;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=EC790w2wBtofMurLZCa3vCoI4IR1rVBptqvIo5PdSdA=;
-        b=Syt56bORWXy6psbcvgdQZ+PaM1WcgrDE/NRAuJFdyWq3N1TLByHN7U/MIZ3lzHxOBc
-         NxOeC/PKKTTTMJUXQAjJKgDxwpCC+4t+FOU7a4CpX4o+z4WznJaYQv2gymZIBnYyzneK
-         VCS1aMraT7w4j8liNpdv0qRqsIZZPHwE4xfrXSx/mGesm9UJwwSchIBNTNk/2iohVlZI
-         +c7Vkc1kOp/36wHhPQv2E/r6siFSPc4SLvweTPhkVRgnoji5Bgqff9R6/bOInGyENeRe
-         IxCjzyuCi/FOSe4aW7PtCovyBFZJNUdejMuHdCRExKSycI6rsasxg/0hh1AMu9gojxUW
-         +1gw==
-X-Gm-Message-State: AOJu0YwPQ3gLgbzNscNHL+YWYsve1e9iGfTNQ0zt41Loem8+cF1IUo6A
-	9sCpXhMXytsvDOQSSEWjN7pBGQ==
-X-Google-Smtp-Source: AGHT+IFjR4I4pOL61ywCzQqF3sg9naj5KMUspwmMQUBNDlEyn/0gZEg+ARarTPzvcRHkT/8K/I6Z0A==
-X-Received: by 2002:a05:6512:e94:b0:50b:f9b5:b4de with SMTP id bi20-20020a0565120e9400b0050bf9b5b4demr9600773lfb.40.1702910514782;
-        Mon, 18 Dec 2023 06:41:54 -0800 (PST)
-Received: from [10.167.154.1] (178235179137.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.137])
-        by smtp.gmail.com with ESMTPSA id hg12-20020a1709072ccc00b00a2359f95ad8sm1145917ejc.37.2023.12.18.06.41.53
+        bh=PwZoYkBYNDGbxdHHhhA9ml9eCEXVo/RzvZajHy3nCT4=;
+        b=cXqnMXcYxAb2IJPPTPRl9m2RGtiSWHsgT1ZcpaerEU5j20h+qgkhjksj4Qv4oBGx13
+         KJORySUSR72tb9ks7bHBfv0kTrEyWtoW6IWW38Yw6Ov6JQ5YmjZqEt8FlGjtBCrWGiPN
+         JaEfDkW8Hq94poV2Cy7AyhR1DuWJeb58ytazsqr/MrV9ePfVFfISOLmsIm/M6Z/J4lhf
+         yu1a521tW+R0OnQEb6+Je0FLJi2gQHx/mxFIo+9nOm4WtWTNttklwpzyTpz/syTczWDA
+         Vdvez/EzSl/Y+mEx5i6BkHTfbs2ew4o05N5hBC2a+ehtREcOCQmHsPtMy3wmZ0rwYt1B
+         jzLw==
+X-Gm-Message-State: AOJu0YzTD5oW5Z55NC4/LUEQpV8y/avH1iLZCyCPT9ogD5wHDzlgiGbS
+	3nuC6Gt7SA+4ymFzDF//dBNB3w==
+X-Google-Smtp-Source: AGHT+IH6uAXX78npFARzX6yqnSfm4d3d9f+sCviIOufO/KnbKhoCDiQAgMkHMfuZrDpRS3IRffHlcw==
+X-Received: by 2002:a17:906:2242:b0:a1f:ad99:a8d8 with SMTP id 2-20020a170906224200b00a1fad99a8d8mr4286249ejr.113.1702911053454;
+        Mon, 18 Dec 2023 06:50:53 -0800 (PST)
+Received: from krzk-bin.. ([178.197.218.27])
+        by smtp.gmail.com with ESMTPSA id sf21-20020a1709078a9500b00a1f7cbf28a5sm12969440ejc.106.2023.12.18.06.50.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Dec 2023 06:41:54 -0800 (PST)
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Mon, 18 Dec 2023 15:41:52 +0100
-Subject: [PATCH RFC] power: supply: qcom_battmgr: Register the power
- supplies after PDR is up
+        Mon, 18 Dec 2023 06:50:52 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: x1e80100: drop qcom,drv-count
+Date: Mon, 18 Dec 2023 15:50:50 +0100
+Message-Id: <20231218145050.66394-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231218-topic-battmgr_fixture_attempt-v1-1-6145745f34fe@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAC9agGUC/x2NUQqDMBAFryL73UAToQ29SimSxI0uaAybVQri3
- bv0cwbevBMaMmGDV3cC40GNtqJgbx2kOZQJDY3K4O6ut856I1ulZGIQWSceMn1lZxwUca1iMPk
- HZj/mJ/agjRgamsihpFkrZV8WlZVRd//T9+e6frbbnkaEAAAA
-To: Bjorn Andersson <andersson@kernel.org>, 
- Sebastian Reichel <sre@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Johan Hovold <johan+linaro@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1702910513; l=7109;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=mgbHzQ/f6XWdmkp7t66704b+Nemu5GXGAe2cOFY3kSY=;
- b=5H6JfwMomIpo9Wi+N1T6ORl8MGtVbT8fuhohEuHl77wXXH5A08OIij6mUO0xDNJ8w5Y1p0b2r
- SfZASp6NigiCLTM94RHTaJSb6G4fIz2RZbs7U5ZicH6XSYtYUCmwTVo
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Transfer-Encoding: 8bit
 
-Currently, a not-yet-entirely-initialized battmgr (e.g. with pd-mapper
-not having yet started or ADSP not being up etc.) results in a couple of
-zombie power supply devices hanging around.
+Property qcom,drv-count in the RSC node is not allowed and not used:
 
-This is particularly noticeable when trying to suspend the device (even
-s2idle): the PSY-internal thermal zone is inaccessible and returns
--ENODEV, which causes log spam.
+  x1e80100-crd.dtb: rsc@17500000: 'qcom,drv-count' does not match any of the regexes: '^regulators(-[0-9])?$', 'pinctrl-[0-9]+'
 
-Register the power supplies only after we received some notification
-indicating battmgr is ready to take off.
-
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/power/supply/qcom_battmgr.c | 109 ++++++++++++++++++++----------------
- 1 file changed, 60 insertions(+), 49 deletions(-)
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-index ec163d1bcd18..a12e2a66d516 100644
---- a/drivers/power/supply/qcom_battmgr.c
-+++ b/drivers/power/supply/qcom_battmgr.c
-@@ -282,6 +282,7 @@ struct qcom_battmgr_wireless {
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index da691e2f3209..fd09fbc7d8e7 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -3315,7 +3315,6 @@ apps_rsc: rsc@17500000 {
+ 			      <0 0x17510000 0 0x10000>,
+ 			      <0 0x17520000 0 0x10000>;
+ 			reg-names = "drv-0", "drv-1", "drv-2";
+-			qcom,drv-count = <3>;
  
- struct qcom_battmgr {
- 	struct device *dev;
-+	struct auxiliary_device *adev;
- 	struct pmic_glink_client *client;
- 
- 	enum qcom_battmgr_variant variant;
-@@ -1293,11 +1294,69 @@ static void qcom_battmgr_enable_worker(struct work_struct *work)
- 		dev_err(battmgr->dev, "failed to request power notifications\n");
- }
- 
-+static char *qcom_battmgr_battery[] = { "battery" };
-+
-+static void qcom_battmgr_register_psy(struct qcom_battmgr *battmgr)
-+{
-+	struct power_supply_config psy_cfg_supply = {};
-+	struct auxiliary_device *adev = battmgr->adev;
-+	struct power_supply_config psy_cfg = {};
-+	struct device *dev = &adev->dev;
-+
-+	psy_cfg.drv_data = battmgr;
-+	psy_cfg.of_node = adev->dev.of_node;
-+
-+	psy_cfg_supply.drv_data = battmgr;
-+	psy_cfg_supply.of_node = adev->dev.of_node;
-+	psy_cfg_supply.supplied_to = qcom_battmgr_battery;
-+	psy_cfg_supply.num_supplicants = 1;
-+
-+	if (battmgr->variant == QCOM_BATTMGR_SC8280XP) {
-+		battmgr->bat_psy = devm_power_supply_register(dev, &sc8280xp_bat_psy_desc, &psy_cfg);
-+		if (IS_ERR(battmgr->bat_psy))
-+			dev_err(dev, "failed to register battery power supply (%ld)\n",
-+				PTR_ERR(battmgr->bat_psy));
-+
-+		battmgr->ac_psy = devm_power_supply_register(dev, &sc8280xp_ac_psy_desc, &psy_cfg_supply);
-+		if (IS_ERR(battmgr->ac_psy))
-+			dev_err(dev, "failed to register AC power supply (%ld)\n",
-+				PTR_ERR(battmgr->ac_psy));
-+
-+		battmgr->usb_psy = devm_power_supply_register(dev, &sc8280xp_usb_psy_desc, &psy_cfg_supply);
-+		if (IS_ERR(battmgr->usb_psy))
-+			dev_err(dev, "failed to register USB power supply (%ld)\n",
-+				PTR_ERR(battmgr->usb_psy));
-+
-+		battmgr->wls_psy = devm_power_supply_register(dev, &sc8280xp_wls_psy_desc, &psy_cfg_supply);
-+		if (IS_ERR(battmgr->wls_psy))
-+			dev_err(dev, "failed to register wireless charing power supply (%ld)\n",
-+				PTR_ERR(battmgr->wls_psy));
-+	} else {
-+		battmgr->bat_psy = devm_power_supply_register(dev, &sm8350_bat_psy_desc, &psy_cfg);
-+		if (IS_ERR(battmgr->bat_psy))
-+			dev_err(dev, "failed to register battery power supply (%ld)\n",
-+				PTR_ERR(battmgr->bat_psy));
-+
-+		battmgr->usb_psy = devm_power_supply_register(dev, &sm8350_usb_psy_desc, &psy_cfg_supply);
-+		if (IS_ERR(battmgr->usb_psy))
-+			dev_err(dev, "failed to register USB power supply (%ld)\n",
-+				PTR_ERR(battmgr->usb_psy));
-+
-+		battmgr->wls_psy = devm_power_supply_register(dev, &sm8350_wls_psy_desc, &psy_cfg_supply);
-+		if (IS_ERR(battmgr->wls_psy))
-+			dev_err(dev, "failed to register wireless charing power supply (%ld)\n",
-+				PTR_ERR(battmgr->wls_psy));
-+	}
-+}
-+
- static void qcom_battmgr_pdr_notify(void *priv, int state)
- {
- 	struct qcom_battmgr *battmgr = priv;
- 
- 	if (state == SERVREG_SERVICE_STATE_UP) {
-+		if (!battmgr->bat_psy)
-+			qcom_battmgr_register_psy(battmgr);
-+
- 		battmgr->service_up = true;
- 		schedule_work(&battmgr->enable_work);
- 	} else {
-@@ -1312,13 +1371,9 @@ static const struct of_device_id qcom_battmgr_of_variants[] = {
- 	{}
- };
- 
--static char *qcom_battmgr_battery[] = { "battery" };
--
- static int qcom_battmgr_probe(struct auxiliary_device *adev,
- 			      const struct auxiliary_device_id *id)
- {
--	struct power_supply_config psy_cfg_supply = {};
--	struct power_supply_config psy_cfg = {};
- 	const struct of_device_id *match;
- 	struct qcom_battmgr *battmgr;
- 	struct device *dev = &adev->dev;
-@@ -1328,14 +1383,7 @@ static int qcom_battmgr_probe(struct auxiliary_device *adev,
- 		return -ENOMEM;
- 
- 	battmgr->dev = dev;
--
--	psy_cfg.drv_data = battmgr;
--	psy_cfg.of_node = adev->dev.of_node;
--
--	psy_cfg_supply.drv_data = battmgr;
--	psy_cfg_supply.of_node = adev->dev.of_node;
--	psy_cfg_supply.supplied_to = qcom_battmgr_battery;
--	psy_cfg_supply.num_supplicants = 1;
-+	battmgr->adev = adev;
- 
- 	INIT_WORK(&battmgr->enable_work, qcom_battmgr_enable_worker);
- 	mutex_init(&battmgr->lock);
-@@ -1347,43 +1395,6 @@ static int qcom_battmgr_probe(struct auxiliary_device *adev,
- 	else
- 		battmgr->variant = QCOM_BATTMGR_SM8350;
- 
--	if (battmgr->variant == QCOM_BATTMGR_SC8280XP) {
--		battmgr->bat_psy = devm_power_supply_register(dev, &sc8280xp_bat_psy_desc, &psy_cfg);
--		if (IS_ERR(battmgr->bat_psy))
--			return dev_err_probe(dev, PTR_ERR(battmgr->bat_psy),
--					     "failed to register battery power supply\n");
--
--		battmgr->ac_psy = devm_power_supply_register(dev, &sc8280xp_ac_psy_desc, &psy_cfg_supply);
--		if (IS_ERR(battmgr->ac_psy))
--			return dev_err_probe(dev, PTR_ERR(battmgr->ac_psy),
--					     "failed to register AC power supply\n");
--
--		battmgr->usb_psy = devm_power_supply_register(dev, &sc8280xp_usb_psy_desc, &psy_cfg_supply);
--		if (IS_ERR(battmgr->usb_psy))
--			return dev_err_probe(dev, PTR_ERR(battmgr->usb_psy),
--					     "failed to register USB power supply\n");
--
--		battmgr->wls_psy = devm_power_supply_register(dev, &sc8280xp_wls_psy_desc, &psy_cfg_supply);
--		if (IS_ERR(battmgr->wls_psy))
--			return dev_err_probe(dev, PTR_ERR(battmgr->wls_psy),
--					     "failed to register wireless charing power supply\n");
--	} else {
--		battmgr->bat_psy = devm_power_supply_register(dev, &sm8350_bat_psy_desc, &psy_cfg);
--		if (IS_ERR(battmgr->bat_psy))
--			return dev_err_probe(dev, PTR_ERR(battmgr->bat_psy),
--					     "failed to register battery power supply\n");
--
--		battmgr->usb_psy = devm_power_supply_register(dev, &sm8350_usb_psy_desc, &psy_cfg_supply);
--		if (IS_ERR(battmgr->usb_psy))
--			return dev_err_probe(dev, PTR_ERR(battmgr->usb_psy),
--					     "failed to register USB power supply\n");
--
--		battmgr->wls_psy = devm_power_supply_register(dev, &sm8350_wls_psy_desc, &psy_cfg_supply);
--		if (IS_ERR(battmgr->wls_psy))
--			return dev_err_probe(dev, PTR_ERR(battmgr->wls_psy),
--					     "failed to register wireless charing power supply\n");
--	}
--
- 	battmgr->client = devm_pmic_glink_register_client(dev,
- 							  PMIC_GLINK_OWNER_BATTMGR,
- 							  qcom_battmgr_callback,
-
----
-base-commit: ceb2fe0d438644e1de06b9a6468a1fb8e2199c70
-change-id: 20231218-topic-battmgr_fixture_attempt-ec86ef8df7e3
-
-Best regards,
+ 			interrupts = <GIC_SPI 3 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH>,
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+2.34.1
 
 
