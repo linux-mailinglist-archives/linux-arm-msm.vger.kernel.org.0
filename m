@@ -1,98 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-5271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 674C6817727
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 17:14:46 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 938D6817755
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 17:23:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9DC8CB20918
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 16:14:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 655391C25631
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 16:23:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EA763D54A;
-	Mon, 18 Dec 2023 16:14:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AF193D57A;
+	Mon, 18 Dec 2023 16:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HC6kXNwF"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Em0KCyQJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8DBF11185;
-	Mon, 18 Dec 2023 16:14:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ED3BC433C8;
-	Mon, 18 Dec 2023 16:14:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702916078;
-	bh=U75V4OnEmiSj0q9JssKWwC2GELlpClzcWhjLzPlGv/w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HC6kXNwFwWkdZEtA9hMqspYzfyCYilMxu+fzG+dxmaOiVjLzQWwv77tz41+ZpLibq
-	 q7x/SCP9QHfGgeHI+DdBtWg8lMSHw5XBggn280Ia8/TdCFgykhN1+WuxwsRgGDz+76
-	 lonuZUBz9ZeNUROAohoKvbVmOZFLlJuBTNdnytiQo2JoytCbhIk4AP9Es5fwv8JXh5
-	 BsNRdeTzzDln6BwwDgjuCPbnjKLTUd2ILwyzUdvC/q+c8Nc0c5bSdXY+fhZ9c/oSUT
-	 aj4D5+qrE+L6eiYTU38NZu7+vRd0cC07Si5xHaQ9CL0G9jUGvsN0A7WJYzuYB55yUP
-	 tpkYZFLHhCUeA==
-Date: Mon, 18 Dec 2023 21:44:15 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 3/3] ARM: dts: qcom: sdx55: fix USB SS wakeup
-Message-ID: <20231218161415.GC50521@thinkpad>
-References: <20231213173131.29436-1-johan+linaro@kernel.org>
- <20231213173131.29436-4-johan+linaro@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 863B94FF7B
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 16:22:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1702916558;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=RzF2JbZXyIcepSdPLxopsW7MW0ToCu0TxILicJdkReA=;
+	b=Em0KCyQJ/slzGrJ4L+KdRfujPDiVMcHcMNUdat3uhuIqsrlhg7KiV+6s/4qxVVrZ67RHkj
+	eJD3CslIvBDzH+KyNIC8CwNokXiKNLjSLZ5I2tJMGWaICHQOX/ADgHgh5mMfB1+MviesEU
+	82XhLhYgXkZx71Uj3Cv1hWK7xxqAyVE=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-572-7_znvknyNEetioJLR8RHhw-1; Mon, 18 Dec 2023 11:22:36 -0500
+X-MC-Unique: 7_znvknyNEetioJLR8RHhw-1
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-77f46b7ef40so569822985a.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 08:22:36 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702916556; x=1703521356;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RzF2JbZXyIcepSdPLxopsW7MW0ToCu0TxILicJdkReA=;
+        b=WiuTIpUeFJDCef3kzlhmi6mPc5v2zGFSHEH+mbvyglpnwehkC89S+e2ZzW6RczZjdr
+         dAbf0cu0qjXDBJoewzkE9qljjhuddEBuqY0Y+ai5qn56GAik1aMSbscwZamgFB8OxHbG
+         MZRRfssOAdtKcYPf98OSzbPXrN7qFyZmVlpgTZoVqqT4e3LGM9vx4XdIdjlDY+hSS0Be
+         /pg6OTka1HjS72rE7BekM7TMt8FvEFsF/A61OYoCTbiRhA0B7ZU+2yNAS9xXGfT7OM/F
+         4O2jt+necx442NaHQHTuqX2/SshMxzuH99tvGkDsvOk9B1dMERGYhWKeaIevPvyWwco8
+         t9sg==
+X-Gm-Message-State: AOJu0YwJG9C7W27t6c7KKus3/gBTcwg0A1+uwiEbbc/3InfEw9uzlF2m
+	2sflEfFCip85WuKBGm5zMR9rTIno5h1dcifKHSego22BQVHfLoUWiFN777zKpSOdbIZT8u98CRr
+	fUqrp95BThFTH0wnQPwp3l5Ns/Q==
+X-Received: by 2002:a0c:d84d:0:b0:67e:f2a3:65b3 with SMTP id i13-20020a0cd84d000000b0067ef2a365b3mr10243371qvj.43.1702916069122;
+        Mon, 18 Dec 2023 08:14:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE6/x18YmncDwyp50UjFRfP/NiAFTZa/XpjJpoegbGivyb5S1NuE3buhOUOC8ymOCWqVGkP/Q==
+X-Received: by 2002:a0c:d84d:0:b0:67e:f2a3:65b3 with SMTP id i13-20020a0cd84d000000b0067ef2a365b3mr10243358qvj.43.1702916068894;
+        Mon, 18 Dec 2023 08:14:28 -0800 (PST)
+Received: from fedora ([2600:1700:1ff0:d0e0::37])
+        by smtp.gmail.com with ESMTPSA id l10-20020a0ce84a000000b0067f38f0afd1sm1644254qvo.19.2023.12.18.08.14.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Dec 2023 08:14:28 -0800 (PST)
+Date: Mon, 18 Dec 2023 10:14:25 -0600
+From: Andrew Halaney <ahalaney@redhat.com>
+To: Sneh Shah <quic_snehshah@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>, 
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Jose Abreu <joabreu@synopsys.com>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
+	Paolo Abeni <pabeni@redhat.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, kernel@quicinc.com
+Subject: Re: [PATCH net-next] net: stmmac: Fix ethool link settings ops for
+ integrated PCS
+Message-ID: <lcfvxawesjc3r2n66zjd2qu5gan7gvvpefgjqjzqwcxosh3n4l@kcggappvytkm>
+References: <20231218135032.27209-1-quic_snehshah@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20231213173131.29436-4-johan+linaro@kernel.org>
+In-Reply-To: <20231218135032.27209-1-quic_snehshah@quicinc.com>
 
-On Wed, Dec 13, 2023 at 06:31:31PM +0100, Johan Hovold wrote:
-> The USB SS PHY interrupt needs to be provided by the PDC interrupt
-> controller in order to be able to wake the system up from low-power
-> states.
+Hi,
+
+I think the subject should be [PATCH net] since this is a fix.
+
+On Mon, Dec 18, 2023 at 07:20:32PM +0530, Sneh Shah wrote:
+> Currently get/set_link_ksettings ethtool ops are dependent on PCS.
+> When PCS is integrated in MAC, it will not have separate link config.
+> Bypass cofiguring and checking PCS link config for integrated PCS.
+
+s/cofiguring/configuring/
+
+Please add:
+
+    Fixes: ("aa571b6275fb net: stmmac: add new switch to struct plat_stmmacenet_data")
+
+This fixes using the ethtool ops for me so also please feel free to add:
+
+    Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8775p-ride
+
+Thanks for the patch!
+
 > 
-> Fixes: fea4b41022f3 ("ARM: dts: qcom: sdx55: Add USB3 and PHY support")
-> Cc: stable@vger.kernel.org	# 5.12
-> Cc: Manivannan Sadhasivam <mani@kernel.org>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-- Mani
-
+> Signed-off-by: Sneh Shah <quic_snehshah@quicinc.com>
 > ---
->  arch/arm/boot/dts/qcom/qcom-sdx55.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c | 10 ++++++----
+>  1 file changed, 6 insertions(+), 4 deletions(-)
 > 
-> diff --git a/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
-> index 49910279cb71..5b69219170a8 100644
-> --- a/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
-> +++ b/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
-> @@ -586,7 +586,7 @@ usb: usb@a6f8800 {
->  			assigned-clock-rates = <19200000>, <200000000>;
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+> index f628411ae4ae..e3ba4cd47b8d 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+> @@ -311,8 +311,9 @@ static int stmmac_ethtool_get_link_ksettings(struct net_device *dev,
+>  {
+>  	struct stmmac_priv *priv = netdev_priv(dev);
 >  
->  			interrupts-extended = <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
-> -					      <&intc GIC_SPI 198 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&pdc 51 IRQ_TYPE_LEVEL_HIGH>,
->  					      <&pdc 11 IRQ_TYPE_EDGE_BOTH>,
->  					      <&pdc 10 IRQ_TYPE_EDGE_BOTH>;
->  			interrupt-names = "hs_phy_irq", "ss_phy_irq",
+> -	if (priv->hw->pcs & STMMAC_PCS_RGMII ||
+> -	    priv->hw->pcs & STMMAC_PCS_SGMII) {
+> +	if (!(priv->plat->flags & STMMAC_FLAG_HAS_INTEGRATED_PCS) &&
+> +	    (priv->hw->pcs & STMMAC_PCS_RGMII ||
+> +	     priv->hw->pcs & STMMAC_PCS_SGMII)) {
+>  		struct rgmii_adv adv;
+>  		u32 supported, advertising, lp_advertising;
+>  
+> @@ -397,8 +398,9 @@ stmmac_ethtool_set_link_ksettings(struct net_device *dev,
+>  {
+>  	struct stmmac_priv *priv = netdev_priv(dev);
+>  
+> -	if (priv->hw->pcs & STMMAC_PCS_RGMII ||
+> -	    priv->hw->pcs & STMMAC_PCS_SGMII) {
+> +	if (!(priv->plat->flags & STMMAC_FLAG_HAS_INTEGRATED_PCS) &&
+> +	    (priv->hw->pcs & STMMAC_PCS_RGMII ||
+> +	     priv->hw->pcs & STMMAC_PCS_SGMII)) {
+>  		/* Only support ANE */
+>  		if (cmd->base.autoneg != AUTONEG_ENABLE)
+>  			return -EINVAL;
 > -- 
-> 2.41.0
+> 2.17.1
 > 
 
--- 
-மணிவண்ணன் சதாசிவம்
 
