@@ -1,152 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-5238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 836F781721B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 15:06:26 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id EFB1E817370
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 15:21:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7D1AB1C24CFA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 14:06:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 62D72B21376
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 14:21:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54D305A862;
-	Mon, 18 Dec 2023 14:03:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADA8A129EFB;
+	Mon, 18 Dec 2023 14:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WLTs41Ow"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N6qKRwbk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBFB5A857;
-	Mon, 18 Dec 2023 14:03:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BIDNGEI020964;
-	Mon, 18 Dec 2023 14:02:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:date:subject:mime-version:content-type
-	:content-transfer-encoding:message-id:to:cc; s=qcppdkim1; bh=QHF
-	a9KVy94RwhEOf0FG+5uP5Upspb4SPTX/TgXysRzo=; b=WLTs41OwPqA490qAlef
-	m/qLuF2Iesu8y5NAOFfQao0zAlEa9EGGp5GyK/AsUPZn77mM2EoETFPvPBZgry84
-	yDWcO5dDyCwNm8+7NXq43m4mTd8jkUNWF83CYpH1PF9IhDZdFKSAeln+xiAsVoQy
-	AIngIKIAMGcq9+LafsATZKhAf3Ob4nYNwd1fLyPv/kNdH20nbcCFxEbJGWQsxhqx
-	/8/5fZuQF8BURtLEfSGZTCWmoDiq7o3w+AFOTbRXkC07UbkXC05XcL/bIFzWSjlj
-	B+wi10bCG4NGhDgyvRNcOG1xRohWkKzQZCJRj6WwiX6ib6SEcNt/k/+j8ZhvVlfK
-	MQg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v2nxs86kq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Dec 2023 14:02:49 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BIE2mK5025693
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Dec 2023 14:02:48 GMT
-Received: from hu-krichai-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Mon, 18 Dec 2023 06:02:43 -0800
-From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Date: Mon, 18 Dec 2023 19:32:36 +0530
-Subject: [PATCH] arm64: dts: qcom: sc7280: Add additional MSI interrupts
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13637129EC8
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 14:21:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-50e2d00f99cso1858608e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 06:21:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702909262; x=1703514062; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XYPn4ya7qFbk7yQY6PKhNIBQN/8dCYyU7fSVPxboeUI=;
+        b=N6qKRwbkmurB+c3/q/jCZPVjckJ4g7ZNjAsj8JJhZIZ1P77fEqzPk7hhr28EVqRRH8
+         tKk1Vwdn8XXo/FkcYE+5nKchEsdqiArN4DECGyLt9P5kTMAbHDZ0eriB162TKE5nm7WP
+         dxFhgCbrdw62E5HFlHAkZGiXz1oIjlBS6ly4x2Vx1drWUdhczpu/mF7rpttssWTu3Rtu
+         cgD2brdRST9gLYgHhUov3CiacC8HhWWq4WWfKuRYwH5i8N6oAXwK3B9mFK+boanXu2Yu
+         ao80dBjHssqClKefc5rAnM4VhhlNA1GQ+9Iwj0osT3XjsSiVAIkq474Mjnvc1iDhkQRy
+         f/BQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702909262; x=1703514062;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XYPn4ya7qFbk7yQY6PKhNIBQN/8dCYyU7fSVPxboeUI=;
+        b=vh6Kb+k4AmfAnK0pz24q4iLaRXzYxLBp2a381Sv4AkyTybENyc0BBVqmFDgTrIzxjT
+         LhCg9l4vJEPwhEEuNo+M1y5uHPIS449wtz1Hc6mQ8Hf1kYUr/dE3Sj2Q1wLbgt83kb3n
+         gCviBRF48YRI2YJPSPfwg+08K9i6/IagAIj0bVIbTrK5jtddL317tHM/hr50I2yfKdmy
+         /L5NQqCMKfIppWZ/Ed0sbuAM3E/4zLQwIyQHDdePHuOYV00peDALLhs70w0FPB1nqq9u
+         IljP3dWPuoCvCfrBUE3IC+Owneu8cDgD2RgMGqyVdAMzBj6r4cBgNdaLjor2zGQVx7rE
+         57OA==
+X-Gm-Message-State: AOJu0Yz6O6L0vqiH285T68ptgP0iAFVWdz6QCHQF2f18AB/qXx7dgUgX
+	gNuW9XMCCD02TQwq1dFweTHAvA==
+X-Google-Smtp-Source: AGHT+IFtF2Ij+LCFr4dFhD0WTaFZ0SmLLCLrmudrPhSNTXFeEUXTKQlpjj6wvW3CXydHO0QCXe1psw==
+X-Received: by 2002:a05:6512:3d11:b0:50e:3df2:c7c0 with SMTP id d17-20020a0565123d1100b0050e3df2c7c0mr672654lfv.21.1702909261958;
+        Mon, 18 Dec 2023 06:21:01 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a0db:1f00::227? (dzdqv0yyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::227])
+        by smtp.gmail.com with ESMTPSA id dw12-20020a0565122c8c00b0050d0b4fc22esm2889485lfb.185.2023.12.18.06.21.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 Dec 2023 06:21:01 -0800 (PST)
+Message-ID: <8338db1e-0216-4fc5-b6ab-ddf43adf3648@linaro.org>
+Date: Mon, 18 Dec 2023 16:21:00 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20231218-additional_msi-v1-1-de6917392684@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAP1QgGUC/x2MQQqAIBAAvyJ7TtANxPpKRIhutVAWGhGEf086D
- szMC5kSU4ZevJDo5sxHrKAbAX51cSHJoTKgwlajttKFwFeV3DbtmaVRBoO3Gj12UKMz0czPPxz
- GUj5jufydYAAAAA==
-To: <cros-qcom-dts-watchers@chromium.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Prasad Malisetty <pmaliset@codeaurora.org>,
-        "Stephen
- Boyd" <swboyd@chromium.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
-        <quic_ramkri@quicinc.com>, <quic_nitegupt@quicinc.com>,
-        <quic_skananth@quicinc.com>, <quic_parass@quicinc.com>,
-        <stable@vger.kernel.org>,
-        Krishna chaitanya chundru
-	<quic_krichai@quicinc.com>
-X-Mailer: b4 0.13-dev-83828
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1702908163; l=1806;
- i=quic_krichai@quicinc.com; s=20230907; h=from:subject:message-id;
- bh=IHezx7uoKT5LzglxoOVzfJ2zxmnys0wEhJXuVwYPBp8=;
- b=aIDCdpl6OP+PF2Xv4IVJ0RB6vcrG92VT2PVMk8HRKjQl9GTHUsS3p+Z9Uis6e2F6lWl7WxVa1
- 1dbfnGS88f5D0W/UXSJlICPbOG7Cp1VTF0YE6S0G1Feh6Ohfwkd7ED0
-X-Developer-Key: i=quic_krichai@quicinc.com; a=ed25519;
- pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 5l6c_5PCImzHzQLmnUTGHzEdUopiuiNQ
-X-Proofpoint-ORIG-GUID: 5l6c_5PCImzHzQLmnUTGHzEdUopiuiNQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=670
- malwarescore=0 bulkscore=0 phishscore=0 spamscore=0 mlxscore=0
- impostorscore=0 priorityscore=1501 clxscore=1011 suspectscore=0
- adultscore=0 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2311290000 definitions=main-2312180102
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/5] iommu/arm-smmu: add ACTLR data and support for
+ SM8550
+Content-Language: en-GB
+To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Robin Murphy <robin.murphy@arm.com>
+Cc: will@kernel.org, joro@8bytes.org, jsnitsel@redhat.com,
+ quic_bjorande@quicinc.com, mani@kernel.org, quic_eberman@quicinc.com,
+ robdclark@chromium.org, u.kleine-koenig@pengutronix.de, robh@kernel.org,
+ vladimir.oltean@nxp.com, quic_pkondeti@quicinc.com,
+ quic_molvera@quicinc.com, linux-arm-msm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+ linux-kernel@vger.kernel.org, qipl.kernel.upstream@quicinc.com
+References: <20231215101827.30549-1-quic_bibekkum@quicinc.com>
+ <20231215101827.30549-4-quic_bibekkum@quicinc.com>
+ <CAA8EJppcsr1sbeD1fK0nZ+rASABNcetBK3yMvaP7OiA4JPwskw@mail.gmail.com>
+ <c9493c5f-ccf8-4e21-b00c-5fbc2a5f2edb@quicinc.com>
+ <b7f2bbf9-fb5a-430d-aa32-3a220b46c2f0@arm.com>
+ <1eee8bae-59f0-4066-9d04-8c3a5f750d3a@linaro.org>
+ <42d627af-164b-4b50-973e-fa71d86cb84c@linaro.org>
+ <aa8b2ccd-33da-404b-9a93-3d88cf63ec77@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <aa8b2ccd-33da-404b-9a93-3d88cf63ec77@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Current MSI's mapping doesn't have all the vectors. This platform
-supports 8 vectors each vector supports 32 MSI's, so total MSI's
-supported is 256.
+On 18/12/2023 13:23, Bibek Kumar Patro wrote:
+> 
+> 
+> On 12/16/2023 9:45 PM, Dmitry Baryshkov wrote:
+>> On 16/12/2023 02:03, Konrad Dybcio wrote:
+>>> On 15.12.2023 13:54, Robin Murphy wrote:
+>>>> On 2023-12-15 12:20 pm, Bibek Kumar Patro wrote:
+>>>>>
+>>>>>
+>>>>> On 12/15/2023 4:14 PM, Dmitry Baryshkov wrote:
+>>>>>> On Fri, 15 Dec 2023 at 12:19, Bibek Kumar Patro
+>>>>>> <quic_bibekkum@quicinc.com> wrote:
+>>>>>>>
+>>>>>>> Add ACTLR data table for SM8550 along with support for
+>>>>>>> same including SM8550 specific implementation operations.
+>>>>>>>
+>>>>>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+>>>>>>> ---
+>>>>>>>    drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 89 
+>>>>>>> ++++++++++++++++++++++
+>>>>>>>    1 file changed, 89 insertions(+)
+>>>>>>>
+>>>>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c 
+>>>>>>> b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>>>>>> index cb49291f5233..d2006f610243 100644
+>>>>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>>>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>>>>>> @@ -20,6 +20,85 @@ struct actlr_config {
+>>>>>>>           u32 actlr;
+>>>>>>>    };
+>>>>>>>
+>>>>>>> +/*
+>>>>>>> + * SMMU-500 TRM defines BIT(0) as CMTLB (Enable context caching 
+>>>>>>> in the
+>>>>>>> + * macro TLB) and BIT(1) as CPRE (Enable context caching in the 
+>>>>>>> prefetch
+>>>>>>> + * buffer). The remaining bits are implementation defined and 
+>>>>>>> vary across
+>>>>>>> + * SoCs.
+>>>>>>> + */
+>>>>>>> +
+>>>>>>> +#define PREFETCH_DEFAULT       0
+>>>>>>> +#define PREFETCH_SHALLOW       BIT(8)
+>>>>>>> +#define PREFETCH_MODERATE      BIT(9)
+>>>>>>> +#define PREFETCH_DEEP          (BIT(9) | BIT(8))
+>>>>>>
+>>>>>> I thin the following might be more correct:
+>>>>>>
+>>>>>> #include <linux/bitfield.h>
+>>>>>>
+>>>>>> #define PREFETCH_MASK GENMASK(9, 8)
+>>>>>> #define PREFETCH_DEFAULT FIELD_PREP(PREFETCH_MASK, 0)
+>>>>>> #define PREFETCH_SHALLOW FIELD_PREP(PREFETCH_MASK, 1)
+>>>>>> #define PREFETCH_MODERATE FIELD_PREP(PREFETCH_MASK, 2)
+>>>>>> #define PREFETCH_DEEP FIELD_PREP(PREFETCH_MASK, 3)
+>>>>>>
+>>>>>
+>>>>> Ack, thanks for this suggestion. Let me try this out using
+>>>>> GENMASK. Once tested, will take care of this in next version.
+>>>>
+>>>> FWIW the more typical usage would be to just define the named macros 
+>>>> for the raw field values, then put the FIELD_PREP() at the point of 
+>>>> use. However in this case that's liable to get pretty verbose, so 
+>>>> although I'm usually a fan of bitfield.h, the most readable option 
+>>>> here might actually be to stick with simpler definitions of "(0 << 
+>>>> 8)", "(1 << 8)", etc. However it's not really a big deal either way, 
+>>>> and I defer to whatever Dmitry and Konrad prefer, since they're the 
+>>>> ones looking after arm-smmu-qcom the most :)
+>>> My 5 cents would be to just use the "common" style of doing this, so:
+>>>
+>>> #define ACTRL_PREFETCH    GENMASK(9, 8)
+>>>   #define PREFETCH_DEFAULT 0
+>>>   #define PREFETCH_SHALLOW 1
+>>>   #define PREFETCH_MODERATE 2
+>>>   #define PREFETCH_DEEP 3
+>>>
+>>> and then use
+>>>
+>>> | FIELD_PREP(ACTRL_PREFETCH, PREFETCH_x)
+>>>
+>>> it can get verbose, but.. arguably that's good, since you really want
+>>> to make sure the right bits are set here
+>>
+>> Sounds good to me.
+>>
+> 
+> Konrad, Dimitry, just checked FIELD_PREP() implementation
+> 
+> #define FIELD_FIT(_mask, _val)
+> ({                                                              \
+>                   __BF_FIELD_CHECK(_mask, 0ULL, _val, "FIELD_PREP: ");  \
+>                   ((typeof(_mask))(_val) << __bf_shf(_mask)) & (_mask); \
+> })
+> 
+> since it is defined as a block, it won't be possible to use FIELD_PREP
+> in macro or as a structure value, and can only be used inside a 
+> block/function. Orelse would show compilation errors as following
+> 
+> kernel/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c:94:20: note: in 
+> expansion of macro 'PREFETCH_SHALLOW'
+>    { 0x1947, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+>                      ^
+> kernel/include/linux/bitfield.h:113:2: error: braced-group within 
+> expression allowed only inside a function
+>    ({        \
+>    ^
+> 
+> So as per my understanding I think, we might need to go ahead with the
+> generic implementation only. Let me know if I missed something.
 
-Add all the MSI groups supported for this PCIe instance in this platform.
+Then anyway (foo << bar) is better compared to BIT(n) | BIT(m).
 
-Fixes: 92e0ee9f83b3 ("arm64: dts: qcom: sc7280: Add PCIe and PHY related nodes")
-cc: stable@vger.kernel.org
-Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 66f1eb83cca7..e1dc41705f61 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2146,8 +2146,16 @@ pcie1: pci@1c08000 {
- 			ranges = <0x01000000 0x0 0x00000000 0x0 0x40200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x1fd00000>;
- 
--			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "msi";
-+			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 308 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 309 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 312 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 313 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 314 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 374 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 375 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "msi0", "msi1", "msi2", "msi3",
-+					  "msi4", "msi5", "msi6", "msi7";
- 			#interrupt-cells = <1>;
- 			interrupt-map-mask = <0 0 0 0x7>;
- 			interrupt-map = <0 0 0 1 &intc 0 0 0 434 IRQ_TYPE_LEVEL_HIGH>,
-
----
-base-commit: 5bd7ef53ffe5ca580e93e74eb8c81ed191ddc4bd
-change-id: 20231218-additional_msi-6062dc812c29
-
-Best regards,
 -- 
-Krishna chaitanya chundru <quic_krichai@quicinc.com>
+With best wishes
+Dmitry
 
 
