@@ -1,65 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-5161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A413D816B00
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 11:26:32 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92C99816B03
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 11:26:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D67B11C22662
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 10:26:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 20BE51F2138B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 10:26:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D76B14ABD;
-	Mon, 18 Dec 2023 10:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EDCD14298;
+	Mon, 18 Dec 2023 10:26:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="or79mqv0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iDdPmvPp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2115714282
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 10:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169DA14AA7
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 10:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3363aa1b7d2so2570685f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 02:26:28 -0800 (PST)
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3363aa2bbfbso2717158f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 02:26:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702895187; x=1703499987; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=bfGdeEVtAP039z0DAM0GYB1EstdhuI6lhd+nU30URD0=;
-        b=or79mqv0DmfSPsZl0+1pURdyfvgaCcvmJyubu+sYJZyfJiQzK2lCmEMLVAGh8Ykflh
-         m279BP2fFAUH+VLuL5cC07MZoUVmkmIkXwxztQAo9W5WbifVH2NF5Y4Deb+OkdepFcFm
-         G3Pgl2IipX2UNZzldvj/Dd4csPCz3VVqltZDJhYpbQpi4z95fxE9IQPMXQRUvh5p07d5
-         EgtgUKNp6ohYQM3hCHn0dkr2FZYBQhqvwyeYaF+tgbKTUKXhfpDgAyiYIkzy/yvQMrA4
-         X0j1RKLJ5DyqH0B1QfA27I3TaMAjmtnCKUBxBvI3H2UTC1IYFqZoaxB/q5/mwd5zGhn1
-         6I/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702895187; x=1703499987;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1702895188; x=1703499988; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=bfGdeEVtAP039z0DAM0GYB1EstdhuI6lhd+nU30URD0=;
-        b=Wp1VqGJZpehdsH3GaCnRwnK1+Wo8ir2YyMhvJ5lDlopdrShe4TaaoQH9IoGqsvdudH
-         NaFtBxDgi/TfWCfCqYE1s9FIYD+INKFaJmNH8m1rd/fIXYWjajYZ2KdAAzseNFjI/WW0
-         SMHo52OByDW4n0GTKiP9t7XkK/WRGpceoJhBDSA6hwREW6Z4mlZBb9NZ5SVaRrY30Zpw
-         mCo72WaT3ealrn+qGYuTlrP03VE/cru49SNhb36haeK/IxpqXy9uq5+aLdqAh2Fr4TA9
-         EIMWb2Rtx3R7mVyZCDBbP9dZW/MoN1ON+bG1LE7RxjjebVizIV7MQkxzABC0x/zdexuH
-         Fn9A==
-X-Gm-Message-State: AOJu0YyaU+sfDv19OASE7xwMWkmZRidPmrFgWJhFC+JosoCQG3YxIvRY
-	HWHmOpqo8Da8KBA5Gc76lufZiw==
-X-Google-Smtp-Source: AGHT+IH7gTI3sQVTip3YEHMYyOyuTBxGVnDnL5oom7hwIOvttarBXpmokCWLuyMer7EXlHTmngDC2Q==
-X-Received: by 2002:a5d:5264:0:b0:333:2fd2:3bc4 with SMTP id l4-20020a5d5264000000b003332fd23bc4mr5414962wrc.125.1702895187323;
-        Mon, 18 Dec 2023 02:26:27 -0800 (PST)
+        bh=0JpYFAZaGSOCR2iZrKzQUAvOF9SV0JKgD6OLjGIZmUg=;
+        b=iDdPmvPpSPsbQw04B1k7JZRtKI8HJDKLeK9U89RUwWrK7UhURGqzuXNsUDmc7eLjY/
+         qt1XTccprcyw8sve8QDSSdDRO5KnqPHLr/1ZXwzlJzr1s1Vo3g3KsATxSSUdx0er7cqg
+         7sKXNs9HZu1t46XEeiEyFzzG+Zy+o4VpIH4h4zx9G5A7h/1H5Ze7561eDUGwTNPadNdu
+         z3SwYn/fWS26ybhSy15VFewbZK2yQ2bhBYWD/654efPqmbr2VCOgZ2+egvu6bRlRdE6M
+         RZHTfeR/ErqsDPqjs6JaB9s/VOKFgowc7e3+kHtDEiLNZHjmn8weSHgmf3TCOlteZVK7
+         +LKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702895188; x=1703499988;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0JpYFAZaGSOCR2iZrKzQUAvOF9SV0JKgD6OLjGIZmUg=;
+        b=xHNjAeMX/KtURcgBPMim0qhrN+Nxu6WWJ/N7TCuhmmiYgxzPwynKttDaS/fTg+Syp4
+         fqDUlMY+YtZP+Jdwhwdpxsr9O5KAxMzJGy3dlvJkMzjDv0VHoLKjZx/vvMnTmPPWw/M8
+         LrFiDgKAheQ61EzMJ0wIuAceblU91N1qZtrPepuK/Wrl1DHZQi/mnHITMO71QU5xQ1pw
+         twUlU1ZC1VeRfw7qDb499WHzWJ6Qk3lhRlZ45N15j+5LrrkreFthQZ4Q1EUlrI3wQkIP
+         /N5UFQdZxY9lKZJVuMCiJG+apcMh+c+8kTF9gPi+4W2YTy3++720c19Va6+n7rIETm3S
+         wjGw==
+X-Gm-Message-State: AOJu0YwwOCQuACW8CBOwvkvBjp1Y7Vt4OqOtDpnqwk5jlpZbgT7pp+NH
+	0Uq44QHdDTylgy3R7co59IbdCg==
+X-Google-Smtp-Source: AGHT+IGxxaBKTgAX4il7WwlGMHxTiaoQVgnts1FpPJMa0rCTgjfqkrV/7FuY30AFyCnZqDnMtAoPlA==
+X-Received: by 2002:adf:d1ce:0:b0:336:3dcd:186b with SMTP id b14-20020adfd1ce000000b003363dcd186bmr5561702wrd.63.1702895188323;
+        Mon, 18 Dec 2023 02:26:28 -0800 (PST)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id o9-20020a5d62c9000000b003364aa5cc13sm11365333wrv.1.2023.12.18.02.26.26
+        by smtp.gmail.com with ESMTPSA id o9-20020a5d62c9000000b003364aa5cc13sm11365333wrv.1.2023.12.18.02.26.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Dec 2023 02:26:26 -0800 (PST)
+        Mon, 18 Dec 2023 02:26:27 -0800 (PST)
 From: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 0/2] arm64: qcom: sm8650: add support for USB-C Altmode
-Date: Mon, 18 Dec 2023 11:26:23 +0100
-Message-Id: <20231218-topic-sm8650-upstream-altmode-v1-0-7900660693cf@linaro.org>
+Date: Mon, 18 Dec 2023 11:26:24 +0100
+Subject: [PATCH 1/2] arm64: dts: qcom: sm8650-qrd: add USB-C Altmode
+ Support
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,9 +69,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAE8egGUC/x3MwQqDMAwA0F+RnBcw1YnsV8YOpU1dwNrSVBHEf
- 1/Z8V3eBcpFWOHVXVD4EJW0NdCjA/e128IovhlMbwYyNGNNWRxqnKdnj3vWWthGtGuNyTMOzDR
- S8M6FAO3IhYOc///9ue8fq3SJvW8AAAA=
+Message-Id: <20231218-topic-sm8650-upstream-altmode-v1-1-7900660693cf@linaro.org>
+References: <20231218-topic-sm8650-upstream-altmode-v1-0-7900660693cf@linaro.org>
+In-Reply-To: <20231218-topic-sm8650-upstream-altmode-v1-0-7900660693cf@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
@@ -80,42 +81,194 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
  Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=781;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3404;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=Sx1JlgYzlpqCvtOmR9gBzgN6SutXNYs6O5wotkCENgs=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlgB5RlV4PyBkoraDzOeocIlIUn6+YTLgJwgl9aYOl
- l5bIyziJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZYAeUQAKCRB33NvayMhJ0e/QD/
- oCutKa/EAdw7aTS4OPR+sn2lJuf0HO7YJhYShx0tLKRTD/DhiMape+ug+q1HVM65Hq/O238TYgEooJ
- Sp/OXGzquanrJJ5VoXXHc2Ge/ZI57Brg8ghkLU0rrRrBHrNAw/pbFKteXCBbGmW9OkZVWq4OTJBpbQ
- UpV79ZOD2YGa+ylfaZu/a4uuEuOLnXBgpRzY5JkAeOMGCJRkWbWG9VTWYoSnyGGqiF7E5qEB5v/EFO
- zX0+m3EXmN485kCPrlUEYZfE638XzN04qEvn/hajiO3bBA3JLBX6jzT86VkUK3S4fjxvvOqsyCfyEy
- ARLmRA64Nc8HoupyK3mlD/2Z3Yo2jNIcYutaw1/g4LW81ZBmNE6T/1FRH1utDz1VxCzrTl8ut2qaky
- 2I9mhuZw1ndTQOy4qSBpGAQ5gFyiYyj1F6cHeMxWw0WatNmCnAK3VDAAU9u/yv1XdBZUpiEbMAol+k
- km+7G8LY/EMhc6u1H4v5CKyCZn4mzp5itkiU8sgEdKgq0NgCzNViN6XmpPgSnoRXFvRWDt97x4pF8Y
- WR6yD+JzEPLVgK+fF4pwMp194DMIFYPsgjxe5w/d3zxjwqBOogQJ8/EBOGqQRtdH3wfm/gLhgN/aFY
- IjJDqPorbqtyfQfUOA8gHCW0xc33APuWNk6GjqLr7vQ8y1L4BSw12EfWhMtQ==
+ bh=nDXHDjdOUbZo6NMCY4ZIRIUoi9CPQ+tjxaeoWgPW94E=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlgB5R3BMMALruVDHpz+DlfjI7+aKYNWPrdMVKk0Ov
+ K91Jq2eJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZYAeUQAKCRB33NvayMhJ0dAAD/
+ 44kh86BJr7RRRsbignuODXOZEQc7PaPk9ZW018RoPHz6esmxH+a/dIRq9DPBr9F2xOIjq/NL/DkjRx
+ GdDvjUvAa/xmV+90FsUHXO8wLacsT/3EuX7H4bUX7Sgbgj2JwQg/+3xsQWnG8qFKvOhVeMV4JmB/4u
+ YJGnSsxeK8c+JL/AASLRKexUtkZKQdwm3v1DumIFnx3nBmndm2Oj36V65CmhPPj+hND/IfXxlZ8zKT
+ PAPJfAHBLwJQe+CQ58R4KM1S2Lw4KZhv1abLty+0VbK8nDQv/lTto1SnT7nhEcN4z9omVDaO/wzcH1
+ t9JRM9ODUvuCPSkRf0ydwSUAH9/nty7Xqs3EknyyEO2wnMF/ilYxCUNw4dFaEOPq2yTTryTss7zsi5
+ d1o/fMHzZDe0+1X0cMUz4zao06Dmma7y7t7ic86K/F5dUrczOyf1O6Cv21Mp4z+zjNLpDIVwxvuo8y
+ wtngj23nuheeL2dXd/bDqUqDl8uXXS2QQ7dXkcrF7XAx8Q7HNxDKcKqlw6q5uMEovU3RlnSoezZvrB
+ IwUjEwzSOCQjkmLeHdDxvwB8aD7e8o+8o72Arg9TMb+Vht9mse9r2CK2dTLtCivdf24wJC6lTPEoY5
+ qr6ud9+N7oUx12EXwUNRMRiXc98Zt0wcYCcDFYuLgxvt1Dq+lZgUUOW1d/PA==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-This adds the missing bits to support Display Port external
-display over the USB-C Altmode support using the Redriver/Retimer
-and WCD939x USBSS Mux/Switch to provide the correct switching.
+Add the necessary nodes to support the USB-C Altmode path by
+adding the following
+- WCD939x USBSS Mux I2C device
+- nb7vpq904m Redriver I2C device
+- Port/Endpoint graph links bettween PMIC-Glink, Mux, Redriver and USB PHY nodes.
+
+WCD939x USBSS port 2 Path to Codec will be added later when Audio support
+is added.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
-Neil Armstrong (2):
-      arm64: dts: qcom: sm8650-qrd: add USB-C Altmode Support
-      arm64: defconfig: enable WCD939x USBSS driver as module
-
  arch/arm64/boot/dts/qcom/sm8650-qrd.dts | 104 +++++++++++++++++++++++++++++++-
- arch/arm64/configs/defconfig            |   1 +
- 2 files changed, 103 insertions(+), 2 deletions(-)
----
-base-commit: ceb2fe0d438644e1de06b9a6468a1fb8e2199c70
-change-id: 20231218-topic-sm8650-upstream-altmode-3ee141fdccff
+ 1 file changed, 102 insertions(+), 2 deletions(-)
 
-Best regards,
+diff --git a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
+index 592a67a47c78..121fbbb5d015 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
++++ b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
+@@ -77,9 +77,17 @@ port@1 {
+ 					reg = <1>;
+ 
+ 					pmic_glink_ss_in: endpoint {
+-						remote-endpoint = <&usb_1_dwc3_ss>;
++						remote-endpoint = <&redriver_ss_out>;
+ 					};
+ 				};
++
++				port@2 {
++					reg = <2>;
++
++					pmic_glink_sbu: endpoint {
++						remote-endpoint = <&wcd_usbss_sbu_mux>;
++				    };
++				};
+ 			};
+ 		};
+ 	};
+@@ -446,6 +454,70 @@ &gpi_dma1 {
+ 	status = "okay";
+ };
+ 
++&i2c3 {
++       status = "ok";
++
++       wcd_usbss: typec-mux@e {
++		compatible = "qcom,wcd9395-usbss", "qcom,wcd9390-usbss";
++		reg = <0xe>;
++
++		vdd-supply = <&vreg_l15b_1p8>;
++		reset-gpios = <&tlmm 152 GPIO_ACTIVE_HIGH>;
++
++		mode-switch;
++		orientation-switch;
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++
++				wcd_usbss_sbu_mux: endpoint {
++					remote-endpoint = <&pmic_glink_sbu>;
++				};
++			};
++		};
++       };
++};
++
++&i2c6 {
++	status = "ok";
++
++	typec-mux@1c {
++		compatible = "onnn,nb7vpq904m";
++		reg = <0x1c>;
++
++		vcc-supply = <&vreg_l15b_1p8>;
++
++		retimer-switch;
++		orientation-switch;
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++
++				redriver_ss_out: endpoint {
++					remote-endpoint = <&pmic_glink_ss_in>;
++				};
++			};
++
++			port@1 {
++				reg = <1>;
++
++				redriver_ss_in: endpoint {
++					data-lanes = <3 2 1 0>;
++					remote-endpoint = <&usb_dp_qmpphy_out>;
++				};
++			};
++		};
++	};
++};
++
+ &ipa {
+ 	qcom,gsi-loader = "self";
+ 	memory-region = <&ipa_fw_mem>;
+@@ -495,6 +567,15 @@ &mdss_dsi0_phy {
+ 	status = "okay";
+ };
+ 
++&mdss_dp0 {
++	status = "okay";
++};
++
++&mdss_dp0_out {
++	data-lanes = <0 1>;
++	remote-endpoint = <&usb_dp_qmpphy_dp_in>;
++};
++
+ &mdss_mdp {
+ 	status = "okay";
+ };
+@@ -600,6 +681,11 @@ &pmk8550_rtc {
+ 	status = "okay";
+ };
+ 
++&qup_i2c3_data_clk {
++	/* Use internal I2C pull-up */
++	bias-pull-up = <2200>;
++};
++
+ &qupv3_id_0 {
+ 	status = "okay";
+ };
+@@ -787,7 +873,7 @@ &usb_1_dwc3_hs {
+ };
+ 
+ &usb_1_dwc3_ss {
+-	remote-endpoint = <&pmic_glink_ss_in>;
++	remote-endpoint = <&usb_dp_qmpphy_usb_ss_in>;
+ };
+ 
+ &usb_1_hsphy {
+@@ -803,9 +889,23 @@ &usb_dp_qmpphy {
+ 	vdda-phy-supply = <&vreg_l3i_1p2>;
+ 	vdda-pll-supply = <&vreg_l3g_0p91>;
+ 
++	orientation-switch;
++
+ 	status = "okay";
+ };
+ 
++&usb_dp_qmpphy_dp_in {
++	remote-endpoint = <&mdss_dp0_out>;
++};
++
++&usb_dp_qmpphy_out {
++	remote-endpoint = <&redriver_ss_in>;
++};
++
++&usb_dp_qmpphy_usb_ss_in {
++	remote-endpoint = <&usb_1_dwc3_ss>;
++};
++
+ &xo_board {
+ 	clock-frequency = <76800000>;
+ };
+
 -- 
-Neil Armstrong <neil.armstrong@linaro.org>
+2.34.1
 
 
