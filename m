@@ -1,43 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-5246-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5247-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3135281748C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 16:00:52 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CEC28174C9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 16:07:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D567C28565F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 15:00:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EA59AB22212
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 15:07:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 262D837899;
-	Mon, 18 Dec 2023 15:00:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9533122088;
+	Mon, 18 Dec 2023 15:07:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gd5wLgBY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A6937874;
-	Mon, 18 Dec 2023 15:00:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
-Received: from amadeus-Vostro-3710.lan (unknown [113.118.189.58])
-	by mail-m121145.qiye.163.com (Hmail) with ESMTPA id 68C108001A7;
-	Mon, 18 Dec 2023 23:00:12 +0800 (CST)
-From: Chukun Pan <amadeus@jmu.edu.cn>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Andy Gross <agross@kernel.org>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88EC1D15F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 15:07:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a234938c7f3so172387466b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 07:07:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702912024; x=1703516824; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dkc4Ff/LayCiLAJgh7FDZFX9VLQFTvw2kDwbU3Y6F7M=;
+        b=gd5wLgBYb9c19Iw20yckWFPibgBYs7xyMKdgGFmF9+UZG8fSl12CQbnxHGJliyO2/R
+         7cZ3eyIcXHug2Wg5IfOHvulTi0NDgPN4qo1almRW+/HvYypm3Wl3HlHb8dlYlWCkY1wp
+         c2kK6OT09i6XSczNcxjQgQrE2ed5hu1och5XitsPKqjqZUJ80AKqEfz7yLPemUSIO/5F
+         gzU7FT17K0nICWClk+XLvkvLc+KCnNBe3nbjHDgC4E1iVNhS6v2cNJZTsmA6lAzb/+75
+         Ob6JNIPWFFlH5ddCUCEv6gAqJIAI11Izs7jLEBW0e4Lp3hMdtZgp/LylN97gjZYMnG3K
+         jj5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702912024; x=1703516824;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dkc4Ff/LayCiLAJgh7FDZFX9VLQFTvw2kDwbU3Y6F7M=;
+        b=eRFy5DrZzETVVbm+dPFblvW0z9ATGSHThHY0Q52dykdk1Y0xEeuoh32/vu1nm6J8tA
+         boUwZ8Op64O5SkqNGYAbXVMMX5Tq3L3pE7IXFaDZCqvRkiYzILSIkOSmEW7cW1DtsWVL
+         u7RwIHlo0lf9W4M2IgeuXtSImXQE6QKi/yCR2Cy3v0prq0nrE/CG0IoU7OsHSssKvM/I
+         JnWVrF5wRci6zuCHZ59XsKdaOLO8GORzb4VudSvsgDlW9glAWscNqfdHkJpc6HR0Y/SH
+         5mB1piNAnpYXIu44ZR2OBsnE5WPPspEn1p+EDfmkF6ih/XBGp3gcRcQAFJrvDj+mw1UZ
+         M5PQ==
+X-Gm-Message-State: AOJu0YzsWJAWgDa0QmLUpFkqkce/eSjYpWM3UDwaFmatCHPW8VRT8To1
+	1T054oqcwkB+hBxSsDX41HDq2w==
+X-Google-Smtp-Source: AGHT+IFP4l7LAGqipYCXtHUHpcRDPDviV+eIXhBVGBVoasjFy0JStfokYP9kTh/dNx+AnYH6aYNqgw==
+X-Received: by 2002:a17:906:fa1b:b0:a23:6248:e987 with SMTP id lo27-20020a170906fa1b00b00a236248e987mr595559ejb.42.1702912024252;
+        Mon, 18 Dec 2023 07:07:04 -0800 (PST)
+Received: from krzk-bin.. ([178.197.218.27])
+        by smtp.gmail.com with ESMTPSA id u25-20020a17090617d900b00a2328f844d2sm2823925eje.85.2023.12.18.07.07.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Dec 2023 07:07:03 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Rob Herring <robh+dt@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	devicetree@vger.kernel.org,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Chukun Pan <amadeus@jmu.edu.cn>
-Subject: [PATCH v2 1/1] arm64: dts: qcom: ipq8074: add MicroSD node
-Date: Mon, 18 Dec 2023 23:00:09 +0800
-Message-Id: <20231218150009.1227848-1-amadeus@jmu.edu.cn>
-X-Mailer: git-send-email 2.25.1
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: x1e80100: align mem timer size cells with bindings
+Date: Mon, 18 Dec 2023 16:06:56 +0100
+Message-Id: <20231218150656.72892-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -45,58 +80,97 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkaGB0dVk1JGBhJHR1PGhpPQ1UTARMWGhIXJBQOD1
-	lXWRgSC1lBWUpKSFVKSkNVSkNCVU5DWVdZFhoPEhUdFFlBWUtVS1VLVUtZBg++
-X-HM-Tid: 0a8c7d711708b03akuuu68c108001a7
-X-HM-MType: 10
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6ME06Mzo*ATw6QihLAj4LLx81
-	FDIaFClVSlVKTEtJQkpKTUpITklNVTMWGhIXVRoWGh8eDgg7ERYOVR4fDlUYFUVZV1kSC1lBWUpK
-	SFVKSkNVSkNCVU5DWVdZCAFZQUlOTkk3Bg++
 
-Enable MicroSD card found on ipq8074 devices.
-Tested fine when SD card IO voltage is 3.3v.
+The ARMv7 memory mapped architected timer bindings expect MMIO sizes up
+to 32-bit.  Keep 64-bit addressing but change the size of memory mapping
+to 32-bit (size-cells=1) and adjust the ranges to match this.
 
-Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+This fixes dtbs_check warnings like:
+
+  x1e80100-qcp.dtb: timer@17800000: #size-cells:0:0: 1 was expected
+
+Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
-Changes in v2:
-* add dedicated qcom,ipq8074-sdhci compatible
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index a4f7ae35be27..4f23c4459112 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -422,6 +422,26 @@ sdhc_1: mmc@7824900 {
- 			status = "disabled";
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index fd09fbc7d8e7..be1285d9919e 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -3417,12 +3417,12 @@ timer@17800000 {
+ 			reg = <0 0x17800000 0 0x1000>;
  
-+		sdhc_2: mmc@7864900 {
-+			compatible = "qcom,ipq8074-sdhci", "qcom,sdhci-msm-v4";
-+			reg = <0x7864900 0x500>, <0x7864000 0x800>;
-+			reg-names = "hc", "core";
-+
-+			interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 221 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hc_irq", "pwr_irq";
-+
-+			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
-+				 <&gcc GCC_SDCC2_APPS_CLK>,
-+				 <&xo>;
-+			clock-names = "iface", "core", "xo";
-+			resets = <&gcc GCC_SDCC2_BCR>;
-+			max-frequency = <192000000>;
-+			bus-width = <4>;
-+
-+			status = "disabled";
-+		};
-+
- 		blsp_dma: dma-controller@7884000 {
- 			compatible = "qcom,bam-v1.7.0";
- 			reg = <0x07884000 0x2b000>;
+ 			#address-cells = <2>;
+-			#size-cells = <2>;
+-			ranges;
++			#size-cells = <1>;
++			ranges = <0 0 0 0 0x20000000>;
+ 
+ 			frame@17801000 {
+-				reg = <0 0x17801000 0 0x1000>,
+-				      <0 0x17802000 0 0x1000>;
++				reg = <0 0x17801000 0x1000>,
++				      <0 0x17802000 0x1000>;
+ 
+ 				interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
+ 					     <GIC_SPI 6 IRQ_TYPE_LEVEL_HIGH>;
+@@ -3431,7 +3431,7 @@ frame@17801000 {
+ 			};
+ 
+ 			frame@17803000 {
+-				reg = <0 0x17803000 0 0x1000>;
++				reg = <0 0x17803000 0x1000>;
+ 
+ 				interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
+ 
+@@ -3441,7 +3441,7 @@ frame@17803000 {
+ 			};
+ 
+ 			frame@17805000 {
+-				reg = <0 0x17805000 0 0x1000>;
++				reg = <0 0x17805000 0x1000>;
+ 
+ 				interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
+ 
+@@ -3451,7 +3451,7 @@ frame@17805000 {
+ 			};
+ 
+ 			frame@17807000 {
+-				reg = <0 0x17807000 0 0x1000>;
++				reg = <0 0x17807000 0x1000>;
+ 
+ 				interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
+ 
+@@ -3461,7 +3461,7 @@ frame@17807000 {
+ 			};
+ 
+ 			frame@17809000 {
+-				reg = <0 0x17809000 0 0x1000>;
++				reg = <0 0x17809000 0x1000>;
+ 
+ 				interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
+ 
+@@ -3471,7 +3471,7 @@ frame@17809000 {
+ 			};
+ 
+ 			frame@1780b000 {
+-				reg = <0 0x1780b000 0 0x1000>;
++				reg = <0 0x1780b000 0x1000>;
+ 
+ 				interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
+ 
+@@ -3481,7 +3481,7 @@ frame@1780b000 {
+ 			};
+ 
+ 			frame@1780d000 {
+-				reg = <0 0x1780d000 0 0x1000>;
++				reg = <0 0x1780d000 0x1000>;
+ 
+ 				interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
+ 
 -- 
-2.25.1
+2.34.1
 
 
