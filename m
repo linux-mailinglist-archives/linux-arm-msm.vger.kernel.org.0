@@ -1,31 +1,31 @@
-Return-Path: <linux-arm-msm+bounces-5171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53641816B77
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 11:47:09 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92C5B816B7E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 11:47:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BE3D4B22685
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 10:47:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 488661F22490
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 10:47:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 577F0168DD;
-	Mon, 18 Dec 2023 10:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43C4F17999;
+	Mon, 18 Dec 2023 10:47:29 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4889D179B4;
-	Mon, 18 Dec 2023 10:46:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14ACE1945D;
+	Mon, 18 Dec 2023 10:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EC06E1FB;
-	Mon, 18 Dec 2023 02:47:06 -0800 (PST)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 000531FB;
+	Mon, 18 Dec 2023 02:48:10 -0800 (PST)
 Received: from [10.57.46.32] (unknown [10.57.46.32])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 00FD13F738;
-	Mon, 18 Dec 2023 02:46:19 -0800 (PST)
-Message-ID: <ebd7e310-d1b4-4b2e-a915-6241e04763d4@arm.com>
-Date: Mon, 18 Dec 2023 10:46:18 +0000
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D4F623F738;
+	Mon, 18 Dec 2023 02:47:23 -0800 (PST)
+Message-ID: <1d57590d-2ecf-4bf6-9c8f-2a9d1ba08aaa@arm.com>
+Date: Mon, 18 Dec 2023 10:47:23 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -33,10 +33,11 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/8] coresight-tpdm: Add timestamp control register
- support for the CMB
+Subject: Re: [PATCH v3 7/8] dt-bindings: arm: Add support for TPDM CMB MSR
+ register
 Content-Language: en-GB
-To: Tao Zhang <quic_taozha@quicinc.com>,
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Tao Zhang <quic_taozha@quicinc.com>,
  Mathieu Poirier <mathieu.poirier@linaro.org>,
  Alexander Shishkin <alexander.shishkin@linux.intel.com>,
  Konrad Dybcio <konradybcio@gmail.com>, Mike Leach <mike.leach@linaro.org>,
@@ -50,307 +51,39 @@ Cc: Jinlong Mao <quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
  Trilok Soni <quic_tsoni@quicinc.com>, Song Chai <quic_songchai@quicinc.com>,
  linux-arm-msm@vger.kernel.org, andersson@kernel.org
 References: <1700533494-19276-1-git-send-email-quic_taozha@quicinc.com>
- <1700533494-19276-7-git-send-email-quic_taozha@quicinc.com>
+ <1700533494-19276-8-git-send-email-quic_taozha@quicinc.com>
+ <e5fbbfab-02bf-4eda-8353-87c54c307af1@linaro.org>
 From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <1700533494-19276-7-git-send-email-quic_taozha@quicinc.com>
+In-Reply-To: <e5fbbfab-02bf-4eda-8353-87c54c307af1@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 21/11/2023 02:24, Tao Zhang wrote:
-> CMB_TIER register is CMB subunit timestamp insertion enable register.
-> Bit 0 is PATT_TSENAB bit. Set this bit to 1 to request a timestamp
-> following a CMB interface pattern match. Bit 1 is XTRIG_TSENAB bit.
-> Set this bit to 1 to request a timestamp following a CMB CTI timestamp
-> request. Bit 2 is TS_ALL bit. Set this bit to 1 to request timestamp
-> for all packets.
+Tao Zhang,
+
+On 21/11/2023 07:24, Krzysztof Kozlowski wrote:
+> On 21/11/2023 03:24, Tao Zhang wrote:
+>> Add property "qcom,cmb_msr_num" to support CMB MSR(mux select register)
+>> for TPDM. It specifies the number of CMB MSR registers supported by
+>> the TDPM.
+>>
+>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+>> ---
 > 
-> Reviewed-by: James Clark <james.clark@arm.com>
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> Signed-off-by: Jinlong Mao <quic_jinlmao@quicinc.com>
-> ---
->   .../testing/sysfs-bus-coresight-devices-tpdm  |  35 ++++++
->   drivers/hwtracing/coresight/coresight-tpdm.c  | 116 +++++++++++++++++-
->   drivers/hwtracing/coresight/coresight-tpdm.h  |  14 +++
->   3 files changed, 162 insertions(+), 3 deletions(-)
+> I prefer not to take any new Qualcomm Coresight bindings or Qualcomm SoC
+> DTS nodes with Coresight till we fix all existing warnings. I don't know
+> how to fix them, so I need help with them. No such fixing happened so
+> far from Qcom, so pushback is my only way to get any attention.
 > 
-> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> index 53662ce7c2d0..e0b77107be13 100644
-> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> @@ -214,3 +214,38 @@ KernelVersion	6.7
->   Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
->   Description:
->   		(RW) Set/Get the mask of the pattern for the CMB subunit TPDM.
-> +
-> +What:		/sys/bus/coresight/devices/<tpdm-name>/cmb_patt/enable_ts
-> +Date:		September 2023
-> +KernelVersion	6.7
-> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-> +Description:
-> +		(Write) Set the pattern timestamp of CMB tpdm. Read
-> +		the pattern timestamp of CMB tpdm.
-> +
-> +		Accepts only one of the 2 values -  0 or 1.
-> +		0 : Disable CMB pattern timestamp.
-> +		1 : Enable CMB pattern timestamp.
-> +
-> +What:		/sys/bus/coresight/devices/<tpdm-name>/cmb_trig_ts
-> +Date:		September 2023
-> +KernelVersion	6.7
-> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-> +Description:
-> +		(RW) Set/Get the trigger timestamp of the CMB for tpdm.
-> +
-> +		Accepts only one of the 2 values -  0 or 1.
-> +		0 : Set the CMB trigger type to false
-> +		1 : Set the CMB trigger type to true
-> +
-> +What:		/sys/bus/coresight/devices/<tpdm-name>/cmb_ts_all
-> +Date:		September 2023
-> +KernelVersion	6.7
-> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-> +Description:
-> +		(RW) Read or write the status of timestamp upon all interface.
-> +		Only value 0 and 1  can be written to this node. Set this node to 1 to requeset
-> +		timestamp to all trace packet.
-> +		Accepts only one of the 2 values -  0 or 1.
-> +		0 : Disable the timestamp of all trace packets.
-> +		1 : Enable the timestamp of all trace packets.
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-> index 894d4309f1c7..f6cda5616e84 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-> @@ -331,6 +331,36 @@ static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
->   	writel_relaxed(val, drvdata->base + TPDM_DSB_CR);
->   }
->   
-> +static void set_cmb_tier(struct tpdm_drvdata *drvdata)
-> +{
-> +	u32 val;
-> +
-> +	val = readl_relaxed(drvdata->base + TPDM_CMB_TIER);
-> +
-> +	/* Clear all relevant fields */
-> +	val &= ~(TPDM_CMB_TIER_PATT_TSENAB | TPDM_CMB_TIER_TS_ALL |
-> +		 TPDM_CMB_TIER_XTRIG_TSENAB);
-> +
-> +	/* Set pattern timestamp type and enablement */
-> +	if (drvdata->cmb->patt_ts)
-> +		val |= TPDM_CMB_TIER_PATT_TSENAB;
+> I already commented on this in other email thread.
 
-  -- cut --
-> +	else
-> +		val &= ~TPDM_CMB_TIER_PATT_TSENAB;
-
-
-All the else cases in this function are superfluous. Please remove all
-of them.
-
-> +
-> +	/* Set trigger timestamp */
-> +	if (drvdata->cmb->trig_ts)
-> +		val |= TPDM_CMB_TIER_XTRIG_TSENAB;
-> +	else
-> +		val &= ~TPDM_CMB_TIER_XTRIG_TSENAB;
-> +
-> +	/* Set all timestamp enablement*/
-> +	if (drvdata->cmb->ts_all)
-> +		val |= TPDM_CMB_TIER_TS_ALL;
-> +	else
-> +		val &= ~TPDM_CMB_TIER_TS_ALL;
-> +	writel_relaxed(val, drvdata->base + TPDM_CMB_TIER);
-> +}
-> +
->   static void tpdm_enable_cmb(struct tpdm_drvdata *drvdata)
->   {
->   	u32 val, i;
-> @@ -347,6 +377,8 @@ static void tpdm_enable_cmb(struct tpdm_drvdata *drvdata)
->   			    drvdata->base + TPDM_CMB_XPMR(i));
->   	}
->   
-> +	set_cmb_tier(drvdata);
-> +
->   	val = readl_relaxed(drvdata->base + TPDM_CMB_CR);
->   	/*
->   	 * Set to 0 for continuous CMB collection mode,
-> @@ -695,9 +727,17 @@ static ssize_t enable_ts_show(struct device *dev,
->   			      char *buf)
->   {
->   	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +	ssize_t size = 0;
->   
-> -	return sysfs_emit(buf, "%u\n",
-> -			 (unsigned int)drvdata->dsb->patt_ts);
-> +	if (tpdm_has_dsb_dataset(drvdata))
-> +		size = sysfs_emit(buf, "%u\n",
-> +				 (unsigned int)drvdata->dsb->patt_ts);
-> +
-> +	if (tpdm_has_cmb_dataset(drvdata))
-> +		size = sysfs_emit(buf, "%u\n",
-> +				 (unsigned int)drvdata->cmb->patt_ts);
-
-Why does this need to show two values ? This must only show ONE value.
-How you deduce that might be based on the availability of the feature
-set. Or store the TS value in the drvdata and use that instead for
-controlling CMB/DSB.
-
-Also, the sysfs documentation needs update, if this is going to
-control the CMB.
+Are you addressing this ?
 
 Suzuki
 
-
-> +
-> +	return size;
->   }
->   
->   /*
-> @@ -715,8 +755,13 @@ static ssize_t enable_ts_store(struct device *dev,
->   		return -EINVAL;
->   
->   	spin_lock(&drvdata->spinlock);
-> -	drvdata->dsb->patt_ts = !!val;
-> +	if (tpdm_has_dsb_dataset(drvdata))
-> +		drvdata->dsb->patt_ts = !!val;
-> +
-> +	if (tpdm_has_cmb_dataset(drvdata))
-> +		drvdata->cmb->patt_ts = !!val;
->   	spin_unlock(&drvdata->spinlock);
-> +
->   	return size;
->   }
->   static DEVICE_ATTR_RW(enable_ts);
-> @@ -851,6 +896,68 @@ static ssize_t cmb_mode_store(struct device *dev,
->   }
->   static DEVICE_ATTR_RW(cmb_mode);
->   
-> +static ssize_t cmb_ts_all_show(struct device *dev,
-> +			       struct device_attribute *attr,
-> +			       char *buf)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +
-> +	return sysfs_emit(buf, "%u\n",
-> +			  (unsigned int)drvdata->cmb->ts_all);
-> +}
-> +
-> +static ssize_t cmb_ts_all_store(struct device *dev,
-> +				struct device_attribute *attr,
-> +				const char *buf,
-> +				size_t size)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +	unsigned long val;
-> +
-> +	if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
-> +		return -EINVAL;
-> +
-> +	spin_lock(&drvdata->spinlock);
-> +	if (val)
-> +		drvdata->cmb->ts_all = true;
-> +	else
-> +		drvdata->cmb->ts_all = false;
-> +	spin_unlock(&drvdata->spinlock);
-> +	return size;
-> +}
-> +static DEVICE_ATTR_RW(cmb_ts_all);
-> +
-> +static ssize_t cmb_trig_ts_show(struct device *dev,
-> +				struct device_attribute *attr,
-> +				char *buf)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +
-> +	return sysfs_emit(buf, "%u\n",
-> +			  (unsigned int)drvdata->cmb->trig_ts);
-> +}
-> +
-> +static ssize_t cmb_trig_ts_store(struct device *dev,
-> +				 struct device_attribute *attr,
-> +				 const char *buf,
-> +				 size_t size)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +	unsigned long val;
-> +
-> +	if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
-> +		return -EINVAL;
-> +
-> +	spin_lock(&drvdata->spinlock);
-> +	if (val)
-> +		drvdata->cmb->trig_ts = true;
-> +	else
-> +		drvdata->cmb->trig_ts = false;
-> +	spin_unlock(&drvdata->spinlock);
-> +	return size;
-> +}
-> +static DEVICE_ATTR_RW(cmb_trig_ts);
-> +
->   static struct attribute *tpdm_dsb_edge_attrs[] = {
->   	&dev_attr_ctrl_idx.attr,
->   	&dev_attr_ctrl_val.attr,
-> @@ -973,6 +1080,7 @@ static struct attribute *tpdm_cmb_patt_attrs[] = {
->   	CMB_PATT_ATTR(1),
->   	CMB_PATT_MASK_ATTR(0),
->   	CMB_PATT_MASK_ATTR(1),
-> +	&dev_attr_enable_ts.attr,
->   	NULL,
->   };
->   
-> @@ -985,6 +1093,8 @@ static struct attribute *tpdm_dsb_attrs[] = {
->   
->   static struct attribute *tpdm_cmb_attrs[] = {
->   	&dev_attr_cmb_mode.attr,
-> +	&dev_attr_cmb_ts_all.attr,
-> +	&dev_attr_cmb_trig_ts.attr,
->   	NULL,
->   };
->   
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
-> index e90d008c1cb2..65b7ca6c4077 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.h
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
-> @@ -11,6 +11,8 @@
->   
->   /* CMB Subunit Registers */
->   #define TPDM_CMB_CR		(0xA00)
-> +/*CMB subunit timestamp insertion enable register*/
-> +#define TPDM_CMB_TIER		(0xA04)
->   /*CMB subunit timestamp pattern registers*/
->   #define TPDM_CMB_TPR(n)		(0xA08 + (n * 4))
->   /*CMB subunit timestamp pattern mask registers*/
-> @@ -24,6 +26,12 @@
->   #define TPDM_CMB_CR_ENA		BIT(0)
->   /* Trace collection mode for CMB subunit */
->   #define TPDM_CMB_CR_MODE	BIT(1)
-> +/* Timestamp control for pattern match */
-> +#define TPDM_CMB_TIER_PATT_TSENAB	BIT(0)
-> +/* CMB CTI timestamp request */
-> +#define TPDM_CMB_TIER_XTRIG_TSENAB	BIT(1)
-> +/* For timestamp fo all trace */
-> +#define TPDM_CMB_TIER_TS_ALL		BIT(2)
->   
->   /*Patten register number*/
->   #define TPDM_CMB_MAX_PATT		2
-> @@ -217,6 +225,9 @@ struct dsb_dataset {
->    * @patt_mask:        Save value for pattern mask
->    * @trig_patt:        Save value for trigger pattern
->    * @trig_patt_mask:   Save value for trigger pattern mask
-> + * @patt_ts:          Indicates if pattern match for timestamp is enabled.
-> + * @trig_ts:          Indicates if CTI trigger for timestamp is enabled.
-> + * @ts_all:           Indicates if timestamp is enabled for all packets.
->    */
->   struct cmb_dataset {
->   	u32			trace_mode;
-> @@ -224,6 +235,9 @@ struct cmb_dataset {
->   	u32			patt_mask[TPDM_CMB_MAX_PATT];
->   	u32			trig_patt[TPDM_CMB_MAX_PATT];
->   	u32			trig_patt_mask[TPDM_CMB_MAX_PATT];
-> +	bool			patt_ts;
-> +	bool			trig_ts;
-> +	bool			ts_all;
->   };
->   
->   /**
+> 
+> Best regards,
+> Krzysztof
+> 
 
 
