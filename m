@@ -1,130 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-5212-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0BF85816CFF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 12:54:29 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E251D816D25
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 12:58:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6E24BB21AF6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 11:54:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 96F861F214D4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 11:58:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53E29495E9;
-	Mon, 18 Dec 2023 11:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF662200D6;
+	Mon, 18 Dec 2023 11:49:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GGUnoiL/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C80ZJkxi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7A148CF9;
-	Mon, 18 Dec 2023 11:41:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BIBVlKo008711;
-	Mon, 18 Dec 2023 11:40:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=6rQzpbXWgglrouGjflZgoxRgWts4Avoi6kZbZQLIY7w=; b=GG
-	UnoiL/5vC4rYdgFvYefMJm3J54o5l9xpU2atPF8V8UQNPK+AN3YGckSoJIwF/Vyc
-	ROQQRVap7gfjZ77MnIEOrblxtSDHG9N8Tc0Xfg3Eui0ghZMeauvYQYlKtqXTH19H
-	7hYgc7dGROAkzuI2lQWoMq6UAZQhAoZh09qI6SbL+7hdjwIaxU+xosSxEno4Gsic
-	/4Zmn3wF3AxczEqZD7wMt/Jc0HA3WXt9tUvMZUsJpOt7GuEw+MMq43a3JEJdySEW
-	WIkjvfpy6jRE+ZdF54FyzdLzS7dBZ9kn5/iKt8I9ySTX6ZqJKX/yvFACWn4DrSHu
-	73ihFi338ZWiUwj2NQoA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v14xy44nv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Dec 2023 11:40:44 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BIBeh43028609
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Dec 2023 11:40:43 GMT
-Received: from [10.214.66.253] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 18 Dec
- 2023 03:40:36 -0800
-Message-ID: <281a46c1-ce2a-4986-8562-878c7267efd0@quicinc.com>
-Date: Mon, 18 Dec 2023 17:10:33 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474DC3714D
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 11:49:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-5cd51c0e8ebso972281a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Dec 2023 03:49:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702900147; x=1703504947; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=WFiECuxQKf4bQHzOWrQB9O9iOx/6SZrLhJKr/Z2J67E=;
+        b=C80ZJkxiwR9Zm0ZsEKM8BmKcnvSLYCkhtK1dQvnDmoi9wbVvIeHxftsgmgH0afTE7u
+         tv86Bo8M8rIqdWJYLKfhlF5aJeO4RaxULPRK75GlvL7OpGIe7LDthzkcV6e73mekVU+K
+         eG0YxNCQ7FYoSsNsMCb41ntmlKlvGjbHxQM/W0tDIxGbG/wYPKt380CkOa1ZGzZkJu6P
+         yqa73Vg7lgWCGGbwj8f3fEOTg8Y8lEhhERQSkXuIB6xlzRlXrXNec9PpvtVmP9U7r6LO
+         EqEawO8Cry1p56dNMBPbO31C9vlWGCiOn/NA7T4Lid2Pi+4cJCeM0Q3VGXhWAqyPgGuw
+         pBLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702900147; x=1703504947;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WFiECuxQKf4bQHzOWrQB9O9iOx/6SZrLhJKr/Z2J67E=;
+        b=o7j4BCVtsUCqyuSvetrQYJCUP1bQCzcqsJrep7ko45gl+F6fZAIU4g9pRmHPk8AUvp
+         37IVHneZ2BJaWp6A+2X1+M/WlTlShTHMKSdDEp3+NnceU2f+8ir1oHP+AVxQr1Feu0Um
+         4MRp6veUxihKzmVXGRpWvuIeBK5dO91fZUZ1ep1v7b/jc+A/6qhIab3c3P8S1IPoYTFe
+         h2u8+Ah4w0vy/hjN8eBrVh5oJDwqXC97tgtnlDmUiHvSOw7Rx2xN3CazR+CIrspOZ7Ea
+         f5yhTEUJ7AWMXHSjTgWmL0Qyz9d8GRHpSKLHHIOpd/aHZhgpZZUZcQo7YhKUe3idKWgC
+         Tpqg==
+X-Gm-Message-State: AOJu0Yxg5T75IjgZoKG/XaFqrbY8v5Ry96AMcwG0qeaUzP+CaCHx1OIZ
+	8baQdPd/hDCGvaltoqxfB16g
+X-Google-Smtp-Source: AGHT+IFNm7vnn6dj9ZJCS5JUQjewTTJwImMcXsK4yzYDnO65BIHPMtdEVIr3bR2Db4u/3gv4EFWJDQ==
+X-Received: by 2002:a05:6a20:3d81:b0:190:c314:35f8 with SMTP id s1-20020a056a203d8100b00190c31435f8mr7847690pzi.46.1702900147590;
+        Mon, 18 Dec 2023 03:49:07 -0800 (PST)
+Received: from thinkpad ([117.207.27.21])
+        by smtp.gmail.com with ESMTPSA id ha9-20020a17090af3c900b0028b8bb9e5cbsm1526025pjb.25.2023.12.18.03.49.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Dec 2023 03:49:07 -0800 (PST)
+Date: Mon, 18 Dec 2023 17:18:58 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Rob Herring <robh@kernel.org>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
+	sboyd@kernel.org, mturquette@baylibre.com,
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH 01/16] dt-bindings: phy: qmp-ufs: Fix PHY clocks
+Message-ID: <20231218114858.GA2900@thinkpad>
+References: <20231214091101.45713-1-manivannan.sadhasivam@linaro.org>
+ <20231214091101.45713-2-manivannan.sadhasivam@linaro.org>
+ <20231214172051.GA611674-robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/5] iommu/arm-smmu: add ACTLR data and support for
- SM8550
-Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, <will@kernel.org>,
-        <robin.murphy@arm.com>, <joro@8bytes.org>,
-        <dmitry.baryshkov@linaro.org>, <jsnitsel@redhat.com>,
-        <quic_bjorande@quicinc.com>, <mani@kernel.org>,
-        <quic_eberman@quicinc.com>, <robdclark@chromium.org>,
-        <u.kleine-koenig@pengutronix.de>, <robh@kernel.org>,
-        <vladimir.oltean@nxp.com>, <quic_pkondeti@quicinc.com>,
-        <quic_molvera@quicinc.com>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <iommu@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-        <qipl.kernel.upstream@quicinc.com>
-References: <20231215101827.30549-1-quic_bibekkum@quicinc.com>
- <20231215101827.30549-4-quic_bibekkum@quicinc.com>
- <e4329952-34ac-4458-a63c-1f64e288614c@linaro.org>
-From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-In-Reply-To: <e4329952-34ac-4458-a63c-1f64e288614c@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 1iff2ovQNWMWW5Fz0XqWBOc6eAAVSLGm
-X-Proofpoint-ORIG-GUID: 1iff2ovQNWMWW5Fz0XqWBOc6eAAVSLGm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
- phishscore=0 priorityscore=1501 mlxscore=0 mlxlogscore=998 impostorscore=0
- lowpriorityscore=0 suspectscore=0 spamscore=0 bulkscore=0 clxscore=1011
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
- definitions=main-2312180084
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20231214172051.GA611674-robh@kernel.org>
 
-
-
-On 12/16/2023 5:05 AM, Konrad Dybcio wrote:
-> On 15.12.2023 11:18, Bibek Kumar Patro wrote:
->> Add ACTLR data table for SM8550 along with support for
->> same including SM8550 specific implementation operations.
->>
->> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
->> ---
-> [...]
+On Thu, Dec 14, 2023 at 11:20:51AM -0600, Rob Herring wrote:
+> On Thu, Dec 14, 2023 at 02:40:46PM +0530, Manivannan Sadhasivam wrote:
+> > All QMP UFS PHYs except MSM8996 require 3 clocks:
+> > 
+> > * ref - 19.2MHz reference clock from RPMh
+> > * ref_aux - Auxiliary reference clock from GCC
+> > * qref - QREF clock from GCC or TCSR (since SM8550)
+> > 
+> > MSM8996 only requires 'ref' and 'qref' clocks. Hence, fix the binding to
+> > reflect the actual clock topology.
 > 
->> +static const struct qcom_smmu_match_data sm8550_smmu_500_impl0_data = {
->> +	.impl = &qcom_smmu_500_impl,
->> +	.adreno_impl = &qcom_adreno_smmu_500_impl,
->> +	.cfg = &qcom_smmu_impl0_cfg,
->> +	.actlrcfg = sm8550_apps_actlr_cfg,
->> +	.actlrcfg_gfx = sm8550_gfx_actlr_cfg,
-> There are platforms that feature more than just APPS and Adreno SMMUs,
-> this implementation seems to assume there's only these two :/
+> Breaking the ABI is okay because...? Please explain in the commit msg.
 > 
 
-Yes, some platforms can feature additional SMMUs as well including APPS 
-and Adreno. In that case there would be a corresponding compatible 
-string and an additional field in qcom_smmu_match_data might be needed.
+I will update the commit message in v2.
 
-Thanks,
-Bibek
+- Mani
 
-> I suppose the only way to solve this would be to introduce new compatibles
-> for each one of them.. Krzysztof, do you think that's reasonable? E.g.
-> MSM8996 has at least 5 instances, 8998 has at least 4 etc.
+> Rob
 > 
-> Konrad
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
