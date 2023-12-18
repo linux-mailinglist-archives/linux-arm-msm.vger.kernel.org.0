@@ -1,119 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-5251-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8B94817551
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 16:35:06 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8AADE8175FD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 16:45:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F3331280FF7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 15:35:03 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2E851B23BD4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Dec 2023 15:45:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E460D3D569;
-	Mon, 18 Dec 2023 15:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A66D72063;
+	Mon, 18 Dec 2023 15:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iQ24PMGu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iWWjVbuq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D293D54D;
-	Mon, 18 Dec 2023 15:34:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BIAsWg9018798;
-	Mon, 18 Dec 2023 15:33:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=Ow5SPTTNB88V
-	cAirt4L0hAseb2z31VaLkP7mDGOMQDA=; b=iQ24PMGu8XqJCIvZjt2R/W/gBFtI
-	wsvbFvOzqZvsRYEaqykLSNPv17pH72X1hRHJjbv2zAIvMwtNHqMc0TWcbjBJZzix
-	4AiFwvbfRC9Mc8tpVsTJCcpMD1pDLXbfay7hUK3uKCiBY5AX/y0FVc6SGtQ2aiYz
-	pd0qtHJmfvc27Uwz5ZVh1/w3m2ZpQIEMs0LXlXU99SLonXxlVufA8bbTS9K/dqOP
-	xaWP/BsVWRKYsQYkz928wfO9ftfNOg8jsv+b37tPMiFyYlH9z6CaQ5LMWvYOC7EV
-	BG9Ufw+PhTMarXdqfy5lJQ3DEMJ9Gv3uqH2hkKQT0Gqhqvj+e8vQRCWrUQ==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v2mfe0n99-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Dec 2023 15:33:53 +0000 (GMT)
-Received: from pps.filterd (NASANPPMTA04.qualcomm.com [127.0.0.1])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3BIFWXT3029489;
-	Mon, 18 Dec 2023 15:33:52 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by NASANPPMTA04.qualcomm.com (PPS) with ESMTP id 3v14ykw605-1;
-	Mon, 18 Dec 2023 15:33:52 +0000
-Received: from NASANPPMTA04.qualcomm.com (NASANPPMTA04.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3BIFXqos031583;
-	Mon, 18 Dec 2023 15:33:52 GMT
-Received: from stor-dylan.qualcomm.com (stor-dylan.qualcomm.com [192.168.140.207])
-	by NASANPPMTA04.qualcomm.com (PPS) with ESMTP id 3BIFXpFx031579;
-	Mon, 18 Dec 2023 15:33:52 +0000
-Received: by stor-dylan.qualcomm.com (Postfix, from userid 359480)
-	id AE92E20A6B; Mon, 18 Dec 2023 07:33:51 -0800 (PST)
-From: Can Guo <quic_cang@quicinc.com>
-To: quic_cang@quicinc.com, bvanassche@acm.org, mani@kernel.org,
-        adrian.hunter@intel.com, beanhuo@micron.com, avri.altman@wdc.com,
-        junwoo80.lee@samsung.com, martin.petersen@oracle.com
-Cc: linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Asutosh Das <quic_asutoshd@quicinc.com>,
-        Peter Wang <peter.wang@mediatek.com>,
-        "Bao D. Nguyen" <quic_nguyenb@quicinc.com>,
-        Arthur Simchaev <Arthur.Simchaev@wdc.com>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] scsi: ufs: core: Let the sq_lock protect sq_tail_slot access
-Date: Mon, 18 Dec 2023 07:32:17 -0800
-Message-Id: <1702913550-20631-1-git-send-email-quic_cang@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 2x7iaMGGHfK-tl-wx8Yqxco24rlFPNO4
-X-Proofpoint-GUID: 2x7iaMGGHfK-tl-wx8Yqxco24rlFPNO4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- clxscore=1011 suspectscore=0 malwarescore=0 lowpriorityscore=0 mlxscore=0
- mlxlogscore=999 phishscore=0 adultscore=0 impostorscore=0 spamscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312180114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE2E7204B;
+	Mon, 18 Dec 2023 15:40:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4953C433C7;
+	Mon, 18 Dec 2023 15:40:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1702914047;
+	bh=kP0KzVP+wAVZYX6I0sfa2j1A+ARxXj0gJm7BlfSRTYU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=iWWjVbuqzUtxKAYbEAcR07YOT+nimr5ntwxRnJE7ByDm2DYEFtTAxVfiYM5c/iAMq
+	 BdcywG+sg6Y6ZTe8SS4kY2ssI+yRjD7zCPQkFnJtEu2gXW3kT9/a/WbXI7Ev7czum/
+	 /wHEJDAospKTTWePuw3/uxxHStZrIJl7Il3R6hl2D0396o51bXcwOO4Xww6VAHl1ev
+	 LNjmVfYAwKrKTlccnjOvbfy3iQlXYbeBPSyO40yWN525mpI1pJzLyA7aA4OC8ITiIA
+	 /S0alap2P4PZF8E59YQWf+ziPbkF8peY9P/lLNt4OGU+rgNV5Okk6UpAkRlpOGuoAo
+	 rFM7qfH1ZKwWA==
+Date: Mon, 18 Dec 2023 21:10:32 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+	Manivannan Sadhasivam <mani@kernel.org>
+Subject: Re: [PATCH 1/3] ARM: dts: qcom: sdx55: fix pdc '#interrupt-cells'
+Message-ID: <20231218154032.GA50521@thinkpad>
+References: <20231213173131.29436-1-johan+linaro@kernel.org>
+ <20231213173131.29436-2-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20231213173131.29436-2-johan+linaro@kernel.org>
 
-If access sq_tail_slot without the protection from the sq_lock, race
-condition can have multiple SQEs copied to duplicate SQE slot(s), which can
-lead to multiple incredible stability issues. Fix it by moving the *dest
-initialization, in ufshcd_send_command(), back under protection from the
-sq_lock.
+On Wed, Dec 13, 2023 at 06:31:29PM +0100, Johan Hovold wrote:
+> The Qualcomm PDC interrupt controller binding expects two cells in
+> interrupt specifiers.
+> 
+> Fixes: 9d038b2e62de ("ARM: dts: qcom: Add SDX55 platform and MTP board support")
+> Cc: stable@vger.kernel.org      # 5.12
+> Cc: Manivannan Sadhasivam <mani@kernel.org>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-Fixes: 3c85f087faec ("scsi: ufs: mcq: Use pointer arithmetic in ufshcd_send_command()")
-Signed-off-by: Can Guo <quic_cang@quicinc.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index ae9936f..2994aac 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -2274,9 +2274,10 @@ void ufshcd_send_command(struct ufs_hba *hba, unsigned int task_tag,
- 	if (is_mcq_enabled(hba)) {
- 		int utrd_size = sizeof(struct utp_transfer_req_desc);
- 		struct utp_transfer_req_desc *src = lrbp->utr_descriptor_ptr;
--		struct utp_transfer_req_desc *dest = hwq->sqe_base_addr + hwq->sq_tail_slot;
-+		struct utp_transfer_req_desc *dest;
- 
- 		spin_lock(&hwq->sq_lock);
-+		dest = hwq->sqe_base_addr + hwq->sq_tail_slot;
- 		memcpy(dest, src, utrd_size);
- 		ufshcd_inc_sq_tail(hwq);
- 		spin_unlock(&hwq->sq_lock);
+- Mani
+
+> ---
+>  arch/arm/boot/dts/qcom/qcom-sdx55.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
+> index e30dbf12990a..0864c99a3da1 100644
+> --- a/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
+> +++ b/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
+> @@ -612,7 +612,7 @@ pdc: interrupt-controller@b210000 {
+>  			compatible = "qcom,sdx55-pdc", "qcom,pdc";
+>  			reg = <0x0b210000 0x30000>;
+>  			qcom,pdc-ranges = <0 179 52>;
+> -			#interrupt-cells = <3>;
+> +			#interrupt-cells = <2>;
+>  			interrupt-parent = <&intc>;
+>  			interrupt-controller;
+>  		};
+> -- 
+> 2.41.0
+> 
+
 -- 
-2.7.4
-
+மணிவண்ணன் சதாசிவம்
 
