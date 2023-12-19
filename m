@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-5367-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E46BE818699
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 12:48:42 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC43B8186A5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 12:50:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 67E401F2358E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 11:48:42 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 06B95B2331A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 11:50:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B78BC15ADD;
-	Tue, 19 Dec 2023 11:48:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E23AE17757;
+	Tue, 19 Dec 2023 11:50:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Vk3KrWML"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VY0QB7A7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF1015ACB
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 11:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46132171BF
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 11:50:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-54c7744a93fso5421441a12.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 03:48:36 -0800 (PST)
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-40c339d2b88so47761565e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 03:50:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702986515; x=1703591315; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1702986636; x=1703591436; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=wNbilt185g1wxKFzamONNfwxhQz25Ie/vMm1An19wsE=;
-        b=Vk3KrWMLb6L7/pCQ7YRqw9ZQjfDI21XdPSNxmRDBo1zewcuxQpNGmSanEOFNB8h0A/
-         34xl7nLNLy5nF+hKWaSvM3wiwmkCkIEYTLUQjzr2pe6TkBbyOtVhMIKrQMhY+zrA46hd
-         Xezl+VZ3AZcEEm+AT8EqlyjhUECcba9QHqTXphv2Mrzly03+ebpGR/ARLMFA6pWOOuWp
-         4ZdR+g74mK2NJ83WZT4aF2Igmm+APKGuklspG+6JLyngAN/j2TVAQH0eaN0JUdvcoQGC
-         fEEyVUMNgxNXJYRHCKpaWZe3JxPY6OngyPg/6HTy3AI+pcpMNn9ZR6Hz18MICQoE3BLb
-         BNCA==
+        bh=B4a4teJHwZUJyBTzwWesDJ9PWyu4xpIdJ7qFNO5rTNc=;
+        b=VY0QB7A7ldBEXgRKTH2YnRmkwlnr1RV0QOPvwR+7uZgiHUFu1fQdUR3Gs+nKaOlWbt
+         m0mJISDrqWk8COkBz9lMlS94WbFz+M3H5M/21kJ9ivflJb2zKM6lhM4ky96xNhpMlpLZ
+         rRkYUsegofGXWaY+Xjv1oQEokxTR8T2Wo3hQS1kdib12l7SIbi48f+mSp1GjTkXarExA
+         lfqXwQZLx43HP64KxbdULBBUQhpR1ClWUY2+6+lYvbn7bXmC3QeZBZ5fwMGrKBUT/RHx
+         twY/ffeex0q0elDESRsNUhqkfDWBD7tJ14nUjrkmjcJjg5SCflgQGbECVZr1k0FTgA6K
+         Cl9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702986515; x=1703591315;
+        d=1e100.net; s=20230601; t=1702986636; x=1703591436;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wNbilt185g1wxKFzamONNfwxhQz25Ie/vMm1An19wsE=;
-        b=DpJ0QbswntkBCkDD2R/mTTZHnEguRAGaEe4AYCK+gP+HJntxVeAzX3G9un0RL8Bnid
-         hL5Pq3D2HmHATNKe4qAAih0SzYcr4ksNbxugHfjML0V0q6Czk0MKm/DQO1ICsQJeCbOl
-         PbrByHB0CYdFll4FUzV3L4lTM5Ah9KODY3REVVPgN+JXWNRJBal3EbRqiUUEkPeqlPD4
-         Uuv/EF+JIZYlNz/vx9IZF6KE3ZhpDHNGw+Envj0nl+k9p41w0rxzsCYTda3BDN87FkX+
-         nRI3miGTse2nyeY31teQ0oKSmif3ypkc435PwWcHnOnfMHJ8hyTn6eZNRh5JBkJOBY+4
-         TBgQ==
-X-Gm-Message-State: AOJu0YyeOS9CNLXp6wjVpdzVbQB7yiu6BMh8f4zgyQfxDPuDfYxNMfNo
-	0bm1wyGHVlxEUEFnAsw8BCNZWQ==
-X-Google-Smtp-Source: AGHT+IE1UXczG2bSR4oKNwgUpRn2UY9X60VdQQvVnO04IFDUlJZ2TtqiChLrg2FvfIAkuxCzST688w==
-X-Received: by 2002:a50:99de:0:b0:553:35f8:e143 with SMTP id n30-20020a5099de000000b0055335f8e143mr2513712edb.67.1702986515321;
-        Tue, 19 Dec 2023 03:48:35 -0800 (PST)
+        bh=B4a4teJHwZUJyBTzwWesDJ9PWyu4xpIdJ7qFNO5rTNc=;
+        b=O7hUpeiafMe2Q3GBO/u94v12scHm8EaeUIaPziQzVntqzgGPEQ8OCJQ09V682rZP//
+         1zHmoNZUrfZ1x6ljGEcj06tOcV0yEpXdS7AnxFnjhTy7syrh7/iZ8BuHdJMOtiV5vvhO
+         /abWMDpuOegAe8sClDFSEVXP3G8FvZ7RRio/VGlmh8vO6WzGP2/WkUkScq34lAwvjtS6
+         mzlNcUGVCNFFnc4D5toOgicdBMS51loMQUTew4qfO5azYczPdUjN3Ga82ykgzj+OhtCJ
+         Seh35Ap3fM20QE9HLMTVFlMjcTMbOE2/LuoEATr56xd7531TvmTrU7tUEcToavWruNRs
+         q7sA==
+X-Gm-Message-State: AOJu0YxgvtNzSM/xlnPV8wMCaOHu3xiXBVj1shY/fyuRZkZOZJGl6bu0
+	ooX/KWmk10g4Gf1NH7s2oRtYAA==
+X-Google-Smtp-Source: AGHT+IF4RYZBU0bIpMbIEP0f2+iigHpU5ygsAxD5kB8kDDyDkIYRkoy3zMNnLp5dntiiCPGDCpM4+A==
+X-Received: by 2002:a05:600c:4d0f:b0:40c:3e43:417f with SMTP id u15-20020a05600c4d0f00b0040c3e43417fmr8925830wmp.58.1702986636513;
+        Tue, 19 Dec 2023 03:50:36 -0800 (PST)
 Received: from [192.168.199.59] (178235179206.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.206])
-        by smtp.gmail.com with ESMTPSA id q24-20020a056402041800b00553165eb4f7sm2966501edv.17.2023.12.19.03.48.34
+        by smtp.gmail.com with ESMTPSA id ah2-20020a1709069ac200b00a23577b265csm2507243ejc.173.2023.12.19.03.50.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Dec 2023 03:48:35 -0800 (PST)
-Message-ID: <23a3955e-744f-4436-adb7-790de9c2f084@linaro.org>
-Date: Tue, 19 Dec 2023 12:48:33 +0100
+        Tue, 19 Dec 2023 03:50:35 -0800 (PST)
+Message-ID: <05796d3a-3046-427b-8a0f-0895026e7da3@linaro.org>
+Date: Tue, 19 Dec 2023 12:50:33 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,8 +66,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 15/34] media: iris: add handling for interrupt service
- routine(ISR) invoked by hardware
+Subject: Re: [PATCH v2 16/34] media: iris: implement iris v4l2_ctrl_ops and
+ prepare capabilities
 Content-Language: en-US
 To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
  linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
@@ -75,7 +75,7 @@ To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
  andersson@kernel.org, mchehab@kernel.org, bryan.odonoghue@linaro.org
 Cc: linux-arm-msm@vger.kernel.org, quic_abhinavk@quicinc.com
 References: <1702899149-21321-1-git-send-email-quic_dikshita@quicinc.com>
- <1702899149-21321-16-git-send-email-quic_dikshita@quicinc.com>
+ <1702899149-21321-17-git-send-email-quic_dikshita@quicinc.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -112,128 +112,38 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <1702899149-21321-16-git-send-email-quic_dikshita@quicinc.com>
+In-Reply-To: <1702899149-21321-17-git-send-email-quic_dikshita@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 18.12.2023 12:32, Dikshita Agarwal wrote:
-> Allocate interrupt resources, enable the interrupt line and IRQ handling.
-> Register the IRQ handler to be called when interrupt occurs and
-> the function to be called from IRQ handler thread.
-> The threads invoke the driver's response handler which handles
-> all different responses from firmware.
+> Implement iris v4l2_ctrl_ops - s_ctrl and g_volatile_ctrl.
+> 
+> Core capability structure has all the supported capabilities
+> for all supported codecs. Initializes instance capability
+> from core capability based on the codec type.
+> 
+> Add following to each capability:
+> Children: define dependencies for a specific capability.
+> Adjust: define function to adjust the value of capability
+>         based on client configuration or dependency with
+> 	other capability.
+> Set: define function to set the adjusted value to firmware.
+> 
+> Prepare dependency graph for all inter-dependent capabilities.
+> This is used to adjust the value of capabilities and set the
+> same to firmware.
 > 
 > Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 > ---
 [...]
 
-> +
-> +irqreturn_t iris_hfi_isr_handler(int irq, void *data)
-> +{
-> +	struct iris_core *core = data;
-> +
-> +	if (!core)
-> +		return IRQ_NONE;
-Should this even be possible?
+> +static inline bool are_all_childrens_visited(struct plat_inst_cap *cap,
+> +					     bool lookup[INST_CAP_MAX])
+he's making a list, he's checking it twice..
 
-> +
-> +	mutex_lock(&core->lock);
-> +	call_vpu_op(core, clear_interrupt, core);
-> +	mutex_unlock(&core->lock);
-> +
-> +	__response_handler(core);
-> +
-> +	if (!call_vpu_op(core, watchdog, core, core->intr_status))
-> +		enable_irq(irq);
-> +
-> +	return IRQ_HANDLED;
-> +}
-> diff --git a/drivers/media/platform/qcom/vcodec/iris/iris_hfi.h b/drivers/media/platform/qcom/vcodec/iris/iris_hfi.h
-> index 8a057cc..8a62986 100644
-> --- a/drivers/media/platform/qcom/vcodec/iris/iris_hfi.h
-> +++ b/drivers/media/platform/qcom/vcodec/iris/iris_hfi.h
-> @@ -14,4 +14,7 @@ int iris_hfi_core_deinit(struct iris_core *core);
->  int iris_hfi_session_open(struct iris_inst *inst);
->  int iris_hfi_session_close(struct iris_inst *inst);
->  
-> +irqreturn_t iris_hfi_isr(int irq, void *data);
-> +irqreturn_t iris_hfi_isr_handler(int irq, void *data);
-> +
->  #endif
-> diff --git a/drivers/media/platform/qcom/vcodec/iris/iris_hfi_response.c b/drivers/media/platform/qcom/vcodec/iris/iris_hfi_response.c
-> new file mode 100644
-> index 0000000..829f3f6
-> --- /dev/null
-> +++ b/drivers/media/platform/qcom/vcodec/iris/iris_hfi_response.c
-> @@ -0,0 +1,184 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include "hfi_defines.h"
-> +#include "iris_hfi_packet.h"
-> +#include "iris_hfi_response.h"
-> +
-> +static void print_sfr_message(struct iris_core *core)
-I'm not sure how 'print' relates to what this function does
-
-[...]
-
-> +static int handle_system_error(struct iris_core *core,
-> +			       struct hfi_packet *pkt)
-> +{
-> +	print_sfr_message(core);
-> +
-> +	iris_core_deinit(core);
-Either take the return value of /\ into account, or make this function
-void.
-
-> +
-> +	return 0;
-> +}
-
-[...]
-
-> +
-> +struct sfr_buffer {
-> +	u32 bufsize;
-> +	u8 rg_data[];
-Looks like you skipped static code checks.. Use __counted_by
-
-[...]
-
-> @@ -17,6 +17,8 @@
->  #define CPU_CS_VCICMDARG0_IRIS3     (CPU_CS_BASE_OFFS_IRIS3 + 0x24)
->  #define CPU_CS_VCICMDARG1_IRIS3     (CPU_CS_BASE_OFFS_IRIS3 + 0x28)
->  
-> +#define CPU_CS_A2HSOFTINTCLR_IRIS3  (CPU_CS_BASE_OFFS_IRIS3 + 0x1C)
-You're mixing upper and lowercase hex throughout your defines.
-
-[...]
-
-> +static int clear_interrupt_iris3(struct iris_core *core)
-> +{
-> +	u32 intr_status = 0, mask = 0;
-> +	int ret;
-> +
-> +	ret = read_register(core, WRAPPER_INTR_STATUS_IRIS3, &intr_status);
-> +	if (ret)
-> +		return ret;
-> +
-> +	mask = (WRAPPER_INTR_STATUS_A2H_BMSK_IRIS3 |
-> +		WRAPPER_INTR_STATUS_A2HWD_BMSK_IRIS3 |
-> +		CTRL_INIT_IDLE_MSG_BMSK_IRIS3);
-unnecesary parentheses
-
-> +
-> +	if (intr_status & mask)
-> +		core->intr_status |= intr_status;
-> +
-> +	ret = write_register(core, CPU_CS_A2HSOFTINTCLR_IRIS3, 1);
-> +
-> +	return ret;
-why not return write_register directly?
+I still think moving to a predefined config struct instead would
+be a good idea
 
 Konrad
 
