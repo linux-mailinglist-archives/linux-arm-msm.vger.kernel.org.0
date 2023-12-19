@@ -1,55 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-5325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5326-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id F14D381808A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 05:28:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 277AC8180AA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 05:44:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A1E6A28334E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 04:28:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CADBE284374
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 04:44:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F34A63D1;
-	Tue, 19 Dec 2023 04:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B1685689;
+	Tue, 19 Dec 2023 04:44:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hnixj6Ne"
+	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="qvKgtpWO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D9A613B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 04:28:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A56C433C7;
-	Tue, 19 Dec 2023 04:28:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702960126;
-	bh=uxjrGpg8pswGWk/L0+XveZAPi6AT6Hh01Bz8IN8/1Dk=;
-	h=From:List-Id:To:Cc:Subject:Date:From;
-	b=Hnixj6NeEw4VoAexiRCU/iHSRkHTjyo4KiXJtXOP62MZzaSOuyzvqoaXkBoNBXDHW
-	 qHzOMu1wApm7Lv7yO54zWgiUoGss2K7gluPvOISUOtuLBAFvCMeWFkYfveSS+DjmgK
-	 28GkGQa4KOCzkxI3nybkxGjWpUmxybESyqfRhNUVbF5mmCCWgbQroOhuxOpYu39vde
-	 6eDrE/SM7VIyhko6oceVkMXkV7RdRP4R3sPxF+WpoN8nti/FmyTea11IfY/CWYYxTR
-	 78hg7JSQIBXabZJKtFQO0MfKu+EBOfEUV+z6nnI3rkAzRxQnf0LHtOY6K03trggG/s
-	 wk4qx8qyZubkA==
-From: Bjorn Andersson <andersson@kernel.org>
-To: arm@kernel.org,
-	soc@kernel.org
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Andy Gross <agross@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Olof Johansson <olof@lixom.net>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Rohit Agarwal <quic_rohiagar@quicinc.com>,
-	Tengfei Fan <quic_tengfan@quicinc.com>
-Subject: [GIT PULL] Qualcomm ARM64 defconfig updates for v6.8
-Date: Mon, 18 Dec 2023 20:33:06 -0800
-Message-ID: <20231219043307.732781-1-andersson@kernel.org>
-X-Mailer: git-send-email 2.42.0
+Received: from smtp.smtpout.orange.fr (smtp-27.smtpout.orange.fr [80.12.242.27])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D159BE56
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 04:43:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=wanadoo.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
+Received: from pop-os.home ([92.140.202.140])
+	by smtp.orange.fr with ESMTPA
+	id FRq7rIyAdCta3FRq7rLpYg; Tue, 19 Dec 2023 05:36:20 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
+	s=t20230301; t=1702960580;
+	bh=kg/q7rumzOx8Hl24GKVNgl/RrROwUKqK72wc4kbD3sE=;
+	h=From:To:Cc:Subject:Date;
+	b=qvKgtpWOoj4dZ6kz4iXiJrNQqE7l3qQNPalzgKRK2QqVljEog23aA11MgO7OVjQ4D
+	 lV5bX8/tbcJ/oDgVc6LS+kvq0WvMWudFPLUREHVM+0pnJN/2m3TyAEwWD2mOExtGgF
+	 ZeviyBnp6Z3OXgfwMrJH77HwMlVG//CwBUHbOAIPJKPYFZXArSWbqd/WHkQzlnEaJR
+	 JBtoBYIUO49hcNIaz+uCnD5dn10f4do3kKO/bmmD1fNmopn9rtycfW7Hl+gazmAggz
+	 3WZW4OcUBMJURMzxqbPBGM66x+YPhUrmo8hup1dejIGSdFbMQeDHdUGtpuPf3n3nXu
+	 jXMgpqka5E5BQ==
+X-ME-Helo: pop-os.home
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Tue, 19 Dec 2023 05:36:20 +0100
+X-ME-IP: 92.140.202.140
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+To: Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: linux-kernel@vger.kernel.org,
+	kernel-janitors@vger.kernel.org,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	linux-arm-msm@vger.kernel.org,
+	alsa-devel@alsa-project.org
+Subject: [PATCH] slimbus: qcom-ngd-ctrl: Make QMI message rules const
+Date: Tue, 19 Dec 2023 05:36:17 +0100
+Message-Id: <7d0660a356a148bb800dcb0e211eca4886785a6c.1702960557.git.christophe.jaillet@wanadoo.fr>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,44 +59,69 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
+Commit ff6d365898d4 ("soc: qcom: qmi: use const for struct qmi_elem_info")
+allows QMI message encoding/decoding rules to be const, so do that here.
 
-The following changes since commit b85ea95d086471afb4ad062012a4d73cd328fa86:
+Before:
+======
+$ size drivers/slimbus/qcom-ngd-ctrl.o
+   text	   data	    bss	    dec	    hex	filename
+  30354	   1993	     96	  32443	   7ebb	drivers/slimbus/qcom-ngd-ctrl.o
 
-  Linux 6.7-rc1 (2023-11-12 16:19:07 -0800)
+After:
+=====
+$ size drivers/slimbus/qcom-ngd-ctrl.o
+   text	   data	    bss	    dec	    hex	filename
+  30738	   1593	     96	  32427	   7eab	drivers/slimbus/qcom-ngd-ctrl.o
 
-are available in the Git repository at:
+Compile tested only.
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-defconfig-for-6.8
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+---
+ drivers/slimbus/qcom-ngd-ctrl.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-for you to fetch changes up to 48a9ba5eb4d720c6e21c6e4d2a6fb6e1a97f5f2a:
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index 77aa6d26476c..efeba8275a66 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -220,7 +220,7 @@ struct slimbus_power_resp_msg_v01 {
+ 	struct qmi_response_type_v01 resp;
+ };
+ 
+-static struct qmi_elem_info slimbus_select_inst_req_msg_v01_ei[] = {
++static const struct qmi_elem_info slimbus_select_inst_req_msg_v01_ei[] = {
+ 	{
+ 		.data_type  = QMI_UNSIGNED_4_BYTE,
+ 		.elem_len   = 1,
+@@ -262,7 +262,7 @@ static struct qmi_elem_info slimbus_select_inst_req_msg_v01_ei[] = {
+ 	},
+ };
+ 
+-static struct qmi_elem_info slimbus_select_inst_resp_msg_v01_ei[] = {
++static const struct qmi_elem_info slimbus_select_inst_resp_msg_v01_ei[] = {
+ 	{
+ 		.data_type  = QMI_STRUCT,
+ 		.elem_len   = 1,
+@@ -284,7 +284,7 @@ static struct qmi_elem_info slimbus_select_inst_resp_msg_v01_ei[] = {
+ 	},
+ };
+ 
+-static struct qmi_elem_info slimbus_power_req_msg_v01_ei[] = {
++static const struct qmi_elem_info slimbus_power_req_msg_v01_ei[] = {
+ 	{
+ 		.data_type  = QMI_UNSIGNED_4_BYTE,
+ 		.elem_len   = 1,
+@@ -324,7 +324,7 @@ static struct qmi_elem_info slimbus_power_req_msg_v01_ei[] = {
+ 	},
+ };
+ 
+-static struct qmi_elem_info slimbus_power_resp_msg_v01_ei[] = {
++static const struct qmi_elem_info slimbus_power_resp_msg_v01_ei[] = {
+ 	{
+ 		.data_type  = QMI_STRUCT,
+ 		.elem_len   = 1,
+-- 
+2.34.1
 
-  arm64: defconfig: enable Qualcomm WSA884x driver (2023-12-17 15:03:06 -0600)
-
-----------------------------------------------------------------
-Qualcomm ARM64 defconfig updates for v6.8
-
-Core platform-specific drivers for SM8650, SM4450, and SDX75 are
-enabled. The sound drivers for SC8280XP and SM8650 are enabled.
-Lastly the UEFI Secure App driver, providing EFI variable access on some
-platforms is enabled.
-
-----------------------------------------------------------------
-Johan Hovold (2):
-      arm64: defconfig: enable Qualcomm sc8280xp sound drivers
-      arm64: defconfig: enable Qualcomm UEFI Secure App driver
-
-Krzysztof Kozlowski (1):
-      arm64: defconfig: enable Qualcomm WSA884x driver
-
-Neil Armstrong (1):
-      arm64: deconfig: enable Qualcomm SM8650 SoC drivers
-
-Rohit Agarwal (1):
-      arm64: defconfig: Enable GCC, pinctrl and interconnect for SDX75
-
-Tengfei Fan (1):
-      arm64: defconfig: enable clock controller and pinctrl
-
- arch/arm64/configs/defconfig | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
 
