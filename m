@@ -1,65 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-5373-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5374-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87F288186E8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 13:02:54 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6EC7E8186FE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 13:06:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2FA93286E56
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 12:02:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 09346B2496F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 12:06:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7007118E36;
-	Tue, 19 Dec 2023 12:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58E0E168BD;
+	Tue, 19 Dec 2023 12:06:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="i17N1M1o"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="onwTq2Er"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AAD18B04
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 12:01:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8281718E25
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 12:06:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a265d4f78bfso29073166b.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 04:01:52 -0800 (PST)
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-50e49a0b5caso567748e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 04:06:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702987311; x=1703592111; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
-         :from:content-language:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=YVvvKQRps43iz6LpvgBs+AvFLcUj1lrxhvkgfLbhk5Y=;
-        b=i17N1M1os7ATsdSlPugI18vzAk9gf7sNtVpEMQH5+PNf9v17gu3QXv1L/w9eUU03cY
-         R3xNipBeTD0nVFTzrbrhqtpI4+6kE11kkoSz80z4RsUZkEcAeBjrp/mwr42HShThhIBV
-         d/wigBpBTDXfT4DQV3jyW28OQUDUOTzNZANHvrDaBqopHxirmc3s6fL8bfxVaa+pI4Ba
-         SyUmQcpGmwh3BHRV6fU5xTfDAoilM5QKYT1NZsjsajZaydcX7eCPenYRcUwOCvDuxqlJ
-         ylbNVuvgHYCy5qxbXltMlpaXhUKTeU5yUOaJyt6Vobu2eKytvTSBjdJqAE9fifmFBBIB
-         Lc9g==
+        d=linaro.org; s=google; t=1702987575; x=1703592375; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UPT5gtqaHdtp0V2LGisXTEFTTniJuvsYthI546xfi9A=;
+        b=onwTq2ErAkUATEQtcdwyHabAxD54clF1wkFyuaqJysQr718qB9Wzevi0JRmGgFfX0U
+         DyauVtSyuOn4/0xxAZpxPdeT7d+ikDLMuFIjFOZITDqqMDZYd3Fj//tHDi+AiXYUG5Fb
+         dvN4O83zgJxRfmHdS/bgF3JMmnX8Y24u2lg4nEqWQdzztGAkemxFQ4zYKjHy85Gmr/oD
+         EGL+JBwp+CA1JcSEdyQ3oGJLiKxxGaoy80woUQnnQiAqX364Ba1F5Apdqceyu7Hp2lwT
+         A5feW5feRnRQAVp1v/iNrBIRr0XdEDNJSkDs46eEfIy2dUnVgLIH8+y/CsGMcd3zbEMS
+         pIUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702987311; x=1703592111;
-        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
-         :from:content-language:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YVvvKQRps43iz6LpvgBs+AvFLcUj1lrxhvkgfLbhk5Y=;
-        b=WLh/hdAYXgODT96cQz1Bz++9UP2iQLoKnGG4hn4lWpdjK0nsu1DBqkk2Eky5JcJ/JH
-         E+ydZhAhWiSNL+z3Mwk5yQ6wvoGrcpNkft2QbfyDyiv/yn98pdrI1Z18cpBhKgl4ou0d
-         66Ztkt2vRsWmZvJBLXrQh1OCjsA80qIQ8fo35AsPgx0EfgVoE9PmGbIMvcv6MCeJfUzh
-         7rXQ4mmFdq17FpyEoA/6YpYllZiZFbsajRTRjaP0gHPqNtURkE1cqcM1EAI4oqwBAIk6
-         SFdhx9CvfvQzX4n1k83xKkZ1TMLNdmNzP65IBFoLUPM/K/uXmYrfdLpuvGjSqcIc2Vtq
-         XWyw==
-X-Gm-Message-State: AOJu0YyxvfyQ7UZvsoiJ5r/Js/anGPDL54zB9t6MjWhwZC58LKw3Z+0W
-	8xj/pq+LcRXgIpfdhH1iSCQScA==
-X-Google-Smtp-Source: AGHT+IHfEJcj5sqilHKdlPgFubmK4nI/7tH8em/CPcCCZeiKmAjLc3BZXIWyh3bOrm4xpr41lMaPbg==
-X-Received: by 2002:a17:907:9016:b0:a23:339f:3313 with SMTP id ay22-20020a170907901600b00a23339f3313mr2181362ejc.55.1702987311149;
-        Tue, 19 Dec 2023 04:01:51 -0800 (PST)
+        d=1e100.net; s=20230601; t=1702987575; x=1703592375;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UPT5gtqaHdtp0V2LGisXTEFTTniJuvsYthI546xfi9A=;
+        b=MMWt42lUGZDwYmxngEun06X7SV7+fl+BcugHeWSAau0tDvf+dT95j15+d1G1QS/e0Y
+         qKDdLIX7xzZ+sHKtVqo6CW0LrxKqwYUTF1b9J5OKFEGKcdY9mrLWZw4eH3hAShTV2rMC
+         hqoK6xDFArbqcG7WztltMCfmLX3ipIKu6GWQqZrqR5yzc0tS0iruI8mN16H4YYtQK1kL
+         jw4MhgjorFxji375mMOk2TEcH3v3Al5cViZ9r6aFu7Cp/JOVTq+/a18a5fBks+IKkoxg
+         SUyLfsV61CKSDDkf4tFBHdGdh17R9nSSyQbFfMeDwMxg0PHmpK4zfg8DqnihUEPuv9de
+         B7hQ==
+X-Gm-Message-State: AOJu0Yzk9JsJBeKvEMvbbZU+k3AoTxtNZYxUgEuVrf846M8xVckraf73
+	09mXToH2BWIAKCtKNcMX+OlBlQ==
+X-Google-Smtp-Source: AGHT+IFrixXWHEcz8ztbqzWk3ox6ogOkzQOLFlYti3WrXFMd5D8129G9Lq6WgyelZr4+DgwdKt2XTw==
+X-Received: by 2002:a05:6512:2821:b0:50e:3170:7c33 with SMTP id cf33-20020a056512282100b0050e31707c33mr2448840lfb.34.1702987575356;
+        Tue, 19 Dec 2023 04:06:15 -0800 (PST)
 Received: from [192.168.199.59] (178235179206.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.206])
-        by smtp.gmail.com with ESMTPSA id lm11-20020a17090718cb00b00a1db76f99c8sm15508227ejc.93.2023.12.19.04.01.48
+        by smtp.gmail.com with ESMTPSA id p13-20020aa7cc8d000000b00553622def74sm1686017edt.29.2023.12.19.04.06.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Dec 2023 04:01:50 -0800 (PST)
-Message-ID: <da5df198-6e17-46f0-a12e-0083a5601785@linaro.org>
-Date: Tue, 19 Dec 2023 13:01:48 +0100
+        Tue, 19 Dec 2023 04:06:15 -0800 (PST)
+Message-ID: <5b453356-f2bd-4703-8761-5311b5964f6c@linaro.org>
+Date: Tue, 19 Dec 2023 13:06:13 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,22 +66,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 18/41] ALSA: usb-audio: qcom: Add USB QMI definitions
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8650-qrd: add USB-C Altmode
+ Support
 Content-Language: en-US
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Catalin Marinas
+ <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+References: <20231218-topic-sm8650-upstream-altmode-v1-0-7900660693cf@linaro.org>
+ <20231218-topic-sm8650-upstream-altmode-v1-1-7900660693cf@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
- mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
- corbet@lwn.net, gregkh@linuxfoundation.org, lgirdwood@gmail.com,
- andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
- Thinh.Nguyen@synopsys.com, broonie@kernel.org, bgoswami@quicinc.com,
- tiwai@suse.com, robh+dt@kernel.org, agross@kernel.org
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
- alsa-devel@alsa-project.org
-References: <20231215214955.12110-1-quic_wcheng@quicinc.com>
- <20231215214955.12110-19-quic_wcheng@quicinc.com>
- <4b644ed4-358d-4caa-bed8-ca76e0baadb3@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
  BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
@@ -118,43 +114,33 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <4b644ed4-358d-4caa-bed8-ca76e0baadb3@linaro.org>
+In-Reply-To: <20231218-topic-sm8650-upstream-altmode-v1-1-7900660693cf@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 19.12.2023 13:01, Konrad Dybcio wrote:
-> On 15.12.2023 22:49, Wesley Cheng wrote:
->> The Qualcomm USB audio offload driver utilizes the QMI protocol to
->> communicate with the audio DSP.  Add the necessary QMI header and field
->> definitions, so the QMI interface driver is able to route the QMI packet
->> received to the USB audio offload driver.
->>
->> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->> ---
->>  sound/usb/qcom/usb_audio_qmi_v01.c | 892 +++++++++++++++++++++++++++++
->>  sound/usb/qcom/usb_audio_qmi_v01.h | 162 ++++++
->>  2 files changed, 1054 insertions(+)
->>  create mode 100644 sound/usb/qcom/usb_audio_qmi_v01.c
->>  create mode 100644 sound/usb/qcom/usb_audio_qmi_v01.h
->>
->> diff --git a/sound/usb/qcom/usb_audio_qmi_v01.c b/sound/usb/qcom/usb_audio_qmi_v01.c
->> new file mode 100644
->> index 000000000000..bdfd67d980eb
->> --- /dev/null
->> +++ b/sound/usb/qcom/usb_audio_qmi_v01.c
->> @@ -0,0 +1,892 @@
->> +// SPDX-License-Identifier: GPL-2.0
->> +/*
->> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +
->> +#include <linux/soc/qcom/qmi.h>
->> +
->> +#include "usb_audio_qmi_v01.h"
->> +
->> +static struct qmi_elem_info mem_info_v01_ei[] = {
-> can these be const?
-Sorry, it was already pointed out.
+On 18.12.2023 11:26, Neil Armstrong wrote:
+> Add the necessary nodes to support the USB-C Altmode path by
+> adding the following
+> - WCD939x USBSS Mux I2C device
+> - nb7vpq904m Redriver I2C device
+> - Port/Endpoint graph links bettween PMIC-Glink, Mux, Redriver and USB PHY nodes.
+> 
+> WCD939x USBSS port 2 Path to Codec will be added later when Audio support
+> is added.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+[...]
+
+> +&i2c3 {
+> +       status = "ok";
+"okay"
+[...]
+
+> +&i2c6 {
+> +	status = "ok";
+"okay"
+
 
 Konrad
 
