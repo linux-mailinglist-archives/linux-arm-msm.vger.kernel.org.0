@@ -1,39 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-5350-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5351-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id ABE2181850C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 11:10:48 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC224818522
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 11:14:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 353632864B3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 10:10:47 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1B68CB22F8A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 10:14:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F0E414AA6;
-	Tue, 19 Dec 2023 10:10:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E86EF14A8F;
+	Tue, 19 Dec 2023 10:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pq7chEDA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eY9DP41J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6F414A87;
-	Tue, 19 Dec 2023 10:10:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6593AC433CC;
-	Tue, 19 Dec 2023 10:10:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702980631;
-	bh=q6wGB0avUcKndoaBou8XiihdCYq6iQnfWzTM7Uy4LuA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=pq7chEDAixUW1p5Zi9TVR1q7C//ibKbNuj/eY5WWw/3C7N02OejPkK9+eX8tQYQr8
-	 phzgIAV0+b3noZzR/m9G85jbs1tG6LX51LULXPBsshguiCF8FKCDwGb7vnDNmEXV+B
-	 z5qaJ85PT+LNcMeDMaPJxteH6umCCaZW5Fg+c8OXMgmVp2uibVdZcdwtpBYYcOigOa
-	 CCDgCqmQz8mdFU/GFj+a7BUVlfhZ2p+P/Lg7q2UHQhVJ2cPV9bI8jPKOw0OLH4sz85
-	 CBMO23i981bOii6I4rlOLjbaZj+Pu/b2Txek+jRiZo/6Y4d4cRJ38cn41wAUfRdVs4
-	 va4TRFdjVCmAw==
-Message-ID: <9b63e455-c6f4-4a4d-bb21-ccd023d3a9e4@kernel.org>
-Date: Tue, 19 Dec 2023 11:10:22 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33A8F14296
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 10:13:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-50c0f13ea11so5225700e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 02:13:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702980829; x=1703585629; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zYrBEqviony/KLPY8G4pCvx58/VjzlZLIbQ8gGZCyHM=;
+        b=eY9DP41JMDhI23bWLwyN4C9/y0G8oC9imkiOy5nB+V6s8oHg+lIZO64wZ3X/aWhbQ4
+         T4AO84P8WEHfk9xEdo5v80IW3o6y0L62WVlgi7W329gOzQ0Jy7ya+JXJabm0eOe1lebX
+         5h5DEGONTIQ4GHw6845wOkQcbXQhdBEqSVoIQev+n4w4h67zZDsw3lHcDYiWG2QdZrWC
+         64as4pXWoysXt4BkjQhUv9sU6qw6JVrUI85W2T9hQbSaBNP9ZVvJpiCzRZ43TZoVKSQ8
+         x4FaSGgT9eKlivMxxhaLFV2a6mE3CZ0KfiO9HbvZafxvmhYoEnkN+K8YqFFh1zxkFCY3
+         n2wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702980829; x=1703585629;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zYrBEqviony/KLPY8G4pCvx58/VjzlZLIbQ8gGZCyHM=;
+        b=g5X6kbMmh5IXEyDpkQ2/8zANESOomttgyAPWQg19nrtcC7SjLaecEuB+cbMgo2pVv9
+         DRvkf3pYNONxcDEd8zRGd69dOjVeh6ZGy1OSRNKrivydKA+J9Whfy2IkdAvLoZk/rGC4
+         tPzX8V3tlRoH//3YTFyf9VFCi3dit5c+m16SY5zmTr5zLHl1n6zwW1F9u+7pW0X37ty3
+         mE3yIPFGOtf+HfEpI5enG3rreFmcwSXXdP5oLscsJq/5+AaOUrJkDpXJ5HmozKuVTQfQ
+         jOMr9XfiwyItW2YcbU0f7w8lwPvASVItVCKkafhzb/sio26AXMa6WO5beb52WenlZqA7
+         y3Gg==
+X-Gm-Message-State: AOJu0YyIfLpFVnx0B/6jMNzuP5lPmOxz0yV/aZuqzZVnzQBZI+kQBsax
+	s+VS5MSMhBWfJvz2aUm/CBYPgQ==
+X-Google-Smtp-Source: AGHT+IGZVXZIL7lXkRX99Ki9B0j4mQU/DafFaPntuZA258Okrh0v5xvhvV3YrKY+KNwKUnQdHxjYmg==
+X-Received: by 2002:a19:4f4a:0:b0:50e:404e:bc9 with SMTP id a10-20020a194f4a000000b0050e404e0bc9mr690721lfk.52.1702980829186;
+        Tue, 19 Dec 2023 02:13:49 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.27])
+        by smtp.gmail.com with ESMTPSA id g6-20020a056402320600b00553463827a8sm2118053eda.87.2023.12.19.02.13.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Dec 2023 02:13:48 -0800 (PST)
+Message-ID: <8546f599-f480-403f-9da4-a227dbd5a6cf@linaro.org>
+Date: Tue, 19 Dec 2023 11:13:46 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -41,21 +66,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/6] dt-bindings: arm: qcom: Document qcs8550 SoC and
- board
+Subject: Re: [PATCH v3 1/1] arm64: dts: qcom: sm8550: remove
+ address/size-cells from mdss_dsi1
 Content-Language: en-US
 To: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>,
  Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
  konrad.dybcio@linaro.org, robh+dt@kernel.org,
  krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20231219005007.11644-1-quic_tengfan@quicinc.com>
- <20231219005007.11644-2-quic_tengfan@quicinc.com>
- <30ecd718-4303-4380-8587-53c6f6b2a9bd@linaro.org>
- <4629b22b-9395-47a3-8af2-a85a9d4412ba@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
+ linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20231219003106.8663-1-quic_tengfan@quicinc.com>
+ <20231219003106.8663-2-quic_tengfan@quicinc.com>
+ <457e336e-004c-4721-b58d-e9ada16dc04b@linaro.org>
+ <a8f168da-14f7-4377-8dea-f282a3eac0a4@quicinc.com>
+ <13b61d41-6045-499e-864b-51c6cb6eacf9@linaro.org>
+ <38604415-b410-4995-9c4f-525536435699@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
  JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
@@ -65,93 +92,88 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  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
- 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 fv0=
-In-Reply-To: <4629b22b-9395-47a3-8af2-a85a9d4412ba@quicinc.com>
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <38604415-b410-4995-9c4f-525536435699@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 19/12/2023 10:45, Aiqun Yu (Maria) wrote:
->>> +      - items:
->>> +          - enum:
->>> +              - qcom,qcs8550-aim300-aiot
->>> +          - const: qcom,qcs8550-aim300
->>> +          - const: qcom,qcs8550
-> Need to add below line here, right?
-> +          - const: qcom,sm8550
+On 19/12/2023 11:09, Aiqun Yu (Maria) wrote:
+>>>>>
+>>>>>     sm8550.dtsi:2937.27-2992.6: Warning (avoid_unnecessary_addr_size): /soc@0/display-subsystem@ae00000/dsi@ae96000:
+>>>>>       unnecessary #address-cells/#size-cells without "ranges" or child "reg" property
+>>>>>
+>>>>>
+>>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+>>>>> ---
+>>>>
+>>>> I disagreed with the patch before. You resubmit it without really
+>>>> addressing my concerns.
+>>>>
+>>>> I am not sure if this is correct fix and I want to fix all of such
+>>>> errors (there are multiple of them) in the same way. Feel free to
+>>>> propose common solution based on arguments.
+>>> Per my understanding, "qcom,mdss-dsi-ctrl" driver node like "mdss_dsi1"
+>>> don't need to have address/size-cells properties.
+>>
+>> Just because dtc says so? And what about bindings?
+> I don't find any reason why "qcom,mdss-dsi-ctrl" driver node need to 
+> have address/size-cells properties. Document Bindings should also be fixed.
 
-Yes.
+Hm, maybe we misunderstand each other but I found clear reason:
+referencing common binding which mentions panels. Now, that's the reason
+for DTS but of course maybe hardware is different. I did not investigate
+that.
 
 >>
->> Missing compatible. Please read previous discussions.
-> The previous comments was missed. Just double confirm here for 
-> "fallback" meaning here.
+>>> Feel free to let us know whether there is different idea of
+>>> "address/size-cells" needed for the "qcom,mdss-dsi-ctrl" driver node.
+>>
+>> The bindings expressed that idea. If the binding is incorrect, fix the
+>> binding and the DTS. If the binding is correct, provide rationale why it
+>> somehow does not apply here etc.
+> Our plan is to fix the bindings as well.
 > 
-> Could you pls also double confirm for my understandings for the 
-> compatible rules?
+> In case you have missed the question, I just re-place it here:
+> While there are about 22 different soc dtsi and it's document binding 
+> files needed to be fixed. Shall we fix it for all qcom related soc usage 
+> in one patch, or we'd better to split into different patches according 
+> to soc specifically?
 
-Compatible rules were expressed in Devicetree specification and also
-writing-bindings document.
-
-> As long as sm8550 was designed "hardware compatible"(pin-to-pin 
-> compatible) and "software firmware compatible"(firmware also support 
-> sm8550) to qcs8550, it is request to add compatible sm8550 to current 
-> compatible sequence like: board/SOM/soc/base soc.
-
-I understood before that firmware is not compatible. Are there any
-changes now?
-
-The understanding was that your new SoC is stripped down SM8550, thus
-you will be using almost all of the SM8550 DTSI. If you use all of
-device nodes, the devices are compatible, aren't they? If they are
-compatible, then the writing-bindings document asks you to do add
-specific compatible.
-
-Please reach internally within Qualcomm for some initial guidance how
-DTS and DTSI looks like, so reviewers on mailing list won't need to
-explain it.
-
-This week it is third comment like this on mailing lists for three
-different patchsets. It is great that you send code upstream. Big
-companies however are expected to do some internal work first, instead
-of relying on the community.
-
-> 
-> Note that, we don't really have hardware like "sm8550 inside aim300".
-
-I really don't know what do you have and I did not find any explanation
-of QCS8550 in this commit msg which brings new compatible.
+Both options work for me.
 
 Best regards,
 Krzysztof
