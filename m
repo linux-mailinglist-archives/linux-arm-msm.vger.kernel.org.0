@@ -1,258 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-5453-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 975C681916C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 21:29:42 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F5B48191C4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 21:55:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A4D211C2484F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 20:29:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CBCC8285F3E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 20:55:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D3B639AD7;
-	Tue, 19 Dec 2023 20:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BC953A8EE;
+	Tue, 19 Dec 2023 20:55:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="hMyGwZh/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lQElauBz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-89-177-23-149.bb.vodafone.cz [89.177.23.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13903D0B3;
-	Tue, 19 Dec 2023 20:29:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from newone.lan (unknown [10.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 7DA0F1630CE;
-	Tue, 19 Dec 2023 21:29:09 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1703017749;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=6G3rw0AEZUGunB6Ksf0C7xKtc2I4eKBWya/sVdOEu40=;
-	b=hMyGwZh/ZwbRH2APJh1Tc014sj8LSxnVHFH4dTVjNH5U7Rz0Pg48Pql2ZUkRN267Qv5t+U
-	EdfeZf3eKyQeee8dMaVpeTDU1+t2YbuhJ6At01ogyYytWiOM6oZCXF9Jr4DUWASKVgox4p
-	bAkOXEXa6utzACcrE8owbXxNJ/uZ134=
-From: David Heidelberg <david@ixit.cz>
-To: Joerg Roedel <joro@8bytes.org>,
-	Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: David Heidelberg <david@ixit.cz>,
-	iommu@lists.linux.dev,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH v6] dt-bindings: iommu: Convert msm,iommu-v0 to yaml
-Date: Tue, 19 Dec 2023 21:28:27 +0100
-Message-ID: <20231219202907.186381-1-david@ixit.cz>
-X-Mailer: git-send-email 2.43.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F90439AEA
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 20:55:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-40c2308faedso59125105e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 12:55:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1703019335; x=1703624135; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=80CU+yeod+Yt0peXksdOGK0+bUEHvW9EJ+C21wPANvY=;
+        b=lQElauBz522nDpUsXXZ1wByOmJkS3CqhNGcKfTiwPsdwcwHMEFfiDS8iE1JLiYZuRL
+         UzwNIh1jEWIDJSv8C/OBGG7p+/KatquGRoNv2Afk0BsQg0N2W2OxHBbvG/NiUTrxVYl7
+         Li9RuM8vL4fzUo5B+lchUu3B7d9iySSCOSGmR8a6tEh/RnneQdsIuLe5FgedkU2fnN/T
+         aKd+R0bkQhHm/FZmjS9+LUU2LpX4gvd4IQTty9+ZhEz8e7RJn1ghVV/0zJ04/2pMBMTG
+         afittzibSQxDVWkQWjoHwFwaYywmc9IrXctQ/H84Vq9yHZZcaqfPxVPd9SfZfAiDPhoq
+         OmCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703019335; x=1703624135;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=80CU+yeod+Yt0peXksdOGK0+bUEHvW9EJ+C21wPANvY=;
+        b=uaz4VsyjvE2xGN18PMe5Kd1oL1CIqNq6NyFmv2Sv51k0Qel7EYgCLhNRUqGgCrUOwY
+         JYEI2SbEmphuW4GW/gV4gNhjE10X8VvSZ1t4729nUnKN6EAqdAgzbhWeMWZtgtRxv0e9
+         eBV7ApK0VKBl9bj9oFpAE9MX5VFHqeWj4WQ6fvjGsFheb2SH87OcD9NlwJfug0BjHoJO
+         YGXwn4VObdohmWAodvKqUa/lxLyKN2n1OpekoMHcBaeu6SdVq1ERR+8TrVt+x+eYpm3T
+         eBozqdjJ/bP/lTEx1ka2l7qh8NAicYmMETFMsXUN0QCAfU1gbK+SxVoC+aqRXrBA6m7T
+         qj7Q==
+X-Gm-Message-State: AOJu0YwDmlHv6dzB2HRodeuUyskKVR9gu48uH4x9LbiZyhuDoIK1rxUA
+	d4aWuUjiV/B3/UyoFMyOHekwBg==
+X-Google-Smtp-Source: AGHT+IG2dugVLWFhvm2ao0v3lUBqXjvW4cAitD3xDK8EpHvuzvTUVzY5T1+Pd2cLf38ZID5QrW9HRw==
+X-Received: by 2002:a05:600c:4f8d:b0:40c:55c4:45f5 with SMTP id n13-20020a05600c4f8d00b0040c55c445f5mr6740557wmq.132.1703019334725;
+        Tue, 19 Dec 2023 12:55:34 -0800 (PST)
+Received: from [127.0.1.1] ([79.115.23.25])
+        by smtp.gmail.com with ESMTPSA id v16-20020a05600c471000b0040c4886f254sm4460701wmo.13.2023.12.19.12.55.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Dec 2023 12:55:34 -0800 (PST)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH 0/3] phy: qcom: edp: Add support for DT phy mode
+ configuration
+Date: Tue, 19 Dec 2023 22:55:21 +0200
+Message-Id: <20231219-x1e80100-phy-edp-compatible-refactor-v1-0-f9e77752953d@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADkDgmUC/x2NQQqDMBAAvyJ77kI2OWj7ldLDdrPWBTUhkWIR/
+ 97gcRiYOaBqMa3w6A4o+rVqaW1Atw5k4vWjaLExeOcDebrjTjo4cg7z9EONGSUtmTd7z4pFR5Y
+ tFRz6EFS4F4kMLZWbsf3aPF/n+Qcm8na2dgAAAA==
+To: Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Johan Hovold <johan@kernel.org>
+Cc: linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1833; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=cxCsK5pPL1ouaTVUEaXGUdmvdaQ8uvQZc+vq2k9i0C8=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlggM7F52Lzw+szjnLXv9iiHPEH0//KIcZP3WF1
+ /Nqreh4KdyJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZYIDOwAKCRAbX0TJAJUV
+ VqOPEAClwnP4muEViar7Pb7gz1K11YvF4s3wy1cyTi7Vldm+EETsNmIs1GVulZ4Lhds7FQ8sdZw
+ 63s7myZ/N7rSOXn/wKN7cTsS3OVW+xwAtUFwKjQXk38va8EsjFSZZC6ZrmHl2YCWLFG1giptxFT
+ 13xKGLZc7Exc8d01N055F0h4IqPvXVdHfapdzMnLCiqkgmBOb0pUMSb26Fi2lZn+KnUnE8298Dz
+ LbJPUM1Gbq5+x3v4qfe+na5x2UWs8JkXzCrmXsnchxW9cMIa/hnnGtGwcqtfzgdybb8kToId8Xl
+ 6t3ty5zu7SW2ror7cJJCza7k7aulPQCBdm1KJU472XlJOwnoJ0jGmpbkztHLYPGPAMEgaqHXq7x
+ 0Dxs3F2XHqnk5LJock2fOIUgfrNP5za9MGveBr8SP5EFoOlr1Fc9mMkU5X9yuPi2WVkzvYfaKNj
+ JlV8Mq2fCZwmQ8FzFUM8AFaayfWKwNyCFDd5gqgi1PKqVD/vVoH2ZmIXXmg3tYLqTO3E2ShLunP
+ xDnjtPTSCQ7dPxo23OKY4sqFUVoQ+KIED4p8cO7pfO5yc+h9q5BVUZ8JjTGRiyLSu2rIpW9HkKx
+ y0yLvKbohlZBvOIrrQDShsbEtzLZ11u3HgPYSSA+Eypizo+UE33ZMG4Xo662ePBSlui/f2+2qQL
+ j7a6+1L4F2LdrwA==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-Convert Qualcomm IOMMU v0 implementation to yaml format.
+Until now, all platform that supported both eDP and DP had different
+compatibles for each mode. Using different compatibles for basically
+the same IP block but for a different configuration is bad way all
+around. There is a new compute platform from Qualcomm that supports
+both eDP and DP with the same PHY. So instead of following the old
+method, we should allow the mode to be configured from devicetree.
 
-iommus part being ommited for the other bindings, as mdp4 one.
+There has been an off-list discussion on what would be the right way
+to pass on the PHY mode information to the driver and it has been
+concluded that phy-cells is the way to go. This means that basically
+the controller will pass another value (that is, the PHY type) to
+its 'phys' DT property.
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
+For this, we need both the bindings value and the PHY mode value to be
+added as well.
+
+The controller part will follow shortly. But for now, lets see where
+this is going.
+
+There has been another attempt at this here:
+https://lore.kernel.org/all/20231122-phy-qualcomm-edp-x1e80100-v3-3-576fc4e9559d@linaro.org/
+
+Compared to that version, this one uses the phy-cells method and drops
+the X1E80100 support. The X1E80100 support will be a separate patchset.
+
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
-v6:
- - clean iommu-cells description (thx @Robin)
-v5:
- - updated example (thx @Konrad)
- - ordering of requirements + dropped > and | and reformatted (thx @Konrad)
-v4:
- - renamed to qcom,apq8064-iommu as Rob requested
- - changed title to Qualcomm APQ8064 IOMMU
- - dropped quotes around URLs
- - dropped mdp node
- - dropped unused mdp_port0 label
+Abel Vesa (3):
+      dt-bindings: phy: Add PHY_TYPE_EDP definition
+      phy: Add PHY Embedded DisplayPort mode
+      phy: qcom: edp: Allow PHY mode configuration via devicetree
 
-v3:
- - I kept the name as -v0, since we have other binding -v1 and it look
-   good, I can change thou in v4 if requested.
- - dropped non-existent smmu_clk part (and adjusted example, which was
-   using it)
- - dropped iommu description
- - moved iommu-cells description to the property #iommu-cells
+ drivers/phy/qualcomm/phy-qcom-edp.c | 89 ++++++++++++++++++++++++++++---------
+ include/dt-bindings/phy/phy.h       |  1 +
+ include/linux/phy/phy.h             |  3 +-
+ 3 files changed, 70 insertions(+), 23 deletions(-)
+---
+base-commit: 0e182d9523f6c0af49357fcd812eaa702bd4b403
+change-id: 20231219-x1e80100-phy-edp-compatible-refactor-8733eca7ccda
 
-v2:
- - fix wrong path in binding $id
- - comment qcom,mdp4 node example (we don't want to validate it yet)
-Signed-off-by: David Heidelberg <david@ixit.cz>
-
- .../bindings/iommu/msm,iommu-v0.txt           | 64 ----------------
- .../bindings/iommu/qcom,apq8064-iommu.yaml    | 76 +++++++++++++++++++
- 2 files changed, 76 insertions(+), 64 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/iommu/msm,iommu-v0.txt
- create mode 100644 Documentation/devicetree/bindings/iommu/qcom,apq8064-iommu.yaml
-
-diff --git a/Documentation/devicetree/bindings/iommu/msm,iommu-v0.txt b/Documentation/devicetree/bindings/iommu/msm,iommu-v0.txt
-deleted file mode 100644
-index 20236385f26e..000000000000
---- a/Documentation/devicetree/bindings/iommu/msm,iommu-v0.txt
-+++ /dev/null
-@@ -1,64 +0,0 @@
--* QCOM IOMMU
--
--The MSM IOMMU is an implementation compatible with the ARM VMSA short
--descriptor page tables. It provides address translation for bus masters outside
--of the CPU, each connected to the IOMMU through a port called micro-TLB.
--
--Required Properties:
--
--  - compatible: Must contain "qcom,apq8064-iommu".
--  - reg: Base address and size of the IOMMU registers.
--  - interrupts: Specifiers for the MMU fault interrupts. For instances that
--    support secure mode two interrupts must be specified, for non-secure and
--    secure mode, in that order. For instances that don't support secure mode a
--    single interrupt must be specified.
--  - #iommu-cells: The number of cells needed to specify the stream id. This
--		  is always 1.
--  - qcom,ncb:	  The total number of context banks in the IOMMU.
--  - clocks	: List of clocks to be used during SMMU register access. See
--		  Documentation/devicetree/bindings/clock/clock-bindings.txt
--		  for information about the format. For each clock specified
--		  here, there must be a corresponding entry in clock-names
--		  (see below).
--
--  - clock-names	: List of clock names corresponding to the clocks specified in
--		  the "clocks" property (above).
--		  Should be "smmu_pclk" for specifying the interface clock
--		  required for iommu's register accesses.
--		  Should be "smmu_clk" for specifying the functional clock
--		  required by iommu for bus accesses.
--
--Each bus master connected to an IOMMU must reference the IOMMU in its device
--node with the following property:
--
--  - iommus: A reference to the IOMMU in multiple cells. The first cell is a
--	    phandle to the IOMMU and the second cell is the stream id.
--	    A single master device can be connected to more than one iommu
--	    and multiple contexts in each of the iommu. So multiple entries
--	    are required to list all the iommus and the stream ids that the
--	    master is connected to.
--
--Example: mdp iommu and its bus master
--
--                mdp_port0: iommu@7500000 {
--			compatible = "qcom,apq8064-iommu";
--			#iommu-cells = <1>;
--			clock-names =
--			    "smmu_pclk",
--			    "smmu_clk";
--			clocks =
--			    <&mmcc SMMU_AHB_CLK>,
--			    <&mmcc MDP_AXI_CLK>;
--			reg = <0x07500000 0x100000>;
--			interrupts =
--			    <GIC_SPI 63 0>,
--			    <GIC_SPI 64 0>;
--			qcom,ncb = <2>;
--		};
--
--		mdp: qcom,mdp@5100000 {
--			compatible = "qcom,mdp";
--			...
--			iommus = <&mdp_port0 0
--				  &mdp_port0 2>;
--		};
-diff --git a/Documentation/devicetree/bindings/iommu/qcom,apq8064-iommu.yaml b/Documentation/devicetree/bindings/iommu/qcom,apq8064-iommu.yaml
-new file mode 100644
-index 000000000000..b9a2d02ed2e6
---- /dev/null
-+++ b/Documentation/devicetree/bindings/iommu/qcom,apq8064-iommu.yaml
-@@ -0,0 +1,76 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+
-+$id: http://devicetree.org/schemas/iommu/qcom,apq8064-iommu.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm APQ8064 IOMMU
-+
-+maintainers:
-+  - Will Deacon <will@kernel.org>
-+
-+description:
-+  The MSM IOMMU is an implementation compatible with the ARM VMSA short
-+  descriptor page tables. It provides address translation for bus masters
-+  outside of the CPU, each connected to the IOMMU through a port called micro-TLB.
-+
-+properties:
-+  compatible:
-+    const: qcom,apq8064-iommu
-+
-+  clocks:
-+    items:
-+      - description: interface clock for register accesses
-+      - description: functional clock for bus accesses
-+
-+  clock-names:
-+    items:
-+      - const: smmu_pclk
-+      - const: iommu_clk
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    description: Specifiers for the MMU fault interrupts.
-+    minItems: 1
-+    items:
-+      - description: non-secure mode interrupt
-+      - description: secure mode interrupt (for instances which supports it)
-+
-+  "#iommu-cells":
-+    const: 1
-+    description: Each IOMMU specifier describes a single Stream ID.
-+
-+  qcom,ncb:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    description: The total number of context banks in the IOMMU.
-+
-+required:
-+  - reg
-+  - interrupts
-+  - clocks
-+  - clock-names
-+  - qcom,ncb
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,mmcc-msm8960.h>
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+
-+    iommu@7500000 {
-+            compatible = "qcom,apq8064-iommu";
-+            reg = <0x07500000 0x100000>;
-+            interrupts = <GIC_SPI 63 IRQ_TYPE_LEVEL_HIGH>,
-+                         <GIC_SPI 64 IRQ_TYPE_LEVEL_HIGH>;
-+            clocks = <&clk SMMU_AHB_CLK>,
-+                     <&clk MDP_AXI_CLK>;
-+            clock-names = "smmu_pclk",
-+                          "iommu_clk";
-+            #iommu-cells = <1>;
-+            qcom,ncb = <2>;
-+    };
+Best regards,
 -- 
-2.43.0
+Abel Vesa <abel.vesa@linaro.org>
 
 
