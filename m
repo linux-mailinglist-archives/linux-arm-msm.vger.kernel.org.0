@@ -1,232 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-5337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2C151818346
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 09:25:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 60D6C818350
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 09:28:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 982F61F22CE0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 08:25:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C79E81F24E6F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 08:28:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB1261119A;
-	Tue, 19 Dec 2023 08:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B64F134A5;
+	Tue, 19 Dec 2023 08:28:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fc03dmA4"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="IYjGGDB+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851C5F9EC;
-	Tue, 19 Dec 2023 08:25:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BJ4fdqx012745;
-	Tue, 19 Dec 2023 08:25:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=lMtdsGx8Cv/vETBbBj/UE1bBF3s9NFSQrIDop6rAcV0=; b=fc
-	03dmA4shIGOhAbhxVGrWfIM668EelOiJJywhVFo47cPkyFdt/nL34J+WjElZl4zx
-	UXnAFYqdNxC+fvczN7NCmrP4A4cIXsOLrYnLSntRsnbG43106xU2r7k4/rVdFS6V
-	lqBM68Hhs/c2su5w9eauBmka4WsXMfMFj+VPcr1vMnjqMD93tnHZUiN//y48ZOUt
-	XwHBxsNRpY/rYLKq8pKgjxwssqZVlmrw0Y0aBLK44reV5Xl02LHXZZTi6PIewEZh
-	KskuTVOk7E6uxjqRaBQ/TtsfXW5Sl8LGx7qOctaKHfXbWMkuahZIjUZINQO2L/Q9
-	1ANfp/Yj7AwZlbUof+PQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v2nxsapdg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Dec 2023 08:25:12 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BJ8PB8s011507
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Dec 2023 08:25:11 GMT
-Received: from [10.214.66.253] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 19 Dec
- 2023 00:25:05 -0800
-Message-ID: <a363c860-62be-43a7-930c-cab8a6f3fa6c@quicinc.com>
-Date: Tue, 19 Dec 2023 13:54:55 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1EF2134B3
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 08:28:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from epcas1p2.samsung.com (unknown [182.195.41.46])
+	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20231219082758epoutp04492b169a1575ad480775344f0d639dad~iLkQNAzCr1455414554epoutp04E
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 08:27:58 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20231219082758epoutp04492b169a1575ad480775344f0d639dad~iLkQNAzCr1455414554epoutp04E
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1702974478;
+	bh=Lkyebhrd6+24n9nfaxXooVLJcoZKM0pcEuToIgbdeGU=;
+	h=From:To:Cc:Subject:Date:References:From;
+	b=IYjGGDB+BTxamjrqtwqJys6c6kj6jeWP9j5OOMzvUmkk5jBI3O6ygkij5IUPuJHqG
+	 wtu8kzLpT2D+IneqKnc9OLETdLdpeaK+aJwclWZ7LHzLU7EXcuU8Bz66lfgY6NOcjo
+	 hmlySkZNgpi4H9sy1kD3wiAk15CmSkF4OSA8F5xw=
+Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
+	epcas1p1.samsung.com (KnoxPortal) with ESMTP id
+	20231219082758epcas1p1a948778fb0e77d048cd05cbbb14220d7~iLkPrWCwG2492424924epcas1p1F;
+	Tue, 19 Dec 2023 08:27:58 +0000 (GMT)
+Received: from epsmgec1p1-new.samsung.com (unknown [182.195.38.242]) by
+	epsnrtp2.localdomain (Postfix) with ESMTP id 4SvVF951JHz4x9Pt; Tue, 19 Dec
+	2023 08:27:57 +0000 (GMT)
+Received: from epcas1p1.samsung.com ( [182.195.41.45]) by
+	epsmgec1p1-new.samsung.com (Symantec Messaging Gateway) with SMTP id
+	7B.09.19104.D0451856; Tue, 19 Dec 2023 17:27:57 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+	epcas1p3.samsung.com (KnoxPortal) with ESMTPA id
+	20231219082757epcas1p33bda4e0723d3d57552132054d3e5a3fe~iLkOmFrH10837108371epcas1p3v;
+	Tue, 19 Dec 2023 08:27:57 +0000 (GMT)
+Received: from epsmgmcp1.samsung.com (unknown [182.195.42.82]) by
+	epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+	20231219082757epsmtrp26cd44266f4c6ffc8aa51380f26380ad3~iLkOk9DcT1117211172epsmtrp2S;
+	Tue, 19 Dec 2023 08:27:57 +0000 (GMT)
+X-AuditID: b6c32a4c-80dff70000004aa0-ec-6581540deb96
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+	epsmgmcp1.samsung.com (Symantec Messaging Gateway) with SMTP id
+	C8.20.18939.C0451856; Tue, 19 Dec 2023 17:27:57 +0900 (KST)
+Received: from localhost.localdomain (unknown [10.253.100.232]) by
+	epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+	20231219082756epsmtip2a68e637137f7a0073d3d41aada0ef488~iLkOU2T8k1132911329epsmtip2s;
+	Tue, 19 Dec 2023 08:27:56 +0000 (GMT)
+From: Chanwoo Lee <cw9316.lee@samsung.com>
+To: mani@kernel.org, agross@kernel.org, andersson@kernel.org,
+	konrad.dybcio@linaro.org, jejb@linux.ibm.com, martin.petersen@oracle.com,
+	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: grant.jung@samsung.com, jt77.jang@samsung.com, dh0421.hwang@samsung.com,
+	sh043.lee@samsung.com, ChanWoo Lee <cw9316.lee@samsung.com>
+Subject: [PATCH] scsi: ufs: qcom: Remove unnecessary goto statement from
+ ufs_qcom_config_esi function
+Date: Tue, 19 Dec 2023 17:27:40 +0900
+Message-Id: <20231219082740.27644-1-cw9316.lee@samsung.com>
+X-Mailer: git-send-email 2.29.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/5] iommu/arm-smmu: add ACTLR data and support for
- SM8550
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Robin Murphy <robin.murphy@arm.com>
-CC: <will@kernel.org>, <joro@8bytes.org>, <jsnitsel@redhat.com>,
-        <quic_bjorande@quicinc.com>, <mani@kernel.org>,
-        <quic_eberman@quicinc.com>, <robdclark@chromium.org>,
-        <u.kleine-koenig@pengutronix.de>, <robh@kernel.org>,
-        <vladimir.oltean@nxp.com>, <quic_pkondeti@quicinc.com>,
-        <quic_molvera@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
-        <linux-kernel@vger.kernel.org>, <qipl.kernel.upstream@quicinc.com>
-References: <20231215101827.30549-1-quic_bibekkum@quicinc.com>
- <20231215101827.30549-4-quic_bibekkum@quicinc.com>
- <CAA8EJppcsr1sbeD1fK0nZ+rASABNcetBK3yMvaP7OiA4JPwskw@mail.gmail.com>
- <c9493c5f-ccf8-4e21-b00c-5fbc2a5f2edb@quicinc.com>
- <b7f2bbf9-fb5a-430d-aa32-3a220b46c2f0@arm.com>
- <1eee8bae-59f0-4066-9d04-8c3a5f750d3a@linaro.org>
- <42d627af-164b-4b50-973e-fa71d86cb84c@linaro.org>
- <aa8b2ccd-33da-404b-9a93-3d88cf63ec77@quicinc.com>
- <8338db1e-0216-4fc5-b6ab-ddf43adf3648@linaro.org>
-Content-Language: en-US
-From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-In-Reply-To: <8338db1e-0216-4fc5-b6ab-ddf43adf3648@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 2vdPj2COOM_Mwu7_zzN6029UHYYa1HUc
-X-Proofpoint-ORIG-GUID: 2vdPj2COOM_Mwu7_zzN6029UHYYa1HUc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- malwarescore=0 bulkscore=0 phishscore=0 spamscore=0 mlxscore=0
- impostorscore=0 priorityscore=1501 clxscore=1015 suspectscore=0
- adultscore=0 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2311290000 definitions=main-2312190061
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprPJsWRmVeSWpSXmKPExsWy7bCmri5vSGOqwZUnyhbnHv9msdjWYWMx
+	41Qbq8W+ayfZLX79Xc9usejGNiaLHc/PsFt0TN7OYjFx/1l2i8u75rBZdF/fwWZx4MMqRovl
+	x/8xWTT92cfiwOexaVUnm8eda3vYPCYsOsDo8fHpLRaPvi2rGD0+b5ILYIvKtslITUxJLVJI
+	zUvOT8nMS7dV8g6Od443NTMw1DW0tDBXUshLzE21VXLxCdB1y8wBulZJoSwxpxQoFJBYXKyk
+	b2dTlF9akqqQkV9cYquUWpCSU2BWoFecmFtcmpeul5daYmVoYGBkClSYkJ2x/PQixoJ3HBV7
+	5j9jb2BsZ+9i5OSQEDCRuLRpJVsXIxeHkMAeRonH11qZQRJCAp8YJb7eNIdIANl71r0EquIA
+	63jXoQYR38kocer5V6juL4wSax72sYAUsQloSdw+5g0SFxF4yiixa8ckFhCHWaCLUeLXwS4W
+	kBXCAukSx1ueMoM0sAioSnxcKQ0S5hWwlthyajcrxHnyEn/u9zBDxAUlTs58AtbKDBRv3jqb
+	GWSmhEAnh8SVJ+9YIBpcJJY+WwNlC0u8Or4F6k8pic/v9rJBNDQzSix8cxyqewKjxJePt9kg
+	quwlmlubwf5kFtCUWL9LH2Ibn8S7rz2sEO/zSnS0CUFUq0jM6TrHBjP/443HUEd7SCye/oIJ
+	EoyxEqf2b2OZwCg3C8kPs5D8MAth2QJG5lWMUqkFxbnpqcmGBYa6eanl8NhMzs/dxAhOqVo+
+	Oxi/r/+rd4iRiYPxEKMEB7OSCK/LovpUId6UxMqq1KL8+KLSnNTiQ4ymwICdyCwlmpwPTOp5
+	JfGGJpYGJmZGJhbGlsZmSuK8Z66UpQoJpCeWpGanphakFsH0MXFwSjUwJVmc23IxlGfZ/mkP
+	/jRuMFIvN/E8VJFi671Vs2rmHd13HTkGtSfnPiuM0i42L1nGUjL3xOqzQsuOpzzoj/tV+sqw
+	WFrGX+ZT+V1J583ZkzwT96tO2af0oE5q83eGT6WrsupDnnVZun/kjg4IurTQ58b3xqatTt++
+	MlcUvnjE8kJfYs4Wla7MLzvXTts4OeWu85+gFl7bUmY3RslwvWN+Sy9USp6ZcOGLgMKmyfEZ
+	OUv0L3f3OqdueOyV+e9TWonsPaUp8zpLXq4+xjF9wpWiYLk4uRUXn0n6MT3M3Leh+lxN4P5H
+	8atTRV4IeZkbMWWuOnbwZ7Dd0bmJ9l/UX6/5e5tlnubCUB9HMT0FIzU/JZbijERDLeai4kQA
+	wriaVTIEAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrALMWRmVeSWpSXmKPExsWy7bCSvC5vSGOqwZtVzBbnHv9msdjWYWMx
+	41Qbq8W+ayfZLX79Xc9usejGNiaLHc/PsFt0TN7OYjFx/1l2i8u75rBZdF/fwWZx4MMqRovl
+	x/8xWTT92cfiwOexaVUnm8eda3vYPCYsOsDo8fHpLRaPvi2rGD0+b5ILYIvisklJzcksSy3S
+	t0vgylh+ehFjwTuOij3zn7E3MLazdzFycEgImEi861DrYuTiEBLYzijR/mIfUxcjJ1BcSmL3
+	/vNsEDXCEocPF0PUfGKUOHtzNxNInE1AS+L2MW+QuIjAe0aJ/+fXMoM4zAITGCUWX3nLDDJI
+	WCBV4vqdGYwgDSwCqhIfV0qDhHkFrCW2nNrNCrFLXuLP/R5miLigxMmZT1hAbGagePPW2cwT
+	GPlmIUnNQpJawMi0ilE0taA4Nz03ucBQrzgxt7g0L10vOT93EyM40LWCdjAuW/9X7xAjEwfj
+	IUYJDmYlEV6XRfWpQrwpiZVVqUX58UWlOanFhxilOViUxHmVczpThATSE0tSs1NTC1KLYLJM
+	HJxSDUwavWcv5YkExjT8yy/6HyqRb3bAL8KuVPrYFY3C8oR/hxLLnu8/cvql+JyZx1ROffuT
+	PkMucOGscp+CWVH2p97w3PFSv+u3f+21/farb/HOlFLbdIinYIbG2y7/qinb7Iv8tFeZKV1/
+	5sl15gzjWsU918835zUqrHC35/kWx8tULj5jk8obAY654e9KtrUoGTJ/Dl3xz+zA03uZ/fNP
+	V1fuce1dV7DhcbHslD/cmWnzhf9dfyyz5LzYr2N1nFOMVopv8RF+mrXbUd4lx/F1wRsn2W88
+	Jy0nqCTtaYySWfs7IyNMPv7X9FZNPjn513ffqkT7blcP2zj/+sPwMsPYmFlzL30/buLNahJ1
+	ar/J1cNKLMUZiYZazEXFiQBxZjCH4wIAAA==
+X-CMS-MailID: 20231219082757epcas1p33bda4e0723d3d57552132054d3e5a3fe
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 101P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20231219082757epcas1p33bda4e0723d3d57552132054d3e5a3fe
+References: <CGME20231219082757epcas1p33bda4e0723d3d57552132054d3e5a3fe@epcas1p3.samsung.com>
 
+From: ChanWoo Lee <cw9316.lee@samsung.com>
 
+There is only one place where goto is used,
+and it is unnecessary to check the ret value through 'goto out'
+because the ret value is already true.
 
-On 12/18/2023 7:51 PM, Dmitry Baryshkov wrote:
-> On 18/12/2023 13:23, Bibek Kumar Patro wrote:
->>
->>
->> On 12/16/2023 9:45 PM, Dmitry Baryshkov wrote:
->>> On 16/12/2023 02:03, Konrad Dybcio wrote:
->>>> On 15.12.2023 13:54, Robin Murphy wrote:
->>>>> On 2023-12-15 12:20 pm, Bibek Kumar Patro wrote:
->>>>>>
->>>>>>
->>>>>> On 12/15/2023 4:14 PM, Dmitry Baryshkov wrote:
->>>>>>> On Fri, 15 Dec 2023 at 12:19, Bibek Kumar Patro
->>>>>>> <quic_bibekkum@quicinc.com> wrote:
->>>>>>>>
->>>>>>>> Add ACTLR data table for SM8550 along with support for
->>>>>>>> same including SM8550 specific implementation operations.
->>>>>>>>
->>>>>>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
->>>>>>>> ---
->>>>>>>>    drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 89 
->>>>>>>> ++++++++++++++++++++++
->>>>>>>>    1 file changed, 89 insertions(+)
->>>>>>>>
->>>>>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c 
->>>>>>>> b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>>>>> index cb49291f5233..d2006f610243 100644
->>>>>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>>>>> @@ -20,6 +20,85 @@ struct actlr_config {
->>>>>>>>           u32 actlr;
->>>>>>>>    };
->>>>>>>>
->>>>>>>> +/*
->>>>>>>> + * SMMU-500 TRM defines BIT(0) as CMTLB (Enable context caching 
->>>>>>>> in the
->>>>>>>> + * macro TLB) and BIT(1) as CPRE (Enable context caching in the 
->>>>>>>> prefetch
->>>>>>>> + * buffer). The remaining bits are implementation defined and 
->>>>>>>> vary across
->>>>>>>> + * SoCs.
->>>>>>>> + */
->>>>>>>> +
->>>>>>>> +#define PREFETCH_DEFAULT       0
->>>>>>>> +#define PREFETCH_SHALLOW       BIT(8)
->>>>>>>> +#define PREFETCH_MODERATE      BIT(9)
->>>>>>>> +#define PREFETCH_DEEP          (BIT(9) | BIT(8))
->>>>>>>
->>>>>>> I thin the following might be more correct:
->>>>>>>
->>>>>>> #include <linux/bitfield.h>
->>>>>>>
->>>>>>> #define PREFETCH_MASK GENMASK(9, 8)
->>>>>>> #define PREFETCH_DEFAULT FIELD_PREP(PREFETCH_MASK, 0)
->>>>>>> #define PREFETCH_SHALLOW FIELD_PREP(PREFETCH_MASK, 1)
->>>>>>> #define PREFETCH_MODERATE FIELD_PREP(PREFETCH_MASK, 2)
->>>>>>> #define PREFETCH_DEEP FIELD_PREP(PREFETCH_MASK, 3)
->>>>>>>
->>>>>>
->>>>>> Ack, thanks for this suggestion. Let me try this out using
->>>>>> GENMASK. Once tested, will take care of this in next version.
->>>>>
->>>>> FWIW the more typical usage would be to just define the named 
->>>>> macros for the raw field values, then put the FIELD_PREP() at the 
->>>>> point of use. However in this case that's liable to get pretty 
->>>>> verbose, so although I'm usually a fan of bitfield.h, the most 
->>>>> readable option here might actually be to stick with simpler 
->>>>> definitions of "(0 << 8)", "(1 << 8)", etc. However it's not really 
->>>>> a big deal either way, and I defer to whatever Dmitry and Konrad 
->>>>> prefer, since they're the ones looking after arm-smmu-qcom the most :)
->>>> My 5 cents would be to just use the "common" style of doing this, so:
->>>>
->>>> #define ACTRL_PREFETCH    GENMASK(9, 8)
->>>>   #define PREFETCH_DEFAULT 0
->>>>   #define PREFETCH_SHALLOW 1
->>>>   #define PREFETCH_MODERATE 2
->>>>   #define PREFETCH_DEEP 3
->>>>
->>>> and then use
->>>>
->>>> | FIELD_PREP(ACTRL_PREFETCH, PREFETCH_x)
->>>>
->>>> it can get verbose, but.. arguably that's good, since you really want
->>>> to make sure the right bits are set here
->>>
->>> Sounds good to me.
->>>
->>
->> Konrad, Dimitry, just checked FIELD_PREP() implementation
->>
->> #define FIELD_FIT(_mask, _val)
->> ({                                                              \
->>                   __BF_FIELD_CHECK(_mask, 0ULL, _val, "FIELD_PREP: ");  \
->>                   ((typeof(_mask))(_val) << __bf_shf(_mask)) & (_mask); \
->> })
->>
->> since it is defined as a block, it won't be possible to use FIELD_PREP
->> in macro or as a structure value, and can only be used inside a 
->> block/function. Orelse would show compilation errors as following
->>
->> kernel/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c:94:20: note: in 
->> expansion of macro 'PREFETCH_SHALLOW'
->>    { 0x1947, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
->>                      ^
->> kernel/include/linux/bitfield.h:113:2: error: braced-group within 
->> expression allowed only inside a function
->>    ({        \
->>    ^
->>
->> So as per my understanding I think, we might need to go ahead with the
->> generic implementation only. Let me know if I missed something.
-> 
-> Then anyway (foo << bar) is better compared to BIT(n) | BIT(m).
-> 
+Therefore, remove the goto statement and
+integrate the '!ret' condition into the existing code.
 
-Sure Dmitry, (foo << bar) would be simpler as well as Robin mentioned
-earlier in his reply.
-I can implement the defines as:
+Signed-off-by: ChanWoo Lee <cw9316.lee@samsung.com>
+---
+ drivers/ufs/host/ufs-qcom.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-#define PREFETCH_DEFAULT       0
-#define PREFETCH_SHALLOW       (1 << 8)
-#define PREFETCH_MODERATE      (1 << 9)
-#define PREFETCH_DEEP          (3 << 8)
-
-This should be okay I think ?
-
-Thanks,
-Bibek
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 17e24270477d..8cf803806326 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -1929,7 +1929,7 @@ static int ufs_qcom_config_esi(struct ufs_hba *hba)
+ 					     ufs_qcom_write_msi_msg);
+ 	if (ret) {
+ 		dev_err(hba->dev, "Failed to request Platform MSI %d\n", ret);
+-		goto out;
++		return ret;
+ 	}
+ 
+ 	msi_lock_descs(hba->dev);
+@@ -1964,11 +1964,8 @@ static int ufs_qcom_config_esi(struct ufs_hba *hba)
+ 				      REG_UFS_CFG3);
+ 		}
+ 		ufshcd_mcq_enable_esi(hba);
+-	}
+-
+-out:
+-	if (!ret)
+ 		host->esi_enabled = true;
++	}
+ 
+ 	return ret;
+ }
+-- 
+2.29.0
 
 
