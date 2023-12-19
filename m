@@ -1,369 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-5315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02C03817F94
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 03:14:22 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7936C817FB1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 03:21:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9A750284A01
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 02:14:21 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C859DB21D74
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 02:21:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 589241842;
-	Tue, 19 Dec 2023 02:14:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D75546A5;
+	Tue, 19 Dec 2023 02:19:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Qqu4oZ0J"
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="eZgqs9I+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76BB91C3D;
-	Tue, 19 Dec 2023 02:14:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BJ2B63Z005082;
-	Tue, 19 Dec 2023 02:13:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=sTN7UOc46rKDjPmwJEWvp+TJ5sQTmaOvICL80XOr2jM=; b=Qq
-	u4oZ0JDbUIPMMNOKelHMMCmIDw6x2MapoNC1umsDRLOp1YOIAa/oXNhZazjtWMgA
-	IC4+cF//TBccJcmHFuKJ1i9Yg8yfsv+xOb4EOENCFzDsdEdjllEnrm+h4PcqHdnY
-	fqkAXMrh4Zyj3zEYB+njp8kBEPkwp6ebQo4ABGHIUofsipDlfhB+V59hXseRPMnp
-	EGFFbRsP4webvpVZ7iYnWtapZNq2M2+CRXQaKKaeXo8imvS8tnf66JeYhYruFMa0
-	qTWhkxOmNw/J0B0KarJO1/MVNOgHq39ltTrKPzqiwBksNx4ltrSCZnCpw2kZwaIn
-	djAQ05V9OvOMXiz/D4Ew==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v2n179yf9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Dec 2023 02:13:48 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BJ2DmCt018555
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Dec 2023 02:13:48 GMT
-Received: from [10.239.133.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 18 Dec
- 2023 18:13:44 -0800
-Message-ID: <b5965008-b51d-4bb7-8cf2-d21aa35d2205@quicinc.com>
-Date: Tue, 19 Dec 2023 10:13:41 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F65468F;
+	Tue, 19 Dec 2023 02:19:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oracle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3BJ0JPom031537;
+	Tue, 19 Dec 2023 02:19:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type : content-transfer-encoding; s=corp-2023-11-20;
+ bh=ACFm5EgYGz2CeeqLh3teFmTxx+lzmuxagAN+Hbo1eac=;
+ b=eZgqs9I+L6CuQX6Y3cRNcegjcsW2EfxwHy80nheNBzOWy8bj+AIURwXPkiqau7MWwUvZ
+ 4qxrDr0pQ5tNA29GI9tK4ldiaUo44sdhFuIsj7BspnwF3yL5SyIa0M7HzgdINI/f2RPF
+ NTiBic+GcRlOV8hzKTXsO+eQzGXvuobs+DVImst5vApsQ4l8GjaULFzpGZQrgxbFY3FE
+ 6a74iwb+VPSywemAsAnldDB5UQ5chuwYlrG0y/K5uGrEFsMdTUaAG2bwUmLXRb14eTGa
+ CBaQ4X49zv2hLcz0mlleGbvRM2GlfRemJbCs1vhY4XInWdy57Cgw2sJ46J8I3KlaiC0/ Sg== 
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3v12aecs5m-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 19 Dec 2023 02:19:17 +0000
+Received: from pps.filterd (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 3BJ0HcRx020893;
+	Tue, 19 Dec 2023 02:19:16 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 3v12b69t9u-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 19 Dec 2023 02:19:16 +0000
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3BJ2J7ZF012682;
+	Tue, 19 Dec 2023 02:19:16 GMT
+Received: from ca-mkp2.ca.oracle.com.com (mpeterse-ol9.allregionaliads.osdevelopmeniad.oraclevcn.com [100.100.251.135])
+	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id 3v12b69t3t-7;
+	Tue, 19 Dec 2023 02:19:15 +0000
+From: "Martin K. Petersen" <martin.petersen@oracle.com>
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org,
+        Luca Weiss <luca.weiss@fairphone.com>
+Cc: "Martin K . Petersen" <martin.petersen@oracle.com>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Nitin Rawat <quic_nitirawa@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
+Subject: Re: [PATCH v6 0/3] Add UFS host controller and Phy nodes for sc7280
+Date: Mon, 18 Dec 2023 21:18:51 -0500
+Message-ID: <170294822179.2675590.13100554882735833514.b4-ty@oracle.com>
+X-Mailer: git-send-email 2.42.1
+In-Reply-To: <20231205-sc7280-ufs-v6-0-ad6ca7796de7@fairphone.com>
+References: <20231205-sc7280-ufs-v6-0-ad6ca7796de7@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/8] coresight-tpda: Add support to configure CMB
- element
-Content-Language: en-US
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mathieu Poirier
-	<mathieu.poirier@linaro.org>,
-        Alexander Shishkin
-	<alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC: Jinlong Mao <quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang
-	<quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Song Chai <quic_songchai@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <andersson@kernel.org>
-References: <1700533494-19276-1-git-send-email-quic_taozha@quicinc.com>
- <1700533494-19276-3-git-send-email-quic_taozha@quicinc.com>
- <88e51407-344e-4584-8711-29cc014c782b@arm.com>
-From: Tao Zhang <quic_taozha@quicinc.com>
-In-Reply-To: <88e51407-344e-4584-8711-29cc014c782b@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 473NI2uD5T8E9JM_pxSc1842BBoxOGGP
-X-Proofpoint-GUID: 473NI2uD5T8E9JM_pxSc1842BBoxOGGP
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 mlxscore=0
- lowpriorityscore=0 impostorscore=0 bulkscore=0 adultscore=0 clxscore=1015
- priorityscore=1501 suspectscore=0 malwarescore=0 phishscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
- definitions=main-2312190015
+ definitions=2023-12-18_15,2023-12-14_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 spamscore=0 mlxscore=0
+ mlxlogscore=999 bulkscore=0 adultscore=0 suspectscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
+ definitions=main-2312190017
+X-Proofpoint-ORIG-GUID: T4moszaKCu7FmN_m49Eai3-Qu-lx8eVF
+X-Proofpoint-GUID: T4moszaKCu7FmN_m49Eai3-Qu-lx8eVF
 
+On Tue, 05 Dec 2023 15:38:53 +0100, Luca Weiss wrote:
 
-On 12/18/2023 6:27 PM, Suzuki K Poulose wrote:
-> On 21/11/2023 02:24, Tao Zhang wrote:
->> Read the CMB element size from the device tree. Set the register
->> bit that controls the CMB element size of the corresponding port.
->>
->> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->> ---
->>   drivers/hwtracing/coresight/coresight-tpda.c | 117 +++++++++++--------
->>   drivers/hwtracing/coresight/coresight-tpda.h |   6 +
->>   2 files changed, 74 insertions(+), 49 deletions(-)
->>
->> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c 
->> b/drivers/hwtracing/coresight/coresight-tpda.c
->> index 5f82737c37bb..e3762f38abb3 100644
->> --- a/drivers/hwtracing/coresight/coresight-tpda.c
->> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
->> @@ -28,24 +28,54 @@ static bool coresight_device_is_tpdm(struct 
->> coresight_device *csdev)
->>               CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM);
->>   }
->>   +static void tpdm_clear_element_size(struct coresight_device *csdev)
->> +{
->> +    struct tpda_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
->> +
->> +    if (drvdata->dsb_esize)
->> +        drvdata->dsb_esize = 0;
->> +    if (drvdata->cmb_esize)
->> +        drvdata->cmb_esize = 0;
->
-> Why do we need the if (...) check here ?
+> This patch adds UFS host controller and Phy nodes for Qualcomm sc7280
+> SoC and enable it on some sc7280-based boards.
+> 
+> Pick up the patchset from Nitin since the last revision (v4) has been
+> sent end of September and is blocking qcm6490-fairphone-fp5 UFS.
+> 
 
-The element size of all the TPDM sub-unit should be set to 0 here.
+Applied to 6.8/scsi-queue, thanks!
 
-I will update this in the next patch series.
+[1/3] scsi: ufs: qcom: dt-bindings: Add SC7280 compatible string
+      https://git.kernel.org/mkp/scsi/c/98bfeda31969
 
->
->> +}
->> +
->> +static void tpda_set_element_size(struct tpda_drvdata *drvdata, u32 
->> *val)
->> +{
->> +
->> +    if (drvdata->dsb_esize == 64)
->> +        *val |= TPDA_Pn_CR_DSBSIZE;
->> +    else if (drvdata->dsb_esize == 32)
->> +        *val &= ~TPDA_Pn_CR_DSBSIZE;
->> +
->> +    if (drvdata->cmb_esize == 64)
->> +        *val |= FIELD_PREP(TPDA_Pn_CR_CMBSIZE, 0x2);
->> +    else if (drvdata->cmb_esize == 32)
->> +        *val |= FIELD_PREP(TPDA_Pn_CR_CMBSIZE, 0x1);
->> +    else if (drvdata->cmb_esize == 8)
->> +        *val &= ~TPDA_Pn_CR_CMBSIZE;
->> +}
->> +
->
->
->>   /*
->> - * Read the DSB element size from the TPDM device
->> + * Read the element size from the TPDM device
->>    * Returns
->> - *    The dsb element size read from the devicetree if available.
->> + *    The element size read from the devicetree if available.
->>    *    0 - Otherwise, with a warning once.
->
-> This doesn't match the function ? It return 0 on success and
-> error (-EINVAL) on failure ?
-
-0 means the element size property is found from the devicetree.
-
-Otherwise, it will return error(-EINVAL).
-
-I will update this in the next patch series.
-
->
->>    */
->> -static int tpdm_read_dsb_element_size(struct coresight_device *csdev)
->> +static int tpdm_read_element_size(struct tpda_drvdata *drvdata,
->> +                  struct coresight_device *csdev)
->>   {
->> -    int rc = 0;
->> -    u8 size = 0;
->> -
->> -    rc = fwnode_property_read_u8(dev_fwnode(csdev->dev.parent),
->> -            "qcom,dsb-element-size", &size);
->> +    int rc = -EINVAL;
->> +
->> +    if (!fwnode_property_read_u8(dev_fwnode(csdev->dev.parent),
->> +            "qcom,dsb-element-size", &drvdata->dsb_esize))
->> +        rc = 0;
->> +    if (!fwnode_property_read_u8(dev_fwnode(csdev->dev.parent),
->> +            "qcom,cmb-element-size", &drvdata->cmb_esize))
->> +        rc = 0;
->
-> Are we not silently resetting the error if the former failed ?
->
-> Could we not :
->
->     rc |= fwnode_...
->
->     rc |= fwnode_...
->
-> instead ?
->
-> Also what is the expectation here ? Are these properties a MUST for
-> TPDM ?
-
-The TPDM must have one of the element size property. As long as one
-
-can be found, this TPDM configuration can be considered valid. So this
-
-function will return 0 if one of the element size property is found.
-
-
-Best,
-
-Tao
-
->
->>       if (rc)
->>           dev_warn_once(&csdev->dev,
->> -            "Failed to read TPDM DSB Element size: %d\n", rc);
->> +            "Failed to read TPDM Element size: %d\n", rc);
->>   -    return size;
->> +    return rc;
->>   }
->>     /*
->> @@ -56,11 +86,12 @@ static int tpdm_read_dsb_element_size(struct 
->> coresight_device *csdev)
->>    * Parameter "inport" is used to pass in the input port number
->>    * of TPDA, and it is set to -1 in the recursize call.
->>    */
->> -static int tpda_get_element_size(struct coresight_device *csdev,
->> +static int tpda_get_element_size(struct tpda_drvdata *drvdata,
->> +                 struct coresight_device *csdev,
->>                    int inport)
->>   {
->> -    int dsb_size = -ENOENT;
->> -    int i, size;
->> +    int rc = 0;
->> +    int i;
->>       struct coresight_device *in;
->>         for (i = 0; i < csdev->pdata->nr_inconns; i++) {
->> @@ -74,25 +105,21 @@ static int tpda_get_element_size(struct 
->> coresight_device *csdev,
->>               continue;
->>             if (coresight_device_is_tpdm(in)) {
->> -            size = tpdm_read_dsb_element_size(in);
->> +            if ((drvdata->dsb_esize) || (drvdata->cmb_esize))
->> +                return -EEXIST;
->> +            rc = tpdm_read_element_size(drvdata, in);
->> +            if (rc)
->> +                return rc;
->>           } else {
->>               /* Recurse down the path */
->> -            size = tpda_get_element_size(in, -1);
->> -        }
->> -
->> -        if (size < 0)
->> -            return size;
->> -
->> -        if (dsb_size < 0) {
->> -            /* Found a size, save it. */
->> -            dsb_size = size;
->> -        } else {
->> -            /* Found duplicate TPDMs */
->> -            return -EEXIST;
->> +            rc = tpda_get_element_size(drvdata, in, -1);
->> +            if (rc)
->> +                return rc;
->>           }
->>       }
->>   -    return dsb_size;
->> +
->> +    return rc;
->>   }
->>     /* Settings pre enabling port control register */
->> @@ -109,7 +136,7 @@ static void tpda_enable_pre_port(struct 
->> tpda_drvdata *drvdata)
->>   static int tpda_enable_port(struct tpda_drvdata *drvdata, int port)
->>   {
->>       u32 val;
->> -    int size;
->> +    int rc;
->>         val = readl_relaxed(drvdata->base + TPDA_Pn_CR(port));
->>       /*
->> @@ -117,29 +144,21 @@ static int tpda_enable_port(struct tpda_drvdata 
->> *drvdata, int port)
->>        * Set the bit to 0 if the size is 32
->>        * Set the bit to 1 if the size is 64
->>        */
->> -    size = tpda_get_element_size(drvdata->csdev, port);
->> -    switch (size) {
->> -    case 32:
->> -        val &= ~TPDA_Pn_CR_DSBSIZE;
->> -        break;
->> -    case 64:
->> -        val |= TPDA_Pn_CR_DSBSIZE;
->> -        break;
->> -    case 0:
->> -        return -EEXIST;
->> -    case -EEXIST:
->> +    tpdm_clear_element_size(drvdata->csdev);
->> +    rc = tpda_get_element_size(drvdata, drvdata->csdev, port);
->> +    if (!rc && ((drvdata->dsb_esize) || (drvdata->cmb_esize))) {
->> +        tpda_set_element_size(drvdata, &val);
->> +        /* Enable the port */
->> +        val |= TPDA_Pn_CR_ENA;
->> +        writel_relaxed(val, drvdata->base + TPDA_Pn_CR(port));
->> +    } else if (rc == -EEXIST)
->>           dev_warn_once(&drvdata->csdev->dev,
->> -            "Detected multiple TPDMs on port %d", -EEXIST);
->> -        return -EEXIST;
->> -    default:
->> -        return -EINVAL;
->> -    }
->> -
->> -    /* Enable the port */
->> -    val |= TPDA_Pn_CR_ENA;
->> -    writel_relaxed(val, drvdata->base + TPDA_Pn_CR(port));
->> +                  "Detected multiple TPDMs on port %d", -EEXIST);
->> +    else
->> +        dev_warn_once(&drvdata->csdev->dev,
->> +                  "Didn't find TPDM elem size");
->
-> "element size"
->
->>   -    return 0;
->> +    return rc;
->>   }
->>     static int __tpda_enable(struct tpda_drvdata *drvdata, int port)
->> diff --git a/drivers/hwtracing/coresight/coresight-tpda.h 
->> b/drivers/hwtracing/coresight/coresight-tpda.h
->> index b3b38fd41b64..29164fd9711f 100644
->> --- a/drivers/hwtracing/coresight/coresight-tpda.h
->> +++ b/drivers/hwtracing/coresight/coresight-tpda.h
->> @@ -10,6 +10,8 @@
->>   #define TPDA_Pn_CR(n)        (0x004 + (n * 4))
->>   /* Aggregator port enable bit */
->>   #define TPDA_Pn_CR_ENA        BIT(0)
->> +/* Aggregator port CMB data set element size bit */
->> +#define TPDA_Pn_CR_CMBSIZE        GENMASK(7, 6)
->>   /* Aggregator port DSB data set element size bit */
->>   #define TPDA_Pn_CR_DSBSIZE        BIT(8)
->>   @@ -25,6 +27,8 @@
->>    * @csdev:      component vitals needed by the framework.
->>    * @spinlock:   lock for the drvdata value.
->>    * @enable:     enable status of the component.
->> + * @dsb_esize   Record the DSB element size.
->> + * @cmb_esize   Record the CMB element size.
->>    */
->>   struct tpda_drvdata {
->>       void __iomem        *base;
->> @@ -32,6 +36,8 @@ struct tpda_drvdata {
->>       struct coresight_device    *csdev;
->>       spinlock_t        spinlock;
->>       u8            atid;
->> +    u8            dsb_esize;
->> +    u8            cmb_esize;
->>   };
->>     #endif  /* _CORESIGHT_CORESIGHT_TPDA_H */
->
-> Suzuki
->
->
+-- 
+Martin K. Petersen	Oracle Linux Engineering
 
