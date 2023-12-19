@@ -1,127 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-5326-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5327-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 277AC8180AA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 05:44:09 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B54FB818151
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 07:06:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CADBE284374
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 04:44:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5366528201A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 06:06:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B1685689;
-	Tue, 19 Dec 2023 04:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC21E6FAE;
+	Tue, 19 Dec 2023 06:05:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="qvKgtpWO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FwNAXiee"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.smtpout.orange.fr (smtp-27.smtpout.orange.fr [80.12.242.27])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D159BE56
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 04:43:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=wanadoo.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
-Received: from pop-os.home ([92.140.202.140])
-	by smtp.orange.fr with ESMTPA
-	id FRq7rIyAdCta3FRq7rLpYg; Tue, 19 Dec 2023 05:36:20 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-	s=t20230301; t=1702960580;
-	bh=kg/q7rumzOx8Hl24GKVNgl/RrROwUKqK72wc4kbD3sE=;
-	h=From:To:Cc:Subject:Date;
-	b=qvKgtpWOoj4dZ6kz4iXiJrNQqE7l3qQNPalzgKRK2QqVljEog23aA11MgO7OVjQ4D
-	 lV5bX8/tbcJ/oDgVc6LS+kvq0WvMWudFPLUREHVM+0pnJN/2m3TyAEwWD2mOExtGgF
-	 ZeviyBnp6Z3OXgfwMrJH77HwMlVG//CwBUHbOAIPJKPYFZXArSWbqd/WHkQzlnEaJR
-	 JBtoBYIUO49hcNIaz+uCnD5dn10f4do3kKO/bmmD1fNmopn9rtycfW7Hl+gazmAggz
-	 3WZW4OcUBMJURMzxqbPBGM66x+YPhUrmo8hup1dejIGSdFbMQeDHdUGtpuPf3n3nXu
-	 jXMgpqka5E5BQ==
-X-ME-Helo: pop-os.home
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Tue, 19 Dec 2023 05:36:20 +0100
-X-ME-IP: 92.140.202.140
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-To: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: linux-kernel@vger.kernel.org,
-	kernel-janitors@vger.kernel.org,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	linux-arm-msm@vger.kernel.org,
-	alsa-devel@alsa-project.org
-Subject: [PATCH] slimbus: qcom-ngd-ctrl: Make QMI message rules const
-Date: Tue, 19 Dec 2023 05:36:17 +0100
-Message-Id: <7d0660a356a148bb800dcb0e211eca4886785a6c.1702960557.git.christophe.jaillet@wanadoo.fr>
-X-Mailer: git-send-email 2.34.1
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0608820;
+	Tue, 19 Dec 2023 06:05:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BJ5DuqO006718;
+	Tue, 19 Dec 2023 06:05:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=wl4+K71V0VvxC1sZKY7Qp0NaqTVKYirLa7JNZAyeOW8=; b=Fw
+	NAXieeNdXvj4/75u9YahBVuFQIFM8OyvzE2+hGZ7tlECFSG0Yp4sZgCtYpRZZ/it
+	pfk2rTyuhjqvyoXTZigHnyfgPs7LIbcBi9tBNs6BApUsbA2rERb84wgO7OsEjOkn
+	H9jSYylQI8XjVQomZsveo18qmT3yW7o6MSgGifRzA9c5pX3Uwoc+LLoro7Qk8s4C
+	res8iZ6aL7rGUwseLVMJlClkpFEt1Ve/U277SpWDdiuBGC3NI+kPRbRcaVpycbKR
+	wHD9JsPEqjTBtrs6p6YDkUljePIXiG2jKjIBYhfMfbjNgoLkM0kMHC+TMQ7ipeQq
+	4/GpjmtDco1ybkRvCXoA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v2vhrgyxn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 Dec 2023 06:05:52 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BJ65pBW017745
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 Dec 2023 06:05:51 GMT
+Received: from [10.238.139.231] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 18 Dec
+ 2023 22:05:47 -0800
+Message-ID: <90ec4c21-cef3-481e-a848-6fa471d43927@quicinc.com>
+Date: Tue, 19 Dec 2023 14:05:04 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] arm64: dts: qcom: Add definition for three LEDs.
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_fenglinw@quicinc.com>,
+        <quic_uchheda@quicinc.com>, <kamalw@qti.qualcomm.com>
+References: <20231110-qcom_leds-v2-1-3cad1fbbc65a@quicinc.com>
+ <aaf2e314-e7e2-4338-833f-1d1412776390@linaro.org>
+From: hui liu <quic_huliu@quicinc.com>
+In-Reply-To: <aaf2e314-e7e2-4338-833f-1d1412776390@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 6OMNMu6jx6bInI-XpOLI6zKWBMfKa0Ng
+X-Proofpoint-GUID: 6OMNMu6jx6bInI-XpOLI6zKWBMfKa0Ng
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
+ adultscore=0 bulkscore=0 priorityscore=1501 impostorscore=0 spamscore=0
+ lowpriorityscore=0 suspectscore=0 clxscore=1011 mlxlogscore=559
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312190043
 
-Commit ff6d365898d4 ("soc: qcom: qmi: use const for struct qmi_elem_info")
-allows QMI message encoding/decoding rules to be const, so do that here.
 
-Before:
-======
-$ size drivers/slimbus/qcom-ngd-ctrl.o
-   text	   data	    bss	    dec	    hex	filename
-  30354	   1993	     96	  32443	   7ebb	drivers/slimbus/qcom-ngd-ctrl.o
 
-After:
-=====
-$ size drivers/slimbus/qcom-ngd-ctrl.o
-   text	   data	    bss	    dec	    hex	filename
-  30738	   1593	     96	  32427	   7eab	drivers/slimbus/qcom-ngd-ctrl.o
+On 11/13/2023 8:14 PM, Konrad Dybcio wrote:
+> On 10.11.2023 03:06, Hui Liu via B4 Relay wrote:
+>> From: Hui Liu <quic_huliu@quicinc.com>
+>>
+>> Add definition for three LEDs to make sure they can
+>> be enabled base on QCOM LPG LED driver.
+>>
+>> Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
+>> ---
+>> Changes in v2:
+>> - Rephrased commit text and updated the nodes to board file.
+> The title should still include it, so:
+> 
+> arm64: dts: qcom: sc7280-idp: Add ...
+Added patch 3 to update the description.
 
-Compile tested only.
-
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
----
- drivers/slimbus/qcom-ngd-ctrl.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
-index 77aa6d26476c..efeba8275a66 100644
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -220,7 +220,7 @@ struct slimbus_power_resp_msg_v01 {
- 	struct qmi_response_type_v01 resp;
- };
- 
--static struct qmi_elem_info slimbus_select_inst_req_msg_v01_ei[] = {
-+static const struct qmi_elem_info slimbus_select_inst_req_msg_v01_ei[] = {
- 	{
- 		.data_type  = QMI_UNSIGNED_4_BYTE,
- 		.elem_len   = 1,
-@@ -262,7 +262,7 @@ static struct qmi_elem_info slimbus_select_inst_req_msg_v01_ei[] = {
- 	},
- };
- 
--static struct qmi_elem_info slimbus_select_inst_resp_msg_v01_ei[] = {
-+static const struct qmi_elem_info slimbus_select_inst_resp_msg_v01_ei[] = {
- 	{
- 		.data_type  = QMI_STRUCT,
- 		.elem_len   = 1,
-@@ -284,7 +284,7 @@ static struct qmi_elem_info slimbus_select_inst_resp_msg_v01_ei[] = {
- 	},
- };
- 
--static struct qmi_elem_info slimbus_power_req_msg_v01_ei[] = {
-+static const struct qmi_elem_info slimbus_power_req_msg_v01_ei[] = {
- 	{
- 		.data_type  = QMI_UNSIGNED_4_BYTE,
- 		.elem_len   = 1,
-@@ -324,7 +324,7 @@ static struct qmi_elem_info slimbus_power_req_msg_v01_ei[] = {
- 	},
- };
- 
--static struct qmi_elem_info slimbus_power_resp_msg_v01_ei[] = {
-+static const struct qmi_elem_info slimbus_power_resp_msg_v01_ei[] = {
- 	{
- 		.data_type  = QMI_STRUCT,
- 		.elem_len   = 1,
--- 
-2.34.1
-
+> Konrad
 
