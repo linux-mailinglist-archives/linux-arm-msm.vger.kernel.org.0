@@ -1,99 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-5431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5432-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7BA63818F3B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 19:06:57 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D937818FC0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 19:25:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 38875287029
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 18:06:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0AF001F28448
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 18:25:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA9E137D00;
-	Tue, 19 Dec 2023 18:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DDF438DEC;
+	Tue, 19 Dec 2023 18:25:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n0x1jHOM"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nloN4sZN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E1F37870;
-	Tue, 19 Dec 2023 18:06:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FC1EC433C8;
-	Tue, 19 Dec 2023 18:06:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1703009199;
-	bh=2AlFxLi7oJh7Wa2NVO96A7tL3W01cNMV+NcW1zh9qDM=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=n0x1jHOM5g1uy9hxI58NgHZwTsQEJjCGuV3K/cBxMRRFgUyHp/TndRdTCsbAlSNud
-	 F2fV1NFM8jwNWonTXby5r/bEyKmcc4qTFXE6RhHQRHe7k2Wfa9u4snAogXXEoU2sbQ
-	 jULiZXGkQ1uzOzqf7Nol9zwJ9O/8EFhmdGcgUFSqeAVv26irpJ62lzFHFo/wTJe/a9
-	 g59D7OcAyl+B+YvhpMbR+WqGwmRYWEnS1J/R56kDJuWceOcFJvomejes37rlEZxYYu
-	 i38C2M1kPKzrR6OG+/hbCSczVKLbDAOqgR89+V2tkvMzeJ4XDtIukGdjfBif5LmLQk
-	 o5V3yMKRvh5SA==
-From: Mark Brown <broonie@kernel.org>
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>, 
- Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>, Neil Armstrong <neil.armstrong@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org, 
- linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org
-In-Reply-To: <20231212-topic-sm8650-upstream-snd-card-v1-0-fbfc38471204@linaro.org>
-References: <20231212-topic-sm8650-upstream-snd-card-v1-0-fbfc38471204@linaro.org>
-Subject: Re: [PATCH 0/2] ASoC: qcom: add sound card support for SM8650
-Message-Id: <170300919611.125466.12203726463843347252.b4-ty@kernel.org>
-Date: Tue, 19 Dec 2023 18:06:36 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF6538DE9;
+	Tue, 19 Dec 2023 18:25:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BJDDEZu004213;
+	Tue, 19 Dec 2023 18:25:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=l2mjR068uBgssSL2NBDdgKbwryFxHPTPbyLcDtsZecg=; b=nl
+	oN4sZNm5DLgsslfyIKB/BhmU7XsbhLUGV+HLerlrU4qV6pivcYxoO0Xfz6gBr7oa
+	OOSHlgD/U5NtPDp5qcqC551Qf9lQo2kBgn46aDH8CL8deAhVLd86PPrEtoJlLF+2
+	0ahlY1oXDUwyMW9yw2Vo+ydfimWdiGdyL4SNoZzLV8BbRMY5BwhBSb4ugas+xiCz
+	JagIiNHLjKQ2rdFlnDuIrbl/OMy654LMaqnX8KpYHf81WN91X3Y0rVuabut24r0+
+	P2gDk5OTlaCJFFgS/2+2c+pxjOJuj1bBuoRnUq8X7o6u4lrbawN18NkA7mRrEhgS
+	0OY+1MlNMM+ez+spbGFQ==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v330kt453-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 Dec 2023 18:25:04 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BJIP3aq012087
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 Dec 2023 18:25:03 GMT
+Received: from [10.110.67.222] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 19 Dec
+ 2023 10:24:58 -0800
+Message-ID: <35eaac60-5617-4b42-bf1e-55d4f4dbbd2f@quicinc.com>
+Date: Tue, 19 Dec 2023 10:24:57 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 00/13] arm64: qcom: add and enable SHM Bridge support
+Content-Language: en-US
+To: Bartosz Golaszewski <brgl@bgdev.pl>, Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>,
+        Guru Das Srinagesh
+	<quic_gurus@quicinc.com>,
+        Andrew Halaney <ahalaney@redhat.com>,
+        "Maximilian
+ Luz" <luzmaximilian@gmail.com>,
+        Alex Elder <elder@linaro.org>,
+        "Srini
+ Kandagatla" <srinivas.kandagatla@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <kernel@quicinc.com>,
+        "Bartosz
+ Golaszewski" <bartosz.golaszewski@linaro.org>
+References: <20231127141600.20929-1-brgl@bgdev.pl>
+From: Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <20231127141600.20929-1-brgl@bgdev.pl>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-5c066
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: _aK5AV8CyCUucdYhkxl0iI19k8lsA1ME
+X-Proofpoint-GUID: _aK5AV8CyCUucdYhkxl0iI19k8lsA1ME
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
+ bulkscore=0 spamscore=0 adultscore=0 mlxlogscore=999 clxscore=1011
+ priorityscore=1501 malwarescore=0 suspectscore=0 lowpriorityscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312190137
 
-On Tue, 12 Dec 2023 09:08:18 +0100, Neil Armstrong wrote:
-> Document the SM8650 sound card using the SM8450 fallback
-> and add the SM8650 compatible to the sc8280xp sound card
-> driver to use the sm8650 card driver_name like SM8450 & SM8550.
+
+
+On 11/27/2023 6:15 AM, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
+> This is pretty much another full rewrite of the SHM Bridge support
+> series. After more on- and off-list discussions I think this time it
+> will be close to the final thing though.
 > 
-
-Applied to
-
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
-
-Thanks!
-
-[1/2] ASoC: dt-bindings: qcom,sm8250: document SM8650 sound card
-      commit: 773df207fdd6e17d7a43abf83ea155ade9a95f79
-[2/2] ASoC: qcom: sc8280xp: Add support for SM8650
-      commit: 7211094dd065908747a143f9adeff41cfdcf37c0
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+> We've established the need for using separate pools for SCM and QSEECOM
+> as well as the upcoming scminvoke driver.
+> 
+> It's also become clear that in order to be future-proof, the new
+> allocator must be an abstraction layer of a higher level as the SHM
+> Bridge will not be the only memory protection mechanism that we'll see
+> upstream. Hence the rename to TrustZone Memory rather than SCM Memory
+> allocator.
+> 
+> Also to that end: the new allocator is its own module now and provides a
+> Kconfig choice menu for selecting the mode of operation (currently
+> default and SHM Bridge).
+> 
+> Due to a high divergence from v2, I dropped all tags except for
+> patch 1/15 which didn't change.
+> 
+> Tested on sm8550 and sa8775p with the Inline Crypto Engine and
+> remoteproc.
+> 
+> v5 -> v6:
+> Fixed two issues reported by autobuilders:
+> - add a fix for memory leaks in the qseecom driver as the first patch for
+>   easier backporting to the v6.6.y branch
+> - explicitly cast the bus address stored in a variable of type dma_addr_t
+>   to phys_addr_t expected by the genpool API
+> 
+> v4 -> v5:
+> - fix the return value from qcom_tzmem_init() if SHM Bridge is not supported
+> - remove a comment that's no longer useful
+> - collect tags
+> 
+> v3 -> v4:
+> - include linux/sizes.h for SZ_X macros
+> - use dedicated RCU APIs to dereference radix tree slots
+> - fix kerneldocs
+> - fix the comment in patch 14/15: it's the hypervisor, not the TrustZone
+>   that creates the SHM bridge
+> 
+> v2 -> v3:
+> - restore pool management and use separate pools for different users
+> - don't use the new allocator in qcom_scm_pas_init_image() as the
+>   TrustZone will create an SHM bridge for us here
+> - rewrite the entire series again for most part
+> 
+> v1 -> v2:
+> - too many changes to list, it's a complete rewrite as explained above
+> 
+> Bartosz Golaszewski (13):
+>   firmware: qcom: qseecom: fix memory leaks in error paths
+>   firmware: qcom: add a dedicated TrustZone buffer allocator
+>   firmware: qcom: scm: enable the TZ mem allocator
+>   firmware: qcom: scm: smc: switch to using the SCM allocator
+>   firmware: qcom: scm: make qcom_scm_assign_mem() use the TZ allocator
+>   firmware: qcom: scm: make qcom_scm_ice_set_key() use the TZ allocator
+>   firmware: qcom: scm: make qcom_scm_lmh_dcvsh() use the TZ allocator
+>   firmware: qcom: scm: make qcom_scm_qseecom_app_get_id() use the TZ
+>     allocator
+>   firmware: qcom: qseecom: convert to using the TZ allocator
+>   firmware: qcom: scm: add support for SHM bridge operations
+>   firmware: qcom: tzmem: enable SHM Bridge support
+>   firmware: qcom: scm: clarify the comment in qcom_scm_pas_init_image()
+>   arm64: defconfig: enable SHM Bridge support for the TZ memory
+>     allocator
+> 
+>  arch/arm64/configs/defconfig                  |   1 +
+>  drivers/firmware/qcom/Kconfig                 |  30 ++
+>  drivers/firmware/qcom/Makefile                |   1 +
+>  .../firmware/qcom/qcom_qseecom_uefisecapp.c   | 261 +++++--------
+>  drivers/firmware/qcom/qcom_scm-smc.c          |  30 +-
+>  drivers/firmware/qcom/qcom_scm.c              | 179 +++++----
+>  drivers/firmware/qcom/qcom_scm.h              |   6 +
+>  drivers/firmware/qcom/qcom_tzmem.c            | 365 ++++++++++++++++++
+>  drivers/firmware/qcom/qcom_tzmem.h            |  13 +
+>  include/linux/firmware/qcom/qcom_qseecom.h    |   4 +-
+>  include/linux/firmware/qcom/qcom_scm.h        |   6 +
+>  include/linux/firmware/qcom/qcom_tzmem.h      |  28 ++
+>  12 files changed, 669 insertions(+), 255 deletions(-)
+>  create mode 100644 drivers/firmware/qcom/qcom_tzmem.c
+>  create mode 100644 drivers/firmware/qcom/qcom_tzmem.h
+>  create mode 100644 include/linux/firmware/qcom/qcom_tzmem.h
+> 
+Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
 
