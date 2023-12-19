@@ -1,54 +1,39 @@
-Return-Path: <linux-arm-msm+bounces-5349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5350-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DA2D818506
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 11:09:38 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id ABE2181850C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 11:10:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BFD8B1F23CFD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 10:09:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 353632864B3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 10:10:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D04DC1427A;
-	Tue, 19 Dec 2023 10:09:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F0E414AA6;
+	Tue, 19 Dec 2023 10:10:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gsWgQZtP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pq7chEDA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E9A14271;
-	Tue, 19 Dec 2023 10:09:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BJ9fZLO006262;
-	Tue, 19 Dec 2023 10:09:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=RnRLvqjZt6MuGnqJKM1p3NgdyFDJky3EeJ1A+41J22Y=; b=gs
-	WgQZtPfhyJE+QTTX65/ks0S9swzby2c8R35sX1FlEI7s+r3BtyIo8uDWXz2KjE+1
-	9GU3uSc9ig0W+1xu6Mrys4ifEGl7YQeMrPmCOImwjgHGxIPEIJid5NvwS0ovdPkq
-	xmsxHTm4+SCIXJLB0n3Lz/UwettzDL2527dl5aQ3qa6+xXA7jllNPItBtptqopi1
-	3XrfYFpSKbRulU3SHdpbu5rPSHTJ8iE/rOe0UT0dXjlYhenAO/N9ptSfp2XsXh5Z
-	kgZvsHDfIVB/ZPP68rhMrX0nAswVx8KTG15D/iizydqDN+UBnuK0N4KdLc91cJ1N
-	b0rdoltxI4VrFnrKRnkw==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v38qsr2e5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Dec 2023 10:09:28 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BJA9RoY027322
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Dec 2023 10:09:27 GMT
-Received: from [10.239.132.150] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 19 Dec
- 2023 02:09:21 -0800
-Message-ID: <38604415-b410-4995-9c4f-525536435699@quicinc.com>
-Date: Tue, 19 Dec 2023 18:09:18 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6F414A87;
+	Tue, 19 Dec 2023 10:10:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6593AC433CC;
+	Tue, 19 Dec 2023 10:10:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1702980631;
+	bh=q6wGB0avUcKndoaBou8XiihdCYq6iQnfWzTM7Uy4LuA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=pq7chEDAixUW1p5Zi9TVR1q7C//ibKbNuj/eY5WWw/3C7N02OejPkK9+eX8tQYQr8
+	 phzgIAV0+b3noZzR/m9G85jbs1tG6LX51LULXPBsshguiCF8FKCDwGb7vnDNmEXV+B
+	 z5qaJ85PT+LNcMeDMaPJxteH6umCCaZW5Fg+c8OXMgmVp2uibVdZcdwtpBYYcOigOa
+	 CCDgCqmQz8mdFU/GFj+a7BUVlfhZ2p+P/Lg7q2UHQhVJ2cPV9bI8jPKOw0OLH4sz85
+	 CBMO23i981bOii6I4rlOLjbaZj+Pu/b2Txek+jRiZo/6Y4d4cRJ38cn41wAUfRdVs4
+	 va4TRFdjVCmAw==
+Message-ID: <9b63e455-c6f4-4a4d-bb21-ccd023d3a9e4@kernel.org>
+Date: Tue, 19 Dec 2023 11:10:22 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,107 +41,119 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/1] arm64: dts: qcom: sm8550: remove
- address/size-cells from mdss_dsi1
+Subject: Re: [PATCH v3 1/6] dt-bindings: arm: qcom: Document qcs8550 SoC and
+ board
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Tengfei Fan
-	<quic_tengfan@quicinc.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
-References: <20231219003106.8663-1-quic_tengfan@quicinc.com>
- <20231219003106.8663-2-quic_tengfan@quicinc.com>
- <457e336e-004c-4721-b58d-e9ada16dc04b@linaro.org>
- <a8f168da-14f7-4377-8dea-f282a3eac0a4@quicinc.com>
- <13b61d41-6045-499e-864b-51c6cb6eacf9@linaro.org>
-From: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>
-In-Reply-To: <13b61d41-6045-499e-864b-51c6cb6eacf9@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>,
+ Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20231219005007.11644-1-quic_tengfan@quicinc.com>
+ <20231219005007.11644-2-quic_tengfan@quicinc.com>
+ <30ecd718-4303-4380-8587-53c6f6b2a9bd@linaro.org>
+ <4629b22b-9395-47a3-8af2-a85a9d4412ba@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <4629b22b-9395-47a3-8af2-a85a9d4412ba@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: RxcrOaUghPkOwbVPiABImMty2koh5QW9
-X-Proofpoint-ORIG-GUID: RxcrOaUghPkOwbVPiABImMty2koh5QW9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- adultscore=0 priorityscore=1501 mlxlogscore=776 impostorscore=0
- suspectscore=0 phishscore=0 clxscore=1015 lowpriorityscore=0
- malwarescore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312190075
 
+On 19/12/2023 10:45, Aiqun Yu (Maria) wrote:
+>>> +      - items:
+>>> +          - enum:
+>>> +              - qcom,qcs8550-aim300-aiot
+>>> +          - const: qcom,qcs8550-aim300
+>>> +          - const: qcom,qcs8550
+> Need to add below line here, right?
+> +          - const: qcom,sm8550
 
+Yes.
 
-On 12/19/2023 5:41 PM, Krzysztof Kozlowski wrote:
-> On 19/12/2023 10:36, Aiqun Yu (Maria) wrote:
 >>
->>
->> On 12/19/2023 3:17 PM, Krzysztof Kozlowski wrote:
->>> On 19/12/2023 01:31, Tengfei Fan wrote:
->>>> The address/size-cells in mdss_dsi1 node have not ranges and child also
->>>> have not reg, then this leads to dtc W=1 warnings:
->>>
->> Comments can be more readable:
->> "mdss_dsi1" node don't have "ranges" or child "reg" property, while it
->> have address/size-cells properties. This caused
->> "avoid_unnecessary_addr_size" warning from dtb check.
->> Remove address/size-cells properties for "mdss_dsi1" node.
->>
->>> I cannot parse it. Address/size cells never have ranges or children.
->>> They cannot have. These are uint32 properties.
->> Pls help to comment on the revised commit message. Every time I write a
->> commit message, also takes a while for me to double confirm whether
->> others can understand me correctly as well. Feel free to let us know if
->> it is not readable to you. It will help us as non-English native developers.
->>>
->>>>
->>>>     sm8550.dtsi:2937.27-2992.6: Warning (avoid_unnecessary_addr_size): /soc@0/display-subsystem@ae00000/dsi@ae96000:
->>>>       unnecessary #address-cells/#size-cells without "ranges" or child "reg" property
->>>>
->>>>
->>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
->>>> ---
->>>
->>> I disagreed with the patch before. You resubmit it without really
->>> addressing my concerns.
->>>
->>> I am not sure if this is correct fix and I want to fix all of such
->>> errors (there are multiple of them) in the same way. Feel free to
->>> propose common solution based on arguments.
->> Per my understanding, "qcom,mdss-dsi-ctrl" driver node like "mdss_dsi1"
->> don't need to have address/size-cells properties.
+>> Missing compatible. Please read previous discussions.
+> The previous comments was missed. Just double confirm here for 
+> "fallback" meaning here.
 > 
-> Just because dtc says so? And what about bindings?
-I don't find any reason why "qcom,mdss-dsi-ctrl" driver node need to 
-have address/size-cells properties. Document Bindings should also be fixed.
-> 
->> Feel free to let us know whether there is different idea of
->> "address/size-cells" needed for the "qcom,mdss-dsi-ctrl" driver node.
-> 
-> The bindings expressed that idea. If the binding is incorrect, fix the
-> binding and the DTS. If the binding is correct, provide rationale why it
-> somehow does not apply here etc.
-Our plan is to fix the bindings as well.
+> Could you pls also double confirm for my understandings for the 
+> compatible rules?
 
-In case you have missed the question, I just re-place it here:
-While there are about 22 different soc dtsi and it's document binding 
-files needed to be fixed. Shall we fix it for all qcom related soc usage 
-in one patch, or we'd better to split into different patches according 
-to soc specifically?
+Compatible rules were expressed in Devicetree specification and also
+writing-bindings document.
+
+> As long as sm8550 was designed "hardware compatible"(pin-to-pin 
+> compatible) and "software firmware compatible"(firmware also support 
+> sm8550) to qcs8550, it is request to add compatible sm8550 to current 
+> compatible sequence like: board/SOM/soc/base soc.
+
+I understood before that firmware is not compatible. Are there any
+changes now?
+
+The understanding was that your new SoC is stripped down SM8550, thus
+you will be using almost all of the SM8550 DTSI. If you use all of
+device nodes, the devices are compatible, aren't they? If they are
+compatible, then the writing-bindings document asks you to do add
+specific compatible.
+
+Please reach internally within Qualcomm for some initial guidance how
+DTS and DTSI looks like, so reviewers on mailing list won't need to
+explain it.
+
+This week it is third comment like this on mailing lists for three
+different patchsets. It is great that you send code upstream. Big
+companies however are expected to do some internal work first, instead
+of relying on the community.
 
 > 
-> 
-> Best regards,
-> Krzysztof
-> 
+> Note that, we don't really have hardware like "sm8550 inside aim300".
 
--- 
-Thx and BRs,
-Aiqun(Maria) Yu
+I really don't know what do you have and I did not find any explanation
+of QCS8550 in this commit msg which brings new compatible.
+
+Best regards,
+Krzysztof
+
 
