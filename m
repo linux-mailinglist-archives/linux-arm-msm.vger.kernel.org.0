@@ -1,166 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-5338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60D6C818350
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 09:28:19 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 386F481841E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 10:07:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C79E81F24E6F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 08:28:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5ECF71C23551
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 09:07:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B64F134A5;
-	Tue, 19 Dec 2023 08:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9365612B80;
+	Tue, 19 Dec 2023 09:06:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="IYjGGDB+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SP6XpKFB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1EF2134B3
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 08:28:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas1p2.samsung.com (unknown [182.195.41.46])
-	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20231219082758epoutp04492b169a1575ad480775344f0d639dad~iLkQNAzCr1455414554epoutp04E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 08:27:58 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20231219082758epoutp04492b169a1575ad480775344f0d639dad~iLkQNAzCr1455414554epoutp04E
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1702974478;
-	bh=Lkyebhrd6+24n9nfaxXooVLJcoZKM0pcEuToIgbdeGU=;
-	h=From:To:Cc:Subject:Date:References:From;
-	b=IYjGGDB+BTxamjrqtwqJys6c6kj6jeWP9j5OOMzvUmkk5jBI3O6ygkij5IUPuJHqG
-	 wtu8kzLpT2D+IneqKnc9OLETdLdpeaK+aJwclWZ7LHzLU7EXcuU8Bz66lfgY6NOcjo
-	 hmlySkZNgpi4H9sy1kD3wiAk15CmSkF4OSA8F5xw=
-Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
-	epcas1p1.samsung.com (KnoxPortal) with ESMTP id
-	20231219082758epcas1p1a948778fb0e77d048cd05cbbb14220d7~iLkPrWCwG2492424924epcas1p1F;
-	Tue, 19 Dec 2023 08:27:58 +0000 (GMT)
-Received: from epsmgec1p1-new.samsung.com (unknown [182.195.38.242]) by
-	epsnrtp2.localdomain (Postfix) with ESMTP id 4SvVF951JHz4x9Pt; Tue, 19 Dec
-	2023 08:27:57 +0000 (GMT)
-Received: from epcas1p1.samsung.com ( [182.195.41.45]) by
-	epsmgec1p1-new.samsung.com (Symantec Messaging Gateway) with SMTP id
-	7B.09.19104.D0451856; Tue, 19 Dec 2023 17:27:57 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-	epcas1p3.samsung.com (KnoxPortal) with ESMTPA id
-	20231219082757epcas1p33bda4e0723d3d57552132054d3e5a3fe~iLkOmFrH10837108371epcas1p3v;
-	Tue, 19 Dec 2023 08:27:57 +0000 (GMT)
-Received: from epsmgmcp1.samsung.com (unknown [182.195.42.82]) by
-	epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-	20231219082757epsmtrp26cd44266f4c6ffc8aa51380f26380ad3~iLkOk9DcT1117211172epsmtrp2S;
-	Tue, 19 Dec 2023 08:27:57 +0000 (GMT)
-X-AuditID: b6c32a4c-80dff70000004aa0-ec-6581540deb96
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-	epsmgmcp1.samsung.com (Symantec Messaging Gateway) with SMTP id
-	C8.20.18939.C0451856; Tue, 19 Dec 2023 17:27:57 +0900 (KST)
-Received: from localhost.localdomain (unknown [10.253.100.232]) by
-	epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20231219082756epsmtip2a68e637137f7a0073d3d41aada0ef488~iLkOU2T8k1132911329epsmtip2s;
-	Tue, 19 Dec 2023 08:27:56 +0000 (GMT)
-From: Chanwoo Lee <cw9316.lee@samsung.com>
-To: mani@kernel.org, agross@kernel.org, andersson@kernel.org,
-	konrad.dybcio@linaro.org, jejb@linux.ibm.com, martin.petersen@oracle.com,
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: grant.jung@samsung.com, jt77.jang@samsung.com, dh0421.hwang@samsung.com,
-	sh043.lee@samsung.com, ChanWoo Lee <cw9316.lee@samsung.com>
-Subject: [PATCH] scsi: ufs: qcom: Remove unnecessary goto statement from
- ufs_qcom_config_esi function
-Date: Tue, 19 Dec 2023 17:27:40 +0900
-Message-Id: <20231219082740.27644-1-cw9316.lee@samsung.com>
-X-Mailer: git-send-email 2.29.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11D64134B3
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 09:06:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3366ddd1eddso1610768f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 01:06:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702976815; x=1703581615; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RDqC8mlmI0zifdWF6zhA4HVQDLdCJIzhq2G0yUNbN+U=;
+        b=SP6XpKFBf/Dam36RWOlQ4c3JCjLJxLbrpWDOz2NvMfZ+5zMn2NRB3y0c+4CRa5PAbc
+         iWLqMKt7xvm8nMWjOz/9wRdX+epnyUPnrxIBCJTraQvUnoVGr5JcL0XBCNOxTRfMhhcc
+         Lz5k/GwayVjcPV5q6z1Zy0zyVf540R36xTsGTCaXjsC7K3kc7FcTeXPM5XVMYh4iFcCV
+         YR3Ag87mg1uzn1bWApKs5SCpJuYub98dku9Xt9Sgyv1IPZaDIKAs+Lf1safiIeNrlsHy
+         X+IqRZhQy9Uu+ERj8JxeClDd2iiT7lgzsE21sSnJwob8OFiDQ5vCnquFp3KV1sWHxA2l
+         lyhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702976815; x=1703581615;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=RDqC8mlmI0zifdWF6zhA4HVQDLdCJIzhq2G0yUNbN+U=;
+        b=ACHHYIv/VKOIKDnAFPE54J2xB3MsoyewFfHp/wrNL8JWDWe18c22PVQkoHTAmZLEJK
+         hkbxMJebaBmyR/TWhDlRdTA7hZdkAfLzBbCnG68Gaz3qwIzoS20nIrQlm+5imKw1pcvX
+         kFYrz7eEvQZ4WtUv1AtMs72OVDYataaf/vjn+BdPDvgSzHgOU+Wf3DrUX/uz2vU+ED7A
+         JWUrpKo1TYcVbd0JmHGxYG97sbdPyGtP3i6y0SY7PawyXwbcvebPvoIleOvNJ8ijIqwZ
+         3HWMPKwv13YSJXmrPAImBLtxzmcc9mC0q7Vfb35j3cxZR9Hx/zIUuAyMgHjAOqDq44Ub
+         8XHw==
+X-Gm-Message-State: AOJu0Yz+ot2PFJG43FLWspUYq+roeBxzjDCk+mjSxgusIfqUNkzi3gwK
+	wiY3MRXMn2dza4BCvmD625/OGe3QFg1rlISX/oo3w/SP
+X-Google-Smtp-Source: AGHT+IFN8G5/Lgsr+ycIlj6IKKA3b++uKO1oEZgohuUof2lngQpHf+MVMOCmZrneYpdXMAHqLDK7kA==
+X-Received: by 2002:adf:e58b:0:b0:336:4c3d:91e6 with SMTP id l11-20020adfe58b000000b003364c3d91e6mr2194897wrm.271.1702976815185;
+        Tue, 19 Dec 2023 01:06:55 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:e99:1baf:483a:7533? ([2a01:e0a:982:cbb0:e99:1baf:483a:7533])
+        by smtp.gmail.com with ESMTPSA id l17-20020a5d4bd1000000b00336607f6630sm7841873wrt.47.2023.12.19.01.06.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Dec 2023 01:06:54 -0800 (PST)
+Message-ID: <73b45f8b-f8a5-47cd-87f1-c522ae908769@linaro.org>
+Date: Tue, 19 Dec 2023 10:06:54 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprPJsWRmVeSWpSXmKPExsWy7bCmri5vSGOqwZUnyhbnHv9msdjWYWMx
-	41Qbq8W+ayfZLX79Xc9usejGNiaLHc/PsFt0TN7OYjFx/1l2i8u75rBZdF/fwWZx4MMqRovl
-	x/8xWTT92cfiwOexaVUnm8eda3vYPCYsOsDo8fHpLRaPvi2rGD0+b5ILYIvKtslITUxJLVJI
-	zUvOT8nMS7dV8g6Od443NTMw1DW0tDBXUshLzE21VXLxCdB1y8wBulZJoSwxpxQoFJBYXKyk
-	b2dTlF9akqqQkV9cYquUWpCSU2BWoFecmFtcmpeul5daYmVoYGBkClSYkJ2x/PQixoJ3HBV7
-	5j9jb2BsZ+9i5OSQEDCRuLRpJVsXIxeHkMAeRonH11qZQRJCAp8YJb7eNIdIANl71r0EquIA
-	63jXoQYR38kocer5V6juL4wSax72sYAUsQloSdw+5g0SFxF4yiixa8ckFhCHWaCLUeLXwS4W
-	kBXCAukSx1ueMoM0sAioSnxcKQ0S5hWwlthyajcrxHnyEn/u9zBDxAUlTs58AtbKDBRv3jqb
-	GWSmhEAnh8SVJ+9YIBpcJJY+WwNlC0u8Or4F6k8pic/v9rJBNDQzSix8cxyqewKjxJePt9kg
-	quwlmlubwf5kFtCUWL9LH2Ibn8S7rz2sEO/zSnS0CUFUq0jM6TrHBjP/443HUEd7SCye/oIJ
-	EoyxEqf2b2OZwCg3C8kPs5D8MAth2QJG5lWMUqkFxbnpqcmGBYa6eanl8NhMzs/dxAhOqVo+
-	Oxi/r/+rd4iRiYPxEKMEB7OSCK/LovpUId6UxMqq1KL8+KLSnNTiQ4ymwICdyCwlmpwPTOp5
-	JfGGJpYGJmZGJhbGlsZmSuK8Z66UpQoJpCeWpGanphakFsH0MXFwSjUwJVmc23IxlGfZ/mkP
-	/jRuMFIvN/E8VJFi671Vs2rmHd13HTkGtSfnPiuM0i42L1nGUjL3xOqzQsuOpzzoj/tV+sqw
-	WFrGX+ZT+V1J583ZkzwT96tO2af0oE5q83eGT6WrsupDnnVZun/kjg4IurTQ58b3xqatTt++
-	MlcUvnjE8kJfYs4Wla7MLzvXTts4OeWu85+gFl7bUmY3RslwvWN+Sy9USp6ZcOGLgMKmyfEZ
-	OUv0L3f3OqdueOyV+e9TWonsPaUp8zpLXq4+xjF9wpWiYLk4uRUXn0n6MT3M3Leh+lxN4P5H
-	8atTRV4IeZkbMWWuOnbwZ7Dd0bmJ9l/UX6/5e5tlnubCUB9HMT0FIzU/JZbijERDLeai4kQA
-	wriaVTIEAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrALMWRmVeSWpSXmKPExsWy7bCSvC5vSGOqwZtVzBbnHv9msdjWYWMx
-	41Qbq8W+ayfZLX79Xc9usejGNiaLHc/PsFt0TN7OYjFx/1l2i8u75rBZdF/fwWZx4MMqRovl
-	x/8xWTT92cfiwOexaVUnm8eda3vYPCYsOsDo8fHpLRaPvi2rGD0+b5ILYIvisklJzcksSy3S
-	t0vgylh+ehFjwTuOij3zn7E3MLazdzFycEgImEi861DrYuTiEBLYzijR/mIfUxcjJ1BcSmL3
-	/vNsEDXCEocPF0PUfGKUOHtzNxNInE1AS+L2MW+QuIjAe0aJ/+fXMoM4zAITGCUWX3nLDDJI
-	WCBV4vqdGYwgDSwCqhIfV0qDhHkFrCW2nNrNCrFLXuLP/R5miLigxMmZT1hAbGagePPW2cwT
-	GPlmIUnNQpJawMi0ilE0taA4Nz03ucBQrzgxt7g0L10vOT93EyM40LWCdjAuW/9X7xAjEwfj
-	IUYJDmYlEV6XRfWpQrwpiZVVqUX58UWlOanFhxilOViUxHmVczpThATSE0tSs1NTC1KLYLJM
-	HJxSDUwavWcv5YkExjT8yy/6HyqRb3bAL8KuVPrYFY3C8oR/hxLLnu8/cvql+JyZx1ROffuT
-	PkMucOGscp+CWVH2p97w3PFSv+u3f+21/farb/HOlFLbdIinYIbG2y7/qinb7Iv8tFeZKV1/
-	5sl15gzjWsU918835zUqrHC35/kWx8tULj5jk8obAY654e9KtrUoGTJ/Dl3xz+zA03uZ/fNP
-	V1fuce1dV7DhcbHslD/cmWnzhf9dfyyz5LzYr2N1nFOMVopv8RF+mrXbUd4lx/F1wRsn2W88
-	Jy0nqCTtaYySWfs7IyNMPv7X9FZNPjn513ffqkT7blcP2zj/+sPwMsPYmFlzL30/buLNahJ1
-	ar/J1cNKLMUZiYZazEXFiQBxZjCH4wIAAA==
-X-CMS-MailID: 20231219082757epcas1p33bda4e0723d3d57552132054d3e5a3fe
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 101P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20231219082757epcas1p33bda4e0723d3d57552132054d3e5a3fe
-References: <CGME20231219082757epcas1p33bda4e0723d3d57552132054d3e5a3fe@epcas1p3.samsung.com>
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org, linux-input@vger.kernel.org
+Subject: Re: [PATCH v13 0/4] Input: add initial support for Goodix Berlin
+ touchscreen IC
+Content-Language: en-US, fr
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc: Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bastien Nocera <hadess@hadess.net>,
+ Hans de Goede <hdegoede@redhat.com>, Henrik Rydberg <rydberg@bitmath.org>,
+ Jeff LaBundy <jeff@labundy.com>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-input@vger.kernel.org, Rob Herring <robh@kernel.org>
+References: <20231213-topic-goodix-berlin-upstream-initial-v13-0-5d7a26a5eaa2@linaro.org>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <20231213-topic-goodix-berlin-upstream-initial-v13-0-5d7a26a5eaa2@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: ChanWoo Lee <cw9316.lee@samsung.com>
+Hi Dmitry,
 
-There is only one place where goto is used,
-and it is unnecessary to check the ret value through 'goto out'
-because the ret value is already true.
+On 13/12/2023 18:13, Neil Armstrong wrote:
+> These touchscreen ICs support SPI, I2C and I3C interface, up to
+> 10 finger touch, stylus and gestures events.
+> 
 
-Therefore, remove the goto statement and
-integrate the '!ret' condition into the existing code.
+<snip>
 
-Signed-off-by: ChanWoo Lee <cw9316.lee@samsung.com>
----
- drivers/ufs/host/ufs-qcom.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+Gentle ping! Is there any chance this driver could land for v6.8-rc1 ?
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 17e24270477d..8cf803806326 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -1929,7 +1929,7 @@ static int ufs_qcom_config_esi(struct ufs_hba *hba)
- 					     ufs_qcom_write_msi_msg);
- 	if (ret) {
- 		dev_err(hba->dev, "Failed to request Platform MSI %d\n", ret);
--		goto out;
-+		return ret;
- 	}
- 
- 	msi_lock_descs(hba->dev);
-@@ -1964,11 +1964,8 @@ static int ufs_qcom_config_esi(struct ufs_hba *hba)
- 				      REG_UFS_CFG3);
- 		}
- 		ufshcd_mcq_enable_esi(hba);
--	}
--
--out:
--	if (!ret)
- 		host->esi_enabled = true;
-+	}
- 
- 	return ret;
- }
--- 
-2.29.0
+Thanks!
+Neil
+
+<snip>
 
 
