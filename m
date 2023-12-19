@@ -1,195 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-5395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5396-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 374248188A3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 14:26:37 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B0B68188D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 14:44:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D912F281381
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 13:26:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5A9B1B20A99
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 13:44:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00D3418ED6;
-	Tue, 19 Dec 2023 13:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42BB91B272;
+	Tue, 19 Dec 2023 13:44:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EBm0c7M/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VHyg7yOB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6AFE1A585
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 13:26:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520011A590
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 13:44:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-dae7cc31151so3090694276.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 05:26:24 -0800 (PST)
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-54c5d041c23so5489807a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 05:44:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702992384; x=1703597184; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=PVGuPQrWl+LmYikQej8Pn8i8g8HVkB+WF5yC7NXZyGI=;
-        b=EBm0c7M/GKxdsxRUVvon8TvOVvc2JfrYMI3IFgnvnZn1GXv/hlo9ByTKJnmlDrJDwL
-         ZVEPYtGEaB1fTVXDC4lVUEmrlldiM5izhInNKFFt4PCMkoGa0xVFsnmEf1gmQVtGIivC
-         1WSGbFumDIfRYvQ70wDeW7yXEnXudhsoHlO1M2kr1MhOFID/J+enCyrvgSzOGM/eq+Mm
-         96s0Zq8FOm7txm8LdSoe2qFCWxksV4ALMXsxhNUkZIbrgo9PjEjBlq3PZfw8s9nJf7yM
-         rJzVNXOHK9JlIwjsjpot6qKEzFEnw1uUzTKxOkvJa4MUoVVEcgw0f0PAUbNkSuEEehrl
-         GXaA==
+        d=linaro.org; s=google; t=1702993442; x=1703598242; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6po6KMiINGJs5wNst8xWPOi02cNvHAcYG9RtuorVPJs=;
+        b=VHyg7yOB5oAU9bXDANP41764cmVFQolboDBA7DM2DJhkSWBQu+xWGqsVkovgaf/OHY
+         tSbVJZCldZ143L4gSKntkE+sU4aItC6P/O53NuM2r/d8fvX3aqk9A3tflybp2EMV2+ZI
+         HAxfmNfS1NWN6x49Sm2Ad22J1NmDErjsJucYqPfF8XJ9NyMqpv2D1BAEQhMrfGJccqjR
+         j1mJaJo8/ycMhlTlTFic2aM7N136QymcslhYy+mbNUHq3ThyWT5j5eltLjxgMG5AaHb3
+         o5CpGHvKKbS6cdGsa4toRy5tn8t0LJ77WLcy1lVglkkI5YxAAPGaCAcjW0l52gWRo6b7
+         dQYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702992384; x=1703597184;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PVGuPQrWl+LmYikQej8Pn8i8g8HVkB+WF5yC7NXZyGI=;
-        b=Im2Deaz294Kr8C2XNyqPMXUWsbrlzNvHXwIqcDhREeSCOKKBTxohoCMnteViVRBTLO
-         uvvup4FHUkXSzD6Gh+t5Si0zSXDo7pxOUqBItltBvtCvPKDWg7k79eiT75ubgVrdoPKj
-         wDdFW+AmCSeqjgD0LUf6T8tnU1whF3ywZ+kdhAcngEBvkNEEGiXLBpRXmnYKKKpI/DBk
-         iLn1MGuHhDsCkAZ/iTz7R4T/rExJhYYE16OJWgjM1T4Z1T/dZRrhdqtFShdF2Qjr4Kqy
-         2k3dFLlS+PiOGSXw3BAuggyTmw1ZB7OnpTNNTkTe3oe+h538T+2tn2uLRczF2iEOug+/
-         9FmA==
-X-Gm-Message-State: AOJu0YzK957WvOZkIFo4jobrDwVvJs2QKaKUCOHx5gvRdjWECl41zHRf
-	6pAM/B17HhAREHaLSyXDBY2oYKfna8jRf2AfPW1VAQ==
-X-Google-Smtp-Source: AGHT+IGotqSKoQXCFGIcuwlkQPZB72NGgPaU4wZmUji7gO4rCFm7wa0NO9LuviWkbp6wfwVM6mQfX4wP3zyE0VI3f4Y=
-X-Received: by 2002:a25:6903:0:b0:dbc:dbab:61ab with SMTP id
- e3-20020a256903000000b00dbcdbab61abmr5881855ybc.12.1702992383748; Tue, 19 Dec
- 2023 05:26:23 -0800 (PST)
+        d=1e100.net; s=20230601; t=1702993442; x=1703598242;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6po6KMiINGJs5wNst8xWPOi02cNvHAcYG9RtuorVPJs=;
+        b=nFumYEU1AMdtz0ugcX2gNE8hvINZK7nL/3Hd8DuVvkM85+dbCJclfRFcFLeFjhmRqV
+         r81dzsO5eW4Fr0/98CWezgNwoS6xDbUGe/QbGxHLIeh/Gad+TGOb/9Hsn9ELauqo1t2M
+         mGW+dQWgvR/HOMtKR0GJYZc3hv9hsHikZ8pGBEAq6Eki/bl4Lgoq5UDuX3ecGoeTsZ1j
+         a+kmwoS8vQRF7Wt1sI8FNAuuHvCLPCWh2LEL+a1DiG0dr+vgF1+ZSl9k8BAMoCUM4LYS
+         7dPL5AcZfFyKx8yCkVF2cJkTUdRgDuG12KkoKFGfiQtv5T+WEgdJ7pchDl4HdW4XKf85
+         Gj8A==
+X-Gm-Message-State: AOJu0YzC/DxA0X5XjnZKwepzUb4yljbCI3J0ZLR+xBwUeDX2rusZK/lh
+	+p+OqxI8Kk+i4ExQrHJHK0kHnA==
+X-Google-Smtp-Source: AGHT+IEy//AKQpCkTtEgDyWAS+2xkqN4uRHNIq2B2im9iWDLdRwfYvCMu2RI1Ibdo4kCapH+4Ej0sQ==
+X-Received: by 2002:a17:906:2086:b0:a23:2c38:753b with SMTP id 6-20020a170906208600b00a232c38753bmr1228938ejq.173.1702993442665;
+        Tue, 19 Dec 2023 05:44:02 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.27])
+        by smtp.gmail.com with ESMTPSA id uv8-20020a170907cf4800b00a1d232b39b9sm15254867ejc.184.2023.12.19.05.44.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Dec 2023 05:44:01 -0800 (PST)
+Message-ID: <bb5f7150-e9ab-4fd0-a727-db348912d371@linaro.org>
+Date: Tue, 19 Dec 2023 14:43:58 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <1702899149-21321-1-git-send-email-quic_dikshita@quicinc.com>
- <1702899149-21321-2-git-send-email-quic_dikshita@quicinc.com> <e08f54cb-5b28-497b-9484-b691dce0acff@linaro.org>
-In-Reply-To: <e08f54cb-5b28-497b-9484-b691dce0acff@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 19 Dec 2023 15:26:12 +0200
-Message-ID: <CAA8EJpojYFRcO32wXc9B5Q1D1oSMbx3GP1d9qdtppar39-2=Qw@mail.gmail.com>
-Subject: Re: [PATCH v2 01/34] media: introduce common helpers for video
- firmware handling
-To: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
-Cc: Dikshita Agarwal <quic_dikshita@quicinc.com>, linux-media@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, stanimir.k.varbanov@gmail.com, 
-	quic_vgarodia@quicinc.com, agross@kernel.org, andersson@kernel.org, 
-	konrad.dybcio@linaro.org, mchehab@kernel.org, linux-arm-msm@vger.kernel.org, 
-	quic_abhinavk@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ASoC: dt-bindings: qcom,lpass-va-macro: remove spurious
+ contains in if statement
+Content-Language: en-US
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Banajit Goswami <bgoswami@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood
+ <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20231219-topic-sm8x50-upstream-va-macro-bindings-fix-v1-1-ae133886f70e@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzTRLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnp5c3p0b2Yua296bG93c2tpQGxpbmFyby5vcmc+wsGUBBMBCgA+FiEE
+ m9B+DgxR+NWWd7dUG5NDfTtBYpsFAmI+BxMCGwMFCRRfreEFCwkIBwIGFQoJCAsCBBYCAwEC
+ HgECF4AACgkQG5NDfTtBYptgbhAAjAGunRoOTduBeC7V6GGOQMYIT5n3OuDSzG1oZyM4kyvO
+ XeodvvYv49/ng473E8ZFhXfrre+c1olbr1A8pnz9vKVQs9JGVa6wwr/6ddH7/yvcaCQnHRPK
+ mnXyP2BViBlyDWQ71UC3N12YCoHE2cVmfrn4JeyK/gHCvcW3hUW4i5rMd5M5WZAeiJj3rvYh
+ v8WMKDJOtZFXxwaYGbvFJNDdvdTHc2x2fGaWwmXMJn2xs1ZyFAeHQvrp49mS6PBQZzcx0XL5
+ cU9ZjhzOZDn6Apv45/C/lUJvPc3lo/pr5cmlOvPq1AsP6/xRXsEFX/SdvdxJ8w9KtGaxdJuf
+ rpzLQ8Ht+H0lY2On1duYhmro8WglOypHy+TusYrDEry2qDNlc/bApQKtd9uqyDZ+rx8bGxyY
+ qBP6bvsQx5YACI4p8R0J43tSqWwJTP/R5oPRQW2O1Ye1DEcdeyzZfifrQz58aoZrVQq+innR
+ aDwu8qDB5UgmMQ7cjDSeAQABdghq7pqrA4P8lkA7qTG+aw8Z21OoAyZdUNm8NWJoQy8m4nUP
+ gmeeQPRc0vjp5JkYPgTqwf08cluqO6vQuYL2YmwVBIbO7cE7LNGkPDA3RYMu+zPY9UUi/ln5
+ dcKuEStFZ5eqVyqVoZ9eu3RTCGIXAHe1NcfcMT9HT0DPp3+ieTxFx6RjY3kYTGLOwU0EVUNc
+ NAEQAM2StBhJERQvgPcbCzjokShn0cRA4q2SvCOvOXD+0KapXMRFE+/PZeDyfv4dEKuCqeh0
+ hihSHlaxTzg3TcqUu54w2xYskG8Fq5tg3gm4kh1Gvh1LijIXX99ABA8eHxOGmLPRIBkXHqJY
+ oHtCvPc6sYKNM9xbp6I4yF56xVLmHGJ61KaWKf5KKWYgA9kfHufbja7qR0c6H79LIsiYqf92
+ H1HNq1WlQpu/fh4/XAAaV1axHFt/dY/2kU05tLMj8GjeQDz1fHas7augL4argt4e+jum3Nwt
+ yupodQBxncKAUbzwKcDrPqUFmfRbJ7ARw8491xQHZDsP82JRj4cOJX32sBg8nO2N5OsFJOcd
+ 5IE9v6qfllkZDAh1Rb1h6DFYq9dcdPAHl4zOj9EHq99/CpyccOh7SrtWDNFFknCmLpowhct9
+ 5ZnlavBrDbOV0W47gO33WkXMFI4il4y1+Bv89979rVYn8aBohEgET41SpyQz7fMkcaZU+ok/
+ +HYjC/qfDxT7tjKXqBQEscVODaFicsUkjheOD4BfWEcVUqa+XdUEciwG/SgNyxBZepj41oVq
+ FPSVE+Ni2tNrW/e16b8mgXNngHSnbsr6pAIXZH3qFW+4TKPMGZ2rZ6zITrMip+12jgw4mGjy
+ 5y06JZvA02rZT2k9aa7i9dUUFggaanI09jNGbRA/ABEBAAHCwXwEGAEKACYCGwwWIQSb0H4O
+ DFH41ZZ3t1Qbk0N9O0FimwUCYDzvagUJFF+UtgAKCRAbk0N9O0Fim9JzD/0auoGtUu4mgnna
+ oEEpQEOjgT7l9TVuO3Qa/SeH+E0m55y5Fjpp6ZToc481za3xAcxK/BtIX5Wn1mQ6+szfrJQ6
+ 59y2io437BeuWIRjQniSxHz1kgtFECiV30yHRgOoQlzUea7FgsnuWdstgfWi6LxstswEzxLZ
+ Sj1EqpXYZE4uLjh6dW292sO+j4LEqPYr53hyV4I2LPmptPE9Rb9yCTAbSUlzgjiyyjuXhcwM
+ qf3lzsm02y7Ooq+ERVKiJzlvLd9tSe4jRx6Z6LMXhB21fa5DGs/tHAcUF35hSJrvMJzPT/+u
+ /oVmYDFZkbLlqs2XpWaVCo2jv8+iHxZZ9FL7F6AHFzqEFdqGnJQqmEApiRqH6b4jRBOgJ+cY
+ qc+rJggwMQcJL9F+oDm3wX47nr6jIsEB5ZftdybIzpMZ5V9v45lUwmdnMrSzZVgC4jRGXzsU
+ EViBQt2CopXtHtYfPAO5nAkIvKSNp3jmGxZw4aTc5xoAZBLo0OV+Ezo71pg3AYvq0a3/oGRG
+ KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
+ fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231219-topic-sm8x50-upstream-va-macro-bindings-fix-v1-1-ae133886f70e@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, 19 Dec 2023 at 13:40, Bryan O'Donoghue
-<bryan.odonoghue@linaro.org> wrote:
->
-> On 18/12/2023 11:31, Dikshita Agarwal wrote:
-> > Re-organize the video driver code by introducing a new folder
-> > 'vcodec' and placing 'venus' driver code inside that.
-> >
-> > Introduce common helpers for trustzone based firmware
-> > load/unload etc. which are placed in common folder
-> > i.e. 'vcodec'.
-> > Use these helpers in 'venus' driver. These helpers will be
-> > used by 'iris' driver as well which is introduced later
-> > in this patch series.
-> >
-> > Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> > ---
->
-> This is a very large patch, I think it needs to be broken up into
-> smaller chunks.
->
-> #1 Introduce common helper functions
-> #2 Use common helper functions
-
-This will make it harder to review. It's usually preferred to have a
-single 'move' patch instead of two (add + remove). But I definitely
-agree that the size of the patch is big. Somewhat it is related to the
-fact that this doesn't only introduce helpers, but also reshuffles the
-rest of the code.
-
->
-> Its alot of code to try to eat in the one go.
->
-> Could you consider making patches 1-3 a standalone series to reduce the
-> amount of code to review here ?
-
-This sounds like a good idea.
-
->
-> * 77e7025529d7c - (HEAD -> linux-stable-master-23-12-18-iris-v2) media:
-> iris: add power management for encoder (21 hours ago)
->
-> * ceb6a6f023fd3 - (tag: v6.7-rc6, linux-stable/master) Linux 6.7-rc6 (2
-> days ago)
->
-> git diff ceb6a6f023fd3 | wc -l
->
-> 21243
->
-> Also I feel it wouild give more time for the changes to "digest" though
-> upstream users and to find any unintended bugs.
->
-> > +int load_fw(struct device *dev, const char *fw_name, phys_addr_t *mem_phys,
-> > +         size_t *mem_size, u32 pas_id, bool use_tz)
-> > +{
-> > +     const struct firmware *firmware = NULL;
-> > +     struct reserved_mem *rmem;
-> > +     struct device_node *node;
-> > +     void *mem_virt = NULL;
-> > +     ssize_t fw_size = 0;
-> > +     int ret;
-> > +
-> > +     if (!IS_ENABLED(CONFIG_QCOM_MDT_LOADER) ||
-> > +         (use_tz && !qcom_scm_is_available()))
-> > +             return -EPROBE_DEFER;
-> > +
-> > +     if (!fw_name || !(*fw_name))
-> > +             return -EINVAL;
->
-> The parameter check should come before the qcom_scm_is_available()
->
-> No matter how many times you -EPROBE_DEFER -EINVAL is still -EINVAL.
->
-> > +
-> > +     *mem_phys = 0;
-> > +     *mem_size = 0;
->
-> I don't think you need this, you don't appear to use these variables
-> before you assign them below.
->
->
-> > +
-> > +     *mem_phys = rmem->base;
-> > +     *mem_size = rmem->size;
->
-> > +
-> > +int auth_reset_fw(u32 pas_id)
-> > +{
-> > +     return qcom_scm_pas_auth_and_reset(pas_id);
-> > +}
-> > +
-> > +void unload_fw(u32 pas_id)
-> > +{
-> > +     qcom_scm_pas_shutdown(pas_id);
-> > +}
-> > +
->
-> Do these wrapper functions add anything ? Some kind of validity check on
-> the pas_id otherwise I'm not sure these are justified.
->
-> > +int set_hw_state(bool resume)
-> > +{
-> > +     return qcom_scm_set_remote_state(resume, 0);
-> > +}
-> > diff --git a/drivers/media/platform/qcom/vcodec/firmware.h b/drivers/media/platform/qcom/vcodec/firmware.h
-> > new file mode 100644
-> > index 0000000..7d410a8
-> > --- /dev/null
->
-> ---
-> bod
->
->
+On 19/12/2023 14:23, Neil Armstrong wrote:
+> Remove this spurious "contains" which causes the bindings check of
+> qcom,sm8450-lpass-va-macro compatible to fail with:
+> codec@33f0000: clocks: [[156, 57, 1], [156, 102, 1], [156, 103, 1], [156, 70, 1]] is too long
+>         from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-va-macro.yaml#
+> codec@33f0000: clock-names: ['mclk', 'macro', 'dcodec', 'npl'] is too long
+>         from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-va-macro.yaml#
+> 
+> Seems the double "contains" was considered as valid by the tool but broke
+> the entire if statements.
+> 
+> Fixes: f243ef746d0a ("ASoC: dt-bindings: qcom,lpass-va-macro: Add SM8650 LPASS VA")
 
 
--- 
-With best wishes
-Dmitry
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
 
