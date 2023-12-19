@@ -1,178 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-5352-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id F12A1818530
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 11:20:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E1A1081853C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 11:21:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7569D2812AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 10:20:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 15DAC281450
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 10:21:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6715A1429B;
-	Tue, 19 Dec 2023 10:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AE8B14AB0;
+	Tue, 19 Dec 2023 10:21:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BJi8VpRz"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="P1SQyXTb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FC514A87;
-	Tue, 19 Dec 2023 10:20:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BJ7NKL2001808;
-	Tue, 19 Dec 2023 10:19:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=1SLkwKsxGvngtX8EoaTWVYJBcj1k3lIqDzT9XfxdYcU=; b=BJ
-	i8VpRzMP1wwhSYxxwj/nJA+e8Ikuecp4PSfR9kjIk9bDcZfYu71ZAJbK09nJ79QV
-	Sr+7spGr39t2Ft/xChVhxURJkH9ZLvo7PVwweh4HNyVskgz1Bz+GN+0RQFGH/06U
-	hJ7M3+48cAkBk1xfj2NOMT4AtspZyT9KYdFKixqbso6KTFSaTWUuAarOtXsgVTw/
-	dFXCxqOqsBjuYXfdVZPwrieuiVMafhAHThBmG6wQvZxBDR412nR6xUDSUFMS94rF
-	Q3rs8Cm+2AIFNTplVzEsjSWYljgemOTP63Z16dnYL093AzGKtpxW7z/hzQPdf1yD
-	cagrtIFBLJxZAE5ejD+Q==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v35tm8kqb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Dec 2023 10:19:56 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BJAJtpX018865
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Dec 2023 10:19:55 GMT
-Received: from [10.239.132.150] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 19 Dec
- 2023 02:19:52 -0800
-Message-ID: <d955f3bb-c73e-4777-b268-a8abc70788ef@quicinc.com>
-Date: Tue, 19 Dec 2023 18:19:50 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8484D14AA9
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 10:21:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-5e248b40c97so35351307b3.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 02:21:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702981295; x=1703586095; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=lJHN/nZH55N6VvaZaAZtpZMkjKp9jds0WE3B6lm/6ss=;
+        b=P1SQyXTbWlOFgZw+Ggkmm8R/mL1T6tjdUZTW7OLMBc+wqnJVM0AqA3vzffn8/AyGNu
+         yqE8ZeEX+NJ4Z5Ux5Hm6kPEXjaEa6zfC1iwuQ3eCeahZIwvwKLpFoPWH5OhBJ1qZ2U0d
+         4JYXhm6TVIq6PBna/KUW3okfqxFLneJ8mfA8ScXgH2mANonmH6InpxSyAt5r73Na4Cb1
+         cUkx5Wwi5tDOIXOR4/GBlV7yD2oZ5xzuTLyFS1TvKJtmDZjfra10IhnSDWe1ApmrK2yL
+         /8kmKxbf/v22DWUps33n+dna0MExA/9hbk7LXkzmi/5IgmhWGtcl3WhfBPqKhV85j79Z
+         tZBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702981295; x=1703586095;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lJHN/nZH55N6VvaZaAZtpZMkjKp9jds0WE3B6lm/6ss=;
+        b=iojdQp7ZNXmirdTMYO8/9VqWKreiI1TdDlAQbtRH05Am7wbcBdwJDn5eIIJ6drkmfw
+         R5ScrzjUtyCOfZzK644X2QYVz0Kr/tGrBcvNe9WTkRuXxvvSDuGULWj6vOpcB4WorLz6
+         Vgkh+MUl7xM6kmx16LqDxKrUpM538Yuz89IX9gQQXHBnOQleXiUsADX+YCQVHglIcYiO
+         bA37+zH+4hpqFG1gG9yx9fZ9uJaXrf933wwc/BsdK8Tkv+t4mipVoL1Fh1DXzRSdEJ+Q
+         TH6wo36lofuX5gP3QFApwwFrJIQZ6RmWdRUOYz1HYdGs9xNGH4bHGzUKw+a/cxXc3Jh7
+         qCOA==
+X-Gm-Message-State: AOJu0YznqjnhReMc/2PFsFLZbwxnDgvMur2tsOnjoCnVi5WTFkx+fvLX
+	3OU9DP8P+NcSbI1a5Czj9Jjm4bKfvvckcZEvhZQxFw==
+X-Google-Smtp-Source: AGHT+IHrLBxPUVOjm7wRbo7M4HpbDoyVyMEnUeRnGXyuxCDlcYiAMMTRmJux1fR16ItYG7qtIKxbHVEiezj/4KDbM+0=
+X-Received: by 2002:a81:494f:0:b0:5e4:f18c:9956 with SMTP id
+ w76-20020a81494f000000b005e4f18c9956mr4378425ywa.24.1702981295343; Tue, 19
+ Dec 2023 02:21:35 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/6] arm64: dts: qcom: qcs8550: introduce qcs8550 dtsi
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Tengfei Fan
-	<quic_tengfan@quicinc.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20231219005007.11644-1-quic_tengfan@quicinc.com>
- <20231219005007.11644-5-quic_tengfan@quicinc.com>
- <ec730ce7-2021-4cad-97e6-0a86c6063533@linaro.org>
- <cd5a0140-295a-4f48-a378-3c2b8be0f499@quicinc.com>
- <f0f707c0-dd96-4409-bfc5-118d885933e8@linaro.org>
-From: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>
-In-Reply-To: <f0f707c0-dd96-4409-bfc5-118d885933e8@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -ZtrUU6EXTV5XxUlWjMI9IWrvh2AzJ3Y
-X-Proofpoint-ORIG-GUID: -ZtrUU6EXTV5XxUlWjMI9IWrvh2AzJ3Y
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- adultscore=0 spamscore=0 priorityscore=1501 malwarescore=0 mlxlogscore=244
- impostorscore=0 phishscore=0 mlxscore=0 suspectscore=0 clxscore=1015
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312190076
+References: <20231219003106.8663-1-quic_tengfan@quicinc.com>
+ <20231219003106.8663-2-quic_tengfan@quicinc.com> <457e336e-004c-4721-b58d-e9ada16dc04b@linaro.org>
+ <a8f168da-14f7-4377-8dea-f282a3eac0a4@quicinc.com> <13b61d41-6045-499e-864b-51c6cb6eacf9@linaro.org>
+ <38604415-b410-4995-9c4f-525536435699@quicinc.com>
+In-Reply-To: <38604415-b410-4995-9c4f-525536435699@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 19 Dec 2023 12:21:23 +0200
+Message-ID: <CAA8EJpo07gE7ZeNP6wSGTLtmF_3PKQAKFyMRZ8dk1K+f7PAxrg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/1] arm64: dts: qcom: sm8550: remove
+ address/size-cells from mdss_dsi1
+To: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Tengfei Fan <quic_tengfan@quicinc.com>, 
+	andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org, 
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, kernel@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
+On Tue, 19 Dec 2023 at 12:09, Aiqun Yu (Maria) <quic_aiquny@quicinc.com> wrote:
+>
+>
+>
+> On 12/19/2023 5:41 PM, Krzysztof Kozlowski wrote:
+> > On 19/12/2023 10:36, Aiqun Yu (Maria) wrote:
+> >>
+> >>
+> >> On 12/19/2023 3:17 PM, Krzysztof Kozlowski wrote:
+> >>> On 19/12/2023 01:31, Tengfei Fan wrote:
+> >>>> The address/size-cells in mdss_dsi1 node have not ranges and child also
+> >>>> have not reg, then this leads to dtc W=1 warnings:
+> >>>
+> >> Comments can be more readable:
+> >> "mdss_dsi1" node don't have "ranges" or child "reg" property, while it
+> >> have address/size-cells properties. This caused
+> >> "avoid_unnecessary_addr_size" warning from dtb check.
+> >> Remove address/size-cells properties for "mdss_dsi1" node.
+> >>
+> >>> I cannot parse it. Address/size cells never have ranges or children.
+> >>> They cannot have. These are uint32 properties.
+> >> Pls help to comment on the revised commit message. Every time I write a
+> >> commit message, also takes a while for me to double confirm whether
+> >> others can understand me correctly as well. Feel free to let us know if
+> >> it is not readable to you. It will help us as non-English native developers.
+> >>>
+> >>>>
+> >>>>     sm8550.dtsi:2937.27-2992.6: Warning (avoid_unnecessary_addr_size): /soc@0/display-subsystem@ae00000/dsi@ae96000:
+> >>>>       unnecessary #address-cells/#size-cells without "ranges" or child "reg" property
+> >>>>
+> >>>>
+> >>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >>>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+> >>>> ---
+> >>>
+> >>> I disagreed with the patch before. You resubmit it without really
+> >>> addressing my concerns.
+> >>>
+> >>> I am not sure if this is correct fix and I want to fix all of such
+> >>> errors (there are multiple of them) in the same way. Feel free to
+> >>> propose common solution based on arguments.
+> >> Per my understanding, "qcom,mdss-dsi-ctrl" driver node like "mdss_dsi1"
+> >> don't need to have address/size-cells properties.
+> >
+> > Just because dtc says so? And what about bindings?
+> I don't find any reason why "qcom,mdss-dsi-ctrl" driver node need to
+> have address/size-cells properties. Document Bindings should also be fixed.
+> >
+> >> Feel free to let us know whether there is different idea of
+> >> "address/size-cells" needed for the "qcom,mdss-dsi-ctrl" driver node.
+> >
+> > The bindings expressed that idea. If the binding is incorrect, fix the
+> > binding and the DTS. If the binding is correct, provide rationale why it
+> > somehow does not apply here etc.
+> Our plan is to fix the bindings as well.
+>
+> In case you have missed the question, I just re-place it here:
+> While there are about 22 different soc dtsi and it's document binding
+> files needed to be fixed. Shall we fix it for all qcom related soc usage
+> in one patch, or we'd better to split into different patches according
+> to soc specifically?
 
+Don't touch the bindings unless you understand what you are doing.
+Your patch will be NAKed. There can be a DSI panel attached to the DSI
+host, which means there is a need for #address-cells / #size-cells.
 
-On 12/19/2023 6:01 PM, Krzysztof Kozlowski wrote:
-> On 19/12/2023 10:57, Aiqun Yu (Maria) wrote:
->>
->>
->> On 12/19/2023 3:02 PM, Krzysztof Kozlowski wrote:
->>> On 19/12/2023 01:50, Tengfei Fan wrote:
->>>> QCS8550 is derived from SM8550, it is mainly used in IoT scenarios.
->>>
->>> What are the differences? You need to describe the hardware, you have
->>> entire commit msg for something useful which will avoid such comments
->>> from reviewers.
->>>
->>>>
->>>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
->>>> ---
->>>>    arch/arm64/boot/dts/qcom/qcs8550.dtsi | 6 ++++++
->>>>    1 file changed, 6 insertions(+)
->>>>    create mode 100644 arch/arm64/boot/dts/qcom/qcs8550.dtsi
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/qcs8550.dtsi b/arch/arm64/boot/dts/qcom/qcs8550.dtsi
->>>> new file mode 100644
->>>> index 000000000000..254657f46c5e
->>>> --- /dev/null
->>>> +++ b/arch/arm64/boot/dts/qcom/qcs8550.dtsi
->>>> @@ -0,0 +1,6 @@
->>>> +// SPDX-License-Identifier: BSD-3-Clause
->>>> +/*
->>>> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
->>>> + */
->>>> +
->>>> +#include "sm8550.dtsi"
->>>
->>> This is a weird file. I thought qcs8550 has differences from sm8550,
->>> e.g. lack of modem, so why do you claim you have here MPSS?
->> MPSS here in qcs8550 is a GPS only MPSS.
-> 
-> Is it different or the same? Is the interface the same? So many
-> questions and so little information. You have entire commit msg to
-> explain this.
-we can add all current email information into the commit message in next 
-patchset.
-> 
->>
->> QCS8550 will have a different firmware release with sm8550, and it will
->> have different memory reserved for the firmware to be used.
->> While firmware release along with memory map was not settled down yet.
->> That's why currently qcs8550.dtsi is an "empty file" and only include
->> sm8550.dtsi. As long as the firmware release is settled down, we will
->> have more detailed different node here.
-> 
-> So the DTS is not really usable now?
-curent qcs8550.dtsi is an "empty file" which is identical to "sm8550.dtsi".
-While qcs8550-aim300-itot.dts is currently used with a "temporary 
-reserved memory" for those engineer qcs8550 firmware for boot up and 
-limited function verify.
-
-So the idea here is to postpone only the firmware related reserved 
-memory part. And open an "empty file" qcs8550.dtsi for common which can 
-be used for other board like qcs8550-rb5-gen2.
->>
->> By the way, RB5 gen2 will also relies on the current qcs8550.dtsi, since
->> it is using the same qcs8550 soc, and will use the same firmware release.
->>
->> We have patch version2 remove the qcs8550.dtsi, and have SOM dtsi
->> qcs8550-aim300.dtsi include the sm8550.dtsi. While after discussion, our
->> understanding is that we can have an qcs8550.dtsi like this. Feel free
->> to let us know if it is not right understanding.
->>
->>>
->>> It's really confusing now.
->>
->> We can have a syncup to clear the confusing point if needed. :)
->>>
-> 
-> The code and commit msg are confusing. I need to keep asking you to get
-> any information.
-> 
-> Best regards,
-> Krzysztof
-> 
+Please stop wasting the time on dtc warning. The bindings (and the
+file) are correct.
 
 -- 
-Thx and BRs,
-Aiqun(Maria) Yu
+With best wishes
+Dmitry
 
