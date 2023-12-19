@@ -1,64 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-5429-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6CD1A818F16
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 19:00:40 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81198818F35
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 19:06:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EC2961F2A0DF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 18:00:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3CBB3282045
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 18:06:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4424139879;
-	Tue, 19 Dec 2023 17:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C449337D09;
+	Tue, 19 Dec 2023 18:06:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WJDN7zMa"
+	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="SZ9dj1nn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+Received: from smtp.smtpout.orange.fr (smtp-19.smtpout.orange.fr [80.12.242.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996AA38DCA
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 17:59:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-553338313a0so3567511a12.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 09:59:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703008757; x=1703613557; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gFY28RdfoF55rbKPTZIwTRbv20OlBIBF0kvqMmjKRbQ=;
-        b=WJDN7zMa5ZQetX2yl0jk3HBqHjB1ynj58eYckGso5rPOg5m/KjMyoMyextbuBVaTff
-         Ng/dFOsoVCM5IK+U2cbrnzjq2yz4xUb1KGv/vcYVbw3654pPsGIL12ClaIwAf0P57LXW
-         I3gfKeopy/evwn78HIXmHxADkBfHRQeBQ2oNJgHUAkphwHhfyogGqxR/wrz6uJC3cmf3
-         glM7VXZEpAbuu1tF+jCYLBMgFxaqPZsW7YDZ+oPi3zMmNew85fsj0/oUmpz5jbAi3864
-         oxkUmUkroJeAisguEf/DTE+X7Rp1lAUZtjbcpJbXw1G/zWrrGG7LRflLgxfo96+ohzOg
-         4NhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703008757; x=1703613557;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gFY28RdfoF55rbKPTZIwTRbv20OlBIBF0kvqMmjKRbQ=;
-        b=h8JEvVCLQ/eRS8uGthM8Os3xLLo+prrN4EmNJ9JNLgMXGJO07ET69L68NPbizWOXG1
-         q/qu1++ehUDFaXS800tbzSvgcVD49OObDZxWfDWZA6JgATaCyxAf0tWrKks78gpAPBdS
-         u6EX+eveZyxu9scCKCAwnqVwK0oLeG7/uMf+bWI2/dXs5YxpMpcmoKg5dJYYVnZ6KIHX
-         nylVI/8zfWmEuIZWLiQ/DZQXq3O3YYm0kRDWMjwsnqNtMGoY/stwJVIayhMGOIMlb9+x
-         Pzyd71dBhkJNCxMQi3GT5PRkl7SGbfaPJUJgab095Ng7Y+Ztk8dWk0FmQybjHa3I67DW
-         oCOA==
-X-Gm-Message-State: AOJu0YzPgBuNdKh4UDBTcsVdQAm/3U/v3LIkgma+giaSscmH53LzP6jG
-	xZ5r1vyrZAK1Azez7CUX36st9Q==
-X-Google-Smtp-Source: AGHT+IEV2+eOUthDZcPp3YRm/r8nZWV+sCsAPgXZUYrxZqIQQDzWiE1AiLCQ+qsN8AIZRXSIdzUbwQ==
-X-Received: by 2002:a17:907:cb02:b0:a23:5378:5eb with SMTP id um2-20020a170907cb0200b00a23537805ebmr1997740ejc.135.1703008756850;
-        Tue, 19 Dec 2023 09:59:16 -0800 (PST)
-Received: from [192.168.199.59] (178235179206.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.206])
-        by smtp.gmail.com with ESMTPSA id b16-20020a170906835000b00a23536c2d72sm3117543ejy.46.2023.12.19.09.59.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Dec 2023 09:59:16 -0800 (PST)
-Message-ID: <810ee42b-49c9-4184-b5aa-a95261faf77a@linaro.org>
-Date: Tue, 19 Dec 2023 18:59:14 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91B737D03;
+	Tue, 19 Dec 2023 18:06:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=wanadoo.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
+Received: from [192.168.1.18] ([92.140.202.140])
+	by smtp.orange.fr with ESMTPA
+	id FeTdrw2ddb4TgFeTerlrH5; Tue, 19 Dec 2023 19:06:00 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
+	s=t20230301; t=1703009160;
+	bh=bRe4uIB8VoeySe+3f/IWMRV40y9LM+iMuTk9Wv+fjso=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=SZ9dj1nnoJo0BiJSMqFkTD+KT3PwX9vSxqitdbCJS8sv2PyWeXf3qkGo5s2yUw7H3
+	 ui5p3n2ElpGv9uPU5l5kZ3cqxxAPUkUKqHeHV1dl1b57lBnHaMkCn/+DHz3IIHcwtB
+	 ik0vjNeeZ90ci0bcgq+In9ZXDnLDb/6lJCoyPH+OrhMZcJBBXjMFHDu0xkOnvz+ifm
+	 WpidANTlEk0shqidjRyqiEcSG3OkNSwkkKs5FPJncQy/Cbgrn6mq8kcm9REL2fk8Ir
+	 GqkMaIPAmxWP+AGDPH+5YjZcrmCP9p91zCAAR8xAN2e/uyeI46O0bcVngGlaBBpHxl
+	 2ekLbIQstdl0g==
+X-ME-Helo: [192.168.1.18]
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Tue, 19 Dec 2023 19:06:00 +0100
+X-ME-IP: 92.140.202.140
+Message-ID: <851d4638-970a-48d0-8f79-493a7ebcc0a5@wanadoo.fr>
+Date: Tue, 19 Dec 2023 19:05:56 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,73 +48,65 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/5] iommu/arm-smmu: re-enable context caching in smmu
- reset operation
-Content-Language: en-US
-To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>, will@kernel.org,
- robin.murphy@arm.com, joro@8bytes.org, dmitry.baryshkov@linaro.org,
- jsnitsel@redhat.com, quic_bjorande@quicinc.com, mani@kernel.org,
- quic_eberman@quicinc.com, robdclark@chromium.org,
- u.kleine-koenig@pengutronix.de, robh@kernel.org, vladimir.oltean@nxp.com,
- quic_pkondeti@quicinc.com, quic_molvera@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
- qipl.kernel.upstream@quicinc.com
-References: <20231219135947.1623-1-quic_bibekkum@quicinc.com>
- <20231219135947.1623-2-quic_bibekkum@quicinc.com>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20231219135947.1623-2-quic_bibekkum@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH] scsi: ufs: qcom: Remove unnecessary goto statement from
+ ufs_qcom_config_esi function
+Content-Language: fr
+To: Chanwoo Lee <cw9316.lee@samsung.com>, mani@kernel.org, agross@kernel.org,
+ andersson@kernel.org, konrad.dybcio@linaro.org, jejb@linux.ibm.com,
+ martin.petersen@oracle.com, linux-arm-msm@vger.kernel.org,
+ linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: grant.jung@samsung.com, jt77.jang@samsung.com, dh0421.hwang@samsung.com,
+ sh043.lee@samsung.com
+References: <CGME20231219082757epcas1p33bda4e0723d3d57552132054d3e5a3fe@epcas1p3.samsung.com>
+ <20231219082740.27644-1-cw9316.lee@samsung.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+In-Reply-To: <20231219082740.27644-1-cw9316.lee@samsung.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 19.12.2023 14:59, Bibek Kumar Patro wrote:
-> Default MMU-500 reset operation disables context caching in
-> prefetch buffer. It is however expected for context banks using
-> the ACTLR register to retain their prefetch value during reset
-> and runtime suspend.
+Le 19/12/2023 à 09:27, Chanwoo Lee a écrit :
+> From: ChanWoo Lee <cw9316.lee@samsung.com>
 > 
-> Replace default MMU-500 reset operation with Qualcomm specific reset
-> operation which envelope the default reset operation and re-enables
-> context caching in prefetch buffer for Qualcomm SoCs.
+> There is only one place where goto is used,
+> and it is unnecessary to check the ret value through 'goto out'
+> because the ret value is already true.
 > 
-> Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Suggested-by implies I came up with this being a solution to
-an issue.. definitely not the case!
+> Therefore, remove the goto statement and
+> integrate the '!ret' condition into the existing code.
+> 
+> Signed-off-by: ChanWoo Lee <cw9316.lee@samsung.com>
 
-Konrad
+Reviewed-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+
+> ---
+>   drivers/ufs/host/ufs-qcom.c | 7 ++-----
+>   1 file changed, 2 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 17e24270477d..8cf803806326 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -1929,7 +1929,7 @@ static int ufs_qcom_config_esi(struct ufs_hba *hba)
+>   					     ufs_qcom_write_msi_msg);
+>   	if (ret) {
+>   		dev_err(hba->dev, "Failed to request Platform MSI %d\n", ret);
+> -		goto out;
+> +		return ret;
+>   	}
+>   
+>   	msi_lock_descs(hba->dev);
+> @@ -1964,11 +1964,8 @@ static int ufs_qcom_config_esi(struct ufs_hba *hba)
+>   				      REG_UFS_CFG3);
+>   		}
+>   		ufshcd_mcq_enable_esi(hba);
+> -	}
+> -
+> -out:
+> -	if (!ret)
+>   		host->esi_enabled = true;
+> +	}
+>   
+>   	return ret;
+>   }
+
 
