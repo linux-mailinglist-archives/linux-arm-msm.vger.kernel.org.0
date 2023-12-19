@@ -1,116 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-5393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B85B818843
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 14:07:18 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D3025818892
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 14:24:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 04FF9286A7C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 13:07:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E52641C229BA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 13:24:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCDCD18EA9;
-	Tue, 19 Dec 2023 13:07:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C20A1A281;
+	Tue, 19 Dec 2023 13:23:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fsVEC5wr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BSdLH83p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6650D18EA0;
-	Tue, 19 Dec 2023 13:07:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BJAgmYt023604;
-	Tue, 19 Dec 2023 13:06:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=QivfX9dR/w5DQ1pMwXDcAJ5dv1UM9wtRLMwtkpY0jus=; b=fs
-	VEC5wrDFBWxJ8h91HJn8GZKw4MyyMd45BGc2ErQfKqstJCU//wgHtQgZ5erxUddH
-	od8KlqkmROtRrwn8JHGCC8qdfYQR8Sd/O4HeyKgwiH+mNnZgzNlCdlgwgXMScdTl
-	W0wh+9ZPDaq7zXXMkHZsSo0EqwH6O7F638O9BaCXHselCWUHqM/6aZxMz9T1ZaeW
-	TP8lotqhDG0gNDiWD+oiMFBKVN1xrVRO2BDnyPjy+y/skX8UX9g88qO1qtYLDlob
-	NO4iERHsPubjN0Tdogb1Y8WS/SQpgxO/CAchv7pRRLA2bFzx8+vlmVZQeiIu0fBL
-	a8mVCz3aGx7/8h0n3d6g==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v39n8rbry-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Dec 2023 13:06:41 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BJD6eqM003237
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Dec 2023 13:06:40 GMT
-Received: from [10.214.66.253] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 19 Dec
- 2023 05:06:34 -0800
-Message-ID: <d5291beb-7384-4ee9-a7a4-8aad931d7bc8@quicinc.com>
-Date: Tue, 19 Dec 2023 18:36:31 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17ED18EAE
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 13:23:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-33671384e50so844587f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 05:23:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702992220; x=1703597020; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=p3LPY/wP+4u8xv3gDTbgceni72i0f7dLsgXss15/0/U=;
+        b=BSdLH83p31k+tIUHs2OgUKaP5mj0WqM6uP4LL0JAKxcWhFOyQ94TeEmicKwQEBNMnB
+         AY8S43MmicreYgZhJx6Tkc7hwBSgaHlIpUPR1tlVTTlH/g3oF2kQyc0k8q6JyTr66LqV
+         mk7Suu+a1EN648qBoUyS+nNZERrTMpc5WA4vu+Bm0s7hlKLgE9pRQ/kWxGwlcu8pSTxl
+         0dOE7jppv98yEBcBtOEOwXnrRW30E3vixuYNLGE9riQXUcW5ra1CTZALtTOWmbxaRBZ3
+         0ln6T0NAOgy0Xt4c2tGFEzDcQEuMs9LmKKnkCaPjm4uA9UrTpzMnTymrbpFwqk38pxD/
+         Frsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702992220; x=1703597020;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=p3LPY/wP+4u8xv3gDTbgceni72i0f7dLsgXss15/0/U=;
+        b=wclTx/1+qve5+pLPQg0mvIceQuvGCSBp5BqCWQYwaipXOFlaky1Qncq3g4eUGmxN9/
+         spqzO9Va8Oo8cL4OmeBI4+K4RA6vjKjzt9F3VoE7orR9QwiAipAW/I+ikcrE9P6ElmNT
+         iqwSMtvykk7v1Mmkkdj+MbeoikRRCchOiay7ZsU+6Oy4Zk6wi+BmaslKHcLM3/fdisTb
+         FAUjQZ5LeItNoPF0klJNN/mL5AaROULpydcGKUIh8VaOLgcqo3KNIOiFZ+DdTWOsgoTb
+         sPQmNCTHS4qHjM6vI84Bh7a2ukNF5t/+U8186ZxX/9t36AO+Chl43eBBk/bj2cqN8U0A
+         nxwg==
+X-Gm-Message-State: AOJu0YyxkcMQpK2k+XgAgTk63xm2bTBCyr+lgiBe3yh28fSDUhA1k5Vq
+	21tdaB8o6tfFHPPDyuDtSI5JLw==
+X-Google-Smtp-Source: AGHT+IFHYzvyDi0corcqB0NWZOjE5iHCoZWBmG8HzPdskcKE9UWUerE1vnbScokBVmD2OSU8t9HD/g==
+X-Received: by 2002:a5d:45cf:0:b0:336:578e:2bd1 with SMTP id b15-20020a5d45cf000000b00336578e2bd1mr3224416wrs.108.1702992219991;
+        Tue, 19 Dec 2023 05:23:39 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id j4-20020adfea44000000b00336471bc7ffsm15010151wrn.109.2023.12.19.05.23.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Dec 2023 05:23:39 -0800 (PST)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Date: Tue, 19 Dec 2023 14:23:37 +0100
+Subject: [PATCH] ASoC: dt-bindings: qcom,lpass-va-macro: remove spurious
+ contains in if statement
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/5] iommu/arm-smmu: re-enable context caching in smmu
- reset operation
-Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, <will@kernel.org>,
-        <robin.murphy@arm.com>, <joro@8bytes.org>,
-        <dmitry.baryshkov@linaro.org>, <jsnitsel@redhat.com>,
-        <quic_bjorande@quicinc.com>, <mani@kernel.org>,
-        <quic_eberman@quicinc.com>, <robdclark@chromium.org>,
-        <u.kleine-koenig@pengutronix.de>, <robh@kernel.org>,
-        <vladimir.oltean@nxp.com>, <quic_pkondeti@quicinc.com>,
-        <quic_molvera@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <iommu@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-        <qipl.kernel.upstream@quicinc.com>
-References: <20231215101827.30549-1-quic_bibekkum@quicinc.com>
- <20231215101827.30549-6-quic_bibekkum@quicinc.com>
- <3c7b8c2c-7174-4ced-8954-5a249f792c1e@linaro.org>
-From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-In-Reply-To: <3c7b8c2c-7174-4ced-8954-5a249f792c1e@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: O6cKu9jgX6SHlCA8_-p4qhVgRs9Y6LeR
-X-Proofpoint-GUID: O6cKu9jgX6SHlCA8_-p4qhVgRs9Y6LeR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
- suspectscore=0 phishscore=0 mlxlogscore=697 lowpriorityscore=0 spamscore=0
- impostorscore=0 mlxscore=0 bulkscore=0 adultscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
- definitions=main-2312190097
+Message-Id: <20231219-topic-sm8x50-upstream-va-macro-bindings-fix-v1-1-ae133886f70e@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAFiZgWUC/x2NOw6DQAwFr4JcxxK7JFHIVSIKsxjiYj+yASEh7
+ p5Vppsp3jvBWIUN3s0JyruY5FTF3RoIX0oLo0zVwbe+c971uOYiAS2+jkeLW7FVmSLuhJGCZhw
+ lTZIWw1kO7P19rjyJOwd1sSjX/H/7DNf1A26qMf59AAAA
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Banajit Goswami <bgoswami@quicinc.com>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org, 
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1689;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=jX/VQsyuPIyHVsUjFUCTRKQIEp2WX+Su12Xn85ZrU+8=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlgZlaDrfW46D5usNUF+97Tkj84cNtskNX0ajIjSB4
+ c2y3rGGJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZYGZWgAKCRB33NvayMhJ0YOND/
+ 46yLraBMW6CnFYt7o5AHOdDFaYq3RCOhhkv53wUrp2UT+9o0dkTo/hdaKGwJlfGVtpIjkR1G/W1n0l
+ p0DAmni76jmRO2lXdxtWY9XfPqYXaFDdgo6OOkaA4Y6CJwJvQqDsRo+wpXftMOvHtgjwbmum8DzLZW
+ 70LxmqtfBXdA/5cxUDQecXMUtJt1RKpCDd84m1OsigYHQ0xVld+pem0MZRY1IHBZ8+e7NmeXKqwhJA
+ 4pbEKd7WeekEhtE8IouZbs1TptF1VnkgL7tKBloFGy/6bh0fQj+nvKZG520uXczqi8u3kuDnJNn2dd
+ Z7e/+jsEOq39jgYM8at/AGCksKx81laJRZ26/eXExBzOrtdCWQYrjq1rJI9/FeUK2MUSeESB6CS00J
+ uGFsd0iaGjIU8mMWI6Swqf23/kR2ci/zLrdpPMsq97gyNbHQ8xq6zrAv5N5/TNMPA39cQ+cu+xDxjq
+ zhODVdvJ2NDNBaMmRab4ZyGjH0WrzZgNeSXLuLU9DWtblMAJc/WjZFfq097FZhl0DkGiD1e3zZ31ej
+ 1xr936utWiaifj2KSeILxMgX0zVAc+gO/BBC4tsvQZnSTOj0x0qzVmWh3dDsUBXG6eeCzsOs49NraC
+ 176n4KxcOQHDA7kWYlN1tFI0aJFqGUNUfZh60WteKpzmVEaensgmrZU/UuDw==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
+Remove this spurious "contains" which causes the bindings check of
+qcom,sm8450-lpass-va-macro compatible to fail with:
+codec@33f0000: clocks: [[156, 57, 1], [156, 102, 1], [156, 103, 1], [156, 70, 1]] is too long
+        from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-va-macro.yaml#
+codec@33f0000: clock-names: ['mclk', 'macro', 'dcodec', 'npl'] is too long
+        from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-va-macro.yaml#
 
+Seems the double "contains" was considered as valid by the tool but broke
+the entire if statements.
 
-On 12/16/2023 5:24 AM, Konrad Dybcio wrote:
-[...]
->> +
->> +	arm_mmu500_reset(smmu);
-> We should check the return value here, in case the function is modified
-> some day in a way that makes it return something else than 0
-> 
+Fixes: f243ef746d0a ("ASoC: dt-bindings: qcom,lpass-va-macro: Add SM8650 LPASS VA")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+ Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-Thanks for pointing this actually. I crosschecked on the
-arm_mmu500_reset function behavior, looks like there's no return value
-other than 0 and so the functionality won't change. I think we can
-keep it as it is in this case.
+diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
+index c03ff9472a85..6b483fa3c428 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
++++ b/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
+@@ -121,9 +121,8 @@ allOf:
+       properties:
+         compatible:
+           contains:
+-            contains:
+-              enum:
+-                - qcom,sm8550-lpass-va-macro
++            enum:
++              - qcom,sm8550-lpass-va-macro
+     then:
+       properties:
+         clocks:
 
-Thanks,
-Bibek
+---
+base-commit: aa4db8324c4d0e67aa4670356df4e9fae14b4d37
+change-id: 20231219-topic-sm8x50-upstream-va-macro-bindings-fix-924ffff6ae31
 
-> LGTM otherwise!
-> 
-> Konrad
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
 
