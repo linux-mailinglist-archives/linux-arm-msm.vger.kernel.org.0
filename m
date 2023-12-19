@@ -1,140 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-5392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52C5181883F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 14:05:22 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B85B818843
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 14:07:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5E4E11C211E5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 13:05:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 04FF9286A7C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 13:07:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCD3318B02;
-	Tue, 19 Dec 2023 13:05:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCDCD18EA9;
+	Tue, 19 Dec 2023 13:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OMT1p29H"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fsVEC5wr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080F81BDC9
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 13:05:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-50e49a0b5caso645246e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 05:05:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702991112; x=1703595912; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=PFXEHGuhlzVRVEQ8PU5ByFnn74CKERLNECfz23ehLu8=;
-        b=OMT1p29HxMkpaucSB8ojVbn1mGNOCmtesk2zk3usu/K+Domgr5YCx7eq4bLY9R7vhZ
-         FwAkqyliCMI0vV7NtKDRq/M6K/ga+K8Z2aiiqvfQtIipxaUm8GdGr9+9E8SbYbYFWdD6
-         kya9Jc8CmCruhrndoIZQFPCoUUZumN4U6t0cw7e7xn4IVh2S+C3Ahb4oYNr/79c2JFsT
-         dBX36xYtnKkC0q4YTc12sU5gJCFGywKudyMMHyeAttpLT7e2HPOVy4Ed/qUvGn8zTXlh
-         D7cAZyTwZ/NK5O0T6sWMglmy5O5lArjw/Zt01obcX9vBD90CR+7GQBfmottGdplmuUAq
-         yM3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702991112; x=1703595912;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PFXEHGuhlzVRVEQ8PU5ByFnn74CKERLNECfz23ehLu8=;
-        b=MfxOPW4oUukd2vPby8RE5yvKe7ku/47RvRJ7ws9VpzBj4D15C9KD1f7aIyjR+33bcF
-         cyp53fOgHWdzcTGA1TV6vXONaopIqFt8QO4GgishzPf8K+aSE8bHRtJ4LnPIiQksI4XU
-         XOqk2VHfIuGc0lyNyBRYMZ3XOzrERAedsImnzQ6i+XhxLStshWbWmg97Z5inzwwnBzNL
-         hD/dZ6JrbAsT1k7Oj9sWB04AHauYCZnX/K7j2Hk1Ig2l5X9bFuqG9IJEMn2Qy73XwaCF
-         AMXjonVp19uzE+lnI1qxb9J7Fk7DMjvdhFDLJ75uvmu+8Kto6y8V86z23Hg7UXlKaW5w
-         xlUw==
-X-Gm-Message-State: AOJu0Yyk4OgszRMPIP5WHmBardCYVIypej46LgYiNoQH6WJSQDLniEYj
-	fEYxM9+CQEPwOTAslllajRZMrg==
-X-Google-Smtp-Source: AGHT+IEfsADHOb0cI2Gfay+DUDpmgRdvyB8bPFcTt85ldcwoQuy0P3pADZ2ZkN1wC0jcYUAOFtr+rg==
-X-Received: by 2002:ac2:5ecb:0:b0:50e:33c0:27c0 with SMTP id d11-20020ac25ecb000000b0050e33c027c0mr1993777lfq.69.1702991111994;
-        Tue, 19 Dec 2023 05:05:11 -0800 (PST)
-Received: from [10.167.154.1] (178235179206.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.206])
-        by smtp.gmail.com with ESMTPSA id i11-20020a056512340b00b0050e4db10fbfsm26603lfr.254.2023.12.19.05.05.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Dec 2023 05:05:11 -0800 (PST)
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Tue, 19 Dec 2023 14:05:06 +0100
-Subject: [PATCH] arm64: dts: qcom: sc8180x: Fix up PCIe nodes
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6650D18EA0;
+	Tue, 19 Dec 2023 13:07:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BJAgmYt023604;
+	Tue, 19 Dec 2023 13:06:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=QivfX9dR/w5DQ1pMwXDcAJ5dv1UM9wtRLMwtkpY0jus=; b=fs
+	VEC5wrDFBWxJ8h91HJn8GZKw4MyyMd45BGc2ErQfKqstJCU//wgHtQgZ5erxUddH
+	od8KlqkmROtRrwn8JHGCC8qdfYQR8Sd/O4HeyKgwiH+mNnZgzNlCdlgwgXMScdTl
+	W0wh+9ZPDaq7zXXMkHZsSo0EqwH6O7F638O9BaCXHselCWUHqM/6aZxMz9T1ZaeW
+	TP8lotqhDG0gNDiWD+oiMFBKVN1xrVRO2BDnyPjy+y/skX8UX9g88qO1qtYLDlob
+	NO4iERHsPubjN0Tdogb1Y8WS/SQpgxO/CAchv7pRRLA2bFzx8+vlmVZQeiIu0fBL
+	a8mVCz3aGx7/8h0n3d6g==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v39n8rbry-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 Dec 2023 13:06:41 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BJD6eqM003237
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 19 Dec 2023 13:06:40 GMT
+Received: from [10.214.66.253] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 19 Dec
+ 2023 05:06:34 -0800
+Message-ID: <d5291beb-7384-4ee9-a7a4-8aad931d7bc8@quicinc.com>
+Date: Tue, 19 Dec 2023 18:36:31 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 5/5] iommu/arm-smmu: re-enable context caching in smmu
+ reset operation
+Content-Language: en-US
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, <will@kernel.org>,
+        <robin.murphy@arm.com>, <joro@8bytes.org>,
+        <dmitry.baryshkov@linaro.org>, <jsnitsel@redhat.com>,
+        <quic_bjorande@quicinc.com>, <mani@kernel.org>,
+        <quic_eberman@quicinc.com>, <robdclark@chromium.org>,
+        <u.kleine-koenig@pengutronix.de>, <robh@kernel.org>,
+        <vladimir.oltean@nxp.com>, <quic_pkondeti@quicinc.com>,
+        <quic_molvera@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <iommu@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+        <qipl.kernel.upstream@quicinc.com>
+References: <20231215101827.30549-1-quic_bibekkum@quicinc.com>
+ <20231215101827.30549-6-quic_bibekkum@quicinc.com>
+ <3c7b8c2c-7174-4ced-8954-5a249f792c1e@linaro.org>
+From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+In-Reply-To: <3c7b8c2c-7174-4ced-8954-5a249f792c1e@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231219-topic-8180_pcie-v1-1-c2acbba4723c@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAAGVgWUC/x2N0QqDMAwAf0XybMDWFau/IkPaLM6A1NJuYyD++
- 8Ie7+C4EyoX4QpTc0Lhj1Q5koJpG6AtpCejPJTBdrY31oz4OrIQeuO7JZMw+uhubqXBDZFBqxg
- qYywh0aZdeu+7ylx4le9/M9+v6wfW0g7hdgAAAA==
-To: Bjorn Andersson <andersson@kernel.org>, 
- Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Manivannan Sadhasivam <mani@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1702991110; l=1644;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=3qURocdV9JugtB3wzqN3xIUL65Cs1IGJ54XSfyLP3cM=;
- b=EdFJ2UfVugCsBHSXT4uh/4OBbUAwmzOAQRTget26RZRfwzkVVbAI13MEaPV3MVVo1A46qX0kQ
- jv30Y6QvwEQBpNG7L3Ha/qYEqsFEhl8FNAaxaPMV7AyNzc5jU+NbZUD
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: O6cKu9jgX6SHlCA8_-p4qhVgRs9Y6LeR
+X-Proofpoint-GUID: O6cKu9jgX6SHlCA8_-p4qhVgRs9Y6LeR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
+ suspectscore=0 phishscore=0 mlxlogscore=697 lowpriorityscore=0 spamscore=0
+ impostorscore=0 mlxscore=0 bulkscore=0 adultscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
+ definitions=main-2312190097
 
-Duplicated clock output names cause probe errors and wrong clocks cause
-hardware not to work. Fix such issues.
 
-Fixes: d20b6c84f56a ("arm64: dts: qcom: sc8180x: Add PCIe instances")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sc8180x.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-index fe761d6d0dd3..acae2652a0f6 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-@@ -1761,7 +1761,7 @@ pcie0_phy: phy@1c06000 {
- 			clocks = <&gcc GCC_PCIE_PHY_AUX_CLK>,
- 				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
- 				 <&gcc GCC_PCIE_0_CLKREF_CLK>,
--				 <&gcc GCC_PCIE1_PHY_REFGEN_CLK>,
-+				 <&gcc GCC_PCIE0_PHY_REFGEN_CLK>,
- 				 <&gcc GCC_PCIE_0_PIPE_CLK>;
- 			clock-names = "aux",
- 				      "cfg_ahb",
-@@ -1857,7 +1857,7 @@ pcie3_phy: phy@1c0c000 {
- 			clocks = <&gcc GCC_PCIE_PHY_AUX_CLK>,
- 				 <&gcc GCC_PCIE_3_CFG_AHB_CLK>,
- 				 <&gcc GCC_PCIE_3_CLKREF_CLK>,
--				 <&gcc GCC_PCIE2_PHY_REFGEN_CLK>,
-+				 <&gcc GCC_PCIE3_PHY_REFGEN_CLK>,
- 				 <&gcc GCC_PCIE_3_PIPE_CLK>;
- 			clock-names = "aux",
- 				      "cfg_ahb",
-@@ -2059,7 +2059,7 @@ pcie2_phy: phy@1c1c000 {
- 				      "refgen",
- 				      "pipe";
- 			#clock-cells = <0>;
--			clock-output-names = "pcie_3_pipe_clk";
-+			clock-output-names = "pcie_2_pipe_clk";
- 
- 			#phy-cells = <0>;
- 
+On 12/16/2023 5:24 AM, Konrad Dybcio wrote:
+[...]
+>> +
+>> +	arm_mmu500_reset(smmu);
+> We should check the return value here, in case the function is modified
+> some day in a way that makes it return something else than 0
+> 
 
----
-base-commit: aa4db8324c4d0e67aa4670356df4e9fae14b4d37
-change-id: 20231219-topic-8180_pcie-8b545fc757be
+Thanks for pointing this actually. I crosschecked on the
+arm_mmu500_reset function behavior, looks like there's no return value
+other than 0 and so the functionality won't change. I think we can
+keep it as it is in this case.
 
-Best regards,
--- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+Thanks,
+Bibek
 
+> LGTM otherwise!
+> 
+> Konrad
 
