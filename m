@@ -1,92 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-5424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7365818CE0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 17:50:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DEF7E818DAA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 18:12:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1A0691C21F00
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 16:50:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1E1B11C24E68
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 17:12:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5F382032E;
-	Tue, 19 Dec 2023 16:49:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D2A421118;
+	Tue, 19 Dec 2023 17:11:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="QY8N5XhP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dLbcc1MT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB061F95F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 16:49:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3366920db54so2473453f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 08:49:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1703004579; x=1703609379; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VRDzLjiMAJP8BbJu7ca4CzlHn8br6Q4rynefqovgK2E=;
-        b=QY8N5XhP1A7bL5nrQ29AhKQmm7Vur6a3nChzQq4+z3HVTNQqsWc4ADP5JQbivf/tsM
-         yOo5qSbWfh2xvUuGGd3OPjQrwqXVQHLTWoSBdOg8Aw0eS48r9HCFRYTFhX/aZmyvN/es
-         SFVWn7lAufgamo1ylbmkF1SN0Mwt7btEr1b0mGq7EkWBblrUhf3ifDEIJdPfTcDcchxQ
-         b9Qx+C7dtZmD5Blrssrj/jqNo0eFCXu+09cxk2lC3M2Vjp9L5PJumLZ2e9JT/WMt7Jeg
-         EsZypGiPpcPdQyTAttR9hvUzcv8Y3zv9uJ/btJqGhp7KMNIoNwVCLJSaLBt785a+8uDa
-         Qvwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703004579; x=1703609379;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VRDzLjiMAJP8BbJu7ca4CzlHn8br6Q4rynefqovgK2E=;
-        b=PHmz3yWlus7wJKkdUF14EUvESW7kJCSbCTbcR9iDClkQk8EzetvUUWmDvjbDUpOvXO
-         SwnPgtr94rAwRKhuWIsX1LmlrIb6MvMq4mQVLLvVGY5ETJF58jS/Gd2gkWsi37F1MIS/
-         i9pFUOD15LDAEaVzD8S9JLk7UVFM75HCACx/XsjTJK9IqD3ipT6JXpwJgbN/Id8VdrCq
-         zn+wY6N0bY6UXzyNBpCprs46yDuXQ8YqmKc3pASgBk+rh8Y8fVSGivKQ5QY8Br+prDlK
-         HggHEpGgWJ2LqwnOo9ynAlIXPTfpcCnVpyPhIQqSRijaYGrQf2ToidtBbgKL36SjCqKb
-         vArw==
-X-Gm-Message-State: AOJu0Yw9nqoOpq9dW+Qj1rM29458KBsL6L8En///P6zAwwsVwegmwQyb
-	nvvKWqR9An/XyF+piJaEgYQq8YFRrt2cawnv1pVMLw==
-X-Google-Smtp-Source: AGHT+IGkSnbETqevyS5YLD3SJEnIfiIu+J0X0Py1heMFhXlPrhe8Yn8VmdFtz1I98N0U0C5dSxJ7i2tWrus4KMvpVek=
-X-Received: by 2002:adf:fb49:0:b0:333:53b9:441b with SMTP id
- c9-20020adffb49000000b0033353b9441bmr4989922wrs.47.1703004579412; Tue, 19 Dec
- 2023 08:49:39 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9453174A;
+	Tue, 19 Dec 2023 17:11:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C68C433C7;
+	Tue, 19 Dec 2023 17:11:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1703005891;
+	bh=bHyMqohUpG3TgYf+LaLoP+IOoy7SIqBFB/tROxy5Kps=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=dLbcc1MT8AkJroDXZHNVC4rIGmJ5mSwe4TcZTvDcLnGuJdXJlMnsMuA04rSDu7dvf
+	 YNj4lHpGIiPutWsfmhil1SWrhHiQJh1n+oxjdc3R3LMlWF2KIRZrwCpaQS4zvWZyrJ
+	 6F9eoKmpxdJG0/biI80m9+ZRCX6Z5wU1VMCLC58oB3yKmTM/X/ytcaBZDZK+pTB6nl
+	 4rzbPrVGpRwpsBtQc3SKpnwp/cannJpbvkfpXF+mw7cI3mMJ75RFA/URo6o9c7rDSj
+	 jMI+QbtdZQ32xr+m+gYn7m52lju/mjH0Y49L5lif1U7EFV8KntgnYEuJamTDDv6Nsv
+	 PsqflFqVEM40A==
+Date: Tue, 19 Dec 2023 11:11:29 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Yassine Oudjana <y.oudjana@protonmail.com>
+Cc: Andy Gross <agross@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Yassine Oudjana <yassine.oudjana@gmail.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: msm8996: Define UFS UniPro clock limits
+Message-ID: <qjz546574l3jp6w7gza7kj43slwotitsrt3rodtp7g5lnqgbhf@2htxa5m4bvtw>
+References: <20231218133917.78770-1-y.oudjana@protonmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231215-llvm-decode-stacktrace-v1-1-201cb86f4879@quicinc.com>
- <CAKwvOdmY=Jysqai3KOYO8+c5idP9JjNGKL2xZn2sDNdj5MjTVA@mail.gmail.com> <CAFhGd8qA8Hh63iZPP33Nsxu61OycP7oqT50mDgUO-HFNUWHZxQ@mail.gmail.com>
-In-Reply-To: <CAFhGd8qA8Hh63iZPP33Nsxu61OycP7oqT50mDgUO-HFNUWHZxQ@mail.gmail.com>
-From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Tue, 19 Dec 2023 08:49:28 -0800
-Message-ID: <CAKwvOdmMCmcHVd7+ymKgVUe5uZrSvUYMaD9Fz5GSBtHBMPTnSQ@mail.gmail.com>
-Subject: Re: [PATCH] scripts/decode_stacktrace.sh: Use LLVM environment variable
-To: Justin Stitt <justinstitt@google.com>
-Cc: Elliot Berman <quic_eberman@quicinc.com>, Masahiro Yamada <masahiroy@kernel.org>, 
-	Nathan Chancellor <nathan@kernel.org>, Bill Wendling <morbo@google.com>, Manuel Traut <manut@linutronix.de>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	llvm@lists.linux.dev, Will Deacon <will@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231218133917.78770-1-y.oudjana@protonmail.com>
 
-On Mon, Dec 18, 2023 at 4:17=E2=80=AFPM Justin Stitt <justinstitt@google.co=
-m> wrote:
->
-> Interestingly, I am getting good stack traces on mainline with a
-> LLVM-built kernel -- both with and without that patch.
+On Mon, Dec 18, 2023 at 01:39:42PM +0000, Yassine Oudjana wrote:
+> These limits were always defined as 0, but that didn't cause any issue
+> since the driver had hardcoded limits. In commit b4e13e1ae95e ("scsi: ufs:
+> qcom: Add multiple frequency support for MAX_CORE_CLK_1US_CYCLES") the
+> hardcoded limits were removed and the driver started reading them from DT,
+> causing UFS to stop working on MSM8996. Add real UniPro clock limits to fix
+> UFS.
+> 
 
-Probably because:
-1. you have GNU binutils installed.
-2. you're not testing .o files from an LTO build (which GNU binutils
-cannot decode).
+Such driver changes are not acceptable, as they break backwards
+compatibility with existing DeviceTree.
 
---=20
+Can you please try to fix the driver to handle this case?
+
+After that is done, I'd be happy to take this patch.
+
 Thanks,
-~Nick Desaulniers
+Bjorn
+
+> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+> ---
+>  arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> index 13667886f50a..4f9939b13c3c 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> @@ -2064,7 +2064,7 @@ ufshc: ufshc@624000 {
+>  				<0 0>,
+>  				<0 0>,
+>  				<150000000 300000000>,
+> -				<0 0>,
+> +				<75000000 150000000>,
+>  				<0 0>,
+>  				<0 0>,
+>  				<0 0>,
+> -- 
+> 2.43.0
+> 
+> 
 
