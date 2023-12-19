@@ -1,54 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-5346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E0858184E1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 10:57:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 02FEC8184EF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 11:01:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4845C1C22D05
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 09:57:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6D4EA1F24DD0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 10:01:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9501413FFF;
-	Tue, 19 Dec 2023 09:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3974E14A8C;
+	Tue, 19 Dec 2023 10:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oFSPdkjR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OSKD7KMs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E7714A8F;
-	Tue, 19 Dec 2023 09:57:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BJ5wsF7007613;
-	Tue, 19 Dec 2023 09:57:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=5V9e9YuBtSIeRBWVdttH6UA7saaTLbl9Nvsa7laPmNE=; b=oF
-	SPdkjRWoEk2Kq+zp3+9lWU05C5g86YxLGqGQ6aq+XlMm6mpUl6ZK60fTlEzY6kUO
-	NyXm+Le/TlD6DmngxHSvoWDKzY0lzTFnrhAjHsjkZ3cw+N+cdsm4qFbgI6kLAAA9
-	4IDu3VBT4VWQmr8HOZjmKZ5nePE5HZ6o26USw95a5ZpFUvXziBx0pIyb0x3rCsVT
-	1DWWN+puXICx1WwrdCseOFxWwcT8O/yk1NtG9V27sOtqO2HseLHcHjyKkyjFIKEG
-	+ZBCtTugapqDU98y1e6ytwj/jlsme7uz6MPotaLpucZlyPhXj8Yw+M1W5fkaE2kT
-	oZaKeL48gdxBVtBAIrbQ==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v34bj8r8c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Dec 2023 09:57:19 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BJ9vIVg021838
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Dec 2023 09:57:18 GMT
-Received: from [10.239.132.150] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 19 Dec
- 2023 01:57:15 -0800
-Message-ID: <cd5a0140-295a-4f48-a378-3c2b8be0f499@quicinc.com>
-Date: Tue, 19 Dec 2023 17:57:13 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7823D14A81
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 10:01:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-50e44c1b35fso670657e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 02:01:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702980065; x=1703584865; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/ZicGYpuXUgdFYjfk2qcQ5RE2Pt34/QHv77l13q5D6w=;
+        b=OSKD7KMswphaJ7Ftjm/HITSJ8gAbZK8VwcjwTrIiMgJjVFGxkSjdACR7hqPFFtAkeJ
+         lLb41s9ZV7iyO4E4n27/r9oiEBscCXsp90+OCIAznEHQ56WK0AjHqAq5P+zPj+lNIlOB
+         BrjRkH2cj6IkEEAIskZnpy4bpw9kWTnvHyKNkQjqm8E9vMas/LR6Vbo9RsWMN23Apae7
+         6muvzxtXsZvHTjB2+psckwOgiV7X3I1ndX4/N8F7ErE80+3/hoagmbiywIO5P8Zoa+Ie
+         35CflqJt/zlQS0ngF3kd3TnyReM/ynn6183FGV2+IOuTAE7PmvXahuT79fykboGzkbTG
+         5eOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702980065; x=1703584865;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/ZicGYpuXUgdFYjfk2qcQ5RE2Pt34/QHv77l13q5D6w=;
+        b=bKICaJfUdODbNifWpcEC+Bk39ULQvkl4XGDJMHt/yituXIMO0Vhfi216tw7BknU/f/
+         0WnDjMjVaLKqBV+VWwhSvO8Is9YcxsZv+cXSOQ8brMzIyW/G9cliZbM8lhLlrPU67gNe
+         nQE+uJhaD2IZH/jzc1353/BJfqFWW7mE/3k70QBKSE+hHOZQRXHHCijf6TjsCuAyPKjx
+         LmOIJrmdVKlyzRozIaot1A/84CjqN32Hbiq0VbjRtFNdVZF/qkMiQHanyT4H0pBwLw5t
+         qRM7WbWAHNXJUA0x4QfFZkTXb0ZWKS8qt88W3S+jVe6XX/UFoTOSTA2o3YLtiQJ5ameN
+         dpkg==
+X-Gm-Message-State: AOJu0YzX6hwJQjKVf9ns6C5tqjUyONfur9PMui495wNGtBf2gmcyS1ky
+	OpH7wCOkjv5b8QfdMKhVzmyUHQ==
+X-Google-Smtp-Source: AGHT+IF/VsgUE9ug4sr7x7yLIxCG4AGuuEm+1U41RiJjZxM3tfcC4ElDE7tvwfiyqVeVyFFxt7jsOw==
+X-Received: by 2002:ac2:428b:0:b0:50d:ae2:2a9f with SMTP id m11-20020ac2428b000000b0050d0ae22a9fmr7296632lfh.24.1702980065513;
+        Tue, 19 Dec 2023 02:01:05 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.27])
+        by smtp.gmail.com with ESMTPSA id z25-20020a1709067e5900b00a2685eca385sm80652ejr.195.2023.12.19.02.01.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Dec 2023 02:01:04 -0800 (PST)
+Message-ID: <f0f707c0-dd96-4409-bfc5-118d885933e8@linaro.org>
+Date: Tue, 19 Dec 2023 11:01:03 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,94 +68,133 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 4/6] arm64: dts: qcom: qcs8550: introduce qcs8550 dtsi
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Tengfei Fan
-	<quic_tengfan@quicinc.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
+To: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>,
+ Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
 References: <20231219005007.11644-1-quic_tengfan@quicinc.com>
  <20231219005007.11644-5-quic_tengfan@quicinc.com>
  <ec730ce7-2021-4cad-97e6-0a86c6063533@linaro.org>
-From: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>
-In-Reply-To: <ec730ce7-2021-4cad-97e6-0a86c6063533@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+ <cd5a0140-295a-4f48-a378-3c2b8be0f499@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <cd5a0140-295a-4f48-a378-3c2b8be0f499@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3YDMuxre7V57zdFvIKiIjde8dtpwbsbU
-X-Proofpoint-ORIG-GUID: 3YDMuxre7V57zdFvIKiIjde8dtpwbsbU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
- mlxlogscore=541 impostorscore=0 priorityscore=1501 clxscore=1015
- spamscore=0 phishscore=0 suspectscore=0 mlxscore=0 lowpriorityscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312190074
 
-
-
-On 12/19/2023 3:02 PM, Krzysztof Kozlowski wrote:
-> On 19/12/2023 01:50, Tengfei Fan wrote:
->> QCS8550 is derived from SM8550, it is mainly used in IoT scenarios.
+On 19/12/2023 10:57, Aiqun Yu (Maria) wrote:
 > 
-> What are the differences? You need to describe the hardware, you have
-> entire commit msg for something useful which will avoid such comments
-> from reviewers.
+> 
+> On 12/19/2023 3:02 PM, Krzysztof Kozlowski wrote:
+>> On 19/12/2023 01:50, Tengfei Fan wrote:
+>>> QCS8550 is derived from SM8550, it is mainly used in IoT scenarios.
+>>
+>> What are the differences? You need to describe the hardware, you have
+>> entire commit msg for something useful which will avoid such comments
+>> from reviewers.
+>>
+>>>
+>>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/qcs8550.dtsi | 6 ++++++
+>>>   1 file changed, 6 insertions(+)
+>>>   create mode 100644 arch/arm64/boot/dts/qcom/qcs8550.dtsi
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/qcs8550.dtsi b/arch/arm64/boot/dts/qcom/qcs8550.dtsi
+>>> new file mode 100644
+>>> index 000000000000..254657f46c5e
+>>> --- /dev/null
+>>> +++ b/arch/arm64/boot/dts/qcom/qcs8550.dtsi
+>>> @@ -0,0 +1,6 @@
+>>> +// SPDX-License-Identifier: BSD-3-Clause
+>>> +/*
+>>> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+>>> + */
+>>> +
+>>> +#include "sm8550.dtsi"
+>>
+>> This is a weird file. I thought qcs8550 has differences from sm8550,
+>> e.g. lack of modem, so why do you claim you have here MPSS?
+> MPSS here in qcs8550 is a GPS only MPSS.
+
+Is it different or the same? Is the interface the same? So many
+questions and so little information. You have entire commit msg to
+explain this.
+
+> 
+> QCS8550 will have a different firmware release with sm8550, and it will 
+> have different memory reserved for the firmware to be used.
+> While firmware release along with memory map was not settled down yet.
+> That's why currently qcs8550.dtsi is an "empty file" and only include 
+> sm8550.dtsi. As long as the firmware release is settled down, we will 
+> have more detailed different node here.
+
+So the DTS is not really usable now?
+
+> 
+> By the way, RB5 gen2 will also relies on the current qcs8550.dtsi, since 
+> it is using the same qcs8550 soc, and will use the same firmware release.
+> 
+> We have patch version2 remove the qcs8550.dtsi, and have SOM dtsi 
+> qcs8550-aim300.dtsi include the sm8550.dtsi. While after discussion, our 
+> understanding is that we can have an qcs8550.dtsi like this. Feel free 
+> to let us know if it is not right understanding.
 > 
 >>
->> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/qcs8550.dtsi | 6 ++++++
->>   1 file changed, 6 insertions(+)
->>   create mode 100644 arch/arm64/boot/dts/qcom/qcs8550.dtsi
+>> It's really confusing now.
+> 
+> We can have a syncup to clear the confusing point if needed. :)
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/qcs8550.dtsi b/arch/arm64/boot/dts/qcom/qcs8550.dtsi
->> new file mode 100644
->> index 000000000000..254657f46c5e
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/qcs8550.dtsi
->> @@ -0,0 +1,6 @@
->> +// SPDX-License-Identifier: BSD-3-Clause
->> +/*
->> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +
->> +#include "sm8550.dtsi"
-> 
-> This is a weird file. I thought qcs8550 has differences from sm8550,
-> e.g. lack of modem, so why do you claim you have here MPSS?
-MPSS here in qcs8550 is a GPS only MPSS.
 
-QCS8550 will have a different firmware release with sm8550, and it will 
-have different memory reserved for the firmware to be used.
-While firmware release along with memory map was not settled down yet.
-That's why currently qcs8550.dtsi is an "empty file" and only include 
-sm8550.dtsi. As long as the firmware release is settled down, we will 
-have more detailed different node here.
+The code and commit msg are confusing. I need to keep asking you to get
+any information.
 
-By the way, RB5 gen2 will also relies on the current qcs8550.dtsi, since 
-it is using the same qcs8550 soc, and will use the same firmware release.
+Best regards,
+Krzysztof
 
-We have patch version2 remove the qcs8550.dtsi, and have SOM dtsi 
-qcs8550-aim300.dtsi include the sm8550.dtsi. While after discussion, our 
-understanding is that we can have an qcs8550.dtsi like this. Feel free 
-to let us know if it is not right understanding.
-
-> 
-> It's really confusing now.
-
-We can have a syncup to clear the confusing point if needed. :)
-> 
-> Best regards,
-> Krzysztof
-> 
-
--- 
-Thx and BRs,
-Aiqun(Maria) Yu
 
