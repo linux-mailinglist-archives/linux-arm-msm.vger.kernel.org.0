@@ -1,139 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-5385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5386-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB1CA81876E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 13:26:40 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EAFAB8187C1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 13:46:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 964801F21F94
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 12:26:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DFA24B249BF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 12:45:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC5771862A;
-	Tue, 19 Dec 2023 12:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2375518626;
+	Tue, 19 Dec 2023 12:45:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OJWMzrCY"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JEqtRYyz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C6C18629
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 12:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F9218E0E
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 12:45:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-552d39ac3ccso7978777a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 04:26:34 -0800 (PST)
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-33662243274so1377915f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 04:45:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702988792; x=1703593592; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wWS3yfczDktkvUpvixqZyQtOZBwe8LPlr5fHw/dxTh4=;
-        b=OJWMzrCYL4bLgoOBfpGnTVn063dDWKmUWhsnHy9rhYFpnIiGPPBulIMnh5BnLJCtWv
-         qH6+Vz/QvvUZm195FaxFxDrtxiwexCYWBcTqTgrMCNL5fSauC+sXJIOVTTA8EVhX5hU3
-         V1RQb+Gu696PW0uICglRjhDGJj/+INZoMcvA7IN9/WhWyE6XcVF4fkWivS7o25Vdxgd5
-         m6k4BS3X9pRHNIA7BPY3OY+OHoLoI7YbnAxDbylmTCzwpJ/F2Z8PdkVD1uL6QPNkMywn
-         4pUN0iivlHuhftgDSHUboA4Q5TQtvOb6hu/B7uDurKfT/PqYleAZerP4KeMIlCmGnyan
-         6YbQ==
+        d=linaro.org; s=google; t=1702989939; x=1703594739; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=DQfpKPPltWnEF7uL8FsRCxLxlxGvjxQdYA/zsOKlDMQ=;
+        b=JEqtRYyzBb/r/9Kd0aEXjtJ/xlTLAbZynLh1JDPP+bFHYGN/XlK6p/YBOMkUqNClVD
+         iMYy9GaNdrfUqUrVsf9Mxjm2FUmw/ELScRQHvu9AAHSRZ2Cuo0I7FLXjXiUhiVgnPXvh
+         Fpbo5kPjmydJaNgvS4AZUHQ1uSrG+K6xnwQGxu+CUipnVxVVSEn6NEDOun21s4R+7ew1
+         0gddV2+ZvhhVdFTs/+Ql+GixQaCBHDqowszBV4PUPuhHOHfKk9xjaTetURvyqqtjPuPr
+         cODTIdUoVA3ZgFHDU75StX2QxWx/eE/7nODLtltoqXQLfcmVSYi3g12x+s3KmLlV2uLy
+         jx3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702988792; x=1703593592;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wWS3yfczDktkvUpvixqZyQtOZBwe8LPlr5fHw/dxTh4=;
-        b=ohjbgajCtQxZ6ndp0WXLFPmk0gbhHLErfmO+/AzGp4L/06/KGCZkv9h9L18QshlMpk
-         9NRVeYiYucPYswqNPsOW46QLBJ9xKu4eAlVXVPcFIAqGhoQ36SjQQCOyJxTWTueJwNFJ
-         dUTFcRjAJ3Eo48Jb291KYa25W+CjWBUi+R7dVWZHqIdSKOuPn/msfqD9Us3GahyuTG/h
-         L53eYky8ZN6fZ1cm+hrRgaK1pwZVjWUV/yR/uvpFVwYkRonl9sx4PqeLDYeElcNnqpBR
-         q/ByI0U4/rFsgQDor5UqKjvTH+0sFZAvoOngVOrg++npIrfnDrvZzXXTSYENAnmi4NSM
-         0qHA==
-X-Gm-Message-State: AOJu0YySuRGvmF0f9r0B7Hwg8EqwYU+HuQ5MsFmcRnneV0o8ro8sQ1Zk
-	MBrO4m71JfzzW/8ZaCyj2vFoFg==
-X-Google-Smtp-Source: AGHT+IF3baFBbt57k/9IDal6KLp1YZfltZBezRPb8tmcI0Bu/yGnWA5AgvMArVDDUwsOc6TLJ/ErEA==
-X-Received: by 2002:a17:906:a38f:b0:a1d:4874:1ab7 with SMTP id k15-20020a170906a38f00b00a1d48741ab7mr1085884ejz.65.1702988792599;
-        Tue, 19 Dec 2023 04:26:32 -0800 (PST)
-Received: from [192.168.199.59] (178235179206.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.206])
-        by smtp.gmail.com with ESMTPSA id tg3-20020a1709078dc300b00a22fdd1722asm8402732ejc.122.2023.12.19.04.26.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Dec 2023 04:26:32 -0800 (PST)
-Message-ID: <d550ba47-7d92-4f55-a498-8f652c806f30@linaro.org>
-Date: Tue, 19 Dec 2023 13:26:30 +0100
+        d=1e100.net; s=20230601; t=1702989939; x=1703594739;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DQfpKPPltWnEF7uL8FsRCxLxlxGvjxQdYA/zsOKlDMQ=;
+        b=jC4d4z+DcPvcZc/6MzaV+J9uwiaSRYJy1XQRT596jThaudMn7EiCrLtycUezQG/8fH
+         QKl9TtA2azJeaO09TQmP80041yMkwH08Y9E2l1W5YAcTm31C7G/ZrPfPaZeQZ7wb7S5J
+         lFbX8g144tENCVIL2mK7VnUFIBSVrif9XZ2MW4rQes5BY3b57RCpO1hY2+F22uci/yNl
+         IBytrv5RXrLq7K6GzhyIPLBzgoWPIghgk25p11ar1Y7Lv1vIrjCoKVjIMKYlv0Ph3y6h
+         GIMkAq6PuYWKzVKnz6aUDliv23v9yNAev+nP+NZoe6i0z7y+EfVGtIyYpIObnQP1Wlrd
+         pBog==
+X-Gm-Message-State: AOJu0Yz7kixAw9yxD+olgXEWQA56EICTNAQeC63WSOdHWSlmDMjxl0pd
+	Q6aTeW1kDNK0fQfw92NrxsdtXg==
+X-Google-Smtp-Source: AGHT+IHWUthfQos25jM1DxXW+vQCECdH+wGadNQ4NVKr9pYNDVqDeLKYNKnGQUQLBrMEprA1w5RR3w==
+X-Received: by 2002:a5d:438d:0:b0:336:7596:30ec with SMTP id i13-20020a5d438d000000b00336759630ecmr332592wrq.20.1702989939059;
+        Tue, 19 Dec 2023 04:45:39 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id c3-20020adffb43000000b00336673a4153sm5975782wrs.80.2023.12.19.04.45.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Dec 2023 04:45:38 -0800 (PST)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v4 0/5] ASoC: codecs: add support for WCD939x Codec
+Date: Tue, 19 Dec 2023 13:45:33 +0100
+Message-Id: <20231219-topic-sm8650-upstream-wcd939x-codec-v4-0-1c3bbff2d7ab@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 34/34] media: iris: add power management for encoder
-Content-Language: en-US
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
- linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
- stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com, agross@kernel.org,
- andersson@kernel.org, mchehab@kernel.org, bryan.odonoghue@linaro.org
-Cc: linux-arm-msm@vger.kernel.org, quic_abhinavk@quicinc.com
-References: <1702899149-21321-1-git-send-email-quic_dikshita@quicinc.com>
- <1702899149-21321-35-git-send-email-quic_dikshita@quicinc.com>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <1702899149-21321-35-git-send-email-quic_dikshita@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAG2QgWUC/5XNy27CMBCF4VdBXneqeHxJzIr3qFgYzwQslTiy0
+ wBCeXcMm4K6ocv/LL5zFYVz5CLWq6vIPMcS01BDf6xEOPhhzxCptsAGlZSoYEpjDFCOnTUN/Ix
+ lyuyPcArklDtDSMQBgra9RbkzhrSo0pi5j+fHy9e29iGWKeXL43SW9/V//iyhAZSkPTlsLfHmO
+ w4+p8+U9+J+MOMvio18D8WKOs3USb1D4/0fVD2j7Xuoqqil3pnOcGhD94Iuy3ID63CGO4EBAAA
+ =
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Banajit Goswami <bgoswami@quicinc.com>, Andy Gross <agross@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>
+Cc: linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org, 
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5307;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=2/6CQOwzdYlAg83zhhFF92wB59IPgOSmY++vmfHgixQ=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlgZBvdoWKHHLVU1xD7eyCCyJsqpoaEVc7+c3HvGNM
+ PDatO6eJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZYGQbwAKCRB33NvayMhJ0ZG8D/
+ 9PDa/OfOBuVmRmw4rb7zInu/5Kk3ctlMN78dzAe0ikzNMp1d+NA2Qt7tqIID99HPZaqIq0FPaOml45
+ jRtKbvHg48kpefs2ziy/mFyh5xVDEogSsBV76b2EeTgK1EsppmxkY1e27slkCnn6Uen3wN/UgdRktk
+ mCpXU2pG7qqlNx18HDQJBHmy1Vil39qnyfUWBSs2kVuEZJvfhdKVfWYlb3Bb92ECHDsGkhD9WvxiE0
+ HPkNNSZPhCKmuKr+fdFoQYe+1dK+5mRd5B8WtRz2CaPW9nyVQffj9SKlSHZyURMeE9pkA/lQebi5Dq
+ 5GeIJIedvG6L0VtSsVkVTWq5mPcw2bKm7gA/kFXPpio8UBYnPUemNv1q6aIeP9QK/nUfTRuEqczlz5
+ Ls6dT+Wf8Mg8wiZfbfmP8f0+Vzamh3HGSUqTrEls910WKId755K48HJV240K7s1HWCYYineEH8Ypmp
+ 3537VsRpRlVKwzHFGTwClIpqhcKGLZslIH3u21Tfh3nEL3mScyuwCEDJ3eBf2yOIbSaUbFxAdSlxAB
+ tDNBfQDvknS6iJH2amkTcwnJ2XAs49GvvzBXFS0Nz9RyVp6H75Q297nwNNEAdgfAc1gvbtTny08hQW
+ QQWY15vokG76UldzzNZbYNmfHvUYUmYha8yJVHNi/E0uwp2FvSOGBEp4r3Eg==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-On 18.12.2023 12:32, Dikshita Agarwal wrote:
-> Hardware specific power sequence include programming specific
-> sequence of registers. Implements this sequence for iris3.
-> 
-> Also, implement iris3 Encoder specific calculation for clock
-> and bus bandwidth which depends on hardware configuration,
-> codec format, resolution and frame rate.
-> 
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> ---
-[...]
+Add the main WCD9390/WCD9395 Audio Codec driver to support:
+- 4 ADC inputs for up to 5 Analog Microphones
+- 4 DMIC inputs for up to 8 Digital Microphones
+- 4 Microphone BIAS
+- Stereo Headphone output
+- Mono EAR output
+- MBHC engine for Headset Detection
 
-> +static const struct bw_info sm8550_bw_table_enc[] = {
-> +	{ 1944000, 1491000, 2693000 },	/* 3840x2160@60 */
-> +	{  972000,  765000, 1366000 },	/* 3840x2160@30 */
-> +	{  489600,  557000, 780000 },	/* 1920x1080@60 */
-> +	{  244800,  288000, 399000 },	/* 1920x1080@30 */
-> +};
-can this be calculated at runtime by chance?
+This adds:
+- bindings
+- MBHC changes to support Type-C muc
+- Soundwire Slave driver
+- Code driver
 
-Konrad
+The USB Mux subsystem support will be submitted separalety
+since it's a functionally separate subsystem connected over
+I2C with it's own reset signal.
+
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v4:
+- Soundwire driver
+ - Removed volatile/read-only registers from defaults list
+ - Added a wcd939x_readable_register() with read-only + read-write registers, so cache does it's job
+ - Added wcd939x_volatile_register() with only volatile registers
+ - Fixed a probable but by not using devm_ from probe() otherwise it would be freed in component unbind
+ - Fixed lifetime of the soundwire device, by setting it un forced suspend until component it bound
+ - Used the component bind/unbind to control the runtime pm, avoiding soundwire callbacks when not bound
+ - Added a wcd939x_swr_get_regmap() callback, because dev_get_regmap() would not work anymore without using devm in probe
+ - Removed useless pm_runtime_mark_last_busy in resume
+- Codec driver
+ - Fixed hph_mode setup, returning 0 is already set, checking against all possible values
+ - Used CLS_H_NORMAL instead CLS_H_INVALID as it should be in the hph_mode_mux_text list
+ - Used wcd939x_swr_get_regmap() to get TX SoundWire device device
+ - Fixed a probable uninitialized usage of version variable in probe
+- Link to v3: https://lore.kernel.org/r/20231207-topic-sm8650-upstream-wcd939x-codec-v3-0-6df9585ec7c8@linaro.org
+
+Changes in v3:
+- Fixed W=1 and smatch warnings reported by lkp & Dan Carpenter
+- Fixed dependency on CONFIG_TYPEC and added guards to not build type-c related code when disabled
+- Collected review on second bindings patch
+- Link to v2: https://lore.kernel.org/r/20231201-topic-sm8650-upstream-wcd939x-codec-v2-0-94ed814b25aa@linaro.org
+
+Changes in v2:
+- Bindings:
+  - Dropped all references to "Slave" or "Host" terminology when possible
+  - Collected review for first patch
+  - Added wcd9395 as fallback of wcd9390
+  - Fixes typos errors
+- MBHC:
+  - Dropped all references to "Slave" or "Host" terminology when possible
+  - Fixed EXPORT_SYMBOL into EXPORT_SYMBOL_GPL
+  - Fixed typo in commit message
+- Soundwire Devices driver
+  - Dropped all references to "Slave" or "Host" terminology when possible
+  - Dropped comments and unused code
+  - Reworked wcd939x_swr_get_current_bank()
+  - Added comments to wcd9390_interrupt_callback()
+  - Reworked regmap's wcd939x_readonly/volatile_register checks
+  - Added comments explaining while bind/unbind are empty
+  - Added comment on SDW_SLAVE_ENTRY meaning
+  - Added more register fields defines
+  - Style fixes
+- Codec driver
+  - Dropped all references to "Slave" or "Host" terminology when possible
+  - Added MICB_BIAS_ values enum and used them in the code
+  - Moved zdet_param to the top
+  - Added TLV data for ear_pa_gain and used it
+  - Defined as much as possible every bit field used on/from register
+  - Replaced 1/0 to true/false when writing to single bit fields
+  - Replaced for loop on all bits with ffs(), simplified code
+  - Simplified MICB fields handling code
+  - Reworked and simplified wcd939x_get/set_compander and other kcontrol get/setters
+  - Reworked and simplified MHGC impedance/zdet/qval code, dropped dead code
+  - Added comments on wcd939x_wd_handle_irq() utility
+  - Added comment on the interrupt handling architecture
+- I've not moved common code yet, I'll probably do later since it would alter wcd939x code
+- Link to v1: https://lore.kernel.org/r/20231123-topic-sm8650-upstream-wcd939x-codec-v1-0-21d4ad9276de@linaro.org
+
+---
+Neil Armstrong (5):
+      ASoC: dt-bindings: qcom,wcd938x: move out common properties
+      ASoC: dt-bindings: document WCD939x Audio Codec
+      ASoC: codec: wcd-mbhc-v2: add support when connected behind an USB-C audio mux
+      ASoC: codecs: Add WCD939x Soundwire devices driver
+      ASoC: codecs: Add WCD939x Codec driver
+
+ .../devicetree/bindings/sound/qcom,wcd938x.yaml    |   81 +-
+ .../bindings/sound/qcom,wcd939x-sdw.yaml           |   69 +
+ .../devicetree/bindings/sound/qcom,wcd939x.yaml    |   96 +
+ .../bindings/sound/qcom,wcd93xx-common.yaml        |   95 +
+ sound/soc/codecs/Kconfig                           |   19 +
+ sound/soc/codecs/Makefile                          |    7 +
+ sound/soc/codecs/wcd-clsh-v2.h                     |    1 +
+ sound/soc/codecs/wcd-mbhc-v2.c                     |   95 +-
+ sound/soc/codecs/wcd-mbhc-v2.h                     |    3 +
+ sound/soc/codecs/wcd939x-sdw.c                     | 1551 ++++++++
+ sound/soc/codecs/wcd939x.c                         | 3686 ++++++++++++++++++++
+ sound/soc/codecs/wcd939x.h                         |  989 ++++++
+ 12 files changed, 6597 insertions(+), 95 deletions(-)
+---
+base-commit: 07b677953b9dca02928be323e2db853511305fa9
+change-id: 20231123-topic-sm8650-upstream-wcd939x-codec-c46f621b55d4
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
 
