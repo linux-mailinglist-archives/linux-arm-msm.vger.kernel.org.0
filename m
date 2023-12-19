@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-5371-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDF9D8186C4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 12:58:37 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C77D28186E5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 13:02:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6E2A9B22845
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 11:58:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6F4F9286E07
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 12:02:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05F701643A;
-	Tue, 19 Dec 2023 11:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53408171D8;
+	Tue, 19 Dec 2023 12:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Lo39CVdd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TfiQgIiE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3AD1A72F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 11:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E7E1BDCE
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 12:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-40c6ea99429so44681075e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 03:58:12 -0800 (PST)
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a2358a75b69so457714066b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 04:01:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702987091; x=1703591891; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1702987288; x=1703592088; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Y6W/gNrNaGFlOaYC3hMxO2994a4+lokggs3hDaq7EMg=;
-        b=Lo39CVdd6v0gqM3RtkqTt8yvBMbQv0xHCI53fr5qXtVNuPLVsew2uJndvBWnr8IKdu
-         fZRa25nh7+EDEio8bW85PjSBXfgPFwt0e5wF9KRT9ydVCdIsq7gGubM0rh+wzt6PAUPX
-         J8yA9IDEhbEuGHU4vZn3Q5dXVptY3yr9MPQZgPWOl50e4KSsMDWS6ELfj2nR1DZA6jzb
-         pZxxYv8+4lcW89j+bezq39I3aJPN3Eb2cHou9YSy4Cg5QTA1aekeBNvj3jYSch2cv87n
-         dZ8QuvMbxLEG+nDNzY3hDxaUsf/i8Mzgq7xXZC8JcjhwIZaPyLGJE/Kebg30JFP8eR40
-         A6VQ==
+        bh=xYTg9juDWxZcIBckJUEaGgG12ZfS5cBo/+tlYXpzWNI=;
+        b=TfiQgIiEroygCBHwAPWpgNdcW/lIaTjzR5Knx8Xis9uI5c3d+gCiv5aW/JavyYXHwH
+         6jwt6xrL9+LZWcaLoy7YPpkwLdCzkTzoEDmpawL2VWXpZsQge4HPJVpFaxsUwFSyj8nP
+         4ma1xtbiuw+aPb+WRkMRSDbeO3ZLdOBu0AntrPIrOSFtQnei9nOnw3zqWxd2hen2OfH4
+         fTsdkMd6sUGvxRe94GbFIp7k12TdvcdRlyo15hwKQrXbYJCat8vD4Wp44iKNYzLrGlgP
+         J0z8ywp0vs2UimNRp6KkUyuPRaf0vn73wJpTx9IdzzAGcSb7/2h8BxvzMKrIgu7NT+QC
+         DhuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702987091; x=1703591891;
+        d=1e100.net; s=20230601; t=1702987288; x=1703592088;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y6W/gNrNaGFlOaYC3hMxO2994a4+lokggs3hDaq7EMg=;
-        b=DixmQ2pDHyoQ8a/+ZIn0rQ68yx3j7mvhi4HernwuPsmSMv42H8jNZBk3uuUT5HN+6a
-         qTa2NteROF6UbqhlqPgUx3bnIyVBb+VW0knhzEJnPwwMJ7uoFH/Ko7oxOpEVgvB03Efw
-         LtY1eLe3su0pgwFrwVsS3rFdURBK/jz47cJQdD2nXzj+wE7CR/0Be2YLZSsZ6vrvgxtK
-         2c7RZb0zJxKXvHtFQNi0tkLRCiinf3AU3FXf0aUM6+LKc4cs7UGTWqW5+J484BOmHnfE
-         WHcuRV62JZA4b8Oy1vGZOXTwlI98Xsb8/CTeeuKhaOu2gHdQlDDW+xhx5qUARCqJaKbs
-         vYVQ==
-X-Gm-Message-State: AOJu0Yw8OF7U+aqS4ooHiGAjVAWX2vgRWvcYZFfqZo+5epkYTsfL6Ir3
-	S6fgzAxNJN20tPB4ZTWYSmSZvw==
-X-Google-Smtp-Source: AGHT+IGfoIe65Ipxa9BOcBbTQlJ4Dwr3ypiFkuCXme9RQCPvGQJc96PAUQ7T3nBbh/uQ17TJlp9RQg==
-X-Received: by 2002:a05:600c:1d8c:b0:40c:872:3c9a with SMTP id p12-20020a05600c1d8c00b0040c08723c9amr6831825wms.253.1702987090961;
-        Tue, 19 Dec 2023 03:58:10 -0800 (PST)
+        bh=xYTg9juDWxZcIBckJUEaGgG12ZfS5cBo/+tlYXpzWNI=;
+        b=wP3kENpb7j82nCNdzCUEtKvqQYaG18yG+svM/HkOB55Xu1wIQM9i/cEme+2yde1ERu
+         PkBB6VFS6hZVJwloQWzQi/LfYJXJItq5WVcRkgWqrWRkjAqZsZ391De+N9ge4TnUKgH9
+         P10yVXA0ZmbzE7t8mmryxpHGNV/a2bYuG2WXv01QvJZM8TNv9spjzww1cf2jB9KE+cMb
+         jHqmk58O0QUxH146BKkRHKwyIZ9XIqSEeNPkG3PE3e4LCF7D/KdlT/MCh/EcGQZ9s6Pu
+         HZftcB17nDqG+6qlvwqnSgTvEm4SgMoiv6hxVUD/qZGudzfj0VUKtAFZQVS+DNQ4FisQ
+         oqOw==
+X-Gm-Message-State: AOJu0YyXJAmI3r6cuuSYsKMaJQnwPZpMLHE24Ce3sahUVjUoXazWguKb
+	jmlYpISAjmnMiFm3/2EMFqNDVQ==
+X-Google-Smtp-Source: AGHT+IGZR13abm6xSkWVYuuhV9Qk7aYDgUNIM6tTPh2sieIdPWD79f7wwxOnWNLPqKuo2dnW88SnOA==
+X-Received: by 2002:a17:906:1194:b0:a1c:d8c6:c21 with SMTP id n20-20020a170906119400b00a1cd8c60c21mr947426eja.67.1702987288015;
+        Tue, 19 Dec 2023 04:01:28 -0800 (PST)
 Received: from [192.168.199.59] (178235179206.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.206])
-        by smtp.gmail.com with ESMTPSA id x24-20020a170906135800b00a25501f4160sm458297ejb.1.2023.12.19.03.58.09
+        by smtp.gmail.com with ESMTPSA id lm11-20020a17090718cb00b00a1db76f99c8sm15508227ejc.93.2023.12.19.04.01.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Dec 2023 03:58:10 -0800 (PST)
-Message-ID: <fb199976-3500-4836-87e3-1e288ae10f5d@linaro.org>
-Date: Tue, 19 Dec 2023 12:58:09 +0100
+        Tue, 19 Dec 2023 04:01:27 -0800 (PST)
+Message-ID: <4b644ed4-358d-4caa-bed8-ca76e0baadb3@linaro.org>
+Date: Tue, 19 Dec 2023 13:01:24 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,16 +66,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 18/34] media: iris: introduce and implement iris vb2
- mem ops
+Subject: Re: [PATCH v10 18/41] ALSA: usb-audio: qcom: Add USB QMI definitions
 Content-Language: en-US
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
- linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
- stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com, agross@kernel.org,
- andersson@kernel.org, mchehab@kernel.org, bryan.odonoghue@linaro.org
-Cc: linux-arm-msm@vger.kernel.org, quic_abhinavk@quicinc.com
-References: <1702899149-21321-1-git-send-email-quic_dikshita@quicinc.com>
- <1702899149-21321-19-git-send-email-quic_dikshita@quicinc.com>
+To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
+ mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
+ corbet@lwn.net, gregkh@linuxfoundation.org, lgirdwood@gmail.com,
+ andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+ Thinh.Nguyen@synopsys.com, broonie@kernel.org, bgoswami@quicinc.com,
+ tiwai@suse.com, robh+dt@kernel.org, agross@kernel.org
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+ alsa-devel@alsa-project.org
+References: <20231215214955.12110-1-quic_wcheng@quicinc.com>
+ <20231215214955.12110-19-quic_wcheng@quicinc.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -112,38 +116,41 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <1702899149-21321-19-git-send-email-quic_dikshita@quicinc.com>
+In-Reply-To: <20231215214955.12110-19-quic_wcheng@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 18.12.2023 12:32, Dikshita Agarwal wrote:
-> From: Vikash Garodia <quic_vgarodia@quicinc.com>
+On 15.12.2023 22:49, Wesley Cheng wrote:
+> The Qualcomm USB audio offload driver utilizes the QMI protocol to
+> communicate with the audio DSP.  Add the necessary QMI header and field
+> definitions, so the QMI interface driver is able to route the QMI packet
+> received to the USB audio offload driver.
 > 
-> Implement the iris vb2 mem ops for buffer management for
-> DMABUF streaming mode. Update video driver buffer
-> with dma buf information.
-> 
-> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
 > ---
-[...]
-
+>  sound/usb/qcom/usb_audio_qmi_v01.c | 892 +++++++++++++++++++++++++++++
+>  sound/usb/qcom/usb_audio_qmi_v01.h | 162 ++++++
+>  2 files changed, 1054 insertions(+)
+>  create mode 100644 sound/usb/qcom/usb_audio_qmi_v01.c
+>  create mode 100644 sound/usb/qcom/usb_audio_qmi_v01.h
+> 
+> diff --git a/sound/usb/qcom/usb_audio_qmi_v01.c b/sound/usb/qcom/usb_audio_qmi_v01.c
+> new file mode 100644
+> index 000000000000..bdfd67d980eb
+> --- /dev/null
+> +++ b/sound/usb/qcom/usb_audio_qmi_v01.c
+> @@ -0,0 +1,892 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
 > +
-> +void *iris_vb2_alloc(struct vb2_buffer *vb, struct device *dev,
-> +		     unsigned long size)
-> +{
-> +	return (void *)0xdeadbeef;
-> +}
+> +#include <linux/soc/qcom/qmi.h>
 > +
-> +void iris_vb2_put(void *buf_priv)
-> +{
-> +}
+> +#include "usb_audio_qmi_v01.h"
 > +
-> +int iris_vb2_mmap(void *buf_priv, struct vm_area_struct *vma)
-> +{
-> +	return 0;
-> +}
-Are you sure these are enough for this driver to function?
+> +static struct qmi_elem_info mem_info_v01_ei[] = {
+can these be const?
 
 Konrad
 
