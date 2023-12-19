@@ -1,221 +1,475 @@
-Return-Path: <linux-arm-msm+bounces-5354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D61CA81853F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 11:22:17 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B60D818547
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 11:25:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4D4391F226FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 10:22:17 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 69CFDB236EE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 10:25:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC05214A99;
-	Tue, 19 Dec 2023 10:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0474414A90;
+	Tue, 19 Dec 2023 10:25:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gN4ljEoZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MyNIwD7R"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF62214A9F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 10:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 341C414A8C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 10:25:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-5e734251f48so11292307b3.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 02:22:10 -0800 (PST)
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-5e7c1012a42so3256297b3.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 02:25:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702981330; x=1703586130; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1702981511; x=1703586311; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=IWtv0nvouCX5fIsmZ0v0oxZW/THrMx3EmTdh8M6/xgA=;
-        b=gN4ljEoZAbB06gJ/52s08hzejsx1gG8TSUfD9FSqvMrcjDXT293NyaEQ/yw1p/cIo7
-         f098Z0rIfNm6kleOtNCMlqgK+BTMHtrJ7RUULdvv4DVGHCyPn27zMYNTESVhygfkJDca
-         IirkJGPuqKsj7DnLl333n8FpUBxS3SvWFRtmbU6rNQJ1FalkUg2BkY9M1mAujK7y/D9z
-         eu+iuHRYq378VVM90keAA1n4VSJloxxMl1TJmqH7TOJAsCjz2MAnDWK25iTFIgDSE4gk
-         An4IF//3Up6cDPhV9oCUCKa3dqmDS2R2t3RUd8eanksEAEsNO9kfO9sLeMaytFWtrvqM
-         IJ0A==
+        bh=JQkLzO626rTKTPxyLCwwXu05HLGx0XuKfJBitLo7Iug=;
+        b=MyNIwD7ReWHz/0BA+jbbcO8DDo5pBKK77Dk7EP1TjhPU2MZTXkTYtNA02gLvrqWjAV
+         1hDJcHLsMl+dkaQz62GO/9TsDwMOqiGsp7hMDXDpEb86G6IKMEypt3S7veDuIZ2cpAzM
+         oiR0Cqw1WVRHmO9l0rq4Pu4nJGl7V68y+Ijd0NgO72+zSKcT4VfkIJhM5DG5IJXxblNP
+         TfmDPivvJ+zcPJZTG33OcVXDAglQMUaei8UoxZl1ALlfFqK03sQU8vtvrHIyNNLj3F+V
+         kO9oZ7UnTTLlgpwty1xQqf7eFqxZ5D2hTxSRoF6l/giGecsb0nBY5GILBY6VqcYdjX2t
+         eO5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702981330; x=1703586130;
+        d=1e100.net; s=20230601; t=1702981511; x=1703586311;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=IWtv0nvouCX5fIsmZ0v0oxZW/THrMx3EmTdh8M6/xgA=;
-        b=VswtAELyJ0K29y5y1pFu+Fm1eXWlAmrSipzSdOYAtPhAkq6km3DNMkoEV7s6sHSrYf
-         pw+z9V9ljAsaKFYpZe6C+5ZfX6NGHeIazBonV0DfFWX80b3JUPCNUCRSng0ZVe/UGgGq
-         RDGuCpA+OrUK5VeU3JFK28XRltI1jJypAj8lpa4kVxx05GRk+tsWnAsl04rK/c7A1t0P
-         +s6FlverPmQucUgaRSV4wmAqmiojAfR2GDjvVDn0f0qw6D+bRpGb7WaB69b/ys+tD3R/
-         8q7cqQs9+eEczPPekuHLAqLSCYLUg8FQam/Ee8onuk8dqYQeclU31MCYnsslcLaoBywI
-         VRLw==
-X-Gm-Message-State: AOJu0YyIfDD34d7fxuYqNPfEKbtMUMKU8cwYwcXTCi0Ryqp28Z0SYKfc
-	5QHKOaxMSLruZfoAnflNgVVwbGVkByLNKvyTJSQmfQ==
-X-Google-Smtp-Source: AGHT+IFhpDdAZ1lxMc9AEtbpDAW0YBFm8qR1mzenXUm1MTWc17RrIWYgD0L/pXRE448LohDI8TSYdryTZupOBG6uO14=
-X-Received: by 2002:a81:62d5:0:b0:5e4:d68a:310 with SMTP id
- w204-20020a8162d5000000b005e4d68a0310mr481678ywb.36.1702981329841; Tue, 19
- Dec 2023 02:22:09 -0800 (PST)
+        bh=JQkLzO626rTKTPxyLCwwXu05HLGx0XuKfJBitLo7Iug=;
+        b=VfLbt8rGtJD3t7qdglVjNDb/+GnBRcASbmBbmBuMyrxJrDf3DhU9L6Dwq3nWbRXvJc
+         SOAVdAg8fVgIKjvQp7A5qJTs51uNOw9xvS4PSVdnExP1OA9R9/nkNEeOFcTq4t2xyyJM
+         b9+nKq82x2vm6N9XromtSw+Tzk/jXM4SqydX1zi2Uw/p9yCWVD0NN9n3GZ0eIzO+BMu5
+         J30yerBA64eqLn93CKmi6qsZ7cSOa5LbJcnsfeBo3lrE2uN3SXmRHnMATUw6gQUXwJTd
+         8zjsYcoWNSCFnRPp9zp0Nmaa51jUflpGRSSx1GonKAVAMbevnoh/ooR3BFFU4t8QCnoV
+         h04A==
+X-Gm-Message-State: AOJu0YxkbRyP2QoNBoci6El/NNhVHC1VZ8eVTheDH2jT49+8zMsIQX9A
+	aoEme9KE9Hw17ytThFN1xgeSeiqTTKw+Y+RxCYq3lw==
+X-Google-Smtp-Source: AGHT+IG6YUYh5bBvnMde2o0Is+53jbog/hQgx1UKgZEExzAYD/oXfO+pI8x0Vj9xF5m8Snle4XjXyvmuRlGhJ220/NM=
+X-Received: by 2002:a0d:cc13:0:b0:5e7:fb2e:6f70 with SMTP id
+ o19-20020a0dcc13000000b005e7fb2e6f70mr164292ywd.87.1702981511122; Tue, 19 Dec
+ 2023 02:25:11 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231215101827.30549-1-quic_bibekkum@quicinc.com>
- <20231215101827.30549-4-quic_bibekkum@quicinc.com> <CAA8EJppcsr1sbeD1fK0nZ+rASABNcetBK3yMvaP7OiA4JPwskw@mail.gmail.com>
- <c9493c5f-ccf8-4e21-b00c-5fbc2a5f2edb@quicinc.com> <b7f2bbf9-fb5a-430d-aa32-3a220b46c2f0@arm.com>
- <1eee8bae-59f0-4066-9d04-8c3a5f750d3a@linaro.org> <42d627af-164b-4b50-973e-fa71d86cb84c@linaro.org>
- <aa8b2ccd-33da-404b-9a93-3d88cf63ec77@quicinc.com> <8338db1e-0216-4fc5-b6ab-ddf43adf3648@linaro.org>
- <a363c860-62be-43a7-930c-cab8a6f3fa6c@quicinc.com>
-In-Reply-To: <a363c860-62be-43a7-930c-cab8a6f3fa6c@quicinc.com>
+References: <20231219005007.11644-1-quic_tengfan@quicinc.com> <20231219005007.11644-6-quic_tengfan@quicinc.com>
+In-Reply-To: <20231219005007.11644-6-quic_tengfan@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 19 Dec 2023 12:21:58 +0200
-Message-ID: <CAA8EJpoMwrwQ9wBZE6AcobLLkCchFtN23SnHhw3enNOfX3CzTQ@mail.gmail.com>
-Subject: Re: [PATCH v4 3/5] iommu/arm-smmu: add ACTLR data and support for SM8550
-To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Robin Murphy <robin.murphy@arm.com>, will@kernel.org, 
-	joro@8bytes.org, jsnitsel@redhat.com, quic_bjorande@quicinc.com, 
-	mani@kernel.org, quic_eberman@quicinc.com, robdclark@chromium.org, 
-	u.kleine-koenig@pengutronix.de, robh@kernel.org, vladimir.oltean@nxp.com, 
-	quic_pkondeti@quicinc.com, quic_molvera@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	iommu@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	qipl.kernel.upstream@quicinc.com
+Date: Tue, 19 Dec 2023 12:25:00 +0200
+Message-ID: <CAA8EJpoBuUVu00-s6uVJpYWB2Bvn2VnJqV8b9CicMfgvfokxdg@mail.gmail.com>
+Subject: Re: [PATCH v3 5/6] arm64: dts: qcom: add base AIM300 dtsi
+To: Tengfei Fan <quic_tengfan@quicinc.com>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org, 
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Fenglin Wu <quic_fenglinw@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Tue, 19 Dec 2023 at 10:25, Bibek Kumar Patro
-<quic_bibekkum@quicinc.com> wrote:
+On Tue, 19 Dec 2023 at 02:52, Tengfei Fan <quic_tengfan@quicinc.com> wrote:
 >
+> AIM300 is a module with QCS8550 SoC, UFS and PMIC chip.
+> AIM300 Series is a highly optimized family of modules designed to support
+> AIoT applications. The Module is mounted onto Qualcomm AIoT carrier board
+> to support verification, evaluation and development.
 >
+> Co-developed-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi | 371 +++++++++++++++++++
+>  1 file changed, 371 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi
 >
-> On 12/18/2023 7:51 PM, Dmitry Baryshkov wrote:
-> > On 18/12/2023 13:23, Bibek Kumar Patro wrote:
-> >>
-> >>
-> >> On 12/16/2023 9:45 PM, Dmitry Baryshkov wrote:
-> >>> On 16/12/2023 02:03, Konrad Dybcio wrote:
-> >>>> On 15.12.2023 13:54, Robin Murphy wrote:
-> >>>>> On 2023-12-15 12:20 pm, Bibek Kumar Patro wrote:
-> >>>>>>
-> >>>>>>
-> >>>>>> On 12/15/2023 4:14 PM, Dmitry Baryshkov wrote:
-> >>>>>>> On Fri, 15 Dec 2023 at 12:19, Bibek Kumar Patro
-> >>>>>>> <quic_bibekkum@quicinc.com> wrote:
-> >>>>>>>>
-> >>>>>>>> Add ACTLR data table for SM8550 along with support for
-> >>>>>>>> same including SM8550 specific implementation operations.
-> >>>>>>>>
-> >>>>>>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-> >>>>>>>> ---
-> >>>>>>>>    drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 89
-> >>>>>>>> ++++++++++++++++++++++
-> >>>>>>>>    1 file changed, 89 insertions(+)
-> >>>>>>>>
-> >>>>>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> >>>>>>>> b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> >>>>>>>> index cb49291f5233..d2006f610243 100644
-> >>>>>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> >>>>>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> >>>>>>>> @@ -20,6 +20,85 @@ struct actlr_config {
-> >>>>>>>>           u32 actlr;
-> >>>>>>>>    };
-> >>>>>>>>
-> >>>>>>>> +/*
-> >>>>>>>> + * SMMU-500 TRM defines BIT(0) as CMTLB (Enable context caching
-> >>>>>>>> in the
-> >>>>>>>> + * macro TLB) and BIT(1) as CPRE (Enable context caching in the
-> >>>>>>>> prefetch
-> >>>>>>>> + * buffer). The remaining bits are implementation defined and
-> >>>>>>>> vary across
-> >>>>>>>> + * SoCs.
-> >>>>>>>> + */
-> >>>>>>>> +
-> >>>>>>>> +#define PREFETCH_DEFAULT       0
-> >>>>>>>> +#define PREFETCH_SHALLOW       BIT(8)
-> >>>>>>>> +#define PREFETCH_MODERATE      BIT(9)
-> >>>>>>>> +#define PREFETCH_DEEP          (BIT(9) | BIT(8))
-> >>>>>>>
-> >>>>>>> I thin the following might be more correct:
-> >>>>>>>
-> >>>>>>> #include <linux/bitfield.h>
-> >>>>>>>
-> >>>>>>> #define PREFETCH_MASK GENMASK(9, 8)
-> >>>>>>> #define PREFETCH_DEFAULT FIELD_PREP(PREFETCH_MASK, 0)
-> >>>>>>> #define PREFETCH_SHALLOW FIELD_PREP(PREFETCH_MASK, 1)
-> >>>>>>> #define PREFETCH_MODERATE FIELD_PREP(PREFETCH_MASK, 2)
-> >>>>>>> #define PREFETCH_DEEP FIELD_PREP(PREFETCH_MASK, 3)
-> >>>>>>>
-> >>>>>>
-> >>>>>> Ack, thanks for this suggestion. Let me try this out using
-> >>>>>> GENMASK. Once tested, will take care of this in next version.
-> >>>>>
-> >>>>> FWIW the more typical usage would be to just define the named
-> >>>>> macros for the raw field values, then put the FIELD_PREP() at the
-> >>>>> point of use. However in this case that's liable to get pretty
-> >>>>> verbose, so although I'm usually a fan of bitfield.h, the most
-> >>>>> readable option here might actually be to stick with simpler
-> >>>>> definitions of "(0 << 8)", "(1 << 8)", etc. However it's not really
-> >>>>> a big deal either way, and I defer to whatever Dmitry and Konrad
-> >>>>> prefer, since they're the ones looking after arm-smmu-qcom the most :)
-> >>>> My 5 cents would be to just use the "common" style of doing this, so:
-> >>>>
-> >>>> #define ACTRL_PREFETCH    GENMASK(9, 8)
-> >>>>   #define PREFETCH_DEFAULT 0
-> >>>>   #define PREFETCH_SHALLOW 1
-> >>>>   #define PREFETCH_MODERATE 2
-> >>>>   #define PREFETCH_DEEP 3
-> >>>>
-> >>>> and then use
-> >>>>
-> >>>> | FIELD_PREP(ACTRL_PREFETCH, PREFETCH_x)
-> >>>>
-> >>>> it can get verbose, but.. arguably that's good, since you really want
-> >>>> to make sure the right bits are set here
-> >>>
-> >>> Sounds good to me.
-> >>>
-> >>
-> >> Konrad, Dimitry, just checked FIELD_PREP() implementation
-> >>
-> >> #define FIELD_FIT(_mask, _val)
-> >> ({                                                              \
-> >>                   __BF_FIELD_CHECK(_mask, 0ULL, _val, "FIELD_PREP: ");  \
-> >>                   ((typeof(_mask))(_val) << __bf_shf(_mask)) & (_mask); \
-> >> })
-> >>
-> >> since it is defined as a block, it won't be possible to use FIELD_PREP
-> >> in macro or as a structure value, and can only be used inside a
-> >> block/function. Orelse would show compilation errors as following
-> >>
-> >> kernel/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c:94:20: note: in
-> >> expansion of macro 'PREFETCH_SHALLOW'
-> >>    { 0x1947, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
-> >>                      ^
-> >> kernel/include/linux/bitfield.h:113:2: error: braced-group within
-> >> expression allowed only inside a function
-> >>    ({        \
-> >>    ^
-> >>
-> >> So as per my understanding I think, we might need to go ahead with the
-> >> generic implementation only. Let me know if I missed something.
-> >
-> > Then anyway (foo << bar) is better compared to BIT(n) | BIT(m).
-> >
->
-> Sure Dmitry, (foo << bar) would be simpler as well as Robin mentioned
-> earlier in his reply.
-> I can implement the defines as:
->
-> #define PREFETCH_DEFAULT       0
-> #define PREFETCH_SHALLOW       (1 << 8)
-> #define PREFETCH_MODERATE      (1 << 9)
+> diff --git a/arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi b/arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi
+> new file mode 100644
+> index 000000000000..04ca4597f952
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi
+> @@ -0,0 +1,371 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +#include "qcs8550.dtsi"
+> +#include "pm8010.dtsi"
+> +#include "pm8550.dtsi"
+> +#include "pm8550b.dtsi"
+> +#define PMK8550VE_SID 5
+> +#include "pm8550ve.dtsi"
+> +#include "pm8550vs.dtsi"
+> +#include "pmk8550.dtsi"
+> +#include "pmr735d_a.dtsi"
+> +#include "pmr735d_b.dtsi"
+> +
+> +/ {
+> +       vph_pwr: vph-pwr-regulator {
+> +               compatible = "regulator-fixed";
+> +               regulator-name = "vph_pwr";
+> +               regulator-min-microvolt = <3700000>;
+> +               regulator-max-microvolt = <3700000>;
+> +
+> +               regulator-always-on;
+> +               regulator-boot-on;
+> +       };
+> +};
 
-2 << 8. Isn't that hard.
+Is VPH_PWR regulator present on the SoM or on the carrier board?
 
-> #define PREFETCH_DEEP          (3 << 8)
+> +
+> +&apps_rsc {
+> +       regulators-0 {
+> +               compatible = "qcom,pm8550-rpmh-regulators";
+> +               qcom,pmic-id = "b";
+> +
+> +               vdd-bob1-supply = <&vph_pwr>;
+> +               vdd-bob2-supply = <&vph_pwr>;
+> +               vdd-l1-l4-l10-supply = <&vreg_s6g_1p86>;
+> +               vdd-l2-l13-l14-supply = <&vreg_bob1>;
+> +               vdd-l3-supply = <&vreg_s4g_1p25>;
+> +               vdd-l5-l16-supply = <&vreg_bob1>;
+> +               vdd-l6-l7-supply = <&vreg_bob1>;
+> +               vdd-l8-l9-supply = <&vreg_bob1>;
+> +               vdd-l11-supply = <&vreg_s4g_1p25>;
+> +               vdd-l12-supply = <&vreg_s6g_1p86>;
+> +               vdd-l15-supply = <&vreg_s6g_1p86>;
+> +               vdd-l17-supply = <&vreg_bob2>;
+> +
+> +               vreg_bob1: bob1 {
+> +                       regulator-name = "vreg_bob1";
+> +                       regulator-min-microvolt = <3296000>;
+> +                       regulator-max-microvolt = <3960000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_bob2: bob2 {
+> +                       regulator-name = "vreg_bob2";
+> +                       regulator-min-microvolt = <2720000>;
+> +                       regulator-max-microvolt = <3960000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l1b_1p8: ldo1 {
+> +                       regulator-name = "vreg_l1b_1p8";
+> +                       regulator-min-microvolt = <1800000>;
+> +                       regulator-max-microvolt = <1800000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l2b_3p0: ldo2 {
+> +                       regulator-name = "vreg_l2b_3p0";
+> +                       regulator-min-microvolt = <3008000>;
+> +                       regulator-max-microvolt = <3008000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l5b_3p1: ldo5 {
+> +                       regulator-name = "vreg_l5b_3p1";
+> +                       regulator-min-microvolt = <3104000>;
+> +                       regulator-max-microvolt = <3104000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l6b_1p8: ldo6 {
+> +                       regulator-name = "vreg_l6b_1p8";
+> +                       regulator-min-microvolt = <1800000>;
+> +                       regulator-max-microvolt = <3008000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l7b_1p8: ldo7 {
+> +                       regulator-name = "vreg_l7b_1p8";
+> +                       regulator-min-microvolt = <1800000>;
+> +                       regulator-max-microvolt = <3008000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l8b_1p8: ldo8 {
+> +                       regulator-name = "vreg_l8b_1p8";
+> +                       regulator-min-microvolt = <1800000>;
+> +                       regulator-max-microvolt = <3008000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l9b_2p9: ldo9 {
+> +                       regulator-name = "vreg_l9b_2p9";
+> +                       regulator-min-microvolt = <2960000>;
+> +                       regulator-max-microvolt = <3008000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l11b_1p2: ldo11 {
+> +                       regulator-name = "vreg_l11b_1p2";
+> +                       regulator-min-microvolt = <1200000>;
+> +                       regulator-max-microvolt = <1504000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l12b_1p8: ldo12 {
+> +                       regulator-name = "vreg_l12b_1p8";
+> +                       regulator-min-microvolt = <1800000>;
+> +                       regulator-max-microvolt = <1800000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l13b_3p0: ldo13 {
+> +                       regulator-name = "vreg_l13b_3p0";
+> +                       regulator-min-microvolt = <3000000>;
+> +                       regulator-max-microvolt = <3000000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l14b_3p2: ldo14 {
+> +                       regulator-name = "vreg_l14b_3p2";
+> +                       regulator-min-microvolt = <3200000>;
+> +                       regulator-max-microvolt = <3200000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l15b_1p8: ldo15 {
+> +                       regulator-name = "vreg_l15b_1p8";
+> +                       regulator-min-microvolt = <1800000>;
+> +                       regulator-max-microvolt = <1800000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l16b_2p8: ldo16 {
+> +                       regulator-name = "vreg_l16b_2p8";
+> +                       regulator-min-microvolt = <1800000>;
+> +                       regulator-max-microvolt = <3300000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l17b_2p5: ldo17 {
+> +                       regulator-name = "vreg_l17b_2p5";
+> +                       regulator-min-microvolt = <2504000>;
+> +                       regulator-max-microvolt = <2504000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +       };
+> +
+> +       regulators-1 {
+> +               compatible = "qcom,pm8550vs-rpmh-regulators";
+> +               qcom,pmic-id = "c";
+> +
+> +               vdd-l1-supply = <&vreg_s4g_1p25>;
+> +               vdd-l2-supply = <&vreg_s4e_0p95>;
+> +               vdd-l3-supply = <&vreg_s4e_0p95>;
+> +
+> +               vreg_l3c_0p9: ldo3 {
+> +                       regulator-name = "vreg_l3c_0p9";
+> +                       regulator-min-microvolt = <880000>;
+> +                       regulator-max-microvolt = <912000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +       };
+> +
+> +       regulators-2 {
+> +               compatible = "qcom,pm8550vs-rpmh-regulators";
+> +               qcom,pmic-id = "d";
+> +
+> +               vdd-l1-supply = <&vreg_s4e_0p95>;
+> +               vdd-l2-supply = <&vreg_s4e_0p95>;
+> +               vdd-l3-supply = <&vreg_s4e_0p95>;
+> +
+> +               vreg_l1d_0p88: ldo1 {
+> +                       regulator-name = "vreg_l1d_0p88";
+> +                       regulator-min-microvolt = <880000>;
+> +                       regulator-max-microvolt = <920000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +       };
+> +
+> +       regulators-3 {
+> +               compatible = "qcom,pm8550vs-rpmh-regulators";
+> +               qcom,pmic-id = "e";
+> +
+> +               vdd-l1-supply = <&vreg_s4e_0p95>;
+> +               vdd-l2-supply = <&vreg_s4e_0p95>;
+> +               vdd-l3-supply = <&vreg_s4g_1p25>;
+> +               vdd-s4-supply = <&vph_pwr>;
+> +               vdd-s5-supply = <&vph_pwr>;
+> +
+> +               vreg_s4e_0p95: smps4 {
+> +                       regulator-name = "vreg_s4e_0p95";
+> +                       regulator-min-microvolt = <904000>;
+> +                       regulator-max-microvolt = <984000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_s5e_1p08: smps5 {
+> +                       regulator-name = "vreg_s5e_1p08";
+> +                       regulator-min-microvolt = <1010000>;
+> +                       regulator-max-microvolt = <1120000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l1e_0p88: ldo1 {
+> +                       regulator-name = "vreg_l1e_0p88";
+> +                       regulator-min-microvolt = <880000>;
+> +                       regulator-max-microvolt = <912000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l2e_0p9: ldo2 {
+> +                       regulator-name = "vreg_l2e_0p9";
+> +                       regulator-min-microvolt = <870000>;
+> +                       regulator-max-microvolt = <970000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l3e_1p2: ldo3 {
+> +                       regulator-name = "vreg_l3e_1p2";
+> +                       regulator-min-microvolt = <1200000>;
+> +                       regulator-max-microvolt = <1200000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +       };
+> +
+> +       regulators-4 {
+> +               compatible = "qcom,pm8550ve-rpmh-regulators";
+> +               qcom,pmic-id = "f";
+> +
+> +               vdd-l1-supply = <&vreg_s4e_0p95>;
+> +               vdd-l2-supply = <&vreg_s4e_0p95>;
+> +               vdd-l3-supply = <&vreg_s4e_0p95>;
+> +               vdd-s4-supply = <&vph_pwr>;
+> +
+> +               vreg_s4f_0p5: smps4 {
+> +                       regulator-name = "vreg_s4f_0p5";
+> +                       regulator-min-microvolt = <500000>;
+> +                       regulator-max-microvolt = <600000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l1f_0p9: ldo1 {
+> +                       regulator-name = "vreg_l1f_0p9";
+> +                       regulator-min-microvolt = <880000>;
+> +                       regulator-max-microvolt = <912000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l2f_0p88: ldo2 {
+> +                       regulator-name = "vreg_l2f_0p88";
+> +                       regulator-min-microvolt = <880000>;
+> +                       regulator-max-microvolt = <912000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l3f_0p88: ldo3 {
+> +                       regulator-name = "vreg_l3f_0p88";
+> +                       regulator-min-microvolt = <880000>;
+> +                       regulator-max-microvolt = <912000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +       };
+> +
+> +       regulators-5 {
+> +               compatible = "qcom,pm8550vs-rpmh-regulators";
+> +               qcom,pmic-id = "g";
+> +               vdd-l1-supply = <&vreg_s4g_1p25>;
+> +               vdd-l2-supply = <&vreg_s4g_1p25>;
+> +               vdd-l3-supply = <&vreg_s4g_1p25>;
+> +               vdd-s1-supply = <&vph_pwr>;
+> +               vdd-s2-supply = <&vph_pwr>;
+> +               vdd-s3-supply = <&vph_pwr>;
+> +               vdd-s4-supply = <&vph_pwr>;
+> +               vdd-s5-supply = <&vph_pwr>;
+> +               vdd-s6-supply = <&vph_pwr>;
+> +
+> +               vreg_s1g_1p25: smps1 {
+> +                       regulator-name = "vreg_s1g_1p25";
+> +                       regulator-min-microvolt = <1200000>;
+> +                       regulator-max-microvolt = <1300000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_s2g_0p85: smps2 {
+> +                       regulator-name = "vreg_s2g_0p85";
+> +                       regulator-min-microvolt = <800000>;
+> +                       regulator-max-microvolt = <1000000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_s3g_0p8: smps3 {
+> +                       regulator-name = "vreg_s3g_0p8";
+> +                       regulator-min-microvolt = <300000>;
+> +                       regulator-max-microvolt = <1004000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_s4g_1p25: smps4 {
+> +                       regulator-name = "vreg_s4g_1p25";
+> +                       regulator-min-microvolt = <1200000>;
+> +                       regulator-max-microvolt = <1300000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_s5g_0p85: smps5 {
+> +                       regulator-name = "vreg_s5g_0p85";
+> +                       regulator-min-microvolt = <500000>;
+> +                       regulator-max-microvolt = <1004000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_s6g_1p86: smps6 {
+> +                       regulator-name = "vreg_s6g_1p86";
+> +                       regulator-min-microvolt = <1800000>;
+> +                       regulator-max-microvolt = <2000000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l1g_1p2: ldo1 {
+> +                       regulator-name = "vreg_l1g_1p2";
+> +                       regulator-min-microvolt = <1200000>;
+> +                       regulator-max-microvolt = <1200000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l2g_1p2: ldo2 {
+> +                       regulator-name = "vreg_l2g_1p2";
+> +                       regulator-min-microvolt = <1100000>;
+> +                       regulator-max-microvolt = <1200000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +
+> +               vreg_l3g_1p2: ldo3 {
+> +                       regulator-name = "vreg_l3g_1p2";
+> +                       regulator-min-microvolt = <1200000>;
+> +                       regulator-max-microvolt = <1200000>;
+> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +               };
+> +       };
+> +};
+> +
+> +&ufs_mem_hc {
+> +       reset-gpios = <&tlmm 210 GPIO_ACTIVE_LOW>;
+> +       vcc-supply = <&vreg_l17b_2p5>;
+> +       vcc-max-microamp = <1300000>;
+> +       vccq-supply = <&vreg_l1g_1p2>;
+> +       vccq-max-microamp = <1200000>;
+> +       vdd-hba-supply = <&vreg_l3g_1p2>;
+> +
+> +       status = "okay";
+> +};
+> +
+> +&ufs_mem_phy {
+> +       vdda-phy-supply = <&vreg_l1d_0p88>;
+> +       vdda-pll-supply = <&vreg_l3e_1p2>;
+> +
+> +       status = "okay";
+> +};
+> --
+> 2.17.1
 >
-> This should be okay I think ?
->
-> Thanks,
-> Bibek
 >
 
 
