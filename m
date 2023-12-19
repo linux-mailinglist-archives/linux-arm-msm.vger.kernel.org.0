@@ -1,79 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-5420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91446818BBB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 17:00:30 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 661FF818BD1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 17:06:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2C504287572
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 16:00:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E129BB24894
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 16:06:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7A131CFB9;
-	Tue, 19 Dec 2023 16:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B5411CFBD;
+	Tue, 19 Dec 2023 16:05:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h6qp/rYy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sl0irgBN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935661CF8D;
-	Tue, 19 Dec 2023 16:00:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22BCEC433C8;
-	Tue, 19 Dec 2023 16:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46AC020B34;
+	Tue, 19 Dec 2023 16:05:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB48C433C7;
+	Tue, 19 Dec 2023 16:05:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1703001625;
-	bh=6OAazItlXZJb2RxR9H3/uVNW6w630Htp7mI9+DI1Y+8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=h6qp/rYyRU+mlbN7Gwg5AiRzgx1Rbk2cEcW7os7DvgtbRVUSVD5jwYfKeOFo7d6lj
-	 xkJeHhmYXgq4qBejzL6PbgBTptUlC3dxXs43BarrIUonCkHTUt+QY4Au/UJTm0fuz8
-	 TuOQQHW0N0hk1Km2RVCIdp6zAvaYrWaqvE/pjMXHOrWHH4TJf1E1D0pDrXLA557Qnm
-	 oaHm0qvDwOGaLPe4BoFRFGYLMk754Amrp/MlqYcwqmBoYWGYb+JAtruBTy4Oz7dISQ
-	 aFj/FE7GffOZKKKRcl28kEEoW81aJbB6fW6/Nr/hiAZfQ2GVt65u9L5A4U/Si89vEQ
-	 ZVsDeiBHfIHOg==
-Received: from johan by xi.lan with local (Exim 4.96.2)
-	(envelope-from <johan@kernel.org>)
-	id 1rFcW6-0008KD-0D;
-	Tue, 19 Dec 2023 17:00:22 +0100
-Date: Tue, 19 Dec 2023 17:00:22 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Linus Walleij <linus.walleij@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: pinctrl: qcom,pmic-mpp: clean up example
-Message-ID: <ZYG-Fr9FfIQUup_r@hovoldconsulting.com>
-References: <20231130172834.12653-1-johan+linaro@kernel.org>
+	s=k20201202; t=1703001951;
+	bh=wOOLPNOS6Wdenq2YMCXYX637AGsdeEONrDQ0EipOGM0=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=Sl0irgBN4Po4Qo20Sl0qGNtmJUhnIP3EOb9EMDDVocMhShoFeDVV0QQjBnuj0WRV1
+	 7CNzsJfUF5ko4jAlf4w8z1GQXPTszA/y6uiE1UNsmLdE1LTk//Sdde1y8ERaHcnDQc
+	 vtqmuhTKbMIajlLoXP2O2o2yeIkK80AvhMpvTTPWCYgYZBYJeg+TLx4+7l33mHP4j+
+	 O6X/WjNl/sLr8gyQcmohEyDEYQxUc+ReXcYzjTFB3hblT0iMKtyaxLQHEuOCl9je6F
+	 SHTqo/fkTnt9cUdKMroaun13XvBrVfQaqdJ2ONw14x0fV95e9UCJ/dwN+QZzgs5+hq
+	 pq9YE9EhtZQDA==
+From: Mark Brown <broonie@kernel.org>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org
+In-Reply-To: <20231219075749.25308-1-johan+linaro@kernel.org>
+References: <20231219075749.25308-1-johan+linaro@kernel.org>
+Subject: Re: [PATCH] dt-bindings: regulator: qcom,usb-vbus-regulator: clean
+ up example
+Message-Id: <170300194921.59203.15876137715050350812.b4-ty@kernel.org>
+Date: Tue, 19 Dec 2023 16:05:49 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231130172834.12653-1-johan+linaro@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13-dev-5c066
 
-Hi Linus,
-
-On Thu, Nov 30, 2023 at 06:28:34PM +0100, Johan Hovold wrote:
-> The Multi-Purpose Pin controller block is part of an SPMI PMIC (which in
-> turns sits on an SPMI bus) and uses a single value for the register
-> property that corresponds to its base address.
+On Tue, 19 Dec 2023 08:57:49 +0100, Johan Hovold wrote:
+> Devicetree node names should be generic; fix up the
+> qcom,usb-vbus-regulator binding example accordingly.
 > 
-> Clean up the example by adding a parent PMIC node with proper
-> '#address-cells' and '#size-cells' properties, dropping the incorrect
-> second register value, adding some newline separators and increasing the
-> indentation to four spaces.
+> While at it, drop an unnecessary label and add a newline separator
+> before the child node to improve readability.
 > 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> 
+> [...]
 
-Can you pick this one up for 6.8?
+Applied to
 
-Johan
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+
+Thanks!
+
+[1/1] dt-bindings: regulator: qcom,usb-vbus-regulator: clean up example
+      commit: d939c02359a656a624d03c6f14ccadae4a1c66ac
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
 
