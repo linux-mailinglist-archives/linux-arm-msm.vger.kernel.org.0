@@ -1,146 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-5394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3025818892
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 14:24:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 374248188A3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 14:26:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E52641C229BA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 13:24:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D912F281381
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 13:26:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C20A1A281;
-	Tue, 19 Dec 2023 13:23:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00D3418ED6;
+	Tue, 19 Dec 2023 13:26:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BSdLH83p"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EBm0c7M/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17ED18EAE
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 13:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6AFE1A585
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 13:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-33671384e50so844587f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 05:23:41 -0800 (PST)
+Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-dae7cc31151so3090694276.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 05:26:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702992220; x=1703597020; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=p3LPY/wP+4u8xv3gDTbgceni72i0f7dLsgXss15/0/U=;
-        b=BSdLH83p31k+tIUHs2OgUKaP5mj0WqM6uP4LL0JAKxcWhFOyQ94TeEmicKwQEBNMnB
-         AY8S43MmicreYgZhJx6Tkc7hwBSgaHlIpUPR1tlVTTlH/g3oF2kQyc0k8q6JyTr66LqV
-         mk7Suu+a1EN648qBoUyS+nNZERrTMpc5WA4vu+Bm0s7hlKLgE9pRQ/kWxGwlcu8pSTxl
-         0dOE7jppv98yEBcBtOEOwXnrRW30E3vixuYNLGE9riQXUcW5ra1CTZALtTOWmbxaRBZ3
-         0ln6T0NAOgy0Xt4c2tGFEzDcQEuMs9LmKKnkCaPjm4uA9UrTpzMnTymrbpFwqk38pxD/
-         Frsw==
+        d=linaro.org; s=google; t=1702992384; x=1703597184; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=PVGuPQrWl+LmYikQej8Pn8i8g8HVkB+WF5yC7NXZyGI=;
+        b=EBm0c7M/GKxdsxRUVvon8TvOVvc2JfrYMI3IFgnvnZn1GXv/hlo9ByTKJnmlDrJDwL
+         ZVEPYtGEaB1fTVXDC4lVUEmrlldiM5izhInNKFFt4PCMkoGa0xVFsnmEf1gmQVtGIivC
+         1WSGbFumDIfRYvQ70wDeW7yXEnXudhsoHlO1M2kr1MhOFID/J+enCyrvgSzOGM/eq+Mm
+         96s0Zq8FOm7txm8LdSoe2qFCWxksV4ALMXsxhNUkZIbrgo9PjEjBlq3PZfw8s9nJf7yM
+         rJzVNXOHK9JlIwjsjpot6qKEzFEnw1uUzTKxOkvJa4MUoVVEcgw0f0PAUbNkSuEEehrl
+         GXaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702992220; x=1703597020;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1702992384; x=1703597184;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=p3LPY/wP+4u8xv3gDTbgceni72i0f7dLsgXss15/0/U=;
-        b=wclTx/1+qve5+pLPQg0mvIceQuvGCSBp5BqCWQYwaipXOFlaky1Qncq3g4eUGmxN9/
-         spqzO9Va8Oo8cL4OmeBI4+K4RA6vjKjzt9F3VoE7orR9QwiAipAW/I+ikcrE9P6ElmNT
-         iqwSMtvykk7v1Mmkkdj+MbeoikRRCchOiay7ZsU+6Oy4Zk6wi+BmaslKHcLM3/fdisTb
-         FAUjQZ5LeItNoPF0klJNN/mL5AaROULpydcGKUIh8VaOLgcqo3KNIOiFZ+DdTWOsgoTb
-         sPQmNCTHS4qHjM6vI84Bh7a2ukNF5t/+U8186ZxX/9t36AO+Chl43eBBk/bj2cqN8U0A
-         nxwg==
-X-Gm-Message-State: AOJu0YyxkcMQpK2k+XgAgTk63xm2bTBCyr+lgiBe3yh28fSDUhA1k5Vq
-	21tdaB8o6tfFHPPDyuDtSI5JLw==
-X-Google-Smtp-Source: AGHT+IFHYzvyDi0corcqB0NWZOjE5iHCoZWBmG8HzPdskcKE9UWUerE1vnbScokBVmD2OSU8t9HD/g==
-X-Received: by 2002:a5d:45cf:0:b0:336:578e:2bd1 with SMTP id b15-20020a5d45cf000000b00336578e2bd1mr3224416wrs.108.1702992219991;
-        Tue, 19 Dec 2023 05:23:39 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id j4-20020adfea44000000b00336471bc7ffsm15010151wrn.109.2023.12.19.05.23.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Dec 2023 05:23:39 -0800 (PST)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Tue, 19 Dec 2023 14:23:37 +0100
-Subject: [PATCH] ASoC: dt-bindings: qcom,lpass-va-macro: remove spurious
- contains in if statement
+        bh=PVGuPQrWl+LmYikQej8Pn8i8g8HVkB+WF5yC7NXZyGI=;
+        b=Im2Deaz294Kr8C2XNyqPMXUWsbrlzNvHXwIqcDhREeSCOKKBTxohoCMnteViVRBTLO
+         uvvup4FHUkXSzD6Gh+t5Si0zSXDo7pxOUqBItltBvtCvPKDWg7k79eiT75ubgVrdoPKj
+         wDdFW+AmCSeqjgD0LUf6T8tnU1whF3ywZ+kdhAcngEBvkNEEGiXLBpRXmnYKKKpI/DBk
+         iLn1MGuHhDsCkAZ/iTz7R4T/rExJhYYE16OJWgjM1T4Z1T/dZRrhdqtFShdF2Qjr4Kqy
+         2k3dFLlS+PiOGSXw3BAuggyTmw1ZB7OnpTNNTkTe3oe+h538T+2tn2uLRczF2iEOug+/
+         9FmA==
+X-Gm-Message-State: AOJu0YzK957WvOZkIFo4jobrDwVvJs2QKaKUCOHx5gvRdjWECl41zHRf
+	6pAM/B17HhAREHaLSyXDBY2oYKfna8jRf2AfPW1VAQ==
+X-Google-Smtp-Source: AGHT+IGotqSKoQXCFGIcuwlkQPZB72NGgPaU4wZmUji7gO4rCFm7wa0NO9LuviWkbp6wfwVM6mQfX4wP3zyE0VI3f4Y=
+X-Received: by 2002:a25:6903:0:b0:dbc:dbab:61ab with SMTP id
+ e3-20020a256903000000b00dbcdbab61abmr5881855ybc.12.1702992383748; Tue, 19 Dec
+ 2023 05:26:23 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231219-topic-sm8x50-upstream-va-macro-bindings-fix-v1-1-ae133886f70e@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAFiZgWUC/x2NOw6DQAwFr4JcxxK7JFHIVSIKsxjiYj+yASEh7
- p5Vppsp3jvBWIUN3s0JyruY5FTF3RoIX0oLo0zVwbe+c971uOYiAS2+jkeLW7FVmSLuhJGCZhw
- lTZIWw1kO7P19rjyJOwd1sSjX/H/7DNf1A26qMf59AAAA
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- Banajit Goswami <bgoswami@quicinc.com>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org, 
- linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1689;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=jX/VQsyuPIyHVsUjFUCTRKQIEp2WX+Su12Xn85ZrU+8=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlgZlaDrfW46D5usNUF+97Tkj84cNtskNX0ajIjSB4
- c2y3rGGJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZYGZWgAKCRB33NvayMhJ0YOND/
- 46yLraBMW6CnFYt7o5AHOdDFaYq3RCOhhkv53wUrp2UT+9o0dkTo/hdaKGwJlfGVtpIjkR1G/W1n0l
- p0DAmni76jmRO2lXdxtWY9XfPqYXaFDdgo6OOkaA4Y6CJwJvQqDsRo+wpXftMOvHtgjwbmum8DzLZW
- 70LxmqtfBXdA/5cxUDQecXMUtJt1RKpCDd84m1OsigYHQ0xVld+pem0MZRY1IHBZ8+e7NmeXKqwhJA
- 4pbEKd7WeekEhtE8IouZbs1TptF1VnkgL7tKBloFGy/6bh0fQj+nvKZG520uXczqi8u3kuDnJNn2dd
- Z7e/+jsEOq39jgYM8at/AGCksKx81laJRZ26/eXExBzOrtdCWQYrjq1rJI9/FeUK2MUSeESB6CS00J
- uGFsd0iaGjIU8mMWI6Swqf23/kR2ci/zLrdpPMsq97gyNbHQ8xq6zrAv5N5/TNMPA39cQ+cu+xDxjq
- zhODVdvJ2NDNBaMmRab4ZyGjH0WrzZgNeSXLuLU9DWtblMAJc/WjZFfq097FZhl0DkGiD1e3zZ31ej
- 1xr936utWiaifj2KSeILxMgX0zVAc+gO/BBC4tsvQZnSTOj0x0qzVmWh3dDsUBXG6eeCzsOs49NraC
- 176n4KxcOQHDA7kWYlN1tFI0aJFqGUNUfZh60WteKpzmVEaensgmrZU/UuDw==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+References: <1702899149-21321-1-git-send-email-quic_dikshita@quicinc.com>
+ <1702899149-21321-2-git-send-email-quic_dikshita@quicinc.com> <e08f54cb-5b28-497b-9484-b691dce0acff@linaro.org>
+In-Reply-To: <e08f54cb-5b28-497b-9484-b691dce0acff@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 19 Dec 2023 15:26:12 +0200
+Message-ID: <CAA8EJpojYFRcO32wXc9B5Q1D1oSMbx3GP1d9qdtppar39-2=Qw@mail.gmail.com>
+Subject: Re: [PATCH v2 01/34] media: introduce common helpers for video
+ firmware handling
+To: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc: Dikshita Agarwal <quic_dikshita@quicinc.com>, linux-media@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, stanimir.k.varbanov@gmail.com, 
+	quic_vgarodia@quicinc.com, agross@kernel.org, andersson@kernel.org, 
+	konrad.dybcio@linaro.org, mchehab@kernel.org, linux-arm-msm@vger.kernel.org, 
+	quic_abhinavk@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
-Remove this spurious "contains" which causes the bindings check of
-qcom,sm8450-lpass-va-macro compatible to fail with:
-codec@33f0000: clocks: [[156, 57, 1], [156, 102, 1], [156, 103, 1], [156, 70, 1]] is too long
-        from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-va-macro.yaml#
-codec@33f0000: clock-names: ['mclk', 'macro', 'dcodec', 'npl'] is too long
-        from schema $id: http://devicetree.org/schemas/sound/qcom,lpass-va-macro.yaml#
+On Tue, 19 Dec 2023 at 13:40, Bryan O'Donoghue
+<bryan.odonoghue@linaro.org> wrote:
+>
+> On 18/12/2023 11:31, Dikshita Agarwal wrote:
+> > Re-organize the video driver code by introducing a new folder
+> > 'vcodec' and placing 'venus' driver code inside that.
+> >
+> > Introduce common helpers for trustzone based firmware
+> > load/unload etc. which are placed in common folder
+> > i.e. 'vcodec'.
+> > Use these helpers in 'venus' driver. These helpers will be
+> > used by 'iris' driver as well which is introduced later
+> > in this patch series.
+> >
+> > Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> > ---
+>
+> This is a very large patch, I think it needs to be broken up into
+> smaller chunks.
+>
+> #1 Introduce common helper functions
+> #2 Use common helper functions
 
-Seems the double "contains" was considered as valid by the tool but broke
-the entire if statements.
+This will make it harder to review. It's usually preferred to have a
+single 'move' patch instead of two (add + remove). But I definitely
+agree that the size of the patch is big. Somewhat it is related to the
+fact that this doesn't only introduce helpers, but also reshuffles the
+rest of the code.
 
-Fixes: f243ef746d0a ("ASoC: dt-bindings: qcom,lpass-va-macro: Add SM8650 LPASS VA")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+>
+> Its alot of code to try to eat in the one go.
+>
+> Could you consider making patches 1-3 a standalone series to reduce the
+> amount of code to review here ?
 
-diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
-index c03ff9472a85..6b483fa3c428 100644
---- a/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
-+++ b/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
-@@ -121,9 +121,8 @@ allOf:
-       properties:
-         compatible:
-           contains:
--            contains:
--              enum:
--                - qcom,sm8550-lpass-va-macro
-+            enum:
-+              - qcom,sm8550-lpass-va-macro
-     then:
-       properties:
-         clocks:
+This sounds like a good idea.
 
----
-base-commit: aa4db8324c4d0e67aa4670356df4e9fae14b4d37
-change-id: 20231219-topic-sm8x50-upstream-va-macro-bindings-fix-924ffff6ae31
+>
+> * 77e7025529d7c - (HEAD -> linux-stable-master-23-12-18-iris-v2) media:
+> iris: add power management for encoder (21 hours ago)
+>
+> * ceb6a6f023fd3 - (tag: v6.7-rc6, linux-stable/master) Linux 6.7-rc6 (2
+> days ago)
+>
+> git diff ceb6a6f023fd3 | wc -l
+>
+> 21243
+>
+> Also I feel it wouild give more time for the changes to "digest" though
+> upstream users and to find any unintended bugs.
+>
+> > +int load_fw(struct device *dev, const char *fw_name, phys_addr_t *mem_phys,
+> > +         size_t *mem_size, u32 pas_id, bool use_tz)
+> > +{
+> > +     const struct firmware *firmware = NULL;
+> > +     struct reserved_mem *rmem;
+> > +     struct device_node *node;
+> > +     void *mem_virt = NULL;
+> > +     ssize_t fw_size = 0;
+> > +     int ret;
+> > +
+> > +     if (!IS_ENABLED(CONFIG_QCOM_MDT_LOADER) ||
+> > +         (use_tz && !qcom_scm_is_available()))
+> > +             return -EPROBE_DEFER;
+> > +
+> > +     if (!fw_name || !(*fw_name))
+> > +             return -EINVAL;
+>
+> The parameter check should come before the qcom_scm_is_available()
+>
+> No matter how many times you -EPROBE_DEFER -EINVAL is still -EINVAL.
+>
+> > +
+> > +     *mem_phys = 0;
+> > +     *mem_size = 0;
+>
+> I don't think you need this, you don't appear to use these variables
+> before you assign them below.
+>
+>
+> > +
+> > +     *mem_phys = rmem->base;
+> > +     *mem_size = rmem->size;
+>
+> > +
+> > +int auth_reset_fw(u32 pas_id)
+> > +{
+> > +     return qcom_scm_pas_auth_and_reset(pas_id);
+> > +}
+> > +
+> > +void unload_fw(u32 pas_id)
+> > +{
+> > +     qcom_scm_pas_shutdown(pas_id);
+> > +}
+> > +
+>
+> Do these wrapper functions add anything ? Some kind of validity check on
+> the pas_id otherwise I'm not sure these are justified.
+>
+> > +int set_hw_state(bool resume)
+> > +{
+> > +     return qcom_scm_set_remote_state(resume, 0);
+> > +}
+> > diff --git a/drivers/media/platform/qcom/vcodec/firmware.h b/drivers/media/platform/qcom/vcodec/firmware.h
+> > new file mode 100644
+> > index 0000000..7d410a8
+> > --- /dev/null
+>
+> ---
+> bod
+>
+>
 
-Best regards,
+
 -- 
-Neil Armstrong <neil.armstrong@linaro.org>
-
+With best wishes
+Dmitry
 
