@@ -1,698 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-5313-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E340817F11
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 01:53:20 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5AEBA817F6A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 02:45:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 23EC7B2378E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 00:53:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DB10E1F25DDD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Dec 2023 01:45:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54DFB17D9;
-	Tue, 19 Dec 2023 00:51:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71CC517D5;
+	Tue, 19 Dec 2023 01:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="R7KA/Iq1"
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="dIoS2lCb";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="t6o91liP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B236BE73;
-	Tue, 19 Dec 2023 00:51:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BIMZDu4025719;
-	Tue, 19 Dec 2023 00:51:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-type; s=qcppdkim1; bh=CMduGZCfA5nn9iv1kwNu
-	9lYcC0bV72Q1IGZzuG1Gqtg=; b=R7KA/Iq1BiWRGdKBYgi0qyVETAmOqyfPqjd2
-	scUXQuowmweox7YTyvF8vrk/9MjDXdcZCFA4TLmq5t2VGmGpIBsD+k+PKFN0sekw
-	uGja2bW8e0PBCP+uchDIAdGfkGiDFy2aU9eiDBedGwv8kOKmuLeOYnaeebLOvykU
-	/vPKFG0Xmrv9FlQS7QL4+Ctk6FWejUZ7Y8CopVXlfoTC+P6nXfohcMwvjwzQofDi
-	y/COEw7FELNOtMRhbPlnlC4r7nKOhe/lGxysv5rSjudT7Mx/IPJciZZHTafCb55i
-	TPlpShkLjmEUqj/V3oluWnS3rmT8Rwh7khmFD3L9ns6PTQWhfA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v2jx0j564-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Dec 2023 00:51:32 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BJ0pVl2005845
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Dec 2023 00:51:31 GMT
-Received: from tengfan2-gv.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Mon, 18 Dec 2023 16:51:27 -0800
-From: Tengfei Fan <quic_tengfan@quicinc.com>
-To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Tengfei Fan <quic_tengfan@quicinc.com>,
-        "Qiang Yu" <quic_qianyu@quicinc.com>,
-        Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-Subject: [PATCH v3 6/6] arm64: dts: qcom: aim300: add AIM300 AIoT
-Date: Tue, 19 Dec 2023 08:50:07 +0800
-Message-ID: <20231219005007.11644-7-quic_tengfan@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20231219005007.11644-1-quic_tengfan@quicinc.com>
-References: <20231219005007.11644-1-quic_tengfan@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7BA315C3;
+	Tue, 19 Dec 2023 01:45:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oracle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3BJ0Jvmo019051;
+	Tue, 19 Dec 2023 01:45:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
+ from : message-id : references : date : in-reply-to : content-type :
+ mime-version; s=corp-2023-11-20;
+ bh=gSSUFaIev6zQmRSEsoKzegK4pEJkGfpPRBSIembmyao=;
+ b=dIoS2lCbgbkj4Zjdk749ABoGJ+SmxuqTc6HuRGLQ44z5S3Dzd0FRNo2IHUzUM3TBzPeQ
+ +/h7OS8WEQV2VzYUYvnV58cUvgiHQka9lgqPiW2Sh2c+QBx+UyUUFb0iUYdfSpi0Z2ur
+ vmgtRJDu+ngZZ+4DlUUK9HkBGiR/C05VPYpUV/GRJMVODKEFnFXweXsMEueloHoNKbQX
+ +qg+G19OaFgeBJZDGlHcrd4ZvBBQC+cWDLUVDE4PmH2qbC51u4Fn+F66G6bXMW7wJVT9
+ avtrazruu9WA3cIG79S8ch9cflTVlh0AkLLp5GUlyHFlgun5mejg4F4zdSsodbg8AAYi Yw== 
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3v13gucs62-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 19 Dec 2023 01:45:26 +0000
+Received: from pps.filterd (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 3BJ1VoAs027438;
+	Tue, 19 Dec 2023 01:45:25 GMT
+Received: from nam02-dm3-obe.outbound.protection.outlook.com (mail-dm3nam02lp2040.outbound.protection.outlook.com [104.47.56.40])
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3v12bc4mgn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 19 Dec 2023 01:45:25 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=BP9SVqa9WzRdDp+P3wf4xWHT3kN6JLPoAfuj1fZLZbz3+E7StYxLISexvDiCMJpVqvolOvU3w9ciQMLBzeZt54ZDuDgRRNxf7D7TVAvCwsnQeMG1T+oC7iQjRIyL47nWHHllaf7l4YjTMqRFl2MvPsgD6ZZZ7uS6mRy6qMe0E23o+3GwoEB+llqnLpc7mdyhgg4opXyCI/TaIxSYy4LBNdz1he29cHXcvH8Uka0ah24arrGnA1WHFEBdR84AvrXDd2qEgxZDeUHSH923WarGJg4GEpp+T2mmvA9BJvFjVrwq/Z5enjqe67C36tcO9Ghca7Euo5aJZQ0XjLC27yavfQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=gSSUFaIev6zQmRSEsoKzegK4pEJkGfpPRBSIembmyao=;
+ b=N6tHgMa4RRqt1RXe3xOpp5Pm1Gpy21PQzHOXdWyw4Qs+61aodlcxbvyDxp2LjMHILtzNCwW3zxARhLFGEiyAeju9aQr/UsuMorAb4fZZ9RPlJ5ob0g/Ma0ZQB1oOa0NGE1i7yeSwLCC8uPyzyM+/k/P1koIx7QE9TsfWJ217t2a4yRGsBO3vhJgqgKLNEZumv4aTjZq/TbHDNRZy+xfqg2oJaqoNeEI29tV7e8jPZhxjwjEnB1CZjrJN5fx1MY4bxivgRcieyUtzECEx4r/HZ0cWPE7Dc+jHbATstsukJvVLQosC8jYMxWQjF15lww0L2KOcyISXppetrlAN0+oD2A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=gSSUFaIev6zQmRSEsoKzegK4pEJkGfpPRBSIembmyao=;
+ b=t6o91liP7iDBru/HFViqqMJP4H1xdvCECXifqi8NT7h3jBnqgD8PPN8Wtlm4Rn7okz8Ec9nRPdXUU+VZzDGlzIazINoT3XCpa/rdXZN/8Ox6KBJheNe2LXqfuvTQn4p67/MTZJAHmwdKsfeFN5Y8IAmAbkZ9DWIEgFPFPjYNaJw=
+Received: from PH0PR10MB4759.namprd10.prod.outlook.com (2603:10b6:510:3d::12)
+ by SN4PR10MB5638.namprd10.prod.outlook.com (2603:10b6:806:209::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7091.38; Tue, 19 Dec
+ 2023 01:45:23 +0000
+Received: from PH0PR10MB4759.namprd10.prod.outlook.com
+ ([fe80::2b0c:62b3:f9a9:5972]) by PH0PR10MB4759.namprd10.prod.outlook.com
+ ([fe80::2b0c:62b3:f9a9:5972%4]) with mapi id 15.20.7091.034; Tue, 19 Dec 2023
+ 01:45:23 +0000
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, jejb@linux.ibm.com,
+        martin.petersen@oracle.com, linux-arm-msm@vger.kernel.org,
+        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Andrew
+ Halaney <ahalaney@redhat.com>
+Subject: Re: [PATCH] scsi: ufs: qcom: Fix ESI vector mask
+From: "Martin K. Petersen" <martin.petersen@oracle.com>
+Organization: Oracle Corporation
+Message-ID: <yq1wmtbc6dw.fsf@ca-mkp.ca.oracle.com>
+References: <20231214125532.55109-1-manivannan.sadhasivam@linaro.org>
+Date: Mon, 18 Dec 2023 20:45:21 -0500
+In-Reply-To: <20231214125532.55109-1-manivannan.sadhasivam@linaro.org>
+	(Manivannan Sadhasivam's message of "Thu, 14 Dec 2023 18:25:32 +0530")
+Content-Type: text/plain
+X-ClientProxiedBy: SJ0PR03CA0024.namprd03.prod.outlook.com
+ (2603:10b6:a03:33a::29) To PH0PR10MB4759.namprd10.prod.outlook.com
+ (2603:10b6:510:3d::12)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 4Jpei-qZmnrD0-QA3mSaMiSbngF8YyLW
-X-Proofpoint-GUID: 4Jpei-qZmnrD0-QA3mSaMiSbngF8YyLW
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR10MB4759:EE_|SN4PR10MB5638:EE_
+X-MS-Office365-Filtering-Correlation-Id: 70dbbdeb-3bcf-4b3f-d7de-08dc00342ad0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 
+	F0oVGaKR1boSfW9zvK7tlrESbWsUlLLbIZZ2+UyvvAPtYP/ZeO0iobUz6UIn5NWfmfNL8URvz80vNmdC5YBv1U+TYj4w6txvMwhvQFS3uf3lRwtAfoDuXb75ThF0/X9d8b+uLlIxXNKO8niZLrjqU8BBBzFSagkAwZb364Bb+1Gqvymjul8bss4sY9aBCZMq2hDuxCIakp6TTXssp9pKgjfSl5BYp+prfqhS2UW6K1Gu5vyz3uinK4zSZTtRL4sX1yAotX10WQolUXINYEf3WTN8/mQoZtwCUhGlws508BXYvX+JKdLJ4cH+wzxcoCtE/3/MpI+pdOAs/fRsZvjXuaPOeeGHBeVfuTmGZzU7RSAoHnErwBd6MST9A2F+nC/cCQhYRWUzT4cdkauCqPdkleP2//scbSn1VBdfMSNoJmfkH2qe/itywGZ1HWnju0U8KZrYWsCpjewsopXsRBBXKO1DZFFooT4QcawqvhIwzauMG6ZIo5iILa2rxjj3rNVhnOnlgTLP62E0m5jc17N7ON5Z9WqwZ5b9Y1l9vPkb7SHiljCoIHYLgEPdjYbW/N0n
+X-Forefront-Antispam-Report: 
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR10MB4759.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(376002)(396003)(366004)(346002)(39860400002)(230922051799003)(1800799012)(451199024)(186009)(64100799003)(6512007)(26005)(38100700002)(4326008)(8676002)(8936002)(316002)(2906002)(5660300002)(6486002)(478600001)(6506007)(41300700001)(36916002)(6916009)(66476007)(66946007)(66556008)(558084003)(86362001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 
+	=?us-ascii?Q?VUNHJ2O/YONx0fhFrplYLhaIzWO7ckO5oyBRboPEMge12CixSO+yVgwJW+/G?=
+ =?us-ascii?Q?pgxzgSF1iSty568IXVimUHE71bXT2YIMemsd7vFR4GkVLfSUoVj7V2wrnBzb?=
+ =?us-ascii?Q?2D1mnBsusADX5bEnFeGzds7tGlo0nZ/c4W5fEXKfFlgGx5RZsLMM5Kpig6fe?=
+ =?us-ascii?Q?JTkm+aXQbHuBP7gsPRHEV4d2TdY0B2f6xaiq7LwIIUModGjluKU3z3goelMv?=
+ =?us-ascii?Q?6EJ38n91N9TRIuHQMf6moXY0fe9oPMgcL+GUcTzjcGUIVMpFGuiCtAx7T5BY?=
+ =?us-ascii?Q?p9RLm7KvOcFFjORZw5f6ZHENOLLv2LHuz/83uLmIz8lNRvbAEDujDl+gwYBo?=
+ =?us-ascii?Q?AOCrf1TEIrwBpArbE57Zr0jOR/ql8UdzLf0H0VC9mtOD//K7FnSIXJOsNiiF?=
+ =?us-ascii?Q?fEQq5BJXTspQ+wbZovhnK4DLU08DXN4IYYn29e+kBtabBhvm64omYqH7KOgU?=
+ =?us-ascii?Q?QbRj6//xD0SzTsNsBG/1x9x5B/Y1SoI3eqIx4j0HIn/T0ZfdfeVPwgXlG3fL?=
+ =?us-ascii?Q?eWc83dmZ9/ZRcpraE3IXlWcDUFrGV9Q2IjfVZ4uZUIMhm45uOhCeTmnSv+Sv?=
+ =?us-ascii?Q?bP7pZklrk0mvpk5pw5U+7yB1PenIXLeLxBjgDDeKH+61aI7h4fEJ+ggTrvbl?=
+ =?us-ascii?Q?G8zdIPORGk7n4qnYqlGhac+dlg6VJXHOXpmlJA8kmUIUzq9vfEhWb7BNyJGX?=
+ =?us-ascii?Q?luPsrlvRIkPaEnr3sH3aE4Iavm/1QXNVmbk3Io4e8C4L0uUsnl5v8Dkg5kih?=
+ =?us-ascii?Q?Lb1uYdS1nbfgasueQlHQpzkjuFY3BO+ff6o/5wiFvONk9bAYajmOb6QmgEqs?=
+ =?us-ascii?Q?hB5NOqcevy/p6ophOKMqyidRR89KG1FNpSTmcAjAtMxfoPrbWn54bpdGeXzH?=
+ =?us-ascii?Q?6GSh7FuWNp4DUBsKUX9QAZodhIgZdPzwyVbZJawj8S8RMTP/h4e91JhOHMxo?=
+ =?us-ascii?Q?VnEDsLz/TXRIW0z3d94hRKkxFq9/y3H3h1UADggvIVRnWEJ7uz++MsjVMbhn?=
+ =?us-ascii?Q?2zvuSHKLTEQPLgwoqdNgxFrJJKxyGyQXq4KL7xfPdfyYknSoatJFJSLE+mim?=
+ =?us-ascii?Q?mFccDP2kHyx9oxrOE7ZULB6bORz5lIPeQQtz0ZzCB8f6SYvQ087M3CqnStys?=
+ =?us-ascii?Q?ArdWIFUNQArpJvVe6s+ORzhaPe3lAdwp5fd87DM7HS0O/kFgCiMrXEvClN4Z?=
+ =?us-ascii?Q?6qo3P1VvivCAicfveSWQP9wvEN/sK6TRy180wpZZAhqXQ88ZNDD3t1Dl9ziC?=
+ =?us-ascii?Q?lABH01yWBtKL0dBi8kGUlLVLx1mT5nnzN57QbaGoM1O/iGHbzazqYNT/jDUG?=
+ =?us-ascii?Q?RPN53Zf/qQFU83PZBI6ZBFW1gmcbK9X+RBNkXk9NN1xFKNxMHB45Upc7Bi2E?=
+ =?us-ascii?Q?oIM6Xe02dyjAd2FNqnc4JqijkjaAJWo6jJx8WlAj5GGIS8uUgh5U0kub7Ry0?=
+ =?us-ascii?Q?CZo6Tz1tZ1OALq2Gi/en1zOQpapvpEp6ji49AAIAhqSp6vIGDIl85+Ibib1F?=
+ =?us-ascii?Q?VQNT7TDkFaBk4azCgLVYyqvhBjwtfS2WX4RXFeBwxPNTsFXnE8KCdYRoZ7GN?=
+ =?us-ascii?Q?uJcBCKDd5BTP44zH6YK1Sp9kHBezKoKjcDRYfQbh7IVRFL6o32vkm5r9Ikuz?=
+ =?us-ascii?Q?PA=3D=3D?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
+	+jwXJ7Dk784d1zgzbUeWLOfkhhDGr0e9eTlzvYwYTem3Bqdbb7LKlmjpjJyThw+LXH+aYvuZPZoqVa39x1zJ+PACZO/J8VffjKcp4+iaPnFv7oF1q3WTgtFVMir9ZFIRzS5C5FlP7UL0Yxjhl2xxdWXyoEwPQG/+hAbdyZf+ZRJtg6bArGrfpMYJ98vCeqbbMuf0OhvVCuXzcgYWLKiP458PcTztXJfl+bZWL+to7wM/AZgM4Y/3ApXUgOJynZlyIAo1yAOY/aThiCfdedCHYDXlF2ARPog3uO59kN6VbWluubTMT7yWrUfsAiQrPpG8KtGlH+A2bCofCgvNUykctUbzBrDNFeuti8rwtQXwToUSUdVvaA+39fRatLgBMXJtGgIV33VFSMqa+O7ChegJot9mRrC1gBLLv5PcJj3eejxkpFIEhP1C0ZZPR779bSz962RJ8q3dppFDebR25nnu0K3mgguf+8MaJbv9HfXoWA7GL5eFI4ZnpFwNEHyYtm4tsVfY/hSf0XtcVW14ZEIYZLSAQGZ9SqTgdLSwr8j1PW7uqoKsojyXs0vyEv6EdvLP50csTq+Nz45qxnTWJK2nafgcSf3t9Ex4j9eful9MTpM=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 70dbbdeb-3bcf-4b3f-d7de-08dc00342ad0
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB4759.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Dec 2023 01:45:23.7443
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 53hHymF6SxlaU3JSZ0p/sHfJBq3OFmqLl2Lc/UnCdjyacTd06H/7IgiU6QsblH64+5tDhqLeNx19prQn0WaGLzrhL/MN8vPjM7F1Y5vpOas=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN4PR10MB5638
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
- phishscore=0 priorityscore=1501 suspectscore=0 impostorscore=0
- lowpriorityscore=0 adultscore=0 mlxscore=0 malwarescore=0 spamscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312190004
+ definitions=2023-12-18_15,2023-12-14_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 mlxscore=0 spamscore=0
+ adultscore=0 phishscore=0 bulkscore=0 mlxlogscore=811 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
+ definitions=main-2312190012
+X-Proofpoint-ORIG-GUID: b3_OlRB_vc57OwqBGlw7bpkNya_u9uol
+X-Proofpoint-GUID: b3_OlRB_vc57OwqBGlw7bpkNya_u9uol
 
-Add AIM300 AIoT board DTS support, including usb, serial, PCIe, and sound
-card functions support.
 
-Co-developed-by: Qiang Yu <quic_qianyu@quicinc.com>
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-Co-developed-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
----
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../boot/dts/qcom/qcs8550-aim300-aiot.dts     | 579 ++++++++++++++++++
- 2 files changed, 580 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dts
+Manivannan,
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 39889d5f8e12..fe54f4518165 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -92,6 +92,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-idp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
-+dtb-$(CONFIG_ARCH_QCOM) += qcs8550-aim300-aiot.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-rb1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb4210-rb2.dtb
-diff --git a/arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dts b/arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dts
-new file mode 100644
-index 000000000000..099f28b86559
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dts
-@@ -0,0 +1,579 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/leds/common.h>
-+#include "qcs8550-aim300.dtsi"
-+
-+/ {
-+	model = "Qualcomm Technologies, Inc. QCS8550 AIM300 AIOT";
-+	compatible = "qcom,qcs8550-aim300-aiot", "qcom,qcs8550-aim300", "qcom,qcs8550";
-+
-+	aliases {
-+		serial0 = &uart7;
-+	};
-+
-+	wcd938x: audio-codec {
-+		compatible = "qcom,wcd9385-codec";
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&wcd_default>;
-+
-+		qcom,micbias1-microvolt = <1800000>;
-+		qcom,micbias2-microvolt = <1800000>;
-+		qcom,micbias3-microvolt = <1800000>;
-+		qcom,micbias4-microvolt = <1800000>;
-+		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000
-+							  500000 500000 500000>;
-+		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
-+		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
-+		qcom,rx-device = <&wcd_rx>;
-+		qcom,tx-device = <&wcd_tx>;
-+
-+		reset-gpios = <&tlmm 108 GPIO_ACTIVE_LOW>;
-+
-+		#sound-dai-cells = <1>;
-+
-+		vdd-buck-supply = <&vreg_l15b_1p8>;
-+		vdd-rxtx-supply = <&vreg_l15b_1p8>;
-+		vdd-io-supply = <&vreg_l15b_1p8>;
-+		vdd-mic-bias-supply = <&vreg_bob1>;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&volume_up_n>;
-+		pinctrl-names = "default";
-+
-+		key-volume-up {
-+			label = "Volume Up";
-+			debounce-interval = <15>;
-+			gpios = <&pm8550_gpios 6 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			linux,can-disable;
-+			wakeup-source;
-+		};
-+	};
-+
-+	pmic-glink {
-+		compatible = "qcom,sm8550-pmic-glink", "qcom,pmic-glink";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		orientation-gpios = <&tlmm 11 GPIO_ACTIVE_HIGH>;
-+
-+		connector@0 {
-+			compatible = "usb-c-connector";
-+			reg = <0>;
-+			power-role = "dual";
-+			data-role = "dual";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+
-+					pmic_glink_hs_in: endpoint {
-+						remote-endpoint = <&usb_1_dwc3_hs>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+
-+					pmic_glink_ss_in: endpoint {
-+						remote-endpoint = <&redriver_ss_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					pmic_glink_sbu: endpoint {
-+						remote-endpoint = <&fsa4480_sbu_mux>;
-+					};
-+				};
-+			};
-+		};
-+	};
-+
-+	sound {
-+		compatible = "qcom,sm8550-sndcard", "qcom,sm8450-sndcard";
-+		model = "AIM300-AIOT";
-+		audio-routing = "SpkrLeft IN", "WSA_SPK1 OUT",
-+				"SpkrRight IN", "WSA_SPK2 OUT",
-+				"IN1_HPHL", "HPHL_OUT",
-+				"IN2_HPHR", "HPHR_OUT",
-+				"AMIC2", "MIC BIAS2",
-+				"VA DMIC0", "MIC BIAS1",
-+				"VA DMIC1", "MIC BIAS1",
-+				"VA DMIC2", "MIC BIAS3",
-+				"TX DMIC0", "MIC BIAS1",
-+				"TX DMIC1", "MIC BIAS2",
-+				"TX DMIC2", "MIC BIAS3",
-+				"TX SWR_ADC1", "ADC2_OUTPUT";
-+
-+		wcd-capture-dai-link {
-+			link-name = "WCD Capture";
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
-+			};
-+
-+			codec {
-+				sound-dai = <&wcd938x 1>, <&swr2 0>, <&lpass_txmacro 0>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+
-+		wcd-playback-dai-link {
-+			link-name = "WCD Playback";
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
-+			};
-+
-+			codec {
-+				sound-dai = <&wcd938x 0>, <&swr1 0>, <&lpass_rxmacro 0>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+
-+		wsa-dai-link {
-+			link-name = "WSA Playback";
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
-+			};
-+
-+			codec {
-+				sound-dai = <&north_spkr>, <&south_spkr>,
-+					    <&swr0 0>, <&lpass_wsamacro 0>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+
-+		va-dai-link {
-+			link-name = "VA Capture";
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
-+			};
-+
-+			codec {
-+				sound-dai = <&lpass_vamacro 0>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+	};
-+};
-+
-+&i2c_master_hub_0 {
-+	status = "okay";
-+};
-+
-+&i2c_hub_2 {
-+	status = "okay";
-+
-+	typec-mux@42 {
-+		compatible = "fcs,fsa4480";
-+		reg = <0x42>;
-+
-+		vcc-supply = <&vreg_bob1>;
-+
-+		mode-switch;
-+		orientation-switch;
-+
-+		port {
-+			fsa4480_sbu_mux: endpoint {
-+				remote-endpoint = <&pmic_glink_sbu>;
-+			};
-+		};
-+	};
-+
-+	typec-retimer@1c {
-+		compatible = "onnn,nb7vpq904m";
-+		reg = <0x1c>;
-+
-+		vcc-supply = <&vreg_l15b_1p8>;
-+
-+		orientation-switch;
-+		retimer-switch;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+
-+				redriver_ss_out: endpoint {
-+					remote-endpoint = <&pmic_glink_ss_in>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+
-+				redriver_ss_in: endpoint {
-+					data-lanes = <3 2 1 0>;
-+					remote-endpoint = <&usb_dp_qmpphy_out>;
-+				};
-+			};
-+		};
-+	};
-+};
-+
-+&gcc {
-+	clocks = <&bi_tcxo_div2>, <&sleep_clk>,
-+		 <0>,
-+		 <&pcie1_phy>,
-+		 <0>,
-+		 <&ufs_mem_phy 0>,
-+		 <&ufs_mem_phy 1>,
-+		 <&ufs_mem_phy 2>,
-+		 <&usb_dp_qmpphy QMP_USB43DP_USB3_PIPE_CLK>;
-+};
-+
-+&lpass_tlmm {
-+	spkr_1_sd_n_active: spkr-1-sd-n-active-state {
-+		pins = "gpio17";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+		output-low;
-+	};
-+
-+	spkr_2_sd_n_active: spkr-2-sd-n-active-state {
-+		pins = "gpio18";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+		output-low;
-+	};
-+};
-+
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mdss_dp0 {
-+	status = "okay";
-+};
-+
-+&mdss_dp0_out {
-+	data-lanes = <0 1>;
-+	remote-endpoint = <&usb_dp_qmpphy_dp_in>;
-+};
-+
-+
-+&mdss_dsi0 {
-+	vdda-supply = <&vreg_l3e_1p2>;
-+	status = "okay";
-+
-+	panel@0 {
-+		compatible = "visionox,vtdr6130";
-+		reg = <0>;
-+
-+		pinctrl-0 = <&dsi_active>, <&te_active>;
-+		pinctrl-1 = <&dsi_suspend>, <&te_suspend>;
-+		pinctrl-names = "default", "sleep";
-+
-+		reset-gpios = <&tlmm 133 GPIO_ACTIVE_LOW>;
-+
-+		vci-supply = <&vreg_l13b_3p0>;
-+		vdd-supply = <&vreg_l11b_1p2>;
-+		vddio-supply = <&vreg_l12b_1p8>;
-+
-+		port {
-+			panel0_in: endpoint {
-+				remote-endpoint = <&mdss_dsi0_out>;
-+			};
-+		};
-+	};
-+};
-+
-+&mdss_dsi0_out {
-+	remote-endpoint = <&panel0_in>;
-+	data-lanes = <0 1 2 3>;
-+};
-+
-+&mdss_dsi0_phy {
-+	vdds-supply = <&vreg_l1e_0p88>;
-+	status = "okay";
-+};
-+
-+&pcie_1_phy_aux_clk {
-+	clock-frequency = <1000>;
-+};
-+
-+&pcie1 {
-+	perst-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 99 GPIO_ACTIVE_HIGH>;
-+
-+	pinctrl-0 = <&pcie1_default_state>;
-+	pinctrl-names = "default";
-+
-+	status = "okay";
-+};
-+
-+&pcie1_phy {
-+	vdda-phy-supply = <&vreg_l3c_0p9>;
-+	vdda-pll-supply = <&vreg_l3e_1p2>;
-+	vdda-qref-supply = <&vreg_l1e_0p88>;
-+
-+	status = "okay";
-+};
-+
-+&pm8550_flash {
-+	status = "okay";
-+
-+	led-0 {
-+		function = LED_FUNCTION_FLASH;
-+		color = <LED_COLOR_ID_YELLOW>;
-+		flash-max-microamp = <2000000>;
-+		flash-max-timeout-us = <1280000>;
-+		function-enumerator = <0>;
-+		led-sources = <1>, <4>;
-+		led-max-microamp = <500000>;
-+	};
-+
-+	led-1 {
-+		function = LED_FUNCTION_FLASH;
-+		color = <LED_COLOR_ID_WHITE>;
-+		flash-max-microamp = <2000000>;
-+		flash-max-timeout-us = <1280000>;
-+		function-enumerator = <1>;
-+		led-sources = <2>, <3>;
-+		led-max-microamp = <500000>;
-+	};
-+};
-+
-+&pm8550_gpios {
-+	volume_up_n: volume-up-n-state {
-+		pins = "gpio6";
-+		function = "normal";
-+		power-source = <1>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+};
-+
-+&pm8550_pwm {
-+	status = "okay";
-+
-+	multi-led {
-+		color = <LED_COLOR_ID_RGB>;
-+		function = LED_FUNCTION_STATUS;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		led@1 {
-+			reg = <1>;
-+			color = <LED_COLOR_ID_RED>;
-+		};
-+
-+		led@2 {
-+			reg = <2>;
-+			color = <LED_COLOR_ID_GREEN>;
-+		};
-+
-+		led@3 {
-+			reg = <3>;
-+			color = <LED_COLOR_ID_BLUE>;
-+		};
-+	};
-+};
-+
-+&pm8550b_eusb2_repeater {
-+	vdd18-supply = <&vreg_l15b_1p8>;
-+	vdd3-supply = <&vreg_l5b_3p1>;
-+};
-+
-+
-+&pon_pwrkey {
-+	status = "okay";
-+};
-+
-+&pon_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+
-+	status = "okay";
-+};
-+
-+&qupv3_id_0 {
-+	status = "okay";
-+};
-+
-+&sleep_clk {
-+	clock-frequency = <32000>;
-+};
-+
-+&swr0 {
-+	status = "okay";
-+
-+	/* WSA8845, Speaker North */
-+	north_spkr: speaker@0,0 {
-+		compatible = "sdw20217020400";
-+		reg = <0 0>;
-+		pinctrl-0 = <&spkr_1_sd_n_active>;
-+		pinctrl-names = "default";
-+		powerdown-gpios = <&lpass_tlmm 17 GPIO_ACTIVE_LOW>;
-+		#sound-dai-cells = <0>;
-+		sound-name-prefix = "SpkrLeft";
-+		vdd-1p8-supply = <&vreg_l15b_1p8>;
-+		vdd-io-supply = <&vreg_l3g_1p2>;
-+	};
-+
-+	/* WSA8845, Speaker South */
-+	south_spkr: speaker@0,1 {
-+		compatible = "sdw20217020400";
-+		reg = <0 1>;
-+		pinctrl-0 = <&spkr_2_sd_n_active>;
-+		pinctrl-names = "default";
-+		powerdown-gpios = <&lpass_tlmm 18 GPIO_ACTIVE_LOW>;
-+		#sound-dai-cells = <0>;
-+		sound-name-prefix = "SpkrRight";
-+		vdd-1p8-supply = <&vreg_l15b_1p8>;
-+		vdd-io-supply = <&vreg_l3g_1p2>;
-+	};
-+};
-+
-+&swr1 {
-+	status = "okay";
-+
-+	/* WCD9385 RX */
-+	wcd_rx: codec@0,4 {
-+		compatible = "sdw20217010d00";
-+		reg = <0 4>;
-+		qcom,rx-port-mapping = <1 2 3 4 5>;
-+	};
-+};
-+
-+&swr2 {
-+	status = "okay";
-+
-+	/* WCD9385 TX */
-+	wcd_tx: codec@0,3 {
-+		compatible = "sdw20217010d00";
-+		reg = <0 3>;
-+		qcom,tx-port-mapping = <1 1 2 3>;
-+	};
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <32 8>;
-+
-+	dsi_active: dsi-active-state {
-+		pins = "gpio133";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-disable;
-+	};
-+
-+	dsi_suspend: dsi-suspend-state {
-+		pins = "gpio133";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	te_active: te-active-state {
-+		pins = "gpio86";
-+		function = "mdp_vsync";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	te_suspend: te-suspend-state {
-+		pins = "gpio86";
-+		function = "mdp_vsync";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	wcd_default: wcd-reset-n-active-state {
-+		pins = "gpio108";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+		output-low;
-+	};
-+};
-+
-+&uart7 {
-+	status = "okay";
-+};
-+
-+&usb_1 {
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	dr_mode = "otg";
-+	usb-role-switch;
-+};
-+
-+&usb_1_dwc3_hs {
-+	remote-endpoint = <&pmic_glink_hs_in>;
-+};
-+
-+&usb_1_dwc3_ss {
-+	remote-endpoint = <&usb_dp_qmpphy_usb_ss_in>;
-+};
-+
-+&usb_1_hsphy {
-+	phys = <&pm8550b_eusb2_repeater>;
-+
-+	vdd-supply = <&vreg_l1e_0p88>;
-+	vdda12-supply = <&vreg_l3e_1p2>;
-+
-+	status = "okay";
-+};
-+
-+&usb_dp_qmpphy {
-+	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-pll-supply = <&vreg_l3f_0p88>;
-+
-+	orientation-switch;
-+
-+	status = "okay";
-+};
-+
-+&usb_dp_qmpphy_dp_in {
-+	remote-endpoint = <&mdss_dp0_out>;
-+};
-+
-+&usb_dp_qmpphy_out {
-+	remote-endpoint = <&redriver_ss_in>;
-+};
-+
-+&usb_dp_qmpphy_usb_ss_in {
-+	remote-endpoint = <&usb_1_dwc3_ss>;
-+};
-+
-+&xo_board {
-+	clock-frequency = <76800000>;
-+};
+> While cleaning up the code to use ufshcd_rmwl() helper, the ESI vector mask
+> was changed incorrectly. Fix it and also define a proper macro for the
+> value together with FIELD_PREP().
+
+Applied to 6.8/scsi-staging, thanks!
+
 -- 
-2.17.1
-
+Martin K. Petersen	Oracle Linux Engineering
 
