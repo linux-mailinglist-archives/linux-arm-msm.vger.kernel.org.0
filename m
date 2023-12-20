@@ -1,112 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-5572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2F68819E29
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 12:34:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id F2EA3819E51
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 12:43:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 55232283E78
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 11:34:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0641285AEE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 11:42:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B6A92137C;
-	Wed, 20 Dec 2023 11:34:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFB802137F;
+	Wed, 20 Dec 2023 11:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VlREs5F6"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UK1DT9vO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3FE20DF3;
-	Wed, 20 Dec 2023 11:34:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD941C433C9;
-	Wed, 20 Dec 2023 11:33:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1703072041;
-	bh=RAXyl4ljakAiP1xrw3EqjOoDMXwJ4PyKKqT6SUzQ5HA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VlREs5F6Zd39xwtfPWVcwlaPWa/UsQGFUgyUrblbh5aicN1h/jnFsLs2G0hrzoL1G
-	 KZcBP9H/2iqypNfcsG9tykx34d3DQMzV/xuSwZOTqKlSfJxJ4zdRkdSlT217odhyQw
-	 NZIHuFYJgQhu8Ir6GhUDbTIhWrwUR6FIzL8Z3vvY2xvSnaCQYDEytHqDQb4X/hEmXK
-	 3Tfu8zgPjlXwAK/Bh54i7XTSDLmVeVoS6Ffrf8W/79nC58Wh9yOWjsT2Eo/cdRyH4C
-	 ZsyrLxYMNi5z5DS53F3PFvWoDemeIk1VnnoVd8bcXpV6YWrwFVVsBWXX4MEa8hVgZW
-	 Gq02I2ewKV5/A==
-Date: Wed, 20 Dec 2023 17:03:44 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Chanwoo Lee <cw9316.lee@samsung.com>
-Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-	jejb@linux.ibm.com, martin.petersen@oracle.com,
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-	linux-kernel@vger.kernel.org, grant.jung@samsung.com,
-	jt77.jang@samsung.com, dh0421.hwang@samsung.com,
-	sh043.lee@samsung.com
-Subject: Re: [PATCH] scsi: ufs: qcom: Remove unnecessary goto statement from
- ufs_qcom_config_esi function
-Message-ID: <20231220113344.GC3544@thinkpad>
-References: <CGME20231219082757epcas1p33bda4e0723d3d57552132054d3e5a3fe@epcas1p3.samsung.com>
- <20231219082740.27644-1-cw9316.lee@samsung.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5956822304;
+	Wed, 20 Dec 2023 11:42:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BK5sdw9022676;
+	Wed, 20 Dec 2023 11:42:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=2j3ICgC
+	Q/r45jyvw6AYQvdh0mdhlwrngYIvFf7PIelg=; b=UK1DT9vOCI4nt4tZPYwRGLh
+	OCIBWrMLgvuFTgrvZ6ko9Yq2fcjSdwMdU2GRB6BoYJkp7paLnpzA8bc26/w5mXhA
+	o9kQMA2d1S5/YX17vE8zcDLkXsRWtbZ0GMEPDcXpU4zYcIkZBEWAFRCZZwwcYyiS
+	bGrh0Ub/F5BJmCmFgS6AsuYnF3B+jFCo2W874ezQZvMi256B16t73S57gBLP6weS
+	IEw7vz8z33Kz+g0m8X/0IBM6MXpr5JWCdLC0DdlhV45La7/ErG2BbolIBD4whSQX
+	R5jlqfFSEpRq6lYj3vAqjUFQSNJnvTJUX+y2IYkeGWaQsWIxfKKgAiAnPogUQog=
+	=
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v3rppgxwk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 Dec 2023 11:42:45 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BKBgiX2021663
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 Dec 2023 11:42:44 GMT
+Received: from hu-kbajaj-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Wed, 20 Dec 2023 03:42:40 -0800
+From: Komal Bajaj <quic_kbajaj@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Komal Bajaj <quic_kbajaj@quicinc.com>
+Subject: [PATCH 0/2] Enable various remoteprocs for qcm6490-idp and qcs6490-rb3gen2
+Date: Wed, 20 Dec 2023 17:12:23 +0530
+Message-ID: <20231220114225.26567-1-quic_kbajaj@quicinc.com>
+X-Mailer: git-send-email 2.42.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20231219082740.27644-1-cw9316.lee@samsung.com>
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: QjMFDxxP9mKVFy-c8rTE4_ChqB2QJ15a
+X-Proofpoint-GUID: QjMFDxxP9mKVFy-c8rTE4_ChqB2QJ15a
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
+ priorityscore=1501 suspectscore=0 mlxlogscore=250 impostorscore=0
+ clxscore=1015 spamscore=0 phishscore=0 lowpriorityscore=0 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312200082
 
-On Tue, Dec 19, 2023 at 05:27:40PM +0900, Chanwoo Lee wrote:
-> From: ChanWoo Lee <cw9316.lee@samsung.com>
-> 
-> There is only one place where goto is used,
-> and it is unnecessary to check the ret value through 'goto out'
-> because the ret value is already true.
-> 
-> Therefore, remove the goto statement and
-> integrate the '!ret' condition into the existing code.
-> 
-> Signed-off-by: ChanWoo Lee <cw9316.lee@samsung.com>
+Enable various applicable remoteproc nodes for qcm6490-idp
+and qcs6490-rb3gen2.
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Komal Bajaj (2):
+  arm64: dts: qcom: qcm6490-idp: Enable various remoteprocs
+  arm64: dts: qcom: qcs6490-rb3gen2: Enable various remoteprocs
 
-- Mani
+ arch/arm64/boot/dts/qcom/qcm6490-idp.dts     | 20 ++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 15 +++++++++++++++
+ 2 files changed, 35 insertions(+)
 
-> ---
->  drivers/ufs/host/ufs-qcom.c | 7 ++-----
->  1 file changed, 2 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 17e24270477d..8cf803806326 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -1929,7 +1929,7 @@ static int ufs_qcom_config_esi(struct ufs_hba *hba)
->  					     ufs_qcom_write_msi_msg);
->  	if (ret) {
->  		dev_err(hba->dev, "Failed to request Platform MSI %d\n", ret);
-> -		goto out;
-> +		return ret;
->  	}
->  
->  	msi_lock_descs(hba->dev);
-> @@ -1964,11 +1964,8 @@ static int ufs_qcom_config_esi(struct ufs_hba *hba)
->  				      REG_UFS_CFG3);
->  		}
->  		ufshcd_mcq_enable_esi(hba);
-> -	}
-> -
-> -out:
-> -	if (!ret)
->  		host->esi_enabled = true;
-> +	}
->  
->  	return ret;
->  }
-> -- 
-> 2.29.0
-> 
+--
+2.42.0
 
--- 
-மணிவண்ணன் சதாசிவம்
 
