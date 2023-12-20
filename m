@@ -1,457 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-5679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA1F381AAB3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 00:06:24 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 15B5D81AB40
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 00:55:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8ADA42828B6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 23:06:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9818D1F23BB0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 23:55:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41DB755C26;
-	Wed, 20 Dec 2023 22:46:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F6EC4B5B3;
+	Wed, 20 Dec 2023 23:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NO7HF0oi"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Q8hr8pYq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079BE6FCCB;
-	Wed, 20 Dec 2023 22:46:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BKKw1Te019974;
-	Wed, 20 Dec 2023 22:45:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-type; s=qcppdkim1; bh=WNDVJiuDa+hN43wCSaDe
-	KEuoZr1dmvsxBbdIqYQ2Zlw=; b=NO7HF0oiPNNwoVyF25QlxVovrr77L1Nm4Mbw
-	RSNifGifqyWXHbDihMM+aOv3YS7uEolJQUJL24JqADeNEXnBKq307RRE4iVms6ro
-	lBvE1mQUN1dRb0CQgOfH1et9KVlOpjG5vQKPIwum8A7AkXaMFlQwcTzBIOAsSnRO
-	9aNE+qZlonPQrLLaV4w7H4uEYIIV8LwBZF61Qnlj595Gi4Zw1KuEzsf3HVkxq8hy
-	XhSRwiJZyVDo18EPAJgwosrr5+MJ+uHvJivqAEABmCNM8iVrT+/TWfVWvZ4/1THX
-	7W+IUnXdXnEadv4liTCkfUlZ31miCrQL5XQwMVBHAwH4G5/sWQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v3wr11y6f-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Dec 2023 22:45:54 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BKMjr4r016369
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Dec 2023 22:45:53 GMT
-Received: from hu-wcheng-lv.qualcomm.com (10.49.16.6) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Wed, 20 Dec 2023 14:45:53 -0800
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-To: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
-        <gregkh@linuxfoundation.org>, <lgirdwood@gmail.com>,
-        <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <konrad.dybcio@linaro.org>, <Thinh.Nguyen@synopsys.com>,
-        <broonie@kernel.org>, <bgoswami@quicinc.com>, <tiwai@suse.com>,
-        <robh+dt@kernel.org>, <agross@kernel.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>,
-        Mathias Nyman <mathias.nyman@linux.intel.com>,
-        Wesley Cheng <quic_wcheng@quicinc.com>
-Subject: [PATCH v11 01/41] xhci: add support to allocate several interrupters
-Date: Wed, 20 Dec 2023 14:45:04 -0800
-Message-ID: <20231220224544.18031-2-quic_wcheng@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20231220224544.18031-1-quic_wcheng@quicinc.com>
-References: <20231220224544.18031-1-quic_wcheng@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65DB14B159
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 23:55:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-7ba84897ba3so9204039f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 15:55:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1703116507; x=1703721307; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wqPdBL+/GuMSQccpt6uaKdYbWfswQmujpY/bP5YPpNI=;
+        b=Q8hr8pYq4FWBKc/qoEPWCGlisUvxT579O0+S7xTRUw6cEhEunxdUKX+ta5Gc9u14O/
+         LRKRHBoOcgL0kh2n53OIED0PpLHs+H0EX9n3VQfo4jul8nSkwJ/UvbbPPbMv00c35V9x
+         lW4VQtlDijHZXwOZQuj2r6ZaTqbfQUAkN1wB0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703116507; x=1703721307;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wqPdBL+/GuMSQccpt6uaKdYbWfswQmujpY/bP5YPpNI=;
+        b=vp7FDqHeDOWf2VtSU1wuJaNs5dRcXNJjOBBxDd0OT47k6wkD7jhNd7JlAJ9bTsekDY
+         7kr3gZRqZ2LSHe6/cbUo4EepKcxi5rapHHGo7KGlZFm9whHpAC7Fg2c8cSNIIbwiKkLV
+         O4RqHIGRpZlvTNTUigoXB+qMWBLvS+vf5M3Z3VG3GJ0SHZNgTIYv/hREwb+SpZxIulyK
+         xW8D0idAOwBsYs9MpieLqJTQil2Dp7LmG3QS7SHcwZyEptiDPvto9Oqr3gUyyfmDoGJc
+         KJ93toNe7DQrB3O4f/BhQWtJ9N+a3U2xPcv9TpXk6MUTLBxZ+wUNfnvDGfcKNR/qkGd3
+         3A1g==
+X-Gm-Message-State: AOJu0Ywr+WYdxkW8o9qJMoYSy3VL7Z1+2OG9ks0/eURNtV1aBzdEV96X
+	DpyPDjzrLqy2KUVZnz/E7YImhg==
+X-Google-Smtp-Source: AGHT+IGvcm8Gmt6btmyTyMqXZVRSOfPvmnIP9TnUstnyKtl6UnorIC2YtaIno3O39yYnkXIJfI/h3g==
+X-Received: by 2002:a05:6602:4148:b0:7b7:b370:bd51 with SMTP id bv8-20020a056602414800b007b7b370bd51mr10520071iob.35.1703116507495;
+        Wed, 20 Dec 2023 15:55:07 -0800 (PST)
+Received: from markhas1.lan (71-218-50-136.hlrn.qwest.net. [71.218.50.136])
+        by smtp.gmail.com with ESMTPSA id bp22-20020a056638441600b0046b39a6f404sm177805jab.17.2023.12.20.15.55.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Dec 2023 15:55:07 -0800 (PST)
+From: Mark Hasemeyer <markhas@chromium.org>
+To: LKML <linux-kernel@vger.kernel.org>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Raul Rangel <rrangel@chromium.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Rob Herring <robh@kernel.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Mark Hasemeyer <markhas@chromium.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Benson Leung <bleung@chromium.org>,
+	Bhanu Prakash Maiya <bhanumaiya@chromium.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Daniel Scally <djrscally@gmail.com>,
+	David Gow <davidgow@google.com>,
+	Enric Balletbo i Serra <eballetbo@gmail.com>,
+	Frank Rowand <frowand.list@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Guenter Roeck <groeck@chromium.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Jesper Nilsson <jesper.nilsson@axis.com>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Lee Jones <lee@kernel.org>,
+	Len Brown <lenb@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Prashant Malani <pmalani@chromium.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Rob Barnes <robbarnes@google.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Romain Perier <romain.perier@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Takashi Iwai <tiwai@suse.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Wei Xu <xuwei5@hisilicon.com>,
+	Wolfram Sang <wsa@kernel.org>,
+	chrome-platform@lists.linux.dev,
+	cros-qcom-dts-watchers@chromium.org,
+	devicetree@vger.kernel.org,
+	linux-acpi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	linux-i2c@vger.kernel.org,
+	linux-mediatek@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-tegra@vger.kernel.org
+Subject: [PATCH v2 00/22] Improve IRQ wake capability reporting and update the cros_ec driver to use it
+Date: Wed, 20 Dec 2023 16:54:14 -0700
+Message-ID: <20231220235459.2965548-1-markhas@chromium.org>
+X-Mailer: git-send-email 2.43.0.472.g3155946c3a-goog
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ewqLdpGUhz6o2eq5GUPRIEjay8Na4S3Z
-X-Proofpoint-GUID: ewqLdpGUhz6o2eq5GUPRIEjay8Na4S3Z
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- phishscore=0 priorityscore=1501 impostorscore=0 mlxscore=0 adultscore=0
- spamscore=0 mlxlogscore=822 bulkscore=0 clxscore=1015 malwarescore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312200163
+Content-Transfer-Encoding: 8bit
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+Currently the cros_ec driver assumes that its associated interrupt is
+wake capable. This is an incorrect assumption as some Chromebooks use a
+separate wake pin, while others overload the interrupt for wake and IO.
+This patch train updates the driver to query the underlying ACPI/DT data
+to determine whether or not the IRQ should be enabled for wake.
 
-Modify the XHCI drivers to accommodate for handling multiple event rings in
-case there are multiple interrupters.  Add the required APIs so clients are
-able to allocate/request for an interrupter ring, and pass this information
-back to the client driver.  This allows for users to handle the resource
-accordingly, such as passing the event ring base address to an audio DSP.
-There is no actual support for multiple MSI/MSI-X vectors.
+Both the device tree and ACPI systems have methods for reporting IRQ
+wake capability. In device tree based systems, a node can advertise
+itself as a 'wakeup-source'. In ACPI based systems, GpioInt and
+Interrupt resource descriptors can use the 'SharedAndWake' or
+'ExclusiveAndWake' share types.
 
-[export xhci_initialize_ring_info() -wcheng]
+Some logic is added to the platform, ACPI, and DT subsystems to more
+easily pipe wakeirq information up to the driver.
 
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
----
- drivers/usb/host/xhci-debugfs.c |   2 +-
- drivers/usb/host/xhci-mem.c     | 108 ++++++++++++++++++++++++++++----
- drivers/usb/host/xhci-ring.c    |   2 +-
- drivers/usb/host/xhci.c         |  51 +++++++++------
- drivers/usb/host/xhci.h         |   6 +-
- 5 files changed, 137 insertions(+), 32 deletions(-)
+Changes in v2:
+-Rebase on linux-next
+-Add cover letter
+-See each patch for patch specific changes
 
-diff --git a/drivers/usb/host/xhci-debugfs.c b/drivers/usb/host/xhci-debugfs.c
-index 6d142cd61bd6..f8ba15e7c225 100644
---- a/drivers/usb/host/xhci-debugfs.c
-+++ b/drivers/usb/host/xhci-debugfs.c
-@@ -693,7 +693,7 @@ void xhci_debugfs_init(struct xhci_hcd *xhci)
- 				     "command-ring",
- 				     xhci->debugfs_root);
- 
--	xhci_debugfs_create_ring_dir(xhci, &xhci->interrupter->event_ring,
-+	xhci_debugfs_create_ring_dir(xhci, &xhci->interrupters[0]->event_ring,
- 				     "event-ring",
- 				     xhci->debugfs_root);
- 
-diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
-index 6faa854152ef..4460fa7e9fab 100644
---- a/drivers/usb/host/xhci-mem.c
-+++ b/drivers/usb/host/xhci-mem.c
-@@ -323,6 +323,7 @@ void xhci_initialize_ring_info(struct xhci_ring *ring,
- 	 */
- 	ring->num_trbs_free = ring->num_segs * (TRBS_PER_SEGMENT - 1) - 1;
- }
-+EXPORT_SYMBOL_GPL(xhci_initialize_ring_info);
- 
- /* Allocate segments and link them for a ring */
- static int xhci_alloc_segments_for_ring(struct xhci_hcd *xhci,
-@@ -1855,6 +1856,31 @@ xhci_free_interrupter(struct xhci_hcd *xhci, struct xhci_interrupter *ir)
- 	kfree(ir);
- }
- 
-+void xhci_remove_secondary_interrupter(struct usb_hcd *hcd, struct xhci_interrupter *ir)
-+{
-+	struct xhci_hcd *xhci = hcd_to_xhci(hcd);
-+	unsigned int intr_num;
-+
-+	/* interrupter 0 is primary interrupter, don't touch it */
-+	if (!ir || !ir->intr_num || ir->intr_num >= xhci->max_interrupters)
-+		xhci_dbg(xhci, "Invalid secondary interrupter, can't remove\n");
-+
-+	/* fixme, should we check xhci->interrupter[intr_num] == ir */
-+	/* fixme locking */
-+
-+	spin_lock_irq(&xhci->lock);
-+
-+	intr_num = ir->intr_num;
-+
-+	xhci_remove_interrupter(xhci, ir);
-+	xhci->interrupters[intr_num] = NULL;
-+
-+	spin_unlock_irq(&xhci->lock);
-+
-+	xhci_free_interrupter(xhci, ir);
-+}
-+EXPORT_SYMBOL_GPL(xhci_remove_secondary_interrupter);
-+
- void xhci_mem_cleanup(struct xhci_hcd *xhci)
- {
- 	struct device	*dev = xhci_to_hcd(xhci)->self.sysdev;
-@@ -1862,10 +1888,14 @@ void xhci_mem_cleanup(struct xhci_hcd *xhci)
- 
- 	cancel_delayed_work_sync(&xhci->cmd_timer);
- 
--	xhci_remove_interrupter(xhci, xhci->interrupter);
--	xhci_free_interrupter(xhci, xhci->interrupter);
--	xhci->interrupter = NULL;
--	xhci_dbg_trace(xhci, trace_xhci_dbg_init, "Freed primary event ring");
-+	for (i = 0; i < xhci->max_interrupters; i++) {
-+		if (xhci->interrupters[i]) {
-+			xhci_remove_interrupter(xhci, xhci->interrupters[i]);
-+			xhci_free_interrupter(xhci, xhci->interrupters[i]);
-+			xhci->interrupters[i] = NULL;
-+		}
-+	}
-+	xhci_dbg_trace(xhci, trace_xhci_dbg_init, "Freed interrupters");
- 
- 	if (xhci->cmd_ring)
- 		xhci_ring_free(xhci, xhci->cmd_ring);
-@@ -1935,6 +1965,7 @@ void xhci_mem_cleanup(struct xhci_hcd *xhci)
- 	for (i = 0; i < xhci->num_port_caps; i++)
- 		kfree(xhci->port_caps[i].psi);
- 	kfree(xhci->port_caps);
-+	kfree(xhci->interrupters);
- 	xhci->num_port_caps = 0;
- 
- 	xhci->usb2_rhub.ports = NULL;
-@@ -1943,6 +1974,7 @@ void xhci_mem_cleanup(struct xhci_hcd *xhci)
- 	xhci->rh_bw = NULL;
- 	xhci->ext_caps = NULL;
- 	xhci->port_caps = NULL;
-+	xhci->interrupters = NULL;
- 
- 	xhci->page_size = 0;
- 	xhci->page_shift = 0;
-@@ -2248,18 +2280,20 @@ static int xhci_setup_port_arrays(struct xhci_hcd *xhci, gfp_t flags)
- }
- 
- static struct xhci_interrupter *
--xhci_alloc_interrupter(struct xhci_hcd *xhci, gfp_t flags)
-+xhci_alloc_interrupter(struct xhci_hcd *xhci, int segs, gfp_t flags)
- {
- 	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
- 	struct xhci_interrupter *ir;
--	unsigned int num_segs;
-+	unsigned int num_segs = segs;
- 	int ret;
- 
- 	ir = kzalloc_node(sizeof(*ir), flags, dev_to_node(dev));
- 	if (!ir)
- 		return NULL;
- 
--	num_segs = min_t(unsigned int, 1 << HCS_ERST_MAX(xhci->hcs_params2),
-+	/* number of ring segments should be greater than 0 */
-+	if (segs <= 0)
-+		num_segs = min_t(unsigned int, 1 << HCS_ERST_MAX(xhci->hcs_params2),
- 			 ERST_MAX_SEGS);
- 
- 	ir->event_ring = xhci_ring_alloc(xhci, num_segs, 1, TYPE_EVENT, 0,
-@@ -2294,6 +2328,13 @@ xhci_add_interrupter(struct xhci_hcd *xhci, struct xhci_interrupter *ir,
- 		return -EINVAL;
- 	}
- 
-+	if (xhci->interrupters[intr_num]) {
-+		xhci_warn(xhci, "Interrupter %d\n already set up", intr_num);
-+		return -EINVAL;
-+	}
-+
-+	xhci->interrupters[intr_num] = ir;
-+	ir->intr_num = intr_num;
- 	ir->ir_set = &xhci->run_regs->ir_set[intr_num];
- 
- 	/* set ERST count with the number of entries in the segment table */
-@@ -2313,10 +2354,52 @@ xhci_add_interrupter(struct xhci_hcd *xhci, struct xhci_interrupter *ir,
- 	return 0;
- }
- 
-+struct xhci_interrupter *
-+xhci_create_secondary_interrupter(struct usb_hcd *hcd, int num_seg)
-+{
-+	struct xhci_hcd *xhci = hcd_to_xhci(hcd);
-+	struct xhci_interrupter *ir;
-+	unsigned int i;
-+	int err = -ENOSPC;
-+
-+	if (!xhci->interrupters || xhci->max_interrupters <= 1)
-+		return NULL;
-+
-+	ir = xhci_alloc_interrupter(xhci, num_seg, GFP_KERNEL);
-+	if (!ir)
-+		return NULL;
-+
-+	spin_lock_irq(&xhci->lock);
-+
-+	/* Find available secondary interrupter, interrupter 0 is reserved for primary */
-+	for (i = 1; i < xhci->max_interrupters; i++) {
-+		if (xhci->interrupters[i] == NULL) {
-+			err = xhci_add_interrupter(xhci, ir, i);
-+			break;
-+		}
-+	}
-+
-+	spin_unlock_irq(&xhci->lock);
-+
-+	if (err) {
-+		xhci_warn(xhci, "Failed to add secondary interrupter, max interrupters %d\n",
-+			  xhci->max_interrupters);
-+		xhci_free_interrupter(xhci, ir);
-+		return NULL;
-+	}
-+
-+	xhci_dbg(xhci, "Add secondary interrupter %d, max interrupters %d\n",
-+		 i, xhci->max_interrupters);
-+
-+	return ir;
-+}
-+EXPORT_SYMBOL_GPL(xhci_create_secondary_interrupter);
-+
- int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
- {
--	dma_addr_t	dma;
-+	struct xhci_interrupter *ir;
- 	struct device	*dev = xhci_to_hcd(xhci)->self.sysdev;
-+	dma_addr_t	dma;
- 	unsigned int	val, val2;
- 	u64		val_64;
- 	u32		page_size, temp;
-@@ -2440,11 +2523,14 @@ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
- 	/* Allocate and set up primary interrupter 0 with an event ring. */
- 	xhci_dbg_trace(xhci, trace_xhci_dbg_init,
- 		       "Allocating primary event ring");
--	xhci->interrupter = xhci_alloc_interrupter(xhci, flags);
--	if (!xhci->interrupter)
-+	xhci->interrupters = kcalloc_node(xhci->max_interrupters, sizeof(*xhci->interrupters),
-+					  flags, dev_to_node(dev));
-+
-+	ir = xhci_alloc_interrupter(xhci, 0, flags);
-+	if (!ir)
- 		goto fail;
- 
--	if (xhci_add_interrupter(xhci, xhci->interrupter, 0))
-+	if (xhci_add_interrupter(xhci, ir, 0))
- 		goto fail;
- 
- 	xhci->isoc_bei_interval = AVOID_BEI_INTERVAL_MAX;
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 2c1d614b3b0f..33806ae966f9 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -3061,7 +3061,7 @@ irqreturn_t xhci_irq(struct usb_hcd *hcd)
- 	writel(status, &xhci->op_regs->status);
- 
- 	/* This is the handler of the primary interrupter */
--	ir = xhci->interrupter;
-+	ir = xhci->interrupters[0];
- 	if (!hcd->msi_enabled) {
- 		u32 irq_pending;
- 		irq_pending = readl(&ir->ir_set->irq_pending);
-diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
-index 7d5b94905b9c..c057c42c36f4 100644
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -480,7 +480,7 @@ static int xhci_init(struct usb_hcd *hcd)
- 
- static int xhci_run_finished(struct xhci_hcd *xhci)
- {
--	struct xhci_interrupter *ir = xhci->interrupter;
-+	struct xhci_interrupter *ir = xhci->interrupters[0];
- 	unsigned long	flags;
- 	u32		temp;
- 
-@@ -532,7 +532,7 @@ int xhci_run(struct usb_hcd *hcd)
- 	u64 temp_64;
- 	int ret;
- 	struct xhci_hcd *xhci = hcd_to_xhci(hcd);
--	struct xhci_interrupter *ir = xhci->interrupter;
-+	struct xhci_interrupter *ir = xhci->interrupters[0];
- 	/* Start the xHCI host controller running only after the USB 2.0 roothub
- 	 * is setup.
- 	 */
-@@ -596,7 +596,7 @@ void xhci_stop(struct usb_hcd *hcd)
- {
- 	u32 temp;
- 	struct xhci_hcd *xhci = hcd_to_xhci(hcd);
--	struct xhci_interrupter *ir = xhci->interrupter;
-+	struct xhci_interrupter *ir = xhci->interrupters[0];
- 
- 	mutex_lock(&xhci->mutex);
- 
-@@ -692,36 +692,51 @@ EXPORT_SYMBOL_GPL(xhci_shutdown);
- #ifdef CONFIG_PM
- static void xhci_save_registers(struct xhci_hcd *xhci)
- {
--	struct xhci_interrupter *ir = xhci->interrupter;
-+	struct xhci_interrupter *ir;
-+	unsigned int i;
- 
- 	xhci->s3.command = readl(&xhci->op_regs->command);
- 	xhci->s3.dev_nt = readl(&xhci->op_regs->dev_notification);
- 	xhci->s3.dcbaa_ptr = xhci_read_64(xhci, &xhci->op_regs->dcbaa_ptr);
- 	xhci->s3.config_reg = readl(&xhci->op_regs->config_reg);
- 
--	if (!ir)
--		return;
-+	/* save both primary and all secondary interrupters */
-+	/* fixme, shold we lock  to prevent race with remove secondary interrupter? */
-+	for (i = 0; i < xhci->max_interrupters; i++) {
-+		ir = xhci->interrupters[i];
-+		if (!ir)
-+			continue;
- 
--	ir->s3_erst_size = readl(&ir->ir_set->erst_size);
--	ir->s3_erst_base = xhci_read_64(xhci, &ir->ir_set->erst_base);
--	ir->s3_erst_dequeue = xhci_read_64(xhci, &ir->ir_set->erst_dequeue);
--	ir->s3_irq_pending = readl(&ir->ir_set->irq_pending);
--	ir->s3_irq_control = readl(&ir->ir_set->irq_control);
-+		ir->s3_erst_size = readl(&ir->ir_set->erst_size);
-+		ir->s3_erst_base = xhci_read_64(xhci, &ir->ir_set->erst_base);
-+		ir->s3_erst_dequeue = xhci_read_64(xhci, &ir->ir_set->erst_dequeue);
-+		ir->s3_irq_pending = readl(&ir->ir_set->irq_pending);
-+		ir->s3_irq_control = readl(&ir->ir_set->irq_control);
-+	}
- }
- 
- static void xhci_restore_registers(struct xhci_hcd *xhci)
- {
--	struct xhci_interrupter *ir = xhci->interrupter;
-+	struct xhci_interrupter *ir;
-+	unsigned int i;
- 
- 	writel(xhci->s3.command, &xhci->op_regs->command);
- 	writel(xhci->s3.dev_nt, &xhci->op_regs->dev_notification);
- 	xhci_write_64(xhci, xhci->s3.dcbaa_ptr, &xhci->op_regs->dcbaa_ptr);
- 	writel(xhci->s3.config_reg, &xhci->op_regs->config_reg);
--	writel(ir->s3_erst_size, &ir->ir_set->erst_size);
--	xhci_write_64(xhci, ir->s3_erst_base, &ir->ir_set->erst_base);
--	xhci_write_64(xhci, ir->s3_erst_dequeue, &ir->ir_set->erst_dequeue);
--	writel(ir->s3_irq_pending, &ir->ir_set->irq_pending);
--	writel(ir->s3_irq_control, &ir->ir_set->irq_control);
-+
-+	/* FIXME should we lock to protect against freeing of interrupters */
-+	for (i = 0; i < xhci->max_interrupters; i++) {
-+		ir = xhci->interrupters[i];
-+		if (!ir)
-+			continue;
-+
-+		writel(ir->s3_erst_size, &ir->ir_set->erst_size);
-+		xhci_write_64(xhci, ir->s3_erst_base, &ir->ir_set->erst_base);
-+		xhci_write_64(xhci, ir->s3_erst_dequeue, &ir->ir_set->erst_dequeue);
-+		writel(ir->s3_irq_pending, &ir->ir_set->irq_pending);
-+		writel(ir->s3_irq_control, &ir->ir_set->irq_control);
-+	}
- }
- 
- static void xhci_set_cmd_ring_deq(struct xhci_hcd *xhci)
-@@ -1084,7 +1099,7 @@ int xhci_resume(struct xhci_hcd *xhci, pm_message_t msg)
- 		xhci_dbg(xhci, "// Disabling event ring interrupts\n");
- 		temp = readl(&xhci->op_regs->status);
- 		writel((temp & ~0x1fff) | STS_EINT, &xhci->op_regs->status);
--		xhci_disable_interrupter(xhci->interrupter);
-+		xhci_disable_interrupter(xhci->interrupters[0]);
- 
- 		xhci_dbg(xhci, "cleaning up memory\n");
- 		xhci_mem_cleanup(xhci);
-diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
-index 90e6b6ef7bd2..a5c72a634e6a 100644
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1774,7 +1774,7 @@ struct xhci_hcd {
- 	struct reset_control *reset;
- 	/* data structures */
- 	struct xhci_device_context_array *dcbaa;
--	struct xhci_interrupter *interrupter;
-+	struct xhci_interrupter **interrupters;
- 	struct xhci_ring	*cmd_ring;
- 	unsigned int            cmd_ring_state;
- #define CMD_RING_STATE_RUNNING         (1 << 0)
-@@ -2085,6 +2085,10 @@ struct xhci_container_ctx *xhci_alloc_container_ctx(struct xhci_hcd *xhci,
- 		int type, gfp_t flags);
- void xhci_free_container_ctx(struct xhci_hcd *xhci,
- 		struct xhci_container_ctx *ctx);
-+struct xhci_interrupter *
-+xhci_create_secondary_interrupter(struct usb_hcd *hcd, int num_seg);
-+void xhci_remove_secondary_interrupter(struct usb_hcd
-+				       *hcd, struct xhci_interrupter *ir);
- 
- /* xHCI host controller glue */
- typedef void (*xhci_get_quirks_t)(struct device *, struct xhci_hcd *);
+Mark Hasemeyer (22):
+  gpiolib: acpi: Modify acpi_dev_irq_wake_get_by() to use resource
+  i2c: acpi: Modify i2c_acpi_get_irq() to use resource
+  Documentation: devicetree: Clarify wording for wakeup-source property
+  ARM: dts: tegra: Enable cros-ec-spi as wake source
+  ARM: dts: rockchip: rk3288: Enable cros-ec-spi as wake source
+  ARM: dts: samsung: exynos5420: Enable cros-ec-spi as wake source
+  ARM: dts: samsung: exynos5800: Enable cros-ec-spi as wake source
+  arm64: dts: mediatek: mt8173: Enable cros-ec-spi as wake source
+  arm64: dts: mediatek: mt8183: Enable cros-ec-spi as wake source
+  arm64: dts: mediatek: mt8192: Enable cros-ec-spi as wake source
+  arm64: dts: mediatek: mt8195: Enable cros-ec-spi as wake source
+  arm64: dts: tegra: Enable cros-ec-spi as wake source
+  arm64: dts: qcom: sc7180: Enable cros-ec-spi as wake source
+  arm64: dts: qcom: sc7280: Enable cros-ec-spi as wake source
+  arm64: dts: qcom: sdm845: Enable cros-ec-spi as wake source
+  arm64: dts: rockchip: rk3399: Enable cros-ec-spi as wake source
+  of: irq: add wake capable bit to of_irq_resource()
+  of: irq: Add default implementation for of_irq_to_resource()
+  of: irq: Remove extern from function declarations
+  device property: Modify fwnode irq_get() to use resource
+  platform: Modify platform_get_irq_optional() to use resource
+  platform/chrome: cros_ec: Use PM subsystem to manage wakeirq
+
+ .../bindings/power/wakeup-source.txt          | 18 +++--
+ arch/arm/boot/dts/nvidia/tegra124-nyan.dtsi   |  1 +
+ arch/arm/boot/dts/nvidia/tegra124-venice2.dts |  1 +
+ .../rockchip/rk3288-veyron-chromebook.dtsi    |  1 +
+ .../boot/dts/samsung/exynos5420-peach-pit.dts |  1 +
+ .../boot/dts/samsung/exynos5800-peach-pi.dts  |  1 +
+ arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi  |  1 +
+ .../arm64/boot/dts/mediatek/mt8183-kukui.dtsi |  1 +
+ .../boot/dts/mediatek/mt8192-asurada.dtsi     |  1 +
+ .../boot/dts/mediatek/mt8195-cherry.dtsi      |  1 +
+ .../arm64/boot/dts/nvidia/tegra132-norrin.dts |  1 +
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  |  1 +
+ .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi |  1 +
+ .../arm64/boot/dts/qcom/sc7280-idp-ec-h1.dtsi |  1 +
+ arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi    |  1 +
+ arch/arm64/boot/dts/rockchip/rk3399-gru.dtsi  |  1 +
+ drivers/acpi/property.c                       | 11 ++-
+ drivers/base/platform.c                       | 74 +++++++++++++------
+ drivers/base/property.c                       | 24 +++++-
+ drivers/gpio/gpiolib-acpi.c                   | 25 ++++---
+ drivers/i2c/i2c-core-acpi.c                   | 38 +++++-----
+ drivers/i2c/i2c-core-base.c                   |  6 +-
+ drivers/i2c/i2c-core.h                        |  4 +-
+ drivers/of/irq.c                              | 32 +++++++-
+ drivers/of/property.c                         |  8 +-
+ drivers/platform/chrome/cros_ec.c             |  9 ---
+ drivers/platform/chrome/cros_ec_lpc.c         | 52 ++++++++++++-
+ drivers/platform/chrome/cros_ec_spi.c         | 41 ++++++++--
+ drivers/platform/chrome/cros_ec_uart.c        | 34 +++++++--
+ include/linux/acpi.h                          | 23 +++---
+ include/linux/fwnode.h                        |  8 +-
+ include/linux/of_irq.h                        | 41 +++++-----
+ include/linux/platform_data/cros_ec_proto.h   |  2 -
+ include/linux/platform_device.h               |  3 +
+ include/linux/property.h                      |  2 +
+ 35 files changed, 328 insertions(+), 142 deletions(-)
+
+-- 
+2.43.0.472.g3155946c3a-goog
+
 
