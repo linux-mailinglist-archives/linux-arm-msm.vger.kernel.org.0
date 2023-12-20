@@ -1,862 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-5589-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5590-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4E1F819F41
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 13:42:46 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70689819F4C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 13:46:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6B903288C98
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 12:42:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E03A6B21590
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 12:46:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C064F24B4C;
-	Wed, 20 Dec 2023 12:41:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 910C724B4B;
+	Wed, 20 Dec 2023 12:46:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="O7oTOMa6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SulQXC4Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D6924B3B;
-	Wed, 20 Dec 2023 12:40:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BK6Ta8w006990;
-	Wed, 20 Dec 2023 12:40:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version
-	:content-transfer-encoding:content-type; s=qcppdkim1; bh=iyj4LpG
-	BvoGgpOi+FveMNyMIhc0+RW1fr1S9oIwjEcQ=; b=O7oTOMa6i+FaFAIX+OSomj5
-	mIaMPImsTh2efCZzbZF/4ou2loJid9iSRHjlYDL0bHwnWRYcGpzvK/OkV4mXxjOJ
-	H1UDc956396JtaLdzzb6reXHZKHtrYxXaEe+rdl54zGwerbGleJ8eeUHcr664+DT
-	+iwdEmeTO12NXsQfXWVXqyr8lHzbs0u5cST/LaeacjTr/7OEX8DVk97wyN4q9AaF
-	O0qYAOfW5pSQlZHNTob7bQ5qVmYkb4tdrD7Bxo/B7QaXtD4dcF7XkyLyqUG9IrlS
-	2uarrjwbR+0rG+00OLTV2D0B2YS37NVjyX5hB/BUpR2UYpT+031PdR+QlumnNAg=
-	=
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v3tmm0tve-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Dec 2023 12:40:53 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BKCeqTJ025927
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Dec 2023 12:40:52 GMT
-Received: from hu-jinlmao-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Wed, 20 Dec 2023 04:40:51 -0800
-From: Mao Jinlong <quic_jinlmao@quicinc.com>
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: Mao Jinlong <quic_jinlmao@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Tingwei Zhang
-	<quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        "Tao
- Zhang" <quic_taozha@quicinc.com>, <coresight@lists.linaro.org>
-Subject: [PATCH] arm64: dts: qcom: Add coresight nodes for sm8450
-Date: Wed, 20 Dec 2023 04:40:06 -0800
-Message-ID: <20231220124009.16816-1-quic_jinlmao@quicinc.com>
-X-Mailer: git-send-email 2.41.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078F724B32
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 12:46:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3365d38dce2so4505787f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 04:46:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1703076399; x=1703681199; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1Ui95pfp08JB0dnY6RIlZ6+jvD2svnfXLA/xXJ7rdp8=;
+        b=SulQXC4ZSolARaZ70FYx5DqL7V4WJkahaDEDDT6ELbDhCKjBI+ySdxSlFZOxM0zN94
+         WesNAWvRXm1926JrIxbVoQDMcKTewHT1pEWGEOVmi0Ejv+OghL9u/zL/owKO650Ymqlg
+         YvV/Ul4oASKM+YiN7Aqe/dXaJveppq6vkKT/KS49wefhnw7+6WJWBCUXLuruUi/aEQy3
+         TlNvzf1e4jX2zvFVFGHKagNttbiwHXKNcQ3f/sYBMPQE6JFNSPcvVoYT1xuRu4feoItk
+         IZ0RtiTHH+/MOxSLikwJ+/YWg6q1/WarR3qn7DGxoGCCpFafFw1AvqzBGK782KBtZeWv
+         gMQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703076399; x=1703681199;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1Ui95pfp08JB0dnY6RIlZ6+jvD2svnfXLA/xXJ7rdp8=;
+        b=gAhukNreHUx1dCPJa4Dsw+gCnXc1ZEhvCnaU9p9oo6BqqLFP7d3ODQ0ZaPBXt9KSEV
+         /H5nLzsPvX3mab0nVaaiey3ZkmKBV3oTeSiB9y8kgQMk8f7Nkw6Ch9Hd7ZM4FUmthu9L
+         krWELerEYUzhxzxBeRu1eIG34qfuMS0Kldkgl82jD70u5Y1HL+4xeg8MI8aCAkcRwk6W
+         fA2BaNX+C5gVEFwOXne8i6mheRzl1RUVstm65m1XiPtU2mIWck8pBjYVLlMfy6waRbgr
+         LXVBVQGZLxmjGyMdhC7CiW3TAZVOr7dySNTpEiNtmxj3reuwa17gGUzTadVNOsC2egCW
+         sY/A==
+X-Gm-Message-State: AOJu0Yy45rREkk5v4XXcWHcA0XJQY5VntgcTDkWUfpjyF3enuIxducrc
+	AM/tjMBXv3CPpTgfhjUJiFTqZkoX7wUwA1+VFS4=
+X-Google-Smtp-Source: AGHT+IH0MmV4WxNV3v9bdD3q9gNzuLvcZUypmQlSV3zv9vQWbe6ZhThaNE8au3j3E5fdslvw05oeuQ==
+X-Received: by 2002:a5d:61c5:0:b0:336:74aa:d78b with SMTP id q5-20020a5d61c5000000b0033674aad78bmr703955wrv.145.1703076399218;
+        Wed, 20 Dec 2023 04:46:39 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.27])
+        by smtp.gmail.com with ESMTPSA id h15-20020a5d504f000000b00336566b885csm14052278wrt.87.2023.12.20.04.46.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Dec 2023 04:46:38 -0800 (PST)
+Message-ID: <dfc7fe85-7418-410c-bd82-6e08799e6417@linaro.org>
+Date: Wed, 20 Dec 2023 13:46:36 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: RXBiNW-WrEXP8iFAaIfIiE_YAnReONDF
-X-Proofpoint-ORIG-GUID: RXBiNW-WrEXP8iFAaIfIiE_YAnReONDF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- spamscore=0 impostorscore=0 mlxscore=0 bulkscore=0 clxscore=1015
- priorityscore=1501 mlxlogscore=905 adultscore=1 malwarescore=0
- phishscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2311290000 definitions=main-2312200089
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: Add coresight nodes for sm8450
+Content-Language: en-US
+To: Mao Jinlong <quic_jinlmao@quicinc.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Tao Zhang <quic_taozha@quicinc.com>, coresight@lists.linaro.org
+References: <20231220124009.16816-1-quic_jinlmao@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231220124009.16816-1-quic_jinlmao@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Add coresight components on Qualcomm SM8450 Soc. The components include
-TMC ETF/ETR, ETE, STM, TPDM, CTI.
+On 20/12/2023 13:40, Mao Jinlong wrote:
+> Add coresight components on Qualcomm SM8450 Soc. The components include
+> TMC ETF/ETR, ETE, STM, TPDM, CTI.
+> 
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8450.dtsi | 742 +++++++++++++++++++++++++++
+>  1 file changed, 742 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> index 1783fa78bdbc..112b5a069c94 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> @@ -285,6 +285,192 @@ CLUSTER_SLEEP_1: cluster-sleep-1 {
+>  		};
+>  	};
+>  
+> +	ete0 {
 
-Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 742 +++++++++++++++++++++++++++
- 1 file changed, 742 insertions(+)
+ete-0
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 1783fa78bdbc..112b5a069c94 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -285,6 +285,192 @@ CLUSTER_SLEEP_1: cluster-sleep-1 {
- 		};
- 	};
- 
-+	ete0 {
-+		compatible = "arm,embedded-trace-extension";
-+		cpu = <&CPU0>;
-+
-+		out-ports {
-+			port {
-+				ete0_out_funnel_ete: endpoint {
-+				remote-endpoint = <&funnel_ete_in_ete0>;
-+				};
-+			};
-+		};
-+	};
-+
-+	ete1 {
-+		compatible = "arm,embedded-trace-extension";
-+		cpu = <&CPU1>;
-+
-+		out-ports {
-+			port {
-+				ete1_out_funnel_ete: endpoint {
-+				remote-endpoint = <&funnel_ete_in_ete1>;
-+				};
-+			};
-+		};
-+	};
-+
-+	ete2 {
-+		compatible = "arm,embedded-trace-extension";
-+		cpu = <&CPU2>;
-+
-+		out-ports {
-+			port {
-+				ete2_out_funnel_ete: endpoint {
-+				remote-endpoint = <&funnel_ete_in_ete2>;
-+				};
-+			};
-+		};
-+	};
-+
-+	ete3 {
-+		compatible = "arm,embedded-trace-extension";
-+		cpu = <&CPU3>;
-+
-+		out-ports {
-+			port {
-+				ete3_out_funnel_ete: endpoint {
-+				remote-endpoint = <&funnel_ete_in_ete3>;
-+				};
-+			};
-+		};
-+	};
-+
-+	ete4 {
-+		compatible = "arm,embedded-trace-extension";
-+		cpu = <&CPU4>;
-+
-+		out-ports {
-+			port {
-+				ete4_out_funnel_ete: endpoint {
-+				remote-endpoint = <&funnel_ete_in_ete4>;
-+				};
-+			};
-+		};
-+	};
-+
-+	ete5 {
-+		compatible = "arm,embedded-trace-extension";
-+		cpu = <&CPU5>;
-+
-+		out-ports {
-+			port {
-+				ete5_out_funnel_ete: endpoint {
-+				remote-endpoint = <&funnel_ete_in_ete5>;
-+				};
-+			};
-+		};
-+	};
-+
-+	ete6 {
-+		compatible = "arm,embedded-trace-extension";
-+		cpu = <&CPU6>;
-+
-+		out-ports {
-+			port {
-+				ete6_out_funnel_ete: endpoint {
-+				remote-endpoint = <&funnel_ete_in_ete6>;
-+				};
-+			};
-+		};
-+	};
-+
-+	ete7 {
-+		compatible = "arm,embedded-trace-extension";
-+		cpu = <&CPU7>;
-+
-+		out-ports {
-+			port {
-+				ete7_out_funnel_ete: endpoint {
-+				remote-endpoint = <&funnel_ete_in_ete7>;
-+				};
-+			};
-+		};
-+	};
-+
-+	funnel_ete {
-+		compatible = "arm,coresight-static-funnel";
-+
-+		out-ports {
-+			port {
-+				funnel_ete_out_funnel_apss: endpoint {
-+					remote-endpoint =
-+					<&funnel_apss_in_funnel_ete>;
-+				};
-+			};
-+		};
-+
-+		in-ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+				funnel_ete_in_ete0: endpoint {
-+					remote-endpoint =
-+					<&ete0_out_funnel_ete>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+				funnel_ete_in_ete1: endpoint {
-+				remote-endpoint =
-+					<&ete1_out_funnel_ete>;
-+				};
-+			};
-+
-+			port@2 {
-+				reg = <2>;
-+				funnel_ete_in_ete2: endpoint {
-+				remote-endpoint =
-+					<&ete2_out_funnel_ete>;
-+				};
-+			};
-+
-+			port@3 {
-+				reg = <3>;
-+				funnel_ete_in_ete3: endpoint {
-+				remote-endpoint =
-+					<&ete3_out_funnel_ete>;
-+				};
-+			};
-+
-+			port@4 {
-+				reg = <4>;
-+				funnel_ete_in_ete4: endpoint {
-+				remote-endpoint =
-+					<&ete4_out_funnel_ete>;
-+				};
-+			};
-+
-+			port@5 {
-+				reg = <5>;
-+				funnel_ete_in_ete5: endpoint {
-+					remote-endpoint =
-+					<&ete5_out_funnel_ete>;
-+				};
-+			};
-+
-+			port@6 {
-+				reg = <6>;
-+				funnel_ete_in_ete6: endpoint {
-+					remote-endpoint =
-+					<&ete6_out_funnel_ete>;
-+				};
-+			};
-+
-+			port@7 {
-+				reg = <7>;
-+				funnel_ete_in_ete7: endpoint {
-+					remote-endpoint =
-+					<&ete7_out_funnel_ete>;
-+				};
-+			};
-+		};
-+	};
-+
- 	firmware {
- 		scm: scm {
- 			compatible = "qcom,scm-sm8450", "qcom,scm";
-@@ -3791,6 +3977,562 @@ data-pins {
- 			};
- 		};
- 
-+		stm@10002000 {
-+			compatible = "arm,coresight-stm", "arm,primecell";
-+			reg = <0x0 0x10002000 0x0 0x1000>,
-+				<0x0 0x16280000 0x0 0x180000>;
-+			reg-names = "stm-base", "stm-stimulus-base";
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					stm_out_funnel_in0: endpoint {
-+						remote-endpoint =
-+						<&funnel_in0_in_stm>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@10041000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+			reg = <0x0 0x10041000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@7 {
-+					reg = <7>;
-+					funnel_in0_in_stm: endpoint {
-+						remote-endpoint =
-+						<&stm_out_funnel_in0>;
-+					};
-+				};
-+
-+			};
-+
-+			out-ports {
-+				port {
-+					funnel_in0_out_funnel_qdss: endpoint {
-+						remote-endpoint =
-+						<&funnel_qdss_in_funnel_in0>;
-+					};
-+				};
-+
-+			};
-+		};
-+
-+		funnel@10042000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+
-+			reg = <0x0 0x10042000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@4 {
-+					reg = <4>;
-+					funnel_in1_in_funnel_apss: endpoint {
-+						remote-endpoint =
-+						<&funnel_apss_out_funnel_in1>;
-+					};
-+				};
-+
-+				port@6 {
-+					reg = <6>;
-+					funnel_in1_in_funnel_dl_center: endpoint {
-+						remote-endpoint =
-+						<&funnel_dl_center_out_funnel_in1>;
-+					};
-+				};
-+
-+			};
-+
-+			out-ports {
-+				port {
-+					funnel_in1_out_funnel_qdss: endpoint {
-+						remote-endpoint =
-+						<&funnel_qdss_in_funnel_in1>;
-+					};
-+				};
-+
-+			};
-+		};
-+
-+		funnel@10045000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+			reg = <0x0 0x10045000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+					funnel_qdss_in_funnel_in0: endpoint {
-+						remote-endpoint =
-+						<&funnel_in0_out_funnel_qdss>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+					funnel_qdss_in_funnel_in1: endpoint {
-+						remote-endpoint =
-+						<&funnel_in1_out_funnel_qdss>;
-+					};
-+				};
-+
-+			};
-+
-+			out-ports {
-+				port {
-+					funnel_qdss_out_funnel_aoss: endpoint {
-+						remote-endpoint =
-+						<&funnel_aoss_in_funnel_qdss>;
-+					};
-+				};
-+
-+			};
-+		};
-+
-+		replicator@10046000 {
-+			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
-+			reg = <0x0 0x10046000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			in-ports {
-+				port {
-+					replicator_qdss_in_replicator_swao: endpoint {
-+						remote-endpoint =
-+						<&replicator_swao_out_replicator_qdss>;
-+					};
-+				};
-+			};
-+
-+			out-ports {
-+
-+				port {
-+					replicator_qdss_out_replicator_etr: endpoint {
-+						remote-endpoint =
-+						<&replicator_etr_in_replicator_qdss>;
-+					};
-+				};
-+			};
-+		};
-+
-+		tmc_etr: tmc@10048000 {
-+			compatible = "arm,coresight-tmc", "arm,primecell";
-+			reg = <0x0 0x10048000 0x0 0x1000>;
-+
-+			iommus = <&apps_smmu 0x0600 0>;
-+			arm,buffer-size = <0x10000>;
-+
-+			arm,scatter-gather;
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			in-ports {
-+				port {
-+					tmc_etr_in_replicator_etr: endpoint {
-+						remote-endpoint =
-+						<&replicator_etr_out_tmc_etr>;
-+					};
-+				};
-+			};
-+		};
-+
-+		replicator@1004e000 {
-+			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
-+			reg = <0x0 0x1004e000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			in-ports {
-+				port {
-+					replicator_etr_in_replicator_qdss: endpoint {
-+						remote-endpoint =
-+						<&replicator_qdss_out_replicator_etr>;
-+					};
-+				};
-+			};
-+
-+			out-ports {
-+
-+				port {
-+
-+					replicator_etr_out_tmc_etr: endpoint {
-+						remote-endpoint =
-+						<&tmc_etr_in_replicator_etr>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@10b04000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+
-+			reg = <0x0 0x10b04000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@6 {
-+					reg = <6>;
-+					funnel_aoss_in_tpda_aoss: endpoint {
-+						remote-endpoint =
-+						<&tpda_aoss_out_funnel_aoss>;
-+					};
-+				};
-+
-+				port@7 {
-+					reg = <7>;
-+					funnel_aoss_in_funnel_qdss: endpoint {
-+						remote-endpoint =
-+						<&funnel_qdss_out_funnel_aoss>;
-+					};
-+				};
-+			};
-+
-+			out-ports {
-+				port {
-+					funnel_aoss_out_tmc_etf: endpoint {
-+						remote-endpoint =
-+						<&tmc_etf_in_funnel_aoss>;
-+					};
-+				};
-+
-+			};
-+		};
-+
-+		tmc@10b05000 {
-+			compatible = "arm,coresight-tmc", "arm,primecell";
-+			reg = <0x0 0x10b05000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			in-ports {
-+				port {
-+					tmc_etf_in_funnel_aoss: endpoint {
-+						remote-endpoint =
-+						<&funnel_aoss_out_tmc_etf>;
-+					};
-+				};
-+			};
-+
-+			out-ports {
-+				port {
-+					tmc_etf_out_replicator_swao: endpoint {
-+						remote-endpoint =
-+						<&replicator_swao_in_tmc_etf>;
-+					};
-+				};
-+			};
-+		};
-+
-+		replicator@10b06000 {
-+			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
-+			reg = <0x0 0x10b06000 0x0 0x1000>;
-+
-+			qcom,replicator-loses-context;
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			in-ports {
-+				port {
-+					replicator_swao_in_tmc_etf: endpoint {
-+						remote-endpoint =
-+						<&tmc_etf_out_replicator_swao>;
-+					};
-+				};
-+			};
-+
-+			out-ports {
-+
-+				port {
-+					replicator_swao_out_replicator_qdss: endpoint {
-+						remote-endpoint =
-+						<&replicator_qdss_in_replicator_swao>;
-+					};
-+				};
-+
-+			};
-+		};
-+
-+		tpda@10b08000 {
-+			compatible = "qcom,coresight-tpda", "arm,primecell";
-+
-+			reg = <0x0 0x10b08000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			in-ports {
-+
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+					tpda_aoss_in_tpdm_swao_prio_0: endpoint {
-+						remote-endpoint =
-+						<&tpdm_swao_prio_0_out_tpda_aoss>;
-+					};
-+				};
-+
-+				port@4 {
-+					reg = <4>;
-+					tpda_aoss_in_tpdm_swao: endpoint {
-+						remote-endpoint =
-+						<&tpdm_swao_out_tpda_aoss>;
-+					};
-+				};
-+
-+			};
-+
-+			out-ports {
-+
-+				port {
-+					tpda_aoss_out_funnel_aoss: endpoint {
-+						remote-endpoint =
-+						<&funnel_aoss_in_tpda_aoss>;
-+					};
-+				};
-+
-+			};
-+		};
-+
-+		tpdm@10b09000 {
-+			compatible = "qcom,coresight-tpdm", "arm,primecell";
-+			reg = <0x0 0x10b09000 0x0 0x1000>;
-+
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					tpdm_swao_prio_0_out_tpda_aoss: endpoint {
-+						remote-endpoint =
-+						<&tpda_aoss_in_tpdm_swao_prio_0>;
-+					};
-+				};
-+			};
-+		};
-+
-+		tpdm@10b0d000 {
-+			compatible = "qcom,coresight-tpdm", "arm,primecell";
-+			reg = <0x0 0x10b0d000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					tpdm_swao_out_tpda_aoss: endpoint {
-+						remote-endpoint =
-+						<&tpda_aoss_in_tpdm_swao>;
-+					};
-+				};
-+			};
-+		};
-+
-+		tpdm@10c28000 {
-+			compatible = "qcom,coresight-tpdm", "arm,primecell";
-+			reg = <0x0 0x10c28000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					tpdm_dlct_out_tpda_dl_center_26: endpoint {
-+						remote-endpoint =
-+						<&tpda_dl_center_26_in_tpdm_dlct>;
-+					};
-+				};
-+			};
-+		};
-+
-+		tpdm@10c29000 {
-+			compatible = "qcom,coresight-tpdm", "arm,primecell";
-+			reg = <0x0 0x10c29000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					tpdm_ipcc_out_tpda_dl_center_27: endpoint {
-+						remote-endpoint =
-+						<&tpda_dl_center_27_in_tpdm_ipcc>;
-+					};
-+				};
-+			};
-+		};
-+
-+		cti@10c2a000 {
-+			compatible = "arm,coresight-cti", "arm,primecell";
-+			reg = <0x0 0x10c2a000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+		};
-+
-+		cti@10c2b000 {
-+			compatible = "arm,coresight-cti", "arm,primecell";
-+			reg = <0x0 0x10c2b000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+		};
-+
-+		tpda@10c2e000 {
-+			compatible = "qcom,coresight-tpda", "arm,primecell";
-+			reg = <0x0 0x10c2e000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			in-ports {
-+
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@1a {
-+					reg = <26>;
-+					tpda_dl_center_26_in_tpdm_dlct: endpoint {
-+						remote-endpoint =
-+						<&tpdm_dlct_out_tpda_dl_center_26>;
-+					};
-+				};
-+
-+				port@1b {
-+					reg = <27>;
-+					tpda_dl_center_27_in_tpdm_ipcc: endpoint {
-+						remote-endpoint =
-+						<&tpdm_ipcc_out_tpda_dl_center_27>;
-+					};
-+				};
-+
-+			};
-+
-+			out-ports {
-+
-+				port {
-+					tpda_dl_center_out_funnel_dl_center: endpoint {
-+						remote-endpoint =
-+						<&funnel_dl_center_in_tpda_dl_center>;
-+					};
-+				};
-+
-+			};
-+		};
-+
-+		funnel@10c2f000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+			reg = <0x0 0x10c2f000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			in-ports {
-+
-+				port {
-+					funnel_dl_center_in_tpda_dl_center: endpoint {
-+						remote-endpoint =
-+						<&tpda_dl_center_out_funnel_dl_center>;
-+					};
-+				};
-+
-+			};
-+
-+			out-ports {
-+				port {
-+					funnel_dl_center_out_funnel_in1: endpoint {
-+						remote-endpoint =
-+						<&funnel_in1_in_funnel_dl_center>;
-+					};
-+				};
-+
-+			};
-+		};
-+
-+		funnel@13810000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+
-+			reg = <0x0 0x13810000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			in-ports {
-+
-+				port {
-+					funnel_apss_in_funnel_ete: endpoint {
-+						remote-endpoint =
-+						<&funnel_ete_out_funnel_apss>;
-+					};
-+				};
-+
-+			};
-+
-+			out-ports {
-+				port {
-+					funnel_apss_out_funnel_in1: endpoint {
-+						remote-endpoint =
-+						<&funnel_in1_in_funnel_apss>;
-+					};
-+				};
-+
-+			};
-+		};
-+
-+		cti@138e0000 {
-+			compatible = "arm,coresight-cti", "arm,primecell";
-+			reg = <0x0 0x138e0000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+		};
-+
-+		cti@138f0000 {
-+			compatible = "arm,coresight-cti", "arm,primecell";
-+			reg = <0x0 0x138f0000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+		};
-+
-+		cti@13900000 {
-+			compatible = "arm,coresight-cti", "arm,primecell";
-+			reg = <0x0 0x13900000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+		};
-+
- 		sram@146aa000 {
- 			compatible = "qcom,sm8450-imem", "syscon", "simple-mfd";
- 			reg = <0 0x146aa000 0 0x1000>;
--- 
-2.41.0
+> +		compatible = "arm,embedded-trace-extension";
+> +		cpu = <&CPU0>;
+> +
+> +		out-ports {
+> +			port {
+> +				ete0_out_funnel_ete: endpoint {
+> +				remote-endpoint = <&funnel_ete_in_ete0>;
+
+Missing indentation.
+
+...
+
+> +	funnel_ete {
+
+funnel
+Anyway underscores are not allowed
+
+> +		compatible = "arm,coresight-static-funnel";
+> +
+> +		out-ports {
+> +			port {
+> +				funnel_ete_out_funnel_apss: endpoint {
+> +					remote-endpoint =
+> +					<&funnel_apss_in_funnel_ete>;
+
+Messed indentation
+
+Errors above look all over this patch, so fix all instances in this patch.
+
+Best regards,
+Krzysztof
 
 
