@@ -1,650 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-5495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5500-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 350E9819853
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 06:55:44 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF8F5819869
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 07:03:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A1BC91F26253
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 05:55:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8747E2872E6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 06:03:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B74741640D;
-	Wed, 20 Dec 2023 05:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E10D16425;
+	Wed, 20 Dec 2023 06:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XUOFC+nr"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JajfMDgm"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9EE116412;
-	Wed, 20 Dec 2023 05:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE7113AF3;
+	Wed, 20 Dec 2023 06:03:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BK450lZ010494;
-	Wed, 20 Dec 2023 05:55:31 GMT
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BK4oRei001889;
+	Wed, 20 Dec 2023 06:02:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version
-	:content-transfer-encoding:content-type; s=qcppdkim1; bh=6kifV8S
-	eVkNL3obAErIOn30i39tEL0jaG5Z7L7hoFS4=; b=XUOFC+nrXaTw/Kq1FOgzRdU
-	RijHFn3/B9naDmdwvpeBJAu3E3aWDbN4xuPa47s8og9dMBpkHYLobDkjXVeV4SOd
-	wMFH0tFuFGfod4v4tUGHv7XVqaoupoY2j+viIzWi56+ux6Gol5bTL/fbEjgNeqNQ
-	iVLhHb+cwCiM4B1UgJxU9Vc54HYgqhtd7jiXblf7aOGj9gcJEw4PiO0h7jttx0kq
-	hvSGmWSVkE0wasoWjDSnPLl5CaYYK7vXsQWwIuaE1unGjhfo7xTMHdajkzy4IPnR
-	VmVx5eXJwNnzIsbfxqpC8K4/nN6Sl1hflCngj+jJEDaNCV5tDSQBe3voxhvn+lg=
-	=
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v37vxtmbd-1
+	from:to:cc:subject:date:message-id:mime-version:content-type; s=
+	qcppdkim1; bh=OjjER9tIK+8NszfEYxyKNEhImaqZl0+oCS/0pEWKhuQ=; b=Ja
+	jfMDgm8Y0e4WTjx07lV9OrGvqvc/pS3loxZTynzAp3xS42ICPXqigOyJZ0/TgdZc
+	YH5VuJQwVITs5byMKffavDMKJ29GnfC9BWnHdyb/zR6wYYbSMkSpawg5uRgi8bRu
+	7WTZctAi8HOfVAaHnFfk3Y4Q4uzmZaHaqkcwgUPOXDCgHF1PsZ3JAV7XuaCz3dlP
+	MpUjVD1tbkT1h/GcxqWm3NrUeMEHNuFgs8/gp/9zm5zaS+eGz1I5/mFx7j2uRlVX
+	faL0d6duv2/z8hh6Pu8ai2mk+4i4xrWtWqODEZwKnVlSp+jZ6iCRyZVe2Fj+15mX
+	otLc6LJr1vMMpN4L+h/g==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v37vxtmqf-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Dec 2023 05:55:30 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BK5tUQI013193
+	Wed, 20 Dec 2023 06:02:46 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BK62kIJ005126
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Dec 2023 05:55:30 GMT
-Received: from hu-viswanat-blr.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+	Wed, 20 Dec 2023 06:02:46 GMT
+Received: from hu-c-gdjako-lv.qualcomm.com (10.49.16.6) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 19 Dec 2023 21:55:25 -0800
-From: Vignesh Viswanathan <quic_viswanat@quicinc.com>
-To: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <lee@kernel.org>, <mathieu.poirier@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_mojha@quicinc.com>
-CC: <quic_anusha@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>,
-        Vignesh Viswanathan
-	<quic_viswanat@quicinc.com>
-Subject: [PATCH V4] remoteproc: qcom: q6v5: Get crash reason from specific SMEM partition
-Date: Wed, 20 Dec 2023 11:25:11 +0530
-Message-ID: <20231220055511.519395-1-quic_viswanat@quicinc.com>
-X-Mailer: git-send-email 2.41.0
+ 15.2.1118.40; Tue, 19 Dec 2023 22:02:44 -0800
+From: Georgi Djakov <quic_c_gdjako@quicinc.com>
+To: <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <will@kernel.org>, <robin.murphy@arm.com>,
+        <joro@8bytes.org>
+CC: <devicetree@vger.kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <linux-arm-kernel@lists.infradead.org>,
+        <iommu@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <quic_cgoldswo@quicinc.com>,
+        <quic_sukadev@quicinc.com>, <quic_pdaly@quicinc.com>,
+        <quic_sudaraja@quicinc.com>, <djakov@kernel.org>
+Subject: [PATCH v3 0/9] Add support for Translation Buffer Units
+Date: Tue, 19 Dec 2023 22:02:27 -0800
+Message-ID: <20231220060236.18600-1-quic_c_gdjako@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: vTAcr-K41Vx1K6lHGUqp-lr0O3uWMqaL
-X-Proofpoint-GUID: vTAcr-K41Vx1K6lHGUqp-lr0O3uWMqaL
+X-Proofpoint-ORIG-GUID: ckVum8-2-bd6I-fhiGrXHXgVXMk1-c1R
+X-Proofpoint-GUID: ckVum8-2-bd6I-fhiGrXHXgVXMk1-c1R
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=891
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=717
  suspectscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0
- bulkscore=0 phishscore=0 spamscore=0 clxscore=1015 mlxscore=0 adultscore=0
+ bulkscore=0 phishscore=0 spamscore=0 clxscore=1011 mlxscore=0 adultscore=0
  priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312200037
+ engine=8.19.0-2311290000 definitions=main-2312200038
 
-q6v5 fatal and watchdog IRQ handlers always retrieves the crash reason
-information from SMEM global partition (QCOM_SMEM_HOST_ANY).
+The TCUs (Translation Control Units) and TBUs (Translation Buffer
+Units) are key components of the MMU-500. Multiple TBUs are connected
+to a single TCU over an interconnect. Each TBU contains a TLB that
+caches page tables. The MMU-500 implements a TBU for each connected
+master, and the TBU is designed, so that it is local to the master.
 
-For some targets like IPQ9574 and IPQ5332, crash reason information is
-present in target specific partition due to which the crash reason is
-not printed in the current implementation.
+The Qualcomm SDM845 and SC7280 platforms have an implementation of the
+SMMU-500, that has multiple TBUs. A DT schema is added to describe the
+resources for each TBU (register space, power-domains, interconnects
+and clocks).
 
-Add support to pass crash_reason_partition along with crash_reason_item
-number in qcom_q6v5_init call and use the same to get the crash
-information from SMEM in fatal and watchdog IRQ handlers.
+The TBU driver will manage the resources and allow the system to
+operate the TBUs during a context fault to obtain details by doing
+s1 inv, software + hardware page table walks etc. This is implemented
+with ATOS/eCATs as the ATS feature is not supported. Being able to
+query the TBUs is useful for debugging various hardware/software
+issues on these platforms.
 
-While at it, rename all instances of "crash_reason_smem" with
-"crash_reason_item" as this reflects the proper meaning.
+v3:
+- Having a TBU is not Qualcomm specific, so allow having TBU child
+  nodes with no specific constraints on properties. For some of the
+  vendor compatibles however, add a schema to describe specific
+  properties and allow validation. (Rob)
+- Drop the useless reg-names DT property on TBUs. (Rob)
+- Make the stream-id-range DT property a common one. (Rob)
+- Fix the DT example. (Rob)
+- Minor fixes on the TBU driver.
+- Add support for SC7280 platforms.
 
-Signed-off-by: Vignesh Viswanathan <quic_viswanat@quicinc.com>
----
-Changes in V4: Rename all instances of crash_reason_smem to crash_reason_item
-Changes in V3: Updated commit message.
-Changes in V2: Addressed comments in V1.
+v2: https://lore.kernel.org/r/20231118042730.2799-1-quic_c_gdjako@quicinc.com
+- Improve DT binding description, add full example. (Konrad)
+- Drop Qcom specific stuff from the generic binding. (Rob)
+- Unconditionally try to populate subnodes. (Konrad)
+- Improve TBU driver commit text, remove memory barriers. (Bjorn)
+- Move TBU stuff into separate file. Make the driver builtin.
+- TODO: Evaluate whether to keep TBU support as a separate driver
+  or just instantiate things from qcom_smmu_impl_init()
 
-This patch depends on [1] which adds support for IPQ9574 and IPQ5332
-remoteproc q5v5_mpd driver.
+v1: https://lore.kernel.org/r/20231019021923.13939-1-quic_c_gdjako@quicinc.com
 
-[1]: https://lore.kernel.org/all/20231110091939.3025413-1-quic_mmanikan@quicinc.com/
+Georgi Djakov (9):
+  dt-bindings: iommu: Add Translation Buffer Unit bindings
+  iommu/arm-smmu-qcom: Add support for TBUs
+  iommu/arm-smmu-qcom-tbu: Add Qualcomm TBU driver
+  iommu/arm-smmu: Allow using a threaded handler for context interrupts
+  iommu/arm-smmu-qcom: Use a custom context fault handler for sdm845
+  arm64: dts: qcom: sdm845: Add DT nodes for the TBUs
+  dt-bindings: arm-smmu: Add TBU support for sc7280
+  iommu/arm-smmu-qcom: Use the custom fault handler on more platforms
+  arm64: dts: qcom: sc7280: Add DT nodes for the TBUs
 
- drivers/remoteproc/qcom_q6v5.c      | 10 +++--
- drivers/remoteproc/qcom_q6v5.h      |  6 ++-
- drivers/remoteproc/qcom_q6v5_adsp.c | 17 +++++----
- drivers/remoteproc/qcom_q6v5_mpd.c  | 13 ++++---
- drivers/remoteproc/qcom_q6v5_mss.c  |  5 ++-
- drivers/remoteproc/qcom_q6v5_pas.c  | 59 +++++++++++++++--------------
- drivers/remoteproc/qcom_q6v5_wcss.c | 12 +++---
- 7 files changed, 66 insertions(+), 56 deletions(-)
-
-diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
-index 0e32f13c196d..e4a28bf25130 100644
---- a/drivers/remoteproc/qcom_q6v5.c
-+++ b/drivers/remoteproc/qcom_q6v5.c
-@@ -100,7 +100,7 @@ static irqreturn_t q6v5_wdog_interrupt(int irq, void *data)
- 		return IRQ_HANDLED;
- 	}
- 
--	msg = qcom_smem_get(QCOM_SMEM_HOST_ANY, q6v5->crash_reason, &len);
-+	msg = qcom_smem_get(q6v5->crash_reason_partition, q6v5->crash_reason_item, &len);
- 	if (!IS_ERR(msg) && len > 0 && msg[0])
- 		dev_err(q6v5->dev, "watchdog received: %s\n", msg);
- 	else
-@@ -121,7 +121,7 @@ irqreturn_t q6v5_fatal_interrupt(int irq, void *data)
- 	if (!q6v5->running)
- 		return IRQ_HANDLED;
- 
--	msg = qcom_smem_get(QCOM_SMEM_HOST_ANY, q6v5->crash_reason, &len);
-+	msg = qcom_smem_get(q6v5->crash_reason_partition, q6v5->crash_reason_item, &len);
- 	if (!IS_ERR(msg) && len > 0 && msg[0])
- 		dev_err(q6v5->dev, "fatal error received: %s\n", msg);
- 	else
-@@ -279,14 +279,16 @@ EXPORT_SYMBOL_GPL(qcom_q6v5_panic);
-  * Return: 0 on success, negative errno on failure
-  */
- int qcom_q6v5_init(struct qcom_q6v5 *q6v5, struct platform_device *pdev,
--		   struct rproc *rproc, int crash_reason, const char *load_state,
-+		   struct rproc *rproc, int crash_reason_partition,
-+		   int crash_reason_item, const char *load_state,
- 		   void (*handover)(struct qcom_q6v5 *q6v5))
- {
- 	int ret;
- 
- 	q6v5->rproc = rproc;
- 	q6v5->dev = &pdev->dev;
--	q6v5->crash_reason = crash_reason;
-+	q6v5->crash_reason_partition = crash_reason_partition;
-+	q6v5->crash_reason_item = crash_reason_item;
- 	q6v5->handover = handover;
- 
- 	init_completion(&q6v5->start_done);
-diff --git a/drivers/remoteproc/qcom_q6v5.h b/drivers/remoteproc/qcom_q6v5.h
-index 4e1bb1a68284..cd02372e9856 100644
---- a/drivers/remoteproc/qcom_q6v5.h
-+++ b/drivers/remoteproc/qcom_q6v5.h
-@@ -40,7 +40,8 @@ struct qcom_q6v5 {
- 	struct completion stop_done;
- 	struct completion spawn_done;
- 
--	int crash_reason;
-+	int crash_reason_partition;
-+	int crash_reason_item;
- 
- 	bool running;
- 
-@@ -49,7 +50,8 @@ struct qcom_q6v5 {
- };
- 
- int qcom_q6v5_init(struct qcom_q6v5 *q6v5, struct platform_device *pdev,
--		   struct rproc *rproc, int crash_reason, const char *load_state,
-+		   struct rproc *rproc, int crash_reason_partition,
-+		   int crash_reason_item, const char *load_state,
- 		   void (*handover)(struct qcom_q6v5 *q6v5));
- void qcom_q6v5_deinit(struct qcom_q6v5 *q6v5);
- 
-diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-index 6c67514cc493..055764aa201c 100644
---- a/drivers/remoteproc/qcom_q6v5_adsp.c
-+++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-@@ -62,7 +62,7 @@
- #define LPASS_EFUSE_Q6SS_EVB_SEL 0x0
- 
- struct adsp_pil_data {
--	int crash_reason_smem;
-+	int crash_reason_item;
- 	const char *firmware_name;
- 
- 	const char *ssr_name;
-@@ -98,7 +98,7 @@ struct qcom_adsp {
- 	struct regmap *halt_map;
- 	unsigned int halt_lpass;
- 
--	int crash_reason_smem;
-+	int crash_reason_item;
- 	const char *info_name;
- 
- 	struct completion start_done;
-@@ -731,8 +731,9 @@ static int adsp_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto disable_pm;
- 
--	ret = qcom_q6v5_init(&adsp->q6v5, pdev, rproc, desc->crash_reason_smem,
--			     desc->load_state, qcom_adsp_pil_handover);
-+	ret = qcom_q6v5_init(&adsp->q6v5, pdev, rproc, QCOM_SMEM_HOST_ANY,
-+			     desc->crash_reason_item, desc->load_state,
-+			     qcom_adsp_pil_handover);
- 	if (ret)
- 		goto disable_pm;
- 
-@@ -776,7 +777,7 @@ static void adsp_remove(struct platform_device *pdev)
- }
- 
- static const struct adsp_pil_data adsp_resource_init = {
--	.crash_reason_smem = 423,
-+	.crash_reason_item = 423,
- 	.firmware_name = "adsp.mdt",
- 	.ssr_name = "lpass",
- 	.sysmon_name = "adsp",
-@@ -794,7 +795,7 @@ static const struct adsp_pil_data adsp_resource_init = {
- };
- 
- static const struct adsp_pil_data adsp_sc7280_resource_init = {
--	.crash_reason_smem = 423,
-+	.crash_reason_item = 423,
- 	.firmware_name = "adsp.pbn",
- 	.load_state = "adsp",
- 	.ssr_name = "lpass",
-@@ -809,7 +810,7 @@ static const struct adsp_pil_data adsp_sc7280_resource_init = {
- };
- 
- static const struct adsp_pil_data cdsp_resource_init = {
--	.crash_reason_smem = 601,
-+	.crash_reason_item = 601,
- 	.firmware_name = "cdsp.mdt",
- 	.ssr_name = "cdsp",
- 	.sysmon_name = "cdsp",
-@@ -827,7 +828,7 @@ static const struct adsp_pil_data cdsp_resource_init = {
- };
- 
- static const struct adsp_pil_data wpss_resource_init = {
--	.crash_reason_smem = 626,
-+	.crash_reason_item = 626,
- 	.firmware_name = "wpss.mdt",
- 	.ssr_name = "wpss",
- 	.sysmon_name = "wpss",
-diff --git a/drivers/remoteproc/qcom_q6v5_mpd.c b/drivers/remoteproc/qcom_q6v5_mpd.c
-index b133285888c7..27c9f4317e98 100644
---- a/drivers/remoteproc/qcom_q6v5_mpd.c
-+++ b/drivers/remoteproc/qcom_q6v5_mpd.c
-@@ -555,9 +555,9 @@ static int q6_get_outbound_irq(struct qcom_q6v5 *q6,
- 	return 0;
- }
- 
--static int init_irq(struct qcom_q6v5 *q6,
--		    struct platform_device *pdev, struct rproc *rproc,
--		    int crash_reason, const char *load_state,
-+static int init_irq(struct qcom_q6v5 *q6, struct platform_device *pdev,
-+		    struct rproc *rproc, int crash_reason_partition,
-+		    int crash_reason_item, const char *load_state,
- 		    void (*handover)(struct qcom_q6v5 *q6))
- {
- 	int ret;
-@@ -565,7 +565,8 @@ static int init_irq(struct qcom_q6v5 *q6,
- 
- 	q6->rproc = rproc;
- 	q6->dev = &pdev->dev;
--	q6->crash_reason = crash_reason;
-+	q6->crash_reason_partition = crash_reason_partition;
-+	q6->crash_reason_item = crash_reason_item;
- 	q6->handover = handover;
- 
- 	init_completion(&q6->start_done);
-@@ -666,7 +667,7 @@ static int q6_register_userpd(struct platform_device *pdev,
- 	if (ret)
- 		goto free_rproc;
- 
--	ret = init_irq(&wcss->q6, userpd_pdev, rproc,
-+	ret = init_irq(&wcss->q6, userpd_pdev, rproc, WCSS_SMEM_HOST,
- 		       WCSS_CRASH_REASON, NULL, NULL);
- 	if (ret)
- 		goto free_rproc;
-@@ -725,7 +726,7 @@ static int q6_wcss_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto free_rproc;
- 
--	ret = qcom_q6v5_init(&wcss->q6, pdev, rproc,
-+	ret = qcom_q6v5_init(&wcss->q6, pdev, rproc, WCSS_SMEM_HOST,
- 			     WCSS_CRASH_REASON, NULL, NULL);
- 	if (ret)
- 		goto free_rproc;
-diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-index 394b2c1cb5e2..48f115f9337b 100644
---- a/drivers/remoteproc/qcom_q6v5_mss.c
-+++ b/drivers/remoteproc/qcom_q6v5_mss.c
-@@ -26,6 +26,7 @@
- #include <linux/remoteproc.h>
- #include <linux/reset.h>
- #include <linux/soc/qcom/mdt_loader.h>
-+#include <linux/soc/qcom/smem.h>
- #include <linux/iopoll.h>
- #include <linux/slab.h>
- 
-@@ -2093,8 +2094,8 @@ static int q6v5_probe(struct platform_device *pdev)
- 	qproc->need_mem_protection = desc->need_mem_protection;
- 	qproc->has_mba_logs = desc->has_mba_logs;
- 
--	ret = qcom_q6v5_init(&qproc->q6v5, pdev, rproc, MPSS_CRASH_REASON_SMEM, "modem",
--			     qcom_msa_handover);
-+	ret = qcom_q6v5_init(&qproc->q6v5, pdev, rproc, QCOM_SMEM_HOST_ANY,
-+			     MPSS_CRASH_REASON_SMEM, "modem", qcom_msa_handover);
- 	if (ret)
- 		goto detach_proxy_pds;
- 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 913a5d2068e8..daca648d4ddb 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -34,7 +34,7 @@
- #define ADSP_DECRYPT_SHUTDOWN_DELAY_MS	100
- 
- struct adsp_data {
--	int crash_reason_smem;
-+	int crash_reason_item;
- 	const char *firmware_name;
- 	const char *dtb_firmware_name;
- 	int pas_id;
-@@ -73,7 +73,7 @@ struct qcom_adsp {
- 	int pas_id;
- 	int dtb_pas_id;
- 	unsigned int minidump_id;
--	int crash_reason_smem;
-+	int crash_reason_item;
- 	bool decrypt_shutdown;
- 	const char *info_name;
- 
-@@ -728,7 +728,8 @@ static int adsp_probe(struct platform_device *pdev)
- 		goto free_rproc;
- 	adsp->proxy_pd_count = ret;
- 
--	ret = qcom_q6v5_init(&adsp->q6v5, pdev, rproc, desc->crash_reason_smem, desc->load_state,
-+	ret = qcom_q6v5_init(&adsp->q6v5, pdev, rproc, QCOM_SMEM_HOST_ANY,
-+			     desc->crash_reason_item, desc->load_state,
- 			     qcom_pas_handover);
- 	if (ret)
- 		goto detach_proxy_pds;
-@@ -777,7 +778,7 @@ static void adsp_remove(struct platform_device *pdev)
- }
- 
- static const struct adsp_data adsp_resource_init = {
--		.crash_reason_smem = 423,
-+		.crash_reason_item = 423,
- 		.firmware_name = "adsp.mdt",
- 		.pas_id = 1,
- 		.auto_boot = true,
-@@ -787,7 +788,7 @@ static const struct adsp_data adsp_resource_init = {
- };
- 
- static const struct adsp_data sdm845_adsp_resource_init = {
--		.crash_reason_smem = 423,
-+		.crash_reason_item = 423,
- 		.firmware_name = "adsp.mdt",
- 		.pas_id = 1,
- 		.auto_boot = true,
-@@ -798,7 +799,7 @@ static const struct adsp_data sdm845_adsp_resource_init = {
- };
- 
- static const struct adsp_data sm6350_adsp_resource = {
--	.crash_reason_smem = 423,
-+	.crash_reason_item = 423,
- 	.firmware_name = "adsp.mdt",
- 	.pas_id = 1,
- 	.auto_boot = true,
-@@ -814,7 +815,7 @@ static const struct adsp_data sm6350_adsp_resource = {
- };
- 
- static const struct adsp_data sm6375_mpss_resource = {
--	.crash_reason_smem = 421,
-+	.crash_reason_item = 421,
- 	.firmware_name = "modem.mdt",
- 	.pas_id = 4,
- 	.minidump_id = 3,
-@@ -829,7 +830,7 @@ static const struct adsp_data sm6375_mpss_resource = {
- };
- 
- static const struct adsp_data sm8150_adsp_resource = {
--		.crash_reason_smem = 423,
-+		.crash_reason_item = 423,
- 		.firmware_name = "adsp.mdt",
- 		.pas_id = 1,
- 		.auto_boot = true,
-@@ -844,7 +845,7 @@ static const struct adsp_data sm8150_adsp_resource = {
- };
- 
- static const struct adsp_data sm8250_adsp_resource = {
--	.crash_reason_smem = 423,
-+	.crash_reason_item = 423,
- 	.firmware_name = "adsp.mdt",
- 	.pas_id = 1,
- 	.auto_boot = true,
-@@ -860,7 +861,7 @@ static const struct adsp_data sm8250_adsp_resource = {
- };
- 
- static const struct adsp_data sm8350_adsp_resource = {
--	.crash_reason_smem = 423,
-+	.crash_reason_item = 423,
- 	.firmware_name = "adsp.mdt",
- 	.pas_id = 1,
- 	.auto_boot = true,
-@@ -876,7 +877,7 @@ static const struct adsp_data sm8350_adsp_resource = {
- };
- 
- static const struct adsp_data msm8996_adsp_resource = {
--		.crash_reason_smem = 423,
-+		.crash_reason_item = 423,
- 		.firmware_name = "adsp.mdt",
- 		.pas_id = 1,
- 		.auto_boot = true,
-@@ -890,7 +891,7 @@ static const struct adsp_data msm8996_adsp_resource = {
- };
- 
- static const struct adsp_data cdsp_resource_init = {
--	.crash_reason_smem = 601,
-+	.crash_reason_item = 601,
- 	.firmware_name = "cdsp.mdt",
- 	.pas_id = 18,
- 	.auto_boot = true,
-@@ -900,7 +901,7 @@ static const struct adsp_data cdsp_resource_init = {
- };
- 
- static const struct adsp_data sdm845_cdsp_resource_init = {
--	.crash_reason_smem = 601,
-+	.crash_reason_item = 601,
- 	.firmware_name = "cdsp.mdt",
- 	.pas_id = 18,
- 	.auto_boot = true,
-@@ -911,7 +912,7 @@ static const struct adsp_data sdm845_cdsp_resource_init = {
- };
- 
- static const struct adsp_data sm6350_cdsp_resource = {
--	.crash_reason_smem = 601,
-+	.crash_reason_item = 601,
- 	.firmware_name = "cdsp.mdt",
- 	.pas_id = 18,
- 	.auto_boot = true,
-@@ -927,7 +928,7 @@ static const struct adsp_data sm6350_cdsp_resource = {
- };
- 
- static const struct adsp_data sm8150_cdsp_resource = {
--	.crash_reason_smem = 601,
-+	.crash_reason_item = 601,
- 	.firmware_name = "cdsp.mdt",
- 	.pas_id = 18,
- 	.auto_boot = true,
-@@ -942,7 +943,7 @@ static const struct adsp_data sm8150_cdsp_resource = {
- };
- 
- static const struct adsp_data sm8250_cdsp_resource = {
--	.crash_reason_smem = 601,
-+	.crash_reason_item = 601,
- 	.firmware_name = "cdsp.mdt",
- 	.pas_id = 18,
- 	.auto_boot = true,
-@@ -957,7 +958,7 @@ static const struct adsp_data sm8250_cdsp_resource = {
- };
- 
- static const struct adsp_data sc8280xp_nsp0_resource = {
--	.crash_reason_smem = 601,
-+	.crash_reason_item = 601,
- 	.firmware_name = "cdsp.mdt",
- 	.pas_id = 18,
- 	.auto_boot = true,
-@@ -971,7 +972,7 @@ static const struct adsp_data sc8280xp_nsp0_resource = {
- };
- 
- static const struct adsp_data sc8280xp_nsp1_resource = {
--	.crash_reason_smem = 633,
-+	.crash_reason_item = 633,
- 	.firmware_name = "cdsp.mdt",
- 	.pas_id = 30,
- 	.auto_boot = true,
-@@ -985,7 +986,7 @@ static const struct adsp_data sc8280xp_nsp1_resource = {
- };
- 
- static const struct adsp_data sm8350_cdsp_resource = {
--	.crash_reason_smem = 601,
-+	.crash_reason_item = 601,
- 	.firmware_name = "cdsp.mdt",
- 	.pas_id = 18,
- 	.auto_boot = true,
-@@ -1001,7 +1002,7 @@ static const struct adsp_data sm8350_cdsp_resource = {
- };
- 
- static const struct adsp_data mpss_resource_init = {
--	.crash_reason_smem = 421,
-+	.crash_reason_item = 421,
- 	.firmware_name = "modem.mdt",
- 	.pas_id = 4,
- 	.minidump_id = 3,
-@@ -1018,7 +1019,7 @@ static const struct adsp_data mpss_resource_init = {
- };
- 
- static const struct adsp_data sc8180x_mpss_resource = {
--	.crash_reason_smem = 421,
-+	.crash_reason_item = 421,
- 	.firmware_name = "modem.mdt",
- 	.pas_id = 4,
- 	.auto_boot = false,
-@@ -1033,7 +1034,7 @@ static const struct adsp_data sc8180x_mpss_resource = {
- };
- 
- static const struct adsp_data msm8996_slpi_resource_init = {
--		.crash_reason_smem = 424,
-+		.crash_reason_item = 424,
- 		.firmware_name = "slpi.mdt",
- 		.pas_id = 12,
- 		.auto_boot = true,
-@@ -1047,7 +1048,7 @@ static const struct adsp_data msm8996_slpi_resource_init = {
- };
- 
- static const struct adsp_data sdm845_slpi_resource_init = {
--		.crash_reason_smem = 424,
-+		.crash_reason_item = 424,
- 		.firmware_name = "slpi.mdt",
- 		.pas_id = 12,
- 		.auto_boot = true,
-@@ -1063,7 +1064,7 @@ static const struct adsp_data sdm845_slpi_resource_init = {
- };
- 
- static const struct adsp_data wcss_resource_init = {
--	.crash_reason_smem = 421,
-+	.crash_reason_item = 421,
- 	.firmware_name = "wcnss.mdt",
- 	.pas_id = 6,
- 	.auto_boot = true,
-@@ -1073,7 +1074,7 @@ static const struct adsp_data wcss_resource_init = {
- };
- 
- static const struct adsp_data sdx55_mpss_resource = {
--	.crash_reason_smem = 421,
-+	.crash_reason_item = 421,
- 	.firmware_name = "modem.mdt",
- 	.pas_id = 4,
- 	.auto_boot = true,
-@@ -1088,7 +1089,7 @@ static const struct adsp_data sdx55_mpss_resource = {
- };
- 
- static const struct adsp_data sm8450_mpss_resource = {
--	.crash_reason_smem = 421,
-+	.crash_reason_item = 421,
- 	.firmware_name = "modem.mdt",
- 	.pas_id = 4,
- 	.minidump_id = 3,
-@@ -1106,7 +1107,7 @@ static const struct adsp_data sm8450_mpss_resource = {
- };
- 
- static const struct adsp_data sm8550_adsp_resource = {
--	.crash_reason_smem = 423,
-+	.crash_reason_item = 423,
- 	.firmware_name = "adsp.mdt",
- 	.dtb_firmware_name = "adsp_dtb.mdt",
- 	.pas_id = 1,
-@@ -1125,7 +1126,7 @@ static const struct adsp_data sm8550_adsp_resource = {
- };
- 
- static const struct adsp_data sm8550_cdsp_resource = {
--	.crash_reason_smem = 601,
-+	.crash_reason_item = 601,
- 	.firmware_name = "cdsp.mdt",
- 	.dtb_firmware_name = "cdsp_dtb.mdt",
- 	.pas_id = 18,
-@@ -1145,7 +1146,7 @@ static const struct adsp_data sm8550_cdsp_resource = {
- };
- 
- static const struct adsp_data sm8550_mpss_resource = {
--	.crash_reason_smem = 421,
-+	.crash_reason_item = 421,
- 	.firmware_name = "modem.mdt",
- 	.dtb_firmware_name = "modem_dtb.mdt",
- 	.pas_id = 4,
-diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
-index cff1fa07d1de..f6b6ec10d21b 100644
---- a/drivers/remoteproc/qcom_q6v5_wcss.c
-+++ b/drivers/remoteproc/qcom_q6v5_wcss.c
-@@ -18,6 +18,7 @@
- #include <linux/regulator/consumer.h>
- #include <linux/reset.h>
- #include <linux/soc/qcom/mdt_loader.h>
-+#include <linux/soc/qcom/smem.h>
- #include "qcom_common.h"
- #include "qcom_pil_info.h"
- #include "qcom_q6v5.h"
-@@ -93,7 +94,7 @@ enum {
- 
- struct wcss_data {
- 	const char *firmware_name;
--	unsigned int crash_reason_smem;
-+	unsigned int crash_reason_item;
- 	u32 version;
- 	bool aon_reset_required;
- 	bool wcss_q6_reset_required;
-@@ -143,7 +144,7 @@ struct q6v5_wcss {
- 	void *mem_region;
- 	size_t mem_size;
- 
--	unsigned int crash_reason_smem;
-+	unsigned int crash_reason_item;
- 	u32 version;
- 	bool requires_force_stop;
- 
-@@ -1047,7 +1048,8 @@ static int q6v5_wcss_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto free_rproc;
- 
--	ret = qcom_q6v5_init(&wcss->q6v5, pdev, rproc, desc->crash_reason_smem, NULL, NULL);
-+	ret = qcom_q6v5_init(&wcss->q6v5, pdev, rproc, QCOM_SMEM_HOST_ANY,
-+			     desc->crash_reason_item, NULL, NULL);
- 	if (ret)
- 		goto free_rproc;
- 
-@@ -1085,7 +1087,7 @@ static void q6v5_wcss_remove(struct platform_device *pdev)
- 
- static const struct wcss_data wcss_ipq8074_res_init = {
- 	.firmware_name = "IPQ8074/q6_fw.mdt",
--	.crash_reason_smem = WCSS_CRASH_REASON,
-+	.crash_reason_item = WCSS_CRASH_REASON,
- 	.aon_reset_required = true,
- 	.wcss_q6_reset_required = true,
- 	.ops = &q6v5_wcss_ipq8074_ops,
-@@ -1093,7 +1095,7 @@ static const struct wcss_data wcss_ipq8074_res_init = {
- };
- 
- static const struct wcss_data wcss_qcs404_res_init = {
--	.crash_reason_smem = WCSS_CRASH_REASON,
-+	.crash_reason_item = WCSS_CRASH_REASON,
- 	.firmware_name = "wcnss.mdt",
- 	.version = WCSS_QCS404,
- 	.aon_reset_required = false,
--- 
-2.41.0
+ .../devicetree/bindings/iommu/arm,smmu.yaml   |  33 ++
+ .../bindings/iommu/qcom,qsmmuv500-tbu.yaml    |  77 +++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          |  97 ++++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  74 +++
+ drivers/iommu/Kconfig                         |   8 +
+ drivers/iommu/arm/arm-smmu/Makefile           |   1 +
+ .../iommu/arm/arm-smmu/arm-smmu-qcom-tbu.c    | 504 ++++++++++++++++++
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c    |  17 +
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h    |   6 +-
+ drivers/iommu/arm/arm-smmu/arm-smmu.c         |  12 +-
+ drivers/iommu/arm/arm-smmu/arm-smmu.h         |   3 +
+ 11 files changed, 829 insertions(+), 3 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/iommu/qcom,qsmmuv500-tbu.yaml
+ create mode 100644 drivers/iommu/arm/arm-smmu/arm-smmu-qcom-tbu.c
 
 
