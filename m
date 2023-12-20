@@ -1,132 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-5578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 101A9819EC6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 13:14:17 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 642F5819ED1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 13:15:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 435B51C2263E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 12:14:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E6E85B22602
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 12:15:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06B3B2232F;
-	Wed, 20 Dec 2023 12:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 288FB22099;
+	Wed, 20 Dec 2023 12:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uyCVgjr9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qIi/XXFd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63800249F3
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 12:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B092322305
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 12:15:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5533ca9cc00so5138685a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 04:12:52 -0800 (PST)
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-5cece20f006so48391027b3.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 04:15:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703074370; x=1703679170; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TkuVnycLAd3dPo8nxlfmOyyJIMjGardOAKjbz5Oomy4=;
-        b=uyCVgjr9wI5wY8Iq57Y89P6vlZN2wpwvQI0axNd+Qzw5ecLHoSpmvJQ0Dx/iG9R8Tu
-         wQcismW3G7qWR464wkpoplTtPuqVVzPNiJXTsXfBnQfRmzhm0TdcFJsVCeobC1M4CcCP
-         4Hv0uKm5iLaHPwP2y0vTDfTbrqtXF/D49Ml+y64v0J+3FpvrdpW1iSAOr9B5zR/0wGSH
-         oO7bxHpXHUS7rou71iFfCICM2X8SUKzvtBOKkDb3GwtaSFEt/u5Rc0eqXNx1tMkT3OAm
-         lvr8ZFXqembJ0bncdu+lM5ORFShw+JkUChYdy0ITDob5jFp/mNm8qmya3lOxzZP9baZx
-         egDg==
+        d=linaro.org; s=google; t=1703074502; x=1703679302; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=4l13RPlxCLnLNVbhTc+jLScyAeZTluA6d9ppZm+Uhxc=;
+        b=qIi/XXFdkAD3GqAkXy+JKS0zJy0DTo1fHCZhGVvBlytvltaFKW88vYh297mpylO1R0
+         zTjahT9NnWM4DvvDrblLrFuLgOibSiSnUJWwPJJI1cvaLdYemklq6YqK99yaTnZsM79X
+         yrMuU/fVNC8yxKZEy3AG4Hm5sD24oxymxDj08OgI91K876Ig9+p67XGKmHdYkKeNw0R6
+         Y8O+22HDfRnHkmt9RdtEEgEhondR27tMnNd2IWygaUNHL0mtVyVZyQKhZOtLO0eanOtM
+         NaqUF61AiHzQFomxUeDUDF4F5Ax87yvQyEzSiKTIC4oQduambYCdLq9mzyOgqWJMSD45
+         rCXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703074370; x=1703679170;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TkuVnycLAd3dPo8nxlfmOyyJIMjGardOAKjbz5Oomy4=;
-        b=PShlevDUuZn7MGh3Rvor5Pibr8fpjLT2wOHJP70J7el5bZ6yLg74SeRhm8grdEceUR
-         EH2iopZ8rpmU42IEf0CLlHs71FiVZ9DwKE85O+xI0dV+8WTLRyzR0EnCxhTNn3SS8KtI
-         3XnVecgLqDGcdweIBddxjDkr/tiznYWBYDIYw+pKEddew7KPmrGMuQrGnjgmflj9yd+m
-         rDnEqLRCdu6ieJbkAeE1zjZdCn8ZYiqFQ+3laqrlk5GgQOCojULaH0+Q5QR0FIhKD3VB
-         vDqhPjUiFHI5WpjlCTjq0I5q9U/8PWQwXtBC4oJ9vCycHaF4y3ts6hcjzVLRtFOiSJ4U
-         CCCQ==
-X-Gm-Message-State: AOJu0YyZC+TdHPhjmZhmaRC41eyrIJvoJjUezis8Y541jtJex/gQB/nU
-	TZ+t6TcNrjW9fHQkHLPRVbcrcA==
-X-Google-Smtp-Source: AGHT+IHcue1eZkGoCrMSvU3vrgdanlUZom0+Te4w5f7HnhBLMKnKKc8kwCXkcK7/+1LsdkuOjm/RrQ==
-X-Received: by 2002:a50:bb28:0:b0:552:e43d:cc7c with SMTP id y37-20020a50bb28000000b00552e43dcc7cmr4990888ede.16.1703074370619;
-        Wed, 20 Dec 2023 04:12:50 -0800 (PST)
-Received: from [192.168.199.59] (178235179206.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.206])
-        by smtp.gmail.com with ESMTPSA id u30-20020a50951e000000b0054ca7afdf35sm13276303eda.86.2023.12.20.04.12.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Dec 2023 04:12:50 -0800 (PST)
-Message-ID: <8d467665-eba8-4c60-9536-fc1fe5760a6e@linaro.org>
-Date: Wed, 20 Dec 2023 13:12:49 +0100
+        d=1e100.net; s=20230601; t=1703074502; x=1703679302;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4l13RPlxCLnLNVbhTc+jLScyAeZTluA6d9ppZm+Uhxc=;
+        b=gAI4UWBmSgJaeTUVS/0SusiCrhJDJRUlcLwnxl7XFQRAsJNkp8FJlq1WVs8aPDDHnl
+         JZU8kQsocScjC2H3MR1vWj4Vou62w48enqpAqMVg+JSoF97f1WmxTHGg3a2GCbVVw7KD
+         F8JRUGlKoGGbaL/eVwemfk4Lw1z/sHEcfAZ63PczJg+2rD+MSboZh6IR6V1JEHfXMGHl
+         D/YS3yYcQF/bWrTJkiWeNaB68ILOZFhWQ1SnuzWB4OcGr+lfs1yKDYJI7B/gg/GlC2FW
+         hk/HG8wDPOSrv4HfpU3Xvc1jsuP6xFsae8SDHAlifWuB9q1COkZBiaro0rdCRu+vjN3D
+         euqQ==
+X-Gm-Message-State: AOJu0Yx8y5+XSp311yAnuXyqMZrYxibGM+kTh88IsO7TX97iGxBb9fpB
+	FAn2d8rlwRaNWG8mNHsdYr5RVkvs/G7gw5qs8nCODA==
+X-Google-Smtp-Source: AGHT+IGzUyozpGOgpDC3PUOwiEMpuZ391fjn7HsJrYV50IQBf6uXJrs7BXMSSj3PZR1gf7dG5KejP3c6KEIiiSOeots=
+X-Received: by 2002:a0d:c703:0:b0:5d7:1940:f3f0 with SMTP id
+ j3-20020a0dc703000000b005d71940f3f0mr16148316ywd.88.1703074501713; Wed, 20
+ Dec 2023 04:15:01 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: qcs6490-rb3gen2: Correct the
- voltage setting for vph_pwr
-Content-Language: en-US
-To: Komal Bajaj <quic_kbajaj@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Caleb Connolly <caleb.connolly@linaro.org>,
- Naina Mehta <quic_nainmeht@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20231220110015.25378-1-quic_kbajaj@quicinc.com>
- <20231220110015.25378-3-quic_kbajaj@quicinc.com>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20231220110015.25378-3-quic_kbajaj@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20231220114225.26567-1-quic_kbajaj@quicinc.com> <20231220114225.26567-3-quic_kbajaj@quicinc.com>
+In-Reply-To: <20231220114225.26567-3-quic_kbajaj@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 20 Dec 2023 14:14:50 +0200
+Message-ID: <CAA8EJpohwgyoRPq_gWKz+cYipsqvFgLdi=X=acL4AJhhU6Erxw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: qcs6490-rb3gen2: Enable various remoteprocs
+To: Komal Bajaj <quic_kbajaj@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 20.12.2023 12:00, Komal Bajaj wrote:
-> Min and max voltages for vph_pwr should be same, otherwise rpmh
-> will not probe, so correcting the min and max voltages for vph_pwr.
-> 
-> Fixes: 04cf333afc75 ("arm64: dts: qcom: Add base qcs6490-rb3gen2 board dts")
+On Wed, 20 Dec 2023 at 13:43, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
+>
+> Enable the ADSP, CDSP and WPSS that are found on qcs6490-rb3gen2.
+>
 > Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> index 8bb7d13d85f6..172f9a3678fd 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> @@ -417,6 +417,21 @@ &qupv3_id_0 {
+>         status = "okay";
+>  };
+>
+> +&remoteproc_adsp {
+> +       firmware-name = "qcom/qcm6490/adsp.mdt";
 
-Konrad
+NAK. this should be .mbn
+
+> +       status = "okay";
+> +};
+> +
+> +&remoteproc_cdsp {
+> +       firmware-name = "qcom/qcm6490/cdsp.mdt";
+> +       status = "okay";
+> +};
+> +
+> +&remoteproc_wpss {
+> +       firmware-name = "qcom/qcm6490/wpss.mdt";
+> +       status = "okay";
+> +};
+> +
+>  &tlmm {
+>         gpio-reserved-ranges = <32 2>, /* ADSP */
+>                                <48 4>; /* NFC */
+> --
+> 2.42.0
+>
+>
+
+
+-- 
+With best wishes
+Dmitry
 
