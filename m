@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-5486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2FC28195B9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 01:38:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 095628195BB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 01:39:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2CFB41F2636F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 00:38:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B3C451F26686
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 00:39:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B997B4A09;
-	Wed, 20 Dec 2023 00:35:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82F631F5E4;
+	Wed, 20 Dec 2023 00:35:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lOO0MUEX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bp1jzAxx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AAA71D6B1
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 00:35:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6031F5F3
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 00:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-5537dd673e5so2070416a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 16:35:31 -0800 (PST)
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-55372c1338bso3123194a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 16:35:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703032529; x=1703637329; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1703032539; x=1703637339; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=B74xsMZ1QFrhSWbE5AzBxVFYpGXrDjD0MNZCrJsiQHw=;
-        b=lOO0MUEXmDecETnWaxgFacyoEdookL2FCj+IxDGxw/pOaT0QKIReE5Jbv7KIKfT3dP
-         Oh1MCrvXPCQBpBhwCkHMnK+nr1XXbYWIgmJlLnk1SCOc9Qtq05pYo9sxdDnZohdUZFRb
-         HaitVQ0r1S2lwbgMrjFKM0t5Y93t5sVnk6cQ+X0++UteTqdcVC43LjRJTiIQ8TUm+SiP
-         qjFoegBddiLsDbvAjtdZXajoXQkPhdBBg47u8gDzrBw0iv8k1VPhASbBMo7/ZbOGo0ZX
-         VaGx9JMSsujkvybEbZ11Tc/hKMeLwmRi73Qc13vttolnWaye4/XV9yLSziK4c33sdOrx
-         V+GQ==
+        bh=U7b2vV5Hcc+N/XtSyKz0mUM9B/fwtPZiJUABzFzOhwU=;
+        b=bp1jzAxxoyOnet2+DVATdb0F33FC+kKXNw36JNi9YS2fSvt+YFDA0taPqeGd4agCs1
+         vaMJeYQK+qvsHcHViDqk5TjYi7DRnSN+3RtouVjmtGta6+sYB1RbOkQ5fh4zYM5ijg/8
+         q0tfSDLSrynWtSWPL++7GV5AogdPo9U3GbkRdE7KchMJrjIC50aFA35iV/KjfufXIRzv
+         ULNLbK4YvF9/DCoQaVFTfr5oJ08ggyOufBarRv7MCqxRwnBfbskj2KfbucE4wwUK96Lp
+         aMEbYCpQUnfY9Cp3t80cH3tCCAsZTILrw8hyPYDlysCMV0Om4tB7cbud/48DRSUVonjh
+         n2JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703032529; x=1703637329;
+        d=1e100.net; s=20230601; t=1703032539; x=1703637339;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=B74xsMZ1QFrhSWbE5AzBxVFYpGXrDjD0MNZCrJsiQHw=;
-        b=mb/g9SXBLQ/oxy45sprihIoUpOwI+wRVdcIh725dgoylHwP1dpm6qo477jP+/wXeyW
-         sp9uroZT96GQ03HEAbNBklRilJFxCJBUHnOTNRrMtKixaCtoggnBlhgI3a3pIkisAjd6
-         MNflSDSTKydq3DPrn4X3uPMrYYfKx8DQMRpp+jhes8umuPmCdkIIu5MBGZMWlIsTgrnD
-         FSAcwYqBeyeFvAR9hXMtbwehbeOxAOt7ZmPdlwJFihiKXvE7V+TiU13lfLIMzTnPKLjV
-         LHqcVNkDyuz4g23L7dqResirWAHexWIl+iH3Ze5Eghq9KOZljLfxW6PfOPZjaMBtA6kI
-         ICjg==
-X-Gm-Message-State: AOJu0Yzm4kV9Ldmf+exD35RejoAhMgbUn7pHed2qnyTogtrMPSBOANby
-	Pfw5cr/Yx1Nlmdsxo3pEFJzZISEl4KUdgLw2Vmc=
-X-Google-Smtp-Source: AGHT+IGATt1VL5NJHtkHtqeMjebPYeIZPP5CrNOsFR6tooUdUUY6VR1pjZw/lF0HdX3F4PUg3VfROw==
-X-Received: by 2002:aa7:c854:0:b0:54c:bd5b:b092 with SMTP id g20-20020aa7c854000000b0054cbd5bb092mr10686667edt.56.1703032529676;
-        Tue, 19 Dec 2023 16:35:29 -0800 (PST)
+        bh=U7b2vV5Hcc+N/XtSyKz0mUM9B/fwtPZiJUABzFzOhwU=;
+        b=EuqAydMKDv77yza8TbM3Bq0pTytWlvvOeUQp7dsSTfD9PhjmLpgnowBXa1AwDQ2bnz
+         2Xj10LMyRm8YDjplU/PMphdApdpfDU7b5w2hxvYrWqQ6tf/Fe7GW8FFHCMfx16nwDivh
+         lec2rzOmC3oTcjGgge3qHYOig3MizkV4QMtTfei36hDC+4yPxaWQmGfDQIWzDas5IVtD
+         /SvH0QOttXpj1qzoMy2vhATERBknchw3fyFkW6Td0DAhZdjVVXc4eX3ccjhp8RgJkgj3
+         jdmk0EN10MiN8oIWvmSDP3YYEhGGsNwBvk0rQRsuYbLwX5IWqB85f8xWdBabwue1wK6U
+         3wwQ==
+X-Gm-Message-State: AOJu0Yy90qfq39HXjpzerSIC+z25VYsLD4muvdPK7ns7ufCi1h6Enh5w
+	O7CVWSLrkq2jxgDvT7LQM5aWJw==
+X-Google-Smtp-Source: AGHT+IG0LQZHFO9VHnoix1AAXor3gxFjH7KcWoW5+yVEXbUca4M77gHQgbZfuMV/R/TtJsUT/6IiKg==
+X-Received: by 2002:a50:d0d6:0:b0:553:dc96:bc17 with SMTP id g22-20020a50d0d6000000b00553dc96bc17mr40187edf.59.1703032539328;
+        Tue, 19 Dec 2023 16:35:39 -0800 (PST)
 Received: from [192.168.199.59] (178235179206.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.206])
-        by smtp.gmail.com with ESMTPSA id cr7-20020a056402222700b0054ce9ef93fbsm12104379edb.4.2023.12.19.16.35.27
+        by smtp.gmail.com with ESMTPSA id cr7-20020a056402222700b0054ce9ef93fbsm12104379edb.4.2023.12.19.16.35.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Dec 2023 16:35:29 -0800 (PST)
-Message-ID: <e905c463-6f89-4939-981a-7a360ed31669@linaro.org>
-Date: Wed, 20 Dec 2023 01:35:27 +0100
+        Tue, 19 Dec 2023 16:35:38 -0800 (PST)
+Message-ID: <1641bd27-0c41-4132-9b53-40294a9f1054@linaro.org>
+Date: Wed, 20 Dec 2023 01:35:37 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,7 +66,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 14/16] arm64: dts: qcom: sc8280xp: Fix UFS PHY clocks
+Subject: Re: [PATCH v2 15/16] arm64: dts: qcom: sm8350: Fix UFS PHY clocks
 Content-Language: en-US
 To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
  andersson@kernel.org, vkoul@kernel.org, sboyd@kernel.org,
@@ -76,7 +76,7 @@ Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
  linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, quic_cang@quicinc.com
 References: <20231218120712.16438-1-manivannan.sadhasivam@linaro.org>
- <20231218120712.16438-15-manivannan.sadhasivam@linaro.org>
+ <20231218120712.16438-16-manivannan.sadhasivam@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -113,40 +113,24 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231218120712.16438-15-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20231218120712.16438-16-manivannan.sadhasivam@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 18.12.2023 13:07, Manivannan Sadhasivam wrote:
-> QMP PHY used in SC8280XP requires 3 clocks:
+> QMP PHY used in SM8350 requires 3 clocks:
 > 
 > * ref - 19.2MHz reference clock from RPMh
 > * ref_aux - Auxiliary reference clock from GCC
 > * qref - QREF clock from GCC
 > 
-> Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
+> While at it, let's move 'clocks' property before 'clock-names' to match
+> the style used commonly.
+> 
+> Fixes: 59c7cf814783 ("arm64: dts: qcom: sm8350: Add UFS nodes")
 > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 18 ++++++++++++------
->  1 file changed, 12 insertions(+), 6 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index cad59af7ccef..37344abbe8bf 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -2256,9 +2256,12 @@ ufs_mem_phy: phy@1d87000 {
->  			compatible = "qcom,sc8280xp-qmp-ufs-phy";
->  			reg = <0 0x01d87000 0 0x1000>;
->  
-> -			clocks = <&gcc GCC_UFS_CARD_CLKREF_CLK>,
-> -				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
-> -			clock-names = "ref", "ref_aux";
-> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
-> +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
-> +				 <&gcc GCC_UFS_CARD_CLKREF_CLK>;
-GCC_UFS_REF_CLKREF_CLK
-
-?
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
