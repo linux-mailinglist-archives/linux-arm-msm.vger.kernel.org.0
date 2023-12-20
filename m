@@ -1,105 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-5612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2571981A178
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 15:50:51 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id BCEC181A30D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 16:50:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D5775286B44
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 14:50:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 46A8A1F22B3F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 15:50:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D7FF3D971;
-	Wed, 20 Dec 2023 14:50:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2859F40BF2;
+	Wed, 20 Dec 2023 15:50:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z3nCfqbl"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DW8qqBvB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BFC33D96F;
-	Wed, 20 Dec 2023 14:50:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9D8C433C7;
-	Wed, 20 Dec 2023 14:50:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1703083848;
-	bh=RbnKwhHVCMmtzs/gnnNR6IeXwTlPNVrUWe2V3JfuahE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Z3nCfqbl6K1XjAuARXoTPBFJ4X57GygwJAsgp5Bhqh5TElE38LXeIuE3xiwom6FuV
-	 sj+Gks9N0DocsTEKOFN0cVX81Fw+LmZE2hSp61o93gh17Z5U35bJAaSxdpFqF02vG+
-	 mTU+I2qLqsUjjO0HsEaHEtJsxGeCWAaP5PDq9qHt2N2gnvBCjlHC08RgKQ5YBbqEIo
-	 vDpgk8VKOfm8jEYaWL1LTvPwzRS+YsuglKONF+ng0QclXwr8wPhOFuytfWhrlrSjYd
-	 RIFHJu8uTDCMkHuU7R3kSR/s9epcDw7Z9+QMQ+19oovFil/EYNtW71p7mEa/tWYKN/
-	 Eui6fDFNUu+Sg==
-Date: Wed, 20 Dec 2023 20:20:31 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Can Guo <quic_cang@quicinc.com>
-Cc: bvanassche@acm.org, adrian.hunter@intel.com, beanhuo@micron.com,
-	avri.altman@wdc.com, junwoo80.lee@samsung.com,
-	martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	Stanley Chu <stanley.chu@mediatek.com>,
-	Asutosh Das <quic_asutoshd@quicinc.com>,
-	Peter Wang <peter.wang@mediatek.com>,
-	"Bao D. Nguyen" <quic_nguyenb@quicinc.com>,
-	Arthur Simchaev <Arthur.Simchaev@wdc.com>,
-	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] scsi: ufs: core: Let the sq_lock protect sq_tail_slot
- access
-Message-ID: <20231220145031.GI3544@thinkpad>
-References: <1702913550-20631-1-git-send-email-quic_cang@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8684940BE8
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 15:50:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-33674f60184so1817146f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 07:50:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1703087407; x=1703692207; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WW1JG7tjDbMcqaXkDUX/m7k0skMs0TrgqA4/j39oQXs=;
+        b=DW8qqBvBXfkFgOZbQZ+Uk+hMewbgSEJyVC9xKrU3oEpt5sbQLJezDfrj1lWZQDW/nD
+         JZxjRro/N0jLeqTrJXRBaF5Sx5AIA0MSglHCmvyT2LXDXXf1WVOjfS9kd28xPWzPujuG
+         1rh7rifEp+p1xCltPRVd2gncxv7cNI2WVHbSp3aeFoYVNqmaLqX/Hy5By3B4g01f7L/N
+         M5eRhj7Nyied7aXAVQUR3DkGBXELX5VwZVUbpvkMGXxK9vkpdcIOKo8M7AbQVN+vqMUV
+         Sne84uxKKX4LbJUr/5f7AZlCNSr67uNP1NVi0PGHa35gmm9IOXB0L77Zh/jyYi6g5Mhz
+         mMjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703087407; x=1703692207;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WW1JG7tjDbMcqaXkDUX/m7k0skMs0TrgqA4/j39oQXs=;
+        b=CkJaS2aRJM2qmyv6itsZp/zvUyQZvyLoYGalf97DYFZCZedPksU5152XZIQBno1R/l
+         lLxbPHNWOZsYbPRJw5T2fAhZldstNhuXz3q6RLgmRZDQ1Wy+8nN+723MuIuYxyBCJSn/
+         gkNC0W+2fvX0qzr5GCHlji4Fe5HgJDavtiD7ZBiI0IpjsCm8SLH3PFoLjrhP/6Jw+clX
+         o5pcSe/UAkx8oyIiJ4QLkk/JODC7AcYXuPHDeNLdPHiT+0ROO1ABMhNaSHEU1HJP/2/5
+         YXvks6uD0L7RbM4IErUrG1dFjs5M/PsmeotycqWg1OhkrIEFBlOVXsLPEtVjGrZrOu+Z
+         dmcA==
+X-Gm-Message-State: AOJu0YwuSXo0/zkk8kmheqQ18IumuFb4FR7WMUNyQYz/8hSfNZsQcPJb
+	rjQgJNPJAmCjJ4J7K7TNZtA8gQxI9b8BAzOT49U=
+X-Google-Smtp-Source: AGHT+IEcemHJ908fymklvuplr7/Vv8UOwfZFA/FigLaHFQnCHK9OcguzDYqHu/WP7NsJV52r3/xiSA==
+X-Received: by 2002:a05:600c:5493:b0:40c:7124:962b with SMTP id iv19-20020a05600c549300b0040c7124962bmr3571421wmb.124.1703087406742;
+        Wed, 20 Dec 2023 07:50:06 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.27])
+        by smtp.gmail.com with ESMTPSA id bi18-20020a05600c3d9200b0040d378623b1sm40439wmb.22.2023.12.20.07.50.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Dec 2023 07:50:06 -0800 (PST)
+Message-ID: <440e2ad2-ecc5-4888-9923-a172d94c710d@linaro.org>
+Date: Wed, 20 Dec 2023 16:50:05 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1702913550-20631-1-git-send-email-quic_cang@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: Add coresight nodes for sm8450
+Content-Language: en-US
+To: Jinlong Mao <quic_jinlmao@quicinc.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Tao Zhang <quic_taozha@quicinc.com>, coresight@lists.linaro.org
+References: <20231220124009.16816-1-quic_jinlmao@quicinc.com>
+ <dfc7fe85-7418-410c-bd82-6e08799e6417@linaro.org>
+ <439916dc-8f71-4998-b145-1d183d9e68f5@quicinc.com>
+ <77ba0140-5b74-40d7-a923-4b270d661d3a@linaro.org>
+ <98407ed5-5e0c-4bee-be4c-70b3d8972823@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <98407ed5-5e0c-4bee-be4c-70b3d8972823@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, Dec 18, 2023 at 07:32:17AM -0800, Can Guo wrote:
-> If access sq_tail_slot without the protection from the sq_lock, race
-> condition can have multiple SQEs copied to duplicate SQE slot(s), which can
-> lead to multiple incredible stability issues. Fix it by moving the *dest
-> initialization, in ufshcd_send_command(), back under protection from the
-> sq_lock.
+On 20/12/2023 14:40, Jinlong Mao wrote:
 > 
-> Fixes: 3c85f087faec ("scsi: ufs: mcq: Use pointer arithmetic in ufshcd_send_command()")
+> 
+> On 12/20/2023 9:21 PM, Krzysztof Kozlowski wrote:
+>> On 20/12/2023 14:07, Jinlong Mao wrote:
+>>>
+>>>
+>>> On 12/20/2023 8:46 PM, Krzysztof Kozlowski wrote:
+>>>> On 20/12/2023 13:40, Mao Jinlong wrote:
+>>>>> Add coresight components on Qualcomm SM8450 Soc. The components include
+>>>>> TMC ETF/ETR, ETE, STM, TPDM, CTI.
+>>>>>
+>>>>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+>>>>> ---
+>>>>>    arch/arm64/boot/dts/qcom/sm8450.dtsi | 742 +++++++++++++++++++++++++++
+>>>>>    1 file changed, 742 insertions(+)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>>> index 1783fa78bdbc..112b5a069c94 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>>> @@ -285,6 +285,192 @@ CLUSTER_SLEEP_1: cluster-sleep-1 {
+>>>>>    		};
+>>>>>    	};
+>>>>>    
+>>>>> +	ete0 {
+>>>>
+>>>> ete-0
+>>> Thanks for the review.
+>>>
+>>> In arm,embedded-trace-extension.yaml, the node name pattern is
+>>> "^ete([0-9a-f]+)$".
+>>
+>> I don't understand why this binding requires ete name. It's not like it
+>> is a generic name worth preserving. Also, the recommended suffix for
+>> names is with '-'.
+>>
+> The number in the ete name should be the same as the number of the CPU.
 
-Cc: stable@vger.kernel.org
+My question was why "ete" is needed.
 
-> Signed-off-by: Can Guo <quic_cang@quicinc.com>
+> So we can know which CPU this ete belongs to from the name.
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-- Mani
+Wait, what? Why? Node names should not be for that.
 
 > 
-> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-> index ae9936f..2994aac 100644
-> --- a/drivers/ufs/core/ufshcd.c
-> +++ b/drivers/ufs/core/ufshcd.c
-> @@ -2274,9 +2274,10 @@ void ufshcd_send_command(struct ufs_hba *hba, unsigned int task_tag,
->  	if (is_mcq_enabled(hba)) {
->  		int utrd_size = sizeof(struct utp_transfer_req_desc);
->  		struct utp_transfer_req_desc *src = lrbp->utr_descriptor_ptr;
-> -		struct utp_transfer_req_desc *dest = hwq->sqe_base_addr + hwq->sq_tail_slot;
-> +		struct utp_transfer_req_desc *dest;
->  
->  		spin_lock(&hwq->sq_lock);
-> +		dest = hwq->sqe_base_addr + hwq->sq_tail_slot;
->  		memcpy(dest, src, utrd_size);
->  		ufshcd_inc_sq_tail(hwq);
->  		spin_unlock(&hwq->sq_lock);
-> -- 
-> 2.7.4
-> 
+> I will update the binding in arm,embedded-trace-extension.yaml.
 
--- 
-மணிவண்ணன் சதாசிவம்
+No, wait, please finish this discussion first. You need to give people
+chance to respond...
+
+Best regards,
+Krzysztof
+
 
