@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-5585-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5586-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B83F819F06
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 13:29:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 631B8819F0F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 13:32:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9C4701F274B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 12:29:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 884481C22984
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 12:32:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5211922339;
-	Wed, 20 Dec 2023 12:29:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6733D224E9;
+	Wed, 20 Dec 2023 12:32:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Y0/Svfvt"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IduhJkVI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93D62232C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 12:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D646925549
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 12:32:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-553b3ee88c0so1446656a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 04:29:47 -0800 (PST)
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5534dcfdd61so1332824a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 04:32:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703075386; x=1703680186; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1703075559; x=1703680359; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=M/IBh6Gr+0A0sZbOQHfXVIhKNk9uHTJkdqBKl9nzM4Q=;
-        b=Y0/SvfvtFDqcielbAmKz8p23TMQ+buihdMhBT8yUSoBw4we3RzlcTAd0O1LOV5lwpn
-         Tt0wvkQ/56MmQ4ETb2PKWKRXSSuL3/3JWYF5qjoTfm4OvtZYdIJGWSSo3EAxw1gyUDSD
-         Dgh3A/C+4oXqGUkYmIsVl+MUrTDG4+WpPwfCUjCSru0k8++0eedepUNUeyuCPfT2VGZ8
-         OqO4Vpiam0iwu5bv8nqGMqTYoMByui4GRSrCnotDVtIo9LPD2jd9HEGzjmcII7PhauMK
-         KnEHmBL2LV/7vr1neqLHeNnh0w5NsRUUFw5t3YlBtc5HRuaoY03oduL0dKQdNdQTW6C4
-         tqtQ==
+        bh=tu7ffZ92sPLeyk+eGDbM7u37bu69MZYvieXsbHFoatg=;
+        b=IduhJkVI3t4Unf9ucRIQO1NTr7r8qOFJZ9yLrOSoEGbWhSl7jV0EQ1UHifFXRjj9i8
+         N3gtDKyZ7r2Yg2jeV06t/B9BmCQLazHF0SMwp6/dL/xy6cSGyM9rULs9O+cBimdOS2Pk
+         Yn96lNY4W1Zzr3DDJq0fw56s10+WraaAECSE/TeBIaWGilnellfHF1O4z8OFezOy/zst
+         L8640jJPa5vNHl67ca3wTOGKBWt2sybs6XyOLiXO4QOK53L9xHXbK2x6/aQSqT0p/TL3
+         /hzS1yMoY7vMpYs8Dh8uc3PHinzmGVGTez06++n6OvrvfF2wv3rvZQl00tjYJedkOwH9
+         CofA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703075386; x=1703680186;
+        d=1e100.net; s=20230601; t=1703075559; x=1703680359;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=M/IBh6Gr+0A0sZbOQHfXVIhKNk9uHTJkdqBKl9nzM4Q=;
-        b=kBcXQqIn+yVA7sh4sGOxjWDn5NrxrxUSTos6qG6yo5uf+C1r7R80E3448ORjnsrX6i
-         UTL3b9QXFZ2ovYQwgF8j41Rm23dC/COa+uxmpDthw2w8XYlHi2YKMY+S6l3RmQysRAjQ
-         R+6FKpvWppd+N9bOFKXcpXd1O+/+FoxDI39PkcyUXM6zx9yXo6se0g6WxaSXZ1a6SxIr
-         jwRn9r5TTtymufRYOzFESS6+EZfgp0XO8sUIxij8omNz9Sk2O/Kc/3j7/BDd12zCBSm0
-         PJRRrIkIYNy+nSZBAVOKI4yVbJze1dKPIm2Jlh7weUJ+ScCkG2uvm3KiLT4Ahv6Y5ErA
-         K+iA==
-X-Gm-Message-State: AOJu0YwmrqwgIvkn1RrKRTXnDaHXZCoC7KwOzOiAqKC7NF8zesxH+FrS
-	bkGeuYU1CbcuRUnr0oarnqRDGQ==
-X-Google-Smtp-Source: AGHT+IHw/1zAy6BV3uGtIeu6/HOLcU/xu3NxhNLQMnH+Qf+7qgBG4runlRgIdrpnDNJF8IskZG8JMQ==
-X-Received: by 2002:a50:cc04:0:b0:54a:f1db:c290 with SMTP id m4-20020a50cc04000000b0054af1dbc290mr11283035edi.9.1703075385811;
-        Wed, 20 Dec 2023 04:29:45 -0800 (PST)
+        bh=tu7ffZ92sPLeyk+eGDbM7u37bu69MZYvieXsbHFoatg=;
+        b=rpC4j/+RUc1AR7f/iwqn4fZDqfu3LcS59w6wqqLxn5MD3kge8FHs/7W3HOmGcOEIKB
+         qSeQivMdDP31O6HYXNSJpOmu10tt13uA8vbeDYtbMBHioAMxjshnIj4E4MAWIASo6qbT
+         pookxl/f+QxZkgY4oZbAyd/+qVmQ5fyX7vij+j6csGdj27V81VEo3p+WAWHbAhEDIi9P
+         UxL3h8Zweg6DVUZUxqtsA0AwILwhDWkVF16H3kAfT23WPRxwkSk1rDmBxGlKc3hCagRx
+         /e4EskNvh4B1nf3wCxBDr76UeqpDjzqOkrWJcgSt7hbzssn+j+esNz2NPPAIIVyT3x4M
+         UVhQ==
+X-Gm-Message-State: AOJu0YwesgC5RpFvX8l01lypwaBkZPLnh0w/R4LjPaBvve7nusvxtHem
+	DxGSSEhnb8TZ6AEfh7t7/cqZyw==
+X-Google-Smtp-Source: AGHT+IGNf6V78YDTanEUyebLe5accfD5uG11DUdZ7pFqQ0L6Uli+ibi8a1IcNx9BKhwpYZEUwHvpUQ==
+X-Received: by 2002:a50:d698:0:b0:54c:bb9c:4b88 with SMTP id r24-20020a50d698000000b0054cbb9c4b88mr2847545edi.5.1703075559111;
+        Wed, 20 Dec 2023 04:32:39 -0800 (PST)
 Received: from [192.168.199.59] (178235179206.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.206])
-        by smtp.gmail.com with ESMTPSA id cn24-20020a0564020cb800b005532f5abaedsm3831493edb.72.2023.12.20.04.29.44
+        by smtp.gmail.com with ESMTPSA id d12-20020a056402000c00b0055344b92fb6sm3393899edu.75.2023.12.20.04.32.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Dec 2023 04:29:45 -0800 (PST)
-Message-ID: <519138d9-2434-4357-abec-f400b87755c6@linaro.org>
-Date: Wed, 20 Dec 2023 13:29:43 +0100
+        Wed, 20 Dec 2023 04:32:38 -0800 (PST)
+Message-ID: <8d042095-1e09-45cc-9762-909fe8d663a9@linaro.org>
+Date: Wed, 20 Dec 2023 13:32:36 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,20 +66,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: qcm6490-idp: Enable various
- remoteprocs
+Subject: Re: [PATCH 0/3] Fairphone 5 PMIC-GLINK support (USB-C, charger, fuel
+ gauge)
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Komal Bajaj <quic_kbajaj@quicinc.com>,
+To: Luca Weiss <luca.weiss@fairphone.com>,
  Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231220114225.26567-1-quic_kbajaj@quicinc.com>
- <20231220114225.26567-2-quic_kbajaj@quicinc.com>
- <d7ae374a-7269-4992-ad44-18b2516cad42@linaro.org>
- <CAA8EJppYuXpqKpTcUda1LBFfBmm40-VpC+3heJqoL82kS=+erA@mail.gmail.com>
+ Conor Dooley <conor+dt@kernel.org>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ cros-qcom-dts-watchers@chromium.org
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
+References: <20231220-fp5-pmic-glink-v1-0-2a1f8e3c661c@fairphone.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -116,52 +116,30 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <CAA8EJppYuXpqKpTcUda1LBFfBmm40-VpC+3heJqoL82kS=+erA@mail.gmail.com>
+In-Reply-To: <20231220-fp5-pmic-glink-v1-0-2a1f8e3c661c@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 20.12.2023 13:18, Dmitry Baryshkov wrote:
-> On Wed, 20 Dec 2023 at 13:46, Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> On 20/12/2023 12:42, Komal Bajaj wrote:
->>> Enable the ADSP, CDSP, MPSS and WPSS that are found on the SoC.
->>>
->>> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
->>> ---
->>>  arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 20 ++++++++++++++++++++
->>>  1 file changed, 20 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
->>> index 03e97e27d16d..ad78efa9197d 100644
->>> --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
->>> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
->>> @@ -419,6 +419,26 @@ &qupv3_id_0 {
->>>       status = "okay";
->>>  };
->>>
->>> +&remoteproc_adsp {
->>> +     firmware-name = "qcom/qcm6490/adsp.mdt";
->>
->> Why MDT not MBN?
+On 20.12.2023 11:02, Luca Weiss wrote:
+> This series adds all the necessary bits to enable USB-C role switching,
+> charger and fuel gauge (all via pmic-glink) on Fairphone 5.
 > 
-> I agree here. NAK until this is .mbn. Please follow the example of
-> other boards when you write patches.
+> One thing that could be made different is the pmic-glink compatible.
+> I've chosen to use qcm6490 compatible for it and not sc7280 since
+> there's plenty of firmware variety on sc7280-based platforms and they
+> might require different quirks in the future, so limit this PDOS quirk
+> to just qcm6490 for now.
 > 
->>
->> I don't see these files in linux-firmware and your cover letter did not
->> explain anything around their submission. What's the status on that part?
-> 
-> This isn't usually required, is it? I mean, the firmware can come from
-> linux-firmware, from the device partition or in any other way. With
-> the FW_LOADER_USER_HELPER this becomes just the key string used to
-> identify firmware to be loaded.
-I think Krzysztof referenced the fact that the Qualcomm-made boards
-usually came with redistributable firmware.
+> If someone thinks it should be qcom,sc7280-pmic-glink, please let me
+> know :)
+IMO it's best to continue using the "base soc" (which just so happened
+to fall onto sc7280 this time around) for all compatibles, unless the
+derivatives actually had changes
 
-As far as my 5 cents go, not submitting the files to linux-firmware.git
-only harms the user experience, so I'd always advocate for it, whenever
-that is actually possible.
+as far as firmware goes, I *think* CrOS doesn't even have PMIC_GLINK?
+There are however WoA 7280 laptops which totally should have it.. Would
+be nice to hunt some down and see if they report different stuff to
+what's there on android firmware
 
 Konrad
 
