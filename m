@@ -1,89 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-5628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F0B681A8B3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 23:05:34 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB99A81A8D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 23:13:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2E9041F23332
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 22:05:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 67A732826EF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 22:13:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1A3C482DC;
-	Wed, 20 Dec 2023 22:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 275044A986;
+	Wed, 20 Dec 2023 22:13:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Hr4Onva/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B420C495CE;
-	Wed, 20 Dec 2023 22:05:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
-Received: from [192.168.0.174] ([80.128.175.14]) by mrelayeu.kundenserver.de
- (mreue012 [212.227.15.167]) with ESMTPSA (Nemesis) id
- 1N9cDF-1rCXxu0CaD-015Y3k; Wed, 20 Dec 2023 23:05:23 +0100
-Message-ID: <39e0f711-9331-4fd2-9d78-be53afb5c37d@oldschoolsolutions.biz>
-Date: Wed, 20 Dec 2023 23:05:22 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FAD84A988
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 22:12:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a235eb41251so14176766b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 14:12:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1703110377; x=1703715177; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=WbE+p+rcyyFP+eEtMwxqlwbKKm3YVPbvUnctIfiDxV4=;
+        b=Hr4Onva/aMYa64TV02v8sEKnKOa9dU62ufHv3yjaq1jplcVcisLWqPTnod6NLBmyFf
+         Oj2XWDERSnbqEhbSHqPfRL+xOo0q4I8ZxNh4PksJmQ7akJXXsFjZJ6H269HHJKBhRZ3/
+         rSqRYkF0PHYQLSfwsHb8O5J1vcFEyhzJHTAjthYue2WHfZQE93GV21d9G19rMnsWnre/
+         +8kIGjaiGETubllpaBv2Z1E2IVgOfhaTDJO3L/47jiNzxlF1z1ODi/WuTDshXNx8EsX8
+         1R36bcOCsw9trvSTscRUDP9VnL0o9rKC9fZyQmmm62IPKdmS/2bdlUba3ugcWnuf7D0R
+         LDTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703110377; x=1703715177;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WbE+p+rcyyFP+eEtMwxqlwbKKm3YVPbvUnctIfiDxV4=;
+        b=xFIZfn/L19I/rti5p3u/A1G0vWEpkiXNewACskYOru1j/mqJYr6I2FnkFZrwTs6LYZ
+         bdzRj9wRQ3S62myJqa3Jc68yjAxUQ9nsmOoQgt2YHY0xrevqYGN9g3vdc9IfzYTutfPP
+         6URnaTdZcP6BshJbE6Hp0x0KNroWsF2/5kLFx3RYsyQ/m2QPNduuFPPMIJvQNyrO91sE
+         Eccz0/mzh96Sc8yjgozUZqkmpgU6LAmM4g+vFfYguSoDQNJegv0aBnDasUE/cGIlSSLK
+         wJxVyULi3DJfKL6QNF8Ynh5VkiNDwIzzl19EOAv23vFhnRiVv94vU8o+sjTpsTkfahDh
+         P5NQ==
+X-Gm-Message-State: AOJu0YyUlrq4IpY1YXn4CVkCDv/A70/mhMFBrMWJMLvp87gO282aDW8z
+	p/DWif1pb9s3v1eafONvWuUmtg==
+X-Google-Smtp-Source: AGHT+IHJw/FE2ewpobj61P+2P9GS8ZpVhAHis9tAoOMOkVKIcEuDOaRMsr1NH5TfHUZOtlI0W92iCQ==
+X-Received: by 2002:a17:906:65d8:b0:a19:a19b:4251 with SMTP id z24-20020a17090665d800b00a19a19b4251mr5876749ejn.188.1703110376744;
+        Wed, 20 Dec 2023 14:12:56 -0800 (PST)
+Received: from [10.167.154.1] (178235179206.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.206])
+        by smtp.gmail.com with ESMTPSA id x22-20020a170906135600b00a235f3b8259sm254654ejb.186.2023.12.20.14.12.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Dec 2023 14:12:56 -0800 (PST)
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH RFT v2 0/3] Fix up SC8280XP idle states
+Date: Wed, 20 Dec 2023 23:12:53 +0100
+Message-Id: <20230619-topic-sc8280xp-idle-v2-0-cde50bf02f3c@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Amit Kucheria <amitk@kernel.org>,
- Thara Gopinath <thara.gopinath@gmail.com>
-Cc: linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Subject: [PATCH] thermal: qcom: tsens: remove dependency to NVMEM_QCOM_QFPROM
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:V+zYi2CmJPxb6VwJ0IPL3maI6fGFCWwBhE/8+esM30YWVFomRwZ
- Zlet4Nqy6+TdqDkTXe9vrakGYGh8YkcbYx7YoauhDuTwKWqmLNZUrWcb7PUOpRJ26sjzv0Y
- vu+Ew+1x4Wm4mWLZnK8pAMgpDvV7wgge8dYdeNWcucOVajok6C64xj7kRPNI/6DnIZe/B4o
- b3w4c6fkQE+kysFxFA8Ow==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:1Disa2g06GY=;R1t8Wdpy+zB8Unov9NHgEAgQgv1
- YdSQTxkGBX/BCjOjlVmlc1c5EipgFoOSo7HVbxRslGrPG+3wE9BmEvFcGuoDoaaK/nJk2t77R
- GGxxQnCxEwLBd/a/fHX0kvgKvH5j3+1o8FMn1NRm2E5d0XT/k7FkzGwtjTc7aw6Z4LmUDDrmv
- 0KrpCUV1tt2/HQHVPcmwTT1tNMP89CJWs16teZ44cdGX50Vjp8kPW3Bt2lvQuvG3puTpv8KB/
- jmu/3ihW9v5JcHkYlde/u8Oa774KnhjLj4NFEaeEeco8K/rt3OjqBEWf+hDTYXhFWsb0gnGKv
- sv05zYfkrURKBm9EtU+4P1uKjQ5zype/FJ0SbgUNAumhAjLSjXX4+NtfM0MYFzTyWWBDnw7h6
- w/pH9kIKm/um/Z3YeOdGO3Yz2X/6hDaurbNYo4R3uvPeMXmXNm/u97Qu8IinKEiNA8ewUSmDb
- UMII48alWhZacK8ssxUaA4OdXnogf22XrIOWyNyOHTY3fL+4f2VWD2GZTVXB3ksPPXQliFpas
- XjB2D1K6NqcBbbAtaXxeUkx9fdQQlLBnXm5KAFJqlXTbYYDgfKIZmSZyM+kjQZGNF9Tk4Ik1h
- lmq4gK4Kc3F1gQTXdQvMmcRhkK8SP8rqP4YIMyd2cL9Dy55sJetMdCjR7SlFdJcInoXiWSa0i
- M5tLycPL5Jsujws2qt0fi2o5qng2iuAv0ip6TJ3e9y5sxKpq4EeUvfqJyMwHdhZJkFOajsbAt
- O49S4JIPvAEiTcmc+qMcdTPRab5qoUs3fwQ9agUnd5KgKQPwZUbmNSkXlpZccqXxhVGCG78Cg
- fTUs2Z3HGTbYNPjrBIyS/Y0yypsz02NeXEg0tTf2yDj/vEWMWRtaReLbXPCpf75nGAb1Ndw3o
- Rw5OXajO6Dkzqvw==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOVmg2UC/32NQQ6CMBBFr0Jmbc20gBZXrjyAcWdYlFJgkqZtW
+ iQYwt1tOIDL919+3gbJRDIJbsUG0SyUyLsM4lSAnpQbDaM+MwgUJV54w2YfSLOkpZC4hmytYYi
+ DRryKstIS8rNTybAuKqen/HUfa/MYohloPVJveD5e0OZxojT7+D3yCz/U39LCGbKyVrJrZFXzH
+ u+WnIr+7OMI7b7vP1oDiMfRAAAA
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Johan Hovold <johan+linaro@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@somainline.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1703110375; l=1554;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=ARUY1xHpXtNbYJC73kXlyu2iubFsquAhjet7Dqjyorw=;
+ b=jEr+FiShAw83HyJ/2AgXX7eCo9PSxs+fd6VLsvmwSxLTtAFYHteCzA7izJM+8hpXXahv2STz/
+ KP9ClVfkcC1BKCyOMLzdt6YpWdfFOmse7l+aVQMz3Ri4ySQHP+ZzN9u
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-The dependency to NVMEM_QCOM_QFPROM seems to be a problem when using
-"make menuconfig", it will exclude QCOM_TSENS from the build wWith
-bad effects on power management, observed on the Windows Dev Kit 2023,
-and Thinkpad X13s. Removing it doesn't have a negative side effect,
-as it seems. Observed this since v6.6.
+Comparing the data available in the downstream sources with what's there
+upstream, it was easy to spot some differences. This series aligns what
+we have upstream with what is there on the vendor kernel.
 
-Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+The big asterisk there is that the downstream sources for SC8280XP can't
+always be trusted. A simple test shows that the lower idle states that
+were previously missing are implemented in the firmware (Linux reports no
+errors and enters them).
+
+HOWEVER
+
+The only cluster idle state that's been present until now (the deepest
+one) is now barely used if at all, as the scheduler seems to deem it
+inefficient or so.
+
+Hence, a request for testing and comments, especially from those who
+use the X13s daily or have reliable setup to measure the power usage.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
-  drivers/thermal/qcom/Kconfig | 1 -
-  1 file changed, 1 deletion(-)
+Changes in v2:
+- Rename the idle states
+- Drop RFC, confirmed with Qualcomm
+- Rebase
+- Link to v1: https://lore.kernel.org/r/20230619-topic-sc8280xp-idle-v1-0-35a8b98451d0@linaro.org
 
-diff --git a/drivers/thermal/qcom/Kconfig b/drivers/thermal/qcom/Kconfig
-index c4ebb1977b177..09d9b35c57bd2 100644
---- a/drivers/thermal/qcom/Kconfig
-+++ b/drivers/thermal/qcom/Kconfig
-@@ -1,7 +1,6 @@
-  # SPDX-License-Identifier: GPL-2.0-only
-  config QCOM_TSENS
-      tristate "Qualcomm TSENS Temperature Alarm"
--    depends on NVMEM_QCOM_QFPROM
-      depends on ARCH_QCOM || COMPILE_TEST
-      help
-        This enables the thermal sysfs driver for the TSENS device. It shows
+---
+Konrad Dybcio (3):
+      arm64: dts: qcom: sc8280xp: Add lower cluster idle states
+      arm64: dts: qcom: sc8280xp: Add missing CPU idle states
+      arm64: dts: qcom: sc8280xp: Fix up idle state periods
+
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 72 +++++++++++++++++++++++++---------
+ 1 file changed, 54 insertions(+), 18 deletions(-)
+---
+base-commit: 20d857259d7d10cd0d5e8b60608455986167cfad
+change-id: 20230619-topic-sc8280xp-idle-00fc007234c8
+
+Best regards,
 -- 
-2.40.1
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
 
