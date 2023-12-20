@@ -1,103 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-5560-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2024819D45
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 11:48:08 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23A67819D75
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 12:00:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 586EE283C1D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 10:48:07 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B7ADEB2424B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 11:00:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2E2F20DCE;
-	Wed, 20 Dec 2023 10:48:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDA2A20B30;
+	Wed, 20 Dec 2023 11:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C1gjLa+N"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pjHNRlCf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A57B20DCB
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 10:48:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-dbd5b96b12eso1359195276.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 02:48:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703069282; x=1703674082; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qMnhogAJ5TBsWqLBjRWdOEdn5tLvSkqIXkY34xtolk8=;
-        b=C1gjLa+NaNYUuCqGThGARe5wDVLpxmw4fHIYY4HfKUNi6W8hrGhzUsyTM0o17Se6o3
-         hPutrm+IpNdHz5oVDTT8TzmFo8VfSSMAUxfG8KakAKVoINqI4LUsdyH5Ff57szZFWEAb
-         DmZFw72mDKroyVDYi85dTuN0xt99sLUWNNXvoRLMx/7+Fs6ZXUbwEaknPchbC+7dueQB
-         fG8ShOvDKxJfae92jC+Ax5cdWf/CMJ+WSPJn4JRn7PfZsI0fpwLTtbkKj3whaHjm6TJh
-         BKp8DyHV8fUlv3UJUKpA60uCA55h6SWoPmA2yqE5lxfWKSMsOJ4gxtgJAF0/DwsQ0mhW
-         KoAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703069282; x=1703674082;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qMnhogAJ5TBsWqLBjRWdOEdn5tLvSkqIXkY34xtolk8=;
-        b=fAVQ/k1Bwqidl+BnE/ISy4/fx9NoPtFQrPqJ/KfibWpcYqafyvZqs2g2c3EW4mE5oD
-         +EGoOJNn+Ch9kvce8som1uaMFZeN9OrWNBcdnAP77Man/4JW01o26NyJBZ78k9uMFWMu
-         EUWMDmEz7FQkt0wcWphF0+L/9pA/epXwpsF+LovshxZr9XAzEnLJU9v4+QOL9QLe7Iyq
-         W2iYH7lNoNq71nKmrcb8rB5QKySMF+xkbW6Ir44HQ1v0UJBt3rGvZDOZAbFDjvoxbmTH
-         DZ4aP1Rt72zhzejXn0uMtQkrZhlr57FJpbUXax2MOlvgzQGOZKEpLL5L3LuIhFc9eKA8
-         2UhA==
-X-Gm-Message-State: AOJu0YwMFVBq2RHHvuPgT9cyBdpMAbQQtrltofiv4BSxmJ60barnXwCC
-	4NYV+Ew0pNh5w8iL/Wf8P8ZW0RGaa/Jt/Ff8EsdMLg==
-X-Google-Smtp-Source: AGHT+IGYRq8+DNsxwVIrAOVvUPSQcI4YnkGr/ON41SKcXrqS0crfkla2Ki2q/G3D/M1BL/nW1R8hhvgf5T+fUsYD0nM=
-X-Received: by 2002:a25:4155:0:b0:dbc:df05:9157 with SMTP id
- o82-20020a254155000000b00dbcdf059157mr6525037yba.69.1703069282394; Wed, 20
- Dec 2023 02:48:02 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FC120B2C;
+	Wed, 20 Dec 2023 11:00:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BK9LE7Q032333;
+	Wed, 20 Dec 2023 11:00:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=uZLXpWp
+	atcSGW7WnIy7wcRKFTAeBbx5Y2C2MIyCYREU=; b=pjHNRlCf6tCzAlqgS9wWXw5
+	9KBgtVAeLd03mhlbkbRLFuGw8BDsOeZjH6LsB7Zhkif7/sXPQED3/l4pP6cgJNUH
+	UmXnm/LMmRyZuruOyeRVS1iFR1VPZdV5BmQ7I66QvnJ7DSJpSD9ZmP325RnPd9NJ
+	rmC73Yhemq9Zv+k2EvHqu3N4h/WqV6ncXLQbpyVzHLBiDFZqsXxw9MKIFIu/w4A9
+	GvlPBsgZZ3GItxKkSgRjwanjUzIPPOdWL8Yq1Nmg9aSnrKdJ/cVGMW0tjwMMJtt8
+	6KlB/qWi7q/+MisEY80QBPrjMtn/N5NaSwvqy7wuIvAL+jJp9h6Y7ecWKVS2pQw=
+	=
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v3pkys1y2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 Dec 2023 11:00:36 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BKB0Zqm024201
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 Dec 2023 11:00:35 GMT
+Received: from hu-kbajaj-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Wed, 20 Dec 2023 03:00:31 -0800
+From: Komal Bajaj <quic_kbajaj@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        "Naina
+ Mehta" <quic_nainmeht@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Komal Bajaj <quic_kbajaj@quicinc.com>
+Subject: [PATCH 0/2] Correcting the voltage setting for vph_pwr
+Date: Wed, 20 Dec 2023 16:30:13 +0530
+Message-ID: <20231220110015.25378-1-quic_kbajaj@quicinc.com>
+X-Mailer: git-send-email 2.42.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231130172834.12653-1-johan+linaro@kernel.org> <ZYG-Fr9FfIQUup_r@hovoldconsulting.com>
-In-Reply-To: <ZYG-Fr9FfIQUup_r@hovoldconsulting.com>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Wed, 20 Dec 2023 11:47:50 +0100
-Message-ID: <CACRpkdb8ObMaMT+kuvs85QydbeqbChsMEnGTkW27C5iOGLuEww@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: pinctrl: qcom,pmic-mpp: clean up example
-To: Johan Hovold <johan@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: YcbsLEjX1z_bOwthiU6gWaLqqWgpmEhp
+X-Proofpoint-ORIG-GUID: YcbsLEjX1z_bOwthiU6gWaLqqWgpmEhp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ mlxlogscore=292 malwarescore=0 lowpriorityscore=0 bulkscore=0 adultscore=0
+ clxscore=1011 priorityscore=1501 suspectscore=0 phishscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
+ definitions=main-2312200077
 
-On Tue, Dec 19, 2023 at 5:00=E2=80=AFPM Johan Hovold <johan@kernel.org> wro=
-te:
+Correcting the voltage setting for vph_pwr for qcm6490-idp and
+qcs6490-rb3gen2 boards.
 
-> Hi Linus,
->
-> On Thu, Nov 30, 2023 at 06:28:34PM +0100, Johan Hovold wrote:
-> > The Multi-Purpose Pin controller block is part of an SPMI PMIC (which i=
-n
-> > turns sits on an SPMI bus) and uses a single value for the register
-> > property that corresponds to its base address.
-> >
-> > Clean up the example by adding a parent PMIC node with proper
-> > '#address-cells' and '#size-cells' properties, dropping the incorrect
-> > second register value, adding some newline separators and increasing th=
-e
-> > indentation to four spaces.
-> >
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
->
-> Can you pick this one up for 6.8?
+Komal Bajaj (2):
+  arm64: dts: qcom: qcm6490-idp: Correct the voltage setting for vph_pwr
+  arm64: dts: qcom: qcs6490-rb3gen2: Correct the voltage setting for
+    vph_pwr
 
-OK, patch applied!
+ arch/arm64/boot/dts/qcom/qcm6490-idp.dts     | 4 ++--
+ arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-Yours,
-Linus Walleij
+--
+2.42.0
+
 
