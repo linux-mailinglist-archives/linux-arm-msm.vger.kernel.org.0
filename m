@@ -1,65 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-5593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5594-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB41F819F9A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 14:13:27 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 720EA819FBE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 14:21:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 60E6FB21B23
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 13:13:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F15D51F2267F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 13:21:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 464582576A;
-	Wed, 20 Dec 2023 13:13:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C9572D620;
+	Wed, 20 Dec 2023 13:21:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xwe2KHft"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vXDhFHaZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9993125767
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 13:13:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00B412CCB8
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 13:21:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-553fbffde39so328128a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 05:13:17 -0800 (PST)
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2cc6eecd319so47419571fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 05:21:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703077996; x=1703682796; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=8mjIzJV3RjJIW1MF2AtC1v/u605iygjkoFeiioUS6Nc=;
-        b=xwe2KHft0OobQJd8mlvsEvmcjjQ4MbvE5mxXAefZ0YmXuPOaZufbeyhMy7YvoUkDZH
-         qie4gmhKxLgUR2R5X0WEky7yjatE8UsPmujyAnNRmkBV873al+i1Zv4tUw4M7gzP+BE5
-         NIvkMjXZl7LgMH370zQxfV7La+/FTv+e//dbaUJ57q/d9/46Mmt+xCbxZlZxHEB5aKIQ
-         eTSXNHHc5Awrgq1apOb+C3hR7loXVQzELwSosCmpv4vAE9K27H1Q9fnq5OQLAaClBiax
-         8KSA6l4TZVUFBMOKMAjJ5Tb5aNcINLrCZKhp+sQkz+/i1lebpt6ahvNzQmf79k4aqYcT
-         jqbA==
+        d=linaro.org; s=google; t=1703078511; x=1703683311; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7oFlTMabigYjmKu9hB3PA+2ishWi1oEJOR42AVBlS3w=;
+        b=vXDhFHaZmuA6YaDQ4YYCUy0R+oN/BXv1Jjy95f7fLM3BG7SvisqCwTIoQ62e9/SNaK
+         P8bsUYqUrkGMf2vJz2ha3cncexH9+tU/13bNwCDBv1C1J5qF8xkhNMMA+aRDoAE5/Ka3
+         ljLN/tuw/F6SM4j8zsjyz0ay7udao2+rNuBo1sRmdqH+jwOGWBO15nSm40F6Fw/2+N4u
+         tSO2NoB4qCJcuXL+30u+0Sv6QCp4Zu/SGxYwa2ok5vaOIzfhesF3YoLvwiTODYqVxTGY
+         6JLFImju6Hi4xmP9wGkneur7A00PyPqdQH8rBK9HufW3wCjSrNrUexgm/iSEUxexmGGY
+         ke3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703077996; x=1703682796;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8mjIzJV3RjJIW1MF2AtC1v/u605iygjkoFeiioUS6Nc=;
-        b=DhjCOmjG0lJMrdU8TgYN/lusTjf6hCPbrn7/J2DIuG6W6Imawl+wWR7Ve6IRE6WxB8
-         YeF5M79LDbniURLlAExF4NLMuyajiZlyAAycaWys2MHkxbNNjP1fm/kzE2cH82PYBInf
-         DSIjwzR0uXNL7Hj0b7l/4nou2lnnDsnINSnTiC+STn3c19Kp2cC9xirYy817CxgL/LNd
-         6NJ6kSsTMZRvohxR3I1SN2+wQZhkIHt2Not296HY2OCgpUdOAmycK/qerJwk+cQRBb9M
-         YrXO4Z8OJ0APzMR/a22hpeOsosHvj3BCD4zZShXeAAyjYVG9KRTsPWJu1W75LROgNfOK
-         vAmg==
-X-Gm-Message-State: AOJu0Yyt9worzOFTh87pA7w/AtP3p/nd6CO93AJ7rovrijFhs++AAYUc
-	OqhSJooMsQDc25xRtwVvtguZwQ==
-X-Google-Smtp-Source: AGHT+IGbACnOOkpYqWxzz+CMsamhPRFNnZfrA10KciebDMBRwUY47VXZFQhLRFYVcrA2DcX98Ud3+w==
-X-Received: by 2002:a50:b402:0:b0:553:9fbc:11ef with SMTP id b2-20020a50b402000000b005539fbc11efmr1220009edh.56.1703077995815;
-        Wed, 20 Dec 2023 05:13:15 -0800 (PST)
-Received: from [192.168.199.59] (178235179206.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.206])
-        by smtp.gmail.com with ESMTPSA id f19-20020a056402195300b005537b00132asm2390633edz.91.2023.12.20.05.13.13
+        d=1e100.net; s=20230601; t=1703078511; x=1703683311;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7oFlTMabigYjmKu9hB3PA+2ishWi1oEJOR42AVBlS3w=;
+        b=Q6z8BWTZ2S04VO60ELXEEZNKAupUiSKPdr60x0kK4vNUxH9uKoCmFst35kX1gDwvg1
+         1Lg6DfrjZC7v4Za0faHTlJiIy0cbSD8Hs4iQtR1V3wkB/ZG3Sl/lJW3Hc14ncxaS3eZT
+         m1aJ5M1eQVJzW7uUe8ktiqRpG1rUiAP593DxqwEggwdSs78bFTSAojVzvpiqrUGWhO7d
+         33Dui9TWkNFlggSW6oqreE6/GP9iPr9NgxpdT3IqFtIUIugU9xsWaTg1YSKsPHqT3Ut8
+         02x7QIpY+OrMrrgeWiZCMwpAv4aQd+c3fiQGCb046C/VwYnhIGUW8hv9xjoKLLjgwLuh
+         nfWw==
+X-Gm-Message-State: AOJu0YzPtFMF5CZDlOn/AgT1hkpiXXlHKr2pArj0QXtDK3PDMU7+kwVq
+	XAHE4mU2xoFbOh3krV74W2wS/g==
+X-Google-Smtp-Source: AGHT+IEoSmmrFFjT4fk/E4P3WaAMABJS0GZLWtw+Avx8+aRNbYdtYwVzxg+dOgmglOq/GuD9sr0U2A==
+X-Received: by 2002:a2e:350f:0:b0:2cc:7157:4e78 with SMTP id z15-20020a2e350f000000b002cc71574e78mr2953492ljz.77.1703078511060;
+        Wed, 20 Dec 2023 05:21:51 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.27])
+        by smtp.gmail.com with ESMTPSA id a15-20020a5d508f000000b0033330846e76sm13484938wrt.86.2023.12.20.05.21.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Dec 2023 05:13:15 -0800 (PST)
-Message-ID: <5e1bbb3a-547a-40a0-975b-81802ac036b5@linaro.org>
-Date: Wed, 20 Dec 2023 14:13:12 +0100
+        Wed, 20 Dec 2023 05:21:50 -0800 (PST)
+Message-ID: <77ba0140-5b74-40d7-a923-4b270d661d3a@linaro.org>
+Date: Wed, 20 Dec 2023 14:21:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,157 +66,104 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 04/15] clk: qcom: gcc-sm6375: Add runtime PM
-To: Johan Hovold <johan@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230717-topic-branch_aon_cleanup-v3-0-3e31bce9c626@linaro.org>
- <20230717-topic-branch_aon_cleanup-v3-4-3e31bce9c626@linaro.org>
- <ZYKzU4FFCc9lnE-p@hovoldconsulting.com>
- <0cbdb9fb-9ad6-46c4-9d20-b0a766ab2629@linaro.org>
- <ZYLij93-n1-OWpIp@hovoldconsulting.com>
+Subject: Re: [PATCH] arm64: dts: qcom: Add coresight nodes for sm8450
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <ZYLij93-n1-OWpIp@hovoldconsulting.com>
+To: Jinlong Mao <quic_jinlmao@quicinc.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Tao Zhang <quic_taozha@quicinc.com>, coresight@lists.linaro.org
+References: <20231220124009.16816-1-quic_jinlmao@quicinc.com>
+ <dfc7fe85-7418-410c-bd82-6e08799e6417@linaro.org>
+ <439916dc-8f71-4998-b145-1d183d9e68f5@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <439916dc-8f71-4998-b145-1d183d9e68f5@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 20.12.2023 13:48, Johan Hovold wrote:
-> On Wed, Dec 20, 2023 at 01:26:55PM +0100, Konrad Dybcio wrote:
->> On 20.12.2023 10:26, Johan Hovold wrote:
->>> On Wed, Dec 20, 2023 at 01:30:45AM +0100, Konrad Dybcio wrote:
->>>> The GCC block on SM6375 is powered by the VDD_CX rail. We need to ensure
->>>> that CX is enabled to prevent unwanted power collapse 
->>>
->>> As I pointed out earlier, this bit of the commit message is incorrect
->>> and misleading as the power domain will never be disabled until you
->>> enable runtime PM as part of this very patch:
->>>
->>> 	https://lore.kernel.org/all/ZLaSpFFBzP_Yz5yY@hovoldconsulting.com/
->>>
->>> Specifically, genpd will not power off CX (at runtime) while the driver
->>> is bound when runtime PM is left disabled.
+On 20/12/2023 14:07, Jinlong Mao wrote:
 > 
->> OK I only now see what you really meant.
+> 
+> On 12/20/2023 8:46 PM, Krzysztof Kozlowski wrote:
+>> On 20/12/2023 13:40, Mao Jinlong wrote:
+>>> Add coresight components on Qualcomm SM8450 Soc. The components include
+>>> TMC ETF/ETR, ETE, STM, TPDM, CTI.
+>>>
+>>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 742 +++++++++++++++++++++++++++
+>>>   1 file changed, 742 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>> index 1783fa78bdbc..112b5a069c94 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>> @@ -285,6 +285,192 @@ CLUSTER_SLEEP_1: cluster-sleep-1 {
+>>>   		};
+>>>   	};
+>>>   
+>>> +	ete0 {
 >>
->> What this bit says is true, but it may be confusing within the context
->> of this patch.
+>> ete-0
+> Thanks for the review.
 > 
-> I'd say it's misleading since it suggests that something can currently
-> cause an "unwanted power collapse" which is not the case.
-> 
->> The CX domain must be turned on [for the SoC to function], however this
->> patch does not solve the issue of it being powered down [like you've said
->> just binding the PD will keep it always-active for RPM-disabled devices].
->> It complements this process, by allowing it to shut down when unnecessary.
-> 
-> Right, so just skip the misleading bits about "unwanted power collapse".
-> 
->>>> and that the
->>>> reference is dropped when unused so that the system can enter a
->>>> firmware-managed lower power state.
->>>>
->>>> Enable runtime PM to keep the power flowing only when necessary.
->>>
->>> The rest is correct.
-> 
->> Let me try to reword this and see if you like it:
->>
->>
->> The GCC block on SM6375 is powered by the VDD_CX rail. The Device Tree
->> description of this dependency lets Linux keep the rail online to prevent
->> power outages. It is however undesirable to keep it enabled at all times,
->> as that consumes additional power.
-> 
-> I'd skip or rephrase the second sentence myself.
->  
->> Moreover, failing to drop the "enabled" vote prevents firmware-managed,
->> SoC-wide power collapse in suspend, which leads to even more wasted power.
-> 
-> However if this is what you meant by "firmware-managed lower power
-> state" then this is not correct either. genpd will still power off the
-> power domain during system suspend, regardless of whether a driver
-> implements runtime PM.
-Hm, right, I'm confusing runtime and system suspend in this message..
+> In arm,embedded-trace-extension.yaml, the node name pattern is 
+> "^ete([0-9a-f]+)$".
 
-> 
->> Enable runtime PM to keep the power flowing only when necessary.
-> 
-> So I'm starting to question whether we need this at all. AFAIK CX is
-> never going to be disabled at runtime and this patch is not needed to
-> disable CX during system suspend.
-After a bit of reconsideration, I think it would still be useful in
-rare circumstances, i.e. when all of the peripherals are runtime
-suspended, but at least one consumer that doesn't depend on GCC isn't
-(some remote procs, venus on some platforms).
-
-Remoteprocs actually directly tap into RPM/RPMh themselves, so that
-may not be necessary, but with Venus I'm not sure.. Then again, running
-Venus without e.g. GCC-dependent storage seems counter-intuitive.
-
-Then I suppose adding RPM to GCC may not be necessary after all (at
-least on platforms that don't use any different collapsible power
-domains).. As opposed to disp/gpu/whatever_cc which usually come with
-either a different domain, or a hefty required-opp and aren't required
-to be on 24/7
+I don't understand why this binding requires ete name. It's not like it
+is a generic name worth preserving. Also, the recommended suffix for
+names is with '-'.
 
 
-One last concern I have is, AFAICU currently CX is assumed by Linux
-to be the parent domain of all GDSCs within GCC (which is not true,
-but that's a separate topic). Can the PM core cope with properly
-dropping CX votes that are propagated up the chain?
+Best regards,
+Krzysztof
 
-i.e. take this excerpt from sc8280xp.dtsi:
-
-// usb_0: usb@a6f8800
-power-domains = <&gcc USB30_PRIM_GDSC>;
-required-opps = <&rpmhpd_opp_nom>;
-
-will runtime suspending USB drop the NOM (val = 256) vote from CX
-if runtime PM is disabled for GCC? I may be totally mixing up
-genpd, OPP and RPM, but to my defense it's not particularly hard
-to do so :D
-
-Konrad
 
