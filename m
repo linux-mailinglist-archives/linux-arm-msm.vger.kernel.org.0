@@ -1,145 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-5515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12A148199A6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 08:37:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C2EA18199B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 08:39:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C2D53284DEF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 07:37:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 79BD428860F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 07:39:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92E871D52A;
-	Wed, 20 Dec 2023 07:37:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9D83171B5;
+	Wed, 20 Dec 2023 07:38:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MvhJHkJR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PZn16j13"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253881D530
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 07:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE44168C4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 07:38:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-5e7415df4d6so3855847b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 23:37:49 -0800 (PST)
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-33664b6d6abso3105082f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 23:38:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703057869; x=1703662669; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=4wEy7aKZB6aXhf/1YBwq1yRA/BeCIlX1y23vgvuPgWw=;
-        b=MvhJHkJRIeAKqOOgWypXF708UzfH1UEx39lOtK8Reae7w4ca7T76EcXCOH3cdCMJEk
-         txEgJCavscXcmsuLB0VbJGIu4NMJJGnxrefMCP202YgBYULmVfWAGI2J/QLNGUVGRfHV
-         yUKLVj8ak1Tns7HWnqsoCuoF3MJ+pmMI8i4T2cN+1nR3mitpSi8VpLnK57FMzxJ2acOR
-         TT3xSP5HFX1G0FNw/3Nhc46uo6WSpL02VIQU2Zyi+Xf5Y4QOd2ZBvgduKtPxiH1z0U+X
-         IzWtvb5DENMCcTRmbkUguwmCwtZWUZvrYSJh39XVoeSrKb+3fKACN7AxZ2YkUor2uZeO
-         ekYA==
+        d=linaro.org; s=google; t=1703057905; x=1703662705; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=z0x7fh3uDCb3Zp83uiLU7euur5+OidRZ51YbD8E0msU=;
+        b=PZn16j13mhwwk/z724/czEU2euXu15xDtxLtcPWswNa8Xmqv6GQYtJqZ8HSKhpWJv6
+         WGKkjxR9rMschuznOJ0sZpdcnpVP9xz6Q0iAjacRLMsSlTfOhnUfCspI0Mj40Ys1/UQi
+         wm4Kagf72i/zeylM1J9Ivfn0no/Cj0agpMhI91DjPMX0SI9vSsRwOrLTY4pIU72e/K12
+         Ed1R4X8eFSolXmWD8ksW+SPj4kSMQ9u7yKtyK2AKK+ACHDN9+aUIw2MEp8BbLNmaEQZQ
+         e46PFdd9F6sqiksEhtN2vZaL9vOlh+7CFKM6fvUyU9vKA835Q1FIA5EdovA6MYUWdV0T
+         mNzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703057869; x=1703662669;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4wEy7aKZB6aXhf/1YBwq1yRA/BeCIlX1y23vgvuPgWw=;
-        b=epPClhs6SCuYx63jdrxAZAi10LYiyaUPdYAhyxbNpEIFmuT1Zy7mu7mSkBhwrB1lpC
-         KM/ShiG88VhS9whxW38Yd+rStSfjXXQRCCVs3c69slo/ZoCILK0VOG0wiunfXWTBcUEL
-         NYRNm6tv2kn0HIMAYAStDOFesY2lfbRoZN0BgKF9ihNpnye7FRBTIukE4QVUbywjXX64
-         8UoUwP0ubzg9+gaU4BX2Wf6XRKSKLrTbhkp6mIQb3ui50ds3yIKy8p4QwwYfB0y5M1k1
-         wjCyxe4N6SZMZtqh+1bQCJuhtVQpQ6Uj6PclWPZV/2+I8pjUHRaoWaQBsbOuxJbvz7d9
-         R4pw==
-X-Gm-Message-State: AOJu0Yz/480u11bmQ73/VSn4s8kDQ/8AU60Za6PSFLxL84MUBHQM9bjk
-	BIlBU6xIthormaOcyc3WUkgeq8z9FcF8RmOxskGP2Q==
-X-Google-Smtp-Source: AGHT+IGR7yLin4e6j26Ca0diNkMq+UpXkjGay37wddrKam/6iQT1PLWaB6BjjU606OEKywmSjK8vjFHclLMr6S1uNB8=
-X-Received: by 2002:a81:4ed6:0:b0:5e4:e8e4:4aa6 with SMTP id
- c205-20020a814ed6000000b005e4e8e44aa6mr1494439ywb.44.1703057869130; Tue, 19
- Dec 2023 23:37:49 -0800 (PST)
+        d=1e100.net; s=20230601; t=1703057905; x=1703662705;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=z0x7fh3uDCb3Zp83uiLU7euur5+OidRZ51YbD8E0msU=;
+        b=uJ86qULvPtkLMq7pNDXRw5klOALSCrl69ybY8sDgkP6OtukaVRZsI42FmB3M35b9lO
+         pWtt/aF6lbJGvbe2nu9Vu2DKcHR69K0UZx/IYMNVo0sY3G+eOVgjlD3rAozPn7C69zPu
+         Ko6qjT+RxTpTwfN8WXf31jrZ5z1eGZJhKAGZl2POeshPL+0tFjRsqiu4pvs4qnkGPbnW
+         Nv/t+Kcebj+QMjCeLtvFyqdWS6Q0u3YtthYU+Nlr39pehMjlPY0cnu+DOmI+y6d+weF/
+         gw4du9Bj9CSfNiaRftyebDKwW9NH9b9yMZggiX4HtjIn2UzwJ3MsjJHnVDFzN03Zfmbj
+         HVEQ==
+X-Gm-Message-State: AOJu0YzJYUe6fV+d2Ow/MrXgj+P3gWqNQRrtS42ZXyAPu1CH+em3wPq3
+	cDrbWZla7RloexOp7CbXlSVAMA==
+X-Google-Smtp-Source: AGHT+IHpF6kUsvEvle2HjwM8JyNE5U/+A74BSKqztM07Rulb/UvEQv19iOJMlznnUZioRQQQXBrAPQ==
+X-Received: by 2002:a5d:49d2:0:b0:336:76a5:5774 with SMTP id t18-20020a5d49d2000000b0033676a55774mr885713wrs.68.1703057905653;
+        Tue, 19 Dec 2023 23:38:25 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.27])
+        by smtp.gmail.com with ESMTPSA id t15-20020a0560001a4f00b003367d48520dsm397648wry.46.2023.12.19.23.38.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Dec 2023 23:38:24 -0800 (PST)
+Message-ID: <4399a91e-d22d-44f7-ad83-9678b27a8cb7@linaro.org>
+Date: Wed, 20 Dec 2023 08:38:23 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <1702899149-21321-1-git-send-email-quic_dikshita@quicinc.com>
- <a033dfc5-dcf1-4969-ad4d-1836ff9ff0a3@linaro.org> <d0ea23ae-8fba-d229-b0f6-dc522f285233@quicinc.com>
-In-Reply-To: <d0ea23ae-8fba-d229-b0f6-dc522f285233@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 20 Dec 2023 09:37:38 +0200
-Message-ID: <CAA8EJpouBOLJ_1Pz_YauuOX+97ud9RkLYRaui4GM6ZFJUKYJMw@mail.gmail.com>
-Subject: Re: [PATCH v2 00/34] Qualcomm video encoder and decoder driver
-To: Vikash Garodia <quic_vgarodia@quicinc.com>
-Cc: Dikshita Agarwal <quic_dikshita@quicinc.com>, linux-media@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, stanimir.k.varbanov@gmail.com, 
-	agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, 
-	mchehab@kernel.org, bryan.odonoghue@linaro.org, linux-arm-msm@vger.kernel.org, 
-	quic_abhinavk@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 03/16] dt-bindings: clock: qcom: Add missing UFS QREF
+ clocks
+Content-Language: en-US
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
+ sboyd@kernel.org, mturquette@baylibre.com, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, quic_cang@quicinc.com
+References: <20231218120712.16438-1-manivannan.sadhasivam@linaro.org>
+ <20231218120712.16438-4-manivannan.sadhasivam@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231218120712.16438-4-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, 20 Dec 2023 at 08:32, Vikash Garodia <quic_vgarodia@quicinc.com> wrote:
->
-> Hi Dmitry,
->
-> On 12/19/2023 12:08 AM, Dmitry Baryshkov wrote:
-> > On 18/12/2023 13:31, Dikshita Agarwal wrote:
-> >> This patch series introduces support for Qualcomm new video acceleration
-> >> hardware architecture, used for video stream decoding/encoding. This driver
-> >> is based on new communication protocol between video hardware and application
-> >> processor.
-> >
-> > This doesn't answer one important point, you have been asked for v1. What is the
-> > actual change point between Venus and Iris? What has been changed so much that
-> > it demands a separate driver. This is the main question for the cover letter,
-> > which has not been answered so far.
-> >
-> > From what I see from you bindings, the hardware is pretty close to what we see
-> > in the latest venus generations. I asssme that there was a change in the vcodec
-> > inteface to the firmware and other similar changes. Could you please point out,
-> > which parts of Venus driver do no longer work or are not applicable for sm8550
->
-> The motivation behind having a separate IRIS driver was discussed earlier in [1]
-> In the same discussion, it was ellaborated on how the impact would be with
-> change in the new firmware interface and other video layers in the driver. I can
-> add this in cover letter in the next revision.
+On 18/12/2023 13:06, Manivannan Sadhasivam wrote:
+> Add missing QREF clocks for UFS MEM and UFS CARD controllers.
+> 
+> Fixes: 0fadcdfdcf57 ("dt-bindings: clock: Add SC8180x GCC binding")
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  include/dt-bindings/clock/qcom,gcc-sc8180x.h | 2 ++
+>  1 file changed, 2 insertions(+)
 
-Ok. So the changes cover the HFI interface. Is that correct?
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-> We see some duplication of code and to handle the same, the series brings in a
-> common code reusability between iris and venus. Aligning the common peices of
-> venus and iris will be a work in progress, once we land the base driver for iris.
+Best regards,
+Krzysztof
 
-This is not how it usually works. Especially not with the patches you
-have posted.
-
-I have the following suggestion how this story can continue:
-You can _start_ by reworking venus driver, separating the HFI /
-firmware / etc interface to an internal interface in the driver. Then
-implement Iris as a plug in for that interface. I might be mistaken
-here, but I think this is the way how this can be beneficial for both
-the video en/decoding on both old and new platforms.
-
-Short rationale:
-The venus driver has a history of supported platforms. There is
-already some kind of buffer management in place. Both developers and
-testers have spent their effort on finding issues there. Sending new
-driver means that we have to spend the same amount of efforts on this.
-Moreover, even from the porter point of view. You are creating new
-bindings for the new hardware. Which do not follow the
-venus-common.yaml. And they do not follow the defined bindings for the
-recent venus platforms. Which means that as a developer I have to care
-about two different ways to describe nearly the same hardware.
-
-> Again qualcomm video team does not have a plan to support sm8550/x1e80100 on
-> venus as the changes are too interleaved to absorb in venus driver. And there is
-> significant interest in community to start validating video driver on sm8550 or
-> x1e80100.
->
-> [1] https://lore.kernel.org/lkml/8c97d866-1cab-0106-4ab3-3ca070945ef7@quicinc.com/
->
-> Regards,
-> Vikash
-
-
-
--- 
-With best wishes
-Dmitry
 
