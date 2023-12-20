@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-5586-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 631B8819F0F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 13:32:49 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AA8A2819F1B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 13:34:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 884481C22984
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 12:32:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3A39F1F27C56
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 12:34:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6733D224E9;
-	Wed, 20 Dec 2023 12:32:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10C2C24B3B;
+	Wed, 20 Dec 2023 12:34:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IduhJkVI"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="L33mAer/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D646925549
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 12:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A909024B2C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 12:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5534dcfdd61so1332824a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 04:32:40 -0800 (PST)
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-553e22940a3so671873a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 04:34:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703075559; x=1703680359; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1703075676; x=1703680476; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=tu7ffZ92sPLeyk+eGDbM7u37bu69MZYvieXsbHFoatg=;
-        b=IduhJkVI3t4Unf9ucRIQO1NTr7r8qOFJZ9yLrOSoEGbWhSl7jV0EQ1UHifFXRjj9i8
-         N3gtDKyZ7r2Yg2jeV06t/B9BmCQLazHF0SMwp6/dL/xy6cSGyM9rULs9O+cBimdOS2Pk
-         Yn96lNY4W1Zzr3DDJq0fw56s10+WraaAECSE/TeBIaWGilnellfHF1O4z8OFezOy/zst
-         L8640jJPa5vNHl67ca3wTOGKBWt2sybs6XyOLiXO4QOK53L9xHXbK2x6/aQSqT0p/TL3
-         /hzS1yMoY7vMpYs8Dh8uc3PHinzmGVGTez06++n6OvrvfF2wv3rvZQl00tjYJedkOwH9
-         CofA==
+        bh=BC20f4XutzLFfpBlBZPN2cj1EyfzNMVi6SKb89pUAMs=;
+        b=L33mAer/gJZ6xWEYOaCWyeB3VBCBFbKo+DoBTuKCU6M8y8JNOTH4sc9lTzE3TlEZnt
+         k7LgEgom9Zgf4pPPz112m/inPQwMP5vIVRoLvmVYe5dOmSW0nD1cR6BxJ8Szm6MyEQ1A
+         fx5h/Pz2Cdplj6zxVSN+v142xHTOrZcZpebCCztIXjjC9XKnpAwiOxtJ7W1iuys6CRqX
+         +LRCTM8JALKnlMhuIa9XCZUxrEflc0zn8SLMw0Hnu/+hiiLYxH3IOfE1QJLW0RoXcalX
+         3vDRDWANdU4ucDTLF2tAUrpN47GmfpVxDXLilHcRSDqNUYkk6w3QnP7sowsqnYtx3CJ4
+         q6wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703075559; x=1703680359;
+        d=1e100.net; s=20230601; t=1703075676; x=1703680476;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tu7ffZ92sPLeyk+eGDbM7u37bu69MZYvieXsbHFoatg=;
-        b=rpC4j/+RUc1AR7f/iwqn4fZDqfu3LcS59w6wqqLxn5MD3kge8FHs/7W3HOmGcOEIKB
-         qSeQivMdDP31O6HYXNSJpOmu10tt13uA8vbeDYtbMBHioAMxjshnIj4E4MAWIASo6qbT
-         pookxl/f+QxZkgY4oZbAyd/+qVmQ5fyX7vij+j6csGdj27V81VEo3p+WAWHbAhEDIi9P
-         UxL3h8Zweg6DVUZUxqtsA0AwILwhDWkVF16H3kAfT23WPRxwkSk1rDmBxGlKc3hCagRx
-         /e4EskNvh4B1nf3wCxBDr76UeqpDjzqOkrWJcgSt7hbzssn+j+esNz2NPPAIIVyT3x4M
-         UVhQ==
-X-Gm-Message-State: AOJu0YwesgC5RpFvX8l01lypwaBkZPLnh0w/R4LjPaBvve7nusvxtHem
-	DxGSSEhnb8TZ6AEfh7t7/cqZyw==
-X-Google-Smtp-Source: AGHT+IGNf6V78YDTanEUyebLe5accfD5uG11DUdZ7pFqQ0L6Uli+ibi8a1IcNx9BKhwpYZEUwHvpUQ==
-X-Received: by 2002:a50:d698:0:b0:54c:bb9c:4b88 with SMTP id r24-20020a50d698000000b0054cbb9c4b88mr2847545edi.5.1703075559111;
-        Wed, 20 Dec 2023 04:32:39 -0800 (PST)
+        bh=BC20f4XutzLFfpBlBZPN2cj1EyfzNMVi6SKb89pUAMs=;
+        b=F5BCuUHSeB4dF36kmmkO/NaJMoVd+KtjTyzt9YT1ou/PDj6nduD4bXukvStMYZolHe
+         04LTT/8ZIg959y/rao4uykXgJ7pR0gD9dy/Crna4gLLnQSeImuyAOy7UyMnC+AIDxbyt
+         55QAf1SYaxHu1wGON6kInQbBo00K+0fDZEqmbLh3rPxjamTIWbThb574IezF5WYgL4ob
+         OeXpFo/C+8OXzJzIbPWpcoMkVJ6hsCfva4vMQqrQ5X4kmm8InkjQY8YKJgklK1P5zHqC
+         f09vUvIHXpRiD/8+usyVzFfk2X67vXQ8aGHPmAKcq5dLIdTM/pGm78JWEbomqeT5bT7B
+         hf5g==
+X-Gm-Message-State: AOJu0YyGrl0dCSSR6jXn/EL+j8/w64cf/Jl6t6moMIjk/VKiUNw2DYL3
+	wcODbSZ04vD72tTadvUj1rGwSg==
+X-Google-Smtp-Source: AGHT+IHfLA0M9+7B/B79vaXWFhdnJgnAtZr90vLKDClciPf9jJT12Xwyn0FDdgw3+Dl0MFf73BejpQ==
+X-Received: by 2002:a17:906:3289:b0:a1a:57f4:e5a4 with SMTP id 9-20020a170906328900b00a1a57f4e5a4mr10680260ejw.140.1703075675982;
+        Wed, 20 Dec 2023 04:34:35 -0800 (PST)
 Received: from [192.168.199.59] (178235179206.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.206])
-        by smtp.gmail.com with ESMTPSA id d12-20020a056402000c00b0055344b92fb6sm3393899edu.75.2023.12.20.04.32.36
+        by smtp.gmail.com with ESMTPSA id lv16-20020a170906bc9000b00a23540a14c8sm3959949ejb.29.2023.12.20.04.34.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Dec 2023 04:32:38 -0800 (PST)
-Message-ID: <8d042095-1e09-45cc-9762-909fe8d663a9@linaro.org>
-Date: Wed, 20 Dec 2023 13:32:36 +0100
+        Wed, 20 Dec 2023 04:34:35 -0800 (PST)
+Message-ID: <cfe3ee21-e1c7-4e54-b544-43cdc8d64bfa@linaro.org>
+Date: Wed, 20 Dec 2023 13:34:33 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,20 +66,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] Fairphone 5 PMIC-GLINK support (USB-C, charger, fuel
- gauge)
+Subject: Re: [PATCH v2 2/2] interconnect: qcom: Add MSM8909 interconnect
+ provider driver
 Content-Language: en-US
-To: Luca Weiss <luca.weiss@fairphone.com>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+To: Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+ Georgi Djakov <djakov@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- cros-qcom-dts-watchers@chromium.org
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
-References: <20231220-fp5-pmic-glink-v1-0-2a1f8e3c661c@fairphone.com>
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Adam Skladowski <a39.skl@gmail.com>
+References: <20231220-icc-msm8909-v2-0-3b68bbed2891@kernkonzept.com>
+ <20231220-icc-msm8909-v2-2-3b68bbed2891@kernkonzept.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -116,30 +114,34 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231220-fp5-pmic-glink-v1-0-2a1f8e3c661c@fairphone.com>
+In-Reply-To: <20231220-icc-msm8909-v2-2-3b68bbed2891@kernkonzept.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 20.12.2023 11:02, Luca Weiss wrote:
-> This series adds all the necessary bits to enable USB-C role switching,
-> charger and fuel gauge (all via pmic-glink) on Fairphone 5.
+On 20.12.2023 11:38, Stephan Gerhold wrote:
+> From: Adam Skladowski <a39.skl@gmail.com>
 > 
-> One thing that could be made different is the pmic-glink compatible.
-> I've chosen to use qcm6490 compatible for it and not sc7280 since
-> there's plenty of firmware variety on sc7280-based platforms and they
-> might require different quirks in the future, so limit this PDOS quirk
-> to just qcm6490 for now.
+> Add driver for interconnect busses found in MSM8909 based platforms.
+> The topology consists of three NoCs that are partially controlled by
+> a RPM processor.
 > 
-> If someone thinks it should be qcom,sc7280-pmic-glink, please let me
-> know :)
-IMO it's best to continue using the "base soc" (which just so happened
-to fall onto sc7280 this time around) for all compatibles, unless the
-derivatives actually had changes
+> In the downstream/vendor kernel from Qualcomm there is an additional
+> "mm-snoc". However, it actually ends up using the same RPM "snoc_clk"
+> as the normal "snoc". It looks like this is actually the same NoC
+> in hardware and the "mm-snoc" was only defined to assign a different
+> "qcom,util-fact" to increase bandwidth requests by a static margin.
+> In mainline we can represent this by assigning the equivalent "ab_coeff"
+> to all the nodes that are part of "mm-snoc" downstream.
+> 
+> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+> [Stephan: Drop separate mm-snoc that exists downstream since it's
+>  actually the same NoC as SNoC in hardware, add qos_offset for BIMC,
+>  add ab_coeff for mm-snoc nodes and BIMC]
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+> ---
+The hard work we put into fixing up smd rpm icc paid off.. thanks!
 
-as far as firmware goes, I *think* CrOS doesn't even have PMIC_GLINK?
-There are however WoA 7280 laptops which totally should have it.. Would
-be nice to hunt some down and see if they report different stuff to
-what's there on android firmware
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
