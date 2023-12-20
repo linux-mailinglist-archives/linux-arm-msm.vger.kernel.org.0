@@ -1,148 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-5606-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5607-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56CB581A0D4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 15:10:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BEBF481A0E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 15:15:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7A31D1C2099B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 14:10:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F0C511C21696
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 14:15:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7AD9C38DE5;
-	Wed, 20 Dec 2023 14:10:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67CBB38DE0;
+	Wed, 20 Dec 2023 14:15:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="meO5DZPJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hxhH1mPX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1BB38DDF
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 14:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBDD238DDD
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 14:15:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-40c3ceded81so57622125e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 06:10:43 -0800 (PST)
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2cc5d9cf766so64716781fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 06:15:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703081442; x=1703686242; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=eDiuBgg43mrOL9mi5BctrXkrAgxQXEG0CN4c+ghpMIY=;
-        b=meO5DZPJEMWbr2EYkWRZ3vTbzY6gh86IE968bd8ygmBJZMVATwo7TateeI22/XGXXK
-         W17rIn9LDA6i/AFs5ejyVNAVcBCYt7HHlGCmdtIGwrM+3h3Rs6FgTlCf+CI16Q8A8bVo
-         K/itMISRRtXQh9GiCOXvAcPjsHlGr7u1tVsEsn2xIeb8mkoLVipw0L3Je88LWXGXBuxx
-         Vo3qUDgCN54YvMzXK/PhDr4HHEW8qPYXeFfu+8XBfUYMmnX2Ui6w80SLYTzwIDXvtFMg
-         4KRE5hW6sjUqNh9gpD6hXP80Hp2cBcqAZCt/gD/4F2I2uQcCZ3a7ydMQPzft3heWe1bR
-         CvyQ==
+        d=linaro.org; s=google; t=1703081719; x=1703686519; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=GVCTTYiJ91+s57jD+K9o4Wr6gXYe09eki8yh7Bk4VS8=;
+        b=hxhH1mPXhKkD8ssEnuEm043LP/Dx5qDez70dFJ20pAVVlkNsj/PaR6PCM75k15azYz
+         UenP1CiqZ+Dr8CNAwaWaZnSZDxvaFAWV6VQoKOPdJoL6VDdbQUopVcmzitsPez9u77la
+         encUCYI472inmz+yov/kvLzS5TT075/xOamgT+tu7vMAg0dldypc5YCXuNghcJqUTojs
+         x4vwWLPChNnnlQygspY8QcNSQxF+GkOC0U1JcTzMe3jTvok9PxFwfWZ1Lt/yLUcwgWFa
+         fQaDJQvhbjMtL02GNmpizvgGJBlVxsWsINCz+RdqdQN4vJjwXPS2C0jVRUyp0Q3LvwWJ
+         hjmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703081442; x=1703686242;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eDiuBgg43mrOL9mi5BctrXkrAgxQXEG0CN4c+ghpMIY=;
-        b=pyXIyEqbu0bUUiObLt/nlIId5l4WY4UFtKv/w5enwFIIa9YsRktjWgWoetb40P5Ht1
-         hDNh8+Ntl0O1g4d6Nqr3fcVuOSlkq+nEJ8D3Zx4VMS+yN4ZUhsOeKieDQnfQMDfEanC3
-         gLmj7D1jXGMy/knr0PbiN/9xjOblBCg5+J99DzfrnDyJJcGhHXzeoI6JMXuc5TX+FBJU
-         LxAosNjxpJYVXHAp/r/b3Z8slN7F4A+77S5tjy90j9OcBswFQA2N/FoTUAfK1ah0+h5J
-         N63j6vwA9E7T5u+Fd2cy/T9qTwcUTd+FCCXz8Re0YU3KbLzvsxrZBUdyRzS97p0XQQb2
-         OI5w==
-X-Gm-Message-State: AOJu0Yz8+Eqq5dJ2OMPQZVG49d/lsU2DROW09TwJw8ZIiHn9zslS0Tw0
-	5D6sDWbUIt9/RlqamZcR7DQpWg==
-X-Google-Smtp-Source: AGHT+IGtwqCWveIC8TYzSB6qWttlHMScHrOUp1RF4PlvDBwlAHie4sh3iEoPe+IpcbzAsx0V++H0tg==
-X-Received: by 2002:a05:600c:4e50:b0:40d:3a34:82ef with SMTP id e16-20020a05600c4e5000b0040d3a3482efmr168389wmq.136.1703081441916;
-        Wed, 20 Dec 2023 06:10:41 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id s21-20020a05600c45d500b0040c3953cda5sm7577322wmo.45.2023.12.20.06.10.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Dec 2023 06:10:41 -0800 (PST)
-Message-ID: <0ee958b5-a863-4c02-9ee1-6af814349860@linaro.org>
-Date: Wed, 20 Dec 2023 15:10:38 +0100
+        d=1e100.net; s=20230601; t=1703081719; x=1703686519;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GVCTTYiJ91+s57jD+K9o4Wr6gXYe09eki8yh7Bk4VS8=;
+        b=tAKpUTZy8MCSfWe5g23o6zcBjoFneoFH2kA10MORHgQUsGUq0/lu89+T4cV/qPybGg
+         Skz9pcStXBaU7K1T8qeS2Bg0oUhAvf9OGcrox3TVeJ3rspjOvuJz+Shh5jhHCA7z35TM
+         JVK06uSy8Q3fPIHY7aETzk6NgbLl5TYhr3/1YsRX6uh/Z1Ggk3IE9KxJhfgwO2397/Mi
+         CnRl/A4C8u8dkVOeOJEMoD39fzU7c38VnzJALH4DO3apIkfN0CygYkdvtTAr1u0nXUBt
+         IkMvlF8jYFWRsqWz+Uz7A6jIGYVy56msc5+TUKZu7BsXwMysEKvkCnpIuBbFLhnujNo3
+         6wLg==
+X-Gm-Message-State: AOJu0Yzkb65HXNVB4Bc5wsmKcidWL6ewAnuNz/eDtDwWIKOungQDIxZA
+	2Snzug372DrEFFeFpg6Ym9Q/YA==
+X-Google-Smtp-Source: AGHT+IGF30HrQ7miU3l5r30Dl5+X6anxhcpbToNfS4jgPhB4ri+adcClT+7X4I2Y1Xo31ii9cFO8Yg==
+X-Received: by 2002:a2e:92c4:0:b0:2c9:ef49:8f05 with SMTP id k4-20020a2e92c4000000b002c9ef498f05mr9133085ljh.86.1703081718740;
+        Wed, 20 Dec 2023 06:15:18 -0800 (PST)
+Received: from [10.167.154.1] (178235179206.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.206])
+        by smtp.gmail.com with ESMTPSA id p8-20020a05640210c800b0055399fbe7b3sm1822446edu.20.2023.12.20.06.15.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Dec 2023 06:15:18 -0800 (PST)
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Date: Wed, 20 Dec 2023 15:15:11 +0100
+Subject: [PATCH] arm64: dts: qcom: sdm845: Use the Low Power Island CX/MX
+ for SLPI
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/2] arm64: dts: qcom: Add coresight nodes for sm8450
-Content-Language: en-US
-To: Mao Jinlong <quic_jinlmao@quicinc.com>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
- <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
- Leo Yan <leo.yan@linaro.org>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
- Yuanfang Zhang <quic_yuanfang@quicinc.com>,
- Tao Zhang <quic_taozha@quicinc.com>, coresight@lists.linaro.org
-References: <20231220140538.13136-1-quic_jinlmao@quicinc.com>
- <20231220140538.13136-3-quic_jinlmao@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231220140538.13136-3-quic_jinlmao@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20231220-topic-sdm845_slpi_lcxmx-v1-1-db7c72ef99ae@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAO72gmUC/x2NQQrDIBAAvxL2XMGohbRfKSWYddMsGCNuG4SQv
+ 0d6nIFhDhAqTALP7oBCOwtvqUF/6wAXnz6kODQGo43tjdHqu2VGJWEd3H2UmHmMWNeqtEU3Pwb
+ vjA3Q6skLqan4hEvr0y/GJnOhmet/93qf5wWoDVNNfgAAAA==
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Dylan Van Assche <me@dylanvanassche.be>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Caleb Connolly <caleb.connolly@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1703081717; l=1035;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=9lF4noAKNDuUswRMaGjgwwfeND5eXR5DTqNtxNwyxDk=;
+ b=Ry3GGZd2tXsxP6MikDMv5dQ5H0XB2wHkZpvj/Ga7txc+qeX09FKM5WIrfrm/5kaBKZIPMS2dR
+ rBLZfEW3bWhBpM1Kxah77xxx6kdaY56aLsYKTc7l6/v3Hjic5CLc1fT
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-On 20/12/2023 15:05, Mao Jinlong wrote:
-> Add coresight components on Qualcomm SM8450 Soc. The components include
-> TMC ETF/ETR, ETE, STM, TPDM, CTI.
-> 
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> ---
+The SLPI is powered by the Low Power Island power rails. Fix the incorrect
+assignment.
 
-I have impression I saw this patch today, so it is not v1. In that case,
-where is the changelog?
+Fixes: 74588aada59a ("arm64: dts: qcom: sdm845: add SLPI remoteproc")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index c2244824355a..237d40486142 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -3366,8 +3366,8 @@ slpi_pas: remoteproc@5c00000 {
+ 
+ 			qcom,qmp = <&aoss_qmp>;
+ 
+-			power-domains = <&rpmhpd SDM845_CX>,
+-					<&rpmhpd SDM845_MX>;
++			power-domains = <&rpmhpd SDM845_LCX>,
++					<&rpmhpd SDM845_LMX>;
+ 			power-domain-names = "lcx", "lmx";
+ 
+ 			memory-region = <&slpi_mem>;
+
+---
+base-commit: 20d857259d7d10cd0d5e8b60608455986167cfad
+change-id: 20231220-topic-sdm845_slpi_lcxmx-03c4f98a423d
 
 Best regards,
-Krzysztof
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
 
