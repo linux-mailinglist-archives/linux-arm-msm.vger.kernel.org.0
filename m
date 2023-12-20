@@ -1,126 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-5538-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5539-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1DCB819A87
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 09:31:05 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED067819A91
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 09:33:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4CFEAB25C6B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 08:31:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A909D288B01
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 08:33:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 928071D520;
-	Wed, 20 Dec 2023 08:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC2D863BD;
+	Wed, 20 Dec 2023 08:33:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xpg6flGd"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oits1DqF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A2C1DA34
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 08:30:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-67f6729a57fso3922096d6.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 00:30:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703061025; x=1703665825; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=1Hp6hDzkalXVHzwngj1E6hzkyPfyrhHPSKm/09FW//U=;
-        b=xpg6flGdC6L6KsRJO5OnDssAeTK3ZU4VlSq3/jHTELFuPXXQwo3d7PcJOWYeD4pgbV
-         eOwoTODwiCZj7d1e850z+3XBq12Mhnw2xd+zosfPzmlUq9jXgs602VDPvoeXmKdoBFBj
-         NbdJyxGl2bZJCbEUFL0lITcdXelj96bHftBs3uTJxCUByPgju7HezzVSORe6BvwQ9Njc
-         ApvMAEjSS44Iw3Ml/ypywmmyvi1lYSCppMFclKB3FdXpPJRVq7vHnXCD+bZnGQLzwSMC
-         BN3bBaPgEAfDQpYVe5vzKfV70qWUIMUpc7b5Ud2GvGAJfO9gO5m/EDiTuujMPws9+0pw
-         Bk9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703061025; x=1703665825;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1Hp6hDzkalXVHzwngj1E6hzkyPfyrhHPSKm/09FW//U=;
-        b=ZgtQhs/2z2crPYTBcvjacpmNZGbCh8QLjlMDNuP42OgBp313IR78Qk5I32IX22uvee
-         90XGXBAUOcW936HRZsLaiggmjAdCkHZ0Gduuy9DnGu3Sqoe4Kr2LpjqVzM8LXJHBIJvv
-         2vouwN5z35B5gk6mpwbhq5lpJlpt4gHPKuyFKZfClibvezW1WkF3z/3+UIfYpxtAmt2u
-         d1lqHK9+7wb6DDMWceP5CISywKjV/Jl8EGt3cTwRQF8vIbOA4F/BHnuNWXw5BkKasJWJ
-         sckP6qBystB7Xl0SG/BqDRdBFrxgVkSLMhwLexQKrljeCdAbgNMdHUkO/iUc3hxqXFTi
-         b+Nw==
-X-Gm-Message-State: AOJu0YxxolLLhaINkrV87nOtCpFKX6CIXJR/Uz6cqf5GJE/DzAuVsTcL
-	Vdv3K19ZtCWbAkZGBv57wH4z
-X-Google-Smtp-Source: AGHT+IFNevoZVeM1/edc6wy5TXyKSe8NyJmPi6C99OU7tYcOeZmMpqFAymznJYajCZJ9JJkwWkRivA==
-X-Received: by 2002:ad4:5aac:0:b0:67f:1ba0:5be8 with SMTP id u12-20020ad45aac000000b0067f1ba05be8mr4253954qvg.55.1703061025183;
-        Wed, 20 Dec 2023 00:30:25 -0800 (PST)
-Received: from thinkpad ([117.217.177.154])
-        by smtp.gmail.com with ESMTPSA id p12-20020ad45f4c000000b0067f19dce377sm4759432qvg.30.2023.12.20.00.30.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Dec 2023 00:30:24 -0800 (PST)
-Date: Wed, 20 Dec 2023 14:00:14 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: andersson@kernel.org, vkoul@kernel.org, sboyd@kernel.org,
-	mturquette@baylibre.com, robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org, quic_cang@quicinc.com
-Subject: Re: [PATCH v2 14/16] arm64: dts: qcom: sc8280xp: Fix UFS PHY clocks
-Message-ID: <20231220083014.GB3544@thinkpad>
-References: <20231218120712.16438-1-manivannan.sadhasivam@linaro.org>
- <20231218120712.16438-15-manivannan.sadhasivam@linaro.org>
- <e905c463-6f89-4939-981a-7a360ed31669@linaro.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875D716434;
+	Wed, 20 Dec 2023 08:33:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BK6Nece009963;
+	Wed, 20 Dec 2023 08:33:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=suSNo3U5hsuWHi0+378sKR4p5lsFJAErXMkh8SjpODM=; b=oi
+	ts1DqF6x8gKIsHRN/hxFbwfcV7YWwINIINl92utrQFc33peIazkQ1lZlWX27OTlg
+	UPyW5x61qRjvpBcgKtoqkdvcHlt8EvuG+a7tlMts/vppKwEfHlndL+2iKMmBupDm
+	Mve6Gcgc78KCeZsImem3t4Ih1F8kRbHkfjceofobD9N7PMMN9O+911gM68myZNhS
+	tmgzN1pkBl17BEmzRCmQrUCInGK3+86o4rEN4aFh9Q6vBY1OKVOtPS8VidbNmew9
+	hBOBjkoj+bhAsCDKlSdBgjYsACEnQKackkmNgHy9ZJUdwd2UiRQLCMfW0lijIzwC
+	9VdfnEmQjhxBWn9DEdFA==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v37vxtyu7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 Dec 2023 08:33:04 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BK8X36o024185
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 Dec 2023 08:33:03 GMT
+Received: from [10.216.20.45] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 20 Dec
+ 2023 00:32:58 -0800
+Message-ID: <55585c99-2359-1e21-51ac-1a211150defd@quicinc.com>
+Date: Wed, 20 Dec 2023 14:02:54 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <e905c463-6f89-4939-981a-7a360ed31669@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2 00/34] Qualcomm video encoder and decoder driver
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        <linux-media@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <stanimir.k.varbanov@gmail.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <mchehab@kernel.org>, <bryan.odonoghue@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <quic_abhinavk@quicinc.com>
+References: <1702899149-21321-1-git-send-email-quic_dikshita@quicinc.com>
+ <a033dfc5-dcf1-4969-ad4d-1836ff9ff0a3@linaro.org>
+ <d0ea23ae-8fba-d229-b0f6-dc522f285233@quicinc.com>
+ <50760ff7-656b-4487-b061-3a679da59917@kernel.org>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <50760ff7-656b-4487-b061-3a679da59917@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: CyXLTm1qSt0eEBaQdODMevObCL-1ed1c
+X-Proofpoint-GUID: CyXLTm1qSt0eEBaQdODMevObCL-1ed1c
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=831
+ suspectscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0
+ bulkscore=0 phishscore=0 spamscore=0 clxscore=1011 mlxscore=0 adultscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312200058
 
-On Wed, Dec 20, 2023 at 01:35:27AM +0100, Konrad Dybcio wrote:
-> On 18.12.2023 13:07, Manivannan Sadhasivam wrote:
-> > QMP PHY used in SC8280XP requires 3 clocks:
-> > 
-> > * ref - 19.2MHz reference clock from RPMh
-> > * ref_aux - Auxiliary reference clock from GCC
-> > * qref - QREF clock from GCC
-> > 
-> > Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 18 ++++++++++++------
-> >  1 file changed, 12 insertions(+), 6 deletions(-)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > index cad59af7ccef..37344abbe8bf 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > @@ -2256,9 +2256,12 @@ ufs_mem_phy: phy@1d87000 {
-> >  			compatible = "qcom,sc8280xp-qmp-ufs-phy";
-> >  			reg = <0 0x01d87000 0 0x1000>;
-> >  
-> > -			clocks = <&gcc GCC_UFS_CARD_CLKREF_CLK>,
-> > -				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
-> > -			clock-names = "ref", "ref_aux";
-> > +			clocks = <&rpmhcc RPMH_CXO_CLK>,
-> > +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
-> > +				 <&gcc GCC_UFS_CARD_CLKREF_CLK>;
-> GCC_UFS_REF_CLKREF_CLK
+Hi Krzysztof,
 
-I'm not sure about this CLK. So I kept it as it is until I verify it.
-
-- Mani
-
+On 12/20/2023 1:45 PM, Krzysztof Kozlowski wrote:
+> On 20/12/2023 07:32, Vikash Garodia wrote:
+>>> From what I see from you bindings, the hardware is pretty close to what we see
+>>> in the latest venus generations. I asssme that there was a change in the vcodec
+>>> inteface to the firmware and other similar changes. Could you please point out,
+>>> which parts of Venus driver do no longer work or are not applicable for sm8550
+>>
+>> The motivation behind having a separate IRIS driver was discussed earlier in [1]
+>> In the same discussion, it was ellaborated on how the impact would be with
+>> change in the new firmware interface and other video layers in the driver. I can
+>> add this in cover letter in the next revision.
+>>
+>> We see some duplication of code and to handle the same, the series brings in a
+>> common code reusability between iris and venus. Aligning the common peices of
+>> venus and iris will be a work in progress, once we land the base driver for iris.
+>>
+>> Again qualcomm video team does not have a plan to support sm8550/x1e80100 on
 > 
-> ?
+> If you want it to get merged, then create such plan, please.
 > 
-> Konrad
+>> venus as the changes are too interleaved to absorb in venus driver. And there is
+>> significant interest in community to start validating video driver on sm8550 or
+>> x1e80100.
+> 
+> Community does not want duplicated drivers leading to maintenance costs.
+> Your approach to this is not how upstreaming process works.
+If you go over the pseudo code which i explained in [1], you can see that the
+maintenance cost would be higher if try to impose the new interface in existing
+driver. Video team, alongwith Stan, have considered the aspect of maintenance
+before starting on this new driver.
 
--- 
-மணிவண்ணன் சதாசிவம்
+[1] https://lore.kernel.org/lkml/8c97d866-1cab-0106-4ab3-3ca070945ef7@quicinc.com/
+
+Regards,
+Vikash
+
 
