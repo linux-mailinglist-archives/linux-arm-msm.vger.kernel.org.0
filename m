@@ -1,88 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-5571-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B86D819E1A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 12:31:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C2F68819E29
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 12:34:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E04D628AD4B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 11:31:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 55232283E78
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 11:34:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A06D219E5;
-	Wed, 20 Dec 2023 11:30:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B6A92137C;
+	Wed, 20 Dec 2023 11:34:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yYioOZO4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VlREs5F6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D4C821A02
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 11:30:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-5e7d306ee27so13372617b3.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 03:30:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703071846; x=1703676646; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5SufIfXUXtE/IGgc3anNuqd58CF8HQVlRsSz3wdrFNs=;
-        b=yYioOZO4GWbJQ1FKbcHMWk8nB634r7ZMkx9PTasis3AWqD43reT+OuSQQafjBzTtml
-         LCUc/X45hvgiiYuLKFilG+/a/XpTD9tM0C/MFVCp0IQpocr0Kgb6JR59TPgE5mRKQDk2
-         HP0V2CLIdru0RGnpkt2QqVGklLHwgesqFN7d6hBwPucDYpncu+C+k6xlO1A6yYeJ6mFR
-         iFQC7POOS1gDKCuL53ubiMXFw2QYSmGCe0xq35U8r4tJ9Yiej5gtEn2MKlJ+2ZhLgL+h
-         VD/1mnnAxyFqGiTtR3t2J5CSm8C2Qo3TI3ITLNJWmz14jL92TUhqR1ooVGaS9BlTfIcz
-         4nVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703071846; x=1703676646;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5SufIfXUXtE/IGgc3anNuqd58CF8HQVlRsSz3wdrFNs=;
-        b=Pl+XSGIM3M/ZgRoOiEK/32R9RhLMd3CnzBJcvmPUd4iyCv2Zff62CkLq37Jqml6x5i
-         PyKOplqTEskNLDi9pXMwOv0/5Z3f/1UA9XwhyJEei0ZKeB1ipezfsPJYSsULZjQPXdTB
-         6ZPWCx3vRDt5vqloHbTaVpMzmuFLTvVECpjmhMeYmIGPJ4bW8If2SSxcWH+dDda3pdSg
-         ojSfVfTB/gNlAfCpmbgAJLE8Q7rR7AdhgJlHVRNQBv8wNgJgTw5WA6gv4/YI02DmCXKN
-         sZ9qBD3DWte/GvC0Eoi2SkOaMWW7c2wsjSY/zcq4LiDsh1OrcjGl6xjkJ7rtHJnBt6Pf
-         6xkw==
-X-Gm-Message-State: AOJu0Yycw1hi+QmvKSPG1mm50kvATSeDTuyaR9i2cvbQQmE/L9vlezsO
-	ejoAOl5DD/MUccfNd3jEoxOBmsogRdQg+U3nePzgtw==
-X-Google-Smtp-Source: AGHT+IGnvk6xRVkvFKhYWp0Qwy3vExCwRaFW2DEjlA/odXuqOOyoMcBeTXq4E6gIhF5x48xCcjowrVFlndR3yRM84pI=
-X-Received: by 2002:a0d:d642:0:b0:5e8:789b:3be6 with SMTP id
- y63-20020a0dd642000000b005e8789b3be6mr480696ywd.17.1703071846489; Wed, 20 Dec
- 2023 03:30:46 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3FE20DF3;
+	Wed, 20 Dec 2023 11:34:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD941C433C9;
+	Wed, 20 Dec 2023 11:33:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1703072041;
+	bh=RAXyl4ljakAiP1xrw3EqjOoDMXwJ4PyKKqT6SUzQ5HA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=VlREs5F6Zd39xwtfPWVcwlaPWa/UsQGFUgyUrblbh5aicN1h/jnFsLs2G0hrzoL1G
+	 KZcBP9H/2iqypNfcsG9tykx34d3DQMzV/xuSwZOTqKlSfJxJ4zdRkdSlT217odhyQw
+	 NZIHuFYJgQhu8Ir6GhUDbTIhWrwUR6FIzL8Z3vvY2xvSnaCQYDEytHqDQb4X/hEmXK
+	 3Tfu8zgPjlXwAK/Bh54i7XTSDLmVeVoS6Ffrf8W/79nC58Wh9yOWjsT2Eo/cdRyH4C
+	 ZsyrLxYMNi5z5DS53F3PFvWoDemeIk1VnnoVd8bcXpV6YWrwFVVsBWXX4MEa8hVgZW
+	 Gq02I2ewKV5/A==
+Date: Wed, 20 Dec 2023 17:03:44 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Chanwoo Lee <cw9316.lee@samsung.com>
+Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+	jejb@linux.ibm.com, martin.petersen@oracle.com,
+	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+	linux-kernel@vger.kernel.org, grant.jung@samsung.com,
+	jt77.jang@samsung.com, dh0421.hwang@samsung.com,
+	sh043.lee@samsung.com
+Subject: Re: [PATCH] scsi: ufs: qcom: Remove unnecessary goto statement from
+ ufs_qcom_config_esi function
+Message-ID: <20231220113344.GC3544@thinkpad>
+References: <CGME20231219082757epcas1p33bda4e0723d3d57552132054d3e5a3fe@epcas1p3.samsung.com>
+ <20231219082740.27644-1-cw9316.lee@samsung.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <202312151810+0800-wangjinchao@xfusion.com>
-In-Reply-To: <202312151810+0800-wangjinchao@xfusion.com>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Wed, 20 Dec 2023 12:30:35 +0100
-Message-ID: <CACRpkdYvCF2Bk-akuOX88xW21DZmvX+7k+L5yhRW00wdhfF9Dw@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: qcom: lpass-lpi: remove duplicated include
-To: Wang Jinchao <wangjinchao@xfusion.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	stone.xulei@xfusion.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20231219082740.27644-1-cw9316.lee@samsung.com>
 
-On Fri, Dec 15, 2023 at 11:11=E2=80=AFAM Wang Jinchao <wangjinchao@xfusion.=
-com> wrote:
+On Tue, Dec 19, 2023 at 05:27:40PM +0900, Chanwoo Lee wrote:
+> From: ChanWoo Lee <cw9316.lee@samsung.com>
+> 
+> There is only one place where goto is used,
+> and it is unnecessary to check the ret value through 'goto out'
+> because the ret value is already true.
+> 
+> Therefore, remove the goto statement and
+> integrate the '!ret' condition into the existing code.
+> 
+> Signed-off-by: ChanWoo Lee <cw9316.lee@samsung.com>
 
-> remove the second #include <linux/seq_file.h>
->
-> Signed-off-by: Wang Jinchao <wangjinchao@xfusion.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Patch applied.
+- Mani
 
-Yours,
-Linus Walleij
+> ---
+>  drivers/ufs/host/ufs-qcom.c | 7 ++-----
+>  1 file changed, 2 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 17e24270477d..8cf803806326 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -1929,7 +1929,7 @@ static int ufs_qcom_config_esi(struct ufs_hba *hba)
+>  					     ufs_qcom_write_msi_msg);
+>  	if (ret) {
+>  		dev_err(hba->dev, "Failed to request Platform MSI %d\n", ret);
+> -		goto out;
+> +		return ret;
+>  	}
+>  
+>  	msi_lock_descs(hba->dev);
+> @@ -1964,11 +1964,8 @@ static int ufs_qcom_config_esi(struct ufs_hba *hba)
+>  				      REG_UFS_CFG3);
+>  		}
+>  		ufshcd_mcq_enable_esi(hba);
+> -	}
+> -
+> -out:
+> -	if (!ret)
+>  		host->esi_enabled = true;
+> +	}
+>  
+>  	return ret;
+>  }
+> -- 
+> 2.29.0
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
