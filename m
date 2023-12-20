@@ -1,196 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-5553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80433819C08
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 11:04:53 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B0BF1819C44
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 11:09:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B30751C2580D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 10:04:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6D099281D87
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 10:09:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FA90219E0;
-	Wed, 20 Dec 2023 10:03:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35D80208B5;
+	Wed, 20 Dec 2023 10:08:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="j5QOHoos"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IGSuSdtw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0397620DE9
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 10:03:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a26964245baso28851566b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 02:03:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1703066583; x=1703671383; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=r4XO7eTq5V2tgbn1CZjnff0P0/4EZ/7bk+Ag+yNw4uk=;
-        b=j5QOHooskpbZ7tJuuKSIB8sbjQnrdcakB7oZ9VNifwJw4tFAzosdquKB00DZck5jib
-         x+q4fnnap/YHifOqsB57hKF9NNdxpmmLu+nwwwQCStp3A/HLklSdrcVeyGR/7UUvZ7dX
-         ELqsj3YnqvyUIrgqz3Wi+CyJ5kWyyEn9QmtC0Dme7fPcW7lSd4T1Dnie9YxCVtJg5cPB
-         cM9SI1gU/4xygGzeBMtOsXGqugZhEofuTWT58NV7Qdg0ZKplWZP/c8xGvgCOOdnbxkBT
-         0HwpcOg7pYTuVJmu7FlUNQ4ybhkgpSDAl08oYW48wupB9RwPmZwTsrAURSA/XnuW0qPF
-         ymyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703066583; x=1703671383;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=r4XO7eTq5V2tgbn1CZjnff0P0/4EZ/7bk+Ag+yNw4uk=;
-        b=Btm6HfE1DQpk+tvu5i+39S5xudx1lgoUxzdXnf6MrReV0z0JtR/sg9UB5Mw0sR4pER
-         IQXuQUboIDlq7+RWHM2P6tstSxrFOfXBfnHaNEroQsILkPFKcwHDoCfYwtauqjjII6+5
-         10ehkZvB3LzZHOzjVTUe0JhZ/2+QAB3S/1k5oukNIiKWgaZTaoi3+FowbxEuI3hY0gxC
-         60e+YN9EQpDflWck7N4Bjo9oymh5HwUuT0lFRfie+DAc71llqOKK+kN54Yourq+S/Dwo
-         +HgNzHKDYCBCRoqfRlBidblFAM03tpIIe8Ufk2W/BRDmhAhiEs5l1Wtfn9xg/LYqxtiw
-         zP7g==
-X-Gm-Message-State: AOJu0Yz7VTyhCLW8scd4ayPGX6QOeZFLYJdOn0OFEHTx0/88BvHFyTfc
-	D9MykpzBmyYeaMd+eYNBAkFrmA==
-X-Google-Smtp-Source: AGHT+IEbEhGD1wKLG7GiNnVJ3JrKSvGoOg9IQgsOKKagASOiSEzuam7Zj/WVz99NylAwPsFOW50kKw==
-X-Received: by 2002:a17:906:19:b0:a23:6084:d5c4 with SMTP id 25-20020a170906001900b00a236084d5c4mr2144865eja.34.1703066583077;
-        Wed, 20 Dec 2023 02:03:03 -0800 (PST)
-Received: from otso.luca.vpn.lucaweiss.eu (2a02-8388-6584-6400-d322-7350-96d2-429d.cable.dynamic.v6.surfer.at. [2a02:8388:6584:6400:d322:7350:96d2:429d])
-        by smtp.gmail.com with ESMTPSA id f18-20020a170906561200b00a2356a7eafasm3718681ejq.199.2023.12.20.02.03.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Dec 2023 02:03:02 -0800 (PST)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Wed, 20 Dec 2023 11:02:58 +0100
-Subject: [PATCH 3/3] arm64: dts: qcom: qcm6490-fairphone-fp5: Add PMIC
- GLINK
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D1B20B03;
+	Wed, 20 Dec 2023 10:08:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BK95Ylu025177;
+	Wed, 20 Dec 2023 10:08:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=uhhFGihaGd26R0sRUHpGszdFchbJbZ+tsPToykepTJo=; b=IG
+	SuSdtw+ZP626NqXnqQXcHE0lzWt8MxPJICiHAFPFll8qgiSrXQar2/s3+9WCimQ0
+	Jpe8zDS/bqhcCpbIP2qMyzcuXl9YsjXMpLr8Xa4q1Pdqk6ZhZPc7xXEGJx5Pss7F
+	U+3prl+KSaveyd1McldjNzRfEg4pfQbYVqoWSj2OfjdM8iUf/PSyZr5HUmg1d2oH
+	xuuTt6UtmBpU9uLYEoLdNAQp9PauTqILA7FtDqzSLS9+lhTl0m+QzP7xcy47vBuN
+	CbVsIMPge5k/1C9d4gOGDRsmgBFx7ClEDOVEI9PkgN0UVliYcyKZyOC5uGTMxJeU
+	AAM/UdNUDOFSk3iTvgow==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v3v338aca-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 Dec 2023 10:08:02 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BKA81wb001394
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 Dec 2023 10:08:01 GMT
+Received: from [10.253.32.162] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 20 Dec
+ 2023 02:07:55 -0800
+Message-ID: <0c416e86-2fd3-4ace-a42f-83c7f4dd25b9@quicinc.com>
+Date: Wed, 20 Dec 2023 18:07:53 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/5] dt-bindings: net: ipq4019-mdio: Document ipq5332
+ platform
+Content-Language: en-US
+To: Conor Dooley <conor@kernel.org>
+CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <andrew@lunn.ch>, <hkallweit1@gmail.com>, <linux@armlinux.org.uk>,
+        <robert.marko@sartura.hr>, <linux-arm-msm@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_srichara@quicinc.com>
+References: <2e77e3b1-00b6-46b9-bfed-7cae3ffa15e9@linaro.org>
+ <7bae46fd-63fd-4b86-9a56-73052cf0ea95@quicinc.com>
+ <5a8095e6-b6a6-4d11-b006-31519e8d8622@linaro.org>
+ <7466b655-2b7e-44f2-a510-6e0cc1b95248@quicinc.com>
+ <602759ce-c93d-4111-9272-1dce7e4a170a@linaro.org>
+ <f656d1c7-ea86-405a-9165-9eb079ea6f2a@quicinc.com>
+ <20231215-gauze-sprinkled-172729f22b6c@spud>
+ <9eab958e-d91f-4f3c-aadd-6b34eaed2cef@quicinc.com>
+ <20231216-unearned-lucid-4bd2ddcd4ac2@spud>
+ <af1dff98-a63e-47b3-a709-6f4110a97529@quicinc.com>
+ <20231219-childcare-sugar-d1ecde8bd0b0@spud>
+From: Jie Luo <quic_luoj@quicinc.com>
+In-Reply-To: <20231219-childcare-sugar-d1ecde8bd0b0@spud>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231220-fp5-pmic-glink-v1-3-2a1f8e3c661c@fairphone.com>
-References: <20231220-fp5-pmic-glink-v1-0-2a1f8e3c661c@fairphone.com>
-In-Reply-To: <20231220-fp5-pmic-glink-v1-0-2a1f8e3c661c@fairphone.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- cros-qcom-dts-watchers@chromium.org
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org, 
- Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.12.4
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: BOZj3fUucv2hHInaerU2IgGZJQhhZ2du
+X-Proofpoint-GUID: BOZj3fUucv2hHInaerU2IgGZJQhhZ2du
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
+ mlxscore=0 malwarescore=0 mlxlogscore=999 clxscore=1015 priorityscore=1501
+ adultscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
+ definitions=main-2312200071
 
-Via the PMIC GLINK driver we can get info about fuel gauge, charger and
-USB connector events. Add the node to the dts and configure USB so that
-role switching works.
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 46 +++++++++++++++++++++-
- arch/arm64/boot/dts/qcom/sc7280.dtsi               | 19 +++++++++
- 2 files changed, 64 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-index 176898c9dbbd..e9076d92ebd1 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-@@ -71,6 +71,41 @@ event-hall-sensor {
- 		};
- 	};
- 
-+	pmic-glink {
-+		compatible = "qcom,qcm6490-pmic-glink", "qcom,pmic-glink";
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		connector@0 {
-+			compatible = "usb-c-connector";
-+			reg = <0>;
-+			power-role = "dual";
-+			data-role = "dual";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+
-+					pmic_glink_hs_in: endpoint {
-+						remote-endpoint = <&usb_1_dwc3_hs>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+
-+					pmic_glink_ss_in: endpoint {
-+						remote-endpoint = <&usb_1_dwc3_ss>;
-+					};
-+				};
-+			};
-+		};
-+	};
-+
- 	reserved-memory {
- 		cont_splash_mem: cont-splash@e1000000 {
- 			reg = <0x0 0xe1000000 0x0 0x2300000>;
-@@ -886,7 +921,16 @@ &usb_1 {
- };
- 
- &usb_1_dwc3 {
--	dr_mode = "peripheral";
-+	dr_mode = "otg";
-+	usb-role-switch;
-+};
-+
-+&usb_1_dwc3_hs {
-+	remote-endpoint = <&pmic_glink_hs_in>;
-+};
-+
-+&usb_1_dwc3_ss {
-+	remote-endpoint = <&pmic_glink_ss_in>;
- };
- 
- &usb_1_hsphy {
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index cd7641fd09b2..3b268620bea8 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -4065,6 +4065,25 @@ usb_1_dwc3: usb@a600000 {
- 				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
- 				phy-names = "usb2-phy", "usb3-phy";
- 				maximum-speed = "super-speed";
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+
-+						usb_1_dwc3_hs: endpoint {
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+
-+						usb_1_dwc3_ss: endpoint {
-+						};
-+					};
-+				};
- 			};
- 		};
- 
+On 12/19/2023 11:47 PM, Conor Dooley wrote:
+> On Sat, Dec 16, 2023 at 11:37:08PM +0800, Jie Luo wrote:
+>> On 12/16/2023 10:16 PM, Conor Dooley wrote:
+>>> On Sat, Dec 16, 2023 at 09:16:49PM +0800, Jie Luo wrote:
+>>>> On 12/15/2023 9:41 PM, Conor Dooley wrote:
+>>>>> On Fri, Dec 15, 2023 at 08:40:20PM +0800, Jie Luo wrote:
+>>>>>> On 12/15/2023 8:19 PM, Krzysztof Kozlowski wrote:
+>>>>>>> On 15/12/2023 12:42, Jie Luo wrote:
+> 
+>>>>>> There is also no enable control for the reference clocks since it is
+>>>>>> inputted by the hardware PIN connection, i will update these description
+>>>>>> in the DT to make it more clear.
+>>>>>
+>>>>> Again, this does not justify having custom properties for this clock,
+>>>>> as it is no different to other platforms. As far as I can tell, the only
+>>>>> thing that a standard "clocks" property cannot convey here is the
+>>>>> internal reference. I would suggest that since there is only one
+>>>>> internal clock frequency, the absence of this particular clock in the
+>>>>> "clocks" property can be used to determine that the reference is the
+>>>>> internal on
+>>>
+>>> I'm surprised you didn't pick up on this, but there are actually _2_
+>>> internal references, which I have just noticed while double checking the
+>>> binding patch.
+>>
+>> i noticed this, the reference clock source can be supported by clocks as
+>> you suggested here, it is really helpful.
+>>
+>>> What is the impact of using the 48 MHz or 96 MHz internal reference?
+>> They works on the different IPQ platform, 96MHZ internal reference is
+>> used on IPQ5018, the internal 48MHZ is used on the IPQ5332, that is
+>> same as what you describe above, the different clock source rate is
+>> selected as the different register value, then the PLL can do the
+>> corresponding config to output the correct clock rate, the external
+>> clock source is also same if the clock rate is same, just the different
+>> hardware PIN is selected if the external reference source is configured.
+> 
+> 
+> Ah, so there is only one internal reference frequency per device. Then
+> my suggestion to use the presence of the clock in the clocks property
+> should work, just the fallback to the internal reference is going to
+> depend on the compatible.
+> 
+> Thanks,
+> Conor.
 
--- 
-2.43.0
+The reference clock source is configurable, normally there is the fix
+reference clock configured per each IPQ platform, but we should keep
+the reference clock source configurable in case of the reference clock
+source switch needed in the future.
 
+you are right, the reference clock source can be distinguished by
+checking the clock rate and the compatible string.
 
