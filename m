@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-5554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5555-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0BF1819C44
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 11:09:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7291E819C7D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 11:16:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6D099281D87
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 10:09:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2F46F287446
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 10:16:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35D80208B5;
-	Wed, 20 Dec 2023 10:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D34B4200D5;
+	Wed, 20 Dec 2023 10:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IGSuSdtw"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hoa4Rx2p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D1B20B03;
-	Wed, 20 Dec 2023 10:08:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747FA208A2;
+	Wed, 20 Dec 2023 10:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BK95Ylu025177;
-	Wed, 20 Dec 2023 10:08:02 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BK8luVw028280;
+	Wed, 20 Dec 2023 10:11:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=uhhFGihaGd26R0sRUHpGszdFchbJbZ+tsPToykepTJo=; b=IG
-	SuSdtw+ZP626NqXnqQXcHE0lzWt8MxPJICiHAFPFll8qgiSrXQar2/s3+9WCimQ0
-	Jpe8zDS/bqhcCpbIP2qMyzcuXl9YsjXMpLr8Xa4q1Pdqk6ZhZPc7xXEGJx5Pss7F
-	U+3prl+KSaveyd1McldjNzRfEg4pfQbYVqoWSj2OfjdM8iUf/PSyZr5HUmg1d2oH
-	xuuTt6UtmBpU9uLYEoLdNAQp9PauTqILA7FtDqzSLS9+lhTl0m+QzP7xcy47vBuN
-	CbVsIMPge5k/1C9d4gOGDRsmgBFx7ClEDOVEI9PkgN0UVliYcyKZyOC5uGTMxJeU
-	AAM/UdNUDOFSk3iTvgow==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v3v338aca-1
+	qcppdkim1; bh=+ISZfyjJ8xoWX7MpOHN6GSDh8GtMiiJz24SeTeDi1kA=; b=ho
+	a4Rx2pKcMyDMLauHx7zsoaPmr00+JjeovS1lj6JU4Ll2+p4OrYsv31VBfjiktqQi
+	yB4zzlBQLUSJdIxblxjizyj3tJKMVy2gmk1eqguSZldTcA4/NrlD2AO4dChAx3+F
+	S5+YrYcOz3uUQEJUg9kjyhriX47hzij1oeW1HW6WqExRtpBhQB0mc8pX2D2TiwFF
+	+HjaPGXGiUmtA0DhSifBVnM9Pcsz1LWV8YHbCJ1gZknXjldgqhFblHG/q14/Au0Y
+	d12MfyOi7MBQROPaO1lFm/HzpwCaOaa+sKA+MIp87Hs1Bg2ITeqhA2rbM5KkfLAG
+	AGv1wgYTztpBUNeRvO9w==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v3tmm0j63-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Dec 2023 10:08:02 +0000 (GMT)
+	Wed, 20 Dec 2023 10:11:43 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BKA81wb001394
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BKABgYP020814
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Dec 2023 10:08:01 GMT
+	Wed, 20 Dec 2023 10:11:42 GMT
 Received: from [10.253.32.162] (10.80.80.8) by nalasex01c.na.qualcomm.com
  (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 20 Dec
- 2023 02:07:55 -0800
-Message-ID: <0c416e86-2fd3-4ace-a42f-83c7f4dd25b9@quicinc.com>
-Date: Wed, 20 Dec 2023 18:07:53 +0800
+ 2023 02:11:37 -0800
+Message-ID: <a4f566c2-17bd-480b-be72-fef808f0be43@quicinc.com>
+Date: Wed, 20 Dec 2023 18:11:34 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,10 +58,10 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 5/5] dt-bindings: net: ipq4019-mdio: Document ipq5332
  platform
-Content-Language: en-US
-To: Conor Dooley <conor@kernel.org>
-CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Conor Dooley
+	<conor@kernel.org>
+CC: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
         <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
         <pabeni@redhat.com>, <robh+dt@kernel.org>,
         <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
@@ -69,7 +69,9 @@ CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, <agross@kernel.org>,
         <robert.marko@sartura.hr>, <linux-arm-msm@vger.kernel.org>,
         <netdev@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>, <quic_srichara@quicinc.com>
-References: <2e77e3b1-00b6-46b9-bfed-7cae3ffa15e9@linaro.org>
+References: <26c8b0b1-5ea9-45cc-adf3-0d0b03a1284d@linaro.org>
+ <4b9c56b8-3b29-4861-a3d5-2da26fbc14b4@quicinc.com>
+ <2e77e3b1-00b6-46b9-bfed-7cae3ffa15e9@linaro.org>
  <7bae46fd-63fd-4b86-9a56-73052cf0ea95@quicinc.com>
  <5a8095e6-b6a6-4d11-b006-31519e8d8622@linaro.org>
  <7466b655-2b7e-44f2-a510-6e0cc1b95248@quicinc.com>
@@ -79,48 +81,31 @@ References: <2e77e3b1-00b6-46b9-bfed-7cae3ffa15e9@linaro.org>
  <9eab958e-d91f-4f3c-aadd-6b34eaed2cef@quicinc.com>
  <20231216-unearned-lucid-4bd2ddcd4ac2@spud>
  <af1dff98-a63e-47b3-a709-6f4110a97529@quicinc.com>
- <20231219-childcare-sugar-d1ecde8bd0b0@spud>
+ <4ad99501-01e2-47e7-b185-f7f96d872bf7@linaro.org>
+Content-Language: en-US
 From: Jie Luo <quic_luoj@quicinc.com>
-In-Reply-To: <20231219-childcare-sugar-d1ecde8bd0b0@spud>
+In-Reply-To: <4ad99501-01e2-47e7-b185-f7f96d872bf7@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: BOZj3fUucv2hHInaerU2IgGZJQhhZ2du
-X-Proofpoint-GUID: BOZj3fUucv2hHInaerU2IgGZJQhhZ2du
+X-Proofpoint-GUID: ggKUiSiqCP1KhU6T7wNkwBeU2REdVsUA
+X-Proofpoint-ORIG-GUID: ggKUiSiqCP1KhU6T7wNkwBeU2REdVsUA
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- mlxscore=0 malwarescore=0 mlxlogscore=999 clxscore=1015 priorityscore=1501
- adultscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
- definitions=main-2312200071
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 impostorscore=0 mlxscore=0 bulkscore=0 clxscore=1015
+ priorityscore=1501 mlxlogscore=999 adultscore=0 malwarescore=0
+ phishscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2311290000 definitions=main-2312200071
 
 
 
-On 12/19/2023 11:47 PM, Conor Dooley wrote:
-> On Sat, Dec 16, 2023 at 11:37:08PM +0800, Jie Luo wrote:
->> On 12/16/2023 10:16 PM, Conor Dooley wrote:
->>> On Sat, Dec 16, 2023 at 09:16:49PM +0800, Jie Luo wrote:
->>>> On 12/15/2023 9:41 PM, Conor Dooley wrote:
->>>>> On Fri, Dec 15, 2023 at 08:40:20PM +0800, Jie Luo wrote:
->>>>>> On 12/15/2023 8:19 PM, Krzysztof Kozlowski wrote:
->>>>>>> On 15/12/2023 12:42, Jie Luo wrote:
-> 
->>>>>> There is also no enable control for the reference clocks since it is
->>>>>> inputted by the hardware PIN connection, i will update these description
->>>>>> in the DT to make it more clear.
->>>>>
->>>>> Again, this does not justify having custom properties for this clock,
->>>>> as it is no different to other platforms. As far as I can tell, the only
->>>>> thing that a standard "clocks" property cannot convey here is the
->>>>> internal reference. I would suggest that since there is only one
->>>>> internal clock frequency, the absence of this particular clock in the
->>>>> "clocks" property can be used to determine that the reference is the
->>>>> internal on
+On 12/20/2023 3:28 PM, Krzysztof Kozlowski wrote:
+> On 16/12/2023 16:37, Jie Luo wrote:
 >>>
 >>> I'm surprised you didn't pick up on this, but there are actually _2_
 >>> internal references, which I have just noticed while double checking the
@@ -128,30 +113,23 @@ On 12/19/2023 11:47 PM, Conor Dooley wrote:
 >>
 >> i noticed this, the reference clock source can be supported by clocks as
 >> you suggested here, it is really helpful.
->>
+>>>
 >>> What is the impact of using the 48 MHz or 96 MHz internal reference?
 >> They works on the different IPQ platform, 96MHZ internal reference is
 >> used on IPQ5018, the internal 48MHZ is used on the IPQ5332, that is
->> same as what you describe above, the different clock source rate is
->> selected as the different register value, then the PLL can do the
->> corresponding config to output the correct clock rate, the external
->> clock source is also same if the clock rate is same, just the different
->> hardware PIN is selected if the external reference source is configured.
+> 
+> So the binding is just incorrect. Why do you even consider configuring
+> 96 MHz internal reference on IPQ5332?
 > 
 > 
-> Ah, so there is only one internal reference frequency per device. Then
-> my suggestion to use the presence of the clock in the clocks property
-> should work, just the fallback to the internal reference is going to
-> depend on the compatible.
+> Best regards,
+> Krzysztof
 > 
-> Thanks,
-> Conor.
 
-The reference clock source is configurable, normally there is the fix
-reference clock configured per each IPQ platform, but we should keep
-the reference clock source configurable in case of the reference clock
-source switch needed in the future.
-
-you are right, the reference clock source can be distinguished by
-checking the clock rate and the compatible string.
+Normally there is the fix reference clock source used per each IPQ
+platform, but we should keep it configurable, the CMN PLL block is
+same among the supported IPQ platforms, Maybe there is special case
+to switch the reference clock in the future.
+i will also update the dtbinding doc to limit the reference clock based
+on the compatible string.
 
