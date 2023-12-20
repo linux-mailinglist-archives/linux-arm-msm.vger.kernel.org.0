@@ -1,255 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-5621-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5622-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7762281A713
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 19:55:55 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F37981A778
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 21:05:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8ECEE1C233FE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 18:55:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EEF6E1F23C7F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 20:05:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E98F5405D3;
-	Wed, 20 Dec 2023 18:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F9D64879F;
+	Wed, 20 Dec 2023 20:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hqC7PGOD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GYCEt0zb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC8934566;
-	Wed, 20 Dec 2023 18:55:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BKImDVP019641;
-	Wed, 20 Dec 2023 18:55:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=uH4lXBMfSLsG7Tfm2blXseD6lH18fQ3JA6FeQVu9E0w=; b=hq
-	C7PGODirpYIKKGWxf+8ZG+m/jDj2BbwhSKhAiNrCB57Lay/8NOzygcOAQwHVtMmR
-	3Me1iOwoMdVInTyrgTO8IpVAzZFcnblKPSpQgRurSszYkJTDI64CQrFyKRxGgR6d
-	XfE6PoyfgebCyaRCa9bTrPqQcVX1qRynLwY6mv8bfvLLX2pbv+tpiYxXmG9IyZyC
-	/6W7sKD18YS9sitkWMVQfxNU2z8v3V6kOuzIadC201PrMuDovxz/OtCT0qBznmEQ
-	D3ud4nDLobZct8UITX8XwTZI4H43LKafGAL+j98EE1Al4OPlcY+boz5HV95ib5K9
-	NRIfb0pUFp98h1dZWqLQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v3wt9sfq1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Dec 2023 18:55:44 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BKItgtp014507
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Dec 2023 18:55:42 GMT
-Received: from [10.110.55.244] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 20 Dec
- 2023 10:55:42 -0800
-Message-ID: <cf2c1c84-2d9d-1be4-997f-d3dde362b27a@quicinc.com>
-Date: Wed, 20 Dec 2023 10:55:41 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6F947771;
+	Wed, 20 Dec 2023 20:05:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77BD5C433C9;
+	Wed, 20 Dec 2023 20:05:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1703102741;
+	bh=4Na6zHOF3IuiCd92bkpwf7VYHr722ENTcJQapD0mvbI=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=GYCEt0zbeTjsCwTyUEClYJa+WEHAfzX5NHOgLwDmBrNkFf4NoxSX5rDb0ErBRwuYD
+	 B+kwSxTjp4m7890M4CfzAaAuYDGbvUZygPGFtxe/s/v9iCUvHB6t9eQtXcqXP9EJVg
+	 o68t5tufAT2VaRce+2PL3spq5BIGez4rNf8qdcskBLLtUT8/XqkAI1a9coMQd5R3vX
+	 mX+t6ChBiK6dLC5A9o09V9giirFqH0DNHmF3m1fu72qBIpFqyMwp5lWE48QUCBEtEY
+	 ju+YaJ1H7jLRtuFTAVFgV48WabEeYq1gMa5JLsaWn8bUAaHgjqysCDKF+yfHr3CoJY
+	 fJyhzkoiUOXSw==
+Message-ID: <ba20c2000c5c37c14c03b94f208b2961.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v2 00/34] Qualcomm video encoder and decoder driver
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vikash Garodia
-	<quic_vgarodia@quicinc.com>
-CC: Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        <linux-media@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <stanimir.k.varbanov@gmail.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mchehab@kernel.org>, <bryan.odonoghue@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <1702899149-21321-1-git-send-email-quic_dikshita@quicinc.com>
- <a033dfc5-dcf1-4969-ad4d-1836ff9ff0a3@linaro.org>
- <d0ea23ae-8fba-d229-b0f6-dc522f285233@quicinc.com>
- <CAA8EJpouBOLJ_1Pz_YauuOX+97ud9RkLYRaui4GM6ZFJUKYJMw@mail.gmail.com>
- <9d94317c-5da9-5494-26a2-12007761a1e5@quicinc.com>
- <CAA8EJpoCGRT=eETab8mF2MZZ04RmCkNnFKaRBFoUYk5qqDAPhg@mail.gmail.com>
- <eb288a33-a8c3-9dea-ffc1-e97a69be9a4c@quicinc.com>
- <CAA8EJprZ1TK7UwfhSh2PtwuNJLUMace7MWnzQkrUMqV5R+WgOA@mail.gmail.com>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAA8EJprZ1TK7UwfhSh2PtwuNJLUMace7MWnzQkrUMqV5R+WgOA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: OBUwtanPNFOUjwoF-KiN5sCuBD_Tksqv
-X-Proofpoint-GUID: OBUwtanPNFOUjwoF-KiN5sCuBD_Tksqv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=858
- spamscore=0 lowpriorityscore=0 mlxscore=0 suspectscore=0 adultscore=0
- clxscore=1015 impostorscore=0 bulkscore=0 priorityscore=1501
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312200134
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20231124151847.1915-3-ansuelsmth@gmail.com>
+References: <20231124151847.1915-1-ansuelsmth@gmail.com> <20231124151847.1915-3-ansuelsmth@gmail.com>
+Subject: Re: [PATCH v7 2/3] clk: qcom: clk-rcg2: add support for rcg2 freq multi ops
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: Christian Marangi <ansuelsmth@gmail.com>
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Christian Marangi <ansuelsmth@gmail.com>, Konrad Dybcio <konrad.dybcio@linaro.org>, Michael Turquette <mturquette@baylibre.com>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Date: Wed, 20 Dec 2023 12:05:39 -0800
+User-Agent: alot/0.10
 
-Hi Dmitry and Krzysztof
+Quoting Christian Marangi (2023-11-24 07:18:46)
+> Some RCG frequency can be reached by multiple configuration.
+>=20
+> Add clk_rcg2_fm_ops ops to support these special RCG configurations.
+>=20
+> These alternative ops will select the frequency using a CEIL policy.
+>=20
+> When the correct frequency is found, the correct config is selected by
+> calculating the final rate (by checking the defined parent and values
+> in the config that is being checked) and deciding based on the one that
+> is less different than the requested one.
+>=20
+> These check are skipped if there is just on config for the requested
 
-On 12/20/2023 1:52 AM, Dmitry Baryshkov wrote:
-> On Wed, 20 Dec 2023 at 10:53, Vikash Garodia <quic_vgarodia@quicinc.com> wrote:
->>
->> On 12/20/2023 2:09 PM, Dmitry Baryshkov wrote:
->>> On Wed, 20 Dec 2023 at 10:14, Vikash Garodia <quic_vgarodia@quicinc.com> wrote:
->>>>
->>>> Hi,
->>>>
->>>> On 12/20/2023 1:07 PM, Dmitry Baryshkov wrote:
->>>>> On Wed, 20 Dec 2023 at 08:32, Vikash Garodia <quic_vgarodia@quicinc.com> wrote:
->>>>>>
->>>>>> Hi Dmitry,
->>>>>>
->>>>>> On 12/19/2023 12:08 AM, Dmitry Baryshkov wrote:
->>>>>>> On 18/12/2023 13:31, Dikshita Agarwal wrote:
->>>>>>>> This patch series introduces support for Qualcomm new video acceleration
->>>>>>>> hardware architecture, used for video stream decoding/encoding. This driver
->>>>>>>> is based on new communication protocol between video hardware and application
->>>>>>>> processor.
->>>>>>>
->>>>>>> This doesn't answer one important point, you have been asked for v1. What is the
->>>>>>> actual change point between Venus and Iris? What has been changed so much that
->>>>>>> it demands a separate driver. This is the main question for the cover letter,
->>>>>>> which has not been answered so far.
->>>>>>>
->>>>>>>  From what I see from you bindings, the hardware is pretty close to what we see
->>>>>>> in the latest venus generations. I asssme that there was a change in the vcodec
->>>>>>> inteface to the firmware and other similar changes. Could you please point out,
->>>>>>> which parts of Venus driver do no longer work or are not applicable for sm8550
->>>>>>
->>>>>> The motivation behind having a separate IRIS driver was discussed earlier in [1]
->>>>>> In the same discussion, it was ellaborated on how the impact would be with
->>>>>> change in the new firmware interface and other video layers in the driver. I can
->>>>>> add this in cover letter in the next revision.
->>>>>
->>>>> Ok. So the changes cover the HFI interface. Is that correct?
->>>> Change wise, yes.
->>>>
->>>>>> We see some duplication of code and to handle the same, the series brings in a
->>>>>> common code reusability between iris and venus. Aligning the common peices of
->>>>>> venus and iris will be a work in progress, once we land the base driver for iris.
->>>>>
->>>>> This is not how it usually works. Especially not with the patches you
->>>>> have posted.
->>>>>
->>>>> I have the following suggestion how this story can continue:
->>>>> You can _start_ by reworking venus driver, separating the HFI /
->>>>> firmware / etc interface to an internal interface in the driver. Then
->>>>> implement Iris as a plug in for that interface. I might be mistaken
->>>>> here, but I think this is the way how this can be beneficial for both
->>>>> the video en/decoding on both old and new platforms.
->>>>
->>>> HFI/firmware interface is already confined to HFI layer in the existing venus
->>>> driver. We explained in the previous discussion [1], on how the HFI change
->>>> impacts the other layers by taking example of a DRC usecase. Please have a look
->>>> considering the usecase and the impact it brings to other layers in the driver.
->>>
->>> I have looked at it. And I still see huge change in the interface
->>> side, but it doesn't tell me about the hardware changes.
->>
->> I hope you noticed how the common layers like decoder, response, state layers
->> are impacted in handling one of usecase. Now add that to all the different
->> scenarios like seek, drain, DRC during seek, DRC during drain, etc.
-> 
-> Yes, for sure.
-> 
->>
->>> Have you evaluated the other opportunity?
->>>
->>> To have a common platform interface and firmware-specific backend?
->>>
->>> You have already done a part of it, but from a different perspective.
->>> You have tried to move common code out of the driver. Instead we are
->>> asking you to do a different thing. Move non-common code within the
->>> driver. Then add your code on top of that.
->>
->> For common platform - yes, we are bringing in common stuff like PIL.
->> Other than that, abstraction to firmware interface is not that confined to one
->> layer. It spreads over decoder/encoder/common layers. Now when majority of the
->> layers/code is different, we planned to make it in parallel to venus and have a
->> common layer having common things to both iris and venus.
-> 
-> My suggestion still holds. Start with this common platform code.
-> Rather than arguing back and forth, could you please perform an
-> experiment on the current venus driver and move firmware interface to
-> subdirs, leaving just the platform / PIL / formats / etc in place?
-> This will at least allow us to determine whether it is a feasible
-> concept or not.
-> 
+s/on/one/
 
-Your comments are valid. The platform driver piece and some other pieces 
-still are common between venus and iris despite this initial effort of 
-moving common pieces out. I have also seen this from whatever I have 
-reviewed.
+> freq.
+>=20
+> qcom_find_freq_multi is added to search the freq with the new struct
+> freq_multi_tbl.
+> __clk_rcg2_select_conf is used to select the correct conf by simulating
+> the final clock.
+> If a conf can't be found due to parent not reachable, a WARN is printed
+> and -EINVAL is returned.
+>=20
+> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+[...]
+> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+> index e22baf3a7112..2393c7df0402 100644
+> --- a/drivers/clk/qcom/clk-rcg2.c
+> +++ b/drivers/clk/qcom/clk-rcg2.c
+> @@ -266,6 +266,115 @@ static int _freq_tbl_determine_rate(struct clk_hw *=
+hw, const struct freq_tbl *f,
+>         return 0;
+>  }
+> =20
+> +static const struct freq_conf *
+> +__clk_rcg2_select_conf(struct clk_hw *hw, const struct freq_multi_tbl *f,
+> +                      unsigned long req_rate)
+> +{
+> +       unsigned long rate_diff, best_rate_diff =3D ULONG_MAX;
+> +       const struct freq_conf *conf, *best_conf =3D NULL;
+> +       struct clk_rcg2 *rcg =3D to_clk_rcg2(hw);
+> +       const char *name =3D clk_hw_get_name(hw);
+> +       unsigned long parent_rate, rate;
+> +       struct clk_hw *p;
+> +       int index, i;
+> +
+> +       /* Exit early if only one config is defined */
+> +       if (f->num_confs =3D=3D 1) {
+> +               best_conf =3D f->confs;
+> +               goto exit;
+> +       }
+> +
+> +       /* Search in each provided config the one that is near the wanted=
+ rate */
+> +       for (i =3D 0, conf =3D f->confs; i < f->num_confs; i++, conf++) {
+> +               index =3D qcom_find_src_index(hw, rcg->parent_map, conf->=
+src);
+> +               if (index < 0)
+> +                       continue;
+> +
+> +               p =3D clk_hw_get_parent_by_index(hw, index);
+> +               if (!p)
+> +                       continue;
+> +
+> +               parent_rate =3D  clk_hw_get_rate(p);
+> +               rate =3D calc_rate(parent_rate, conf->n, conf->m, conf->n=
+, conf->pre_div);
+> +
+> +               if (rate =3D=3D req_rate) {
+> +                       best_conf =3D conf;
+> +                       goto exit;
+> +               }
+> +
+> +               rate_diff =3D abs(req_rate - rate);
 
-Video team also acknowledges this part and internally I think they did 
-evaluate this option and their feedback was, the more and more they 
-changed, they were touching pretty much every file of venus.
+Use abs_diff() please.
 
-The missing piece i think in all this discussion is that in addition to 
-the forward channel, the reverse channel of HFI, based on which the rest 
-of the video state machine changes should also be considered.
+> +               if (rate_diff < best_rate_diff) {
+> +                       best_rate_diff =3D rate_diff;
+> +                       best_conf =3D conf;
+> +               }
+> +       }
+> +
+> +       /*
+> +        * Very unlikely. Warn if we couldn't find a correct config
+> +        * due to parent not found in every config.
+> +        */
+> +       if (unlikely(!best_conf)) {
+> +               WARN(1, "%s: can't find a configuration for rate %lu.",
 
-So even with respect to the code layout, its not just the forward 
-communication but the backwards communication of fw--->hfi--->codec is 
-becoming a challenge as the venus layers seem to only work with the hfi 
-of venus.
+Needs a newline in the format string and should drop the period.
 
-For adding support for the new HFI events/communication, it was getting 
-harder to extend venus.
+> +                    name, req_rate);
+> +               return ERR_PTR(-EINVAL);
+> +       }
+> +
+> +exit:
+> +       return best_conf;
+> +}
+> +
+[...]
+> +
+>  static int clk_rcg2_determine_rate(struct clk_hw *hw,
+>                                    struct clk_rate_request *req)
+>  {
+> @@ -377,6 +494,30 @@ static int __clk_rcg2_set_rate(struct clk_hw *hw, un=
+signed long rate,
+>         return clk_rcg2_configure(rcg, f);
+>  }
+> =20
+> +static int __clk_rcg2_fm_set_rate(struct clk_hw *hw, unsigned long rate)
+> +{
+> +       struct clk_rcg2 *rcg =3D to_clk_rcg2(hw);
+> +       const struct freq_multi_tbl *f;
+> +       const struct freq_conf *conf;
+> +       struct freq_tbl f_tbl;
 
-What I certainly acknowledge is now with iris whether this can be dealt 
-with better for future chipsets to avoid another re-write for another 
-HFI as that will be too much of maintenance cost.
+		f_tbl =3D { }
 
-I will let the video team comment on this part.
+In case we want to add more fields so this isn't a time bomb.
 
-Thanks
-
-Abhinav
-
-
-
-
-
->>
->>>>
->>>> [1] https://lore.kernel.org/lkml/8c97d866-1cab-0106-4ab3-3ca070945ef7@quicinc.com/
->>>>> Short rationale:
->>>>> The venus driver has a history of supported platforms. There is
->>>>> already some kind of buffer management in place. Both developers and
->>>>> testers have spent their effort on finding issues there. Sending new
->>>>> driver means that we have to spend the same amount of efforts on this.
->>>>> Moreover, even from the porter point of view. You are creating new
->>>>> bindings for the new hardware. Which do not follow the
->>>>> venus-common.yaml. And they do not follow the defined bindings for the
->>>>> recent venus platforms. Which means that as a developer I have to care
->>>>> about two different ways to describe nearly the same hardware.>> Again qualcomm video team does not have a plan to support sm8550/x1e80100 on
->>>>>> venus as the changes are too interleaved to absorb in venus driver. And there is
->>>>>> significant interest in community to start validating video driver on sm8550 or
->>>>>> x1e80100.
->>>>>>
->>>>>> [1] https://lore.kernel.org/lkml/8c97d866-1cab-0106-4ab3-3ca070945ef7@quicinc.com/
->>>>>>
->>>>>> Regards,
->>>>>> Vikash
->>>>>
->>>>>
->>>>>
->>>
->>>
->>>
-> 
-> 
-> 
+> +
+> +       f =3D qcom_find_freq_multi(rcg->freq_multi_tbl, rate);
+> +       if (!f || !f->confs)
+> +               return -EINVAL;
+> +
+> +       conf =3D __clk_rcg2_select_conf(hw, f, rate);
+> +       if (IS_ERR(conf))
+> +               return PTR_ERR(conf);
+> +
+> +       f_tbl.freq =3D f->freq;
+> +       f_tbl.src =3D conf->src;
+> +       f_tbl.pre_div =3D conf->pre_div;
+> +       f_tbl.m =3D conf->m;
+> +       f_tbl.n =3D conf->n;
+> +
+> +       return clk_rcg2_configure(rcg, &f_tbl);
+> +}
+> +
+>  static int clk_rcg2_set_rate(struct clk_hw *hw, unsigned long rate,
+>                             unsigned long parent_rate)
+>  {
 
