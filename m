@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-5472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DAFC181957C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 01:34:09 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 09CC3819580
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 01:34:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 179661C2436D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 00:34:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 59606B20FA5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 00:34:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DE73179BF;
-	Wed, 20 Dec 2023 00:31:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 128B91CABE;
+	Wed, 20 Dec 2023 00:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CGjLZn8R"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="t+YI46tT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936CA15E9D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 00:31:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7889F15491
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 00:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2cc4029dc6eso62192671fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 16:31:13 -0800 (PST)
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2cc3f5e7451so62090391fa.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 16:31:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703032272; x=1703637072; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1703032273; x=1703637073; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=iL7/cJ6kElWHnhbek3aTb1dfvRVji6nGvSY/NIw03Sk=;
-        b=CGjLZn8RQSJNX0wsXcyRFOEoQWWLUmHI16Ise7axkkdwuILSywsDyRWFBIi4hGAi1f
-         WZq503A2jdRA5PslAJWhVArYVGgoFDSJgwb0wVXP6f0OR4edZYYaIfx4ZdsTjsnJFGrw
-         Kycjd95M3zrpcc+gasvkUrU4Nlum3/GHkQ073VXbbgsv2vrACzd5O1jid0GwXPAJT0dC
-         nkv5e2F72aLSCkPU/2ywvupJc/uk3a25u2nU6Ql1LgZyuQEisOJtQ5MuuHCSpHVRF/lR
-         3TmnkoGwTJZo+84nSImenaHgCWbWBpILkjcEMpfjQuvKn0gS7nT5ey8QNOGUFphuu3SA
-         UZWQ==
+        bh=+ls2aUMbVxdc/7lozE+p30ZeM7lcweE8oneLXZx5wYg=;
+        b=t+YI46tTHIYcgwERFwMKxuTeA/QmRqxFcLYCbn2OeMPG/Pt7RkQvbgRdTw2ueOulIj
+         wrnUVfgQVt+IEcks04QWUWcnuFkKNCzXS41ihHZY2VlBaLRacr86YB5mHS4kxZqGYKrp
+         Lhszni+G27qR+jGQeA4BQEyhe/JPF8FaLglduymoX517qyxUrq91VDD5NCJKUQNka5/m
+         KR9OKyqWyjx+ACdx8uaCNUTzqlYtH4esYqQLnXz+q6xOSMv/8nKKz5H+QwfoNt5AfGQl
+         ZC/McPW9admSmCBbwpMsXCq+G757WpMED6QvPyLja+QGWei7yRBbU/rc00YqC3OpE/kG
+         PTGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703032272; x=1703637072;
+        d=1e100.net; s=20230601; t=1703032273; x=1703637073;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=iL7/cJ6kElWHnhbek3aTb1dfvRVji6nGvSY/NIw03Sk=;
-        b=c48/vbC6FlIEAHMMQdA7ux4IuPKny2WJ6TPkFXxffd9RKwjbA2l3gfh70tCG+JYDtO
-         MSsnM035V/GCcCYbyY6qemnVYv79id5rXTJSYSO8WAbjeKsszLvjHpzTKDe9ApLwdV0Q
-         DLO+i/WIbmoGv2QK9xHVc7A+3jQTVWYxxQplpvvRi3utjf9P8DCpfUKLgRAY2yY/ZXoS
-         9HDSnqkY4Itzg3l5tPXKr67hHX6RiZ6L8PS78+waafTICZMYnvIWqmbPnkcVV9f7IAAF
-         2KixrSq6QvKUFdABikQ9l+QzgzrlgZZKlkXX6R/VPXq+mUB5hLPQ/B00h7I2JyHiAVJn
-         Tz1g==
-X-Gm-Message-State: AOJu0YyFdd28X00f3GVdynJxusRIS03tuH9mEVkBoG9YK/9t/PRUFtBs
-	4jwzdqgjlg+GD1ODdBld3OJ1QA==
-X-Google-Smtp-Source: AGHT+IGggSpim3Sjz11CySr8Mk3XffgInvaRz+LVbVBVtZqi8rGkaMS60eO0kkzseXHzRGB/V9cE6w==
-X-Received: by 2002:a2e:a685:0:b0:2cc:69a6:a49d with SMTP id q5-20020a2ea685000000b002cc69a6a49dmr2060217lje.78.1703032271806;
-        Tue, 19 Dec 2023 16:31:11 -0800 (PST)
+        bh=+ls2aUMbVxdc/7lozE+p30ZeM7lcweE8oneLXZx5wYg=;
+        b=SneUzssdSGI7mSUb2elKaZqzLrVngZ3I2+OK7gcB1KOZ8f+pktFMM+dy7pExXYwUoG
+         sYOFZhjs9TFN0cHtJOuu8M2oZFdBzc7KIA7ykIh1pY7RK7+CTtJua5eN9USdTHRX8Evt
+         MLZgVcUgAXgPGaDuOu+5pgGg9B77UxPO76AOv4YVItvky8OVcsL+iU7lrAls4ozPD3sh
+         sDFiP2/lkhFXn9/HwRvRg3njMFghLuDywEO3bCjcI4kbl+5vSdUpex9RsQf8xPY2IfgN
+         BMCSsf7GsEvOxfQoW02F17pMChuNHMRLKSoUrYLfhfPVrpPty5d+I5ZgBEUY04nRcZCk
+         nYFw==
+X-Gm-Message-State: AOJu0Yxns25BsIVQiDaaplu0Tl1Z/Ll6xWSD4XBCEuah/JRXYMRcQEhp
+	XvKTMOpmblszDIOAoygD2VzRTQ==
+X-Google-Smtp-Source: AGHT+IGVs9JKAowhjn+b7AGbiUGfGCugR7sKfc3mf8G2XtwNNXY08ZkD8Ot+EKxsKM+HzoibkNZOXQ==
+X-Received: by 2002:a2e:300e:0:b0:2cc:7b78:a4b9 with SMTP id w14-20020a2e300e000000b002cc7b78a4b9mr1298603ljw.1.1703032273686;
+        Tue, 19 Dec 2023 16:31:13 -0800 (PST)
 Received: from [10.167.154.1] (178235179206.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.206])
-        by smtp.gmail.com with ESMTPSA id k16-20020a056402049000b00552d03a17acsm4824397edv.61.2023.12.19.16.31.10
+        by smtp.gmail.com with ESMTPSA id k16-20020a056402049000b00552d03a17acsm4824397edv.61.2023.12.19.16.31.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Dec 2023 16:31:11 -0800 (PST)
+        Tue, 19 Dec 2023 16:31:13 -0800 (PST)
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Wed, 20 Dec 2023 01:30:52 +0100
-Subject: [PATCH v3 11/15] clk: qcom: gcc-qcm2290: Add runtime PM
+Date: Wed, 20 Dec 2023 01:30:53 +0100
+Subject: [PATCH v3 12/15] arm64: dts: qcom: sm6375: Add VDD_CX to GCC
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,7 +68,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230717-topic-branch_aon_cleanup-v3-11-3e31bce9c626@linaro.org>
+Message-Id: <20230717-topic-branch_aon_cleanup-v3-12-3e31bce9c626@linaro.org>
 References: <20230717-topic-branch_aon_cleanup-v3-0-3e31bce9c626@linaro.org>
 In-Reply-To: <20230717-topic-branch_aon_cleanup-v3-0-3e31bce9c626@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>, 
@@ -81,79 +81,33 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
  Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1703032250; l=2146;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1703032250; l=718;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=Am9uKVZmtmU4RslmGcqWt7Und9xViAlu8ssTW3WECb8=;
- b=P9NWhqhoMKb6ser2xFt0lQBZ+Aao5an5mJaPk9VN2bm2Vgn4In7Yny97kQ5t3WtDW3KF0/L9C
- 6cCVEJalfIOCb0A+pg1Lcax4vvhqXAGO0sSBAOE5NiQxXAg9VCtEkqc
+ bh=Gc/yH23ZENvzGFFViZ7/qVCV3FeiRMp+LehbPO3k6Xw=;
+ b=LpPP3sYjj29DdeD2Vc6CdLOLcwYNezXrAnQZUt5BWyEjmp2mTGBc7njoOaySLt1N2SXJq5YV0
+ lfl88WAVSTwCh79WLhi3C4+SqgGLOo4sYa6Bkgg2kBksp2aCurg9l2D
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-The GCC block on QCM2290 is powered by the VDD_CX rail. We need to
-ensure that CX is enabled to prevent unwanted power collapse and that
-the reference is dropped when unused so that the system can enter a
-firmware-managed lower power state.
-
-Enable runtime PM to keep the power flowing only when necessary.
+The GCC block is mainly powered by VDD_CX. Describe that.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/clk/qcom/gcc-qcm2290.c | 22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/sm6375.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/qcom/gcc-qcm2290.c b/drivers/clk/qcom/gcc-qcm2290.c
-index cc1dd5fc6d32..0992da84a741 100644
---- a/drivers/clk/qcom/gcc-qcm2290.c
-+++ b/drivers/clk/qcom/gcc-qcm2290.c
-@@ -8,6 +8,7 @@
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/platform_device.h>
-+#include <linux/pm_runtime.h>
- #include <linux/regmap.h>
- 
- #include <dt-bindings/clock/qcom,gcc-qcm2290.h>
-@@ -2882,14 +2883,26 @@ static int gcc_qcm2290_probe(struct platform_device *pdev)
- 	struct regmap *regmap;
- 	int ret;
- 
-+	ret = devm_pm_runtime_enable(&pdev->dev);
-+	if (ret)
-+		return ret;
-+
-+	ret = pm_runtime_resume_and_get(&pdev->dev);
-+	if (ret)
-+		return ret;
-+
- 	regmap = qcom_cc_map(pdev, &gcc_qcm2290_desc);
--	if (IS_ERR(regmap))
-+	if (IS_ERR(regmap)) {
-+		pm_runtime_put(&pdev->dev);
- 		return PTR_ERR(regmap);
-+	}
- 
- 	ret = qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks,
- 				       ARRAY_SIZE(gcc_dfs_clocks));
--	if (ret)
-+	if (ret) {
-+		pm_runtime_put(&pdev->dev);
- 		return ret;
-+	}
- 
- 	clk_alpha_pll_configure(&gpll10, regmap, &gpll10_config);
- 	clk_alpha_pll_configure(&gpll11, regmap, &gpll11_config);
-@@ -2903,7 +2916,10 @@ static int gcc_qcm2290_probe(struct platform_device *pdev)
- 	qcom_branch_set_clk_en(regmap, 0x36004); /* GCC_GPU_CFG_AHB_CLK */
- 	qcom_branch_set_clk_en(regmap, 0x2b06c); /* GCC_SYS_NOC_CPUSS_AHB_CLK */
- 
--	return qcom_cc_really_probe(pdev, &gcc_qcm2290_desc, regmap);
-+	ret = qcom_cc_really_probe(pdev, &gcc_qcm2290_desc, regmap);
-+	pm_runtime_put(&pdev->dev);
-+
-+	return ret;
- }
- 
- static struct platform_driver gcc_qcm2290_driver = {
+diff --git a/arch/arm64/boot/dts/qcom/sm6375.dtsi b/arch/arm64/boot/dts/qcom/sm6375.dtsi
+index 7ac8bf26dda3..f578d110f36b 100644
+--- a/arch/arm64/boot/dts/qcom/sm6375.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6375.dtsi
+@@ -954,6 +954,7 @@ gcc: clock-controller@1400000 {
+ 			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
+ 				 <&rpmcc RPM_SMD_XO_A_CLK_SRC>,
+ 				 <&sleep_clk>;
++			power-domains = <&rpmpd SM6375_VDDCX>;
+ 			#power-domain-cells = <1>;
+ 			#clock-cells = <1>;
+ 			#reset-cells = <1>;
 
 -- 
 2.43.0
