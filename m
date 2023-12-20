@@ -1,392 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-5460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0EA8E819539
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 01:28:26 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92E5581954E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 01:31:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7A0211F227E7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 00:28:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0ED331F26179
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 00:31:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD7198801;
-	Wed, 20 Dec 2023 00:28:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 638627E1;
+	Wed, 20 Dec 2023 00:30:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jO9JJUKc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nhVvrj4O"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8648825;
-	Wed, 20 Dec 2023 00:28:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BK0GT9X001769;
-	Wed, 20 Dec 2023 00:27:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=zoQh/8YNvCB3kEURhsJUKvtjpmLB03UJyNk6CVlBC/U=; b=jO
-	9JJUKcvSOVkBSJjc8Ftki/aFauKmTqHo2DDPzuYiXBw6q9nu9sBOb+t9s2NlZnwu
-	SVT1TOkpey8T/NALEZm0UC0bndmKbmUZF19h1c3zMAE9xutOAbo1sfHZsCrjiGLO
-	8wajyQrIBeLHAuKkFxOMKhAvU4p7Xmn/Qu7VK0bCEJ8pIdREjWaq8Ljrp1udL0O2
-	2ehoFZXyFqlIk55gligNYFPYkJlVrtoU9JcckKXhSLlPVVTywcrLnIQzlakT6u/k
-	lezES3w4b/QN9teFVORTVtUozD92SJKaTD0mHflT9rXqKJf621LFxpm5ZlixDdfl
-	8xvDkBfCtYvOjSb/hm8A==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v34dyandd-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Dec 2023 00:27:47 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BK0Rk9C001206
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Dec 2023 00:27:46 GMT
-Received: from [10.239.133.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 19 Dec
- 2023 16:27:42 -0800
-Message-ID: <56f477d9-0b7b-4671-a09c-cc3fc24a8492@quicinc.com>
-Date: Wed, 20 Dec 2023 08:27:39 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609FD1FA8
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 00:30:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-50bdec453c8so5961299e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Dec 2023 16:30:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1703032252; x=1703637052; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mWZvCxitZuGixzKuEq3TIl4LD0lytvrrFKs/eeQVctM=;
+        b=nhVvrj4OBtbpKfJMlEyXCbmjR3jkqWIKomhxSBhtkWE2CQof7kJr97E2niBrP5AxUy
+         1d6af0oWrEJFYXnBZBj0utiNYQ6h2ZNSJ6kBI9R8XXyg7zYOPE+77AHFFJGrO1bj+76m
+         BoRJa0u5AyzBlHFacOB62PavCgioofhN4GrJuAkU+5tuZPdE/lFRKdbditFOPcrn/mMv
+         yTKA2Auktqqbay3yCgoM4ET0PSVtZS0k0CbOJ2vGlHQxAW/DvbqxtKLyRsol68ZLIe5Y
+         PlHqdkZ3tyte6B8NikP9F0f+KojtgfnsOLhPKVYZfyiOjT+QDvIxRfC5rYqg6P/+eeDc
+         LY6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703032252; x=1703637052;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mWZvCxitZuGixzKuEq3TIl4LD0lytvrrFKs/eeQVctM=;
+        b=sgwWJxmHNi0QiZsax9vBIyLstHN7zZPv2jtjknIeajLb7Z7nvmPxpXG1/sdlBVP8MD
+         vCFK+8mxwt09w9OhFlzn6JsSE2yfqKyyCzqrIVY/iMsQZtiThovqUf60CYkf2gOMqD44
+         wv6fWmjaq38WCcBg5mtWBM/xwgJUO7K2NPO+3YPhJcr4QY0z0Qxb/8O34X5jZeMz+dgL
+         GX/7kSKhCR6Mx+M9QV90wRUrPXNdl8TDIdHE0an92DjClNBYZM1aXdNPMotrGmn/lcAG
+         PsBwbPtDXPgI6YB+4E+qO3Dc0YOHnPOp6FITWMZKLXbckQ8zU0QKKiQf/+gawHW7vLIr
+         HP2Q==
+X-Gm-Message-State: AOJu0YzbG9ol9gLkC1RMqf1j30z4XaibRdhYfb6OjUp/PJFcsR4YdIQN
+	Z2C0iOhgUvIp4lHSoB2evXcOSg==
+X-Google-Smtp-Source: AGHT+IGvuuqQ6CZNter5M4MFcL7ofl2/ybStrzPNyOZhDeuRUxCyN2bNpEA+fgT8CcCcVxbW8V9itw==
+X-Received: by 2002:a05:6512:3d90:b0:50e:38ff:d9e2 with SMTP id k16-20020a0565123d9000b0050e38ffd9e2mr2473150lfv.32.1703032252285;
+        Tue, 19 Dec 2023 16:30:52 -0800 (PST)
+Received: from [10.167.154.1] (178235179206.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.206])
+        by smtp.gmail.com with ESMTPSA id k16-20020a056402049000b00552d03a17acsm4824397edv.61.2023.12.19.16.30.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Dec 2023 16:30:51 -0800 (PST)
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v3 00/15] Unregister critical branch clocks + some RPM
+Date: Wed, 20 Dec 2023 01:30:41 +0100
+Message-Id: <20230717-topic-branch_aon_cleanup-v3-0-3e31bce9c626@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/8] coresight-tpda: Add support to configure CMB
- element
-Content-Language: en-US
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mathieu Poirier
-	<mathieu.poirier@linaro.org>,
-        Alexander Shishkin
-	<alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC: Jinlong Mao <quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang
-	<quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Song Chai <quic_songchai@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <andersson@kernel.org>
-References: <1700533494-19276-1-git-send-email-quic_taozha@quicinc.com>
- <1700533494-19276-3-git-send-email-quic_taozha@quicinc.com>
- <88e51407-344e-4584-8711-29cc014c782b@arm.com>
- <b5965008-b51d-4bb7-8cf2-d21aa35d2205@quicinc.com>
- <fa39e477-7faf-46e4-8ae2-9eb2321afc26@arm.com>
-From: Tao Zhang <quic_taozha@quicinc.com>
-In-Reply-To: <fa39e477-7faf-46e4-8ae2-9eb2321afc26@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: r6rfnBgQh2OnWRI_BdAGmieklXfkTpl5
-X-Proofpoint-GUID: r6rfnBgQh2OnWRI_BdAGmieklXfkTpl5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
- lowpriorityscore=0 phishscore=0 malwarescore=0 suspectscore=0
- clxscore=1015 bulkscore=0 spamscore=0 adultscore=0 mlxlogscore=999
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312200001
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALE1gmUC/42NzQ6DIBAGX6XhXBr+CranvkfTGMRFSQwYUNLG+
+ O5F00tvHufL7syCEkQHCd1PC4qQXXLBF+DnEzK99h1g1xZGjDBOFFV4CqMzuInam77WwddmAO3
+ nEcubkoZyC4oaVN4bneB3VwR+HoYyjhGse++956tw79IU4mfPZ7qtB0qZYoKZUpVomdLCisfgv
+ I7hEmKHNmtmR01sM+lrxYUkYJn8M63r+gVEK473IAEAAA==
+To: Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Johan Hovold <johan+linaro@kernel.org>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1703032249; l=4596;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=TOhUcZQV9pL6H0IYh/H/hiMLY+tqB9v/ZY20JeDivt0=;
+ b=XreHTluc+J6PWRiZWAkckyzExqA5QYvxffRmYmTZr71esThReM+XO9BjyqYjw96eW6ueQNoSK
+ fyn35Aqry4wC7X5SHWqEXQoiUlen3BLA155GhzScg2AxeAM8tVJHn5i
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
+On Qualcomm SoCs, certain branch clocks either need to be always-on, or
+should be if you're interested in touching some part of the hardware.
 
-On 12/19/2023 9:54 PM, Suzuki K Poulose wrote:
-> On 19/12/2023 02:13, Tao Zhang wrote:
->>
->> On 12/18/2023 6:27 PM, Suzuki K Poulose wrote:
->>> On 21/11/2023 02:24, Tao Zhang wrote:
->>>> Read the CMB element size from the device tree. Set the register
->>>> bit that controls the CMB element size of the corresponding port.
->>>>
->>>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->>>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->>>> ---
->>>>   drivers/hwtracing/coresight/coresight-tpda.c | 117 
->>>> +++++++++++--------
->>>>   drivers/hwtracing/coresight/coresight-tpda.h |   6 +
->>>>   2 files changed, 74 insertions(+), 49 deletions(-)
->>>>
->>>> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c 
->>>> b/drivers/hwtracing/coresight/coresight-tpda.c
->>>> index 5f82737c37bb..e3762f38abb3 100644
->>>> --- a/drivers/hwtracing/coresight/coresight-tpda.c
->>>> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
->>>> @@ -28,24 +28,54 @@ static bool coresight_device_is_tpdm(struct 
->>>> coresight_device *csdev)
->>>>               CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM);
->>>>   }
->>>>   +static void tpdm_clear_element_size(struct coresight_device *csdev)
->>>> +{
->>>> +    struct tpda_drvdata *drvdata = 
->>>> dev_get_drvdata(csdev->dev.parent);
->>>> +
->>>> +    if (drvdata->dsb_esize)
->>>> +        drvdata->dsb_esize = 0;
->>>> +    if (drvdata->cmb_esize)
->>>> +        drvdata->cmb_esize = 0;
->>>
->>> Why do we need the if (...) check here ?
->>
->> The element size of all the TPDM sub-unit should be set to 0 here.
->>
->> I will update this in the next patch series.
->>
->>>
->>>> +}
->>>> +
->>>> +static void tpda_set_element_size(struct tpda_drvdata *drvdata, 
->>>> u32 *val)
->>>> +{
->>>> +
->>>> +    if (drvdata->dsb_esize == 64)
->>>> +        *val |= TPDA_Pn_CR_DSBSIZE;
->>>> +    else if (drvdata->dsb_esize == 32)
->>>> +        *val &= ~TPDA_Pn_CR_DSBSIZE;
->>>> +
->>>> +    if (drvdata->cmb_esize == 64)
->>>> +        *val |= FIELD_PREP(TPDA_Pn_CR_CMBSIZE, 0x2);
->>>> +    else if (drvdata->cmb_esize == 32)
->>>> +        *val |= FIELD_PREP(TPDA_Pn_CR_CMBSIZE, 0x1);
->>>> +    else if (drvdata->cmb_esize == 8)
->>>> +        *val &= ~TPDA_Pn_CR_CMBSIZE;
->>>> +}
->>>> +
->>>
->>>
->>>>   /*
->>>> - * Read the DSB element size from the TPDM device
->>>> + * Read the element size from the TPDM device
->>>>    * Returns
->>>> - *    The dsb element size read from the devicetree if available.
->>>> + *    The element size read from the devicetree if available.
->>>>    *    0 - Otherwise, with a warning once.
->>>
->>> This doesn't match the function ? It return 0 on success and
->>> error (-EINVAL) on failure ?
->>
->> 0 means the element size property is found from the devicetree.
->>
->> Otherwise, it will return error(-EINVAL).
->>
->> I will update this in the next patch series.
->>
->>>
->>>>    */
->>>> -static int tpdm_read_dsb_element_size(struct coresight_device *csdev)
->>>> +static int tpdm_read_element_size(struct tpda_drvdata *drvdata,
->>>> +                  struct coresight_device *csdev)
->>>>   {
->>>> -    int rc = 0;
->>>> -    u8 size = 0;
->>>> -
->>>> -    rc = fwnode_property_read_u8(dev_fwnode(csdev->dev.parent),
->>>> -            "qcom,dsb-element-size", &size);
->>>> +    int rc = -EINVAL;
->>>> +
->>>> +    if (!fwnode_property_read_u8(dev_fwnode(csdev->dev.parent),
->>>> +            "qcom,dsb-element-size", &drvdata->dsb_esize))
->>>> +        rc = 0;
->>>> +    if (!fwnode_property_read_u8(dev_fwnode(csdev->dev.parent),
->>>> +            "qcom,cmb-element-size", &drvdata->cmb_esize))
->>>> +        rc = 0;
->>>
->>> Are we not silently resetting the error if the former failed ?
->>>
->>> Could we not :
->>>
->>>     rc |= fwnode_...
->>>
->>>     rc |= fwnode_...
->>>
->>> instead ?
->>>
->>> Also what is the expectation here ? Are these properties a MUST for
->>> TPDM ?
->>
->> The TPDM must have one of the element size property. As long as one
->
-> Please add a comment in the function. Someone else might try to "fix"
-> it otherwise.
+Using CLK_IS_CRITICAL for this purpose sounds like a genius idea,
+however that messes with the runtime pm handling - if a clock is
+marked as such, the clock controller device will never enter the
+"suspended" state, leaving the associated resources online, which in
+turn breaks SoC-wide suspend.
 
-Sure, I will update this in the next patch series.
+This series aims to solve that on a couple SoCs that I could test the
+changes on and it sprinkles some runtime pm enablement atop these drivers.
 
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Changes in v3:
+- Rebase (next-20231219)
+- Fix up a copypaste mistake in "gcc-sm6375: Unregister critical clocks" (bod)
+- Pick up tags
+- Link to v2: https://lore.kernel.org/r/20230717-topic-branch_aon_cleanup-v2-0-2a583460ef26@linaro.org
 
-Best,
+Changes in v2:
+- Rebase
+- Pick up tags
+- Fix up missing pm_runtime_put in SM6375 GCC (Johan)
+- Clarify the commit message of "Add runtime PM" commits (Johan)
+- "GPU_CCC" -> "GPU_CC" (oops)
+- Rebase atop next-20231129
+  - Also fix up camcc-sm8550 & gcc-sm4450
+  - Unify and clean up the comment style
+  - Fix missing comments in gcc-sc7180..
+  - Drop Johan's ack from "clk: qcom: Use qcom_branch_set_clk_en()"
+- Improve 6115 dt patch commit message (Bjorn)
+- Link to v1: https://lore.kernel.org/r/20230717-topic-branch_aon_cleanup-v1-0-27784d27a4f4@linaro.org
 
-Tao
+---
+Konrad Dybcio (15):
+      clk: qcom: branch: Add a helper for setting the enable bit
+      clk: qcom: Use qcom_branch_set_clk_en()
+      clk: qcom: gcc-sm6375: Unregister critical clocks
+      clk: qcom: gcc-sm6375: Add runtime PM
+      clk: qcom: gpucc-sm6375: Unregister critical clocks
+      clk: qcom: gpucc-sm6115: Unregister critical clocks
+      clk: qcom: gpucc-sm6115: Add runtime PM
+      clk: qcom: gcc-sm6115: Unregister critical clocks
+      clk: qcom: gcc-sm6115: Add runtime PM
+      clk: qcom: gcc-qcm2290: Unregister critical clocks
+      clk: qcom: gcc-qcm2290: Add runtime PM
+      arm64: dts: qcom: sm6375: Add VDD_CX to GCC
+      arm64: dts: qcom: qcm2290: Add VDD_CX to GCC
+      arm64: dts: qcom: sm6115: Add VDD_CX to GCC
+      arm64: dts: qcom: sm6115: Add VDD_CX to GPU_CC
 
->
-> Suzuki
->>
->> can be found, this TPDM configuration can be considered valid. So this
->>
->> function will return 0 if one of the element size property is found.
->
->
->>
->>
->> Best,
->>
->> Tao
->>
->>>
->>>>       if (rc)
->>>>           dev_warn_once(&csdev->dev,
->>>> -            "Failed to read TPDM DSB Element size: %d\n", rc);
->>>> +            "Failed to read TPDM Element size: %d\n", rc);
->>>>   -    return size;
->>>> +    return rc;
->>>>   }
->>>>     /*
->>>> @@ -56,11 +86,12 @@ static int tpdm_read_dsb_element_size(struct 
->>>> coresight_device *csdev)
->>>>    * Parameter "inport" is used to pass in the input port number
->>>>    * of TPDA, and it is set to -1 in the recursize call.
->>>>    */
->>>> -static int tpda_get_element_size(struct coresight_device *csdev,
->>>> +static int tpda_get_element_size(struct tpda_drvdata *drvdata,
->>>> +                 struct coresight_device *csdev,
->>>>                    int inport)
->>>>   {
->>>> -    int dsb_size = -ENOENT;
->>>> -    int i, size;
->>>> +    int rc = 0;
->>>> +    int i;
->>>>       struct coresight_device *in;
->>>>         for (i = 0; i < csdev->pdata->nr_inconns; i++) {
->>>> @@ -74,25 +105,21 @@ static int tpda_get_element_size(struct 
->>>> coresight_device *csdev,
->>>>               continue;
->>>>             if (coresight_device_is_tpdm(in)) {
->>>> -            size = tpdm_read_dsb_element_size(in);
->>>> +            if ((drvdata->dsb_esize) || (drvdata->cmb_esize))
->>>> +                return -EEXIST;
->>>> +            rc = tpdm_read_element_size(drvdata, in);
->>>> +            if (rc)
->>>> +                return rc;
->>>>           } else {
->>>>               /* Recurse down the path */
->>>> -            size = tpda_get_element_size(in, -1);
->>>> -        }
->>>> -
->>>> -        if (size < 0)
->>>> -            return size;
->>>> -
->>>> -        if (dsb_size < 0) {
->>>> -            /* Found a size, save it. */
->>>> -            dsb_size = size;
->>>> -        } else {
->>>> -            /* Found duplicate TPDMs */
->>>> -            return -EEXIST;
->>>> +            rc = tpda_get_element_size(drvdata, in, -1);
->>>> +            if (rc)
->>>> +                return rc;
->>>>           }
->>>>       }
->>>>   -    return dsb_size;
->>>> +
->>>> +    return rc;
->>>>   }
->>>>     /* Settings pre enabling port control register */
->>>> @@ -109,7 +136,7 @@ static void tpda_enable_pre_port(struct 
->>>> tpda_drvdata *drvdata)
->>>>   static int tpda_enable_port(struct tpda_drvdata *drvdata, int port)
->>>>   {
->>>>       u32 val;
->>>> -    int size;
->>>> +    int rc;
->>>>         val = readl_relaxed(drvdata->base + TPDA_Pn_CR(port));
->>>>       /*
->>>> @@ -117,29 +144,21 @@ static int tpda_enable_port(struct 
->>>> tpda_drvdata *drvdata, int port)
->>>>        * Set the bit to 0 if the size is 32
->>>>        * Set the bit to 1 if the size is 64
->>>>        */
->>>> -    size = tpda_get_element_size(drvdata->csdev, port);
->>>> -    switch (size) {
->>>> -    case 32:
->>>> -        val &= ~TPDA_Pn_CR_DSBSIZE;
->>>> -        break;
->>>> -    case 64:
->>>> -        val |= TPDA_Pn_CR_DSBSIZE;
->>>> -        break;
->>>> -    case 0:
->>>> -        return -EEXIST;
->>>> -    case -EEXIST:
->>>> +    tpdm_clear_element_size(drvdata->csdev);
->>>> +    rc = tpda_get_element_size(drvdata, drvdata->csdev, port);
->>>> +    if (!rc && ((drvdata->dsb_esize) || (drvdata->cmb_esize))) {
->>>> +        tpda_set_element_size(drvdata, &val);
->>>> +        /* Enable the port */
->>>> +        val |= TPDA_Pn_CR_ENA;
->>>> +        writel_relaxed(val, drvdata->base + TPDA_Pn_CR(port));
->>>> +    } else if (rc == -EEXIST)
->>>>           dev_warn_once(&drvdata->csdev->dev,
->>>> -            "Detected multiple TPDMs on port %d", -EEXIST);
->>>> -        return -EEXIST;
->>>> -    default:
->>>> -        return -EINVAL;
->>>> -    }
->>>> -
->>>> -    /* Enable the port */
->>>> -    val |= TPDA_Pn_CR_ENA;
->>>> -    writel_relaxed(val, drvdata->base + TPDA_Pn_CR(port));
->>>> +                  "Detected multiple TPDMs on port %d", -EEXIST);
->>>> +    else
->>>> +        dev_warn_once(&drvdata->csdev->dev,
->>>> +                  "Didn't find TPDM elem size");
->>>
->>> "element size"
->>>
->>>>   -    return 0;
->>>> +    return rc;
->>>>   }
->>>>     static int __tpda_enable(struct tpda_drvdata *drvdata, int port)
->>>> diff --git a/drivers/hwtracing/coresight/coresight-tpda.h 
->>>> b/drivers/hwtracing/coresight/coresight-tpda.h
->>>> index b3b38fd41b64..29164fd9711f 100644
->>>> --- a/drivers/hwtracing/coresight/coresight-tpda.h
->>>> +++ b/drivers/hwtracing/coresight/coresight-tpda.h
->>>> @@ -10,6 +10,8 @@
->>>>   #define TPDA_Pn_CR(n)        (0x004 + (n * 4))
->>>>   /* Aggregator port enable bit */
->>>>   #define TPDA_Pn_CR_ENA        BIT(0)
->>>> +/* Aggregator port CMB data set element size bit */
->>>> +#define TPDA_Pn_CR_CMBSIZE        GENMASK(7, 6)
->>>>   /* Aggregator port DSB data set element size bit */
->>>>   #define TPDA_Pn_CR_DSBSIZE        BIT(8)
->>>>   @@ -25,6 +27,8 @@
->>>>    * @csdev:      component vitals needed by the framework.
->>>>    * @spinlock:   lock for the drvdata value.
->>>>    * @enable:     enable status of the component.
->>>> + * @dsb_esize   Record the DSB element size.
->>>> + * @cmb_esize   Record the CMB element size.
->>>>    */
->>>>   struct tpda_drvdata {
->>>>       void __iomem        *base;
->>>> @@ -32,6 +36,8 @@ struct tpda_drvdata {
->>>>       struct coresight_device    *csdev;
->>>>       spinlock_t        spinlock;
->>>>       u8            atid;
->>>> +    u8            dsb_esize;
->>>> +    u8            cmb_esize;
->>>>   };
->>>>     #endif  /* _CORESIGHT_CORESIGHT_TPDA_H */
->>>
->>> Suzuki
->>>
->>>
->
+ arch/arm64/boot/dts/qcom/qcm2290.dtsi |   1 +
+ arch/arm64/boot/dts/qcom/sm6115.dtsi  |   3 +
+ arch/arm64/boot/dts/qcom/sm6375.dtsi  |   1 +
+ drivers/clk/qcom/camcc-sm8550.c       |   9 +--
+ drivers/clk/qcom/clk-branch.h         |   7 ++
+ drivers/clk/qcom/dispcc-qcm2290.c     |   3 +-
+ drivers/clk/qcom/dispcc-sc7280.c      |   6 +-
+ drivers/clk/qcom/dispcc-sc8280xp.c    |   3 +-
+ drivers/clk/qcom/dispcc-sm6115.c      |   3 +-
+ drivers/clk/qcom/dispcc-sm8250.c      |   3 +-
+ drivers/clk/qcom/dispcc-sm8450.c      |   6 +-
+ drivers/clk/qcom/dispcc-sm8550.c      |   6 +-
+ drivers/clk/qcom/gcc-qcm2290.c        | 127 ++++++-----------------------
+ drivers/clk/qcom/gcc-sa8775p.c        |  24 +++---
+ drivers/clk/qcom/gcc-sc7180.c         |  21 ++---
+ drivers/clk/qcom/gcc-sc7280.c         |  19 ++---
+ drivers/clk/qcom/gcc-sc8180x.c        |  27 +++----
+ drivers/clk/qcom/gcc-sc8280xp.c       |  24 +++---
+ drivers/clk/qcom/gcc-sdx55.c          |  11 +--
+ drivers/clk/qcom/gcc-sdx65.c          |  12 +--
+ drivers/clk/qcom/gcc-sdx75.c          |   9 +--
+ drivers/clk/qcom/gcc-sm4450.c         |  27 ++-----
+ drivers/clk/qcom/gcc-sm6115.c         | 145 +++++++---------------------------
+ drivers/clk/qcom/gcc-sm6375.c         | 126 +++++++----------------------
+ drivers/clk/qcom/gcc-sm7150.c         |  22 ++----
+ drivers/clk/qcom/gcc-sm8250.c         |  18 ++---
+ drivers/clk/qcom/gcc-sm8350.c         |  19 ++---
+ drivers/clk/qcom/gcc-sm8450.c         |  20 ++---
+ drivers/clk/qcom/gcc-sm8550.c         |  20 ++---
+ drivers/clk/qcom/gpucc-sc7280.c       |   8 +-
+ drivers/clk/qcom/gpucc-sc8280xp.c     |   8 +-
+ drivers/clk/qcom/gpucc-sm6115.c       |  52 +++++-------
+ drivers/clk/qcom/gpucc-sm6375.c       |  33 +-------
+ drivers/clk/qcom/gpucc-sm8550.c       |   9 +--
+ drivers/clk/qcom/lpasscorecc-sc7180.c |   6 +-
+ drivers/clk/qcom/videocc-sm8250.c     |   5 +-
+ drivers/clk/qcom/videocc-sm8350.c     |   9 +--
+ drivers/clk/qcom/videocc-sm8450.c     |  12 +--
+ drivers/clk/qcom/videocc-sm8550.c     |  12 +--
+ 39 files changed, 236 insertions(+), 640 deletions(-)
+---
+base-commit: aa4db8324c4d0e67aa4670356df4e9fae14b4d37
+change-id: 20230717-topic-branch_aon_cleanup-6976c13fe71c
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
 
