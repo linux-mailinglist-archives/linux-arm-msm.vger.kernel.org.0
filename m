@@ -1,201 +1,308 @@
-Return-Path: <linux-arm-msm+bounces-5548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5549-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF417819BC0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 10:53:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0EC0819BCF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 10:56:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 85E5C2878B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 09:53:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A9CFB28196A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 09:56:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B3681F618;
-	Wed, 20 Dec 2023 09:52:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18B1F1F934;
+	Wed, 20 Dec 2023 09:56:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IPvbDhcs"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="H60Ql/re"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD51E200CA
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 09:52:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-5e248b40c97so47114027b3.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 01:52:50 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7DA1F61F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 09:56:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-55322dbabf6so4291975a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 01:56:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703065970; x=1703670770; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=hogvja0xVIkkpg3N+6iU77v6ti9BPz5LqsXbI7QDFuQ=;
-        b=IPvbDhcsHFGMrR+miBhc5XqYqZ/YQUo19qKUfbV1EAYvC/Nn1qMv8KI4myGjLt80Aq
-         JB0Rj1MXaWv0KF9B0Yqs8jO+lwtavzPnOTR6wWhfFZR5KjvYlx11DTH/sh4OcQMTMyoF
-         6BIBdlmoKGH4oiLwQZYdC29w2Vg6yTAyFqfDY3x8TeZIuc3XCKnAN6eYIRQVnGhviy4G
-         muWexjKgFVMA5LOtDVbqdITWDcj0C2vJhFiHj1oXZDWForPM9fX3eTnVqfVcKrDxwvqW
-         7ZRUBHpWF4pE8t0r8P1OF81BhR6/W24miMieZrvdOpZbeTmHqe/QfQPTBKETziANxoVz
-         CNTw==
+        d=fairphone.com; s=fair; t=1703066178; x=1703670978; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=13u6CJzloCwNROWpaaN5LYVVec8rVqVlyAkXjhxCkLQ=;
+        b=H60Ql/reVB+0UddANd3OPOMJ11nwxlC3c2VUXEd2Jax63GnZ5pSQRXy6uQhxziJIfW
+         kVeO7DfzKJ1qYqeIY3io23TO0mbzriXT6EmbDuRXBe0e1ojFrtwBNXLtQ/iPWX2nQZSO
+         jNFGVjHOwqfJQ2mKmThYPaAFCDYEaCsGV5/DEDOAiOEFduE4OcjL3ruv9k6HWd7pwTke
+         rTaTEA1lUJ/vfAeK0zkiaNVeZitq//6jWsk6TVAdqhZFMtGaTGwItM8Gno4i1Utv4JC4
+         yCBWKa1pFMtmxc4ZdBsadL1+HcPkyCC1Zt2K3UJ1whJ1+IbE1UBZloSFak7OKLT5NZx/
+         qbWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703065970; x=1703670770;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hogvja0xVIkkpg3N+6iU77v6ti9BPz5LqsXbI7QDFuQ=;
-        b=dNtaot1SmmHSl0tQXfVzufRgtRUk2K8yC8Pf7+Kjt6VO/29dSgCxnwkgBB32WROB6j
-         UStWhULsWOsdJOIXXX5U/HpTVvEspdsndvPkEOllKUo93Wf1uNZup59OEJ85QGzS/xHB
-         niZLIrTNuNeWjD/uo3gaO/Q0JEI1l5FtFg3lPCnPZC5JvCDIqNtV83bYl03ok0PYl133
-         816LL4owUKruhgJ8icM2MPpBQGYU7viHh/QiLFJKXGdyfHBn4z4o1XI+rA7qPR0SNWOf
-         npsIX3hrLDVn54l0zbf8Uru3UlCW2YEN3YZO0b2cqvrnH2uTEuMhr+FjdI0P6/pzdvKM
-         soXQ==
-X-Gm-Message-State: AOJu0Yw29EY7cpPhL/GVJcPl2whqW+fZEhHpP0CQdQtpccjUEINg9/mt
-	U4WkOHSeQWpmmu16VFsGLBMYHxLE7UUK7brIL/fA3A==
-X-Google-Smtp-Source: AGHT+IHa9abAxBqfvgu2VEATjTXP7RsILfCHv1QAK1a136nQqIhAC3OMNah3ueuDGBDBTH9DAWreJ+FsKm4O3eoCxVA=
-X-Received: by 2002:a81:6e42:0:b0:5e7:6f2d:aa90 with SMTP id
- j63-20020a816e42000000b005e76f2daa90mr2340336ywc.3.1703065969854; Wed, 20 Dec
- 2023 01:52:49 -0800 (PST)
+        d=1e100.net; s=20230601; t=1703066178; x=1703670978;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=13u6CJzloCwNROWpaaN5LYVVec8rVqVlyAkXjhxCkLQ=;
+        b=DIDu8z9BWvtsIBRzd+pRL0BoXLKWNwJbRTID1PGmvwxGoT4+8OO7+GtCYY860vmuzw
+         4awknaxNjXXhtQGarICsOvwAbdFNJof1/mREUgalU9I0IYn57xKwo/XuApUhNDK17Gbm
+         ZddAItYiDOT2vbGk2pVrCXXj6t+dnbd+RVeJe9VNdeNaiWUtYFLUMWG9MkhhYM3RwYyn
+         6LD8x2IJs3k63m91IWGiEoJG2qg/0ewHXG3sqRivc0suPjGCzb1bweI/PXJYzzDvrVj3
+         dXia+YAULZOQ4e/stEHa3d6RedXXLWO5xuO5fbBrvz8bImIQbLZnFQ5Pzt2/+VHmaTEh
+         2lww==
+X-Gm-Message-State: AOJu0Yx0iVxgrP1/bWbNJkjqOjIt2JHOPQv8SGzPuDCrYEmKknVcAljh
+	80huNC0hvULXQYO1VlQeCMLSwA==
+X-Google-Smtp-Source: AGHT+IEXWIO5wMlW1tjJniy5ZXS0gAtwe5IrjLIJfXFU5RFe9pDvkHeSDozUmVsEE67rdQe/OZQ24Q==
+X-Received: by 2002:a50:cc4a:0:b0:54d:d2af:6353 with SMTP id n10-20020a50cc4a000000b0054dd2af6353mr10870434edi.48.1703066178609;
+        Wed, 20 Dec 2023 01:56:18 -0800 (PST)
+Received: from localhost (2a02-8388-6584-6400-d322-7350-96d2-429d.cable.dynamic.v6.surfer.at. [2a02:8388:6584:6400:d322:7350:96d2:429d])
+        by smtp.gmail.com with ESMTPSA id h29-20020a0564020e9d00b0054c63cc0469sm12550507eda.33.2023.12.20.01.56.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Dec 2023 01:56:18 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <1702899149-21321-1-git-send-email-quic_dikshita@quicinc.com>
- <a033dfc5-dcf1-4969-ad4d-1836ff9ff0a3@linaro.org> <d0ea23ae-8fba-d229-b0f6-dc522f285233@quicinc.com>
- <CAA8EJpouBOLJ_1Pz_YauuOX+97ud9RkLYRaui4GM6ZFJUKYJMw@mail.gmail.com>
- <9d94317c-5da9-5494-26a2-12007761a1e5@quicinc.com> <CAA8EJpoCGRT=eETab8mF2MZZ04RmCkNnFKaRBFoUYk5qqDAPhg@mail.gmail.com>
- <eb288a33-a8c3-9dea-ffc1-e97a69be9a4c@quicinc.com>
-In-Reply-To: <eb288a33-a8c3-9dea-ffc1-e97a69be9a4c@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 20 Dec 2023 11:52:38 +0200
-Message-ID: <CAA8EJprZ1TK7UwfhSh2PtwuNJLUMace7MWnzQkrUMqV5R+WgOA@mail.gmail.com>
-Subject: Re: [PATCH v2 00/34] Qualcomm video encoder and decoder driver
-To: Vikash Garodia <quic_vgarodia@quicinc.com>
-Cc: Dikshita Agarwal <quic_dikshita@quicinc.com>, linux-media@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, stanimir.k.varbanov@gmail.com, 
-	agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, 
-	mchehab@kernel.org, bryan.odonoghue@linaro.org, linux-arm-msm@vger.kernel.org, 
-	quic_abhinavk@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 20 Dec 2023 10:56:16 +0100
+Message-Id: <CXT2KOUYYB7G.11K72VA0G9DKI@fairphone.com>
+Cc: "Marijn Suijten" <marijn.suijten@somainline.org>,
+ <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, "Dmitry Baryshkov"
+ <dmitry.baryshkov@linaro.org>, "Johan Hovold" <johan+linaro@kernel.org>
+Subject: Re: [PATCH RFC] power: supply: qcom_battmgr: Register the power
+ supplies after PDR is up
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Konrad Dybcio" <konrad.dybcio@linaro.org>, "Bjorn Andersson"
+ <andersson@kernel.org>, "Sebastian Reichel" <sre@kernel.org>
+X-Mailer: aerc 0.15.2
+References: <20231218-topic-battmgr_fixture_attempt-v1-1-6145745f34fe@linaro.org>
+In-Reply-To: <20231218-topic-battmgr_fixture_attempt-v1-1-6145745f34fe@linaro.org>
 
-On Wed, 20 Dec 2023 at 10:53, Vikash Garodia <quic_vgarodia@quicinc.com> wrote:
+On Mon Dec 18, 2023 at 3:41 PM CET, Konrad Dybcio wrote:
+> Currently, a not-yet-entirely-initialized battmgr (e.g. with pd-mapper
+> not having yet started or ADSP not being up etc.) results in a couple of
+> zombie power supply devices hanging around.
 >
-> On 12/20/2023 2:09 PM, Dmitry Baryshkov wrote:
-> > On Wed, 20 Dec 2023 at 10:14, Vikash Garodia <quic_vgarodia@quicinc.com> wrote:
-> >>
-> >> Hi,
-> >>
-> >> On 12/20/2023 1:07 PM, Dmitry Baryshkov wrote:
-> >>> On Wed, 20 Dec 2023 at 08:32, Vikash Garodia <quic_vgarodia@quicinc.com> wrote:
-> >>>>
-> >>>> Hi Dmitry,
-> >>>>
-> >>>> On 12/19/2023 12:08 AM, Dmitry Baryshkov wrote:
-> >>>>> On 18/12/2023 13:31, Dikshita Agarwal wrote:
-> >>>>>> This patch series introduces support for Qualcomm new video acceleration
-> >>>>>> hardware architecture, used for video stream decoding/encoding. This driver
-> >>>>>> is based on new communication protocol between video hardware and application
-> >>>>>> processor.
-> >>>>>
-> >>>>> This doesn't answer one important point, you have been asked for v1. What is the
-> >>>>> actual change point between Venus and Iris? What has been changed so much that
-> >>>>> it demands a separate driver. This is the main question for the cover letter,
-> >>>>> which has not been answered so far.
-> >>>>>
-> >>>>> From what I see from you bindings, the hardware is pretty close to what we see
-> >>>>> in the latest venus generations. I asssme that there was a change in the vcodec
-> >>>>> inteface to the firmware and other similar changes. Could you please point out,
-> >>>>> which parts of Venus driver do no longer work or are not applicable for sm8550
-> >>>>
-> >>>> The motivation behind having a separate IRIS driver was discussed earlier in [1]
-> >>>> In the same discussion, it was ellaborated on how the impact would be with
-> >>>> change in the new firmware interface and other video layers in the driver. I can
-> >>>> add this in cover letter in the next revision.
-> >>>
-> >>> Ok. So the changes cover the HFI interface. Is that correct?
-> >> Change wise, yes.
-> >>
-> >>>> We see some duplication of code and to handle the same, the series brings in a
-> >>>> common code reusability between iris and venus. Aligning the common peices of
-> >>>> venus and iris will be a work in progress, once we land the base driver for iris.
-> >>>
-> >>> This is not how it usually works. Especially not with the patches you
-> >>> have posted.
-> >>>
-> >>> I have the following suggestion how this story can continue:
-> >>> You can _start_ by reworking venus driver, separating the HFI /
-> >>> firmware / etc interface to an internal interface in the driver. Then
-> >>> implement Iris as a plug in for that interface. I might be mistaken
-> >>> here, but I think this is the way how this can be beneficial for both
-> >>> the video en/decoding on both old and new platforms.
-> >>
-> >> HFI/firmware interface is already confined to HFI layer in the existing venus
-> >> driver. We explained in the previous discussion [1], on how the HFI change
-> >> impacts the other layers by taking example of a DRC usecase. Please have a look
-> >> considering the usecase and the impact it brings to other layers in the driver.
-> >
-> > I have looked at it. And I still see huge change in the interface
-> > side, but it doesn't tell me about the hardware changes.
+> This is particularly noticeable when trying to suspend the device (even
+> s2idle): the PSY-internal thermal zone is inaccessible and returns
+> -ENODEV, which causes log spam.
 >
-> I hope you noticed how the common layers like decoder, response, state layers
-> are impacted in handling one of usecase. Now add that to all the different
-> scenarios like seek, drain, DRC during seek, DRC during drain, etc.
+> Register the power supplies only after we received some notification
+> indicating battmgr is ready to take off.
 
-Yes, for sure.
+Hi Konrad,
+
+This seems to fix an issue I'm seeing consistently on
+qcm6490-fairphone-fp5 when having adsp driver built-in and manually
+starting it with:
+  echo start | sudo tee /sys/class/remoteproc/remoteproc0/state
+
+Before upower was thinking line_power_qcom_battmgr_usb and
+line_power_qcom_battmgr_wls were "battery" devices with 0% charge and
+not "line-power" (which is what they're shown as now, and also before
+with adsp =3Dm).
+That caused upower to have its "Display Device" only show a third of the
+actual battery percent because it was including those fake batteries
+also.
+
+At least for this exact case (didn't test more tbh) I can offer my:
+
+Tested-by: Luca Weiss <luca.weiss@fairphone.com>
+
+Regards
+Luca
 
 >
-> > Have you evaluated the other opportunity?
-> >
-> > To have a common platform interface and firmware-specific backend?
-> >
-> > You have already done a part of it, but from a different perspective.
-> > You have tried to move common code out of the driver. Instead we are
-> > asking you to do a different thing. Move non-common code within the
-> > driver. Then add your code on top of that.
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  drivers/power/supply/qcom_battmgr.c | 109 ++++++++++++++++++++----------=
+------
+>  1 file changed, 60 insertions(+), 49 deletions(-)
 >
-> For common platform - yes, we are bringing in common stuff like PIL.
-> Other than that, abstraction to firmware interface is not that confined to one
-> layer. It spreads over decoder/encoder/common layers. Now when majority of the
-> layers/code is different, we planned to make it in parallel to venus and have a
-> common layer having common things to both iris and venus.
-
-My suggestion still holds. Start with this common platform code.
-Rather than arguing back and forth, could you please perform an
-experiment on the current venus driver and move firmware interface to
-subdirs, leaving just the platform / PIL / formats / etc in place?
-This will at least allow us to determine whether it is a feasible
-concept or not.
-
+> diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/q=
+com_battmgr.c
+> index ec163d1bcd18..a12e2a66d516 100644
+> --- a/drivers/power/supply/qcom_battmgr.c
+> +++ b/drivers/power/supply/qcom_battmgr.c
+> @@ -282,6 +282,7 @@ struct qcom_battmgr_wireless {
+> =20
+>  struct qcom_battmgr {
+>  	struct device *dev;
+> +	struct auxiliary_device *adev;
+>  	struct pmic_glink_client *client;
+> =20
+>  	enum qcom_battmgr_variant variant;
+> @@ -1293,11 +1294,69 @@ static void qcom_battmgr_enable_worker(struct wor=
+k_struct *work)
+>  		dev_err(battmgr->dev, "failed to request power notifications\n");
+>  }
+> =20
+> +static char *qcom_battmgr_battery[] =3D { "battery" };
+> +
+> +static void qcom_battmgr_register_psy(struct qcom_battmgr *battmgr)
+> +{
+> +	struct power_supply_config psy_cfg_supply =3D {};
+> +	struct auxiliary_device *adev =3D battmgr->adev;
+> +	struct power_supply_config psy_cfg =3D {};
+> +	struct device *dev =3D &adev->dev;
+> +
+> +	psy_cfg.drv_data =3D battmgr;
+> +	psy_cfg.of_node =3D adev->dev.of_node;
+> +
+> +	psy_cfg_supply.drv_data =3D battmgr;
+> +	psy_cfg_supply.of_node =3D adev->dev.of_node;
+> +	psy_cfg_supply.supplied_to =3D qcom_battmgr_battery;
+> +	psy_cfg_supply.num_supplicants =3D 1;
+> +
+> +	if (battmgr->variant =3D=3D QCOM_BATTMGR_SC8280XP) {
+> +		battmgr->bat_psy =3D devm_power_supply_register(dev, &sc8280xp_bat_psy=
+_desc, &psy_cfg);
+> +		if (IS_ERR(battmgr->bat_psy))
+> +			dev_err(dev, "failed to register battery power supply (%ld)\n",
+> +				PTR_ERR(battmgr->bat_psy));
+> +
+> +		battmgr->ac_psy =3D devm_power_supply_register(dev, &sc8280xp_ac_psy_d=
+esc, &psy_cfg_supply);
+> +		if (IS_ERR(battmgr->ac_psy))
+> +			dev_err(dev, "failed to register AC power supply (%ld)\n",
+> +				PTR_ERR(battmgr->ac_psy));
+> +
+> +		battmgr->usb_psy =3D devm_power_supply_register(dev, &sc8280xp_usb_psy=
+_desc, &psy_cfg_supply);
+> +		if (IS_ERR(battmgr->usb_psy))
+> +			dev_err(dev, "failed to register USB power supply (%ld)\n",
+> +				PTR_ERR(battmgr->usb_psy));
+> +
+> +		battmgr->wls_psy =3D devm_power_supply_register(dev, &sc8280xp_wls_psy=
+_desc, &psy_cfg_supply);
+> +		if (IS_ERR(battmgr->wls_psy))
+> +			dev_err(dev, "failed to register wireless charing power supply (%ld)\=
+n",
+> +				PTR_ERR(battmgr->wls_psy));
+> +	} else {
+> +		battmgr->bat_psy =3D devm_power_supply_register(dev, &sm8350_bat_psy_d=
+esc, &psy_cfg);
+> +		if (IS_ERR(battmgr->bat_psy))
+> +			dev_err(dev, "failed to register battery power supply (%ld)\n",
+> +				PTR_ERR(battmgr->bat_psy));
+> +
+> +		battmgr->usb_psy =3D devm_power_supply_register(dev, &sm8350_usb_psy_d=
+esc, &psy_cfg_supply);
+> +		if (IS_ERR(battmgr->usb_psy))
+> +			dev_err(dev, "failed to register USB power supply (%ld)\n",
+> +				PTR_ERR(battmgr->usb_psy));
+> +
+> +		battmgr->wls_psy =3D devm_power_supply_register(dev, &sm8350_wls_psy_d=
+esc, &psy_cfg_supply);
+> +		if (IS_ERR(battmgr->wls_psy))
+> +			dev_err(dev, "failed to register wireless charing power supply (%ld)\=
+n",
+> +				PTR_ERR(battmgr->wls_psy));
+> +	}
+> +}
+> +
+>  static void qcom_battmgr_pdr_notify(void *priv, int state)
+>  {
+>  	struct qcom_battmgr *battmgr =3D priv;
+> =20
+>  	if (state =3D=3D SERVREG_SERVICE_STATE_UP) {
+> +		if (!battmgr->bat_psy)
+> +			qcom_battmgr_register_psy(battmgr);
+> +
+>  		battmgr->service_up =3D true;
+>  		schedule_work(&battmgr->enable_work);
+>  	} else {
+> @@ -1312,13 +1371,9 @@ static const struct of_device_id qcom_battmgr_of_v=
+ariants[] =3D {
+>  	{}
+>  };
+> =20
+> -static char *qcom_battmgr_battery[] =3D { "battery" };
+> -
+>  static int qcom_battmgr_probe(struct auxiliary_device *adev,
+>  			      const struct auxiliary_device_id *id)
+>  {
+> -	struct power_supply_config psy_cfg_supply =3D {};
+> -	struct power_supply_config psy_cfg =3D {};
+>  	const struct of_device_id *match;
+>  	struct qcom_battmgr *battmgr;
+>  	struct device *dev =3D &adev->dev;
+> @@ -1328,14 +1383,7 @@ static int qcom_battmgr_probe(struct auxiliary_dev=
+ice *adev,
+>  		return -ENOMEM;
+> =20
+>  	battmgr->dev =3D dev;
+> -
+> -	psy_cfg.drv_data =3D battmgr;
+> -	psy_cfg.of_node =3D adev->dev.of_node;
+> -
+> -	psy_cfg_supply.drv_data =3D battmgr;
+> -	psy_cfg_supply.of_node =3D adev->dev.of_node;
+> -	psy_cfg_supply.supplied_to =3D qcom_battmgr_battery;
+> -	psy_cfg_supply.num_supplicants =3D 1;
+> +	battmgr->adev =3D adev;
+> =20
+>  	INIT_WORK(&battmgr->enable_work, qcom_battmgr_enable_worker);
+>  	mutex_init(&battmgr->lock);
+> @@ -1347,43 +1395,6 @@ static int qcom_battmgr_probe(struct auxiliary_dev=
+ice *adev,
+>  	else
+>  		battmgr->variant =3D QCOM_BATTMGR_SM8350;
+> =20
+> -	if (battmgr->variant =3D=3D QCOM_BATTMGR_SC8280XP) {
+> -		battmgr->bat_psy =3D devm_power_supply_register(dev, &sc8280xp_bat_psy=
+_desc, &psy_cfg);
+> -		if (IS_ERR(battmgr->bat_psy))
+> -			return dev_err_probe(dev, PTR_ERR(battmgr->bat_psy),
+> -					     "failed to register battery power supply\n");
+> -
+> -		battmgr->ac_psy =3D devm_power_supply_register(dev, &sc8280xp_ac_psy_d=
+esc, &psy_cfg_supply);
+> -		if (IS_ERR(battmgr->ac_psy))
+> -			return dev_err_probe(dev, PTR_ERR(battmgr->ac_psy),
+> -					     "failed to register AC power supply\n");
+> -
+> -		battmgr->usb_psy =3D devm_power_supply_register(dev, &sc8280xp_usb_psy=
+_desc, &psy_cfg_supply);
+> -		if (IS_ERR(battmgr->usb_psy))
+> -			return dev_err_probe(dev, PTR_ERR(battmgr->usb_psy),
+> -					     "failed to register USB power supply\n");
+> -
+> -		battmgr->wls_psy =3D devm_power_supply_register(dev, &sc8280xp_wls_psy=
+_desc, &psy_cfg_supply);
+> -		if (IS_ERR(battmgr->wls_psy))
+> -			return dev_err_probe(dev, PTR_ERR(battmgr->wls_psy),
+> -					     "failed to register wireless charing power supply\n");
+> -	} else {
+> -		battmgr->bat_psy =3D devm_power_supply_register(dev, &sm8350_bat_psy_d=
+esc, &psy_cfg);
+> -		if (IS_ERR(battmgr->bat_psy))
+> -			return dev_err_probe(dev, PTR_ERR(battmgr->bat_psy),
+> -					     "failed to register battery power supply\n");
+> -
+> -		battmgr->usb_psy =3D devm_power_supply_register(dev, &sm8350_usb_psy_d=
+esc, &psy_cfg_supply);
+> -		if (IS_ERR(battmgr->usb_psy))
+> -			return dev_err_probe(dev, PTR_ERR(battmgr->usb_psy),
+> -					     "failed to register USB power supply\n");
+> -
+> -		battmgr->wls_psy =3D devm_power_supply_register(dev, &sm8350_wls_psy_d=
+esc, &psy_cfg_supply);
+> -		if (IS_ERR(battmgr->wls_psy))
+> -			return dev_err_probe(dev, PTR_ERR(battmgr->wls_psy),
+> -					     "failed to register wireless charing power supply\n");
+> -	}
+> -
+>  	battmgr->client =3D devm_pmic_glink_register_client(dev,
+>  							  PMIC_GLINK_OWNER_BATTMGR,
+>  							  qcom_battmgr_callback,
 >
-> >>
-> >> [1] https://lore.kernel.org/lkml/8c97d866-1cab-0106-4ab3-3ca070945ef7@quicinc.com/
-> >>> Short rationale:
-> >>> The venus driver has a history of supported platforms. There is
-> >>> already some kind of buffer management in place. Both developers and
-> >>> testers have spent their effort on finding issues there. Sending new
-> >>> driver means that we have to spend the same amount of efforts on this.
-> >>> Moreover, even from the porter point of view. You are creating new
-> >>> bindings for the new hardware. Which do not follow the
-> >>> venus-common.yaml. And they do not follow the defined bindings for the
-> >>> recent venus platforms. Which means that as a developer I have to care
-> >>> about two different ways to describe nearly the same hardware.>> Again qualcomm video team does not have a plan to support sm8550/x1e80100 on
-> >>>> venus as the changes are too interleaved to absorb in venus driver. And there is
-> >>>> significant interest in community to start validating video driver on sm8550 or
-> >>>> x1e80100.
-> >>>>
-> >>>> [1] https://lore.kernel.org/lkml/8c97d866-1cab-0106-4ab3-3ca070945ef7@quicinc.com/
-> >>>>
-> >>>> Regards,
-> >>>> Vikash
-> >>>
-> >>>
-> >>>
-> >
-> >
-> >
+> ---
+> base-commit: ceb2fe0d438644e1de06b9a6468a1fb8e2199c70
+> change-id: 20231218-topic-battmgr_fixture_attempt-ec86ef8df7e3
+>
+> Best regards,
 
-
-
--- 
-With best wishes
-Dmitry
 
