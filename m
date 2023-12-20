@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-5491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FC0D819600
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 01:54:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5916781962D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 02:23:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 354411C24C30
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 00:54:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7E0821C253CC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Dec 2023 01:23:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 435041FAF;
-	Wed, 20 Dec 2023 00:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 548FF5245;
+	Wed, 20 Dec 2023 01:23:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QT/YOyEU"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Be4GSOtT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AA41EA7E;
-	Wed, 20 Dec 2023 00:54:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D1F96128;
+	Wed, 20 Dec 2023 01:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BJMwo7F009275;
-	Wed, 20 Dec 2023 00:53:58 GMT
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BJNjfj5006140;
+	Wed, 20 Dec 2023 01:23:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=cHXBAm42TwGsErIeMkvw1BRTy0PFunf9wSVEzQtP94w=; b=QT
-	/YOyEUUNLRn2uOJNGKuiG807Yut1UchQV/1IfPMTdddyuG7HtLuX4IS8aXUHnk/X
-	dWaYB1sM4qNHOmO4LTpP8sAMCEuZoE9MXgebASsErAOH1wrjOoswXoOpTfLzi50+
-	KILm58UO7EVKfUwpchXHCscZ6NwVBtNLKmxZC3GPsmn5eHK+kBPhveHb/WIk7f3/
-	v9kYMqZspX4SXHGWRm7tE1/112z/v5xwoO9O7WyfrHpvZO1OJ7RNvM+BKOo0nODd
-	7nnvaGw6rhCpK04X2ieISHHgTJ1QRXotHM6z92I22a2JzOJMpnqXdbjuATW/ZVTb
-	TpemRBSR0tz16bGMY1GA==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v34dyapu9-1
+	qcppdkim1; bh=FXs6Cp96+pU6KkyJ1HoaENV085C9R657xdQToej2jiI=; b=Be
+	4GSOtT76DikysnRAl8Ad6K/zeDuchkpPccVuA/TgRjfqdx1Zunt9nsrzjQAjYCW/
+	akjWLBdgwlKpBi0Zhbw1ySdEatjrcXFKvGyPMSWzsPkAXjN0fyAI4HMOfh8SHDer
+	JffhQZ5NTE7KXLvkG34UpYvXQuVlc09KamLI8Vw0kd2++BwcX577jXIIH3zdGL1Z
+	xqyGwrBzfKBdgsoL0isu5LL69T+oZe5gTriGqrzQrMyHa7S7RCD71EfHlI+GS+I/
+	J1+/VAfkH6QRIeqE/Y4TGhVkiAFbJDxEtJJN4aas2JNYye9RphpJ9+h84ixnTQjW
+	SCeq27EkHis2m8kOWRhA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v34dyar4v-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Dec 2023 00:53:58 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BK0rvvr016402
+	Wed, 20 Dec 2023 01:23:43 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BK1NgsQ024343
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Dec 2023 00:53:57 GMT
-Received: from [10.239.132.150] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+	Wed, 20 Dec 2023 01:23:42 GMT
+Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 19 Dec
- 2023 16:53:50 -0800
-Message-ID: <ad1547cf-0520-422d-a105-ec426f526d71@quicinc.com>
-Date: Wed, 20 Dec 2023 08:53:48 +0800
+ 2023 17:23:39 -0800
+Message-ID: <b46398da-ef01-432a-896d-f4ce2436ec52@quicinc.com>
+Date: Wed, 20 Dec 2023 09:23:36 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,127 +56,440 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/1] arm64: dts: qcom: sm8550: remove
- address/size-cells from mdss_dsi1
-Content-Language: en-US
+Subject: Re: [PATCH v3 5/6] arm64: dts: qcom: add base AIM300 dtsi
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Tengfei Fan
-	<quic_tengfan@quicinc.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
         <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
         <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
-References: <20231219003106.8663-1-quic_tengfan@quicinc.com>
- <20231219003106.8663-2-quic_tengfan@quicinc.com>
- <457e336e-004c-4721-b58d-e9ada16dc04b@linaro.org>
- <a8f168da-14f7-4377-8dea-f282a3eac0a4@quicinc.com>
- <13b61d41-6045-499e-864b-51c6cb6eacf9@linaro.org>
- <38604415-b410-4995-9c4f-525536435699@quicinc.com>
- <CAA8EJpo07gE7ZeNP6wSGTLtmF_3PKQAKFyMRZ8dk1K+f7PAxrg@mail.gmail.com>
-From: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>
-In-Reply-To: <CAA8EJpo07gE7ZeNP6wSGTLtmF_3PKQAKFyMRZ8dk1K+f7PAxrg@mail.gmail.com>
+        <linux-kernel@vger.kernel.org>, Fenglin Wu <quic_fenglinw@quicinc.com>
+References: <20231219005007.11644-1-quic_tengfan@quicinc.com>
+ <20231219005007.11644-6-quic_tengfan@quicinc.com>
+ <CAA8EJpoBuUVu00-s6uVJpYWB2Bvn2VnJqV8b9CicMfgvfokxdg@mail.gmail.com>
+From: Tengfei Fan <quic_tengfan@quicinc.com>
+In-Reply-To: <CAA8EJpoBuUVu00-s6uVJpYWB2Bvn2VnJqV8b9CicMfgvfokxdg@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: BC-uqf524ImoRaDOit4enta9ECDma7hC
-X-Proofpoint-GUID: BC-uqf524ImoRaDOit4enta9ECDma7hC
+X-Proofpoint-ORIG-GUID: k4UbqdZncyyD3StPvmgs9Ro_2d1GCNkj
+X-Proofpoint-GUID: k4UbqdZncyyD3StPvmgs9Ro_2d1GCNkj
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
  lowpriorityscore=0 phishscore=0 malwarescore=0 suspectscore=0
- clxscore=1011 bulkscore=0 spamscore=0 adultscore=0 mlxlogscore=906
+ clxscore=1011 bulkscore=0 spamscore=0 adultscore=0 mlxlogscore=999
  priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312200004
+ engine=8.19.0-2311290000 definitions=main-2312200007
 
 
 
-On 12/19/2023 6:21 PM, Dmitry Baryshkov wrote:
-> On Tue, 19 Dec 2023 at 12:09, Aiqun Yu (Maria) <quic_aiquny@quicinc.com> wrote:
+On 12/19/2023 6:25 PM, Dmitry Baryshkov wrote:
+> On Tue, 19 Dec 2023 at 02:52, Tengfei Fan <quic_tengfan@quicinc.com> wrote:
 >>
+>> AIM300 is a module with QCS8550 SoC, UFS and PMIC chip.
+>> AIM300 Series is a highly optimized family of modules designed to support
+>> AIoT applications. The Module is mounted onto Qualcomm AIoT carrier board
+>> to support verification, evaluation and development.
 >>
+>> Co-developed-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+>> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi | 371 +++++++++++++++++++
+>>   1 file changed, 371 insertions(+)
+>>   create mode 100644 arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi
 >>
->> On 12/19/2023 5:41 PM, Krzysztof Kozlowski wrote:
->>> On 19/12/2023 10:36, Aiqun Yu (Maria) wrote:
->>>>
->>>>
->>>> On 12/19/2023 3:17 PM, Krzysztof Kozlowski wrote:
->>>>> On 19/12/2023 01:31, Tengfei Fan wrote:
->>>>>> The address/size-cells in mdss_dsi1 node have not ranges and child also
->>>>>> have not reg, then this leads to dtc W=1 warnings:
->>>>>
->>>> Comments can be more readable:
->>>> "mdss_dsi1" node don't have "ranges" or child "reg" property, while it
->>>> have address/size-cells properties. This caused
->>>> "avoid_unnecessary_addr_size" warning from dtb check.
->>>> Remove address/size-cells properties for "mdss_dsi1" node.
->>>>
->>>>> I cannot parse it. Address/size cells never have ranges or children.
->>>>> They cannot have. These are uint32 properties.
->>>> Pls help to comment on the revised commit message. Every time I write a
->>>> commit message, also takes a while for me to double confirm whether
->>>> others can understand me correctly as well. Feel free to let us know if
->>>> it is not readable to you. It will help us as non-English native developers.
->>>>>
->>>>>>
->>>>>>      sm8550.dtsi:2937.27-2992.6: Warning (avoid_unnecessary_addr_size): /soc@0/display-subsystem@ae00000/dsi@ae96000:
->>>>>>        unnecessary #address-cells/#size-cells without "ranges" or child "reg" property
->>>>>>
->>>>>>
->>>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>>>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
->>>>>> ---
->>>>>
->>>>> I disagreed with the patch before. You resubmit it without really
->>>>> addressing my concerns.
->>>>>
->>>>> I am not sure if this is correct fix and I want to fix all of such
->>>>> errors (there are multiple of them) in the same way. Feel free to
->>>>> propose common solution based on arguments.
->>>> Per my understanding, "qcom,mdss-dsi-ctrl" driver node like "mdss_dsi1"
->>>> don't need to have address/size-cells properties.
->>>
->>> Just because dtc says so? And what about bindings?
->> I don't find any reason why "qcom,mdss-dsi-ctrl" driver node need to
->> have address/size-cells properties. Document Bindings should also be fixed.
->>>
->>>> Feel free to let us know whether there is different idea of
->>>> "address/size-cells" needed for the "qcom,mdss-dsi-ctrl" driver node.
->>>
->>> The bindings expressed that idea. If the binding is incorrect, fix the
->>> binding and the DTS. If the binding is correct, provide rationale why it
->>> somehow does not apply here etc.
->> Our plan is to fix the bindings as well.
->>
->> In case you have missed the question, I just re-place it here:
->> While there are about 22 different soc dtsi and it's document binding
->> files needed to be fixed. Shall we fix it for all qcom related soc usage
->> in one patch, or we'd better to split into different patches according
->> to soc specifically?
+>> diff --git a/arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi b/arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi
+>> new file mode 100644
+>> index 000000000000..04ca4597f952
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi
+>> @@ -0,0 +1,371 @@
+>> +// SPDX-License-Identifier: BSD-3-Clause
+>> +/*
+>> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>> +#include "qcs8550.dtsi"
+>> +#include "pm8010.dtsi"
+>> +#include "pm8550.dtsi"
+>> +#include "pm8550b.dtsi"
+>> +#define PMK8550VE_SID 5
+>> +#include "pm8550ve.dtsi"
+>> +#include "pm8550vs.dtsi"
+>> +#include "pmk8550.dtsi"
+>> +#include "pmr735d_a.dtsi"
+>> +#include "pmr735d_b.dtsi"
+>> +
+>> +/ {
+>> +       vph_pwr: vph-pwr-regulator {
+>> +               compatible = "regulator-fixed";
+>> +               regulator-name = "vph_pwr";
+>> +               regulator-min-microvolt = <3700000>;
+>> +               regulator-max-microvolt = <3700000>;
+>> +
+>> +               regulator-always-on;
+>> +               regulator-boot-on;
+>> +       };
+>> +};
 > 
-> Don't touch the bindings unless you understand what you are doing.
-> Your patch will be NAKed. There can be a DSI panel attached to the DSI
-> host, which means there is a need for #address-cells / #size-cells.
+> Is VPH_PWR regulator present on the SoM or on the carrier board?VPH_PWR regulator present on the SoM.
 > 
-Could you please help to elaborate more on details? Like what's the 
-right example here for the "qcom,mdss-dsi-ctrl" driver node needed to 
-have "#address-cells"/"#size-cells".
-
-Thx to chime in that we have put a good amount of time here.
-> Please stop wasting the time on dtc warning. The bindings (and the
-> file) are correct.
-I don't agree here.
-Either it is a wrong usage of "#address-cells"/"#size-cells", or dtc 
-warning should be fixed with this usage take into account.
-"dtb check" will be a good guideline for developers to follow, I don't 
-think it is wasting time here.
+>> +
+>> +&apps_rsc {
+>> +       regulators-0 {
+>> +               compatible = "qcom,pm8550-rpmh-regulators";
+>> +               qcom,pmic-id = "b";
+>> +
+>> +               vdd-bob1-supply = <&vph_pwr>;
+>> +               vdd-bob2-supply = <&vph_pwr>;
+>> +               vdd-l1-l4-l10-supply = <&vreg_s6g_1p86>;
+>> +               vdd-l2-l13-l14-supply = <&vreg_bob1>;
+>> +               vdd-l3-supply = <&vreg_s4g_1p25>;
+>> +               vdd-l5-l16-supply = <&vreg_bob1>;
+>> +               vdd-l6-l7-supply = <&vreg_bob1>;
+>> +               vdd-l8-l9-supply = <&vreg_bob1>;
+>> +               vdd-l11-supply = <&vreg_s4g_1p25>;
+>> +               vdd-l12-supply = <&vreg_s6g_1p86>;
+>> +               vdd-l15-supply = <&vreg_s6g_1p86>;
+>> +               vdd-l17-supply = <&vreg_bob2>;
+>> +
+>> +               vreg_bob1: bob1 {
+>> +                       regulator-name = "vreg_bob1";
+>> +                       regulator-min-microvolt = <3296000>;
+>> +                       regulator-max-microvolt = <3960000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_bob2: bob2 {
+>> +                       regulator-name = "vreg_bob2";
+>> +                       regulator-min-microvolt = <2720000>;
+>> +                       regulator-max-microvolt = <3960000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l1b_1p8: ldo1 {
+>> +                       regulator-name = "vreg_l1b_1p8";
+>> +                       regulator-min-microvolt = <1800000>;
+>> +                       regulator-max-microvolt = <1800000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l2b_3p0: ldo2 {
+>> +                       regulator-name = "vreg_l2b_3p0";
+>> +                       regulator-min-microvolt = <3008000>;
+>> +                       regulator-max-microvolt = <3008000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l5b_3p1: ldo5 {
+>> +                       regulator-name = "vreg_l5b_3p1";
+>> +                       regulator-min-microvolt = <3104000>;
+>> +                       regulator-max-microvolt = <3104000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l6b_1p8: ldo6 {
+>> +                       regulator-name = "vreg_l6b_1p8";
+>> +                       regulator-min-microvolt = <1800000>;
+>> +                       regulator-max-microvolt = <3008000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l7b_1p8: ldo7 {
+>> +                       regulator-name = "vreg_l7b_1p8";
+>> +                       regulator-min-microvolt = <1800000>;
+>> +                       regulator-max-microvolt = <3008000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l8b_1p8: ldo8 {
+>> +                       regulator-name = "vreg_l8b_1p8";
+>> +                       regulator-min-microvolt = <1800000>;
+>> +                       regulator-max-microvolt = <3008000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l9b_2p9: ldo9 {
+>> +                       regulator-name = "vreg_l9b_2p9";
+>> +                       regulator-min-microvolt = <2960000>;
+>> +                       regulator-max-microvolt = <3008000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l11b_1p2: ldo11 {
+>> +                       regulator-name = "vreg_l11b_1p2";
+>> +                       regulator-min-microvolt = <1200000>;
+>> +                       regulator-max-microvolt = <1504000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l12b_1p8: ldo12 {
+>> +                       regulator-name = "vreg_l12b_1p8";
+>> +                       regulator-min-microvolt = <1800000>;
+>> +                       regulator-max-microvolt = <1800000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l13b_3p0: ldo13 {
+>> +                       regulator-name = "vreg_l13b_3p0";
+>> +                       regulator-min-microvolt = <3000000>;
+>> +                       regulator-max-microvolt = <3000000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l14b_3p2: ldo14 {
+>> +                       regulator-name = "vreg_l14b_3p2";
+>> +                       regulator-min-microvolt = <3200000>;
+>> +                       regulator-max-microvolt = <3200000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l15b_1p8: ldo15 {
+>> +                       regulator-name = "vreg_l15b_1p8";
+>> +                       regulator-min-microvolt = <1800000>;
+>> +                       regulator-max-microvolt = <1800000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l16b_2p8: ldo16 {
+>> +                       regulator-name = "vreg_l16b_2p8";
+>> +                       regulator-min-microvolt = <1800000>;
+>> +                       regulator-max-microvolt = <3300000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l17b_2p5: ldo17 {
+>> +                       regulator-name = "vreg_l17b_2p5";
+>> +                       regulator-min-microvolt = <2504000>;
+>> +                       regulator-max-microvolt = <2504000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +       };
+>> +
+>> +       regulators-1 {
+>> +               compatible = "qcom,pm8550vs-rpmh-regulators";
+>> +               qcom,pmic-id = "c";
+>> +
+>> +               vdd-l1-supply = <&vreg_s4g_1p25>;
+>> +               vdd-l2-supply = <&vreg_s4e_0p95>;
+>> +               vdd-l3-supply = <&vreg_s4e_0p95>;
+>> +
+>> +               vreg_l3c_0p9: ldo3 {
+>> +                       regulator-name = "vreg_l3c_0p9";
+>> +                       regulator-min-microvolt = <880000>;
+>> +                       regulator-max-microvolt = <912000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +       };
+>> +
+>> +       regulators-2 {
+>> +               compatible = "qcom,pm8550vs-rpmh-regulators";
+>> +               qcom,pmic-id = "d";
+>> +
+>> +               vdd-l1-supply = <&vreg_s4e_0p95>;
+>> +               vdd-l2-supply = <&vreg_s4e_0p95>;
+>> +               vdd-l3-supply = <&vreg_s4e_0p95>;
+>> +
+>> +               vreg_l1d_0p88: ldo1 {
+>> +                       regulator-name = "vreg_l1d_0p88";
+>> +                       regulator-min-microvolt = <880000>;
+>> +                       regulator-max-microvolt = <920000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +       };
+>> +
+>> +       regulators-3 {
+>> +               compatible = "qcom,pm8550vs-rpmh-regulators";
+>> +               qcom,pmic-id = "e";
+>> +
+>> +               vdd-l1-supply = <&vreg_s4e_0p95>;
+>> +               vdd-l2-supply = <&vreg_s4e_0p95>;
+>> +               vdd-l3-supply = <&vreg_s4g_1p25>;
+>> +               vdd-s4-supply = <&vph_pwr>;
+>> +               vdd-s5-supply = <&vph_pwr>;
+>> +
+>> +               vreg_s4e_0p95: smps4 {
+>> +                       regulator-name = "vreg_s4e_0p95";
+>> +                       regulator-min-microvolt = <904000>;
+>> +                       regulator-max-microvolt = <984000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_s5e_1p08: smps5 {
+>> +                       regulator-name = "vreg_s5e_1p08";
+>> +                       regulator-min-microvolt = <1010000>;
+>> +                       regulator-max-microvolt = <1120000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l1e_0p88: ldo1 {
+>> +                       regulator-name = "vreg_l1e_0p88";
+>> +                       regulator-min-microvolt = <880000>;
+>> +                       regulator-max-microvolt = <912000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l2e_0p9: ldo2 {
+>> +                       regulator-name = "vreg_l2e_0p9";
+>> +                       regulator-min-microvolt = <870000>;
+>> +                       regulator-max-microvolt = <970000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l3e_1p2: ldo3 {
+>> +                       regulator-name = "vreg_l3e_1p2";
+>> +                       regulator-min-microvolt = <1200000>;
+>> +                       regulator-max-microvolt = <1200000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +       };
+>> +
+>> +       regulators-4 {
+>> +               compatible = "qcom,pm8550ve-rpmh-regulators";
+>> +               qcom,pmic-id = "f";
+>> +
+>> +               vdd-l1-supply = <&vreg_s4e_0p95>;
+>> +               vdd-l2-supply = <&vreg_s4e_0p95>;
+>> +               vdd-l3-supply = <&vreg_s4e_0p95>;
+>> +               vdd-s4-supply = <&vph_pwr>;
+>> +
+>> +               vreg_s4f_0p5: smps4 {
+>> +                       regulator-name = "vreg_s4f_0p5";
+>> +                       regulator-min-microvolt = <500000>;
+>> +                       regulator-max-microvolt = <600000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l1f_0p9: ldo1 {
+>> +                       regulator-name = "vreg_l1f_0p9";
+>> +                       regulator-min-microvolt = <880000>;
+>> +                       regulator-max-microvolt = <912000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l2f_0p88: ldo2 {
+>> +                       regulator-name = "vreg_l2f_0p88";
+>> +                       regulator-min-microvolt = <880000>;
+>> +                       regulator-max-microvolt = <912000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l3f_0p88: ldo3 {
+>> +                       regulator-name = "vreg_l3f_0p88";
+>> +                       regulator-min-microvolt = <880000>;
+>> +                       regulator-max-microvolt = <912000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +       };
+>> +
+>> +       regulators-5 {
+>> +               compatible = "qcom,pm8550vs-rpmh-regulators";
+>> +               qcom,pmic-id = "g";
+>> +               vdd-l1-supply = <&vreg_s4g_1p25>;
+>> +               vdd-l2-supply = <&vreg_s4g_1p25>;
+>> +               vdd-l3-supply = <&vreg_s4g_1p25>;
+>> +               vdd-s1-supply = <&vph_pwr>;
+>> +               vdd-s2-supply = <&vph_pwr>;
+>> +               vdd-s3-supply = <&vph_pwr>;
+>> +               vdd-s4-supply = <&vph_pwr>;
+>> +               vdd-s5-supply = <&vph_pwr>;
+>> +               vdd-s6-supply = <&vph_pwr>;
+>> +
+>> +               vreg_s1g_1p25: smps1 {
+>> +                       regulator-name = "vreg_s1g_1p25";
+>> +                       regulator-min-microvolt = <1200000>;
+>> +                       regulator-max-microvolt = <1300000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_s2g_0p85: smps2 {
+>> +                       regulator-name = "vreg_s2g_0p85";
+>> +                       regulator-min-microvolt = <800000>;
+>> +                       regulator-max-microvolt = <1000000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_s3g_0p8: smps3 {
+>> +                       regulator-name = "vreg_s3g_0p8";
+>> +                       regulator-min-microvolt = <300000>;
+>> +                       regulator-max-microvolt = <1004000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_s4g_1p25: smps4 {
+>> +                       regulator-name = "vreg_s4g_1p25";
+>> +                       regulator-min-microvolt = <1200000>;
+>> +                       regulator-max-microvolt = <1300000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_s5g_0p85: smps5 {
+>> +                       regulator-name = "vreg_s5g_0p85";
+>> +                       regulator-min-microvolt = <500000>;
+>> +                       regulator-max-microvolt = <1004000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_s6g_1p86: smps6 {
+>> +                       regulator-name = "vreg_s6g_1p86";
+>> +                       regulator-min-microvolt = <1800000>;
+>> +                       regulator-max-microvolt = <2000000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l1g_1p2: ldo1 {
+>> +                       regulator-name = "vreg_l1g_1p2";
+>> +                       regulator-min-microvolt = <1200000>;
+>> +                       regulator-max-microvolt = <1200000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l2g_1p2: ldo2 {
+>> +                       regulator-name = "vreg_l2g_1p2";
+>> +                       regulator-min-microvolt = <1100000>;
+>> +                       regulator-max-microvolt = <1200000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +
+>> +               vreg_l3g_1p2: ldo3 {
+>> +                       regulator-name = "vreg_l3g_1p2";
+>> +                       regulator-min-microvolt = <1200000>;
+>> +                       regulator-max-microvolt = <1200000>;
+>> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +               };
+>> +       };
+>> +};
+>> +
+>> +&ufs_mem_hc {
+>> +       reset-gpios = <&tlmm 210 GPIO_ACTIVE_LOW>;
+>> +       vcc-supply = <&vreg_l17b_2p5>;
+>> +       vcc-max-microamp = <1300000>;
+>> +       vccq-supply = <&vreg_l1g_1p2>;
+>> +       vccq-max-microamp = <1200000>;
+>> +       vdd-hba-supply = <&vreg_l3g_1p2>;
+>> +
+>> +       status = "okay";
+>> +};
+>> +
+>> +&ufs_mem_phy {
+>> +       vdda-phy-supply = <&vreg_l1d_0p88>;
+>> +       vdda-pll-supply = <&vreg_l3e_1p2>;
+>> +
+>> +       status = "okay";
+>> +};
+>> --
+>> 2.17.1
+>>
+>>
+> 
 > 
 
 -- 
 Thx and BRs,
-Aiqun(Maria) Yu
+Tengfei Fan
 
