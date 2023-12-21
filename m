@@ -1,158 +1,229 @@
-Return-Path: <linux-arm-msm+bounces-5755-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5756-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8DA8181B939
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 15:05:53 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC57981B97A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 15:25:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B200D1C21FAC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 14:05:52 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2687DB21D04
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 14:25:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FE89627E9;
-	Thu, 21 Dec 2023 13:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5497C6D6F4;
+	Thu, 21 Dec 2023 14:25:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="juCznA2n"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pc+AlV7s"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814D8627E4
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 13:59:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5532b348d30so897491a12.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 05:59:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703167139; x=1703771939; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RGjpbWeu2d75WiGJs42ks4r1NRpOtPCVXK5h+gmfJs0=;
-        b=juCznA2nqaAulaGjBhbW868YYoZRgumzZTTe46Y68H7tElxBRUWg41P4NU1lNbGom4
-         iiuIRT0FSKqUU2QDAnFOcZb7724SkP+BdqajeXLy8T2be9WrkPd2xvnG7kb6LVmET9DJ
-         z3z1spxT+Eb9JQkfTqoDqpPrC4QJxvB3W3kMovZDl0IF66Sm4pwRjodIZ2zAnw7hgco2
-         PGTt+rtoEJ4eyjzsU1WEeRFd+YNR7wV8I5um/STgwLSH7wNrTFwpPXnM5nFwsQ1IqdrZ
-         z1aE77CFNEVPymRAWT7UihOqlh5Z/gYAikdbg6znfB2IAqnrejybKaYJFvgFC74K1VVM
-         Ai8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703167139; x=1703771939;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RGjpbWeu2d75WiGJs42ks4r1NRpOtPCVXK5h+gmfJs0=;
-        b=awbtc4KRkMkneBownOUror6a0bLz9f2HcH347w46NxqTKNElqhgh3jJsmuCQziCVpa
-         jxfcnjeFb5FVA3uf96N2i6wEPXdmfOI8FqoTvlNOLB89/PauFgR8CGGNC6oeRJGhzbsU
-         YwvHceoiyiDPNMAEBKJHMA0AEMdoNnyeZq3YpUQoD6XekBpVqdWaP3QfivvfX+F543jO
-         KVXANYOsOiwZyj8xgpBfyTF62AIETN+GW6b4arHEqXQ2RDS0A/JTW6M0QkrLo78LwD12
-         9DUjyj9bQN5wvk5r5/lDN1WFLYknb22Yztyxr2HVEnPvnFKVxo2502XoLugFw/fBUA8C
-         y+ew==
-X-Gm-Message-State: AOJu0Yx1CEfqvEgsTUG31tGcwnOiLjIVThBewQg5qKUw1xfP9G6sLL6o
-	Rmq29+KALEKFFIXd8noCsC07WA==
-X-Google-Smtp-Source: AGHT+IFuBtGwoF1hx0kvCDeLycqVfbxEaFw55MkGmehlyGMKISqCPYql5WdhiDKmyhpGZIk3PSWtjg==
-X-Received: by 2002:a50:c25a:0:b0:553:9fab:6cb6 with SMTP id t26-20020a50c25a000000b005539fab6cb6mr2182364edf.74.1703167138773;
-        Thu, 21 Dec 2023 05:58:58 -0800 (PST)
-Received: from [192.168.199.125] (178235179206.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.206])
-        by smtp.gmail.com with ESMTPSA id er15-20020a056402448f00b005540f0c2183sm1085871edb.97.2023.12.21.05.58.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Dec 2023 05:58:58 -0800 (PST)
-Message-ID: <af7becf0-84b7-4630-9c37-0e6296c41f74@linaro.org>
-Date: Thu, 21 Dec 2023 14:58:55 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F676D6E7;
+	Thu, 21 Dec 2023 14:25:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A357C433C7;
+	Thu, 21 Dec 2023 14:25:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1703168733;
+	bh=ocQ9EjUsxyh5+RDobb40P0qaPVGGj9nzip9H6VJRjIw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=pc+AlV7s1dtCyqu4IrWCCGACCZu9yLIdhMIzQRLpBXdoKWGiXBJxvM2Ds9jMZWG0k
+	 NUQt/C/vK8TGMgTuTBK5C3c5lmYkqfDw7TRsjzwPFwjLgWZkNodisFNfZTzS77Reiu
+	 yzt38yfyi6c2woJl0Ki98nG3tqtaWxmQ/PkWo9Col6uoxU8uc89d8JsY/AbaPZXAix
+	 f8STa19wkKXWWTI4qENq2qqU0REDMp+XRrQ8oxq7qyOZf4ISgdCWlinhYhiFT2a+7G
+	 S/Uk//E2GOQ3AnVgldnXvquQ3MiY9sDKHa4nFG/5CsIsfRk+6cTuzhppajYOL5MX4p
+	 xpKmbmqvyvSSg==
+Received: (nullmailer pid 3842774 invoked by uid 1000);
+	Thu, 21 Dec 2023 14:25:31 -0000
+Date: Thu, 21 Dec 2023 08:25:31 -0600
+From: Rob Herring <robh@kernel.org>
+To: Georgi Djakov <quic_c_gdjako@quicinc.com>
+Cc: krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, devicetree@vger.kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, quic_cgoldswo@quicinc.com, quic_sukadev@quicinc.com, quic_pdaly@quicinc.com, quic_sudaraja@quicinc.com, djakov@kernel.org
+Subject: Re: [PATCH v3 1/9] dt-bindings: iommu: Add Translation Buffer Unit
+ bindings
+Message-ID: <20231221142531.GA3730284-robh@kernel.org>
+References: <20231220060236.18600-1-quic_c_gdjako@quicinc.com>
+ <20231220060236.18600-2-quic_c_gdjako@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2] arm64: dts: qcom: qcm6490: Add UFS nodes
-Content-Language: en-US
-To: Manish Pandey <quic_mapa@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
- quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
- quic_bhaskarv@quicinc.com, quic_narepall@quicinc.com,
- quic_rampraka@quicinc.com, quic_ahari@quicinc.com
-References: <20231221111959.12970-1-quic_mapa@quicinc.com>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20231221111959.12970-1-quic_mapa@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231220060236.18600-2-quic_c_gdjako@quicinc.com>
 
-On 21.12.2023 12:19, Manish Pandey wrote:
-> Add UFS host controller and Phy nodes for
-> Qualcomm qcm6490 Board.
+On Tue, Dec 19, 2023 at 10:02:28PM -0800, Georgi Djakov wrote:
+> The "apps_smmu" on the Qualcomm sdm845 platform is an implementation
+> of the SMMU-500, that consists of a single TCU (Translation Control
+> Unit) and multiple TBUs (Translation Buffer Units). The TCU is already
+> being described in the generic SMMU DT schema. Add bindings for the
+> TBUs to describe their properties and resources that needs to be
+> managed in order to operate them.
 > 
-> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
+> In this DT schema, the TBUs are modelled as child devices of the TCU
+> and each of them is described with it's register space, clocks, power
+> domains, interconnects etc.
+> 
+> Signed-off-by: Georgi Djakov <quic_c_gdjako@quicinc.com>
 > ---
-> Changes from v1:
-> - updated with correct patchset
-Well no, this clearly hasn't been compile-tested..
-
-Please also include the board name in the subject
-(qcm6490: -> qcm6490-idp:)
+>  .../devicetree/bindings/iommu/arm,smmu.yaml   | 31 ++++++++
+>  .../bindings/iommu/qcom,qsmmuv500-tbu.yaml    | 77 +++++++++++++++++++
+>  2 files changed, 108 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/iommu/qcom,qsmmuv500-tbu.yaml
 > 
-> ---
->  arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> index 03e97e27d16d..51efd46b576c 100644
-> --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> @@ -440,6 +440,25 @@
->  	status = "okay";
->  };
+> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> index a4042ae24770..a610af2c7e5e 100644
+> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> @@ -235,6 +235,27 @@ properties:
+>        enabled for any given device.
+>      $ref: /schemas/types.yaml#/definitions/phandle
 >  
-> +&ufs_mem_hc {
-> +	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
-> +	vcc-supply = <&vreg_l7b_2p9>;
-> +	vcc-max-microamp = <800000>;
-> +	vccq-supply = <&vreg_l9b_1p2>;
-> +	vccq-max-microamp = <900000>;
-> +	vccq2-supply = <&vreg_l9b_1p2>;
-> +	vccq2-max-microamp = <900000>;
-These regulators should get regulator-allow-set-load since the
-UFS driver expects to perform current/mode setting ops on them
+> +  '#address-cells':
+> +    enum: [ 1, 2 ]
+> +
+> +  '#size-cells':
+> +    enum: [ 1, 2 ]
+> +
+> +  ranges: true
+> +
+> +patternProperties:
+> +  "^tbu@[0-9a-f]+":
 
-Konrad
+Missing '$' on the end.
+
+> +    description: The TBU child node(s)
+> +    type: object
+> +
+> +    properties:
+> +      stream-id-range:
+> +        $ref: /schemas/types.yaml#/definitions/uint32-array
+> +        description: Stream ID range (address and size) that is assigned by the TBU
+> +        items:
+> +          minItems: 2
+> +          maxItems: 2
+
+This is allowing any property in the TBU nodes. This all needs to move 
+to a separate TBU schema.
+
+> +
+>  required:
+>    - compatible
+>    - reg
+> @@ -312,6 +333,16 @@ allOf:
+>                      through the TCU's programming interface.
+>                  - description: bus clock required for the smmu ptw
+>  
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: qcom,sdm845-smmu-500
+> +    then:
+> +      patternProperties:
+> +        "^tbu@[0-9a-f]+":
+> +          $ref: qcom,qsmmuv500-tbu.yaml
+
+TBU nodes are allowed for all other SMMUs. Is that your intent? If not, 
+then the node definition up above should be removed and you would just 
+have this if/then schema.
+
+> +
+>    - if:
+>        properties:
+>          compatible:
+> diff --git a/Documentation/devicetree/bindings/iommu/qcom,qsmmuv500-tbu.yaml b/Documentation/devicetree/bindings/iommu/qcom,qsmmuv500-tbu.yaml
+> new file mode 100644
+> index 000000000000..c4f148ae5f38
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/iommu/qcom,qsmmuv500-tbu.yaml
+> @@ -0,0 +1,77 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/iommu/qcom,qsmmuv500-tbu.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm TBU (Translation Buffer Unit)
+> +
+> +maintainers:
+> +  - Georgi Djakov <quic_c_gdjako@quicinc.com>
+> +
+> +description:
+> +  The Qualcomm SMMU500 implementation consists of TCU and TBU. The TBU contains
+> +  a Translation Lookaside Buffer (TLB) that caches page tables. TBUs provides
+> +  debug features to trace and trigger debug transactions. There are multiple TBU
+> +  instances distributes with each client core.
+> +
+> +properties:
+> +
+> +  compatible:
+> +    const: qcom,qsmmuv500-tbu
+> +
+> +  reg:
+> +    items:
+> +      - description: Address and size of the TBU's register space.
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  interconnects:
+> +    maxItems: 1
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +  stream-id-range:
+> +    $ref: "arm,smmu.yaml#/patternProperties/^tbu@[0-9a-f]+/properties/stream-id-range"
+
+No. We generally don't reference properties this way. Partly because not 
+all regex's work as a path.
+
+You need a base TBU schema of the common properties that is referenced 
+at the top level here. That should also solve the above problem.
+
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - stream-id-range
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-sdm845.h>
+> +    #include <dt-bindings/interconnect/qcom,icc.h>
+> +    #include <dt-bindings/interconnect/qcom,sdm845.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +    #include <dt-bindings/power/qcom-rpmpd.h>
+> +
+> +    apps_smmu: iommu@15000000 {
+
+Drop unused labels.
+
+> +        compatible = "qcom,sdm845-smmu-500", "arm,mmu-500";
+> +        reg = <0x15000000 0x80000>;
+> +        ranges = <0 0 0 0 0xffffffff>;
+> +        #iommu-cells = <2>;
+> +        #global-interrupts = <1>;
+> +        interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>,
+> +                     <GIC_SPI 343 IRQ_TYPE_LEVEL_HIGH>;
+> +        #address-cells = <2>;
+> +        #size-cells = <2>;
+> +
+> +        anoc_1_pcie_tbu: tbu@150e1000 {
+> +            compatible = "qcom,qsmmuv500-tbu";
+> +            reg = <0x0 0x150e1000 0x0 0x1000>;
+> +            clocks = <&gcc GCC_AGGRE_NOC_PCIE_TBU_CLK>;
+> +            interconnects = <&system_noc MASTER_GNOC_SNOC QCOM_ICC_TAG_ACTIVE_ONLY
+> +                             &config_noc SLAVE_IMEM_CFG QCOM_ICC_TAG_ACTIVE_ONLY>;
+> +            power-domains = <&gcc HLOS1_VOTE_AGGRE_NOC_MMU_PCIE_TBU_GDSC>;
+> +            stream-id-range = <0x1c00 0x400>;
+> +        };
+> +    };
+> +
+> +...
 
