@@ -1,144 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-5758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A278481BA61
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 16:16:39 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4063F81BA6D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 16:17:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5F296285E0D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 15:16:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F1C13285B5A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 15:17:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1C5452F60;
-	Thu, 21 Dec 2023 15:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EADF5539E4;
+	Thu, 21 Dec 2023 15:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kuGqfnHn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cjAEJiVs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B58E539F8;
-	Thu, 21 Dec 2023 15:16:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BLDw7fR026094;
-	Thu, 21 Dec 2023 15:16:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:date:subject:mime-version:content-type
-	:content-transfer-encoding:message-id:to:cc; s=qcppdkim1; bh=I/U
-	x/t5vBHviDOr73BQf5hZoG+ErO3yOItGQwBSmyt8=; b=kuGqfnHnPatmZBdibfh
-	t19WgGGHX9TTr+xxBpfmwmBrekpnOMLE1E2Aflc9zEjrscH1olUsdDFuhjtfN1EX
-	rCtD9mlS15yOgto27A6hZILQTNdt61Q6WnMPGjTBIVDlLPJfczMZV+pDp59GmN61
-	Wo/FYyX1ZkEJB4RaJnKzJ3bZ9bYm3vBJZPFH12iHhn+ZJInKBuhOLNSiqNq7gBf8
-	PMoYTB+CnUIdRKKrtcToelR+FFWqvkQKaf1Mlhc8WQMWvkRNk1Nun+U/0iw4P4HJ
-	yeZY83xEq08VVb7eCtJUMKu41vsu979VC+CCZkbgLHyqmdJ6SKwoD/KjPjF5Dt8W
-	ZgA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v4pq386np-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Dec 2023 15:16:09 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BLFG85m012246
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Dec 2023 15:16:08 GMT
-Received: from [169.254.0.1] (10.49.16.6) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 21 Dec
- 2023 07:16:05 -0800
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
-Date: Thu, 21 Dec 2023 07:16:04 -0800
-Subject: [PATCH] slimbus: qcom-ngd-ctrl: Make QMI message rules const
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD36539E5
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 15:17:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-50e39ac39bcso1212775e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 07:17:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1703171855; x=1703776655; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3rS/d8cLXqQ939RyFghs3sfiM6ylHXt1p6P+vznFiPg=;
+        b=cjAEJiVsi2Z2icsVcLG74GKjC7NP2uTjjbyvQaRbqGzczOQJFOYOLPPyKeWED6Oz8L
+         hqy6OtUPMUGSpjAiGJ6xLmHYvDxc6AbTx0Md1gIBc3tN2bndp5zj631PyArbX2xBVKkm
+         lgKOzG0Q5ct+7VITWtM4kaviLlNnX4QgE3kCQnlRTMTK79XuBs86Z3wAlTNU8dZP0IjM
+         hXgc9IomisyDDapGTArLRegnPQJo6RHrbRkl9RPBCSG5RngVDSCOaUzBJwoOu+kwFO4a
+         vjoZrM+aqHBM8ykozDvPGwweTjXHwqIWdvBJ6dIU0h2JOsu7+f2bQYxbQJKXuaC6B0fX
+         gFvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703171855; x=1703776655;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3rS/d8cLXqQ939RyFghs3sfiM6ylHXt1p6P+vznFiPg=;
+        b=RpbSDBv2Yth2g4YOIKFzJLC7/udKV/G6Spj7AQqOsTfHH6dNH88NlQuKilMBXGSVWd
+         DUUKliF2egxswLZg1173eSe/B9BJZmNeJpUxQSLfatjic0vNzk8288BrLHXk7sZO5Fuq
+         waDJNmEjHbEawa4HOSisijhpsxQB24OEXRnzoqwfvoJ39ldPPnIoMxq53JC6zTgUu+jx
+         tRrTqruHh25YkXH5LTcJeieJL5vsE+mfkVNfFe79bMnzQTuSBxB2ZM1KibpOYydc+aoS
+         WBTt+fzDwR2gagCpgpd+bvc0nHJkZd180q8fvuXnEZAsgBdPZcTytXMJx7f+jYw4WLmm
+         PxKw==
+X-Gm-Message-State: AOJu0YwmkhjASunClG2j9VYBlvIRoOHIZRkRjcoTnpZbqv/SBzUphelH
+	k+ny2+gTH5rHtptSWiMLfkkeJQ==
+X-Google-Smtp-Source: AGHT+IH194/ByNGt3ybhEl+9Rklx6k8BT9gbdHbgOLts8b0E22QNyTZ+tuBjQBtSIWiJov8xQ4EMgA==
+X-Received: by 2002:ac2:4e01:0:b0:50b:f304:3bed with SMTP id e1-20020ac24e01000000b0050bf3043bedmr6122805lfr.49.1703171854925;
+        Thu, 21 Dec 2023 07:17:34 -0800 (PST)
+Received: from [192.168.199.125] (178235179206.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.206])
+        by smtp.gmail.com with ESMTPSA id ka12-20020a170907920c00b00a26ac57b951sm397271ejb.23.2023.12.21.07.17.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Dec 2023 07:17:34 -0800 (PST)
+Message-ID: <5760478d-ca64-499c-939b-6e5b065afc2f@linaro.org>
+Date: Thu, 21 Dec 2023 16:17:31 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 2/2] arm64: dts: qcom: qcm6490: Add UFS nodes
+Content-Language: en-US
+To: Manish Pandey <quic_mapa@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
+ quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
+ quic_bhaskarv@quicinc.com, quic_narepall@quicinc.com,
+ quic_rampraka@quicinc.com, quic_ahari@quicinc.com
+References: <20231221104529.13513-1-quic_mapa@quicinc.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20231221104529.13513-1-quic_mapa@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-ID: <20231221-qmi_elem_info-const-v1-1-81db0a9e6616@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIALNWhGUC/22NQQrCMBBFryKzNtKJNjWuvIeUUsaJHbCJTWpRS
- u9uLLhz+R7892dIHIUTnDYzRJ4kSfAZcLsB6lp/YyXXzKALvUeNpRp6afjOfSPeBUXBp1EZqiq
- LlTtqLiEvH5GdvNbqpc7cSRpDfK8nE37tr2f+9iZUqJw9OGMLcq015+EpJJ52FHqol2X5AKSsF
- ue4AAAA
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Srinivas Kandagatla
-	<srinivas.kandagatla@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
-        Jeff Johnson
-	<quic_jjohnson@quicinc.com>
-X-Mailer: b4 0.12.3
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: y4lYcOS900awVgkkB0MX_DVKXLMKkamZ
-X-Proofpoint-ORIG-GUID: y4lYcOS900awVgkkB0MX_DVKXLMKkamZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 phishscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0
- mlxscore=0 clxscore=1015 impostorscore=0 mlxlogscore=892 adultscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312210115
 
-Commit ff6d365898d4 ("soc: qcom: qmi: use const for struct
-qmi_elem_info") allows QMI message encoding/decoding rules
-to be const, so do that for qcom-ngd-ctrl.c.
+On 21.12.2023 11:45, Manish Pandey wrote:
+> Add UFS host controller and Phy nodes for
+> Qualcomm qcm6490 Board.
+> 
+> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
+> ---
+This still doesn't compile and only v2 made it to my inbox.
 
-Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
----
- drivers/slimbus/qcom-ngd-ctrl.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Please fix this.
 
-diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
-index 77aa6d26476c..efeba8275a66 100644
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -220,7 +220,7 @@ struct slimbus_power_resp_msg_v01 {
- 	struct qmi_response_type_v01 resp;
- };
- 
--static struct qmi_elem_info slimbus_select_inst_req_msg_v01_ei[] = {
-+static const struct qmi_elem_info slimbus_select_inst_req_msg_v01_ei[] = {
- 	{
- 		.data_type  = QMI_UNSIGNED_4_BYTE,
- 		.elem_len   = 1,
-@@ -262,7 +262,7 @@ static struct qmi_elem_info slimbus_select_inst_req_msg_v01_ei[] = {
- 	},
- };
- 
--static struct qmi_elem_info slimbus_select_inst_resp_msg_v01_ei[] = {
-+static const struct qmi_elem_info slimbus_select_inst_resp_msg_v01_ei[] = {
- 	{
- 		.data_type  = QMI_STRUCT,
- 		.elem_len   = 1,
-@@ -284,7 +284,7 @@ static struct qmi_elem_info slimbus_select_inst_resp_msg_v01_ei[] = {
- 	},
- };
- 
--static struct qmi_elem_info slimbus_power_req_msg_v01_ei[] = {
-+static const struct qmi_elem_info slimbus_power_req_msg_v01_ei[] = {
- 	{
- 		.data_type  = QMI_UNSIGNED_4_BYTE,
- 		.elem_len   = 1,
-@@ -324,7 +324,7 @@ static struct qmi_elem_info slimbus_power_req_msg_v01_ei[] = {
- 	},
- };
- 
--static struct qmi_elem_info slimbus_power_resp_msg_v01_ei[] = {
-+static const struct qmi_elem_info slimbus_power_resp_msg_v01_ei[] = {
- 	{
- 		.data_type  = QMI_STRUCT,
- 		.elem_len   = 1,
-
----
-base-commit: bee0e7762ad2c6025b9f5245c040fcc36ef2bde8
-change-id: 20231215-qmi_elem_info-const-6c77917f82e5
-
+Konrad
 
