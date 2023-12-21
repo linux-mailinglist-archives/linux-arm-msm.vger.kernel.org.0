@@ -1,107 +1,248 @@
-Return-Path: <linux-arm-msm+bounces-5832-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47A8281C223
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 00:52:27 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B0D7381C21F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 00:50:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F3B7828811D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 23:52:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 17A77B216B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 23:50:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4C4B7947C;
-	Thu, 21 Dec 2023 23:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D7CD79491;
+	Thu, 21 Dec 2023 23:50:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SJU5Dytp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [5.144.164.166])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784DE79460
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 23:52:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 95E7E404FD;
-	Fri, 22 Dec 2023 00:36:43 +0100 (CET)
-Date: Fri, 22 Dec 2023 00:36:42 +0100
-From: Marijn Suijten <marijn.suijten@somainline.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Stephen Boyd <swboyd@chromium.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org
-Subject: Re: [RFT PATCH v2 2/4] drm/msm/dpu: enable writeback on SC8108X
-Message-ID: <hv4w6w23nlgnma6fdxpkwucj2nagu5vegxiztsf5qey2ssocij@ndi7a5ossul4>
-References: <20231203003203.1293087-1-dmitry.baryshkov@linaro.org>
- <20231203003203.1293087-3-dmitry.baryshkov@linaro.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098E241C96;
+	Thu, 21 Dec 2023 23:50:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1d3fe03b6b7so3478415ad.1;
+        Thu, 21 Dec 2023 15:50:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1703202614; x=1703807414; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=rWD0Seqn+C4pMMZodPpqXRuromc9xBSV+i2Crj+WzE8=;
+        b=SJU5Dytpzj3fVo7qgrdus9DE1WSEECmZp79oWrM8etVQ+vM9mBYPRu+ED2vv1n6jxG
+         MG2kRkP7vnRR+9+i7pLSbXAEGgDB1zrPaCknogx9eLQ2tv3MtgTwywY/XVgXiYR1eyhI
+         piCeX4AaIK/m9g9Jn7a5UmZhEf7T4V/YAnFAjP6H4zdkHA/UnWn3jD2S4hggNBM3wxnR
+         sBho3wqoi0yGZaehURNDpsVmexnMmmC9Titjj+S2gBmswRRAFj4kuFm316vs52O/wbR6
+         FpvOibDDZfMLfEXmtUND5P7YgUrDuiNg5+uaGVW530ZIoguHv8PNN/o5yJeye4WeQYv/
+         OjAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703202614; x=1703807414;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rWD0Seqn+C4pMMZodPpqXRuromc9xBSV+i2Crj+WzE8=;
+        b=Ol00YR4COTIFDv4SCZKq1ThB9Ms8e6uAiSKvA0fTOLRvIbW3G4IIQkARNJfwLn1SRv
+         YlnM2lB64XXo83jqefTHUhlkot46amZ5gmPB+G1cjI8j4xgDc6S4aouJZSd9O7N6WFDh
+         7+il3ehpZrgiK2QoxWyxi5bpLJ/wdKFw7rGFIP8wBbS3RVENmyVUVdFhdoUhXIkSf7DL
+         FoVDd5W13RgCE8sKCkqgp/fmQZvDDGKYnSEl6SANycMROluoP6w2XuFJrw5KOnP+z/b3
+         NU/nAXHXcjp/aLwfiao7w7IxjcnpvwMvWj//3b7KFDBrcsM6/kyYkNJ7JsGZxMeuYE0t
+         Cm3w==
+X-Gm-Message-State: AOJu0Yy7MoLHfXVHWgYeis+rlGLCMBa45e31FJC9/CI4RR5nuPVSGs/G
+	3lZPKi4kddQzq87cFRIlVDsL8q17EH0=
+X-Google-Smtp-Source: AGHT+IHrE41MOMPtngw4cPoeH5P9m+8nCSlviTr7ecIa4eSYcRTgPf2Oby0qGLjbRgYq+bnjB3rwxw==
+X-Received: by 2002:a17:903:244e:b0:1d3:e7cc:e2a6 with SMTP id l14-20020a170903244e00b001d3e7cce2a6mr927602pls.0.1703202614046;
+        Thu, 21 Dec 2023 15:50:14 -0800 (PST)
+Received: from olv-ct-22.c.googlers.com.com (255.176.125.34.bc.googleusercontent.com. [34.125.176.255])
+        by smtp.gmail.com with ESMTPSA id y8-20020a17090264c800b001d1cd7e4ad2sm2232985pli.125.2023.12.21.15.50.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Dec 2023 15:50:13 -0800 (PST)
+From: Chia-I Wu <olvaffe@gmail.com>
+To: cros-qcom-dts-watchers@chromium.org,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Maulik Shah <quic_mkshah@quicinc.com>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sc7280: revert back to PSCI PC mode for herobrine
+Date: Thu, 21 Dec 2023 15:50:01 -0800
+Message-ID: <20231221235010.3178415-1-olvaffe@gmail.com>
+X-Mailer: git-send-email 2.43.0.195.gebba966016-goog
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231203003203.1293087-3-dmitry.baryshkov@linaro.org>
+Content-Transfer-Encoding: 8bit
 
-Title typo: SC8108X -> SC8180X :)
+This effectively reverts 7925ca85e9561 ("arm64: dts: qcom: sc7280: Add
+power-domains for cpuidle states") for sc7280-herobrine.  Those devices
+use the TF-A firmware and do not support the OSI mode.
 
-On 2023-12-03 03:32:01, Dmitry Baryshkov wrote:
-> Enable WB2 hardware block, enabling writeback support on this platform.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    | 18 ++++++++++++++++++
->  1 file changed, 18 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> index 9ffc8804a6fc..d4b531752ec2 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> @@ -34,6 +34,7 @@ static const struct dpu_mdp_cfg sc8180x_mdp = {
->  		[DPU_CLK_CTRL_DMA1] = { .reg_off = 0x2b4, .bit_off = 8 },
->  		[DPU_CLK_CTRL_DMA2] = { .reg_off = 0x2bc, .bit_off = 8 },
->  		[DPU_CLK_CTRL_DMA3] = { .reg_off = 0x2c4, .bit_off = 8 },
-> +		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x2bc, .bit_off = 16 },
->  	},
->  };
->  
-> @@ -298,6 +299,21 @@ static const struct dpu_dsc_cfg sc8180x_dsc[] = {
->  	},
->  };
->  
-> +static const struct dpu_wb_cfg sc8180x_wb[] = {
-> +	{
-> +		.name = "wb_2", .id = WB_2,
-> +		.base = 0x65000, .len = 0x2c8,
-> +		.features = WB_SDM845_MASK,
-> +		.format_list = wb2_formats,
-> +		.num_formats = ARRAY_SIZE(wb2_formats),
-> +		.clk_ctrl = DPU_CLK_CTRL_WB2,
-> +		.xin_id = 6,
-> +		.vbif_idx = VBIF_RT,
-> +		.maxlinewidth = 4096,
-> +		.intr_wb_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 4),
-> +	},
-> +};
-> +
->  static const struct dpu_intf_cfg sc8180x_intf[] = {
->  	{
->  		.name = "intf_0", .id = INTF_0,
-> @@ -411,6 +427,8 @@ const struct dpu_mdss_cfg dpu_sc8180x_cfg = {
->  	.pingpong = sc8180x_pp,
->  	.merge_3d_count = ARRAY_SIZE(sc8180x_merge_3d),
->  	.merge_3d = sc8180x_merge_3d,
-> +	.wb_count = ARRAY_SIZE(sc8180x_wb),
-> +	.wb = sc8180x_wb,
->  	.intf_count = ARRAY_SIZE(sc8180x_intf),
->  	.intf = sc8180x_intf,
->  	.vbif_count = ARRAY_SIZE(sdm845_vbif),
-> -- 
-> 2.39.2
-> 
+v2: improved commit message
+
+Fixes: 7925ca85e9561 ("arm64: dts: qcom: sc7280: Add power-domains for cpuidle states")
+Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
+---
+ .../boot/dts/qcom/sc7280-firmware-tfa.dtsi    | 107 ++++++++++++++++++
+ .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi |   1 +
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          |   4 +-
+ 3 files changed, 110 insertions(+), 2 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-firmware-tfa.dtsi
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-firmware-tfa.dtsi b/arch/arm64/boot/dts/qcom/sc7280-firmware-tfa.dtsi
+new file mode 100644
+index 0000000000000..b3fc03da244d6
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sc7280-firmware-tfa.dtsi
+@@ -0,0 +1,107 @@
++// SPDX-License-Identifier: BSD-3-Clause
++
++/*
++ * Devices that use SC7280 with TrustedFirmware-A
++ * need PSCI PC mode instead of the OSI mode provided
++ * by Qualcomm firmware.
++ */
++
++&CPU0 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
++			   &LITTLE_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU1 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
++			   &LITTLE_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU2 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
++			   &LITTLE_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU3 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
++			   &LITTLE_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU4 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&BIG_CPU_SLEEP_0
++			   &BIG_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU5 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&BIG_CPU_SLEEP_0
++			   &BIG_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU6 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&BIG_CPU_SLEEP_0
++			   &BIG_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU7 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&BIG_CPU_SLEEP_0
++			   &BIG_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++/delete-node/ &domain_idle_states;
++
++&idle_states {
++	CLUSTER_SLEEP_0: cluster-sleep-0 {
++		compatible = "arm,idle-state";
++		idle-state-name = "cluster-power-down";
++		arm,psci-suspend-param = <0x40003444>;
++		entry-latency-us = <3263>;
++		exit-latency-us = <6562>;
++		min-residency-us = <9926>;
++		local-timer-stop;
++	};
++};
++
++/delete-node/ &CPU_PD0;
++/delete-node/ &CPU_PD1;
++/delete-node/ &CPU_PD2;
++/delete-node/ &CPU_PD3;
++/delete-node/ &CPU_PD4;
++/delete-node/ &CPU_PD5;
++/delete-node/ &CPU_PD6;
++/delete-node/ &CPU_PD7;
++/delete-node/ &CLUSTER_PD;
++
++&apps_rsc {
++	/delete-property/ power-domains;
++};
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+index 9ea6636125ad9..09b2d370bf7e0 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+@@ -19,6 +19,7 @@
+ 
+ #include "sc7280-qcard.dtsi"
+ #include "sc7280-chrome-common.dtsi"
++#include "sc7280-firmware-tfa.dtsi"
+ 
+ / {
+ 	chosen {
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 66f1eb83cca7e..354bf2868eba6 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -383,7 +383,7 @@ core7 {
+ 			};
+ 		};
+ 
+-		idle-states {
++		idle_states: idle-states {
+ 			entry-method = "psci";
+ 
+ 			LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
+@@ -427,7 +427,7 @@ BIG_CPU_SLEEP_1: cpu-sleep-1-1 {
+ 			};
+ 		};
+ 
+-		domain-idle-states {
++		domain_idle_states: domain-idle-states {
+ 			CLUSTER_SLEEP_0: cluster-sleep-0 {
+ 				compatible = "domain-idle-state";
+ 				idle-state-name = "cluster-power-down";
+-- 
+2.43.0.195.gebba966016-goog
+
 
