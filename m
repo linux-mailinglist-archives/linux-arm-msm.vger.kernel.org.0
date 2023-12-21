@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-5741-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5742-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9BADA81B425
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 11:46:09 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8594E81B4CB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 12:20:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CEA051C23DE1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 10:46:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 410B5281DCC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 11:20:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C8F469299;
-	Thu, 21 Dec 2023 10:46:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 456FD6BB34;
+	Thu, 21 Dec 2023 11:20:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nsUCvOI+"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kSyh62hI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD64A68EA0;
-	Thu, 21 Dec 2023 10:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B981E6ABB9;
+	Thu, 21 Dec 2023 11:20:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BL7JosN021271;
-	Thu, 21 Dec 2023 10:46:00 GMT
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BL7LkYN027724;
+	Thu, 21 Dec 2023 11:20:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	from:to:cc:subject:date:message-id:mime-version:content-type; s=
-	qcppdkim1; bh=HkwbleRBu76qyIDVeqh/7K2yIPwFZuLkPDckpsjyCJ4=; b=ns
-	UCvOI+KvaAMb7HipkujG2+LMqvCG1nGi7qXgv3OOEOyjNJPxLNZoPQ/rja7zLkh/
-	l0nQ8pdH7pBm4bKoRxHle0ImTQQalPrVOflUFFUoPo23TOyTYD2PLR6lpiQnTqG5
-	eveCD2CwL0ii8ep1bTkmsRSuafrKrioiRqLhBBu8tmQCNm6Xly5p6M2zZeEIWMMC
-	7V1tUulB4kB1EzBl3IHTq1uRa1xCKVYNN0+UxpdXhe7Jpg514n1l286B/7oTfiQ4
-	OpiaSy7m99Q8SzfxZu8X2ETrH1508+GOmDf7hdn6kbb+S3lAng6r42lsCxXHSZVV
-	Shrd14BPuHXw5RhhKwSw==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v4gvh0rjc-1
+	qcppdkim1; bh=3aYvoZWloxCDA4axs+qsrrMbqXf/t4nEOkKRw7rLx74=; b=kS
+	yh62hIgLY5Ahq7r+QgNK8g7cr25sTBxKxRkHM7hmOonkEpDEQwRzpZ9YV2Ekt++B
+	hQbMRUl+Uj2QfmEoq9Mrlgqh7ZlhvDgaqS8AjGRf5Ey3s+ZinlHiu6IrCTF8vWuT
+	b6G+n2d0/rrgkhzrRknmIYengobNMLlcsT/Wse0xHIHWlIF8O9VJwS5k28hYMbZ/
+	ATyoFCMpEeGHDjnSmirztlvf/c2TyftGWO+3mLB/grMQBoalFc7JFoweVYPWdwj/
+	bprpc63CgOuNq36aJM3WyS4b3IWMjZTUahyOBI0zrPDcJOjpro1JUyp/VuxV+sgC
+	nb/gGlOtUTI/Ln0VP+PQ==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v4gvh0uaq-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Dec 2023 10:46:00 +0000 (GMT)
+	Thu, 21 Dec 2023 11:20:20 +0000 (GMT)
 Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BLAjxk5019002
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BLBKJXx007662
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Dec 2023 10:45:59 GMT
+	Thu, 21 Dec 2023 11:20:19 GMT
 Received: from hu-mapa-hyd.qualcomm.com (10.80.80.8) by
  nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Thu, 21 Dec 2023 02:45:54 -0800
+ 15.2.1118.40; Thu, 21 Dec 2023 03:20:15 -0800
 From: Manish Pandey <quic_mapa@quicinc.com>
 To: Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio
@@ -61,9 +61,9 @@ CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <quic_nitirawa@quicinc.com>, <quic_bhaskarv@quicinc.com>,
         <quic_narepall@quicinc.com>, <quic_rampraka@quicinc.com>,
         <quic_ahari@quicinc.com>
-Subject: [PATCH V2 2/2] arm64: dts: qcom: qcm6490: Add UFS nodes
-Date: Thu, 21 Dec 2023 16:15:29 +0530
-Message-ID: <20231221104529.13513-1-quic_mapa@quicinc.com>
+Subject: [PATCH V2] arm64: dts: qcom: qcm6490: Add UFS nodes
+Date: Thu, 21 Dec 2023 16:49:59 +0530
+Message-ID: <20231221111959.12970-1-quic_mapa@quicinc.com>
 X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -76,21 +76,25 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: g043uD9Ug1bvgO9npE7I6Cykeb7d8Wty
-X-Proofpoint-GUID: g043uD9Ug1bvgO9npE7I6Cykeb7d8Wty
+X-Proofpoint-ORIG-GUID: BMScrzOkmRfzHaAV8QhzEAm4nwxAL8JF
+X-Proofpoint-GUID: BMScrzOkmRfzHaAV8QhzEAm4nwxAL8JF
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- spamscore=0 priorityscore=1501 clxscore=1011 adultscore=0 suspectscore=0
- mlxlogscore=508 bulkscore=0 phishscore=0 malwarescore=0 impostorscore=0
+ spamscore=0 priorityscore=1501 clxscore=1015 adultscore=0 suspectscore=0
+ mlxlogscore=543 bulkscore=0 phishscore=0 malwarescore=0 impostorscore=0
  mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312210079
+ engine=8.19.0-2311290000 definitions=main-2312210084
 
 Add UFS host controller and Phy nodes for
 Qualcomm qcm6490 Board.
 
 Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
+---
+Changes from v1:
+- updated with correct patchset
+
 ---
  arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 19 +++++++++++++++++++
  1 file changed, 19 insertions(+)
