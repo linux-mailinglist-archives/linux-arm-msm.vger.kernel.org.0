@@ -1,51 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-5777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62DC981BCC3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 18:16:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7959E81BCCB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 18:17:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 955751C25D1C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 17:16:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AC53A1C25EBA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 17:17:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BA52627F2;
-	Thu, 21 Dec 2023 17:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 640D362804;
+	Thu, 21 Dec 2023 17:16:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dxK+bMpO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nF/GnY0i"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C25C627F0;
-	Thu, 21 Dec 2023 17:15:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE46C433D9;
-	Thu, 21 Dec 2023 17:15:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446A8627E0;
+	Thu, 21 Dec 2023 17:16:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C645C433C9;
+	Thu, 21 Dec 2023 17:16:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1703178955;
-	bh=+zyXRn20w9EQZVYWIlgPBatlUpErpGuSEmHVNzCBnRY=;
+	s=k20201202; t=1703178967;
+	bh=n70baIvcjor/mK5/3mzrSLuCYGgvXxOtzRttt3oI4zE=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=dxK+bMpOr3ZXrqtkX+4I99FHLCgwz2ydUpLgWFDG3z4xLnkjRUe0I26qTX3UDcHbt
-	 qCgjDqoNpQjQsLXwM920syDLXffV6ZNPlMmdtSm36vCw5lelSeI4VBkZFDvthQG5SR
-	 0gakYzUj4rGQYYx/LHd+j6lj3A064Hcczgo54upcUXEYJtZZEMCRe4G9Cr2uaqqn+l
-	 z0+m5d13TotrYyQO1NHo+Zc4HnnTgEd7LGpUku4e5LFd9NFK2yCFxHJC363mo5e+13
-	 Ry6RutvhKDvkCAzeC8WtaU3+a9dxErBNAf5/lMUn7LaIIUA78ATe1H6MQEitixTbbN
-	 1q/FztPwybVqw==
+	b=nF/GnY0iQR/v5v4WY1QhEdxmtX6J/BZ7ieUxm6JRjD+Du4JZ6esROdyzX9tg7+rOu
+	 mR3K+0W/r0QO7u7eBZ4GVvjNCWKXiHi+ptura7DWKVdvqDzThZdl71fK/urkOzGb5m
+	 TQ32kb7B6OYB0Yrydoq4drhyECS60WXTmEQfqYc13w5jjMzcqrHuDprGeCHNr1FS1Y
+	 o+Pb3glUGOucsXXtbcbUziuwAhjARC/sy4dhaK/D4jngcd2n0s2Rj3BMBoCU5w7JfO
+	 RSs+3O+kxBX2Xn/TPgCz2+Bhkjqxfa2l+5iZ2F6EYGD6LQFzuYaC4qzvXsYJ0cXUrU
+	 ZeguFuEFQibhQ==
 From: Vinod Koul <vkoul@kernel.org>
-To: bvanassche@acm.org, mani@kernel.org, adrian.hunter@intel.com, 
- beanhuo@micron.com, avri.altman@wdc.com, junwoo80.lee@samsung.com, 
- martin.petersen@oracle.com, Can Guo <quic_cang@quicinc.com>
-Cc: linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-mediatek@lists.infradead.org
-In-Reply-To: <1701520577-31163-1-git-send-email-quic_cang@quicinc.com>
-References: <1701520577-31163-1-git-send-email-quic_cang@quicinc.com>
-Subject: Re: (subset) [PATCH v8 00/10] Enable HS-G5 support on SM8550
-Message-Id: <170317895067.712473.11493486832134923013.b4-ty@kernel.org>
-Date: Thu, 21 Dec 2023 22:45:50 +0530
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Abel Vesa <abel.vesa@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20231122-phy-qualcomm-eusb2-x1e80100-v2-1-3ba9a8e5ade4@linaro.org>
+References: <20231122-phy-qualcomm-eusb2-x1e80100-v2-1-3ba9a8e5ade4@linaro.org>
+Subject: Re: [PATCH v2] dt-bindings: phy: qcom: snps-eusb2: Document the
+ X1E80100 compatible
+Message-Id: <170317896370.712473.16155097082641260373.b4-ty@kernel.org>
+Date: Thu, 21 Dec 2023 22:46:03 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,27 +58,15 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.12.3
 
 
-On Sat, 02 Dec 2023 04:36:06 -0800, Can Guo wrote:
-> This series enables HS-G5 support on SM8550.
+On Thu, 07 Dec 2023 14:49:10 +0200, Abel Vesa wrote:
+> Add the X1E80100 compatible to the list of supported PHYs.
 > 
-> This series is rebased on below changes from Mani -
-> https://patchwork.kernel.org/project/linux-scsi/patch/20230908145329.154024-1-manivannan.sadhasivam@linaro.org/
-> https://patchwork.kernel.org/project/linux-scsi/patch/20230908145329.154024-2-manivannan.sadhasivam@linaro.org/
 > 
-> This series is tested on below HW combinations -
-> SM8550 MTP + UFS4.0
-> SM8550 QRD + UFS3.1
-> SM8450 MTP + UFS3.1 (for regression test)
-> SM8350 MTP + UFS3.1 (for regression test)
-> 
-> [...]
 
 Applied, thanks!
 
-[09/10] phy: qualcomm: phy-qcom-qmp-ufs: Rectify SM8550 UFS HS-G4 PHY Settings
-        commit: 5301b7a04040b0a6191856c765146e0a9ab88ebc
-[10/10] phy: qualcomm: phy-qcom-qmp-ufs: Add High Speed Gear 5 support for SM8550
-        (no commit info)
+[1/1] dt-bindings: phy: qcom: snps-eusb2: Document the X1E80100 compatible
+      commit: ec80c175c096eb752d581ef0aafb12ed46010b2a
 
 Best regards,
 -- 
