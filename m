@@ -1,132 +1,262 @@
-Return-Path: <linux-arm-msm+bounces-5759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4063F81BA6D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 16:17:47 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FE6981BA79
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 16:21:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F1C13285B5A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 15:17:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 83674B23678
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 15:21:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EADF5539E4;
-	Thu, 21 Dec 2023 15:17:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7D9750254;
+	Thu, 21 Dec 2023 15:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cjAEJiVs"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WeWOwona"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD36539E5
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 15:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3A34B13B
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 15:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-50e39ac39bcso1212775e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 07:17:36 -0800 (PST)
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1d337dc9697so7949275ad.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 07:21:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703171855; x=1703776655; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3rS/d8cLXqQ939RyFghs3sfiM6ylHXt1p6P+vznFiPg=;
-        b=cjAEJiVsi2Z2icsVcLG74GKjC7NP2uTjjbyvQaRbqGzczOQJFOYOLPPyKeWED6Oz8L
-         hqy6OtUPMUGSpjAiGJ6xLmHYvDxc6AbTx0Md1gIBc3tN2bndp5zj631PyArbX2xBVKkm
-         lgKOzG0Q5ct+7VITWtM4kaviLlNnX4QgE3kCQnlRTMTK79XuBs86Z3wAlTNU8dZP0IjM
-         hXgc9IomisyDDapGTArLRegnPQJo6RHrbRkl9RPBCSG5RngVDSCOaUzBJwoOu+kwFO4a
-         vjoZrM+aqHBM8ykozDvPGwweTjXHwqIWdvBJ6dIU0h2JOsu7+f2bQYxbQJKXuaC6B0fX
-         gFvA==
+        d=linaro.org; s=google; t=1703172094; x=1703776894; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=p1ibgzicqbTcN+y+liz8Y1ihcqL+Qtrs8u5A28Unpyo=;
+        b=WeWOwonarbcpVaWbNSx8Jksf+tLQ2w8O1DFwm9SWMn4fLMRqDoBhHdXYX4T1zvAPMI
+         wSUI1MgSRFz8CqERn4SIuaC750KKNAjO0MWp+LFseFduY+/6Lndl5LS2a9nC5bX3CL75
+         JdnrGOzn/zTIOHs6zIWRd7QONcBr7ZSRWHpE3eNM3Z8On1APO7ArsOUqOROkxIDvGHc3
+         5h47thnbRkvlAtY+zgqef+fQqcWSonO39mDz07RQfpZZO82kfATSPs4CviHH+9V7+bzd
+         7kuD3ft0wxES1VJEiw+wI5mOHvu4fWh3wcpM2CACeixOEh+Pc1/4svwuvS97haEgEf3T
+         li8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703171855; x=1703776655;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3rS/d8cLXqQ939RyFghs3sfiM6ylHXt1p6P+vznFiPg=;
-        b=RpbSDBv2Yth2g4YOIKFzJLC7/udKV/G6Spj7AQqOsTfHH6dNH88NlQuKilMBXGSVWd
-         DUUKliF2egxswLZg1173eSe/B9BJZmNeJpUxQSLfatjic0vNzk8288BrLHXk7sZO5Fuq
-         waDJNmEjHbEawa4HOSisijhpsxQB24OEXRnzoqwfvoJ39ldPPnIoMxq53JC6zTgUu+jx
-         tRrTqruHh25YkXH5LTcJeieJL5vsE+mfkVNfFe79bMnzQTuSBxB2ZM1KibpOYydc+aoS
-         WBTt+fzDwR2gagCpgpd+bvc0nHJkZd180q8fvuXnEZAsgBdPZcTytXMJx7f+jYw4WLmm
-         PxKw==
-X-Gm-Message-State: AOJu0YwmkhjASunClG2j9VYBlvIRoOHIZRkRjcoTnpZbqv/SBzUphelH
-	k+ny2+gTH5rHtptSWiMLfkkeJQ==
-X-Google-Smtp-Source: AGHT+IH194/ByNGt3ybhEl+9Rklx6k8BT9gbdHbgOLts8b0E22QNyTZ+tuBjQBtSIWiJov8xQ4EMgA==
-X-Received: by 2002:ac2:4e01:0:b0:50b:f304:3bed with SMTP id e1-20020ac24e01000000b0050bf3043bedmr6122805lfr.49.1703171854925;
-        Thu, 21 Dec 2023 07:17:34 -0800 (PST)
-Received: from [192.168.199.125] (178235179206.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.206])
-        by smtp.gmail.com with ESMTPSA id ka12-20020a170907920c00b00a26ac57b951sm397271ejb.23.2023.12.21.07.17.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Dec 2023 07:17:34 -0800 (PST)
-Message-ID: <5760478d-ca64-499c-939b-6e5b065afc2f@linaro.org>
-Date: Thu, 21 Dec 2023 16:17:31 +0100
+        d=1e100.net; s=20230601; t=1703172094; x=1703776894;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=p1ibgzicqbTcN+y+liz8Y1ihcqL+Qtrs8u5A28Unpyo=;
+        b=eSMl1AYZm+4HOcrpu6j0Rs951vNBU/Iy3q8OxBHbqR3/VhqoNKW37HXZhQAFNBeKLZ
+         wj/os1gFg7n8IayB0Oudj7D9gm5SfziPAVgV/7oLG1BVrKdek1ZrzBQ2jvLH2TRLFq/I
+         OFd/RCXYQ0H9cKFRPn9sU4Y4im2oTDGaf5NXcnNjptsvq0Wq97/Yowfsqhu2VblX6/nE
+         /YbjyFZ5V6adWxT49QQsOYyZPc2tQC0Mz3ecOXlVhWc/3APTAkbGuSkkk0nBr4cXC5bj
+         wjKO4kQk18U1fr3uuubvEwpC1Yt4RWqOdGVUqsuUJsGxhmYF24j0Jlzm6l3hn/OoMVhB
+         Tqig==
+X-Gm-Message-State: AOJu0YwkYhGi27a8Uek2eK8c+mCyZbAzsWD9SGRpv06HBYhKgQvvFKLG
+	Kmx96EQyYZbx5oNysdcs6b4LBw==
+X-Google-Smtp-Source: AGHT+IHWjWx0FboKQHFaw4mZl5/dZOZWNwlvi6cEALoU6ae9uGyvATtJr6Fu8yDyoZkXHAkSLBwOjQ==
+X-Received: by 2002:a17:902:f686:b0:1d3:be14:372a with SMTP id l6-20020a170902f68600b001d3be14372amr8164759plg.60.1703172094392;
+        Thu, 21 Dec 2023 07:21:34 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id z3-20020a170902ee0300b001d3561680aasm1756217plb.82.2023.12.21.07.21.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Dec 2023 07:21:33 -0800 (PST)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v14 0/4] Input: add initial support for Goodix Berlin
+ touchscreen IC
+Date: Thu, 21 Dec 2023 16:21:18 +0100
+Message-Id: <20231221-topic-goodix-berlin-upstream-initial-v14-0-04459853b640@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 2/2] arm64: dts: qcom: qcm6490: Add UFS nodes
-Content-Language: en-US
-To: Manish Pandey <quic_mapa@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
- quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
- quic_bhaskarv@quicinc.com, quic_narepall@quicinc.com,
- quic_rampraka@quicinc.com, quic_ahari@quicinc.com
-References: <20231221104529.13513-1-quic_mapa@quicinc.com>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20231221104529.13513-1-quic_mapa@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAO5XhGUC/53TwY7bIBAG4FdZ+VyqGQwGeup7VD0MeEiQUjvC2
+ WhXq7z7jvfQpOJCc2RkfYxn+D+GjWvhbfjx8jFUvpatrIsc0Hx7GdKRlgOrMkth0KBHmGBSl/V
+ ckjqs61zeVOR6Kot6PW+XyvRHlaVcCp1UpODYc/LZpEGoSBurWGlJR8GW19NJiufKubx9Xf7rt
+ 5yPZbus9f2rlyvu1f+89YoKlCFwBqMnzvNP+Yzq+n2th2G/4aqfUbWoeoryM4wcgBt1fEYdRc1
+ gnUtMs4PQqOYZ1YgKwbhkfIiMrlHtXfWAnardVRe01WG0NoyNOt3VgLpTnUSNhlMmE3IM7bbcX
+ xUBelUnqrQqIGbL3jeqf1THTtWLig5lEQia56lRw4Oqe+cadnXMMgTvHdpWRXhke5tF2Zbynjl
+ ptpggtu49Xoj98drzZZNxHBy4BO07wHvAUEPodfeEMeVMHK2Mw7bu+OBi9xz2jNnZkZ7IMpH+x
+ 73dbp9jsjDL/wQAAA==
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+ linux-input@vger.kernel.org
+Cc: Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bastien Nocera <hadess@hadess.net>, 
+ Hans de Goede <hdegoede@redhat.com>, Henrik Rydberg <rydberg@bitmath.org>, 
+ Jeff LaBundy <jeff@labundy.com>, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring <robh@kernel.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6716;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=lhHzN99w+w4nTL5IPWaxQaPYSZkQloAq8K14Bp98iK8=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlhFf18f+Y3AIxzz90sAojSyGovU6jGje5GaCqM0Fu
+ 7IxrOUCJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZYRX9QAKCRB33NvayMhJ0SkKD/
+ 9Bk2lK9aS0XgtZa/6bmIeRYsXbnCp8W6+o8Xp8Sv09euhWjl1QPkcWJJK3zdrwj6zu/EqGgz90UIIY
+ Y79zZcCAnLkaykOa67W6AaFrCZBxQ0fqM4j0z0gfEBxXSUPsGR0Mzvt5OI8DfVKAd424e7wgaHtxd6
+ +bXMLzXaGlKUOGeaG4vOCTqUv8E6nbXBvdfmIRgVXLSWROLhoGAVmlIpPQBsiIHQK/yOkP2EZg2IvA
+ DJZdbHsuZrjLg+HFu+azE0jxjtCB3J3ackPVqQwbFA8D77vIwdSqlkRQifULgJtZekvwOzYqaw1Thd
+ fFjAgSNANH7D9aTTycQI/lBTt9hspsoN0wU4ANDhI+V7EBLZLtMM1/zqCE7u2W69Cg0IwvY2JE2FhM
+ pds7j0oZf0/xfiX+0mdAHa7xoeCsfCf9mHzMZ/Whln5Si3Xx0tHNN+IV0f5nwbGEATO6/lsgCjvOQY
+ 7pSqgBjbYKGN+5etcYi1wAIYBEN4Hb7Hr5YYB2yzOccEmI4cAuCMJcXc2nNeMTKomkZ9k59pKsw3Az
+ kEuuggwaejiqzDpTVZLaJSztdb5LxFO54/uH0UlKL9EPG9dNbJ+uL0mx+6OeL6NwXRIDPon+rdnUrt
+ m8E/0PH2lROO7w5QS9CrNtYfFjWZfK8Tv9FGIG+DUs7N4yMUudGH0vA0Krew==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-On 21.12.2023 11:45, Manish Pandey wrote:
-> Add UFS host controller and Phy nodes for
-> Qualcomm qcm6490 Board.
-> 
-> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
-> ---
-This still doesn't compile and only v2 made it to my inbox.
+These touchscreen ICs support SPI, I2C and I3C interface, up to
+10 finger touch, stylus and gestures events.
 
-Please fix this.
+This initial driver is derived from the Goodix goodix_ts_berlin
+available at [1] and [2] and only supports the GT9916 IC
+present on the Qualcomm SM8550/SM8650 MTP & QRD touch panel.
 
-Konrad
+The current implementation only supports BerlinD, aka GT9916.
+
+Support for advanced features like:
+- Firmware & config update
+- Stylus events
+- Gestures events
+- Previous revisions support (BerlinA or BerlinB)
+is not included in current version.
+
+The current support will work with currently flashed firmware
+and config, and bail out if firmware or config aren't flashed yet.
+
+[1] https://github.com/goodix/goodix_ts_berlin
+[2] https://git.codelinaro.org/clo/la/platform/vendor/opensource/touch-drivers
+
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v14:
+- Rebased on next-20231221
+- Fixed build on SPI/I2S drivers missing <linux/input.h> include
+- Link to v13: https://lore.kernel.org/r/20231213-topic-goodix-berlin-upstream-initial-v13-0-5d7a26a5eaa2@linaro.org
+
+Changes in v13:
+- Thanks to Dmitry's suggestion:
+  - Move core defines and structs into goodix_berlin_core.c
+  - Comments typos and rephrasings
+  - Identation fixes
+  - Refactor of goodix_berlin_power_on
+  - goodix_berlin_get_ic_info move to __free(kfree) to avoid leaking
+- Added comment explaining how data is retrieved in irq handler
+- Link to v12: https://lore.kernel.org/r/20231209-topic-goodix-berlin-upstream-initial-v12-0-eaffaeb53fb5@linaro.org
+
+Changes in v12:
+- Rebased on next-20231208
+- Link to v11: https://lore.kernel.org/r/20231106-topic-goodix-berlin-upstream-initial-v11-0-5c47e9707c03@linaro.org
+
+Changes in v11:
+- Fixes according to Jeff's review:
+ - s/dev_info/dev_err/ in goodix_berlin_get_ic_info()
+ - remove spurious return instead of goto in goodix_berlin_get_ic_info()
+ - added back dropped msleep() in goodix_berlin_request_handle_reset()
+- Link to v10: https://lore.kernel.org/r/20231023-topic-goodix-berlin-upstream-initial-v10-0-88eec2e51c0b@linaro.org
+
+Changes in v10:
+- Fix according to Dmitry's review:
+ - move goodix_berlin_get_ic_info() afe_data to heap
+ - merge the goodix_berlin_parse_finger() loops and skip invalid fingers instead of returning
+ - remove unwanted goodix_berlin_touch_handler() "static" for buffer
+ - only call goodix_berlin_request_handle_reset() if gpio was provided
+ - use "error = func(); if(error) return error;" instead of "return func()" when function handles multiple error cases
+- Link to v9: https://lore.kernel.org/r/20231021-topic-goodix-berlin-upstream-initial-v9-0-13fb4e887156@linaro.org
+
+Changes in v9:
+- Rebased on next-20231020 
+- Link to v8: https://lore.kernel.org/r/20231003-topic-goodix-berlin-upstream-initial-v8-0-171606102ed6@linaro.org
+
+Changes in v8:
+- Add missing bitfield.h include in core
+- Link to v7: https://lore.kernel.org/r/20231002-topic-goodix-berlin-upstream-initial-v7-0-792fb91f5e88@linaro.org
+
+Changes in v7:
+- rebased on v6.6-rc3
+- Link to v6: https://lore.kernel.org/r/20230912-topic-goodix-berlin-upstream-initial-v6-0-b4ecfa49fb9d@linaro.org
+
+Changes in v6:
+- rebased on v6.6-rc1
+- changed commit message prefix to match the other Input commits
+- Link to v5: https://lore.kernel.org/r/20230801-topic-goodix-berlin-upstream-initial-v5-0-079252935593@linaro.org
+
+Changes in v5:
+- rebased on next-20230801
+- Link to v4: https://lore.kernel.org/r/20230606-topic-goodix-berlin-upstream-initial-v4-0-0947c489be17@linaro.org
+
+Changes in v4:
+- Core updates:
+ - drop kconfig depends, deps will be handled by _SPI and _I2C
+ - change power_on() error labels
+ - print errors on all dev_err() prints
+ - remove useless default variable initialization
+ - switch irq touch checksum error to dev_err()
+ - add Jeff's review tag
+- I2C changes
+ - change REGMAP_I2C Kconfig from depends to select
+ - add Jeff's review tag
+- SPI changes
+ - add select REGMAP to Kconfig
+ - added GOODIX_BERLIN_ prefix to defines
+ - switched from ret to error
+ - add Jeff's review tag
+- Link to v3: https://lore.kernel.org/r/20230606-topic-goodix-berlin-upstream-initial-v3-0-f0577cead709@linaro.org
+
+Changes in v3:
+- Another guge cleanups after Jeff's review:
+ - appended goodix_berlin_ before all defines
+ - removed some unused defines
+ - removed retries on most of read functions, can be added back later
+ - added __le to ic_info structures
+ - reworked and simplified irq handling, dropped enum and ts_event structs
+ - added struct for touch data
+ - simplified and cleaned goodix_berlin_check_checksum & goodix_berlin_is_dummy_data
+ - moved touch_data_addr to the end of the main code_data
+ - reworked probe to get_irq last and right before setip input device
+ - cleaned probe by removing the "cd->dev"
+ - added short paragraph to justify new driver for berlin devices
+ - defined all offsets & masks
+- Added bindings review tag
+- Link to v2: https://lore.kernel.org/r/20230606-topic-goodix-berlin-upstream-initial-v2-0-26bc8fe1e90e@linaro.org
+
+Changes in v2:
+- Huge cleanups after Jeff's review:
+ - switch to error instead of ret
+ - drop dummy vendor/product ids
+ - drop unused defined/enums
+ - drop unused ic_info and only keep needes values
+ - cleanup namings and use goodix_berlin_ everywhere
+ - fix regulator setup
+ - fix default variables value when assigned afterwars
+ - removed indirections
+ - dropped debugfs
+ - cleaned input_dev setup
+ - dropped _remove()
+ - sync'ed i2c and spi drivers
+- fixed yaml bindings
+- Link to v1: https://lore.kernel.org/r/20230606-topic-goodix-berlin-upstream-initial-v1-0-4a0741b8aefd@linaro.org
+
+---
+Neil Armstrong (4):
+      dt-bindings: input: document Goodix Berlin Touchscreen IC
+      Input: add core support for Goodix Berlin Touchscreen IC
+      Input: goodix-berlin - add I2C support for Goodix Berlin Touchscreen IC
+      Input: goodix-berlin - add SPI support for Goodix Berlin Touchscreen IC
+
+ .../bindings/input/touchscreen/goodix,gt9916.yaml  |  95 +++
+ drivers/input/touchscreen/Kconfig                  |  31 +
+ drivers/input/touchscreen/Makefile                 |   3 +
+ drivers/input/touchscreen/goodix_berlin.h          |  24 +
+ drivers/input/touchscreen/goodix_berlin_core.c     | 766 +++++++++++++++++++++
+ drivers/input/touchscreen/goodix_berlin_i2c.c      |  75 ++
+ drivers/input/touchscreen/goodix_berlin_spi.c      | 178 +++++
+ 7 files changed, 1172 insertions(+)
+---
+base-commit: 857647efa9be89a13cf8963c7e167fab062b28bb
+change-id: 20230606-topic-goodix-berlin-upstream-initial-ba97e8ec8f4c
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
 
