@@ -1,105 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-5774-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5775-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 536CA81BC7F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 17:59:21 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A6C6A81BCB5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 18:13:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 09DDA1F225F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 16:59:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 453601F23350
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 17:13:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7ADA359923;
-	Thu, 21 Dec 2023 16:59:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 324195990A;
+	Thu, 21 Dec 2023 17:13:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="oIaXa8H9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ejtRGhxj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8D559909;
-	Thu, 21 Dec 2023 16:59:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 47FBDE0006;
-	Thu, 21 Dec 2023 16:58:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1703177940;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=64g4WXHsmtstsXFWVKn4+jC7SrQnUgEAndJzQ+FYA9s=;
-	b=oIaXa8H9AfHKgs3Zfmu8VPmK09bSKs+HtjTMOjRenfZ44LykxNabiA4r4NX3YJW/++hQjx
-	R86criDYih8pJkoQ5c5pKQPtbZAwBRYmHtQkR8Rq64WHSmvIGOqJ4iMUUkeYPXKc631cnr
-	LbFO7vYXlg9qkgzIsrJ0ueQOqpt8D5vB4NCCLYycBrDJnFtRXk//pfK2JajnoeANTfVLOA
-	WHbOI70ihS71u57Zl9ZIuestgOaqYj00AhO0kLyvNAWyg7G7oI4FuBsJdaZ9vEVpSWRtJs
-	Dq558tUtybtDXPh3o0iuR4w7bEsUcKvqYCfJ9enC7Vtyipz8vuZy1o120z0xVQ==
-Date: Thu, 21 Dec 2023 17:58:57 +0100
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-To: Andrew Halaney <ahalaney@redhat.com>
-Cc: Sneh Shah <quic_snehshah@quicinc.com>, kernel@quicinc.com,
- linux-kernel@vger.kernel.org, Bhupesh Sharma <bhupesh.sharma@linaro.org>,
- netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, Eric
- Dumazet <edumazet@google.com>, Vinod Koul <vkoul@kernel.org>, Jose Abreu
- <joabreu@synopsys.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- linux-arm-msm@vger.kernel.org, Jakub Kicinski <kuba@kernel.org>, Paolo
- Abeni <pabeni@redhat.com>, "David S. Miller" <davem@davemloft.net>,
- linux-arm-kernel@lists.infradead.org
-Subject: Re: [Linux-stm32] [PATCH net-next] net: stmmac: dwmac-qcom-ethqos:
- Add support for 2.5G SGMII
-Message-ID: <20231221175857.6d2874ff@device-28.home>
-In-Reply-To: <vvlnwiobrgcwuam6lkud2np5xqocj6asjf627j3gekkhm4hfp5@vhdd47fyortm>
-References: <20231218071118.21879-1-quic_snehshah@quicinc.com>
-	<4zbf5fmijxnajk7kygcjrcusf6tdnuzsqqboh23nr6f3rb3c4g@qkfofhq7jmv6>
-	<8b80ab09-8444-4c3d-83b0-c7dbf5e58658@quicinc.com>
-	<wvzhz4fmtheculsiag4t2pn2kaggyle2mzhvawbs4m5isvqjto@lmaonvq3c3e7>
-	<8f94489d-5f0e-4166-a14e-4959098a5c80@quicinc.com>
-	<vvlnwiobrgcwuam6lkud2np5xqocj6asjf627j3gekkhm4hfp5@vhdd47fyortm>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-redhat-linux-gnu)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A3358221;
+	Thu, 21 Dec 2023 17:13:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D60C433C7;
+	Thu, 21 Dec 2023 17:13:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1703178794;
+	bh=nAyiX2jVa47VcjFldc2L8bwP0OG/80C5+x4N04/VWn0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ejtRGhxj7cS86pXS2KzLKKAJLerUlW6+M4wQzjlIRnyiP9lgkl9MC3SHQ91dc6igr
+	 VJV3uq+wzBBLwagh48AOWkoTR5/nZ52RUXfZYb2WH2qfjMH10CTn1i/QGgcA4Zl4Ks
+	 3YZkXhWhsMC1vjaeUCzV8kS4Wm0iKkwgdxLXOv/Joqm9GpLLBX0+9pOXsedkxGZYSP
+	 4eGIByOofhN2AD9DCJpp72YMNGWwY16z7GSw4g+sUnt/50LhUMCFxYp4emIOC2xg3g
+	 q782ViZF4N3XFY73gV+oHnpfcLmPLzuPxio69tjaqz9Yum5sEOInfX2BgLuwf+tYps
+	 nKYXZS74e7JXA==
+Date: Thu, 21 Dec 2023 22:43:09 +0530
+From: Vinod Koul <vkoul@kernel.org>
+To: Can Guo <quic_cang@quicinc.com>
+Cc: bvanassche@acm.org, mani@kernel.org, adrian.hunter@intel.com,
+	beanhuo@micron.com, avri.altman@wdc.com, junwoo80.lee@samsung.com,
+	martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	"open list:GENERIC PHY FRAMEWORK" <linux-phy@lists.infradead.org>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v8 09/10] phy: qualcomm: phy-qcom-qmp-ufs: Rectify SM8550
+ UFS HS-G4 PHY Settings
+Message-ID: <ZYRyJU9klhZzLdni@matsya>
+References: <1701520577-31163-1-git-send-email-quic_cang@quicinc.com>
+ <1701520577-31163-10-git-send-email-quic_cang@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-GND-Sasl: maxime.chevallier@bootlin.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1701520577-31163-10-git-send-email-quic_cang@quicinc.com>
 
-Hello Andrew,
+On 02-12-23, 04:36, Can Guo wrote:
+> The registers, which are being touched in current SM8550 UFS PHY settings,
+> and the values being programmed are mainly the ones working for HS-G4 mode,
+> meanwhile, there are also a few ones somehow taken from HS-G5 PHY settings.
+> However, even consider HS-G4 mode only, some of them are incorrect and some
+> are missing. Rectify the HS-G4 PHY settings by strictly aligning with the
+> SM8550 UFS PHY Hardware Programming Guide suggested HS-G4 PHY settings.
 
-On Thu, 21 Dec 2023 08:30:49 -0600
-Andrew Halaney <ahalaney@redhat.com> wrote:
+This fails for me, as I have picked Abels offset series, can you please
+rebase these two patches and send
 
-[...]
-> 
-> Note, I'm struggling to keep up with the standards at play here, so if
-> someone else who's a bit more wise on these topics has an opinion I'd
-> listen to them. I find myself rewatching this presentation from
-> Maxime/Antoine as a primer on all of this:
-> 
->     https://www.youtube.com/watch?v=K962S9gTBVM
-
-:)
-
-> If anyone's got any recommended resources for me to read in particular I
-> am all ears.
-
-I think Russell and Andrew did a good job clarifying some quirks with
-all these standards :
-
-https://elixir.bootlin.com/linux/latest/source/Documentation/networking/phy.rst#L229
-
-There are some more info in Andrew's LPC talk here :
-http://vger.kernel.org/lpc_net2018_talks/phylink-and-sfp-slides.pdf
-
-(more phylink related though)
-
-But I agree that this is hard to fully grasp, there are so many
-variants everywhere, some standard, some ad-hoc standards, etc.
-
-Maxime
+-- 
+~Vinod
 
