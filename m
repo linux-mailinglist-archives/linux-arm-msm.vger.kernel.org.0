@@ -1,79 +1,245 @@
-Return-Path: <linux-arm-msm+bounces-5825-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5826-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DCD7181BFDF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 22:08:21 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79FEB81C071
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 22:48:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 90DEC1F2530A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 21:08:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 31205287409
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 21:48:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B84A76DA4;
-	Thu, 21 Dec 2023 21:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAA5777635;
+	Thu, 21 Dec 2023 21:48:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZZ7HE0KH"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fDxOhkzO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6966280F;
-	Thu, 21 Dec 2023 21:08:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39DADC433C8;
-	Thu, 21 Dec 2023 21:08:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1703192897;
-	bh=rWCnstf7VPSOkoEfMQP6U3T55hfbyUebaA/zKF3SW6A=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ZZ7HE0KHCIPLUKI1EzXKui4xroGUa8k+MkxZf2om2cKxHYz8+4HQhzqMKEPXMx7gR
-	 huk2J7CH7sWq+E8lBkVWUcWMi1HhvHSzp9zPAgVX9/Mj8oVnzqKroY74U2Z+r9QAcs
-	 nPYwkVmMhPmRKICorGd/SsfCi7LZ8jNU4gLkWRtvSQR/qm4V4ZxGvSxFCPjd1Uh7Mt
-	 kvRwRm8Umq2pLP3JLIDBQeowsClO24mRsJ28B0UMY7H0TZ0UJjKuM11+Uwv1AkFB4r
-	 sQM6Qv+t07my4qnQlljljnbCZTglWmWLTkXWdGyUG9mWy9fwi8S2q+q8MYCMVDH0aZ
-	 y15MJFOds2NAA==
-Received: (nullmailer pid 96522 invoked by uid 1000);
-	Thu, 21 Dec 2023 21:08:15 -0000
-Date: Thu, 21 Dec 2023 15:08:15 -0600
-From: Rob Herring <robh@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: freedreno@lists.freedesktop.org, Marijn Suijten <marijn.suijten@somainline.org>, Daniel Vetter <daniel@ffwll.ch>, Rob Clark <robdclark@gmail.com>, Jonathan Marek <jonathan@marek.ca>, Vinod Koul <vkoul@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Stephen Boyd <swboyd@chromium.org>, Sean Paul <sean@poorly.run>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, linux-phy@lists.infradead.org, dri-devel@lists.freedesktop.org, Andy Gross <agross@kernel.org>, Krishna Manikandan <quic_mkrishn@quicinc.com>, Kishon Vijay Abraham I <kishon@kernel.org>, linux-arm-msm@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, Aiqun Yu <quic_aiquny@quicinc.com>, David Airlie <airlied@gmail.com>, Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org, Abhinav Kumar <quic_abhinavk@quicinc.com>
-Subject: Re: [RFC PATCH 2/2] dt-bindings: display: msm: mass-rename files
-Message-ID: <170319289437.96441.9965499072649831420.robh@kernel.org>
-References: <20231221102506.18320-1-dmitry.baryshkov@linaro.org>
- <20231221102506.18320-3-dmitry.baryshkov@linaro.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5545676DB6;
+	Thu, 21 Dec 2023 21:48:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-58962bf3f89so183781a12.0;
+        Thu, 21 Dec 2023 13:48:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1703195306; x=1703800106; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1aacouOcWfy0uLQPDK6KV+FB6xgizIHygVWnh4T+IL0=;
+        b=fDxOhkzOOZ87oWmHU3j8lbW9/oCJcYk2RFiSwtNyeGr2b2tBfQniIE7fdP6AKZRqOi
+         Ld0ACzkOOtKf5hcLtCLZslL5R/rSQvaGJkxJMgsJ6Fuc4+bdzZGRUaIQLipsLVc1Bked
+         dAwEWDp9nobcEmwhnV++VS2HCxQ0Jb+loBmXRXYq3K4uVPfzp/4gdHeNeBZqHl3s1NaK
+         chOI5iVf2jtQLcWF1xzZ87jw12waYadt4kcgGgy7tZvt/H8g2QSYYguJ/PhlnQcEMDDm
+         hfNdmTxdIJQIDZHwldSPbEhLQmoWEJfuTatlx5fE7qHfVLVsN1XXCEiaJ062zu6Bf5S7
+         caGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703195306; x=1703800106;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1aacouOcWfy0uLQPDK6KV+FB6xgizIHygVWnh4T+IL0=;
+        b=v1rOTgQLd3AsBbrtTPUvYBXB2R8U4ac15pVDf5bAtod76UWWlbgh3fqowIAsD2ZbQ6
+         K9X445opxFlsCXbyyOtdg0vhXD09cTo1SndoAhOrbeevtYULgZgrxp11CotgzGBADH3P
+         Ed5qvPU5EgtMRRJYblNlBFGCmeWv4lQy2o88tlBFtMA5bfdZFtHZkQ8O46XZ10tY1IAL
+         +RmXea/JvIc7yadKhXb8gR8Cs68ouAh6lfJVbgp6IRF5bC0fs7fx8MbuFYV0XOy9vEjK
+         u6cBbLUadAHUhxkEcZprlhXCfr7Wks7sd/GJAxjsmSdQlz0pgcs8FwHMkJm4LKYxTww4
+         9tug==
+X-Gm-Message-State: AOJu0YwWEyhQLNQFZyUadwBzhvAV/xg2i4PkGLSOOgwYRs9uBhGR9cjB
+	c2ehKUK/eXmIyZnwI1wiGRY=
+X-Google-Smtp-Source: AGHT+IHdgJo2QpFvb27GHdPapdFDZTihUk7M68E1vt7ojkgQggytWYtbRV0KomYGJgOYc02kZ2OTPQ==
+X-Received: by 2002:a17:90a:8b11:b0:28b:a5ea:732e with SMTP id y17-20020a17090a8b1100b0028ba5ea732emr757329pjn.2.1703195306212;
+        Thu, 21 Dec 2023 13:48:26 -0800 (PST)
+Received: from olv-ct-22.c.googlers.com.com (255.176.125.34.bc.googleusercontent.com. [34.125.176.255])
+        by smtp.gmail.com with ESMTPSA id d7-20020a17090a2a4700b0028bcbee2badsm2480659pjg.10.2023.12.21.13.48.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Dec 2023 13:48:25 -0800 (PST)
+From: Chia-I Wu <olvaffe@gmail.com>
+To: cros-qcom-dts-watchers@chromium.org,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Maulik Shah <quic_mkshah@quicinc.com>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sc7280: revert back to PSCI PC mode
+Date: Thu, 21 Dec 2023 13:48:13 -0800
+Message-ID: <20231221214822.3063219-1-olvaffe@gmail.com>
+X-Mailer: git-send-email 2.43.0.195.gebba966016-goog
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231221102506.18320-3-dmitry.baryshkov@linaro.org>
+Content-Transfer-Encoding: 8bit
 
+This effectively reverts 7925ca85e9561 ("arm64: dts: qcom: sc7280: Add
+power-domains for cpuidle states") for sc7280-herobrine.
 
-On Thu, 21 Dec 2023 12:25:06 +0200, Dmitry Baryshkov wrote:
-> Rename the Qualcomm MSM Display schemas to follow the main compatible
-> string instead of just using the block type. This follows the
-> established practice for YAML file names.
-> 
-> Cc: Aiqun Yu (Maria) <quic_aiquny@quicinc.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../bindings/display/msm/{gmu.yaml => qcom,adreno-gmu.yaml}     | 2 +-
->  .../bindings/display/msm/{gpu.yaml => qcom,adreno.yaml}         | 2 +-
->  .../bindings/display/msm/{hdmi.yaml => qcom,hdmi-tx.yaml}       | 2 +-
->  .../bindings/display/msm/{mdp4.yaml => qcom,mdp4.yaml}          | 2 +-
->  .../msm/{dsi-controller-main.yaml => qcom,mdss-dsi-ctrl.yaml}   | 2 +-
->  5 files changed, 5 insertions(+), 5 deletions(-)
->  rename Documentation/devicetree/bindings/display/msm/{gmu.yaml => qcom,adreno-gmu.yaml} (99%)
->  rename Documentation/devicetree/bindings/display/msm/{gpu.yaml => qcom,adreno.yaml} (99%)
->  rename Documentation/devicetree/bindings/display/msm/{hdmi.yaml => qcom,hdmi-tx.yaml} (98%)
->  rename Documentation/devicetree/bindings/display/msm/{mdp4.yaml => qcom,mdp4.yaml} (97%)
->  rename Documentation/devicetree/bindings/display/msm/{dsi-controller-main.yaml => qcom,mdss-dsi-ctrl.yaml} (99%)
-> 
+Fixes: 7925ca85e9561 ("arm64: dts: qcom: sc7280: Add power-domains for cpuidle states")
+Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
+---
+ .../boot/dts/qcom/sc7280-firmware-tfa.dtsi    | 107 ++++++++++++++++++
+ .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi |   1 +
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          |   4 +-
+ 3 files changed, 110 insertions(+), 2 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-firmware-tfa.dtsi
 
-Acked-by: Rob Herring <robh@kernel.org>
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-firmware-tfa.dtsi b/arch/arm64/boot/dts/qcom/sc7280-firmware-tfa.dtsi
+new file mode 100644
+index 0000000000000..b3fc03da244d6
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sc7280-firmware-tfa.dtsi
+@@ -0,0 +1,107 @@
++// SPDX-License-Identifier: BSD-3-Clause
++
++/*
++ * Devices that use SC7280 with TrustedFirmware-A
++ * need PSCI PC mode instead of the OSI mode provided
++ * by Qualcomm firmware.
++ */
++
++&CPU0 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
++			   &LITTLE_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU1 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
++			   &LITTLE_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU2 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
++			   &LITTLE_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU3 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
++			   &LITTLE_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU4 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&BIG_CPU_SLEEP_0
++			   &BIG_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU5 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&BIG_CPU_SLEEP_0
++			   &BIG_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU6 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&BIG_CPU_SLEEP_0
++			   &BIG_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++&CPU7 {
++	/delete-property/ power-domains;
++	/delete-property/ power-domain-names;
++
++	cpu-idle-states = <&BIG_CPU_SLEEP_0
++			   &BIG_CPU_SLEEP_1
++			   &CLUSTER_SLEEP_0>;
++};
++
++/delete-node/ &domain_idle_states;
++
++&idle_states {
++	CLUSTER_SLEEP_0: cluster-sleep-0 {
++		compatible = "arm,idle-state";
++		idle-state-name = "cluster-power-down";
++		arm,psci-suspend-param = <0x40003444>;
++		entry-latency-us = <3263>;
++		exit-latency-us = <6562>;
++		min-residency-us = <9926>;
++		local-timer-stop;
++	};
++};
++
++/delete-node/ &CPU_PD0;
++/delete-node/ &CPU_PD1;
++/delete-node/ &CPU_PD2;
++/delete-node/ &CPU_PD3;
++/delete-node/ &CPU_PD4;
++/delete-node/ &CPU_PD5;
++/delete-node/ &CPU_PD6;
++/delete-node/ &CPU_PD7;
++/delete-node/ &CLUSTER_PD;
++
++&apps_rsc {
++	/delete-property/ power-domains;
++};
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+index 9ea6636125ad9..09b2d370bf7e0 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+@@ -19,6 +19,7 @@
+ 
+ #include "sc7280-qcard.dtsi"
+ #include "sc7280-chrome-common.dtsi"
++#include "sc7280-firmware-tfa.dtsi"
+ 
+ / {
+ 	chosen {
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 66f1eb83cca7e..354bf2868eba6 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -383,7 +383,7 @@ core7 {
+ 			};
+ 		};
+ 
+-		idle-states {
++		idle_states: idle-states {
+ 			entry-method = "psci";
+ 
+ 			LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
+@@ -427,7 +427,7 @@ BIG_CPU_SLEEP_1: cpu-sleep-1-1 {
+ 			};
+ 		};
+ 
+-		domain-idle-states {
++		domain_idle_states: domain-idle-states {
+ 			CLUSTER_SLEEP_0: cluster-sleep-0 {
+ 				compatible = "domain-idle-state";
+ 				idle-state-name = "cluster-power-down";
+-- 
+2.43.0.195.gebba966016-goog
 
 
