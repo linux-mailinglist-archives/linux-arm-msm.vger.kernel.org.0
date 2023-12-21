@@ -1,348 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-5764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44E2F81BA8C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 16:23:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8245281BA97
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 16:24:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AEBE21F25167
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 15:23:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A6D051C25547
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 15:24:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A24FD53A04;
-	Thu, 21 Dec 2023 15:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88F82539FD;
+	Thu, 21 Dec 2023 15:24:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KcxWiS//"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QggNSoTd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D788858208
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 15:22:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B371C4F884
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 15:24:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1d4006b2566so6389845ad.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 07:22:01 -0800 (PST)
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-40b5155e154so11258285e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 07:24:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703172121; x=1703776921; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OetDTW52ox4JEw6CgWxlaDanXL4m3ZtE503VRTXSSV0=;
-        b=KcxWiS//iILxYrnLGF3X8stKhXs5UeT+OcXGP4KuHTZ7EGfscPgnRMRfca8gm3mfts
-         O8B0RLfsWRTwNd9tk3G7KBQ8EP7txs9Bpqk6cpNpD2PjQJspDu6pmBDDrzi2hOWC+gz5
-         W8j6ProG75lGHPZYrHyiaOIN47HBwxDW2jtkz1uui5xhR42/K5V8F2oIxXXvjkA5D9X+
-         OqrfbodU61PXAanyR7+OW2GTG4HoAFFU6Hdnn6iIpqwuK4eIu9wYUGBt43SAdOMIjyhK
-         ZFIW6g+YAI4JSExf9kk463Mj+qFK43GaFEMXvzLR3gnX1XZqtbTUCHuUsI/0r/CiQkw7
-         XF7A==
+        d=linaro.org; s=google; t=1703172251; x=1703777051; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/XnYWAWl26fljdZ1eq0DEOr8xRmoWq9IceEo0OwSXEM=;
+        b=QggNSoTdaYxq6TU52fd+iZ0QgGGxnXa5MzBPetB2T6yNaQ9CJjxWSGTreX9zZQTmAm
+         +LpTVF/Ju8qtYCcM/w79mtsPCVjKDDsTRy2nCkkf0Ff83OjBrmJZlA68rUZqsl9lPJR8
+         sK3FHAkUfoc/9xR1TPtWSGkEP2QGsMDX7J+GTV3+ppEUmGRpLE6s5xdMF27+45tvnyd9
+         8CDepM0xiobzvOIpL34qXyXMXKlYPbV5mvMIgoYGDlKHUfHuJ336tb6xa5erTwwx2Es8
+         x76cldVkhK6ZET+KWP67ceCp0zfVu171c3vas+D71REVpSyUJXWGeFA4+JUad3C5jmMb
+         l0HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703172121; x=1703776921;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OetDTW52ox4JEw6CgWxlaDanXL4m3ZtE503VRTXSSV0=;
-        b=GjnOuGBA+0mIQEoSA/XHmNp0W0msh1/ULuuA3jW8gjtyY9tRnX4f6bBK5kCnjpnY6o
-         isBbCmdKB09QrsPBxkrMadS2h1gIFRkXOKPiJUXnLErIycV/P7SmZIir6m3Z2kP+ZdRQ
-         L0O7xJTeSBAbAk3nrwhiyexVKWmuoAH6veXE2MbQnVvQVG7qfjAIVF3p4NWRWOKIqqwa
-         ZdguZU0a2IqTtbdFXQb1jJyHb7gSyD7qUIDHElb7MiT2/OHMHpH6XgzoFRCc3J8RU3Gn
-         Rs5ZVTk7/nwEz14gEWH04MtxayiaA0bXe6HYPuUQcSI7h/dgpW3p3XM4Qh+kKwf99Kno
-         yESw==
-X-Gm-Message-State: AOJu0Yy4n3UhE1VzvQLg7YzuIVbIzVsPBY3/HheM8I20oxF0xLnx4aij
-	csdej7ZIc4TPTJQMWnTGDf/z+g==
-X-Google-Smtp-Source: AGHT+IG+5CLqE7AliKjXk3OXCqufoumAgLEKyFMxNvoooABr66AIwKUJ57LQ64yZs4qbyrHYBIzwNg==
-X-Received: by 2002:a17:902:ea0c:b0:1d4:15ec:1c7b with SMTP id s12-20020a170902ea0c00b001d415ec1c7bmr23026plg.40.1703172121192;
-        Thu, 21 Dec 2023 07:22:01 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id z3-20020a170902ee0300b001d3561680aasm1756217plb.82.2023.12.21.07.21.55
+        d=1e100.net; s=20230601; t=1703172251; x=1703777051;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/XnYWAWl26fljdZ1eq0DEOr8xRmoWq9IceEo0OwSXEM=;
+        b=aQuymDvk8vS4rjBTnrU7gVQUHHhxWn7Rn3Six/uOMgTyZeltUFEobGnFaLU6QZTQRN
+         S98NeWHECTdLisNKZJ3TISw3qlxxi98VnJHFTqG8OzhmVRB4vSHKOJvPJO33UoeV4sei
+         OCG/EE6RZB4VZx6aj5qS52KdS+oC4gj3m2RbYOVg5ZWiwDVqZz9pSUXzXVuKH7Lp0z3Z
+         mKTDLjUcWT81+3AYToZb7LaRKZQ/6zbaSe09buVkShlMBd51RhPJm4/fz1N0ew62Um88
+         Jx12yzMNI4cHRVu2byaBTw8HCToiZPdD5x2weGaZet19CW7xYQQ78W9mkEp+tIuaG4Ag
+         1IJA==
+X-Gm-Message-State: AOJu0Yzosx7JaUU8NEnSXcUatcz0s04jNTh1qb/9fxdpUCRFRFtg1rod
+	5I8yiXK/uq7W+oTLLNKGPZ1Z+g==
+X-Google-Smtp-Source: AGHT+IGHy1A1RTCdL6pRPW1PyWOXhl6RuneTu+2GCu8vndp3F2NPHNxrmP0VXwZLO7mpsjJUq7SHGA==
+X-Received: by 2002:a1c:7411:0:b0:40d:177e:c024 with SMTP id p17-20020a1c7411000000b0040d177ec024mr840724wmc.187.1703172250872;
+        Thu, 21 Dec 2023 07:24:10 -0800 (PST)
+Received: from vingu-book.. ([2a01:e0a:f:6020:2db4:9d2a:db65:42d6])
+        by smtp.gmail.com with ESMTPSA id t3-20020a05600c450300b0040c4acaa4bfsm11466974wmo.19.2023.12.21.07.24.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Dec 2023 07:22:00 -0800 (PST)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Thu, 21 Dec 2023 16:21:22 +0100
-Subject: [PATCH v14 4/4] Input: goodix-berlin - add SPI support for Goodix
- Berlin Touchscreen IC
+        Thu, 21 Dec 2023 07:24:10 -0800 (PST)
+From: Vincent Guittot <vincent.guittot@linaro.org>
+To: catalin.marinas@arm.com,
+	will@kernel.org,
+	sudeep.holla@arm.com,
+	rafael@kernel.org,
+	viresh.kumar@linaro.org,
+	agross@kernel.org,
+	andersson@kernel.org,
+	konrad.dybcio@linaro.org,
+	mingo@redhat.com,
+	peterz@infradead.org,
+	juri.lelli@redhat.com,
+	dietmar.eggemann@arm.com,
+	rostedt@goodmis.org,
+	bsegall@google.com,
+	mgorman@suse.de,
+	bristot@redhat.com,
+	vschneid@redhat.com,
+	lukasz.luba@arm.com,
+	rui.zhang@intel.com,
+	mhiramat@kernel.org,
+	daniel.lezcano@linaro.org,
+	amit.kachhap@gmail.com,
+	linux@armlinux.org.uk,
+	corbet@lwn.net,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org
+Cc: Vincent Guittot <vincent.guittot@linaro.org>
+Subject: [PATCH v2 0/5] Rework system pressure interface to the scheduler
+Date: Thu, 21 Dec 2023 16:24:02 +0100
+Message-Id: <20231221152407.436177-1-vincent.guittot@linaro.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231221-topic-goodix-berlin-upstream-initial-v14-4-04459853b640@linaro.org>
-References: <20231221-topic-goodix-berlin-upstream-initial-v14-0-04459853b640@linaro.org>
-In-Reply-To: <20231221-topic-goodix-berlin-upstream-initial-v14-0-04459853b640@linaro.org>
-To: Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
- linux-input@vger.kernel.org
-Cc: Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bastien Nocera <hadess@hadess.net>, 
- Hans de Goede <hdegoede@redhat.com>, Henrik Rydberg <rydberg@bitmath.org>, 
- Jeff LaBundy <jeff@labundy.com>, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8094;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=4NyS6D5Qofbhb2SQAREqrd3GswVI2CZPZl6TmOTm0fg=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlhFf3iY3d5r+qNRS/HuG/admGIZYImsYqrDT5m44T
- e7myg52JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZYRX9wAKCRB33NvayMhJ0QoXEA
- CdwESNDKQZkucQLsSUOJiAfUBPZAXLOYW18uwFcS0xOi54JtKirco9xK449vIzHApiDxEOU1n87MK0
- 38JwsjysqE07FcEzAyINy+3NkdH8H+yL6HYNQAQMdiYq2l+FN8wI1ECgVsVKDYR+tSAamvmGSS/6ax
- aAMln77pQ0q4S+DHqUnXziUJG5OIzVydc2ESdj4LuQe0dLmY4GJrN4NyK9XHMXqTwxBOi95RwEH9G0
- retS4yCdthyHh7Ldv8dAxwiuBQIwVpLbMOf03hbqWa8cUhB4rbdFjoVWVcC7DF+ptiCQaA6TXGNfTs
- 7g+akSOmK33oDo3XzHzay3K0iz4t/4dlkv+jTb5zHXrK6Z0FqiC40ibxdRPNe3Srk80gC7t39bAS25
- Nugpmd2Q85Kdt4N8ZgVIhAvm4dQXjBfezBvkUg1d4HDqEpIQTGO3fFSWDHPBXJa9O1Et+lWv9kx0iy
- joSFrUpgblQEbSAYo2RdAN5fdaDPKLeoiHXjoPheBzatGid1vemL2QsKl/V1vpRdIy3ukMqW3NqKx5
- uC/sLvcsAvrA+y9W1xM0Wf2AuDH8hqM6vQxELQv/1Kju2ko2I1iM+u3elVEhRBNRQYNvubNJOd5Mgj
- LKlB000Ly/PJHYm3V5D2Wsq90pZmTL1gEIt0VxCoxiITz0eV/4DKbwhQukZQ==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+Content-Transfer-Encoding: 8bit
 
-Add initial support for the new Goodix "Berlin" touchscreen ICs
-over the SPI interface.
+Following the consolidation and cleanup of CPU capacity in [1], this serie
+reworks how the scheduler gets the pressures on CPUs. We need to take into
+account all pressures applied by cpufreq on the compute capacity of a CPU
+for dozens of ms or more and not only cpufreq cooling device or HW
+mitigiations. we split the pressure applied on CPU's capacity in 2 parts:
+- one from cpufreq and freq_qos
+- one from HW high freq mitigiation.
 
-The driver doesn't use the regmap_spi code since the SPI messages
-needs to be prefixed, thus this custom regmap code.
+The next step will be to add a dedicated interface for long standing
+capping of the CPU capacity (i.e. for seconds or more) like the
+scaling_max_freq of cpufreq sysfs. The latter is already taken into
+account by this serie but as a temporary pressure which is not always the
+best choice when we know that it will happen for seconds or more.
 
-This initial driver is derived from the Goodix goodix_ts_berlin
-available at [1] and [2] and only supports the GT9916 IC
-present on the Qualcomm SM8550 MTP & QRD touch panel.
+[1] https://lore.kernel.org/lkml/20231211104855.558096-1-vincent.guittot@linaro.org/
 
-The current implementation only supports BerlinD, aka GT9916.
+Change since v1:
+- Use struct cpufreq_policy as parameter of cpufreq_update_pressure()
+- Fix typos and comments
+- Make sched_thermal_decay_shift boot param as deprecated
 
-[1] https://github.com/goodix/goodix_ts_berlin
-[2] https://git.codelinaro.org/clo/la/platform/vendor/opensource/touch-drivers
+Vincent Guittot (5):
+  cpufreq: Add a cpufreq pressure feedback for the scheduler
+  sched: Take cpufreq feedback into account
+  thermal/cpufreq: Remove arch_update_thermal_pressure()
+  sched: Rename arch_update_thermal_pressure into
+    arch_update_hw_pressure
+  sched/pelt: Remove shift of thermal clock
 
-Reviewed-by: Jeff LaBundy <jeff@labundy.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- drivers/input/touchscreen/Kconfig             |  14 ++
- drivers/input/touchscreen/Makefile            |   1 +
- drivers/input/touchscreen/goodix_berlin_spi.c | 178 ++++++++++++++++++++++++++
- 3 files changed, 193 insertions(+)
-
-diff --git a/drivers/input/touchscreen/Kconfig b/drivers/input/touchscreen/Kconfig
-index cc7b88118158..c821fe3ee794 100644
---- a/drivers/input/touchscreen/Kconfig
-+++ b/drivers/input/touchscreen/Kconfig
-@@ -433,6 +433,20 @@ config TOUCHSCREEN_GOODIX_BERLIN_I2C
- 	  To compile this driver as a module, choose M here: the
- 	  module will be called goodix_berlin_i2c.
- 
-+config TOUCHSCREEN_GOODIX_BERLIN_SPI
-+	tristate "Goodix Berlin SPI touchscreen"
-+	depends on SPI_MASTER
-+	select REGMAP
-+	select TOUCHSCREEN_GOODIX_BERLIN_CORE
-+	help
-+	  Say Y here if you have a Goodix Berlin IC connected to
-+	  your system via SPI.
-+
-+	  If unsure, say N.
-+
-+	  To compile this driver as a module, choose M here: the
-+	  module will be called goodix_berlin_spi.
-+
- config TOUCHSCREEN_HIDEEP
- 	tristate "HiDeep Touch IC"
- 	depends on I2C
-diff --git a/drivers/input/touchscreen/Makefile b/drivers/input/touchscreen/Makefile
-index 7ef677cf7a10..a81cb5aa21a5 100644
---- a/drivers/input/touchscreen/Makefile
-+++ b/drivers/input/touchscreen/Makefile
-@@ -49,6 +49,7 @@ obj-$(CONFIG_TOUCHSCREEN_FUJITSU)	+= fujitsu_ts.o
- obj-$(CONFIG_TOUCHSCREEN_GOODIX)	+= goodix_ts.o
- obj-$(CONFIG_TOUCHSCREEN_GOODIX_BERLIN_CORE)	+= goodix_berlin_core.o
- obj-$(CONFIG_TOUCHSCREEN_GOODIX_BERLIN_I2C)	+= goodix_berlin_i2c.o
-+obj-$(CONFIG_TOUCHSCREEN_GOODIX_BERLIN_SPI)	+= goodix_berlin_spi.o
- obj-$(CONFIG_TOUCHSCREEN_HIDEEP)	+= hideep.o
- obj-$(CONFIG_TOUCHSCREEN_HYNITRON_CSTXXX)	+= hynitron_cstxxx.o
- obj-$(CONFIG_TOUCHSCREEN_ILI210X)	+= ili210x.o
-diff --git a/drivers/input/touchscreen/goodix_berlin_spi.c b/drivers/input/touchscreen/goodix_berlin_spi.c
-new file mode 100644
-index 000000000000..4cc557da048a
---- /dev/null
-+++ b/drivers/input/touchscreen/goodix_berlin_spi.c
-@@ -0,0 +1,178 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+/*
-+ * Goodix Berlin Touchscreen Driver
-+ *
-+ * Copyright (C) 2020 - 2021 Goodix, Inc.
-+ * Copyright (C) 2023 Linaro Ltd.
-+ *
-+ * Based on goodix_ts_berlin driver.
-+ */
-+#include <asm/unaligned.h>
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/regmap.h>
-+#include <linux/spi/spi.h>
-+#include <linux/input.h>
-+
-+#include "goodix_berlin.h"
-+
-+#define GOODIX_BERLIN_SPI_TRANS_PREFIX_LEN	1
-+#define GOODIX_BERLIN_REGISTER_WIDTH		4
-+#define GOODIX_BERLIN_SPI_READ_DUMMY_LEN	3
-+#define GOODIX_BERLIN_SPI_READ_PREFIX_LEN	(GOODIX_BERLIN_SPI_TRANS_PREFIX_LEN + \
-+						 GOODIX_BERLIN_REGISTER_WIDTH + \
-+						 GOODIX_BERLIN_SPI_READ_DUMMY_LEN)
-+#define GOODIX_BERLIN_SPI_WRITE_PREFIX_LEN	(GOODIX_BERLIN_SPI_TRANS_PREFIX_LEN + \
-+						 GOODIX_BERLIN_REGISTER_WIDTH)
-+
-+#define GOODIX_BERLIN_SPI_WRITE_FLAG		0xF0
-+#define GOODIX_BERLIN_SPI_READ_FLAG		0xF1
-+
-+static int goodix_berlin_spi_read(void *context, const void *reg_buf,
-+				  size_t reg_size, void *val_buf,
-+				  size_t val_size)
-+{
-+	struct spi_device *spi = context;
-+	struct spi_transfer xfers;
-+	struct spi_message spi_msg;
-+	const u32 *reg = reg_buf; /* reg is stored as native u32 at start of buffer */
-+	u8 *buf;
-+	int error;
-+
-+	if (reg_size != GOODIX_BERLIN_REGISTER_WIDTH)
-+		return -EINVAL;
-+
-+	buf = kzalloc(GOODIX_BERLIN_SPI_READ_PREFIX_LEN + val_size, GFP_KERNEL);
-+	if (!buf)
-+		return -ENOMEM;
-+
-+	spi_message_init(&spi_msg);
-+	memset(&xfers, 0, sizeof(xfers));
-+
-+	/* buffer format: 0xF1 + addr(4bytes) + dummy(3bytes) + data */
-+	buf[0] = GOODIX_BERLIN_SPI_READ_FLAG;
-+	put_unaligned_be32(*reg, buf + GOODIX_BERLIN_SPI_TRANS_PREFIX_LEN);
-+	memset(buf + GOODIX_BERLIN_SPI_TRANS_PREFIX_LEN + GOODIX_BERLIN_REGISTER_WIDTH,
-+	       0xff, GOODIX_BERLIN_SPI_READ_DUMMY_LEN);
-+
-+	xfers.tx_buf = buf;
-+	xfers.rx_buf = buf;
-+	xfers.len = GOODIX_BERLIN_SPI_READ_PREFIX_LEN + val_size;
-+	xfers.cs_change = 0;
-+	spi_message_add_tail(&xfers, &spi_msg);
-+
-+	error = spi_sync(spi, &spi_msg);
-+	if (error < 0)
-+		dev_err(&spi->dev, "spi transfer error, %d", error);
-+	else
-+		memcpy(val_buf, buf + GOODIX_BERLIN_SPI_READ_PREFIX_LEN, val_size);
-+
-+	kfree(buf);
-+	return error;
-+}
-+
-+static int goodix_berlin_spi_write(void *context, const void *data,
-+				   size_t count)
-+{
-+	unsigned int len = count - GOODIX_BERLIN_REGISTER_WIDTH;
-+	struct spi_device *spi = context;
-+	struct spi_transfer xfers;
-+	struct spi_message spi_msg;
-+	const u32 *reg = data; /* reg is stored as native u32 at start of buffer */
-+	u8 *buf;
-+	int error;
-+
-+	buf = kzalloc(GOODIX_BERLIN_SPI_WRITE_PREFIX_LEN + len, GFP_KERNEL);
-+	if (!buf)
-+		return -ENOMEM;
-+
-+	spi_message_init(&spi_msg);
-+	memset(&xfers, 0, sizeof(xfers));
-+
-+	buf[0] = GOODIX_BERLIN_SPI_WRITE_FLAG;
-+	put_unaligned_be32(*reg, buf + GOODIX_BERLIN_SPI_TRANS_PREFIX_LEN);
-+	memcpy(buf + GOODIX_BERLIN_SPI_WRITE_PREFIX_LEN,
-+	       data + GOODIX_BERLIN_REGISTER_WIDTH, len);
-+
-+	xfers.tx_buf = buf;
-+	xfers.len = GOODIX_BERLIN_SPI_WRITE_PREFIX_LEN + len;
-+	xfers.cs_change = 0;
-+	spi_message_add_tail(&xfers, &spi_msg);
-+
-+	error = spi_sync(spi, &spi_msg);
-+	if (error < 0)
-+		dev_err(&spi->dev, "spi transfer error, %d", error);
-+
-+	kfree(buf);
-+	return error;
-+}
-+
-+static const struct regmap_config goodix_berlin_spi_regmap_conf = {
-+	.reg_bits = 32,
-+	.val_bits = 8,
-+	.read = goodix_berlin_spi_read,
-+	.write = goodix_berlin_spi_write,
-+};
-+
-+/* vendor & product left unassigned here, should probably be updated from fw info */
-+static const struct input_id goodix_berlin_spi_input_id = {
-+	.bustype = BUS_SPI,
-+};
-+
-+static int goodix_berlin_spi_probe(struct spi_device *spi)
-+{
-+	struct regmap_config regmap_config;
-+	struct regmap *regmap;
-+	size_t max_size;
-+	int error = 0;
-+
-+	spi->mode = SPI_MODE_0;
-+	spi->bits_per_word = 8;
-+	error = spi_setup(spi);
-+	if (error)
-+		return error;
-+
-+	max_size = spi_max_transfer_size(spi);
-+
-+	regmap_config = goodix_berlin_spi_regmap_conf;
-+	regmap_config.max_raw_read = max_size - GOODIX_BERLIN_SPI_READ_PREFIX_LEN;
-+	regmap_config.max_raw_write = max_size - GOODIX_BERLIN_SPI_WRITE_PREFIX_LEN;
-+
-+	regmap = devm_regmap_init(&spi->dev, NULL, spi, &regmap_config);
-+	if (IS_ERR(regmap))
-+		return PTR_ERR(regmap);
-+
-+	error = goodix_berlin_probe(&spi->dev, spi->irq,
-+				    &goodix_berlin_spi_input_id, regmap);
-+	if (error)
-+		return error;
-+
-+	return 0;
-+}
-+
-+static const struct spi_device_id goodix_berlin_spi_ids[] = {
-+	{ "gt9916" },
-+	{ },
-+};
-+MODULE_DEVICE_TABLE(spi, goodix_berlin_spi_ids);
-+
-+static const struct of_device_id goodix_berlin_spi_of_match[] = {
-+	{ .compatible = "goodix,gt9916", },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, goodix_berlin_spi_of_match);
-+
-+static struct spi_driver goodix_berlin_spi_driver = {
-+	.driver = {
-+		.name = "goodix-berlin-spi",
-+		.of_match_table = goodix_berlin_spi_of_match,
-+		.pm = pm_sleep_ptr(&goodix_berlin_pm_ops),
-+	},
-+	.probe = goodix_berlin_spi_probe,
-+	.id_table = goodix_berlin_spi_ids,
-+};
-+module_spi_driver(goodix_berlin_spi_driver);
-+
-+MODULE_LICENSE("GPL");
-+MODULE_DESCRIPTION("Goodix Berlin SPI Touchscreen driver");
-+MODULE_AUTHOR("Neil Armstrong <neil.armstrong@linaro.org>");
+ .../admin-guide/kernel-parameters.txt         |  1 +
+ arch/arm/include/asm/topology.h               |  6 +-
+ arch/arm64/include/asm/topology.h             |  6 +-
+ drivers/base/arch_topology.c                  | 26 ++++----
+ drivers/cpufreq/cpufreq.c                     | 34 ++++++++++
+ drivers/cpufreq/qcom-cpufreq-hw.c             |  4 +-
+ drivers/thermal/cpufreq_cooling.c             |  3 -
+ include/linux/arch_topology.h                 |  8 +--
+ include/linux/cpufreq.h                       | 10 +++
+ include/linux/sched/topology.h                |  8 +--
+ .../{thermal_pressure.h => hw_pressure.h}     | 14 ++---
+ include/trace/events/sched.h                  |  2 +-
+ init/Kconfig                                  | 12 ++--
+ kernel/sched/core.c                           |  8 +--
+ kernel/sched/fair.c                           | 63 +++++++++----------
+ kernel/sched/pelt.c                           | 18 +++---
+ kernel/sched/pelt.h                           | 16 ++---
+ kernel/sched/sched.h                          | 22 +------
+ 18 files changed, 142 insertions(+), 119 deletions(-)
+ rename include/trace/events/{thermal_pressure.h => hw_pressure.h} (55%)
 
 -- 
 2.34.1
