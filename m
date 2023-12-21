@@ -1,144 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-5816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0ABF981BF00
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 20:16:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D645E81BF12
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 20:25:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3DC3A1C21AED
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 19:16:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D586D1C21C08
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 19:25:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BDEC651AE;
-	Thu, 21 Dec 2023 19:16:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PKdBIb1C"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 917646519F;
+	Thu, 21 Dec 2023 19:25:55 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18407651A4;
-	Thu, 21 Dec 2023 19:16:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BLDMiN7031672;
-	Thu, 21 Dec 2023 19:16:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=M4ofItWEa2ZMEZHfAhfrl
-	hv/rg3HOV3fP0U/2gxcGck=; b=PKdBIb1CfcNOW97RL8HOl87615EbrPMxnp+Ne
-	PvEW4c4XXleqzMpI4vC8L5NeyZYPtlbvWu+PSwE31ibC9bg6SaALCkCpvwEMzvMS
-	Z7VlLslOlTRrKQl3MVbTh1hR5mVay5g/oRjeU6rSPk4iMzpp+zU5x55nfiEO3zaQ
-	IL+hfRWb5JSgcznKak74AvsVNYsYsZ33JfsjcXnWCtKSC8d1HB3JRE4B/XA4qFls
-	/e4v8VTK4Em+GZetTkBYAAS91IoXWTVkN1rxPGYpcCOb/kASLR67QU8/uvDoBOlb
-	Dos+LpEphOOte/6awbJ3J9EyXy7FEtradpfqFWmEylXRN6/6g==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v4gvh25pn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Dec 2023 19:16:36 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BLJGara031058
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Dec 2023 19:16:36 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Thu, 21 Dec 2023 11:16:35 -0800
-Date: Thu, 21 Dec 2023 11:16:34 -0800
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Ulf Hansson
-	<ulf.hansson@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        "Catalin
- Marinas" <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH 1/8] dt-bindings: clock: qcom: Allow VDD_GFX supply to GX
-Message-ID: <20231221191634.GS1766637@hu-bjorande-lv.qualcomm.com>
-References: <20231220-sa8295p-gpu-v1-0-d8cdf2257f97@quicinc.com>
- <20231220-sa8295p-gpu-v1-1-d8cdf2257f97@quicinc.com>
- <CAA8EJprRjRJsV5hPR6mzjgucKa8UEthJd-y573aYJH0P8QRWqw@mail.gmail.com>
- <CAA8EJpqgcOJHUFHtrTEE0T+jtQqdv3RGm-eTuVVa0ama_eFssQ@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA4765198;
+	Thu, 21 Dec 2023 19:25:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=acm.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1d3e05abcaeso8466645ad.1;
+        Thu, 21 Dec 2023 11:25:54 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703186753; x=1703791553;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BbeiS+nR5HLz0VyzxksNmQP936OjapFJccP6nWbsbVg=;
+        b=joiwnadZzEP0UHX9FvH2iZLpwlDLkJ/RUjal2dsxpIoACVE7FK7BpUEqECV7AFArAI
+         8XcuhJYenrFrPX0Tg+5Uyqx6QN0PUrEM9HwAsk4aQyZfjBcBRSmF56zlUhybZI4Bm2fO
+         o9WzMKhySTSO9Y4T7/kSzWoDW83rBn3ghAmWLkqcv0m7ejg9kZalKRPf+rPS+srryDEb
+         /zpmvgiUE8P4I7i6u9dyMn4ei9/452aWfaYiA7nfDHvNwkdyYprxzRkBR3OgOuZPSokZ
+         hIJu3CSVR1eZW+4eyZvbd3/4ST86jCWW8Sg9v45hPirr+34NHiZLPKEtTJNzCBuH7By4
+         3ONQ==
+X-Gm-Message-State: AOJu0Yx3/NXDly5roU91n2MspLX6MDF0uXiSzvgnvMKfdwo7XRROyh0R
+	KnrhkeYPG1kzn6EFNE0cKKQ=
+X-Google-Smtp-Source: AGHT+IHVT54J/2E66aR0G9wm0i8JbNSgVX8TliNvjir0D8eFXVHHG8DYGEoUI/TMDbHQDGDFwfMPnw==
+X-Received: by 2002:a17:903:40cc:b0:1d3:4860:591b with SMTP id t12-20020a17090340cc00b001d34860591bmr168869pld.0.1703186753353;
+        Thu, 21 Dec 2023 11:25:53 -0800 (PST)
+Received: from ?IPV6:2620:0:1000:8411:872c:d7b7:41e9:3edd? ([2620:0:1000:8411:872c:d7b7:41e9:3edd])
+        by smtp.gmail.com with ESMTPSA id x7-20020a170902ec8700b001d08e08003esm2004315plg.174.2023.12.21.11.25.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Dec 2023 11:25:50 -0800 (PST)
+Message-ID: <d4e9bf6c-0a71-49d1-a74b-76eba3af6a51@acm.org>
+Date: Thu, 21 Dec 2023 11:25:47 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpqgcOJHUFHtrTEE0T+jtQqdv3RGm-eTuVVa0ama_eFssQ@mail.gmail.com>
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: sdqrhYe5YehdA1OTvNJ99Jnj2rDKz_Bz
-X-Proofpoint-GUID: sdqrhYe5YehdA1OTvNJ99Jnj2rDKz_Bz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- spamscore=0 priorityscore=1501 clxscore=1015 adultscore=0 suspectscore=0
- mlxlogscore=999 bulkscore=0 phishscore=0 malwarescore=0 impostorscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312210146
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC v3 11/11] scsi: ufs: core: Perform read back before
+ writing run/stop regs
+Content-Language: en-US
+To: Andrew Halaney <ahalaney@redhat.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Manivannan Sadhasivam <mani@kernel.org>,
+ "James E.J. Bottomley" <jejb@linux.ibm.com>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>,
+ Hannes Reinecke <hare@suse.de>, Janek Kotas <jank@cadence.com>,
+ Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
+ Can Guo <quic_cang@quicinc.com>
+Cc: Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231221-ufs-reset-ensure-effect-before-delay-v3-0-2195a1b66d2e@redhat.com>
+ <20231221-ufs-reset-ensure-effect-before-delay-v3-11-2195a1b66d2e@redhat.com>
+From: Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20231221-ufs-reset-ensure-effect-before-delay-v3-11-2195a1b66d2e@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Dec 21, 2023 at 09:10:28AM +0200, Dmitry Baryshkov wrote:
-> On Thu, 21 Dec 2023 at 09:03, Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > On Thu, 21 Dec 2023 at 05:51, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
-> > >
-> > > In some designs the SoC's VDD_GFX pads are supplied by an external
-> > > regulator, rather than a power-domain. Allow this to be described in the
-> > > GPU clock controller binding.
-> > >
-> > > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> > > ---
-> > >  Documentation/devicetree/bindings/clock/qcom,gpucc.yaml | 3 +++
-> > >  1 file changed, 3 insertions(+)
-> > >
-> > > diff --git a/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml b/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
-> > > index f369fa34e00c..013ef78d2b31 100644
-> > > --- a/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
-> > > +++ b/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
-> > > @@ -53,6 +53,9 @@ properties:
-> > >    power-domains:
-> > >      maxItems: 1
-> > >
-> > > +  vdd-gfx-supply:
-> > > +    description: Regulator supply for the VDD_GFX pads
-> > > +
-> > >    '#clock-cells':
-> > >      const: 1
-> >
-> > I think it might be good to restrict this property to a particular
-> > platform (via if:not:properties:compatible:contains
-> > then:properties:vdd-gfx-supply:false).
+On 12/21/23 11:09, Andrew Halaney wrote:
+> Currently a wmb() is used to ensure that writes to the
+> UTP_TASK_REQ_LIST_BASE* regs are completed prior to following writes to
+> the run/stop registers.
 > 
-> After reading the last patches in the series, there is another
-> suggestion. Maybe we should explicitly say that there should be either
-> power-domains or vdd-gfx-supply, but not both.
+> wmb() ensure that the write completes, but completion doesn't mean that
+> it isn't stored in a buffer somewhere. The recommendation for
+> ensuring the bits have taken effect on the device is to perform a read
+> back to force it to make it all the way to the device. This is
+> documented in device-io.rst and a talk by Will Deacon on this can
+> be seen over here:
 > 
+>      https://youtu.be/i6DayghhA8Q?si=MiyxB5cKJXSaoc01&t=1678
+> 
+> Let's do that to ensure the bits hit the device. Because the wmb()'s
+> purpose wasn't to add extra ordering (on top of the ordering guaranteed
+> by writel()/readl()), it can safely be removed.
 
-Even on this platform it's not a property of the SoC, but surrounding
-design. So I like this proposal.
-
-Thanks,
-Bjorn
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 
