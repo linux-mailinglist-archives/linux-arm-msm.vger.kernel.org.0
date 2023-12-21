@@ -1,146 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-5729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5730-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68CBE81B2C0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 10:42:32 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E332181B2D9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 10:48:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E74521F242C3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 09:42:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 21C081C21B81
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 09:48:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6767F482E2;
-	Thu, 21 Dec 2023 09:36:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 313E1224C7;
+	Thu, 21 Dec 2023 09:48:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rpEtGmjI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SzlTHP+A"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B68AB4E635
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 09:36:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-50e33fe3856so705167e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 01:36:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703151403; x=1703756203; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=VAQgZLT6MJzqToCCRHqRMgeKmPjv4qb6pRJlgJ6h2xs=;
-        b=rpEtGmjIxO7744Ro/I5W7bQrmtlVoOMeIpCrEolPmcDtgHj4/NUhzoZbhUx4UulPV0
-         3hT5ZIEtWRs3v0e5pHidM4WsXu4iREuRACaHGyWCZca2NL57FFCmEoL1HevA+UwUGDYr
-         t2AzRMTJtL4NgE9hfHS5UMZOUhain+MkgTKBaSbm+fgj7p0YW6CjO6DBzzBVmeU2IZId
-         J1aFi7VaykBSybCxRu27TiW7VH3gA+mzLeGipJOeHeOUOa46YhbnB8XrLEx/7LcVaUxV
-         mC4P/0pwFRRlgqnp7xvfc2j84Z3OAQWrzGDu9XezDXFtZOxeOpKTvuwlbCAdnue9iFuR
-         8y3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703151403; x=1703756203;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VAQgZLT6MJzqToCCRHqRMgeKmPjv4qb6pRJlgJ6h2xs=;
-        b=coA3RNBFxIM46G0CqOuHmyacqFkVuIpTDYkqwA9fk04CnrZo+K8Bu0igm5y+B8Qrz9
-         79aQdm03Gy+HvY8w4mHvhh+XfpnKu9qSsWMyyEmknGuboEy321Y/B7dp4DhwUz3piFyZ
-         Y6dWyhXDDOC/9W4AjA0I1PtA8M5/aW8wff99wBwJgzOPCQxa0bWHspEFgtiolliwKzGp
-         mKefKu/A1wFaJCfpTzkKd1BqCiJvPcV5u3W8j5EHbHVYLUY4lFpt0PHuDhzP3P8WizAA
-         oOfhtmI3Z/eN0uN1jMkZhy621+cybPj6yGdM8/KlHTBm8OwlrKrZ++JBt+cQ63JYjQmG
-         ismA==
-X-Gm-Message-State: AOJu0YxUqBjCtkAbpwQ08WGBI0to7SsommhSEHkewJHjn4sWJliv9rm7
-	GnoKEkuLTfMr8BCC+raMWS5HNw==
-X-Google-Smtp-Source: AGHT+IG2g9cPY53SrvukT+opnaiuFgyvHCmBlc8NKMeq4llaF7oY8zF/znDeExaTsWIeyqbduuGRwA==
-X-Received: by 2002:a05:6512:696:b0:50e:588b:5bad with SMTP id t22-20020a056512069600b0050e588b5badmr764854lfe.67.1703151402826;
-        Thu, 21 Dec 2023 01:36:42 -0800 (PST)
-Received: from [192.168.0.22] ([78.10.206.178])
-        by smtp.gmail.com with ESMTPSA id wh14-20020a170906fd0e00b009fc576e26e6sm753457ejb.80.2023.12.21.01.36.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Dec 2023 01:36:42 -0800 (PST)
-Message-ID: <d15b4544-c60a-45b4-a0e4-739675e2e4e2@linaro.org>
-Date: Thu, 21 Dec 2023 10:36:40 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FAB2225D6;
+	Thu, 21 Dec 2023 09:48:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14724C433C7;
+	Thu, 21 Dec 2023 09:48:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1703152094;
+	bh=c2g5y6kiflVeNGhN8PpT0D5trQyz7k/JpEp8prWhHD0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=SzlTHP+AeHmHs9xY452PnUZTHwFg60YYT0FJu680NOPj0v9145EzPbhwRRtmA1Esj
+	 4ULy8sC4WkHmR9QGMMGTzXOluYJZMa2F+ndbnzGsF/OLd0hCRJOZgqe/XVTSGrniSK
+	 pklfkmNpf9mXVFn/k3PNvymX39dITY+51a6wURsydk51TIeiJ7w90zDED7Yap0huVP
+	 Nb7jFWRNpXWvKfLgyF1Oqr4EfpNwTVKPb7grehwdAHJcLjCaDUaYi1nw9CYKm9r1xw
+	 jT8DJ7nl0AzN8oj6sglFzNTo+GidWcqcVKQ+tN4pwmrDbM42e4syVQSMZtaKm4g/rL
+	 9/flXmtRsY6mQ==
+Date: Thu, 21 Dec 2023 10:48:11 +0100
+From: Maxime Ripard <mripard@kernel.org>
+To: Jani Nikula <jani.nikula@intel.com>
+Cc: linux-sound@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org, 
+	Emma Anholt <emma@anholt.net>, Andrzej Hajda <andrzej.hajda@intel.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v4] ASoC: hdmi-codec: drop drm/drm_edid.h include
+Message-ID: <eexfqzmhm7z4gausmjqhqklidz7crfq3io4vwxsspfixkd4uqx@cayecc5z6uvg>
+References: <20231214092856.4019251-1-jani.nikula@intel.com>
+ <20231219121210.1076152-1-jani.nikula@intel.com>
+ <8734vvuccx.fsf@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: soc: qcom: qcom,pmic-glink: document
- QCM6490 compatible
-Content-Language: en-US
-To: Luca Weiss <luca.weiss@fairphone.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- cros-qcom-dts-watchers@chromium.org
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
-References: <20231220-fp5-pmic-glink-v1-0-2a1f8e3c661c@fairphone.com>
- <20231220-fp5-pmic-glink-v1-1-2a1f8e3c661c@fairphone.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231220-fp5-pmic-glink-v1-1-2a1f8e3c661c@fairphone.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="7o3xr7p4t4lcajc6"
+Content-Disposition: inline
+In-Reply-To: <8734vvuccx.fsf@intel.com>
 
-On 20/12/2023 11:02, Luca Weiss wrote:
-> Document the QCM6490 compatible used to describe the pmic glink on this
-> platform.
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+--7o3xr7p4t4lcajc6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Best regards,
-Krzysztof
+On Thu, Dec 21, 2023 at 11:35:42AM +0200, Jani Nikula wrote:
+> On Tue, 19 Dec 2023, Jani Nikula <jani.nikula@intel.com> wrote:
+> > hdmi-codec.h does not appear to directly need drm/drm_edid.h for
+> > anything. Remove it.
+> >
+> > There are some files that get drm/edid.h by proxy; include it where
+> > needed.
+> >
+> > v2-v4: Fix build (kernel test robot <lkp@intel.com>)
+> >
+> > Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+> >
+> > ---
+> >
+> > I'm pretty sure I haven't compiled everything that might implicitly
+> > depend on the include. However, the right thing to do is to include
+> > drm_edid.h where needed, not from somewhat random intermediate
+> > headers. I hope this uncovers anything I missed.
+>=20
+> The kernel test robot came back with clean results.
+>=20
+> Added a bunch more Cc's here. Ack to merge this via drm-misc-next,
+> please?
 
+Acked-by: Maxime Ripard <mripard@kernel.org>
+
+Maxime
+
+--7o3xr7p4t4lcajc6
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZYQJ2wAKCRDj7w1vZxhR
+xSW0AQCJlH99BsxjepYQObIU2W6v087aYxO8BzYL4hwVes27CgEAvgEDL2E/HZHk
+AfQBYylYm1Rf70+sI6J67z8P6Brc6QM=
+=yy41
+-----END PGP SIGNATURE-----
+
+--7o3xr7p4t4lcajc6--
 
