@@ -1,124 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-5735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5736-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF20D81B32C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 11:08:07 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 01FD581B37B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 11:25:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AAAC7287FB3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 10:08:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 36E6D1C2402D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 10:25:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4192C51C20;
-	Thu, 21 Dec 2023 10:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED8534F890;
+	Thu, 21 Dec 2023 10:25:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="grskYiz6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sxk9lvqH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D61A250254;
-	Thu, 21 Dec 2023 10:07:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BL63YSW029032;
-	Thu, 21 Dec 2023 10:07:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-type; s=qcppdkim1; bh=ENy9zIRzfqmgFGIyKdRN
-	Aiv5Sae6mMm9M3jFcJx5ZFY=; b=grskYiz6yeeOq+ZecajThBjUfg1O86H5mVuu
-	gWlFg/9LZNudd44R8lbJo+lBgKFil4Ksg+7nSCeekL0cBjNMFdGKUGLEvPsluFOn
-	PWrc1+hd4oxNksWnt3eQSp481hkbrgBlgjgXcEG5x+J1X3hLh7dPlSUgsxm5Zyn9
-	b90ZUGhXIqB6TaU426jS1HcRtmZ2bI9VfEmVgWkNds2jqmaJiH1qbMunQI6JZFCc
-	P8aXRqdQ5ew9Uhnbu0+aZmh7UZdeI+Qisqj/pE5e7YoqZhPOvXBTOUW4GCMfS1vq
-	+kDgdOG7RVLSKvKMtS6Ui6Gfhpz7IKwItH13PTs4tztQyOObvg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v3v33c87c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Dec 2023 10:07:40 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BLA7EDq008062
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Dec 2023 10:07:14 GMT
-Received: from sarannya-linux.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Thu, 21 Dec 2023 02:07:09 -0800
-From: Sarannya S <quic_sarannya@quicinc.com>
-To: <quic_bjorande@quicinc.com>, <bjorn.andersson@kernel.org>,
-        <andersson@kernel.org>, <quic_clew@quicinc.com>,
-        <mathieu.poirier@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <quic_sarannya@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        "David S. Miller"
-	<davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub Kicinski
-	<kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        "open list:NETWORKING
- [GENERAL]" <netdev@vger.kernel.org>
-Subject: [PATCH V1] net: qrtr: ns: Return 0 if server port is not present
-Date: Thu, 21 Dec 2023 15:36:51 +0530
-Message-ID: <1703153211-3717-2-git-send-email-quic_sarannya@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1703153211-3717-1-git-send-email-quic_sarannya@quicinc.com>
-References: <1703153211-3717-1-git-send-email-quic_sarannya@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3939751C25
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 10:25:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-50e616ef769so379032e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 02:25:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1703154307; x=1703759107; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pYNLBDFWO3LrdFkIMvJ8nxiptH8Derg0mKqbJmtxv8s=;
+        b=sxk9lvqHDgX4jMJVz+bxjFQx+PLVIYfq5ZvUxmcLKzJQGJ8qvLEoCBBw96rNIhg3c7
+         UPrs2pBcDhGP4hWXmjKIm2SSR0BlkBduUI+Q+8msA2Ze5Fj6p96AlZAmCoCugGjBqRSP
+         fwWdA4Qb+AlQq45tpLa6NRgj+OtjSUmUH6Q0hnizLV+AaCjsUQBlfiGgxghBBoPvkB/r
+         Nvzg7xpSQh+1KJHMpBDYfTcAjDYo2Sv8m0+JTJVdsCdaen4Bo/suxbKL7Cudjzt2P0y/
+         OS5WYWOZRfCP000iuQCUzhtznFVtQO+IlMITqsLe/V1bHaUBTdQmQUhGlW52mAOAJH+D
+         nVww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703154307; x=1703759107;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pYNLBDFWO3LrdFkIMvJ8nxiptH8Derg0mKqbJmtxv8s=;
+        b=BOpvff4/kkRODwFhJuJ2fSUvrZLpNL8hGvCBln6z+YA0uL118xcq+T8c4RnD1hEZR0
+         QyRbliLB3aU+mlIFUWRaTuiVNlXtA17a1gunHmG5fy4UhUItBqyFASxcef3nyaX7PqzF
+         jSEEiKxg86+KZJ0an4oZsEEtXxII17R4s0wlK7S/75MLhzkzH5gFNqae2YW6NtFKGJh4
+         OgAzDg8aSq1IFo9ck3Kam6E4wdivyQFtQmIIBYPZLxwYBj3urhhAAljOARbEq/5eqvnj
+         yBr80HUgcu1bteRfirEgQFF/JXYo6wYIbphHCT/QDOzr9YuK95150Oae4MMcaU+8cZ0F
+         +hbg==
+X-Gm-Message-State: AOJu0Yxjnj5iSdHybQMtbZsp2A0lh1Jvm4rndTQt8QsLTXhTPIMz9BKB
+	MJ6n0jmBspL0GRjCFVqeoB3FGg==
+X-Google-Smtp-Source: AGHT+IH6pMrLYwHqjlp1850CLT8V4kczgmX00VnjUzgg0aKA4yDbM+awaOvHnZsumP3WdOAsyEN9Dg==
+X-Received: by 2002:a05:6512:238e:b0:50e:4c33:1266 with SMTP id c14-20020a056512238e00b0050e4c331266mr2146675lfv.72.1703154307282;
+        Thu, 21 Dec 2023 02:25:07 -0800 (PST)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id m26-20020a056512359a00b0050aaae62dbdsm231671lfr.62.2023.12.21.02.25.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Dec 2023 02:25:06 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Clark <robdclark@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>
+Cc: Stephen Boyd <swboyd@chromium.org>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	Krishna Manikandan <quic_mkrishn@quicinc.com>,
+	Jonathan Marek <jonathan@marek.ca>,
+	linux-phy@lists.infradead.org
+Subject: [RFC PATCH 0/2] dt-bindings: display: msm: correct schema filenames
+Date: Thu, 21 Dec 2023 12:25:04 +0200
+Message-Id: <20231221102506.18320-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: qVrbWCGQWVpjBwfPIQWPCzb_PiyBJj0e
-X-Proofpoint-GUID: qVrbWCGQWVpjBwfPIQWPCzb_PiyBJj0e
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- mlxscore=0 malwarescore=0 mlxlogscore=734 clxscore=1015 priorityscore=1501
- adultscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
- definitions=main-2312210075
+Content-Transfer-Encoding: 8bit
 
-When a 'DEL_CLIENT' message is received from the remote, the corresponding
-server port gets deleted. A DEL_SERVER message is then announced for this
-server. As part of handling the subsequent DEL_SERVER message, the name-
-server attempts to delete the server port which results in a '-ENOENT' error.
-The return value from server_del() is then propagated back to qrtr_ns_worker,
-causing excessive error prints.
-To address this, return 0 from control_cmd_del_server() without checking the
-return value of server_del(), since the above scenario is not an error case
-and hence server_del() doesn't have any other error return value.
+During the email discussion Aiqun Yu (Maria) pointed out that the file
+names for some of the MSM display schema files might not be obvious.
+Indeed they do not fully follow the established practice of matching the
+file name and one of compat strings.
 
-Signed-off-by: Sarannya Sasikumar <quic_sarannya@quicinc.com>
----
- net/qrtr/ns.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Move DSI PHY schemas to the PHY subdir (renaming them meanwhile) and
+rename remaining schema files.
 
-diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
-index b1db0b5..abb0c70 100644
---- a/net/qrtr/ns.c
-+++ b/net/qrtr/ns.c
-@@ -512,7 +512,9 @@ static int ctrl_cmd_del_server(struct sockaddr_qrtr *from,
- 	if (!node)
- 		return -ENOENT;
- 
--	return server_del(node, port, true);
-+	server_del(node, port, true);
-+
-+	return 0;
- }
- 
- static int ctrl_cmd_new_lookup(struct sockaddr_qrtr *from,
+Note, I have intentinally left dpu-common.yaml and mdss-common.yaml
+untouched, they describe common properties for a family of devices.
+
+Also I have left dp-controller.yaml intact. I could not come up with a
+good enough file name. Suggestions for this file are appreciated.
+
+Dmitry Baryshkov (2):
+  dt-bindings: display: msm: move DSI PHY schema to bindings/phy
+  dt-bindings: display: msm: mass-rename files
+
+ .../bindings/display/msm/{gmu.yaml => qcom,adreno-gmu.yaml}   | 2 +-
+ .../bindings/display/msm/{gpu.yaml => qcom,adreno.yaml}       | 2 +-
+ .../bindings/display/msm/{hdmi.yaml => qcom,hdmi-tx.yaml}     | 2 +-
+ .../bindings/display/msm/{mdp4.yaml => qcom,mdp4.yaml}        | 2 +-
+ .../msm/{dsi-controller-main.yaml => qcom,mdss-dsi-ctrl.yaml} | 2 +-
+ .../msm/dsi-phy-10nm.yaml => phy/qcom,dsi-phy-10nm.yaml}      | 4 ++--
+ .../msm/dsi-phy-14nm.yaml => phy/qcom,dsi-phy-14nm.yaml}      | 4 ++--
+ .../msm/dsi-phy-20nm.yaml => phy/qcom,dsi-phy-20nm.yaml}      | 4 ++--
+ .../msm/dsi-phy-28nm.yaml => phy/qcom,dsi-phy-28nm.yaml}      | 4 ++--
+ .../msm/dsi-phy-7nm.yaml => phy/qcom,dsi-phy-7nm.yaml}        | 4 ++--
+ .../msm/dsi-phy-common.yaml => phy/qcom,dsi-phy-common.yaml}  | 2 +-
+ 11 files changed, 16 insertions(+), 16 deletions(-)
+ rename Documentation/devicetree/bindings/display/msm/{gmu.yaml => qcom,adreno-gmu.yaml} (99%)
+ rename Documentation/devicetree/bindings/display/msm/{gpu.yaml => qcom,adreno.yaml} (99%)
+ rename Documentation/devicetree/bindings/display/msm/{hdmi.yaml => qcom,hdmi-tx.yaml} (98%)
+ rename Documentation/devicetree/bindings/display/msm/{mdp4.yaml => qcom,mdp4.yaml} (97%)
+ rename Documentation/devicetree/bindings/display/msm/{dsi-controller-main.yaml => qcom,mdss-dsi-ctrl.yaml} (99%)
+ rename Documentation/devicetree/bindings/{display/msm/dsi-phy-10nm.yaml => phy/qcom,dsi-phy-10nm.yaml} (96%)
+ rename Documentation/devicetree/bindings/{display/msm/dsi-phy-14nm.yaml => phy/qcom,dsi-phy-14nm.yaml} (94%)
+ rename Documentation/devicetree/bindings/{display/msm/dsi-phy-20nm.yaml => phy/qcom,dsi-phy-20nm.yaml} (93%)
+ rename Documentation/devicetree/bindings/{display/msm/dsi-phy-28nm.yaml => phy/qcom,dsi-phy-28nm.yaml} (94%)
+ rename Documentation/devicetree/bindings/{display/msm/dsi-phy-7nm.yaml => phy/qcom,dsi-phy-7nm.yaml} (94%)
+ rename Documentation/devicetree/bindings/{display/msm/dsi-phy-common.yaml => phy/qcom,dsi-phy-common.yaml} (90%)
+
 -- 
-2.7.4
+2.39.2
 
 
