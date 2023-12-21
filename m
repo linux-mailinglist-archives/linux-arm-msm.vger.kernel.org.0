@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-5817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D645E81BF12
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 20:25:58 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8538E81BF1C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 20:28:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D586D1C21C08
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 19:25:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 41C4C2869B3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 19:28:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 917646519F;
-	Thu, 21 Dec 2023 19:25:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B900651B2;
+	Thu, 21 Dec 2023 19:28:47 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA4765198;
-	Thu, 21 Dec 2023 19:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66059651A4;
+	Thu, 21 Dec 2023 19:28:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=acm.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1d3e05abcaeso8466645ad.1;
-        Thu, 21 Dec 2023 11:25:54 -0800 (PST)
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1d3e2972f65so5866995ad.3;
+        Thu, 21 Dec 2023 11:28:45 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703186753; x=1703791553;
+        d=1e100.net; s=20230601; t=1703186925; x=1703791725;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BbeiS+nR5HLz0VyzxksNmQP936OjapFJccP6nWbsbVg=;
-        b=joiwnadZzEP0UHX9FvH2iZLpwlDLkJ/RUjal2dsxpIoACVE7FK7BpUEqECV7AFArAI
-         8XcuhJYenrFrPX0Tg+5Uyqx6QN0PUrEM9HwAsk4aQyZfjBcBRSmF56zlUhybZI4Bm2fO
-         o9WzMKhySTSO9Y4T7/kSzWoDW83rBn3ghAmWLkqcv0m7ejg9kZalKRPf+rPS+srryDEb
-         /zpmvgiUE8P4I7i6u9dyMn4ei9/452aWfaYiA7nfDHvNwkdyYprxzRkBR3OgOuZPSokZ
-         hIJu3CSVR1eZW+4eyZvbd3/4ST86jCWW8Sg9v45hPirr+34NHiZLPKEtTJNzCBuH7By4
-         3ONQ==
-X-Gm-Message-State: AOJu0Yx3/NXDly5roU91n2MspLX6MDF0uXiSzvgnvMKfdwo7XRROyh0R
-	KnrhkeYPG1kzn6EFNE0cKKQ=
-X-Google-Smtp-Source: AGHT+IHVT54J/2E66aR0G9wm0i8JbNSgVX8TliNvjir0D8eFXVHHG8DYGEoUI/TMDbHQDGDFwfMPnw==
-X-Received: by 2002:a17:903:40cc:b0:1d3:4860:591b with SMTP id t12-20020a17090340cc00b001d34860591bmr168869pld.0.1703186753353;
-        Thu, 21 Dec 2023 11:25:53 -0800 (PST)
+        bh=0Bco0ERQRj3rYAMBWppOOAWWH4RcSWSSR/RuHXwNzZw=;
+        b=lf2metfXrrZuVaujnH+JQ9yRjLu4VoahGFZijYuoFg6DbJhBkxrl2/cRzyIqDX24pc
+         Dl5imzvjaRfz2MMn0NDIuRFKgjQ4XefNwwIfUIiDr1lNj9Y8FcgccsLtt9M5+W1+jyNA
+         DMBJRYUac+P8PpOqViXfcETVcGPyhcTo38DfErMD82uBwWrJHLr+2ILIIwS/zOcrLRSz
+         dMBY6910ViLVrPUf+34pjejvHNyybbNx+vcufcKSMTv7KtwzwQLPxykfUFo2JHQBRrw8
+         V1niMEk70QmhXMaSnhjEpJT40zgms5dlgS00gq335nyRt4ClPsa0m438bb6VYnxMekXc
+         dDWw==
+X-Gm-Message-State: AOJu0Ywm/AVC5nJ30+Zv/3lkRgjPikPdfT0PBk6SFkIl3uP3X1AsqxG9
+	gR/pZxfw99k354M3XhJXYzw=
+X-Google-Smtp-Source: AGHT+IHSHzhTy84vjyTXbw0y78oR/kW5cDCh5EFHZXHEFoI6LpSDZJKJUPgJMwCmOQ0BzrG8SpVJ0Q==
+X-Received: by 2002:a17:902:c406:b0:1d3:fa3f:668a with SMTP id k6-20020a170902c40600b001d3fa3f668amr153251plk.58.1703186925077;
+        Thu, 21 Dec 2023 11:28:45 -0800 (PST)
 Received: from ?IPV6:2620:0:1000:8411:872c:d7b7:41e9:3edd? ([2620:0:1000:8411:872c:d7b7:41e9:3edd])
-        by smtp.gmail.com with ESMTPSA id x7-20020a170902ec8700b001d08e08003esm2004315plg.174.2023.12.21.11.25.49
+        by smtp.gmail.com with ESMTPSA id l17-20020a170902eb1100b001bf11cf2e21sm1995752plb.210.2023.12.21.11.28.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Dec 2023 11:25:50 -0800 (PST)
-Message-ID: <d4e9bf6c-0a71-49d1-a74b-76eba3af6a51@acm.org>
-Date: Thu, 21 Dec 2023 11:25:47 -0800
+        Thu, 21 Dec 2023 11:28:44 -0800 (PST)
+Message-ID: <b8056aae-e7d5-4814-957d-585ab803a3aa@acm.org>
+Date: Thu, 21 Dec 2023 11:28:42 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,8 +52,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v3 11/11] scsi: ufs: core: Perform read back before
- writing run/stop regs
+Subject: Re: [PATCH RFC v3 10/11] scsi: ufs: core: Perform read back to commit
+ doorbell
 Content-Language: en-US
 To: Andrew Halaney <ahalaney@redhat.com>, Andy Gross <agross@kernel.org>,
  Bjorn Andersson <andersson@kernel.org>,
@@ -67,29 +67,31 @@ To: Andrew Halaney <ahalaney@redhat.com>, Andy Gross <agross@kernel.org>,
 Cc: Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
  linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20231221-ufs-reset-ensure-effect-before-delay-v3-0-2195a1b66d2e@redhat.com>
- <20231221-ufs-reset-ensure-effect-before-delay-v3-11-2195a1b66d2e@redhat.com>
+ <20231221-ufs-reset-ensure-effect-before-delay-v3-10-2195a1b66d2e@redhat.com>
 From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <20231221-ufs-reset-ensure-effect-before-delay-v3-11-2195a1b66d2e@redhat.com>
+In-Reply-To: <20231221-ufs-reset-ensure-effect-before-delay-v3-10-2195a1b66d2e@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 12/21/23 11:09, Andrew Halaney wrote:
-> Currently a wmb() is used to ensure that writes to the
-> UTP_TASK_REQ_LIST_BASE* regs are completed prior to following writes to
-> the run/stop registers.
-> 
-> wmb() ensure that the write completes, but completion doesn't mean that
-> it isn't stored in a buffer somewhere. The recommendation for
-> ensuring the bits have taken effect on the device is to perform a read
-> back to force it to make it all the way to the device. This is
-> documented in device-io.rst and a talk by Will Deacon on this can
-> be seen over here:
-> 
->      https://youtu.be/i6DayghhA8Q?si=MiyxB5cKJXSaoc01&t=1678
-> 
-> Let's do that to ensure the bits hit the device. Because the wmb()'s
-> purpose wasn't to add extra ordering (on top of the ordering guaranteed
-> by writel()/readl()), it can safely be removed.
+> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+> index 75a03ee9a1ba..caebd589e08c 100644
+> --- a/drivers/ufs/core/ufshcd.c
+> +++ b/drivers/ufs/core/ufshcd.c
+> @@ -7050,7 +7050,7 @@ static int __ufshcd_issue_tm_cmd(struct ufs_hba *hba,
+>   
+>   	ufshcd_writel(hba, 1 << task_tag, REG_UTP_TASK_REQ_DOOR_BELL);
+>   	/* Make sure that doorbell is committed immediately */
+> -	wmb();
+> +	ufshcd_readl(hba, REG_UTP_TASK_REQ_DOOR_BELL);
+>   
+>   	spin_unlock_irqrestore(host->host_lock, flags);
 
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+There is a wait_for_completion_io_timeout() call later in this function and
+it is safe to write to the REG_UTP_TASK_REQ_DOOR_BELL register from multiple
+threads concurrently so I think the above wmb() call can be left out entirely.
+
+Thanks,
+
+Bart.
 
