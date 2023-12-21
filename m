@@ -1,305 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-5739-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B154081B3AD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 11:34:08 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 94EBD81B3B3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 11:35:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D62BB1C2553A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 10:34:07 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D6456B23228
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 10:34:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A92956EB66;
-	Thu, 21 Dec 2023 10:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE4D365A87;
+	Thu, 21 Dec 2023 10:34:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xVOO1AJj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="R2cVRFVZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE2D6E5BC
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 10:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 899F86979B
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 10:34:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-5e7467eb93aso4904107b3.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 02:32:25 -0800 (PST)
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-5d33574f64eso7245537b3.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 02:34:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703154745; x=1703759545; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1703154891; x=1703759691; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=QH0RrHp3BbVq3x0TcnWEn70gx4fcFHG3l/rgwq9Zzao=;
-        b=xVOO1AJjClx6ZInQssG5VCKwRF4w3qH0es/wR3uGCPeIUvpzwOhZAjyPjSFjUXFtlU
-         oHOZKt4VD2DjT1GSbme8jvsfjWjhskGgDA/Xe82bup2M03ESEPLeDb6lr9yi25vIJiET
-         zUoxzrcs9LbrRAmcRHxWa1RlbcyxfsaoogS7ew6SLZZ8D3RzW8sWdOA0u32mTh6ZlzrR
-         8mF8y11INy6wkqj7aYRabshqkP4mLGueA0LlYCRXP2jilTIElqdxjICrw91BXXjv0eCI
-         VMfzbku/fqXTy4zTNGLxI9UTQiSQEnnjg9Y/lxPVlu1FYW4mDrS2C7UCis32cjsuqBjH
-         2M+A==
+        bh=k1jggwYkG4hQyycQm/RtNvDfA67fuZq9Z5qOm74FzWI=;
+        b=R2cVRFVZK8yYhOW2cQy2NMWE6yMdB8Vpaknnm8gwCF9Zzsp8NPIjlsyO730w+Z9uWq
+         aLlHOLrLELiJzSm7HyXg6+J+Fwbz6ge/mocVKj8XVdGB9aquYgeDVQv811IKR2Dx7Wht
+         pg57sswTJBa51l5hvJ0JwjkXmxUg9kOrmnR3nmia05j2qsIfOHlX6ZYzMyQ46KmP5Mrm
+         gU4huELdFVHqMVD8Rk2X3lCGIEWZ4+huDzrDG/vyx880MQQXrffKaa68woz3ocioScli
+         C3xrjJ5PiO81X2gYwuWyvpWkfi6cDubS3PHtJH0DhCwnjiV4F7M4DkNMSMSDl5xIlq42
+         XrUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703154745; x=1703759545;
+        d=1e100.net; s=20230601; t=1703154891; x=1703759691;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=QH0RrHp3BbVq3x0TcnWEn70gx4fcFHG3l/rgwq9Zzao=;
-        b=HP78anGITVVBND4L6ekQBC0tswcarahEkT3TpL0OTXegNAquzNCmqIg/PioQ6NsPgF
-         tAC+dXviN+94zyFxK7W2iwEr/Lu43yDpqkAjg0rvdgYdpxbHh4iN0LXtAl73H3t88oJL
-         z3K+vZNuZdtk4rxCKi7nMSy4d801FnJgWV/pkHWFPT71/RRei995WlGQ5Q0Mudm3MJVh
-         XkFOfKU54K5kayvYBIB2jfM0F2bokESp1y0T9ISNKvSFyTRYjIeDGAdLtDAQuWMKdL5V
-         SfdW1FqrpsnW/NlE7Gi1OL5LF+9/4DbhZJ3gbijTa/T2ATJ2n/uDiyoua8JIHJtTVhnH
-         b4Yg==
-X-Gm-Message-State: AOJu0YzmRdMKiBgeVUs91AoagaG11Bn3MvXWvlCiSGhb4J9GPYswy9aZ
-	PMaQ8wPq8I91JpfekpZcxI0+Y0ge5j8PBjAjhS8oHg==
-X-Google-Smtp-Source: AGHT+IEDCA6TTwRZViV0lqKVy39Uwh2vsaYqgEwFHnRhf+6Q177re6i4SkHhOtg0CPX6CtP0tEwle+bwjnGkABKknC8=
-X-Received: by 2002:a0d:e84c:0:b0:5e6:81f8:b2ea with SMTP id
- r73-20020a0de84c000000b005e681f8b2eamr723855ywe.96.1703154744760; Thu, 21 Dec
- 2023 02:32:24 -0800 (PST)
+        bh=k1jggwYkG4hQyycQm/RtNvDfA67fuZq9Z5qOm74FzWI=;
+        b=VprL4Kxi6QcPsSpI3qBPeIzDTqu5aePaFW4+EK1AABPSgO/pCBo1SBH/SippFOm4LH
+         55L3Ghh9CAcMiIZBlnbFMj5R4LCnlGV4Sn/utq0fBjZcFyxQRMH+yJiL0ej/14aUNYoj
+         eFiMObAj7lQs462ijANfylQAWwTQXufe0WT8D2lKjT6zokrQPYn8NgfoUj6MTSBu+Qml
+         Ahkos2DfZYEojWVLsCdnEhCcroMNe8jtaX5EczNdVibFlkCM59FRZRFTPydcgxg6nDmU
+         sj//jNR63Y5g1qt9xqnQhXXB/0+p75tLrl6TxjaDfz0vPvnrobkf7z6uyK+Wil9caCqY
+         lZzA==
+X-Gm-Message-State: AOJu0YwufFMWij/KfrHpVu7HnlOzH1tgMOht5aqujUgj5ViDqBFM6b0t
+	4iZDfTW/V7dBhh/kpgH1gqV3+IRIfy8Oq2UQun0Iurvj1FXzUoyu
+X-Google-Smtp-Source: AGHT+IGfnie6/2dvOxBU6HIqheolQzMJV+6Zo4QAQEchMvhcGdYYrIohHNPC1JpbJAdq0YamseBDZvDZglYO6CXJ7tE=
+X-Received: by 2002:a0d:c5c3:0:b0:5d7:1940:b384 with SMTP id
+ h186-20020a0dc5c3000000b005d71940b384mr1196055ywd.80.1703154891585; Thu, 21
+ Dec 2023 02:34:51 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231220133808.5654-1-quic_bibekkum@quicinc.com>
- <20231220133808.5654-4-quic_bibekkum@quicinc.com> <CAA8EJpo8X+jfi20N9P7kUshxe6_7pwQe8G0Q02JDuB8ozH7hLA@mail.gmail.com>
- <7b32b7a7-bc64-4102-a6bf-3c3fc8d979ac@quicinc.com>
-In-Reply-To: <7b32b7a7-bc64-4102-a6bf-3c3fc8d979ac@quicinc.com>
+References: <20231220-fp5-pmic-glink-v1-0-2a1f8e3c661c@fairphone.com>
+ <8d042095-1e09-45cc-9762-909fe8d663a9@linaro.org> <CXTU5MLN0YDS.29PPV8KZF8G9R@fairphone.com>
+In-Reply-To: <CXTU5MLN0YDS.29PPV8KZF8G9R@fairphone.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 21 Dec 2023 12:32:13 +0200
-Message-ID: <CAA8EJpo6LdBQm5q=r2+ETBwhKL3YkUsPDuzA2MGCqb-1R_9b7w@mail.gmail.com>
-Subject: Re: [PATCH v6 3/5] iommu/arm-smmu: introduction of ACTLR for custom
- prefetcher settings
-To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-Cc: will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, 
-	konrad.dybcio@linaro.org, jsnitsel@redhat.com, quic_bjorande@quicinc.com, 
-	mani@kernel.org, quic_eberman@quicinc.com, robdclark@chromium.org, 
-	u.kleine-koenig@pengutronix.de, robh@kernel.org, vladimir.oltean@nxp.com, 
-	quic_pkondeti@quicinc.com, quic_molvera@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	iommu@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	qipl.kernel.upstream@quicinc.com
+Date: Thu, 21 Dec 2023 12:34:40 +0200
+Message-ID: <CAA8EJpoD3x=kVLu4x2yLtAqCp=wmGSU4ssq5Oj_SD5VQ=GyAYQ@mail.gmail.com>
+Subject: Re: [PATCH 0/3] Fairphone 5 PMIC-GLINK support (USB-C, charger, fuel gauge)
+To: Luca Weiss <luca.weiss@fairphone.com>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, cros-qcom-dts-watchers@chromium.org, 
+	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 21 Dec 2023 at 12:02, Bibek Kumar Patro
-<quic_bibekkum@quicinc.com> wrote:
+On Thu, 21 Dec 2023 at 09:33, Luca Weiss <luca.weiss@fairphone.com> wrote:
 >
+> On Wed Dec 20, 2023 at 1:32 PM CET, Konrad Dybcio wrote:
+> > On 20.12.2023 11:02, Luca Weiss wrote:
+> > > This series adds all the necessary bits to enable USB-C role switching,
+> > > charger and fuel gauge (all via pmic-glink) on Fairphone 5.
+> > >
+> > > One thing that could be made different is the pmic-glink compatible.
+> > > I've chosen to use qcm6490 compatible for it and not sc7280 since
+> > > there's plenty of firmware variety on sc7280-based platforms and they
+> > > might require different quirks in the future, so limit this PDOS quirk
+> > > to just qcm6490 for now.
+> > >
+> > > If someone thinks it should be qcom,sc7280-pmic-glink, please let me
+> > > know :)
+> > IMO it's best to continue using the "base soc" (which just so happened
+> > to fall onto sc7280 this time around) for all compatibles, unless the
+> > derivatives actually had changes
 >
+> Hi Konrad,
 >
-> On 12/21/2023 6:06 AM, Dmitry Baryshkov wrote:
-> > On Wed, 20 Dec 2023 at 15:39, Bibek Kumar Patro
-> > <quic_bibekkum@quicinc.com> wrote:
-> >>
-> >> Currently in Qualcomm  SoCs the default prefetch is set to 1 which allows
-> >> the TLB to fetch just the next page table. MMU-500 features ACTLR
-> >> register which is implementation defined and is used for Qualcomm SoCs
-> >> to have a custom prefetch setting enabling TLB to prefetch the next set
-> >> of page tables accordingly allowing for faster translations.
-> >>
-> >> ACTLR value is unique for each SMR (Stream matching register) and stored
-> >> in a pre-populated table. This value is set to the register during
-> >> context bank initialisation.
-> >>
-> >> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-> >> ---
-> >>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 45 ++++++++++++++++++++++
-> >>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h |  6 ++-
-> >>   drivers/iommu/arm/arm-smmu/arm-smmu.c      |  5 ++-
-> >>   drivers/iommu/arm/arm-smmu/arm-smmu.h      |  5 +++
-> >>   4 files changed, 58 insertions(+), 3 deletions(-)
-> >>
-> >> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> >> index 20c9836d859b..1cefdd0ca110 100644
-> >> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> >> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> >> @@ -24,6 +24,12 @@
-> >>   #define CPRE                   (1 << 1)
-> >>   #define CMTLB                  (1 << 0)
-> >>
-> >> +struct actlr_config {
-> >> +       u16 sid;
-> >> +       u16 mask;
-> >> +       u32 actlr;
-> >> +};
-> >> +
-> >>   static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
-> >>   {
-> >>          return container_of(smmu, struct qcom_smmu, smmu);
-> >> @@ -215,9 +221,38 @@ static bool qcom_adreno_can_do_ttbr1(struct arm_smmu_device *smmu)
-> >>          return true;
-> >>   }
-> >>
-> >> +static void qcom_smmu_set_actlr(struct device *dev, struct arm_smmu_device *smmu, int cbndx,
-> >> +               const struct actlr_config *actlrcfg)
-> >> +{
-> >> +       struct arm_smmu_master_cfg *cfg = dev_iommu_priv_get(dev);
-> >> +       struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
-> >> +       struct arm_smmu_smr *smr;
-> >> +       u16 mask;
-> >> +       int idx;
-> >> +       u16 id;
-> >> +       int i;
-> >> +
-> >> +       for (; actlrcfg->sid || actlrcfg->mask || actlrcfg->actlr; actlrcfg++) {
-> >> +               id = actlrcfg->sid;
-> >> +               mask = actlrcfg->mask;
-> >> +
-> >> +               for_each_cfg_sme(cfg, fwspec, i, idx) {
-> >> +                       smr = &smmu->smrs[idx];
-> >> +                       if (smr_is_subset(smr, id, mask)) {
-> >> +                               arm_smmu_cb_write(smmu, cbndx, ARM_SMMU_CB_ACTLR,
-> >> +                                               actlrcfg->actlr);
-> >> +                               break;
-> >> +                       }
-> >> +               }
-> >> +       }
-> >> +}
-> >> +
-> >>   static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
-> >>                  struct io_pgtable_cfg *pgtbl_cfg, struct device *dev)
-> >>   {
-> >> +       struct arm_smmu_device *smmu = smmu_domain->smmu;
-> >> +       struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
-> >> +       int cbndx = smmu_domain->cfg.cbndx;
-> >>          struct adreno_smmu_priv *priv;
-> >>
-> >>          smmu_domain->cfg.flush_walk_prefer_tlbiasid = true;
-> >> @@ -248,6 +283,9 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
-> >>          priv->set_stall = qcom_adreno_smmu_set_stall;
-> >>          priv->resume_translation = qcom_adreno_smmu_resume_translation;
-> >>
-> >> +       if (qsmmu->data->actlrcfg_gfx)
-> >> +               qcom_smmu_set_actlr(dev, smmu, cbndx, qsmmu->data->actlrcfg_gfx);
-> >
-> > There was a feedback point against v4 that there can be more than two
-> > (apps + gpu) SMMU devices. No, we can not use additional compat
-> > strings, the SMMU units are compatible with each other.
+> I think at some point I asked Dmitry what he thought and he mentioned
+> qcm6490. Even found the message again:
 >
-> Just to understand better, did you mean if in the below check
-> [inside arm-smmu-qcom.c file during qcom_smmu_create()], "else" has two
-> things? (Currently adreno_impl for gpu smmu, else for only
-> apps smmu)
+> > well, since it is a firmware thing, you might want to emphasise that.
+> > So from my POV qcm6490 makes more sense
+>
+> But yeah since it's likely that sc7280 firmware behaves the same as
+> qcm6490 firmware it's probably okay to use sc7280 compatible, worst case
+> we change it later :) I'll send a v2 with those changes.
 
-qcom,adreno-smmu is quite unique here, this is the only distinctive
-substring. We do not have such compat strings for any other of SMMU
-nodes.
+Worst case we end up with sc7280 which has yet another slightly
+different UCSI / PMIC GLINK implementation, but the compatible string
+is already taken.
+I still suppose that this should be a qcm6490-related string.
 
 >
->           if (np && of_device_is_compatible(np, "qcom,adreno-smmu"))
->                   impl = data->adreno_impl;
->           else
->                   impl = data->impl;
+> Regards
+> Luca
 >
-> > Please add
-> > matching between the smmu and particular actlr table using the IO
-> > address of the SMMU block.
 > >
+> > as far as firmware goes, I *think* CrOS doesn't even have PMIC_GLINK?
+> > There are however WoA 7280 laptops which totally should have it.. Would
+> > be nice to hunt some down and see if they report different stuff to
+> > what's there on android firmware
+> >
+> > Konrad
 >
-> The ACTLR table for each smmu will have A IO address attached, so based
-> on IO address we can apply ACTLR.
-> Is this your proposal((IMO hardcoding IO in driver won't be viable,
-> isn't it?), or in smmu DT we would need to set the IO?
-
-Unfortunately, I meant exactly that: hardcoding addresses of the SMMU
-register spaces. see drivers/gpu/drm/msm/dsi_cfg.c
-Then during device probe the driver can match the IO address to the
-list of the per-platform ACTLR tables and select the correct one.
-Then you don't even need a special actlrcfg_gfx. The GFX will fall
-into the main schema.
-
->
->
-> Thanks & regards,
-> Bibek
->
-> >> +
-> >>          return 0;
-> >>   }
-> >>
-> >> @@ -274,6 +312,13 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
-> >>   static int qcom_smmu_init_context(struct arm_smmu_domain *smmu_domain,
-> >>                  struct io_pgtable_cfg *pgtbl_cfg, struct device *dev)
-> >>   {
-> >> +       struct arm_smmu_device *smmu = smmu_domain->smmu;
-> >> +       struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
-> >> +       int cbndx = smmu_domain->cfg.cbndx;
-> >> +
-> >> +       if (qsmmu->data->actlrcfg)
-> >> +               qcom_smmu_set_actlr(dev, smmu, cbndx, qsmmu->data->actlrcfg);
-> >> +
-> >
-> > One issue occured to me, while I was reviewing the patchset. The ACTLR
-> > settings are related to the whole SMMU setup, but we are applying them
-> > each time there is an SMMU context init (in other words, one per each
-> > domain). Is that correct? Or it's just that there is no better place
-> > for initialising the global register set? Would it be better to
-> > reprogram the ACTLR registers which are related just to this
-> > particular domain?
-> >
-> >>          smmu_domain->cfg.flush_walk_prefer_tlbiasid = true;
-> >>
-> >>          return 0;
-> >> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
-> >> index f3b91963e234..cb4cb402c202 100644
-> >> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
-> >> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
-> >> @@ -1,6 +1,6 @@
-> >>   /* SPDX-License-Identifier: GPL-2.0-only */
-> >>   /*
-> >> - * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
-> >> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
-> >>    */
-> >>
-> >>   #ifndef _ARM_SMMU_QCOM_H
-> >> @@ -24,7 +24,11 @@ struct qcom_smmu_config {
-> >>          const u32 *reg_offset;
-> >>   };
-> >>
-> >> +struct actlr_config;
-> >> +
-> >>   struct qcom_smmu_match_data {
-> >> +       const struct actlr_config *actlrcfg;
-> >> +       const struct actlr_config *actlrcfg_gfx;
-> >>          const struct qcom_smmu_config *cfg;
-> >>          const struct arm_smmu_impl *impl;
-> >>          const struct arm_smmu_impl *adreno_impl;
-> >> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> >> index d6d1a2a55cc0..0c7f700b27dd 100644
-> >> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> >> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> >> @@ -990,9 +990,10 @@ static int arm_smmu_find_sme(struct arm_smmu_device *smmu, u16 id, u16 mask)
-> >>                   * expect simply identical entries for this case, but there's
-> >>                   * no harm in accommodating the generalisation.
-> >>                   */
-> >> -               if ((mask & smrs[i].mask) == mask &&
-> >> -                   !((id ^ smrs[i].id) & ~smrs[i].mask))
-> >> +
-> >> +               if (smr_is_subset(&smrs[i], id, mask))
-> >>                          return i;
-> >> +
-> >>                  /*
-> >>                   * If the new entry has any other overlap with an existing one,
-> >>                   * though, then there always exists at least one stream ID
-> >> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> >> index 703fd5817ec1..2e4f65412c6b 100644
-> >> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> >> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> >> @@ -501,6 +501,11 @@ static inline void arm_smmu_writeq(struct arm_smmu_device *smmu, int page,
-> >>                  writeq_relaxed(val, arm_smmu_page(smmu, page) + offset);
-> >>   }
-> >>
-> >> +static inline bool smr_is_subset(struct arm_smmu_smr *smrs, u16 id, u16 mask)
-> >> +{
-> >> +       return (mask & smrs->mask) == mask && !((id ^ smrs->id) & ~smrs->mask);
-> >> +}
-> >> +
-> >>   #define ARM_SMMU_GR0           0
-> >>   #define ARM_SMMU_GR1           1
-> >>   #define ARM_SMMU_CB(s, n)      ((s)->numpage + (n))
-> >> --
-> >> 2.17.1
-> >>
-> >
-> >
-
 
 
 -- 
