@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-5733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3660E81B324
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 11:06:06 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9473981B329
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 11:07:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E6DEF282E04
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 10:06:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4F207285996
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 10:07:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3491E4D5BC;
-	Thu, 21 Dec 2023 10:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59C944D5AF;
+	Thu, 21 Dec 2023 10:07:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mI7F/UnV"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ab847a19"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EBF04D5A6;
-	Thu, 21 Dec 2023 10:06:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34794F1E9;
+	Thu, 21 Dec 2023 10:07:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BL63EN3028172;
-	Thu, 21 Dec 2023 10:05:54 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BL8j8K3005498;
+	Thu, 21 Dec 2023 10:07:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	from:to:cc:subject:date:message-id:mime-version:content-type; s=
-	qcppdkim1; bh=Kq8VbpDqe3FOuWKJfLOXUx2yB0WHYeTuEVaPSqZj6UE=; b=mI
-	7F/UnVBAk9r3yMw+NjTPcVp69U+6DhGZxr4OvhXoc3okMkg/HtRGPlCepskrXw/F
-	9zanMNBT1diPhrrv1/UsbHD9mxN2fNy4rQBvdglNVuj03DHMPS6amZcDJOfHMXuk
-	N21w6vx3Neu3pqy8w40f2p4LbBGXDvhqX5M2dtuh6YqAt8ZQQ66fMLPeATpds6fj
-	DLjqqwtCvypJB48n3MM4RAdBv6CoE8Clv66RoIo9RY0qyhvJezsfi2ztzbW2cZeu
-	HFWBXf7uj1CTsJg9u/tPGnWXRi+NdJVP8XAsJEXDqoE590tDyqaTGZdrjwthZoQy
-	kOwdkKL1jdxH0xpkk9GQ==
+	qcppdkim1; bh=Kq8VbpDqe3FOuWKJfLOXUx2yB0WHYeTuEVaPSqZj6UE=; b=ab
+	847a196GpnVo+MWOmSgUW90w6EgfSMqENwDQI93OfpBaQoLhhpG2ffB1ok0ZmApk
+	H+cc1XM/S7LmMfd9LREX3zvdkKbegM9Rh8SZbC1NSM6LNm212Bg8P9keOEBpJiw2
+	dpO3LgMzHnxPB90spfKL47ZBi7Ses36Tg3FwSTGzlqZ6irJChZDtB/pIvq8p46JQ
+	W48ctEiPEGDkga2wjpZ9wNgyVWJ1ULQIfdvtA6LlTXUbNTLLJ3a0XBTrzWa+HC9H
+	UoKdXS8q9KRJT5j6psuIBvSeVgzvUIe85ZT7Qmu4bb/iuxsfTbRD7Tiz5jwh4Ygo
+	CljzAb9Yw2EPJS7E14OA==
 Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v3v33c83c-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v4j43g8yf-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Dec 2023 10:05:53 +0000 (GMT)
+	Thu, 21 Dec 2023 10:07:37 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BLA5qV1006123
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BLA77HU007957
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Dec 2023 10:05:52 GMT
+	Thu, 21 Dec 2023 10:07:07 GMT
 Received: from sarannya-linux.qualcomm.com (10.80.80.8) by
  nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Thu, 21 Dec 2023 02:05:47 -0800
+ 15.2.1118.40; Thu, 21 Dec 2023 02:07:02 -0800
 From: Sarannya S <quic_sarannya@quicinc.com>
 To: <quic_bjorande@quicinc.com>, <bjorn.andersson@kernel.org>,
         <andersson@kernel.org>, <quic_clew@quicinc.com>,
@@ -60,9 +60,9 @@ CC: <linux-kernel@vger.kernel.org>, <quic_sarannya@quicinc.com>,
         Paolo Abeni <pabeni@redhat.com>,
         "open list:NETWORKING
  [GENERAL]" <netdev@vger.kernel.org>
-Subject: [PATCH V1 1/1] net: qrtr: ns: Ignore ENODEV failures in ns
-Date: Thu, 21 Dec 2023 15:35:35 +0530
-Message-ID: <1703153136-3607-1-git-send-email-quic_sarannya@quicinc.com>
+Subject: [PATCH V1] net: qrtr: ns: Ignore ENODEV failures in ns
+Date: Thu, 21 Dec 2023 15:36:50 +0530
+Message-ID: <1703153211-3717-1-git-send-email-quic_sarannya@quicinc.com>
 X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -71,20 +71,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: IRYirnL3ks9jCOZ42oyKBpMvPWsk6E75
-X-Proofpoint-GUID: IRYirnL3ks9jCOZ42oyKBpMvPWsk6E75
+X-Proofpoint-ORIG-GUID: 7TllMe0d82FDSsZvrOqsR1FhIA2xt3Mr
+X-Proofpoint-GUID: 7TllMe0d82FDSsZvrOqsR1FhIA2xt3Mr
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- mlxscore=0 malwarescore=0 mlxlogscore=724 clxscore=1011 priorityscore=1501
- adultscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
- definitions=main-2312210074
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 spamscore=0 impostorscore=0 adultscore=0 mlxlogscore=729
+ mlxscore=0 phishscore=0 priorityscore=1501 clxscore=1015 bulkscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312210075
 
 From: Chris Lew <quic_clew@quicinc.com>
 
