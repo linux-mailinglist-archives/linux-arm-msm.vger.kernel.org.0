@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-5719-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5720-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A450481AFF5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 09:04:13 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F1B781B011
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 09:12:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2E1591F278ED
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 08:04:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id ECD261F213E4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 08:12:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DEB2156D7;
-	Thu, 21 Dec 2023 08:04:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98B6715AFD;
+	Thu, 21 Dec 2023 08:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y21Q/4nu"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="koSiH874"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE94171A4
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 08:04:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C62168B1
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 08:12:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a234dc0984fso50242566b.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 00:04:07 -0800 (PST)
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-54cb4fa667bso618265a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 00:12:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703145846; x=1703750646; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1703146360; x=1703751160; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=rZ3EgJBFwrcoVo0x7FF2XBy23R5zWqDNweyq7hF92Xc=;
-        b=y21Q/4nubZxNvE4iaPceQn3FC9djLrq15pxNabyxtRNraZt1znDbReXOG6ctGLaCW6
-         DF+rcmspE0mgMkdYUfYTodGFvmQzxCUvHSQ9yqLIpo5+MtqbhY/Xs2z4N128f4b9L9PF
-         frosukRXqPe8gqoftOh5U7N/e4xE9Jpemdy23KhzkOO542yT8BxTClxFoN1MnL6xXvZn
-         GZv8NOS53fD5IkJTsDKYuOXGwGl3CGVxCZ/4jAqOCGBrRC2K1u3VGdeJsMOeRXZ1xYDS
-         YpMWpISkrvIlD4OUwLQ0bLhZw6p1fDETCdQ6dqO6ir66W5MjX2LhS31k5ax21vFZ7tWI
-         4dEA==
+        bh=PMwwJtmC2mecPsqY9i7UuR/4xKJj2rkigXKOfKmkhDY=;
+        b=koSiH8747tX5PUypwEPgArBl2Z2pz6KatD1wpy5h7x472kbf2A89CgNAoA+chJnuMA
+         PegZgAjnrDuu31KstMNejzv4Qoccri6qxIK473oJb6CIxPzRzbhyvLwyGWjACgEr9Rup
+         Qwa7/fkHUHPRAr9O5JKvlQbP6yNNpuCyAeB4v30ggAEDEc1AgTsNfnxpcvwmbbJREpko
+         w3EXc+NES6OKnF6qja/YRxPsXiJZ9lP+hphFIGVBZLDTm3KGqFaY24wDjiUqPD0itfEf
+         hegcsMgXczBwG9KDedLYQ2NvmoR11/qDKWZqLgIRedekQfVOxgifYOvbzxRn7jQIzhRg
+         Iv3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703145846; x=1703750646;
+        d=1e100.net; s=20230601; t=1703146360; x=1703751160;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rZ3EgJBFwrcoVo0x7FF2XBy23R5zWqDNweyq7hF92Xc=;
-        b=ryIg4TWR0IuNUNxmCFwYiOuxglss1NFsjnypoOhppuJPX+EcQ5fYmVF4giIeu5HNIC
-         NYCtLy+WaVIFCFtU5xio8T1QIe1WI9m6CzrZhAkYAmaqZMhwIfTxmDA/xR7e7qUz7wjT
-         O71DDmoRQobAGe/Xyd0W63dvbVkTmDXZrst1npnwxvhksiGCqO5LgLfiiObZFH+6lQqs
-         i2jlpnVH43OKl1tgTuuTo6PDhS4BTgj5u77IdrlqFrLL/hBaGu0XH+CQmtyeRnoUUH+r
-         UK/zHg9Zg35k6iOl6cnF1ML+Z6+rA2JEh5ZnygkOs5PqRmgHwySyHKH6a/8ecJrblJn1
-         dNuw==
-X-Gm-Message-State: AOJu0Yx48142Ipitayepg9poBBVCQZhXGr3GaulFY9vGjvN8WH07uap/
-	iyFD/BcmCe3l76/M9/lX0hvBgQ==
-X-Google-Smtp-Source: AGHT+IFlLf/Y8txPOazZFFIbWprrfrvwwiSUa02b2iZjD/FdJ5o9tWd17tCYfFEumi8+76SEor2ClQ==
-X-Received: by 2002:a17:906:b4b:b0:a23:633a:79c2 with SMTP id v11-20020a1709060b4b00b00a23633a79c2mr3410151ejg.94.1703145846007;
-        Thu, 21 Dec 2023 00:04:06 -0800 (PST)
+        bh=PMwwJtmC2mecPsqY9i7UuR/4xKJj2rkigXKOfKmkhDY=;
+        b=rHTsiNcVjEPB1YFI6yyBjUbJYFvc4lKXa6X3rITJ6n1WBOtX7/0mGt0MMuR098dgv2
+         t2oV7/KYENYg7WQFhn8r6Kl/Cx+w1SNwIkGZHUGkU4N310D9cV1QbhwQY8F6l5QF3cNR
+         zRn2b3Hyh/wOsnjYjhcoaByreZsq/hb1LGe/kYbzF7eSlLtOXzT4Lr/1HsLPDPBqGPL1
+         NvqyjEr8rtgDwTg5L4zmuUoNTRngbTIsd8P/OXl4OrYK3sf8btClp9cgj4be7qI9q3cS
+         s3veZm9y7rTRjpGIbstGLXz2UMM+A7eRy/n3aoImvUwcX1JpsqHOZL4xYO7F9QrphV+/
+         5lUA==
+X-Gm-Message-State: AOJu0YxrWKTzr2pMAJr29vWUmn1T1BCtlMN1+pkmqUjq92rPtanY8VcW
+	JaFKL7HKO+tsS5zQg+4Ye/Lf6Q==
+X-Google-Smtp-Source: AGHT+IHFYhPFdo8vZ0DhaBItCxX2miOh16U1wNUaV6t500AYW83wFk1Y4oggyAZpEF0nlTYRo1QfBA==
+X-Received: by 2002:a17:906:2a86:b0:a02:609a:5c6c with SMTP id l6-20020a1709062a8600b00a02609a5c6cmr8716244eje.44.1703146360295;
+        Thu, 21 Dec 2023 00:12:40 -0800 (PST)
 Received: from [192.168.0.22] ([78.10.206.178])
-        by smtp.gmail.com with ESMTPSA id zx13-20020a170907348d00b00a26881eeda6sm662421ejb.99.2023.12.21.00.04.04
+        by smtp.gmail.com with ESMTPSA id dt6-20020a170906b78600b00a2699f9d5b1sm677712ejb.177.2023.12.21.00.12.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Dec 2023 00:04:05 -0800 (PST)
-Message-ID: <bea6c2ed-c47b-4bbe-8cda-6e28fd2fcea8@linaro.org>
-Date: Thu, 21 Dec 2023 09:04:04 +0100
+        Thu, 21 Dec 2023 00:12:39 -0800 (PST)
+Message-ID: <c41ff7c8-48d6-4f4f-a9df-aafe953a2e98@linaro.org>
+Date: Thu, 21 Dec 2023 09:12:38 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,27 +66,26 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 1/3] dt-bindings: iio: adc: Add QCOM PMIC5 Gen3 ADC
- bindings
+Subject: Re: [PATCH v1 1/2] dt-bindings: arm: coresight: Update the pattern of
+ ete node name
 Content-Language: en-US
-To: Jishnu Prakash <quic_jprakash@quicinc.com>, jic23@kernel.org,
- robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
- agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
- daniel.lezcano@linaro.org, dmitry.baryshkov@linaro.org,
- linus.walleij@linaro.org, linux-arm-msm@vger.kernel.org,
- andriy.shevchenko@linux.intel.com, quic_subbaram@quicinc.com,
- quic_collinsd@quicinc.com, quic_amelende@quicinc.com,
- quic_kamalw@quicinc.com, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, marijn.suijten@somainline.org
-Cc: lars@metafoo.de, luca@z3ntu.xyz, linux-iio@vger.kernel.org,
- lee@kernel.org, rafael@kernel.org, rui.zhang@intel.com, lukasz.luba@arm.com,
- cros-qcom-dts-watchers@chromium.org, sboyd@kernel.org,
- linux-pm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org,
- kernel@quicinc.com
-References: <20231116032530.753192-1-quic_jprakash@quicinc.com>
- <20231116032530.753192-2-quic_jprakash@quicinc.com>
- <832053f4-bd5d-4e58-81bb-1a8188e7f364@linaro.org>
- <716cf526-59e3-e755-0a47-ff9ae496e87c@quicinc.com>
+To: Jinlong Mao <quic_jinlmao@quicinc.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
+ <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
+ Leo Yan <leo.yan@linaro.org>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Tao Zhang <quic_taozha@quicinc.com>, coresight@lists.linaro.org
+References: <20231220140538.13136-1-quic_jinlmao@quicinc.com>
+ <20231220140538.13136-2-quic_jinlmao@quicinc.com>
+ <79f88d35-17cc-43b0-bb22-3c854f89d961@linaro.org>
+ <8e5e9603-456b-4956-be03-b866feeeafb4@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -132,46 +131,30 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <716cf526-59e3-e755-0a47-ff9ae496e87c@quicinc.com>
+In-Reply-To: <8e5e9603-456b-4956-be03-b866feeeafb4@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 21/12/2023 09:00, Jishnu Prakash wrote:
+On 21/12/2023 04:28, Jinlong Mao wrote:
+>>> diff --git a/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml b/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml
+>>> index f725e6940993..cbf583d34029 100644
+>>> --- a/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml
+>>> +++ b/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml
+>>> @@ -23,7 +23,7 @@ description: |
+>>>   
+>>>   properties:
+>>>     $nodename:
+>>> -    pattern: "^ete([0-9a-f]+)$"
+>>> +    pattern: "^ete-([0-9a-f]+)$"
+>>
+>> My concerns are not resolved. Why is it here in the first place?
+> 
 > Hi Krzysztof,
 > 
-> On 11/16/2023 5:13 PM, Krzysztof Kozlowski wrote:
->> On 16/11/2023 04:25, Jishnu Prakash wrote:
->>> For the PMIC5-Gen3 type PMICs, ADC peripheral is present in HW for the
->>> following PMICs: PMK8550, PM8550, PM8550B and PM8550VX PMICs.
->>>
->> A nit, subject: drop second/last, redundant "bindings". The
->> "dt-bindings" prefix is already stating that these are bindings.
->>
->>>   
->>>     reg:
->>> -    description: VADC base address in the SPMI PMIC register map
->>> -    maxItems: 1
->> NAK.
->>
->> I wrote it multiple times. You canno remove the widest constraints from
->> top-level property.
->>
-> 
->>>     '#io-channel-cells':
->>>       const: 1
->>>   
->>>     interrupts:
->>> -    maxItems: 1
->> No, srsly. We went through it.
-> 
-> 
-> Is it fine if I add the bindings for ADC5 Gen3 in a new file? It's not 
-> just for the reg and interrupts properties, I think it would make sense 
-> to have a new file as ADC5 Gen3 is a new device combining the functions 
-> of the existing QCOM VADC and ADC_TM devices.
-> 
+> ETE is acronym of embedded trace extension. The number of the name is 
+> the same as the number of the CPU it belongs to.
 
-The patch is no longer in my mailbox, that was more than a month ago.
+This is obvious and was not my question.
 
 Best regards,
 Krzysztof
