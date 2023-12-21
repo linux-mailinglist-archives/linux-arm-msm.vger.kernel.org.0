@@ -1,48 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-5756-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC57981B97A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 15:25:40 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 692AF81B992
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 15:31:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2687DB21D04
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 14:25:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D4321C25AA5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 14:31:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5497C6D6F4;
-	Thu, 21 Dec 2023 14:25:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46D4C36095;
+	Thu, 21 Dec 2023 14:31:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pc+AlV7s"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="VLxm6WxL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F676D6E7;
-	Thu, 21 Dec 2023 14:25:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A357C433C7;
-	Thu, 21 Dec 2023 14:25:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1703168733;
-	bh=ocQ9EjUsxyh5+RDobb40P0qaPVGGj9nzip9H6VJRjIw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pc+AlV7s1dtCyqu4IrWCCGACCZu9yLIdhMIzQRLpBXdoKWGiXBJxvM2Ds9jMZWG0k
-	 NUQt/C/vK8TGMgTuTBK5C3c5lmYkqfDw7TRsjzwPFwjLgWZkNodisFNfZTzS77Reiu
-	 yzt38yfyi6c2woJl0Ki98nG3tqtaWxmQ/PkWo9Col6uoxU8uc89d8JsY/AbaPZXAix
-	 f8STa19wkKXWWTI4qENq2qqU0REDMp+XRrQ8oxq7qyOZf4ISgdCWlinhYhiFT2a+7G
-	 S/Uk//E2GOQ3AnVgldnXvquQ3MiY9sDKHa4nFG/5CsIsfRk+6cTuzhppajYOL5MX4p
-	 xpKmbmqvyvSSg==
-Received: (nullmailer pid 3842774 invoked by uid 1000);
-	Thu, 21 Dec 2023 14:25:31 -0000
-Date: Thu, 21 Dec 2023 08:25:31 -0600
-From: Rob Herring <robh@kernel.org>
-To: Georgi Djakov <quic_c_gdjako@quicinc.com>
-Cc: krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, devicetree@vger.kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, quic_cgoldswo@quicinc.com, quic_sukadev@quicinc.com, quic_pdaly@quicinc.com, quic_sudaraja@quicinc.com, djakov@kernel.org
-Subject: Re: [PATCH v3 1/9] dt-bindings: iommu: Add Translation Buffer Unit
- bindings
-Message-ID: <20231221142531.GA3730284-robh@kernel.org>
-References: <20231220060236.18600-1-quic_c_gdjako@quicinc.com>
- <20231220060236.18600-2-quic_c_gdjako@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CDB0EDC
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 14:30:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1703169059;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Zig8qc3IDsKkD4ExqdB1/amOsrM6X3FD08f8jHvUYWI=;
+	b=VLxm6WxLl1sK+6UjgLU3HUwr55UUWcuyaLFZtiRIY0SYewREWZOEiplBOkVjcpj3RYh9BU
+	15Kx+GXWP/KWl5u+XIM83XvozXDuxuEvcmdeav1rmAtaf2aDLEZvt2Cfcaym9b/xPYiBv6
+	DAQqjonDJYfPrGibHGyq7zALA+DvDr4=
+Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
+ [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-296-Ctauu9rpP2CMDpc4BsmAGA-1; Thu, 21 Dec 2023 09:30:57 -0500
+X-MC-Unique: Ctauu9rpP2CMDpc4BsmAGA-1
+Received: by mail-ot1-f69.google.com with SMTP id 46e09a7af769-6da00040aafso787218a34.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 06:30:57 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703169052; x=1703773852;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Zig8qc3IDsKkD4ExqdB1/amOsrM6X3FD08f8jHvUYWI=;
+        b=kBwmTyPROEfZSPz9ah1xRjODVIW0O/Fa9ycVDLA/YDtiIYcMOWii0OuHjXv6GYms3z
+         Oj/Y6DVRS4n1oLvDvspMcDTX/tgvyeo2paGkvH7Mo7AkyL32g6k/70ZTJUVJf6h+py9Q
+         foIK+e0D9nfTFaq+9dAfRZCkAYfCAgQs8ZRH+buwSTJRJV0VsTY+52lT1BwMcgbPprDE
+         GiVIJjsIsFZNOse5zIQmghV+pqOYtBeWwfDrqciEEjrGd+9UYdfbRJk/SItrCqp3G9Aj
+         83BCyi9/nb/v5m9rO8f54NFAMc7NbxPqgXq9W2bi//7RMeuCigMWbbiDyvGNhg4XpjR2
+         pmyw==
+X-Gm-Message-State: AOJu0YyVJ7dHTs2i6d8pxmx05DGam8LqYn+FnAKRUt+OR7COW7LOeDGT
+	+rFue+lD0ThM2qO1rYTXt+rUmVlkack3Q2Vo9gAYi+ZykGPC0bn3yxeNsyB+wOvsupKLVb2/V6w
+	tlnn9m0wzyodr/JneXxkzDnb3RA==
+X-Received: by 2002:a05:6808:3a13:b0:3b9:e779:8a0e with SMTP id gr19-20020a0568083a1300b003b9e7798a0emr24604039oib.1.1703169052139;
+        Thu, 21 Dec 2023 06:30:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGh5JWE7xwkRuEZs5f8huoPHHsEpTlNPmCqmNG9XaohXtJYkwK7dgrejxTjPDpZalyNe4H8Tw==
+X-Received: by 2002:a05:6808:3a13:b0:3b9:e779:8a0e with SMTP id gr19-20020a0568083a1300b003b9e7798a0emr24604029oib.1.1703169051803;
+        Thu, 21 Dec 2023 06:30:51 -0800 (PST)
+Received: from fedora ([2600:1700:1ff0:d0e0::37])
+        by smtp.gmail.com with ESMTPSA id d11-20020a0cfe8b000000b0067f14259eb7sm658817qvs.76.2023.12.21.06.30.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Dec 2023 06:30:51 -0800 (PST)
+Date: Thu, 21 Dec 2023 08:30:49 -0600
+From: Andrew Halaney <ahalaney@redhat.com>
+To: Sneh Shah <quic_snehshah@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>, 
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Jose Abreu <joabreu@synopsys.com>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
+	Paolo Abeni <pabeni@redhat.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, kernel@quicinc.com
+Subject: Re: [PATCH net-next] net: stmmac: dwmac-qcom-ethqos: Add support for
+ 2.5G SGMII
+Message-ID: <vvlnwiobrgcwuam6lkud2np5xqocj6asjf627j3gekkhm4hfp5@vhdd47fyortm>
+References: <20231218071118.21879-1-quic_snehshah@quicinc.com>
+ <4zbf5fmijxnajk7kygcjrcusf6tdnuzsqqboh23nr6f3rb3c4g@qkfofhq7jmv6>
+ <8b80ab09-8444-4c3d-83b0-c7dbf5e58658@quicinc.com>
+ <wvzhz4fmtheculsiag4t2pn2kaggyle2mzhvawbs4m5isvqjto@lmaonvq3c3e7>
+ <8f94489d-5f0e-4166-a14e-4959098a5c80@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -51,179 +89,224 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231220060236.18600-2-quic_c_gdjako@quicinc.com>
+In-Reply-To: <8f94489d-5f0e-4166-a14e-4959098a5c80@quicinc.com>
 
-On Tue, Dec 19, 2023 at 10:02:28PM -0800, Georgi Djakov wrote:
-> The "apps_smmu" on the Qualcomm sdm845 platform is an implementation
-> of the SMMU-500, that consists of a single TCU (Translation Control
-> Unit) and multiple TBUs (Translation Buffer Units). The TCU is already
-> being described in the generic SMMU DT schema. Add bindings for the
-> TBUs to describe their properties and resources that needs to be
-> managed in order to operate them.
+On Thu, Dec 21, 2023 at 02:23:57PM +0530, Sneh Shah wrote:
 > 
-> In this DT schema, the TBUs are modelled as child devices of the TCU
-> and each of them is described with it's register space, clocks, power
-> domains, interconnects etc.
 > 
-> Signed-off-by: Georgi Djakov <quic_c_gdjako@quicinc.com>
-> ---
->  .../devicetree/bindings/iommu/arm,smmu.yaml   | 31 ++++++++
->  .../bindings/iommu/qcom,qsmmuv500-tbu.yaml    | 77 +++++++++++++++++++
->  2 files changed, 108 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/iommu/qcom,qsmmuv500-tbu.yaml
+> On 12/20/2023 9:29 PM, Andrew Halaney wrote:
+> > On Wed, Dec 20, 2023 at 01:02:45PM +0530, Sneh Shah wrote:
+> >>
+> >>
+> >> On 12/18/2023 9:50 PM, Andrew Halaney wrote:
+> >>> On Mon, Dec 18, 2023 at 12:41:18PM +0530, Sneh Shah wrote:
+> >>>> Serdes phy needs to operate at 2500 mode for 2.5G speed and 1000
+> >>>> mode for 1G/100M/10M speed.
+> >>>> Added changes to configure serdes phy and mac based on link speed.
+> >>>>
+> >>>> Signed-off-by: Sneh Shah <quic_snehshah@quicinc.com>
+> >>>> ---
+> >>>>  .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 31 +++++++++++++++++--
+> >>>>  1 file changed, 29 insertions(+), 2 deletions(-)
+> >>>>
+> >>>> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> >>>> index d3bf42d0fceb..b3a28dc19161 100644
+> >>>> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> >>>> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> >>>> @@ -21,6 +21,7 @@
+> >>>>  #define RGMII_IO_MACRO_CONFIG2		0x1C
+> >>>>  #define RGMII_IO_MACRO_DEBUG1		0x20
+> >>>>  #define EMAC_SYSTEM_LOW_POWER_DEBUG	0x28
+> >>>> +#define ETHQOS_MAC_AN_CTRL		0xE0
+> >>>>  
+> >>>>  /* RGMII_IO_MACRO_CONFIG fields */
+> >>>>  #define RGMII_CONFIG_FUNC_CLK_EN		BIT(30)
+> >>>> @@ -78,6 +79,10 @@
+> >>>>  #define ETHQOS_MAC_CTRL_SPEED_MODE		BIT(14)
+> >>>>  #define ETHQOS_MAC_CTRL_PORT_SEL		BIT(15)
+> >>>>  
+> >>>> +/*ETHQOS_MAC_AN_CTRL bits */
+> >>>> +#define ETHQOS_MAC_AN_CTRL_RAN			BIT(9)
+> >>>> +#define ETHQOS_MAC_AN_CTRL_ANE			BIT(12)
+> >>>> +
+> >>>
+> >>> nit: space please add a space before ETHQOS_MAC_AN_CTRL
+> >>>
+> >> will take care of this in next patch
+> >>
+> >>>>  struct ethqos_emac_por {
+> >>>>  	unsigned int offset;
+> >>>>  	unsigned int value;
+> >>>> @@ -109,6 +114,7 @@ struct qcom_ethqos {
+> >>>>  	unsigned int num_por;
+> >>>>  	bool rgmii_config_loopback_en;
+> >>>>  	bool has_emac_ge_3;
+> >>>> +	unsigned int serdes_speed;
+> > 
+> > Another nit as I look closer: I think this should be grouped by phy_mode
+> > etc just for readability.
+> Didn't get this. can you please elaborate more?
+
+I meant instead of this:
+
+    struct qcom_ethqos {
+	    struct platform_device *pdev;
+	    void __iomem *rgmii_base;
+	    void __iomem *mac_base;
+	    int (*configure_func)(struct qcom_ethqos *ethqos);
+
+	    unsigned int link_clk_rate;
+	    struct clk *link_clk;
+	    struct phy *serdes_phy;
+	    unsigned int speed;
+	    phy_interface_t phy_mode;
+
+	    const struct ethqos_emac_por *por;
+	    unsigned int num_por;
+	    bool rgmii_config_loopback_en;
+	    bool has_emac_ge_3;
+	    unsigned int serdes_speed;
+    };
+
+I think this would make more logical sense:
+
+    struct qcom_ethqos {
+	    struct platform_device *pdev;
+	    void __iomem *rgmii_base;
+	    void __iomem *mac_base;
+	    int (*configure_func)(struct qcom_ethqos *ethqos);
+
+	    unsigned int link_clk_rate;
+	    struct clk *link_clk;
+	    struct phy *serdes_phy;
+	    unsigned int serdes_speed;
+	    unsigned int speed;
+	    phy_interface_t phy_mode;
+
+	    const struct ethqos_emac_por *por;
+	    unsigned int num_por;
+	    bool rgmii_config_loopback_en;
+	    bool has_emac_ge_3;
+    };
+
+It is definitely nit picking though :)
+> > 
+> >>>>  };
+> >>>>  
+> >>>>  static int rgmii_readl(struct qcom_ethqos *ethqos, unsigned int offset)
+> >>>> @@ -600,27 +606,47 @@ static int ethqos_configure_rgmii(struct qcom_ethqos *ethqos)
+> >>>>  
+> >>>>  static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos)
+> >>>>  {
+> >>>> -	int val;
+> >>>> -
+> >>>> +	int val, mac_an_value;
+> >>>>  	val = readl(ethqos->mac_base + MAC_CTRL_REG);
+> >>>> +	mac_an_value = readl(ethqos->mac_base + ETHQOS_MAC_AN_CTRL);
+> >>>>  
+> >>>>  	switch (ethqos->speed) {
+> >>>> +	case SPEED_2500:
+> >>>> +		val &= ~ETHQOS_MAC_CTRL_PORT_SEL;
+> >>>> +		rgmii_updatel(ethqos, RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
+> >>>> +			      RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
+> >>>> +			      RGMII_IO_MACRO_CONFIG2);
+> >>>> +		if (ethqos->serdes_speed != SPEED_2500)
+> >>>> +			phy_set_speed(ethqos->serdes_phy, ethqos->speed);
+> >>>> +		mac_an_value &= ~ETHQOS_MAC_AN_CTRL_ANE;
+> >>>> +		break;
+> >>>>  	case SPEED_1000:
+> >>>>  		val &= ~ETHQOS_MAC_CTRL_PORT_SEL;
+> >>>>  		rgmii_updatel(ethqos, RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
+> >>>>  			      RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
+> >>>>  			      RGMII_IO_MACRO_CONFIG2);
+> >>>> +		if (ethqos->serdes_speed != SPEED_1000)
+> >>>> +			phy_set_speed(ethqos->serdes_phy, ethqos->speed);
+> >>>> +		mac_an_value |= ETHQOS_MAC_AN_CTRL_RAN | ETHQOS_MAC_AN_CTRL_ANE;
+> >>>>  		break;
+> >>>>  	case SPEED_100:
+> >>>>  		val |= ETHQOS_MAC_CTRL_PORT_SEL | ETHQOS_MAC_CTRL_SPEED_MODE;
+> >>>> +		if (ethqos->serdes_speed != SPEED_1000)
+> >>>> +			phy_set_speed(ethqos->serdes_phy, ethqos->speed);
+> >>>> +		mac_an_value |= ETHQOS_MAC_AN_CTRL_RAN | ETHQOS_MAC_AN_CTRL_ANE;
+> >>>>  		break;
+> >>>>  	case SPEED_10:
+> >>>>  		val |= ETHQOS_MAC_CTRL_PORT_SEL;
+> >>>>  		val &= ~ETHQOS_MAC_CTRL_SPEED_MODE;
+> >>>> +		if (ethqos->serdes_speed != SPEED_1000)
+> >>>> +			phy_set_speed(ethqos->serdes_phy, ethqos->speed);
+> >>>> +		mac_an_value |= ETHQOS_MAC_AN_CTRL_RAN | ETHQOS_MAC_AN_CTRL_ANE;
+> >>>>  		break;
+> >>>>  	}
+> >>>>  
+> >>>>  	writel(val, ethqos->mac_base + MAC_CTRL_REG);
+> >>>> +	writel(mac_an_value, ethqos->mac_base + ETHQOS_MAC_AN_CTRL);
+> >>>> +	ethqos->serdes_speed = ethqos->speed;
+> >>>
+> >>> I see these bits are generic and there's some functions in stmmac_pcs.h
+> >>> that muck with these...
+> >>>
+> >>> Could you help me understand if this really should be Qualcomm specific,
+> >>> or if this is something that should be considered for the more core bits
+> >>> of the driver? I feel in either case we should take advantage of the
+> >>> common definitions in that file if possible.
+> >>>
+> >> we do have function dwmac_ctrl_ane in core driver which updates same registers. However, it does not have the option to reset ANE bit, it can only set bits. For SPEED_2500 we need to reset ANE bit. Hence I am adding it here. Not sure if we can extend dwmac_ctrl_ane function to reset bits as well.
+> > 
+> > I'd evaluate if you can update that function to clear the ANE bit when
+> > the ane boolean is false. From the usage I see I feel that makes sense,
+> > but correct me if you think I'm wrong.
+> > At the very least let's use the defines from there, and possibly add a
+> > new function if clearing is not acceptable in dwmac_ctrl_ane().
+> > 
+> > Stepping back, I was asking in general is the need to muck with ANE here
+> > is a Qualcomm specific problem, or is that a generic thing that should be
+> > handled in the core (and the phy_set_speed() bit stay here)? i.e. would
+> > any dwmac5 based IP need to do something like this for SPEED_2500?
+> I think disabling ANE for SPEED_2500 is generic not specific to qualcomm. Even in dwxgmac2 versions also we need to disable ANE for SPEED_2500. Autoneg clause 37 stadard doesn't support 2500 speed. So we need to disable autoneg for speed 2500
+
+Another nit, sorry for being so picky. Can you please wrap your emails
+to around 80 characters? That's the general etiquette when replying
+on-list, makes it easier to read (similar to say a commit message).
+
+Thanks for explaining that. Then in my opinion based on what you've said
+I think the disabling of ANE for SPEED_2500 should be done outside of
+the Qualcomm platform code.
+
+Note, I'm struggling to keep up with the standards at play here, so if
+someone else who's a bit more wise on these topics has an opinion I'd
+listen to them. I find myself rewatching this presentation from
+Maxime/Antoine as a primer on all of this:
+
+    https://www.youtube.com/watch?v=K962S9gTBVM
+
+If anyone's got any recommended resources for me to read in particular I
+am all ears.
+
+I'll be out the next 2-3 weeks, so don't wait for any responses from me
+:)
+
+Thanks,
+Andrew
+
 > 
-> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-> index a4042ae24770..a610af2c7e5e 100644
-> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-> @@ -235,6 +235,27 @@ properties:
->        enabled for any given device.
->      $ref: /schemas/types.yaml#/definitions/phandle
->  
-> +  '#address-cells':
-> +    enum: [ 1, 2 ]
-> +
-> +  '#size-cells':
-> +    enum: [ 1, 2 ]
-> +
-> +  ranges: true
-> +
-> +patternProperties:
-> +  "^tbu@[0-9a-f]+":
+> > 
+> >>>>  
+> >>>>  	return val;
+> >>>>  }
+> >>>> @@ -789,6 +815,7 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+> >>>>  				     "Failed to get serdes phy\n");
+> >>>>  
+> >>>>  	ethqos->speed = SPEED_1000;
+> >>>> +	ethqos->serdes_speed = SPEED_1000;
+> >>>>  	ethqos_update_link_clk(ethqos, SPEED_1000);
+> >>>>  	ethqos_set_func_clk_en(ethqos);
+> >>>>  
+> >>>> -- 
+> >>>> 2.17.1
+> >>>>
+> >>>
+> >>
+> > 
+> 
 
-Missing '$' on the end.
-
-> +    description: The TBU child node(s)
-> +    type: object
-> +
-> +    properties:
-> +      stream-id-range:
-> +        $ref: /schemas/types.yaml#/definitions/uint32-array
-> +        description: Stream ID range (address and size) that is assigned by the TBU
-> +        items:
-> +          minItems: 2
-> +          maxItems: 2
-
-This is allowing any property in the TBU nodes. This all needs to move 
-to a separate TBU schema.
-
-> +
->  required:
->    - compatible
->    - reg
-> @@ -312,6 +333,16 @@ allOf:
->                      through the TCU's programming interface.
->                  - description: bus clock required for the smmu ptw
->  
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            const: qcom,sdm845-smmu-500
-> +    then:
-> +      patternProperties:
-> +        "^tbu@[0-9a-f]+":
-> +          $ref: qcom,qsmmuv500-tbu.yaml
-
-TBU nodes are allowed for all other SMMUs. Is that your intent? If not, 
-then the node definition up above should be removed and you would just 
-have this if/then schema.
-
-> +
->    - if:
->        properties:
->          compatible:
-> diff --git a/Documentation/devicetree/bindings/iommu/qcom,qsmmuv500-tbu.yaml b/Documentation/devicetree/bindings/iommu/qcom,qsmmuv500-tbu.yaml
-> new file mode 100644
-> index 000000000000..c4f148ae5f38
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/iommu/qcom,qsmmuv500-tbu.yaml
-> @@ -0,0 +1,77 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/iommu/qcom,qsmmuv500-tbu.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm TBU (Translation Buffer Unit)
-> +
-> +maintainers:
-> +  - Georgi Djakov <quic_c_gdjako@quicinc.com>
-> +
-> +description:
-> +  The Qualcomm SMMU500 implementation consists of TCU and TBU. The TBU contains
-> +  a Translation Lookaside Buffer (TLB) that caches page tables. TBUs provides
-> +  debug features to trace and trigger debug transactions. There are multiple TBU
-> +  instances distributes with each client core.
-> +
-> +properties:
-> +
-> +  compatible:
-> +    const: qcom,qsmmuv500-tbu
-> +
-> +  reg:
-> +    items:
-> +      - description: Address and size of the TBU's register space.
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +  interconnects:
-> +    maxItems: 1
-> +
-> +  power-domains:
-> +    maxItems: 1
-> +
-> +  stream-id-range:
-> +    $ref: "arm,smmu.yaml#/patternProperties/^tbu@[0-9a-f]+/properties/stream-id-range"
-
-No. We generally don't reference properties this way. Partly because not 
-all regex's work as a path.
-
-You need a base TBU schema of the common properties that is referenced 
-at the top level here. That should also solve the above problem.
-
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - stream-id-range
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-sdm845.h>
-> +    #include <dt-bindings/interconnect/qcom,icc.h>
-> +    #include <dt-bindings/interconnect/qcom,sdm845.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/interrupt-controller/irq.h>
-> +    #include <dt-bindings/power/qcom-rpmpd.h>
-> +
-> +    apps_smmu: iommu@15000000 {
-
-Drop unused labels.
-
-> +        compatible = "qcom,sdm845-smmu-500", "arm,mmu-500";
-> +        reg = <0x15000000 0x80000>;
-> +        ranges = <0 0 0 0 0xffffffff>;
-> +        #iommu-cells = <2>;
-> +        #global-interrupts = <1>;
-> +        interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>,
-> +                     <GIC_SPI 343 IRQ_TYPE_LEVEL_HIGH>;
-> +        #address-cells = <2>;
-> +        #size-cells = <2>;
-> +
-> +        anoc_1_pcie_tbu: tbu@150e1000 {
-> +            compatible = "qcom,qsmmuv500-tbu";
-> +            reg = <0x0 0x150e1000 0x0 0x1000>;
-> +            clocks = <&gcc GCC_AGGRE_NOC_PCIE_TBU_CLK>;
-> +            interconnects = <&system_noc MASTER_GNOC_SNOC QCOM_ICC_TAG_ACTIVE_ONLY
-> +                             &config_noc SLAVE_IMEM_CFG QCOM_ICC_TAG_ACTIVE_ONLY>;
-> +            power-domains = <&gcc HLOS1_VOTE_AGGRE_NOC_MMU_PCIE_TBU_GDSC>;
-> +            stream-id-range = <0x1c00 0x400>;
-> +        };
-> +    };
-> +
-> +...
 
