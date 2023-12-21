@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-5745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FDD381B6AA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 13:58:09 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3427981B6B1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 13:58:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C5978B25DCA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 12:58:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 262B71C259EE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 12:58:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A02BD760B4;
-	Thu, 21 Dec 2023 12:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33BDE77F10;
+	Thu, 21 Dec 2023 12:53:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LhZ/3gnE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eUKQgpcS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1DC673182
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 12:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B537B77F06
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 12:53:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5540a2516b6so919207a12.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 04:52:03 -0800 (PST)
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-55322dbabf6so836022a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 04:53:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703163122; x=1703767922; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1703163214; x=1703768014; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=uGwBTIh4Dz1SJStKRaT4MD0TZ8mnFlnlThnve5PWJVQ=;
-        b=LhZ/3gnEr9CLL/qUrVtq787wjBunjeIP15S0UWDdjcgflgffZ1VbUnzyPMmWdpEEl1
-         mEl6I3taTHJSWBByfAI6UnVjtHOK9gPCIXYoxI+xkbA7nFfB7zC7HcP9XFQttXRmu6dn
-         KHvRopBSUxDUUfDWxlysZUw8vBwEeu5txE8kTYqaf6UBypzU8tvMtqI/W4tTgDBj6Etx
-         aP2URaZnpfq32b3xuBLr+J3IutUMD65s6ZYZgLUrhi2JeJFdKPP+ZzlbDLPldoWh/Dtq
-         HYBVBE7F561B0mU7P7GuNcZ0HmfAC/dJQTVNbSFLnGX8+Wp1Uo27u+r/AyDPtlTj9Fa7
-         vBbg==
+        bh=g+z6IBb57Ppqbid95erAGh0Pwx17723I4teCRYnelRI=;
+        b=eUKQgpcSqYKRPfadBuzXvHodNmBODVtGliW0mBFAqcotP0tfLt/6CfhcpgNLk1tL1S
+         flN+OpyNPwXsz07OrP3J7QyJJXSP5asVcNru3DMZHEorN0Yf0Zgk3EQ79Jj6xGM7903Z
+         WxUBA3FEj1wPrKqIsyGsdUNXRfHgzXv4AA6etL32U5mRkFeE39IKd7OzeBQ0exWNYf87
+         v3jGLDE4TS0BMzYX1cSB1D52l+1F791phEuwwvNN2kgxuj6PDb/YArdqBsF3v1/CV16P
+         dzYbV1Sy88jMoxPSPVITO2xLjziWDlhXzyULvpx3cC5aZEb1H0KbhlBknts5HfSEcvPW
+         mJeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703163122; x=1703767922;
+        d=1e100.net; s=20230601; t=1703163214; x=1703768014;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uGwBTIh4Dz1SJStKRaT4MD0TZ8mnFlnlThnve5PWJVQ=;
-        b=DzwvvyLeC6DmHsts+HJLsxWQ6HnwazrNZGPcATvRsDqWHTZ3fjFzfeWxjFur1rQBQy
-         /cBUycIB6aBIfPmwWhaw63RAnzUFeSUD6da3leYdtcVYaMz2jl08oL9/EIjbYc9LGhq0
-         8TwFYTbTrczCgUYZQwS7b9Q2AYRehNs6zyyzPLrbKruL3uMs91+33g6gAOkIBuXdWv7C
-         ZDlWwc1OJ2gJ6NqweoXYPRmvwneO5wQfgRYJxCJuJZ3n6v+uiz7Kk3Hcb/ycyEZL6Y3m
-         ZRgzqY0ylNE6CqIlxoYveVeOaYSlCpthR2wO5MaUJkdSYr33abGnLwet3TKb3fpJTQRc
-         8dJA==
-X-Gm-Message-State: AOJu0Yzg2oXs+ZPJj4d6PxY2xfz0tQgUYXUpzgonKM0NCypjnEZpFhJ5
-	3TOpVSzYqdcrJaL/NLn/Z+fYd+hEA5MuI8weFD0=
-X-Google-Smtp-Source: AGHT+IFpsAsQsrZEFCPKENktHEluTVoHQkw16pumZSePVVQj6bjUO8pFL/EkjErINMJ260tfuQXpsg==
-X-Received: by 2002:a17:907:7850:b0:a23:57a1:d85b with SMTP id lb16-20020a170907785000b00a2357a1d85bmr4379329ejc.74.1703163122074;
-        Thu, 21 Dec 2023 04:52:02 -0800 (PST)
+        bh=g+z6IBb57Ppqbid95erAGh0Pwx17723I4teCRYnelRI=;
+        b=g1PaAZwtLvA1ku/YGrkHK9WO6FJyKHgdflBMUQ5imZntLmAC141wziFWzteyvu4qs5
+         Ut2CboTd1+YXpXRw7orPd6phLqe8s7WVwXBUeCoezUCljr/mw/TMAbFWx67PwIi+TLmx
+         XPlBAxjZimf/ZtrFG2jdoGMpNDbweXdf5w6xaO1OUbbU7J+IbjyyR7Wmyh4YX269xWbD
+         QEPUsQPqfOokiHSCLrl6pvRVlSmXw4lbZNQ2dpX5tXjjQpQ6UZNsq8TiXLtm2ICLEU1K
+         gNhVtSlfULfDwSgHCAphR9cpei9ehAhJ3wXxK6J3xqg87UgHT7ttZMHedjZiech0VEuF
+         mZyA==
+X-Gm-Message-State: AOJu0YwaVprsMDy4+M8V2S3vj1Sl+vdfVW9eO9DC5aX+DpNybCer6qDJ
+	jC3YhZ5UOZlb1WbcNqYzV1K+dg==
+X-Google-Smtp-Source: AGHT+IH8WuhcvcvvMLjvCJ3CAdXqw5omFoQd3Z1bMT/YRAxPAgWjh4hH/toJSYDqjXr7zZJ7Xno8uQ==
+X-Received: by 2002:a17:906:dc:b0:a23:5d5d:783 with SMTP id 28-20020a17090600dc00b00a235d5d0783mr2423146eji.151.1703163214030;
+        Thu, 21 Dec 2023 04:53:34 -0800 (PST)
 Received: from [192.168.199.125] (178235179206.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.206])
-        by smtp.gmail.com with ESMTPSA id e3-20020a17090681c300b00a1f7ae3dfbcsm935159ejx.174.2023.12.21.04.51.59
+        by smtp.gmail.com with ESMTPSA id e3-20020a17090681c300b00a1f7ae3dfbcsm935159ejx.174.2023.12.21.04.53.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Dec 2023 04:52:01 -0800 (PST)
-Message-ID: <b6866ee4-31d9-4404-9bd9-92bc4ab59b8c@linaro.org>
-Date: Thu, 21 Dec 2023 13:51:58 +0100
+        Thu, 21 Dec 2023 04:53:33 -0800 (PST)
+Message-ID: <d2007240-2779-4881-8e9d-1c4f5daa55e5@linaro.org>
+Date: Thu, 21 Dec 2023 13:53:32 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,22 +66,24 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/8] arm64: dts: qcom: sa8295p-adp: add max20411
+Subject: Re: [PATCH 0/3] Fairphone 5 PMIC-GLINK support (USB-C, charger, fuel
+ gauge)
 Content-Language: en-US
-To: Bjorn Andersson <quic_bjorande@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Luca Weiss <luca.weiss@fairphone.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
- Ulf Hansson <ulf.hansson@linaro.org>, Johan Hovold
- <johan+linaro@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
- Will Deacon <will@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ Conor Dooley <conor+dt@kernel.org>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ cros-qcom-dts-watchers@chromium.org, ~postmarketos/upstreaming@lists.sr.ht,
+ phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-References: <20231220-sa8295p-gpu-v1-0-d8cdf2257f97@quicinc.com>
- <20231220-sa8295p-gpu-v1-6-d8cdf2257f97@quicinc.com>
+ linux-usb@vger.kernel.org
+References: <20231220-fp5-pmic-glink-v1-0-2a1f8e3c661c@fairphone.com>
+ <8d042095-1e09-45cc-9762-909fe8d663a9@linaro.org>
+ <CXTU5MLN0YDS.29PPV8KZF8G9R@fairphone.com>
+ <CAA8EJpoD3x=kVLu4x2yLtAqCp=wmGSU4ssq5Oj_SD5VQ=GyAYQ@mail.gmail.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -118,48 +120,47 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231220-sa8295p-gpu-v1-6-d8cdf2257f97@quicinc.com>
+In-Reply-To: <CAA8EJpoD3x=kVLu4x2yLtAqCp=wmGSU4ssq5Oj_SD5VQ=GyAYQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 21.12.2023 04:50, Bjorn Andersson wrote:
-> From: Bjorn Andersson <andersson@kernel.org>
+On 21.12.2023 11:34, Dmitry Baryshkov wrote:
+> On Thu, 21 Dec 2023 at 09:33, Luca Weiss <luca.weiss@fairphone.com> wrote:
+>>
+>> On Wed Dec 20, 2023 at 1:32 PM CET, Konrad Dybcio wrote:
+>>> On 20.12.2023 11:02, Luca Weiss wrote:
+>>>> This series adds all the necessary bits to enable USB-C role switching,
+>>>> charger and fuel gauge (all via pmic-glink) on Fairphone 5.
+>>>>
+>>>> One thing that could be made different is the pmic-glink compatible.
+>>>> I've chosen to use qcm6490 compatible for it and not sc7280 since
+>>>> there's plenty of firmware variety on sc7280-based platforms and they
+>>>> might require different quirks in the future, so limit this PDOS quirk
+>>>> to just qcm6490 for now.
+>>>>
+>>>> If someone thinks it should be qcom,sc7280-pmic-glink, please let me
+>>>> know :)
+>>> IMO it's best to continue using the "base soc" (which just so happened
+>>> to fall onto sc7280 this time around) for all compatibles, unless the
+>>> derivatives actually had changes
+>>
+>> Hi Konrad,
+>>
+>> I think at some point I asked Dmitry what he thought and he mentioned
+>> qcm6490. Even found the message again:
+>>
+>>> well, since it is a firmware thing, you might want to emphasise that.
+>>> So from my POV qcm6490 makes more sense
+>>
+>> But yeah since it's likely that sc7280 firmware behaves the same as
+>> qcm6490 firmware it's probably okay to use sc7280 compatible, worst case
+>> we change it later :) I'll send a v2 with those changes.
 > 
-> The SA8295P ADP has a MAX20411 LDO regulator on I2C 12, supplying the
-> VDD_GFX pads. Enable the bus and add the maxim,max20411 device on the
-> bus.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 40 ++++++++++++++++++++++++++++++++
->  1 file changed, 40 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> index fd253942e5e5..e16406c9c19d 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> @@ -266,6 +266,26 @@ &dispcc1 {
->  	status = "okay";
->  };
->  
-> +&i2c12 {
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&qup1_i2c4_state>;
-property-n
-property-names
-
-(same below)
-> +
-> +	status = "okay";
-> +
-> +	vdd_gfx: regulator@39 {
-> +		compatible = "maxim,max20411";
-> +		reg = <0x39>;
-> +
-> +		regulator-min-microvolt = <800000>;
-> +		regulator-max-microvolt = <968750>;
-Is this ever going to be scaled? I suppose you could add some OPP code to
-drm/msm and use opp-microvolts.. Or lock this down at min=max
+> Worst case we end up with sc7280 which has yet another slightly
+> different UCSI / PMIC GLINK implementation, but the compatible string
+> is already taken.
+> I still suppose that this should be a qcm6490-related string.
+Right, let's keep qcm then
 
 Konrad
 
