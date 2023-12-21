@@ -1,195 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-5823-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5824-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F2D281BF4C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 21:02:11 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E8D681BFDB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 22:07:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A02A4B23FD5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 20:02:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 04C01288494
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 21:07:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F06D8651BC;
-	Thu, 21 Dec 2023 20:02:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EF6E76DA0;
+	Thu, 21 Dec 2023 21:07:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NZSUBm1b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2E4651AC;
-	Thu, 21 Dec 2023 20:02:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-3b9fb227545so128397b6e.1;
-        Thu, 21 Dec 2023 12:02:03 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703188922; x=1703793722;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XtaH4nkfWzBTwDdIvfbGlDnvjw8JE5Ezgnk1g1ujwFU=;
-        b=SZUYhR1COwghtL1SSkwv3ODZN6gJgaJlFX+LhepSn/Z/1x5In6x1qw/jsLUySmPyN1
-         gMCJ+0QR/lWYS8gCN1hnaqvFvg2TLMmVbsfEFuTRXeaFSIjiUI3mMKAg+cxD7Dzf61NC
-         iUa+55f1wVJZy09usJzhcK7kSQQeVgmvpnFzRwWQMLjgFGOI3FNyzfo6FwBbdBymHYjd
-         KjJDz0aDxdcLx18ENlW9ebrvVuXtL2tqE/GcW3neRWBaeQnIhy11/VbvJF6qTZK2hqmi
-         Crw7AhfaSUibW45tftytL+h2LPpysZHcqijM/DK2oaTov/kJ4w3SKSmw5B+HAik2P7xv
-         fO9w==
-X-Gm-Message-State: AOJu0YztrOgglb6rc7qu7X1/hXxUcHf5IOkJJNR3ah/iiDjriq8oHIag
-	vb6oVyTWdcW3GnaqiKOMdh9qhumoMkdkXsFyqBw=
-X-Google-Smtp-Source: AGHT+IH33M1GYQpUeZctljakeSCCKWDW84ql+MSWV1uSzlfgr2dBzY+jzJjK2q40LQCBT5BHCrdWJqsMldXJwwVwD+A=
-X-Received: by 2002:a05:6820:1043:b0:594:36ea:b0ce with SMTP id
- x3-20020a056820104300b0059436eab0cemr361932oot.0.1703188922498; Thu, 21 Dec
- 2023 12:02:02 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E7D6280F;
+	Thu, 21 Dec 2023 21:07:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6605C433C7;
+	Thu, 21 Dec 2023 21:07:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1703192856;
+	bh=l8ep+ho90zz55mBaxz8kcOinwOvjzB7qaAX4jDuIHnw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=NZSUBm1b3ftXaEDWfhDKmhQa1MG/iOb2MaLnppHsD92h/baQnjTg7AUsC7dKIOZzJ
+	 H2WI2v1NrzlBlPJZqC3z2gZCmNsYt7a8q+9ejav8lsDZ29Yfug1xDLzGBLPN/47X/O
+	 rApMsy+pxCiiDsyD2hbkziXvu9geOQVOdQ4WWkKeGR3J43aOgkyEf5IONRLDytBr81
+	 BL7QRVL9tdJJh6fKs3+/zLX6Skd9G37xGtynFLrrT8eacMD8uN4W66v39Lg+V6CRsG
+	 S6ymSIZbzO1dX9aSSUCARo7JR2a4neSIyYSzF/ohyG6qOU9F7XV0TlUW5Q1C9Ghgf+
+	 zIek1eaHIs5Og==
+Received: (nullmailer pid 95648 invoked by uid 1000);
+	Thu, 21 Dec 2023 21:07:34 -0000
+Date: Thu, 21 Dec 2023 15:07:34 -0600
+From: Rob Herring <robh@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Jonathan Marek <jonathan@marek.ca>, Marijn Suijten <marijn.suijten@somainline.org>, linux-phy@lists.infradead.org, Krishna Manikandan <quic_mkrishn@quicinc.com>, Vinod Koul <vkoul@kernel.org>, devicetree@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>, Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>, Kishon Vijay Abraham I <kishon@kernel.org>, Daniel Vetter <daniel@ffwll.ch>, Abhinav Kumar <quic_abhinavk@quicinc.com>, Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Clark <robdclark@gmail.com>, freedreno@lists.freedesktop.org, David Airlie <airlied@gmail.com>
+Subject: Re: [RFC PATCH 1/2] dt-bindings: display: msm: move DSI PHY schema
+ to bindings/phy
+Message-ID: <170319283595.95147.10971652363367515055.robh@kernel.org>
+References: <20231221102506.18320-1-dmitry.baryshkov@linaro.org>
+ <20231221102506.18320-2-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231221152407.436177-1-vincent.guittot@linaro.org>
- <20231221152407.436177-2-vincent.guittot@linaro.org> <CAJZ5v0iU+nx_Tk_K74=dfeOuA7Lyvbq51UW=U1L4mZVEKy-+ZQ@mail.gmail.com>
-In-Reply-To: <CAJZ5v0iU+nx_Tk_K74=dfeOuA7Lyvbq51UW=U1L4mZVEKy-+ZQ@mail.gmail.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Thu, 21 Dec 2023 21:01:51 +0100
-Message-ID: <CAJZ5v0iChOQKpHaQy+Q0e9bBDjPsB107qk0FfT1z8_exFXiJdQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/5] cpufreq: Add a cpufreq pressure feedback for the scheduler
-To: Vincent Guittot <vincent.guittot@linaro.org>
-Cc: catalin.marinas@arm.com, will@kernel.org, sudeep.holla@arm.com, 
-	rafael@kernel.org, viresh.kumar@linaro.org, agross@kernel.org, 
-	andersson@kernel.org, konrad.dybcio@linaro.org, mingo@redhat.com, 
-	peterz@infradead.org, juri.lelli@redhat.com, dietmar.eggemann@arm.com, 
-	rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de, bristot@redhat.com, 
-	vschneid@redhat.com, lukasz.luba@arm.com, rui.zhang@intel.com, 
-	mhiramat@kernel.org, daniel.lezcano@linaro.org, amit.kachhap@gmail.com, 
-	linux@armlinux.org.uk, corbet@lwn.net, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-trace-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231221102506.18320-2-dmitry.baryshkov@linaro.org>
 
-On Thu, Dec 21, 2023 at 8:57=E2=80=AFPM Rafael J. Wysocki <rafael@kernel.or=
-g> wrote:
->
-> On Thu, Dec 21, 2023 at 4:24=E2=80=AFPM Vincent Guittot
-> <vincent.guittot@linaro.org> wrote:
-> >
-> > Provide to the scheduler a feedback about the temporary max available
-> > capacity. Unlike arch_update_thermal_pressure, this doesn't need to be
-> > filtered as the pressure will happen for dozens ms or more.
-> >
-> > Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
-> > ---
-> >  drivers/cpufreq/cpufreq.c | 34 ++++++++++++++++++++++++++++++++++
-> >  include/linux/cpufreq.h   | 10 ++++++++++
-> >  2 files changed, 44 insertions(+)
-> >
-> > diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-> > index 44db4f59c4cc..15bd41f9bb5e 100644
-> > --- a/drivers/cpufreq/cpufreq.c
-> > +++ b/drivers/cpufreq/cpufreq.c
-> > @@ -2563,6 +2563,38 @@ int cpufreq_get_policy(struct cpufreq_policy *po=
-licy, unsigned int cpu)
-> >  }
-> >  EXPORT_SYMBOL(cpufreq_get_policy);
-> >
-> > +DEFINE_PER_CPU(unsigned long, cpufreq_pressure);
-> > +
-> > +/**
-> > + * cpufreq_update_pressure() - Update cpufreq pressure for CPUs
-> > + * @policy: cpufreq policy of the CPUs.
-> > + *
-> > + * Update the value of cpufreq pressure for all @cpus in the policy.
-> > + */
-> > +static void cpufreq_update_pressure(struct cpufreq_policy *policy)
-> > +{
-> > +       unsigned long max_capacity, capped_freq, pressure;
-> > +       u32 max_freq;
-> > +       int cpu;
-> > +
-> > +       cpu =3D cpumask_first(policy->related_cpus);
-> > +       pressure =3D max_capacity =3D arch_scale_cpu_capacity(cpu);
->
-> I would prefer two separate statements instead of the above.
->
-> Other than this
->
-> Acked-by: Rafael J. Wysocki <rafael@kernel.org>
->
-> > +       capped_freq =3D policy->max;
-> > +       max_freq =3D arch_scale_freq_ref(cpu);
-> > +
-> > +       /*
-> > +        * Handle properly the boost frequencies, which should simply c=
-lean
-> > +        * the thermal pressure value.
-> > +        */
-> > +       if (max_freq <=3D capped_freq)
-> > +               pressure -=3D max_capacity;
 
-Actually, it would be somewhat cleaner to do
+On Thu, 21 Dec 2023 12:25:05 +0200, Dmitry Baryshkov wrote:
+> While the DSI PHY schema files describe the display-related hardware,
+> they still describe a PHY. Move all DSI PHY schema files to the phy/
+> subdir.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../msm/dsi-phy-10nm.yaml => phy/qcom,dsi-phy-10nm.yaml}      | 4 ++--
+>  .../msm/dsi-phy-14nm.yaml => phy/qcom,dsi-phy-14nm.yaml}      | 4 ++--
+>  .../msm/dsi-phy-20nm.yaml => phy/qcom,dsi-phy-20nm.yaml}      | 4 ++--
+>  .../msm/dsi-phy-28nm.yaml => phy/qcom,dsi-phy-28nm.yaml}      | 4 ++--
+>  .../msm/dsi-phy-7nm.yaml => phy/qcom,dsi-phy-7nm.yaml}        | 4 ++--
+>  .../msm/dsi-phy-common.yaml => phy/qcom,dsi-phy-common.yaml}  | 2 +-
+>  6 files changed, 11 insertions(+), 11 deletions(-)
+>  rename Documentation/devicetree/bindings/{display/msm/dsi-phy-10nm.yaml => phy/qcom,dsi-phy-10nm.yaml} (96%)
+>  rename Documentation/devicetree/bindings/{display/msm/dsi-phy-14nm.yaml => phy/qcom,dsi-phy-14nm.yaml} (94%)
+>  rename Documentation/devicetree/bindings/{display/msm/dsi-phy-20nm.yaml => phy/qcom,dsi-phy-20nm.yaml} (93%)
+>  rename Documentation/devicetree/bindings/{display/msm/dsi-phy-28nm.yaml => phy/qcom,dsi-phy-28nm.yaml} (94%)
+>  rename Documentation/devicetree/bindings/{display/msm/dsi-phy-7nm.yaml => phy/qcom,dsi-phy-7nm.yaml} (94%)
+>  rename Documentation/devicetree/bindings/{display/msm/dsi-phy-common.yaml => phy/qcom,dsi-phy-common.yaml} (90%)
+> 
 
-pressure =3D 0;
+Acked-by: Rob Herring <robh@kernel.org>
 
-here and
-
-> > +       else
-> > +               pressure -=3D mult_frac(max_capacity, capped_freq, max_=
-freq);
-
-pressure =3D max_capacity - mult_frac(max_capacity, capped_freq, max_freq);
-
-and it would not be necessary to initialize pressure.
-
-> > +
-> > +       for_each_cpu(cpu, policy->related_cpus)
-> > +               WRITE_ONCE(per_cpu(cpufreq_pressure, cpu), pressure);
-> > +}
-> > +
-> >  /**
-> >   * cpufreq_set_policy - Modify cpufreq policy parameters.
-> >   * @policy: Policy object to modify.
-> > @@ -2618,6 +2650,8 @@ static int cpufreq_set_policy(struct cpufreq_poli=
-cy *policy,
-> >         policy->max =3D __resolve_freq(policy, policy->max, CPUFREQ_REL=
-ATION_H);
-> >         trace_cpu_frequency_limits(policy);
-> >
-> > +       cpufreq_update_pressure(policy);
-> > +
-> >         policy->cached_target_freq =3D UINT_MAX;
-> >
-> >         pr_debug("new min and max freqs are %u - %u kHz\n",
-> > diff --git a/include/linux/cpufreq.h b/include/linux/cpufreq.h
-> > index afda5f24d3dd..b1d97edd3253 100644
-> > --- a/include/linux/cpufreq.h
-> > +++ b/include/linux/cpufreq.h
-> > @@ -241,6 +241,12 @@ struct kobject *get_governor_parent_kobj(struct cp=
-ufreq_policy *policy);
-> >  void cpufreq_enable_fast_switch(struct cpufreq_policy *policy);
-> >  void cpufreq_disable_fast_switch(struct cpufreq_policy *policy);
-> >  bool has_target_index(void);
-> > +
-> > +DECLARE_PER_CPU(unsigned long, cpufreq_pressure);
-> > +static inline unsigned long cpufreq_get_pressure(int cpu)
-> > +{
-> > +       return per_cpu(cpufreq_pressure, cpu);
-> > +}
-> >  #else
-> >  static inline unsigned int cpufreq_get(unsigned int cpu)
-> >  {
-> > @@ -263,6 +269,10 @@ static inline bool cpufreq_supports_freq_invarianc=
-e(void)
-> >         return false;
-> >  }
-> >  static inline void disable_cpufreq(void) { }
-> > +static inline unsigned long cpufreq_get_pressure(int cpu)
-> > +{
-> > +       return 0;
-> > +}
-> >  #endif
-> >
-> >  #ifdef CONFIG_CPU_FREQ_STAT
-> > --
-> > 2.34.1
-> >
 
