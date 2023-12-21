@@ -1,55 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-5780-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5781-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E18FD81BCD1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 18:17:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EE2E781BCD5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 18:18:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 97ABD1F254B7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 17:17:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A2FBC1F2543D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 17:18:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23E5D627FF;
-	Thu, 21 Dec 2023 17:16:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9875B651A0;
+	Thu, 21 Dec 2023 17:16:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dd4eOicP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KkHWrw6L"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E7E64AA6;
-	Thu, 21 Dec 2023 17:16:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 180C3C433A9;
-	Thu, 21 Dec 2023 17:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB7E6519F;
+	Thu, 21 Dec 2023 17:16:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F32CBC433CA;
+	Thu, 21 Dec 2023 17:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1703178977;
-	bh=GiGjWiCFjhYD3COXF7UOcoSeBaRUyyIV4TEwJQY0BoA=;
+	s=k20201202; t=1703178982;
+	bh=TQnnNdN3bVLMWPQ/3nx5Jm2PxVjwduzfYNkah623D6Y=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=Dd4eOicPTjyKWE5Y7eHNki5GqNBHqoB7XQGi+Z7rv3DgxZZwIWIbvGULCgA5ieKU+
-	 XeRWI6ZYdDgr+QkgyZEr2H6A3x3ctfAqsAQyO2/IPaeQVQH3eAg9AxCngSV86MCw6A
-	 kSaUxHLKzpnYig2RdnvomB2+FUsz7NvdptMfI451GJLlYFYXhNu0PvZYjW8gmtqDHD
-	 NDNPJBQRBtpOkpwJH9MqOWQg6I0Qyh1Zmne+wsIoOomz1g3aF4LcgPPx7Qjgc7fjsl
-	 4zLLXGUtmpnqSujBZ2FdCZmac2/haOTYQIsG/xIHEmFM8n/HcYQ1/vkvTBKYoMzMXD
-	 b2fPpluog7iyA==
+	b=KkHWrw6LCm6KJQ2lAYoZbwoya1iZHkCBwZCaEcU/2jrJnU3ZOSNMUdR+zPXIrJ+qJ
+	 dV1LOXgnRT9g5d173mqwDLA16Oge7ISzhMrUhk7h/4U4KVnWS2Qlra4g/jMdZsm+5F
+	 c+jhIN2cuTbP0p48GfWfIvlTrTOdOwBhTgacu3vg70BWqGzcBjIaZzwjD0DkbwMBDc
+	 QQVfaZ9zU+iEWbLz34ajdKSaPmXq0tL7mcWrldaKotWXwDsRkHZZBHrVLbkpcfCxfr
+	 D8znULkEJfE2Wg8mhfAztEmNhoA2x4LTdbCyD+YdujYZKJccavzxKUiSFlB8gRvZ9s
+	 twV78Cf8Eh0ow==
 From: Vinod Koul <vkoul@kernel.org>
 To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>, 
  Kishon Vijay Abraham I <kishon@kernel.org>, 
- Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, Johan Hovold <johan@kernel.org>, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
  Abel Vesa <abel.vesa@linaro.org>
 Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20231122-phy-qualcomm-usb3-uniphy-x1e80100-v3-0-273814c300f8@linaro.org>
-References: <20231122-phy-qualcomm-usb3-uniphy-x1e80100-v3-0-273814c300f8@linaro.org>
-Subject: Re: [PATCH v3 0/2] phy: qcom: qmp-usb: Add support for X1E80100
- USB3 PHY
-Message-Id: <170317897267.712473.15138229989572768698.b4-ty@kernel.org>
-Date: Thu, 21 Dec 2023 22:46:12 +0530
+ linux-kernel@vger.kernel.org
+In-Reply-To: <20231122-phy-qualcomm-v6-v6-20-v7-new-offsets-v3-0-dfd1c375ef61@linaro.org>
+References: <20231122-phy-qualcomm-v6-v6-20-v7-new-offsets-v3-0-dfd1c375ef61@linaro.org>
+Subject: Re: [PATCH v3 0/7] phy: qcom: Add register offsets for v6 and v7
+Message-Id: <170317897954.712473.7478662557724121939.b4-ty@kernel.org>
+Date: Thu, 21 Dec 2023 22:46:19 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,20 +56,29 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.12.3
 
 
-On Thu, 07 Dec 2023 14:34:10 +0200, Abel Vesa wrote:
-> This patchset adds support for USB3 PHYs instances found on X1E80100.
-> It depends on the v7 register offsets added by the following patchset:
-> 
-> https://lore.kernel.org/all/20231122-phy-qualcomm-v6-v6-20-v7-new-offsets-v3-0-dfd1c375ef61@linaro.org/
+On Thu, 07 Dec 2023 14:19:09 +0200, Abel Vesa wrote:
+> This patchset adds some missing register offsets for the v6 and v6.20,
+> as well as the new v7 ones. These register offsets are used by the
+> new Qualcomm Snapdragon X Elite (X1E80100) platform.
 > 
 > 
 
 Applied, thanks!
 
-[1/2] dt-bindings: phy: qcom,sc8280xp-qmp-usb3-uni: Add X1E80100 USB PHY binding
-      commit: c5ffffd714373e7c6b39d3b005dbfbaadbbb4d2d
-[2/2] phy: qcom-qmp-usb: Add Qualcomm X1E80100 USB3 PHY support
-      commit: 2daa9555ba9858c29b9734b3a104c338b718feab
+[1/7] phy: qcom-qmp: qserdes-com: Add some more v6 register offsets
+      commit: 2226ec072ed3f1bd3f8dbe0cbf0e6cad699aedc2
+[2/7] phy: qcom-qmp: qserdes-txrx: Add some more v6.20 register offsets
+      commit: a40542507b9045da03f4e013ab8562f6e6fe8aad
+[3/7] phy: qcom-qmp: pcs: Add v7 register offsets
+      commit: 7b98cf0e9b5f8a05a7f0f0d06d3cfa130bb576e2
+[4/7] phy: qcom-qmp: pcs-usb: Add v7 register offsets
+      commit: 8d4f9f801095b120e433d935b296baf0e3bdc6a0
+[5/7] phy: qcom-qmp: qserdes-com: Add v7 register offsets
+      commit: bc546cc85c1d92d9ba7b278b77016b7d4334fafa
+[6/7] phy: qcom-qmp: qserdes-txrx: Add V6 N4 register offsets
+      commit: 762c3565f3c8105603089eeaa0501e5089922221
+[7/7] phy: qcom-qmp: qserdes-txrx: Add v7 register offsets
+      commit: ee6fcc0f337d6790b46838bab76c36e8bdd5658e
 
 Best regards,
 -- 
