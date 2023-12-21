@@ -1,113 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-5686-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5687-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A30B81AB90
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 01:11:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 713C381ABC0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 01:29:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3FEB31F2230D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 00:11:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2786E1F21F0B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Dec 2023 00:29:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D90EF522D;
-	Thu, 21 Dec 2023 00:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D862964A;
+	Thu, 21 Dec 2023 00:28:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="hUPSVvmz"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ow8eCw1R"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F63F4A18
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 00:11:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a2335d81693so43785466b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 16:11:33 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A747C623
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Dec 2023 00:28:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-dbdb5e37f93so219620276.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 16:28:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1703117489; x=1703722289; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/mYEduXCSX53GxkPa+3HzLZx264zuWEFs+pArKbO8ws=;
-        b=hUPSVvmzb1+/bAanusHAmMeqR7eIcpU7PL6u30fPIjIp4EvhwkE4j1yYxKcJ8f+MvZ
-         qEOIzUCBJrMoa6/PHW8L/r0BvqFsCRC9nCh8ZwSxBiIyYsyPvjlysnEAOSnq3tDdZrXx
-         AB5TXz4XfP9C8Pdzxe86BNe2ZHe4G2QHJkwnA=
+        d=linaro.org; s=google; t=1703118499; x=1703723299; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=5sMbFiggIUmpWXZnrREwNxuVRfp3qHTdWSSj+2QBgxQ=;
+        b=Ow8eCw1R88bJd64R3tLV0RS4CGnNFiqum9RVlbpD748bZR7iKrm+oYkEmE77cOlJjC
+         3KRRnvtZT0TfhXpv9WLltiNDFq6p0WdembXMQJGkupl3wErFPLFBxqBRn1F8cQ44FzCN
+         8sOjOQfulMpaoirnzL3gLThWUa7GcWxTMZU96yFBkeLk97yrEeFilEeJ4IdVe26wzCnj
+         mmtusxZUcaYVwgGsdE9TwRaz1MP3ju2DOA22obDfoTGPbBqOKjkr2Zj4kyur8WoCIsbP
+         gQ/i2QRM2vRNqt3eeRSiMIkv06bNzV2FFi5D5PSPewpeG3KKpJAsM6h0dfwDlZpgpIF1
+         2mLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703117489; x=1703722289;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/mYEduXCSX53GxkPa+3HzLZx264zuWEFs+pArKbO8ws=;
-        b=HBhgJUGL0PfK38yMcSWaqr1Jx0zd5bqrn3E9Rjq0aVxt4aiyrrruu5RsMjwtCw+vzJ
-         zalAN8/2EirnubnK54T1/Sf0mBVjdT0xtqDeDXuGAHR05k3ufBXCijZTPtrIrU53ylgb
-         BvsIOSgM/Zon3C91Ccazzh4kGhQRtsrtNtwZVR2sdGMTiYpVxglLgB3xc8/3eDB+BBpg
-         Mfnjrnkt8pRJ63hxOEOv6+PKX3t1B2cMRpv5xsw+sDXVdiLXelaSI5kdPe2kZckapsHq
-         yukoQgKgR++lE6Uw/KunFXeSMjhKmPnrHfCLUw7GLeYv/OUWeThP296qHAyANITeSOYq
-         iUXQ==
-X-Gm-Message-State: AOJu0Ywrdd2dxdHVecmBhRWGphcedB9qj14ckDBftF9OVA153Cumw3xs
-	o1Qjz+Aj6nsbvcxciQBhbspDsMvR8FQqZzeUz+z3lcq8
-X-Google-Smtp-Source: AGHT+IHWxQQlw1ABzrJMujvOx/vU7uilH/4QqFxvsGCWFaYtdCCDyth0sdpbfCRWqI1YUKdiETb4ew==
-X-Received: by 2002:a17:906:73cf:b0:a23:3653:832a with SMTP id n15-20020a17090673cf00b00a233653832amr3550126ejl.17.1703117489496;
-        Wed, 20 Dec 2023 16:11:29 -0800 (PST)
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com. [209.85.208.44])
-        by smtp.gmail.com with ESMTPSA id gi20-20020a1709070c9400b00a26a25d9205sm202208ejc.16.2023.12.20.16.11.28
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Dec 2023 16:11:28 -0800 (PST)
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-548ae9a5eeaso1874a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Dec 2023 16:11:28 -0800 (PST)
-X-Received: by 2002:a50:c316:0:b0:553:773b:b7b2 with SMTP id
- a22-20020a50c316000000b00553773bb7b2mr3837edb.6.1703117488506; Wed, 20 Dec
- 2023 16:11:28 -0800 (PST)
+        d=1e100.net; s=20230601; t=1703118499; x=1703723299;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5sMbFiggIUmpWXZnrREwNxuVRfp3qHTdWSSj+2QBgxQ=;
+        b=h88y/cNhooHau5TEXT2mSvpPNuyUaJ1BlcM0AjDK6dgMX1+4c4nqL0VyeWS48J69Jf
+         xSYMjYXBdrvuvbisoGwxUj7wJnM+qSw/2mdei+rqhgISy10/fgqkuUEd/cMJa+vA+dtz
+         mlR6tyKqq1xrOf8lSPoOMKYQx3yzFF1MLzmgDOdfDz8fD1QJOuNJe8/ZzagbVWpicyIi
+         1+ryQjJQJeGvDRkB39RVwPWFPkZ5YH7oi5ynLSF0Zs40GB3AO+1Ghv6Y09/qKNoPEULt
+         OyvkWD7ze7hb+d40nQebrUVsySZBerx/vrLQCjYIGU3u+4v3+duS+W7PYg13x6Xu5QBm
+         HS9A==
+X-Gm-Message-State: AOJu0YxqVnGJSV8Y/kT59FdpP0tzHMdjRvYza17iiAl7/ogYY9ecNtmr
+	Q/DGv2hrkBcWyzn/mklxEAr+NfIamLZIqWIeWt3V0w==
+X-Google-Smtp-Source: AGHT+IEXA5o0utbapRU0+vSEAQxdKOvIWZZnqGp+XkTJgxSCokGvW5Qw4aB0oXschndT2a3KehjpQUnEbq8jzosLp4w=
+X-Received: by 2002:a25:2d11:0:b0:dbc:e3cf:5763 with SMTP id
+ t17-20020a252d11000000b00dbce3cf5763mr552348ybt.57.1703118499654; Wed, 20 Dec
+ 2023 16:28:19 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231220235459.2965548-1-markhas@chromium.org> <20231220165423.v2.15.I870e2c3490e7fc27a8f6bc41dba23b3dfacd2d13@changeid>
-In-Reply-To: <20231220165423.v2.15.I870e2c3490e7fc27a8f6bc41dba23b3dfacd2d13@changeid>
-From: Doug Anderson <dianders@chromium.org>
-Date: Wed, 20 Dec 2023 16:11:16 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=XwT62H+eBH-PRfQPH-X17_BmWQd5wrHTj6o8Zxkf72sQ@mail.gmail.com>
-Message-ID: <CAD=FV=XwT62H+eBH-PRfQPH-X17_BmWQd5wrHTj6o8Zxkf72sQ@mail.gmail.com>
-Subject: Re: [PATCH v2 15/22] arm64: dts: qcom: sdm845: Enable cros-ec-spi as
- wake source
-To: Mark Hasemeyer <markhas@chromium.org>
-Cc: LKML <linux-kernel@vger.kernel.org>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Tzung-Bi Shih <tzungbi@kernel.org>, 
-	Raul Rangel <rrangel@chromium.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Andy Shevchenko <andriy.shevchenko@intel.com>, Rob Herring <robh@kernel.org>, 
-	Sudeep Holla <sudeep.holla@arm.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
-	cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
+References: <20231220133808.5654-1-quic_bibekkum@quicinc.com> <20231220133808.5654-3-quic_bibekkum@quicinc.com>
+In-Reply-To: <20231220133808.5654-3-quic_bibekkum@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 21 Dec 2023 02:28:08 +0200
+Message-ID: <CAA8EJpoh_jsA6UrH1aEaJ4cufBTKENvG1zqjciy7WSTEh9nmnQ@mail.gmail.com>
+Subject: Re: [PATCH v6 2/5] iommu/arm-smmu: refactor qcom_smmu structure to
+ include single pointer
+To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+Cc: will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, 
+	konrad.dybcio@linaro.org, jsnitsel@redhat.com, quic_bjorande@quicinc.com, 
+	mani@kernel.org, quic_eberman@quicinc.com, robdclark@chromium.org, 
+	u.kleine-koenig@pengutronix.de, robh@kernel.org, vladimir.oltean@nxp.com, 
+	quic_pkondeti@quicinc.com, quic_molvera@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	iommu@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	qipl.kernel.upstream@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi,
-
-On Wed, Dec 20, 2023 at 3:55=E2=80=AFPM Mark Hasemeyer <markhas@chromium.or=
-g> wrote:
+On Wed, 20 Dec 2023 at 15:38, Bibek Kumar Patro
+<quic_bibekkum@quicinc.com> wrote:
 >
-> The cros_ec driver currently assumes that cros-ec-spi compatible device
-> nodes are a wakeup-source even though the wakeup-source property is not
-> defined.
+> qcom_smmu_match_data is static and constant so refactor qcom_smmu
+> to store single pointer to qcom_smmu_match_data instead of
+> replicating multiple child members of the same and handle the further
+> dereferences in the places that want them.
 >
-> Add the wakeup-source property to all cros-ec-spi compatible device
-> nodes to match expected behavior.
->
-> Signed-off-by: Mark Hasemeyer <markhas@chromium.org>
+> Suggested-by: Robin Murphy <robin.murphy@arm.com>
+> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
 > ---
->
-> Changes in v2:
-> -Split by arch/soc
->
->  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi | 1 +
->  1 file changed, 1 insertion(+)
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c | 2 +-
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c       | 2 +-
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h       | 2 +-
+>  3 files changed, 3 insertions(+), 3 deletions(-)
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+-- 
+With best wishes
+Dmitry
 
