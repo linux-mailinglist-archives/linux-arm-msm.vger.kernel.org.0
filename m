@@ -1,172 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-5873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5874-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF37E81C9B3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 13:08:07 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B227781CA69
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 14:02:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6BFFC1F26086
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 12:08:07 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5CD55B222D4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 13:01:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8608F18AEF;
-	Fri, 22 Dec 2023 12:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BA031946A;
+	Fri, 22 Dec 2023 13:01:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Y74jHu/t"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QHv53Ru7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FAA1799C
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Dec 2023 12:07:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59A918B09
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Dec 2023 13:01:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-50e3901c2e2so2173719e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Dec 2023 04:07:38 -0800 (PST)
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-40c29f7b068so18471845e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Dec 2023 05:01:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703246857; x=1703851657; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=nvgpL3qEBxgU0a2eKbgDbOrM1FwKdSrTGRnjkzSYtp8=;
-        b=Y74jHu/tVgBpZDwL0mQ0j5I9klRWx334YLy+tS78nbxsExmV1WkKYkT2MC4rDF2SRH
-         o4pu/EqA0Y+s2F53cLNo1wJGFXqB4YMoXb0JgPGw/CnOH4on6h+CyghnyrZ1wMTjY4pb
-         OkAyGpTzt6gBwl35/1taiVcGTwwb+lPy1F2SeYBxF3VeM5DZVvk1XpLdfJrObgBExkZq
-         fkDzomtAx/cGzpfb9eTwTpGrFpkPUB1l7I4uuWGfkccPCtqLKgvQHtzBWyZQuaQXOwYK
-         vFvGHFvXWuGCWspz9eD9uTRizzCRIA9X8RNb+Fg0iNHAtpK4XiCqUnWIjP7IDNUqZXN4
-         Nk5w==
+        d=linaro.org; s=google; t=1703250107; x=1703854907; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=JWmdonR8NpARXjfe3qqartT0mhGrBDRLU87EB6urV1M=;
+        b=QHv53Ru7dD3dDJjPkOw+rVTu0U5yTeMUUqQXtxdTiwdxv5FLT3n3YowTLF7wCJkPzo
+         mEsnvZkVJsgWsmBNXqUE10nYyd5z9WkSmwzx8oim9CQymRptJ3/PfrgLJyD/4OW8eCqT
+         LWdHllIxMAHP4rlYmVvdC3w/ZIKrw+swYraaYJVzeTfxVANjvaVcsyDxNia1dtPt922d
+         OKSckHAP2oM0RJH9YC0t77/r/K48YwZBDqXylWFtfTm+8OvX96BG5SKAotk+P5eqLA5q
+         /Q9Nkz2xXb+T6V9UxJ9he5x2RXam3qOQkFYKO0CGVdSfWGE3cQrYMOFq33AbXmHmO1Od
+         cO7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703246857; x=1703851657;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nvgpL3qEBxgU0a2eKbgDbOrM1FwKdSrTGRnjkzSYtp8=;
-        b=Q4oBiFoOdX5WIMOwHDjxB45nFddAg16AovG6judDHmrx1PSUqHSaxBY2SP6CTDGaLS
-         eMmlF34gQZtK714766tX6+P6ZAVi6TaTpL2hzIR8gaqPqZ9l6Q7dZahPyA9Jk7K1VTjo
-         savsKJSfVTnpXwKsaPLkWGZD1/VQsQ5MsjA3r/W810ULUi9BXQkn5JzFubIClq2SVBU5
-         OQY+HV2ow+vn+ryCRuIf6nnIORYti4hffqC2YkzBd4Ecm3s1vRUwt69Epz3QL0yUrF7z
-         0Ll7GNzk5UsHC3IIVA5eIia62lNohtZYKx3GUARAw1PYSOjEfbZh43jtT+PNd7Iabg79
-         MD8A==
-X-Gm-Message-State: AOJu0Ywq5s6e2o7bvSVmuL5MmXkhfCtbyML+oJBXwmGv5e+rQRS0Ylgi
-	HVKFT8Tca7WN8ZlzrK+rmDgyLRK4sa8X6Q==
-X-Google-Smtp-Source: AGHT+IESJiqB2x1rgNMeJY/VGI58lLZz48PlqJXxFZTH15QE3NVtltjaDSQWwzqSSvdmDe/FGXrcHg==
-X-Received: by 2002:ac2:48b9:0:b0:50e:1870:1ef2 with SMTP id u25-20020ac248b9000000b0050e18701ef2mr480321lfg.114.1703246856607;
-        Fri, 22 Dec 2023 04:07:36 -0800 (PST)
-Received: from [192.168.199.125] (178235179206.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.206])
-        by smtp.gmail.com with ESMTPSA id f19-20020a056402069300b0054c9b0bd576sm2470850edy.26.2023.12.22.04.07.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Dec 2023 04:07:36 -0800 (PST)
-Message-ID: <94d2c5e2-d75e-4de6-928a-e278b341a02c@linaro.org>
-Date: Fri, 22 Dec 2023 13:07:33 +0100
+        d=1e100.net; s=20230601; t=1703250107; x=1703854907;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JWmdonR8NpARXjfe3qqartT0mhGrBDRLU87EB6urV1M=;
+        b=VJlUswTXuTzqSLP4UMq3UGQcKNgzeKSbhAbHpyTOY/6cZ6yNh6AAcD07m3XIdLTVbg
+         x4nkGmxcwY8VFg8dbK2I68F7NZrrHeneY+eaweZRYSeSZI94V1gamVeGo1XgcuGzZ7w/
+         pW4+ltymm0z5mfbnHRFk79olr6yM/jPy3UKB42y5q0Y/Io77u0ad0hnagPy6xRl3b2bq
+         fw9sNIVp9BPsMh/WR9d63dVX55ZowVWz63M/LGypTYrF1JZBDsXZXHQBMEPbaV2XgJtJ
+         47wscGJRWp+86QSUjViLvXGHfN4PgoQw8R0D/7n995vCNBl7Be+kVL9ZBQsxz/ODymxP
+         Ur6Q==
+X-Gm-Message-State: AOJu0Yzw2WXytS9Vfge/0XAlFqyKlB/u6qTfAY8CLXngRFv1z/lrjtbh
+	mxGBOWnh8Md1mFvxeqmjR8gUpHXC5KGTRg==
+X-Google-Smtp-Source: AGHT+IEoyA67rBN4hpcEFYo6S+igZ3ct0M4Huc2ATJHcWr0tSVPEJyqU9rE5tmgTRM8HN9IfSSXvXg==
+X-Received: by 2002:a05:600c:1c9d:b0:40d:38c6:7cfd with SMTP id k29-20020a05600c1c9d00b0040d38c67cfdmr774026wms.35.1703250106701;
+        Fri, 22 Dec 2023 05:01:46 -0800 (PST)
+Received: from [127.0.1.1] ([79.115.23.25])
+        by smtp.gmail.com with ESMTPSA id h1-20020a05600c350100b0040d3f4b1c8esm5375631wmq.36.2023.12.22.05.01.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Dec 2023 05:01:46 -0800 (PST)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH v2 0/2] phy: qcom: edp: Allow eDP/DP configuring via
+ set_mode op
+Date: Fri, 22 Dec 2023 15:01:30 +0200
+Message-Id: <20231222-x1e80100-phy-edp-compatible-refactor-v2-0-ab5786c2359f@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/8] dt-bindings: clock: qcom: Allow VDD_GFX supply to
- GX
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Bjorn Andersson <quic_bjorande@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
- Ulf Hansson <ulf.hansson@linaro.org>, Johan Hovold
- <johan+linaro@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
- Will Deacon <will@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-References: <20231220-sa8295p-gpu-v2-0-4763246b72c0@quicinc.com>
- <20231220-sa8295p-gpu-v2-1-4763246b72c0@quicinc.com>
- <26617c83-31b3-4ad9-8a61-0b8271fad41f@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <26617c83-31b3-4ad9-8a61-0b8271fad41f@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKqIhWUC/5WNTQqDMBCFryKz7pT8INGueo/iIk1GHbAmJCKKe
+ Pem3qDL773H+w7IlJgyPKoDEq2cOcwF1K0CN9p5IGRfGJRQWirZ4iapEVIIjOOO5CO68Il24fd
+ EmKi3bgkJG6M1OWuc8xbKVSwNb5fm1RUeOZfZfllX+Uv/FKwSBfYtGWNq1dbaPyeebQr3kAboz
+ vP8AgKA0MrZAAAA
+To: Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Johan Hovold <johan@kernel.org>
+Cc: linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1717; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=cDX+OTRf4Doi1u/l+84vE/tm+BZU4P6g8JGruDSER80=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlhYixD+yv7XbZuCNQkxvgIpsKAib9ot+pgK9dZ
+ ftlCviPpdKJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZYWIsQAKCRAbX0TJAJUV
+ VqK3EACPWP40VmX3w6tO2nMIW+Yhud4GatWzn2ZY79z2bMwGc3M3DCL36ntk9c3LUEqGAEH84e/
+ Bcb6Ftjeyqg0qOXTmrXIxpg2NAo8K5M4JQe72PH581cZNCTa4SJlaSnlzaHLr5EJaa9xp/SJrT+
+ ddP5UrbWhyaPHMAPxo8QewHyYRYBnBED0GZ/Uf62g34M0MRg3VXEtmPwKLLOnbR8fO19Ag7oxEf
+ Zi2cxEHQkEbdQLlMBaMcxIvUJWPqe/gppHbKVXnlKb/a0sYoaZdYhYBg0TRYYyzuqYCePcJQ77u
+ AnxxJEa/81oJClfHA2MndDvPLkg0qEciRm+ICpPIIfCrPj5DyglyqL/yeFEW4y8kEeX6+6gTz7d
+ CoPpiatJmQPrB1q7K7vAoamc/dxMk6gjbbdHqj0FI8CnBqBw04FGkCc1z39YkD5orNqfVJb1VK+
+ 88t1tkXvdS0hSW19xcUSCmD9CV8l0esR0JtKtXS0tkyj2YdevYzyoPnXyQ/W5MSithZmqKZqYpK
+ zrcpw2/42vRFFejm1+O14OMKzulceLQJG2xcI9CjdhAnoM1EJKFl4Gl58GY/jZrVhgzOmLr9lCe
+ +pl7qrFpfWVwM/w+i4PAq0vt8gEjC8n9b4ZtwYFWlxp5ywwOHQWUjFGEI0vFOe+lYg688PFmM32
+ +paxeYaKrLfKmTQ==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-On 22.12.2023 09:12, Krzysztof Kozlowski wrote:
-> On 22/12/2023 05:39, Bjorn Andersson wrote:
->> In some designs the SoC's VDD_GFX pads are supplied by an external
->> regulator, rather than a power-domain. Allow this to be described in the
->> GPU clock controller binding.
->>
->> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
->> ---
->>  Documentation/devicetree/bindings/clock/qcom,gpucc.yaml | 16 ++++++++++++++++
->>  1 file changed, 16 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml b/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
->> index f369fa34e00c..c0dd24c9dcb3 100644
->> --- a/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
->> +++ b/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
->> @@ -53,6 +53,9 @@ properties:
->>    power-domains:
->>      maxItems: 1
->>  
->> +  vdd-gfx-supply:
->> +    description: Regulator supply for the VDD_GFX pads
->> +
->>    '#clock-cells':
->>      const: 1
->>  
->> @@ -74,6 +77,19 @@ required:
->>    - '#reset-cells'
->>    - '#power-domain-cells'
->>  
->> +# Allow either power-domains or vdd-gfx-supply, not both
->> +oneOf:
->> +  - required:
->> +      - power-domains
->> +  - required:
->> +      - vdd-gfx-supply
-> 
-> This should be enough, assuming one of them is actually required. The
-> code. See also:
-> https://elixir.bootlin.com/linux/v5.17-rc2/source/Documentation/devicetree/bindings/reserved-memory/reserved-memory.yaml#L91
-At least one of them indeed is, though this change is being made
-implicitly. No clock controller works with no power FWIW
+Until now, all platform that supported both eDP and DP had different
+compatibles for each mode. Using different compatibles for basically
+the same IP block but for a different configuration is bad way all
+around. There is a new compute platform from Qualcomm that supports
+both eDP and DP with the same PHY. So instead of following the old
+method, we should allow the mode to be configured via set_mode from
+the controller driver.
 
-Konrad
+The controller part will follow after we conclude the PHY part first.
+
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+Changes in v2:
+- Dropped the dedicated xlate function and added set_mode op instead
+- Dropped the eDP PHY type and mode addition
+- Added the DP PHY submodes (eDP and DP)
+- Removed the device match data storing from the container struct
+- Link to v1: https://lore.kernel.org/r/20231219-x1e80100-phy-edp-compatible-refactor-v1-0-f9e77752953d@linaro.org
+
+Initial attepmpt was here:
+https://lore.kernel.org/all/20231122-phy-qualcomm-edp-x1e80100-v3-3-576fc4e9559d@linaro.org/
+Compared to that version, this one uses the phy-cells method and drops
+the X1E80100 support. The X1E80100 support will be a separate patchset.
+
+---
+Abel Vesa (2):
+      phy: Add Embedded DisplayPort and DisplayPort submodes
+      phy: qcom: edp: Add set_mode op for configuring eDP/DP submode
+
+ drivers/phy/qualcomm/phy-qcom-edp.c | 90 ++++++++++++++++++++++++++++---------
+ include/linux/phy/phy-dp.h          |  3 ++
+ 2 files changed, 72 insertions(+), 21 deletions(-)
+---
+base-commit: 8a9be2a3cb673dba9d22311beb74be261f0b3f15
+change-id: 20231219-x1e80100-phy-edp-compatible-refactor-8733eca7ccda
+
+Best regards,
+-- 
+Abel Vesa <abel.vesa@linaro.org>
+
 
