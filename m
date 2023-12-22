@@ -1,115 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-5877-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BB9781CA81
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 14:08:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 51B7D81CAA1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 14:25:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CC2B3283992
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 13:08:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 06A992888AA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 13:25:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9892018C3F;
-	Fri, 22 Dec 2023 13:08:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCED119443;
+	Fri, 22 Dec 2023 13:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EyZkjfOt"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dlnSZaKg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EABDB18C2E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Dec 2023 13:08:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-40d2e56f3a6so10711325e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Dec 2023 05:08:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703250527; x=1703855327; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xvw6tTnY8BhMF5IOV3JmRTPTPlqTLaF6hJkfSsjnKRM=;
-        b=EyZkjfOtpIp53rr+ephw5qMvQOcpyeei62Zr4QEoLhH39W/DTzF4b8rTrzJAzWSaFO
-         iNVCaJApARhkg+uFozzEdfH5A4akXGC8mBlvDeFLynvuucvUdpoBIKiqhr4XJiZlkPXr
-         hDkE4DhJJNhEAPVT8U+19eX38oup2pmIB+iEnu1HD8XcL/WBeEga8mo/TBAYN+p6lt1L
-         wWAKUONoPwPu+6cfrbEl5E+rGBKLvod4wsFpWb3s8NRdomcu1Of2lRrhiuh8FOCZlLQQ
-         wSuKV5xrJ0N2mNgOQ9IUObd4uoz/cAaglXrdqjIjtgzjeQ932JCRxanOvJGoXF30yeRG
-         Ya1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703250527; x=1703855327;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xvw6tTnY8BhMF5IOV3JmRTPTPlqTLaF6hJkfSsjnKRM=;
-        b=t4FcjJJuuWA7pkSZA0doYrRVRiz9hff8FHWddIn8AJ0cCEqDqpJViAw/+h9TwOTeaV
-         AP8VflFDQzc8HRAuSao7ZFg+14YnUcrZnxfdZA2o79LtJrmlbZTTpeiND///rPrDXKm0
-         5rX0pwJD7TWTP+DUf9ajAhici1ud9H6uL0KWRcT+XSRYFRAq39dPrxNX6lGKX8Rb1Qgu
-         KcrEGO3mdJL/vxnPDbXtUWti+t4nd66HZSanILPW5vTnuXj2nrLsS66XGpH2+fKoO1uA
-         BCZj/6tb3jwkYfESGF5TkqdJ1UN3Opr3CjZV1nqpL1RfiYrDBReFumzKy1OsXGOTOT6y
-         XMdQ==
-X-Gm-Message-State: AOJu0YxqbLF3onKtr7R3UCWqWyk2qT6PblmubLODX8LmglaGCEFgzOdr
-	y+fR6Ilf/mlUJBv6Xg+Ixy/ICvCeXTaxKA==
-X-Google-Smtp-Source: AGHT+IEtGUJ5s+Rjh44OTBSnJUh5SIZt9blfpsqR72lDhlBFtL8plaCCgc/sEjQRyjVlwp5BcRB0gA==
-X-Received: by 2002:a05:600c:a44:b0:40d:2dd9:dac5 with SMTP id c4-20020a05600c0a4400b0040d2dd9dac5mr699601wmq.97.1703250526958;
-        Fri, 22 Dec 2023 05:08:46 -0800 (PST)
-Received: from [192.168.100.86] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id o11-20020a05600c510b00b0040d3b0780d5sm7085780wms.30.2023.12.22.05.08.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Dec 2023 05:08:46 -0800 (PST)
-Message-ID: <61998a14-2f9a-4b37-a6d0-77451332ae6f@linaro.org>
-Date: Fri, 22 Dec 2023 13:08:45 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157F718B00;
+	Fri, 22 Dec 2023 13:25:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BMDMKQ5016120;
+	Fri, 22 Dec 2023 13:25:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=6TPncqO6Duso2oWrroEP6CTyYy49aXdVwwWn4631rfI=; b=dl
+	nSZaKg2mO375Co3qcM4Z62dJJMPEsNex5UGEMVcW2251elIgGaRijAHIpGx70Aku
+	cjNqxTN/YzsmOIfhKN1A48nitj7VAu6NjWIarO2JOpLLb0Cj7l9fgZji258+NH1l
+	j1JARDkd/Xn7dZUvwHeh+GcyBOIrceVOp4BhF5Vm8ChfMpQTjlOcsHj0tcUBMXU0
+	KJY7L/oWyXDYQWembKlF5pIRwi/MnKiAS15RQ48WGSrQiTPT2iFTi+wghGI6QAdj
+	5JaGe/Z/q1qkjeFtMilQ/s/jMUgLn+39hjc9WZr3tJMaShGgcu9ufT4XASX4RWtk
+	/XdyXoYA1C2gKvtQAmRw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v57vg8n4u-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 22 Dec 2023 13:25:42 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BMDPfnU012701
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 22 Dec 2023 13:25:41 GMT
+Received: from [10.214.67.128] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 22 Dec
+ 2023 05:25:38 -0800
+Message-ID: <a93867af-80e6-ab91-6a13-cdf94aa7f80c@quicinc.com>
+Date: Fri, 22 Dec 2023 18:54:59 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm SC8280XP camera clock
- controller
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: qcm6490-idp: Enable various
+ remoteprocs
 Content-Language: en-US
-To: Bjorn Andersson <quic_bjorande@quicinc.com>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>
-References: <20231221-enable-sc8280xp-camcc-v1-1-2249581dd538@quicinc.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20231221-enable-sc8280xp-camcc-v1-1-2249581dd538@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>
+CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20231220114225.26567-1-quic_kbajaj@quicinc.com>
+ <20231220114225.26567-2-quic_kbajaj@quicinc.com>
+ <d7ae374a-7269-4992-ad44-18b2516cad42@linaro.org>
+ <CAA8EJppYuXpqKpTcUda1LBFfBmm40-VpC+3heJqoL82kS=+erA@mail.gmail.com>
+ <519138d9-2434-4357-abec-f400b87755c6@linaro.org>
+ <CAA8EJpoEwU_S05EdO+sXekE355d5vAQCO+Vt3iH9yibhqOhH_A@mail.gmail.com>
+From: Komal Bajaj <quic_kbajaj@quicinc.com>
+In-Reply-To: <CAA8EJpoEwU_S05EdO+sXekE355d5vAQCO+Vt3iH9yibhqOhH_A@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: -qaP_QFJsBw26DbghkFSIXJMZ2GwhVrV
+X-Proofpoint-ORIG-GUID: -qaP_QFJsBw26DbghkFSIXJMZ2GwhVrV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 impostorscore=0
+ phishscore=0 malwarescore=0 priorityscore=1501 mlxscore=0
+ lowpriorityscore=0 bulkscore=0 clxscore=1015 suspectscore=0 spamscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312220098
 
-On 22/12/2023 04:47, Bjorn Andersson wrote:
-> With the camera clock controller added to the DeviceTree of SC8280XP the
-> interconnect providers no longer reaches sync_state, resulting in a
-> noticeable reduction in battery life.
-> 
-> Enable the camera clock controller (as a module) to avoid this, and
-> hopefully soon provide some level of camera support.
-> 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
->   arch/arm64/configs/defconfig | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index ef1061089548..e5ce6d08006e 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -1256,6 +1256,7 @@ CONFIG_QCM_GCC_2290=y
->   CONFIG_QCM_DISPCC_2290=m
->   CONFIG_QCS_GCC_404=y
->   CONFIG_SA_GCC_8775P=y
-> +CONFIG_SC_CAMCC_8280XP=m
->   CONFIG_SC_DISPCC_8280XP=m
->   CONFIG_SA_GPUCC_8775P=m
->   CONFIG_SC_GCC_7180=y
-> 
-> ---
-> base-commit: 20d857259d7d10cd0d5e8b60608455986167cfad
-> change-id: 20231221-enable-sc8280xp-camcc-969b2cf2e4d7
-> 
-> Best regards,
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
+On 12/20/2023 6:04 PM, Dmitry Baryshkov wrote:
+> On Wed, 20 Dec 2023 at 14:29, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>
+>> On 20.12.2023 13:18, Dmitry Baryshkov wrote:
+>>> On Wed, 20 Dec 2023 at 13:46, Krzysztof Kozlowski
+>>> <krzysztof.kozlowski@linaro.org> wrote:
+>>>>
+>>>> On 20/12/2023 12:42, Komal Bajaj wrote:
+>>>>> Enable the ADSP, CDSP, MPSS and WPSS that are found on the SoC.
+>>>>>
+>>>>> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+>>>>> ---
+>>>>>   arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 20 ++++++++++++++++++++
+>>>>>   1 file changed, 20 insertions(+)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>>>>> index 03e97e27d16d..ad78efa9197d 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>>>>> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>>>>> @@ -419,6 +419,26 @@ &qupv3_id_0 {
+>>>>>        status = "okay";
+>>>>>   };
+>>>>>
+>>>>> +&remoteproc_adsp {
+>>>>> +     firmware-name = "qcom/qcm6490/adsp.mdt";
+>>>>
+>>>> Why MDT not MBN?
+>>>
+>>> I agree here. NAK until this is .mbn. Please follow the example of
+>>> other boards when you write patches.
+>>>
+>>>>
+>>>> I don't see these files in linux-firmware and your cover letter did not
+>>>> explain anything around their submission. What's the status on that part?
+>>>
+>>> This isn't usually required, is it? I mean, the firmware can come from
+>>> linux-firmware, from the device partition or in any other way. With
+>>> the FW_LOADER_USER_HELPER this becomes just the key string used to
+>>> identify firmware to be loaded.
+>> I think Krzysztof referenced the fact that the Qualcomm-made boards
+>> usually came with redistributable firmware.
+>>
+>> As far as my 5 cents go, not submitting the files to linux-firmware.git
+>> only harms the user experience, so I'd always advocate for it, whenever
+>> that is actually possible.
+> 
+> Me too. I think this is work in progress on the Qualcomm side, see the
+> discussion at https://github.com/Linaro/meta-qcom/pull/551 .
+> 
+
+I was searching for MBN files pushed for SM8550 at 
+https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/, 
+but could not find it. Am I missing something?
+
+Are we maintaining it somewhere else asking just out of curiosity and 
+learning and do similar for QCM/QCS6490.
+
+Thanks
+Komal
 
