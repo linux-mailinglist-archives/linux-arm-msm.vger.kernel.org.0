@@ -1,142 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-5895-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5896-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76DE181CC6F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 16:57:19 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D959C81CCA6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 17:19:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 986301C215FC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 15:57:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 92D83285F96
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 16:19:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75EB9241E4;
-	Fri, 22 Dec 2023 15:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B27D9241FA;
+	Fri, 22 Dec 2023 16:18:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PnBRINe/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UCPpy92g"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E990A241E0
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Dec 2023 15:57:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a2696852965so515497966b.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Dec 2023 07:57:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703260633; x=1703865433; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5Q1L2FzZl19SgOcMo3d90a51few8p57KgwJWkO/uZ4k=;
-        b=PnBRINe/TLCo2amU2M/wsZC7BZZXhnZJfCPfLEdTfU5EuEplaiX7lae4WTGVqPPMVf
-         tZIwHasz5ZVtFWVFXU+o+ybM87tuGae6dVcqFuggaBnI5Vw+GRMnB1pErS++BwBxERpH
-         H0//odRDBnCs5EOcZAjKF/JB1si2LQPOR3i7Fi8/x8k7LgZ29BWO9huYtqsm1gj+Jomw
-         seXbxBsGlAx579f5bpkwzVvwP0xZYsyoMUP9ly/DHnHEGwPKGEA3beFcoS5ECtBo0KDo
-         +YPAz70kkkKvbtsRvKhfrHG7ZOD/qk+CNGiF3J4GkhtTTv2JhBg8sdXlrDxtddeh1qKI
-         co0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703260633; x=1703865433;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5Q1L2FzZl19SgOcMo3d90a51few8p57KgwJWkO/uZ4k=;
-        b=LygEhgCiuFVA2ynsyS3u2T2rxy9C7j6Wyy9veMe2h09w8hIPkim0XQmd8Zd4/uOCzF
-         ySp0y5WG304dF6bsjtW3BLyM8SVIwD7VFTq2vc4RjqgMKNS37ZHE9ZkW4PqLlht8StMp
-         QQkV0sod70QgQl34MsD3il6K7+cx5jwc3pHLZEnkIQDVswZfqFaWJ9Vm16rOU4SiEcr/
-         HAyjEn+7fGBoofBYtIAldDqMLb5LqGUQL4ihTXQRDBdFXwMQ8WnBT8NkCiDsNTxTRsUU
-         +jmUHP9aDr4U3QWfUVj79tpLRp2PjEJgboPig9lvi7DRm2pJy7IID/dMSsU6ec/0wFGH
-         bqwg==
-X-Gm-Message-State: AOJu0YyStf/oR7Jj9fVgwP44aMpQwkjY3ak9dZ7YMLqR7XjJQZlwsUJ/
-	ECX3qKPHFERtWVkOVzEJDDktw6JT3HUMbA==
-X-Google-Smtp-Source: AGHT+IFBEkIPeYXUytR4Bh2/BYOZfGKH6cpe5WBxErHKO7qqCF6J3YdDinIEH80rAs9LX9xUn31FZA==
-X-Received: by 2002:a17:906:1d6:b0:a26:968c:b4a8 with SMTP id 22-20020a17090601d600b00a26968cb4a8mr1386234ejj.2.1703260633190;
-        Fri, 22 Dec 2023 07:57:13 -0800 (PST)
-Received: from [192.168.0.22] ([78.10.206.178])
-        by smtp.gmail.com with ESMTPSA id rh9-20020a17090720e900b00a269e87ad84sm2162877ejb.189.2023.12.22.07.57.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Dec 2023 07:57:12 -0800 (PST)
-Message-ID: <e8b8819b-d79a-4325-a2b7-eeb86b9562a2@linaro.org>
-Date: Fri, 22 Dec 2023 16:57:11 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89BBB241E9;
+	Fri, 22 Dec 2023 16:18:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1808EC433C7;
+	Fri, 22 Dec 2023 16:18:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1703261936;
+	bh=sFyXLqvCSCBVIhDV6X2IZpUbgvA4jiAGHM2EZhVLSlc=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=UCPpy92g601dTI7dvHpzT4blOVWMfSvem7QoBoxijwV4aUK95R8nccnISdSTUHu91
+	 zso3T+h0zkaEPYlWAqpx5PVehlivGfhTcSbM96MZknFHSUiQGMKQELUvhPexkD52Q0
+	 iRScgtx0OfIul3NcKYx/ulXdt2KXtKj6lFv2+E6U5nprGQuFxOUST8Ps7jMqY7IFwb
+	 hp5e9AZVDQQ8ISVlltvPGJ+9lCDB8ZsTYVJQ2PvO40EATRYlKf5VDLVmie/v+0ilEX
+	 WfbahfO504NHMHQczmsIboru/k5VWYll1/UFhd0LxO8edYIj7sU0FmGSMFxEqHBgcp
+	 Yc8K62r5Wb7Tg==
+Received: (nullmailer pid 2480748 invoked by uid 1000);
+	Fri, 22 Dec 2023 16:18:53 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy:
- Document the X1E80100 QMP PCIe PHYs
-Content-Language: en-US
-To: Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring
- <robh+dt@kernel.org>, Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231222-x1e80100-phy-pcie-v1-0-b74ac13390bf@linaro.org>
- <20231222-x1e80100-phy-pcie-v1-1-b74ac13390bf@linaro.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzTRLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnp5c3p0b2Yua296bG93c2tpQGxpbmFyby5vcmc+wsGUBBMBCgA+FiEE
- m9B+DgxR+NWWd7dUG5NDfTtBYpsFAmI+BxMCGwMFCRRfreEFCwkIBwIGFQoJCAsCBBYCAwEC
- HgECF4AACgkQG5NDfTtBYptgbhAAjAGunRoOTduBeC7V6GGOQMYIT5n3OuDSzG1oZyM4kyvO
- XeodvvYv49/ng473E8ZFhXfrre+c1olbr1A8pnz9vKVQs9JGVa6wwr/6ddH7/yvcaCQnHRPK
- mnXyP2BViBlyDWQ71UC3N12YCoHE2cVmfrn4JeyK/gHCvcW3hUW4i5rMd5M5WZAeiJj3rvYh
- v8WMKDJOtZFXxwaYGbvFJNDdvdTHc2x2fGaWwmXMJn2xs1ZyFAeHQvrp49mS6PBQZzcx0XL5
- cU9ZjhzOZDn6Apv45/C/lUJvPc3lo/pr5cmlOvPq1AsP6/xRXsEFX/SdvdxJ8w9KtGaxdJuf
- rpzLQ8Ht+H0lY2On1duYhmro8WglOypHy+TusYrDEry2qDNlc/bApQKtd9uqyDZ+rx8bGxyY
- qBP6bvsQx5YACI4p8R0J43tSqWwJTP/R5oPRQW2O1Ye1DEcdeyzZfifrQz58aoZrVQq+innR
- aDwu8qDB5UgmMQ7cjDSeAQABdghq7pqrA4P8lkA7qTG+aw8Z21OoAyZdUNm8NWJoQy8m4nUP
- gmeeQPRc0vjp5JkYPgTqwf08cluqO6vQuYL2YmwVBIbO7cE7LNGkPDA3RYMu+zPY9UUi/ln5
- dcKuEStFZ5eqVyqVoZ9eu3RTCGIXAHe1NcfcMT9HT0DPp3+ieTxFx6RjY3kYTGLOwU0EVUNc
- NAEQAM2StBhJERQvgPcbCzjokShn0cRA4q2SvCOvOXD+0KapXMRFE+/PZeDyfv4dEKuCqeh0
- hihSHlaxTzg3TcqUu54w2xYskG8Fq5tg3gm4kh1Gvh1LijIXX99ABA8eHxOGmLPRIBkXHqJY
- oHtCvPc6sYKNM9xbp6I4yF56xVLmHGJ61KaWKf5KKWYgA9kfHufbja7qR0c6H79LIsiYqf92
- H1HNq1WlQpu/fh4/XAAaV1axHFt/dY/2kU05tLMj8GjeQDz1fHas7augL4argt4e+jum3Nwt
- yupodQBxncKAUbzwKcDrPqUFmfRbJ7ARw8491xQHZDsP82JRj4cOJX32sBg8nO2N5OsFJOcd
- 5IE9v6qfllkZDAh1Rb1h6DFYq9dcdPAHl4zOj9EHq99/CpyccOh7SrtWDNFFknCmLpowhct9
- 5ZnlavBrDbOV0W47gO33WkXMFI4il4y1+Bv89979rVYn8aBohEgET41SpyQz7fMkcaZU+ok/
- +HYjC/qfDxT7tjKXqBQEscVODaFicsUkjheOD4BfWEcVUqa+XdUEciwG/SgNyxBZepj41oVq
- FPSVE+Ni2tNrW/e16b8mgXNngHSnbsr6pAIXZH3qFW+4TKPMGZ2rZ6zITrMip+12jgw4mGjy
- 5y06JZvA02rZT2k9aa7i9dUUFggaanI09jNGbRA/ABEBAAHCwXwEGAEKACYCGwwWIQSb0H4O
- DFH41ZZ3t1Qbk0N9O0FimwUCYDzvagUJFF+UtgAKCRAbk0N9O0Fim9JzD/0auoGtUu4mgnna
- oEEpQEOjgT7l9TVuO3Qa/SeH+E0m55y5Fjpp6ZToc481za3xAcxK/BtIX5Wn1mQ6+szfrJQ6
- 59y2io437BeuWIRjQniSxHz1kgtFECiV30yHRgOoQlzUea7FgsnuWdstgfWi6LxstswEzxLZ
- Sj1EqpXYZE4uLjh6dW292sO+j4LEqPYr53hyV4I2LPmptPE9Rb9yCTAbSUlzgjiyyjuXhcwM
- qf3lzsm02y7Ooq+ERVKiJzlvLd9tSe4jRx6Z6LMXhB21fa5DGs/tHAcUF35hSJrvMJzPT/+u
- /oVmYDFZkbLlqs2XpWaVCo2jv8+iHxZZ9FL7F6AHFzqEFdqGnJQqmEApiRqH6b4jRBOgJ+cY
- qc+rJggwMQcJL9F+oDm3wX47nr6jIsEB5ZftdybIzpMZ5V9v45lUwmdnMrSzZVgC4jRGXzsU
- EViBQt2CopXtHtYfPAO5nAkIvKSNp3jmGxZw4aTc5xoAZBLo0OV+Ezo71pg3AYvq0a3/oGRG
- KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
- fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231222-x1e80100-phy-pcie-v1-1-b74ac13390bf@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: linux-sound@vger.kernel.org, Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Sean Anderson <sean.anderson@seco.com>, Bartosz Golaszewski <brgl@bgdev.pl>, Mark Brown <broonie@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org, Banajit Goswami <bgoswami@quicinc.com>, Rob Herring <robh+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>, devicetree@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Jaroslav Kysela <perex@perex.cz>, Philipp Zabel <p.zabel@pengutronix.de>
+In-Reply-To: <20231222150133.732662-4-krzysztof.kozlowski@linaro.org>
+References: <20231222150133.732662-1-krzysztof.kozlowski@linaro.org>
+ <20231222150133.732662-4-krzysztof.kozlowski@linaro.org>
+Message-Id: <170326193305.2480732.11136927518876044020.robh@kernel.org>
+Subject: Re: [PATCH 3/4] ASoC: dt-bindings: qcom,wsa8840: Add reset-gpios
+ for shared line
+Date: Fri, 22 Dec 2023 10:18:53 -0600
 
-On 22/12/2023 11:40, Abel Vesa wrote:
-> Document the QMP PCIe PHYs on the X1E80100 platform.
+
+On Fri, 22 Dec 2023 16:01:32 +0100, Krzysztof Kozlowski wrote:
+> On newer Qualcomm platforms, like X1E80100-CRD, the WSA884x speakers
+> share SD_N GPIOs between two speakers, thus a coordinated assertion is
+> needed.  Linux supports handling shared GPIO lines through "reset-gpios"
+> property, thus allow specifying either powerdown or reset GPIOs (these
+> are the same).
 > 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Cc: Bartosz Golaszewski <brgl@bgdev.pl>
+> Cc: Sean Anderson <sean.anderson@seco.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
 > ---
+> 
+> If previous patches are fine, then this commit is independent and could
+> be taken via ASoC.
+> ---
+>  .../devicetree/bindings/sound/qcom,wsa8840.yaml          | 9 ++++++++-
+>  1 file changed, 8 insertions(+), 1 deletion(-)
+> 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-Best regards,
-Krzysztof
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml: oneOf:0: 'powerdown-gpios' is not of type 'object', 'boolean'
+	from schema $id: http://json-schema.org/draft-07/schema#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml: oneOf:1: 'reset-gpios' is not of type 'object', 'boolean'
+	from schema $id: http://json-schema.org/draft-07/schema#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml: oneOf: ['powerdown-gpios', 'reset-gpios'] should not be valid under {'items': {'propertyNames': {'const': 'const'}, 'required': ['const']}}
+	hint: Use 'enum' rather than 'oneOf' + 'const' entries
+	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml#
+Traceback (most recent call last):
+  File "/usr/local/bin/dt-validate", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/dtschema/dtb_validate.py", line 144, in main
+    sg.check_dtb(filename)
+  File "/usr/local/lib/python3.11/dist-packages/dtschema/dtb_validate.py", line 89, in check_dtb
+    self.check_subtree(dt, subtree, False, "/", "/", filename)
+  File "/usr/local/lib/python3.11/dist-packages/dtschema/dtb_validate.py", line 82, in check_subtree
+    self.check_subtree(tree, value, disabled, name, fullname + name, filename)
+  File "/usr/local/lib/python3.11/dist-packages/dtschema/dtb_validate.py", line 82, in check_subtree
+    self.check_subtree(tree, value, disabled, name, fullname + name, filename)
+  File "/usr/local/lib/python3.11/dist-packages/dtschema/dtb_validate.py", line 82, in check_subtree
+    self.check_subtree(tree, value, disabled, name, fullname + name, filename)
+  File "/usr/local/lib/python3.11/dist-packages/dtschema/dtb_validate.py", line 77, in check_subtree
+    self.check_node(tree, subtree, disabled, nodename, fullname, filename)
+  File "/usr/local/lib/python3.11/dist-packages/dtschema/dtb_validate.py", line 33, in check_node
+    for error in self.validator.iter_errors(node, filter=match_schema_file):
+  File "/usr/local/lib/python3.11/dist-packages/dtschema/validator.py", line 403, in iter_errors
+    for error in self.DtValidator(sch,
+  File "/usr/local/lib/python3.11/dist-packages/jsonschema/validators.py", line 288, in iter_errors
+    for error in errors:
+  File "/usr/local/lib/python3.11/dist-packages/jsonschema/_validators.py", line 414, in if_
+    yield from validator.descend(instance, then, schema_path="then")
+  File "/usr/local/lib/python3.11/dist-packages/jsonschema/validators.py", line 305, in descend
+    for error in self.evolve(schema=schema).iter_errors(instance):
+  File "/usr/local/lib/python3.11/dist-packages/jsonschema/validators.py", line 288, in iter_errors
+    for error in errors:
+  File "/usr/local/lib/python3.11/dist-packages/jsonschema/_validators.py", line 383, in oneOf
+    errs = list(validator.descend(instance, subschema, schema_path=index))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/jsonschema/validators.py", line 305, in descend
+    for error in self.evolve(schema=schema).iter_errors(instance):
+  File "/usr/local/lib/python3.11/dist-packages/jsonschema/validators.py", line 278, in iter_errors
+    scope = id_of(_schema)
+            ^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/jsonschema/validators.py", line 101, in _id_of
+    return schema.get("$id", "")
+           ^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'get'
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20231222150133.732662-4-krzysztof.kozlowski@linaro.org
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
 
