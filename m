@@ -1,65 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-5889-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5890-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B17881CBBE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 16:09:22 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3B6481CBF5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 16:14:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9E60E1C219AE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 15:09:21 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1F4A6B25790
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 15:14:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03D23249F1;
-	Fri, 22 Dec 2023 15:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E89523751;
+	Fri, 22 Dec 2023 15:09:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QP7XTBLH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qyEfC4YF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DA024207
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Dec 2023 15:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0EA13306C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Dec 2023 15:09:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-54cb4fa667bso2447088a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Dec 2023 07:08:42 -0800 (PST)
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5545aa3532aso644916a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Dec 2023 07:09:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703257721; x=1703862521; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=pSZBhbXDrGnmXtidTuV/j+Dox+NV5LjdI7XHZbvBamQ=;
-        b=QP7XTBLHzf6fMBBN/fkB5FwHg8NeQa/r2cRb3ZrIEUPBBy6scKawvX3x6uKkFSi1Jw
-         uqaha0ogcbBVCMV3Nxgj1f4YpmHWFnzFxjDE5hnz47xpfg7wRyGHkRppUQNlsBc9tgLy
-         h7NWMN2ZgaKBcbrZ1uvu/QUss8f0jiB1Wxb0uVQTAuVUhSkYOW3wAcjKwc8UCaV+koEz
-         hp+7d+tapnH4n09m0GB6OiKeCWhsKtdmb2DgyoK4RI0w2MJqAjri6SpX49OZ/UN3aqVz
-         lsl2oNMa5E3sVUooLEjdjj/oP9ZU21MnmlocXIVkVVkWFiirF7W+diwvDGDtCCRN0kuT
-         LO5g==
+        d=linaro.org; s=google; t=1703257761; x=1703862561; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=klND5eviMWjqCFc2JRjl7wfCCC6ki6+noUjZExFi2BA=;
+        b=qyEfC4YFnzgX2Dc6rWGZVliQ+qzdPERjPo641cxfvI1eDWM8BVj1aKXUXmWucs6Pkm
+         tD1KawQNa6ENQwwUY2W5JaeltMytXlsXeS8mGrNMw2qDazW/gvEdj5H+b6bBJ37FT2dk
+         07Ioha7TC3wwqP7WAYq49Qn54wyPULk4E9+akJ5/jDRh0vaPR2eio2fyDakbhLmNekCY
+         Sop7v5qRq5GKlB8QN21UKuSuzd9Rz/nNMUfuQPmffNO2SzpBSVVCK/yjEHH57d/FjNT8
+         yqwjwFvn0PXU0D3QpM1c/SgF3LyzTOVEg3GIdbgJSPlhQ40cXtSkZcIGQz27M+jyt/ES
+         cxcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703257721; x=1703862521;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pSZBhbXDrGnmXtidTuV/j+Dox+NV5LjdI7XHZbvBamQ=;
-        b=oIdYU/p+ZkQIKwWXFnJPy+mQG6/S2AXAE88qbfUSczPQTl64TEWg2rIbpovZlIE4wA
-         9obyCCacKjMYYEpgBNTB/NLhSDNY5YOO9XNQ6a0QAzETsKVRJPaY7KI3eunDMpqFGlvH
-         jsM76gZpwvAzOC3fjMOrUQuUfKdd8r1tyyzOzrCOdqEBdYRvqzZFFq92sY+wXSj7/OB3
-         GEFgMiS7Tbr3wTx0Pobc6LR7YjHNLhfeIruiq72R6LfjvWsWEGjhvUXvfs9ymRGdPYEp
-         C5cIIyb73a9KG/LfaQ/mzuj/GGvjtxKDoXbPEkINtCN4xBBJOaQDV8EDFD0cD2MAMiku
-         TJFA==
-X-Gm-Message-State: AOJu0YyNE0B7jIT6tVgArDR9M+jtuJ9o19RNhv+//SepHSnQysP5whdW
-	WT8Krlg2x9X1QY4eSchuESQxpyZvBetxXg==
-X-Google-Smtp-Source: AGHT+IEpN9K3zAlm511VjClLVTzGW5t9o5gsFdjE+rfJ6Y/xT1vo0GBVhtxSv+qPXldU8tBUv03mpw==
-X-Received: by 2002:a50:cd16:0:b0:553:b3ee:5840 with SMTP id z22-20020a50cd16000000b00553b3ee5840mr850124edi.79.1703257720884;
-        Fri, 22 Dec 2023 07:08:40 -0800 (PST)
+        d=1e100.net; s=20230601; t=1703257761; x=1703862561;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=klND5eviMWjqCFc2JRjl7wfCCC6ki6+noUjZExFi2BA=;
+        b=MHo3Gdrc44hjXNNOHN0UkLZlBXD9si1bfHPuv9N8Sl6nVW0pYCcqlGUycAY0pFGku3
+         rIUUaXvid1h1E9EFzkBCTe8dFmmAIMhjAIdQJsVisT16mRUBaMR3aZfW9gilTeJPLIAD
+         jd9W1/xJ8L7mYRAJrKBs/uV3WStTIuXZKM7p0QANGML5eY0DmvuJF3aYLWg9spyByX0a
+         5X6uqZi06FCMiRF81tOWxqYyasVStSJoDP60AfRRu5FUaNsf5YzRacPnSfSmBwY39C3+
+         lRG7A1ERbayF2D+htRAa7S2CxU1gr8l2eNnLxZK2CqU2cCBPobl+ddeuX3+sErLnSm7Q
+         PCJg==
+X-Gm-Message-State: AOJu0Yz0ywfAQ2iZN7iYvzC/TV0YcQCjw7aJc2qL5QqVr++02uJ4QsR6
+	t3JWKtrU7AxevMOW37wsPTwsdl9TmE5aaQ==
+X-Google-Smtp-Source: AGHT+IE7ej6Twp4tGUiwq63QuEa+hvJMZkS7XMiI1DP0rx0M9RtceR1+vN2dE+tV/G2HjTzHykPm6g==
+X-Received: by 2002:a50:8d12:0:b0:553:2294:8170 with SMTP id s18-20020a508d12000000b0055322948170mr746312eds.11.1703257761123;
+        Fri, 22 Dec 2023 07:09:21 -0800 (PST)
 Received: from [192.168.0.22] ([78.10.206.178])
-        by smtp.gmail.com with ESMTPSA id ek19-20020a056402371300b0055383eb043csm2668141edb.56.2023.12.22.07.08.39
+        by smtp.gmail.com with ESMTPSA id ek19-20020a056402371300b0055383eb043csm2668141edb.56.2023.12.22.07.09.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Dec 2023 07:08:40 -0800 (PST)
-Message-ID: <546a4278-ecff-44a1-9d06-d2c1e35aa4f1@linaro.org>
-Date: Fri, 22 Dec 2023 16:08:38 +0100
+        Fri, 22 Dec 2023 07:09:20 -0800 (PST)
+Message-ID: <89256009-3c97-4a8a-8ea6-3d3bfa800fce@linaro.org>
+Date: Fri, 22 Dec 2023 16:09:19 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,8 +66,11 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] reset: add GPIO-based reset controller
-To: Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [PATCH 0/4] reset: gpio: ASoC: shared GPIO resets
+Content-Language: en-US
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Chris Packham <chris.packham@alliedtelesis.co.nz>,
+ Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konrad.dybcio@linaro.org>,
  Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
  Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
@@ -78,12 +80,8 @@ To: Bjorn Andersson <andersson@kernel.org>,
  Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
  linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
  linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
- Sean Anderson <sean.anderson@seco.com>
+ linux-kernel@vger.kernel.org, Sean Anderson <sean.anderson@seco.com>
 References: <20231222150133.732662-1-krzysztof.kozlowski@linaro.org>
- <20231222150133.732662-3-krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -129,37 +127,20 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231222150133.732662-3-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20231222150133.732662-1-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 22/12/2023 16:01, Krzysztof Kozlowski wrote:
-> Add simple driver to control GPIO-based resets using the reset
-> controller API for the cases when the GPIOs are shared and reset should
-> be coordinated.  The driver is expected to be used by reset core
-> framework for ad-hoc reset controllers.
+> Hi,
+> 
+> We have at least few cases where hardware engineers decided to use one
+> powerdown/shutdown/reset GPIO line for multiple devices:
+> 
 
-...
-
-> +
-> +	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-> +	if (!priv)
-> +		return -ENOMEM;
-> +
-> +	platform_set_drvdata(pdev, &priv->rc);
-> +	device_set_node(dev, of_fwnode_handle(*platdata));
-> +
-> +	/*
-> +	 * Need to get non-exclusive because it is used in reset core as cookie
-> +	 * to find existing controllers.  However the actual use is exclusive.
-> +	 */
-
-This comment is a left-over of my work-in-progress and it is not
-accurate anymore. Exclusive GPIOs are not used, which should make
-Bartosz happy!
-
-I will remove it in v2.
-
+Bartosz,
+Please kindly provide feedback whether my way of using "struct
+gpio_desc" to compare cookies is acceptable.
 
 Best regards,
 Krzysztof
