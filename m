@@ -1,215 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-5886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4E0281CBA1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 16:02:47 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C66B381CBAA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 16:03:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 30795B2464B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 15:02:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0370F1C22032
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 15:03:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B53F24B4F;
-	Fri, 22 Dec 2023 15:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19F9523772;
+	Fri, 22 Dec 2023 15:03:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MU0DWe9w"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BXLbik3E"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC283241F7
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Dec 2023 15:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F15D23745
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Dec 2023 15:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-554473c653aso1144955a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Dec 2023 07:01:51 -0800 (PST)
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a26988a86f0so223925466b.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Dec 2023 07:03:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703257310; x=1703862110; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+d2F5ydtA1OobfJmI2hpIshuNT6ymaNJ4rjSuqNR8IA=;
-        b=MU0DWe9w6pHEuxKA32Jx7HPsnmZMaUdvYgQovU+9LEgQV68hwfB63pdAz7yxYwydMg
-         QzLWoh+nhFgCajpXrXFyd9K3tBM0LWzIDJSGU+dAVMCfb5uDOAEKVUOSzbJNm9xT5ehC
-         OxaKNUVwqj2mPJ/xoEMUw/rUtSb/6Jmr9E5D6SgdyDLjb1fBnicKAlL35hwlqLNpVdVx
-         aklooGxr0CefoTStBiRg+W+mT8oulBXzADBT/OmRNMMx5uoCRus3LetIAqR6moWTwQuc
-         HXygHPbp0sxVjNEaPq5b4jCOcHw5nhraElt9k9wMP585qrx+/rHAE6e5OVaMLXAVWjqK
-         9hDA==
+        d=linaro.org; s=google; t=1703257381; x=1703862181; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zpin9NlJNaj65IvFxwU5Q2gEO0aZ7ZbPsPXnz9gof7k=;
+        b=BXLbik3EfjdtW+RDJrKTwkwj1NaBwD3Z0VZIDkZy11m7SK1GNcxw+y8fKTUwwQEcxx
+         /NVVIUM353ZuA+lg48VY9OV4XUk2Axs0NaaHpxtIjSerd6h5jnwMW7zfuDH789mrRTkH
+         ejXvcR84xu0WJ0ZsRNvFYmjy6yblxOUWTLW5QMmVMV8g2E3Dz0BCa9fxPgkRcD7VSMfh
+         PlcaU3bcJa9gk0hCaavLwF3kwmqTE5dD0XrRCx2BDJ2l/EUEwWf59mKCRi5OxEvVP/4n
+         QPmHQI54Jj0SBtsBT5eFvLfRw4DoMTExSAV6X1bUdK7pG2BIfA/UECKiFJDRt3e5zyJM
+         jEUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703257310; x=1703862110;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+d2F5ydtA1OobfJmI2hpIshuNT6ymaNJ4rjSuqNR8IA=;
-        b=de66k3k7WCOZk/KlZ88waU2TakS77QF7rKtO6vmSKOAk/+HzpC/9QYtmDufiMy0fdo
-         S7YpoRAUJL6i69Yg40LAoniljgdlR9Db9mt/hC8cHDYGv3ILDanNd/tf0VCxqJAzBV8S
-         dlLVpjv/dnvoPABznxQmsZHWb3kKgnTL1yxGwt8nG2liAPZ1jXSmIps5X7PtCw52AmNt
-         gCXfu8mtrB8ZXCp+KwmnEC0gCLPm0uU42HgD4uk1QvRA6pu0l/rTaT7aTBQgAqZRGkOC
-         WKQg9havstrr0gMjm+nKE1jUfimzcRnVsxL/UIia/lfljSSuSNzaBoyBZGf8hJHu0s3P
-         sS+Q==
-X-Gm-Message-State: AOJu0YxfDRPvUdo+8LtAspUTCzpi4Zvar1qnmBLL5bumTInNurbmTGmH
-	dMQ+xvg1D/v8pOgn4Z5+9aT07TcWdlzG7g==
-X-Google-Smtp-Source: AGHT+IFzDificB3UdraTqz1VX5y4HhiRlv+QgDqloc5aGPlnfsgxfIGccPb4+aYc8yFdDUFdm5GSDw==
-X-Received: by 2002:a17:906:18:b0:a23:4589:75b0 with SMTP id 24-20020a170906001800b00a23458975b0mr808715eja.100.1703257310132;
-        Fri, 22 Dec 2023 07:01:50 -0800 (PST)
-Received: from krzk-bin.. ([78.10.206.178])
-        by smtp.gmail.com with ESMTPSA id h1-20020a17090791c100b00a26af35c171sm1275671ejz.0.2023.12.22.07.01.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Dec 2023 07:01:49 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Banajit Goswami <bgoswami@quicinc.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	linux-arm-msm@vger.kernel.org,
-	alsa-devel@alsa-project.org,
-	linux-sound@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Sean Anderson <sean.anderson@seco.com>
-Subject: [PATCH 4/4] ASoC: codecs: wsa884x: Allow sharing reset GPIO
-Date: Fri, 22 Dec 2023 16:01:33 +0100
-Message-Id: <20231222150133.732662-5-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231222150133.732662-1-krzysztof.kozlowski@linaro.org>
-References: <20231222150133.732662-1-krzysztof.kozlowski@linaro.org>
+        d=1e100.net; s=20230601; t=1703257381; x=1703862181;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zpin9NlJNaj65IvFxwU5Q2gEO0aZ7ZbPsPXnz9gof7k=;
+        b=TjNYgnD2Rk8RGY/yjrwZHYafbun++ssPkM5clj94jyMlZpcP3ScMRTB3dPy9kMsitv
+         mQb3ivfVy0liOIBinBjuFLQ1Od0+ErOv2wZwF/pwCHbbdAfhouFEEWbRzzPAlIiKJA5K
+         P7aFOPGjquQzgMEfTDztf2h2SQLymQ/MLnjgrnAN2bCkPdMV8NLWZQOYUVLbAXc2s7tk
+         mryvBWJ35z8ZeMJoLfF3MWGl0U2R/psY5BPeVsEyUZBnZ/TIkAhuNlq4P6eFBD+ye+Ag
+         atFXeUly4Wnj24O9I37Jccy0chocwHRceB9C744epLvTqi+TFJ6NS8zLQ4DzS3y1noNr
+         WaLw==
+X-Gm-Message-State: AOJu0Yzm620jZS7iuxDYWem58IlKaobwP6B9GUkoxVJBJSPVoCKwqoFh
+	zska5VAvMLMv+/tcpzlFfK5zVzM4vXK9sg==
+X-Google-Smtp-Source: AGHT+IErC3VV28sz12TmmpTCfPkwC4SZPyU3SjxVUpvt/rBPsoVVxkIhNSxLwWPe8NN0UtVdBc3mVQ==
+X-Received: by 2002:a17:906:4c53:b0:a23:46b8:c4ce with SMTP id d19-20020a1709064c5300b00a2346b8c4cemr695206ejw.154.1703257380359;
+        Fri, 22 Dec 2023 07:03:00 -0800 (PST)
+Received: from [192.168.199.125] (178235179206.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.206])
+        by smtp.gmail.com with ESMTPSA id gi21-20020a1709070c9500b00a26af11a335sm1271289ejc.2.2023.12.22.07.02.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 Dec 2023 07:02:59 -0800 (PST)
+Message-ID: <d2a2762f-4565-4a0b-a99b-099dcce33268@linaro.org>
+Date: Fri, 22 Dec 2023 16:02:56 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] phy: qcom: edp: Allow eDP/DP configuring via
+ set_mode op
+Content-Language: en-US
+To: Abel Vesa <abel.vesa@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Johan Hovold <johan@kernel.org>
+Cc: linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20231222-x1e80100-phy-edp-compatible-refactor-v2-0-ab5786c2359f@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20231222-x1e80100-phy-edp-compatible-refactor-v2-0-ab5786c2359f@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On some boards with multiple WSA8840/WSA8845 speakers, the reset
-(shutdown) GPIO is shared between two speakers.  Use the reset
-controller framework and its "reset-gpio" driver to handle this case.
-This allows bring-up and proper handling of all WSA884x speakers on
-X1E80100-CRD board.
+On 22.12.2023 14:01, Abel Vesa wrote:
+> Until now, all platform that supported both eDP and DP had different
+> compatibles for each mode. Using different compatibles for basically
+> the same IP block but for a different configuration is bad way all
+> around. There is a new compute platform from Qualcomm that supports
+> both eDP and DP with the same PHY. So instead of following the old
+> method, we should allow the mode to be configured via set_mode from
+> the controller driver.
+> 
+> The controller part will follow after we conclude the PHY part first.
+I got a bit lost between all the propositions, how are we going to
+discern the controller modes going forward?
 
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Sean Anderson <sean.anderson@seco.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
----
-
-If previous patches are fine, then this commit is independent and could
-be taken via ASoC.
----
- sound/soc/codecs/wsa884x.c | 52 ++++++++++++++++++++++++++++++--------
- 1 file changed, 42 insertions(+), 10 deletions(-)
-
-diff --git a/sound/soc/codecs/wsa884x.c b/sound/soc/codecs/wsa884x.c
-index f2653df84e4a..49ae7712e6ef 100644
---- a/sound/soc/codecs/wsa884x.c
-+++ b/sound/soc/codecs/wsa884x.c
-@@ -13,6 +13,7 @@
- #include <linux/pm_runtime.h>
- #include <linux/regmap.h>
- #include <linux/regulator/consumer.h>
-+#include <linux/reset.h>
- #include <linux/slab.h>
- #include <linux/soundwire/sdw.h>
- #include <linux/soundwire/sdw_registers.h>
-@@ -699,6 +700,7 @@ struct wsa884x_priv {
- 	struct sdw_stream_runtime *sruntime;
- 	struct sdw_port_config port_config[WSA884X_MAX_SWR_PORTS];
- 	struct gpio_desc *sd_n;
-+	struct reset_control *sd_reset;
- 	bool port_prepared[WSA884X_MAX_SWR_PORTS];
- 	bool port_enable[WSA884X_MAX_SWR_PORTS];
- 	unsigned int variant;
-@@ -1799,9 +1801,22 @@ static struct snd_soc_dai_driver wsa884x_dais[] = {
- 	},
- };
- 
--static void wsa884x_gpio_powerdown(void *data)
-+static void wsa884x_reset_powerdown(void *data)
- {
--	gpiod_direction_output(data, 1);
-+	struct wsa884x_priv *wsa884x = data;
-+
-+	if (wsa884x->sd_reset)
-+		reset_control_assert(wsa884x->sd_reset);
-+	else
-+		gpiod_direction_output(wsa884x->sd_n, 1);
-+}
-+
-+static void wsa884x_reset_deassert(struct wsa884x_priv *wsa884x)
-+{
-+	if (wsa884x->sd_reset)
-+		reset_control_deassert(wsa884x->sd_reset);
-+	else
-+		gpiod_direction_output(wsa884x->sd_n, 0);
- }
- 
- static void wsa884x_regulator_disable(void *data)
-@@ -1809,6 +1824,26 @@ static void wsa884x_regulator_disable(void *data)
- 	regulator_bulk_disable(WSA884X_SUPPLIES_NUM, data);
- }
- 
-+static int wsa884x_get_reset(struct device *dev, struct wsa884x_priv *wsa884x)
-+{
-+	wsa884x->sd_reset = devm_reset_control_get_optional_shared(dev, NULL);
-+	if (IS_ERR(wsa884x->sd_reset))
-+		return dev_err_probe(dev, PTR_ERR(wsa884x->sd_reset),
-+				     "Failed to get reset\n");
-+
-+	/*
-+	 * Backwards compatible way for powerdown-gpios, does not handle
-+	 * sharing GPIO properly.
-+	 */
-+	wsa884x->sd_n = devm_gpiod_get_optional(dev, "powerdown",
-+						GPIOD_OUT_HIGH);
-+	if (IS_ERR(wsa884x->sd_n))
-+		return dev_err_probe(dev, PTR_ERR(wsa884x->sd_n),
-+				     "Shutdown Control GPIO not found\n");
-+
-+	return 0;
-+}
-+
- static int wsa884x_probe(struct sdw_slave *pdev,
- 			 const struct sdw_device_id *id)
- {
-@@ -1838,11 +1873,9 @@ static int wsa884x_probe(struct sdw_slave *pdev,
- 	if (ret)
- 		return ret;
- 
--	wsa884x->sd_n = devm_gpiod_get_optional(dev, "powerdown",
--						GPIOD_OUT_HIGH);
--	if (IS_ERR(wsa884x->sd_n))
--		return dev_err_probe(dev, PTR_ERR(wsa884x->sd_n),
--				     "Shutdown Control GPIO not found\n");
-+	ret = wsa884x_get_reset(dev, wsa884x);
-+	if (ret)
-+		return ret;
- 
- 	dev_set_drvdata(dev, wsa884x);
- 	wsa884x->slave = pdev;
-@@ -1858,9 +1891,8 @@ static int wsa884x_probe(struct sdw_slave *pdev,
- 	pdev->prop.sink_dpn_prop = wsa884x_sink_dpn_prop;
- 	pdev->prop.scp_int1_mask = SDW_SCP_INT1_BUS_CLASH | SDW_SCP_INT1_PARITY;
- 
--	/* Bring out of reset */
--	gpiod_direction_output(wsa884x->sd_n, 0);
--	ret = devm_add_action_or_reset(dev, wsa884x_gpio_powerdown, wsa884x->sd_n);
-+	wsa884x_reset_deassert(wsa884x);
-+	ret = devm_add_action_or_reset(dev, wsa884x_reset_powerdown, wsa884x);
- 	if (ret)
- 		return ret;
- 
--- 
-2.34.1
-
+Konrad
 
