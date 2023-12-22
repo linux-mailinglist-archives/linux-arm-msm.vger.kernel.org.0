@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-5863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 661EF81C68D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 09:27:35 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8378B81C694
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 09:28:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DB3DBB23D5F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 08:27:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3DB84287CC2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 08:28:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B66A217983;
-	Fri, 22 Dec 2023 08:27:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24927199A4;
+	Fri, 22 Dec 2023 08:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lnNuGTVV"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Y10Xr7sc"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A6D17984;
-	Fri, 22 Dec 2023 08:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC7519448;
+	Fri, 22 Dec 2023 08:27:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BM7AXrr010122;
-	Fri, 22 Dec 2023 08:26:40 GMT
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BM6mJT7021447;
+	Fri, 22 Dec 2023 08:27:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=IMurFZ9YPEhXkzguDLU/fHg9rMH3BKtFIDfQ16v5W48=; b=ln
-	NuGTVVpBKGbQ/QZiRTLY8japikZHoSsjam82iaHbSncziDtY8vl/yd8Q9lUM3sKP
-	z4DBCNti6D0EdsCx6YHrobqCqmnHDCJSRE6ZKGhaWGNanBn+0STZlGbhLqUze1fn
-	OM+j+zaScu+jQm1B0pvV3jfDjowqWDKlpaWp+uXmS2hzkU9ejJFgLWkcKyNwxn9G
-	KZEk6RetTHYVSeI2hQqsC8WkGu92vmdhcvaCT53bPAMzyGyUg9pRCM5N/pnb79IP
-	StIjZC3DrIXDmiCw/fPpKFXCcIx6FO9XbPo7XKZzFMHWkp7Brvr8rDZmUdL/4KvZ
-	oIwSMkVm/cdUxLNAMlFg==
+	qcppdkim1; bh=IWQzRiq1FJLluo9evumHWLCWgz7uK87P5Y+UWB7CfDE=; b=Y1
+	0Xr7sc2sesUsi+IsNReuxibxzl4Gz0uoPKIl81Cc/Z8Mr9szXGxL8xd6m9PNOk+a
+	JXlIj6ub6WVpfFcL8K1gvTcnqkPL3y5y/kn2pxOsXS8e47fjDY1XlZb9KPiGNSNL
+	epKs4bZVB6mmuzzFFJz7LUf4cDJid3RlmafKXofz2jcsum7irAazZ8/97kz8T6xf
+	9P7H2bjr5nTChQHrtj/kiZoL762GT3n1vC9i9xsArlEh1EPjPIjnP9Wc0SP1kpET
+	0aKugFNxsjKSJGprS/QtyTEw3dX9WCVhdgX50XKNQNlAzgNXZdqaRe/vcXyp3/Ie
+	tB2FKhB6qUvNUc1yVZYg==
 Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v51u08qf5-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v51u08qkr-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Dec 2023 08:26:40 +0000 (GMT)
+	Fri, 22 Dec 2023 08:27:19 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BM8QdAp022911
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BM8RI5C023532
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Dec 2023 08:26:39 GMT
+	Fri, 22 Dec 2023 08:27:19 GMT
 Received: from [10.253.15.135] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 22 Dec
- 2023 00:26:35 -0800
-Message-ID: <9648b3ee-dff9-424f-a6db-3b8051b42fbd@quicinc.com>
-Date: Fri, 22 Dec 2023 16:26:36 +0800
+ 2023 00:27:14 -0800
+Message-ID: <2b04cca6-ee41-47c3-86db-c52aa5f5405d@quicinc.com>
+Date: Fri, 22 Dec 2023 16:27:15 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,8 +56,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v3 09/11] scsi: ufs: core: Perform read back after
- disabling UIC_COMMAND_COMPL
+Subject: Re: [PATCH RFC v3 10/11] scsi: ufs: core: Perform read back to commit
+ doorbell
 Content-Language: en-US
 To: Andrew Halaney <ahalaney@redhat.com>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -77,17 +77,17 @@ To: Andrew Halaney <ahalaney@redhat.com>, Andy Gross <agross@kernel.org>,
 CC: Will Deacon <will@kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <linux-scsi@vger.kernel.org>, <linux-kernel@vger.kernel.org>
 References: <20231221-ufs-reset-ensure-effect-before-delay-v3-0-2195a1b66d2e@redhat.com>
- <20231221-ufs-reset-ensure-effect-before-delay-v3-9-2195a1b66d2e@redhat.com>
+ <20231221-ufs-reset-ensure-effect-before-delay-v3-10-2195a1b66d2e@redhat.com>
 From: Can Guo <quic_cang@quicinc.com>
-In-Reply-To: <20231221-ufs-reset-ensure-effect-before-delay-v3-9-2195a1b66d2e@redhat.com>
+In-Reply-To: <20231221-ufs-reset-ensure-effect-before-delay-v3-10-2195a1b66d2e@redhat.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ZOsTbwVfW9kVeAoOzQyiF8F6aKTaeV33
-X-Proofpoint-ORIG-GUID: ZOsTbwVfW9kVeAoOzQyiF8F6aKTaeV33
+X-Proofpoint-GUID: qtanN9W5L-UCIrrhRrbLM6krCEmG8c36
+X-Proofpoint-ORIG-GUID: qtanN9W5L-UCIrrhRrbLM6krCEmG8c36
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
@@ -100,15 +100,15 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowprio
 
 
 On 12/22/2023 3:09 AM, Andrew Halaney wrote:
-> Currently, the UIC_COMMAND_COMPL interrupt is disabled and a wmb() is
-> used to complete the register write before any following writes.
+> Currently, the doorbell is written to and a wmb() is used to commit it
+> immediately.
 > 
-> wmb() ensures the writes complete in that order, but completion doesn't
-> mean that it isn't stored in a buffer somewhere. The recommendation for
-> ensuring this bit has taken effect on the device is to perform a read
-> back to force it to make it all the way to the device. This is
-> documented in device-io.rst and a talk by Will Deacon on this can
-> be seen over here:
+> wmb() ensures that the write completes before following writes occur,
+> but completion doesn't mean that it isn't stored in a buffer somewhere.
+> The recommendation for ensuring this bit has taken effect on the device
+> is to perform a read back to force it to make it all the way to the
+> device. This is documented in device-io.rst and a talk by Will Deacon on
+> this can be seen over here:
 > 
 >      https://youtu.be/i6DayghhA8Q?si=MiyxB5cKJXSaoc01&t=1678
 > 
@@ -116,25 +116,25 @@ On 12/22/2023 3:09 AM, Andrew Halaney wrote:
 > purpose wasn't to add extra ordering (on top of the ordering guaranteed
 > by writel()/readl()), it can safely be removed.
 > 
-> Fixes: d75f7fe495cf ("scsi: ufs: reduce the interrupts for power mode change requests")
+> Fixes: ad1a1b9cd67a ("scsi: ufs: commit descriptors before setting the doorbell")
 > Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
 > ---
 >   drivers/ufs/core/ufshcd.c | 2 +-
 >   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-> index bb603769b029..75a03ee9a1ba 100644
+> index 75a03ee9a1ba..caebd589e08c 100644
 > --- a/drivers/ufs/core/ufshcd.c
 > +++ b/drivers/ufs/core/ufshcd.c
-> @@ -4240,7 +4240,7 @@ static int ufshcd_uic_pwr_ctrl(struct ufs_hba *hba, struct uic_command *cmd)
->   		 * Make sure UIC command completion interrupt is disabled before
->   		 * issuing UIC command.
->   		 */
-> -		wmb();
-> +		ufshcd_readl(hba, REG_INTERRUPT_ENABLE);
->   		reenable_intr = true;
->   	}
->   	spin_unlock_irqrestore(hba->host->host_lock, flags);
+> @@ -7050,7 +7050,7 @@ static int __ufshcd_issue_tm_cmd(struct ufs_hba *hba,
+>   
+>   	ufshcd_writel(hba, 1 << task_tag, REG_UTP_TASK_REQ_DOOR_BELL);
+>   	/* Make sure that doorbell is committed immediately */
+> -	wmb();
+> +	ufshcd_readl(hba, REG_UTP_TASK_REQ_DOOR_BELL);
+>   
+>   	spin_unlock_irqrestore(host->host_lock, flags);
+>   
 > 
 Reviewed-by: Can Guo <quic_cang@quicinc.com>
 
