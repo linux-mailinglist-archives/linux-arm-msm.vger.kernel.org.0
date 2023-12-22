@@ -1,76 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-5852-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5853-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD5D281C535
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 07:38:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B9BA81C5AD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 08:34:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 069331C20F96
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 06:38:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CE57E1C2517D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 07:34:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBD9A4691;
-	Fri, 22 Dec 2023 06:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A81929447;
+	Fri, 22 Dec 2023 07:32:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GDhthlv2"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AneRBOro"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF4CC2DF;
-	Fri, 22 Dec 2023 06:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4507B2207A;
+	Fri, 22 Dec 2023 07:32:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BM6Ml8d028055;
-	Fri, 22 Dec 2023 06:37:55 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BM3x9bR015513;
+	Fri, 22 Dec 2023 07:32:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=BMcIK6+tF1WzlJAS4gMMrCiHhLdtiy0eQaT/jyXeihI=; b=GD
-	hthlv2Il9xKHvewzF0w5QSAbnkCZ7tjnH+OloospvvvqCUg2fhlXTenmctTrTKNq
-	8okC3xz56Nn4CzXNdOC4HmyDVaZlgQT6Thzm5sdj+mJX4yYG0ztzbaO5pkA1oaEx
-	fBnaEh0jtS4RMz0HXhdzCw+sTeSkd4vFXoM5eh5AuHPAN/GtxfiF1FwGqvclfLqe
-	BrRKyHRriqF7vBn1jY/YXnhpQwmwGCuDOCBiLDNcvfpNoW9/SJzBGimQEET9EsQy
-	K/dyFFRuYvs7W3SGhw00LgvQZPwmAN5NZSf1uUa+fP7zE/INin001eAaui1YkxxL
-	WGNmwDq7SkmSvyKPbILg==
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=6ImjNiS
+	I1CFUB7fpLoA7Gqc4wRl1CPubkUKBD/qGQAo=; b=AneRBOroiHo40Q2bNZVc1JF
+	DXmyRCYF2cUqsKO1V7/05/IVdhimDIN4UmQMZX16w56Z6cYL6Jk5VdVD9zP5LyOl
+	q6IW0RP1aG5FbEhyceFzWOO+9dBqtyZVdr2prAfaSNd827qUcriKPYxro/vhyvEP
+	VJj5mU632xssI3ZJpUehpbSNASvfpaIaTSIURKfmGEL+PN5z40F7daG3IDB4rwG6
+	mSfKFOqmuoMedy8V+mC371AxHL2GTeHq5osXWvByMfS2fiIjj4SNbARvf8iQVRkO
+	4s7mKr+F2mikswTnHZWPAc/73rY3QztAr3wiwpnzjyyv2CdOoR15tBwfPMzWBlw=
+	=
 Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v4xpq8r6a-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v51u08h21-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Dec 2023 06:37:54 +0000 (GMT)
+	Fri, 22 Dec 2023 07:32:21 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BM6bJr4031642
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BM7VsJi015689
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Dec 2023 06:37:19 GMT
-Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
+	Fri, 22 Dec 2023 07:31:55 GMT
+Received: from hu-uchheda-hyd.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Thu, 21 Dec 2023 22:37:14 -0800
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, "Andy
- Gross" <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+ 15.2.1118.40; Thu, 21 Dec 2023 23:31:51 -0800
+From: Umang Chheda <quic_uchheda@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio
 	<konrad.dybcio@linaro.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        "Conor
- Dooley" <conor+dt@kernel.org>, Johan Hovold <johan@kernel.org>
-CC: <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>,
-        Krishna Kurapati
-	<quic_kriskura@quicinc.com>
-Subject: [PATCH v5 2/2] usb: dwc3: qcom: Rename hs_phy_irq to qusb2_phy_irq
-Date: Fri, 22 Dec 2023 12:06:48 +0530
-Message-ID: <20231222063648.11193-3-quic_kriskura@quicinc.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231222063648.11193-1-quic_kriskura@quicinc.com>
-References: <20231222063648.11193-1-quic_kriskura@quicinc.com>
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_kamalw@quicinc.com>,
+        <quic_uchheda@quicinc.com>
+Subject: [PATCH] arm64: dts: qcom: qcm6490-idp: Add support for PM7250B PMIC
+Date: Fri, 22 Dec 2023 13:01:35 +0530
+Message-ID: <20231222073135.2512313-1-quic_uchheda@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,120 +75,44 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: LOKba6_9yG-uwdK5Mt8VZQBojXvglo3M
-X-Proofpoint-ORIG-GUID: LOKba6_9yG-uwdK5Mt8VZQBojXvglo3M
+X-Proofpoint-GUID: F5uHIJBa8W2kBAz9hMob3ZCh4S5Iq7sb
+X-Proofpoint-ORIG-GUID: F5uHIJBa8W2kBAz9hMob3ZCh4S5Iq7sb
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 impostorscore=0 malwarescore=0 adultscore=0 mlxscore=0
- spamscore=0 clxscore=1015 bulkscore=0 lowpriorityscore=0 mlxlogscore=661
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312220045
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
+ bulkscore=0 suspectscore=0 clxscore=1011 priorityscore=1501 spamscore=0
+ adultscore=0 malwarescore=0 mlxlogscore=767 phishscore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
+ definitions=main-2312220052
 
-For wakeup to work, driver needs to enable interrupts that depict what is
-happening on the DP/DM lines. On QUSB targets, this is identified by
-qusb2_phy whereas on SoCs using Femto PHY, separate {dp,dm}_hs_phy_irq's
-are used instead.
+qcm6490-idp platform supports PM7250B PMIC as well.
+Add support for the same.
 
-The implementation incorrectly names qusb2_phy interrupts as "hs_phy_irq".
-Clean this up so that driver would be using only qusb2/(dp & dm) for wakeup
-purposes.
-
-For devices running older kernels, this won't break any functionality
-because the interrupt configurations in QUSB2 PHY based SoCs is done
-by configuring QUSB2PHY_INTR_CTRL register in PHY address space and it was
-never armed properly right from the start.
-
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+Signed-off-by: Umang Chheda <quic_uchheda@quicinc.com>
 ---
- drivers/usb/dwc3/dwc3-qcom.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index fdf6d5d3c2ad..dbd6a5b2b289 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -57,7 +57,7 @@ struct dwc3_acpi_pdata {
- 	u32			qscratch_base_offset;
- 	u32			qscratch_base_size;
- 	u32			dwc3_core_base_size;
--	int			hs_phy_irq_index;
-+	int			qusb2_phy_irq_index;
- 	int			dp_hs_phy_irq_index;
- 	int			dm_hs_phy_irq_index;
- 	int			ss_phy_irq_index;
-@@ -73,7 +73,7 @@ struct dwc3_qcom {
- 	int			num_clocks;
- 	struct reset_control	*resets;
+diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+index 03e97e27d16d..2a6e4907c5ee 100644
+--- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
++++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+@@ -5,8 +5,13 @@
  
--	int			hs_phy_irq;
-+	int			qusb2_phy_irq;
- 	int			dp_hs_phy_irq;
- 	int			dm_hs_phy_irq;
- 	int			ss_phy_irq;
-@@ -372,7 +372,7 @@ static void dwc3_qcom_disable_wakeup_irq(int irq)
+ /dts-v1/;
  
- static void dwc3_qcom_disable_interrupts(struct dwc3_qcom *qcom)
- {
--	dwc3_qcom_disable_wakeup_irq(qcom->hs_phy_irq);
-+	dwc3_qcom_disable_wakeup_irq(qcom->qusb2_phy_irq);
- 
- 	if (qcom->usb2_speed == USB_SPEED_LOW) {
- 		dwc3_qcom_disable_wakeup_irq(qcom->dm_hs_phy_irq);
-@@ -389,7 +389,7 @@ static void dwc3_qcom_disable_interrupts(struct dwc3_qcom *qcom)
- 
- static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
- {
--	dwc3_qcom_enable_wakeup_irq(qcom->hs_phy_irq, 0);
-+	dwc3_qcom_enable_wakeup_irq(qcom->qusb2_phy_irq, 0);
- 
- 	/*
- 	 * Configure DP/DM line interrupts based on the USB2 device attached to
-@@ -542,19 +542,19 @@ static int dwc3_qcom_setup_irq(struct platform_device *pdev)
- 	int irq;
- 	int ret;
- 
--	irq = dwc3_qcom_get_irq(pdev, "hs_phy_irq",
--				pdata ? pdata->hs_phy_irq_index : -1);
-+	irq = dwc3_qcom_get_irq(pdev, "qusb2_phy",
-+				pdata ? pdata->qusb2_phy_irq_index : -1);
- 	if (irq > 0) {
- 		/* Keep wakeup interrupts disabled until suspend */
- 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
- 					qcom_dwc3_resume_irq,
- 					IRQF_ONESHOT | IRQF_NO_AUTOEN,
--					"qcom_dwc3 HS", qcom);
-+					"qcom_dwc3 QUSB2", qcom);
- 		if (ret) {
--			dev_err(qcom->dev, "hs_phy_irq failed: %d\n", ret);
-+			dev_err(qcom->dev, "qusb2_phy_irq failed: %d\n", ret);
- 			return ret;
- 		}
--		qcom->hs_phy_irq = irq;
-+		qcom->qusb2_phy_irq = irq;
- 	}
- 
- 	irq = dwc3_qcom_get_irq(pdev, "dp_hs_phy_irq",
-@@ -1058,7 +1058,7 @@ static const struct dwc3_acpi_pdata sdm845_acpi_pdata = {
- 	.qscratch_base_offset = SDM845_QSCRATCH_BASE_OFFSET,
- 	.qscratch_base_size = SDM845_QSCRATCH_SIZE,
- 	.dwc3_core_base_size = SDM845_DWC3_CORE_SIZE,
--	.hs_phy_irq_index = 1,
-+	.qusb2_phy_irq_index = 1,
- 	.dp_hs_phy_irq_index = 4,
- 	.dm_hs_phy_irq_index = 3,
- 	.ss_phy_irq_index = 2
-@@ -1068,7 +1068,7 @@ static const struct dwc3_acpi_pdata sdm845_acpi_urs_pdata = {
- 	.qscratch_base_offset = SDM845_QSCRATCH_BASE_OFFSET,
- 	.qscratch_base_size = SDM845_QSCRATCH_SIZE,
- 	.dwc3_core_base_size = SDM845_DWC3_CORE_SIZE,
--	.hs_phy_irq_index = 1,
-+	.qusb2_phy_irq_index = 1,
- 	.dp_hs_phy_irq_index = 4,
- 	.dm_hs_phy_irq_index = 3,
- 	.ss_phy_irq_index = 2,
++/* PM7250B is configured to use SID8/9 */
++#define PM7250B_SID 8
++#define PM7250B_SID1 9
++
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ #include "sc7280.dtsi"
++#include "pm7250b.dtsi"
+ #include "pm7325.dtsi"
+ #include "pm8350c.dtsi"
+ #include "pmk8350.dtsi"
 -- 
-2.42.0
+2.25.1
 
 
