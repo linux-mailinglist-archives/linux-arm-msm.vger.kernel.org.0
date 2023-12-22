@@ -1,300 +1,301 @@
-Return-Path: <linux-arm-msm+bounces-5880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65D8681CB4F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 15:27:41 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F49F81CB62
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 15:35:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D22921F22EFA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 14:27:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1B7F11F2414B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Dec 2023 14:35:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5909E1CAA9;
-	Fri, 22 Dec 2023 14:27:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9938C1CF92;
+	Fri, 22 Dec 2023 14:35:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u7dnw7s7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XId1mLs9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2289920B09
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Dec 2023 14:27:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-dbd722b55afso1746592276.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Dec 2023 06:27:28 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA50820B3E;
+	Fri, 22 Dec 2023 14:35:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2cc6eecd319so23373291fa.1;
+        Fri, 22 Dec 2023 06:35:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703255248; x=1703860048; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=/ohOxKlVlxp9JV2DrmYRKprL04h+s8jRqUwmTQjiVwc=;
-        b=u7dnw7s7emNSAlHazAXflAa6Wb9QyPQ6pTBpvPoFtYQsgN6iAmI58obR8XaFDUpBwj
-         ABNdLmibsiTXsm6IygHfAMA4tgjfKQpL6/mR5zitz/Zf27KUlbWlhzeZaGhGqoe8LMo2
-         C7TZ1TbFRuHMSz+pWpk+xNgbdVVq/W4SNkfkK1Cgtx812hl7HAI4kthVGapRY/m40zPk
-         lBcF5DNgX0QOLCdYhXosfXx5j4OzEB9YWT3ttP/OEsPyDoxIR4BBFCIeTLOKuUlkgri1
-         QSjlwXQa9JSU+fqfsNkJX5v12sjoq8JxUnlCEGyCehgOWEIhhVJWxVEHQpM7hWriZqjl
-         KIlw==
+        d=gmail.com; s=20230601; t=1703255717; x=1703860517; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=19330V05jnim9tqHKI81rhlyn9YLwEeYkPtMUaA5/Ts=;
+        b=XId1mLs9waS/iCPC0kdr8be+cCgUTBuwqHek5XDM7nAJe85rUPPaeBD9mWbAfeDTml
+         VJ5GYechl4HLIvhPrxcjT1kt4f1ElLtW2RFY5MmzRMKU/Whx/j+HmbeThrfUrBtk5WP1
+         zxEvdPbjPbKnyr/1/i8RGeg02q+Et6DY4sgG4StOqls+8ExuBy4wHS4SnGbSosFmoL4i
+         hVX/WUDfzfWQvWoPmzqaC3mrepP5jnN1/1RswLrHlBp8RyITfSZkR97r5sCcIsnSJVgJ
+         n0ayGRkRc48PoxBCSOqMq+qtgLR4CVqQvu2Xk1ogv0BembC/SI7pvwHtARJrtl/PwMoP
+         el6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703255248; x=1703860048;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/ohOxKlVlxp9JV2DrmYRKprL04h+s8jRqUwmTQjiVwc=;
-        b=t+C8uN9FGLXKVQySn1h3L4up4zgtCwQFnhRap0YIhL6z4Ul7/3Ioa1UXc8p95oHu5R
-         +ZDiEw2DB0l8BBbFkJMFYXqMsj8BaGbPw1JCFQh13z2SjukGzYrWlqtOgTldrk4Oz/HL
-         BusRtpkH7TkMpWVQc0gz6jUplZe3khQYTXLJDiQ/attkuafsNIZa+X2/4kcMf+/xV7UP
-         PsSdSQDg3vm5LOXyOYHi9q8rc7v7jetrPbVkTDZH8GGmTuo6MtARzotma7Qv2Si6V4bH
-         hsA6Aw8KoQ1C/slfc0f9ucHwP9E4SQJgyO5dZSOlHkkJg4S7l80b4DzkjdfiEWGkYJLo
-         zPDw==
-X-Gm-Message-State: AOJu0YwiEZROy4F6oHVi4Qa479suX5JzeSWj1aXte+hPuEkSD+gRcv7K
-	EM/P3XBw5eBb+Juy7s5ZSk8l/vHtx7X6DFq41b3rc4G57+Wh3o2WjcNygG6T5eQ=
-X-Google-Smtp-Source: AGHT+IHBrF4XR8p5LkLNum7eai1yd12WDBgkxaeQk1y1iyJGg8WGpESOtBoo1MnFbFq/XkwhjhLvOJGHCI7y/Dn1XKU=
-X-Received: by 2002:a25:9f0f:0:b0:db7:dacf:5a0b with SMTP id
- n15-20020a259f0f000000b00db7dacf5a0bmr526697ybq.127.1703255248064; Fri, 22
- Dec 2023 06:27:28 -0800 (PST)
+        d=1e100.net; s=20230601; t=1703255717; x=1703860517;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=19330V05jnim9tqHKI81rhlyn9YLwEeYkPtMUaA5/Ts=;
+        b=cpC21A3DGNlZyKvfbewbYwS4yiEjPEbgtbmy3cZRj1ORyXZ/sSpVFqZOhv0tI0PPNG
+         GDs6s9ok+nPCdQYtmQXFrPADFjcM0FBaUIbkVJURbZBwkTuDFy6gD1l/6+wSVX8s8JVb
+         8Zy0gx6PQtUdI2QTGPDrdWmEvzNKOVaY0PhTwA1GeElcKdY5K/LF3agzDOXG0o4x5kdF
+         xUZXMhQkn+RBxQ81YNfQ8yneWBshcQAcJgwbnd3WdlcPC38wQLll8F4JXtdMRxId49Rb
+         MOuEfxmMLesYLSU1e8y3lhblzWqYXMjAtAGqQ9RmzVIyuQpWjH1FCLqgLEazbzpTzJl9
+         TtTQ==
+X-Gm-Message-State: AOJu0Yz3yFg4Ako3k8m2E9KxNiPH13c1ozCU7ujjw0n68E2aEWITRZvt
+	aO8+bIMJxt4gOZK0BQG5DR0=
+X-Google-Smtp-Source: AGHT+IFlxZdfsMnhVXkg7K6QHgzJwzt8L6U+FZduAFeGCwFFfJVANfYA42Q8L/dP9lI4kDiqivutKQ==
+X-Received: by 2002:a2e:a418:0:b0:2cc:96fd:b79e with SMTP id p24-20020a2ea418000000b002cc96fdb79emr812350ljn.33.1703255716554;
+        Fri, 22 Dec 2023 06:35:16 -0800 (PST)
+Received: from mobilestation ([178.176.56.174])
+        by smtp.gmail.com with ESMTPSA id p25-20020a2e9ad9000000b002ccaddac048sm161994ljj.64.2023.12.22.06.35.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Dec 2023 06:35:15 -0800 (PST)
+Date: Fri, 22 Dec 2023 17:35:12 +0300
+From: Serge Semin <fancer.lancer@gmail.com>
+To: Suraj Jaiswal <quic_jsuraj@quicinc.com>
+Cc: "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
+	Paolo Abeni <pabeni@redhat.com>, Vinod Koul <vkoul@kernel.org>, 
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>, Andy Gross <agross@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Jose Abreu <joabreu@synopsys.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
+	Prasad Sodagudi <psodagud@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>, 
+	Rob Herring <robh@kernel.org>, kernel@quicinc.com
+Subject: Re: [PATCH net-next v8 3/3] net: stmmac: Add driver support for
+ DWMAC5 common safety IRQ
+Message-ID: <xdcrwxh7e4t2zkgdcfwzjr2z4ouwgv3vr4drwvshadxmpwyqkd@j3kj3p2u7nd7>
+References: <20231221073620.232619-1-quic_jsuraj@quicinc.com>
+ <20231221073620.232619-4-quic_jsuraj@quicinc.com>
+ <yromhtr73rwsr6hizr4tq37vfvyzfue7wzpmufqyscwspzffza@uhfcrn573acd>
+ <aec2dc6a-ffa4-4753-a764-77dfe1af995a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231222-x1e80100-phy-pcie-v1-0-b74ac13390bf@linaro.org> <20231222-x1e80100-phy-pcie-v1-2-b74ac13390bf@linaro.org>
-In-Reply-To: <20231222-x1e80100-phy-pcie-v1-2-b74ac13390bf@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 22 Dec 2023 16:27:18 +0200
-Message-ID: <CAA8EJpp52D0f5hvLxB1h=ogtbyitV56AWw319JspB7YZT5-ZkA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] phy: qcom-qmp-pcie: Add support for X1E80100 g3x2 and
- g4x2 PCIE
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aec2dc6a-ffa4-4753-a764-77dfe1af995a@quicinc.com>
 
-On Fri, 22 Dec 2023 at 12:41, Abel Vesa <abel.vesa@linaro.org> wrote:
->
-> Add the X1E80100 G3 and G4 configurations.
->
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 173 +++++++++++++++++++++++++++++++
->  1 file changed, 173 insertions(+)
->
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> index 2af7115ef968..7a5cc4e80eda 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> @@ -982,6 +982,143 @@ static const struct qmp_phy_init_tbl sc8280xp_qmp_gen3x2_pcie_pcs_misc_tbl[] = {
->         QMP_PHY_INIT_CFG(QPHY_V5_PCS_PCIE_OSC_DTCT_ACTIONS, 0x00),
->  };
->
-> +static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_serdes_tbl[] = {
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_SSC_STEP_SIZE1_MODE1, 0x26),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_SSC_STEP_SIZE2_MODE1, 0x03),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE1, 0x06),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE1, 0x16),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE1, 0x36),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_CORECLK_DIV_MODE1, 0x04),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE1, 0x0a),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE1, 0x1a),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE1, 0x68),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_DIV_FRAC_START1_MODE1, 0xab),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_DIV_FRAC_START2_MODE1, 0xaa),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_DIV_FRAC_START3_MODE1, 0x02),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_HSCLK_SEL_1, 0x12),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_SSC_STEP_SIZE1_MODE0, 0xf8),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_SSC_STEP_SIZE2_MODE0, 0x01),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE0, 0x06),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE0, 0x16),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x36),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CORE_CLK_DIV_MODE0, 0x0a),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0x04),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x0d),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE0, 0x41),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_DIV_FRAC_START1_MODE0, 0xab),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_DIV_FRAC_START2_MODE0, 0xaa),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_DIV_FRAC_START3_MODE0, 0x01),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_HSCLK_HS_SWITCH_SEL_1, 0x00),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_BG_TIMER, 0x0a),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_SSC_EN_CENTER, 0x01),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_SSC_PER1, 0x62),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_SSC_PER2, 0x02),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_POST_DIV_MUX, 0x40),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_BIAS_EN_CLK_BUFLR_EN, 0x14),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_CLK_ENABLE1, 0x90),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_SYS_CLK_CTRL, 0x82),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_IVCO, 0x0f),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_SYSCLK_EN_SEL, 0x08),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP_EN, 0x46),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP_CFG, 0x04),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_MAP, 0x14),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_CLK_SELECT, 0x34),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_CORE_CLK_EN, 0xa0),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_CMN_CONFIG_1, 0x06),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_CMN_MISC_1, 0x88),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_CMN_MODE, 0x14),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_VCO_DC_LEVEL_CTRL, 0x0f),
-> +};
-> +
-> +static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_ln_shrd_tbl[] = {
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RXCLK_DIV2_CTRL, 0x01),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_DFE_DAC_ENABLE1, 0x88),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_TX_ADAPT_POST_THRESH1, 0x00),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_TX_ADAPT_POST_THRESH2, 0x1f),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MODE_RATE_0_1_B0, 0xd4),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MODE_RATE_0_1_B1, 0x12),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MODE_RATE_0_1_B2, 0xdb),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MODE_RATE_0_1_B3, 0x9a),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MODE_RATE_0_1_B4, 0x32),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MODE_RATE_0_1_B5, 0xb6),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MODE_RATE_0_1_B6, 0x64),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH1_RATE210, 0x1f),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH1_RATE3, 0x1f),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH2_RATE210, 0x1f),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH2_RATE3, 0x1f),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH3_RATE210, 0x1f),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH3_RATE3, 0x1f),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH4_RATE3, 0x1f),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH5_RATE3, 0x1f),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH6_RATE3, 0x1f),
-> +};
-> +
-> +static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_tx_tbl[] = {
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_TX_RES_CODE_LANE_OFFSET_TX, 0x1d),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_TX_RES_CODE_LANE_OFFSET_RX, 0x03),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_TX_LANE_MODE_1, 0x01),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_TX_LANE_MODE_2, 0x10),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_TX_LANE_MODE_3, 0x51),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_TX_TRAN_DRVR_EMP_EN, 0x34),
-> +};
-> +
-> +static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_rx_tbl[] = {
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_UCDR_FO_GAIN_RATE_2, 0x0c),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_UCDR_SO_GAIN_RATE_2, 0x04),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_UCDR_FO_GAIN_RATE_3, 0x0a),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_UCDR_PI_CONTROLS, 0x16),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_UCDR_SO_ACC_DEFAULT_VAL_RATE3, 0x00),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_IVCM_CAL_CTRL2, 0x80),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_IVCM_POSTCAL_OFFSET, 0x00),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_BKUP_CTRL1, 0x15),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_DFE_1, 0x01),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_DFE_2, 0x01),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_DFE_3, 0x45),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_VGA_CAL_MAN_VAL, 0x0b),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_GM_CAL, 0x0d),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_EQU_ADAPTOR_CNTRL4, 0x0b),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_SIGDET_ENABLES, 0x1c),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_PHPRE_CTRL, 0x20),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_DFE_CTLE_POST_CAL_OFFSET, 0x38),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_Q_PI_INTRINSIC_BIAS_RATE32, 0x39),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE2_B0, 0x14),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE2_B1, 0xb3),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE2_B2, 0x58),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE2_B3, 0x9a),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE2_B4, 0x26),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE2_B5, 0xb6),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE2_B6, 0xee),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE3_B0, 0xe4),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE3_B1, 0xa4),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE3_B2, 0x60),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE3_B3, 0xdf),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE3_B4, 0x4b),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE3_B5, 0x76),
-> +       QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE3_B6, 0xff),
-> +};
-> +
-> +static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_pcs_tbl[] = {
-> +       QMP_PHY_INIT_CFG(QPHY_V6_20_PCS_G3S2_PRE_GAIN, 0x2e),
-> +       QMP_PHY_INIT_CFG(QPHY_V6_20_PCS_RX_SIGDET_LVL, 0xcc),
-> +       QMP_PHY_INIT_CFG(QPHY_V6_20_PCS_EQ_CONFIG4, 0x00),
-> +       QMP_PHY_INIT_CFG(QPHY_V6_20_PCS_EQ_CONFIG5, 0x22),
-> +};
-> +
-> +static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_pcs_misc_tbl[] = {
-> +       QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_ENDPOINT_REFCLK_DRIVE, 0xc1),
-> +       QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_OSC_DTCT_ATCIONS, 0x00),
-> +       QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_EQ_CONFIG1, 0x16),
-> +       QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_EQ_CONFIG5, 0x02),
-> +       QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_G4_PRE_GAIN, 0x2e),
-> +       QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_RX_MARGINING_CONFIG1, 0x03),
-> +       QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_RX_MARGINING_CONFIG3, 0x28),
-> +       QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_TX_RX_CONFIG, 0xc0),
-> +       QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_POWER_STATE_CONFIG2, 0x1d),
-> +       QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_RX_MARGINING_CONFIG5, 0x0f),
-> +       QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_G3_FOM_EQ_CONFIG5, 0xf2),
-> +       QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_G4_FOM_EQ_CONFIG5, 0xf2),
-> +};
-> +
->  static const struct qmp_phy_init_tbl sm8250_qmp_pcie_serdes_tbl[] = {
->         QMP_PHY_INIT_CFG(QSERDES_V4_COM_SYSCLK_EN_SEL, 0x08),
->         QMP_PHY_INIT_CFG(QSERDES_V4_COM_CLK_SELECT, 0x34),
-> @@ -3183,6 +3320,36 @@ static const struct qmp_phy_cfg sa8775p_qmp_gen4x4_pciephy_cfg = {
->         .phy_status             = PHYSTATUS_4_20,
->  };
->
-> +static const struct qmp_phy_cfg x1e80100_qmp_gen4x2_pciephy_cfg = {
-> +       .lanes = 2,
-> +
-> +       .offsets                = &qmp_pcie_offsets_v6_20,
-> +
-> +       .tbls = {
-> +               .serdes                 = x1e80100_qmp_gen4x2_pcie_serdes_tbl,
-> +               .serdes_num             = ARRAY_SIZE(x1e80100_qmp_gen4x2_pcie_serdes_tbl),
-> +               .tx                     = x1e80100_qmp_gen4x2_pcie_tx_tbl,
-> +               .tx_num                 = ARRAY_SIZE(x1e80100_qmp_gen4x2_pcie_tx_tbl),
-> +               .rx                     = x1e80100_qmp_gen4x2_pcie_rx_tbl,
-> +               .rx_num                 = ARRAY_SIZE(x1e80100_qmp_gen4x2_pcie_rx_tbl),
-> +               .pcs                    = x1e80100_qmp_gen4x2_pcie_pcs_tbl,
-> +               .pcs_num                = ARRAY_SIZE(x1e80100_qmp_gen4x2_pcie_pcs_tbl),
-> +               .pcs_misc               = x1e80100_qmp_gen4x2_pcie_pcs_misc_tbl,
-> +               .pcs_misc_num           = ARRAY_SIZE(x1e80100_qmp_gen4x2_pcie_pcs_misc_tbl),
-> +               .ln_shrd                = x1e80100_qmp_gen4x2_pcie_ln_shrd_tbl,
-> +               .ln_shrd_num            = ARRAY_SIZE(x1e80100_qmp_gen4x2_pcie_ln_shrd_tbl),
-> +       },
-> +       .reset_list             = sdm845_pciephy_reset_l,
-> +       .num_resets             = ARRAY_SIZE(sdm845_pciephy_reset_l),
-> +       .vreg_list              = sm8550_qmp_phy_vreg_l,
-> +       .num_vregs              = ARRAY_SIZE(sm8550_qmp_phy_vreg_l),
-> +       .regs                   = pciephy_v5_regs_layout,
+On Fri, Dec 22, 2023 at 02:13:49PM +0530, Suraj Jaiswal wrote:
+> HI Serge,
+> please find commnet inline.
+> 
+> Thanks
+> Suraj
+> 
+> On 12/21/2023 6:19 PM, Serge Semin wrote:
+> > Hi Suraj
+> > 
+> > On Thu, Dec 21, 2023 at 01:06:20PM +0530, Suraj Jaiswal wrote:
+> >> Add support to listen HW safety IRQ like ECC(error
+> >> correction code), DPP(data path parity), FSM(finite state
+> >> machine) fault in common IRQ line.
+> >>
+> >> Signed-off-by: Suraj Jaiswal <quic_jsuraj@quicinc.com>
+> > 
+> > Thanks for taking my notes into account. One more comment is further
+> > below.
+> > 
+> >> ---
+> >>  drivers/net/ethernet/stmicro/stmmac/common.h  |  1 +
+> >>  drivers/net/ethernet/stmicro/stmmac/stmmac.h  |  3 ++
+> >>  .../net/ethernet/stmicro/stmmac/stmmac_main.c | 37 +++++++++++++++++++
+> >>  .../ethernet/stmicro/stmmac/stmmac_platform.c |  8 ++++
+> >>  4 files changed, 49 insertions(+)
+> >>
+> >> diff --git a/drivers/net/ethernet/stmicro/stmmac/common.h b/drivers/net/ethernet/stmicro/stmmac/common.h
+> >> index 721c1f8e892f..b9233b09b80f 100644
+> >> --- a/drivers/net/ethernet/stmicro/stmmac/common.h
+> >> +++ b/drivers/net/ethernet/stmicro/stmmac/common.h
+> >> @@ -344,6 +344,7 @@ enum request_irq_err {
+> >>  	REQ_IRQ_ERR_ALL,
+> >>  	REQ_IRQ_ERR_TX,
+> >>  	REQ_IRQ_ERR_RX,
+> >> +	REQ_IRQ_ERR_SFTY,
+> >>  	REQ_IRQ_ERR_SFTY_UE,
+> >>  	REQ_IRQ_ERR_SFTY_CE,
+> >>  	REQ_IRQ_ERR_LPI,
+> >> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+> >> index 9f89acf31050..ca3d93851bed 100644
+> >> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+> >> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+> >> @@ -31,6 +31,7 @@ struct stmmac_resources {
+> >>  	int wol_irq;
+> >>  	int lpi_irq;
+> >>  	int irq;
+> >> +	int sfty_irq;
+> >>  	int sfty_ce_irq;
+> >>  	int sfty_ue_irq;
+> >>  	int rx_irq[MTL_MAX_RX_QUEUES];
+> >> @@ -297,6 +298,7 @@ struct stmmac_priv {
+> >>  	void __iomem *ptpaddr;
+> >>  	void __iomem *estaddr;
+> >>  	unsigned long active_vlans[BITS_TO_LONGS(VLAN_N_VID)];
+> >> +	int sfty_irq;
+> >>  	int sfty_ce_irq;
+> >>  	int sfty_ue_irq;
+> >>  	int rx_irq[MTL_MAX_RX_QUEUES];
+> >> @@ -305,6 +307,7 @@ struct stmmac_priv {
+> >>  	char int_name_mac[IFNAMSIZ + 9];
+> >>  	char int_name_wol[IFNAMSIZ + 9];
+> >>  	char int_name_lpi[IFNAMSIZ + 9];
+> >> +	char int_name_sfty[IFNAMSIZ + 10];
+> >>  	char int_name_sfty_ce[IFNAMSIZ + 10];
+> >>  	char int_name_sfty_ue[IFNAMSIZ + 10];
+> >>  	char int_name_rx_irq[MTL_MAX_TX_QUEUES][IFNAMSIZ + 14];
+> >> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+> >> index 47de466e432c..7d4e827dfeab 100644
+> >> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+> >> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+> >> @@ -3592,6 +3592,10 @@ static void stmmac_free_irq(struct net_device *dev,
+> >>  		if (priv->wol_irq > 0 && priv->wol_irq != dev->irq)
+> >>  			free_irq(priv->wol_irq, dev);
+> >>  		fallthrough;
+> >> +	case REQ_IRQ_ERR_SFTY:
+> >> +		if (priv->sfty_irq > 0 && priv->sfty_irq != dev->irq)
+> >> +			free_irq(priv->sfty_irq, dev);
+> >> +		fallthrough;
+> >>  	case REQ_IRQ_ERR_WOL:
+> >>  		free_irq(dev->irq, dev);
+> >>  		fallthrough;
+> >> @@ -3661,6 +3665,23 @@ static int stmmac_request_irq_multi_msi(struct net_device *dev)
+> >>  		}
+> >>  	}
+> >>  
+> >> +	/* Request the common Safety Feature Correctible/Uncorrectible
+> >> +	 * Error line in case of another line is used
+> >> +	 */
+> >> +	if (priv->sfty_irq > 0 && priv->sfty_irq != dev->irq) {
+> >> +		int_name = priv->int_name_sfty;
+> >> +		sprintf(int_name, "%s:%s", dev->name, "safety");
+> >> +		ret = request_irq(priv->sfty_irq, stmmac_safety_interrupt,
+> >> +				  0, int_name, dev);
+> >> +		if (unlikely(ret < 0)) {
+> >> +			netdev_err(priv->dev,
+> >> +				   "%s: alloc sfty MSI %d (error: %d)\n",
+> >> +				   __func__, priv->sfty_irq, ret);
+> >> +			irq_err = REQ_IRQ_ERR_SFTY;
+> >> +			goto irq_error;
+> >> +		}
+> >> +	}
+> >> +
+> >>  	/* Request the Safety Feature Correctible Error line in
+> >>  	 * case of another line is used
+> >>  	 */
+> >> @@ -3798,6 +3819,21 @@ static int stmmac_request_irq_single(struct net_device *dev)
+> >>  		}
+> >>  	}
+> >>  
+> >> +	/* Request the common Safety Feature Correctible/Uncorrectible
+> >> +	 * Error line in case of another line is used
+> >> +	 */
+> >> +	if (priv->sfty_irq > 0 && priv->sfty_irq != dev->irq) {
+> > 
+> >> +		ret = request_irq(priv->sfty_irq, stmmac_safety_interrupt,
+> >> +				  IRQF_SHARED, dev->name, dev);
+> > 
+> > Just noticed yesterday that stmmac_safety_interrupt() is also called
+> > from the stmmac_interrupt() handler which is supposed to be registered
+> > on the generic "mac" IRQ. Won't it cause races around the CSRs
+> > (doubtfully but still worth to note) and the errors handling
+> > (stmmac_global_err()) in case if both IRQs are raised simultaneously?
+> > At the very least it looks suspicious and worth double-checking.
+> > 
+> > I also found out that nobody seemed to care that the same handler is
+> > registered on MAC, WoL and LPI IRQ lines. Hmm, no race-related
+> > problems have been reported so far for the platforms with separate
+> > WoL/LPI IRQs. It's either a lucky coincident or the IRQs are always
+> > assigned to the same CPU or the IRQs handle is indeed free of races.
+> > In anyway it looks suspicious too. At the very least AFAICS the DMA
+> > IRQ-handler is indeed racy on the status CSR access. It isn't
+> > cleared-on-read, but write-one-to-clear. So the statistics might be
+> > calculated more than once for the same CSR state. There might be some
+> > other problems I failed to spot on the first glance.
+> > 
+> > David, Eric, Jacub, Paolo, your opinion about the note above?
+> > 
+> > -Serge(y)
+> > 
 
-pciephy_v6_regs_layout
+> <Suraj> We are adding common IRQ similar to already present code for correcteable/uncorrecable https://elixir.bootlin.com/linux/latest/source/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c#L3592.
 
-LGTM otherwise.
+From that perspective your change in stmmac_request_irq_multi_msi() is
+correct, but stmmac_request_irq_single() is another story. The first
+one method implies assigning the individual IRQ handlers to all
+available lines. The later method assigns the _common_ handler to all
+the lines. The common handler already calls the Safety IRQ handler -
+stmmac_safety_feat_interrupt(). So should the safety IRQ line is
+separately available it's possible to have the Safety IRQ handlers
+executed concurrently - in framework of the common IRQ events handling
+(if safety IRQ is raised during the common IRQ being handled) and
+individual Safety IRQ. It's prune to the race condition I pointed out
+to in my message above. Did you consider that problem?
 
-> +
-> +       .pwrdn_ctrl             = SW_PWRDN | REFCLK_DRV_DSBL,
-> +       .phy_status             = PHYSTATUS_4_20,
-> +       .has_nocsr_reset        = true,
-> +};
-> +
->  static void qmp_pcie_configure_lane(void __iomem *base,
->                                         const struct qmp_phy_init_tbl tbl[],
->                                         int num,
-> @@ -3885,6 +4052,12 @@ static const struct of_device_id qmp_pcie_of_match_table[] = {
->         }, {
->                 .compatible = "qcom,sm8650-qmp-gen4x2-pcie-phy",
->                 .data = &sm8650_qmp_gen4x2_pciephy_cfg,
-> +       }, {
-> +               .compatible = "qcom,x1e80100-qmp-gen3x2-pcie-phy",
-> +               .data = &sm8550_qmp_gen3x2_pciephy_cfg,
-> +       }, {
-> +               .compatible = "qcom,x1e80100-qmp-gen4x2-pcie-phy",
-> +               .data = &x1e80100_qmp_gen4x2_pciephy_cfg,
->         },
->         { },
->  };
->
-> --
-> 2.34.1
->
->
+> Also, we need the sfty IRQ handling as soon as the fault occured & that can only be handled if we have handler attached with sfty IRQ.
+> stmmac_interrupt() will only be triggerd when interrupt triggered for rx/tx packet .
+> while registerting with sfty IRQ will get triggered as soon as emac HW detect the fault. 
 
+Please read my comment more carefully. The safety IRQ can be raised
+during the common IRQ handling, thus the
+stmmac_safety_feat_interrupt() method might get to be concurrently
+executed.
 
--- 
-With best wishes
-Dmitry
+-Serge(y)
+
+>    
+> >> +		if (unlikely(ret < 0)) {
+> >> +			netdev_err(priv->dev,
+> >> +				   "%s: ERROR: allocating the sfty IRQ %d (%d)\n",
+> >> +				   __func__, priv->sfty_irq, ret);
+> >> +			irq_err = REQ_IRQ_ERR_SFTY;
+> >> +			goto irq_error;
+> >> +		}
+> >> +	}
+> >> +
+> >>  	return 0;
+> >>  
+> >>  irq_error:
+> >> @@ -7462,6 +7498,7 @@ int stmmac_dvr_probe(struct device *device,
+> >>  	priv->dev->irq = res->irq;
+> >>  	priv->wol_irq = res->wol_irq;
+> >>  	priv->lpi_irq = res->lpi_irq;
+> >> +	priv->sfty_irq = res->sfty_irq;
+> >>  	priv->sfty_ce_irq = res->sfty_ce_irq;
+> >>  	priv->sfty_ue_irq = res->sfty_ue_irq;
+> >>  	for (i = 0; i < MTL_MAX_RX_QUEUES; i++)
+> >> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+> >> index 70eadc83ca68..ab250161fd79 100644
+> >> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+> >> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+> >> @@ -743,6 +743,14 @@ int stmmac_get_platform_resources(struct platform_device *pdev,
+> >>  		dev_info(&pdev->dev, "IRQ eth_lpi not found\n");
+> >>  	}
+> >>  
+> >> +	stmmac_res->sfty_irq =
+> >> +		platform_get_irq_byname_optional(pdev, "sfty");
+> >> +	if (stmmac_res->sfty_irq < 0) {
+> >> +		if (stmmac_res->sfty_irq == -EPROBE_DEFER)
+> >> +			return -EPROBE_DEFER;
+> >> +		dev_info(&pdev->dev, "IRQ safety IRQ not found\n");
+> >> +	}
+> >> +
+> >>  	stmmac_res->addr = devm_platform_ioremap_resource(pdev, 0);
+> >>  
+> >>  	return PTR_ERR_OR_ZERO(stmmac_res->addr);
+> >> -- 
+> >> 2.25.1
+> >>
+> >>
 
