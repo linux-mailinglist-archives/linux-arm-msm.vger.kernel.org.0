@@ -1,246 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-5913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5914-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D9FD81D311
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Dec 2023 09:06:28 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 24CD381D3DA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Dec 2023 12:55:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 170871F21126
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Dec 2023 08:06:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4F8C01C20D62
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Dec 2023 11:55:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 553724A34;
-	Sat, 23 Dec 2023 08:06:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 175E0CA6E;
+	Sat, 23 Dec 2023 11:55:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="iNm7uSiv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tpSTe79z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750B58BE0;
-	Sat, 23 Dec 2023 08:06:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
-Received: from authenticated-user (box.trvn.ru [194.87.146.52])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-	(No client certificate requested)
-	by box.trvn.ru (Postfix) with ESMTPSA id B252441BD2;
-	Sat, 23 Dec 2023 13:05:33 +0500 (+05)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-	t=1703318736; bh=e08FoWdtPSBF5xVKc91iPWDm+2CtVdPEztlQEzzLCXQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=iNm7uSivuY3lLD2FvO/siVeJpH5oY+zOTe++KykAHZBgFklLQbxJ0VeWGVKonQMk7
-	 2Q4EgDbFs5VxzLt5Gm6KpfnWJsaHLIuuMvEauc6xfHA/e3WZdnnyG1iIQ2GrqwTOHm
-	 5cpFnfqpunmLiQB0VDGSEeR8xbO/i/k10nfuctLmmOVwGDCbNVw9BJwEyDfMIHMdcW
-	 nHRZ34p64tLw0udA1b7jAiEsoqyflT/18ivYQNRz0DxA8zZm5V3fbOW2JVVnZ2M4Ia
-	 rVw4DYiPZ1VC+nqjKUiacDYyclQTyJYgajJ6eblr1E4D7pY1NwUNy6EiI1pbv1MDG9
-	 xKzhDWvl5pxkw==
-Date: Sat, 23 Dec 2023 13:05:29 +0500
-From: Nikita Travkin <nikita@trvn.ru>
-To: Chia-I Wu <olvaffe@gmail.com>
-Cc: cros-qcom-dts-watchers@chromium.org, Andy Gross <agross@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Maulik Shah <quic_mkshah@quicinc.com>, 
-	Ulf Hansson <ulf.hansson@linaro.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3] arm64: dts: qcom: sc7280: revert back to PSCI PC mode
- for herobrine
-Message-ID: <bwfqomkub25wr5nsqvbp3dkpeda5halx4rsd2jgfct3rk5qxux@gqrdks7oyavk>
-References: <20231222190311.3344572-1-olvaffe@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B787CA53
+	for <linux-arm-msm@vger.kernel.org>; Sat, 23 Dec 2023 11:55:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-33674f60184so2554572f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Dec 2023 03:55:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1703332541; x=1703937341; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vPGk0HjLiKQ+CxO6emi2O17JwxG8APTMJGWVOcTcvfQ=;
+        b=tpSTe79z/ylvB4kRUa0CzkaP883KVii01D+38IeF43N6OqRd5Y711S0rakhcKRqW3p
+         YjiD3lOKbaJ8MHj/i5QQNG/QThsSV73E7u62nvmP93qUfmNiw5IugruzAGTd1tsvUIxJ
+         2a2L77Tfa6jL3900SEswn4gfxSeNGtSJnfQz/wCqLRNYOXAeSM5Iop8uxzxjCcs+Zb8B
+         XuzcjAAxOxrS7n7YhUPWIHXh1qcdE0zIEfHrtrRY17o7OeCDTJSgcIwKDJlGsM1Jy8bx
+         8uzR4siQoswfJmGJIUBzQyyd9OJVtZdRRqe8KfdP0NPFnFTq7Aj2xN3XzG1vXdjDCa6l
+         kvKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703332541; x=1703937341;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vPGk0HjLiKQ+CxO6emi2O17JwxG8APTMJGWVOcTcvfQ=;
+        b=khCM9XZP4pViN8hFGKZXNAH2rPPk5j+v/3MAAbi4voXXB6vn41k7ZgxXpMUyMcrkpX
+         DEdcvV9qwj1AuHuxumgH2HfUxu536nve10twffLsD++3zcDwCyC6UkoMVldvMxajEDwI
+         gkv3/ISWeqEE2Li25CrHnJKS2PfGOI2c8xkBqZ2brOtzMy0AaQWmYqmqEjiLAlCW9oXi
+         qrAU4rYXq9F1mTVyEneRLTa2j/9z1JcNcRp7PzpZM8fpIjETnnRAPvZCmc1VXlEJvB97
+         nnAr/JCZSJ7Z3RJ78imm6pHgS1tVjC3qb5BMueXsa5RUB6w7O/1eSop/ay7KkAKy6n05
+         LoEA==
+X-Gm-Message-State: AOJu0Ywk5D29izPUiPNowPwEYmQmiwX9G4MWCs6OWqStVFAaDL88CfuR
+	rUGFVYsyBmXibiJoXE+/DV7TmMsL5FU+QA==
+X-Google-Smtp-Source: AGHT+IEY+TL616yws8qTBZ6IKKDIvFw0yhgoQ1kz8rSNxIo80Asg/yeKA23VhJS3VGagBrqFhKR4uw==
+X-Received: by 2002:a05:6000:100f:b0:336:a0e2:1117 with SMTP id a15-20020a056000100f00b00336a0e21117mr671182wrx.140.1703332540494;
+        Sat, 23 Dec 2023 03:55:40 -0800 (PST)
+Received: from [127.0.1.1] ([79.115.23.25])
+        by smtp.gmail.com with ESMTPSA id r10-20020adfce8a000000b00336781490dcsm6351525wrn.69.2023.12.23.03.55.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 23 Dec 2023 03:55:39 -0800 (PST)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH v2 0/3] phy: qcom: qmp-pcie: Add support for G3/G4 PCIe PHY
+ for X1E80100
+Date: Sat, 23 Dec 2023 13:55:20 +0200
+Message-Id: <20231223-x1e80100-phy-pcie-v2-0-223c0556908a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231222190311.3344572-1-olvaffe@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKjKhmUC/23NQQrCMBCF4auUrB2ZJILWlfeQLpJ00gyUpCRaW
+ krvbiwuXf4PHt8mCmWmIu7NJjLNXDjFGurUCBdMHAi4ry0UKi0VSlgk3VAiwhRWmBwTkL9eTG9
+ b4zWK+rOmENhsogv1Gd/jWMcpk+flgJ5d7cDllfJ6uLP8rj9CqT/ELAHBVsZJrVu0/jFyNDmdU
+ x5Et+/7B3VCtr/IAAAA
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Abel Vesa <abel.vesa@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1235; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=Hk/a9Ag7u1CiPccqFteOJa8czWyyeAF22NOW7Iqw3qw=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlhsqrzQaD++ommUEpEZ5dUZVxjtSvLm9zc0r0C
+ DsnFYzt2waJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZYbKqwAKCRAbX0TJAJUV
+ Vq5WEACCOItGsuunfzlThSOrDl7CA89Keed1vy28p/oxWkC3c6Sjp204+Ld0LP9d6PBZCBXOd1o
+ /lSem+tUVoBhQG119cd25oxEPXJQQ0l/pRTvevEZH3QVayUOM7YvgVQRBXmc8BIUEYJ3nt0TCLd
+ RNjx4mHd08q3x5f5/yxvrE3VUpWWY6Ug9mBQ1+cFcbmBGySKOLNTIqaujJOH1GBCSIE8bHpKXRT
+ eo9bA7hBuPymVUjTmENow7VO88QAR1npiUAWuIrtmkTb7xq1rygd/Jch1JNsYHfF1mNnHGN9tvp
+ Iszcgr0HWHsIpAX1+FY1PVfFHPTn0bMuigZ37+kE7PZ2Fgrnrqz4DGqsmBQoD2pCyWxvTS9+nn2
+ jHXCHwC3sWmykaw2+4oxrN8bV3OT7dxOnJy/9I2PdbKo7qCbGxFgG4tSCAqDHAN909mL1E7U4FA
+ 0PeZoNMHf/zl/3elRUtClKRj79dgFy7ieUIlsPj/JxInoqUF1FxZ/1oh8zfVe9xgLCFPMY/xOxB
+ l5JSv+6xWFdSy1/qd9SJqVhJHBqP6V8Glfn6FDv+8K9jkk6HpQr9hQ9c7LeamRl8DKq91c/hiZC
+ MtAt1N2XOsNi0F7zyr/kNVg438Byd/NhQa6lyd5KbIZDOcnVkS5igH91mVY2d4JkXHrUa9pfzRb
+ 0t5/+gdmFezbxCA==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-On Fri, Dec 22, 2023 at 11:03:03AM -0800, Chia-I Wu wrote:
-> Commit 7925ca85e9561 ("arm64: dts: qcom: sc7280: Add power-domains for
-> cpuidle states") transitioned all SC7280 devices to PSCI OS initiated
-> mode, which doesn't work on TFA-based SC7280 devices.  This effectively
-> revert the commit for sc7280-herobrine.
->
+This patchset adds the G4 tables and G4/G3 compatibles for X1E80100
+platforms. Also adds the pciphy_v6_regs_layout to be used by the G4x2
+phy and switches all the old QMP v6 PHYs to use the new regs layout.
 
-Hi!
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+Changes in v2:
+- Added Krzysztof's R-b tag to first patch
+- Added new patch which brings the pciephy_v6_regs_layout and made sure
+  all older (existing) QMP v6 are using that.
+- Switched the regs layout of the x1e80100 gen4x2 to the new
+  pciephy_v6_regs_layout
+- Link to v1: https://lore.kernel.org/r/20231222-x1e80100-phy-pcie-v1-0-b74ac13390bf@linaro.org
 
-I believe modern TF-A includes OSI mode, and it was added pretty much
-specifically for sc7280, as described in [1]. More to that, I think
-the original commit that introduced OSI mode for sc7280 did it using
-the TF-A specific suspend params (I believe they are different from
-qcom firmware) so the leftover state of the base soc dtsi would be
-weird...
+---
+Abel Vesa (3):
+      dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Document the X1E80100 QMP PCIe PHYs
+      phy: qcom: qmp-pcie: Add QMP v6 registers layout
+      phy: qcom-qmp-pcie: Add support for X1E80100 g3x2 and g4x2 PCIE
 
-I can't understand why this change is needed...
+ .../bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml   |   6 +
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c           | 186 ++++++++++++++++++++-
+ 2 files changed, 189 insertions(+), 3 deletions(-)
+---
+base-commit: 8a9be2a3cb673dba9d22311beb74be261f0b3f15
+change-id: 20231201-x1e80100-phy-pcie-ef74adb9af30
 
-Nikita
+Best regards,
+-- 
+Abel Vesa <abel.vesa@linaro.org>
 
-[1] https://trustedfirmware-a.readthedocs.io/en/latest/design_documents/psci_osi_mode.html
-
-> Fixes: 7925ca85e9561 ("arm64: dts: qcom: sc7280: Add power-domains for cpuidle states")
-> Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
-> ---
-> 
-> v2: improved commit message
-> v3: improved commit message.  I hope it's better now!
-> 
->  .../boot/dts/qcom/sc7280-firmware-tfa.dtsi    | 107 ++++++++++++++++++
->  .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi |   1 +
->  arch/arm64/boot/dts/qcom/sc7280.dtsi          |   4 +-
->  3 files changed, 110 insertions(+), 2 deletions(-)
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-firmware-tfa.dtsi
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-firmware-tfa.dtsi b/arch/arm64/boot/dts/qcom/sc7280-firmware-tfa.dtsi
-> new file mode 100644
-> index 0000000000000..b3fc03da244d6
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-firmware-tfa.dtsi
-> @@ -0,0 +1,107 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +
-> +/*
-> + * Devices that use SC7280 with TrustedFirmware-A
-> + * need PSCI PC mode instead of the OSI mode provided
-> + * by Qualcomm firmware.
-> + */
-> +
-> +&CPU0 {
-> +	/delete-property/ power-domains;
-> +	/delete-property/ power-domain-names;
-> +
-> +	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
-> +			   &LITTLE_CPU_SLEEP_1
-> +			   &CLUSTER_SLEEP_0>;
-> +};
-> +
-> +&CPU1 {
-> +	/delete-property/ power-domains;
-> +	/delete-property/ power-domain-names;
-> +
-> +	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
-> +			   &LITTLE_CPU_SLEEP_1
-> +			   &CLUSTER_SLEEP_0>;
-> +};
-> +
-> +&CPU2 {
-> +	/delete-property/ power-domains;
-> +	/delete-property/ power-domain-names;
-> +
-> +	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
-> +			   &LITTLE_CPU_SLEEP_1
-> +			   &CLUSTER_SLEEP_0>;
-> +};
-> +
-> +&CPU3 {
-> +	/delete-property/ power-domains;
-> +	/delete-property/ power-domain-names;
-> +
-> +	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
-> +			   &LITTLE_CPU_SLEEP_1
-> +			   &CLUSTER_SLEEP_0>;
-> +};
-> +
-> +&CPU4 {
-> +	/delete-property/ power-domains;
-> +	/delete-property/ power-domain-names;
-> +
-> +	cpu-idle-states = <&BIG_CPU_SLEEP_0
-> +			   &BIG_CPU_SLEEP_1
-> +			   &CLUSTER_SLEEP_0>;
-> +};
-> +
-> +&CPU5 {
-> +	/delete-property/ power-domains;
-> +	/delete-property/ power-domain-names;
-> +
-> +	cpu-idle-states = <&BIG_CPU_SLEEP_0
-> +			   &BIG_CPU_SLEEP_1
-> +			   &CLUSTER_SLEEP_0>;
-> +};
-> +
-> +&CPU6 {
-> +	/delete-property/ power-domains;
-> +	/delete-property/ power-domain-names;
-> +
-> +	cpu-idle-states = <&BIG_CPU_SLEEP_0
-> +			   &BIG_CPU_SLEEP_1
-> +			   &CLUSTER_SLEEP_0>;
-> +};
-> +
-> +&CPU7 {
-> +	/delete-property/ power-domains;
-> +	/delete-property/ power-domain-names;
-> +
-> +	cpu-idle-states = <&BIG_CPU_SLEEP_0
-> +			   &BIG_CPU_SLEEP_1
-> +			   &CLUSTER_SLEEP_0>;
-> +};
-> +
-> +/delete-node/ &domain_idle_states;
-> +
-> +&idle_states {
-> +	CLUSTER_SLEEP_0: cluster-sleep-0 {
-> +		compatible = "arm,idle-state";
-> +		idle-state-name = "cluster-power-down";
-> +		arm,psci-suspend-param = <0x40003444>;
-> +		entry-latency-us = <3263>;
-> +		exit-latency-us = <6562>;
-> +		min-residency-us = <9926>;
-> +		local-timer-stop;
-> +	};
-> +};
-> +
-> +/delete-node/ &CPU_PD0;
-> +/delete-node/ &CPU_PD1;
-> +/delete-node/ &CPU_PD2;
-> +/delete-node/ &CPU_PD3;
-> +/delete-node/ &CPU_PD4;
-> +/delete-node/ &CPU_PD5;
-> +/delete-node/ &CPU_PD6;
-> +/delete-node/ &CPU_PD7;
-> +/delete-node/ &CLUSTER_PD;
-> +
-> +&apps_rsc {
-> +	/delete-property/ power-domains;
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> index 9ea6636125ad9..09b2d370bf7e0 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> @@ -19,6 +19,7 @@
->  
->  #include "sc7280-qcard.dtsi"
->  #include "sc7280-chrome-common.dtsi"
-> +#include "sc7280-firmware-tfa.dtsi"
->  
->  / {
->  	chosen {
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 66f1eb83cca7e..354bf2868eba6 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -383,7 +383,7 @@ core7 {
->  			};
->  		};
->  
-> -		idle-states {
-> +		idle_states: idle-states {
->  			entry-method = "psci";
->  
->  			LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
-> @@ -427,7 +427,7 @@ BIG_CPU_SLEEP_1: cpu-sleep-1-1 {
->  			};
->  		};
->  
-> -		domain-idle-states {
-> +		domain_idle_states: domain-idle-states {
->  			CLUSTER_SLEEP_0: cluster-sleep-0 {
->  				compatible = "domain-idle-state";
->  				idle-state-name = "cluster-power-down";
-> -- 
-> 2.43.0.195.gebba966016-goog
 
