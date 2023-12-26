@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-5979-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72BE681E66C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Dec 2023 10:33:26 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C730181E674
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Dec 2023 10:37:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2E173282EE3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Dec 2023 09:33:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EBFE31C2150B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Dec 2023 09:37:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C61F4D129;
-	Tue, 26 Dec 2023 09:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AE154D123;
+	Tue, 26 Dec 2023 09:37:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Lc1MGMGc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kq4VXrax"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308D54CE18
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Dec 2023 09:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB284D584
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Dec 2023 09:36:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-554dbe1857dso1312797a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Dec 2023 01:33:10 -0800 (PST)
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-5534dcfdd61so7360904a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Dec 2023 01:36:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703583189; x=1704187989; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1703583416; x=1704188216; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=6KZXQn9ODEq2Iz6nICwBj41bsX2uZdgILwjZcdz3rdo=;
-        b=Lc1MGMGc8cYLNOruArOlfLfpl10uKwMLHPM0lfVaNuLCjNYGxfLW6sXaRCnz/YVdDA
-         uaZ/sBAHFo3FIyEPGZP8WdC3tuS/T0Xe3U24RpphEUCEhBSXrprYbAHMPP5NftMQEME7
-         H+ZStbE9Gcny8p6klXiQZ5z/Bm777gSEjM59C8FZKmGog1i+onnjrMWeBgoKHEbE90Jj
-         59napbmBEapTd31vKDH11E8JUTZoHfg/Q4roVZAsm6/LEBj5HJmQ5U6RCyJ9mF67lY4T
-         j18ej3H3dstvCGEQzkGxOIVvMvgPOaIIX75xR0poYaqwdcz/7/6W3eSQLmufcxAIprRc
-         3i5w==
+        bh=aq/IL+aI2wvzsv74vMm6XI/3SuDRb0LU/4Y+hul9Li4=;
+        b=kq4VXraxutFoQwGUGX0k0dIc1r28SkaOsyyBDpS61Ds4OyzcXy6XtUB8rjUHXlNNRq
+         5sMAvoEfOYlIEdshBjdLjL4dRJJEiQAd4OTt4zOPKw/k2ivkz5EAqj9WpJYMX+M/CX6S
+         7Z3uuEfb1HH0+QJGQaPAABSxclZcBM9WlY36K9P53jeq2GMt+ac4OoULMwigQqNwtZsB
+         LvCbM4M+eRQQsI76z6zD+1iA0q8mV33fWnCvTjCKZ1PeMmceS7IaYwzDB410HhqnOEFX
+         54sOCm37nORawSecU/psmpCuVRmqRPi/FoXa0tArRLjCzEM9/YmSsKx54qqwTMo0Um5d
+         aV8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703583189; x=1704187989;
+        d=1e100.net; s=20230601; t=1703583416; x=1704188216;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6KZXQn9ODEq2Iz6nICwBj41bsX2uZdgILwjZcdz3rdo=;
-        b=HGakejFsPg/I1fPRIuSmoNuOUcHtgdVEpqwyB9VlWYYPRsgGSvbGPPa95SJg2hIG/X
-         4fclfdX2AOYKwZgVmEju6xj5E2fo4hKNKIQkThMdhyaA/8hQtiTchOCI6ythJRXIo6KA
-         BKd33sfsGR2raW7IvirQEmcoEtiJ+91F12puQRai+TjpC7fRKzJrabAjbtQRUxbIB3eu
-         teyK7s6CY2+c1topGUXIe4wawblzp3PR7LdSn/klLsbnJrywYtIVTk/YK+JsxzMzZv/H
-         B6JFy2ijRHe1YDJkrm2WF/Q3/qcIM1GAD3pWr+NsNFU8tFGfwIH4kjHemjE/Mul4AXtg
-         QGbw==
-X-Gm-Message-State: AOJu0Yy8VRr8K7t4n7itAvFKEYhHWaUX0BW84WWmqmE+bsdQhRrLGCAD
-	WKafVvRngz9wQ4kHQ91emxWSP/9IAu8wMA==
-X-Google-Smtp-Source: AGHT+IEX+w6RcnhYAn58ymj+DhttkmNbHTaZmlbUYjB9bu1GxzcKegPLW1HCJAWjfu8zmizgHwo/Yg==
-X-Received: by 2002:a50:fa96:0:b0:553:7ecc:d51c with SMTP id w22-20020a50fa96000000b005537eccd51cmr4901281edr.72.1703583189415;
-        Tue, 26 Dec 2023 01:33:09 -0800 (PST)
+        bh=aq/IL+aI2wvzsv74vMm6XI/3SuDRb0LU/4Y+hul9Li4=;
+        b=wmmLvImTb1bQ90oEO4mJjB+Jogf6okVWK93GpIakhAJbHfVtM2qVbKdeKU7dHDErZs
+         kbzDmBeXCrIUu0yzL6uvguWmLulHlmB2O3GiZpnDJiLeGmNZ8Ts8XDnJZRbRg7pjOe6x
+         SYlE23/NPhzFlY3mwlZrJHf/3qsGEhdWHm6vq68HRDSgrsdvo7H7nERmNUweGdY0VI9D
+         MZ3Wmu6PFv/2WJJfCTbzvoidPtbZ421u0loD4LhzHwPjXDv7a5aQ27CUE2H0+/wjbvoU
+         zm6wHKFdkDYFzZwq4HBaD6kHgYuCr633nPy3k2bmoo0dVp2ldx/wdN75l+9OG+lDqPX9
+         xCgg==
+X-Gm-Message-State: AOJu0YzfBdDR++T5DcYip8e3Txe3e8SolNolJQqw3JtMIeGhC/BvlIwX
+	ToKYD4Kgm8pOnan0Vt5Nj/5W2VKHbF25Ow==
+X-Google-Smtp-Source: AGHT+IEm1vJdt9n9NRZSWj/SNczfh/2xCjOJy1cy7kFhPScEs4b0wVDQzpiJQU5OzyhUd+AdTWe50g==
+X-Received: by 2002:a50:cd14:0:b0:554:3bdb:52c6 with SMTP id z20-20020a50cd14000000b005543bdb52c6mr6318482edi.6.1703583415889;
+        Tue, 26 Dec 2023 01:36:55 -0800 (PST)
 Received: from [192.168.0.22] ([78.10.206.178])
-        by smtp.gmail.com with ESMTPSA id y11-20020aa7c24b000000b00553754bd636sm7180779edo.35.2023.12.26.01.33.08
+        by smtp.gmail.com with ESMTPSA id p2-20020a056402044200b005553a8bb61dsm72021edw.87.2023.12.26.01.36.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Dec 2023 01:33:08 -0800 (PST)
-Message-ID: <55c478c7-abcc-4487-b81c-479df47d5666@linaro.org>
-Date: Tue, 26 Dec 2023 10:33:07 +0100
+        Tue, 26 Dec 2023 01:36:55 -0800 (PST)
+Message-ID: <578d6319-5ab5-45e5-8457-00116c7c84ae@linaro.org>
+Date: Tue, 26 Dec 2023 10:36:54 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,25 +66,32 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/2] dt-bindings: usb: dwc3: Clean up hs_phy_irq in
- binding
+Subject: Re: [PATCH v1 1/2] dt-bindings: arm: coresight: Update the pattern of
+ ete node name
 Content-Language: en-US
-To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
+To: Jinlong Mao <quic_jinlmao@quicinc.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
+ <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
+ Leo Yan <leo.yan@linaro.org>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Rob Herring <robh+dt@kernel.org>,
- Bjorn Andersson <bjorn.andersson@linaro.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Wesley Cheng <quic_wcheng@quicinc.com>, Johan Hovold <johan@kernel.org>
-Cc: linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
- Conor Dooley <conor+dt@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- Thinh Nguyen <Thinh.Nguyen@synopsys.com>, quic_ppratap@quicinc.com,
- quic_jackp@quicinc.com, Andy Gross <agross@kernel.org>
-References: <20231222063648.11193-1-quic_kriskura@quicinc.com>
- <20231222063648.11193-2-quic_kriskura@quicinc.com>
- <e6419898-0d77-4286-a04b-7240eb90d8df@linaro.org>
- <268f9f54-8b2a-42bb-9a5d-10bd930cb282@quicinc.com>
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Tao Zhang <quic_taozha@quicinc.com>, coresight@lists.linaro.org
+References: <20231220140538.13136-1-quic_jinlmao@quicinc.com>
+ <20231220140538.13136-2-quic_jinlmao@quicinc.com>
+ <79f88d35-17cc-43b0-bb22-3c854f89d961@linaro.org>
+ <8e5e9603-456b-4956-be03-b866feeeafb4@quicinc.com>
+ <c41ff7c8-48d6-4f4f-a9df-aafe953a2e98@linaro.org>
+ <f2f983b7-4c57-4b1b-925d-ffb18f6350a0@quicinc.com>
+ <c64a41af-ff62-43c5-89f7-0558f8456010@linaro.org>
+ <16932826-fcc2-49d3-95ab-201eff729360@quicinc.com>
+ <d4c6c32f-b1cf-4cf2-9c52-85fa8c1ed73f@linaro.org>
+ <9d13e1ce-38b1-4cdd-83ba-eca0c3091ce1@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -130,128 +137,74 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <268f9f54-8b2a-42bb-9a5d-10bd930cb282@quicinc.com>
+In-Reply-To: <9d13e1ce-38b1-4cdd-83ba-eca0c3091ce1@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 26/12/2023 06:37, Krishna Kurapati PSSNV wrote:
+On 26/12/2023 02:50, Jinlong Mao wrote:
 > 
 > 
-> On 12/25/2023 6:35 PM, Krzysztof Kozlowski wrote:
->> On 22/12/2023 07:36, Krishna Kurapati wrote:
->>> The high speed related interrupts present on QC targets are as follows:
+> On 12/21/2023 4:44 PM, Krzysztof Kozlowski wrote:
+>> On 21/12/2023 09:36, Jinlong Mao wrote:
 >>>
+>>>
+>>> On 12/21/2023 4:17 PM, Krzysztof Kozlowski wrote:
+>>>> On 21/12/2023 09:15, Jinlong Mao wrote:
+>>>>>
+>>>>>
+>>>>> On 12/21/2023 4:12 PM, Krzysztof Kozlowski wrote:
+>>>>>> On 21/12/2023 04:28, Jinlong Mao wrote:
+>>>>>>>>> diff --git a/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml b/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml
+>>>>>>>>> index f725e6940993..cbf583d34029 100644
+>>>>>>>>> --- a/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml
+>>>>>>>>> +++ b/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml
+>>>>>>>>> @@ -23,7 +23,7 @@ description: |
+>>>>>>>>>      
+>>>>>>>>>      properties:
+>>>>>>>>>        $nodename:
+>>>>>>>>> -    pattern: "^ete([0-9a-f]+)$"
+>>>>>>>>> +    pattern: "^ete-([0-9a-f]+)$"
+>>>>>>>>
+>>>>>>>> My concerns are not resolved. Why is it here in the first place?
+>>>>>>>
+>>>>>>> Hi Krzysztof,
+>>>>>>>
+>>>>>>> ETE is acronym of embedded trace extension. The number of the name is
+>>>>>>> the same as the number of the CPU it belongs to.
+>>>>>>
+>>>>>> This is obvious and was not my question.
+
+You already said it here...
+
+>>>>>
+>>>>> Do you mean why the pattern match of the node name is added here ?
+>>>>
+>>>> Yes, especially that it is requiring a non-generic name.
+>>>>
+>>>>>
+>>>>> This node should not have the node name match, right ?
+>>>>
+>>>> Usually. For sure shouldn't be for non-generic names.
+>>>>
+>>> Hi Suzuki,
+>>>
+>>> Can we remove the pattern match of the node name and use a generic name
+>>> "ete" for the ete DT nodes ?
 >>
->>
->>>   
->>>     interrupt-names:
->>> -    minItems: 1
->>> -    maxItems: 4
->>> +    minItems: 2
->>> +    maxItems: 5
->>>   
->>>     qcom,select-utmi-as-pipe-clk:
->>>       description:
->>> @@ -361,60 +378,21 @@ allOf:
->>>           compatible:
->>>             contains:
->>>               enum:
->>> -              - qcom,ipq4019-dwc3
->>
->> Why do you remove it, without adding it somewhere else. Nothing in the
->> commit msg explains it.
+>> "ete" is not a generic name. What is generic here? It's an acronym of
+>> some specific device name.
 >>
 > 
-> Apologies, Will check and add it back.
+> The device full name is embedded trace extension. So use ETE as the name 
+> here.
 
-Please check your patch for other entries. I just took first compatible
-which turns out to be gone. I did not check the reset and I don't want
-to keep checking.
+That's obvious and my comment was not about it. Second time... This is
+my unlucky day... I said, why do you even want to enforce name which is
+not generic, since the names should be generic?
 
-...
+I assume you read the DT specification:
+https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
 
->>> -    then:
->>> -      properties:
->>> -        interrupts:
->>> -          minItems: 1
->>> -          maxItems: 2
->>> -        interrupt-names:
->>> -          minItems: 1
->>> -          items:
->>> -            - const: hs_phy_irq
->>> -            - const: ss_phy_irq
->>> -
->>> -  - if:
->>> -      properties:
->>> -        compatible:
->>> -          contains:
->>> -            enum:
->>> -              - qcom,sc7280-dwc3
->>> +              - qcom,sm6115-dwc3
->>> +              - qcom,sm6125-dwc3
->>>       then:
->>>         properties:
->>>           interrupts:
->>>             minItems: 3
->>>             maxItems: 4
->>>           interrupt-names:
->>> -          minItems: 3
->>>             items:
->>> +            - const: pwr_event
->>>               - const: hs_phy_irq
->>> -            - const: dp_hs_phy_irq
->>> -            - const: dm_hs_phy_irq
->>> +            - const: qusb2_phy
->>
->> Why qusb2_phy is after hs_phy_irq? In the earlier if:then: it is the
->> second one.
->>
-> 
-> In v3 as well, the hs_phy_irq is before qusb2_phy interrupt:
-> https://lore.kernel.org/all/20231211121124.4194-2-quic_kriskura@quicinc.com/
-
-? How v3 matters?
-
-> 
->>
->>>               - const: ss_phy_irq
->>>   
->>>     - if:
->>> @@ -460,11 +422,13 @@ allOf:
->>>           compatible:
->>>             contains:
->>>               enum:
->>> +              - qcom,ipq5332-dwc3
->>>                 - qcom,sc8280xp-dwc3
->>>                 - qcom,x1e80100-dwc3
->>>       then:
->>>         properties:
->>>           interrupts:
->>> +          minItems: 3
->>
->> Hm, why? This commit is unmanageable. Your commit msg is already huge
->> but still does not explain this. Are you sure you are fixing only one
->> logical thing per patch? Does not look like.
->>
-> 
-> This is reordering the targets based on interrupts they have. I put it 
-> in one commit because splitting this into multiple patches breaks one 
-> thing or other. Also once I am defining permutations, I have to group 
-> targets into these combinations in the same patch. I know this is a big 
-> commit but it solves the interrupt cleanup and defines a way for future 
-> targets.
-
-
-This does not answer why, you sc8280xp and x1e80100 not get one optional
-interrupt. I asked "why" you are doing this change. Why do you need it?
-What is the rationale?
-
-Then I grunted about unmanageable commit, because all my troubles to
-review it are the effect of it: it is very difficult to read. It is also
-difficult for you, because you keep making here mistakes. So if you
-cannot write this commit properly and I cannot review it, then it is way
-over-complicated, don't you think? But this is still second problem
-here, don't ignore the fist - "why?"
 
 Best regards,
 Krzysztof
