@@ -1,156 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-5964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5967-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9E5381E209
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Dec 2023 19:53:09 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C7FE81E432
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Dec 2023 01:50:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6DF362822DB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Dec 2023 18:53:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3C21E1F2304D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Dec 2023 00:50:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CF83537E2;
-	Mon, 25 Dec 2023 18:53:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 913A5137B;
+	Tue, 26 Dec 2023 00:34:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AQoXN31n"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BSvIRUU+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F8C52F77;
-	Mon, 25 Dec 2023 18:53:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BPInQnJ010630;
-	Mon, 25 Dec 2023 18:52:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:date:subject:mime-version:content-type
-	:content-transfer-encoding:message-id:to:cc; s=qcppdkim1; bh=ftp
-	HYL73P0PMwcf3vm6rL6xXEEG/VlZNKCFd75Qx88M=; b=AQoXN31nsRXM+bWTSC9
-	AT/dKG5dko7Cw0WYc3z4om1PipbitdlYYQ0Q/expTtMhUgcrearW3Chk12WKrFFj
-	p3He9K/lOFndAZBDn3zH+xGyE90VaI/mwF5fk6IxSZ12X0/ZqMznZOGg+ONYtpwF
-	C/047i0DsKtx9/s+ACtzGYbP/9NJKIYlQmol809v8z/SVjrFBIEErlbkAEpC2ixX
-	ifUbOF9FHfwxou30ZT7h0CwF6iBEI72qDct6GwFoCBlbTl99YAKFMr9QUPUIXgkH
-	SA2qRIX7ywpsPECo0up7CsK1rrUqRK3NdiBpVI13Mfz4Fg2c5pG5uKEUz27M/f9u
-	daQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v5pgvc5cy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 Dec 2023 18:52:58 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BPIqwfk022033
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 Dec 2023 18:52:58 GMT
-Received: from [169.254.0.1] (10.49.16.6) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 25 Dec
- 2023 10:52:57 -0800
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-Date: Mon, 25 Dec 2023 10:52:57 -0800
-Subject: [PATCH] scripts/decode_stacktrace.sh: Support LLVM addr2line
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83161A28
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Dec 2023 00:34:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2cc6b5a8364so36317701fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Dec 2023 16:34:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1703550888; x=1704155688; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=JSqq/oRAK8tG/6OBNWJ7j1pib3lTQhlU58NT4JC7FjY=;
+        b=BSvIRUU+TWxuPDAzpRZsiNAa4NSLxShC1XboJVtxI2+JxNvRMk+F1i3N20FZ7xh9VM
+         R2LInkWUANMkFNdZT3aQQ1TQnraXSwUtoqZAtdukVF2NrkkOlCx8Y3+cew0AVAS6uVtD
+         tZhlth/ErUfkVEZwh8Zqvnhj33NAeuOGZB482MNBenHlrfsLudTqRtz7y7Z745v4Hh2/
+         /Dt4zUhAcn0JukAxqlrX+nVBMLAJA7BwbGFdHuSFCdZadvHGBjr5wwB8og8AgX52qu9w
+         4g/VrGp1gfLsATcvTQQBoUpRnXOOPGkuDzWzr5+kOUYuygGbcj1qpU5LNZfnnX8XxT8W
+         kckA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703550888; x=1704155688;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JSqq/oRAK8tG/6OBNWJ7j1pib3lTQhlU58NT4JC7FjY=;
+        b=BUEZX4+wi1xJ613Kw/8YOfUZgTUwFk0Ot1XewAFEm6RYRO8bx5u5IKJYnOLif3ODdh
+         loOjyrkrrCvt64jlR4rjmCkT3a1V459Pn8Mxarm+2it7DaSEu73OQCBaqvCjIoR4mPit
+         111ZUaLbSJXIOiajzgWtzl0jGuHQWc/AZb6SPp63hS7dx/Rxv4wEoVbi6PgygImdOx13
+         EycKDAo/4ePplYEvgaPQikzU1eJe4L5apUjzXgGzUW94ktCM+mj3PTBqOuMcL6V3hsmG
+         r8xV7gvM6piN5UcZXuS1YcVmWV/G/++9xR66FFakuoloXmHslnEfxRPLj4r5XfiI80QW
+         rltQ==
+X-Gm-Message-State: AOJu0YxrK/e035viLsFCloFxKYBc2H5yimd3WOH5+rh7IC47eJicSIQ3
+	sYRjZ3PkPHu8DeL9y6C+SZxUqyEDXvj2FUxDJCHbG4AfgEpFig==
+X-Google-Smtp-Source: AGHT+IGR9Z2RMSQd+nXkE/c0vlRSUUG71sv+Oa2PTNfwTNLaPDde+99dFVskzIZpJV/OxZqu2gHH8A==
+X-Received: by 2002:a2e:9895:0:b0:2cc:94dd:483e with SMTP id b21-20020a2e9895000000b002cc94dd483emr2243027ljj.2.1703550888302;
+        Mon, 25 Dec 2023 16:34:48 -0800 (PST)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id d1-20020a05651c088100b002ccb1301d53sm1368810ljq.48.2023.12.25.16.34.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Dec 2023 16:34:47 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org
+Subject: [RFC PATCH 0/5] soc: qcom: add in-kernel pd-mapper implementation
+Date: Tue, 26 Dec 2023 02:34:42 +0200
+Message-Id: <20231226003447.3044365-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20231225-decode-stacktrace-llvm-v1-1-abb9aa220cbf@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAIjPiWUC/x2NQQrCQAwAv1JyNtBsdQ9+RTyk2dQurlvZ1CKU/
- t3gcQaG2cG0ZTW4djs03bLlpTrQqQOZuT4Uc3KG0IeBQrhgUlmSoq0sz7WxKJayvXAKsWeKdB4
- igccjm+LYuMrsef2U4vLddMrf/+12P44fVyVADX0AAAA=
-To: Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers
-	<ndesaulniers@google.com>,
-        Bill Wendling <morbo@google.com>,
-        Justin Stitt
-	<justinstitt@google.com>,
-        Andrew Morton <akpm@linux-foundation.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <llvm@lists.linux.dev>, Bjorn Andersson <quic_bjorande@quicinc.com>
-X-Mailer: b4 0.12.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1703530377; l=2236;
- i=quic_bjorande@quicinc.com; s=20230915; h=from:subject:message-id;
- bh=oJebOxoPeoTym3cgqwcxkxFxxmZ7qB8J295Bv1j1YBg=;
- b=97Upa7nXp3PiuUtOwM3kJionIy4dQgtXEXbbwd+uM7nAkgxJxyOYhxsUf27He321eLdJXgJ7gxYL
- nBKfsPEdDaPG+ME4g8l0bJE1n6GSYPkNtXYkTqxNnjZsNzI35egZ
-X-Developer-Key: i=quic_bjorande@quicinc.com; a=ed25519;
- pk=VkhObtljigy9k0ZUIE1Mvr0Y+E1dgBEH9WoLQnUtbIM=
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 0Q6qqyDAQf7p6PPC7zDFoVfT5vqx8IGS
-X-Proofpoint-ORIG-GUID: 0Q6qqyDAQf7p6PPC7zDFoVfT5vqx8IGS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1011
- suspectscore=0 phishscore=0 adultscore=0 impostorscore=0 mlxlogscore=752
- malwarescore=0 bulkscore=0 mlxscore=0 lowpriorityscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312250149
+Content-Transfer-Encoding: 8bit
 
-The kernel build system adhere to the LLVM environment variable, to
-select building the kernel using clang/llvm. In combination with the
-ARCH environment variable the kernel can be cross-compiled without the
-user specifying the CROSS_COMPILE variable.
+Protection domain mapper is a QMI service providing mapping between
+'protection domains' and services supported / allowed in these domains.
+For example such mapping is required for loading of the WiFi firmware or
+for properly starting up the UCSI / altmode / battery manager support.
 
-The LLVM environment variable is used to specify the suffix of the llvm
-executables (such as LLVM=-12 for llvm-addr2line-12), or to omit the
-suffix when set to "1" (e.g. llvm-addr2line).
+The existing userspace implementation has several issue. It doesn't play
+well with CONFIG_EXTRA_FIRMWARE, it doesn't reread the JSON files if the
+firmware location is changed (or if the firmware was not available at
+the time pd-mapper was started but the corresponding directory is
+mounted later), etc.
 
-decode_stacktrace.sh allows invoking a specific addr2line executable by
-prefixing the command with CROSS_COMPILE. At best allows the user to
-trick decode_stacktrace.sh into invoking llvm-addr2line, and it does not
-support specifying an alternative version based on the suffix.
+However this configuration is largely static and common between
+different platforms. Provide in-kernel service implementing static
+per-platform data.
 
-Teach decode_stacktrace.sh about the two cases of the LLVM environment
-variable, and use this to determine which addr2line to use. The current
-behavior is maintained when the LLVM variable is not set.
+NOTE: this is an RFC / RFC, the domain mapping data might be inaccurate
+(especially for SM6xxx and SC7xxx platforms), which is reflected by
+several TODO and FIXME comments in the code.
 
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
----
- scripts/decode_stacktrace.sh | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+Dmitry Baryshkov (5):
+  soc: qcom: add pd-mapper implementation
+  remoteproc: qcom: pas: correct data indentation
+  remoteproc: qcom: adsp: add configuration for in-kernel pdm
+  remoteproc: qcom: mss: add configuration for in-kernel pdm
+  remoteproc: qcom: pas: add configuration for in-kernel pdm
 
-diff --git a/scripts/decode_stacktrace.sh b/scripts/decode_stacktrace.sh
-index 564c5632e1a2..adf1d64477a1 100755
---- a/scripts/decode_stacktrace.sh
-+++ b/scripts/decode_stacktrace.sh
-@@ -16,6 +16,13 @@ elif type c++filt >/dev/null 2>&1 ; then
- 	cppfilt_opts=-i
- fi
- 
-+# Determine which addr2line to use
-+case "$LLVM" in
-+	""	) addr2line="${CROSS_COMPILE}addr2line";;
-+	"1"	) addr2line="llvm-addr2line";;
-+	*	) addr2line="llvm-addr2line${LLVM}";;
-+esac
-+
- if [[ $1 == "-r" ]] ; then
- 	vmlinux=""
- 	basepath="auto"
-@@ -169,7 +176,7 @@ parse_symbol() {
- 	if [[ $aarray_support == true && "${cache[$module,$address]+isset}" == "isset" ]]; then
- 		local code=${cache[$module,$address]}
- 	else
--		local code=$(${CROSS_COMPILE}addr2line -i -e "$objfile" "$address" 2>/dev/null)
-+		local code=$(${addr2line} -i -e "$objfile" "$address" 2>/dev/null)
- 		if [[ $aarray_support == true ]]; then
- 			cache[$module,$address]=$code
- 		fi
+ drivers/remoteproc/Kconfig          |   3 +
+ drivers/remoteproc/qcom_q6v5_adsp.c |  67 +++++
+ drivers/remoteproc/qcom_q6v5_mss.c  |  84 ++++++
+ drivers/remoteproc/qcom_q6v5_pas.c  | 418 +++++++++++++++++++++++-----
+ drivers/soc/qcom/Kconfig            |  10 +
+ drivers/soc/qcom/Makefile           |   2 +
+ drivers/soc/qcom/qcom_pdm.c         | 302 ++++++++++++++++++++
+ drivers/soc/qcom/qcom_pdm_msg.c     | 189 +++++++++++++
+ drivers/soc/qcom/qcom_pdm_msg.h     |  66 +++++
+ include/linux/soc/qcom/pd_mapper.h  |  35 +++
+ 10 files changed, 1108 insertions(+), 68 deletions(-)
+ create mode 100644 drivers/soc/qcom/qcom_pdm.c
+ create mode 100644 drivers/soc/qcom/qcom_pdm_msg.c
+ create mode 100644 drivers/soc/qcom/qcom_pdm_msg.h
+ create mode 100644 include/linux/soc/qcom/pd_mapper.h
 
----
-base-commit: 39676dfe52331dba909c617f213fdb21015c8d10
-change-id: 20231225-decode-stacktrace-llvm-f260a1614361
-
-Best regards,
 -- 
-Bjorn Andersson <quic_bjorande@quicinc.com>
+2.39.2
 
 
