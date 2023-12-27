@@ -1,116 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-6035-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6037-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB2E681F21F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 22:05:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E3C181F255
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 23:17:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A73E8281012
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 21:04:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BAF11283DE5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 22:17:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44F994A9A6;
-	Wed, 27 Dec 2023 21:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E40FB481CE;
+	Wed, 27 Dec 2023 22:17:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lFD0vFg/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D071D49F6A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Dec 2023 21:03:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1rIb3L-0000sJ-2D; Wed, 27 Dec 2023 22:02:59 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1rIb3J-001wFB-HN; Wed, 27 Dec 2023 22:02:58 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.96)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1rIb3K-001ZVk-1k;
-	Wed, 27 Dec 2023 22:02:58 +0100
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Jassi Brar <jassisinghbrar@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	kernel@pengutronix.de
-Subject: [PATCH 08/12] mailbox: qcom-ipcc: Convert to platform remove callback returning void
-Date: Wed, 27 Dec 2023 22:02:36 +0100
-Message-ID:  <515f199e83af8a6295d38f0127be230bbbd6098b.1703710628.git.u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1703710628.git.u.kleine-koenig@pengutronix.de>
-References: <cover.1703710628.git.u.kleine-koenig@pengutronix.de>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557B0481C0
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Dec 2023 22:17:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a26fa26e7aeso228651766b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Dec 2023 14:17:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1703715454; x=1704320254; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PNu/Hibw+A4NmOwrD/KUQB5a8JfK056fiWwU3utcXx4=;
+        b=lFD0vFg/pkMF3icjz4TOo1KofM0J8sh+qbzvB48cEe2JTxrHhUjpWyJf9+grFzXfQZ
+         yHSauMST/pRHVkCn48Td+2iJ6UTUIXJV79CvwAujjE1y+XowETLJZG6KNCQSnYTILiAs
+         O4J00xsrjwkKnRP6LMjG7H+D8ne6mMHrqxkwXkHMgjY0p5QL5bEkvv4NvxzxvP0XX62T
+         0Wkyr423xUht1PNExPpsBJ6nmvwVj20cC3lsGXZrtWf8QQgsMveyfe4kWeicyhTNDteA
+         xt12rhCmAaV2L6C8VsR0xGtu1sLjqbLkE+HQHNBy+mrZruVbPLCyfoue26cAwNsy9x64
+         /bJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703715454; x=1704320254;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PNu/Hibw+A4NmOwrD/KUQB5a8JfK056fiWwU3utcXx4=;
+        b=iunNvb6MpRcKFZfm9UTTINolxrgbIRs62fFklyqgT392bWK8+WMCXrj5R+KjU2nG3O
+         3jOLnoVbcl2ELTVkC62VoZgBDPsJaFHHGh0MaqbgI9x2mKvSwlwhWpjedBLFM8iqlfjH
+         3v12nQL6gJA7C+SsiO+8bEQY1uTQsROqaY+aCsvyB6CZQ7zIyip9w2ENPdLV+jJuhUHA
+         BVCUdRmflA9aaRzxLHORWA7xxZ9v2LfU0RUJ3b0ZI/9aIdMFrQVJARcfeoc3RB3mYHwC
+         EtpbW+adHyEUwhDXf4xoXfb1g08NJF10+ngLAIQv9ngEoCTdNAcgLIX2TPmcPb/EHvnl
+         kENg==
+X-Gm-Message-State: AOJu0YzT3cDnnLvHL3Hff0bCCFDQlmipkkeEjS2N23XakY+/1B+ICKJZ
+	uTEdaekHm0O5zyxdAxr2qzIF822AwUb4KJjF9PLkv6mFSiY=
+X-Google-Smtp-Source: AGHT+IEhrJKQaqxQcDxDiFWu1GsD+/kBAspq1WlaGaHdfvd24+0hx/rKrrCeYR5Mu5B8GmS3/0zhjw==
+X-Received: by 2002:a17:906:c143:b0:a26:a51e:4313 with SMTP id dp3-20020a170906c14300b00a26a51e4313mr4713907ejc.99.1703715454453;
+        Wed, 27 Dec 2023 14:17:34 -0800 (PST)
+Received: from [10.167.154.1] (178235179028.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.28])
+        by smtp.gmail.com with ESMTPSA id ka12-20020a170907920c00b00a26ac57b951sm6245712ejb.23.2023.12.27.14.17.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Dec 2023 14:17:34 -0800 (PST)
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/4] Qualcomm PCIe RC shutdown & reinit
+Date: Wed, 27 Dec 2023 23:17:18 +0100
+Message-Id: <20231227-topic-8280_pcie-v1-0-095491baf9e4@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1791; i=u.kleine-koenig@pengutronix.de; h=from:subject:message-id; bh=dQ7xAWwAr+m6oeIQoY8ovO5/17i2OHqeN97W+/12Du4=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBljJDufzD2oU8+z6pomHH+G4A8o2UtNr9z9PhPb vptCsZeZieJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZYyQ7gAKCRCPgPtYfRL+ Tq7pB/9Dmb/jKMl6/r477Ic9N1qIMXfrf4k1YWh8kVn7VLU0tzEVL5PeORJkHj5yqzysrPTJyTf G88OGmEFNY5XtxMN/p4IpCnkixdN0ZR1EWm6uCQhsLhJwwwsuGsJodiXkfDT6fSjIedCH7nDyAE dZcXeVoWOjztd+8ps5A3NYZkXGg7gAQP40tblN6PIIwMocxKsGLNhKtt71tsf61wu9SMTUMmgwl QwyWpfrV1MOUrtwmwW+DHBh2a6TvxNX7iWVBRYnzFIpdGj/OqHJURKPOdMYNXifhfstSrbWcQCI r78rzCbFkV3luWKwxJVYlsYlLH64Q9wlWKDEUgllPAHT4bMn
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAG6ijGUC/x2N0QrCMAwAf2Xk2UATH6z+ioh0MXWB0ZVWRRj79
+ 4U93sFxK3Rtph1uwwpNf9ZtKQ50GkCmVN6K9nIGDnwm5gt+lmqCkWN4VjHFSCQhXzkLCXg1pq4
+ 4tlRk8q5859llbZrtf2zuj23bAXignCN2AAAA
+To: Manivannan Sadhasivam <mani@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+ Philipp Zabel <p.zabel@pengutronix.de>, 
+ Stanimir Varbanov <svarbanov@mm-sol.com>, 
+ Andrew Murray <amurray@thegoodpenguin.co.uk>, Vinod Koul <vkoul@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Bjorn Andersson <quic_bjorande@quicinc.com>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1703715452; l=746;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=02WWBUP4VI09LIYAqAaCWpT1VF+UeeRG3z0iQXnSq4k=;
+ b=tBfut8NqDlYh7+Da2duoRNkj1XPLP1jm5yMzMTw+TWzl8uPNTQYxVXDF6QkJR88VepC4fiinP
+ FcW8LeGpAUUDXcAbpR/Hs0fpWQ7x0hA/NJhGnlGeU/E0+Wyj1NIp0Im
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
+This series implements shutdown & reinitialization of the PCIe RC on
+system suspend. Tested on 8280-crd.
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
-
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
-
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/mailbox/qcom-ipcc.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+Konrad Dybcio (4):
+      PCI: qcom: Reshuffle reset logic in 2_7_0 .init
+      PCI: qcom: Cache last icc bandwidth
+      PCI: qcom: Read back PARF_LTSSM register
+      PCI: qcom: Implement RC shutdown/power up
 
-diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
-index f597a1bd5684..d537cc9c4d4b 100644
---- a/drivers/mailbox/qcom-ipcc.c
-+++ b/drivers/mailbox/qcom-ipcc.c
-@@ -326,14 +326,12 @@ static int qcom_ipcc_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int qcom_ipcc_remove(struct platform_device *pdev)
-+static void qcom_ipcc_remove(struct platform_device *pdev)
- {
- 	struct qcom_ipcc *ipcc = platform_get_drvdata(pdev);
- 
- 	disable_irq_wake(ipcc->irq);
- 	irq_domain_remove(ipcc->irq_domain);
--
--	return 0;
- }
- 
- static const struct of_device_id qcom_ipcc_of_match[] = {
-@@ -348,7 +346,7 @@ static const struct dev_pm_ops qcom_ipcc_dev_pm_ops = {
- 
- static struct platform_driver qcom_ipcc_driver = {
- 	.probe = qcom_ipcc_probe,
--	.remove = qcom_ipcc_remove,
-+	.remove_new = qcom_ipcc_remove,
- 	.driver = {
- 		.name = "qcom-ipcc",
- 		.of_match_table = qcom_ipcc_of_match,
+ drivers/pci/controller/dwc/Kconfig     |   1 +
+ drivers/pci/controller/dwc/pcie-qcom.c | 159 ++++++++++++++++++++++++---------
+ 2 files changed, 120 insertions(+), 40 deletions(-)
+---
+base-commit: 39676dfe52331dba909c617f213fdb21015c8d10
+change-id: 20231227-topic-8280_pcie-811c0f92fc1c
+
+Best regards,
 -- 
-2.43.0
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
 
