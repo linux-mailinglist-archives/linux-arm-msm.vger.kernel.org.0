@@ -1,38 +1,38 @@
-Return-Path: <linux-arm-msm+bounces-6012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6013-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1688D81EC5E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 07:01:42 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A844D81EC6C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 07:05:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 67208B22369
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 06:01:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C3D051C20DEC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 06:05:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4B28566A;
-	Wed, 27 Dec 2023 06:01:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B261523E;
+	Wed, 27 Dec 2023 06:05:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O/9CkDd3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CNjCzd0g"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9EEB5668;
-	Wed, 27 Dec 2023 06:01:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B540C433C8;
-	Wed, 27 Dec 2023 06:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4BA4C9F;
+	Wed, 27 Dec 2023 06:05:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A3F9C433C8;
+	Wed, 27 Dec 2023 06:04:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1703656894;
-	bh=5KBS7cLdGjQyWWqEupSKUW/EksX2rpKqU4TmWGn4AL4=;
+	s=k20201202; t=1703657101;
+	bh=z9Ut5+T79zJ4io2Ut8tIiKTSBH8zmGKCzu0ENVeM97Q=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=O/9CkDd3zpRtEelhXVPS7yeOeqe7ioRjQsvu8tHaXIafDTtj/XiyFTyO6SsASc4pC
-	 RrRt23qsHLH6gkt1TAEnRqUA05Ij0r92RkWDBZKrAuzI6LBonyfvWCDdq/AyYm73Lo
-	 oTVEw05K+UilQCsjDsQ59FEoCiCGsPRzuwlTmT6k725SAQcIPAcJeJvA+H/yHEz1al
-	 6jCxzNCXqoStAN+sBW/rd/VMu4Mj3FlhK7/bt/pp6QKPa2eeJxLTMMnnUMm5C1SZTK
-	 uEK43Nt77ZRchGrFWmCr8Ht0VMyz5YzFZaCgQKebc9qyhoNjFtTkPSEtX+gYRBam1z
-	 VlFp08TXRcKUQ==
-Date: Wed, 27 Dec 2023 11:31:21 +0530
+	b=CNjCzd0goUTC7Y0K5OoM5H95LekDRNkGykp/RBYKyEYCk8FM5hMV6nc/1Vf7bRy7+
+	 Yny7rz77CPhaHHGFO3xnXAEHl1rX/dKKuieDKgkBZtbMzL4V6hu76RXlhcLpHZQB4J
+	 jfVstwBnOWrYzIoIf1KgrGsZb6juO6+6wq11OeNVraRJIKGSBpFxtNXzhjzoLNluUV
+	 RX2w/Uw4jeZyONH/VMwVHWx0RUEpVKt6TjBR8eLsQQQq98Li1ijM9bbX6ObizyJXLE
+	 FuQg/zvekHRyb5Rr4RTQnQcbMcWVlH9AOgCe2uiNacyKz1akKkELp7qs0s0OegdPbv
+	 Iiquk9nTA4Lpw==
+Date: Wed, 27 Dec 2023 11:34:48 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
 To: Andrew Halaney <ahalaney@redhat.com>
 Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
@@ -54,11 +54,11 @@ Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
 	Can Guo <quic_cang@quicinc.com>, Will Deacon <will@kernel.org>,
 	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC v2 04/11] scsi: ufs: qcom: Perform read back after
- writing unipro mode'
-Message-ID: <20231227060121.GB2814@thinkpad>
+Subject: Re: [PATCH RFC v2 05/11] scsi: ufs: qcom: Perform read back after
+ writing CGC enable'
+Message-ID: <20231227060448.GC2814@thinkpad>
 References: <20231221-ufs-reset-ensure-effect-before-delay-v2-0-75af2a9bae51@redhat.com>
- <20231221-ufs-reset-ensure-effect-before-delay-v2-4-75af2a9bae51@redhat.com>
+ <20231221-ufs-reset-ensure-effect-before-delay-v2-5-75af2a9bae51@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,10 +68,10 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20231221-ufs-reset-ensure-effect-before-delay-v2-4-75af2a9bae51@redhat.com>
+In-Reply-To: <20231221-ufs-reset-ensure-effect-before-delay-v2-5-75af2a9bae51@redhat.com>
 
-On Thu, Dec 21, 2023 at 12:25:21PM -0600, Andrew Halaney wrote:
-> Currently, the QUNIPRO_SEL bit is written to and then an mb() is used to
+On Thu, Dec 21, 2023 at 12:25:22PM -0600, Andrew Halaney wrote:
+> Currently, the CGC enable bit is written and then an mb() is used to
 > ensure that completes before continuing.
 > 
 > mb() ensure that the write completes, but completion doesn't mean that
@@ -87,30 +87,33 @@ On Thu, Dec 21, 2023 at 12:25:21PM -0600, Andrew Halaney wrote:
 > purpose wasn't to add extra ordering (on top of the ordering guaranteed
 > by writel()/readl()), it can safely be removed.
 > 
-> Fixes: f06fcc7155dc ("scsi: ufs-qcom: add QUniPro hardware support and power optimizations")
+> Fixes: 81c0fc51b7a7 ("ufs-qcom: add support for Qualcomm Technologies Inc platforms")
 > Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+
+For this patch, a read back would make sense since I'm not sure if the ICE block
+getting enabled afterwards is in the same domain or not.
+
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+- Mani
+
 > ---
 >  drivers/ufs/host/ufs-qcom.c | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 6df2ab3b6f23..ab1ff7432d11 100644
+> index ab1ff7432d11..3db19591d008 100644
 > --- a/drivers/ufs/host/ufs-qcom.c
 > +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -280,7 +280,7 @@ static void ufs_qcom_select_unipro_mode(struct ufs_qcom_host *host)
->  		ufshcd_rmwl(host->hba, QUNIPRO_G4_SEL, 0, REG_UFS_CFG0);
+> @@ -409,7 +409,7 @@ static void ufs_qcom_enable_hw_clk_gating(struct ufs_hba *hba)
+>  		    REG_UFS_CFG2);
 >  
->  	/* make sure above configuration is applied before we return */
+>  	/* Ensure that HW clock gating is enabled before next operations */
 > -	mb();
-> +	ufshcd_readl(host->hba, REG_UFS_CFG1);
-
-Same comment as patch 03/11.
-
-- Mani
-
+> +	ufshcd_readl(hba, REG_UFS_CFG2);
 >  }
 >  
->  /*
+>  static int ufs_qcom_hce_enable_notify(struct ufs_hba *hba,
 > 
 > -- 
 > 2.43.0
