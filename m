@@ -1,138 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-6031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 188DA81F18F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 20:13:31 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D59E581F1D1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 21:21:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C9C08283C92
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 19:13:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7C6A11F2307A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 20:21:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E18547771;
-	Wed, 27 Dec 2023 19:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5623347F53;
+	Wed, 27 Dec 2023 20:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="CMLOCkL7"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="P3WGgsZm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BF2C46B88
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Dec 2023 19:13:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-4b743e64cfeso270582e0c.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Dec 2023 11:13:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1703704402; x=1704309202; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=S3qLwklk9U4gMAhrladKe1ApGulYoEDWa19ngg2KpQ4=;
-        b=CMLOCkL7tc5m/B5sWs6PP7QghzaQh/TET0pi7s7h33BoKdrp3Bq6HaQWawAHtChm+q
-         NOSacPWN5Na1qd3xtav5uG3SmsCC372kCjnkqj2fCmFk8m66jAvw0NlQcRKUcgwwGnlg
-         mr4NJrp3atN/uzmUYhPCyOcRdW4jEyzSJZakNFv2L+tndskjSH8F5mUGlXsSnCrrcVYO
-         g3w1PZjdde+S41Q1pL6mohdlHBGgNpaXD55v0d/AIkZmzwy0XjFt6b+ZrkaKgD682eyP
-         /rHPJ5pnwCWxF35P/WuO0AQi+5XCX699aTH2io5x8nOLVkYErZw0iCfqEQV0VC/R+Y+a
-         0npw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703704402; x=1704309202;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=S3qLwklk9U4gMAhrladKe1ApGulYoEDWa19ngg2KpQ4=;
-        b=Bo4zMpYn+DBSExaWLVBBVgWiFUQ4m4Dg3zDrDAYXpJkL+GJmSq4VjbPAyj9baX2m3H
-         fYSxGaIaIf0oNLDYzrI3dy7LVVF1u5uKUng3plK3YrxcF1kqCWCd/6AdenRHe2UKgtpO
-         5yiWMwYdiQRs4cDkx8W2/S4dMVWPjDpxZ/PCVxmiDNDUB42IkMn05dYsj9fAK0edo7gC
-         s2E2IIhtTCUWQuxzIA+DeRT0dzcVeKIv95tE3ZbDvXPxAGdVYp8N14gknl1AnousLbRl
-         uyNYIuooHGHgnf+uivi7lexGYMACKGm3WNqWKN/CZGH5Etm4YuAv7xMey2qqKSFyjlIc
-         iPxA==
-X-Gm-Message-State: AOJu0YxMsJPoE5TkM790Ypv8luj3oNMtejec9AyFih2SZTjd3wW8iHSj
-	OacOBJLlp9eqcoTEpHUbD3kr7cPT9U+efo5XYHKUdWrbn19EkA==
-X-Google-Smtp-Source: AGHT+IFUs7dm3S3V4xYhOPFC9E9EgbP+SpH3MAbAicqVRSXicJa9l3Z7CFlOmIGFjC7GBisXfF33h7pkFtdX1T+HNa0=
-X-Received: by 2002:a05:6122:a02:b0:4b7:3eee:3a3f with SMTP id
- 2-20020a0561220a0200b004b73eee3a3fmr1614353vkn.31.1703704401898; Wed, 27 Dec
- 2023 11:13:21 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA87447F46;
+	Wed, 27 Dec 2023 20:21:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BRJvPqN020877;
+	Wed, 27 Dec 2023 20:21:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=2quQCISfmXXvAuqhivENf
+	6jVOT6ATrMLLpI3zefedDI=; b=P3WGgsZmFDboyy/qfXtOfJRWdAk/62UUyJI/s
+	A+1eyQVCLWWWVq4wsAlkcd3YNo0b4nIoyqp6+Hrj73Jrzcg4fQ2ka7+l2X062EXR
+	GKphQ60yjRXQRz+DkDD5z2PrF1O2SZcLyEupgN3u9V68fMm58vJ1qNx2pMg9dZwD
+	KRSY+jlDS1uAevifo6aZQk+ijLIfouObj1TvvzLpeoLpmhOEWzWySL72G0ZP0DLr
+	pc8EjbUPIlglsMFh3fdEPdVvT0uzoHmmXHeWhUGZNBKIOQOIkmIwSFiOrvMwlxM5
+	D0kkfRUEw2nVC8ekl29SMlw+9przf000taPcpDr/UMqN7n1Nw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v8grt14t7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 27 Dec 2023 20:21:33 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BRKLWsr007498
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 27 Dec 2023 20:21:32 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Wed, 27 Dec 2023 12:21:32 -0800
+Date: Wed, 27 Dec 2023 12:21:30 -0800
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Catalin Marinas
+	<catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH v2 7/8] arm64: dts: qcom: sa8295p-adp: Enable GPU
+Message-ID: <20231227202130.GA1315173@hu-bjorande-lv.qualcomm.com>
+References: <20231220-sa8295p-gpu-v2-0-4763246b72c0@quicinc.com>
+ <20231220-sa8295p-gpu-v2-7-4763246b72c0@quicinc.com>
+ <4a1c18e3-39c8-4070-ae55-b1148b3dc65b@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231222150133.732662-1-krzysztof.kozlowski@linaro.org>
- <20231222150133.732662-2-krzysztof.kozlowski@linaro.org> <CAMRc=MdYPuW8C_+EAY4UTCjqNggx6RAkp9OmLU-hRxjZNRQRHw@mail.gmail.com>
- <e9bcea6e-922c-4903-996f-1677e6eb6e1e@linaro.org>
-In-Reply-To: <e9bcea6e-922c-4903-996f-1677e6eb6e1e@linaro.org>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 27 Dec 2023 20:13:10 +0100
-Message-ID: <CAMRc=MfGOr4yF50fOwfvahe=CV2Xf9oTrPBLC1QPAb2hw1FLUA@mail.gmail.com>
-Subject: Re: [PATCH 1/4] reset: instantiate reset GPIO controller for shared reset-gpios
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Banajit Goswami <bgoswami@quicinc.com>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org, 
-	linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Sean Anderson <sean.anderson@seco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <4a1c18e3-39c8-4070-ae55-b1148b3dc65b@linaro.org>
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: inYKcTRVZQYCScIFDOT_tCHeQ41FmRKx
+X-Proofpoint-ORIG-GUID: inYKcTRVZQYCScIFDOT_tCHeQ41FmRKx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
+ phishscore=0 suspectscore=0 spamscore=0 malwarescore=0 priorityscore=1501
+ lowpriorityscore=0 mlxlogscore=701 mlxscore=0 impostorscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312270149
 
-On Wed, Dec 27, 2023 at 1:35=E2=80=AFPM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
+On Wed, Dec 27, 2023 at 02:09:47AM +0100, Konrad Dybcio wrote:
+> On 22.12.2023 05:39, Bjorn Andersson wrote:
+> > With the necessary support in place for supplying VDD_GFX from the
+> > MAX20411 regulator, enable the GPU clock controller, GMU, Adreno SMMU
+> > and the GPU on the SA8295P ADP.
+> > 
+> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> > ---
+> [...]
+> 
+> > +&gpucc {
+> > +	vdd-gfx-supply = <&vdd_gfx>;
+> > +	status = "okay";
+> > +};
+> Already enabled
+> 
 
-[snip]
+No, we're disabling these in sa8540p.dtsi, so they need to be re-enabled
+here.
 
-> >
-> > I dislike this approach entirely. Here's what I would do:
-> >
-> > In the reset core: parse the phandle of the reset-gpios property. Use
-> > the resulting node with gpio_device_find_by_fwnode(). If the device is
-> > not up yet, defer probe. You'll now have the GPIO device object.
-> > Retrieve its label using gpio_device_get_label(). Now you should have
-> > everything you need (the offset and flags of the GPIO you'll get from
-> > __of_parse_phandle_with_args()) to set up the lookup tables. See
->
-> I don't get exactly what do you want to use as the cookie for lookup
-> reset controller?
+I don't remember if it's because the attempt to bring up gfx.lvl or if
+it's the attempt to operate the GPU components without adequate VDD_GFX,
+that is causing the issue...but either way, we don't survive boot.
 
-I'm not sure what you refer to as "cookie". :(
 
-> 1. GPIO controller node? No way, not enough
-> 2. GPIO label?
-> 3. Or some combination of above? This would work, I guess, a bit more
-> complicated cookie than just one pointer/unsigned long.
->
+It's possible that we could move the max20411 up to sa8540p.dtsi to
+avoid the intermediate disable, but I'm not confident that it's "part of
+the platform"...
 
-For a GPIO lookup you need:
+Regards,
+Bjorn
 
-1. The name of the target device (in your case "reset-gpio.X", you can
-either keep track of device IDs yourself or live with the fact that
-you may have one deferred probe between when the device is registered
-and bound and when you are able to read its final name for the
-lookup).
-2. The label of the GPIO chip (whatever gpio_device_get_label() returns).
-3. The hardware offset of the pin (which you can get by parsing the phandle=
-).
-
-You may need additional lookup flags but the above allows you to
-correctly assign a GPIO to a device. No need for cookies.
-
-Bart
-
-> > include/linux/gpio/machine.h. An example of that would be in:
-> > bcm2835_spi_setup() in drivers/spi/spi-bcm2835.c.
-> >
-> > Then with a lookup table in place, you instantiate your device and
-> > it'll get its GPIO as it should. This is not ideal but much better
-> > than the above.
->
->
-> Best regards,
-> Krzysztof
->
+> > +
+> > +&gmu {
+> > +	status = "okay";
+> > +};
+> > +
+> > +&gpu {
+> > +	status = "okay";
+> > +
+> > +	zap-shader {
+> > +		memory-region = <&gpu_mem>;
+> > +		firmware-name = "qcom/sa8295p/a690_zap.mbn";
+> > +	};
+> > +};
+> > +
+> > +&gpu_smmu {
+> > +	status = "okay";
+> > +};
+> Already enabled
+> 
+> 
+> Konrad
 
