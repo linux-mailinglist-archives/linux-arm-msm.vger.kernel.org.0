@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C0E181EEA3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 12:48:14 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9EA0681EEE0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 13:35:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 467DE28349D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 11:48:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 155171F220D1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 12:35:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92F73446B0;
-	Wed, 27 Dec 2023 11:48:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD1D544C69;
+	Wed, 27 Dec 2023 12:35:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="P+s7m0QV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NYee9cWR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3870446AE
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Dec 2023 11:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62BF444C6A
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Dec 2023 12:35:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2cc259392a6so51399311fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Dec 2023 03:48:09 -0800 (PST)
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3369ccb539aso3277184f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Dec 2023 04:35:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703677688; x=1704282488; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1703680511; x=1704285311; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=UWgo0Nu/8bGQ9XPxNxU+NjxOsPf0CklHHmO+hsalEdc=;
-        b=P+s7m0QVrkraiajpxH0YMzR0egaKBzVcb9dujPV/8NC54ul60fv5AJ3Y6/etpDon3W
-         wUnO47AGnSym1GjjWCNTjmHwjybw68mR0K+39ecv8XzHcn7J+PK6KHfKRCLhhXV5KEDM
-         KV5qFNA/VCdo0RhjfFYNxFbpLHMA0wZ2ccdE21yxQcs3MWy4+wrBjATgAISBL1PJ4Q96
-         nziaHmWuRNjCL1TfwQctprLmRDHREtUpmM+jxLJo61BUk535pHU+6ThiFLNTXmUqoyv7
-         n1WGJhXtEIyAHhrAsLT3drThdh1yMJK5iZaCEYyZa2LKLvWhXQMR7kOTkObm921Deqng
-         DzPg==
+        bh=epGZ+q6UP32u7muTF0woV3dsSCz73pHRzHknNCbCjuk=;
+        b=NYee9cWRFPvsEpx0dF5LnheMrt8B/W4GJ4PMZuBgyx1tvM6mkncvmzEfVc/6Af3lsy
+         HU24YMFOOWLczA068ikGJ2ov7XYhxLMq+ZrV3qFtmgWG53NSEnYCOLTjMDf3EOw967EB
+         9luacZZIPIUMTezcKQdbNv3XYw8kH2Rt0b5HzLkrCQ7818+eUgTEK72pJeckSL58j2t+
+         T5uxsMncSBfIOAWDig3h9MLQ/DiWAzGzXE7zyPFvtUGnn/I2dz2sJOIDKo3rlTTbdPz1
+         ThAOmW65oVuwT1vPd2pqnew2nA//zOi+4Veuj/tEqf7FSNHQwroLeDneoCv4djPJ9Sko
+         Go+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703677688; x=1704282488;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1703680511; x=1704285311;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UWgo0Nu/8bGQ9XPxNxU+NjxOsPf0CklHHmO+hsalEdc=;
-        b=mYUjt76SKg73REwPLDucTk6CrloMue4b2J/QspIwAdKFfB3TxuQWK8m2FXhdtZbS1u
-         /KIDwl/+KWpirSzF6ZxhiATItbOs3/kDHxV2R/cpUkrXxXcddf42YqnXoizU8esrFQTW
-         i6OBNgABcupAMhRJYJw3oS4pa3EvH3HvppD0kziBGIKPq4YaWM9/EcfUBN2FhUkbtvoo
-         Xllh1lkqC48eLwqo3G1s5RX4dwQfvhATIwZ6EgsFWNkol/CNfku9QlEf/fOTyGVwZM2V
-         lgKqUP9fE/8jBNTsTjeYr2FaSFHmtGLMUg66QPTBgzWkTQhT6nSpm0cMMFLbcG/rApYF
-         m2PA==
-X-Gm-Message-State: AOJu0YxAMkpekCelQXWg5s/AGNDZh2+fDuNLgi/Ad7vx443rBcDYI2sx
-	+U+NOvvtr5XLs/ZnPlIp1abxA6DtWxQ9yg==
-X-Google-Smtp-Source: AGHT+IExhAzXrwAipulv5QIKsguVKmEN9CNh9lndgg4Ie4v/xheFiX4142BGx+/QU/OXi0hR6k8Ejw==
-X-Received: by 2002:a05:6512:2805:b0:50e:7f5c:521d with SMTP id cf5-20020a056512280500b0050e7f5c521dmr1565155lfb.104.1703677687545;
-        Wed, 27 Dec 2023 03:48:07 -0800 (PST)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id n3-20020a056512388300b0050e6d797536sm1464060lft.230.2023.12.27.03.48.06
+        bh=epGZ+q6UP32u7muTF0woV3dsSCz73pHRzHknNCbCjuk=;
+        b=hUjjzSgsVAM4AHLrF0CMHYy7XvpHbqFyZkgkqw1Bt9ZWvwqw9lgQNRxm9dMI8HBNdV
+         Nt89JyK4d4ZC2/9YodyuEhcxoL5PS95gsXLmrA8oTa6W8kvJ5cfJ8Rxb6OyYZxDgX+P8
+         psjFox9WQJto+PsFnrSaL5FPEtRbnKGHpsCzFuh/+0Ks/VTrBrA1r/9p4ErVAHeCA3t7
+         LMUegtxMQEwVtSXTTHMoGTSJH6RdcxQq15AFsj3pjSRZjsTzZG1jCap/p7GoJx4Eu4UJ
+         /FMwJMIOz/4ELNENb+VastXCoa93l1PuLVxOdkb6Wk9/1PdP1nSZSKw45digkkE7jG/D
+         CL6A==
+X-Gm-Message-State: AOJu0Ywbk5trVQMpR/VktBH+gB6OWElkyFkQQR9YiW0R3GM192V7EZ8C
+	6v/t3d0hX5cBH8Hkx0nJuDEFuRN6eKbavw==
+X-Google-Smtp-Source: AGHT+IH2LTK8BtQpyT3te/10HSe9eiLkrR1TeIv9Jc4wR6leMJ4eWm8bv8fbJ+b0b7TPx4oZzw5Xgg==
+X-Received: by 2002:a5d:5404:0:b0:336:1aef:7352 with SMTP id g4-20020a5d5404000000b003361aef7352mr5001123wrv.109.1703680510694;
+        Wed, 27 Dec 2023 04:35:10 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.27])
+        by smtp.gmail.com with ESMTPSA id t18-20020a5d49d2000000b00336751cd4ebsm14772953wrs.72.2023.12.27.04.35.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Dec 2023 03:48:07 -0800 (PST)
-Message-ID: <ae1c1cb6-00f9-41ce-afd1-d557fbf3034f@linaro.org>
-Date: Wed, 27 Dec 2023 13:48:05 +0200
+        Wed, 27 Dec 2023 04:35:09 -0800 (PST)
+Message-ID: <e9bcea6e-922c-4903-996f-1677e6eb6e1e@linaro.org>
+Date: Wed, 27 Dec 2023 13:35:07 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,124 +66,250 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] regulator: qcom_smd: Keep one rpm handle for all vregs
-Content-Language: en-GB
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231227-topic-rpm_vreg_cleanup-v1-1-949da0864ac5@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20231227-topic-rpm_vreg_cleanup-v1-1-949da0864ac5@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH 1/4] reset: instantiate reset GPIO controller for shared
+ reset-gpios
+Content-Language: en-US
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+ linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Sean Anderson <sean.anderson@seco.com>
+References: <20231222150133.732662-1-krzysztof.kozlowski@linaro.org>
+ <20231222150133.732662-2-krzysztof.kozlowski@linaro.org>
+ <CAMRc=MdYPuW8C_+EAY4UTCjqNggx6RAkp9OmLU-hRxjZNRQRHw@mail.gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <CAMRc=MdYPuW8C_+EAY4UTCjqNggx6RAkp9OmLU-hRxjZNRQRHw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 27/12/2023 03:29, Konrad Dybcio wrote:
-> For no apparent reason (as there's just one RPM per SoC), all vregs
-> currently store a copy of a pointer to smd_rpm. Introduce a single,
-> global one to save up on space in each definition.
+On 22/12/2023 18:31, Bartosz Golaszewski wrote:
+>>
+>> +static int __reset_add_reset_gpio_device(struct device_node *node,
+>> +                                        const struct gpio_desc **out)
+>> +{
+>> +       struct platform_device *pdev;
+>> +       int gpio;
+>> +
+>> +       /* Don't care about deprecated '-gpio' suffix. */
+>> +       gpio = of_get_named_gpio(node, "reset-gpios", 0);
 > 
-> bloat-o-meter reports:
-> 
-> Total: Before=43944, After=43924, chg -0.05%
-> 
-> plus sizeof(ptr) on every dynamically allocated regulator :)
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->   drivers/regulator/qcom_smd-regulator.c | 18 +++++++-----------
->   1 file changed, 7 insertions(+), 11 deletions(-)
-> 
-> diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
-> index d1be9568025e..905c15df8c85 100644
-> --- a/drivers/regulator/qcom_smd-regulator.c
-> +++ b/drivers/regulator/qcom_smd-regulator.c
-> @@ -11,11 +11,10 @@
->   #include <linux/regulator/of_regulator.h>
->   #include <linux/soc/qcom/smd-rpm.h>
->   
-> +struct qcom_smd_rpm *smd_vreg_rpm;
-> +
->   struct qcom_rpm_reg {
->   	struct device *dev;
-> -
-> -	struct qcom_smd_rpm *rpm;
-> -
->   	u32 type;
->   	u32 id;
->   
-> @@ -70,7 +69,7 @@ static int rpm_reg_write_active(struct qcom_rpm_reg *vreg)
->   	if (!reqlen)
->   		return 0;
->   
-> -	ret = qcom_rpm_smd_write(vreg->rpm, QCOM_SMD_RPM_ACTIVE_STATE,
-> +	ret = qcom_rpm_smd_write(smd_vreg_rpm, QCOM_SMD_RPM_ACTIVE_STATE,
->   				 vreg->type, vreg->id,
->   				 req, sizeof(req[0]) * reqlen);
->   	if (!ret) {
-> @@ -1391,7 +1390,7 @@ MODULE_DEVICE_TABLE(of, rpm_of_match);
->    * Return: 0 on success, errno on failure
->    */
->   static int rpm_regulator_init_vreg(struct qcom_rpm_reg *vreg, struct device *dev,
-> -				   struct device_node *node, struct qcom_smd_rpm *rpm,
-> +				   struct device_node *node,
->   				   const struct rpm_regulator_data *pmic_rpm_data)
->   {
->   	struct regulator_config config = {};
-> @@ -1409,7 +1408,6 @@ static int rpm_regulator_init_vreg(struct qcom_rpm_reg *vreg, struct device *dev
->   	}
->   
->   	vreg->dev	= dev;
-> -	vreg->rpm	= rpm;
->   	vreg->type	= rpm_data->type;
->   	vreg->id	= rpm_data->id;
->   
-> @@ -1440,11 +1438,10 @@ static int rpm_reg_probe(struct platform_device *pdev)
->   	const struct rpm_regulator_data *vreg_data;
->   	struct device_node *node;
->   	struct qcom_rpm_reg *vreg;
-> -	struct qcom_smd_rpm *rpm;
->   	int ret;
->   
-> -	rpm = dev_get_drvdata(pdev->dev.parent);
-> -	if (!rpm) {
-> +	smd_vreg_rpm = dev_get_drvdata(pdev->dev.parent);
-> +	if (!smd_vreg_rpm) {
+> Sorry but NAK. This is a legacy API, we've managed to remove all of_
 
-I thought about having a mutex around (I don't remember if secondary 
-PMICs and/or chargers can be routed through RPM or not).
+No worries, I expected problems with this patchset. I should have title
+it RFC.
 
-Then I went on checking other RPM and SMD-RPM drivers.
-
-clk-rpm: global variable, field
-clk-smd-rpm: struct field
-regulator_qcom-smd-rpm: struct field
-
-Probably it's worth using the same approach in all four drivers?
-
->   		dev_err(&pdev->dev, "Unable to retrieve handle to rpm\n");
->   		return -ENODEV;
->   	}
-> @@ -1460,8 +1457,7 @@ static int rpm_reg_probe(struct platform_device *pdev)
->   			return -ENOMEM;
->   		}
->   
-> -		ret = rpm_regulator_init_vreg(vreg, dev, node, rpm, vreg_data);
-> -
-> +		ret = rpm_regulator_init_vreg(vreg, dev, node, vreg_data);
->   		if (ret < 0) {
->   			of_node_put(node);
->   			return ret;
+> GPIO interfaces but this one. Please don't use it. Any function that
+> deals with the global GPIO numberspace is deprecated. See below how I
+> would approach it.
 > 
-> ---
-> base-commit: 39676dfe52331dba909c617f213fdb21015c8d10
-> change-id: 20231227-topic-rpm_vreg_cleanup-fa095cd528ec
-> 
-> Best regards,
+> Side note: do we have any formal way of deprecating interfaces in the kernel?
 
--- 
-With best wishes
-Dmitry
+"DEPRECATED" message in kerneldoc would be enough for me. This could be
+later used by tooling like checkpatch/sparse/toolchains.
+
+
+> 
+>> +       if (!gpio_is_valid(gpio))
+>> +               return gpio;
+>> +
+>> +       pdev = platform_device_register_data(NULL, "reset-gpio",
+>> +                                            PLATFORM_DEVID_AUTO, &node,
+>> +                                            sizeof(node));
+> 
+> You seem to make an assumption (in __reset_find_rcdev()) that this
+> device will get bound to its driver before this function returns.
+> There is no such guarantee. There are many situations where this may
+> not happen immediately (think loading the reset-gpio driver as a
+> module from the filesystem). You should set up a notifier callback on
+
+Yeah, this code is poor. In the case you mentioned, requesting a reset
+line would spawn multiple platform devices of which none would bind.
+
+> the platform bus that will get invoked on bus events and wait for this
+> device's BUS_NOTIFY_BOUND_DRIVER event.
+
+Hm, good point. Thanks.
+
+
+> 
+>> +       if (!IS_ERR(pdev))
+>> +               *out = gpio_to_desc(gpio);
+>> +
+>> +       return PTR_ERR_OR_ZERO(pdev);
+>> +}
+>> +
+>> +static struct reset_controller_dev *__reset_find_rcdev(const struct of_phandle_args *args,
+>> +                                                      const void *cookie)
+>> +{
+>> +       struct reset_controller_dev *r, *rcdev;
+>> +
+>> +       lockdep_assert_held(&reset_list_mutex);
+>> +
+>> +       rcdev = NULL;
+>> +       list_for_each_entry(r, &reset_controller_list, list) {
+>> +               if (args && args->np) {
+>> +                       if (args->np == r->of_node) {
+>> +                               rcdev = r;
+>> +                               break;
+>> +                       }
+>> +               } else if (cookie) {
+>> +                       if (cookie == r->cookie) {
+> 
+> As I said in private: there's no guarantee that the same GPIO
+> descriptor will always reference the same GPIO line. It happens to be
+> the case currently but it's an implementation detail.
+
+I guess you commented on this further, so I will reply there.
+
+> 
+>> +                               rcdev = r;
+>> +                               break;
+>> +                       }
+>> +               }
+>> +       }
+>> +
+>> +       return rcdev;
+>> +}
+>> +
+>>  struct reset_control *
+>>  __of_reset_control_get(struct device_node *node, const char *id, int index,
+>>                        bool shared, bool optional, bool acquired)
+>>  {
+>> +       const struct gpio_desc *gpio = NULL;
+>> +       struct of_phandle_args args = {0};
+>>         struct reset_control *rstc;
+>> -       struct reset_controller_dev *r, *rcdev;
+>> -       struct of_phandle_args args;
+>> +       struct reset_controller_dev *rcdev;
+>>         int rstc_id;
+>>         int ret;
+>>
+>> @@ -839,17 +888,16 @@ __of_reset_control_get(struct device_node *node, const char *id, int index,
+>>                                          index, &args);
+>>         if (ret == -EINVAL)
+>>                 return ERR_PTR(ret);
+>> -       if (ret)
+>> -               return optional ? NULL : ERR_PTR(ret);
+>> +       if (ret) {
+>> +               ret = __reset_add_reset_gpio_device(node, &gpio);
+>> +               if (ret)
+>> +                       return optional ? NULL : ERR_PTR(ret);
+>> +
+>> +               args.args_count = 1; /* reset-gpio has only one reset line */
+>> +       }
+>>
+>>         mutex_lock(&reset_list_mutex);
+>> -       rcdev = NULL;
+>> -       list_for_each_entry(r, &reset_controller_list, list) {
+>> -               if (args.np == r->of_node) {
+>> -                       rcdev = r;
+>> -                       break;
+>> -               }
+>> -       }
+>> +       rcdev = __reset_find_rcdev(&args, gpio);
+>>
+>>         if (!rcdev) {
+>>                 rstc = ERR_PTR(-EPROBE_DEFER);
+>> diff --git a/include/linux/reset-controller.h b/include/linux/reset-controller.h
+>> index 0fa4f60e1186..c0a99a8ea29e 100644
+>> --- a/include/linux/reset-controller.h
+>> +++ b/include/linux/reset-controller.h
+>> @@ -61,6 +61,7 @@ struct reset_control_lookup {
+>>   * @dev: corresponding driver model device struct
+>>   * @of_node: corresponding device tree node as phandle target
+>>   * @of_reset_n_cells: number of cells in reset line specifiers
+>> + * @cookie: for reset-gpios controllers: corresponding GPIO instead of of_node
+>>   * @of_xlate: translation function to translate from specifier as found in the
+>>   *            device tree to id as given to the reset control ops, defaults
+>>   *            to :c:func:`of_reset_simple_xlate`.
+>> @@ -74,6 +75,7 @@ struct reset_controller_dev {
+>>         struct device *dev;
+>>         struct device_node *of_node;
+>>         int of_reset_n_cells;
+>> +       const void *cookie;
+>>         int (*of_xlate)(struct reset_controller_dev *rcdev,
+>>                         const struct of_phandle_args *reset_spec);
+>>         unsigned int nr_resets;
+>> --
+>> 2.34.1
+>>
+> 
+> I dislike this approach entirely. Here's what I would do:
+> 
+> In the reset core: parse the phandle of the reset-gpios property. Use
+> the resulting node with gpio_device_find_by_fwnode(). If the device is
+> not up yet, defer probe. You'll now have the GPIO device object.
+> Retrieve its label using gpio_device_get_label(). Now you should have
+> everything you need (the offset and flags of the GPIO you'll get from
+> __of_parse_phandle_with_args()) to set up the lookup tables. See
+
+I don't get exactly what do you want to use as the cookie for lookup
+reset controller?
+1. GPIO controller node? No way, not enough
+2. GPIO label?
+3. Or some combination of above? This would work, I guess, a bit more
+complicated cookie than just one pointer/unsigned long.
+
+> include/linux/gpio/machine.h. An example of that would be in:
+> bcm2835_spi_setup() in drivers/spi/spi-bcm2835.c.
+> 
+> Then with a lookup table in place, you instantiate your device and
+> it'll get its GPIO as it should. This is not ideal but much better
+> than the above.
+
+
+Best regards,
+Krzysztof
 
 
