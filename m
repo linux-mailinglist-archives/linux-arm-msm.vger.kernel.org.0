@@ -1,151 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-6010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0A0781EBE0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 04:35:12 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E59A081EC4E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 06:47:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 622411F21A42
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 03:35:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2329B1C21147
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 05:47:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8121223D6;
-	Wed, 27 Dec 2023 03:35:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C1FE440A;
+	Wed, 27 Dec 2023 05:47:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CZk5qCkg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PDSHgRlG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DDD23C0C;
-	Wed, 27 Dec 2023 03:35:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BR2WaoF031104;
-	Wed, 27 Dec 2023 03:35:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=IBPhLlEUrcFF
-	zF3MonYYwbzRY+5lcNQKBjMYFt11Q+k=; b=CZk5qCkgnzwF02nfH6/2dNWYWpZb
-	TGUr7VOZbwIjAce3JSC+9DirgZYcVNAo3x5c0jV4NNMK60GD3VowxUTfcIqpWj3c
-	GLXs934lDxWRpDwUB/EFOWx0HXHiHt9LnydeA1qwrw5FQi2nFbUZDkqeoS4emEK8
-	N0Iqg59zuaH8SL6GfmOUT7eKm3WFsHCJMoCfo0OBjSremyHC9em4kUVtKp+Go7WS
-	qBPUyFm0P+FJYlekZNMRlarcC/6VVrqL+k2d5NgdKBtXf8GlZG+qdbldeKTHxUAD
-	Zms50ljTFgijN5a2+JAcP6DF+5zbNmqI3RAU7xjT01KrPPlSKeLUNGuFAg==
-Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v7s8ua7hk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 27 Dec 2023 03:35:03 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3BR3Z0o3031125;
-	Wed, 27 Dec 2023 03:35:00 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTP id 3v5rmkrva6-1;
-	Wed, 27 Dec 2023 03:35:00 +0000
-Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3BR3Z0KI031120;
-	Wed, 27 Dec 2023 03:35:00 GMT
-Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTP id 3BR3Z06s031119;
-	Wed, 27 Dec 2023 03:35:00 +0000
-Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 4098150)
-	id 3F52656D0; Wed, 27 Dec 2023 11:34:58 +0800 (CST)
-From: Qiang Yu <quic_qianyu@quicinc.com>
-To: andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
-        quic_mrana@quicinc.com, quic_qianyu@quicinc.com
-Subject: [PATCH v2] arm64: dts: qcom: sm8550: Increase supported MSI interrupts.
-Date: Wed, 27 Dec 2023 11:34:56 +0800
-Message-Id: <1703648096-46067-1-git-send-email-quic_qianyu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: cNJUDYaKBq3auUm04yngxdnUsSdCP6Ea
-X-Proofpoint-ORIG-GUID: cNJUDYaKBq3auUm04yngxdnUsSdCP6Ea
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- priorityscore=1501 mlxlogscore=299 impostorscore=0 adultscore=0
- clxscore=1015 mlxscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0
- suspectscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312270025
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7016B4403;
+	Wed, 27 Dec 2023 05:47:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780BDC433C8;
+	Wed, 27 Dec 2023 05:47:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1703656067;
+	bh=HmpjSaYrmUUsg9E2xroGEt/cOrPn7cVKnOx0gLYZpSU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=PDSHgRlGhvQ5EJ8TvsFa7lgIbVlMlVn/INxni06BVCcRvBbJFZAfQPP8DxLOVU2Iw
+	 z2JGKDdYtQc8hSk/Pn7Ma9bjubSXUwevcK7sfUg5GwTZTUkWPXDor9U2lrh9zx+JHv
+	 6rK1B6rnhYaGbA/uGGeRT919GevcHwCLPVHPgbodua7V4foksZxwGYYCo7Tg5FeO0i
+	 ZqRya950f4RXRb/oPepio2Fke8tsGjPk/9GFGl74aecqz81Y9w10PEeSx4RaxP3MbM
+	 jWZG4N2AiDvkvC/J7eBkyiNAUjgZr0vu/Vo954DLFeEpcwHNx25tMt1bc4jpMiGpdG
+	 Lig9eDHfbZohw==
+Date: Wed, 27 Dec 2023 11:17:34 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Andrew Halaney <ahalaney@redhat.com>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Yaniv Gardi <ygardi@codeaurora.org>,
+	Dov Levenglick <dovl@codeaurora.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Subhash Jadavani <subhashj@codeaurora.org>,
+	Gilad Broner <gbroner@codeaurora.org>,
+	Venkat Gopalakrishnan <venkatg@codeaurora.org>,
+	Janek Kotas <jank@cadence.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Anjana Hari <quic_ahari@quicinc.com>,
+	Dolev Raviv <draviv@codeaurora.org>,
+	Can Guo <quic_cang@quicinc.com>, Will Deacon <will@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFC v2 03/11] scsi: ufs: qcom: Perform read back after
+ writing testbus config
+Message-ID: <20231227054734.GA2814@thinkpad>
+References: <20231221-ufs-reset-ensure-effect-before-delay-v2-0-75af2a9bae51@redhat.com>
+ <20231221-ufs-reset-ensure-effect-before-delay-v2-3-75af2a9bae51@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20231221-ufs-reset-ensure-effect-before-delay-v2-3-75af2a9bae51@redhat.com>
 
-On sm8550, synopsys MSI controller supports 256 MSI interrupts. Hence,
-enable all GIC interrupts required by MSI controller for PCIe0 and PCIe1.
+On Thu, Dec 21, 2023 at 12:25:20PM -0600, Andrew Halaney wrote:
+> Currently, the testbus configuration is written and completed with an
+> mb().
+> 
+> mb() ensure that the write completes, but completion doesn't mean
+> that it isn't stored in a buffer somewhere. The recommendation for
+> ensuring this bit has taken effect on the device is to perform a read
+> back to force it to make it all the way to the device. This is
+> documented in device-io.rst and a talk by Will Deacon on this can
+> be seen over here:
+> 
+>     https://youtu.be/i6DayghhA8Q?si=MiyxB5cKJXSaoc01&t=1678
+> 
+> Let's do that to ensure the bit hits the device. Because the mb()'s
+> purpose wasn't to add extra ordering (on top of the ordering guaranteed
+> by writel()/readl()), it can safely be removed.
+> 
+> Fixes: 9c46b8676271 ("scsi: ufs-qcom: dump additional testbus registers")
+> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+> ---
+>  drivers/ufs/host/ufs-qcom.c | 8 +++-----
+>  1 file changed, 3 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 4c15c8a1d058..6df2ab3b6f23 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -1332,6 +1332,9 @@ static void ufs_qcom_enable_test_bus(struct ufs_qcom_host *host)
+>  	ufshcd_rmwl(host->hba, UFS_REG_TEST_BUS_EN,
+>  			UFS_REG_TEST_BUS_EN, REG_UFS_CFG1);
+>  	ufshcd_rmwl(host->hba, TEST_BUS_EN, TEST_BUS_EN, REG_UFS_CFG1);
+> +
+> +	/* dummy read to ensure this has been enabled prior to returning */
+> +	ufshcd_readl(host->hba, REG_UFS_CFG1);
 
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
----
-v1->v2: make interrupt-names one per line
+In this case, I do not see the necessity to do a read back itself since there is
+no delay afterwards nor any dependent operation in an altogether different
+domain.
 
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 36 ++++++++++++++++++++++++++++++++----
- 1 file changed, 32 insertions(+), 4 deletions(-)
+So removing the mb() should be sufficient.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index ee1ba5a..3f413cb 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -1713,8 +1713,22 @@
- 			linux,pci-domain = <0>;
- 			num-lanes = <2>;
- 
--			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "msi";
-+			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "msi0",
-+					  "msi1",
-+					  "msi2",
-+					  "msi3",
-+					  "msi4",
-+					  "msi5",
-+					  "msi6",
-+					  "msi7";
- 
- 			#interrupt-cells = <1>;
- 			interrupt-map-mask = <0 0 0 0x7>;
-@@ -1804,8 +1818,22 @@
- 			linux,pci-domain = <1>;
- 			num-lanes = <2>;
- 
--			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "msi";
-+			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 308 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 309 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 312 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 313 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 314 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 374 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 375 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "msi0",
-+					  "msi1",
-+					  "msi2",
-+					  "msi3",
-+					  "msi4",
-+					  "msi5",
-+					  "msi6",
-+					  "msi7";
- 
- 			#interrupt-cells = <1>;
- 			interrupt-map-mask = <0 0 0 0x7>;
+- Mani
+
+>  }
+>  
+>  static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host)
+> @@ -1429,11 +1432,6 @@ int ufs_qcom_testbus_config(struct ufs_qcom_host *host)
+>  		    (u32)host->testbus.select_minor << offset,
+>  		    reg);
+>  	ufs_qcom_enable_test_bus(host);
+> -	/*
+> -	 * Make sure the test bus configuration is
+> -	 * committed before returning.
+> -	 */
+> -	mb();
+>  
+>  	return 0;
+>  }
+> 
+> -- 
+> 2.43.0
+> 
+
 -- 
-2.7.4
-
+மணிவண்ணன் சதாசிவம்
 
