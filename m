@@ -1,116 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-6019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80B4981EC89
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 07:21:37 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4608281ED9D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 10:09:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 355E62836C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 06:21:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 471101C20BF8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 09:09:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C747610E;
-	Wed, 27 Dec 2023 06:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E872199CD;
+	Wed, 27 Dec 2023 09:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WtcfljAs"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qIHuRuOG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF936105;
-	Wed, 27 Dec 2023 06:21:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 209CEC433C7;
-	Wed, 27 Dec 2023 06:21:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1703658093;
-	bh=uSrf39EJ3m2nWoWySm/WpjS4Iw8WDsXjJGD5Xt+c8eo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WtcfljAsXrB0OyllKXtg8mhcJCrl06MXO3isk1FLVmuY3tbWgcgunFO+vIq9Q1Q3L
-	 K/+AJOPVdbx24Z2iBvA52ig2KUk4TEj7Dv8csNFB47ZA87F2CTMNnRkPllXEB3NBpZ
-	 u6slESNZ6jbV+VDGCvbGYZBJZLgbxQ9SRxMCfJ7Zhx7ZqEA2BhdLi/btvtM+pGwVAi
-	 ZVoGcRq1uTnqHo6Y18LlCVOSJxFFejK1Tdh+Ef7HXFPUTseOHbYbZ7ux91Q7HVOD/X
-	 ryIInmXuPMukYIsb+/9X4+lxNn0Y9/iXWuNWCgh79eNHX5AdyNfSHrVKw54Go4jKzQ
-	 PH4JI00KI7wEA==
-Date: Wed, 27 Dec 2023 11:51:23 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Andrew Halaney <ahalaney@redhat.com>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Hannes Reinecke <hare@suse.de>, Janek Kotas <jank@cadence.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Can Guo <quic_cang@quicinc.com>, Will Deacon <will@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC v3 11/11] scsi: ufs: core: Perform read back before
- writing run/stop regs
-Message-ID: <20231227062123.GI2814@thinkpad>
-References: <20231221-ufs-reset-ensure-effect-before-delay-v3-0-2195a1b66d2e@redhat.com>
- <20231221-ufs-reset-ensure-effect-before-delay-v3-11-2195a1b66d2e@redhat.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C168010960
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Dec 2023 09:09:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-5e7f0bf46a2so40562987b3.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Dec 2023 01:09:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1703668191; x=1704272991; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=fwEu5R28XphpFnA42t09e1RbHp63w9bz44iIVwBNAUc=;
+        b=qIHuRuOGYZY6sdOafW8wMj94D4MBaRJVLDCNYd/jYTV0d5DvQ7D+eyaBn5RkNzQYDK
+         aI+ppaYoLid0/Q6WI+FX5H837Wm2aqzBmGmudSVrnGWrjs8Pug74zlkmP2rAMH8FeuTM
+         SGkd7cIxMi5yKGYcyKBNdWQetdIm9JprMMf9x0qgqRtKNXaxirHCg/p91JsGZ8LWMwTy
+         uLVqrJGLNWith2ws0ze+wtLgq0ilm3EV73+iT5EM17frKh6DrDqAV5QbeoVhB5UvEVIL
+         hVzXT+zy9m1WUt7Jj1HmDl3ilhCqCqAgKyPcNjVZgRJxarYKa54prdqMGaUkH/W66r7h
+         qedQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703668191; x=1704272991;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fwEu5R28XphpFnA42t09e1RbHp63w9bz44iIVwBNAUc=;
+        b=RojGQWUNKVZoLB2XpP5qSCnfCryd1lye9D6Vwqu7rJhib5ZhM9SgHP2XkirQCiSyAY
+         0HcJshqiy3v9JgD0vzxEAnV5XdHaRVb14T12LeKNFWTt7CGUBNWzjL7+32GjODNhPdlM
+         P5irdcOt7WM1uFeYd8kCho0jrRqdHa7/xNFDwFCRtVHZav3axP77+jNgg24V52cdUfJL
+         5sfhkbJDJpJwbAjngLW+aDgOnzLO8Z1fZolGJUu/6JWm0MhEaWTV37NTZq8FRemVt3Wo
+         cQUQxYDCEpZcgy+cKLm7sRMDQ+tcTrodAP7QzFpl1DtAUGVtZ9GH8+mVAsWZYbAgLNio
+         bePA==
+X-Gm-Message-State: AOJu0YyAH82o9tRnN9M2kDya4QSBtG49Mpg79qkmwYtAZlMEB6pbQc70
+	t3GpwOs87brAtQ61dS2G4rVXwaNlLCBa7xxyWW47RB3TFMolcQ==
+X-Google-Smtp-Source: AGHT+IGzAOf7UJ6bNjZfB8fXmc9A10p4UfDDlXfSVykTuCPbV230Jq5FCUITCLhKd8YqNo8CWH778G0MyDmSAaA6gl4=
+X-Received: by 2002:a0d:dd96:0:b0:5c9:cb4c:35df with SMTP id
+ g144-20020a0ddd96000000b005c9cb4c35dfmr4595433ywe.37.1703668191750; Wed, 27
+ Dec 2023 01:09:51 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20231221-ufs-reset-ensure-effect-before-delay-v3-11-2195a1b66d2e@redhat.com>
+References: <20231226003447.3044365-1-dmitry.baryshkov@linaro.org>
+ <20231226003447.3044365-5-dmitry.baryshkov@linaro.org> <3561f0ea-f6a7-42e5-a51a-3efa75de8661@linaro.org>
+In-Reply-To: <3561f0ea-f6a7-42e5-a51a-3efa75de8661@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 27 Dec 2023 11:09:40 +0200
+Message-ID: <CAA8EJprJEUtzSz-pDyJ+UeyTaPjmJ8i9mX_A8JuLzUDNxFOGtA@mail.gmail.com>
+Subject: Re: [RFC PATCH 4/5] remoteproc: qcom: mss: add configuration for
+ in-kernel pdm
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Dec 21, 2023 at 01:09:57PM -0600, Andrew Halaney wrote:
-> Currently a wmb() is used to ensure that writes to the
-> UTP_TASK_REQ_LIST_BASE* regs are completed prior to following writes to
-> the run/stop registers.
-> 
-> wmb() ensure that the write completes, but completion doesn't mean that
-> it isn't stored in a buffer somewhere. The recommendation for
-> ensuring the bits have taken effect on the device is to perform a read
-> back to force it to make it all the way to the device. This is
-> documented in device-io.rst and a talk by Will Deacon on this can
-> be seen over here:
-> 
->     https://youtu.be/i6DayghhA8Q?si=MiyxB5cKJXSaoc01&t=1678
-> 
-> Let's do that to ensure the bits hit the device. Because the wmb()'s
-> purpose wasn't to add extra ordering (on top of the ordering guaranteed
-> by writel()/readl()), it can safely be removed.
-> 
-> Fixes: 897efe628d7e ("scsi: ufs: add missing memory barriers")
-> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-> ---
->  drivers/ufs/core/ufshcd.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-> index caebd589e08c..7c1975a1181f 100644
-> --- a/drivers/ufs/core/ufshcd.c
-> +++ b/drivers/ufs/core/ufshcd.c
-> @@ -4726,7 +4726,7 @@ int ufshcd_make_hba_operational(struct ufs_hba *hba)
->  	 * Make sure base address and interrupt setup are updated before
->  	 * enabling the run/stop registers below.
->  	 */
-> -	wmb();
-> +	ufshcd_readl(hba, REG_UTP_TASK_REQ_LIST_BASE_H);
+On Wed, 27 Dec 2023 at 03:43, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+> On 26.12.2023 01:34, Dmitry Baryshkov wrote:
+> > Add domain / service configuration for the in-kernel protection domain
+> > mapper service.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  drivers/remoteproc/Kconfig         |  1 +
+> >  drivers/remoteproc/qcom_q6v5_mss.c | 84 ++++++++++++++++++++++++++++++
+> >  2 files changed, 85 insertions(+)
+> >
+> > diff --git a/drivers/remoteproc/Kconfig b/drivers/remoteproc/Kconfig
+> > index f1698d4c302e..8152e845f7a3 100644
+> > --- a/drivers/remoteproc/Kconfig
+> > +++ b/drivers/remoteproc/Kconfig
+> > @@ -202,6 +202,7 @@ config QCOM_Q6V5_MSS
+> >       depends on QCOM_SYSMON || QCOM_SYSMON=n
+> >       depends on RPMSG_QCOM_GLINK || RPMSG_QCOM_GLINK=n
+> >       depends on QCOM_AOSS_QMP || QCOM_AOSS_QMP=n
+> > +     depends on QCOM_PD_MAPPER || QCOM_PD_MAPPER=n
+> >       select MFD_SYSCON
+> >       select QCOM_MDT_LOADER
+> >       select QCOM_PIL_INFO
+> > diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+> > index 394b2c1cb5e2..0bc611165657 100644
+> > --- a/drivers/remoteproc/qcom_q6v5_mss.c
+> > +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+> > @@ -26,6 +26,7 @@
+> >  #include <linux/remoteproc.h>
+> >  #include <linux/reset.h>
+> >  #include <linux/soc/qcom/mdt_loader.h>
+> > +#include <linux/soc/qcom/pd_mapper.h>
+> >  #include <linux/iopoll.h>
+> >  #include <linux/slab.h>
+> >
+> > @@ -163,6 +164,9 @@ struct rproc_hexagon_res {
+> >       bool has_qaccept_regs;
+> >       bool has_ext_cntl_regs;
+> >       bool has_vq6;
+> > +
+> > +     size_t num_domains;
+> > +     const struct qcom_pdm_domain_data * const *domains;
+> >  };
+> >
+> >  struct q6v5 {
+> > @@ -242,6 +246,9 @@ struct q6v5 {
+> >       u64 mba_perm;
+> >       const char *hexagon_mdt_image;
+> >       int version;
+> > +
+> > +     size_t num_domains;
+> > +     const struct qcom_pdm_domain_data * const *domains;
+> My ocd says num_x should go below x, but that may be a DT leftover..
+>
+> [...]
+>
+> >
+> > +static const struct qcom_pdm_domain_data mpss_root_pd = {
+> > +     .domain = "msm/modem/root_pd",
+> > +     .instance_id = 180,
+> > +     .services = { NULL },
+> > +};
+> > +
+> > +static const struct qcom_pdm_domain_data msm8996_mpss_root_pd = {
+> > +     .domain = "msm/modem/root_pd",
+> > +     .instance_id = 100,
+> > +     .services = { NULL },
+> > +};
+> > +
+> > +static const struct qcom_pdm_domain_data sm8150_mpss_root_pd = {
+> > +     .domain = "msm/modem/root_pd",
+> > +     .instance_id = 180,
+> > +     .services = {
+> > +             "gps/gps_service",
+> > +             NULL,
+> > +     },
+> > +};
+> > +
+> > +static const struct qcom_pdm_domain_data mpss_wlan_pd = {
+> > +     .domain = "msm/modem/wlan_pd",
+> > +     .instance_id = 180,
+> > +     .services = {
+> > +             "kernel/elf_loader",
+> > +             "wlan/fw",
+> > +             NULL,
+> > +     },
+> > +};
+> > +
+> > +static const struct qcom_pdm_domain_data *msm8996_mpss_domains[] = {
+> > +     &msm8996_mpss_root_pd,
+> > +};
+> couldn't find anything on 96
 
-I don't think the readback is really needed here. Because, the dependency is
-with UTP registers and both should be in the same domain. So there is no way the
-following write can happen before prior UTP write completion.
+The file /lib/firmware/qcom/apq8096/modemr.jsn comes from db820c firmware.
 
-- Mani
 
->  
->  	/*
->  	 * UCRDY, UTMRLDY and UTRLRDY bits must be 1
-> 
-> -- 
-> 2.43.0
-> 
+>
+> > +
+> > +static const struct qcom_pdm_domain_data *sdm660_mpss_domains[] = {
+> > +     &mpss_wlan_pd,
+> > +};
+> matches my findings
+>
+> > +
+> > +static const struct qcom_pdm_domain_data *sdm845_mpss_domains[] = {
+> > +     &mpss_root_pd,
+> > +     &mpss_wlan_pd,
+> > +};
+> can't see this wlan one, maybe just on my device
+
+And this is really interesting. I think modemuw.jsn is required to
+make modem.mbn load the wcn3990 firmware (wlanmdsp.mbn) through
+tqftpserv. What is the WiFi chip on the device you've checked against?
+
+>
+> > +
+> > +static const struct qcom_pdm_domain_data *sm8350_mpss_domains[] = {
+> > +     &sm8150_mpss_root_pd,
+> > +};
+> matches my findings
+>
+> >  static const struct rproc_hexagon_res msm8998_mss = {
+> > @@ -2309,6 +2389,8 @@ static const struct rproc_hexagon_res msm8998_mss = {
+> >       .has_ext_cntl_regs = false,
+> >       .has_vq6 = false,
+> >       .version = MSS_MSM8998,
+> > +     .num_domains = ARRAY_SIZE(sdm845_mpss_domains),
+> > +     .domains = sdm845_mpss_domains,
+> >  };
+> matches my findings
+>
+> Konrad
+
+
 
 -- 
-மணிவண்ணன் சதாசிவம்
+With best wishes
+Dmitry
 
