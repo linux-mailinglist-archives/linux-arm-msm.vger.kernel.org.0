@@ -1,38 +1,38 @@
-Return-Path: <linux-arm-msm+bounces-6015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E2C981EC74
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 07:11:10 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FDE481EC7B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 07:13:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BA3B91C21130
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 06:11:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9D3271F22CE1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 06:13:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8661522C;
-	Wed, 27 Dec 2023 06:11:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69BFF442F;
+	Wed, 27 Dec 2023 06:13:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b6PJY+kT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Nce85qwp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E0C5228;
-	Wed, 27 Dec 2023 06:11:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B17C433C8;
-	Wed, 27 Dec 2023 06:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44EC65C9C;
+	Wed, 27 Dec 2023 06:13:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03545C433C7;
+	Wed, 27 Dec 2023 06:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1703657465;
-	bh=EbTles2opVDGaZKfZKJxC69A0Tm4AO/LxxDWp87Mq48=;
+	s=k20201202; t=1703657608;
+	bh=Z0HbVb39Y0GB2FLNaCZrOecrN2XrOMtaehWwhJhRtMU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=b6PJY+kT9ne/f1z8+DNBLcNGWxhJKg+EEixZFdmLotdeQ/w5GPlD42S+G09b6ARjG
-	 hNcSTY5gUBMG2fF7Pofl4Q2nnKd2FkB/8gES0e8HuFefxgv++jO+uyH83uQ6IXSeoY
-	 3jIi1QLmvDAA+9a63SecS7XrRWNezIU3LV9wLZCOVLEVek11NVb0PhNYbltc9dK9Za
-	 3Q+3Rr9sN+P2iRKpcJEqlmdZ1z3i5zwd5c+luawc/Jv7XERftd0lKmHoejlwyBKrHC
-	 +g2hZ4hwHb5xVCSt5Intd6/2NR7tU9m2saczP4qmoVZNXnpZD3K3/RbzyKfe3knhC/
-	 Jjx9kMpevf/8w==
-Date: Wed, 27 Dec 2023 11:40:53 +0530
+	b=Nce85qwpQaLfStbrawAERY3lGpL3rAELIEEpHODCWbcxS+D6YjB4p/mUoaSOkVGhQ
+	 jy8D3k2+pLkOMRPp1IuVlRl8fESpdS9IGPr8a6a7w1N3JkKWUuHz6N4uLf1sa9oT1z
+	 CdIQY1lOqYXJGNzpLKesLSJVXlOX5fKvPofPLs/El6iwZBpj8TCSIuV301TfxlKbdv
+	 R9Q6MI1nbg+iLIGfGdiEUv6C8qp68prE49Q11z2PNv4sSCHatToBlcU23nwodqbeTW
+	 Cu5Y+GZD3rWhdHLwmTLulCbE/ZaBQigCYiLzNFUeVfKi570cc63Ng+AGDjjXzGjfA6
+	 7OtB08tZVBdBw==
+Date: Wed, 27 Dec 2023 11:43:17 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
 To: Andrew Halaney <ahalaney@redhat.com>
 Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
@@ -54,11 +54,11 @@ Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
 	Can Guo <quic_cang@quicinc.com>, Will Deacon <will@kernel.org>,
 	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC v2 07/11] scsi: ufs: core: Perform read back after
- writing UTP_TASK_REQ_LIST_BASE_H
-Message-ID: <20231227061053.GE2814@thinkpad>
+Subject: Re: [PATCH RFC v2 08/11] scsi: ufs: core: Perform read back after
+ disabling interrupts
+Message-ID: <20231227061317.GF2814@thinkpad>
 References: <20231221-ufs-reset-ensure-effect-before-delay-v2-0-75af2a9bae51@redhat.com>
- <20231221-ufs-reset-ensure-effect-before-delay-v2-7-75af2a9bae51@redhat.com>
+ <20231221-ufs-reset-ensure-effect-before-delay-v2-8-75af2a9bae51@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,11 +68,12 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20231221-ufs-reset-ensure-effect-before-delay-v2-7-75af2a9bae51@redhat.com>
+In-Reply-To: <20231221-ufs-reset-ensure-effect-before-delay-v2-8-75af2a9bae51@redhat.com>
 
-On Thu, Dec 21, 2023 at 12:25:24PM -0600, Andrew Halaney wrote:
-> Currently, the UTP_TASK_REQ_LIST_BASE_L/UTP_TASK_REQ_LIST_BASE_H regs
-> are written to and then completed with an mb().
+On Thu, Dec 21, 2023 at 12:25:25PM -0600, Andrew Halaney wrote:
+> Currently, interrupts are cleared and disabled prior to registering the
+> interrupt. An mb() is used to complete the clear/disable writes before
+> the interrupt is registered.
 > 
 > mb() ensure that the write completes, but completion doesn't mean that
 > it isn't stored in a buffer somewhere. The recommendation for
@@ -83,14 +84,14 @@ On Thu, Dec 21, 2023 at 12:25:24PM -0600, Andrew Halaney wrote:
 > 
 >     https://youtu.be/i6DayghhA8Q?si=MiyxB5cKJXSaoc01&t=1678
 > 
-> Let's do that to ensure the bits hit the device. Because the mb()'s
+> Let's do that to ensure these bits hit the device. Because the mb()'s
 > purpose wasn't to add extra ordering (on top of the ordering guaranteed
 > by writel()/readl()), it can safely be removed.
 > 
-> Fixes: 88441a8d355d ("scsi: ufs: core: Add hibernation callbacks")
+> Fixes: 199ef13cac7d ("scsi: ufs: avoid spurious UFS host controller interrupts")
 > Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
 
-This also I'm not sure whether we can safely remove readback. So,
+Same comment as patch 07/11.
 
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
@@ -101,18 +102,18 @@ Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-> index d1e33328ff3f..7bfb556e5b8e 100644
+> index 7bfb556e5b8e..bb603769b029 100644
 > --- a/drivers/ufs/core/ufshcd.c
 > +++ b/drivers/ufs/core/ufshcd.c
-> @@ -10351,7 +10351,7 @@ int ufshcd_system_restore(struct device *dev)
->  	 * are updated with the latest queue addresses. Only after
->  	 * updating these addresses, we can queue the new commands.
+> @@ -10568,7 +10568,7 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
+>  	 * Make sure that UFS interrupts are disabled and any pending interrupt
+>  	 * status is cleared before registering UFS interrupt handler.
 >  	 */
 > -	mb();
-> +	ufshcd_readl(hba, REG_UTP_TASK_REQ_LIST_BASE_H);
+> +	ufshcd_readl(hba, REG_INTERRUPT_ENABLE);
 >  
->  	/* Resuming from hibernate, assume that link was OFF */
->  	ufshcd_set_link_off(hba);
+>  	/* IRQ registration */
+>  	err = devm_request_irq(dev, irq, ufshcd_intr, IRQF_SHARED, UFSHCD, hba);
 > 
 > -- 
 > 2.43.0
