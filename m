@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD7D281EB42
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 02:20:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 132D281EB4B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 02:29:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DBFCE1C2215A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 01:20:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2503E1C2214B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 01:29:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A19B1FDF;
-	Wed, 27 Dec 2023 01:20:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA86F1FBF;
+	Wed, 27 Dec 2023 01:29:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wv+mBK7g"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YhRzvGtn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D2171FA3
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Dec 2023 01:20:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215281FB2
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Dec 2023 01:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a2699ee30d1so399230366b.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Dec 2023 17:20:36 -0800 (PST)
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a233bf14cafso558511866b.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Dec 2023 17:29:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703640034; x=1704244834; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1703640574; x=1704245374; darn=vger.kernel.org;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=+BAdkUhCF0OOr2fFOOWv7vL/WbcV+b4PYGfK20EZi0Q=;
-        b=wv+mBK7guTFWMQa0iDwOw/xZaUFus7JxRPvvm1QJo5/NVqaiYas2AjQsTm+4Kz9AZl
-         5jkA+q7oI/9wSCHya5MBB5vyodl4S7CTSv7iJfs871VU2eZqepV9qs2/B0IOsyIByFQa
-         BOZ/OgE+NMjl1m3OizVUY/49L0HCNG6eXAMkZgHWNKvGyYWBkmbqBWuxvRn6MFbvx7ll
-         epposTactvR4T/rdXANVwo7wny8zAMwiJ3ppRXb3h/iOZHlgE8zUpDT2qlBhB+mKJI+n
-         TOBGOoO3W4rRHcX1PCxQl0/odGIYorCaWRkLlMAVLj7sQxDP2t4L05Cqf2FSz+7MTlq7
-         t03w==
+        bh=2D5wXd8y6YDz3Y7OZAiTyYTC//DCpbhbIggq/xSd+SI=;
+        b=YhRzvGtn5AzXYqjNQgz8SnesemOt2K6TLUzkltbz6CBxSa6uKG3bXQKXYEqe3YAoe+
+         3aSaQzBuxBEdJlLq6Ey8rw8jhMnxEnfX5NSdAwHvKtLMvd/SiCdmGDPShLC+iGdc/JTK
+         WAgSenhIvt0mpJaf54+GJB+MGhtJ43f24bs+jgwwW76fcgZhx9LRtgqEayPp1+CVvujb
+         QJXwLYOtXmB0BFwVnzZ6pkXfoS7kvbl12PYnj6g2BIY+bkfQcH1R36DulLaEo+At33S4
+         M6LdcfFwFAIYeoYE2L6A9n9UKqStMSEXVDCwAkDYSbroynKtME34RkU5yQ6YXUk7K1a0
+         hQ3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703640034; x=1704244834;
+        d=1e100.net; s=20230601; t=1703640574; x=1704245374;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+BAdkUhCF0OOr2fFOOWv7vL/WbcV+b4PYGfK20EZi0Q=;
-        b=dcMdtskpXc4JZ1webUBaJ7mYpjGkBqjIyMNag3K9/nAkM62MP0VwNgiZPKNNiyj4vz
-         3sMIxWcnELLkKHJ5hp1montxAj+1TgLNbuUnqizrMFhzQQoq6XbQ8cwSJB1hIhMYyAsq
-         R7VbpFwx3QMl+yUOHA8/Rkxs4I98Eh/7h1ryjRMyYrmHv2Cn5Zp/NabhzcOw7sSkfBvT
-         Z6ihbmJDN5yMeh6P8zYqX0vVV+zbP1D93rSxOX142d8f61VZfhwPUx+ZWggjGwiRGTb4
-         4P4Pa2d3pNF7AK8nAHsv2zMK3r9ilOq2JtXgzwtCz9EYV8ooEpYZZWcEw5qnO/zZx4Zw
-         v51g==
-X-Gm-Message-State: AOJu0Yw7Gr/GVTaaqcV//qJZ0qjK7iyD4JqWodJH2UGBDSktbNj9AADP
-	dHQXwqmrcr647RjRRrn+G6Zt5VAvbvN814/3mJCA6Rl1PJg=
-X-Google-Smtp-Source: AGHT+IGn07C+ejaWkfudutVG3jfYc2Z7lPpiyDpCmM2dhMVc3F10b8trA4Dv2FG5LzbOu68TX9qE6w==
-X-Received: by 2002:a17:906:95:b0:a26:e106:38f6 with SMTP id 21-20020a170906009500b00a26e10638f6mr2628232ejc.68.1703640034634;
-        Tue, 26 Dec 2023 17:20:34 -0800 (PST)
+        bh=2D5wXd8y6YDz3Y7OZAiTyYTC//DCpbhbIggq/xSd+SI=;
+        b=qCMv3pTvd1T4YMnJ1GpeM7E8lCEpSBcbVXzqTuh8i+sqTnbRDw3uoBzBuhQ8KPnhas
+         GZXgzINsbUD36m5sdUgJA8aNqq/kUc646h1EMNxsgY7bx1kVgyj+HfMvuvQo06ey09eZ
+         uJK9MoCREjQWJ0W/ZJKswWOsAsuMr03JWPYWHTuK2iqGbtndLT1AM12lnvmQWo36gn5/
+         L8QmUd1XU7Wj77rCqVhUiOvaGMmsNWoXw5gcTGs6a7EzBIvxec3KDjg2uPV+nAl+ZJKr
+         12VkX+hKUI5Z/P2Y27f8MVwZmQe5ekaPgrWHUF2Q3Q/IdyjF12MU1ieB0fzPZ8nSZClW
+         NRnw==
+X-Gm-Message-State: AOJu0Yy+sVGkFdHV1nUFWxfCdcbIFaJMlmuBBh5RUYd+vHgdlSXsgf/N
+	/JqvUd2wpjITgAGQTHV03K4xVpsvHmOX6UN9Nzc7LMtCLA0=
+X-Google-Smtp-Source: AGHT+IGM2AJdYnrWnWNLIMybhMo7f+t9xBUMdtl2T1SgifBRaDwDzp3Uv020nhjb7Z4t5WNXbI5XMg==
+X-Received: by 2002:a17:906:6150:b0:a19:a19b:c701 with SMTP id p16-20020a170906615000b00a19a19bc701mr3969934ejl.81.1703640574350;
+        Tue, 26 Dec 2023 17:29:34 -0800 (PST)
 Received: from [10.167.154.1] (178235179028.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.28])
-        by smtp.gmail.com with ESMTPSA id ey18-20020a1709070b9200b00a26af6131e0sm5293775ejc.7.2023.12.26.17.20.33
+        by smtp.gmail.com with ESMTPSA id up10-20020a170907cc8a00b00a2366090bcfsm2563010ejc.212.2023.12.26.17.29.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Dec 2023 17:20:34 -0800 (PST)
+        Tue, 26 Dec 2023 17:29:34 -0800 (PST)
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Wed, 27 Dec 2023 02:20:32 +0100
-Subject: [PATCH] pmdomain: qcom: rpmpd: Keep one RPM handle for all RPMPDs
+Date: Wed, 27 Dec 2023 02:29:33 +0100
+Subject: [PATCH] regulator: qcom_smd: Keep one rpm handle for all vregs
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,103 +67,111 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231227-topic-rpmpd_cleanup-v1-1-860ab141b076@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAN97i2UC/x2N0QqDMAwAf0XyvIJGQbZfGWPENs5AV0OqYyD++
- 8Ie7+C4AyqbcIVbc4DxR6qsxaG7NBAXKi8OkpwBW+w7xDFsq0oMpm9Nz5iZyq4BuR36RPE6DyN
- 4OVHlMBmVuHhb9pxdqvEs3//q/jjPH9acHEF6AAAA
+Message-Id: <20231227-topic-rpm_vreg_cleanup-v1-1-949da0864ac5@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAPx9i2UC/x2NWwqDQAwAryL5bkBTpI+rlCJrjBrYxiWrUhDv3
+ qWfMzDMAVlcJcOzOsBl16yLFWguFfAcbBLUoTBQTdeG6IbrkpTR06fbXaaOowTbEo6hfrQ8tHQ
+ XhhL3IQv2HoznktsWY5HJZdTv//Z6n+cP3Rsjen0AAAA=
 To: Bjorn Andersson <andersson@kernel.org>, 
- Ulf Hansson <ulf.hansson@linaro.org>
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>
 Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1703640033; l=2631;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1703640573; l=2867;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=tqvTOGMWBoqGPdbq/Qmyk7WDy6NCPjMrsy0aBwvZfA0=;
- b=kEipfeXyLbryIcGNe05HzKxOOylVoBtSOOCD9EJV2YN1xHKTkFxSKO48nhxYYwolZaPCcaQx9
- OtiKUWCN+bmCK93Bj9mDS0vA4lpc8JHTRYQUn4qZoLV8o91WoaWn1pt
+ bh=9Tqu1p9SYBTpsvzpd2G7/sD+9sC24EsBi4LoZn2SeCY=;
+ b=mBHz7z3eGXsXINB18n0CU/5eNlgbMYl5gbtssb6tOVlg9/++g8QgKLVlTHRkQLJNj4Fsfd0kh
+ kJEQaybQb3tBNAy9Kldff7BpHpIhuwbXpRQiSaqJIhiO1BgImv1qe34
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-For no apparent reason (as there's just one RPM per SoC), all RPMPDs
+For no apparent reason (as there's just one RPM per SoC), all vregs
 currently store a copy of a pointer to smd_rpm. Introduce a single,
 global one to save up on space in each definition.
 
 bloat-o-meter reports:
 
-Total: Before=92010, After=91062, chg -1.03%
+Total: Before=43944, After=43924, chg -0.05%
+
+plus sizeof(ptr) on every dynamically allocated regulator :)
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/pmdomain/qcom/rpmpd.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ drivers/regulator/qcom_smd-regulator.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/pmdomain/qcom/rpmpd.c b/drivers/pmdomain/qcom/rpmpd.c
-index 7796d65f96e8..90b62767f9d0 100644
---- a/drivers/pmdomain/qcom/rpmpd.c
-+++ b/drivers/pmdomain/qcom/rpmpd.c
-@@ -16,6 +16,8 @@
+diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
+index d1be9568025e..905c15df8c85 100644
+--- a/drivers/regulator/qcom_smd-regulator.c
++++ b/drivers/regulator/qcom_smd-regulator.c
+@@ -11,11 +11,10 @@
+ #include <linux/regulator/of_regulator.h>
+ #include <linux/soc/qcom/smd-rpm.h>
  
- #define domain_to_rpmpd(domain) container_of(domain, struct rpmpd, pd)
- 
-+static struct qcom_smd_rpm *rpmpd_smd_rpm;
++struct qcom_smd_rpm *smd_vreg_rpm;
 +
- /* Resource types:
-  * RPMPD_X is X encoded as a little-endian, lower-case, ASCII string */
- #define RPMPD_SMPA 0x61706d73
-@@ -54,7 +56,6 @@ struct rpmpd {
- 	bool enabled;
- 	const int res_type;
- 	const int res_id;
+ struct qcom_rpm_reg {
+ 	struct device *dev;
+-
 -	struct qcom_smd_rpm *rpm;
- 	unsigned int max_state;
- 	__le32 key;
- 	bool state_synced;
-@@ -879,7 +880,7 @@ static int rpmpd_send_enable(struct rpmpd *pd, bool enable)
- 		.value = cpu_to_le32(enable),
- 	};
+-
+ 	u32 type;
+ 	u32 id;
  
--	return qcom_rpm_smd_write(pd->rpm, QCOM_SMD_RPM_ACTIVE_STATE,
-+	return qcom_rpm_smd_write(rpmpd_smd_rpm, QCOM_SMD_RPM_ACTIVE_STATE,
- 				  pd->res_type, pd->res_id, &req, sizeof(req));
- }
+@@ -70,7 +69,7 @@ static int rpm_reg_write_active(struct qcom_rpm_reg *vreg)
+ 	if (!reqlen)
+ 		return 0;
  
-@@ -891,7 +892,7 @@ static int rpmpd_send_corner(struct rpmpd *pd, int state, unsigned int corner)
- 		.value = cpu_to_le32(corner),
- 	};
+-	ret = qcom_rpm_smd_write(vreg->rpm, QCOM_SMD_RPM_ACTIVE_STATE,
++	ret = qcom_rpm_smd_write(smd_vreg_rpm, QCOM_SMD_RPM_ACTIVE_STATE,
+ 				 vreg->type, vreg->id,
+ 				 req, sizeof(req[0]) * reqlen);
+ 	if (!ret) {
+@@ -1391,7 +1390,7 @@ MODULE_DEVICE_TABLE(of, rpm_of_match);
+  * Return: 0 on success, errno on failure
+  */
+ static int rpm_regulator_init_vreg(struct qcom_rpm_reg *vreg, struct device *dev,
+-				   struct device_node *node, struct qcom_smd_rpm *rpm,
++				   struct device_node *node,
+ 				   const struct rpm_regulator_data *pmic_rpm_data)
+ {
+ 	struct regulator_config config = {};
+@@ -1409,7 +1408,6 @@ static int rpm_regulator_init_vreg(struct qcom_rpm_reg *vreg, struct device *dev
+ 	}
  
--	return qcom_rpm_smd_write(pd->rpm, state, pd->res_type, pd->res_id,
-+	return qcom_rpm_smd_write(rpmpd_smd_rpm, state, pd->res_type, pd->res_id,
- 				  &req, sizeof(req));
- };
+ 	vreg->dev	= dev;
+-	vreg->rpm	= rpm;
+ 	vreg->type	= rpm_data->type;
+ 	vreg->id	= rpm_data->id;
  
-@@ -1004,12 +1005,11 @@ static int rpmpd_probe(struct platform_device *pdev)
- 	int i;
- 	size_t num;
- 	struct genpd_onecell_data *data;
+@@ -1440,11 +1438,10 @@ static int rpm_reg_probe(struct platform_device *pdev)
+ 	const struct rpm_regulator_data *vreg_data;
+ 	struct device_node *node;
+ 	struct qcom_rpm_reg *vreg;
 -	struct qcom_smd_rpm *rpm;
- 	struct rpmpd **rpmpds;
- 	const struct rpmpd_desc *desc;
+ 	int ret;
  
 -	rpm = dev_get_drvdata(pdev->dev.parent);
 -	if (!rpm) {
-+	rpmpd_smd_rpm = dev_get_drvdata(pdev->dev.parent);
-+	if (!rpmpd_smd_rpm) {
- 		dev_err(&pdev->dev, "Unable to retrieve handle to RPM\n");
++	smd_vreg_rpm = dev_get_drvdata(pdev->dev.parent);
++	if (!smd_vreg_rpm) {
+ 		dev_err(&pdev->dev, "Unable to retrieve handle to rpm\n");
  		return -ENODEV;
  	}
-@@ -1039,7 +1039,6 @@ static int rpmpd_probe(struct platform_device *pdev)
- 			continue;
+@@ -1460,8 +1457,7 @@ static int rpm_reg_probe(struct platform_device *pdev)
+ 			return -ENOMEM;
  		}
  
--		rpmpds[i]->rpm = rpm;
- 		rpmpds[i]->max_state = desc->max_state;
- 		rpmpds[i]->pd.power_off = rpmpd_power_off;
- 		rpmpds[i]->pd.power_on = rpmpd_power_on;
+-		ret = rpm_regulator_init_vreg(vreg, dev, node, rpm, vreg_data);
+-
++		ret = rpm_regulator_init_vreg(vreg, dev, node, vreg_data);
+ 		if (ret < 0) {
+ 			of_node_put(node);
+ 			return ret;
 
 ---
 base-commit: 39676dfe52331dba909c617f213fdb21015c8d10
-change-id: 20231227-topic-rpmpd_cleanup-2e043dac9f47
+change-id: 20231227-topic-rpm_vreg_cleanup-fa095cd528ec
 
 Best regards,
 -- 
