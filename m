@@ -1,70 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-6036-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8FD6681F224
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 22:05:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BF7381F21B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 22:04:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C26DB1C210DE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 21:05:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CB4A1283EB6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 21:04:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24F93482C7;
-	Wed, 27 Dec 2023 21:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EAB549890;
+	Wed, 27 Dec 2023 21:03:04 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7550481CE
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Dec 2023 21:03:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1675481AA
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Dec 2023 21:03:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
 	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
 	(Exim 4.92)
 	(envelope-from <ukl@pengutronix.de>)
-	id 1rIb3M-0000le-3j; Wed, 27 Dec 2023 22:03:00 +0100
+	id 1rIb3K-0000rD-QS; Wed, 27 Dec 2023 22:02:58 +0100
 Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
 	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.94.2)
 	(envelope-from <ukl@pengutronix.de>)
-	id 1rIb3H-001wEi-AR; Wed, 27 Dec 2023 22:02:56 +0100
+	id 1rIb3J-001wF8-9E; Wed, 27 Dec 2023 22:02:58 +0100
 Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.96)
 	(envelope-from <ukl@pengutronix.de>)
-	id 1rIb3I-001ZVE-0o;
-	Wed, 27 Dec 2023 22:02:56 +0100
+	id 1rIb3K-001ZVg-0x;
+	Wed, 27 Dec 2023 22:02:58 +0100
 From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
 To: Jassi Brar <jassisinghbrar@gmail.com>
-Cc: linux-kernel@vger.kernel.org,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	NXP Linux Team <linux-imx@nxp.com>,
-	linux-arm-kernel@lists.infradead.org,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	linux-mediatek@lists.infradead.org,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	linux-arm-msm@vger.kernel.org,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	linux-stm32@st-md-mailman.stormreply.com,
-	Chen-Yu Tsai <wens@csie.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	linux-sunxi@lists.linux.dev,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	linux-tegra@vger.kernel.org,
-	Michal Simek <michal.simek@amd.com>,
+	linux-kernel@vger.kernel.org,
 	kernel@pengutronix.de
-Subject: [PATCH 00/12] mailbox: Convert to platform remove callback returning void
-Date: Wed, 27 Dec 2023 22:02:28 +0100
-Message-ID: <cover.1703710628.git.u.kleine-koenig@pengutronix.de>
+Subject: [PATCH 07/12] mailbox: qcom-apcs-ipc: Convert to platform remove callback returning void
+Date: Wed, 27 Dec 2023 22:02:35 +0100
+Message-ID:  <9e4c20de4cf16ae8cf03a1844a000a17e4ed1990.1703710628.git.u.kleine-koenig@pengutronix.de>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1703710628.git.u.kleine-koenig@pengutronix.de>
+References: <cover.1703710628.git.u.kleine-koenig@pengutronix.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,7 +54,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2241; i=u.kleine-koenig@pengutronix.de; h=from:subject:message-id; bh=TnloZYpKIYRmaOM4Vyp6tR8nMUztNxQOKpyjV0rpvQ4=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBljJDlF5RcQbsMo+jn9Hk4Fn0DGB3DTp1LZRoam 4uXEKKoj2GJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZYyQ5QAKCRCPgPtYfRL+ TmefCACxCqozxo0GnqWmhu00tf7kElJNTysNznKKdidgf7fo9mcsJuA7Ck125Ja84llYdplJCvv Dsdgd+ignUqSSvOgP0rhHT1pxzc3t9CgKIvLUZMIwaiFUxnPuGs0iLILF0hhUoUb6JLwyAFJw/W pPtgJ/owxsaEcqXJEcIL+CMDaCWvE8mUTxuY4pmJCm6WMPBEM3f8affobB2FMtJ7qI2crJx7ojl xgvXdsuX9EtOecBbxd/N706v8sAbPO2cSehuoXojKHPV81zg+QhoTYPjdqW75nODS26hacjnboO xL/0decenMphAvdsq/GieTqJqbXlITNBQapQQbyLQwxG+KFY
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1902; i=u.kleine-koenig@pengutronix.de; h=from:subject:message-id; bh=05Aw79eBvCAd2KreU2oJxdpnDsDvRhiwGd7aMF2V4do=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBljJDt5XSagpy/f9wKNc7ifFv9CjOCUmtb4pRYN d382lA2HM2JATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZYyQ7QAKCRCPgPtYfRL+ Tho5B/4slMPTrECJh7cRwJNM5OG+HFXibTK9phg2cNi2f7oFi7RzX2fHVe+2AmZCnAAcbvyoCJy VbfJtdkERRfrIwYPGreUAMLJiDfwK4QezgiiIYg/1jmyxYMNL6n07/XOaxndXs1u6tKXXxzbTVa RYtrMvs6DmlFtMSAY6cuJB8tetw2vri+kr/y+yZmM0xB11VFFdQ6LjscPx9VfgNWD04zywbopch mR/QzVVI4U2sHZ1wCJZgExf4tPAyt62l25ytPz8KCYUEBkpbtxm/NmCtmrqRPK2e4lswZ3AsfuZ AiF1GElyr3260sQUDKdC/dfAIGfzSO4dZXcR8RYRiYsGBMOn
 X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
@@ -80,52 +62,53 @@ X-SA-Exim-Mail-From: ukl@pengutronix.de
 X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
 X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 
-Hello,
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-this series converts all platform drivers below drivers/mailbox that
-make use of .remove() to use .remove_new() instead.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-See commit 5c5a7680e67b ("platform: Provide a remove callback that
-returns no value") for an extended explanation and the eventual goal.
-The TL;DR; is to make it harder for driver authors to leak resources
-without noticing. The drivers here get it right though and so can be
-converted trivially.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-This is merge window material. All patches are pairwise independent, so
-they can be applied individually.
-
-Best regards
-Uwe
-
-Uwe Kleine-König (12):
-  mailbox: bcm-flexrm: Convert to platform remove callback returning void
-  mailbox: bcm-pdc: Convert to platform remove callback returning void
-  mailbox: imx: Convert to platform remove callback returning void
-  mailbox: mailbox-test: Convert to platform remove callback returning void
-  mailbox: mtk-cmdq: Convert to platform remove callback returning void
-  mailbox: omap: Convert to platform remove callback returning void
-  mailbox: qcom-apcs-ipc: Convert to platform remove callback returning void
-  mailbox: qcom-ipcc: Convert to platform remove callback returning void
-  mailbox: stm32-ipcc: Convert to platform remove callback returning void
-  mailbox: sun6i-msgbox: Convert to platform remove callback returning void
-  mailbox: tegra-hsp: Convert to platform remove callback returning void
-  mailbox: zynqmp-ipi: Convert to platform remove callback returning void
-
- drivers/mailbox/bcm-flexrm-mailbox.c    | 6 ++----
- drivers/mailbox/bcm-pdc-mailbox.c       | 5 ++---
- drivers/mailbox/imx-mailbox.c           | 6 ++----
- drivers/mailbox/mailbox-test.c          | 6 ++----
- drivers/mailbox/mtk-cmdq-mailbox.c      | 5 ++---
- drivers/mailbox/omap-mailbox.c          | 6 ++----
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+---
  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 6 ++----
- drivers/mailbox/qcom-ipcc.c             | 6 ++----
- drivers/mailbox/stm32-ipcc.c            | 6 ++----
- drivers/mailbox/sun6i-msgbox.c          | 6 ++----
- drivers/mailbox/tegra-hsp.c             | 6 ++----
- drivers/mailbox/zynqmp-ipi-mailbox.c    | 6 ++----
- 12 files changed, 24 insertions(+), 46 deletions(-)
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-base-commit: 39676dfe52331dba909c617f213fdb21015c8d10
+diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+index 79136fb62f01..7d91e7c016ba 100644
+--- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
++++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+@@ -129,14 +129,12 @@ static int qcom_apcs_ipc_probe(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static int qcom_apcs_ipc_remove(struct platform_device *pdev)
++static void qcom_apcs_ipc_remove(struct platform_device *pdev)
+ {
+ 	struct qcom_apcs_ipc *apcs = platform_get_drvdata(pdev);
+ 	struct platform_device *clk = apcs->clk;
+ 
+ 	platform_device_unregister(clk);
+-
+-	return 0;
+ }
+ 
+ /* .data is the offset of the ipc register within the global block */
+@@ -169,7 +167,7 @@ MODULE_DEVICE_TABLE(of, qcom_apcs_ipc_of_match);
+ 
+ static struct platform_driver qcom_apcs_ipc_driver = {
+ 	.probe = qcom_apcs_ipc_probe,
+-	.remove = qcom_apcs_ipc_remove,
++	.remove_new = qcom_apcs_ipc_remove,
+ 	.driver = {
+ 		.name = "qcom_apcs_ipc",
+ 		.of_match_table = qcom_apcs_ipc_of_match,
 -- 
 2.43.0
 
