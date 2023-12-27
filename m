@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-5998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8EBA81EAF7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 01:26:49 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5943581EB12
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 02:07:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E703C1C215C4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 00:26:48 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F0DA0B220B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Dec 2023 01:07:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F29A28FA;
-	Wed, 27 Dec 2023 00:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF3CDA40;
+	Wed, 27 Dec 2023 01:07:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EDhqE4Il"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IG5DCc3h"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6142D2582
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Dec 2023 00:26:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B3C523D7
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Dec 2023 01:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-55551925340so298171a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Dec 2023 16:26:39 -0800 (PST)
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5553f251e3cso354882a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Dec 2023 17:07:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703636797; x=1704241597; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1703639238; x=1704244038; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=6m5N6KSmWicNC6ptRsM5Dj2FJ7jYL4rCMlpLvqZm9lE=;
-        b=EDhqE4IlGwohunFuKV4c7qBpSaoyx6XgDhxJlhSP+DSfKxf33XFvI1kjF4q9uqmWYx
-         g/cvuz3/21SJLk4ncqUCIgKMq+dgCl/de9Dv/CWZN7RVPjX7qeOEWdOgfMpyFi/vkRgR
-         TBHtW65f+MKtyUOA4v5De3Z4BOaHoyqoN4A9dTSo2RMDB8CePqlWX9w/a+lMhOGMooaj
-         aJWUsYb+Mv+tAK/T1onJeYcdc6vZEa6oEk07szR19kEDY2EF5XTdJ1fQ6OAK1WNpvPYp
-         wRK9smegzbHrbQM084EbJg6Ss+RmAZGMNzMdJ+qwVkRdJj+krTW/PRxhjjARO8da04Qj
-         lpsQ==
+        bh=t4tMFvEeMgMjXLstJzcFftKZTc5NR15boMM+FQhmp88=;
+        b=IG5DCc3hzatQF9Js9Bu7n+sD3kvelDR1mbw/AIuRQ5Sb97dITbBr5/wr+m8LjCWN5u
+         9J5P69tvPcArag8hSX9o0A2cLSA5EWiKa90N6rmKZ7RLjzwrtzKjRyd1RsgrlXcG/Kvb
+         23MEdm2C5p6xkonVJn4rmDU/ohpF1Gb62QQMDY/2x1uRbuah+XilmC/QYZbj6BkNOdGR
+         WLRRfbNsk7FTPVgTdn9selFWSeKv+h/e/eMOL97A+WsNpqDkZeG0Wmajr+HhUbmlQjXz
+         xPzLDbcrHKndB15JXXu5uLYutYAnraNG9PltKroKD8FssP/pxRMKMutEFhm8bbIqFlzw
+         DKJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703636797; x=1704241597;
+        d=1e100.net; s=20230601; t=1703639238; x=1704244038;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6m5N6KSmWicNC6ptRsM5Dj2FJ7jYL4rCMlpLvqZm9lE=;
-        b=eCbL0MFp0J7l9ubYg03BQvFqNhrpUSjIhQraiVecIvfxCXcNpfpPOBNuMsVZF6vbmC
-         UfHOtX2WZGxWGHaej+8hUnW128fWXQS9pLNZKbpHtcFrurcRS9WVpp9DxJ+yEL4AUrNX
-         XvnJww1sCTQA6BKOBorAwVt8VX9uEvg4V9B2wxpz2fzmg2Xiuu9Me19cNo1qkwc2QzjF
-         4+V0iNTMxWZ6ZVyOwInhtwifSLUqLinJoa/EIfFsMdFFLg1Jry0RiUOXJQX8BNjBiJy/
-         CzskY7oQThFo10vHclX9MVL9TkHUQPEa+RAZVHeqZOyuswjODZPPO0bOYdh9kFqyzPHP
-         hVmg==
-X-Gm-Message-State: AOJu0YyWckb7K82UriOFh/WSeg1dN4/9ky3kpB1r6mym8kqm3K3nqYvR
-	OcRCReji0RGxHmzar2585qlvqHBx69QU6w==
-X-Google-Smtp-Source: AGHT+IFsB99vgmLGBsObfVk0qQAkAFI/1AcM5aAXY4w7RXFyg2N8v1g1/xEyZY+BcHwuC5oSyWzlTA==
-X-Received: by 2002:aa7:cd5c:0:b0:553:3749:7a6a with SMTP id v28-20020aa7cd5c000000b0055337497a6amr7502604edw.6.1703636797544;
-        Tue, 26 Dec 2023 16:26:37 -0800 (PST)
+        bh=t4tMFvEeMgMjXLstJzcFftKZTc5NR15boMM+FQhmp88=;
+        b=aIXsB9OhgLamVm7j1uLjFgjtstsQSQAOJkJwSdsBUxNKhTmUQSO/rCbVt2c5QJcPG7
+         TWVBjri3WxYZ6gr/sWm0T37a1IJzII2dPm3IwPDNlY59Uc1NMMzovL7/juyLFJ8/ENV6
+         roxSQxvD4N3NhSzpwJ4T+dKH2m2hYCxaXk+hfjVv0ALAxD5Frukf9JuW0MRx25Z4IqgY
+         RozrP8j9iREg4YZZ679UesUrIYIeQn0JDM8UezWfoOcK00G/3oFNy+OzWyLs7gEds215
+         lAE6OXp3ywq+EL6bXM8hFjWu+RnaUmZhBGEyS0k6NoFVhabXTKhha9GqEru2ms6NkJeO
+         iitg==
+X-Gm-Message-State: AOJu0Yxw8z4ZKT0QoLLfyq5HrmJwADbkS9RG47jNtNz7frShYHcyGyQA
+	N4vkD8lS+++A9CsnnGyxHb7xFLjyhBr95pbVwMQfCWMnaaI=
+X-Google-Smtp-Source: AGHT+IGZGUY+ComcdEv3TyZJpAQYnWaCNAV0YpFmNZdDLTG10Crgm8nPIvZHBhDmwODdKfuPMHH2Qg==
+X-Received: by 2002:a50:875c:0:b0:553:8226:da72 with SMTP id 28-20020a50875c000000b005538226da72mr5950719edv.16.1703639238415;
+        Tue, 26 Dec 2023 17:07:18 -0800 (PST)
 Received: from [192.168.199.125] (178235179028.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.28])
-        by smtp.gmail.com with ESMTPSA id bf25-20020a0564021a5900b0055286b1bfc2sm7887399edb.25.2023.12.26.16.26.35
+        by smtp.gmail.com with ESMTPSA id ck8-20020a0564021c0800b0055515b40464sm1599865edb.81.2023.12.26.17.07.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Dec 2023 16:26:37 -0800 (PST)
-Message-ID: <3e3c58e0-6501-42c2-874b-1d9a00abb6c7@linaro.org>
-Date: Wed, 27 Dec 2023 01:26:34 +0100
+        Tue, 26 Dec 2023 17:07:17 -0800 (PST)
+Message-ID: <43728d36-0d20-4e1e-8671-726c29d09a2d@linaro.org>
+Date: Wed, 27 Dec 2023 02:07:15 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,14 +66,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sm8550: Increase supported MSI
- interrupts.
+Subject: Re: [PATCH v2 2/8] clk: qcom: gdsc: Enable supply reglator in GPU GX
+ handler
 Content-Language: en-US
-To: Qiang Yu <quic_qianyu@quicinc.com>, andersson@kernel.org,
- robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, quic_cang@quicinc.com, quic_mrana@quicinc.com
-References: <1703578131-14747-1-git-send-email-quic_qianyu@quicinc.com>
+To: Bjorn Andersson <quic_bjorande@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+ Ulf Hansson <ulf.hansson@linaro.org>, Johan Hovold
+ <johan+linaro@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
+ Will Deacon <will@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+References: <20231220-sa8295p-gpu-v2-0-4763246b72c0@quicinc.com>
+ <20231220-sa8295p-gpu-v2-2-4763246b72c0@quicinc.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -110,43 +119,21 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <1703578131-14747-1-git-send-email-quic_qianyu@quicinc.com>
+In-Reply-To: <20231220-sa8295p-gpu-v2-2-4763246b72c0@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 26.12.2023 09:08, Qiang Yu wrote:
-> On sm8550, synopsys MSI controller supports 256 MSI interrupts. Hence,
-> enable all GIC interrupts required by MSI controller for PCIe0 and PCIe1.
+On 22.12.2023 05:39, Bjorn Andersson wrote:
+> The GX GDSC is modelled to aid the GMU in powering down the GPU in the
+> event that the GPU crashes, so that it can be restarted again. But in
+> the event that the power-domain is supplied through a dedicated
+> regulator (in contrast to being a subdomin of another power-domain),
+> something needs to turn that regulator on, both to make sure things are
+> powered and to match the operation in gdsc_disable().
 > 
-> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
-Thanks for digging this up, could you check the same for other platforms
-too? Particularly for the compute ones which heavily depend on PCIe..
-
->  arch/arm64/boot/dts/qcom/sm8550.dtsi | 24 ++++++++++++++++++++----
->  1 file changed, 20 insertions(+), 4 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index ee1ba5a..80e31fb 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -1713,8 +1713,16 @@
->  			linux,pci-domain = <0>;
->  			num-lanes = <2>;
->  
-> -			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
-> -			interrupt-names = "msi";
-> +			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "msi0", "msi1", "msi2", "msi3",
-> +					  "msi4", "msi5", "msi6", "msi7";
-Please make it one per line, like the interrupts entries.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
