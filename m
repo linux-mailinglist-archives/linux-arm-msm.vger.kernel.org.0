@@ -1,175 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-6056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07BC981F916
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Dec 2023 15:30:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9BA7681F982
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Dec 2023 16:12:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 004F5B23766
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Dec 2023 14:30:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 572F32812B0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Dec 2023 15:12:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 065CFD2E6;
-	Thu, 28 Dec 2023 14:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 275A7DDB9;
+	Thu, 28 Dec 2023 15:12:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="dv8rhXUf"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QQx88cHf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17CB9C8C2
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Dec 2023 14:29:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a277339dcf4so45592466b.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Dec 2023 06:29:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1703773797; x=1704378597; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IfOkw9nEcZxbA1rEGXnw7Xr3Fbv2QGCNa/sv3AZ14y4=;
-        b=dv8rhXUfeIIde9MZGjI6hLX+c81tekNQVvOna8wokRJYaskThEmkjZYVcF/8UpVNCA
-         WJvzBrDudVuXUJLvRRMGFNAs8WtmxyuyueFvSJhJ+dH9MnSewQju440m90hKwZZAa0om
-         EgT6qlyZDvDCdWti/BMZksKdrs6NyWCgFer1tHKrgEWph9k43KGI3aLlLZfAAfwFXLF8
-         U0azGfF+09/drjuMrS8jDXlqVMLvS8kAeywrbt/EGcJEWcGLD8zE0rJLTgyqAqUjK6Ww
-         Kuy+6x16nf1MtO3T0xaQvNIvZ2+6MXejx7NpdRdH260DejMtu4KIswRtwt6++COxddGn
-         rZ4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703773797; x=1704378597;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=IfOkw9nEcZxbA1rEGXnw7Xr3Fbv2QGCNa/sv3AZ14y4=;
-        b=wI41dPTYt4BZdwpRgipKPNKdLDnGaq6+KuwKlaDX8vulRKjpucpxgw0l1KgM1Eica/
-         Q5HR+GDnaFXKlRFsa3gdxLiRReoFWjRJlZwse1QNWr6xgKE4/KSJxr8s9ObpEFIoUMBv
-         dR4qfSq72z0jkR4kjl5uXNvCMK+Eateu85oRPWCdG8GmNL68EWrU10A8GlPIUbgi8tyh
-         ur/ZCa0jhTfTsgi8JaesIaWzGvFmgOFvEk/HyHW6BKf2W7ydrK1rpvmsFfhLgRduA3ge
-         JI9OnGoBVWnxKrlvno7LOVMe3cG1YdifKXjKncrBoViPHv76tRWxJVFpTK9Z7SBqfik0
-         Dl8w==
-X-Gm-Message-State: AOJu0YwuvsrMeOuElf4NlTU6qeB1mkHNCTRP+zkoufrsoTcqyCWy1f4Y
-	/wS+8U90IRcXdGrBwId4AytDyvLhihusNg==
-X-Google-Smtp-Source: AGHT+IEwzibakp4+9ZXJZVidzN9ogA4Ep77wRAfVlvNC3XZ4Cuo92tm68q7JErfyuMvnMmslNephwA==
-X-Received: by 2002:a17:906:7810:b0:a12:78b5:3d81 with SMTP id u16-20020a170906781000b00a1278b53d81mr4527886ejm.1.1703773797149;
-        Thu, 28 Dec 2023 06:29:57 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id r25-20020a170906281900b00a1f7c502736sm7523221ejc.164.2023.12.28.06.29.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Dec 2023 06:29:56 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE5CDDB1;
+	Thu, 28 Dec 2023 15:12:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1703776350; x=1735312350;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=9joJ//r2WbPiqu6shWzXWoF/mATyTHXA55BcruPVTlE=;
+  b=QQx88cHfuXYmBlykUFPEHpba+ZakbER268nDjVkGgKUg9ybm5F8wds+A
+   Sv47NTPNW3cxemQMsj+zgo7td0OAmTPwHYH8ZkuCjUxpA7xBAKxGx3ovx
+   3MOIFXxzj1Fh5/yb4N3lyNJfqB1wZyZ/m3PT+thqYq9/0NENIKxqtxjMm
+   AM+4Fiq5NZdt32HDoWXAutm6ub7M2Pc0P3HMqIMDFrSbB9LHEd6wyq7yR
+   T9YPoOBb5Ob46W+qbKz+AVAYAQ8mXEWRdJIJIQsi0Et1JrXn8ROS9HbpE
+   FBf7ep1iTmV5IsJU2nklBEbV15W1UKp+Yc3x1MFX3N96afjMMpuguJrZb
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10936"; a="482733304"
+X-IronPort-AV: E=Sophos;i="6.04,312,1695711600"; 
+   d="scan'208";a="482733304"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Dec 2023 07:12:29 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10936"; a="922117912"
+X-IronPort-AV: E=Sophos;i="6.04,312,1695711600"; 
+   d="scan'208";a="922117912"
+Received: from lkp-server02.sh.intel.com (HELO b07ab15da5fe) ([10.239.97.151])
+  by fmsmga001.fm.intel.com with ESMTP; 28 Dec 2023 07:12:26 -0800
+Received: from kbuild by b07ab15da5fe with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1rIs3c-000GYX-07;
+	Thu, 28 Dec 2023 15:12:24 +0000
+Date: Thu, 28 Dec 2023 23:12:02 +0800
+From: kernel test robot <lkp@intel.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <helgaas@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Stanimir Varbanov <svarbanov@mm-sol.com>,
+	Andrew Murray <amurray@thegoodpenguin.co.uk>,
+	Vinod Koul <vkoul@kernel.org>
+Cc: oe-kbuild-all@lists.linux.dev,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH 4/4] PCI: qcom: Implement RC shutdown/power up
+Message-ID: <202312282244.N6b5czwN-lkp@intel.com>
+References: <20231227-topic-8280_pcie-v1-4-095491baf9e4@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 28 Dec 2023 15:29:56 +0100
-Message-Id: <CY01EKQVWE36.B9X5TDXAREPF@fairphone.com>
-Cc: <neil.armstrong@linaro.org>, <konrad.dybcio@linaro.org>,
- <agross@kernel.org>, <andersson@kernel.org>, <conor+dt@kernel.org>,
- <davem@davemloft.net>, <devicetree@vger.kernel.org>,
- <herbert@gondor.apana.org.au>, <krzysztof.kozlowski+dt@linaro.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-crypto@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <marijn.suijten@somainline.org>,
- <robh+dt@kernel.org>, <vkoul@kernel.org>,
- <cros-qcom-dts-watchers@chromium.org>
-Subject: Re: [PATCH V3 2/2] arm64: dts: qcom: sc7280: add QCrypto nodes
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Om Prakash Singh" <quic_omprsing@quicinc.com>
-X-Mailer: aerc 0.15.2
-References: <20231214103600.2613988-1-quic_omprsing@quicinc.com>
- <20231214103600.2613988-3-quic_omprsing@quicinc.com>
-In-Reply-To: <20231214103600.2613988-3-quic_omprsing@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231227-topic-8280_pcie-v1-4-095491baf9e4@linaro.org>
 
-On Thu Dec 14, 2023 at 11:36 AM CET, Om Prakash Singh wrote:
-> Add the QCE and Crypto BAM DMA nodes.
->
-> Signed-off-by: Om Prakash Singh <quic_omprsing@quicinc.com>
-> ---
->
-> Changes in V3:
->   - V2 patch was sent without actual modification. Resending the patch wi=
-th modified file.
->
-> Changes in V2:
->   - Update DT node sequence as per register ascending order.
->   - Fix DT node properties as per convention.
->
->  arch/arm64/boot/dts/qcom/sc7280.dtsi | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/q=
-com/sc7280.dtsi
-> index 66f1eb83cca7..b819724c1255 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -2233,6 +2233,28 @@ pcie1_phy: phy@1c0e000 {
->  			status =3D "disabled";
->  		};
-> =20
-> +		cryptobam: dma-controller@1dc4000 {
-> +			compatible =3D "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
-> +			reg =3D <0x0 0x01dc4000 0x0 0x28000>;
-> +			interrupts =3D <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
-> +			#dma-cells =3D <1>;
-> +			iommus =3D <&apps_smmu 0x4e4 0x0011>,
-> +				 <&apps_smmu 0x4e6 0x0011>;
-> +			qcom,ee =3D <0>;
-> +			qcom,controlled-remotely;
-> +		};
+Hi Konrad,
 
-Hi,
+kernel test robot noticed the following build errors:
 
-Unfortunately I seem to have boot failure / device crash with cryptobam
-enabled on my qcm6490-fairphone-fp5. Are you aware of any firmware
-differences that could cause this with QCM6490 LA firmware?
+[auto build test ERROR on 39676dfe52331dba909c617f213fdb21015c8d10]
 
-Looking at downstream msm-5.4 dmesg I do see this BAM being used so it
-should generally be accessible from Linux.
+url:    https://github.com/intel-lab-lkp/linux/commits/Konrad-Dybcio/PCI-qcom-Reshuffle-reset-logic-in-2_7_0-init/20231228-062002
+base:   39676dfe52331dba909c617f213fdb21015c8d10
+patch link:    https://lore.kernel.org/r/20231227-topic-8280_pcie-v1-4-095491baf9e4%40linaro.org
+patch subject: [PATCH 4/4] PCI: qcom: Implement RC shutdown/power up
+config: powerpc64-randconfig-002-20231228 (https://download.01.org/0day-ci/archive/20231228/202312282244.N6b5czwN-lkp@intel.com/config)
+compiler: powerpc64-linux-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231228/202312282244.N6b5czwN-lkp@intel.com/reproduce)
 
-[    5.217214] qce 1de0000.qcedev: Adding to iommu group 18
-[    5.223741] QCE50: __qce_get_device_tree_data: CE operating frequency is=
- not defined, setting to default 100MHZ
-[    5.234986] qce 1de0000.qcedev: QTI Crypto 5.6.0 device found @0x1de0000
-[    5.242981] sps_register_bam_device: sps:BAM 0x0000000001dc4000 is regis=
-tered
-[    5.251124] sps_bam_enable: sps:BAM 0x0000000001dc4000 (va:0x000000001db=
-63156) enabled: ver:0x27, number of pipes:16
-[    5.262783] QCE50: qce_sps_init:  QTI MSM CE-BAM at 0x0000000001dc4000 i=
-rq 9
-[    5.271820] qce 1de0000.qcedev:qcom_cedev_ns_cb: Adding to iommu group 1=
-9
-[    5.281083] qce 1de0000.qcedev:qcom_cedev_s_cb: Adding to iommu group 20
-[    5.289376] qcrypto 1de0000.qcrypto: Adding to iommu group 21
-[    5.296326] QCE50: __qce_get_device_tree_data: CE operating frequency is=
- not defined, setting to default 100MHZ
-[    5.307675] qcrypto 1de0000.qcrypto: QTI Crypto 5.6.0 device found @0x1d=
-e0000
-[    5.315867] QCE50: qce_sps_init:  QTI MSM CE-BAM at 0x0000000001dc4000 i=
-rq 9
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202312282244.N6b5czwN-lkp@intel.com/
 
-Any idea?
+All errors (new ones prefixed by >>):
 
-Regards
-Luca
+   powerpc64-linux-ld: warning: orphan section `.stubs' from `drivers/dma/fsl-edma-common.o' being placed in section `.stubs'
+   powerpc64-linux-ld: warning: discarding dynamic section .glink
+   powerpc64-linux-ld: warning: discarding dynamic section .plt
+   powerpc64-linux-ld: linkage table error against `cmd_db_ready'
+   powerpc64-linux-ld: stubs don't match calculated size
+   powerpc64-linux-ld: can not build stubs: bad value
+   powerpc64-linux-ld: drivers/pci/controller/dwc/pcie-qcom.o: in function `qcom_pcie_probe':
+>> pcie-qcom.c:(.text+0x1894): undefined reference to `cmd_db_ready'
 
-> +
-> +		crypto: crypto@1dfa000 {
-> +			compatible =3D "qcom,sc7280-qce", "qcom,sm8150-qce", "qcom,qce";
-> +			reg =3D <0x0 0x01dfa000 0x0 0x6000>;
-> +			dmas =3D <&cryptobam 4>, <&cryptobam 5>;
-> +			dma-names =3D "rx", "tx";
-> +			iommus =3D <&apps_smmu 0x4e4 0x0011>,
-> +				 <&apps_smmu 0x4e4 0x0011>;
-> +			interconnects =3D <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>=
-;
-> +			interconnect-names =3D "memory";
-> +		};
-> +
->  		ipa: ipa@1e40000 {
->  			compatible =3D "qcom,sc7280-ipa";
-> =20
-
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
