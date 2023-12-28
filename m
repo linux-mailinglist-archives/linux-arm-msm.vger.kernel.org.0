@@ -1,134 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-6046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 598EC81F4C0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Dec 2023 06:43:01 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1471281F4D5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Dec 2023 07:08:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DEC951F223C1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Dec 2023 05:43:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 45CA71C20E6D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Dec 2023 06:08:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4734C1FDF;
-	Thu, 28 Dec 2023 05:42:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5BCE1FDF;
+	Thu, 28 Dec 2023 06:08:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LX1etL9V"
+	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="ZTRdhT1y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45971FB9;
-	Thu, 28 Dec 2023 05:42:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BS3c669017766;
-	Thu, 28 Dec 2023 05:42:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references; s=
-	qcppdkim1; bh=5PMzEBWHDtxqCU1GPDisDDRpe8uVPE8fXRl+sAk4D+8=; b=LX
-	1etL9VCSE9LbQ6wxZDJc3k+zxr3VpbMqky3KSCniZcSQq4lSpF836pJwsMXSTErU
-	cVGTAYzBVqR9oI5eYFMPSaUnmgWBndF5/2T3/RM+dBWLyXfqY7L6uL8QrkKn18SZ
-	/HTOVfhdt4F6VJoubmPvFyKkdknPdwPHVhVDM5JI9iC3vsoTteIov0TEOtfnt7EM
-	kSYfO9fjI+CLb/RsAJcDORujxhQVX+ORsDnUBjzrz4N9mCK8BjoXvt2bRBC9S2Fa
-	rlk2hz23CwQ5SC5WLwM+sAHKNxpi9ViC7pAAaNNls4KJ9hxO/5rEiQ05/Tv15lKQ
-	DX2AO7y/e0+891d9hpVQ==
-Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v8yyega4t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 28 Dec 2023 05:42:43 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3BS5ge6E015305;
-	Thu, 28 Dec 2023 05:42:40 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTP id 3v5rmkwkat-1;
-	Thu, 28 Dec 2023 05:42:40 +0000
-Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3BS5gejT015298;
-	Thu, 28 Dec 2023 05:42:40 GMT
-Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTP id 3BS5geE5015294;
-	Thu, 28 Dec 2023 05:42:40 +0000
-Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 4098150)
-	id 6045D56F2; Thu, 28 Dec 2023 13:42:39 +0800 (CST)
-From: Qiang Yu <quic_qianyu@quicinc.com>
-To: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        vkoul@kernel.org, kishon@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
-        quic_mrana@quicinc.com, quic_qianyu@quicinc.com
-Subject: [PATCH 2/2] phy: qcom: qmp-pcie: Update PCIe0 PHY settings for SM8550
-Date: Thu, 28 Dec 2023 13:42:37 +0800
-Message-Id: <1703742157-69840-3-git-send-email-quic_qianyu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1703742157-69840-1-git-send-email-quic_qianyu@quicinc.com>
-References: <1703742157-69840-1-git-send-email-quic_qianyu@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: wrnE-jJ1l89uvcZpqMsb-KBNGLOMTWa5
-X-Proofpoint-ORIG-GUID: wrnE-jJ1l89uvcZpqMsb-KBNGLOMTWa5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 clxscore=1015 mlxlogscore=531 impostorscore=0
- lowpriorityscore=0 bulkscore=0 malwarescore=0 mlxscore=0 phishscore=0
- spamscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312280043
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78AD01FDD;
+	Thu, 28 Dec 2023 06:08:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+	(No client certificate requested)
+	by box.trvn.ru (Postfix) with ESMTPSA id 5E86E40564;
+	Thu, 28 Dec 2023 11:08:29 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+	t=1703743710; bh=nOX6jjTicKxqmOSERrqk583i64MzTIyy5OLB82ZzTv8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ZTRdhT1yd+lcRCUOlGTMlRLWUJP6aBO4M+m5XV3w8tint5euG4BSa94c+xsKq4+m/
+	 hSPud5i0yagcLi3Bcmd9w/QEi+HYqz3yu+GyhBZQi/f4TCd3xVSoYjZTjob+IVxTm3
+	 dLf/5BA6Wk+MKXn2WkKRQVmC9zfeZb7L2Ke3E+2bWfDzN+4WskCBxtVnPvv0Eai1uP
+	 Wi4vNJqj6uGhBWpAh4EDY2l1bxhi92kr4Hr5fyX7bjSBQ+uxjP2gmUCf5isnyRJz+R
+	 JwSu6yfUhYY9a1+27hT05cju82qtA7fDrvUGR9hcKAr1GZOKVNafGVLwHnUW5mrFzs
+	 1pbHn8COU8Zuw==
+Date: Thu, 28 Dec 2023 11:08:26 +0500
+From: Nikita Travkin <nikita@trvn.ru>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Marcel Holtmann <marcel@holtmann.org>, 
+	Johan Hedberg <johan.hedberg@gmail.com>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Bjorn Andersson <quic_bjorande@quicinc.com>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	stable@vger.kernel.org, Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, 
+	Matthias Kaehlcke <mka@chromium.org>
+Subject: Re: [PATCH] Bluetooth: qca: fix device-address endianness
+Message-ID: <grhpb3vyajjmceuwgna36g6k2esjtw6qrv35ldlwgdmlvjvuo5@2b3q27zxttxa>
+References: <20231227180306.6319-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231227180306.6319-1-johan+linaro@kernel.org>
 
-Align PCIe0 PHY settings with SM8550 latest PCIe PHY Hardware Programming
-Guide.
+On Wed, Dec 27, 2023 at 07:03:06PM +0100, Johan Hovold wrote:
+> The WCN6855 firmware on the Lenovo ThinkPad X13s expects the Bluetooth
+> device address in MSB order when setting it using the
+> EDL_WRITE_BD_ADDR_OPCODE command.
+> 
+> Presumably, this is the case for all non-ROME devices which all use the
+> EDL_WRITE_BD_ADDR_OPCODE command for this (unlike the ROME devices which
+> use a different command and expect the address in LSB order).
+> 
+> Reverse the little-endian address before setting it to make sure that
+> the address can be configured using tools like btmgmt or using the
+> 'local-bd-address' devicetree property.
+> 
+> Note that this can potentially break systems with boot firmware which
+> has started relying on the broken behaviour and is incorrectly passing
+> the address via devicetree in MSB order.
+> 
+> Fixes: 5c0a1001c8be ("Bluetooth: hci_qca: Add helper to set device address")
+> Cc: stable@vger.kernel.org      # 5.1
+> Cc: Balakrishna Godavarthi <quic_bgodavar@quicinc.com>
+> Cc: Matthias Kaehlcke <mka@chromium.org>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
----
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c        | 4 +++-
- drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6.h | 2 ++
- 2 files changed, 5 insertions(+), 1 deletion(-)
+The same issue was present on sc7180 (qcom,wcn3991-bt) and this patch
+fixes it.
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index 5f87ebc..857581d 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -1747,7 +1747,7 @@ static const struct qmp_phy_init_tbl sm8550_qmp_gen3x2_pcie_rx_tbl[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_V6_RX_RX_MODE_10_HIGH2, 0x5b),
- 	QMP_PHY_INIT_CFG(QSERDES_V6_RX_RX_MODE_10_HIGH3, 0x1a),
- 	QMP_PHY_INIT_CFG(QSERDES_V6_RX_RX_MODE_10_HIGH4, 0x89),
--	QMP_PHY_INIT_CFG(QSERDES_V6_RX_TX_ADAPT_POST_THRESH, 0xf0),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_RX_TX_ADAPT_POST_THRESH, 0x00),
- 	QMP_PHY_INIT_CFG(QSERDES_V6_RX_UCDR_FO_GAIN, 0x09),
- 	QMP_PHY_INIT_CFG(QSERDES_V6_RX_UCDR_SO_GAIN, 0x05),
- 	QMP_PHY_INIT_CFG(QSERDES_V6_RX_UCDR_SB2_THRESH1, 0x08),
-@@ -1767,6 +1767,8 @@ static const struct qmp_phy_init_tbl sm8550_qmp_gen3x2_pcie_pcs_tbl[] = {
- };
- 
- static const struct qmp_phy_init_tbl sm8550_qmp_gen3x2_pcie_pcs_misc_tbl[] = {
-+	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_PCS_PCIE_EQ_CONFIG1, 0x1e),
-+	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_PCS_PCIE_RXEQEVAL_TIME, 0x27),
- 	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_PCS_PCIE_POWER_STATE_CONFIG2, 0x1d),
- 	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_PCS_PCIE_POWER_STATE_CONFIG4, 0x07),
- 	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_PCS_PCIE_ENDPOINT_REFCLK_DRIVE, 0xc1),
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6.h
-index 91e7000..0ca7933 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6.h
-@@ -7,6 +7,8 @@
- #define QCOM_PHY_QMP_PCS_PCIE_V6_H_
- 
- /* Only for QMP V6 PHY - PCIE have different offsets than V5 */
-+#define QPHY_PCIE_V6_PCS_PCIE_EQ_CONFIG1		0xa4
-+#define QPHY_PCIE_V6_PCS_PCIE_RXEQEVAL_TIME		0xf4
- #define QPHY_PCIE_V6_PCS_PCIE_POWER_STATE_CONFIG2	0x0c
- #define QPHY_PCIE_V6_PCS_PCIE_POWER_STATE_CONFIG4	0x14
- #define QPHY_PCIE_V6_PCS_PCIE_ENDPOINT_REFCLK_DRIVE	0x20
--- 
-2.7.4
+Tested-by: Nikita Travkin <nikita@trvn.ru> # sc7180
 
+Thanks!
+
+> ---
+> 
+> Hi Qualcomm people,
+> 
+> Could you please verify with your documentation that all non-ROME
+> devices expect the address provided in the EDL_WRITE_BD_ADDR_OPCODE
+> command in MSB order?
+> 
+> I assume this is not something that anyone would change between firmware
+> revisions, but if that turns out to be the case, we'd need to reverse
+> the address based on firmware revision or similar.
+> 
+> Johan
+> 
+> 
+>  drivers/bluetooth/btqca.c | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+> index fdb0fae88d1c..29035daf21bc 100644
+> --- a/drivers/bluetooth/btqca.c
+> +++ b/drivers/bluetooth/btqca.c
+> @@ -826,11 +826,15 @@ EXPORT_SYMBOL_GPL(qca_uart_setup);
+>  
+>  int qca_set_bdaddr(struct hci_dev *hdev, const bdaddr_t *bdaddr)
+>  {
+> +	bdaddr_t bdaddr_swapped;
+>  	struct sk_buff *skb;
+>  	int err;
+>  
+> -	skb = __hci_cmd_sync_ev(hdev, EDL_WRITE_BD_ADDR_OPCODE, 6, bdaddr,
+> -				HCI_EV_VENDOR, HCI_INIT_TIMEOUT);
+> +	baswap(&bdaddr_swapped, bdaddr);
+> +
+> +	skb = __hci_cmd_sync_ev(hdev, EDL_WRITE_BD_ADDR_OPCODE, 6,
+> +				&bdaddr_swapped, HCI_EV_VENDOR,
+> +				HCI_INIT_TIMEOUT);
+>  	if (IS_ERR(skb)) {
+>  		err = PTR_ERR(skb);
+>  		bt_dev_err(hdev, "QCA Change address cmd failed (%d)", err);
+> -- 
+> 2.41.0
 
