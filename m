@@ -1,42 +1,42 @@
-Return-Path: <linux-arm-msm+bounces-6073-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D684181FFA1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 14:20:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A17481FFA8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 14:25:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9191D283294
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 13:20:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F2536284551
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 13:25:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 730D6111BD;
-	Fri, 29 Dec 2023 13:20:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60F1111702;
+	Fri, 29 Dec 2023 13:25:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ARsCAUrd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XwkG7X7N"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B910111B5;
-	Fri, 29 Dec 2023 13:20:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B061C433C7;
-	Fri, 29 Dec 2023 13:20:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D0811C84;
+	Fri, 29 Dec 2023 13:25:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B04C433C7;
+	Fri, 29 Dec 2023 13:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1703856022;
-	bh=PZ8xNlGCvRbn/i0nNGotIHyKuFdlPak1Ni35jU5x2xQ=;
+	s=k20201202; t=1703856348;
+	bh=Qjdq/NiV7NMUTpVZdpiyOV0E08a+f4/G4AzkNI+HNQE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ARsCAUrdFPk9WlFqWn1bmXWWZPl7mLPBucASz2oJIvyqSx/pIR7CGyRn360YWj3bU
-	 i6Vmq78XvLMouTN4NtS5eghI8YGAH8N+39AGUEKs7vdmT8L/1uB/992YFf05u0lPIO
-	 1GHFNQktP3L3GrnDSa0z2Ua5B+1QAo+vWI/bnzbxNgLgNZxlCGOg//mG74yC0TMMiM
-	 R/8iMW8UTFXaovVw2B/HmFwB5m96hdrktXZ2gVOKxVwFbu3nig6fjLA+u1UgCulXnO
-	 BnNStwk8wKf5uRonGrN9WEOxDIOe5rQ5BGE7HHGnXgG457lKI6ijXTVv1k6ERhnqwU
-	 D1rphok6WoOmA==
+	b=XwkG7X7NWOjzQloEY+Hjh4c45ux4z/YP8Jg6OlOLSrx7tZmUlFKpu0Zi2/YFmLYyP
+	 poQzjlQhQ7peboc5IRDUf2EhKIuWfLWVk+mOG1WBt/FxoGVpDuaG3qGsQ5/sBjO2QI
+	 XHBbz+fVH1jRT1bT4cY8xqtxpaZxI72AiC13ttVKyX32PG9XYxMV4IaT9fM/24n9WS
+	 lRE4H33qAluaYRPQzMmYMuWUAGS2ZHE9IKI1A7A/J1iYnPDFYZGqUq8J+xfmREdaPl
+	 YmRqWdfqHsKxqnERH0pjpA4v7EoJON3PXXygfFksqiYQBis8SQA3HvRUrjGG4/bwfM
+	 iNDt9QBsChqDw==
 Received: from johan by xi.lan with local (Exim 4.96.2)
 	(envelope-from <johan@kernel.org>)
-	id 1rJCmd-0000A6-1u;
-	Fri, 29 Dec 2023 14:20:15 +0100
-Date: Fri, 29 Dec 2023 14:20:15 +0100
+	id 1rJCrt-0000B0-2I;
+	Fri, 29 Dec 2023 14:25:41 +0100
+Date: Fri, 29 Dec 2023 14:25:41 +0100
 From: Johan Hovold <johan@kernel.org>
 To: Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc: Bjorn Andersson <andersson@kernel.org>,
@@ -49,13 +49,13 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: sc8280xp: Fix PCIe PHY
- power-domains
-Message-ID: <ZY7HjxOXhikr4VKM@hovoldconsulting.com>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sc8280xp: Correct USB PHY power
+ domains
+Message-ID: <ZY7I1brn0chtOzis@hovoldconsulting.com>
 References: <20231227-topic-8280_pcie_dts-v1-0-13d12b1698ff@linaro.org>
- <20231227-topic-8280_pcie_dts-v1-1-13d12b1698ff@linaro.org>
- <ZY6sh8nlEUyEfL0u@hovoldconsulting.com>
- <ce7022e6-011c-4745-a508-4776269708d0@linaro.org>
+ <20231227-topic-8280_pcie_dts-v1-2-13d12b1698ff@linaro.org>
+ <ZY7DEpaIgvfL_A11@hovoldconsulting.com>
+ <b730bf22-fa3a-4720-9fd1-79d2207d6812@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,35 +64,28 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ce7022e6-011c-4745-a508-4776269708d0@linaro.org>
+In-Reply-To: <b730bf22-fa3a-4720-9fd1-79d2207d6812@linaro.org>
 
-On Fri, Dec 29, 2023 at 02:08:25PM +0100, Konrad Dybcio wrote:
-> On 29.12.2023 12:24, Johan Hovold wrote:
-> > On Wed, Dec 27, 2023 at 11:28:26PM +0100, Konrad Dybcio wrote:
-> >> The PCIe GDSCs are only related to the RCs. The PCIe PHYs on the other
-> >> hand, are powered by VDD_MX and their specific VDDA_PHY/PLL regulators.
+[ Please remember to trim your replies and add a newline before your
+  inline comments to make them readable. ]
+
+On Fri, Dec 29, 2023 at 02:06:26PM +0100, Konrad Dybcio wrote:
+> On 29.12.2023 14:01, Johan Hovold wrote:
+> > On Wed, Dec 27, 2023 at 11:28:27PM +0100, Konrad Dybcio wrote:
+
+> >> Fix the power-domains assignment to stop potentially toggling the GDSC
+> >> unnecessarily.
 > > 
-> > No, that does not seem to be entirely correct. I added the power-domains
-> > here precisely because they were needed to enable the PHYs.
+> > Again, there's no additional toggling being done here, but yes, this may
+> > keep the domains enabled during suspend depending on how the driver is
+> > implemented.
 
-> > If you try to enable one of these PHYs without the corresponding GDSC
-> > being enabled, you end up with:
-> > 
-> > [   37.709324] ------------[ cut here ]------------
-> > [   37.718196] gcc_pcie_3b_aux_clk status stuck at 'off'
-> > [   37.718205] WARNING: CPU: 4 PID: 482 at drivers/clk/qcom/clk-branch.c:86 clk_branch_wait+0x144/0x15c
-> > 	
-> > Now, you may or may not want to describe the above in the devicetree,
-> > but this makes it sound like you're trying to work around an issue with
-> > the current Linux implementation.
+> No, it can actually happen. (Some) QMP PHYs are referenced by the
+> DP hardware. If USB is disabled (or suspended), the DP being active
+> will hold these GDSCs enabled.
 
-> Could you please recheck this with patch 1 from [1] applied?
-
-As expected that makes no difference as I'm powering on the PHY without
-the corresponding controller being enabled (which otherwise guarantees
-the GDSC to be on).
-
-> [1] https://lore.kernel.org/linux-arm-msm/20231227-topic-8280_pcie-v1-1-095491baf9e4@linaro.org/T/#u
+That's not a "toggling", is it? Also if the DP controller is a consumer of
+these PHY's why should it not prevent the PHYs from suspending?
 
 Johan
 
