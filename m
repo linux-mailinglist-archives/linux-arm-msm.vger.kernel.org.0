@@ -1,57 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-6090-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6091-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3CD3482014B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 21:03:04 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A9682820166
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 21:30:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6D4BAB222A9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 20:03:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D09961C20C25
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 20:30:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AD9A13FFB;
-	Fri, 29 Dec 2023 20:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5417923B3;
+	Fri, 29 Dec 2023 20:30:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="cKPamvrh"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="1jBzkh8F"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ixit.cz (ip-89-177-23-149.bb.vodafone.cz [89.177.23.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF86010A25;
-	Fri, 29 Dec 2023 20:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C74E14284;
+	Fri, 29 Dec 2023 20:30:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ixit.cz
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
 Received: from newone.congress.ccc.de (unknown [151.217.64.190])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 29D9116397E;
-	Fri, 29 Dec 2023 21:02:48 +0100 (CET)
+	by ixit.cz (Postfix) with ESMTPSA id 28C53163998;
+	Fri, 29 Dec 2023 21:30:05 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1703880168;
+	t=1703881805;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding;
-	bh=8lkZagsXqJ7Db2fhGTjyn9VcjxY+BefcgmcUx7qidls=;
-	b=cKPamvrhVcH5xIGcneftksV7ANrG+/DIQyvtGX0S4SZvuwp9zDn6XDG99VZ5aF7xkoDkwE
-	eBFVOcL9VU0u4hanX/ZlJBmxXLRfhjtGBD3a2iyGGXLkB/tF0AtRh9AncYILbRiBRgjW+N
-	0/s/D06ktg0Eompa8iSSiNjVgXCfPuU=
+	bh=W1DwKX7Tz/5TTyYVFi24EUOrX90BXUle9nCmdIhFA28=;
+	b=1jBzkh8FP7nsZ3cPYsjY/0y2YREnZN4iHiqoo8Y5ufW5pSzSzwwAl9HBL/OVb/GSzSVOO6
+	DZ0bMILvFj5eLPZdnfyS4WkAJn6yJddU+dD3vNsrJhck+zcdQZ3GXKNPUAbDWKrd3UafFT
+	LEnPmItUuK9zX8vik66xnDds9P7GUTM=
 From: David Heidelberg <david@ixit.cz>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Rob Herring <robh+dt@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Caleb Connolly <caleb.connolly@linaro.org>,
-	Dylan Van Assche <me@dylanvanassche.be>
-Cc: David Heidelberg <david@ixit.cz>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: Caleb Connolly <caleb.connolly@linaro.org>,
+	David Heidelberg <david@ixit.cz>,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sdm845-oneplus-common: improve DAI node naming
-Date: Fri, 29 Dec 2023 21:02:33 +0100
-Message-ID: <20231229200245.259689-1-david@ixit.cz>
+Subject: [PATCH] arm64: dts: qcom: sdm845: add power domain to UFS phy interface
+Date: Fri, 29 Dec 2023 21:29:54 +0100
+Message-ID: <20231229202959.266502-1-david@ixit.cz>
 X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -61,44 +60,26 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Make it easier to understand what the reg in those nodes is by using the
-constants provided by qcom,q6dsp-lpass-ports.h.
+Reported by: `make CHECK_DTBS=1 qcom/sdm845-oneplus-enchilada.dtb`
 
-Name nodes according to dt-binding expectations.
-
-Fix for
-```
-arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dtb: service@4: dais: Unevaluated properties are not allowed ('qi2s@22', 'qi2s@23' were unexpected)
-```
-
-Fixes: b7b734286856 ("arm64: dts: qcom: sdm845-oneplus-*: add audio devices")
 Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index e821103d49c0..46e25c53829a 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -508,13 +508,13 @@ led-1 {
- };
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index c2244824355a..ad8677b62bfb 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -2644,6 +2644,8 @@ ufs_mem_phy: phy@1d87000 {
+ 			clocks = <&gcc GCC_UFS_MEM_CLKREF_CLK>,
+ 				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
  
- &q6afedai {
--	qi2s@22 {
--		reg = <22>;
-+	dai@22 {
-+		reg = <QUATERNARY_MI2S_RX>;
- 		qcom,sd-lines = <1>;
- 	};
++			power-domains = <&gcc UFS_PHY_GDSC>;
++
+ 			resets = <&ufs_mem_hc 0>;
+ 			reset-names = "ufsphy";
  
--	qi2s@23 {
--		reg = <23>;
-+	dai@23 {
-+		reg = <QUATERNARY_MI2S_TX>;
- 		qcom,sd-lines = <0>;
- 	};
- };
 -- 
 2.43.0
 
