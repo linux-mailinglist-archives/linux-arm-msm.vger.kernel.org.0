@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A8A9820011
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 16:01:37 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E096820019
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 16:05:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4B03C28456F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 15:01:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 04EFE284690
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 15:05:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F75811CB7;
-	Fri, 29 Dec 2023 15:01:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32E72125A5;
+	Fri, 29 Dec 2023 15:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cuDvjIx/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EO+B0mM7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C2C11CB0
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 15:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3B7125A1
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 15:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5559bb6b29dso1478615a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 07:01:32 -0800 (PST)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-50e7abe4be4so4672173e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 07:05:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703862091; x=1704466891; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1703862321; x=1704467121; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=OJGAbTsJuV5c3Gk6VGVnHrcLGAJpmZfominI1jRqdbY=;
-        b=cuDvjIx/AaPwCvtsVoX9cVFHQNjHNMs8TqNApLoK6NLIb8L1uBgsYnL1KXUMykvEqv
-         9SQAu/YsY2PHRS3LJlHvc4KPTK/vwkuxCWSM9gnqxX9LBSN87lho+fJQP5ekRJXbNpJO
-         ShFB2Js6fNiUif0a6nCZXsKF7fROLkNpaaqob1UfHSGgwUY94WWwRmYUl6bNrqwky/Hm
-         RLbyIJfVYF8BqiAnfZDiQja/SblNTJqYCLJCvsIqiu0TaAmJQuDEIRn0aXVSjTP7mS/m
-         M6Ji50QAlzE+YdHPWicHlmN3i8DMJOsNBKes7bg+QCzr8xUBfqUjgT233u+epHD/3RDq
-         PaTw==
+        bh=LI8tZ4xmGQoPWoAmYH9zktwI7/vEBWrFa18ETiwGSuM=;
+        b=EO+B0mM7HowwbGLsYgjiy6jEH+BRhfQiPlMyuey37QVzsI1X2GhFNdiBTHbkd/Lekv
+         C9WA8Nx+iVJjkkXFGS/M3cyJgoTmhN7oTdn4i3rFMDw24tNx9AUf2aPYFTBz+OaKiwes
+         V9o2FPUofR9ZPqIjRptKVCi68BZ2LSKtgJtcBTdP2Lqh8dwecGgLRoXYi+RGyDU5LJB/
+         TX8DoEMQVkl3J2ySY3o8BkOHuBP8cXlwMlKZPJJF02LHwHp0EC30lVYcW7wN0J9tr/iK
+         zCb+0Jpon49Fk8ZCy/gHQ+IjUkWIFCY18UzxM+Q7aKt+iWJAuxzs5OdqvmIyxulDNrAJ
+         aSXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703862091; x=1704466891;
+        d=1e100.net; s=20230601; t=1703862321; x=1704467121;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OJGAbTsJuV5c3Gk6VGVnHrcLGAJpmZfominI1jRqdbY=;
-        b=b6LDBpviyqlKGIVdLhUNBfifJ7oOto0w0ZpDTfSXkH4g0oQOeFl+RoZsCtZM1rj31P
-         77AGslmqmmzT6nquTYCF0r/GKI/+Lpmuu5nkqoXlupt5+1E2IhuzGFkVRL5OGNzAPYYc
-         9jQydquLSZsII6QVPJiH6Tm3cWP7EB8939yHob6Mnvrym/QZqvVbHrFf9F0N5fTeCcf4
-         IVOZ+LIcpXrgcifTDHvhXBuglyCE+0LbjqgqHX3VgHhV9YV6w9z3rrIfONQqzmPHDfjC
-         ynkC6s5EZ5Pqr0HS/ih9dTzf8ZTVoEIv2B3mxRvAvYJktq9lShuouwijjvV2i6Zk+Gxq
-         gOnA==
-X-Gm-Message-State: AOJu0YyJLYE4NsPGg/VY9Zl9zj40sAj9UJdrcvkqZttNKdt8Jjwz3ZjO
-	y+lxq6hrsNpymCl6Es0/6ywKmpLpBtoEWw==
-X-Google-Smtp-Source: AGHT+IEZeurjyRSu48qUdStUze94ZQxDBRD2FAfapU1QE4BtuFKUPN6p6ZaG2oLuMSrnqbkHNZqbfA==
-X-Received: by 2002:a50:ccd9:0:b0:553:a5e5:78d8 with SMTP id b25-20020a50ccd9000000b00553a5e578d8mr8073190edj.26.1703862090577;
-        Fri, 29 Dec 2023 07:01:30 -0800 (PST)
+        bh=LI8tZ4xmGQoPWoAmYH9zktwI7/vEBWrFa18ETiwGSuM=;
+        b=fyjKNjsH8tSGVY6JX2JhPXA3A1PZ/l5wgiwCjC4/YyYv0qLEX9ZUIUjMY6sQKG7Ffr
+         fiLbNYJNFLXQqt7HT4HOWZhACVfbF3WyWWQJMYNzINWlKBsb1fAg2vOY1ieR6zlqgHKj
+         K1uPeOdWtH5tAitJk+xhXnOfTWYO8QhRI0+HkLPsEcTHCZgokeexLKahIostXUvh9NTG
+         Osiz+NXM0szZKbuLgnWHfnfqKb6WISN/RMOKAdesuT1SrBhevd+hJ4BtbIsrmCsOu3mV
+         cRh2Iznv5xJ8VYTD/IppciJagHFivHzwFyq03owoVZdsBgmW37g32XG9dpUkXAPZY7NI
+         VONA==
+X-Gm-Message-State: AOJu0YyZs1t4hPfwFpGTHewymuK9xGQEKKogXrL3x1WkU6dRi+hzAwM0
+	hrlL59jcbEpgUlOiEIVbHBXinPwwSGLg8w==
+X-Google-Smtp-Source: AGHT+IHtqF4araK/7HsfoTLOgdzip7g33hgiJXUjY4pAbP43QnQJKUFmRNfVvcHPMJ8E0UbKWjiL1w==
+X-Received: by 2002:a05:6512:3592:b0:50e:6a07:5c02 with SMTP id m18-20020a056512359200b0050e6a075c02mr4698769lfr.15.1703862321464;
+        Fri, 29 Dec 2023 07:05:21 -0800 (PST)
 Received: from [192.168.199.125] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
-        by smtp.gmail.com with ESMTPSA id ek19-20020a056402371300b0055383eb043csm11193743edb.56.2023.12.29.07.01.28
+        by smtp.gmail.com with ESMTPSA id bg10-20020a170906a04a00b00a26a443e98esm8225174ejb.169.2023.12.29.07.05.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Dec 2023 07:01:30 -0800 (PST)
-Message-ID: <fa0fbadc-a7c3-4bea-bed7-0006db0616dc@linaro.org>
-Date: Fri, 29 Dec 2023 16:01:27 +0100
+        Fri, 29 Dec 2023 07:05:21 -0800 (PST)
+Message-ID: <11aa0b82-ddab-4b65-8f49-54e15e0ce44e@linaro.org>
+Date: Fri, 29 Dec 2023 16:05:18 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,23 +66,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] PCI: qcom: Reshuffle reset logic in 2_7_0 .init
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sc8280xp: Correct USB PHY power
+ domains
 Content-Language: en-US
 To: Johan Hovold <johan@kernel.org>
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Philipp Zabel <p.zabel@pengutronix.de>,
- Stanimir Varbanov <svarbanov@mm-sol.com>,
- Andrew Murray <amurray@thegoodpenguin.co.uk>, Vinod Koul <vkoul@kernel.org>,
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Johan Hovold <johan+linaro@kernel.org>,
  Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20231227-topic-8280_pcie-v1-0-095491baf9e4@linaro.org>
- <20231227-topic-8280_pcie-v1-1-095491baf9e4@linaro.org>
- <ZY7R581pgn3uO6kk@hovoldconsulting.com>
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Konrad Dybcio <konrad.dybcio@somainline.org>
+References: <20231227-topic-8280_pcie_dts-v1-0-13d12b1698ff@linaro.org>
+ <20231227-topic-8280_pcie_dts-v1-2-13d12b1698ff@linaro.org>
+ <ZY7DEpaIgvfL_A11@hovoldconsulting.com>
+ <b730bf22-fa3a-4720-9fd1-79d2207d6812@linaro.org>
+ <ZY7I1brn0chtOzis@hovoldconsulting.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -119,58 +119,36 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <ZY7R581pgn3uO6kk@hovoldconsulting.com>
+In-Reply-To: <ZY7I1brn0chtOzis@hovoldconsulting.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29.12.2023 15:04, Johan Hovold wrote:
-> On Wed, Dec 27, 2023 at 11:17:19PM +0100, Konrad Dybcio wrote:
->> At least on SC8280XP, if the PCIe reset is asserted, the corresponding
->> AUX_CLK will be stuck at 'off'.
+On 29.12.2023 14:25, Johan Hovold wrote:
+> [ Please remember to trim your replies and add a newline before your
+>   inline comments to make them readable. ]
 > 
-> No, this path is exercised on every boot without the aux clock ever
-> being stuck at off. So something is clearly missing in this description.
-That's likely because the hardware has been initialized and not cleanly
-shut down by your bootloader. When you reset it, or your bootloader
-wasn't so kind, you need to start initialization from scratch.
-
->> Assert the reset (which may end up being a NOP if it was previously
->> asserted) and de-assert it back *before* turning on the clocks to avoid
->> such cases.
->>
->> In addition to that, in case the clock bulk enable fails, assert the
->> RC reset back, as the hardware is in an unknown state at best.
+> On Fri, Dec 29, 2023 at 02:06:26PM +0100, Konrad Dybcio wrote:
+>> On 29.12.2023 14:01, Johan Hovold wrote:
+>>> On Wed, Dec 27, 2023 at 11:28:27PM +0100, Konrad Dybcio wrote:
 > 
-> This is arguably a separate change, and not necessarily one that is
-> correct either
-If the clock enable fails, the PCIe hw is not in reset state, ergo it
-may be doing "something", and that "something" would eat non-zero power.
-It's just cleaning up after yourself.
-
-> so should at least go in a separate patch if it should
-> be done at all.
-I'll grumpily comply..
-
->> Fixes: ed8cc3b1fc84 ("PCI: qcom: Add support for SDM845 PCIe controller")
+>>>> Fix the power-domains assignment to stop potentially toggling the GDSC
+>>>> unnecessarily.
+>>>
+>>> Again, there's no additional toggling being done here, but yes, this may
+>>> keep the domains enabled during suspend depending on how the driver is
+>>> implemented.
 > 
-> I think you're being way to liberal with your use of Fixes tags. To
-> claim that this is a bug, you need to make a more convincing case for
-> why you think so.
-The first paragraph describes the issue that this patch fixes.
+>> No, it can actually happen. (Some) QMP PHYs are referenced by the
+>> DP hardware. If USB is disabled (or suspended), the DP being active
+>> will hold these GDSCs enabled.
+> 
+> That's not a "toggling", is it? Also if the DP controller is a consumer of
+> these PHY's why should it not prevent the PHYs from suspending?
 
-> Also note Qualcomm's vendor driver is similarly asserting reset after
-> enabling the clocks.
-It's also not asserting the reset on suspend, see below.
-
-> That driver does not seem to reset the controller on resume, though, in
-> case that is relevant for your current experiments.
-I know, the vendor driver doesn't fully shut down the controller. This
-is however the only sequence that we (partially) have upstream, and the
-only one that is going to work on SC8280XP (due to hw design).
-
-On other platforms, a "soft shutdown" (i.e. dropping the link, cutting
-clocks but not fully resetting the RC state) should be possible, but
-that's not what this patchset concerns.
+As far as I'm concerned, "toggling" is the correct word for "switching it
+on".. While the PHYs are indeed useful for getting displayport to work,
+the USB controller itself may not be necessary there, so enabling its
+power line would be a bit of a waste..
 
 Konrad
 
