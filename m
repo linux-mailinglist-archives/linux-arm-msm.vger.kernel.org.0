@@ -1,62 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-6097-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D84D820263
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 23:57:19 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D21982026B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 23:57:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6FA7F1C213D8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 22:57:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 79FB2B21459
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 22:57:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68D1914F8D;
-	Fri, 29 Dec 2023 22:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 372B814F69;
+	Fri, 29 Dec 2023 22:56:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GQJKCTil"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Xa06FCAV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACBCA14ABF
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 22:56:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738B614F78
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 22:56:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-50e7b9cca2fso4415530e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 14:56:55 -0800 (PST)
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-50e7abe4be4so5050741e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 14:56:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1703890614; x=1704495414; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jWBx35fV7am+45bKhj9ZTSkIR2B0OijQCf07KK7Jt+Q=;
-        b=GQJKCTilWbpzTQX6HNAvNLkD1L3x4Kst3d84N0N8ZcLjdJlLBrapkbL6HeXta6SAPM
-         fpkjbO1Ql6Vp2k+DvRj+w1Q8jMwMVECgYJAsHRzHEqyHjkHnE9s2v/Dt2UFfTpAIBBxQ
-         hj7GdAnYhj0bCki0lKjkbbv5r8VgWQUoAxy9WWPyTQiKaZ76cthJ4gGRMz0++rGt4eat
-         qj5i7oFDlLlTTbO56DRrb9M/XQ6JFZJw+9HFBo6ugknil7BAlHLSYLbQr7x1imJFxvLY
-         +3WXg1JNd9EBcKREESU5yErYQrc1IcY/O5VMbFFAiftfvy4BZ552dX6qRgWVxpR31Ce/
-         PgTA==
+        bh=n4pFhJH5mQfqCVMvmQQbHNi1KAwIKvpP2d1YL1kukAk=;
+        b=Xa06FCAVbn+gtkVNpSGN0dF/qaHJYTomJ9W02pE/2HwM6JcB7J8/IfpLMoJEJIaNak
+         dqLkEKpZAV2x1CC1tJFwBvz6C+Y1PPYVMeL7A7yom/4u2l68TMyyqVbQQkE/LosYgEOi
+         OMn+DaOg2pVPdvmJo/5MJcgvko9nRaLTghi2hiLiG6NBpKMWqDbTbbNs7sjWHvg4bnuf
+         0OyR6hRkZeF1m7w09FwJ/7ZgBtSjd0EGM1UAoNuTUDf0+WYI2fST1Ey3zsbW/PsvwiDr
+         kElWp+hbCRBCb82VTUUnAMb0bnzrlerDJJ2qk+lvJeGuqcMpRxULHFEv6W5ZuDQGGrsA
+         46gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1703890614; x=1704495414;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=jWBx35fV7am+45bKhj9ZTSkIR2B0OijQCf07KK7Jt+Q=;
-        b=srkIBpTR+6oXTkx+fF7oeeD2Zo6vVypepiaqI5hEc72PDSho0wtOMfjXe56EVpfBi5
-         wmTD1sph6B/hdIZwqJEBtHBfCVdtiNbH3CCCkPEXQQji3kGF4MmTcBdoSyyfxfKg77ck
-         8kjCpQFWVCc8wdjnI+pccfSciDpgrw/hHqtGKynhK+dhb9dG5k3LYOiA1bphj+EoFMZR
-         4ohAhBTb8opCs26q+NAH6h5bwTTUH/TADG9Wt+PPtxv1aRJjeqySbsocrvzVzef7lbxf
-         T3v+AWbf54hgNbkFLArpjsf9Nacvx8kcSAjTPPIzgnLtlQQ7S1ZvRrX+zPL8uGUjMPAx
-         MYgA==
-X-Gm-Message-State: AOJu0YxTMI75KYnX6pBGSTnIxp4oHx/RTzgM/LW9vavFtmV+vuzi4ILn
-	6ls4k5HA2O7DXevxiH5kyiUp1Tpp8qNE1Q==
-X-Google-Smtp-Source: AGHT+IEsqRR6tFpvAIToSg3ICrRygtYsNovZRsfVa0nASyoZr6OoPbwyPxFEPhrlxt6uLlFRSiEtQg==
-X-Received: by 2002:ac2:58ca:0:b0:50e:7c6e:dcaf with SMTP id u10-20020ac258ca000000b0050e7c6edcafmr3144927lfo.35.1703890613826;
-        Fri, 29 Dec 2023 14:56:53 -0800 (PST)
+        bh=n4pFhJH5mQfqCVMvmQQbHNi1KAwIKvpP2d1YL1kukAk=;
+        b=N1f/mW07TtIM7QbXpbx2XSpckenXNv02i5E3iY/kre5gB9qSiqcSKs2XthiIhy+7UG
+         HNvqBjx9ENfknxYe4P3LfcsC6pub2EZWdl+OhZugGej+/O5zzGRXiGSz0Haxajs225P2
+         /3ocW8BPAtYuTJHEeO2IBhzX8wq7tAVwAC5XscT1KLSumTtpyTBC1UCiQSJTNVmyjWWA
+         r7o83bAhplUq0c4uHe25VptfQ/Y4Hqt8uUMfdplS8W05/DBWM9ufZQ311/Di88CUIxy0
+         N1Ayr4wqBKiPgj3DTWysxmtXvTy2oNtCfi2hdXs586DXHdlJs9k0g+Ej3uYNtlYOy12+
+         /XFw==
+X-Gm-Message-State: AOJu0Yw3eD/fiWL9LOfZU3PAEu+55vDuPQTgusMkfRFNVcj37bEnkpf9
+	aYXNBBfzIFMw3cfudRt4YidL4osUUc123A==
+X-Google-Smtp-Source: AGHT+IGvc0O8jDz3WMXRb2jv1Ko/MujAtbwsbHD6NbUQHVTlM8E4QI1tRuTPh1ctY+aia/WmV0Y5kg==
+X-Received: by 2002:a05:6512:401b:b0:50e:7fb5:a07e with SMTP id br27-20020a056512401b00b0050e7fb5a07emr4006691lfb.56.1703890614557;
+        Fri, 29 Dec 2023 14:56:54 -0800 (PST)
 Received: from umbar.unikie.fi ([192.130.178.91])
         by smtp.gmail.com with ESMTPSA id j26-20020ac2455a000000b0050e7f5794cbsm1326952lfm.309.2023.12.29.14.56.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Dec 2023 14:56:53 -0800 (PST)
+        Fri, 29 Dec 2023 14:56:54 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Rob Clark <robdclark@gmail.com>,
 	Sean Paul <sean@poorly.run>,
@@ -71,9 +71,9 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
 	dri-devel@lists.freedesktop.org,
 	freedreno@lists.freedesktop.org
-Subject: [PATCH 03/14] drm/msm/dp: parse DT from dp_parser_get
-Date: Sat, 30 Dec 2023 00:56:39 +0200
-Message-Id: <20231229225650.912751-4-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 04/14] drm/msm/dp: inline dp_power_(de)init
+Date: Sat, 30 Dec 2023 00:56:40 +0200
+Message-Id: <20231229225650.912751-5-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20231229225650.912751-1-dmitry.baryshkov@linaro.org>
 References: <20231229225650.912751-1-dmitry.baryshkov@linaro.org>
@@ -85,80 +85,92 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-It makes little sense to split the submodule get and actual DT parsing.
-Call dp_parser_parse() directly from dp_parser_get(), so that the parser
-data is fully initialised once it is returned to the caller.
+In preparation to cleanup of the dp_power module, inline dp_power_init()
+and dp_power_deinit() functions, which are now just turning the clocks
+on and off.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/dp/dp_display.c | 6 ------
- drivers/gpu/drm/msm/dp/dp_parser.c  | 8 +++++++-
- drivers/gpu/drm/msm/dp/dp_parser.h  | 3 ---
- 3 files changed, 7 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_display.c |  4 ++--
+ drivers/gpu/drm/msm/dp/dp_power.c   | 10 ----------
+ drivers/gpu/drm/msm/dp/dp_power.h   | 21 ---------------------
+ 3 files changed, 2 insertions(+), 33 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index d37d599aec27..67b48f0a6c83 100644
+index 67b48f0a6c83..8cd18705740f 100644
 --- a/drivers/gpu/drm/msm/dp/dp_display.c
 +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1266,12 +1266,6 @@ static int dp_display_probe(struct platform_device *pdev)
- 		return -EPROBE_DEFER;
- 	}
+@@ -434,7 +434,7 @@ static void dp_display_host_init(struct dp_display_private *dp)
+ 		dp->dp_display.connector_type, dp->core_initialized,
+ 		dp->phy_initialized);
  
--	rc = dp->parser->parse(dp->parser);
--	if (rc) {
--		DRM_ERROR("device tree parsing failed\n");
--		goto err;
--	}
--
- 	rc = dp_power_client_init(dp->power);
- 	if (rc) {
- 		DRM_ERROR("Power client create failed\n");
-diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
-index 7032dcc8842b..2d9d126c119b 100644
---- a/drivers/gpu/drm/msm/dp/dp_parser.c
-+++ b/drivers/gpu/drm/msm/dp/dp_parser.c
-@@ -315,13 +315,19 @@ static int dp_parser_parse(struct dp_parser *parser)
- struct dp_parser *dp_parser_get(struct platform_device *pdev)
- {
- 	struct dp_parser *parser;
-+	int ret;
+-	dp_power_init(dp->power);
++	dp_power_clk_enable(dp->power, DP_CORE_PM, true);
+ 	dp_ctrl_reset_irq_ctrl(dp->ctrl, true);
+ 	dp_aux_init(dp->aux);
+ 	dp->core_initialized = true;
+@@ -448,7 +448,7 @@ static void dp_display_host_deinit(struct dp_display_private *dp)
  
- 	parser = devm_kzalloc(&pdev->dev, sizeof(*parser), GFP_KERNEL);
- 	if (!parser)
- 		return ERR_PTR(-ENOMEM);
- 
--	parser->parse = dp_parser_parse;
- 	parser->pdev = pdev;
- 
-+	ret = dp_parser_parse(parser);
-+	if (ret) {
-+		dev_err(&pdev->dev, "device tree parsing failed\n");
-+		return ERR_PTR(ret);
-+	}
-+
- 	return parser;
+ 	dp_ctrl_reset_irq_ctrl(dp->ctrl, false);
+ 	dp_aux_deinit(dp->aux);
+-	dp_power_deinit(dp->power);
++	dp_power_clk_enable(dp->power, DP_CORE_PM, false);
+ 	dp->core_initialized = false;
  }
-diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
-index 90a2cdbbe344..4ccc432b4142 100644
---- a/drivers/gpu/drm/msm/dp/dp_parser.h
-+++ b/drivers/gpu/drm/msm/dp/dp_parser.h
-@@ -67,7 +67,6 @@ struct dss_module_power {
-  *
-  * @pdev: platform data of the client
-  * @mp: gpio, regulator and clock related data
-- * @parse: function to be called by client to parse device tree.
-  */
- struct dp_parser {
- 	struct platform_device *pdev;
-@@ -76,8 +75,6 @@ struct dp_parser {
- 	u32 max_dp_lanes;
- 	u32 max_dp_link_rate;
- 	struct drm_bridge *next_bridge;
+ 
+diff --git a/drivers/gpu/drm/msm/dp/dp_power.c b/drivers/gpu/drm/msm/dp/dp_power.c
+index b095a5b47c8b..f49e3aede308 100644
+--- a/drivers/gpu/drm/msm/dp/dp_power.c
++++ b/drivers/gpu/drm/msm/dp/dp_power.c
+@@ -152,16 +152,6 @@ int dp_power_client_init(struct dp_power *dp_power)
+ 	return dp_power_clk_init(power);
+ }
+ 
+-int dp_power_init(struct dp_power *dp_power)
+-{
+-	return dp_power_clk_enable(dp_power, DP_CORE_PM, true);
+-}
 -
--	int (*parse)(struct dp_parser *parser);
+-int dp_power_deinit(struct dp_power *dp_power)
+-{
+-	return dp_power_clk_enable(dp_power, DP_CORE_PM, false);
+-}
+-
+ struct dp_power *dp_power_get(struct device *dev, struct dp_parser *parser)
+ {
+ 	struct dp_power_private *power;
+diff --git a/drivers/gpu/drm/msm/dp/dp_power.h b/drivers/gpu/drm/msm/dp/dp_power.h
+index 55ada51edb57..eb836b5aa24a 100644
+--- a/drivers/gpu/drm/msm/dp/dp_power.h
++++ b/drivers/gpu/drm/msm/dp/dp_power.h
+@@ -22,27 +22,6 @@ struct dp_power {
+ 	bool stream_clks_on;
  };
  
+-/**
+- * dp_power_init() - enable power supplies for display controller
+- *
+- * @power: instance of power module
+- * return: 0 if success or error if failure.
+- *
+- * This API will turn on the regulators and configures gpio's
+- * aux/hpd.
+- */
+-int dp_power_init(struct dp_power *power);
+-
+-/**
+- * dp_power_deinit() - turn off regulators and gpios.
+- *
+- * @power: instance of power module
+- * return: 0 for success
+- *
+- * This API turns off power and regulators.
+- */
+-int dp_power_deinit(struct dp_power *power);
+-
  /**
+  * dp_power_clk_status() - display controller clocks status
+  *
 -- 
 2.39.2
 
