@@ -1,62 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-6101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BFD082026E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 23:57:26 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C987D820270
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 23:57:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 42D6F283B9E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 22:57:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 596D01F23039
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 22:57:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A68CC15494;
-	Fri, 29 Dec 2023 22:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BFCA15485;
+	Fri, 29 Dec 2023 22:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bsb2zZuz"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="G7L7B1+o"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C479915485
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 22:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C4BD15488
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 22:56:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-50e70b0b869so5561996e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 14:56:58 -0800 (PST)
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-50e78f1f41fso4361304e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 14:56:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1703890617; x=1704495417; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=siIradHTXx7UPEZ4VsbiUoMRC0DlsLeXsrytGTLnmC4=;
-        b=bsb2zZuzOHwdkF6D4Y0kXHGlVhjSnhx8MqGFwRDVDxUsovllXRyY9+/s5e1rLyJPcU
-         x6dYzzLL4a7VSUln8+AiaQFVi/ICJ/snuLg3FzCEwkzvwMiFTjGUpF0VItUM/T/BaxbY
-         2e2IVIFmlVU8Et4u9kVpoP4oVYMtaO7s07JE57eTwpkZJMRucaiTGci/WVkeZECGmphI
-         f0qs4O4WqcWP/J9nKjGdf3Q0bckN3/8zQE9JoasDvyk3yV2OSC6nJsYQQdebasHwH7gV
-         3I8Bsx7qo54ZKB0Ho2LPM25LvmIsOy3uDliiUnhgh3pw9BKn9dRkTRc+Pj4upu3YeuP3
-         whkw==
+        bh=vg8yJRW4p2x0lwIZbztyFSj/Gr+GANMZijc9xIjNZSM=;
+        b=G7L7B1+oBXFHc8+IXt5BHYKynxULsl/LujjXYZx0N566Gbr2DoBnuVijlpVdkedq2/
+         SWcV7lzDCDLQbAbN5Vkek0woqUUfV03GrQj/Ew5vE3rVXIUv7Jw4Cvy4JREkzIUeY0Cm
+         2HBWo7QVOQimZOHJsvjBF7Ii8tY15yQ+2ztaQrqANKZ/BzTgUiThOAUtym2ngaIZj3h9
+         J9FlHH5eyGiWDaJ6BmpfRMHoTqbhm+8g12/HPxvI+9lE7F0cWYeCrUJQqr9e/bn4lCiw
+         H5JAjmVfBLdMNyeASyLrsrkqicQsEZBQLH+ckJxMCKO4lw6JBa3Aun+jIpm7GBzzV8Ha
+         7hdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1703890617; x=1704495417;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=siIradHTXx7UPEZ4VsbiUoMRC0DlsLeXsrytGTLnmC4=;
-        b=jpUUSquMXH40J8ooC8wHVCQ+5Bk27302IdPOTu1qAxuJaSaCr2gbY8aP4Ytxmhvc6W
-         4/UNAYO0AUH0jKPUQbvLraRyBxroNFwL3Op4k5QuHsNgsjIh6LJbj1+Y03FRYbFeWcmj
-         zsX4fw6PtqJ3iQtGr9X9IyJVTtDJpRexs2yT94l7v4he8vbxNcAcC0vZOymaKRwkp2qv
-         5bCp4vu3Do1nfOOE38t1QcjbVNbVxcDW4VsWWghXcTm/AxVuzXNBWUTd7x6OGtjWm4w8
-         Hy9YHOO+h/h/2TyD1XqlapLs8OlVi1INZkij56U6Z+P89VNOcAHozS/AvG9K4KEctk6u
-         bXGA==
-X-Gm-Message-State: AOJu0YzLrtXLKBep/vkVw1168fJr6M+gp7RLmNYDPO63/bQdKjGznq9Z
-	FAe7UxngS+6SfKaQ+E52lU978uUC9/wk+g==
-X-Google-Smtp-Source: AGHT+IEnk5MK6DWvjh9qZ5tpFgC7sIJdeWJehaAZ6kwUu4Ik6e/TOg42UP2khL2RKm7JD0FFHvAh/g==
-X-Received: by 2002:ac2:5dc7:0:b0:50e:455d:1bb4 with SMTP id x7-20020ac25dc7000000b0050e455d1bb4mr4362062lfq.17.1703890616985;
-        Fri, 29 Dec 2023 14:56:56 -0800 (PST)
+        bh=vg8yJRW4p2x0lwIZbztyFSj/Gr+GANMZijc9xIjNZSM=;
+        b=nw9tU0HfWjy5EpHo8UFziQXx05E4BQdyvrXYHd+xuucahqimkigJm51s6DN6SFXNp3
+         5xySmGlUt7Vx4toXH1mV9GB7dP/f8QXX6WGg8W6sIZ3YpN7U7Ef90rVCZX3wit0U9NJl
+         ycVaNK4Ctv073/f9mh4VsY6EsXmPQgagg9qCtZp6/yFDGIbf6e1W5epEXATLwKiZQxV7
+         ahFaXyROxeaT4ol88vG82CpWaYfbXDI+zvePlWJobKfR3Y+GbvJTuyZWwJLKPBXCEFVF
+         an9P00xP/wOjq5crBLT2UQKSW8kihsXhm22VZS34z9+T83li3m1B9jOCSVyM3cNaNu1G
+         v7TQ==
+X-Gm-Message-State: AOJu0Yz9RFV6CvRJcBgS26WeDFCkoilBVTTdSVtjqZn9pYTvdMexYrqd
+	50zrt9iJ4eP5guMN0+0zIGE5PrrBM5+3pg==
+X-Google-Smtp-Source: AGHT+IE2+chXc8Xc2K7q3QDqlEC3TxrQNe4abfwdDHsAa8dcvEQPT7I//JGkIdrmvCLe4AVuh9FNig==
+X-Received: by 2002:a19:ac06:0:b0:50e:4acb:3d0d with SMTP id g6-20020a19ac06000000b0050e4acb3d0dmr4349535lfc.47.1703890617710;
+        Fri, 29 Dec 2023 14:56:57 -0800 (PST)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id j26-20020ac2455a000000b0050e7f5794cbsm1326952lfm.309.2023.12.29.14.56.56
+        by smtp.gmail.com with ESMTPSA id j26-20020ac2455a000000b0050e7f5794cbsm1326952lfm.309.2023.12.29.14.56.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Dec 2023 14:56:56 -0800 (PST)
+        Fri, 29 Dec 2023 14:56:57 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Rob Clark <robdclark@gmail.com>,
 	Sean Paul <sean@poorly.run>,
@@ -71,9 +71,9 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
 	dri-devel@lists.freedesktop.org,
 	freedreno@lists.freedesktop.org
-Subject: [PATCH 07/14] drm/msm/dp: stop parsing clock names from DT
-Date: Sat, 30 Dec 2023 00:56:43 +0200
-Message-Id: <20231229225650.912751-8-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 08/14] drm/msm/dp: move phy_configure_opts to dp_ctrl
+Date: Sat, 30 Dec 2023 00:56:44 +0200
+Message-Id: <20231229225650.912751-9-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20231229225650.912751-1-dmitry.baryshkov@linaro.org>
 References: <20231229225650.912751-1-dmitry.baryshkov@linaro.org>
@@ -85,350 +85,174 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-All supported platforms use the same clocks configuration. Instead of
-parsing names from DT in a pretty complex manner, use the static
-configuration. If at some point newer (or older) platforms have
-different clock configuration, this clock config can be moved to the
-device data.
+There is little point in sharing phy configuration structure between
+several modules. Move it to dp_ctrl, which becomes the only submodule
+re-configuring the PHY.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/dp/dp_ctrl.c   |  55 ++++++++++++--
- drivers/gpu/drm/msm/dp/dp_ctrl.h   |   6 ++
- drivers/gpu/drm/msm/dp/dp_parser.c | 112 -----------------------------
- drivers/gpu/drm/msm/dp/dp_parser.h |  22 ------
- 4 files changed, 54 insertions(+), 141 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_catalog.c | 19 -------------
+ drivers/gpu/drm/msm/dp/dp_catalog.h |  2 --
+ drivers/gpu/drm/msm/dp/dp_ctrl.c    | 41 +++++++++++++++++++----------
+ drivers/gpu/drm/msm/dp/dp_parser.h  |  3 ---
+ 4 files changed, 27 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index 088bd35695f6..9b59a29547c0 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -69,6 +69,11 @@ struct dp_vc_tu_mapping_table {
- 	u8 tu_size_minus1;
- };
- 
-+struct dss_module_power {
-+	unsigned int num_clk;
-+	struct clk_bulk_data *clocks;
-+};
-+
- struct dp_ctrl_private {
- 	struct dp_ctrl dp_ctrl;
- 	struct drm_device *drm_dev;
-@@ -79,6 +84,7 @@ struct dp_ctrl_private {
- 	struct dp_parser *parser;
- 	struct dp_catalog *catalog;
- 
-+	struct dss_module_power mp[DP_MAX_PM];
- 	struct clk *pixel_clk;
- 
- 	struct completion idle_comp;
-@@ -90,6 +96,15 @@ struct dp_ctrl_private {
- 	bool stream_clks_on;
- };
- 
-+static inline const char *dp_pm_name(enum dp_pm_type module)
-+{
-+	switch (module) {
-+	case DP_CORE_PM:	return "DP_CORE_PM";
-+	case DP_CTRL_PM:	return "DP_CTRL_PM";
-+	default:		return "???";
-+	}
-+}
-+
- static int dp_aux_link_configure(struct drm_dp_aux *aux,
- 					struct dp_link_info *link)
- {
-@@ -2101,7 +2116,7 @@ int dp_ctrl_clk_enable(struct dp_ctrl *dp_ctrl,
- 
- 	if (pm_type != DP_CORE_PM && pm_type != DP_CTRL_PM) {
- 		DRM_ERROR("unsupported ctrl module: %s\n",
--				dp_parser_pm_name(pm_type));
-+				dp_pm_name(pm_type));
- 		return -EINVAL;
- 	}
- 
-@@ -2121,7 +2136,7 @@ int dp_ctrl_clk_enable(struct dp_ctrl *dp_ctrl,
- 		if ((pm_type == DP_CTRL_PM) && (!ctrl->core_clks_on)) {
- 			drm_dbg_dp(ctrl->drm_dev,
- 					"Enable core clks before link clks\n");
--			mp = &ctrl->parser->mp[DP_CORE_PM];
-+			mp = &ctrl->mp[DP_CORE_PM];
- 
- 			rc = clk_bulk_prepare_enable(mp->num_clk, mp->clocks);
- 			if (rc)
-@@ -2131,7 +2146,7 @@ int dp_ctrl_clk_enable(struct dp_ctrl *dp_ctrl,
- 		}
- 	}
- 
--	mp = &ctrl->parser->mp[pm_type];
-+	mp = &ctrl->mp[pm_type];
- 	if (enable) {
- 		rc = clk_bulk_prepare_enable(mp->num_clk, mp->clocks);
- 		if (rc)
-@@ -2147,7 +2162,7 @@ int dp_ctrl_clk_enable(struct dp_ctrl *dp_ctrl,
- 
- 	drm_dbg_dp(ctrl->drm_dev, "%s clocks for %s\n",
- 			enable ? "enable" : "disable",
--			dp_parser_pm_name(pm_type));
-+			dp_pm_name(pm_type));
- 	drm_dbg_dp(ctrl->drm_dev,
- 		"stream_clks:%s link_clks:%s core_clks:%s\n",
- 		ctrl->stream_clks_on ? "on" : "off",
-@@ -2157,23 +2172,49 @@ int dp_ctrl_clk_enable(struct dp_ctrl *dp_ctrl,
- 	return 0;
+diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
+index 5142aeb705a4..e07651768805 100644
+--- a/drivers/gpu/drm/msm/dp/dp_catalog.c
++++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+@@ -765,25 +765,6 @@ void dp_catalog_ctrl_phy_reset(struct dp_catalog *dp_catalog)
+ 	dp_write_ahb(catalog, REG_DP_PHY_CTRL, 0x0);
  }
  
-+static const char *core_clks[] = {
-+	"core_iface",
-+	"core_aux",
-+};
-+
-+static const char *ctrl_clks[] = {
-+	"ctrl_link",
-+	"ctrl_link_iface",
-+};
-+
- static int dp_ctrl_clk_init(struct dp_ctrl *dp_ctrl)
- {
- 	struct dp_ctrl_private *ctrl_private;
--	int rc = 0;
- 	struct dss_module_power *core, *ctrl;
- 	struct device *dev;
-+	int i, rc;
- 
- 	ctrl_private = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
- 	dev = ctrl_private->dev;
- 
--	core = &ctrl_private->parser->mp[DP_CORE_PM];
--	ctrl = &ctrl_private->parser->mp[DP_CTRL_PM];
-+	core = &ctrl_private->mp[DP_CORE_PM];
-+	ctrl = &ctrl_private->mp[DP_CTRL_PM];
-+
-+	core->num_clk = ARRAY_SIZE(core_clks);
-+	core->clocks = devm_kcalloc(dev, core->num_clk, sizeof(*core->clocks), GFP_KERNEL);
-+	if (!core->clocks)
-+		return -ENOMEM;
-+
-+	for (i = 0; i < core->num_clk; i++)
-+		core->clocks[i].id = core_clks[i];
- 
- 	rc = devm_clk_bulk_get(dev, core->num_clk, core->clocks);
- 	if (rc)
- 		return rc;
- 
-+	ctrl->num_clk = ARRAY_SIZE(ctrl_clks);
-+	ctrl->clocks = devm_kcalloc(dev, ctrl->num_clk, sizeof(*ctrl->clocks), GFP_KERNEL);
-+	if (!ctrl->clocks)
-+		return -ENOMEM;
-+
-+	for (i = 0; i < ctrl->num_clk; i++)
-+		ctrl->clocks[i].id = ctrl_clks[i];
-+
- 	rc = devm_clk_bulk_get(dev, ctrl->num_clk, ctrl->clocks);
- 	if (rc)
- 		return -ENODEV;
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-index 36e7c52a730a..cc0cd5be9f40 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-@@ -17,6 +17,12 @@ struct dp_ctrl {
- 	bool wide_bus_en;
- };
- 
-+enum dp_pm_type {
-+	DP_CORE_PM,
-+	DP_CTRL_PM,
-+	DP_MAX_PM
-+};
-+
- int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train);
- int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl);
-diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
-index fe2b75f7555a..de7cfc340f0c 100644
---- a/drivers/gpu/drm/msm/dp/dp_parser.c
-+++ b/drivers/gpu/drm/msm/dp/dp_parser.c
-@@ -141,114 +141,6 @@ static int dp_parser_misc(struct dp_parser *parser)
- 	return 0;
- }
- 
--static inline bool dp_parser_check_prefix(const char *clk_prefix,
--						const char *clk_name)
+-int dp_catalog_ctrl_update_vx_px(struct dp_catalog *dp_catalog,
+-		u8 v_level, u8 p_level)
 -{
--	return !strncmp(clk_prefix, clk_name, strlen(clk_prefix));
--}
+-	struct dp_catalog_private *catalog = container_of(dp_catalog,
+-				struct dp_catalog_private, dp_catalog);
+-	struct dp_io *dp_io = catalog->io;
+-	struct phy *phy = dp_io->phy;
+-	struct phy_configure_opts_dp *opts_dp = &dp_io->phy_opts.dp;
 -
--static int dp_parser_init_clk_data(struct dp_parser *parser)
--{
--	int num_clk, i, rc;
--	int core_clk_count = 0, ctrl_clk_count = 0;
--	const char *clk_name;
--	struct device *dev = &parser->pdev->dev;
--	struct dss_module_power *core_power = &parser->mp[DP_CORE_PM];
--	struct dss_module_power *ctrl_power = &parser->mp[DP_CTRL_PM];
--
--	num_clk = of_property_count_strings(dev->of_node, "clock-names");
--	if (num_clk <= 0) {
--		DRM_ERROR("no clocks are defined\n");
--		return -EINVAL;
--	}
--
--	for (i = 0; i < num_clk; i++) {
--		rc = of_property_read_string_index(dev->of_node,
--				"clock-names", i, &clk_name);
--		if (rc < 0)
--			return rc;
--
--		if (dp_parser_check_prefix("core", clk_name))
--			core_clk_count++;
--
--		if (dp_parser_check_prefix("ctrl", clk_name))
--			ctrl_clk_count++;
--	}
--
--	/* Initialize the CORE power module */
--	if (core_clk_count == 0) {
--		DRM_ERROR("no core clocks are defined\n");
--		return -EINVAL;
--	}
--
--	core_power->num_clk = core_clk_count;
--	core_power->clocks = devm_kcalloc(dev,
--			core_power->num_clk, sizeof(struct clk_bulk_data),
--			GFP_KERNEL);
--	if (!core_power->clocks)
--		return -ENOMEM;
--
--	/* Initialize the CTRL power module */
--	if (ctrl_clk_count == 0) {
--		DRM_ERROR("no ctrl clocks are defined\n");
--		return -EINVAL;
--	}
--
--	ctrl_power->num_clk = ctrl_clk_count;
--	ctrl_power->clocks = devm_kcalloc(dev,
--			ctrl_power->num_clk, sizeof(struct clk_bulk_data),
--			GFP_KERNEL);
--	if (!ctrl_power->clocks) {
--		ctrl_power->num_clk = 0;
--		return -ENOMEM;
--	}
--
--	return num_clk;
--}
--
--static int dp_parser_clock(struct dp_parser *parser)
--{
--	int rc = 0, i = 0;
--	int num_clk = 0;
--	int core_clk_index = 0, ctrl_clk_index = 0;
--	int core_clk_count = 0, ctrl_clk_count = 0;
--	const char *clk_name;
--	struct device *dev = &parser->pdev->dev;
--	struct dss_module_power *core_power = &parser->mp[DP_CORE_PM];
--	struct dss_module_power *ctrl_power = &parser->mp[DP_CTRL_PM];
--
--	rc =  dp_parser_init_clk_data(parser);
--	if (rc < 0) {
--		DRM_ERROR("failed to initialize power data %d\n", rc);
--		return rc;
--	}
--
--	num_clk = rc;
--
--	core_clk_count = core_power->num_clk;
--	ctrl_clk_count = ctrl_power->num_clk;
--
--	for (i = 0; i < num_clk; i++) {
--		rc = of_property_read_string_index(dev->of_node, "clock-names",
--				i, &clk_name);
--		if (rc) {
--			DRM_ERROR("error reading clock-names %d\n", rc);
--			return rc;
--		}
--		if (dp_parser_check_prefix("core", clk_name) &&
--				core_clk_index < core_clk_count) {
--			core_power->clocks[core_clk_index].id = devm_kstrdup(dev, clk_name, GFP_KERNEL);
--			core_clk_index++;
--		} else if (dp_parser_check_prefix("ctrl", clk_name) &&
--			   ctrl_clk_index < ctrl_clk_count) {
--			ctrl_power->clocks[ctrl_clk_index].id = devm_kstrdup(dev, clk_name, GFP_KERNEL);
--			ctrl_clk_index++;
--		}
--	}
+-	/* TODO: Update for all lanes instead of just first one */
+-	opts_dp->voltage[0] = v_level;
+-	opts_dp->pre[0] = p_level;
+-	opts_dp->set_voltages = 1;
+-	phy_configure(phy, &dp_io->phy_opts);
+-	opts_dp->set_voltages = 0;
 -
 -	return 0;
 -}
 -
- int devm_dp_parser_find_next_bridge(struct device *dev, struct dp_parser *parser)
+ void dp_catalog_ctrl_send_phy_pattern(struct dp_catalog *dp_catalog,
+ 			u32 pattern)
  {
- 	struct platform_device *pdev = parser->pdev;
-@@ -280,10 +172,6 @@ static int dp_parser_parse(struct dp_parser *parser)
- 	if (rc)
- 		return rc;
+diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
+index 38786e855b51..ba7c62ba7ca3 100644
+--- a/drivers/gpu/drm/msm/dp/dp_catalog.h
++++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
+@@ -111,8 +111,6 @@ void dp_catalog_ctrl_set_psr(struct dp_catalog *dp_catalog, bool enter);
+ u32 dp_catalog_link_is_connected(struct dp_catalog *dp_catalog);
+ u32 dp_catalog_hpd_get_intr_status(struct dp_catalog *dp_catalog);
+ void dp_catalog_ctrl_phy_reset(struct dp_catalog *dp_catalog);
+-int dp_catalog_ctrl_update_vx_px(struct dp_catalog *dp_catalog, u8 v_level,
+-				u8 p_level);
+ int dp_catalog_ctrl_get_interrupt(struct dp_catalog *dp_catalog);
+ u32 dp_catalog_ctrl_read_psr_interrupt_status(struct dp_catalog *dp_catalog);
+ void dp_catalog_ctrl_update_transfer_unit(struct dp_catalog *dp_catalog,
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index 9b59a29547c0..3bb8bd83fff4 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -87,6 +87,8 @@ struct dp_ctrl_private {
+ 	struct dss_module_power mp[DP_MAX_PM];
+ 	struct clk *pixel_clk;
  
--	rc = dp_parser_clock(parser);
--	if (rc)
--		return rc;
--
- 	return 0;
++	union phy_configure_opts phy_opts;
++
+ 	struct completion idle_comp;
+ 	struct completion psr_op_comp;
+ 	struct completion video_comp;
+@@ -1026,6 +1028,21 @@ static int dp_ctrl_wait4video_ready(struct dp_ctrl_private *ctrl)
+ 	return ret;
  }
  
++static int dp_ctrl_set_vx_px(struct dp_ctrl_private *ctrl,
++			     u8 v_level, u8 p_level)
++{
++	union phy_configure_opts *phy_opts = &ctrl->phy_opts;
++
++	/* TODO: Update for all lanes instead of just first one */
++	phy_opts->dp.voltage[0] = v_level;
++	phy_opts->dp.pre[0] = p_level;
++	phy_opts->dp.set_voltages = 1;
++	phy_configure(ctrl->parser->io.phy, phy_opts);
++	phy_opts->dp.set_voltages = 0;
++
++	return 0;
++}
++
+ static int dp_ctrl_update_vx_px(struct dp_ctrl_private *ctrl)
+ {
+ 	struct dp_link *link = ctrl->link;
+@@ -1038,7 +1055,7 @@ static int dp_ctrl_update_vx_px(struct dp_ctrl_private *ctrl)
+ 	drm_dbg_dp(ctrl->drm_dev,
+ 		"voltage level: %d emphasis level: %d\n",
+ 			voltage_swing_level, pre_emphasis_level);
+-	ret = dp_catalog_ctrl_update_vx_px(ctrl->catalog,
++	ret = dp_ctrl_set_vx_px(ctrl,
+ 		voltage_swing_level, pre_emphasis_level);
+ 
+ 	if (ret)
+@@ -1340,16 +1357,14 @@ static int dp_ctrl_setup_main_link(struct dp_ctrl_private *ctrl,
+ static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl)
+ {
+ 	int ret = 0;
+-	struct dp_io *dp_io = &ctrl->parser->io;
+-	struct phy *phy = dp_io->phy;
+-	struct phy_configure_opts_dp *opts_dp = &dp_io->phy_opts.dp;
++	struct phy *phy = ctrl->parser->io.phy;
+ 	const u8 *dpcd = ctrl->panel->dpcd;
+ 
+-	opts_dp->lanes = ctrl->link->link_params.num_lanes;
+-	opts_dp->link_rate = ctrl->link->link_params.rate / 100;
+-	opts_dp->ssc = drm_dp_max_downspread(dpcd);
++	ctrl->phy_opts.dp.lanes = ctrl->link->link_params.num_lanes;
++	ctrl->phy_opts.dp.link_rate = ctrl->link->link_params.rate / 100;
++	ctrl->phy_opts.dp.ssc = drm_dp_max_downspread(dpcd);
+ 
+-	phy_configure(phy, &dp_io->phy_opts);
++	phy_configure(phy, &ctrl->phy_opts);
+ 	phy_power_on(phy);
+ 
+ 	dev_pm_opp_set_rate(ctrl->dev, ctrl->link->link_params.rate * 1000);
+@@ -1488,13 +1503,11 @@ static bool dp_ctrl_use_fixed_nvid(struct dp_ctrl_private *ctrl)
+ static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private *ctrl)
+ {
+ 	int ret = 0;
+-	struct dp_io *dp_io = &ctrl->parser->io;
+-	struct phy *phy = dp_io->phy;
+-	struct phy_configure_opts_dp *opts_dp = &dp_io->phy_opts.dp;
++	struct phy *phy = ctrl->parser->io.phy;
+ 
+ 	dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, false);
+-	opts_dp->lanes = ctrl->link->link_params.num_lanes;
+-	phy_configure(phy, &dp_io->phy_opts);
++	ctrl->phy_opts.dp.lanes = ctrl->link->link_params.num_lanes;
++	phy_configure(phy, &ctrl->phy_opts);
+ 	/*
+ 	 * Disable and re-enable the mainlink clock since the
+ 	 * link clock might have been adjusted as part of the
+@@ -1580,7 +1593,7 @@ static bool dp_ctrl_send_phy_test_pattern(struct dp_ctrl_private *ctrl)
+ 
+ 	drm_dbg_dp(ctrl->drm_dev, "request: 0x%x\n", pattern_requested);
+ 
+-	if (dp_catalog_ctrl_update_vx_px(ctrl->catalog,
++	if (dp_ctrl_set_vx_px(ctrl,
+ 			ctrl->link->phy_params.v_level,
+ 			ctrl->link->phy_params.p_level)) {
+ 		DRM_ERROR("Failed to set v/p levels\n");
 diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
-index c6fe26602e07..cad82c4d07da 100644
+index cad82c4d07da..b28052e87101 100644
 --- a/drivers/gpu/drm/msm/dp/dp_parser.h
 +++ b/drivers/gpu/drm/msm/dp/dp_parser.h
-@@ -16,12 +16,6 @@
- #define DP_MAX_NUM_DP_LANES	4
- #define DP_LINK_RATE_HBR2	540000 /* kbytes */
+@@ -7,8 +7,6 @@
+ #define _DP_PARSER_H_
  
--enum dp_pm_type {
--	DP_CORE_PM,
--	DP_CTRL_PM,
--	DP_MAX_PM
--};
--
- struct dss_io_region {
- 	size_t len;
- 	void __iomem *base;
-@@ -34,15 +28,6 @@ struct dss_io_data {
- 	struct dss_io_region p0;
+ #include <linux/platform_device.h>
+-#include <linux/phy/phy.h>
+-#include <linux/phy/phy-dp.h>
+ 
+ #include "msm_drv.h"
+ 
+@@ -37,7 +35,6 @@ struct dss_io_data {
+ struct dp_io {
+ 	struct dss_io_data dp_controller;
+ 	struct phy *phy;
+-	union phy_configure_opts phy_opts;
  };
  
--static inline const char *dp_parser_pm_name(enum dp_pm_type module)
--{
--	switch (module) {
--	case DP_CORE_PM:	return "DP_CORE_PM";
--	case DP_CTRL_PM:	return "DP_CTRL_PM";
--	default:		return "???";
--	}
--}
--
  /**
-  * struct dp_ctrl_resource - controller's IO related data
-  *
-@@ -55,20 +40,13 @@ struct dp_io {
- 	union phy_configure_opts phy_opts;
- };
- 
--struct dss_module_power {
--	unsigned int num_clk;
--	struct clk_bulk_data *clocks;
--};
--
- /**
-  * struct dp_parser - DP parser's data exposed to clients
-  *
-  * @pdev: platform data of the client
-- * @mp: gpio, regulator and clock related data
-  */
- struct dp_parser {
- 	struct platform_device *pdev;
--	struct dss_module_power mp[DP_MAX_PM];
- 	struct dp_io io;
- 	u32 max_dp_lanes;
- 	u32 max_dp_link_rate;
 -- 
 2.39.2
 
