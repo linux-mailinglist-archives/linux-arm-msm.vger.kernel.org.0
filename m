@@ -1,42 +1,42 @@
-Return-Path: <linux-arm-msm+bounces-6068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1402E81FF83
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 13:55:19 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 61A9981FF8A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 14:01:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4663D1C21130
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 12:55:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1C636282FFA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 13:01:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7A50111B0;
-	Fri, 29 Dec 2023 12:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC1C8111AB;
+	Fri, 29 Dec 2023 13:01:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LtaRb/39"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N5iIvUsb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E1A111AB;
-	Fri, 29 Dec 2023 12:55:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 163AAC433C8;
-	Fri, 29 Dec 2023 12:55:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A811E11705;
+	Fri, 29 Dec 2023 13:01:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218D3C433C8;
+	Fri, 29 Dec 2023 13:01:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1703854512;
-	bh=aTnhvu/a+fFNZukUNewDL5zHRCt6veGzDwTQmZE1yCg=;
+	s=k20201202; t=1703854874;
+	bh=3DRFvSQwixMH0DXgU8nYRceIY5QE4EsSnvVGoP7ntTY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=LtaRb/390cdHST6fnrqYgXaUibt7YvkRfVDPi1Jp6sEFDB6QnIIbmHNeQF3Sawd76
-	 Y5QQMZE6nFztN9CW1cQqLF4BPJg0SSfi2+uqcuixvn3mq0OdcBJN83w5z5gqgMELnm
-	 aS/lHcZb8OBTcYVnpla+ghHCZXFO9AU6HcYRVKNmo25cYVuI1YTApav7yPIe9A94Eq
-	 70SKjqSHOG4EIQ3FVvy0rMdv5P0zB8+qRKjpWRrrby+T5eLEwmChyKLRFFL4T3XbHp
-	 mRn3+r3zDTFL3U9UaOtkgmOXRcM6YMozGywFDGEgpS5AOkP4LxgZEBCIJBIj+9Tb+Z
-	 4i/9kVrbiBIEA==
+	b=N5iIvUsbwk+t29KgblAN8s6BmmNldvrHJEsyE0VydeVI+6gDAfPI4a1Bs1pbT3dAL
+	 kin7FFubLw5beSFOcDE+YjzXAjQWoOhY/etxE4VaKlu76m9F3XSbv/Nv8o+StRWnfP
+	 bjtKQjzZNHwagttZILdNkzNqe4TJKwpjpYnO+ONYoQM4cUf+ba1IXKH9vOvc7Vzu5R
+	 4RS2LKtm5RfSnq6l9stJWLsNS8NDV1UMJBIT5ObMKJmLlFwwt/VqwmGvvDjLWOKzKY
+	 ImBT5M0+tfwF0jYkehMMrX8pltg3o9fusJ9GMcr2NVvpzKWrbpo53caGl/2wU6jgJp
+	 Lz7dOzs/D2WhA==
 Received: from johan by xi.lan with local (Exim 4.96.2)
 	(envelope-from <johan@kernel.org>)
-	id 1rJCOG-0007ge-0r;
-	Fri, 29 Dec 2023 13:55:05 +0100
-Date: Fri, 29 Dec 2023 13:55:04 +0100
+	id 1rJCU6-0007hq-21;
+	Fri, 29 Dec 2023 14:01:07 +0100
+Date: Fri, 29 Dec 2023 14:01:06 +0100
 From: Johan Hovold <johan@kernel.org>
 To: Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc: Bjorn Andersson <andersson@kernel.org>,
@@ -49,11 +49,11 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sc8280xp-crd: Add PCIe CLKREQ#
- sleep state
-Message-ID: <ZY7BqLJZ0btpuL4b@hovoldconsulting.com>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sc8280xp: Correct USB PHY power
+ domains
+Message-ID: <ZY7DEpaIgvfL_A11@hovoldconsulting.com>
 References: <20231227-topic-8280_pcie_dts-v1-0-13d12b1698ff@linaro.org>
- <20231227-topic-8280_pcie_dts-v1-3-13d12b1698ff@linaro.org>
+ <20231227-topic-8280_pcie_dts-v1-2-13d12b1698ff@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,44 +62,35 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231227-topic-8280_pcie_dts-v1-3-13d12b1698ff@linaro.org>
+In-Reply-To: <20231227-topic-8280_pcie_dts-v1-2-13d12b1698ff@linaro.org>
 
-On Wed, Dec 27, 2023 at 11:28:28PM +0100, Konrad Dybcio wrote:
-> The CLKREQ pin should not be muxed to its active function when the RC
-> is asleep. 
+On Wed, Dec 27, 2023 at 11:28:27PM +0100, Konrad Dybcio wrote:
+> The USB GDSCs are only related to the controllers.
 
-You forgot to explain *why* you think this is needed.
+Are you sure?
 
-Note that this is only appears to be done for one upstream Qualcomm SoC
-(msm8996) currently, and that, notably, there is no driver support for
-actually changing the pin state.
-
-> Add the missing pin sleep states to resolve that.
-
-> Fixes: d907fe5acbf1 ("arm64: dts: qcom: sc8280xp-crd: enable WiFi controller")
-> Fixes: 17e2ccaf65d1 ("arm64: dts: qcom: sc8280xp-crd: enable SDX55 modem")
-> Fixes: 6a1ec5eca73c ("arm64: dts: qcom: sc8280xp-crd: enable NVMe SSD")
-
-So not sure these Fixes tags are warranted either.
-
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 78 ++++++++++++++++++++-----------
->  1 file changed, 51 insertions(+), 27 deletions(-)
+> The PHYs on the other
+> hand, are powered by VDD_MX and their specific VDDA_PHY/PLL regulators.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> index ffc4406422ae..58c0c2d10cb3 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> @@ -530,8 +530,9 @@ &pcie2a {
+> Fix the power-domains assignment to stop potentially toggling the GDSC
+> unnecessarily.
+
+Again, there's no additional toggling being done here, but yes, this may
+keep the domains enabled during suspend depending on how the driver is
+implemented.
+
+If that's the concern, then please spell that out too.
+
+> Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
+
+May not be needed either.
+
+> @@ -2597,7 +2597,7 @@ usb_2_qmpphy0: phy@88ef000 {
+>  				 <&gcc GCC_USB3UNIPHY_PHY_MP0_BCR>;
+>  			reset-names = "phy", "phy_phy";
 >  
->  	vddpe-3v3-supply = <&vreg_nvme>;
->  
-> -	pinctrl-names = "default";
-> -	pinctrl-0 = <&pcie2a_default>;
-> +	pinctrl-0 = <&pcie2a_default>, <&pcie2a_clkreq_default>;
-> +	pinctrl-1 = <&pcie2a_default>, <&pcie2a_clkreq_sleep>;
-> +	pinctrl-names = "default", "sleep";
+> -			power-domains = <&gcc USB30_MP_GDSC>;
+> +			power-domains = <&rpmhpd SC8280XP_MX>;
 
 Johan
 
