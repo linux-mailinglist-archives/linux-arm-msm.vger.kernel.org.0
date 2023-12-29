@@ -1,205 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-6059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B258481FB94
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Dec 2023 23:40:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36CE781FCBC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 04:21:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DA9921F22A1B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Dec 2023 22:40:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 237AB1C2141E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 03:21:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87CBB10960;
-	Thu, 28 Dec 2023 22:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5E2E17EF;
+	Fri, 29 Dec 2023 03:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="KHXXKQZp"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TXdOfEye"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9EB107BC;
-	Thu, 28 Dec 2023 22:39:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=kQ+uKuyxhmcjSMG7LN+mZVJSxMAB8MaVFuhiW7JiPfc=; b=KHXXKQZpOt9etWodUQCdGaQE2b
-	9KJWxMzCTUUh3sxe3Y75CnkuzFp+l8AW3f2sSmKRCwanS720bp2Un6aHnAfX/z9/JtIRsMh/ypcC5
-	HGPs9M3qxsME+51W0rachnSOIb1ljosSCeax34cSZhyDvMN9xXfGsgmfoJ07Tp04fdpCh7WOs94G3
-	lDJy6Gv/cJRx890dse2nws3lBy7fN4fiz2GxWU+PvZ9Z1byTi2FrmfL2YqA9W/iWUnz91UC/s61J2
-	rSp8EQVu0uwUogN9IGCIUxZNxIetjAEg0lVuPElVdTrxavbxOqCYBBf5UhihqmCqxUVyPc7jTGZDF
-	27uLB1Mg==;
-Received: from willy by casper.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1rIyjT-005dpL-R0; Thu, 28 Dec 2023 22:20:03 +0000
-Date: Thu, 28 Dec 2023 22:20:03 +0000
-From: Matthew Wilcox <willy@infradead.org>
-To: "Eric W. Biederman" <ebiederm@xmission.com>
-Cc: Maria Yu <quic_aiquny@quicinc.com>, kernel@quicinc.com,
-	quic_pkondeti@quicinc.com, keescook@chromium.or,
-	viro@zeniv.linux.org.uk, brauner@kernel.org, oleg@redhat.com,
-	dhowells@redhat.com, jarkko@kernel.org, paul@paul-moore.com,
-	jmorris@namei.org, serge@hallyn.com, linux-mm@kvack.org,
-	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
-	keyrings@vger.kernel.org, linux-security-module@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] kernel: Introduce a write lock/unlock wrapper for
- tasklist_lock
-Message-ID: <ZY30k7OCtxrdR9oP@casper.infradead.org>
-References: <20231213101745.4526-1-quic_aiquny@quicinc.com>
- <ZXnaNSrtaWbS2ivU@casper.infradead.org>
- <87o7eu7ybq.fsf@email.froward.int.ebiederm.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E577217CE;
+	Fri, 29 Dec 2023 03:21:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BT3LB2q008136;
+	Fri, 29 Dec 2023 03:21:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=3iwCb4qcDiYcPO1CE8UgzT5vhsCnZQM30MoadwGuPLk=; b=TX
+	dOfEyeQJqoNYQ3p4N4x5Bv4BwnKT9/qS9+RXF36zaEKjtjNurLUSLXG+ugJAe7na
+	t+hOK5r1SIIm0p5kHBpp+2h1vhd2PdRXuBziUwVrVIysDrYpwybg2RxHMhmyRZf/
+	OaEi3jaJH2gSuJscXf35j7mIv7t9hIkyx63pY0mZDlzPpU3BAPT9X6MxhHz955XT
+	lWpc7hurEVSRdRud2JAIHJXywX2zs4wXy51Rs1dVGNwNEwqFixkJgaJQqyZMN/V+
+	s6oyXxxOVhPX10WVZAyc883r+r3uK3nYsedun2Z3WtgHRHnLLtS8HDwHCbsfN7gG
+	HeT3W8Ea+Z7Obr6W2kCg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v9cg3h0h1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 Dec 2023 03:21:36 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BT3LZgq029637
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 29 Dec 2023 03:21:35 GMT
+Received: from [10.253.11.123] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 28 Dec
+ 2023 19:21:31 -0800
+Message-ID: <292b4694-8f11-1821-8dd3-d9650cfa194c@quicinc.com>
+Date: Fri, 29 Dec 2023 11:21:07 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87o7eu7ybq.fsf@email.froward.int.ebiederm.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v1 1/2] dt-bindings: arm: coresight: Update the pattern of
+ ete node name
+To: James Clark <james.clark@arm.com>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang
+	<quic_taozha@quicinc.com>, <coresight@lists.linaro.org>,
+        Mathieu Poirier
+	<mathieu.poirier@linaro.org>,
+        Mike Leach <mike.leach@linaro.org>, Leo Yan
+	<leo.yan@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+References: <20231220140538.13136-1-quic_jinlmao@quicinc.com>
+ <20231220140538.13136-2-quic_jinlmao@quicinc.com>
+ <79f88d35-17cc-43b0-bb22-3c854f89d961@linaro.org>
+ <8e5e9603-456b-4956-be03-b866feeeafb4@quicinc.com>
+ <c41ff7c8-48d6-4f4f-a9df-aafe953a2e98@linaro.org>
+ <f2f983b7-4c57-4b1b-925d-ffb18f6350a0@quicinc.com>
+ <c64a41af-ff62-43c5-89f7-0558f8456010@linaro.org>
+ <16932826-fcc2-49d3-95ab-201eff729360@quicinc.com>
+ <d4c6c32f-b1cf-4cf2-9c52-85fa8c1ed73f@linaro.org>
+ <9d13e1ce-38b1-4cdd-83ba-eca0c3091ce1@quicinc.com>
+ <578d6319-5ab5-45e5-8457-00116c7c84ae@linaro.org>
+ <cf5d97d0-ae79-9524-fc19-a73d4403a3d0@arm.com>
+Content-Language: en-US
+From: Jinlong Mao <quic_jinlmao@quicinc.com>
+In-Reply-To: <cf5d97d0-ae79-9524-fc19-a73d4403a3d0@arm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: HTJT5c_xJwvujHgTa6iw13LH3PmKgqfx
+X-Proofpoint-GUID: HTJT5c_xJwvujHgTa6iw13LH3PmKgqfx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ priorityscore=1501 suspectscore=0 mlxlogscore=999 phishscore=0
+ malwarescore=0 mlxscore=0 clxscore=1015 adultscore=0 lowpriorityscore=0
+ bulkscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2311290000 definitions=main-2312290023
 
-On Wed, Dec 13, 2023 at 12:27:05PM -0600, Eric W. Biederman wrote:
-> Matthew Wilcox <willy@infradead.org> writes:
-> > I think the right way to fix this is to pass a boolean flag to
-> > queued_write_lock_slowpath() to let it know whether it can re-enable
-> > interrupts while checking whether _QW_WAITING is set.
-> 
-> Yes.  It seems to make sense to distinguish between write_lock_irq and
-> write_lock_irqsave and fix this for all of write_lock_irq.
 
-I wasn't planning on doing anything here, but Hillf kind of pushed me into
-it.  I think it needs to be something like this.  Compile tested only.
-If it ends up getting used,
+On 12/28/2023 7:02 PM, James Clark wrote:
+>
+> On 26/12/2023 09:36, Krzysztof Kozlowski wrote:
+>> On 26/12/2023 02:50, Jinlong Mao wrote:
+>>>
+>>> On 12/21/2023 4:44 PM, Krzysztof Kozlowski wrote:
+>>>> On 21/12/2023 09:36, Jinlong Mao wrote:
+>>>>>
+>>>>> On 12/21/2023 4:17 PM, Krzysztof Kozlowski wrote:
+>>>>>> On 21/12/2023 09:15, Jinlong Mao wrote:
+>>>>>>>
+>>>>>>> On 12/21/2023 4:12 PM, Krzysztof Kozlowski wrote:
+>>>>>>>> On 21/12/2023 04:28, Jinlong Mao wrote:
+>>>>>>>>>>> diff --git a/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml b/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml
+>>>>>>>>>>> index f725e6940993..cbf583d34029 100644
+>>>>>>>>>>> --- a/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml
+>>>>>>>>>>> +++ b/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml
+>>>>>>>>>>> @@ -23,7 +23,7 @@ description: |
+>>>>>>>>>>>       
+>>>>>>>>>>>       properties:
+>>>>>>>>>>>         $nodename:
+>>>>>>>>>>> -    pattern: "^ete([0-9a-f]+)$"
+>>>>>>>>>>> +    pattern: "^ete-([0-9a-f]+)$"
+>>>>>>>>>> My concerns are not resolved. Why is it here in the first place?
+>>>>>>>>> Hi Krzysztof,
+>>>>>>>>>
+>>>>>>>>> ETE is acronym of embedded trace extension. The number of the name is
+>>>>>>>>> the same as the number of the CPU it belongs to.
+>>>>>>>> This is obvious and was not my question.
+>> You already said it here...
+>>
+>>>>>>> Do you mean why the pattern match of the node name is added here ?
+>>>>>> Yes, especially that it is requiring a non-generic name.
+>>>>>>
+>>>>>>> This node should not have the node name match, right ?
+>>>>>> Usually. For sure shouldn't be for non-generic names.
+>>>>>>
+>>>>> Hi Suzuki,
+>>>>>
+>>>>> Can we remove the pattern match of the node name and use a generic name
+>>>>> "ete" for the ete DT nodes ?
+>>>> "ete" is not a generic name. What is generic here? It's an acronym of
+>>>> some specific device name.
+>>>>
+>>> The device full name is embedded trace extension. So use ETE as the name
+>>> here.
+>> That's obvious and my comment was not about it. Second time... This is
+>> my unlucky day... I said, why do you even want to enforce name which is
+>> not generic, since the names should be generic?
+>>
+> I think we can just drop the enforced name if it's getting in the way.
+> It doesn't really do anything and other Coresight bindings don't have it
+> anyway.
+>
+>> I assume you read the DT specification:
+>> https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+>>
+>>
+>> Best regards,
+>> Krzysztof
+>>
+> I couldn't find anything in that list that would be a good fit for a
+> name, and it seems like all of the Coresight devices have already been
+> added with non generic names (like funnel and replicator etc), so it
+> might be a bit late now.
+>
+> But if we drop the enforced name then it's probably fine.
+Thanks  James.
 
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+I will make change to remove the "$nodename:".
 
-diff --git a/include/asm-generic/qrwlock.h b/include/asm-generic/qrwlock.h
-index 75b8f4601b28..1152e080c719 100644
---- a/include/asm-generic/qrwlock.h
-+++ b/include/asm-generic/qrwlock.h
-@@ -33,8 +33,8 @@
- /*
-  * External function declarations
-  */
--extern void queued_read_lock_slowpath(struct qrwlock *lock);
--extern void queued_write_lock_slowpath(struct qrwlock *lock);
-+void queued_read_lock_slowpath(struct qrwlock *lock);
-+void queued_write_lock_slowpath(struct qrwlock *lock, bool irq);
- 
- /**
-  * queued_read_trylock - try to acquire read lock of a queued rwlock
-@@ -98,7 +98,21 @@ static inline void queued_write_lock(struct qrwlock *lock)
- 	if (likely(atomic_try_cmpxchg_acquire(&lock->cnts, &cnts, _QW_LOCKED)))
- 		return;
- 
--	queued_write_lock_slowpath(lock);
-+	queued_write_lock_slowpath(lock, false);
-+}
-+
-+/**
-+ * queued_write_lock_irq - acquire write lock of a queued rwlock
-+ * @lock : Pointer to queued rwlock structure
-+ */
-+static inline void queued_write_lock_irq(struct qrwlock *lock)
-+{
-+	int cnts = 0;
-+	/* Optimize for the unfair lock case where the fair flag is 0. */
-+	if (likely(atomic_try_cmpxchg_acquire(&lock->cnts, &cnts, _QW_LOCKED)))
-+		return;
-+
-+	queued_write_lock_slowpath(lock, true);
- }
- 
- /**
-@@ -138,6 +152,7 @@ static inline int queued_rwlock_is_contended(struct qrwlock *lock)
-  */
- #define arch_read_lock(l)		queued_read_lock(l)
- #define arch_write_lock(l)		queued_write_lock(l)
-+#define arch_write_lock_irq(l)		queued_write_lock_irq(l)
- #define arch_read_trylock(l)		queued_read_trylock(l)
- #define arch_write_trylock(l)		queued_write_trylock(l)
- #define arch_read_unlock(l)		queued_read_unlock(l)
-diff --git a/include/linux/rwlock.h b/include/linux/rwlock.h
-index c0ef596f340b..897010b6ba0a 100644
---- a/include/linux/rwlock.h
-+++ b/include/linux/rwlock.h
-@@ -33,6 +33,7 @@ do {								\
-  extern int do_raw_read_trylock(rwlock_t *lock);
-  extern void do_raw_read_unlock(rwlock_t *lock) __releases(lock);
-  extern void do_raw_write_lock(rwlock_t *lock) __acquires(lock);
-+ extern void do_raw_write_lock_irq(rwlock_t *lock) __acquires(lock);
-  extern int do_raw_write_trylock(rwlock_t *lock);
-  extern void do_raw_write_unlock(rwlock_t *lock) __releases(lock);
- #else
-@@ -40,6 +41,7 @@ do {								\
- # define do_raw_read_trylock(rwlock)	arch_read_trylock(&(rwlock)->raw_lock)
- # define do_raw_read_unlock(rwlock)	do {arch_read_unlock(&(rwlock)->raw_lock); __release(lock); } while (0)
- # define do_raw_write_lock(rwlock)	do {__acquire(lock); arch_write_lock(&(rwlock)->raw_lock); } while (0)
-+# define do_raw_write_lock_irq(rwlock)	do {__acquire(lock); arch_write_lock_irq(&(rwlock)->raw_lock); } while (0)
- # define do_raw_write_trylock(rwlock)	arch_write_trylock(&(rwlock)->raw_lock)
- # define do_raw_write_unlock(rwlock)	do {arch_write_unlock(&(rwlock)->raw_lock); __release(lock); } while (0)
- #endif
-diff --git a/include/linux/rwlock_api_smp.h b/include/linux/rwlock_api_smp.h
-index dceb0a59b692..6257976dfb72 100644
---- a/include/linux/rwlock_api_smp.h
-+++ b/include/linux/rwlock_api_smp.h
-@@ -193,7 +193,7 @@ static inline void __raw_write_lock_irq(rwlock_t *lock)
- 	local_irq_disable();
- 	preempt_disable();
- 	rwlock_acquire(&lock->dep_map, 0, 0, _RET_IP_);
--	LOCK_CONTENDED(lock, do_raw_write_trylock, do_raw_write_lock);
-+	LOCK_CONTENDED(lock, do_raw_write_trylock, do_raw_write_lock_irq);
- }
- 
- static inline void __raw_write_lock_bh(rwlock_t *lock)
-diff --git a/kernel/locking/qrwlock.c b/kernel/locking/qrwlock.c
-index d2ef312a8611..6c644a71b01d 100644
---- a/kernel/locking/qrwlock.c
-+++ b/kernel/locking/qrwlock.c
-@@ -61,9 +61,10 @@ EXPORT_SYMBOL(queued_read_lock_slowpath);
- 
- /**
-  * queued_write_lock_slowpath - acquire write lock of a queued rwlock
-- * @lock : Pointer to queued rwlock structure
-+ * @lock: Pointer to queued rwlock structure
-+ * @irq: True if we can enable interrupts while spinning
-  */
--void __lockfunc queued_write_lock_slowpath(struct qrwlock *lock)
-+void __lockfunc queued_write_lock_slowpath(struct qrwlock *lock, bool irq)
- {
- 	int cnts;
- 
-@@ -82,7 +83,11 @@ void __lockfunc queued_write_lock_slowpath(struct qrwlock *lock)
- 
- 	/* When no more readers or writers, set the locked flag */
- 	do {
-+		if (irq)
-+			local_irq_enable();
- 		cnts = atomic_cond_read_relaxed(&lock->cnts, VAL == _QW_WAITING);
-+		if (irq)
-+			local_irq_disable();
- 	} while (!atomic_try_cmpxchg_acquire(&lock->cnts, &cnts, _QW_LOCKED));
- unlock:
- 	arch_spin_unlock(&lock->wait_lock);
-diff --git a/kernel/locking/spinlock_debug.c b/kernel/locking/spinlock_debug.c
-index 87b03d2e41db..bf94551d7435 100644
---- a/kernel/locking/spinlock_debug.c
-+++ b/kernel/locking/spinlock_debug.c
-@@ -212,6 +212,13 @@ void do_raw_write_lock(rwlock_t *lock)
- 	debug_write_lock_after(lock);
- }
- 
-+void do_raw_write_lock_irq(rwlock_t *lock)
-+{
-+	debug_write_lock_before(lock);
-+	arch_write_lock_irq(&lock->raw_lock);
-+	debug_write_lock_after(lock);
-+}
-+
- int do_raw_write_trylock(rwlock_t *lock)
- {
- 	int ret = arch_write_trylock(&lock->raw_lock);
+Thanks
+Jinlong Mao
+
+>
+> James
 
