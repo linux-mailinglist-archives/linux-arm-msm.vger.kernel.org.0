@@ -1,65 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8357681FF8F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 14:02:49 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7DB4181FF94
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 14:06:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1C4A31F22D1F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 13:02:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 39DDE282BD1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 13:06:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 945621170A;
-	Fri, 29 Dec 2023 13:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF3B511707;
+	Fri, 29 Dec 2023 13:06:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IOWT/RXd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mKEVaFcD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED01111B2
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 13:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442C2111A1
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 13:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a2345aaeb05so745389166b.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 05:02:35 -0800 (PST)
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a2772011f8dso121939566b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 05:06:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703854954; x=1704459754; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=kBb9J4FLVr3c7zCjdLWSWFc3YEv2PP10mRTZA5K1t3A=;
-        b=IOWT/RXd596ZOC58+KLduDW1y0KMKchwCD8TpaL3iKDhpCh8/cFcmqAF7T6iPH01wG
-         doVbrrLrj1jRRyml43zzlAflOgO9ZnmgTldLtPlNX/BFFOm5a2cFexQivjjXjH5EuaIB
-         LD4omV2xwtMGXs1Lf+l+55o07FINivTuDgNj57wzk1ibZoJu724EqR5QHvjOtaIhR1T0
-         7cvd4NBWOkiYQOqvRoSp0ANZ5E3g6ysOPRq3aXh935lgj3B70+OS1leGhFJZfisrWdgP
-         4Ha7f1CAJmQn2bnjIv8ALzkXSKDD5sNg6rarK8sMClcn5rw5DQmlOxhVAIH3+5EofLfh
-         8/aA==
+        d=linaro.org; s=google; t=1703855189; x=1704459989; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rKl2hv7xjGsCk4ipbW2TPD5NpXw4HvPQGvbNkejIlh4=;
+        b=mKEVaFcD/L2jaQ0hPvFrYEPYGCJswZBDPe0Ps+6c84ZAWBsa8q0Fx5Zsk06qwPM7Gx
+         gQV5DNeDWt2d6CBRVGVVUPPSiywHQ1SCGirRaEEFEhLQRcCfDf4yy6kHzQF5bQGJkGWy
+         WeKuRoI9qVL58g6as8+J+/tmD7/ONkfYp3wVhQHHgUhUzrTz6QNEa+YTyzwIXaRM03J/
+         RuibcVzwQl/P95jGDc9aUKkB99y1IPcwUYGWqjCdJAk4A3ZYFDQ08Ikk5PeECqWIRi0c
+         SCSnParoveJT7hXInk0OXwMVOMpf8WogBcP4w7vDwdOE8sQKFdByObzWfXQeWrsaHTST
+         s2Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703854954; x=1704459754;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kBb9J4FLVr3c7zCjdLWSWFc3YEv2PP10mRTZA5K1t3A=;
-        b=VPehOC6yvNXcL+dtO1h15qllGWNYpiujt9Amm0Y1EdGNSVqCCS5NGK0VUpk2aBABce
-         g/wpXtWbdawtImezAFkIKMFk7hRQtXINfgOY50+eA25Sj82g8+zKekvUCaY9tQhWZWtp
-         mhYC1336KQC5CxZIXvX9cZoLWgp+hNzpTD5/9VAtin4UEJRjj64dY8M9i6TmwCp39ms4
-         4NDwNe2j5pYYFfzxIfpc7koxpQim8Kzr2u6iir0K1ZtfQXeS7yUAOXLc8CxnVNKXSUWM
-         L/ht4+GHvwjE6IBM/IrF7VC6Qc0J6N8skbFqgXwHfwvYmFx1irGsTj6E2Mwo+49ye/Ms
-         OP6A==
-X-Gm-Message-State: AOJu0Yz+LnJw8RJQuXYxJF117okaByaLpgNfxeZYrCgoI5/gWAE8WCNs
-	WsNo+UfgepoHHem/hFctTjGuEVgQb97Ekg==
-X-Google-Smtp-Source: AGHT+IGgYvYa38LRx0qUWUoijJrf/2agW1BUl2edx6ysDrhxh1li5Z0/oDbsurR/p1egoD4s76YeIA==
-X-Received: by 2002:a17:906:188:b0:a23:6fd9:b088 with SMTP id 8-20020a170906018800b00a236fd9b088mr5449826ejb.102.1703854953914;
-        Fri, 29 Dec 2023 05:02:33 -0800 (PST)
+        d=1e100.net; s=20230601; t=1703855189; x=1704459989;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rKl2hv7xjGsCk4ipbW2TPD5NpXw4HvPQGvbNkejIlh4=;
+        b=Na97fgA7DBISjHvLnweel50CsD0bjjTJWDZ3qSnRwpwy2orSLcZvRnk+IoD/9BHspp
+         hmsfO6J7h6Qumy/7e96ZP4C9t6r0igHf/UJlsgdrpfXRIZHle7tXOt9LnGGbC1h1fsos
+         k03x3YRVz1CMB6l0XsVsLhh0OIT3C/Z+yucb1KdTdwQhT3mK8CXi5nYMmjWshgt93smo
+         au7nl7qBZH/XJheVqLmeomCWxoiVr6lC9jW5UFIjIChTCZ59HHJECh/8FmQPzLVvVBGA
+         tgp539FTtQfy/g1nilSXcuocxtow2f/DLMmHnDdjW6ukKZphJh7FMP2OZdnvzbvhR5s9
+         31ug==
+X-Gm-Message-State: AOJu0YxzoU63JSRaLNbJlTVtU2qEayXQmsPZssYQNeedO6PTVUr0WbKI
+	xTyc9YaYHljpvB9PTW7joGXsfBF9nckRWQ==
+X-Google-Smtp-Source: AGHT+IG6nayuDtLATAJ3w9ufh+iosF+lV0OjwmqvmBhBKgXTlvxjbK7Wz8rK3l6GS4p8DMngFG204w==
+X-Received: by 2002:a17:906:7386:b0:a26:f18a:b31d with SMTP id f6-20020a170906738600b00a26f18ab31dmr2827006ejl.13.1703855189611;
+        Fri, 29 Dec 2023 05:06:29 -0800 (PST)
 Received: from [192.168.199.125] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
-        by smtp.gmail.com with ESMTPSA id f21-20020a170906739500b00a26aa045e82sm6800939ejl.21.2023.12.29.05.02.32
+        by smtp.gmail.com with ESMTPSA id fh24-20020a1709073a9800b00a26a5f83cecsm7927239ejc.79.2023.12.29.05.06.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Dec 2023 05:02:33 -0800 (PST)
-Message-ID: <03fb2c01-053b-42c9-aa8a-7469cbd344d8@linaro.org>
-Date: Fri, 29 Dec 2023 14:02:31 +0100
+        Fri, 29 Dec 2023 05:06:29 -0800 (PST)
+Message-ID: <b730bf22-fa3a-4720-9fd1-79d2207d6812@linaro.org>
+Date: Fri, 29 Dec 2023 14:06:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,18 +66,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: qcm6490-fairphone-fp5: Add missing
- reserved-memory
-To: Luca Weiss <luca.weiss@fairphone.com>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20231229-fp5-reserved-mem-v1-1-87bb818f1397@fairphone.com>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sc8280xp: Correct USB PHY power
+ domains
 Content-Language: en-US
+To: Johan Hovold <johan@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Johan Hovold <johan+linaro@kernel.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Konrad Dybcio <konrad.dybcio@somainline.org>
+References: <20231227-topic-8280_pcie_dts-v1-0-13d12b1698ff@linaro.org>
+ <20231227-topic-8280_pcie_dts-v1-2-13d12b1698ff@linaro.org>
+ <ZY7DEpaIgvfL_A11@hovoldconsulting.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -115,20 +117,44 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231229-fp5-reserved-mem-v1-1-87bb818f1397@fairphone.com>
+In-Reply-To: <ZY7DEpaIgvfL_A11@hovoldconsulting.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29.12.2023 13:53, Luca Weiss wrote:
-> It seems we also need to reserve a region of 81 MiB called "removed_mem"
-> otherwise we can easily hit the following error with higher RAM usage:
+On 29.12.2023 14:01, Johan Hovold wrote:
+> On Wed, Dec 27, 2023 at 11:28:27PM +0100, Konrad Dybcio wrote:
+>> The USB GDSCs are only related to the controllers.
 > 
->   [ 1467.809274] Internal error: synchronous external abort: 0000000096000010 [#2] SMP
+> Are you sure?
+That's what I've been told from rather reliable sources.
+
 > 
-> Fixes: eee9602ad649 ("arm64: dts: qcom: qcm6490: Add device-tree for Fairphone 5")
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> The PHYs on the other
+>> hand, are powered by VDD_MX and their specific VDDA_PHY/PLL regulators.
+>>
+>> Fix the power-domains assignment to stop potentially toggling the GDSC
+>> unnecessarily.
+> 
+> Again, there's no additional toggling being done here, but yes, this may
+> keep the domains enabled during suspend depending on how the driver is
+> implemented.
+No, it can actually happen. (Some) QMP PHYs are referenced by the
+DP hardware. If USB is disabled (or suspended), the DP being active
+will hold these GDSCs enabled.
 
 Konrad
+> If that's the concern, then please spell that out too.
+> 
+>> Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
+> 
+> May not be needed either.
+> 
+>> @@ -2597,7 +2597,7 @@ usb_2_qmpphy0: phy@88ef000 {
+>>  				 <&gcc GCC_USB3UNIPHY_PHY_MP0_BCR>;
+>>  			reset-names = "phy", "phy_phy";
+>>  
+>> -			power-domains = <&gcc USB30_MP_GDSC>;
+>> +			power-domains = <&rpmhpd SC8280XP_MX>;
+> 
+> Johan
 
