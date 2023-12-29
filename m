@@ -1,148 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-6110-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6111-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7370E8202CB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 00:18:47 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 109328202DF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 00:52:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2F63E283842
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 23:18:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 90D3A1F21E09
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 23:52:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC75D14AB6;
-	Fri, 29 Dec 2023 23:18:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8DCA14F6B;
+	Fri, 29 Dec 2023 23:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="Yy5Zu/tZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TGlnMH6f"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-89-177-23-149.bb.vodafone.cz [89.177.23.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A6214AAF;
-	Fri, 29 Dec 2023 23:18:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [151.217.64.190] (unknown [151.217.64.190])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id BB665163865;
-	Sat, 30 Dec 2023 00:18:37 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1703891918;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=zSYUMSW0R8QXx6cCnsu+oWLbXKhMRIE3bmoXu2/jrdM=;
-	b=Yy5Zu/tZOCEaMxMLaeR8fx8Oy9cVlM+68+fuAA0WEY6dKO5irkmhmUmLKP6m+F3w3xCnkA
-	2A95IHTQm6h15gwqMLvy0dXNzW6ZKZNJO6Wrygs1P3yGQ42dA9Dd7XTKxymihEJn7YvMlA
-	QgOM7J2hq5furiD4/dobTkVJpJi9j7E=
-Message-ID: <e299a7bd-2f50-41e0-a638-a1fbbeb65635@ixit.cz>
-Date: Sat, 30 Dec 2023 00:18:37 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF19214F61
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 23:51:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a26fa294e56so395587866b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 15:51:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1703893914; x=1704498714; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+euFWqMJJkXiPS9ThG6gX+dfKUD0ApFu+6/ednPk02U=;
+        b=TGlnMH6fFccaGH1UcA3nW9ra6YLe7BXJ5tQa/95AEPaHTZpzb/b5yfoPYlS79ZcNSI
+         peWKe4mwv/ilZ2LnOm4PrcU6mr8GypQ6TnZMxw6RfvVxeGlAfEr8uHvqHngZNYJmwOi1
+         mBx06T8j0mCEc1BV0uaMYffaFdFCHd3TGZ5ufGj0CxnLqTKZJsLqJOixsYtZtBVz5CkW
+         LEf4efJFR3oZeGeiAxdOLQIO5hkwatZa+MNxt6jmv8eIaeGBzfxwOzsMfYHZ9w5esF2F
+         O0sr30Bsu2tHTSPck1zP1wMytpqQoz8djWC03COncOzBA1fBkJUtk56SZvWD5t1XrVpX
+         6b4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703893914; x=1704498714;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+euFWqMJJkXiPS9ThG6gX+dfKUD0ApFu+6/ednPk02U=;
+        b=Pl8jJiucSE3++Yx4p9pWcEvOqVWaMost5L9rqU87Xqr5ZfXbpbyRH7nGOBJOdABcj2
+         XQImwlabAW94uxtrgDyLST0Q8JqDRuZajTw7pJ1D+0jT0y2FG4mIOeWPUgON/KyUOPu8
+         0+MbFQSp8VwvaqXet5VXz8UgMS0DEPCXEhL+D8YbfUk27IQpCFlssG/xT1t5dsRqwZuh
+         4w7DS5ZLVTMJXSZjg8a+qAf6GULrAXUjCo07U853VXNofxdJGaD/egw3ge228sJvC+HR
+         HMZFJAD1AcYeRFzxUPE9bFIzhFQj0dphRm924lYCkIqS0sTaX/wWF2KAVd8AaZxE8vOF
+         LyuA==
+X-Gm-Message-State: AOJu0Yzruh8GwQmPeW9oMFrHi030QFVyA03jNdfDIhmpIEHDH7SkS/Aw
+	MEbhDQXykS86JG8MRiuukqKnBABeiorXY8SlV4ip2T74/Zw=
+X-Google-Smtp-Source: AGHT+IEZLEvgPP3ahYwzenIjDIuESsbwlOQfI4RC7EC8W/b1ijXh/HWo6aIqKz0oVQLeAdy9Po/ghw==
+X-Received: by 2002:a17:906:73d5:b0:a23:3bf5:bc73 with SMTP id n21-20020a17090673d500b00a233bf5bc73mr4897253ejl.58.1703893913867;
+        Fri, 29 Dec 2023 15:51:53 -0800 (PST)
+Received: from [192.168.199.125] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
+        by smtp.gmail.com with ESMTPSA id d8-20020a170906304800b00a26a5f80d07sm2256252ejd.14.2023.12.29.15.51.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Dec 2023 15:51:53 -0800 (PST)
+Message-ID: <4e56729e-0549-4075-8f6c-a43c84ae9b9a@linaro.org>
+Date: Sat, 30 Dec 2023 00:51:50 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845: add power domain to UFS phy
- interface
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/8] dt-bindings: clock: qcom: Allow VDD_GFX supply to
+ GX
 Content-Language: en-US
-To: Luca Weiss <luca@z3ntu.xyz>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+To: Bjorn Andersson <quic_bjorande@quicinc.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: Caleb Connolly <caleb.connolly@linaro.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Manivannan Sadhasivam <mani@kernel.org>
-References: <20231229202959.266502-1-david@ixit.cz>
- <2710291.mvXUDI8C0e@z3ntu.xyz>
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <2710291.mvXUDI8C0e@z3ntu.xyz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+ Conor Dooley <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+ Ulf Hansson <ulf.hansson@linaro.org>, Johan Hovold
+ <johan+linaro@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
+ Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org
+References: <20231220-sa8295p-gpu-v2-0-4763246b72c0@quicinc.com>
+ <20231220-sa8295p-gpu-v2-1-4763246b72c0@quicinc.com>
+ <26617c83-31b3-4ad9-8a61-0b8271fad41f@linaro.org>
+ <20231227203048.GB1315173@hu-bjorande-lv.qualcomm.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20231227203048.GB1315173@hu-bjorande-lv.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 29/12/2023 22:37, Luca Weiss wrote:
+On 27.12.2023 21:30, Bjorn Andersson wrote:
+> On Fri, Dec 22, 2023 at 09:12:04AM +0100, Krzysztof Kozlowski wrote:
+>> On 22/12/2023 05:39, Bjorn Andersson wrote:
+>>> In some designs the SoC's VDD_GFX pads are supplied by an external
+>>> regulator, rather than a power-domain. Allow this to be described in the
+>>> GPU clock controller binding.
+>>>
+>>> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+>>> ---
+>>>  Documentation/devicetree/bindings/clock/qcom,gpucc.yaml | 16 ++++++++++++++++
+>>>  1 file changed, 16 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml b/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
+>>> index f369fa34e00c..c0dd24c9dcb3 100644
+>>> --- a/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
+>>> +++ b/Documentation/devicetree/bindings/clock/qcom,gpucc.yaml
+>>> @@ -53,6 +53,9 @@ properties:
+>>>    power-domains:
+>>>      maxItems: 1
+>>>  
+>>> +  vdd-gfx-supply:
+>>> +    description: Regulator supply for the VDD_GFX pads
+>>> +
+>>>    '#clock-cells':
+>>>      const: 1
+>>>  
+>>> @@ -74,6 +77,19 @@ required:
+>>>    - '#reset-cells'
+>>>    - '#power-domain-cells'
+>>>  
+>>> +# Allow either power-domains or vdd-gfx-supply, not both
+>>> +oneOf:
+>>> +  - required:
+>>> +      - power-domains
+>>> +  - required:
+>>> +      - vdd-gfx-supply
+>>
+>> This should be enough, assuming one of them is actually required. The
+>> code. See also:
+>> https://elixir.bootlin.com/linux/v5.17-rc2/source/Documentation/devicetree/bindings/reserved-memory/reserved-memory.yaml#L91
+>>
+> 
+> Yes, that would be the correct binding. But the majority of our
+> DeviceTree source does not specify a power-domain for their gpucc.
+> 
+> While this should be corrected, it seem reasonable to leave this
+> optional for now.
+Moreover, I think it would be reasonable to add power-domains as
+required in qcom,gcc.yaml. IIRC all "normal" (not q6) clock controllers
+use at least CX+MX, with perhaps more hw-specific domains for some clocks
+or GDSCs.
 
-> On Freitag, 29. Dezember 2023 21:29:54 CET David Heidelberg wrote:
->> Reported by: `make CHECK_DTBS=1 qcom/sdm845-oneplus-enchilada.dtb`
->>
->> Signed-off-by: David Heidelberg <david@ixit.cz>
->> ---
->>   arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 ++
->>   1 file changed, 2 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi
->> b/arch/arm64/boot/dts/qcom/sdm845.dtsi index c2244824355a..ad8677b62bfb
->> 100644
->> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->> @@ -2644,6 +2644,8 @@ ufs_mem_phy: phy@1d87000 {
->>   			clocks = <&gcc GCC_UFS_MEM_CLKREF_CLK>,
->>   				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
->>
->> +			power-domains = <&gcc UFS_PHY_GDSC>;
->> +
->>   			resets = <&ufs_mem_hc 0>;
->>   			reset-names = "ufsphy";
-> This is potentially the wrong power domain, see the conversation here:
-> https://lore.kernel.org/linux-arm-msm/20231204172829.GA69580@thinkpad/
-Thanks, I was thinking about  SDM845_MX, but then looked at rest more 
-closer qcom archs and thought it'll be likely GDSC (also by looking at 
-ufs_mem_hc reset vectors).
->
-> Hopefully Mani can give some input here :)
->
-> Regards
-> Luca
->
->
--- 
-David Heidelberg
-
+Konrad
 
