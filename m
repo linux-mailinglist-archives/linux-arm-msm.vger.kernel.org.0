@@ -1,59 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-6064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9362E81FF23
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 12:25:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DEDB81FF2E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 12:37:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 368D4B215F4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 11:25:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3AEA2B2220E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 11:37:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6996210A3A;
-	Fri, 29 Dec 2023 11:25:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D74D610A3B;
+	Fri, 29 Dec 2023 11:37:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IR+9Pbtz"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="bah1vHAg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429E611183;
-	Fri, 29 Dec 2023 11:25:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9EA6C433C8;
-	Fri, 29 Dec 2023 11:25:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1703849103;
-	bh=MieiRL5YdRkCYRdCXxYZ9gmxzPhKZ67/qsDP0kxrLek=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IR+9Pbtzwr09SaZmVGlv9yoDpz0bu/d6mWkxctCHahOojgGp7pfbNM0DxDS5tb+3y
-	 tOEMh3fQ6BiTfse0W+6wPYFRr3Ex0I8j2ndTRV3jASg6HrQQvgHn0hFlB8xCYKCSGd
-	 reMdwCIGWew6JxWL+9n2gzvPjI4reIWZY99troit764ZHHiRB6Lj+tazMMfyEQwQNa
-	 6XsqCC1wb8pcemSWwTndXT7hWgCcHMSiD49O2ps4sDlWQnPNqj6lPKOE8/ieMOOrHO
-	 ghBh9s6zaW1j8U2mzPxL40mueEaopWkYMKyX4TW2goce3aZc7vVmUy8vFJ4uhW3fZ7
-	 X5jf2rbaVMWcg==
-Received: from johan by xi.lan with local (Exim 4.96.2)
-	(envelope-from <johan@kernel.org>)
-	id 1rJAz1-0007Nf-2f;
-	Fri, 29 Dec 2023 12:24:56 +0100
-Date: Fri, 29 Dec 2023 12:24:55 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: sc8280xp: Fix PCIe PHY
- power-domains
-Message-ID: <ZY6sh8nlEUyEfL0u@hovoldconsulting.com>
-References: <20231227-topic-8280_pcie_dts-v1-0-13d12b1698ff@linaro.org>
- <20231227-topic-8280_pcie_dts-v1-1-13d12b1698ff@linaro.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A09510A36;
+	Fri, 29 Dec 2023 11:37:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1703849826; x=1735385826;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=jXpLHm3Y0MAniZ7pNG5aFvqoCCSnZ/QB13PROwYSaT8=;
+  b=bah1vHAgKd0F16QnKtzcmLBAg379AwRKSusj1s2II9twMOje6gkwGpWM
+   yNtfSOPQX94TfmtUVVjv05tgi+Bx74U+dU/flizPFmbvC/mAa8Yab5mQX
+   +Io+pkRXoZrw+ssI3EKjfBd1tZ9/i6oP9S6Ie9/VLqZBtS5caeQ93VYD+
+   WRsL9crS2fNhGlLzd2X5fQDh8hK0vtBFh2+eMUX9f45+NyedWRQI/Z3o2
+   PUK73ul/z9PWPItM8h3gasBnPwt2ooChlI23AzbKdeamZasGdVjQVfX7c
+   V/rc2wcHGkOqC0XMP3hCHqf+v5lyuhEYSc+dRETaKnkbJNlRq5gr2RWsB
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10937"; a="381615577"
+X-IronPort-AV: E=Sophos;i="6.04,314,1695711600"; 
+   d="scan'208";a="381615577"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Dec 2023 03:37:05 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10937"; a="771950637"
+X-IronPort-AV: E=Sophos;i="6.04,314,1695711600"; 
+   d="scan'208";a="771950637"
+Received: from lkp-server02.sh.intel.com (HELO b07ab15da5fe) ([10.239.97.151])
+  by orsmga007.jf.intel.com with ESMTP; 29 Dec 2023 03:36:59 -0800
+Received: from kbuild by b07ab15da5fe with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1rJBAe-000HOd-0D;
+	Fri, 29 Dec 2023 11:36:56 +0000
+Date: Fri, 29 Dec 2023 19:35:58 +0800
+From: kernel test robot <lkp@intel.com>
+To: Matthew Wilcox <willy@infradead.org>,
+	"Eric W. Biederman" <ebiederm@xmission.com>
+Cc: oe-kbuild-all@lists.linux.dev, Maria Yu <quic_aiquny@quicinc.com>,
+	kernel@quicinc.com, quic_pkondeti@quicinc.com, keescook@chromium.or,
+	viro@zeniv.linux.org.uk, brauner@kernel.org, oleg@redhat.com,
+	dhowells@redhat.com, jarkko@kernel.org, paul@paul-moore.com,
+	jmorris@namei.org, serge@hallyn.com, linux-mm@kvack.org,
+	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
+	keyrings@vger.kernel.org, linux-security-module@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: Re: [PATCH] kernel: Introduce a write lock/unlock wrapper for
+ tasklist_lock
+Message-ID: <202312291936.G87eGfCo-lkp@intel.com>
+References: <ZY30k7OCtxrdR9oP@casper.infradead.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,49 +74,53 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231227-topic-8280_pcie_dts-v1-1-13d12b1698ff@linaro.org>
+In-Reply-To: <ZY30k7OCtxrdR9oP@casper.infradead.org>
 
-On Wed, Dec 27, 2023 at 11:28:26PM +0100, Konrad Dybcio wrote:
-> The PCIe GDSCs are only related to the RCs. The PCIe PHYs on the other
-> hand, are powered by VDD_MX and their specific VDDA_PHY/PLL regulators.
+Hi Matthew,
 
-No, that does not seem to be entirely correct. I added the power-domains
-here precisely because they were needed to enable the PHYs.
+kernel test robot noticed the following build errors:
 
-This is something I stumbled over when trying to figure out how to
-add support for the second lane pair (i.e. four-lane mode), and I just
-went back and confirmed that this is still the case.
+[auto build test ERROR on tip/locking/core]
+[also build test ERROR on arnd-asm-generic/master brauner-vfs/vfs.all vfs-idmapping/for-next linus/master v6.7-rc7 next-20231222]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-If you try to enable one of these PHYs without the corresponding GDSC
-being enabled, you end up with:
+url:    https://github.com/intel-lab-lkp/linux/commits/Matthew-Wilcox/Re-PATCH-kernel-Introduce-a-write-lock-unlock-wrapper-for-tasklist_lock/20231229-062352
+base:   tip/locking/core
+patch link:    https://lore.kernel.org/r/ZY30k7OCtxrdR9oP%40casper.infradead.org
+patch subject: Re: [PATCH] kernel: Introduce a write lock/unlock wrapper for tasklist_lock
+config: i386-randconfig-011-20231229 (https://download.01.org/0day-ci/archive/20231229/202312291936.G87eGfCo-lkp@intel.com/config)
+compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231229/202312291936.G87eGfCo-lkp@intel.com/reproduce)
 
-[   37.709324] ------------[ cut here ]------------
-[   37.718196] gcc_pcie_3b_aux_clk status stuck at 'off'
-[   37.718205] WARNING: CPU: 4 PID: 482 at drivers/clk/qcom/clk-branch.c:86 clk_branch_wait+0x144/0x15c
-	
-Now, you may or may not want to describe the above in the devicetree,
-but this makes it sound like you're trying to work around an issue with
-the current Linux implementation.
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202312291936.G87eGfCo-lkp@intel.com/
 
-> Fix the power-domains assignment to stop potentially toggling the GDSC
-> unnecessarily.
+All errors (new ones prefixed by >>):
 
-Nothing is being toggled unnecessarily, and generally this is just
-another use count increment.
+   kernel/locking/spinlock_debug.c: In function 'do_raw_write_lock_irq':
+>> kernel/locking/spinlock_debug.c:217:9: error: implicit declaration of function 'arch_write_lock_irq'; did you mean '_raw_write_lock_irq'? [-Werror=implicit-function-declaration]
+     217 |         arch_write_lock_irq(&lock->raw_lock);
+         |         ^~~~~~~~~~~~~~~~~~~
+         |         _raw_write_lock_irq
+   cc1: some warnings being treated as errors
 
-> Fixes: 813e83157001 ("arm64: dts: qcom: sc8280xp/sa8540p: add PCIe2-4 nodes")
 
-So not sure a Fixes tag is warranted either.
+vim +217 kernel/locking/spinlock_debug.c
 
-> @@ -1895,7 +1895,7 @@ pcie3b_phy: phy@1c0e000 {
->  			assigned-clocks = <&gcc GCC_PCIE3B_PHY_RCHNG_CLK>;
->  			assigned-clock-rates = <100000000>;
->  
-> -			power-domains = <&gcc PCIE_3B_GDSC>;
-> +			power-domains = <&rpmhpd SC8280XP_MX>;
->  
->  			resets = <&gcc GCC_PCIE_3B_PHY_BCR>;
->  			reset-names = "phy";
+   213	
+   214	void do_raw_write_lock_irq(rwlock_t *lock)
+   215	{
+   216		debug_write_lock_before(lock);
+ > 217		arch_write_lock_irq(&lock->raw_lock);
+   218		debug_write_lock_after(lock);
+   219	}
+   220	
 
-Johan
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
