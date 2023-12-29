@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7DB4181FF94
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 14:06:42 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 593E981FF98
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 14:08:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 39DDE282BD1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 13:06:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 854FD1C20D7F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 13:08:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF3B511707;
-	Fri, 29 Dec 2023 13:06:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9B7C111B1;
+	Fri, 29 Dec 2023 13:08:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mKEVaFcD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wYnc3AKR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442C2111A1
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 13:06:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450CD11707
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 13:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a2772011f8dso121939566b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 05:06:31 -0800 (PST)
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5553d588cc7so2897520a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 05:08:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703855189; x=1704459989; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1703855308; x=1704460108; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=rKl2hv7xjGsCk4ipbW2TPD5NpXw4HvPQGvbNkejIlh4=;
-        b=mKEVaFcD/L2jaQ0hPvFrYEPYGCJswZBDPe0Ps+6c84ZAWBsa8q0Fx5Zsk06qwPM7Gx
-         gQV5DNeDWt2d6CBRVGVVUPPSiywHQ1SCGirRaEEFEhLQRcCfDf4yy6kHzQF5bQGJkGWy
-         WeKuRoI9qVL58g6as8+J+/tmD7/ONkfYp3wVhQHHgUhUzrTz6QNEa+YTyzwIXaRM03J/
-         RuibcVzwQl/P95jGDc9aUKkB99y1IPcwUYGWqjCdJAk4A3ZYFDQ08Ikk5PeECqWIRi0c
-         SCSnParoveJT7hXInk0OXwMVOMpf8WogBcP4w7vDwdOE8sQKFdByObzWfXQeWrsaHTST
-         s2Hw==
+        bh=dSWeTiMkwsfQEJmoJjotnLlqP/j1o0llUk3wvmIF5M0=;
+        b=wYnc3AKR3GnxO9rSqe58sUSaluGDT6A3DmCADtApfi2cNTZCkGmP1v6kGyI7GCaVub
+         cdBDE13vOj7hiPR8LRMYKI9aKrjhvtyBZka4+iRUldCz4nl9dvfFUa+I45Y80ngSKE83
+         hB4Z3iYJSnC+xp0fcjhsrSEORsq6PBx6pAvymDmbIOB1+HBepDnGdcKeRPZzH5MN+sKU
+         pGaa2Uu1ym2HwGQ62fiPnt+0LUIL/ZUEUTKyMNyVkZqpNWB//GfvvLfcGNI9lOXB7KYx
+         LgTvoPYPLhjyR+rPsqy7M76rl9v39j7JryAleUouWw/oycPAFE4opII2zwA5s5RW5zUZ
+         +ypQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703855189; x=1704459989;
+        d=1e100.net; s=20230601; t=1703855308; x=1704460108;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rKl2hv7xjGsCk4ipbW2TPD5NpXw4HvPQGvbNkejIlh4=;
-        b=Na97fgA7DBISjHvLnweel50CsD0bjjTJWDZ3qSnRwpwy2orSLcZvRnk+IoD/9BHspp
-         hmsfO6J7h6Qumy/7e96ZP4C9t6r0igHf/UJlsgdrpfXRIZHle7tXOt9LnGGbC1h1fsos
-         k03x3YRVz1CMB6l0XsVsLhh0OIT3C/Z+yucb1KdTdwQhT3mK8CXi5nYMmjWshgt93smo
-         au7nl7qBZH/XJheVqLmeomCWxoiVr6lC9jW5UFIjIChTCZ59HHJECh/8FmQPzLVvVBGA
-         tgp539FTtQfy/g1nilSXcuocxtow2f/DLMmHnDdjW6ukKZphJh7FMP2OZdnvzbvhR5s9
-         31ug==
-X-Gm-Message-State: AOJu0YxzoU63JSRaLNbJlTVtU2qEayXQmsPZssYQNeedO6PTVUr0WbKI
-	xTyc9YaYHljpvB9PTW7joGXsfBF9nckRWQ==
-X-Google-Smtp-Source: AGHT+IG6nayuDtLATAJ3w9ufh+iosF+lV0OjwmqvmBhBKgXTlvxjbK7Wz8rK3l6GS4p8DMngFG204w==
-X-Received: by 2002:a17:906:7386:b0:a26:f18a:b31d with SMTP id f6-20020a170906738600b00a26f18ab31dmr2827006ejl.13.1703855189611;
-        Fri, 29 Dec 2023 05:06:29 -0800 (PST)
+        bh=dSWeTiMkwsfQEJmoJjotnLlqP/j1o0llUk3wvmIF5M0=;
+        b=hQUkSADjk8M4Z4Zin30M87VpocbXxWDOqk8wbsaZzXxeWGytO0cwQQa3LwZ/Lzm8qW
+         P7cszbv1RHUA97XrPyhcTOrLGhUEymM6NN0gVwkw9pdtELOWYKQnf3evsbtHnIU7czUF
+         q+Czzpvwrnr2JRasY0U/DgAoXxqJ12f9oSPxBYRxlTtlaixu3kRWXfKykFcRHLsJmTuw
+         89jrHNmb13JwvhqHEa88vyD/aD+K9GkLgGjmfpNXJd2OOm+zx3NNHzQwbXXTpyYRWRLV
+         QIHLWR7i18CRU/S+qhP5PGQBvbgDWTKikSlPIglcYsHWHHiHMzQHRCKbKKFYeTmAWnoD
+         v0Ag==
+X-Gm-Message-State: AOJu0YzouOY/cUiHi9ZxsTjvXLABpM304wJO+iOnxjKhcfY8BNGzBlT2
+	aP6Xb1Rf42+E5rRdy/4AbepImZy5CcWSPB5Oi5bdc61Bq+g=
+X-Google-Smtp-Source: AGHT+IF8tg/YlGkPTMGx5Yw14pxtq9TVmvrWVKz2V+MGtg44Ct+A1WmjeGc4DjwI8s9MlGSXGx0dZg==
+X-Received: by 2002:a50:8745:0:b0:553:f06d:3aae with SMTP id 5-20020a508745000000b00553f06d3aaemr992725edv.45.1703855308479;
+        Fri, 29 Dec 2023 05:08:28 -0800 (PST)
 Received: from [192.168.199.125] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
-        by smtp.gmail.com with ESMTPSA id fh24-20020a1709073a9800b00a26a5f83cecsm7927239ejc.79.2023.12.29.05.06.27
+        by smtp.gmail.com with ESMTPSA id p2-20020a056402500200b0055338547cc1sm11059927eda.70.2023.12.29.05.08.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Dec 2023 05:06:29 -0800 (PST)
-Message-ID: <b730bf22-fa3a-4720-9fd1-79d2207d6812@linaro.org>
-Date: Fri, 29 Dec 2023 14:06:26 +0100
+        Fri, 29 Dec 2023 05:08:28 -0800 (PST)
+Message-ID: <ce7022e6-011c-4745-a508-4776269708d0@linaro.org>
+Date: Fri, 29 Dec 2023 14:08:25 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,8 +66,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sc8280xp: Correct USB PHY power
- domains
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: sc8280xp: Fix PCIe PHY
+ power-domains
 Content-Language: en-US
 To: Johan Hovold <johan@kernel.org>
 Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
@@ -79,8 +79,8 @@ Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
  Konrad Dybcio <konrad.dybcio@somainline.org>
 References: <20231227-topic-8280_pcie_dts-v1-0-13d12b1698ff@linaro.org>
- <20231227-topic-8280_pcie_dts-v1-2-13d12b1698ff@linaro.org>
- <ZY7DEpaIgvfL_A11@hovoldconsulting.com>
+ <20231227-topic-8280_pcie_dts-v1-1-13d12b1698ff@linaro.org>
+ <ZY6sh8nlEUyEfL0u@hovoldconsulting.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -117,44 +117,35 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <ZY7DEpaIgvfL_A11@hovoldconsulting.com>
+In-Reply-To: <ZY6sh8nlEUyEfL0u@hovoldconsulting.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29.12.2023 14:01, Johan Hovold wrote:
-> On Wed, Dec 27, 2023 at 11:28:27PM +0100, Konrad Dybcio wrote:
->> The USB GDSCs are only related to the controllers.
-> 
-> Are you sure?
-That's what I've been told from rather reliable sources.
-
-> 
->> The PHYs on the other
+On 29.12.2023 12:24, Johan Hovold wrote:
+> On Wed, Dec 27, 2023 at 11:28:26PM +0100, Konrad Dybcio wrote:
+>> The PCIe GDSCs are only related to the RCs. The PCIe PHYs on the other
 >> hand, are powered by VDD_MX and their specific VDDA_PHY/PLL regulators.
->>
->> Fix the power-domains assignment to stop potentially toggling the GDSC
->> unnecessarily.
 > 
-> Again, there's no additional toggling being done here, but yes, this may
-> keep the domains enabled during suspend depending on how the driver is
-> implemented.
-No, it can actually happen. (Some) QMP PHYs are referenced by the
-DP hardware. If USB is disabled (or suspended), the DP being active
-will hold these GDSCs enabled.
+> No, that does not seem to be entirely correct. I added the power-domains
+> here precisely because they were needed to enable the PHYs.
+> 
+> This is something I stumbled over when trying to figure out how to
+> add support for the second lane pair (i.e. four-lane mode), and I just
+> went back and confirmed that this is still the case.
+> 
+> If you try to enable one of these PHYs without the corresponding GDSC
+> being enabled, you end up with:
+> 
+> [   37.709324] ------------[ cut here ]------------
+> [   37.718196] gcc_pcie_3b_aux_clk status stuck at 'off'
+> [   37.718205] WARNING: CPU: 4 PID: 482 at drivers/clk/qcom/clk-branch.c:86 clk_branch_wait+0x144/0x15c
+> 	
+> Now, you may or may not want to describe the above in the devicetree,
+> but this makes it sound like you're trying to work around an issue with
+> the current Linux implementation.
+Could you please recheck this with patch 1 from [1] applied?
 
 Konrad
-> If that's the concern, then please spell that out too.
-> 
->> Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
-> 
-> May not be needed either.
-> 
->> @@ -2597,7 +2597,7 @@ usb_2_qmpphy0: phy@88ef000 {
->>  				 <&gcc GCC_USB3UNIPHY_PHY_MP0_BCR>;
->>  			reset-names = "phy", "phy_phy";
->>  
->> -			power-domains = <&gcc USB30_MP_GDSC>;
->> +			power-domains = <&rpmhpd SC8280XP_MX>;
-> 
-> Johan
+
+[1] https://lore.kernel.org/linux-arm-msm/20231227-topic-8280_pcie-v1-1-095491baf9e4@linaro.org/T/#u
 
