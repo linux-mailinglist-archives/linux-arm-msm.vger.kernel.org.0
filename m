@@ -1,194 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-6060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36CE781FCBC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 04:21:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3150781FCE4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 04:46:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 237AB1C2141E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 03:21:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2F2901C2146A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Dec 2023 03:46:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5E2E17EF;
-	Fri, 29 Dec 2023 03:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B3F91857;
+	Fri, 29 Dec 2023 03:46:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TXdOfEye"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Ah/aicGE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E577217CE;
-	Fri, 29 Dec 2023 03:21:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BT3LB2q008136;
-	Fri, 29 Dec 2023 03:21:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=3iwCb4qcDiYcPO1CE8UgzT5vhsCnZQM30MoadwGuPLk=; b=TX
-	dOfEyeQJqoNYQ3p4N4x5Bv4BwnKT9/qS9+RXF36zaEKjtjNurLUSLXG+ugJAe7na
-	t+hOK5r1SIIm0p5kHBpp+2h1vhd2PdRXuBziUwVrVIysDrYpwybg2RxHMhmyRZf/
-	OaEi3jaJH2gSuJscXf35j7mIv7t9hIkyx63pY0mZDlzPpU3BAPT9X6MxhHz955XT
-	lWpc7hurEVSRdRud2JAIHJXywX2zs4wXy51Rs1dVGNwNEwqFixkJgaJQqyZMN/V+
-	s6oyXxxOVhPX10WVZAyc883r+r3uK3nYsedun2Z3WtgHRHnLLtS8HDwHCbsfN7gG
-	HeT3W8Ea+Z7Obr6W2kCg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v9cg3h0h1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 Dec 2023 03:21:36 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BT3LZgq029637
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 Dec 2023 03:21:35 GMT
-Received: from [10.253.11.123] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 28 Dec
- 2023 19:21:31 -0800
-Message-ID: <292b4694-8f11-1821-8dd3-d9650cfa194c@quicinc.com>
-Date: Fri, 29 Dec 2023 11:21:07 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9734B567C;
+	Fri, 29 Dec 2023 03:46:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1703821574; x=1735357574;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Vm6p9nuxloRluzYcX979ML+GT8QFdDfRTL49gEoXQn4=;
+  b=Ah/aicGELwRB1UDR92/tVtkjEliD2YeJgdQDbaXjBdctPgzi1culLNtX
+   2T+o2BGygwzY0sQOK0XSbm4wcHrmP3+esO5Xvm9A7CXR8kE/vRo0LtBTh
+   h1G7m5tunRj+UAwDhYaTlgC1Hq3HENcTFxJ6IPnfUYjls0PwrERExeXJc
+   bWYkOVu+FyXg1Nqr/p2E2xOpQjWTbeZYh4mhbky2K7MgKcmMpUEuhTLnn
+   TlpjEK8Y1k3MIs3U+kDTHaLil7io1Sno8jzKRT44Q1C56Ap3wr6xZBlIy
+   ABP8grqmDyheonJ2TCgqO5yw4/pppY0ndFCSTG0jIO4YF4LyjAWkSr0m6
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10937"; a="381591511"
+X-IronPort-AV: E=Sophos;i="6.04,313,1695711600"; 
+   d="scan'208";a="381591511"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Dec 2023 19:46:13 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10937"; a="778711269"
+X-IronPort-AV: E=Sophos;i="6.04,313,1695711600"; 
+   d="scan'208";a="778711269"
+Received: from lkp-server02.sh.intel.com (HELO b07ab15da5fe) ([10.239.97.151])
+  by orsmga002.jf.intel.com with ESMTP; 28 Dec 2023 19:46:10 -0800
+Received: from kbuild by b07ab15da5fe with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1rJ3oz-000H4F-1U;
+	Fri, 29 Dec 2023 03:46:06 +0000
+Date: Fri, 29 Dec 2023 11:42:53 +0800
+From: kernel test robot <lkp@intel.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <helgaas@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Stanimir Varbanov <svarbanov@mm-sol.com>,
+	Andrew Murray <amurray@thegoodpenguin.co.uk>,
+	Vinod Koul <vkoul@kernel.org>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH 4/4] PCI: qcom: Implement RC shutdown/power up
+Message-ID: <202312291155.8v6ZEtrf-lkp@intel.com>
+References: <20231227-topic-8280_pcie-v1-4-095491baf9e4@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v1 1/2] dt-bindings: arm: coresight: Update the pattern of
- ete node name
-To: James Clark <james.clark@arm.com>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang
-	<quic_taozha@quicinc.com>, <coresight@lists.linaro.org>,
-        Mathieu Poirier
-	<mathieu.poirier@linaro.org>,
-        Mike Leach <mike.leach@linaro.org>, Leo Yan
-	<leo.yan@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring
-	<robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-References: <20231220140538.13136-1-quic_jinlmao@quicinc.com>
- <20231220140538.13136-2-quic_jinlmao@quicinc.com>
- <79f88d35-17cc-43b0-bb22-3c854f89d961@linaro.org>
- <8e5e9603-456b-4956-be03-b866feeeafb4@quicinc.com>
- <c41ff7c8-48d6-4f4f-a9df-aafe953a2e98@linaro.org>
- <f2f983b7-4c57-4b1b-925d-ffb18f6350a0@quicinc.com>
- <c64a41af-ff62-43c5-89f7-0558f8456010@linaro.org>
- <16932826-fcc2-49d3-95ab-201eff729360@quicinc.com>
- <d4c6c32f-b1cf-4cf2-9c52-85fa8c1ed73f@linaro.org>
- <9d13e1ce-38b1-4cdd-83ba-eca0c3091ce1@quicinc.com>
- <578d6319-5ab5-45e5-8457-00116c7c84ae@linaro.org>
- <cf5d97d0-ae79-9524-fc19-a73d4403a3d0@arm.com>
-Content-Language: en-US
-From: Jinlong Mao <quic_jinlmao@quicinc.com>
-In-Reply-To: <cf5d97d0-ae79-9524-fc19-a73d4403a3d0@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: HTJT5c_xJwvujHgTa6iw13LH3PmKgqfx
-X-Proofpoint-GUID: HTJT5c_xJwvujHgTa6iw13LH3PmKgqfx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- priorityscore=1501 suspectscore=0 mlxlogscore=999 phishscore=0
- malwarescore=0 mlxscore=0 clxscore=1015 adultscore=0 lowpriorityscore=0
- bulkscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2311290000 definitions=main-2312290023
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231227-topic-8280_pcie-v1-4-095491baf9e4@linaro.org>
 
+Hi Konrad,
 
-On 12/28/2023 7:02 PM, James Clark wrote:
->
-> On 26/12/2023 09:36, Krzysztof Kozlowski wrote:
->> On 26/12/2023 02:50, Jinlong Mao wrote:
->>>
->>> On 12/21/2023 4:44 PM, Krzysztof Kozlowski wrote:
->>>> On 21/12/2023 09:36, Jinlong Mao wrote:
->>>>>
->>>>> On 12/21/2023 4:17 PM, Krzysztof Kozlowski wrote:
->>>>>> On 21/12/2023 09:15, Jinlong Mao wrote:
->>>>>>>
->>>>>>> On 12/21/2023 4:12 PM, Krzysztof Kozlowski wrote:
->>>>>>>> On 21/12/2023 04:28, Jinlong Mao wrote:
->>>>>>>>>>> diff --git a/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml b/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml
->>>>>>>>>>> index f725e6940993..cbf583d34029 100644
->>>>>>>>>>> --- a/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml
->>>>>>>>>>> +++ b/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml
->>>>>>>>>>> @@ -23,7 +23,7 @@ description: |
->>>>>>>>>>>       
->>>>>>>>>>>       properties:
->>>>>>>>>>>         $nodename:
->>>>>>>>>>> -    pattern: "^ete([0-9a-f]+)$"
->>>>>>>>>>> +    pattern: "^ete-([0-9a-f]+)$"
->>>>>>>>>> My concerns are not resolved. Why is it here in the first place?
->>>>>>>>> Hi Krzysztof,
->>>>>>>>>
->>>>>>>>> ETE is acronym of embedded trace extension. The number of the name is
->>>>>>>>> the same as the number of the CPU it belongs to.
->>>>>>>> This is obvious and was not my question.
->> You already said it here...
->>
->>>>>>> Do you mean why the pattern match of the node name is added here ?
->>>>>> Yes, especially that it is requiring a non-generic name.
->>>>>>
->>>>>>> This node should not have the node name match, right ?
->>>>>> Usually. For sure shouldn't be for non-generic names.
->>>>>>
->>>>> Hi Suzuki,
->>>>>
->>>>> Can we remove the pattern match of the node name and use a generic name
->>>>> "ete" for the ete DT nodes ?
->>>> "ete" is not a generic name. What is generic here? It's an acronym of
->>>> some specific device name.
->>>>
->>> The device full name is embedded trace extension. So use ETE as the name
->>> here.
->> That's obvious and my comment was not about it. Second time... This is
->> my unlucky day... I said, why do you even want to enforce name which is
->> not generic, since the names should be generic?
->>
-> I think we can just drop the enforced name if it's getting in the way.
-> It doesn't really do anything and other Coresight bindings don't have it
-> anyway.
->
->> I assume you read the DT specification:
->> https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
->>
->>
->> Best regards,
->> Krzysztof
->>
-> I couldn't find anything in that list that would be a good fit for a
-> name, and it seems like all of the Coresight devices have already been
-> added with non generic names (like funnel and replicator etc), so it
-> might be a bit late now.
->
-> But if we drop the enforced name then it's probably fine.
-Thanks  James.
+kernel test robot noticed the following build errors:
 
-I will make change to remove the "$nodename:".
+[auto build test ERROR on 39676dfe52331dba909c617f213fdb21015c8d10]
 
-Thanks
-Jinlong Mao
+url:    https://github.com/intel-lab-lkp/linux/commits/Konrad-Dybcio/PCI-qcom-Reshuffle-reset-logic-in-2_7_0-init/20231228-062002
+base:   39676dfe52331dba909c617f213fdb21015c8d10
+patch link:    https://lore.kernel.org/r/20231227-topic-8280_pcie-v1-4-095491baf9e4%40linaro.org
+patch subject: [PATCH 4/4] PCI: qcom: Implement RC shutdown/power up
+config: arm64-allmodconfig (https://download.01.org/0day-ci/archive/20231229/202312291155.8v6ZEtrf-lkp@intel.com/config)
+compiler: clang version 18.0.0git (https://github.com/llvm/llvm-project 8a4266a626914765c0c69839e8a51be383013c1a)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231229/202312291155.8v6ZEtrf-lkp@intel.com/reproduce)
 
->
-> James
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202312291155.8v6ZEtrf-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+>> ld.lld: error: undefined symbol: cmd_db_ready
+   >>> referenced by pcie-qcom.c
+   >>>               drivers/pci/controller/dwc/pcie-qcom.o:(qcom_pcie_probe) in archive vmlinux.a
+--
+>> ld.lld: error: undefined symbol: crc8_populate_msb
+   >>> referenced by pcie-qcom.c
+   >>>               drivers/pci/controller/dwc/pcie-qcom.o:(qcom_pcie_config_sid_1_9_0) in archive vmlinux.a
+--
+>> ld.lld: error: undefined symbol: crc8
+   >>> referenced by pcie-qcom.c
+   >>>               drivers/pci/controller/dwc/pcie-qcom.o:(qcom_pcie_config_sid_1_9_0) in archive vmlinux.a
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
