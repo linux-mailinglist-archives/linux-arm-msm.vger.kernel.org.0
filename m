@@ -1,31 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-6129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA19D820424
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 10:40:04 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CB768205D8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 13:22:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3A51A1F21695
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 09:40:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 52C21282031
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 12:22:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6011023C4;
-	Sat, 30 Dec 2023 09:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39F178825;
+	Sat, 30 Dec 2023 12:22:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UdTmY8PN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C284E23AF;
-	Sat, 30 Dec 2023 09:39:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 965072F4;
-	Sat, 30 Dec 2023 01:40:41 -0800 (PST)
-Received: from [10.57.45.90] (unknown [10.57.45.90])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2B0AE3F64C;
-	Sat, 30 Dec 2023 01:39:52 -0800 (PST)
-Message-ID: <4ae81e28-1791-4128-860f-eb6a83ea3742@arm.com>
-Date: Sat, 30 Dec 2023 09:39:50 +0000
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8C079DE
+	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Dec 2023 12:22:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-555144cd330so4729820a12.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Dec 2023 04:22:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1703938933; x=1704543733; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=WraejfcK2e2j5BfUVDmZdtIL5eFxZdjlTkM6VwDeTVI=;
+        b=UdTmY8PNFYbmblYxw7hPNxvRCIn36zCMi8eXvlKUi1WLs5Rlmye9eaP4+7vA8uBiRM
+         RjpbWA04HOzVZiJmsR8io1p+96XQtZ6scoA7Iu4C0wkXVgYUU2I1Hr8Shh2zjZJUDSoB
+         yZWMETjJFJsvudSSCjkr9cKnKkB+richEhYHDUBaHi9Sr/Zt72FUQAiH0OHRdaljCWqU
+         bNlXvsPnXa5ckhsAp7i1l+kIh8eDD0kNVxmL9r1Kiu3Xp0FRdKRdOXGKVwCZVV9m4lIK
+         vrMrvd5+FpM/lkOaABJmvsXsykxq0Wm2l5G9CbXm3tn+PmXapx8ZqCN3N3XOJI8wagrN
+         1CxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703938933; x=1704543733;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WraejfcK2e2j5BfUVDmZdtIL5eFxZdjlTkM6VwDeTVI=;
+        b=jSnKHoNsC4iao9TMYOclquVvaYt0NYoT/eMGIajHUxOahuwsn5/8lY0qcsxnIZIsFM
+         CjMTc4fgwsC2Gotsyvc+8O8I648atP92dRk6s9WbTOfmSaI1C8dAh+2OrUQTRbOw5ymD
+         NM0J4T11eiXVZPu4uiie8/nt18sk+EVs/zlf69M8uYSCnoizMzcaVFEJ0DCugnLySCvV
+         0yhBbS6yOoo//iePoAl+Pnb5gcLd+ELLCovq2sIGSnc9tzSczDvmZHc7vhL4r+nSt7eJ
+         ZPK5Xej2jy7kvlJ/o8ZvFx3DYho2ZFDDX0wuuS5yg4J7+hsr3m3cgSKaac+bfkd/7Alf
+         xOgQ==
+X-Gm-Message-State: AOJu0YwwChrkpfkfIQEFoIwkyssAT9cGXqXZ1WXybW3C/Rjs/c+JhOGl
+	j4zaNHIoLexcTJAK3T/xYP/XTCeEFk0hOg==
+X-Google-Smtp-Source: AGHT+IGioza2ZLJGqYDEiNM69okkxaTquc5p5kuP+zRZUhfhEuqvZbJCDySqOqnouQ7x7+YejTIElA==
+X-Received: by 2002:a50:8acb:0:b0:554:4dce:9d47 with SMTP id k11-20020a508acb000000b005544dce9d47mr7873841edk.14.1703938932976;
+        Sat, 30 Dec 2023 04:22:12 -0800 (PST)
+Received: from [192.168.199.125] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
+        by smtp.gmail.com with ESMTPSA id s20-20020a056402015400b005530cb1464bsm12202499edu.15.2023.12.30.04.22.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 30 Dec 2023 04:22:12 -0800 (PST)
+Message-ID: <dc11577e-7088-4975-8543-ad8001e678fe@linaro.org>
+Date: Sat, 30 Dec 2023 13:22:10 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -33,473 +67,99 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/8] coresight-tpdm: Add timestamp control register
- support for the CMB
-Content-Language: en-GB
-To: Tao Zhang <quic_taozha@quicinc.com>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Konrad Dybcio <konradybcio@gmail.com>, Mike Leach <mike.leach@linaro.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc: Jinlong Mao <quic_jinlmao@quicinc.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, coresight@lists.linaro.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
- Yuanfang Zhang <quic_yuanfang@quicinc.com>,
- Trilok Soni <quic_tsoni@quicinc.com>, Song Chai <quic_songchai@quicinc.com>,
- linux-arm-msm@vger.kernel.org, andersson@kernel.org
-References: <1700533494-19276-1-git-send-email-quic_taozha@quicinc.com>
- <1700533494-19276-7-git-send-email-quic_taozha@quicinc.com>
- <ebd7e310-d1b4-4b2e-a915-6241e04763d4@arm.com>
- <b61c3d70-7277-4fe7-ab67-8afc1062c737@quicinc.com>
- <cdad425c-b965-44c7-a612-1c99341e95b9@arm.com>
- <b7ef4e75-69c6-4251-8f9c-58682699e3f6@quicinc.com>
- <cc7b83ec-2c97-4a5d-87a9-36f1e13d8fc4@arm.com>
- <797eadf6-2708-47ad-a61f-88bb0d4fcf28@quicinc.com>
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <797eadf6-2708-47ad-a61f-88bb0d4fcf28@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v2 7/8] arm64: dts: qcom: sa8295p-adp: Enable GPU
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+ Ulf Hansson <ulf.hansson@linaro.org>, Johan Hovold
+ <johan+linaro@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
+ Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org
+References: <20231220-sa8295p-gpu-v2-0-4763246b72c0@quicinc.com>
+ <20231220-sa8295p-gpu-v2-7-4763246b72c0@quicinc.com>
+ <4a1c18e3-39c8-4070-ae55-b1148b3dc65b@linaro.org>
+ <20231227202130.GA1315173@hu-bjorande-lv.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20231227202130.GA1315173@hu-bjorande-lv.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 25/12/2023 01:55, Tao Zhang wrote:
-> 
-> On 12/20/2023 7:07 PM, Suzuki K Poulose wrote:
->> On 20/12/2023 09:51, Tao Zhang wrote:
+On 27.12.2023 21:21, Bjorn Andersson wrote:
+> On Wed, Dec 27, 2023 at 02:09:47AM +0100, Konrad Dybcio wrote:
+>> On 22.12.2023 05:39, Bjorn Andersson wrote:
+>>> With the necessary support in place for supplying VDD_GFX from the
+>>> MAX20411 regulator, enable the GPU clock controller, GMU, Adreno SMMU
+>>> and the GPU on the SA8295P ADP.
 >>>
->>> On 12/19/2023 9:51 PM, Suzuki K Poulose wrote:
->>>> On 19/12/2023 02:43, Tao Zhang wrote:
->>>>>
->>>>> On 12/18/2023 6:46 PM, Suzuki K Poulose wrote:
->>>>>> On 21/11/2023 02:24, Tao Zhang wrote:
->>>>>>> CMB_TIER register is CMB subunit timestamp insertion enable 
->>>>>>> register.
->>>>>>> Bit 0 is PATT_TSENAB bit. Set this bit to 1 to request a timestamp
->>>>>>> following a CMB interface pattern match. Bit 1 is XTRIG_TSENAB bit.
->>>>>>> Set this bit to 1 to request a timestamp following a CMB CTI 
->>>>>>> timestamp
->>>>>>> request. Bit 2 is TS_ALL bit. Set this bit to 1 to request timestamp
->>>>>>> for all packets.
->>>>>>>
->>>>>>> Reviewed-by: James Clark <james.clark@arm.com>
->>>>>>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->>>>>>> Signed-off-by: Jinlong Mao <quic_jinlmao@quicinc.com>
->>>>>>> ---
->>>>>>>   .../testing/sysfs-bus-coresight-devices-tpdm  |  35 ++++++
->>>>>>>   drivers/hwtracing/coresight/coresight-tpdm.c  | 116 
->>>>>>> +++++++++++++++++-
->>>>>>>   drivers/hwtracing/coresight/coresight-tpdm.h  |  14 +++
->>>>>>>   3 files changed, 162 insertions(+), 3 deletions(-)
->>>>>>>
->>>>>>> diff --git 
->>>>>>> a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm 
->>>>>>> b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->>>>>>> index 53662ce7c2d0..e0b77107be13 100644
->>>>>>> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->>>>>>> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->>>>>>> @@ -214,3 +214,38 @@ KernelVersion    6.7
->>>>>>>   Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao 
->>>>>>> Zhang (QUIC) <quic_taozha@quicinc.com>
->>>>>>>   Description:
->>>>>>>           (RW) Set/Get the mask of the pattern for the CMB 
->>>>>>> subunit TPDM.
->>>>>>> +
->>>>>>> +What: /sys/bus/coresight/devices/<tpdm-name>/cmb_patt/enable_ts
->>>>>>> +Date:        September 2023
->>>>>>> +KernelVersion    6.7
->>>>>>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao 
->>>>>>> Zhang (QUIC) <quic_taozha@quicinc.com>
->>>>>>> +Description:
->>>>>>> +        (Write) Set the pattern timestamp of CMB tpdm. Read
->>>>>>> +        the pattern timestamp of CMB tpdm.
->>>>>>> +
->>>>>>> +        Accepts only one of the 2 values -  0 or 1.
->>>>>>> +        0 : Disable CMB pattern timestamp.
->>>>>>> +        1 : Enable CMB pattern timestamp.
->>>>>>> +
->>>>>>> +What: /sys/bus/coresight/devices/<tpdm-name>/cmb_trig_ts
->>>>>>> +Date:        September 2023
->>>>>>> +KernelVersion    6.7
->>>>>>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao 
->>>>>>> Zhang (QUIC) <quic_taozha@quicinc.com>
->>>>>>> +Description:
->>>>>>> +        (RW) Set/Get the trigger timestamp of the CMB for tpdm.
->>>>>>> +
->>>>>>> +        Accepts only one of the 2 values -  0 or 1.
->>>>>>> +        0 : Set the CMB trigger type to false
->>>>>>> +        1 : Set the CMB trigger type to true
->>>>>>> +
->>>>>>> +What: /sys/bus/coresight/devices/<tpdm-name>/cmb_ts_all
->>>>>>> +Date:        September 2023
->>>>>>> +KernelVersion    6.7
->>>>>>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao 
->>>>>>> Zhang (QUIC) <quic_taozha@quicinc.com>
->>>>>>> +Description:
->>>>>>> +        (RW) Read or write the status of timestamp upon all 
->>>>>>> interface.
->>>>>>> +        Only value 0 and 1  can be written to this node. Set 
->>>>>>> this node to 1 to requeset
->>>>>>> +        timestamp to all trace packet.
->>>>>>> +        Accepts only one of the 2 values -  0 or 1.
->>>>>>> +        0 : Disable the timestamp of all trace packets.
->>>>>>> +        1 : Enable the timestamp of all trace packets.
->>>>>>> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c 
->>>>>>> b/drivers/hwtracing/coresight/coresight-tpdm.c
->>>>>>> index 894d4309f1c7..f6cda5616e84 100644
->>>>>>> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
->>>>>>> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
->>>>>>> @@ -331,6 +331,36 @@ static void tpdm_enable_dsb(struct 
->>>>>>> tpdm_drvdata *drvdata)
->>>>>>>       writel_relaxed(val, drvdata->base + TPDM_DSB_CR);
->>>>>>>   }
->>>>>>>   +static void set_cmb_tier(struct tpdm_drvdata *drvdata)
->>>>>>> +{
->>>>>>> +    u32 val;
->>>>>>> +
->>>>>>> +    val = readl_relaxed(drvdata->base + TPDM_CMB_TIER);
->>>>>>> +
->>>>>>> +    /* Clear all relevant fields */
->>>>>>> +    val &= ~(TPDM_CMB_TIER_PATT_TSENAB | TPDM_CMB_TIER_TS_ALL |
->>>>>>> +         TPDM_CMB_TIER_XTRIG_TSENAB);
->>>>>>> +
->>>>>>> +    /* Set pattern timestamp type and enablement */
->>>>>>> +    if (drvdata->cmb->patt_ts)
->>>>>>> +        val |= TPDM_CMB_TIER_PATT_TSENAB;
->>>>>>
->>>>>>  -- cut --
->>>>>>> +    else
->>>>>>> +        val &= ~TPDM_CMB_TIER_PATT_TSENAB;
->>>>>>
->>>>>>
->>>>>> All the else cases in this function are superfluous. Please remove 
->>>>>> all
->>>>>> of them.
->>>>> I will update this in the next patch.
->>>>>>
->>>>>>> +
->>>>>>> +    /* Set trigger timestamp */
->>>>>>> +    if (drvdata->cmb->trig_ts)
->>>>>>> +        val |= TPDM_CMB_TIER_XTRIG_TSENAB;
->>>>>>> +    else
->>>>>>> +        val &= ~TPDM_CMB_TIER_XTRIG_TSENAB;
->>>>>>> +
->>>>>>> +    /* Set all timestamp enablement*/
->>>>>>> +    if (drvdata->cmb->ts_all)
->>>>>>> +        val |= TPDM_CMB_TIER_TS_ALL;
->>>>>>> +    else
->>>>>>> +        val &= ~TPDM_CMB_TIER_TS_ALL;
->>>>>>> +    writel_relaxed(val, drvdata->base + TPDM_CMB_TIER);
->>>>>>> +}
->>>>>>> +
->>>>>>>   static void tpdm_enable_cmb(struct tpdm_drvdata *drvdata)
->>>>>>>   {
->>>>>>>       u32 val, i;
->>>>>>> @@ -347,6 +377,8 @@ static void tpdm_enable_cmb(struct 
->>>>>>> tpdm_drvdata *drvdata)
->>>>>>>                   drvdata->base + TPDM_CMB_XPMR(i));
->>>>>>>       }
->>>>>>>   +    set_cmb_tier(drvdata);
->>>>>>> +
->>>>>>>       val = readl_relaxed(drvdata->base + TPDM_CMB_CR);
->>>>>>>       /*
->>>>>>>        * Set to 0 for continuous CMB collection mode,
->>>>>>> @@ -695,9 +727,17 @@ static ssize_t enable_ts_show(struct device 
->>>>>>> *dev,
->>>>>>>                     char *buf)
->>>>>>>   {
->>>>>>>       struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
->>>>>>> +    ssize_t size = 0;
->>>>>>>   -    return sysfs_emit(buf, "%u\n",
->>>>>>> -             (unsigned int)drvdata->dsb->patt_ts);
->>>>>>> +    if (tpdm_has_dsb_dataset(drvdata))
->>>>>>> +        size = sysfs_emit(buf, "%u\n",
->>>>>>> +                 (unsigned int)drvdata->dsb->patt_ts);
->>>>>>> +
->>>>>>> +    if (tpdm_has_cmb_dataset(drvdata))
->>>>>>> +        size = sysfs_emit(buf, "%u\n",
->>>>>>> +                 (unsigned int)drvdata->cmb->patt_ts);
->>>>>>
->>>>>> Why does this need to show two values ? This must only show ONE 
->>>>>> value.
->>>>>> How you deduce that might be based on the availability of the feature
->>>>>> set. Or store the TS value in the drvdata and use that instead for
->>>>>> controlling CMB/DSB.
->>>>>
->>>>> Since both of CMB/DSB need to have "enable_ts" SysFs file, can I 
->>>>> separate them
->>>>
->>>> The question really is, do we need fine grained control. i.e.,
->>>>
->>>> enable TS for DSB but not for CMB or vice versa.
->>>>
->>>> I am not an expert on the usage scenario of the same. So, if you/Qcomm
->>>> thinks the users need separate, fine grained control for timestamp
->>>> for the DSB and CMB, then yes, follow your recommendation below.
->>>> i.e., tpdm.../dsb_patt/enable_ts
->>>>
->>>>> as "enable_dsb_ts" and "enable_cmb_ts"? The path will be like below.
->>>>>
->>>>> tpdm0/dsb_patt/enable_dsb_ts
->>>>
->>>> You don't need enable_dsb_ts. It could be "enable_ts"
->>>>
->>>>>
->>>>> tpdm1/cmb_patt/enable_cmb_ts
->>>>>
->>>>> Is this design appropriate?
->>>>
->>>>
->>>> Otherwise, stick to single enable_ts : which enables the ts for both
->>>> CMB/DSB. And it only ever show one value : 0 (TS is disabled for both
->>>> CMB/DSB) 1 : TS enabled for both.
->>>
->>> We have a very special case, such as the TPDM supporting both CMB and
->>>
->>> DSB datasets. Although this case is very rare, it still exists.
->>>
->>> Can I use the data bit to instruct whether timestamp is enabled for 
->>> CMB/DSB or not? For example,
->>>
->>> size = sysfs_emit(buf, "%u\n",
->>>                  (unsigned int)(drvdata->dsb->patt_ts << 1 | 
->>> drvdata->cmb->patt_ts));
->>>
->>> Thus, this value can instruct the following situations.
->>>
->>> 0 - TS is disabled for both CMB/DSB
->>>
->>> 1 - TS is enabled for CMB
->>>
->>> 2 - TS is enabled for DSB
->>>
->>> 3 - TS is enabled for both
->>>
->>> Is this approach acceptable?
->>>
+>>> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+>>> ---
+>> [...]
 >>
->> No, please stick to separate controls for TS. Do not complicate
->> the user interface.
+>>> +&gpucc {
+>>> +	vdd-gfx-supply = <&vdd_gfx>;
+>>> +	status = "okay";
+>>> +};
+>> Already enabled
 >>
->> i.e.,
->> tpdm0/dsb_patt/enable_ts
->> tpdm0/cmb_patt/enable_ts
 > 
-> We need to be able to control/show dsb and cmb timestamp enablement 
-> independently.
+> No, we're disabling these in sa8540p.dtsi, so they need to be re-enabled
+> here.
 > 
-> Can we achieve this requirement if we use a sysfs file with the same name?
+> I don't remember if it's because the attempt to bring up gfx.lvl or if
+> it's the attempt to operate the GPU components without adequate VDD_GFX,
+> that is causing the issue...but either way, we don't survive boot.
+Oh right!
 
-They are independent and in their respective directory (group) for CMB 
-and DSB. What am I missing ?
-e.g., if you want to enable TS for DSB, you do :
-
-$ echo 1 > dsb_patt/enable_ts
-
-And that only works for DSB not for CMB.
-
-Suzuki
+On 8155 touching mmcx, lcx or lmx would kaboom the platform..
 
 > 
-> I'm not able to find a good way to achieve it. Do you have any 
-> suggestions for this?
 > 
+> It's possible that we could move the max20411 up to sa8540p.dtsi to
+> avoid the intermediate disable, but I'm not confident that it's "part of
+> the platform"...
+Yeah, it's probably a question that is impossible to answer, as my
+wild assumption is that all designs are ADP-derived anyway..
 
-
-> 
-> Best,
-> 
-> Tao
-> 
->>
->> Suzuki
->>
->>
->>>
->>> Best,
->>>
->>> Tao
->>>
->>>>
->>>> Suzuki
->>>>
->>>>
->>>>>>
->>>>
->>>>>> Also, the sysfs documentation needs update, if this is going to
->>>>>> control the CMB.
->>>>>
->>>>> Sure. I will update the SysFs documentation according to the 
->>>>> modification in the
->>>>>
->>>>> next patch series.
->>>>>
->>>>>
->>>>> Best,
->>>>>
->>>>> Tao
->>>>>
->>>>>>
->>>>>> Suzuki
->>>>>>
->>>>>>
->>>>>>> +
->>>>>>> +    return size;
->>>>>>>   }
->>>>>>>     /*
->>>>>>> @@ -715,8 +755,13 @@ static ssize_t enable_ts_store(struct device 
->>>>>>> *dev,
->>>>>>>           return -EINVAL;
->>>>>>>         spin_lock(&drvdata->spinlock);
->>>>>>> -    drvdata->dsb->patt_ts = !!val;
->>>>>>> +    if (tpdm_has_dsb_dataset(drvdata))
->>>>>>> +        drvdata->dsb->patt_ts = !!val;
->>>>>>> +
->>>>>>> +    if (tpdm_has_cmb_dataset(drvdata))
->>>>>>> +        drvdata->cmb->patt_ts = !!val;
->>>>>>>       spin_unlock(&drvdata->spinlock);
->>>>>>> +
->>>>>>>       return size;
->>>>>>>   }
->>>>>>>   static DEVICE_ATTR_RW(enable_ts);
->>>>>>> @@ -851,6 +896,68 @@ static ssize_t cmb_mode_store(struct device 
->>>>>>> *dev,
->>>>>>>   }
->>>>>>>   static DEVICE_ATTR_RW(cmb_mode);
->>>>>>>   +static ssize_t cmb_ts_all_show(struct device *dev,
->>>>>>> +                   struct device_attribute *attr,
->>>>>>> +                   char *buf)
->>>>>>> +{
->>>>>>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
->>>>>>> +
->>>>>>> +    return sysfs_emit(buf, "%u\n",
->>>>>>> +              (unsigned int)drvdata->cmb->ts_all);
->>>>>>> +}
->>>>>>> +
->>>>>>> +static ssize_t cmb_ts_all_store(struct device *dev,
->>>>>>> +                struct device_attribute *attr,
->>>>>>> +                const char *buf,
->>>>>>> +                size_t size)
->>>>>>> +{
->>>>>>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
->>>>>>> +    unsigned long val;
->>>>>>> +
->>>>>>> +    if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
->>>>>>> +        return -EINVAL;
->>>>>>> +
->>>>>>> +    spin_lock(&drvdata->spinlock);
->>>>>>> +    if (val)
->>>>>>> +        drvdata->cmb->ts_all = true;
->>>>>>> +    else
->>>>>>> +        drvdata->cmb->ts_all = false;
->>>>>>> +    spin_unlock(&drvdata->spinlock);
->>>>>>> +    return size;
->>>>>>> +}
->>>>>>> +static DEVICE_ATTR_RW(cmb_ts_all);
->>>>>>> +
->>>>>>> +static ssize_t cmb_trig_ts_show(struct device *dev,
->>>>>>> +                struct device_attribute *attr,
->>>>>>> +                char *buf)
->>>>>>> +{
->>>>>>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
->>>>>>> +
->>>>>>> +    return sysfs_emit(buf, "%u\n",
->>>>>>> +              (unsigned int)drvdata->cmb->trig_ts);
->>>>>>> +}
->>>>>>> +
->>>>>>> +static ssize_t cmb_trig_ts_store(struct device *dev,
->>>>>>> +                 struct device_attribute *attr,
->>>>>>> +                 const char *buf,
->>>>>>> +                 size_t size)
->>>>>>> +{
->>>>>>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
->>>>>>> +    unsigned long val;
->>>>>>> +
->>>>>>> +    if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
->>>>>>> +        return -EINVAL;
->>>>>>> +
->>>>>>> +    spin_lock(&drvdata->spinlock);
->>>>>>> +    if (val)
->>>>>>> +        drvdata->cmb->trig_ts = true;
->>>>>>> +    else
->>>>>>> +        drvdata->cmb->trig_ts = false;
->>>>>>> +    spin_unlock(&drvdata->spinlock);
->>>>>>> +    return size;
->>>>>>> +}
->>>>>>> +static DEVICE_ATTR_RW(cmb_trig_ts);
->>>>>>> +
->>>>>>>   static struct attribute *tpdm_dsb_edge_attrs[] = {
->>>>>>>       &dev_attr_ctrl_idx.attr,
->>>>>>>       &dev_attr_ctrl_val.attr,
->>>>>>> @@ -973,6 +1080,7 @@ static struct attribute 
->>>>>>> *tpdm_cmb_patt_attrs[] = {
->>>>>>>       CMB_PATT_ATTR(1),
->>>>>>>       CMB_PATT_MASK_ATTR(0),
->>>>>>>       CMB_PATT_MASK_ATTR(1),
->>>>>>> +    &dev_attr_enable_ts.attr,
->>>>>>>       NULL,
->>>>>>>   };
->>>>>>>   @@ -985,6 +1093,8 @@ static struct attribute *tpdm_dsb_attrs[] = {
->>>>>>>     static struct attribute *tpdm_cmb_attrs[] = {
->>>>>>>       &dev_attr_cmb_mode.attr,
->>>>>>> +    &dev_attr_cmb_ts_all.attr,
->>>>>>> +    &dev_attr_cmb_trig_ts.attr,
->>>>>>>       NULL,
->>>>>>>   };
->>>>>>>   diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h 
->>>>>>> b/drivers/hwtracing/coresight/coresight-tpdm.h
->>>>>>> index e90d008c1cb2..65b7ca6c4077 100644
->>>>>>> --- a/drivers/hwtracing/coresight/coresight-tpdm.h
->>>>>>> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
->>>>>>> @@ -11,6 +11,8 @@
->>>>>>>     /* CMB Subunit Registers */
->>>>>>>   #define TPDM_CMB_CR        (0xA00)
->>>>>>> +/*CMB subunit timestamp insertion enable register*/
->>>>>>> +#define TPDM_CMB_TIER        (0xA04)
->>>>>>>   /*CMB subunit timestamp pattern registers*/
->>>>>>>   #define TPDM_CMB_TPR(n)        (0xA08 + (n * 4))
->>>>>>>   /*CMB subunit timestamp pattern mask registers*/
->>>>>>> @@ -24,6 +26,12 @@
->>>>>>>   #define TPDM_CMB_CR_ENA        BIT(0)
->>>>>>>   /* Trace collection mode for CMB subunit */
->>>>>>>   #define TPDM_CMB_CR_MODE    BIT(1)
->>>>>>> +/* Timestamp control for pattern match */
->>>>>>> +#define TPDM_CMB_TIER_PATT_TSENAB    BIT(0)
->>>>>>> +/* CMB CTI timestamp request */
->>>>>>> +#define TPDM_CMB_TIER_XTRIG_TSENAB    BIT(1)
->>>>>>> +/* For timestamp fo all trace */
->>>>>>> +#define TPDM_CMB_TIER_TS_ALL        BIT(2)
->>>>>>>     /*Patten register number*/
->>>>>>>   #define TPDM_CMB_MAX_PATT        2
->>>>>>> @@ -217,6 +225,9 @@ struct dsb_dataset {
->>>>>>>    * @patt_mask:        Save value for pattern mask
->>>>>>>    * @trig_patt:        Save value for trigger pattern
->>>>>>>    * @trig_patt_mask:   Save value for trigger pattern mask
->>>>>>> + * @patt_ts:          Indicates if pattern match for timestamp 
->>>>>>> is enabled.
->>>>>>> + * @trig_ts:          Indicates if CTI trigger for timestamp is 
->>>>>>> enabled.
->>>>>>> + * @ts_all:           Indicates if timestamp is enabled for all 
->>>>>>> packets.
->>>>>>>    */
->>>>>>>   struct cmb_dataset {
->>>>>>>       u32            trace_mode;
->>>>>>> @@ -224,6 +235,9 @@ struct cmb_dataset {
->>>>>>>       u32            patt_mask[TPDM_CMB_MAX_PATT];
->>>>>>>       u32            trig_patt[TPDM_CMB_MAX_PATT];
->>>>>>>       u32            trig_patt_mask[TPDM_CMB_MAX_PATT];
->>>>>>> +    bool            patt_ts;
->>>>>>> +    bool            trig_ts;
->>>>>>> +    bool            ts_all;
->>>>>>>   };
->>>>>>>     /**
->>>>>>
->>>>
->>>> _______________________________________________
->>>> CoreSight mailing list -- coresight@lists.linaro.org
->>>> To unsubscribe send an email to coresight-leave@lists.linaro.org
->>
->> _______________________________________________
->> CoreSight mailing list -- coresight@lists.linaro.org
->> To unsubscribe send an email to coresight-leave@lists.linaro.org
-
+Konrad
 
