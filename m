@@ -1,65 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-6112-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6114-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3861B8202E9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 01:05:17 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3AED28202F0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 01:05:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A03D01F22D5A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 00:05:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EA3042839AB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 00:05:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0088664A;
-	Sat, 30 Dec 2023 00:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BDA728FE;
+	Sat, 30 Dec 2023 00:05:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Z2qfqXKY"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wRqi7/e3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3BDD14F65
-	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Dec 2023 00:05:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8817370
+	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Dec 2023 00:05:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a277339dcf4so168182866b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 16:05:07 -0800 (PST)
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-50e8ca6c76dso1913296e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 16:05:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703894706; x=1704499506; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=N5GQ4lEdN9DwNLKuqGguw5oyIOnWfTXUWjk0i1Y3v/8=;
-        b=Z2qfqXKYFj/T05auyzw9PbJ9h3r0pBsTBqlxlxR3tC2SfhRQkstZOJcU9c96UAMt/N
-         V0EbDHYeDovOVr2z1qtOMqDkFpg37bDZxTSbsqcjxD03eW5779/TaJOYY742l+sGtwjH
-         5PQZHRhfjsocVBzDXdajBnPWiPDokp8EHiLYIFVeb93BtIcQDNdQFYVFgElnG7pwpyeR
-         W8N0xJKVSfIgv8Ujdp0JSXpIOIWx7bsWv3a1+Qa5nVLkBPDQENPC63ahjCAuDXfSFnJ8
-         CwHu8Af0TRD2yF8KiiLnp3+RVAtDgf1C2PlADoeRYjrAB4xc8xiGsnVANCnLpZkZArRJ
-         q3XQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703894706; x=1704499506;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1703894708; x=1704499508; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=N5GQ4lEdN9DwNLKuqGguw5oyIOnWfTXUWjk0i1Y3v/8=;
-        b=X9eG3/09XSdJQga+OEhug9E0hb+JWWo2zDRcStaCPiGHf+cJctBmZG+6L6AuMOEGRq
-         vIwQ7AZ3pTPbXq4F90XpJDNbZ/+/jmlKNrZXW4fri/+3UhzljTSrlMUzhz/Ae+tRKY5L
-         HbvX73095F3vOLfQv3ZFuZX1w+DAmRNdO3tALBBUk5ORzdx+TAloBJlMxRjww+9UiGeJ
-         1O9vFZdplTJqp7HZh+8O9iSs0JGV8J4IyO5pHtUAXXzxGAhJNRi5CzwcLkuIP4Aw3Zti
-         gY/W+VpXtcqG7SQwYBmB4lksaoyspRsCgp58n5xrYhAv+QDcQDJzApgZbZYPnwxgM2RZ
-         TW9g==
-X-Gm-Message-State: AOJu0Yxn4BHgqZzP1en5u+alRpJZUldKbwo8ALKwTStKNS+cFkM6BS2H
-	s4TcIi7Nkpq9nyoGlwxpakqQuXl4nsdbEw==
-X-Google-Smtp-Source: AGHT+IHCMcmpofdli8WcdSQfiZV5Lod9lF9eLGUu5VGDQDPsnvVgcettmTUO4hQwWqmdONfFCh0WKA==
-X-Received: by 2002:a17:907:36c6:b0:a27:6d9c:816c with SMTP id bj6-20020a17090736c600b00a276d9c816cmr2346578ejc.25.1703894706028;
-        Fri, 29 Dec 2023 16:05:06 -0800 (PST)
+        bh=8FrB087Wxc7YUxgxR36o8RYypzFH7Y/v8MFiKZG/oMY=;
+        b=wRqi7/e38kjNV/EzDUt/RgHSrSgjecukZtMXqGIX47uJdmWvxyTY/8o/+31sj/r1ZH
+         ZX/1h2Ti5tLzTMcJx77QGEmQVRMehUKreOHQN5Mx0HlMoN9ZxpbW3dPxwLrKrqpYXlju
+         AeALO5JDAE/q+sBh3mcPymKOk6AtPMHqfUlxlJEBjpfa8yDmkBCqeDWmCpkXkGMfqppp
+         FCTbWpCeY0vJHKDPNiE1MiWtwvOHq5U9FUlI5csVDyRa3HMAasFH4gDLRqXfqNqqD5VW
+         VFcwaFqAZf+/JXikgP7HP1JionaMs7eCSicKFY5RqfvuMJLlPQmmjMtjgx4p8B/+T3B+
+         BUAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703894708; x=1704499508;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8FrB087Wxc7YUxgxR36o8RYypzFH7Y/v8MFiKZG/oMY=;
+        b=Z+FUrOnhrl2fIdsgqzPKfYGDwZB2FEJTEGKvPQ5Qva+uihW74+g0kAuGwd+Klid9La
+         YbYw/IUhdziaVJD5xnTHwHhVtmdd2v5SMJ+IAuLu9ov6RizN6urK0X31Uo4dD8ySLHNI
+         CwXVKJ59ShDTMD4t9L/l24HgYqpdjXxQfG7K9Y0RGiSPzv5cCh+/bsk8iji3UcjF5Z0t
+         hWmaB6mY1vhcWrU/DX8znnjbocZ/ETRY4RwGl9juYasf/C2/bwXiL2ceyjk4t1QO9Y+u
+         wt+t8dt3HvKuzPLtt3tbSMDxljXxoZho8/49pYUF/SupSj15A9W6yeVz/JGaMNuWLGhW
+         uWkw==
+X-Gm-Message-State: AOJu0YyLdbMShTK1D12xZTK/nJiIn+5WlVUjBk7gIpiPCcLaJ9As8n1t
+	Ttua4/kMyLDjPYsAgwpbDSG8Q8c3xEGfXA==
+X-Google-Smtp-Source: AGHT+IESbUUUrskneqleCfW1B53y5DbAic4Lq+wysIajPwIXYTa484l7ZF5yNXRCtBMvbbbN8GaV2g==
+X-Received: by 2002:ac2:4c4e:0:b0:50e:885d:4d1a with SMTP id o14-20020ac24c4e000000b0050e885d4d1amr2495677lfk.93.1703894707814;
+        Fri, 29 Dec 2023 16:05:07 -0800 (PST)
 Received: from [10.167.154.1] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
-        by smtp.gmail.com with ESMTPSA id wj6-20020a170907050600b00a26a0145c5esm8609623ejb.116.2023.12.29.16.05.04
+        by smtp.gmail.com with ESMTPSA id wj6-20020a170907050600b00a26a0145c5esm8609623ejb.116.2023.12.29.16.05.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Dec 2023 16:05:05 -0800 (PST)
+        Fri, 29 Dec 2023 16:05:07 -0800 (PST)
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH 00/10] More 8180x dts fixes
-Date: Sat, 30 Dec 2023 01:05:01 +0100
-Message-Id: <20231230-topic-8180_more_fixes-v1-0-93b5c107ed43@linaro.org>
+Date: Sat, 30 Dec 2023 01:05:02 +0100
+Subject: [PATCH 01/10] dt-bindings: clock: gcc-sc8180x: Add the missing CX
+ power domain
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,10 +69,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAK1ej2UC/4WNWwqDMBBFtyL5bkoeWEO/uo8iEtNRB2wiEystk
- r136gb6eQ73cHeRgRCyuFa7INgwY4oM+lSJMPk4gsQHszDKWG2skmtaMEinneqeiaAb8A2ZOQw
- 2OG8uthHc9j6D7MnHMHEdX/PMciE41mzuLfOEeU30Ob43/bP/bjYtlQxQGweDqXvb3GaMntI50
- SjaUsoXpEFJk9AAAAA=
+Message-Id: <20231230-topic-8180_more_fixes-v1-1-93b5c107ed43@linaro.org>
+References: <20231230-topic-8180_more_fixes-v1-0-93b5c107ed43@linaro.org>
+In-Reply-To: <20231230-topic-8180_more_fixes-v1-0-93b5c107ed43@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Michael Turquette <mturquette@baylibre.com>, 
  Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
@@ -82,40 +82,60 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1703894704; l=1262;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1703894704; l=1455;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=ix3Tb8eliufejahIgJHedyMxZtF0hqPj0BvrRSjOYOs=;
- b=SAe6+wtkqRw1VP0/jceIZXULNqTUFVk8hrYAEmpitkecxNceoITlA47g8gzCwL8p5Xqz2hT2V
- Dg9bIZ9/7VsB9JF1rosN2giXEiW+Fg6ZmBhGXJhmNUjR/cV4h9D4Ex+
+ bh=EUFmaZVLsy2eKPdw1XRmfhHY9zTvCfCahSEoyNR/DAs=;
+ b=I2aj2RRwuDf5hoAahsDQJFfeq4V502Q5JD7r0SaMt3xBsmDWkIWZd6hWvHdvWZwKgad5/5ihT
+ tLvzdi/rb+kCweiPlNERqaQcMo5yjGj0bjq5A3JAPNayy3DAn1Xj529
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-SC8180X has got various random power plumbing issues, this series tries
-to address that, and introduces RPMh sleep stats.
+The GCC block is (mostly) powered by the VDD_CX rail. Allow specifying
+it in power-domains.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
-Konrad Dybcio (10):
-      dt-bindings: clock: gcc-sc8180x: Add the missing CX power domain
-      arm64: dts: qcom: sc8180x: Hook up VDD_CX as GCC parent domain
-      arm64: dts: qcom: sc8180x: Fix up big CPU idle state entry latency
-      arm64: dts: qcom: sc8180x: Add missing CPU off state
-      arm64: dts: qcom: sc8180x: Fix eDP PHY power-domains
-      arm64: dts: qcom: sc8180x: Don't hold MDP core clock at FMAX
-      arm64: dts: qcom: sc8180x: Require LOW_SVS vote for MMCX if DISPCC is on
-      arm64: dts: qcom: sc8180x: Add missing CPU<->MDP_CFG path
-      arm64: dts: qcom: sc8180x: Shrink aoss_qmp register space size
-      arm64: dts: qcom: sc8180x: Add RPMh sleep stats
+ Documentation/devicetree/bindings/clock/qcom,gcc-sc8180x.yaml | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
- .../bindings/clock/qcom,gcc-sc8180x.yaml           |  7 ++++
- arch/arm64/boot/dts/qcom/sc8180x.dtsi              | 43 ++++++++++++++++------
- 2 files changed, 38 insertions(+), 12 deletions(-)
----
-base-commit: 39676dfe52331dba909c617f213fdb21015c8d10
-change-id: 20231230-topic-8180_more_fixes-81cf3c8a2637
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sc8180x.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sc8180x.yaml
+index 6c4846b34e4b..a1085ef4fd05 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,gcc-sc8180x.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sc8180x.yaml
+@@ -31,10 +31,15 @@ properties:
+       - const: bi_tcxo_ao
+       - const: sleep_clk
+ 
++  power-domains:
++    items:
++      - description: CX domain
++
+ required:
+   - compatible
+   - clocks
+   - clock-names
++  - power-domains
+ 
+ allOf:
+   - $ref: qcom,gcc.yaml#
+@@ -44,6 +49,7 @@ unevaluatedProperties: false
+ examples:
+   - |
+     #include <dt-bindings/clock/qcom,rpmh.h>
++    #include <dt-bindings/power/qcom-rpmpd.h>
+     clock-controller@100000 {
+       compatible = "qcom,gcc-sc8180x";
+       reg = <0x00100000 0x1f0000>;
+@@ -51,6 +57,7 @@ examples:
+                <&rpmhcc RPMH_CXO_CLK_A>,
+                <&sleep_clk>;
+       clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk";
++      power-domains = <&rpmhpd SC8180X_CX>;
+       #clock-cells = <1>;
+       #reset-cells = <1>;
+       #power-domain-cells = <1>;
 
-Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+2.43.0
 
 
