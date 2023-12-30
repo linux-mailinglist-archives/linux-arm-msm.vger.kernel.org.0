@@ -1,118 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-6144-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F16E820689
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 14:08:35 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 962528206AF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 15:10:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0023BB2167C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 13:08:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 02BD9281FDF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 14:10:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE7A715AE2;
-	Sat, 30 Dec 2023 13:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3B118BED;
+	Sat, 30 Dec 2023 14:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r5E7LdNt"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HRcv/DPg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F29B156F4
-	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Dec 2023 13:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A90B656
+	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Dec 2023 14:10:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2cca5e7b390so73544631fa.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Dec 2023 05:04:47 -0800 (PST)
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-40d858c56cbso526275e9.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Dec 2023 06:10:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703941485; x=1704546285; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RUTCpmfzsSKDHjYlRAYYiQ/aykX/VSlVLVDx9q/aHss=;
-        b=r5E7LdNt4+H7YHlK867Sxo1w8ir7gZs+DiEJwR9jcDqnFmUhB6z2YPZr0jj6HTEtIe
-         L3DQKW0vcBmuvHtb99x4EaBqxlCQ1RjqFUNGzmtqCOyQ5frJJ+dIvnxksdzboKyPgH7r
-         9G6kWOG5TlXQ7U8v7uTtFNRC67EA37inJMiCRJHXZFwJ9kNoyo2jOxkO2Ey/1pBtIwZT
-         cC/NQGG7/96jU+arhumndGBcijxVXZH+AkbmHuOGxlXH9ttWvyP2vmtlbH2WVI0zKGip
-         7i6m11GOqS6vJf4YgDR4fsID7yyAm83ZBjCkakT7X2HRBg+hBeHIzedlT8zv/n7fS9Mj
-         CjyQ==
+        d=linaro.org; s=google; t=1703945432; x=1704550232; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+c0j6bbsjMBV/kl71pxi0oW3JLtWSbRYa2S4SYKJxzM=;
+        b=HRcv/DPgOcY1xfK+r+6cPndKsy80JTRYQ472uWutG/5zJduQz8gAwSMRuXIvXzPmif
+         1uYDukvnm8/XsPk4XuDJ7plVdL4DV4JlD/879F6l6/XbJ8hd6AA2CbinJcybHbqUpCb8
+         kFVQETaw7i/jSDdm/hjbqeZi5tdVK9kDgTe4CFG+1HCXMBfqdTTN903eeFjkjNeBZuoQ
+         axa1/DRRJ9Tt6ZTcmANa+J8K+Iw6KzhojJFw2H7afCGYE/zNbR3AwUJ4TFPBGDRx6wkY
+         Kf6RDRkMgvzPsXj4clcujwJrI7LTdhHsFTgQbbAb/T7fQHj9B1bMz/IDQ63lZ54FEAGr
+         2rbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703941485; x=1704546285;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RUTCpmfzsSKDHjYlRAYYiQ/aykX/VSlVLVDx9q/aHss=;
-        b=FJ88Jp/fur7A0gVhi/Wes/NHJLBfNpHlR9oT5pnIkZg/iM4lcc4axHcLrGN+HBkrRD
-         B9VDgA32hczEIdmPZ3XV7JEvBvQ4Uux0NfK1UtbxLJjG14vFx3+jbuCytvAj9xcG4f6s
-         yuX6gUXFsjPVtvGNXQ4PRAow5sguHKaFH+P1L5/FTvkGpj9UCDILUs3y7j9bh0lO1Mrl
-         KriLkHsIk6/sb0+VCJkhGrAN1TBNk+526tunfO1JZVbiz5hGqd9F2bJlxdYVJ5vEzDH7
-         v8Nrjt8tYPP2YABSXohHeOkTRKZinL9fYB3hwo0EbE8oW9jAWng+pCoKbGmTMbagNfeC
-         wYZQ==
-X-Gm-Message-State: AOJu0YzqI9IvBsQxGFZhpAKqu5FkLQ8/f8OHUH0QDWfxTMq2OLTsYGZa
-	nCrFzXpj1tcl4BPGciBSJfMAv4UB0ivtIQ==
-X-Google-Smtp-Source: AGHT+IHU+x3djEpIT6wEg1juKyJq9AUeXR5FMYN7QxnnNiFJHJ45mcitVUhqemdbQz0AhCxu6WNxUw==
-X-Received: by 2002:a05:651c:124a:b0:2cc:eb47:225b with SMTP id h10-20020a05651c124a00b002cceb47225bmr1539686ljh.100.1703941485677;
-        Sat, 30 Dec 2023 05:04:45 -0800 (PST)
-Received: from [10.167.154.1] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
-        by smtp.gmail.com with ESMTPSA id ij14-20020a056402158e00b00554368c9ce8sm11359578edb.1.2023.12.30.05.04.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Dec 2023 05:04:45 -0800 (PST)
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Sat, 30 Dec 2023 14:04:14 +0100
-Subject: [PATCH v4 12/12] arm64: dts: qcom: sm6115: Add VDD_CX to GPU_CC
+        d=1e100.net; s=20230601; t=1703945432; x=1704550232;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+c0j6bbsjMBV/kl71pxi0oW3JLtWSbRYa2S4SYKJxzM=;
+        b=SROiBvrN0uy1V4E5c32j+dWnLATp8OiGvEv428WO4RsQi2Ifcn6Zn294Y8Hy8NoUnK
+         mlfp6l9QObrS2YDHg5nlleoAiQHpSw3R7hv8+hTJ6mob4JjbPQ1DTwtfAoMvNyxWsA57
+         OVaj1PTmxTKYl9r6I/b6zgenp638blBTT9yVoKprdiEM7j2lupPhIbCWZfjvs2+BJ1NM
+         mEYTGbIvjHsafOUF8G9YLPaaQSW10ooRqVxdSVneV1YfjVsW4pcceSiIqSJeJy0VtzdA
+         bj5NSgWiK55MG932C+TLtLBc690Xhky5Mzet//nU3Sx9f9FUXQ0uvJgLnjZA+HRkSk+a
+         raqg==
+X-Gm-Message-State: AOJu0YxZfPJmtPlB8Dx3l3fF+3hOKItHXgkB0gaGYhyLiics9OJNHPRW
+	IIt4yOaei5p4/DM986UDioguNlwu1j32AA==
+X-Google-Smtp-Source: AGHT+IEOUp96O7ZsNz3WKe4aaNJiU7IunBwI94mNBFg1GDWyINcr756WH7QtNzOgMe1/c5+00qMBHA==
+X-Received: by 2002:a05:600c:3107:b0:40d:5f41:2e4d with SMTP id g7-20020a05600c310700b0040d5f412e4dmr2936770wmo.159.1703945432171;
+        Sat, 30 Dec 2023 06:10:32 -0800 (PST)
+Received: from [192.168.199.125] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
+        by smtp.gmail.com with ESMTPSA id p9-20020a170907910900b00a26ac5e3683sm8529380ejq.100.2023.12.30.06.10.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 30 Dec 2023 06:10:31 -0800 (PST)
+Message-ID: <f431ab4e-fdd3-4771-a770-558cdba9ef75@linaro.org>
+Date: Sat, 30 Dec 2023 15:10:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sc8280xp-crd: Add PCIe CLKREQ#
+ sleep state
+Content-Language: en-US
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Johan Hovold <johan+linaro@kernel.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Konrad Dybcio <konrad.dybcio@somainline.org>
+References: <20231227-topic-8280_pcie_dts-v1-0-13d12b1698ff@linaro.org>
+ <20231227-topic-8280_pcie_dts-v1-3-13d12b1698ff@linaro.org>
+ <20231229171425.GC9098@thinkpad>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20231229171425.GC9098@thinkpad>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230717-topic-branch_aon_cleanup-v4-12-32c293ded915@linaro.org>
-References: <20230717-topic-branch_aon_cleanup-v4-0-32c293ded915@linaro.org>
-In-Reply-To: <20230717-topic-branch_aon_cleanup-v4-0-32c293ded915@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1703941465; l=911;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=WDI26IliceRlW0YgN7X8GrPWGyVd7988pOYar0kAAss=;
- b=tJe4w2odgxduiwNhQKpH46QG19PrXsyZwDwXtdiYCPIKhlwTuKNdbLk+C897zMdU2NNBJn+4H
- xur4Bw/li2rA+bk/fiiYRQpqhf06ASknrm080sAFAT5eDcoG0ZpU9Nm
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-The GPU_CC block is powered by VDD_CX. Link the power domain and
-provide a reasonable minimum vote (lowest available on the platform)
-to ensure the registers within are accessible.
+On 29.12.2023 18:14, Manivannan Sadhasivam wrote:
+> On Wed, Dec 27, 2023 at 11:28:28PM +0100, Konrad Dybcio wrote:
+>> The CLKREQ pin should not be muxed to its active function when the RC
+>> is asleep. Add the missing pin sleep states to resolve that.
+>>
+> 
+> I don't understand why it should not be muxed and wondering what is the actual
+> issue you are seeing that lead to this conclusion.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm6115.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+According to my knowledge, demuxing this pin prevents the RC from
+getting (possibly erronous) reference clock request signals when
+running the RC shutdown sequence. Reading this again, the fixes
+tags don't really fit this commit.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index 30b140e1cec0..ec9a74acc69c 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -1723,6 +1723,8 @@ gpucc: clock-controller@5990000 {
- 			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
- 				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
- 				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
-+			power-domains = <&rpmpd SM6115_VDDCX>;
-+			required-opps = <&rpmpd_opp_low_svs>;
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
+What's perhaps more interesting is that on msm8996, Qualcomm vendor
+kernels used to remove the pull-up on the CLKREQ pin in its sleep
+state, while on msm8998 through sm8550 they keep it there, always..
+Perhaps an oversight?
 
--- 
-2.43.0
+Konrad
 
 
