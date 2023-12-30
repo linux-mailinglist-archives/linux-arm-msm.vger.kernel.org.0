@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6123-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6124-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7BCC8820319
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 01:08:19 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BBCFB82031C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 01:08:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 38E1E28398A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 00:08:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5B3801F230E3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 00:08:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76F5A1367;
-	Sat, 30 Dec 2023 00:05:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F026A28F0;
+	Sat, 30 Dec 2023 00:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OXNQn+Fr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="usBmJZoD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E5010FF
-	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Dec 2023 00:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D72228E6
+	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Dec 2023 00:07:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5532b45c286so8350326a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 16:05:41 -0800 (PST)
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a271a28aeb4so343514366b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 16:07:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703894740; x=1704499540; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1703894833; x=1704499633; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=33A76yFoQkKr5deY2FSzkn/TJXZS1uCS5tWMAGyUQQY=;
-        b=OXNQn+Fr1IiwRbbvq/kFFiteJWk6KL7pVhJgHSb3ouFdYmpOOKVLkOu7ZCw3s1fK59
-         tJ1lFZj5LialjBdBy7zB0Yg2Ax+0XFV3jDtHkdbJq6YkyJo9X5vGngACM7OTmBy9JMJz
-         EYrlqbrhhtbfCOKIL++6z4cAFZ9TY6f7wclyOQm7MklBv7C/FsppdBUk3s9+tjLgClfU
-         rI/+ptoMHIzRitZ5wFtH9xhHvYyPXtJ2ifR0pBLhSKM/kEbqIineiMa4GYGbbk5me+AE
-         arnEP6ojysGla17XxFj3sTY7tGCA47/HQsjfEO4rMo5c1aPKl11rf5bt3eaGV6G0TJo9
-         cJ6Q==
+        bh=rpjHr4Hj7eiSl3KURQb40f1bEV2YZNNP1ZWcRV/mmho=;
+        b=usBmJZoDPHR4ZIjW4FMB/IeCwS5JhTSdjysAHz5M1UTMUrU00A6pmsvM+OVrrhw97k
+         Wx1v2xb6VGynZ+aZKJZOGA5ejVgtvNPpsA4s1vrMydbotStyX6hJLop3U+IsgGjfzLY7
+         7U81C+CpxDnmaM+HSfU3BpRe680ErFAhl7G4UVXEhy31KJ7qJS0HYEMJCQNdP0RmJC9Q
+         5n+gUFfnD5nP350a6wAxNrQ7pD0QAuYwHkA1q16krqssnvSNkBCVzV5kMYrInce6o5MS
+         YcAEsyV6h6P08jEeco8+8BDsn7zDc7e5JSQxT7S4stYiq1ouSBOzm8jM6GqMx0mPrvPx
+         TA4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703894740; x=1704499540;
+        d=1e100.net; s=20230601; t=1703894833; x=1704499633;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=33A76yFoQkKr5deY2FSzkn/TJXZS1uCS5tWMAGyUQQY=;
-        b=FglybFd/1YdAkZNCmYbSvogGT2cdZHhyyxZ4xDx7PcocXxN4P57iyEtWEL+MlrIvPO
-         WkGeMwsnYqHMHK4Jcczp1YwfYXHsFBU1sUAhw6J10OR+AxHiohj9IaRrdbF9JeICMPqg
-         0Cl/aInToVrUlkB6JgCMo2EP8FhxqhAtdI/Qf1cHaJbfpQYoQxBB636euNUaqizYkmIM
-         7+obYXVUml/1V4wkJaVjfF6in8g/HB2R2yfjxeC69CLe0fFUnG+CLopreQpNFOl3yZ3M
-         zpHCLrLJ+uFQH0wIujGe9aTvt2myUpMd/Vzbm58ollrGpFQxwFMGbBc/5b5wacQGHLQ1
-         rPgw==
-X-Gm-Message-State: AOJu0YxJ+nSf5Rwbg5nm0PMxbL7TJlP7wUa9HrYnMMmBcH5l/ofYpZ3G
-	Znsej1uv/jkyKTU0zipPYjEiy15Odt6yvZEp5RnxIz2qpGk=
-X-Google-Smtp-Source: AGHT+IETOmzjCUGEVVeHeMzVYXAiTPXiJXWmampkZpasbuwoomx7lwH3QUYzvYL9FExgMdJ0HqGGrA==
-X-Received: by 2002:a17:906:cec9:b0:a23:46b9:9970 with SMTP id si9-20020a170906cec900b00a2346b99970mr2651479ejb.72.1703894740474;
-        Fri, 29 Dec 2023 16:05:40 -0800 (PST)
+        bh=rpjHr4Hj7eiSl3KURQb40f1bEV2YZNNP1ZWcRV/mmho=;
+        b=CrvDX/IY8HW/lsvneffzGHNhLZyOp/25/IZx7PE7JpkEndxdae9C6/+ub9g8gqPHag
+         DzhzGcCYbMxst9FGPWMaBBa8+77HmndALzG+r28U4CWPbmRxxNBBGUcb0Ud0SB7T8aPn
+         LZalvsHVUq2CsYbm5gEsSc8fJXiGvMxSGktyeoGdIvxeeC6T9NQw/TZCKPfFQDIunbMl
+         U7LE55p4QgFJuCoFsimDe0jPQJQGhjMy6pp+IgT7DzDjyIC2auP0R5uQywWaZQkZwoXl
+         AE573w00WNBViIWBd6lGdc2UONLMuahIZhNxa7tt1OiU6wwehsZtQDbSCua6qiwkQ+bc
+         QFYw==
+X-Gm-Message-State: AOJu0YwLC6zIZwEr+h05/XRJqM1k6oHI5SgDBcIVBG/Kv/h2HCK1OYX1
+	tvdyHdEI3S8Rc+9aU+QIaaGnMi2l9zR5fA==
+X-Google-Smtp-Source: AGHT+IGAcq8IYOIzGFtf3MSlPAkVy9HO1nsOfyJ1SdMu8YsxT6kw69UmQ3+hwFPf+1XFdztvQ1OjQw==
+X-Received: by 2002:a17:906:c0d2:b0:a23:f50:60f7 with SMTP id bn18-20020a170906c0d200b00a230f5060f7mr6034331ejb.102.1703894833620;
+        Fri, 29 Dec 2023 16:07:13 -0800 (PST)
 Received: from [192.168.199.125] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
-        by smtp.gmail.com with ESMTPSA id r25-20020a170906281900b00a1f7c502736sm8828080ejc.164.2023.12.29.16.05.39
+        by smtp.gmail.com with ESMTPSA id r25-20020a170906281900b00a1f7c502736sm8828080ejc.164.2023.12.29.16.07.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Dec 2023 16:05:40 -0800 (PST)
-Message-ID: <df2359e2-f00e-45d8-badb-f458d88fe56a@linaro.org>
-Date: Sat, 30 Dec 2023 01:05:38 +0100
+        Fri, 29 Dec 2023 16:07:13 -0800 (PST)
+Message-ID: <015155f0-f0d9-4600-869d-9795fbd8d220@linaro.org>
+Date: Sat, 30 Dec 2023 01:07:11 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,8 +66,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/14] drm/msm/dp: drop unused fields from
- dp_power_private
+Subject: Re: [PATCH 03/14] drm/msm/dp: parse DT from dp_parser_get
 Content-Language: en-US
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
  Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
@@ -79,7 +78,7 @@ Cc: Bjorn Andersson <andersson@kernel.org>, Stephen Boyd
  Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
  dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
 References: <20231229225650.912751-1-dmitry.baryshkov@linaro.org>
- <20231229225650.912751-3-dmitry.baryshkov@linaro.org>
+ <20231229225650.912751-4-dmitry.baryshkov@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -116,12 +115,14 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231229225650.912751-3-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20231229225650.912751-4-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 29.12.2023 23:56, Dmitry Baryshkov wrote:
-> Drop unused and obsolete fields from struct dp_power_private.
+> It makes little sense to split the submodule get and actual DT parsing.
+> Call dp_parser_parse() directly from dp_parser_get(), so that the parser
+> data is fully initialised once it is returned to the caller.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
