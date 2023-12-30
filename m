@@ -1,185 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-6131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ACCDD8205E5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 13:28:37 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 204BC82065C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 14:04:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 64109282005
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 12:28:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A5FF41F2181A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 13:04:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB5DB79EF;
-	Sat, 30 Dec 2023 12:28:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD6918C02;
+	Sat, 30 Dec 2023 13:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HWkdVvd2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QBbyL0F5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3F58487
-	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Dec 2023 12:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8988BEB
+	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Dec 2023 13:04:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-50e7288a6e1so5781436e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Dec 2023 04:28:30 -0800 (PST)
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-555144cd330so4751967a12.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Dec 2023 05:04:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703939309; x=1704544109; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=keCmGBN/im/IoCDZQ/LMPz0jTzLPy/YoVnmESVbA/O0=;
-        b=HWkdVvd2bD61F9fDi+2fPBR4IjzGjJSXSS1kLOM5MFECXB4i61wxT1AmIeIxf7xW8V
-         u9AVbaOdKwq9CU4IaK/jEnsSEWM/F/PHSYfwtRk0XDE9AnnUQ7R2i2FA8cdqdjc2bZRd
-         03oqI+yg9bLHeCsD1dPdhoWTlcYLRiKDH7G6E/5ypKkT8ymkvH77vyscArvPLniKABic
-         UuD1ZfATSxYqYmBP7cyMN925kR2a/Pmjexud5riSxXjb0RKsjid45VLIzz/8UR2cC5kg
-         57EUUPLFT2vUg4tTWH3xvog/uvI/Rg2tYPdp/sCUDqwOxZOy0wTk28Kr0loMOJYPerWq
-         uj4Q==
+        d=linaro.org; s=google; t=1703941467; x=1704546267; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=eAK3GkpXOGhDaB/Q0hZvmQy//6V7+7rM0YC0FJDvdW4=;
+        b=QBbyL0F5kI/gLJE4aLvgUrNB83KztRf1fR9gyiKHcO5bEbyHnYxVK8hWOE7PdaS+e0
+         l9wQhB7ZzDdRHl4mqKBCReYhuDWulSCM4F49F34riUUVWEvSe1WhZEeFpQd6PrOMzhWd
+         vKJEVyiI6cagnNKIj6RypLCon3WI/JyOuyMlo68luoZCuPFBR1FDQNDA5V0HBhoidOGX
+         t2jxtehgitsiAMpwyFC3S9SoqyxerXeqUyB4/2NCDu9Pjd86GiRHNHlx0pmy8K0Xukle
+         9lfBxhRHO5F/WnirlDxF48HMO+LrgFcMt6ibd7fNU9Kzz9ScBg4kK9vFN9WGgS3lbyvP
+         BRVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703939309; x=1704544109;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=keCmGBN/im/IoCDZQ/LMPz0jTzLPy/YoVnmESVbA/O0=;
-        b=kLg63+XIHlPf9Ghlf7WsKXT/SeU/oerGqvo9dt5dYSIUgtNAm4j2BUgYZawDGYZtzP
-         fsR8FEemeTfCcdqEK+Ij/gKp1L0i3hWP41BHbHrzstdNTl6PU1GLIG/pnVsm1z26p2I3
-         7AFoDOn6ZulXArfpJNVPby7DmK4+bbz9ywaio7QRmzsjDZ69R/H92Nw1qKyImCQC/mJN
-         BhuMUGizsGGLjP67Uhk4/riL0ougsGMGlIA+/wT9E2r3HlbH5xkh3/7sJxn7sPr0BDdd
-         Tg7IzbNAn/mYDjAKzpi/81myJhrareLpFW4wXoIBs6GmnJtJY35b7r4iG1YvRAnscTcO
-         AHYA==
-X-Gm-Message-State: AOJu0YxvpihUJoCSgVlDTFm41nzeINTaRjm7FM96NCVeO8k04u5FPHtR
-	+cW96RR7nT2V80jgJg8rwwTKRJTwEzXHPQ==
-X-Google-Smtp-Source: AGHT+IHgyk41heTkSrAA+GHMVqwm41w4cfBV4Y0QUrKHXCUt2GWjAV98NMh1l87in3lNfKs4MfJaiQ==
-X-Received: by 2002:a05:6512:3f26:b0:50e:5a25:efbf with SMTP id y38-20020a0565123f2600b0050e5a25efbfmr5545047lfa.42.1703939308628;
-        Sat, 30 Dec 2023 04:28:28 -0800 (PST)
-Received: from [192.168.199.125] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
-        by smtp.gmail.com with ESMTPSA id ef5-20020a17090697c500b00a269597d173sm9240174ejb.135.2023.12.30.04.28.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 30 Dec 2023 04:28:28 -0800 (PST)
-Message-ID: <2e937686-d579-4553-ada8-17a1cb1237cf@linaro.org>
-Date: Sat, 30 Dec 2023 13:28:25 +0100
+        d=1e100.net; s=20230601; t=1703941467; x=1704546267;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eAK3GkpXOGhDaB/Q0hZvmQy//6V7+7rM0YC0FJDvdW4=;
+        b=JuRSif5yMhXoZQMmUf0M/VsO2zaq6VI/P3dt8pVnD7WM/G8frFfQRwAFAk0s5v7Jts
+         G2nt22I50kBL0uPrplGBOpepYwQXP1N5ZqrXJulcc0NFhnD6LAzovU9SKIqg45MP1Qhx
+         G5zCOM19tTCm1TKwdlRH4BoR1oAh+cjZhaLv9sIScQR8ANtKBTV4Cq1UQM61ie0pyiVf
+         Mp3OGr1BHYJfYDNEt/QJCnOdF8vnSwo3sTU3Eyru1b5rCKhMbp8l8X7TMaZyWogAr/nM
+         Hhk4vG+a+Rfp5XNUwSKUmXc5wL6E7fLhEsEyEEWCiVqUXFblU8IKTp4ZiJvgOtKroqR/
+         QkVw==
+X-Gm-Message-State: AOJu0YzSWZS6UVGdshTUH7CG4YySLW7Hzeg7yQemmHdf9hprJkcNhVf6
+	pERYBZrNse/juIQo3Hnii/K7G3F+lxNgcw==
+X-Google-Smtp-Source: AGHT+IFApVGYIiluQ6V//KKyvVa+N8o1/XlEG++DvWMnCS3ySSr/AKv0DWlWNQA7bkWDlxZMh4jquA==
+X-Received: by 2002:a50:bb69:0:b0:54c:87a1:34fe with SMTP id y96-20020a50bb69000000b0054c87a134femr8479103ede.10.1703941467118;
+        Sat, 30 Dec 2023 05:04:27 -0800 (PST)
+Received: from [10.167.154.1] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
+        by smtp.gmail.com with ESMTPSA id ij14-20020a056402158e00b00554368c9ce8sm11359578edb.1.2023.12.30.05.04.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 30 Dec 2023 05:04:26 -0800 (PST)
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v4 00/12] Unregister critical branch clocks + some RPM
+Date: Sat, 30 Dec 2023 14:04:02 +0100
+Message-Id: <20230717-topic-branch_aon_cleanup-v4-0-32c293ded915@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: sc8280xp: Fix PCIe PHY
- power-domains
-Content-Language: en-US
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Johan Hovold <johan@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Johan Hovold <johan+linaro@kernel.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Konrad Dybcio <konrad.dybcio@somainline.org>
-References: <20231227-topic-8280_pcie_dts-v1-0-13d12b1698ff@linaro.org>
- <20231227-topic-8280_pcie_dts-v1-1-13d12b1698ff@linaro.org>
- <ZY6sh8nlEUyEfL0u@hovoldconsulting.com> <20231229170334.GA9098@thinkpad>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20231229170334.GA9098@thinkpad>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEIVkGUC/43NTQ6DIBAF4KsY1qWRn4LtqvdoGoM4KAkBA2raG
+ O9eNF21G5fvZeZ7C0oQLSR0KxYUYbbJBp8DPxVI98p3gG2bM6IlZaUkEo9hsBo3UXnd1yr4Wjt
+ QfhqwuEqhCTMgiUb5vVEJvncZ8JNzuRwiGPva9x7PnHubxhDf+/xMtvbA0kxwiamUFW+pVNzwu
+ 7NexXAOsUObOtOjEt0kdakYFyUYKv4kdlRiWWLASKPhqsWPtK7rB+8p7yBqAQAA
+To: Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Johan Hovold <johan+linaro@kernel.org>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1703941465; l=5058;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=BX4AD0XKdE4IXC+Rm7JwsEKLVBZzcfLUrFI0a0Z2nm0=;
+ b=bEAanTKBC7TP6EUNGTuwHzPQ6xbD7FPr/oHbFsFZyI8A6KXbP/a4TZsct1wjlXytuaWSXI+W7
+ 2/khx7fmCAOCUCluXvzwGdKiFOSg2i2tIcIrGVnfpY8ntXOtXO20h+7
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-On 29.12.2023 18:03, Manivannan Sadhasivam wrote:
-> On Fri, Dec 29, 2023 at 12:24:55PM +0100, Johan Hovold wrote:
->> On Wed, Dec 27, 2023 at 11:28:26PM +0100, Konrad Dybcio wrote:
->>> The PCIe GDSCs are only related to the RCs. The PCIe PHYs on the other
->>> hand, are powered by VDD_MX and their specific VDDA_PHY/PLL regulators.
->>
->> No, that does not seem to be entirely correct. I added the power-domains
->> here precisely because they were needed to enable the PHYs.
->>
->> This is something I stumbled over when trying to figure out how to
->> add support for the second lane pair (i.e. four-lane mode), and I just
->> went back and confirmed that this is still the case.
->>
->> If you try to enable one of these PHYs without the corresponding GDSC
->> being enabled, you end up with:
->>
->> [   37.709324] ------------[ cut here ]------------
->> [   37.718196] gcc_pcie_3b_aux_clk status stuck at 'off'
->> [   37.718205] WARNING: CPU: 4 PID: 482 at drivers/clk/qcom/clk-branch.c:86 clk_branch_wait+0x144/0x15c
->> 	
-> 
-> Technically this patch is correct. PHYs are backed by MX domain only and not
-> GDSCs. Only the controllers (PCIe, UFS, USB) are backed by GDSCs. The fact that
-> you are seeing issue with PCIe Aux clock suggests me that this clock may not be
-> applicable to the PHY but it needs to be enabled for working of the PHY somehow.
-> I'll try to find the details on how exactly it is needed.
-> 
-> But if I get the answer like, "This clock is also sourced to PHY directly", then
-> we may need to add dual power domain for PHY (both GDSC and MX).
-> 
->> Now, you may or may not want to describe the above in the devicetree,
->> but this makes it sound like you're trying to work around an issue with
->> the current Linux implementation.
+On Qualcomm SoCs, certain branch clocks either need to be always-on, or
+should be if you're interested in touching some part of the hardware.
 
-I did a bit of experimentation, and.. I think that the PHY itself doesn't
-need the GDSC to be enabled.
+Using CLK_IS_CRITICAL for this purpose sounds like a genius idea,
+however that messes with the runtime pm handling - if a clock is
+marked as such, the clock controller device will never enter the
+"suspended" state, leaving the associated resources online, which in
+turn breaks SoC-wide suspend.
 
-However.
+This series aims to solve that on a couple SoCs that I could test the
+changes on and it sprinkles some runtime pm enablement atop these drivers.
 
-The AUX clock requires the GDSC to be enabled and the PHY will fail to
-power on if this clock is disabled.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Changes in v4:
+- Add and unify the "/* Keep the critical clocks always-on */" comment
+- Rebase (next-20231222), also include 8650, X1E and 8280camcc drivers
+- Drop enabling runtime PM on GCC
+- Improve the commit message of "clk: qcom: gpucc-sm6115: Add runtime PM"
+- Link to v3: https://lore.kernel.org/r/20230717-topic-branch_aon_cleanup-v3-0-3e31bce9c626@linaro.org
 
-That makes me wonder if representing the PCIe PHY as a wholly separate
-device (instead of e.g. it being a subdev of PCIe RC) is even correct..
+Changes in v3:
+- Rebase (next-20231219)
+- Fix up a copypaste mistake in "gcc-sm6375: Unregister critical clocks" (bod)
+- Pick up tags
+- Link to v2: https://lore.kernel.org/r/20230717-topic-branch_aon_cleanup-v2-0-2a583460ef26@linaro.org
 
->>
-> 
-> Adding MX domain to PHY in devicetree is definitely not a workaround. It is the
-> actual hardware representation. MX is the always on domain, and when CX collapse
-> happens during suspend state, it will ensure that all the analog components
-> (like PHY) are kept powered on. Otherwise, we will see link down issues.
-> 
-> But, I heard from Qcom that _only_ on this platform, MX is not backing the PCIe
-> PHY. I can correlate that with my encounter with PCIe issues after forcing CX
-> power collapse.
-I've heard otherwise, the PHY itself is powered by MX, but CX needs
-to be (should be?) enabled for communication with the RC (which itself
-needs CX to be up to function).
+Changes in v2:
+- Rebase
+- Pick up tags
+- Fix up missing pm_runtime_put in SM6375 GCC (Johan)
+- Clarify the commit message of "Add runtime PM" commits (Johan)
+- "GPU_CCC" -> "GPU_CC" (oops)
+- Rebase atop next-20231129
+  - Also fix up camcc-sm8550 & gcc-sm4450
+  - Unify and clean up the comment style
+  - Fix missing comments in gcc-sc7180..
+  - Drop Johan's ack from "clk: qcom: Use qcom_branch_set_clk_en()"
+- Improve 6115 dt patch commit message (Bjorn)
+- Link to v1: https://lore.kernel.org/r/20230717-topic-branch_aon_cleanup-v1-0-27784d27a4f4@linaro.org
 
-Konrad
+---
+Konrad Dybcio (12):
+      clk: qcom: branch: Add a helper for setting the enable bit
+      clk: qcom: Use qcom_branch_set_clk_en()
+      clk: qcom: gcc-sm6375: Unregister critical clocks
+      clk: qcom: gpucc-sm6375: Unregister critical clocks
+      clk: qcom: gpucc-sm6115: Unregister critical clocks
+      clk: qcom: gpucc-sm6115: Add runtime PM
+      clk: qcom: gcc-sm6115: Unregister critical clocks
+      clk: qcom: gcc-qcm2290: Unregister critical clocks
+      arm64: dts: qcom: sm6375: Add VDD_CX to GCC
+      arm64: dts: qcom: qcm2290: Add VDD_CX to GCC
+      arm64: dts: qcom: sm6115: Add VDD_CX to GCC
+      arm64: dts: qcom: sm6115: Add VDD_CX to GPU_CC
+
+ arch/arm64/boot/dts/qcom/qcm2290.dtsi |   1 +
+ arch/arm64/boot/dts/qcom/sm6115.dtsi  |   3 +
+ arch/arm64/boot/dts/qcom/sm6375.dtsi  |   1 +
+ drivers/clk/qcom/camcc-sc8280xp.c     |   6 +-
+ drivers/clk/qcom/camcc-sm8550.c       |  10 +--
+ drivers/clk/qcom/clk-branch.h         |   7 ++
+ drivers/clk/qcom/dispcc-qcm2290.c     |   4 +-
+ drivers/clk/qcom/dispcc-sc7280.c      |   7 +-
+ drivers/clk/qcom/dispcc-sc8280xp.c    |   4 +-
+ drivers/clk/qcom/dispcc-sm6115.c      |   4 +-
+ drivers/clk/qcom/dispcc-sm8250.c      |   4 +-
+ drivers/clk/qcom/dispcc-sm8450.c      |   7 +-
+ drivers/clk/qcom/dispcc-sm8550.c      |   7 +-
+ drivers/clk/qcom/dispcc-sm8650.c      |   4 +-
+ drivers/clk/qcom/gcc-qcm2290.c        | 105 ++---------------------------
+ drivers/clk/qcom/gcc-sa8775p.c        |  25 +++----
+ drivers/clk/qcom/gcc-sc7180.c         |  22 +++---
+ drivers/clk/qcom/gcc-sc7280.c         |  20 +++---
+ drivers/clk/qcom/gcc-sc8180x.c        |  28 +++-----
+ drivers/clk/qcom/gcc-sc8280xp.c       |  25 +++----
+ drivers/clk/qcom/gcc-sdx55.c          |  12 ++--
+ drivers/clk/qcom/gcc-sdx65.c          |  13 ++--
+ drivers/clk/qcom/gcc-sdx75.c          |  10 +--
+ drivers/clk/qcom/gcc-sm4450.c         |  28 +++-----
+ drivers/clk/qcom/gcc-sm6115.c         | 123 +++-------------------------------
+ drivers/clk/qcom/gcc-sm6375.c         | 105 +++--------------------------
+ drivers/clk/qcom/gcc-sm7150.c         |  23 +++----
+ drivers/clk/qcom/gcc-sm8250.c         |  19 ++----
+ drivers/clk/qcom/gcc-sm8350.c         |  20 +++---
+ drivers/clk/qcom/gcc-sm8450.c         |  21 +++---
+ drivers/clk/qcom/gcc-sm8550.c         |  21 +++---
+ drivers/clk/qcom/gcc-sm8650.c         |  16 ++---
+ drivers/clk/qcom/gcc-x1e80100.c       |  16 ++---
+ drivers/clk/qcom/gpucc-sc7280.c       |   9 +--
+ drivers/clk/qcom/gpucc-sc8280xp.c     |   9 +--
+ drivers/clk/qcom/gpucc-sm6115.c       |  52 ++++++--------
+ drivers/clk/qcom/gpucc-sm6375.c       |  33 +--------
+ drivers/clk/qcom/gpucc-sm8550.c       |  10 +--
+ drivers/clk/qcom/lpasscorecc-sc7180.c |   7 +-
+ drivers/clk/qcom/videocc-sm8250.c     |   6 +-
+ drivers/clk/qcom/videocc-sm8350.c     |  10 +--
+ drivers/clk/qcom/videocc-sm8450.c     |  13 ++--
+ drivers/clk/qcom/videocc-sm8550.c     |  13 ++--
+ 43 files changed, 230 insertions(+), 653 deletions(-)
+---
+base-commit: 39676dfe52331dba909c617f213fdb21015c8d10
+change-id: 20230717-topic-branch_aon_cleanup-6976c13fe71c
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
 
