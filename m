@@ -1,64 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-6127-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59A34820336
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 02:16:36 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A1F1820375
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 04:15:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0E732282501
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 01:16:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2F7A71C20BC2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 03:15:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60F7963B;
-	Sat, 30 Dec 2023 01:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F34514404;
+	Sat, 30 Dec 2023 03:15:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rPPnWcyQ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oKxfJHLV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775D17F5
-	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Dec 2023 01:16:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a2772011f8dso164244966b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 17:16:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703898987; x=1704503787; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EcIe4YJ5YCTQdS+tf3+D0wVuBPwXDmW3xk764/9wSSI=;
-        b=rPPnWcyQNJb6GYO6NY79RTsOAvALwsO8VbpAjyRia2vurXSev+fSLfYLSEjfpcV+F1
-         mzYzYyKjyWlhdMqwXSzx1TGwOKlUAr74Hs36YH2iR4QfEyYMd//gntOcJrCKIa7sq5ri
-         Xqc8iiKMkkq8SCrY4xkrButWEPusB0DLEYoDeNjeeKJOA9WmtUO8T+oUagrSlGapJLrQ
-         D25sNMJH2+89IdR8H6oxuufHEz2Gbcm2wIbOGoK5wT2qKgMlK0EMTtL24CzEwLvFvUJL
-         YSuAoeg50cZKpzhCoyVxLW8nwjIbnXtgtb0JXmjDLDMy62NgVKbwXOACSqA1JyPeh39b
-         eMDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703898987; x=1704503787;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EcIe4YJ5YCTQdS+tf3+D0wVuBPwXDmW3xk764/9wSSI=;
-        b=gaozZ4ZzXKzqyTcCDx9rD2wbiqlsasfYMuPd5ZAXQXB+NyAQ9enGv+F+XLUtrHBqfh
-         2UZUFEGaKX15Hs8ZXlLvwgTOzsSMn59bbWeytrsoKY0443eNdJw+mXeFtXYtZUoNsmQ1
-         EGwgaAB8UPjLGOT4SZosjuccDkt+eRHZ8pc8bVMiGQHVkHpW+ow0SsZtS93tMQfchxbv
-         VJq/a/DO6wU1EDY7+0x2nHJH2QijQpy7boPBs4pvU+7NiH4GYuKkT7DKOXc56PJjBW0T
-         ZzKE2T5Z0oAW3P5X9BckVhZaDafy09R1fje2lvt57KQOFWekRpRuQIlNVvf5qqH3m63v
-         Durw==
-X-Gm-Message-State: AOJu0YxjAKWQux+KzWpfoHKGQH4A743LtRv/p2mXtzTl2jmy7dg6GDkY
-	Aa533ny4Ti3e+5VCVXdcqNkNaohvMCq3fg==
-X-Google-Smtp-Source: AGHT+IHWXrAn3AaZSP5giRmCNTQGDxW9VBM1R4CeODgbmnJ1+Tim4Uq3twZVIGvJye2TZn/uE4d5Zw==
-X-Received: by 2002:a17:906:cc12:b0:a17:d7ea:f59e with SMTP id ml18-20020a170906cc1200b00a17d7eaf59emr5811394ejb.48.1703898986762;
-        Fri, 29 Dec 2023 17:16:26 -0800 (PST)
-Received: from [192.168.199.125] ([178.235.179.36])
-        by smtp.gmail.com with ESMTPSA id fp21-20020a1709069e1500b00a26ade46619sm8019163ejc.121.2023.12.29.17.16.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Dec 2023 17:16:26 -0800 (PST)
-Message-ID: <598ede70-bc01-4137-b68b-981c3d420735@linaro.org>
-Date: Sat, 30 Dec 2023 02:16:18 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB124416;
+	Sat, 30 Dec 2023 03:15:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BU3DREf006099;
+	Sat, 30 Dec 2023 03:15:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=8c0GH8dqUCpd9jsZDZf2CgJ01L5NHGOI5uNMKuoPtrs=; b=oK
+	xfJHLVSGmAr819OJMj2iXNSnaDhkOCMplbjA9+B95s070mQTFKTvE+m/Bcc86Ngz
+	Fke3JoarvRBBpfn+ySI3Ef46EkTkMZgg/gXRZ46puMmYKtwwTHUWIPgLCJJrNC+M
+	KUgR5+V9L2mh8WYXLy+HgLeRTD2M/upmmGOzuXQAv27ti7JiV/4um0FRrYzUGDod
+	Bw1Ou8tQp0CTVXKc882eAFSg+9M47SM2qexDp4dbV31xe9pGJc9BLEhdg2IFTpos
+	lng64Qf8vwOYkoUX506E6UxTrqiOfRMxCK4IjcooNcaSLAL9yp9ql5/Mn0DiPZN5
+	DTstNnw4wkbG5zww62Qg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3v9655bxtm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 30 Dec 2023 03:15:16 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BU3FFjd029089
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 30 Dec 2023 03:15:15 GMT
+Received: from [10.253.33.123] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 29 Dec
+ 2023 19:15:11 -0800
+Message-ID: <f15dee29-662b-4f8f-ad88-87b1548658d7@quicinc.com>
+Date: Sat, 30 Dec 2023 11:15:08 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,208 +56,166 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] PCI: qcom: Reshuffle reset logic in 2_7_0 .init
+Subject: Re: [PATCH v4 1/5] net: mdio: ipq4019: move eth_ldo_rdy before MDIO
+ bus register
 Content-Language: en-US
-To: Johan Hovold <johan@kernel.org>
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Philipp Zabel <p.zabel@pengutronix.de>,
- Stanimir Varbanov <svarbanov@mm-sol.com>,
- Andrew Murray <amurray@thegoodpenguin.co.uk>, Vinod Koul <vkoul@kernel.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20231227-topic-8280_pcie-v1-0-095491baf9e4@linaro.org>
- <20231227-topic-8280_pcie-v1-1-095491baf9e4@linaro.org>
- <ZY7R581pgn3uO6kk@hovoldconsulting.com>
- <fa0fbadc-a7c3-4bea-bed7-0006db0616dc@linaro.org>
- <ZY7l828-mSGXVwrk@hovoldconsulting.com>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <ZY7l828-mSGXVwrk@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <davem@davemloft.net>, <edumazet@google.com>,
+        <kuba@kernel.org>, <pabeni@redhat.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <andrew@lunn.ch>, <hkallweit1@gmail.com>, <linux@armlinux.org.uk>,
+        <robert.marko@sartura.hr>
+CC: <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_srichara@quicinc.com>
+References: <20231225084424.30986-1-quic_luoj@quicinc.com>
+ <20231225084424.30986-2-quic_luoj@quicinc.com>
+ <aa495827-4d20-4b66-8496-eef378d8f7c1@linaro.org>
+From: Jie Luo <quic_luoj@quicinc.com>
+In-Reply-To: <aa495827-4d20-4b66-8496-eef378d8f7c1@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-
-On 29.12.2023 16:29, Johan Hovold wrote:
-> [ Again, please remember to add a newline before you inline comments to
-> make you replies readable. ]
-> 
-> On Fri, Dec 29, 2023 at 04:01:27PM +0100, Konrad Dybcio wrote:
->> On 29.12.2023 15:04, Johan Hovold wrote:
->>> On Wed, Dec 27, 2023 at 11:17:19PM +0100, Konrad Dybcio wrote:
->>>> At least on SC8280XP, if the PCIe reset is asserted, the corresponding
->>>> AUX_CLK will be stuck at 'off'.
->>>
->>> No, this path is exercised on every boot without the aux clock ever
->>> being stuck at off. So something is clearly missing in this description.
-> 
->> That's likely because the hardware has been initialized and not cleanly
->> shut down by your bootloader. When you reset it, or your bootloader
->> wasn't so kind, you need to start initialization from scratch.
-> 
-> What does that even mean? I'm telling you that this reset is asserted on
-> each boot, on all sc8280xp platforms I have access to, and never have I
-> seen the aux clk stuck at off.
-> 
-> So clearly your claim above is too broad and the commit message is
-> incorrect or incomplete.
-
-diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
-index 0b7801971dc1..6650bd6af5e3 100644
---- a/drivers/clk/qcom/gcc-sc8280xp.c
-+++ b/drivers/clk/qcom/gcc-sc8280xp.c
-@@ -7566,6 +7566,18 @@ static int gcc_sc8280xp_probe(struct platform_device *pdev)
-        if (ret)
-                goto err_put_rpm;
- 
-+       int val;
-+       regmap_read(regmap, 0xa0000, &val);
-+       pr_err("GCC_PCIE_3A_BCR = 0x%x\n", val);
-+       regmap_read(regmap, 0xa00f0, &val);
-+       pr_err("GCC_PCIE_3A_LINK_DOWN_BCR = 0x%x\n", val);
-+       regmap_read(regmap, 0xa00fc, &val);
-+       pr_err("GCC_PCIE_3A_NOCSR_COM_PHY_BCR = 0x%x\n", val);
-+       regmap_read(regmap, 0xa00e0, &val);
-+       pr_err("GCC_PCIE_3A_PHY_BCR = 0x%x\n", val);
-+       regmap_read(regmap, 0xa00e4, &val);
-+       pr_err("GCC_PCIE_3A_PHY_NOCSR_COM_PHY_BCR = 0x%x\n", val);
-+
-        pm_runtime_put(&pdev->dev);
- 
-        return 0;
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: rvtaT6WZ0fHTvQlQchC6aH1RXiY0VpFH
+X-Proofpoint-ORIG-GUID: rvtaT6WZ0fHTvQlQchC6aH1RXiY0VpFH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ mlxlogscore=999 spamscore=0 phishscore=0 mlxscore=0 adultscore=0
+ malwarescore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
+ priorityscore=1501 clxscore=1015 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2311290000 definitions=main-2312300025
 
 
-[root@sc8280xp-crd ~]# dmesg | grep BCR
-[    2.500245] GCC_PCIE_3A_BCR = 0x0
-[    2.500250] GCC_PCIE_3A_LINK_DOWN_BCR = 0x0
-[    2.500253] GCC_PCIE_3A_NOCSR_COM_PHY_BCR = 0x0
-[    2.500255] GCC_PCIE_3A_PHY_BCR = 0x0
-[    2.500257] GCC_PCIE_3A_PHY_NOCSR_COM_PHY_BCR = 0x0
 
-
-0 meaning "not asserted".
-
-Adding the read in the GCC driver .probe ensures we get the
-unmodified data, as all GCC consumers must wait for it to probe. 
-
-PCIE3A is used for WLAN on the CRD, btw.
-
->  
->>>> Assert the reset (which may end up being a NOP if it was previously
->>>> asserted) and de-assert it back *before* turning on the clocks to avoid
->>>> such cases.
->>>>
->>>> In addition to that, in case the clock bulk enable fails, assert the
->>>> RC reset back, as the hardware is in an unknown state at best.
->>>
->>> This is arguably a separate change, and not necessarily one that is
->>> correct either
-> 
->> If the clock enable fails, the PCIe hw is not in reset state, ergo it
->> may be doing "something", and that "something" would eat non-zero power.
->> It's just cleaning up after yourself.
-> 
-> How can it do something without power and clocks?
-
-Fair point.
-
-As far as power goes, the RC hangs off CX, which is on whenever the
-system is not in power collapse. As for clocks, at least parts of it
-use the crystal oscillator, not sure if directly.
-
-> And leaving reset
-> asserted for non-powered devices is generally not a good idea.
-
-Depends on the hw.
-
->  
->>> so should at least go in a separate patch if it should
->>> be done at all.
-> 
->> I'll grumpily comply..
-> 
-> I suggest you leave it deasserted unless you have documentation
-> suggesting that the opposite is safe and recommended for this piece of
-> hardware.
->  
->>>> Fixes: ed8cc3b1fc84 ("PCI: qcom: Add support for SDM845 PCIe controller")
->>>
->>> I think you're being way to liberal with your use of Fixes tags. To
->>> claim that this is a bug, you need to make a more convincing case for
->>> why you think so.
-> 
->> The first paragraph describes the issue that this patch fixes.
-> 
-> Yes, but this is all very hand-wavy so far. With a complete commit
-> message I may agree, but you still haven't convinced me that this is a
-> bug and not just a workaround from some not fully-understood issue on
-> one particular platform.
-
-Right, reading it again, it doesn't really tell the whole story.
-
->  
->>> Also note Qualcomm's vendor driver is similarly asserting reset after
->>> enabling the clocks.
-> 
->> It's also not asserting the reset on suspend, see below.
-> 
-> Right, as I mentioned.
->  
->>> That driver does not seem to reset the controller on resume, though, in
->>> case that is relevant for your current experiments.
-> 
->> I know, the vendor driver doesn't fully shut down the controller. This
->> is however the only sequence that we (partially) have upstream, and the
->> only one that is going to work on SC8280XP (due to hw design).
+On 12/28/2023 5:49 PM, Konrad Dybcio wrote:
+> On 25.12.2023 09:44, Luo Jie wrote:
+>> The ethernet LDO provides the clock for the ethernet PHY that
+>> is connected with PCS, each LDO enables the clock output to
+>> each PCS, after the clock output enablement, the PHY GPIO reset
+>> can take effect.
 >>
->> On other platforms, a "soft shutdown" (i.e. dropping the link, cutting
->> clocks but not fully resetting the RC state) should be possible, but
->> that's not what this patchset concerns.
+>> For the PHY taking the MDIO bus level GPIO reset, the ethernet
+>> LDO should be enabled before the MDIO bus register.
+>>
+>> For example, the qca8084 PHY takes the MDIO bus level GPIO
+>> reset for quad PHYs, there is another reason for qca8084 PHY
+>> using MDIO bus level GPIO reset instead of PHY level GPIO
+>> reset as below.
+>>
+>> The work sequence of qca8084:
+>> 1. enable ethernet LDO.
+>> 2. GPIO reset on quad PHYs.
+>> 3. register clock provider based on MDIO device of qca8084.
+>> 4. PHY probe function called for initializing common clocks.
+>> 5. PHY capabilities acquirement.
+>>
+>> If qca8084 takes PHY level GPIO reset in the step 4, the clock
+>> provider of qca8084 can't be registered correctly, since the
+>> clock parent(reading the current qca8084 hardware registers in
+>> step 3) of the registered clocks is deserted after GPIO reset.
+>>
+>> There are two PCS(UNIPHY) supported in SOC side on ipq5332,
+>> and three PCS(UNIPHY) supported on ipq9574.
+>>
+>> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+>> ---
+>>   drivers/net/mdio/mdio-ipq4019.c | 51 +++++++++++++++++++++------------
+>>   1 file changed, 32 insertions(+), 19 deletions(-)
+>>
+>> diff --git a/drivers/net/mdio/mdio-ipq4019.c b/drivers/net/mdio/mdio-ipq4019.c
+>> index abd8b508ec16..5273864fabb3 100644
+>> --- a/drivers/net/mdio/mdio-ipq4019.c
+>> +++ b/drivers/net/mdio/mdio-ipq4019.c
+>> @@ -37,9 +37,12 @@
+>>   
+>>   #define IPQ_PHY_SET_DELAY_US	100000
+>>   
+>> +/* Maximum SOC PCS(uniphy) number on IPQ platform */
+>> +#define ETH_LDO_RDY_CNT				3
+>> +
+>>   struct ipq4019_mdio_data {
+>> -	void __iomem	*membase;
+>> -	void __iomem *eth_ldo_rdy;
+>> +	void __iomem *membase;
+>> +	void __iomem *eth_ldo_rdy[ETH_LDO_RDY_CNT];
+>>   	struct clk *mdio_clk;
+>>   };
+>>   
+>> @@ -206,19 +209,8 @@ static int ipq4019_mdio_write_c22(struct mii_bus *bus, int mii_id, int regnum,
+>>   static int ipq_mdio_reset(struct mii_bus *bus)
+>>   {
+>>   	struct ipq4019_mdio_data *priv = bus->priv;
+>> -	u32 val;
+>>   	int ret;
+>>   
+>> -	/* To indicate CMN_PLL that ethernet_ldo has been ready if platform resource 1
+>> -	 * is specified in the device tree.
+>> -	 */
+>> -	if (priv->eth_ldo_rdy) {
+>> -		val = readl(priv->eth_ldo_rdy);
+>> -		val |= BIT(0);
+>> -		writel(val, priv->eth_ldo_rdy);
+>> -		fsleep(IPQ_PHY_SET_DELAY_US);
+>> -	}
+>> -
+>>   	/* Configure MDIO clock source frequency if clock is specified in the device tree */
+>>   	ret = clk_set_rate(priv->mdio_clk, IPQ_MDIO_CLK_RATE);
+>>   	if (ret)
+>> @@ -236,7 +228,7 @@ static int ipq4019_mdio_probe(struct platform_device *pdev)
+>>   	struct ipq4019_mdio_data *priv;
+>>   	struct mii_bus *bus;
+>>   	struct resource *res;
+>> -	int ret;
+>> +	int ret, index;
+>>   
+>>   	bus = devm_mdiobus_alloc_size(&pdev->dev, sizeof(*priv));
+>>   	if (!bus)
+>> @@ -252,11 +244,32 @@ static int ipq4019_mdio_probe(struct platform_device *pdev)
+>>   	if (IS_ERR(priv->mdio_clk))
+>>   		return PTR_ERR(priv->mdio_clk);
+>>   
+>> -	/* The platform resource is provided on the chipset IPQ5018 */
+>> -	/* This resource is optional */
+>> -	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+>> -	if (res)
+>> -		priv->eth_ldo_rdy = devm_ioremap_resource(&pdev->dev, res);
+>> +	/* These platform resources are provided on the chipset IPQ5018 or
+>> +	 * IPQ5332.
+>> +	 */
+>> +	/* This resource are optional */
+>> +	for (index = 0; index < ETH_LDO_RDY_CNT; index++) {
+>> +		res = platform_get_resource(pdev, IORESOURCE_MEM, index + 1);
+>> +		if (res) {
+> if (!res)
+> 	break
+
+will update this.
+
 > 
-> The commit message does not even mention suspend, it just makes a
-> clearly false general claim about a clock being stuck unless you reorder
-> things.
+>> +			priv->eth_ldo_rdy[index] = devm_ioremap(&pdev->dev,
+>> +								res->start,
+>> +								resource_size(res));
+>> +
+>> +			/* The ethernet LDO enable is necessary to reset PHY
+>> +			 * by GPIO, some PHY(such as qca8084) GPIO reset uses
+>> +			 * the MDIO level reset, so this function should be
+>> +			 * called before the MDIO bus register.
+>> +			 */
+>> +			if (priv->eth_ldo_rdy[index]) {
+>> +				u32 val;
+>> +
+>> +				val = readl(priv->eth_ldo_rdy[index]);
+>> +				val |= BIT(0);
+>> +				writel(val, priv->eth_ldo_rdy[index]);
+>> +				fsleep(IPQ_PHY_SET_DELAY_US);
+> fsleep should only be used when the argument is variable
+> 
+> Konrad
 
-No, I insist that this general statement, while indeed lacking a full
-description of the problem, is provably true. The AUX clock will not
-turn on if the PCIe reset is asserted, at least on SC8280XP.
-
-Konrad
+Ok, will update to use usleep_range, Thanks.
 
