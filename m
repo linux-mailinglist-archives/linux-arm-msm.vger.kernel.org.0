@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6126-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6127-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 320A8820324
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 01:12:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59A34820336
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 02:16:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4EACF1C21819
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 00:12:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0E732282501
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Dec 2023 01:16:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B05F7F;
-	Sat, 30 Dec 2023 00:12:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60F7963B;
+	Sat, 30 Dec 2023 01:16:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="d4Qwn5pT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rPPnWcyQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDBEE9463
-	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Dec 2023 00:12:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775D17F5
+	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Dec 2023 01:16:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a23566e91d5so829087266b.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 16:12:14 -0800 (PST)
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a2772011f8dso164244966b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Dec 2023 17:16:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703895133; x=1704499933; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1703898987; x=1704503787; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=wli4NoQY8VlNG56wC/hFOSwd6o8qeR4x0eMtWXnYdmQ=;
-        b=d4Qwn5pTkLpVxqOulSImbxtkbsxnP9VvghE4Kr8f0WjRonlOoCd84dFNuij4gsuzzT
-         rS7ofErvsRO3GTtk/2KRzi/GmgJWyZ5Q9V0qv/PAp1JCAPjR5p+0Omw+jUxzOo4VIYv9
-         srvndburIK5e6IvgNYAEFt19T6sP0uvBBgPimDNqFxZQBMt+veiC3lQ1UsgOHRqBNkOD
-         bKyG5gjBh35MaGniZxoXINjPc7G9boksOuBghVCgxT9TGQGPNAWuxZk3MOzO+3GqIEEZ
-         N78CXklmxiLdDXVrIARMm0uWkJiCprF3/sFVPLV59RYfU+b8jQBCcCWgP6n59daC4Q8G
-         k+ag==
+        bh=EcIe4YJ5YCTQdS+tf3+D0wVuBPwXDmW3xk764/9wSSI=;
+        b=rPPnWcyQNJb6GYO6NY79RTsOAvALwsO8VbpAjyRia2vurXSev+fSLfYLSEjfpcV+F1
+         mzYzYyKjyWlhdMqwXSzx1TGwOKlUAr74Hs36YH2iR4QfEyYMd//gntOcJrCKIa7sq5ri
+         Xqc8iiKMkkq8SCrY4xkrButWEPusB0DLEYoDeNjeeKJOA9WmtUO8T+oUagrSlGapJLrQ
+         D25sNMJH2+89IdR8H6oxuufHEz2Gbcm2wIbOGoK5wT2qKgMlK0EMTtL24CzEwLvFvUJL
+         YSuAoeg50cZKpzhCoyVxLW8nwjIbnXtgtb0JXmjDLDMy62NgVKbwXOACSqA1JyPeh39b
+         eMDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703895133; x=1704499933;
+        d=1e100.net; s=20230601; t=1703898987; x=1704503787;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wli4NoQY8VlNG56wC/hFOSwd6o8qeR4x0eMtWXnYdmQ=;
-        b=duFT29R54WlJf2yYLS9D18sZhC6poXDUjRVMa12DcRp7IZ5MoO4oDjmPeFou0oZ6+s
-         /U+xAMTtu6Wy2bAxJiZ21mWMnFRHxDlmqJVW0925yMTB9/k0qWaqv+j/TbOScU+IN27F
-         s3irYfFOAIWdi5Bewu/rGpgjy279adQAy3WSxICpdFgZmtDkIhEIPPe43oisIc6vjaJO
-         YdJn398i4Gpol7P7V5yCIBQd05h/idCA6+8FSgVMo7HY7D+FVI5wyyTGNMO/TxMzziyl
-         zmNbSVa7LXoVAEHQP+5bsJ1BTAaPaJw/vcQhksaPgbvOKsDUAxo0dGHftZmwOgxIngF5
-         F+ww==
-X-Gm-Message-State: AOJu0YxfiFu/edZQT2eFXWoP42/q8vvVNeKfeS5Cma22MRk+4CHZq/Kq
-	og6cifoNQQgBg3zWqKJeAwCFwkruaUe0eA==
-X-Google-Smtp-Source: AGHT+IHZiC3cWCgcDM5IivmmRV2fLEapj83hqmUykJn7eVSI0oQ/gTSn3U43tM44wAyRS4KkNJn13A==
-X-Received: by 2002:a17:906:3891:b0:a23:6edb:d394 with SMTP id q17-20020a170906389100b00a236edbd394mr3948964ejd.102.1703895133080;
-        Fri, 29 Dec 2023 16:12:13 -0800 (PST)
-Received: from [192.168.199.125] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
-        by smtp.gmail.com with ESMTPSA id d17-20020a170906175100b00a235b01886dsm8874452eje.10.2023.12.29.16.12.11
+        bh=EcIe4YJ5YCTQdS+tf3+D0wVuBPwXDmW3xk764/9wSSI=;
+        b=gaozZ4ZzXKzqyTcCDx9rD2wbiqlsasfYMuPd5ZAXQXB+NyAQ9enGv+F+XLUtrHBqfh
+         2UZUFEGaKX15Hs8ZXlLvwgTOzsSMn59bbWeytrsoKY0443eNdJw+mXeFtXYtZUoNsmQ1
+         EGwgaAB8UPjLGOT4SZosjuccDkt+eRHZ8pc8bVMiGQHVkHpW+ow0SsZtS93tMQfchxbv
+         VJq/a/DO6wU1EDY7+0x2nHJH2QijQpy7boPBs4pvU+7NiH4GYuKkT7DKOXc56PJjBW0T
+         ZzKE2T5Z0oAW3P5X9BckVhZaDafy09R1fje2lvt57KQOFWekRpRuQIlNVvf5qqH3m63v
+         Durw==
+X-Gm-Message-State: AOJu0YxjAKWQux+KzWpfoHKGQH4A743LtRv/p2mXtzTl2jmy7dg6GDkY
+	Aa533ny4Ti3e+5VCVXdcqNkNaohvMCq3fg==
+X-Google-Smtp-Source: AGHT+IHWXrAn3AaZSP5giRmCNTQGDxW9VBM1R4CeODgbmnJ1+Tim4Uq3twZVIGvJye2TZn/uE4d5Zw==
+X-Received: by 2002:a17:906:cc12:b0:a17:d7ea:f59e with SMTP id ml18-20020a170906cc1200b00a17d7eaf59emr5811394ejb.48.1703898986762;
+        Fri, 29 Dec 2023 17:16:26 -0800 (PST)
+Received: from [192.168.199.125] ([178.235.179.36])
+        by smtp.gmail.com with ESMTPSA id fp21-20020a1709069e1500b00a26ade46619sm8019163ejc.121.2023.12.29.17.16.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Dec 2023 16:12:12 -0800 (PST)
-Message-ID: <d6447285-5485-4a89-b8e9-43625f00f960@linaro.org>
-Date: Sat, 30 Dec 2023 01:12:10 +0100
+        Fri, 29 Dec 2023 17:16:26 -0800 (PST)
+Message-ID: <598ede70-bc01-4137-b68b-981c3d420735@linaro.org>
+Date: Sat, 30 Dec 2023 02:16:18 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,19 +66,25 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/14] drm/msm/dp: fold dp_power into dp_ctrl module
+Subject: Re: [PATCH 1/4] PCI: qcom: Reshuffle reset logic in 2_7_0 .init
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Kuogee Hsieh <quic_khsieh@quicinc.com>,
- Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Stephen Boyd
- <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
- Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-References: <20231229225650.912751-1-dmitry.baryshkov@linaro.org>
- <20231229225650.912751-6-dmitry.baryshkov@linaro.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: Manivannan Sadhasivam <mani@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ Stanimir Varbanov <svarbanov@mm-sol.com>,
+ Andrew Murray <amurray@thegoodpenguin.co.uk>, Vinod Koul <vkoul@kernel.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20231227-topic-8280_pcie-v1-0-095491baf9e4@linaro.org>
+ <20231227-topic-8280_pcie-v1-1-095491baf9e4@linaro.org>
+ <ZY7R581pgn3uO6kk@hovoldconsulting.com>
+ <fa0fbadc-a7c3-4bea-bed7-0006db0616dc@linaro.org>
+ <ZY7l828-mSGXVwrk@hovoldconsulting.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -115,51 +121,153 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231229225650.912751-6-dmitry.baryshkov@linaro.org>
+In-Reply-To: <ZY7l828-mSGXVwrk@hovoldconsulting.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29.12.2023 23:56, Dmitry Baryshkov wrote:
-> The dp_power submodule is limited to handling the clocks only following
-> previous cleanups. Fold it into the dp_ctrl submodule, removing one
-> unnecessary level of indirection.
+On 29.12.2023 16:29, Johan Hovold wrote:
+> [ Again, please remember to add a newline before you inline comments to
+> make you replies readable. ]
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-[...]
+> On Fri, Dec 29, 2023 at 04:01:27PM +0100, Konrad Dybcio wrote:
+>> On 29.12.2023 15:04, Johan Hovold wrote:
+>>> On Wed, Dec 27, 2023 at 11:17:19PM +0100, Konrad Dybcio wrote:
+>>>> At least on SC8280XP, if the PCIe reset is asserted, the corresponding
+>>>> AUX_CLK will be stuck at 'off'.
+>>>
+>>> No, this path is exercised on every boot without the aux clock ever
+>>> being stuck at off. So something is clearly missing in this description.
+> 
+>> That's likely because the hardware has been initialized and not cleanly
+>> shut down by your bootloader. When you reset it, or your bootloader
+>> wasn't so kind, you need to start initialization from scratch.
+> 
+> What does that even mean? I'm telling you that this reset is asserted on
+> each boot, on all sc8280xp platforms I have access to, and never have I
+> seen the aux clk stuck at off.
+> 
+> So clearly your claim above is too broad and the commit message is
+> incorrect or incomplete.
+
+diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
+index 0b7801971dc1..6650bd6af5e3 100644
+--- a/drivers/clk/qcom/gcc-sc8280xp.c
++++ b/drivers/clk/qcom/gcc-sc8280xp.c
+@@ -7566,6 +7566,18 @@ static int gcc_sc8280xp_probe(struct platform_device *pdev)
+        if (ret)
+                goto err_put_rpm;
+ 
++       int val;
++       regmap_read(regmap, 0xa0000, &val);
++       pr_err("GCC_PCIE_3A_BCR = 0x%x\n", val);
++       regmap_read(regmap, 0xa00f0, &val);
++       pr_err("GCC_PCIE_3A_LINK_DOWN_BCR = 0x%x\n", val);
++       regmap_read(regmap, 0xa00fc, &val);
++       pr_err("GCC_PCIE_3A_NOCSR_COM_PHY_BCR = 0x%x\n", val);
++       regmap_read(regmap, 0xa00e0, &val);
++       pr_err("GCC_PCIE_3A_PHY_BCR = 0x%x\n", val);
++       regmap_read(regmap, 0xa00e4, &val);
++       pr_err("GCC_PCIE_3A_PHY_NOCSR_COM_PHY_BCR = 0x%x\n", val);
++
+        pm_runtime_put(&pdev->dev);
+ 
+        return 0;
+
+
+[root@sc8280xp-crd ~]# dmesg | grep BCR
+[    2.500245] GCC_PCIE_3A_BCR = 0x0
+[    2.500250] GCC_PCIE_3A_LINK_DOWN_BCR = 0x0
+[    2.500253] GCC_PCIE_3A_NOCSR_COM_PHY_BCR = 0x0
+[    2.500255] GCC_PCIE_3A_PHY_BCR = 0x0
+[    2.500257] GCC_PCIE_3A_PHY_NOCSR_COM_PHY_BCR = 0x0
+
+
+0 meaning "not asserted".
+
+Adding the read in the GCC driver .probe ensures we get the
+unmodified data, as all GCC consumers must wait for it to probe. 
+
+PCIE3A is used for WLAN on the CRD, btw.
 
 >  
-> -	/* set dongle to D3 (power off) mode */
-> +	/* set dongle to D3 (ctrl off) mode */
-:thinking emoji:
+>>>> Assert the reset (which may end up being a NOP if it was previously
+>>>> asserted) and de-assert it back *before* turning on the clocks to avoid
+>>>> such cases.
+>>>>
+>>>> In addition to that, in case the clock bulk enable fails, assert the
+>>>> RC reset back, as the hardware is in an unknown state at best.
+>>>
+>>> This is arguably a separate change, and not necessarily one that is
+>>> correct either
+> 
+>> If the clock enable fails, the PCIe hw is not in reset state, ergo it
+>> may be doing "something", and that "something" would eat non-zero power.
+>> It's just cleaning up after yourself.
+> 
+> How can it do something without power and clocks?
 
-[...]
+Fair point.
 
-> +int dp_ctrl_clk_enable(struct dp_ctrl *dp_ctrl,
-> +		enum dp_pm_type pm_type, bool enable)
-> +{
-> +	int rc = 0;
-> +	struct dp_ctrl_private *ctrl;
-> +	struct dss_module_power *mp;
-I haven't checked out the rest of the series yet, but cleaning
-this up with rc->ret and reverse-Christmas-tree (merry late
-Christmas!) would be nice
+As far as power goes, the RC hangs off CX, which is on whenever the
+system is not in power collapse. As for clocks, at least parts of it
+use the crystal oscillator, not sure if directly.
 
-> +
-> +	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
-> +
-> +	if (pm_type != DP_CORE_PM && pm_type != DP_CTRL_PM &&
-> +			pm_type != DP_STREAM_PM) {
-> +		DRM_ERROR("unsupported ctrl module: %s\n",
-> +				dp_parser_pm_name(pm_type));
-> +		return -EINVAL;
-> +	}
-> +
-> +	if (enable) {
-> +		if (pm_type == DP_CORE_PM && ctrl->core_clks_on) {
-again, haven't yet looked through all the patches but this screams
-"if (enable && pm_type == DP_CORE_PM)"
+> And leaving reset
+> asserted for non-powered devices is generally not a good idea.
 
+Depends on the hw.
+
+>  
+>>> so should at least go in a separate patch if it should
+>>> be done at all.
+> 
+>> I'll grumpily comply..
+> 
+> I suggest you leave it deasserted unless you have documentation
+> suggesting that the opposite is safe and recommended for this piece of
+> hardware.
+>  
+>>>> Fixes: ed8cc3b1fc84 ("PCI: qcom: Add support for SDM845 PCIe controller")
+>>>
+>>> I think you're being way to liberal with your use of Fixes tags. To
+>>> claim that this is a bug, you need to make a more convincing case for
+>>> why you think so.
+> 
+>> The first paragraph describes the issue that this patch fixes.
+> 
+> Yes, but this is all very hand-wavy so far. With a complete commit
+> message I may agree, but you still haven't convinced me that this is a
+> bug and not just a workaround from some not fully-understood issue on
+> one particular platform.
+
+Right, reading it again, it doesn't really tell the whole story.
+
+>  
+>>> Also note Qualcomm's vendor driver is similarly asserting reset after
+>>> enabling the clocks.
+> 
+>> It's also not asserting the reset on suspend, see below.
+> 
+> Right, as I mentioned.
+>  
+>>> That driver does not seem to reset the controller on resume, though, in
+>>> case that is relevant for your current experiments.
+> 
+>> I know, the vendor driver doesn't fully shut down the controller. This
+>> is however the only sequence that we (partially) have upstream, and the
+>> only one that is going to work on SC8280XP (due to hw design).
+>>
+>> On other platforms, a "soft shutdown" (i.e. dropping the link, cutting
+>> clocks but not fully resetting the RC state) should be possible, but
+>> that's not what this patchset concerns.
+> 
+> The commit message does not even mention suspend, it just makes a
+> clearly false general claim about a clock being stuck unless you reorder
+> things.
+
+No, I insist that this general statement, while indeed lacking a full
+description of the problem, is provably true. The AUX clock will not
+turn on if the PCIe reset is asserted, at least on SC8280XP.
 
 Konrad
 
