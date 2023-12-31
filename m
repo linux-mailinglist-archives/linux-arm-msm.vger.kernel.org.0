@@ -1,65 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-6150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99373820939
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Dec 2023 01:44:04 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE2F582093D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Dec 2023 01:44:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B7A221C2155A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Dec 2023 00:44:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8B63B283C03
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Dec 2023 00:44:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE3AE819;
-	Sun, 31 Dec 2023 00:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8162A50;
+	Sun, 31 Dec 2023 00:44:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="J4tFG5hD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rgjmsqHy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAE4659
-	for <linux-arm-msm@vger.kernel.org>; Sun, 31 Dec 2023 00:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E82EC639
+	for <linux-arm-msm@vger.kernel.org>; Sun, 31 Dec 2023 00:43:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-50e7e55c0f6so4730417e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Dec 2023 16:43:58 -0800 (PST)
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-50e7d6565b5so4946725e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Dec 2023 16:43:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1703983437; x=1704588237; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1703983438; x=1704588238; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=3oS3e08i9+4napyM4Cx2ITHLfZ0NtaHlzp9IZJ5e4DI=;
-        b=J4tFG5hDkIIgMRqed0eieItsrFCluczCXS5hXla+8gHCEdK301Ll6fPlym58lXL65m
-         3HQSzUWIgKT1X6Uj+xvj95zviGSd07Ymz4sfPtEx+wPb6KsxsJEoIKmdka90YXPhefme
-         pUQR5y9IqS6mIletEkL0yBt1dw7ElbM5TfrxiX4KBHtd9jsVyHffRs3zphBCHHMiT+5u
-         j6tJvROXTwsVMHm6zmomngiWQnQXG54sRDx0AvtNWWvTvNPot6XoVrCIDcoHAE5cGwpL
-         nSsZKh4iu9OBajcBlgEhaWiiMKNkbcngsS5sjX1cIvUSU0ANtwBu/wHpjJBiZ9h7xwwi
-         xqfw==
+        bh=i0o+ygDvKgdzg84z/yGD97dQg8nwAd++RNbp4iSd1H4=;
+        b=rgjmsqHyFScCcfcITNKJtAODr4ElX6NpOmAdhuM5G8tvsBe1y8DKOaVKr1kmmsFdG6
+         1uhOm3P4VYduntdkEyGBNMszcTfGXgTbaJbf7s6heVFCAA+27Oya+TgD2I4qVQVQ/Edf
+         XztjZ0ke1Zw3R2cUOVkmaPKNrvzO2zD3PB/JLJ8qA2gS+oIstqQsULijAzxhLSdjv0DT
+         fYQtG7FDeqaTOXupP4BBZAnmZma9zhFtxW4Ps8iieulUVlx85TNuSNj3SZ98dBhEh6+A
+         gn367dv4kHVi0MExiR/kDAwIKOL4G0dbVOtjp14MJImoqaH+xqYw7jMlpTFnEmIBwkTo
+         OM+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703983437; x=1704588237;
+        d=1e100.net; s=20230601; t=1703983438; x=1704588238;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3oS3e08i9+4napyM4Cx2ITHLfZ0NtaHlzp9IZJ5e4DI=;
-        b=ObLnbQZntQ91+o06CwQwmf7rct7JMOpcP2UBh88rhTvxR6fhM4dj4VILK0vCMdv4UA
-         w8IxQAzQISocdMuNAtqRpfZKZrH3yATQTWZY+37mS+sNbsD1tRtoJnSJZZplVTIc+pvf
-         Ey1dDpJCSQoWfRaJ/vk6cmFEsGlzfT3zD3F5by0Hf7ZAQ3Z8UhEyIiAtUYKs3SEmTKK3
-         +E1tva6crpHdW4KYV5qYDVKuWqkTg8ZXS+nQuqe5orFWs+IZyar788WeerLfzPA/rW2J
-         j4WYBCk7r5v3gmevxY2HDPGeusrl2hHitiNchIx+bGpdYKgaGia8IGOswMo29LK0EjMB
-         gpjA==
-X-Gm-Message-State: AOJu0Yxhn2V0BQc/AgDtmBFJF2FklQu0jPiCIFNlgw2k1FQvb6cif6yK
-	L3qRZbpo1hukXGe5fcrmygpRa0jRF+FOwA==
-X-Google-Smtp-Source: AGHT+IG/BQ6GApy4H/SeCJffIMC1S1kURQGtN4k5+GaCdaX81KwQ4RajZwmthCVAOZU1lksWe59Oag==
-X-Received: by 2002:ac2:4245:0:b0:50e:7e38:6e09 with SMTP id m5-20020ac24245000000b0050e7e386e09mr1639786lfl.192.1703983437145;
-        Sat, 30 Dec 2023 16:43:57 -0800 (PST)
+        bh=i0o+ygDvKgdzg84z/yGD97dQg8nwAd++RNbp4iSd1H4=;
+        b=HJMiRIlYcXmVmJzLM4BHz47EdfXScPre+ySqo8f6cJb26fR1Cn8mq7FePtsRM9Km7h
+         n1YpHlnkmYoKuoHbILhWy0LxnYBuGhQWZOnCnKcFGVApmmYTWRpLcOnOjDT4gWFATQas
+         xVB4AHh9g6i2Zh61paXy32H3o+XjrF+1NntuPD3zwx4u1acNO3toyzsuyT4f6UuAAN1G
+         WJg/C0zGJxLeUsQz94OxU39+iDDUWc8saizySxjGEC80m1J2Pvu0i0C15wopwr92jRfp
+         kbTwHkR7NVYn9AQSgO/ifsqsT2RJXzX6fj6fuM+s3mR80Wx9/0AYLQ4TaGyDHTX3RX1r
+         niWw==
+X-Gm-Message-State: AOJu0YzdjQ4Q/p2TPcHFAQQLtmpKP566N7IN4Aw2ZjkhGf95ESIOcFJq
+	kz5c9/hhoXk3ZIZub+00oezwesxgEzlqog==
+X-Google-Smtp-Source: AGHT+IFuKsyNeRIsb9xygH5jZjhnVEd6acR8l9kvPpcafsGNAEuVd0LqVjSdqOhwjSmp/ANF2Hm3Gg==
+X-Received: by 2002:a05:6512:60c:b0:50b:f7bb:4545 with SMTP id b12-20020a056512060c00b0050bf7bb4545mr5260316lfe.68.1703983438024;
+        Sat, 30 Dec 2023 16:43:58 -0800 (PST)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id n13-20020a05651203ed00b0050e84be8127sm1295995lfq.101.2023.12.30.16.43.56
+        by smtp.gmail.com with ESMTPSA id n13-20020a05651203ed00b0050e84be8127sm1295995lfq.101.2023.12.30.16.43.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Dec 2023 16:43:56 -0800 (PST)
+        Sat, 30 Dec 2023 16:43:57 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sun, 31 Dec 2023 02:43:48 +0200
-Subject: [PATCH v2 01/15] drm/msm/dp: drop unused parser definitions
+Date: Sun, 31 Dec 2023 02:43:49 +0200
+Subject: [PATCH v2 02/15] drm/msm/dp: drop unused fields from
+ dp_power_private
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,7 +69,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231231-dp-power-parser-cleanup-v2-1-fc3e902a6f5b@linaro.org>
+Message-Id: <20231231-dp-power-parser-cleanup-v2-2-fc3e902a6f5b@linaro.org>
 References: <20231231-dp-power-parser-cleanup-v2-0-fc3e902a6f5b@linaro.org>
 In-Reply-To: <20231231-dp-power-parser-cleanup-v2-0-fc3e902a6f5b@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -81,121 +82,41 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2918;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=744;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=yVyRmmNda9mfXwPWksVdLkO9SsjdUAzlZBACGcKQbRg=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlkLlJxDusX/Mwxoi5Za1T0xN6tZBtKSS46fvKj
- rES0TQ+n66JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZZC5SQAKCRCLPIo+Aiko
- 1eZ3B/wPO1Rh++PAEXQawRFR2VwvctoM9Rzvn8dCISWUeFJz1zWbzPN/xFw3qtzU4v+syJ+ZZjK
- GLjFkyYfL1j2TrBpYuu6UywJJmAqy1TXzY1d6osF9ioPaRNW43UHcAvMMm/KfmDDAvfnlmiSif5
- qHdFbNcbL9gQd71SnrA6uy1QBI2deU8TBfW4Z9YJveUBH1AeXOFqAPPD2YxiiF+Lb020lRdvE6p
- lohRtzNcD+QBHk3rIxFfGEo405nZAfCDoNUKw/Roec/DWv3FtmngQl3n9CnWrUO36w4X8EOUHgv
- XCjLDS3RNZdTTFGzTKHpBoJ/k4cjTriRR3ZbJN6s8YwmgoYM
+ bh=mPuJ0sdVtb49CzPgC03wOi5IYVOAPxO/LgrDoWoA7+M=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlkLlJ9pxCr+cfMbT52vEps1uINtOzZDFA5Bp0S
+ JE02LmKf9GJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZZC5SQAKCRCLPIo+Aiko
+ 1YJUB/9HzfmJqtMbNuXniEQKlE2aau8EdIcJfrVD8jFUc21yySAuaqy5QLLHxYT/qktPDubQ/t2
+ K0e852gS8v0R1ich+98jsWgae9PwbL2w8snsZIWP+G6sNVgGUF2n8AXyjR46zvvB+mKv7dsTTtt
+ BYasWqlRqT6Oqn3TG60BzA80543KWt8nH9dJkfJ7VRIImfqPpsdQxDNaHIwHkJ/iAZl184uc8rM
+ 1VCLBSqF7xAVYgfDJcYX+m5bVKdh/4lKiIi4b1YF2+eNoT0AsCAtqYaxQ9p+f2ONIaetLQG0sQK
+ qmKjg4QMfBkcENhDGoZPebtasnsAGMSI8EfaQTgOZexEkzz8
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Drop several unused and obsolete definitions from the dp_parser module.
+Drop unused and obsolete fields from struct dp_power_private.
 
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/dp/dp_parser.h | 46 --------------------------------------
- 1 file changed, 46 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_power.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
-index 1f068626d445..90a2cdbbe344 100644
---- a/drivers/gpu/drm/msm/dp/dp_parser.h
-+++ b/drivers/gpu/drm/msm/dp/dp_parser.h
-@@ -12,7 +12,6 @@
+diff --git a/drivers/gpu/drm/msm/dp/dp_power.c b/drivers/gpu/drm/msm/dp/dp_power.c
+index c4843dd69f47..b095a5b47c8b 100644
+--- a/drivers/gpu/drm/msm/dp/dp_power.c
++++ b/drivers/gpu/drm/msm/dp/dp_power.c
+@@ -16,9 +16,6 @@ struct dp_power_private {
+ 	struct dp_parser *parser;
+ 	struct device *dev;
+ 	struct drm_device *drm_dev;
+-	struct clk *link_clk_src;
+-	struct clk *pixel_provider;
+-	struct clk *link_provider;
  
- #include "msm_drv.h"
- 
--#define DP_LABEL "MDSS DP DISPLAY"
- #define DP_MAX_PIXEL_CLK_KHZ	675000
- #define DP_MAX_NUM_DP_LANES	4
- #define DP_LINK_RATE_HBR2	540000 /* kbytes */
-@@ -21,7 +20,6 @@ enum dp_pm_type {
- 	DP_CORE_PM,
- 	DP_CTRL_PM,
- 	DP_STREAM_PM,
--	DP_PHY_PM,
- 	DP_MAX_PM
+ 	struct dp_power dp_power;
  };
- 
-@@ -43,28 +41,10 @@ static inline const char *dp_parser_pm_name(enum dp_pm_type module)
- 	case DP_CORE_PM:	return "DP_CORE_PM";
- 	case DP_CTRL_PM:	return "DP_CTRL_PM";
- 	case DP_STREAM_PM:	return "DP_STREAM_PM";
--	case DP_PHY_PM:		return "DP_PHY_PM";
- 	default:		return "???";
- 	}
- }
- 
--/**
-- * struct dp_display_data  - display related device tree data.
-- *
-- * @ctrl_node: referece to controller device
-- * @phy_node:  reference to phy device
-- * @is_active: is the controller currently active
-- * @name: name of the display
-- * @display_type: type of the display
-- */
--struct dp_display_data {
--	struct device_node *ctrl_node;
--	struct device_node *phy_node;
--	bool is_active;
--	const char *name;
--	const char *display_type;
--};
--
- /**
-  * struct dp_ctrl_resource - controller's IO related data
-  *
-@@ -77,28 +57,6 @@ struct dp_io {
- 	union phy_configure_opts phy_opts;
- };
- 
--/**
-- * struct dp_pinctrl - DP's pin control
-- *
-- * @pin: pin-controller's instance
-- * @state_active: active state pin control
-- * @state_hpd_active: hpd active state pin control
-- * @state_suspend: suspend state pin control
-- */
--struct dp_pinctrl {
--	struct pinctrl *pin;
--	struct pinctrl_state *state_active;
--	struct pinctrl_state *state_hpd_active;
--	struct pinctrl_state *state_suspend;
--};
--
--/* Regulators for DP devices */
--struct dp_reg_entry {
--	char name[32];
--	int enable_load;
--	int disable_load;
--};
--
- struct dss_module_power {
- 	unsigned int num_clk;
- 	struct clk_bulk_data *clocks;
-@@ -109,16 +67,12 @@ struct dss_module_power {
-  *
-  * @pdev: platform data of the client
-  * @mp: gpio, regulator and clock related data
-- * @pinctrl: pin-control related data
-- * @disp_data: controller's display related data
-  * @parse: function to be called by client to parse device tree.
-  */
- struct dp_parser {
- 	struct platform_device *pdev;
- 	struct dss_module_power mp[DP_MAX_PM];
--	struct dp_pinctrl pinctrl;
- 	struct dp_io io;
--	struct dp_display_data disp_data;
- 	u32 max_dp_lanes;
- 	u32 max_dp_link_rate;
- 	struct drm_bridge *next_bridge;
 
 -- 
 2.39.2
