@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-6182-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F13B820C2D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Dec 2023 18:31:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D6D81820C33
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Dec 2023 18:39:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9A0D71C20864
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Dec 2023 17:31:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0F0C91C20921
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Dec 2023 17:39:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDA8B8F57;
-	Sun, 31 Dec 2023 17:31:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21DD98F49;
+	Sun, 31 Dec 2023 17:39:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GC7dD6fM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fqY8+YUJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E358F5A
-	for <linux-arm-msm@vger.kernel.org>; Sun, 31 Dec 2023 17:31:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 539F28F42
+	for <linux-arm-msm@vger.kernel.org>; Sun, 31 Dec 2023 17:39:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-50e80d14404so4064960e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 31 Dec 2023 09:31:00 -0800 (PST)
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-50e7abe4be4so6107872e87.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 31 Dec 2023 09:39:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704043859; x=1704648659; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hlBwUBagV5t7Ua0zL9AMI5lLR/VTB0BrMWRgto0wa3M=;
-        b=GC7dD6fMqrznZQX2ceVrMMY9ezONho/5TOPOy0FSLZVMoieTdy1zU2YaD9LB0uQAZD
-         HpGdxUFdvKwrSYhDwOUxE5X7u1XDdNMTGbukqyjb2quFpRgjN6OP5ZDzti+fO2nAptSi
-         wiOCxVNOqeYpRWGU38d93udGSXHmfx3BRQ2DPS++ezTot+nVeAsTYC83GUzahGQg1p7+
-         oWQkYMxnpO62MdyhM3lcJEJXeO6Rr+sEnD7RzduDcRWB/UoUuub1HJga6O56NYLqZyFC
-         hiY+Jueh0WR3hS1PIHfJDnRvEqejxBRyFsGYfcrREywZaF9KG+clzX4B6yYKutiGxwPe
-         AaOw==
+        d=linaro.org; s=google; t=1704044340; x=1704649140; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=JUYroI/6ZskYJOmbOSs8RYk5gRIfUp7UoYG0GxO1WAM=;
+        b=fqY8+YUJvoC6IzPfbqMAbdT1A1BfXt/6rT7E9EyOvn91WLT9232wdkdbUxSEjs5r9U
+         meg7p+80slQIiUQeDQBpwuLhhWRb6NM31b7WrAeb1HGuNOb2bV4K2Z06bjYHACIIpSns
+         BTmVqX6ZoceR4Lw4w4j6VLs1HrqAtaq1XydNyrI7IcclUuKA7ApAeCb4HhbXZMmgwtCV
+         stMNnDY7/r/DqvgGm9nXZsX+UuAJohJF96avztiqnu4GnvEqEVev1k6PHLwgMZTalCc7
+         cV0nz+/CNGH1OvJwZUIPw8t1yVO20kaB5JP6BXqDPAGpYbVpB0SC3SBOmIwroqu0P+MA
+         yxNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704043859; x=1704648659;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hlBwUBagV5t7Ua0zL9AMI5lLR/VTB0BrMWRgto0wa3M=;
-        b=YpSCJyOTX1yfuVY3U2Rmw20l4stfrA+l9xGs4gZRMt6cKCGtEmAKOrRfA4/gHveIb1
-         3tu5Y6SFThTTaZ2+0bqN0M+Knt4I1o52XphEo2PWEn5SloKpk8bxwyQuDJc0OyV+hn5D
-         GN9gIjJXFUjanQgqcf0+Z4rhbCCVq/spiAj7X1Zshw6HAta4Iu2qJLqSs1uYiOInbu6N
-         mFNUv3se4KzmUpWrf+eMUzyoGn/nmyQZxdtdSIkKTwdcU+Z/9HcVCUt6uJDAa8S5lkcJ
-         +Y001tyw1cchBXM4xlzHGDW32PA92LWgo5DQd6+HYvo4qUh3MhOpqZ4GhiXwAQiMTbs9
-         LKBw==
-X-Gm-Message-State: AOJu0YxAZUnSk278zVMRWnWLxtfyv5sD2DFCeoHkSqMhqfTehoDShZfH
-	Nsf+A1g2+4XkWe17ufP04NFOTKMK36FWcw==
-X-Google-Smtp-Source: AGHT+IFoDiaFV03S7y908enJQ4ZO1/mX4GL5lE3nL/FpG6FrTCC3QLeXkVjPAYbQ/gWSjN+6Zt/7rQ==
-X-Received: by 2002:ac2:593b:0:b0:50e:7c08:1ac3 with SMTP id v27-20020ac2593b000000b0050e7c081ac3mr4768303lfi.19.1704043859245;
-        Sun, 31 Dec 2023 09:30:59 -0800 (PST)
+        d=1e100.net; s=20230601; t=1704044340; x=1704649140;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JUYroI/6ZskYJOmbOSs8RYk5gRIfUp7UoYG0GxO1WAM=;
+        b=q+nx5hKBEafkmXXHp4xzleTtK6BY4venCIrHpe3JARTUm14r2jmjNP5cPmhiQzlIKI
+         F8avMfGuRlw4boVypV05dW4jjQBr0p9WLmbeYijz5mi87wwz4miTZCwSa93hIkbKgvGt
+         t8lDKBhSazzztnjaeJyE35NaoaAOConcYP3FP/MFgHTR+/pdBcMtigM3uoEPCK4R/XYt
+         KiVOzgCwFPSvD6MX/LoWilCNJt0lCpXXRBbcpoBGJjLCzGvjRFrcn+8RLWftvHevrJ0g
+         1DY1L36k5YtolopZDqOXikM/zIXIdIFmzWV63XSRYevjWYsqNoHkfEifZA0wS5JAslIg
+         171w==
+X-Gm-Message-State: AOJu0YwB60pAx5tKE6WbKiZmoVLUp5yXvbGQcQ8hJVJAQR+NaSno03EY
+	ce3jowonazDQeUxTKzc3ERTZwOausswL4Q==
+X-Google-Smtp-Source: AGHT+IFY/Zh50AzzndWvUFWaUuz63rVRCNSN2OErP8kxIW3iJeJjid1EtVt8ySwieUtRtLxSp6bf0A==
+X-Received: by 2002:a19:4f51:0:b0:50e:6d4f:6915 with SMTP id a17-20020a194f51000000b0050e6d4f6915mr5508938lfk.47.1704044340345;
+        Sun, 31 Dec 2023 09:39:00 -0800 (PST)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id k1-20020ac257c1000000b0050e6b5228d3sm2754645lfo.304.2023.12.31.09.30.58
+        by smtp.gmail.com with ESMTPSA id t27-20020ac243bb000000b0050e798243a7sm2233233lfl.177.2023.12.31.09.38.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 31 Dec 2023 09:30:58 -0800 (PST)
+        Sun, 31 Dec 2023 09:38:59 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sun, 31 Dec 2023 19:30:57 +0200
-Subject: [PATCH 2/2] cacheinfo: pass of_node to cpu_device_create()
+Subject: [PATCH 0/2] ARM: implement cacheinfo support (for v7/v7m)
+Date: Sun, 31 Dec 2023 19:38:56 +0200
+Message-Id: <20231231-armv7-cacheinfo-v1-0-9e8d440b59d9@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,103 +68,55 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231231-cpu-cacheinfo-of-v1-2-cd3584d2c7b4@linaro.org>
-References: <20231231-cpu-cacheinfo-of-v1-0-cd3584d2c7b4@linaro.org>
-In-Reply-To: <20231231-cpu-cacheinfo-of-v1-0-cd3584d2c7b4@linaro.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- "Rafael J. Wysocki" <rafael@kernel.org>, 
- Thomas Gleixner <tglx@linutronix.de>, Peter Zijlstra <peterz@infradead.org>, 
- Rob Herring <robh@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+X-B4-Tracking: v=1; b=H4sIADCnkWUC/x2MQQqAIBAAvyJ7TkglpL4SHRZbcw9pKEgg/j0J5
+ jKHmQaFMlOBTTTIVLlwikPUJMAFjBdJPoeDnrVRA4n5rlY6dIE4+iRXj4sxSMYqglE9mTy//3E
+ /ev8Azbr0AmEAAAA=
+To: Russell King <linux@armlinux.org.uk>
+Cc: linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2544;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1231;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=fihis3MyTyp6l+0iQfwORdHTA5PAnKsF+hOW3xnuqjs=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlkaVQJD3G1THjeCig6ET5zZhdsHC0L/7ei8U3y
- 4n0huoVld+JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZZGlUAAKCRCLPIo+Aiko
- 1Qf2B/0UXewDYJGJ1YjHKDD/rcJ4C/E/1rFAl7G9iqNf3CBWZd4r3jO2bpk6kHQDG4SQhIDVv22
- zS29LNYdCv9Ugr3lfE2+52kkdDxrLzLjjJMEavEw/kRU/Pd0d5FLWksQiPx/xICJIjkZVO4RvP6
- UqdLR/CLr6n1tOGciyo0Rw6e2J4DAgXVoWT7vMB3P1cMyDgjQvNTmxsuueGptDLe3mSfzrhD7j8
- fIPoDi4YOM7/qVvNLOpT4EzDAsR2R4llvRg1EekdvFYcvuX79oKFsE+xOiEQQ3VEKwzQUTXUeR6
- pmZONSYGuD+Qzjb2b4MN83lAhlaTUFSW9KmPSHSx3WlO4HSJ
+ bh=ZbnkF096dvQGlLCSukEfSJ0VKpmFN+Kk69iSZdj9Crk=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlkaczSNiTf9HQFVkXjC/zbvwQY5RW4pEXfvDET
+ Zjntl+IzneJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZZGnMwAKCRCLPIo+Aiko
+ 1Xu6B/41D9u8tN4na0LDhbVVyfTej377cgDODkEVyEHduVEo/AEyVyQPYN8uWDYPo2l93g3aYPP
+ hFo7+yLhDY4PgLP0R9vkWTYlPvi5oA1g5z9jRs4ILBscMUlOIg59ppcsoHQtkMjU9ZCEHUcRv0S
+ zx7t9gH5HEGaqJn8fTikSAkicb0NXSnOgLiW6xJ+/5t6IxOEXcbAxGg0vn2GtFj2O2yfcOZyV6R
+ 2YhdrrVfzFgYNI6a6zxDw3RBt9R+qh5N9R1EExXyzYbLppFRrJ4UUCmwQdfpYTyZbrP+Sibrmo7
+ eZ5+C+R/X18lWk4Pdm61biT96U8ly72apPuV+JqxIr5pMUSi
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Pass the DT node correponsing to caches to the cpu_device_create() in
-order to let platform-specific cache drivers to bind to the
-corresponding cache devices. For example, on Qualcomm Krait platforms
-the L2 cache frequency should be scaled following the CPU frequencies.
+Follow the ARM64 platform and implement simple cache information driver.
+As it reads data from CTR (ARMv6+) and CLIDR (ARMv7+) registers, it is
+limited to the ARMv7 / ARMv7M, providing simple fallback or just
+returning -EOPNOTSUPP in case of older platforms.
+
+In theory we should be able to skip CLIDR reading and assume that Dcache
+and Icache (or unified L1 cache) always exist if CTR is supported and
+returns sensible value. However I think this better be handled by the
+maintainers of corresponding platforms.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/base/cacheinfo.c  | 12 +++++++++++-
- include/linux/cacheinfo.h |  2 ++
- 2 files changed, 13 insertions(+), 1 deletion(-)
+Dmitry Baryshkov (2):
+      ARM: add CLIDR accessor functions
+      ARM: implement cacheinfo support
 
-diff --git a/drivers/base/cacheinfo.c b/drivers/base/cacheinfo.c
-index a72c69e70fa3..63bc94cf2c59 100644
---- a/drivers/base/cacheinfo.c
-+++ b/drivers/base/cacheinfo.c
-@@ -230,6 +230,7 @@ static int cache_setup_of_node(unsigned int cpu)
- 		}
- 		cache_of_set_props(this_leaf, np);
- 		this_leaf->fw_token = np;
-+		this_leaf->of_node = of_node_get(np);
- 		index++;
- 	}
- 
-@@ -457,10 +458,19 @@ static void cache_shared_cpu_map_remove(unsigned int cpu)
- 
- static void free_cache_attributes(unsigned int cpu)
- {
-+	struct cacheinfo *this_leaf;
-+	unsigned int index;
-+
- 	if (!per_cpu_cacheinfo(cpu))
- 		return;
- 
- 	cache_shared_cpu_map_remove(cpu);
-+
-+	for (index = 0; index < cache_leaves(cpu); index++) {
-+		this_leaf = per_cpu_cacheinfo_idx(cpu, index);
-+		of_node_put(this_leaf->of_node);
-+		this_leaf->of_node = NULL;
-+	}
- }
- 
- int __weak early_cache_level(unsigned int cpu)
-@@ -883,7 +893,7 @@ static int cache_add_dev(unsigned int cpu)
- 			break;
- 		cache_groups = cache_get_attribute_groups(this_leaf);
- 		ci_dev = cpu_device_create(parent, this_leaf,
--					   NULL,
-+					   this_leaf->of_node,
- 					   cache_groups,
- 					   "index%1u", i);
- 		if (IS_ERR(ci_dev)) {
-diff --git a/include/linux/cacheinfo.h b/include/linux/cacheinfo.h
-index d504eb4b49ab..543d1410e56a 100644
---- a/include/linux/cacheinfo.h
-+++ b/include/linux/cacheinfo.h
-@@ -38,6 +38,7 @@ extern unsigned int coherency_max_size;
-  * @attributes: bitfield representing various cache attributes
-  * @fw_token: Unique value used to determine if different cacheinfo
-  *	structures represent a single hardware cache instance.
-+ * @of_node: Corresponding DT node
-  * @disable_sysfs: indicates whether this node is visible to the user via
-  *	sysfs or not
-  * @priv: pointer to any private data structure specific to particular
-@@ -67,6 +68,7 @@ struct cacheinfo {
- 	(CACHE_READ_ALLOCATE | CACHE_WRITE_ALLOCATE)
- #define CACHE_ID		BIT(4)
- 	void *fw_token;
-+	struct device_node *of_node;
- 	bool disable_sysfs;
- 	void *priv;
- };
+ arch/arm/Kconfig                 |   1 +
+ arch/arm/include/asm/cache.h     |   6 ++
+ arch/arm/include/asm/cachetype.h |  13 ++++
+ arch/arm/kernel/Makefile         |   1 +
+ arch/arm/kernel/cacheinfo.c      | 164 +++++++++++++++++++++++++++++++++++++++
+ include/linux/cacheinfo.h        |   2 +-
+ 6 files changed, 186 insertions(+), 1 deletion(-)
+---
+base-commit: 39676dfe52331dba909c617f213fdb21015c8d10
+change-id: 20231231-armv7-cacheinfo-9fa533ae371e
 
+Best regards,
 -- 
-2.39.2
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 
