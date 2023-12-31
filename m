@@ -1,129 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-6171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08AC38209E0
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Dec 2023 07:08:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7746D820B95
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Dec 2023 15:49:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8C24F1F21578
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Dec 2023 06:08:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 01ED21F21ACD
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Dec 2023 14:49:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA7FB17C2;
-	Sun, 31 Dec 2023 06:08:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88A245686;
+	Sun, 31 Dec 2023 14:49:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="NrvB6Tb8"
+	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="rpeCS7dt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1416017C3;
-	Sun, 31 Dec 2023 06:08:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	MIME-Version:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=Pdi5ZtHpaZp9Kggr/yaJ0U8/BDWSSZaYMUzC+gCeArI=; b=NrvB6Tb8ns3knSE1FFQWcCpQmA
-	TBARokTfNINIlgExGe1w8/dUTRRFP/ErXNL/TONz8XXT9zP/1KGvyCo7F+XVkPt4nXGIabttUdnze
-	ln3vUlceKcMCd2Mjrt07AOtKr7WW/E3Yf47VxVOBdg1+HdqZp827wzcU7mnbrDERuCV610OENFD2P
-	OC7Hn/dHpFHRIN2/fA1ktDGxEmzAHpXGRFV/PeazBJ1Ldu9LQqKWTvOMPhuxwDWbmZNk9V16Gy+9r
-	ZMepz4aSi5NTk7AcQbiCPBpFdzhi/D5AmJfyeV1jxeEDw76guY3fGxrs3W4dzw5d0yODviTdiXTa6
-	cc6hxB1w==;
-Received: from [50.53.46.231] (helo=bombadil.infradead.org)
-	by bombadil.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
-	id 1rJozo-0042hK-2l;
-	Sun, 31 Dec 2023 06:08:24 +0000
-From: Randy Dunlap <rdunlap@infradead.org>
-To: linux-kernel@vger.kernel.org
-Cc: Randy Dunlap <rdunlap@infradead.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Vegard Nossum <vegard.nossum@oracle.com>
-Subject: [PATCH] drm/msm/dpu: fix kernel-doc warnings
-Date: Sat, 30 Dec 2023 22:08:23 -0800
-Message-ID: <20231231060823.1934-1-rdunlap@infradead.org>
-X-Mailer: git-send-email 2.43.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFCD45665;
+	Sun, 31 Dec 2023 14:49:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=z3ntu.xyz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
+	t=1704034143; bh=0N0OPAmBa1NtYEUHpBUQN1JVNKCFx25fN/ki65Os83I=;
+	h=From:Subject:Date:To:Cc;
+	b=rpeCS7dtFMdvIVZK97zguzX+LjeIgxq3WqGgUFvNhrngM4eS0Uuuo+AjOaUr3xg7Z
+	 mM3t+yUfv7QdDssBzUyFTrs2iaxKOg0tkrlnQK4PIJcKruQzPNrrZTZh1dfqVDof5U
+	 AeWiC1K1q0sjEz6VjhzekF/P97C84BIg4pE9TrSY=
+From: Luca Weiss <luca@z3ntu.xyz>
+Subject: [PATCH 0/3] Convert qcom,hfpll documentation to yaml + related
+ changes
+Date: Sun, 31 Dec 2023 15:48:42 +0100
+Message-Id: <20231231-hfpll-yaml-v1-0-359d44a4e194@z3ntu.xyz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEt/kWUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI2NDINLNSCvIydGtTMzN0bU0MjNLMwCKmpkmKwE1FBSlpmVWgA2Ljq2tBQD
+ dcCxAXAAAAA==
+To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Luca Weiss <luca@z3ntu.xyz>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=833; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=0N0OPAmBa1NtYEUHpBUQN1JVNKCFx25fN/ki65Os83I=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBlkX9RN3K/kYMXLHdIC4SvTq8UfhtScKacU2QAB
+ i0PfNIPbweJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZZF/UQAKCRBy2EO4nU3X
+ VpypEAC/64eLJdySn/HHH593Y+IvuWI+iuA0f3BT6BJlXMO3RFDkzy5J3ARrs6760vrZDpRU6bI
+ lJBitKpY+PW308HB/z5Di1R/CZXs2u/OC9OX321u8FrnhjwCFx0j0mUr6Dd7gEAiUEW06pyvOEc
+ RTc6ddUxseb/xHgSBfJokoROPMHCudd45uZMWo9+kysgg+TKET1aRpTxdDtA9ZI6g+WIA6ToeB8
+ ow3z814bWYYEb/zSRFnd4HDwn5lAu3Sf6bNYKOGbO5ampOegDxXK3e4TXkiOuBWArVykOd5f7xD
+ KxvX64vA9c4soYyzZrTVGcWRcHWsjwi5YRClRUeVqxlirModMTSPoozewW/DDhHc/qmz9haWtmZ
+ 3alBwxjw2TvqVgpMnK/uTpy+t8C3ASfLubzeT70ymLcS8gUZXfZzBiJAhk/ZeSqN69UPqcP/jnA
+ tqOb4c7WfyoJ3PBABY294XFkaRlP3WlQ894ukbQnQxsvuWXGcUI0g0f/ca37yPfirwAWUfJOQKX
+ KYCsuG497Krt+vKFHkxMRTzJ6mn6e0kbNDSx92+MmCEFbJRXHoAhc8D4YPZPscSlDOXPcxzLZ8A
+ CEYFg18uIM4wNUMMjQHGwWWJDYVQcgBvGxCxAK0il2LHZP3/4JS/BGDd2DGLxQt4VGEGTuVQMUv
+ usNqzBGeGlIun0g==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 
-Correct all kernel-doc warnings in dpu_encoder.c and dpu_rm.c:
+Finally touch the hfpll doc and convert it to yaml, and do some related
+changes along the way.
 
-dpu_encoder.c:212: warning: Excess struct member 'crtc_kickoff_cb' description in 'dpu_encoder_virt'
-dpu_encoder.c:212: warning: Excess struct member 'crtc_kickoff_cb_data' description in 'dpu_encoder_virt'
-dpu_encoder.c:212: warning: Excess struct member 'debugfs_root' description in 'dpu_encoder_virt'
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+Luca Weiss (3):
+      dt-bindings: clock: qcom,hfpll: Convert to YAML
+      clk: qcom: hfpll: Add QCS404-specific compatible
+      arm64: dts: qcom: qcs404: Use specific compatible for hfpll
 
-dpu_rm.c:35: warning: Excess struct member 'hw_res' description in 'dpu_rm_requirements'
-dpu_rm.c:208: warning: No description found for return value of '_dpu_rm_get_lm_peer'
+ .../devicetree/bindings/clock/qcom,hfpll.txt       | 63 -----------------
+ .../devicetree/bindings/clock/qcom,hfpll.yaml      | 82 ++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qcs404.dtsi               |  2 +-
+ drivers/clk/qcom/hfpll.c                           |  6 +-
+ 4 files changed, 87 insertions(+), 66 deletions(-)
+---
+base-commit: 39676dfe52331dba909c617f213fdb21015c8d10
+change-id: 20231231-hfpll-yaml-9266f012365c
 
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Sean Paul <sean@poorly.run>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Vegard Nossum <vegard.nossum@oracle.com>
+Best regards,
 -- 
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |    4 ----
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      |    3 ++-
- 2 files changed, 2 insertions(+), 5 deletions(-)
+Luca Weiss <luca@z3ntu.xyz>
 
-diff -- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -144,10 +144,6 @@ enum dpu_enc_rc_states {
-  *			to track crtc in the disable() hook which is called
-  *			_after_ encoder_mask is cleared.
-  * @connector:		If a mode is set, cached pointer to the active connector
-- * @crtc_kickoff_cb:		Callback into CRTC that will flush & start
-- *				all CTL paths
-- * @crtc_kickoff_cb_data:	Opaque user data given to crtc_kickoff_cb
-- * @debugfs_root:		Debug file system root file node
-  * @enc_lock:			Lock around physical encoder
-  *				create/destroy/enable/disable
-  * @frame_busy_mask:		Bitmask tracking which phys_enc we are still
-diff -- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-@@ -29,7 +29,6 @@ static inline bool reserved_by_other(uin
- /**
-  * struct dpu_rm_requirements - Reservation requirements parameter bundle
-  * @topology:  selected topology for the display
-- * @hw_res:	   Hardware resources required as reported by the encoders
-  */
- struct dpu_rm_requirements {
- 	struct msm_display_topology topology;
-@@ -204,6 +203,8 @@ static bool _dpu_rm_needs_split_display(
-  * _dpu_rm_get_lm_peer - get the id of a mixer which is a peer of the primary
-  * @rm: dpu resource manager handle
-  * @primary_idx: index of primary mixer in rm->mixer_blks[]
-+ *
-+ * Returns: lm peer mixed id on success or %-EINVAL on error
-  */
- static int _dpu_rm_get_lm_peer(struct dpu_rm *rm, int primary_idx)
- {
 
