@@ -1,55 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-6190-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6191-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C32C821444
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jan 2024 16:43:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 77A318214C2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jan 2024 18:31:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E36DC2816B6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jan 2024 15:43:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 21FD2281AB9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jan 2024 17:31:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 044DF6117;
-	Mon,  1 Jan 2024 15:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD3248F58;
+	Mon,  1 Jan 2024 17:31:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eZRCOX8W"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SXIidgFC"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D128F6116;
-	Mon,  1 Jan 2024 15:43:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95469C433C7;
-	Mon,  1 Jan 2024 15:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8B1945F;
+	Mon,  1 Jan 2024 17:31:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF5DDC433C7;
+	Mon,  1 Jan 2024 17:31:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704123827;
-	bh=zPnzCjn9QOkXUy8dvYci9jgjlA+acxJXGlng7zvr0Gk=;
+	s=k20201202; t=1704130271;
+	bh=IpekLPO/bhpfBR6SUNYWxaC/ReSzdsaQ7WSCC67bnig=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eZRCOX8Wa+h7iZPKz6qbhKyje4SPcdT7RhbQP2LY7C3E8vHjtPJr1tNuwGEPbfFVl
-	 QSpxMXeJGAV2KqQYaEaYTCdoEI1ZOYfr/FzuE0ZGc8+A94yx8kSriEBe/7LXVibkaj
-	 T5YkRwT4sr4FvbROX9AkM1Gex/DA8LHMUA3fdIEzgr+ElbAyzuT1U831mPX8QekctQ
-	 B5p0YNxX93cY37btljgd2nG6D5VTgxMPhMUJ0yj3+4uTI9yuRQLIV3XUNey3+hhC0B
-	 L3cJkUdqTLrt3bKAYznj7dN3P0fOeygzyB5U6YbXpJFDS70OWKZ/W6yhBRMr/QO3vO
-	 oE5EFzXvFo+iw==
-Date: Mon, 1 Jan 2024 21:13:36 +0530
+	b=SXIidgFCydJ7lOwp6GAux/HddHuebpNAQQLZb3D+Tgqcf+IHFk0IxV8SphswNb5DF
+	 CMIsrE0G38xmLC7IP+diwVNBx7VUcV61TLdPPx/hI501JeghX9+26nRB5YryGFBjZR
+	 3bsOIjF6d0A7MSrWxmm4rXYQWCJuqEDk4Wv9dXxAA6UJycXqEsjrzlQCMBptPRaWOP
+	 4reTQ3QGMvi/WU5VEcffQ/B5ANtkx3F81G4NF0/Ng+4tDIRRWjxWjjAxANtiGbBiZV
+	 GjxCtmCbJSbr6zuyucTecnzo+4VHFGFyN+87UPqrY6Tk9K1jiAAp+klxhm366IuFUu
+	 MTov9lRWd2KiQ==
+Date: Mon, 1 Jan 2024 23:01:00 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
-To: Luca Weiss <luca@z3ntu.xyz>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	David Heidelberg <david@ixit.cz>,
-	Caleb Connolly <caleb.connolly@linaro.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Manivannan Sadhasivam <mani@kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845: add power domain to UFS phy
- interface
-Message-ID: <20240101154336.GA3280@thinkpad>
-References: <20231229202959.266502-1-david@ixit.cz>
- <2710291.mvXUDI8C0e@z3ntu.xyz>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Johan Hovold <johan@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Stanimir Varbanov <svarbanov@mm-sol.com>,
+	Andrew Murray <amurray@thegoodpenguin.co.uk>,
+	Vinod Koul <vkoul@kernel.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/4] PCI: qcom: Reshuffle reset logic in 2_7_0 .init
+Message-ID: <20240101173100.GB3280@thinkpad>
+References: <20231227-topic-8280_pcie-v1-0-095491baf9e4@linaro.org>
+ <20231227-topic-8280_pcie-v1-1-095491baf9e4@linaro.org>
+ <ZY7R581pgn3uO6kk@hovoldconsulting.com>
+ <fa0fbadc-a7c3-4bea-bed7-0006db0616dc@linaro.org>
+ <ZY7l828-mSGXVwrk@hovoldconsulting.com>
+ <598ede70-bc01-4137-b68b-981c3d420735@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,46 +63,186 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <2710291.mvXUDI8C0e@z3ntu.xyz>
+In-Reply-To: <598ede70-bc01-4137-b68b-981c3d420735@linaro.org>
 
-On Fri, Dec 29, 2023 at 10:37:56PM +0100, Luca Weiss wrote:
-> On Freitag, 29. Dezember 2023 21:29:54 CET David Heidelberg wrote:
-> > Reported by: `make CHECK_DTBS=1 qcom/sdm845-oneplus-enchilada.dtb`
+On Sat, Dec 30, 2023 at 02:16:18AM +0100, Konrad Dybcio wrote:
+> On 29.12.2023 16:29, Johan Hovold wrote:
+> > [ Again, please remember to add a newline before you inline comments to
+> > make you replies readable. ]
 > > 
-> > Signed-off-by: David Heidelberg <david@ixit.cz>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 ++
-> >  1 file changed, 2 insertions(+)
+> > On Fri, Dec 29, 2023 at 04:01:27PM +0100, Konrad Dybcio wrote:
+> >> On 29.12.2023 15:04, Johan Hovold wrote:
+> >>> On Wed, Dec 27, 2023 at 11:17:19PM +0100, Konrad Dybcio wrote:
+> >>>> At least on SC8280XP, if the PCIe reset is asserted, the corresponding
+> >>>> AUX_CLK will be stuck at 'off'.
+> >>>
+> >>> No, this path is exercised on every boot without the aux clock ever
+> >>> being stuck at off. So something is clearly missing in this description.
 > > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > b/arch/arm64/boot/dts/qcom/sdm845.dtsi index c2244824355a..ad8677b62bfb
-> > 100644
-> > --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > @@ -2644,6 +2644,8 @@ ufs_mem_phy: phy@1d87000 {
-> >  			clocks = <&gcc GCC_UFS_MEM_CLKREF_CLK>,
-> >  				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
+> >> That's likely because the hardware has been initialized and not cleanly
+> >> shut down by your bootloader. When you reset it, or your bootloader
+> >> wasn't so kind, you need to start initialization from scratch.
 > > 
-> > +			power-domains = <&gcc UFS_PHY_GDSC>;
-> > +
-> >  			resets = <&ufs_mem_hc 0>;
-> >  			reset-names = "ufsphy";
+> > What does that even mean? I'm telling you that this reset is asserted on
+> > each boot, on all sc8280xp platforms I have access to, and never have I
+> > seen the aux clk stuck at off.
+> > 
+> > So clearly your claim above is too broad and the commit message is
+> > incorrect or incomplete.
 > 
-> This is potentially the wrong power domain, see the conversation here:
-> https://lore.kernel.org/linux-arm-msm/20231204172829.GA69580@thinkpad/
+> diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
+> index 0b7801971dc1..6650bd6af5e3 100644
+> --- a/drivers/clk/qcom/gcc-sc8280xp.c
+> +++ b/drivers/clk/qcom/gcc-sc8280xp.c
+> @@ -7566,6 +7566,18 @@ static int gcc_sc8280xp_probe(struct platform_device *pdev)
+>         if (ret)
+>                 goto err_put_rpm;
+>  
+> +       int val;
+> +       regmap_read(regmap, 0xa0000, &val);
+> +       pr_err("GCC_PCIE_3A_BCR = 0x%x\n", val);
+> +       regmap_read(regmap, 0xa00f0, &val);
+> +       pr_err("GCC_PCIE_3A_LINK_DOWN_BCR = 0x%x\n", val);
+> +       regmap_read(regmap, 0xa00fc, &val);
+> +       pr_err("GCC_PCIE_3A_NOCSR_COM_PHY_BCR = 0x%x\n", val);
+> +       regmap_read(regmap, 0xa00e0, &val);
+> +       pr_err("GCC_PCIE_3A_PHY_BCR = 0x%x\n", val);
+> +       regmap_read(regmap, 0xa00e4, &val);
+> +       pr_err("GCC_PCIE_3A_PHY_NOCSR_COM_PHY_BCR = 0x%x\n", val);
+> +
+>         pm_runtime_put(&pdev->dev);
+>  
+>         return 0;
+> 
+> 
+> [root@sc8280xp-crd ~]# dmesg | grep BCR
+> [    2.500245] GCC_PCIE_3A_BCR = 0x0
+> [    2.500250] GCC_PCIE_3A_LINK_DOWN_BCR = 0x0
+> [    2.500253] GCC_PCIE_3A_NOCSR_COM_PHY_BCR = 0x0
+> [    2.500255] GCC_PCIE_3A_PHY_BCR = 0x0
+> [    2.500257] GCC_PCIE_3A_PHY_NOCSR_COM_PHY_BCR = 0x0
+> 
+> 
+> 0 meaning "not asserted".
+> 
+> Adding the read in the GCC driver .probe ensures we get the
+> unmodified data, as all GCC consumers must wait for it to probe. 
+> 
+> PCIE3A is used for WLAN on the CRD, btw.
 > 
 
-Yes, GDSCs are the power domain of the controllers, not PHYs. This applies to
-other peripherals such as USB, PCIe etc...
+I get what you are trying to do, but I should say that your justification so far
+didn't do the justice.
+
+Your point is that, if the PCIe BCR is asserted during boot (which can happen if
+the bootloader didn't initialize PCIe for things like storage), then trying to
+enable clocks will result in the "clk stuck" error from GCC. But in the case of
+sc8280xp, bootloader would've already initialized PCIe during boot as it is uses
+NVMe for things like firmware. But when you do a full power down during suspend
+(CX power collapse), then while reinitializing the controller during resume, you
+are hitting the "clk stuck" error because at that time, the BCR reset would be
+asserted (POR value).
+
+But I really suspect if that is the case... Because, the same init function is
+being used by other SoCs (sm8150, sm8250, etc... even sdx55) and I'm pretty sure
+that in those SoCs, the bootloader wouldn't have initialized PCIe during boot as
+there is no use case.
+
+So I cross checked it on SM8450, but I saw the BCR status being "0" during boot
+(same as on sc8280xp). Then I checked the HPG and came to know that when the
+PCIe GDSC is uncollapsed, some of the BCRs would be deasserted in the back.
+Though it mentioned only PHY_BCR and not the PCIE_n_BCR. But I think the
+behavior might be same for both. You can verify it by printing the state of all
+BCRs during resume from suspend. This will give us some clue...
+
+> >  
+> >>>> Assert the reset (which may end up being a NOP if it was previously
+> >>>> asserted) and de-assert it back *before* turning on the clocks to avoid
+> >>>> such cases.
+> >>>>
+> >>>> In addition to that, in case the clock bulk enable fails, assert the
+> >>>> RC reset back, as the hardware is in an unknown state at best.
+> >>>
+> >>> This is arguably a separate change, and not necessarily one that is
+> >>> correct either
+> > 
+> >> If the clock enable fails, the PCIe hw is not in reset state, ergo it
+> >> may be doing "something", and that "something" would eat non-zero power.
+> >> It's just cleaning up after yourself.
+> > 
+> > How can it do something without power and clocks?
+> 
+> Fair point.
+> 
+> As far as power goes, the RC hangs off CX, which is on whenever the
+> system is not in power collapse. As for clocks, at least parts of it
+> use the crystal oscillator, not sure if directly.
+> 
+> > And leaving reset
+> > asserted for non-powered devices is generally not a good idea.
+> 
+> Depends on the hw.
+> 
+
+I do not have any strong argument here as there are too many things happening
+that determines whether the controller is properly powered or not. So I'd say
+that if you do not have any power numbers, it is best to leave it as it is.
 
 - Mani
 
-> Hopefully Mani can give some input here :)
+> >  
+> >>> so should at least go in a separate patch if it should
+> >>> be done at all.
+> > 
+> >> I'll grumpily comply..
+> > 
+> > I suggest you leave it deasserted unless you have documentation
+> > suggesting that the opposite is safe and recommended for this piece of
+> > hardware.
+> >  
+> >>>> Fixes: ed8cc3b1fc84 ("PCI: qcom: Add support for SDM845 PCIe controller")
+> >>>
+> >>> I think you're being way to liberal with your use of Fixes tags. To
+> >>> claim that this is a bug, you need to make a more convincing case for
+> >>> why you think so.
+> > 
+> >> The first paragraph describes the issue that this patch fixes.
+> > 
+> > Yes, but this is all very hand-wavy so far. With a complete commit
+> > message I may agree, but you still haven't convinced me that this is a
+> > bug and not just a workaround from some not fully-understood issue on
+> > one particular platform.
 > 
-> Regards
-> Luca
+> Right, reading it again, it doesn't really tell the whole story.
 > 
+> >  
+> >>> Also note Qualcomm's vendor driver is similarly asserting reset after
+> >>> enabling the clocks.
+> > 
+> >> It's also not asserting the reset on suspend, see below.
+> > 
+> > Right, as I mentioned.
+> >  
+> >>> That driver does not seem to reset the controller on resume, though, in
+> >>> case that is relevant for your current experiments.
+> > 
+> >> I know, the vendor driver doesn't fully shut down the controller. This
+> >> is however the only sequence that we (partially) have upstream, and the
+> >> only one that is going to work on SC8280XP (due to hw design).
+> >>
+> >> On other platforms, a "soft shutdown" (i.e. dropping the link, cutting
+> >> clocks but not fully resetting the RC state) should be possible, but
+> >> that's not what this patchset concerns.
+> > 
+> > The commit message does not even mention suspend, it just makes a
+> > clearly false general claim about a clock being stuck unless you reorder
+> > things.
 > 
+> No, I insist that this general statement, while indeed lacking a full
+> description of the problem, is provably true. The AUX clock will not
+> turn on if the PCIe reset is asserted, at least on SC8280XP.
+> 
+> Konrad
 
 -- 
 மணிவண்ணன் சதாசிவம்
