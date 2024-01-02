@@ -1,125 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-6327-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6328-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 09162822498
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 23:13:51 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF92D82257E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 00:30:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 979792875E4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 22:13:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E12091C217F7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 23:30:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCB3917721;
-	Tue,  2 Jan 2024 22:13:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A9061774B;
+	Tue,  2 Jan 2024 23:30:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QaFV9zW1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GYvx8/RO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F6017727;
-	Tue,  2 Jan 2024 22:13:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 402M0sHD000831;
-	Tue, 2 Jan 2024 22:13:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=81lbXW4HImZGl+eDhFTN5fAxXcaost06Oz288uO0jaQ=; b=Qa
-	FV9zW1EoWOM4jG3lejXyWdFpZnkFxrocibQp4TXCDJd2uJ/yWd8KWGLT43mARpfL
-	szlezZMPE61NDiMWrpw2+i4Tdy2AOJjpSNldman6yV9XAHZuKQXR3aw3mbmEH+q9
-	u2bX9SCy5QPMCF8EWQzq0YpeHSQkJpQYr0R+29g80syJy1LDmTibr+D17L9spQfH
-	6vNP6RwzDYo98Keuzhv5YifL1u3KHfstdRaCyy99AP+iCY00kiuinpX1zrMlL9YK
-	x0G6M4hTfUndSLfFC1PtQJGH3tA1TcRlQyvut84kEN9AedpsCtdq2LKsguyzBQQO
-	3GWKdHlVRAiuZ1IB0Xqw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vch7n98pr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 02 Jan 2024 22:13:17 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 402MDGMm013272
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 2 Jan 2024 22:13:16 GMT
-Received: from [10.71.111.96] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 2 Jan
- 2024 14:13:16 -0800
-Message-ID: <48e19422-77ba-a876-4552-783d54ac9bf6@quicinc.com>
-Date: Tue, 2 Jan 2024 14:13:15 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0FC1773F;
+	Tue,  2 Jan 2024 23:30:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AF96C433C7;
+	Tue,  2 Jan 2024 23:30:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1704238242;
+	bh=yHQMbbCMfdmOdZwNywEUJRpRywJN3uD2vdfBpqT2ICg=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=GYvx8/ROn6w5OELZ8KQvSXmbPdfWDi7o9pbMoK+e1/1I19a7ScOxChOlkfS/skaAZ
+	 vzUn0g1kX2M2LVCwOQ/0JxsaMXaQ2WrcvUOvI/tDbiTRV/nubAMNTYd2LOvFg1pVUC
+	 zCK3xGqf2E7D6o/6jYQeBEvSs7HXflCTmAzV4DufTNlUm57919u/qT9XW6wV8FvkqW
+	 ZgC3wAnmCwX24afglblmdbgwgzQD8JQCjM3GRxT2lEXZiLJ3lfMWbtJvleWSUoifSs
+	 3Uqi0GIWm5pVJTdtFtphCG3GezxxCTGYIPIaRTT0yN1stCYFUHvnLkKYABFYu7kqVh
+	 gQmXNDt0uuN6g==
+Message-ID: <44ef74fb81ec3a16cec2b1197eb826f4.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH] drm/msm/dpu: fix kernel-doc warnings
-Content-Language: en-US
-To: Randy Dunlap <rdunlap@infradead.org>, <linux-kernel@vger.kernel.org>
-CC: <freedreno@lists.freedesktop.org>,
-        Vegard Nossum
-	<vegard.nossum@oracle.com>,
-        Jonathan Corbet <corbet@lwn.net>, <linux-arm-msm@vger.kernel.org>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, Rob Clark
-	<robdclark@gmail.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann
-	<tzimmermann@suse.de>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Marijn Suijten" <marijn.suijten@somainline.org>,
-        Sean Paul <sean@poorly.run>
-References: <20231231060823.1934-1-rdunlap@infradead.org>
-From: Paloma Arellano <quic_parellan@quicinc.com>
-In-Reply-To: <20231231060823.1934-1-rdunlap@infradead.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: vVOOCgP4NBmMg3iT98FJWBz6hEU1c1Q9
-X-Proofpoint-ORIG-GUID: vVOOCgP4NBmMg3iT98FJWBz6hEU1c1Q9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- impostorscore=0 phishscore=0 mlxlogscore=999 mlxscore=0 lowpriorityscore=0
- priorityscore=1501 malwarescore=0 bulkscore=0 spamscore=0 clxscore=1011
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401020165
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20231231041115.3263074-1-andersson@kernel.org>
+References: <20231231041115.3263074-1-andersson@kernel.org>
+Subject: Re: [GIT PULL] Qualcomm clock updates for v6.8
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, Andy Gross <agross@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, Rajendra Nayak <quic_rjendra@quicinc.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>, Imran Shaik <quic_imrashai@quicinc.com>, Vincent Knecht <vincent.knecht@mailoo.org>, Dan Carpenter <dan.carpenter@linaro.org>, Robert Marko <robimarko@gmail.com>, Taniya Das <quic_tdas@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>, linux-clk@vger.kernel.org
+Date: Tue, 02 Jan 2024 15:30:40 -0800
+User-Agent: alot/0.10
 
+Quoting Bjorn Andersson (2023-12-30 20:11:14)
+>=20
+> The following changes since commit b85ea95d086471afb4ad062012a4d73cd328fa=
+86:
+>=20
+>   Linux 6.7-rc1 (2023-11-12 16:19:07 -0800)
+>=20
+> are available in the Git repository at:
+>=20
+>   https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qco=
+m-clk-for-6.8
+>=20
+> for you to fetch changes up to 757d1ca14f94e4e00777491dcab0b4abee18f9bf:
+>=20
+>   clk: qcom: dispcc-sm8650: Add test_ctl parameters to PLL config (2023-1=
+2-19 14:12:41 -0600)
+>=20
+> ----------------------------------------------------------------
 
-On 12/30/2023 10:08 PM, Randy Dunlap wrote:
-> Correct all kernel-doc warnings in dpu_encoder.c and dpu_rm.c:
->
-> dpu_encoder.c:212: warning: Excess struct member 'crtc_kickoff_cb' description in 'dpu_encoder_virt'
-> dpu_encoder.c:212: warning: Excess struct member 'crtc_kickoff_cb_data' description in 'dpu_encoder_virt'
-> dpu_encoder.c:212: warning: Excess struct member 'debugfs_root' description in 'dpu_encoder_virt'
->
-> dpu_rm.c:35: warning: Excess struct member 'hw_res' description in 'dpu_rm_requirements'
-> dpu_rm.c:208: warning: No description found for return value of '_dpu_rm_get_lm_peer'
->
-> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reviewed-by: Paloma Arellano <quic_parellan@quicinc.com>
-> Cc: Rob Clark <robdclark@gmail.com>
-> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Sean Paul <sean@poorly.run>
-> Cc: Marijn Suijten <marijn.suijten@somainline.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: dri-devel@lists.freedesktop.org
-> Cc: freedreno@lists.freedesktop.org
-> Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-> Cc: Maxime Ripard <mripard@kernel.org>
-> Cc: Thomas Zimmermann <tzimmermann@suse.de>
-> Cc: Jonathan Corbet <corbet@lwn.net>
-> Cc: Vegard Nossum <vegard.nossum@oracle.com>
+Thanks. Pulled into clk-next
 
