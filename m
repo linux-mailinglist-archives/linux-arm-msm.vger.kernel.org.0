@@ -1,62 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-6223-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 471C28218AC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 10:06:07 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EC7668218CB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 10:15:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D02DF1F21E26
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 09:06:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9423A283685
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 09:15:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 442CA5692;
-	Tue,  2 Jan 2024 09:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 686DE612B;
+	Tue,  2 Jan 2024 09:15:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kDUxrUCm"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="qbjbK+L5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC325672;
-	Tue,  2 Jan 2024 09:06:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5821C433C8;
-	Tue,  2 Jan 2024 09:06:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704186360;
-	bh=L2uJ+bAvmhIK5Q/e3x9A1mvcDooM9dY7ZfhWFQ8inSM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kDUxrUCmByrDI8zmdaiiRee5gx5PTGLC2S8azQkvEa9Pg9TgByQ01GjwEi/JTAETj
-	 O3g/DgzRr27BysH9R5q06LIWZQqfkj7hBr6qdjhgxjLkZ9+EalR1UDtRUdB+Y4PVsJ
-	 blgin1UhmZjTVHgComZEtdkrytNfC+tI3sUtiAod/+zNEVYsDBwVigOrQri7g6ns4n
-	 kcL1JUGSywFl/NS8Rl6a9O+qU7AMBgMt0L8pfLvaoRxzlmmlXS8ykjKP+i8D/qj4YK
-	 EvxVHhRXJJRNscAfIi2jXnL3NGLNk4ox1IxezApwLDhnIXZG6gS4SxC29jw0p03T7I
-	 OmOJ1tSfNxWgA==
-Received: from johan by xi.lan with local (Exim 4.96.2)
-	(envelope-from <johan@kernel.org>)
-	id 1rKaid-00053V-27;
-	Tue, 02 Jan 2024 10:05:51 +0100
-Date: Tue, 2 Jan 2024 10:05:51 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: sc8280xp: Fix PCIe PHY
- power-domains
-Message-ID: <ZZPR793E3SoIplLw@hovoldconsulting.com>
-References: <20231227-topic-8280_pcie_dts-v1-0-13d12b1698ff@linaro.org>
- <20231227-topic-8280_pcie_dts-v1-1-13d12b1698ff@linaro.org>
- <ZY6sh8nlEUyEfL0u@hovoldconsulting.com>
- <20231229170334.GA9098@thinkpad>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C3B2CA69;
+	Tue,  2 Jan 2024 09:15:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=tlEfMQFt5gK7xTvm4OYyFW6oyrGcWRnYRgh3+dnfWXQ=; b=qbjbK+L5aYe/lDZscjtenI5cjW
+	dZL/n71TVQj2zphfxq3RZ+cNggYEWOSaYIL6eYvVx5t5XbeQtXC5MfvkPEbeyWhD7ffyRT3M3U/Vd
+	VVSFZvNRo70tslTpjdD38Sg+/jUCGJ+dlQkKzla59Tw98eiFplHqpLYGh8x1cESshIjA8i2C7Sn5M
+	muL2EGVBlVq2u1U2wLBjpcL4+E4cCtxzD6oY/ijyD7c2z9wI6Hy3ySQPY+FZTT4GhfgPtObTsn+Mf
+	4GMgFwlfji7YX5rkT/+U0nnZrO6GArNuSqp3UnB6eP/3Dq/eakRRSpeSc0fIN9D8KevfYWMzxiVW4
+	BH4OtoIw==;
+Received: from willy by casper.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1rKaqw-009pns-In; Tue, 02 Jan 2024 09:14:26 +0000
+Date: Tue, 2 Jan 2024 09:14:26 +0000
+From: Matthew Wilcox <willy@infradead.org>
+To: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>,
+	Hillf Danton <hdanton@sina.com>, kernel@quicinc.com,
+	quic_pkondeti@quicinc.com, keescook@chromium.or,
+	viro@zeniv.linux.org.uk, brauner@kernel.org, oleg@redhat.com,
+	dhowells@redhat.com, jarkko@kernel.org, paul@paul-moore.com,
+	jmorris@namei.org, serge@hallyn.com, linux-mm@kvack.org,
+	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
+	keyrings@vger.kernel.org, linux-security-module@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] kernel: Introduce a write lock/unlock wrapper for
+ tasklist_lock
+Message-ID: <ZZPT8hMiuT1pCBP7@casper.infradead.org>
+References: <20231213101745.4526-1-quic_aiquny@quicinc.com>
+ <ZXnaNSrtaWbS2ivU@casper.infradead.org>
+ <87o7eu7ybq.fsf@email.froward.int.ebiederm.org>
+ <ZY30k7OCtxrdR9oP@casper.infradead.org>
+ <cd0f6613-9aa9-4698-bebe-0f61286d7552@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,67 +62,61 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231229170334.GA9098@thinkpad>
+In-Reply-To: <cd0f6613-9aa9-4698-bebe-0f61286d7552@quicinc.com>
 
-On Fri, Dec 29, 2023 at 10:33:34PM +0530, Manivannan Sadhasivam wrote:
-> On Fri, Dec 29, 2023 at 12:24:55PM +0100, Johan Hovold wrote:
-> > On Wed, Dec 27, 2023 at 11:28:26PM +0100, Konrad Dybcio wrote:
-> > > The PCIe GDSCs are only related to the RCs. The PCIe PHYs on the other
-> > > hand, are powered by VDD_MX and their specific VDDA_PHY/PLL regulators.
+On Tue, Jan 02, 2024 at 10:19:47AM +0800, Aiqun Yu (Maria) wrote:
+> On 12/29/2023 6:20 AM, Matthew Wilcox wrote:
+> > On Wed, Dec 13, 2023 at 12:27:05PM -0600, Eric W. Biederman wrote:
+> > > Matthew Wilcox <willy@infradead.org> writes:
+> > > > I think the right way to fix this is to pass a boolean flag to
+> > > > queued_write_lock_slowpath() to let it know whether it can re-enable
+> > > > interrupts while checking whether _QW_WAITING is set.
+> > > 
+> > > Yes.  It seems to make sense to distinguish between write_lock_irq and
+> > > write_lock_irqsave and fix this for all of write_lock_irq.
 > > 
-> > No, that does not seem to be entirely correct. I added the power-domains
-> > here precisely because they were needed to enable the PHYs.
-> > 
-> > This is something I stumbled over when trying to figure out how to
-> > add support for the second lane pair (i.e. four-lane mode), and I just
-> > went back and confirmed that this is still the case.
-> > 
-> > If you try to enable one of these PHYs without the corresponding GDSC
-> > being enabled, you end up with:
-> > 
-> > [   37.709324] ------------[ cut here ]------------
-> > [   37.718196] gcc_pcie_3b_aux_clk status stuck at 'off'
-> > [   37.718205] WARNING: CPU: 4 PID: 482 at drivers/clk/qcom/clk-branch.c:86 clk_branch_wait+0x144/0x15c
-> > 	
-> 
-> Technically this patch is correct. PHYs are backed by MX domain only and not
-> GDSCs. Only the controllers (PCIe, UFS, USB) are backed by GDSCs. The fact that
-> you are seeing issue with PCIe Aux clock suggests me that this clock may not be
-> applicable to the PHY but it needs to be enabled for working of the PHY somehow.
-> I'll try to find the details on how exactly it is needed.
+> > I wasn't planning on doing anything here, but Hillf kind of pushed me into
+> > it.  I think it needs to be something like this.  Compile tested only.
+> > If it ends up getting used,
+> Happy new year!
 
-Sounds good, thanks.
+Thank you!  I know your new year is a few weeks away still ;-)
 
-> But if I get the answer like, "This clock is also sourced to PHY directly", then
-> we may need to add dual power domain for PHY (both GDSC and MX).
+> > -void __lockfunc queued_write_lock_slowpath(struct qrwlock *lock)
+> > +void __lockfunc queued_write_lock_slowpath(struct qrwlock *lock, bool irq)
+> >   {
+> >   	int cnts;
+> > @@ -82,7 +83,11 @@ void __lockfunc queued_write_lock_slowpath(struct qrwlock *lock)
+> Also a new state showed up after the current design:
+> 1. locked flag with _QW_WAITING, while irq enabled.
+> 2. And this state will be only in interrupt context.
+> 3. lock->wait_lock is hold by the write waiter.
+> So per my understanding, a different behavior also needed to be done in
+> queued_write_lock_slowpath:
+>   when (unlikely(in_interrupt())) , get the lock directly.
 
-Right.
- 
-> > Now, you may or may not want to describe the above in the devicetree,
-> > but this makes it sound like you're trying to work around an issue with
-> > the current Linux implementation.
-> > 
-> 
-> Adding MX domain to PHY in devicetree is definitely not a workaround.
+I don't think so.  Remember that write_lock_irq() can only be called in
+process context, and when interrupts are enabled.
 
-I was referring to the fact that the GDSC domain also appears to be
-needed even if that may possible get in the way when trying to implement
-suspend.
+> So needed to be done in release path. This is to address Hillf's concern on
+> possibility of deadlock.
 
-> It is the
-> actual hardware representation. MX is the always on domain, and when CX collapse
-> happens during suspend state, it will ensure that all the analog components
-> (like PHY) are kept powered on. Otherwise, we will see link down issues.
+Hillf's concern is invalid.
 
-But if it's an always-on domain as you say, it should not be shut down,
-right? Perhaps you still want it described in DT for some other reason.
- 
-> But, I heard from Qcom that _only_ on this platform, MX is not backing the PCIe
-> PHY. I can correlate that with my encounter with PCIe issues after forcing CX
-> power collapse.
+> >   	/* When no more readers or writers, set the locked flag */
+> >   	do {
+> > +		if (irq)
+> > +			local_irq_enable();
+> I think write_lock_irqsave also needs to be take account. So
+> loal_irq_save(flags) should be take into account here.
 
-Ok, but that seems to imply that this patch is definitely *not* correct
-(for sc8280xp)?
+If we did want to support the same kind of spinning with interrupts
+enabled for write_lock_irqsave(), we'd want to pass the flags in
+and do local_irq_restore(), but I don't know how we'd support
+write_lock_irq() if we did that -- can we rely on passing in 0 for flags
+meaning "reenable" on all architectures?  And ~0 meaning "don't
+reenable" on all architectures?
 
-Johan
+That all seems complicated, so I didn't do that.
+
 
