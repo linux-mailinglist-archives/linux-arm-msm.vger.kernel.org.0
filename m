@@ -1,113 +1,254 @@
-Return-Path: <linux-arm-msm+bounces-6253-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20F21821FC5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 17:58:02 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92486821FDB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 18:03:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AE615283AEF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 16:58:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 60649B21E22
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 17:03:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 980EA154BD;
-	Tue,  2 Jan 2024 16:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 526A314F9B;
+	Tue,  2 Jan 2024 17:03:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GoCxToQu"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SPZKEdcZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC2315488
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jan 2024 16:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871D615480
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jan 2024 17:03:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-5e778e484dbso82101247b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jan 2024 08:57:34 -0800 (PST)
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-55676f1faa9so1142750a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jan 2024 09:03:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704214654; x=1704819454; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=VVh7m29Ky9WukziqxPzevKkxIvdB0PDoPjGRWVMZV14=;
-        b=GoCxToQuXJ99CCfr5iMWA63EfTF0f/Yimi0ufjs5iv0aNPM+SOh68DIHyKv3N6r9oB
-         DD3OuGiufNXVYbFiaQ1xfyaqG4OpssyYv66cWnLwjKu83WHE/gAmRxp+HkORBOAGJCWx
-         JTkm5CpVfYlNjm3COcY7U3xJi/5md8Qwqv9VIa3i8QBgFSZRKh+pUtGGe9f2E1bKQJsY
-         uVcTGXsAMzVN4ihifHLHWv0fotUw9v9zwCKVl3Db5I5nX2BCj43O8u/LQMp6lDa+25mo
-         L9fAKUXezj7kBFmPxL92XOW3v6Te+vXKAx2n9asNlRIY+GmtMAYG3kKJthQnVdUEKsxP
-         pTjg==
+        d=linaro.org; s=google; t=1704215019; x=1704819819; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vXy+piCF6laRl4RirosdnXKxrWevr0U2OrR6U+dUeHM=;
+        b=SPZKEdcZ7W8C9T+9a65+bg4mv0Lrh3YhW45sLhSY+YWNU+VuuethT0wZLxtKwXPZ4r
+         MbkxHwdrzXJP47ipl2bq1zCK0Ac9WgfzbhQoGmQ+WibVKME0lcG4vKCm9CqlmFVWCsV2
+         V6L5fNS8jCWKxbQ6qhIK2gLkCIAdO71aYjx/tnhTOR6xSUc2lLlxg/TRABdDHste10Wq
+         j1waizz5JVKa9605qePYb+gESvPPqi+SmDgKgQrjABzFwHoNfsgN4aJooJZFId+JZJWq
+         b1c09dBHBU9jtlY6U7XvYdOf9QV0HKcWGSaLACo2VMf7DywDXfIYi/v0wuMbVCkKccO5
+         DyTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704214654; x=1704819454;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VVh7m29Ky9WukziqxPzevKkxIvdB0PDoPjGRWVMZV14=;
-        b=q9h9+1tW9xSMglTZAmSPFgQ9SSJQHBUPw/Knsj6HN+sAd9KmjKYJ4TeA1WLxRLEwQ/
-         beGm5hFyiW3UJo3u9o5X9HgdITHtnkpbyXojQSoiPf1v1LvW5SuqUymwG4o1JIlmLIyd
-         Z5A9/251MeApwPwllhvNo3ZFu8RM70izSeDyfOtvZ4qcAhX4Lprk6zhaHCPGMy24GAyS
-         b1AYjnoEQPLmGO6lwB6gUACq9FCQXyk+l7PzK2n5yNZnieEVmkKKPq+leuTprHGvslRL
-         hsyfSfupLJyDS7gK0ysPsdwZQmWFx9TpqkoERaMTXsGIzxtUBsPUDkZSCXNIN9lOilqs
-         GY9Q==
-X-Gm-Message-State: AOJu0YzWMUl7S+lfYCPH7rulMANvOYAvaJ+Y9+lBqfVNPjIT+MvfH/B4
-	lakAbUhGSqbdkXTZ/Zq5o7GTfRSkLi5NZQrXKOJG6roGSMK01g==
-X-Google-Smtp-Source: AGHT+IG3cKejQU1lw6kB8D1slP13fhxQrPArTQrPYYY9m76Qm4R78xwRcBK6XSjxNJfA9eOGogYLST+VoA5oeAJFa5c=
-X-Received: by 2002:a81:b718:0:b0:5eb:bfac:69c with SMTP id
- v24-20020a81b718000000b005ebbfac069cmr8701530ywh.45.1704214654000; Tue, 02
- Jan 2024 08:57:34 -0800 (PST)
+        d=1e100.net; s=20230601; t=1704215019; x=1704819819;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vXy+piCF6laRl4RirosdnXKxrWevr0U2OrR6U+dUeHM=;
+        b=fLF306xZMZb20UCjepFj4dagbsSNki9Qbmf35ghWHuwt6ezAc6E7OeZeBLkL0Mtz5o
+         AjGc/BQ3SeHa0mEdXbfAEPDrDIoD7/yLahBVWqXCioK/gPfLejYxXwTeujytaH3dDScU
+         cgA5U+ALy6wkkjSxJ/jFwLCYRsEqn0LO99rt3E1cVioef3EQFsS21BeyBTbzZrraxhoz
+         3TEZVmVW4MRu2WWH/KEEdxFwYIazUa0ACMX3tdidRD1LyUMA5IjrD5KNFU341wYRo1gf
+         OZrvsNXBpsSJmF2rdfcxKffgczSuJVjgHsm8NbXyVSsjSp0+lqLZEHSvXdvNpIBChh0t
+         LZqA==
+X-Gm-Message-State: AOJu0YznU/kwCMRbi2Fju1w6qxPp448yluedR3GE9I2ucoHNZjQXChN7
+	+UUXuYHRnIxSHrAIs8RLsEefBMB+4+/Msg==
+X-Google-Smtp-Source: AGHT+IE0rCUtRWDEA2A9NkB46vryE752x23H6ZV2iEco2BKL9wfkDZNRGtiJD0FyJyJqlqzOhx09eg==
+X-Received: by 2002:a50:d65d:0:b0:553:f8be:9754 with SMTP id c29-20020a50d65d000000b00553f8be9754mr10257514edj.50.1704215018842;
+        Tue, 02 Jan 2024 09:03:38 -0800 (PST)
+Received: from [192.168.199.125] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
+        by smtp.gmail.com with ESMTPSA id en22-20020a056402529600b00553830eb2fcsm15987959edb.64.2024.01.02.09.03.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Jan 2024 09:03:38 -0800 (PST)
+Message-ID: <07b20408-4b45-48c3-9356-730a7a827743@linaro.org>
+Date: Tue, 2 Jan 2024 18:03:36 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231211085830.25380-1-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20231211085830.25380-1-krzysztof.kozlowski@linaro.org>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Tue, 2 Jan 2024 17:56:58 +0100
-Message-ID: <CAPDyKFo3kpTrKctYX0oZeCxSeBF1ehLmEtFoE4HQfvG0wnEh=w@mail.gmail.com>
-Subject: Re: [PATCH 1/3] dt-bindings: mmc: sdhci-msm: document dedicated
- IPQ4019 and IPQ8074
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Bhupesh Sharma <bhupesh.sharma@linaro.org>, 
-	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] PCI: qcom: Reshuffle reset logic in 2_7_0 .init
+Content-Language: en-US
+To: Johan Hovold <johan@kernel.org>
+Cc: Manivannan Sadhasivam <mani@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ Stanimir Varbanov <svarbanov@mm-sol.com>,
+ Andrew Murray <amurray@thegoodpenguin.co.uk>, Vinod Koul <vkoul@kernel.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20231227-topic-8280_pcie-v1-0-095491baf9e4@linaro.org>
+ <20231227-topic-8280_pcie-v1-1-095491baf9e4@linaro.org>
+ <ZY7R581pgn3uO6kk@hovoldconsulting.com>
+ <fa0fbadc-a7c3-4bea-bed7-0006db0616dc@linaro.org>
+ <ZY7l828-mSGXVwrk@hovoldconsulting.com>
+ <598ede70-bc01-4137-b68b-981c3d420735@linaro.org>
+ <ZZPiwk1pbhLyfthB@hovoldconsulting.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <ZZPiwk1pbhLyfthB@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, 11 Dec 2023 at 09:58, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> Add dedicated compatibles for the Qualcomm IPQ4019 and IPQ8074 SoCs,
-> because usage of generic qcom,sdhci-msm-v4 compatible alone is
-> deprecated.
->
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On 2.01.2024 11:17, Johan Hovold wrote:
+> On Sat, Dec 30, 2023 at 02:16:18AM +0100, Konrad Dybcio wrote:
+>> On 29.12.2023 16:29, Johan Hovold wrote:
+>>> [ Again, please remember to add a newline before you inline comments to
+>>> make you replies readable. ]
+>>>
+>>> On Fri, Dec 29, 2023 at 04:01:27PM +0100, Konrad Dybcio wrote:
+>>>> On 29.12.2023 15:04, Johan Hovold wrote:
+>>>>> On Wed, Dec 27, 2023 at 11:17:19PM +0100, Konrad Dybcio wrote:
+>>>>>> At least on SC8280XP, if the PCIe reset is asserted, the corresponding
+>>>>>> AUX_CLK will be stuck at 'off'.
+>>>>>
+>>>>> No, this path is exercised on every boot without the aux clock ever
+>>>>> being stuck at off. So something is clearly missing in this description.
+>>>
+>>>> That's likely because the hardware has been initialized and not cleanly
+>>>> shut down by your bootloader. When you reset it, or your bootloader
+>>>> wasn't so kind, you need to start initialization from scratch.
+>>>
+>>> What does that even mean? I'm telling you that this reset is asserted on
+>>> each boot, on all sc8280xp platforms I have access to, and never have I
+>>> seen the aux clk stuck at off.
+>>>
+>>> So clearly your claim above is too broad and the commit message is
+>>> incorrect or incomplete.
+>>
+>> diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
+>> index 0b7801971dc1..6650bd6af5e3 100644
+>> --- a/drivers/clk/qcom/gcc-sc8280xp.c
+>> +++ b/drivers/clk/qcom/gcc-sc8280xp.c
+>> @@ -7566,6 +7566,18 @@ static int gcc_sc8280xp_probe(struct platform_device *pdev)
+>>         if (ret)
+>>                 goto err_put_rpm;
+>>  
+>> +       int val;
+>> +       regmap_read(regmap, 0xa0000, &val);
+>> +       pr_err("GCC_PCIE_3A_BCR = 0x%x\n", val);
+>> +       regmap_read(regmap, 0xa00f0, &val);
+>> +       pr_err("GCC_PCIE_3A_LINK_DOWN_BCR = 0x%x\n", val);
+>> +       regmap_read(regmap, 0xa00fc, &val);
+>> +       pr_err("GCC_PCIE_3A_NOCSR_COM_PHY_BCR = 0x%x\n", val);
+>> +       regmap_read(regmap, 0xa00e0, &val);
+>> +       pr_err("GCC_PCIE_3A_PHY_BCR = 0x%x\n", val);
+>> +       regmap_read(regmap, 0xa00e4, &val);
+>> +       pr_err("GCC_PCIE_3A_PHY_NOCSR_COM_PHY_BCR = 0x%x\n", val);
+>> +
+>>         pm_runtime_put(&pdev->dev);
+>>  
+>>         return 0;
+>>
+>>
+>> [root@sc8280xp-crd ~]# dmesg | grep BCR
+>> [    2.500245] GCC_PCIE_3A_BCR = 0x0
+>> [    2.500250] GCC_PCIE_3A_LINK_DOWN_BCR = 0x0
+>> [    2.500253] GCC_PCIE_3A_NOCSR_COM_PHY_BCR = 0x0
+>> [    2.500255] GCC_PCIE_3A_PHY_BCR = 0x0
+>> [    2.500257] GCC_PCIE_3A_PHY_NOCSR_COM_PHY_BCR = 0x0
+>>
+>>
+>> 0 meaning "not asserted".
+> 
+> We're clearly talking past each other. When I'm saying reset is asserted
+> on each boot, I'm referring to reset being asserted in
+> qcom_pcie_init_2_7_0(), whereas you appear to be referring to whether
+> the reset has been left asserted by the bootloader when the driver
+> probes.
 
-Applied for next, thanks!
+OK, "boot" meant "booting the device" to me, not the PCIe controller.
 
-Kind regards
-Uffe
+> 
+> I understand what you meant to say now, but I think you should rephrase:
+> 
+> 	At least on SC8280XP, if the PCIe reset is asserted, the
+> 	corresponding AUX_CLK will be stuck at 'off'.
+> 
+> because as it stands, it sounds like the problem happens when the driver
+> asserts reset.
 
+Does this sound good?
 
-> ---
->  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> index 86fae733d9a0..c24c537f62b1 100644
-> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> @@ -22,6 +22,8 @@ properties:
->        - items:
->            - enum:
->                - qcom,apq8084-sdhci
-> +              - qcom,ipq4019-sdhci
-> +              - qcom,ipq8074-sdhci
->                - qcom,msm8226-sdhci
->                - qcom,msm8953-sdhci
->                - qcom,msm8974-sdhci
-> --
-> 2.34.1
->
+"At least on SC8280XP, trying to enable the AUX_CLK associated with
+a PCIe host fails if the corresponding PCIe reset is asserted."
+
+> 
+>> PCIE3A is used for WLAN on the CRD, btw.
+> 
+> You meant to say WWAN (modem).
+
+Right :)
+
+> 
+>>>>>> Assert the reset (which may end up being a NOP if it was previously
+>>>>>> asserted) and de-assert it back *before* turning on the clocks to avoid
+>>>>>> such cases.
+>>>>>>
+>>>>>> In addition to that, in case the clock bulk enable fails, assert the
+>>>>>> RC reset back, as the hardware is in an unknown state at best.
+>>>>>
+>>>>> This is arguably a separate change, and not necessarily one that is
+>>>>> correct either
+>>>
+>>>> If the clock enable fails, the PCIe hw is not in reset state, ergo it
+>>>> may be doing "something", and that "something" would eat non-zero power.
+>>>> It's just cleaning up after yourself.
+>>>
+>>> How can it do something without power and clocks?
+>>
+>> Fair point.
+>>
+>> As far as power goes, the RC hangs off CX, which is on whenever the
+>> system is not in power collapse. As for clocks, at least parts of it
+>> use the crystal oscillator, not sure if directly.
+>>
+>>> And leaving reset
+>>> asserted for non-powered devices is generally not a good idea.
+>>
+>> Depends on the hw.
+> 
+> That's why I said "generally".
+
+I'll try to get a proper answer for this, or otherwise see if there's
+any change in power draw / functionality.
+
+Konrad
 
