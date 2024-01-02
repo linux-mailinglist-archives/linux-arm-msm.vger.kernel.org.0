@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73BFA821FF2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 18:07:05 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 807B8821FF8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 18:07:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8B37E1C2242F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 17:07:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B8F94B223EB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 17:07:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A070514F9D;
-	Tue,  2 Jan 2024 17:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9112415491;
+	Tue,  2 Jan 2024 17:07:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MsMrrgP2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bJyFDesC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE8215482
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jan 2024 17:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036471548D
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jan 2024 17:07:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a2864eb81c9so60651366b.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jan 2024 09:06:57 -0800 (PST)
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a27733ae1dfso432955666b.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jan 2024 09:07:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704215216; x=1704820016; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1704215237; x=1704820037; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
         bh=7x5a+ClF8n6Kmc4EpbUBTFd5BFTJQd+3r73zChoBoAc=;
-        b=MsMrrgP2P0iu2soc0DVZM9soh+56zrlIhsRg/k2VSn3qxS9K75JorA6iORaNLpcDjr
-         ZauAeSuWCPn3wIUryHXR3HdyQoIo6VAI6eP4Et+tbX8cuSnwki7DAod85kbDra37KUC1
-         GZ1PO7H1O0QPfqd0TjD/XX+HoscNdTXPWknSV0F1HrxD2+1ePf2P6x1Yke6L/7SSrEJ4
-         1y6YndY4PdTQtHj5U0sz/13K4uhViwEi8DsvLRSo7GeNeb/1209ayNSELd6QKFZcmlRy
-         +oHmAFEBpIBD5nqYrQtLZa9sgT0ZNPUqNbR9GS0PJj/XNK6jNra5Y/7W/Y9RMqgAIumt
-         05Tw==
+        b=bJyFDesCmSIYnOLhcCkP9Q5k87Liq/2Ibk3t4/DSpy99+x2HISjHWSrfLgOggbD6wB
+         YW7XsHKmr5jPrYSqTO2sJUKA959KRwVkfWMhnGIHADCkLOysQvlDJ3v14ZqRMQ096WjI
+         5E76O79IZH9G6SjWbE8QaR9m8/E6jSD8spu2wI9ZqV2vIVIkz/4/r12S9ko+S89tg7zP
+         JnUd3jGHmrk0sjBgzyZJ/YAjrolfPt1VZlFAgq3DMWtvBsa7R7yT5qcTt3vvBCcyKqFY
+         yTjQ4yrxebUVFeklKD5qSJVNikh2e1JeM9lEWgftQ1bfUp2d+DtPvcBp8hlW7UWraq4s
+         gIcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704215216; x=1704820016;
+        d=1e100.net; s=20230601; t=1704215237; x=1704820037;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
         bh=7x5a+ClF8n6Kmc4EpbUBTFd5BFTJQd+3r73zChoBoAc=;
-        b=q7ZgkIvnGZhUV/mfr75rJp0QonCA8YWwZf42GbMb7SoBGQnz3J8yqqfPtAYSDqYlnJ
-         8w2/V9bBYNAUiI1kTRT7sDFK4YSaL+j9VZIl18+3aw54wIaUvZ68r0NwoytJrqOIY3BD
-         hKOthYNZ2+tr4ag2Y8kZoExqB77YjX3K1ZsM4vJf7N/chk+Ie+DCKrVO2UBMmxvaD2pN
-         EfaHBGq4hU3Je2csUPVMBO5JpPgtaUSe1Iy2xeS7dVVpjsUU6Ja8PXzCM97qecbzWZy+
-         V9/4g+O3xo0nnLhavEOHtGZvtNYwyjQrewCMHeb8ArZtpU1AEm7F2MWDCVlZA/yq+Am4
-         nzPw==
-X-Gm-Message-State: AOJu0YwmZ7C7v6I6q+0J4d//UrumYsCLj1VCOfsUVc+J7QVFTm5uBZ2f
-	ec9fIqCPgiF0yHfKrldBSJxtwNkTdJN+OA==
-X-Google-Smtp-Source: AGHT+IGiK/5/wwfNtFHQSaKYEe1xwkHj9EHWNn/VY1YqiFq1sr+Ogk86t8sK8wmg35+mhK3RZwzlNg==
-X-Received: by 2002:a17:906:f595:b0:a27:f465:298c with SMTP id cm21-20020a170906f59500b00a27f465298cmr2410876ejd.124.1704215216536;
-        Tue, 02 Jan 2024 09:06:56 -0800 (PST)
+        b=KujpIOE+nbh735weF/jVxK5caskj9qP5e4yjeuMk3v+6Itig6EGdDtBGXjLAd1sk4u
+         1GX99GQE4zsRSjvfsNjfowTBUGArEPif8ODpuGkPWaNxO0pncUWGnjpv4BPdbNlVBjoO
+         nNnDuNgt0lUhs22a4DuSOj7SbYlq2QtTtq5cwtFvKDYuysV5xm8FT5u2K5yXm3A/CSUQ
+         SSdicCpToW5QtDu3NYLIM978hLVZ5bhkZL04U82xZRPt5fr2Q64AyYLwgZMABloJzYqp
+         2hUlnWwE/2mulihheAbFXptBpSUCbFL6JOTEIbza2ViyUh6qsUPjNhpOEi1Uasz2kKAR
+         ZHfQ==
+X-Gm-Message-State: AOJu0Ywz2axVKxkg89OEEuXRwsnPtLohQZvDXoJQaX9JkTxg8QFKFpS+
+	+Jqdg+zMBG1unVOQKcRpSG+BNjBNkBrvhw==
+X-Google-Smtp-Source: AGHT+IFGyyuPcNMWjM7WEHGy3VZ8M5eyngLvuMP1GsOKxch67Xpc083uFpKSGVnxvc9bMU4Ldex4jQ==
+X-Received: by 2002:a17:906:69a:b0:a26:9288:2a44 with SMTP id u26-20020a170906069a00b00a2692882a44mr4332398ejb.62.1704215237259;
+        Tue, 02 Jan 2024 09:07:17 -0800 (PST)
 Received: from [192.168.199.125] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
-        by smtp.gmail.com with ESMTPSA id ex18-20020a170907955200b00a26abea03bbsm11543368ejc.141.2024.01.02.09.06.55
+        by smtp.gmail.com with ESMTPSA id ex18-20020a170907955200b00a26abea03bbsm11543368ejc.141.2024.01.02.09.07.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Jan 2024 09:06:56 -0800 (PST)
-Message-ID: <cf58b681-b4c5-4d8e-929e-5ba312344939@linaro.org>
-Date: Tue, 2 Jan 2024 18:06:55 +0100
+        Tue, 02 Jan 2024 09:07:16 -0800 (PST)
+Message-ID: <dcc078f2-f45f-4c48-8879-736cc75ea26a@linaro.org>
+Date: Tue, 2 Jan 2024 18:07:15 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,7 +66,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 08/22] ARM: dts: qcom: msm8960: use SoC-specific
+Subject: Re: [PATCH v7 09/22] ARM: dts: qcom: ipq4019: use SoC-specific
  compatibles for SAW2 devices
 Content-Language: en-US
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
@@ -77,7 +77,7 @@ To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org
 References: <20240102-saw2-spm-regulator-v7-0-0472ec237f49@linaro.org>
- <20240102-saw2-spm-regulator-v7-8-0472ec237f49@linaro.org>
+ <20240102-saw2-spm-regulator-v7-9-0472ec237f49@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -114,7 +114,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240102-saw2-spm-regulator-v7-8-0472ec237f49@linaro.org>
+In-Reply-To: <20240102-saw2-spm-regulator-v7-9-0472ec237f49@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
