@@ -1,122 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-6224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6225-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC7668218CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 10:15:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CF6C4821959
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 11:02:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9423A283685
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 09:15:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6B738282E45
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 10:02:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 686DE612B;
-	Tue,  2 Jan 2024 09:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7262CA69;
+	Tue,  2 Jan 2024 10:02:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="qbjbK+L5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZBm9+e6E"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C3B2CA69;
-	Tue,  2 Jan 2024 09:15:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=tlEfMQFt5gK7xTvm4OYyFW6oyrGcWRnYRgh3+dnfWXQ=; b=qbjbK+L5aYe/lDZscjtenI5cjW
-	dZL/n71TVQj2zphfxq3RZ+cNggYEWOSaYIL6eYvVx5t5XbeQtXC5MfvkPEbeyWhD7ffyRT3M3U/Vd
-	VVSFZvNRo70tslTpjdD38Sg+/jUCGJ+dlQkKzla59Tw98eiFplHqpLYGh8x1cESshIjA8i2C7Sn5M
-	muL2EGVBlVq2u1U2wLBjpcL4+E4cCtxzD6oY/ijyD7c2z9wI6Hy3ySQPY+FZTT4GhfgPtObTsn+Mf
-	4GMgFwlfji7YX5rkT/+U0nnZrO6GArNuSqp3UnB6eP/3Dq/eakRRSpeSc0fIN9D8KevfYWMzxiVW4
-	BH4OtoIw==;
-Received: from willy by casper.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1rKaqw-009pns-In; Tue, 02 Jan 2024 09:14:26 +0000
-Date: Tue, 2 Jan 2024 09:14:26 +0000
-From: Matthew Wilcox <willy@infradead.org>
-To: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>
-Cc: "Eric W. Biederman" <ebiederm@xmission.com>,
-	Hillf Danton <hdanton@sina.com>, kernel@quicinc.com,
-	quic_pkondeti@quicinc.com, keescook@chromium.or,
-	viro@zeniv.linux.org.uk, brauner@kernel.org, oleg@redhat.com,
-	dhowells@redhat.com, jarkko@kernel.org, paul@paul-moore.com,
-	jmorris@namei.org, serge@hallyn.com, linux-mm@kvack.org,
-	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
-	keyrings@vger.kernel.org, linux-security-module@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] kernel: Introduce a write lock/unlock wrapper for
- tasklist_lock
-Message-ID: <ZZPT8hMiuT1pCBP7@casper.infradead.org>
-References: <20231213101745.4526-1-quic_aiquny@quicinc.com>
- <ZXnaNSrtaWbS2ivU@casper.infradead.org>
- <87o7eu7ybq.fsf@email.froward.int.ebiederm.org>
- <ZY30k7OCtxrdR9oP@casper.infradead.org>
- <cd0f6613-9aa9-4698-bebe-0f61286d7552@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B182CA64;
+	Tue,  2 Jan 2024 10:02:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4028wxAp031023;
+	Tue, 2 Jan 2024 10:02:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=U/qIkXpqNy15nekMfvk/AQomDo1b68nmO+3poX3Uda0=; b=ZB
+	m9+e6E1iaENa7KrTz2VptTU7k8/J5qh6JLnl2AaNjd3r5AlULLR/T0nEES7cEPVU
+	a73He4TPM1LBIwwGw4yUeHx6t86YDtgS4pO+rFOlN7cFdflMen6A/GrItgesLD3G
+	CZH9kM6o8Xc1GQuyTJre3JiMBqLI8oKfVHZL9QMaxL6fdXfsmgxQz6NnhtE0gGGg
+	VbqlEkmEOC90t/WMHDp4bd9dpJRKR/9qz4fnZVWINO0VUZyYbASrZa/XdTa7p3sd
+	E3FlEBr1Oy8v7J1BqR7E6lA0K1Dr74fNaeUTr980+VOeSnfzpHM7v1JAo6EZDCJx
+	HByu9MyZkBTf7PeKDdtQ==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vccc1gdgq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 02 Jan 2024 10:02:10 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 402A29iZ016088
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 2 Jan 2024 10:02:09 GMT
+Received: from [10.239.132.150] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 2 Jan
+ 2024 02:02:03 -0800
+Message-ID: <dce0f577-b08e-4eed-8457-9ea5fefbd8c9@quicinc.com>
+Date: Tue, 2 Jan 2024 18:01:59 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cd0f6613-9aa9-4698-bebe-0f61286d7552@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/14] arm64: dts: qcom: msm8916: Drop RPM bus clocks
+Content-Language: en-US
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        Mathieu Poirier
+	<mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Sibi Sankar
+	<quic_sibis@quicinc.com>, Will Deacon <will@kernel.org>,
+        Robin Murphy
+	<robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>
+CC: Marijn Suijten <marijn.suijten@somainline.org>,
+        Alexey Minnekhanov
+	<alexeymin@postmarketos.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+        <linux-usb@vger.kernel.org>
+References: <20230721-topic-rpm_clk_cleanup-v2-0-1e506593b1bd@linaro.org>
+ <20230721-topic-rpm_clk_cleanup-v2-1-1e506593b1bd@linaro.org>
+ <bd11d1b1-efe5-4f96-43e7-163fca5d3278@linaro.org>
+ <ac501bcc-80a1-4b65-ba24-272152d1c95c@linaro.org>
+ <7b500bba-3091-f425-a60d-e58a3d9e4c1a@linaro.org>
+ <9a0ab5a9-d4d8-41b8-94b0-9c62bd686254@linaro.org>
+ <30bb6068-6bb8-9a2c-af19-b989960d0be9@linaro.org>
+ <70b19df7-c70c-41ea-ac4c-8af6956f4fc6@linaro.org>
+From: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>
+In-Reply-To: <70b19df7-c70c-41ea-ac4c-8af6956f4fc6@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: wcsyJrzxICN3wHO1NZ9_HEVWn06ctdHI
+X-Proofpoint-ORIG-GUID: wcsyJrzxICN3wHO1NZ9_HEVWn06ctdHI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=921
+ lowpriorityscore=0 malwarescore=0 spamscore=0 clxscore=1011
+ impostorscore=0 adultscore=0 phishscore=0 suspectscore=0 mlxscore=0
+ bulkscore=0 priorityscore=1501 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2311290000 definitions=main-2401020076
 
-On Tue, Jan 02, 2024 at 10:19:47AM +0800, Aiqun Yu (Maria) wrote:
-> On 12/29/2023 6:20 AM, Matthew Wilcox wrote:
-> > On Wed, Dec 13, 2023 at 12:27:05PM -0600, Eric W. Biederman wrote:
-> > > Matthew Wilcox <willy@infradead.org> writes:
-> > > > I think the right way to fix this is to pass a boolean flag to
-> > > > queued_write_lock_slowpath() to let it know whether it can re-enable
-> > > > interrupts while checking whether _QW_WAITING is set.
-> > > 
-> > > Yes.  It seems to make sense to distinguish between write_lock_irq and
-> > > write_lock_irqsave and fix this for all of write_lock_irq.
-> > 
-> > I wasn't planning on doing anything here, but Hillf kind of pushed me into
-> > it.  I think it needs to be something like this.  Compile tested only.
-> > If it ends up getting used,
-> Happy new year!
 
-Thank you!  I know your new year is a few weeks away still ;-)
 
-> > -void __lockfunc queued_write_lock_slowpath(struct qrwlock *lock)
-> > +void __lockfunc queued_write_lock_slowpath(struct qrwlock *lock, bool irq)
-> >   {
-> >   	int cnts;
-> > @@ -82,7 +83,11 @@ void __lockfunc queued_write_lock_slowpath(struct qrwlock *lock)
-> Also a new state showed up after the current design:
-> 1. locked flag with _QW_WAITING, while irq enabled.
-> 2. And this state will be only in interrupt context.
-> 3. lock->wait_lock is hold by the write waiter.
-> So per my understanding, a different behavior also needed to be done in
-> queued_write_lock_slowpath:
->   when (unlikely(in_interrupt())) , get the lock directly.
+On 9/13/2023 7:14 PM, Konrad Dybcio wrote:
+> On 13.09.2023 13:14, Krzysztof Kozlowski wrote:
+>> On 13/09/2023 12:48, Konrad Dybcio wrote:
+>>> On 13.09.2023 10:53, Krzysztof Kozlowski wrote:
+>>>> On 13/09/2023 10:47, Konrad Dybcio wrote:
+>>>>> On 13.09.2023 09:07, Krzysztof Kozlowski wrote:
+>>>>>> On 12/09/2023 15:31, Konrad Dybcio wrote:
+>>>>>>> These clocks are now handled from within the icc framework and are
+>>>>>>
+>>>>>> That's a driver behavior, not hardware.
+>>>>> I believe we've been over this already..
+>>>>>
+>>>>> The rationale behind this change is: that hardware, which falls
+>>>>> under the "interconnect" class, was previously misrepresented as
+>>>>> a bunch of clocks. There are clocks underneath, but accessing them
+>>>>> directly would be equivalent to e.g. circumventing the PHY subsystem
+>>>>> and initializing your UFS PHY from within the UFS device.
+>>>>
+>>>> And every time one write such commit msg, how should we remember there
+>>>> is some exception and actually it is about clock representation not CCF
+>>>> or ICC framework.
+>>> So is your reply essentially "fine, but please make it clear in
+>>> each commit message"?
+>>
+>> I am fine with this change. If commit msg had such statement, I would
+>> not have doubts :/
+> Ok, I'll resend, thanks for confirming!
+Is there any one continue working on this?
 
-I don't think so.  Remember that write_lock_irq() can only be called in
-process context, and when interrupts are enabled.
+The bindings already merged while the dtb is not consistent with current 
+binding files. So dt bindings checks are failed actually.
+> 
+> Konrad
+> 
+> _______________________________________________
+> linux-arm-kernel mailing list
+> linux-arm-kernel@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
 
-> So needed to be done in release path. This is to address Hillf's concern on
-> possibility of deadlock.
-
-Hillf's concern is invalid.
-
-> >   	/* When no more readers or writers, set the locked flag */
-> >   	do {
-> > +		if (irq)
-> > +			local_irq_enable();
-> I think write_lock_irqsave also needs to be take account. So
-> loal_irq_save(flags) should be take into account here.
-
-If we did want to support the same kind of spinning with interrupts
-enabled for write_lock_irqsave(), we'd want to pass the flags in
-and do local_irq_restore(), but I don't know how we'd support
-write_lock_irq() if we did that -- can we rely on passing in 0 for flags
-meaning "reenable" on all architectures?  And ~0 meaning "don't
-reenable" on all architectures?
-
-That all seems complicated, so I didn't do that.
-
+-- 
+Thx and BRs,
+Aiqun(Maria) Yu
 
