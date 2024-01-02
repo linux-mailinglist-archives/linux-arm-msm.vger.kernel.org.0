@@ -1,124 +1,283 @@
-Return-Path: <linux-arm-msm+bounces-6230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1E77821ACD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 12:20:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B5E41821B58
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 13:04:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6BDC8B20C4D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 11:19:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 137ADB211DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 12:04:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E48BADF58;
-	Tue,  2 Jan 2024 11:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BADBEED0;
+	Tue,  2 Jan 2024 12:04:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tz32HQYQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Y67F9vST"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DEDADF4F
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jan 2024 11:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891FAEADC
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jan 2024 12:04:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-5e784ce9bb8so69174897b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jan 2024 03:19:54 -0800 (PST)
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-6da6b0eb2d4so216164b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jan 2024 04:04:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704194393; x=1704799193; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1704197081; x=1704801881; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=RoCKJmLNypuO4iV/d5JKlLOsOW1MONyGLn7Yes5k0vo=;
-        b=tz32HQYQVbZ2HN3UzqvYXbOK0zZi2Z3DXTWybMhheUxmbYx1KStvWRQwLwFxROwxHQ
-         vGhTcbpbckGF8UonS12mCk4GZ3RvUVcZ7ejavo906iJLrLyz5Ey6LqzCgh+j26M2oArT
-         C7xdS0Y0B0KT/p/Rrdzn0nqJM84KOCC81qYX0jKAYqenKKgf6oUPXevzOzlKLf40R0Kb
-         zp1RbnbRD5yjquSc3pIwtU6PnqXKBvWk8lQSA6ct3PDoIPKZp56T/p21j7cVXRukxWru
-         NL+g/v/jNTY6zBw1QSgPG+2UiK2whREekej1W7+qvnkwZviag41NwT/ajOuZOWf9sXHR
-         B/YQ==
+        bh=N76OjKLOgBDpHQZl6Q0vBRfZ3upph3nCrsYFs7Cd9m8=;
+        b=Y67F9vSTmO4dvCOpTTm2s4rfFMMUN1CCAoef9Y9GnFNQ/ZFwAloE5oIgmxvcf3DkmY
+         TcGFcQnp7z1yieSYabOnGgI9LGdwemSH8RdTmmGXWNV++YtBFlvE5UOjHUZIZ0V/rkpO
+         EQlmX0w+CzXbTxS9DwblyQHysfIGTaFCItK20m8ZeOEXH23Y48IRZFkQvlKyUVlTYOTn
+         WYJ1zUtC/D3Io9ZN8GKowF8TuUqMo4REjn1sMEzFl7HYM1KjZN+c6pGz5Bsxp11vb/FC
+         xuf1M6SkrOa8YeOMw3P2lxOtn3L+AQJbzyXmBvMqvl/4qLNk2aIsr2mWAXvZyvZ5QvxQ
+         b7vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704194393; x=1704799193;
+        d=1e100.net; s=20230601; t=1704197081; x=1704801881;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=RoCKJmLNypuO4iV/d5JKlLOsOW1MONyGLn7Yes5k0vo=;
-        b=YPUI9asaF2bd1tXz3uzEzLyXET+1FgET5jjvR1Vd2jpgUZsnfBkJ61fGN2OO9DT93l
-         k4TAZBOSty8oVO1IEZozN+bN/N3V0YzMUPws01PJAPNzZLXk/BYayw3EhQ0LrmX/abRj
-         N/Bqi0rK5pI6Hg82eWGeEySosCvr0IQC7+kQ/ise13AQl0P4s5g1DdCzWUqKXlosCQ//
-         upiUc9lYOicPqu9eS5tXbdOtQyD7eAa2MGL7aKa0B+MoipgBAu3XtUkGD9RQM4pk2Knf
-         jlmFWJIypQMdgnthccraIqwYL+ucQCJDs1Lzr07KeW++HmRJx+K5yXQM7DbOUrKBFMsG
-         n91A==
-X-Gm-Message-State: AOJu0Ywb2kRNtooNtyUBH8tiEfkm7jTUTkYwGHLjAfdL0e6RIS4hByoH
-	eCFGywoV+MwW4pdlZ+hFHfvn9Uwj5cLPaztqm7+ilImJ6Ir2BA==
-X-Google-Smtp-Source: AGHT+IFrAuQNhlzlRQsyHyk5pUdcHgqhtVaR49+5kjXKeJirtWfRLQHeIOnR8NY/b/Nj/rCyLUP0Qobi4YuaFwRqXoI=
-X-Received: by 2002:a81:5fc1:0:b0:5d3:66ad:f8f6 with SMTP id
- t184-20020a815fc1000000b005d366adf8f6mr11600270ywb.24.1704194393450; Tue, 02
- Jan 2024 03:19:53 -0800 (PST)
+        bh=N76OjKLOgBDpHQZl6Q0vBRfZ3upph3nCrsYFs7Cd9m8=;
+        b=GP+LyzPADlvi6O+VlmWghGSVipKgkxvRblHZbrbmZ1Iu0TqPjZlO1pfw8EAlkVZ3mE
+         zGbbcPEAIdNBL4pin5pZlux6cxo1Ftf3ydBgBCo37GPZHzIGel72d+VUFhjzFltTjhHA
+         8IF1/cvBmtip/WVorreLHDyyHtPVKWT76GUGLJQpGxnBMQkxu2/ff3M8yleM3LjaI0Sr
+         gOZKJE/GVDcv5VYFQRz7NHjhbklql4A+wJCtDFS6b79D3P8Pq2Yl+RfmM787+oqEYsLy
+         eRZCvVqXFyvlV57y/Y7xFJh+pQZiP1xAQF5a7IevNvvz+A2lTmJ0Wy4k7t0USE1SeBCG
+         +cng==
+X-Gm-Message-State: AOJu0Yzd0bLJABWBmKI0Dz1w6SYK7NyOSTjwU6c7m0riiPXv1dTSXi5r
+	uAyG3wtj4B9kj9LL83Ugz8gvcjNqTKTcJEjVniqCm5kof17P5g==
+X-Google-Smtp-Source: AGHT+IEj8/MeJc6HIYq1FfB5T22NdbVaEpyPDqxtITGxOgk+wa/CS1OG2MvJd2fh+DCi0d0/v4YDh7LCmUKpEjM3f9E=
+X-Received: by 2002:a62:e717:0:b0:6d9:9de5:d121 with SMTP id
+ s23-20020a62e717000000b006d99de5d121mr5349441pfh.27.1704197080752; Tue, 02
+ Jan 2024 04:04:40 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231229121504.3479594-1-himanshu.bhavani@siliconsignals.io>
-In-Reply-To: <20231229121504.3479594-1-himanshu.bhavani@siliconsignals.io>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 2 Jan 2024 13:19:42 +0200
-Message-ID: <CAA8EJpp7XOxk3xuUzzuF+omMaQXUeeL_gm7ipFEwv+bfHdONMA@mail.gmail.com>
-Subject: Re: [PATCH] media: venus: use div64_u64() instead of do_div()
-To: Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>
-Cc: stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com, 
-	agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, 
-	mchehab@kernel.org, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
-	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
+References: <20231228093321.5522-1-quic_jinlmao@quicinc.com> <12ce6e5d-6e4d-fb99-eb82-dece97423bfb@arm.com>
+In-Reply-To: <12ce6e5d-6e4d-fb99-eb82-dece97423bfb@arm.com>
+From: Mike Leach <mike.leach@linaro.org>
+Date: Tue, 2 Jan 2024 12:04:29 +0000
+Message-ID: <CAJ9a7Vgi=ELOhXNF97KrBtV5ef8khwWqzWKevrYW2RtBBtsppw@mail.gmail.com>
+Subject: Re: [PATCH] coresight: Add coresight name support
+To: James Clark <james.clark@arm.com>
+Cc: Mao Jinlong <quic_jinlmao@quicinc.com>, Suzuki K Poulose <suzuki.poulose@arm.com>, 
+	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Tingwei Zhang <quic_tingweiz@quicinc.com>, Yuanfang Zhang <quic_yuanfang@quicinc.com>, 
+	Tao Zhang <quic_taozha@quicinc.com>, Leo Yan <leo.yan@linaro.org>, 
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 29 Dec 2023 at 14:16, Himanshu Bhavani
-<himanshu.bhavani@siliconsignals.io> wrote:
->
-> do_div() does a 64-by-32 division.
-> When the divisor is u64, do_div() truncates it to 32 bits, this means it
-> can test non-zero and be truncated to zero for division.
->
-> fix do_div.cocci warning:
-> do_div() does a 64-by-32 division, please consider using div64_u64 instead.
->
-> Signed-off-by: Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>
->
-> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-> index 44b13696cf82..81853eb2993a 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -409,13 +409,13 @@ static int venc_s_parm(struct file *file, void *fh, struct v4l2_streamparm *a)
->         out->capability = V4L2_CAP_TIMEPERFRAME;
->
->         us_per_frame = timeperframe->numerator * (u64)USEC_PER_SEC;
-> -       do_div(us_per_frame, timeperframe->denominator);
-> +       div64_u64(us_per_frame, timeperframe->denominator);
+As James mentions this is clearly a V2 of a previous patch - please
+mark as such in future.
 
-NAK! This is completely incorrect. do_div() is a macro and it changes
-the first argument. div64_u64 is a function, which returns the result
-instead of changing the first argument.
+Adding to what James has already said:-
 
-Please consider checking the code before sending a patch.
+1) Mapping between the canonical names used in the drivers and the
+information as to the precise device is as easy as running 'ls' on
+/sys/bus/coresight/devices:-
 
+root@linaro-developer:/home/linaro/cs-mods# ls -al /sys/bus/coresight/devices/
+total 0
+drwxr-xr-x 2 root root 0 Jan  2 11:27 .
+drwxr-xr-x 4 root root 0 Jan  2 11:27 ..
+lrwxrwxrwx 1 root root 0 Jan  2 11:27 cti_cpu0 ->
+../../../devices/platform/soc@0/858000.cti/cti_cpu0
+lrwxrwxrwx 1 root root 0 Jan  2 11:27 cti_cpu1 ->
+../../../devices/platform/soc@0/859000.cti/cti_cpu1
+lrwxrwxrwx 1 root root 0 Jan  2 11:27 cti_cpu2 ->
+../../../devices/platform/soc@0/85a000.cti/cti_cpu2
+lrwxrwxrwx 1 root root 0 Jan  2 11:27 cti_cpu3 ->
+../../../devices/platform/soc@0/85b000.cti/cti_cpu3
+lrwxrwxrwx 1 root root 0 Jan  2 11:27 cti_sys0 ->
+../../../devices/platform/soc@0/810000.cti/cti_sys0
+lrwxrwxrwx 1 root root 0 Jan  2 11:27 cti_sys1 ->
+../../../devices/platform/soc@0/811000.cti/cti_sys1
+lrwxrwxrwx 1 root root 0 Jan  2 11:27 etm0 ->
+../../../devices/platform/soc@0/85c000.etm/etm0
+lrwxrwxrwx 1 root root 0 Jan  2 11:27 etm1 ->
+../../../devices/platform/soc@0/85d000.etm/etm1
+lrwxrwxrwx 1 root root 0 Jan  2 11:27 etm2 ->
+../../../devices/platform/soc@0/85e000.etm/etm2
+lrwxrwxrwx 1 root root 0 Jan  2 11:27 etm3 ->
+../../../devices/platform/soc@0/85f000.etm/etm3
+lrwxrwxrwx 1 root root 0 Jan  2 11:42 funnel0 ->
+../../../devices/platform/soc@0/821000.funnel/funnel0
+lrwxrwxrwx 1 root root 0 Jan  2 11:42 funnel1 ->
+../../../devices/platform/soc@0/841000.funnel/funnel1
+lrwxrwxrwx 1 root root 0 Jan  2 11:42 replicator0 ->
+../../../devices/platform/soc@0/824000.replicator/replicator0
+lrwxrwxrwx 1 root root 0 Jan  2 11:42 tmc_etf0 ->
+../../../devices/platform/soc@0/825000.etf/tmc_etf0
+lrwxrwxrwx 1 root root 0 Jan  2 11:42 tmc_etr0 ->
+../../../devices/platform/soc@0/826000.etr/tmc_etr0
+
+
+2) The patch set must contain the usage and specification in the .yaml
+ file(s) of the property used.
+
+However, there was a standard property called 'name' which is
+deprecated - see
+https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html
+section 2.3.11. I do not believe that adding another 'name' property
+would be accepted by the DT maintainers.
+
+3) the 'device_node' structure has a 'name' field that contains the
+node name in the DT approved "node-name@unit-address" format.This
+contains whatever node names you used in the dt.  Why not use this if
+a change has to be made and find some conditional to activate it.
+
+However, given point 1) above, the problem is solved and the patch
+adds no new information not already available.
+
+Regards
+
+Mike
+
+On Thu, 28 Dec 2023 at 11:26, James Clark <james.clark@arm.com> wrote:
 >
->         if (!us_per_frame)
->                 return -EINVAL;
->
->         fps = (u64)USEC_PER_SEC;
-> -       do_div(fps, us_per_frame);
-> +       div64_u64(fps, us_per_frame);
->
->         inst->timeperframe = *timeperframe;
->         inst->fps = fps;
-> --
-> 2.25.1
 >
 >
+> On 28/12/2023 09:33, Mao Jinlong wrote:
+> > Add coresight name support for custom names which will be
+> > easy to identify the device by the name.
+> >
+>
+> I suppose this is more of a V2 because the subject is the same as the
+> one sent earlier this year. But it looks like the discussion on the
+> previous one wasn't resolved.
+>
+> With the main issues to solve being:
+>
+>  * It would be nice to use the existing root node name instead of adding
+>    a new property. But at the same time DT nodes are supposed to have
+>    generic names.
+>
+>  * This only works for DT and not ACPI
+>
+> To me it seems like adding the new property is just a "cheat" to get
+> around not being allowed to have a specific name for the root node. But
+> if we admit that we need a name I don't see the benefit of not putting
+> the name where the node is already named.
+>
+> Using the root node name at this point would also undo the hard coded
+> per-cpu naming of the CTI and ETM devices, so maybe it would be nice,
+> but it's just too late. That means that a new field is necessary.
+> Although that field could be a boolean like "use-root-name-for-display"
+> or something like that. In the end it probably doesn't really make a
+> difference whether it's that or a name string.
+>
+> And maybe the answer to the ACPI question is just that if anyone needs
+> it, they can add it in the future. It doesn't seem like it would
+> conflict with anything we do here.
+>
+> > Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> > ---
+> >  .../hwtracing/coresight/coresight-cti-core.c  | 20 ++++++++------
+> >  drivers/hwtracing/coresight/coresight-dummy.c | 10 ++++---
+> >  .../hwtracing/coresight/coresight-platform.c  | 27 +++++++++++++++++++
+> >  drivers/hwtracing/coresight/coresight-tpdm.c  | 10 ++++---
+> >  include/linux/coresight.h                     |  1 +
+> >  5 files changed, 53 insertions(+), 15 deletions(-)
+> >
+> > diff --git a/drivers/hwtracing/coresight/coresight-cti-core.c b/drivers/hwtracing/coresight/coresight-cti-core.c
+> > index 3999d0a2cb60..60a1e76064a9 100644
+> > --- a/drivers/hwtracing/coresight/coresight-cti-core.c
+> > +++ b/drivers/hwtracing/coresight/coresight-cti-core.c
+> > @@ -902,14 +902,18 @@ static int cti_probe(struct amba_device *adev, const struct amba_id *id)
+> >       /* default to powered - could change on PM notifications */
+> >       drvdata->config.hw_powered = true;
+> >
+> > -     /* set up device name - will depend if cpu bound or otherwise */
+> > -     if (drvdata->ctidev.cpu >= 0)
+> > -             cti_desc.name = devm_kasprintf(dev, GFP_KERNEL, "cti_cpu%d",
+> > -                                            drvdata->ctidev.cpu);
+> > -     else
+> > -             cti_desc.name = coresight_alloc_device_name(&cti_sys_devs, dev);
+>
+> Can we put the new name stuff inside coresight_alloc_device_name()? Then
+> it happens by default for every device.
+>
+> I know Suzuki said previously to do it per-device, but the new DT
+> property is just "coresight-name", so it's generic. Rather than being
+> specific like "cti-name". So I don't see the benefit of duplicating the
+> code at this point if we do decide to do it.
+>
+> > -     if (!cti_desc.name)
+> > -             return -ENOMEM;
+> > +     cti_desc.name = coresight_get_device_name(dev);
+> > +     if (!cti_desc.name) {
+> > +             /* set up device name - will depend if cpu bound or otherwise */
+> > +             if (drvdata->ctidev.cpu >= 0)
+> > +                     cti_desc.name = devm_kasprintf(dev, GFP_KERNEL, "cti_cpu%d",
+> > +                                                    drvdata->ctidev.cpu);
+> > +             else {
+> > +                     cti_desc.name = coresight_alloc_device_name(&cti_sys_devs, dev);
+> > +                     if (!cti_desc.name)
+> > +                             return -ENOMEM;
+> > +             }
+> > +     }
+>
+> >
+> >       /* setup CPU power management handling for CPU bound CTI devices. */
+> >       ret = cti_pm_setup(drvdata);
+> > diff --git a/drivers/hwtracing/coresight/coresight-dummy.c b/drivers/hwtracing/coresight/coresight-dummy.c
+> > index e4deafae7bc2..b19cd400df79 100644
+> > --- a/drivers/hwtracing/coresight/coresight-dummy.c
+> > +++ b/drivers/hwtracing/coresight/coresight-dummy.c
+> > @@ -76,10 +76,12 @@ static int dummy_probe(struct platform_device *pdev)
+> >       struct coresight_desc desc = { 0 };
+> >
+> >       if (of_device_is_compatible(node, "arm,coresight-dummy-source")) {
+> > -
+> > -             desc.name = coresight_alloc_device_name(&source_devs, dev);
+> > -             if (!desc.name)
+> > -                     return -ENOMEM;
+> > +             desc.name = coresight_get_device_name(dev);
+> > +             if (!desc.name) {
+> > +                     desc.name = coresight_alloc_device_name(&source_devs, dev);
+> > +                     if (!desc.name)
+> > +                             return -ENOMEM;
+> > +             }
+> >
+> >               desc.type = CORESIGHT_DEV_TYPE_SOURCE;
+> >               desc.subtype.source_subtype =
+> > diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/drivers/hwtracing/coresight/coresight-platform.c
+> > index 9d550f5697fa..284aa22a06b7 100644
+> > --- a/drivers/hwtracing/coresight/coresight-platform.c
+> > +++ b/drivers/hwtracing/coresight/coresight-platform.c
+> > @@ -183,6 +183,18 @@ static int of_coresight_get_cpu(struct device *dev)
+> >       return cpu;
+> >  }
+> >
+> > +static const char *of_coresight_get_device_name(struct device *dev)
+> > +{
+> > +     const char *name = NULL;
+> > +
+> > +     if (!dev->of_node)
+> > +             return NULL;
+> > +
+> > +     of_property_read_string(dev->of_node, "coresight-name", &name);
+>
+> Do you need to update the binding docs with this new property?
+>
+> Also a minor nit: Maybe "display-name" is better? "Coresight" is
+> implied, and the node is already named, although that node name isn't
+> used for display purposes, but this one is.
+>
+> Thanks
+> James
+
 
 
 -- 
-With best wishes
-Dmitry
+Mike Leach
+Principal Engineer, ARM Ltd.
+Manchester Design Centre. UK
 
