@@ -1,133 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-6267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DB69822042
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 18:15:59 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A2C5822058
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 18:25:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7CB0C1C22657
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 17:15:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E5FE11F21C1D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 17:25:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 410A61549A;
-	Tue,  2 Jan 2024 17:15:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 265C0154AA;
+	Tue,  2 Jan 2024 17:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Xv+W5sCn"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="JnALshJ1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92F7156C7
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jan 2024 17:15:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a2331caab22so967689066b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jan 2024 09:15:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704215740; x=1704820540; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GKMEWuKvZaWRwwOGqwx05sBOoWcghyu4o4JqKkgXxhU=;
-        b=Xv+W5sCnbhOzNY6NE9m4/wYgGJ2JAvq9k8wZsG3WXya94lytF7WRsLZv17Si7ZWMzm
-         71n/xahTnvv39FQ1DqxgnhIRfMNrHv5qpwlR8sKWGk+RfBvbNnXDFmWW1HDzQ78A+l4j
-         00rk24YXutPaF2KePA8kWQzCH/FiGHfT/5NIa9q/qZlW761eGOStoA2LCiJPSlOWR52Q
-         3XDGNLclW3U+OyLS8Aw642+FaX1+qjp3bawxLpw2g4vLRbt5nuOyF1XxSaY4WSXgGkR9
-         he41OIyk6rwOAcCpEpG75VvoyALCv5Kw4lJoOdUI99kKW9KE4kIjEbyN1+tZNhQ1xbYQ
-         FJLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704215740; x=1704820540;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GKMEWuKvZaWRwwOGqwx05sBOoWcghyu4o4JqKkgXxhU=;
-        b=ZLK6x06fizYhwKpG0NMA6AdX7AHPRenK4/a3FXIy3IE98YKWAVYjieC5NbAwtAZ9xf
-         AFhbc4KrtuBRBqud2BKPF/tUMi0trOE9Ob7OtDLJhaEUGnUwSEXPzT38iUkie5kBftjb
-         Z1g6dXdOsVmHmYa779TTuixixcig/dvphM6HrimoB7dZX1+22HOqgplXeii/GW+Lhb3b
-         MTt5qHjgXltKV27txKVBgCINI0xRTVCYdF5EGDzv6h9AZAnfwaTTYUMtm8WPujVu7Yuq
-         DV6R0OfMCmpNikgQK7nYq5rCLfdQBb650JrpN/Vgc1+Us2LBVoTGpPSpBfd0l34e70g9
-         q0zQ==
-X-Gm-Message-State: AOJu0YxbAE3R0plzUEG8LPjXOqDXHKLsBVyrUUI1zu6mTDUL87eFIZAp
-	4dOzHDNcTJHec1p11t/s+4JNFv9ZK20R1g==
-X-Google-Smtp-Source: AGHT+IHIhP9V/E059evi51M1PmCVW/Qi+LML+f6dN1GdFbuW1OSfdkPWgpD6GQPK1KvYR2CngIHSPg==
-X-Received: by 2002:a17:906:b3a1:b0:a26:8fcd:75e5 with SMTP id uh33-20020a170906b3a100b00a268fcd75e5mr5848025ejc.31.1704215740008;
-        Tue, 02 Jan 2024 09:15:40 -0800 (PST)
-Received: from [192.168.199.125] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
-        by smtp.gmail.com with ESMTPSA id el1-20020a170907284100b00a1c96e987c4sm11958396ejc.101.2024.01.02.09.15.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Jan 2024 09:15:39 -0800 (PST)
-Message-ID: <5f1f883b-639c-44db-a03d-6503b359be7e@linaro.org>
-Date: Tue, 2 Jan 2024 18:15:37 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC651549F;
+	Tue,  2 Jan 2024 17:25:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=v7p+4wOjxD8iHSF+Ol2HJc13gpqMfMW5a3rOFwDOZ54=; b=JnALshJ1N5mzIsZfJSk3TrJlRy
+	GfefA8sf1ABLyd8U0jL5FmbvBIrWqj3dFwDKYnM/S10+/4yYbL1WIU2crYGvyxJA9BA47EQWUYlY1
+	vG8x2vf58SKHy7CQuj8cGRupddca6cjHklaoDAdgG6enWtnVIb4PvqTUDPOdX/a1klbX/+BFjHG2X
+	/CdzaIkn0TwUcjqS1Y9o7JsKJZbenrMOybNo27ebRJc9k7KGQmxBDds+PZ+mBYQgil/5xskZOlXhY
+	ixT4eZiQCDtYck1lwzpAV55O2iN4HC7T7m/ORjg39DbxSl7iftGbuz7B5YQz9hAG5zMBg7LCVn7p6
+	GU0zZQ8A==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:46248)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1rKiVR-0006l9-1E;
+	Tue, 02 Jan 2024 17:24:45 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1rKiVR-0005V0-N4; Tue, 02 Jan 2024 17:24:45 +0000
+Date: Tue, 2 Jan 2024 17:24:45 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Luo Jie <quic_luoj@quicinc.com>
+Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+	pabeni@redhat.com, robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+	andrew@lunn.ch, hkallweit1@gmail.com, robert.marko@sartura.hr,
+	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_srichara@quicinc.com
+Subject: Re: [PATCH v4 1/5] net: mdio: ipq4019: move eth_ldo_rdy before MDIO
+ bus register
+Message-ID: <ZZRG3eZJM5QouR9+@shell.armlinux.org.uk>
+References: <20231225084424.30986-1-quic_luoj@quicinc.com>
+ <20231225084424.30986-2-quic_luoj@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 05/22] soc: qcom: spm: add support for voltage
- regulator
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Andy Gross <agross@kernel.org>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20240102-saw2-spm-regulator-v7-0-0472ec237f49@linaro.org>
- <20240102-saw2-spm-regulator-v7-5-0472ec237f49@linaro.org>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20240102-saw2-spm-regulator-v7-5-0472ec237f49@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231225084424.30986-2-quic_luoj@quicinc.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-On 2.01.2024 06:17, Dmitry Baryshkov wrote:
-> The SPM / SAW2 device also provides a voltage regulator functionality
-> with optional AVS (Adaptive Voltage Scaling) support. The exact register
-> sequence and voltage ranges differs from device to device.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-I don't think I have more complaints here..
+On Mon, Dec 25, 2023 at 04:44:20PM +0800, Luo Jie wrote:
+> +/* Maximum SOC PCS(uniphy) number on IPQ platform */
+> +#define ETH_LDO_RDY_CNT				3
+> +
+>  struct ipq4019_mdio_data {
+> -	void __iomem	*membase;
+> -	void __iomem *eth_ldo_rdy;
+> +	void __iomem *membase;
+> +	void __iomem *eth_ldo_rdy[ETH_LDO_RDY_CNT];
 
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Do you have any plans to make use of eth_ldo_rdy other than by code that
+you touch in this patch? If you don't, what is the point of storing
+these points in struct ipq4019_mdio_data ? You're using devm_ioremap()
+which will already store the pointer internally to be able to free the
+resource at the appropriate moment, so if your only use is shortly after
+devm_ioremap(), you can use a local variable for this... meaning this
+becomes (in addition to the other suggestion):
 
-Konrad
+> +	/* This resource are optional */
+> +	for (index = 0; index < ETH_LDO_RDY_CNT; index++) {
+> +		res = platform_get_resource(pdev, IORESOURCE_MEM, index + 1);
+> +		if (res) {
+> +			priv->eth_ldo_rdy[index] = devm_ioremap(&pdev->dev,
+> +								res->start,
+> +								resource_size(res));
+> +
+> +			/* The ethernet LDO enable is necessary to reset PHY
+> +			 * by GPIO, some PHY(such as qca8084) GPIO reset uses
+> +			 * the MDIO level reset, so this function should be
+> +			 * called before the MDIO bus register.
+> +			 */
+> +			if (priv->eth_ldo_rdy[index]) {
+> +				u32 val;
+> +
+> +				val = readl(priv->eth_ldo_rdy[index]);
+> +				val |= BIT(0);
+> +				writel(val, priv->eth_ldo_rdy[index]);
+> +				fsleep(IPQ_PHY_SET_DELAY_US);
+> +			}
+> +		}
+
+		void __iomem *eth_ldo_rdy;
+		u32 val;
+
+		res = platform_get_resource(pdev, IORESOURCE_MEM, index + 1);
+		if (!res)
+			break;
+
+		eth_ldo_rdy = devm_ioremap(&pdev->dev, res->start,
+					   resource_size(res));
+		if (!eth_ldo_rdy)
+			continue;
+
+		val = readl(eth_ldo_rdy) | BIT(0);
+		writel(val, eth_ldo_rdy);
+		... whatever sleep is deemed required ...
+
+Other issues:
+
+1. if devm_ioremap() fails (returns NULL) is it right that we should
+   just ignore that resource?
+
+2. Do you need to sleep after each write, or will sleeping after
+   writing all of these do? It may be more efficient to detect when
+   we have at least one eth_ldo_rdy and then sleep once.
+
+Thanks.
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
