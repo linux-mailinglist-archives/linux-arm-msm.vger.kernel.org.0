@@ -1,161 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-6197-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6199-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03686821674
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 03:25:44 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B1FB282171F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 06:17:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AC32F1F215BE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 02:25:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A32F51C210EE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 05:17:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 792B046A3;
-	Tue,  2 Jan 2024 02:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63E7815D0;
+	Tue,  2 Jan 2024 05:17:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lmpQ2aUR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YLzeU8jd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60FA468C;
-	Tue,  2 Jan 2024 02:25:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4022NrNt006991;
-	Tue, 2 Jan 2024 02:25:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version
-	:content-transfer-encoding:content-type; s=qcppdkim1; bh=LJOUtUc
-	TF/R4WfEckhIyQSw22FUju7HZ22zDBTo2u28=; b=lmpQ2aUR7Q+eSqSYFqfzwQQ
-	5gPo4SMyRvZG6VOKWlhU9/rsTEedVZ/3g3CLtweHP6ULdHj0fYtLnBep4Yb1Yksb
-	/rWEXm2FFWrA586V1zOUwia+UlrCXPQvw6MuBCIYNAxBz70UAp2w9tl23KqND9d8
-	8LQHVnbUY39plKsP9HaTf+Z/xqufNVOJeXBAQVQspU797NESl/lU9SDKMdVOf2ec
-	mnaTsRsWjK+3pocZr0pA7FlYHzOJZ19Sqtk9TEgtKIxl+JgUjeNiUYHH3p5EF95E
-	2SRBWp67IV94ri7AUai+YvD5yAyEFiyCBIoPrNKzvp6nRyWVQtKEcNl3bl7oevA=
-	=
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vabkbbv6f-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 02 Jan 2024 02:25:27 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4022PQEB004756
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 2 Jan 2024 02:25:26 GMT
-Received: from hu-taozhan-sha.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Mon, 1 Jan 2024 18:25:21 -0800
-From: Tao Zhang <quic_taozhan@quicinc.com>
-To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>
-Subject: [PATCH] qcom: smem: remove hwspinlock from item get routine
-Date: Tue, 2 Jan 2024 07:55:12 +0530
-Message-ID: <20240102022512.999635-1-quic_taozhan@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6833B20F8
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jan 2024 05:17:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-50e9a42582aso1205544e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jan 2024 21:17:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704172648; x=1704777448; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=oKdUrJNCReC9eOhzNwa7lHUNCx2+g7VDaGVelraoPhQ=;
+        b=YLzeU8jdrsWivVFLipzgSmp+OICTbp3MH5vsAIiwYXRARuqGZenbxBfAi7KOJV7e2T
+         DyorTE6IXLXvOgrUgLpvidIJAby8cwsDnx7UcYYOurBr+yu4w9HPRbfogQUy0S3hxhik
+         ohY39IbuLt7pVZzEOS/HnTqRhfYx/0dRBoXQwxE68sVppmd5KlyByIsqpkLXW2sor62j
+         JNYqwXNE/Ho3eB8jtnp/z4AN15K/cY6njIXtC7D493JRPSRtXXKs3hXlJyD3YApNv0Os
+         v/VF6xiRdAhr5H4tcAibS4oJRWWLnwb80CJ8LpeDv1DQtoyHCF5UEbp2ZSpt4OsATWTn
+         gofg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704172648; x=1704777448;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oKdUrJNCReC9eOhzNwa7lHUNCx2+g7VDaGVelraoPhQ=;
+        b=PF+FyCDkWTvgKRB/x2UKc2j4+ezfpa6n7WEw9CceIXVzjgCJP4JqILyzOzbK8upNK9
+         +0ahjK7aqMBjsVfyCM0lLUkWoRLdEH7Xj7DVf1yLSQf0xMW1jGr8cSlQz0yg0moEkGCh
+         bpacSj99l8dH9seRvjpvA7ie0QzLvloqnDXO9DHeaTJC7ZXL11yforT8WderRt0qujyZ
+         EnH18LjFDpoxsl7VWQAilzA9Y7qpNXqqLThv2blh+o6yw6VJy58XB+OpApTsOMP0AdX5
+         vVdIZcYDi/9iQr9OdRL4jlwP+KfCtwUcEzz5zU35xNUUghdcG7q1IKIQGdAmxPW4oFz6
+         StCw==
+X-Gm-Message-State: AOJu0Yyn97PW2hn4hKRRgXVlXhZ5H2984/QKKxg9v94r1aYqSNGNR4Jr
+	fqi9Wwd/YWryi4P2Ub4EuaczCfAXmhpJDRenYcpY2RI5iW0Pqg==
+X-Google-Smtp-Source: AGHT+IH9Ux8fGS3Kjpth3HOJrmmqp91o+F0uRMGNzThcSjvbmBy78jjYmKqmwlAc2rflwCcfe9Z0iQ==
+X-Received: by 2002:ac2:5e6a:0:b0:50e:935a:ca83 with SMTP id a10-20020ac25e6a000000b0050e935aca83mr1785675lfr.91.1704172647723;
+        Mon, 01 Jan 2024 21:17:27 -0800 (PST)
+Received: from umbar.lan ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id r25-20020ac252b9000000b0050e810689e5sm2081827lfm.33.2024.01.01.21.17.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Jan 2024 21:17:27 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v7 00/22] soc: qcom: spm: add support for SPM regulator
+Date: Tue, 02 Jan 2024 07:17:20 +0200
+Message-Id: <20240102-saw2-spm-regulator-v7-0-0472ec237f49@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: TmWLeD2LZ-zk7hICnCegMN8T8WHfXKhv
-X-Proofpoint-GUID: TmWLeD2LZ-zk7hICnCegMN8T8WHfXKhv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 mlxlogscore=999 spamscore=0 malwarescore=0 mlxscore=0
- clxscore=1011 impostorscore=0 bulkscore=0 lowpriorityscore=0
- suspectscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2311290000 definitions=main-2401020017
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGGck2UC/zXMTQ6CMBBA4auQrh3SHwzgynsYF2OZQiNQMq0oI
+ dzdxsTlt3hvF5HYUxSXYhdMq48+zBn1qRB2wLkn8F220FJXUkkFEd8a4jIBU/8aMQUGdNI1yqq
+ z7azI4cLk/Oc3vd2zHYcJ0sCE/5VRWjZSVpWqS2Nao9sWFHSTT7yVD+QtDs+wXkc/I4cycC+O4
+ wvl1xotqwAAAA==
+To: Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross <agross@kernel.org>
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, Rob Herring <robh@kernel.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3455;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=jUUzlvlRe6+nOTsn7j/oEccAvSac6S7/LU+ktDHJNQQ=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlk5xiIQpi6N5Sy/VOojLvbNYdI3w/mOqEiHAIw
+ kDGq+AlkEOJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZZOcYgAKCRCLPIo+Aiko
+ 1SpjB/0UnyaxoVFryguBxKe6lprIw23jO7C1eesEx9lxYCZqM7Mz7juGdjas2fbCRO2fY9ejfY8
+ 0VGupbo8WaMsMEX+tQFjWcO91FIE29Pau1fI12HjUyCtfPkxyUZNtbqKSPV3GwqX20goXoBmMtr
+ iacLgWAtu1UbcHIQSTb3BnIh98iasGmvm3CoNg2XcID5mwmYbggA2UL8R5oFqka0aarMv/H+i/s
+ gqXMy67Z6WuKQhRlqU4OpNjmg5ARO/fFJGXv3ZMCpm8v5vntps3yRNlLoBt1a7mJMXUwOWfZpM5
+ o+k7cjmKRQSWn5e7DqITAnCkNScCApjkRrZZ/1qg1Vs7Oyhp
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-During an SSR(Sub-System Restart) process, the remoteproc driver will
-try to read the crash reason from SMEM. The qcom_smem_get() backing such
-operations does however take the hwspinlock (tcsr mutex), which might be
-held by the dying remoteproc.
+The apq8064 rework to use cacheinfo takes more than expected, so I've
+spanwed this series. It is an excerpt of the APQ8064 cpufreq series
+[1], so it it continues the version numbering for those patches.
 
-The associated timeout on the hwspin_lock_timeout_irqsave() would take
-care of the system not hanging forever, but the get operation will fail,
-unnecessarily delaying the process for the 'HWSPINLOCK_TIMEOUT' duration
-(currently is '1s'), and finally resulting in failure to get crash
-information from SMEM.
+The Subsystem Power Manager (SPM) / SPM AutoVoltageScaling Wrapper2
+(SAW2) are hardware blocks used on some of Qualcomm platforms to handle
+the voltage rails. It does this by bypassing RPM and directly
+interfacing the PMIC. Extend current SPM driver to export this
+regulator.
 
-This timeout can be avoided by removing the hwspinlock in the
-qcom_smem_get routine. SMEM ensures that the allocated item will only be
-visible after the new item is safe to use by following a specific order
-of updates.
+[1] https://lore.kernel.org/linux-arm-msm/20230827115033.935089-1-dmitry.baryshkov@linaro.org/
 
-In the private partition case, qcom_smem_get_private() will use
-'offset_free_uncached' as a loop boundary when looking for existing
-allocated items. The corresponding allocation will only update
-offset_free_uncached once the item is fully initialized.
+Changes since v6:
+- Added SoC-specific compat strings on MSM8960, IPQ4019, IPQ8064
+  platforms (Luca)
+- Fixed saw2 node names on few remaining platforms.
 
-    hdr->canary = SMEM_PRIVATE_CANARY;
-    hdr->item = cpu_to_le16(item);
-    hdr->size = cpu_to_le32(ALIGN(size, 8));
-    hdr->padding_data = cpu_to_le16(le32_to_cpu(hdr->size) - size);
-    hdr->padding_hdr = 0;
+Changes since v5:
+- Added patch that moves SPM structs out of the header file
+- Removed support for L2 SAW regulator (Stephan Gerhold).
+  msm8960/apq8064 do not use this SAW2 to manage this regulator and
+  other platforms will need changes anyway.
 
-    wmb();
-    le32_add_cpu(&phdr->offset_free_uncached, alloc_size);
-
-The global partition is similar but uses the "entry->allocated" variable
-to ensure the item is not visible to qcom_smem_get_global().
-
-Signed-off-by: Tao Zhang <quic_taozhan@quicinc.com>
 ---
- drivers/soc/qcom/smem.c | 11 -----------
- 1 file changed, 11 deletions(-)
+Dmitry Baryshkov (22):
+      dt-bindings: soc: qcom: merge qcom,saw2.txt into qcom,spm.yaml
+      dt-bindings: soc: qcom: qcom,saw2: add missing compatible strings
+      dt-bindings: soc: qcom: qcom,saw2: define optional regulator node
+      soc: qcom: spm: remove driver-internal structures from the driver API
+      soc: qcom: spm: add support for voltage regulator
+      ARM: dts: qcom: apq8084: use new compat string for L2 SAW2 unit
+      ARM: dts: qcom: msm8974: use new compat string for L2 SAW2 unit
+      ARM: dts: qcom: msm8960: use SoC-specific compatibles for SAW2 devices
+      ARM: dts: qcom: ipq4019: use SoC-specific compatibles for SAW2 devices
+      ARM: dts: qcom: ipq8064: use SoC-specific compatibles for SAW2 devices
+      ARM: dts: qcom: apq8064: rename SAW nodes to power-manager
+      ARM: dts: qcom: apq8084: rename SAW nodes to power-manager
+      ARM: dts: qcom: msm8960: rename SAW nodes to power-manager
+      ARM: dts: qcom: msm8974: rename SAW nodes to power-manager
+      ARM: dts: qcom: ipq4019: rename SAW nodes to power-manager
+      ARM: dts: qcom: ipq8064: rename SAW nodes to power-manager
+      ARM: dts: qcom: apq8064: declare SAW2 regulators
+      ARM: dts: qcom: msm8960: declare SAW2 regulators
+      ARM: dts: qcom: apq8084: drop 'regulator' property from SAW2 device
+      ARM: dts: qcom: msm8974: drop 'regulator' property from SAW2 device
+      ARM: dts: qcom: ipq4019: drop 'regulator' property from SAW2 devices
+      ARM: dts: qcom: ipq8064: drop 'regulator' property from SAW2 devices
 
-diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
-index 690afc9a12f4..7191fa0c087f 100644
---- a/drivers/soc/qcom/smem.c
-+++ b/drivers/soc/qcom/smem.c
-@@ -655,8 +655,6 @@ static void *qcom_smem_get_private(struct qcom_smem *smem,
- void *qcom_smem_get(unsigned host, unsigned item, size_t *size)
- {
- 	struct smem_partition *part;
--	unsigned long flags;
--	int ret;
- 	void *ptr = ERR_PTR(-EPROBE_DEFER);
- 
- 	if (!__smem)
-@@ -665,12 +663,6 @@ void *qcom_smem_get(unsigned host, unsigned item, size_t *size)
- 	if (WARN_ON(item >= __smem->item_count))
- 		return ERR_PTR(-EINVAL);
- 
--	ret = hwspin_lock_timeout_irqsave(__smem->hwlock,
--					  HWSPINLOCK_TIMEOUT,
--					  &flags);
--	if (ret)
--		return ERR_PTR(ret);
--
- 	if (host < SMEM_HOST_COUNT && __smem->partitions[host].virt_base) {
- 		part = &__smem->partitions[host];
- 		ptr = qcom_smem_get_private(__smem, part, item, size);
-@@ -681,10 +673,7 @@ void *qcom_smem_get(unsigned host, unsigned item, size_t *size)
- 		ptr = qcom_smem_get_global(__smem, item, size);
- 	}
- 
--	hwspin_unlock_irqrestore(__smem->hwlock, &flags);
--
- 	return ptr;
--
- }
- EXPORT_SYMBOL_GPL(qcom_smem_get);
- 
-
+ .../devicetree/bindings/arm/msm/qcom,saw2.txt      |  58 -----
+ .../soc/qcom/{qcom,spm.yaml => qcom,saw2.yaml}     |  45 +++-
+ arch/arm/boot/dts/qcom/qcom-apq8064.dtsi           |  32 ++-
+ arch/arm/boot/dts/qcom/qcom-apq8084.dtsi           |  13 +-
+ arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi           |  25 +-
+ arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi           |  10 +-
+ arch/arm/boot/dts/qcom/qcom-msm8960.dtsi           |  20 +-
+ arch/arm/boot/dts/qcom/qcom-msm8974.dtsi           |  13 +-
+ drivers/soc/qcom/spm.c                             | 254 ++++++++++++++++++++-
+ include/soc/qcom/spm.h                             |  23 +-
+ 10 files changed, 353 insertions(+), 140 deletions(-)
+---
 base-commit: 39676dfe52331dba909c617f213fdb21015c8d10
+change-id: 20240101-saw2-spm-regulator-af0f81c15cdc
+
+Best regards,
 -- 
-2.25.1
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 
