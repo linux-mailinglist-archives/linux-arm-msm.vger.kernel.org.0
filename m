@@ -1,42 +1,42 @@
-Return-Path: <linux-arm-msm+bounces-6222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6223-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F73582189E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 09:55:40 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 471C28218AC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 10:06:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9BAC6282AB2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 08:55:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D02DF1F21E26
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 09:06:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC81F53AF;
-	Tue,  2 Jan 2024 08:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 442CA5692;
+	Tue,  2 Jan 2024 09:06:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RbBGNzbg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kDUxrUCm"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A445663;
-	Tue,  2 Jan 2024 08:55:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18C8CC433C8;
-	Tue,  2 Jan 2024 08:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC325672;
+	Tue,  2 Jan 2024 09:06:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5821C433C8;
+	Tue,  2 Jan 2024 09:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704185735;
-	bh=xcyM9Lzy1bHGatQvJpZM8mMNBURf6l+UqF32aRscneU=;
+	s=k20201202; t=1704186360;
+	bh=L2uJ+bAvmhIK5Q/e3x9A1mvcDooM9dY7ZfhWFQ8inSM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RbBGNzbgptzv630Z08gZGOYXaXQsYdxaNmXmmrAvVzk0qc1138IWhTqkx3v2g4dL/
-	 c+raznQx0AYVhKw4kqrxfAnLreBpzcliumoJb+ZTOyi9DYjWslFj0uDpTSTKV4Jd1S
-	 o5y6cXvtLWrO1gTwO9gSeVWrXw+NC5CY2RCBmfZvrC4h5KluoWCQ47usdM88QIqJc0
-	 vsayqI/pj+zKfsa2Or7IbTRV1cD0wxTU7IIPJ8Cl+8w0OTSkap+LwQe5YoZW1yujsv
-	 gg1xGZxy1Et1d1HJELysjP1yQUWuvr3ERRTFgDjblMtpKOxKxsOlpUR9KOrXJvI6vW
-	 ccTRGSXHxXntQ==
+	b=kDUxrUCmByrDI8zmdaiiRee5gx5PTGLC2S8azQkvEa9Pg9TgByQ01GjwEi/JTAETj
+	 O3g/DgzRr27BysH9R5q06LIWZQqfkj7hBr6qdjhgxjLkZ9+EalR1UDtRUdB+Y4PVsJ
+	 blgin1UhmZjTVHgComZEtdkrytNfC+tI3sUtiAod/+zNEVYsDBwVigOrQri7g6ns4n
+	 kcL1JUGSywFl/NS8Rl6a9O+qU7AMBgMt0L8pfLvaoRxzlmmlXS8ykjKP+i8D/qj4YK
+	 EvxVHhRXJJRNscAfIi2jXnL3NGLNk4ox1IxezApwLDhnIXZG6gS4SxC29jw0p03T7I
+	 OmOJ1tSfNxWgA==
 Received: from johan by xi.lan with local (Exim 4.96.2)
 	(envelope-from <johan@kernel.org>)
-	id 1rKaYY-0004y7-0i;
-	Tue, 02 Jan 2024 09:55:26 +0100
-Date: Tue, 2 Jan 2024 09:55:26 +0100
+	id 1rKaid-00053V-27;
+	Tue, 02 Jan 2024 10:05:51 +0100
+Date: Tue, 2 Jan 2024 10:05:51 +0100
 From: Johan Hovold <johan@kernel.org>
 To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -50,13 +50,13 @@ Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
 	linux-kernel@vger.kernel.org,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sc8280xp: Correct USB PHY power
- domains
-Message-ID: <ZZPPflCNy6rULI2F@hovoldconsulting.com>
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: sc8280xp: Fix PCIe PHY
+ power-domains
+Message-ID: <ZZPR793E3SoIplLw@hovoldconsulting.com>
 References: <20231227-topic-8280_pcie_dts-v1-0-13d12b1698ff@linaro.org>
- <20231227-topic-8280_pcie_dts-v1-2-13d12b1698ff@linaro.org>
- <ZY7DEpaIgvfL_A11@hovoldconsulting.com>
- <20231229171008.GB9098@thinkpad>
+ <20231227-topic-8280_pcie_dts-v1-1-13d12b1698ff@linaro.org>
+ <ZY6sh8nlEUyEfL0u@hovoldconsulting.com>
+ <20231229170334.GA9098@thinkpad>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,21 +65,67 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231229171008.GB9098@thinkpad>
+In-Reply-To: <20231229170334.GA9098@thinkpad>
 
-On Fri, Dec 29, 2023 at 10:40:08PM +0530, Manivannan Sadhasivam wrote:
-> On Fri, Dec 29, 2023 at 02:01:06PM +0100, Johan Hovold wrote:
-> > On Wed, Dec 27, 2023 at 11:28:27PM +0100, Konrad Dybcio wrote:
-> > > The USB GDSCs are only related to the controllers.
+On Fri, Dec 29, 2023 at 10:33:34PM +0530, Manivannan Sadhasivam wrote:
+> On Fri, Dec 29, 2023 at 12:24:55PM +0100, Johan Hovold wrote:
+> > On Wed, Dec 27, 2023 at 11:28:26PM +0100, Konrad Dybcio wrote:
+> > > The PCIe GDSCs are only related to the RCs. The PCIe PHYs on the other
+> > > hand, are powered by VDD_MX and their specific VDDA_PHY/PLL regulators.
 > > 
-> > Are you sure?
+> > No, that does not seem to be entirely correct. I added the power-domains
+> > here precisely because they were needed to enable the PHYs.
+> > 
+> > This is something I stumbled over when trying to figure out how to
+> > add support for the second lane pair (i.e. four-lane mode), and I just
+> > went back and confirmed that this is still the case.
+> > 
+> > If you try to enable one of these PHYs without the corresponding GDSC
+> > being enabled, you end up with:
+> > 
+> > [   37.709324] ------------[ cut here ]------------
+> > [   37.718196] gcc_pcie_3b_aux_clk status stuck at 'off'
+> > [   37.718205] WARNING: CPU: 4 PID: 482 at drivers/clk/qcom/clk-branch.c:86 clk_branch_wait+0x144/0x15c
+> > 	
 > 
-> Yes, that's what I was told by UFS and PCIe teams and some of the internal
-> documentation also confirms the same.
+> Technically this patch is correct. PHYs are backed by MX domain only and not
+> GDSCs. Only the controllers (PCIe, UFS, USB) are backed by GDSCs. The fact that
+> you are seeing issue with PCIe Aux clock suggests me that this clock may not be
+> applicable to the PHY but it needs to be enabled for working of the PHY somehow.
+> I'll try to find the details on how exactly it is needed.
 
-Ok, good. I'm not sure I did a corresponding test of powering on a USB
-PHY without the corresponding USB GDSC enabled, so perhaps the issue I
-noted only applies to PCIe.
+Sounds good, thanks.
+
+> But if I get the answer like, "This clock is also sourced to PHY directly", then
+> we may need to add dual power domain for PHY (both GDSC and MX).
+
+Right.
+ 
+> > Now, you may or may not want to describe the above in the devicetree,
+> > but this makes it sound like you're trying to work around an issue with
+> > the current Linux implementation.
+> > 
+> 
+> Adding MX domain to PHY in devicetree is definitely not a workaround.
+
+I was referring to the fact that the GDSC domain also appears to be
+needed even if that may possible get in the way when trying to implement
+suspend.
+
+> It is the
+> actual hardware representation. MX is the always on domain, and when CX collapse
+> happens during suspend state, it will ensure that all the analog components
+> (like PHY) are kept powered on. Otherwise, we will see link down issues.
+
+But if it's an always-on domain as you say, it should not be shut down,
+right? Perhaps you still want it described in DT for some other reason.
+ 
+> But, I heard from Qcom that _only_ on this platform, MX is not backing the PCIe
+> PHY. I can correlate that with my encounter with PCIe issues after forcing CX
+> power collapse.
+
+Ok, but that seems to imply that this patch is definitely *not* correct
+(for sc8280xp)?
 
 Johan
 
