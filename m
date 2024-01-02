@@ -1,123 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-6273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6274-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA5E082210A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 19:31:09 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE1B2822148
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 19:45:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 95E1E1F2342F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 18:31:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8D7DF2828A7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 18:45:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B69C16415;
-	Tue,  2 Jan 2024 18:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95FA215AEF;
+	Tue,  2 Jan 2024 18:45:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vWcnYTO1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EjQVUlMq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A25E15ADB
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jan 2024 18:30:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a2821884a09so101850366b.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jan 2024 10:30:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704220213; x=1704825013; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cp5GNYs8COIpVS3xr0MHdRdJQ4iBxaqmuCTnKQzb9HQ=;
-        b=vWcnYTO1HYUYJviMjPW/Omttgckm6yu/65N/K/836mrO/+6fo5Vg6ZSXbV4GcRtDah
-         0AFYeoLi3J/YIzfEyQtRvWpoDB/giitUw9ln9w1T4duMJbqxQeHgRioLbA2oZOwIkk6D
-         iJOJfBFIy/PR57nwxHTHH8xj86R8X1KUZ1FOUcKITx0ctMD4VXmSKTxIHwg2mZ5deUQF
-         YphfV+nN3cS+pBTDYxTZlD48yLKlDq/1IM1rvcG3ISlvGei5COmuvfs8FrXdCpjRDFwy
-         v3EUpGd9Kj9JSnEbrm3xsFR1J/g5wbU6SBG1V3KKYptKzH1ai7911xxG7CuwDMDpPHOY
-         v17w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704220213; x=1704825013;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cp5GNYs8COIpVS3xr0MHdRdJQ4iBxaqmuCTnKQzb9HQ=;
-        b=bmfLt2huyKPpZDhYihOr6780zPyC/XrASdufXPLGTNdB4ysHXlBpt6NHEQuaKAQ9ds
-         dyKnb06Ejit3FbGkYAGUkbMm7SKaxGnbqD2ug/KcSvbsP4mlvx5xx9LHOyyYVG/1LsrO
-         kNqjuRjr37dIzBnvqW3BD0v7TKVdikm4wZNv5btACUAczHUhwoITcQyGTWw33c/pg9uA
-         PlMHoaUsuhOU2Nvcbzv2ZJeNWkhqhQh0EHm4i25vfIjgciyGbl93Lo/oeJmX642NCc0d
-         BV7FchChTacwGUeinYTWbO2XosmDnkvUrYRDG3YwyjoypeGRIEOMGZtwqlcEZoBIAVPv
-         r1AA==
-X-Gm-Message-State: AOJu0Ywb/2ny2Ymh6xNJz1dXXu/rlEgUosDZQT2/xbFwEzPKAUR1PYdm
-	yIpLsiLeulSHukVZC4GHTzQ7MPRsL0wR/Q==
-X-Google-Smtp-Source: AGHT+IEtrEeyMfPqrNLa3Jtqiv9w2sKozdJ2TbgYHjpAJW+k52RxgM/5dlUFCx+gNLIZkLr24Jpv+w==
-X-Received: by 2002:a17:906:413:b0:a28:2165:7c74 with SMTP id d19-20020a170906041300b00a2821657c74mr1307851eja.13.1704220212903;
-        Tue, 02 Jan 2024 10:30:12 -0800 (PST)
-Received: from [10.167.154.1] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
-        by smtp.gmail.com with ESMTPSA id et10-20020a170907294a00b00a2699a54888sm11968835ejc.64.2024.01.02.10.30.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jan 2024 10:30:12 -0800 (PST)
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Tue, 02 Jan 2024 19:29:50 +0100
-Subject: [PATCH 4/4] arm64: dts: qcom: x1e80100: Flush RSC sleep & wake
- votes
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1E315ACB;
+	Tue,  2 Jan 2024 18:45:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0090AC433C7;
+	Tue,  2 Jan 2024 18:45:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1704221126;
+	bh=bQI+DoJdsXFB4m5zQE85kj5grJW5PX4xlcWP8bfjp9o=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=EjQVUlMqtAK6ZTYPHbl+QxMW4MOW9tmBgaGNDCsAKIruYwsdST7DmGMD3elIj2K/P
+	 3q+od4je/xBZWztmr+W5/14TykPDdGhHpwS0eGuFuFX57ZxH6qjDMo/ZbWRVCh8/UP
+	 dqTNI3QwUpCk9nGlTvMjtZMV4tRmJ/Gr+yCVZe6hhwEmzkVu0NON+aSnMRVV4v+WH0
+	 rHQcu5Q5ncvZI224L7OTvPXUh3VjOoxGI7OicbX/IkCWpj1XQkqu7hsc1CkDZTLJc/
+	 Z8lmEGCa7vDFzEd9e3xDzoLsUiIyUUFw2M5Tp9DGPEo/Eq8gL9uItFjwSEyi2i08p1
+	 60YR4pw4u/wng==
+Received: (nullmailer pid 3362798 invoked by uid 1000);
+	Tue, 02 Jan 2024 18:45:23 -0000
+Date: Tue, 2 Jan 2024 11:45:23 -0700
+From: Rob Herring <robh@kernel.org>
+To: Mao Jinlong <quic_jinlmao@quicinc.com>
+Cc: Conor Dooley <conor+dt@kernel.org>, Tingwei Zhang <quic_tingweiz@quicinc.com>, Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>, Yuanfang Zhang <quic_yuanfang@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, devicetree@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Rob Herring <robh+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Tao Zhang <quic_taozha@quicinc.com>
+Subject: Re: [PATCH v4 1/4] dt-bindings: arm: Add remote etm dt-binding
+Message-ID: <170422101475.3360198.5669406333146629491.robh@kernel.org>
+References: <20231210072633.4243-1-quic_jinlmao@quicinc.com>
+ <20231210072633.4243-2-quic_jinlmao@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240102-topic-x1e_fixes-v1-4-70723e08d5f6@linaro.org>
-References: <20240102-topic-x1e_fixes-v1-0-70723e08d5f6@linaro.org>
-In-Reply-To: <20240102-topic-x1e_fixes-v1-0-70723e08d5f6@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Georgi Djakov <djakov@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Rajendra Nayak <quic_rjendra@quicinc.com>, 
- Sibi Sankar <quic_sibis@quicinc.com>, Abel Vesa <abel.vesa@linaro.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1704220203; l=982;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=ZMHte+R+v5WQ2x6Ng6sIhmvNpiEdoapaHW4wE0VSFZ4=;
- b=7um3uB/1kZ41KjjEu9/1KhmrD49Zm4CmzwAHeG/8u+R44ad6kRC5yv6KeqQ8a44EBZeBZKKAG
- sZ5DqheX/UACWzaZr8mqKzg6SQO0/ZNgd/wLY4Ks6b0ACbRoShImT3b
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231210072633.4243-2-quic_jinlmao@quicinc.com>
 
-The RPMh driver will cache sleep and wake votes until the cluster
-power-domain is about to enter idle, to avoid unnecessary writes. So
-associate the apps_rsc with the cluster pd, so that it can be notified
-about this event.
 
-Without this, only AMC votes are being committed.
+On Sat, 09 Dec 2023 23:26:28 -0800, Mao Jinlong wrote:
+> Remote ETM(Embedded Trace Macrocell) is to capture information of
+> the executed processor instructions of remote processors like modem.
+> Add new coresight-remote-etm.yaml file describing the bindings
+> required to define coresight remote etm in the device trees.
+> 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> ---
+>  .../arm/qcom,coresight-remote-etm.yaml        | 51 +++++++++++++++++++
+>  1 file changed, 51 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-remote-etm.yaml
+> 
 
-Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+Applied, thanks!
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index fc164b9b3ef1..2a14e8e39b3b 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -3334,6 +3334,7 @@ apps_rsc: rsc@17500000 {
- 					  <WAKE_TCS      2>, <CONTROL_TCS   0>;
- 
- 			label = "apps_rsc";
-+			power-domains = <&SYSTEM_PD>;
- 
- 			apps_bcm_voter: bcm-voter {
- 				compatible = "qcom,bcm-voter";
+Bjorn, Really either you or the coresight maintainers should have taken 
+this, but they weren't Cc'ed.
 
--- 
-2.43.0
-
+Rob
 
