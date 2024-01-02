@@ -1,136 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-6282-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6283-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C4EA4822316
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 22:13:01 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0098782233E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 22:27:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 743672846A1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 21:13:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 84720B2118F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 21:27:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 266B318E2F;
-	Tue,  2 Jan 2024 21:09:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="gPGOZCPV"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8C6E168D9;
+	Tue,  2 Jan 2024 21:26:44 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [5.144.164.162])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC2318C36
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jan 2024 21:08:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-7bade847536so342477739f.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jan 2024 13:08:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1704229738; x=1704834538; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YBXG8fkqI4E9TDywbJQDVQlGARTRe1Vl9dne1ILm/18=;
-        b=gPGOZCPVl2IIrjDodIynds27pMs1g9tjyI6RUW8c4K5irQ1QWFY02ZdmSp9dw1xXuD
-         lVXArgUDrQ1w0wwrIRF2JSKyrb2MoJmnK0jQdeXA9XfriG2gO5eaIKLgFI/l0UfGKoUS
-         ImvMVxBWqgtbgpsE3ief97V6bU0JucG9PvaZY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704229738; x=1704834538;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YBXG8fkqI4E9TDywbJQDVQlGARTRe1Vl9dne1ILm/18=;
-        b=OjjUAiy63eTMk1efAEDypPJLmF0MEBpqpl4UzetBd8BsCJDeiZwPuCVwtLvit38hFc
-         LmdYGlnkswwn9h7corgVkFnMe2mYISuv0xnccX/jnT6Wmfn+zCWJz4z0jP4ayRrLVH5y
-         pl+5tJx9HDvATIu1gkD/kS0QPxGG2x+cRBNi+VSpFwaA5Souzy5k7Wo6TIiLwuVUbiKP
-         Bl1PzdiqWtM2tpSB55nvDf6+aQTdWnxaCw2rMeRtEhdY+guNwP7Z5PKn/M1T7xMiEEM7
-         /9RbjMHrl5tPg2N6EKxk4/50LHScHfTc/mi7vRLbDgmwdly4z8kOQfYmMQDysa+JUyID
-         4Ysw==
-X-Gm-Message-State: AOJu0YxeEYXm+jjyspkvCarfmDp+SYJvLbXNfxO3XBw26eQP0cXwNHzh
-	UfaKSPNt5VjTf95qdfwnnu9/4+nd9qAw
-X-Google-Smtp-Source: AGHT+IFDiPa9pElKMxmX/lH+gQE+ZfY9viPPALh0NbNdlcQ8hMR9S/3o4NKAXs823EmCxtbJutVSRw==
-X-Received: by 2002:a5d:974b:0:b0:7b7:4b32:7986 with SMTP id c11-20020a5d974b000000b007b74b327986mr22772171ioo.27.1704229738043;
-        Tue, 02 Jan 2024 13:08:58 -0800 (PST)
-Received: from markhas1.lan (71-218-50-136.hlrn.qwest.net. [71.218.50.136])
-        by smtp.gmail.com with ESMTPSA id bo18-20020a056638439200b0046993034c91sm6956978jab.77.2024.01.02.13.08.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jan 2024 13:08:57 -0800 (PST)
-From: Mark Hasemeyer <markhas@chromium.org>
-To: LKML <linux-kernel@vger.kernel.org>
-Cc: Sudeep Holla <sudeep.holla@arm.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Rob Herring <robh@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Raul Rangel <rrangel@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Mark Hasemeyer <markhas@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org,
-	devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH v4 16/24] arm64: dts: qcom: sdm845: Enable cros-ec-spi as wake source
-Date: Tue,  2 Jan 2024 14:07:40 -0700
-Message-ID: <20240102140734.v4.16.I870e2c3490e7fc27a8f6bc41dba23b3dfacd2d13@changeid>
-X-Mailer: git-send-email 2.43.0.472.g3155946c3a-goog
-In-Reply-To: <20240102210820.2604667-1-markhas@chromium.org>
-References: <20240102210820.2604667-1-markhas@chromium.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA22168A7;
+	Tue,  2 Jan 2024 21:26:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id B6E5820145;
+	Tue,  2 Jan 2024 22:17:46 +0100 (CET)
+Date: Tue, 2 Jan 2024 22:17:45 +0100
+From: Marijn Suijten <marijn.suijten@somainline.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>, 
+	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
+	Joerg Roedel <joro@8bytes.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Wesley Cheng <quic_wcheng@quicinc.com>, Alexey Minnekhanov <alexeymin@postmarketos.org>, 
+	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev, 
+	linux-usb@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v2 06/14] arm64: dts: qcom: sdm630: Drop RPM bus clocks
+Message-ID: <6b3eetuyhg6y6wgqgxn2ruovjfrg24dbwsictlryealtwtnq6t@xk6nm3mxwbeh>
+References: <20230721-topic-rpm_clk_cleanup-v2-0-1e506593b1bd@linaro.org>
+ <20230721-topic-rpm_clk_cleanup-v2-6-1e506593b1bd@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230721-topic-rpm_clk_cleanup-v2-6-1e506593b1bd@linaro.org>
 
-The cros_ec driver currently assumes that cros-ec-spi compatible device
-nodes are a wakeup-source even though the wakeup-source property is not
-defined.
+On 2023-09-12 15:31:44, Konrad Dybcio wrote:
+> These clocks are now handled from within the icc framework and are
+> no longer registered from within the CCF. Remove them.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Some Chromebooks use a separate wake pin, while others overload the
-interrupt for wake and IO. With the current assumption, spurious wakes
-can occur on systems that use a separate wake pin. It is planned to
-update the driver to no longer assume that the EC interrupt pin should
-be enabled for wake.
+This makes the USB and IOMMUs probe again on SDM630 devices like the Sony Xperia
+XA2 Ultra.  Thanks!
 
-Add the wakeup-source property to all cros-ec-spi compatible device
-nodes to signify to the driver that they should still be a valid wakeup
-source.
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Mark Hasemeyer <markhas@chromium.org>
----
++cc Dmitry who was talking to me about this SoC.
 
-Changes in v4:
--Add Douglas's Reviewed-by tag from v2 review
-
-Changes in v3:
--Update commit message to provide details of the motivation behind the
-change
-
-Changes in v2:
--Split by arch/soc
-
- arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-index 0ab5e8f53ac9f..e8276db9eabb2 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-@@ -852,6 +852,7 @@ cros_ec: ec@0 {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&ec_ap_int_l>;
- 		spi-max-frequency = <3000000>;
-+		wakeup-source;
- 
- 		cros_ec_pwm: pwm {
- 			compatible = "google,cros-ec-pwm";
--- 
-2.43.0.472.g3155946c3a-goog
-
+> ---
+>  arch/arm64/boot/dts/qcom/sdm630.dtsi | 49 +++++++-----------------------------
+>  1 file changed, 9 insertions(+), 40 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> index ec6003212c4d..f11d2a07508c 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> @@ -605,9 +605,6 @@ bimc: interconnect@1008000 {
+>  			compatible = "qcom,sdm660-bimc";
+>  			reg = <0x01008000 0x78000>;
+>  			#interconnect-cells = <1>;
+> -			clock-names = "bus", "bus_a";
+> -			clocks = <&rpmcc RPM_SMD_BIMC_CLK>,
+> -				 <&rpmcc RPM_SMD_BIMC_A_CLK>;
+>  		};
+>  
+>  		restart@10ac000 {
+> @@ -619,28 +616,17 @@ cnoc: interconnect@1500000 {
+>  			compatible = "qcom,sdm660-cnoc";
+>  			reg = <0x01500000 0x10000>;
+>  			#interconnect-cells = <1>;
+> -			clock-names = "bus", "bus_a";
+> -			clocks = <&rpmcc RPM_SMD_CNOC_CLK>,
+> -				 <&rpmcc RPM_SMD_CNOC_A_CLK>;
+>  		};
+>  
+>  		snoc: interconnect@1626000 {
+>  			compatible = "qcom,sdm660-snoc";
+>  			reg = <0x01626000 0x7090>;
+>  			#interconnect-cells = <1>;
+> -			clock-names = "bus", "bus_a";
+> -			clocks = <&rpmcc RPM_SMD_SNOC_CLK>,
+> -				 <&rpmcc RPM_SMD_SNOC_A_CLK>;
+>  		};
+>  
+>  		anoc2_smmu: iommu@16c0000 {
+>  			compatible = "qcom,sdm630-smmu-v2", "qcom,smmu-v2";
+>  			reg = <0x016c0000 0x40000>;
+> -
+> -			assigned-clocks = <&rpmcc RPM_SMD_AGGR2_NOC_CLK>;
+> -			assigned-clock-rates = <1000>;
+> -			clocks = <&rpmcc RPM_SMD_AGGR2_NOC_CLK>;
+> -			clock-names = "bus";
+>  			#global-interrupts = <2>;
+>  			#iommu-cells = <1>;
+>  
+> @@ -685,16 +671,12 @@ a2noc: interconnect@1704000 {
+>  			compatible = "qcom,sdm660-a2noc";
+>  			reg = <0x01704000 0xc100>;
+>  			#interconnect-cells = <1>;
+> -			clock-names = "bus",
+> -				      "bus_a",
+> -				      "ipa",
+> +			clock-names = "ipa",
+>  				      "ufs_axi",
+>  				      "aggre2_ufs_axi",
+>  				      "aggre2_usb3_axi",
+>  				      "cfg_noc_usb2_axi";
+> -			clocks = <&rpmcc RPM_SMD_AGGR2_NOC_CLK>,
+> -				 <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>,
+> -				 <&rpmcc RPM_SMD_IPA_CLK>,
+> +			clocks = <&rpmcc RPM_SMD_IPA_CLK>,
+>  				 <&gcc GCC_UFS_AXI_CLK>,
+>  				 <&gcc GCC_AGGRE2_UFS_AXI_CLK>,
+>  				 <&gcc GCC_AGGRE2_USB3_AXI_CLK>,
+> @@ -705,10 +687,8 @@ mnoc: interconnect@1745000 {
+>  			compatible = "qcom,sdm660-mnoc";
+>  			reg = <0x01745000 0xa010>;
+>  			#interconnect-cells = <1>;
+> -			clock-names = "bus", "bus_a", "iface";
+> -			clocks = <&rpmcc RPM_SMD_MMSSNOC_AXI_CLK>,
+> -				 <&rpmcc RPM_SMD_MMSSNOC_AXI_CLK_A>,
+> -				 <&mmcc AHB_CLK_SRC>;
+> +			clock-names = "iface";
+> +			clocks = <&mmcc AHB_CLK_SRC>;
+>  		};
+>  
+>  		tsens: thermal-sensor@10ae000 {
+> @@ -1228,20 +1208,16 @@ usb3: usb@a8f8800 {
+>  				 <&gcc GCC_USB30_MASTER_CLK>,
+>  				 <&gcc GCC_AGGRE2_USB3_AXI_CLK>,
+>  				 <&gcc GCC_USB30_SLEEP_CLK>,
+> -				 <&gcc GCC_USB30_MOCK_UTMI_CLK>,
+> -				 <&rpmcc RPM_SMD_AGGR2_NOC_CLK>;
+> +				 <&gcc GCC_USB30_MOCK_UTMI_CLK>;
+>  			clock-names = "cfg_noc",
+>  				      "core",
+>  				      "iface",
+>  				      "sleep",
+> -				      "mock_utmi",
+> -				      "bus";
+> +				      "mock_utmi";
+>  
+>  			assigned-clocks = <&gcc GCC_USB30_MOCK_UTMI_CLK>,
+> -					  <&gcc GCC_USB30_MASTER_CLK>,
+> -					  <&rpmcc RPM_SMD_AGGR2_NOC_CLK>;
+> -			assigned-clock-rates = <19200000>, <120000000>,
+> -					       <19200000>;
+> +					  <&gcc GCC_USB30_MASTER_CLK>;
+> +			assigned-clock-rates = <19200000>, <120000000>;
+>  
+>  			interrupts = <GIC_SPI 347 IRQ_TYPE_LEVEL_HIGH>,
+>  				     <GIC_SPI 243 IRQ_TYPE_LEVEL_HIGH>;
+> @@ -2144,10 +2120,9 @@ mmss_smmu: iommu@cd00000 {
+>  
+>  			clocks = <&mmcc MNOC_AHB_CLK>,
+>  				 <&mmcc BIMC_SMMU_AHB_CLK>,
+> -				 <&rpmcc RPM_SMD_MMSSNOC_AXI_CLK>,
+>  				 <&mmcc BIMC_SMMU_AXI_CLK>;
+>  			clock-names = "iface-mm", "iface-smmu",
+> -				      "bus-mm", "bus-smmu";
+> +				      "bus-smmu";
+>  			#global-interrupts = <2>;
+>  			#iommu-cells = <1>;
+>  
+> @@ -2264,12 +2239,6 @@ gnoc: interconnect@17900000 {
+>  			compatible = "qcom,sdm660-gnoc";
+>  			reg = <0x17900000 0xe000>;
+>  			#interconnect-cells = <1>;
+> -			/*
+> -			 * This one apparently features no clocks,
+> -			 * so let's not mess with the driver needlessly
+> -			 */
+> -			clock-names = "bus", "bus_a";
+> -			clocks = <&xo_board>, <&xo_board>;
+>  		};
+>  
+>  		apcs_glb: mailbox@17911000 {
+> 
+> -- 
+> 2.42.0
+> 
 
