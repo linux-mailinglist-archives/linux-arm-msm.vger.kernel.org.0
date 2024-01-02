@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-6213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71FB5821748
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 06:21:24 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DBA582174C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 06:21:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D55A8B216F6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 05:21:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 54D451C2121D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 05:21:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72BCA125D2;
-	Tue,  2 Jan 2024 05:17:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36E5012E7B;
+	Tue,  2 Jan 2024 05:17:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="l0ElC/f5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lv+M77gt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74707FBEB
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19405FC1D
 	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jan 2024 05:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-50e7dff3e9fso6182035e87.2
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-50e759ece35so6773530e87.3
         for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jan 2024 21:17:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704172657; x=1704777457; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1704172658; x=1704777458; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=qYsFiIpWrc4BIxXKOne7VG9wtKzsVeNKWc1rPsU0p94=;
-        b=l0ElC/f5EIP49dlH/MFcDXPZm/29Qppnp1XbRbzqafOvsxCd7UxSkMqz8rh0i0i5Ab
-         t1/jgkj5Xm9Gam1w8948CtsIy2UbKEpY9/bZyVzoi5k0RPEl8aSqYaSwryi47LqMrOX/
-         9/oi3hc+NH4L5AzfdJqTKQGSxWhVx9XnBPxz78IyA8e7109ZnDknIpTojiIATNLUlBF3
-         yhzsgc/U2RG2JsHaIKH2djiQ/eA+kXTG/FOfTNPFCjsi86Lwxb5xONbKogOkmuGlTNRP
-         VS9M9+bqZKxbeDxU4zFvOJoMgzFOVbbr2AvnNgtgQPY4Fz2uhPesbOCUX5oRkMyobuS0
-         XbEg==
+        bh=dFrxViamUlcIECciiL3VBSp5M0WyZ7222XAdKdYgLuM=;
+        b=lv+M77gtZeBdBmWTfVpS5v0kpNhXN3k0QayCG0SZ4t4H0FDXBtGVj0dC6seys5vRjh
+         njMr1m8KhSbdNz/3cZj0gDzHppPioO2qlZtVZEHf6nhjTxTXW9LYLNceQHVNr4PCt3fv
+         3HD3XTn9bRzqjsSlmpNspokFeeRfP//wKKpj8JGE3pLQdiREmit4BG8VBhvWxQQBkdDo
+         seLpDrcBMH7jmmg54ZMgTTB+ZKt1mPH/rHJSDDQIHaB2xJw/9VLmR39jptLhENWEcG8R
+         Fdua4MmFTGeiwNYuDito+BhVZt0S8EZU8k725EWZsD6paiz3Oo2MX5aYvq1AANfrzUMu
+         WOIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704172657; x=1704777457;
+        d=1e100.net; s=20230601; t=1704172658; x=1704777458;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qYsFiIpWrc4BIxXKOne7VG9wtKzsVeNKWc1rPsU0p94=;
-        b=CVC0PXmrcZX/7Bge3KS0nElzlb0yyan6aAxgkCHFPKMH0lCyA+i7/hn8cfVW1sHX3H
-         b7bz0SStU00N1sU0ir4OI8dzLnbP7M62mAuAv41+qkk9l6v/GwcUhaSEAAVwPJdhirjW
-         y0QprkN63opkjyaguC4vmGlM1FYgCIl/KlQTVP9wR4awlfxLZQ8VkUBQLzxUpkBG5gYm
-         v+b4/5wf7VcCBSRwkKWGd2QgqcDh7gicBPRcPPVeBDB69wKjcTiesoPuLaEjhlk4TmhB
-         A7GP9WEyn1UPMQ+yPbF0a9tNbrX1Iz3x4dU0JhbYN6SPhwrIfH3rLjq1+6DdnGwloENe
-         tbqA==
-X-Gm-Message-State: AOJu0Yw/xOP2ejEn6iuzrtPH44qgeC42TmP8D4HpjFG/BU56la9h+lZn
-	D5DmfBF9Q+1Ggl6dNsbQH1+NRCXEEil9Fj5HSDQ/GtoErIKFHw==
-X-Google-Smtp-Source: AGHT+IG3QMNOtAejc1VAnWNHZfxLC+VVcsM4K4ahbLzSYkg5T7erU2tuwhZk2oOakUWvxidNCdeQTQ==
-X-Received: by 2002:a05:6512:3404:b0:50e:9e5b:497 with SMTP id i4-20020a056512340400b0050e9e5b0497mr534408lfr.137.1704172657537;
-        Mon, 01 Jan 2024 21:17:37 -0800 (PST)
+        bh=dFrxViamUlcIECciiL3VBSp5M0WyZ7222XAdKdYgLuM=;
+        b=AAWdklAniOfh40D8/bB57pP4j3TdAehKP6vrbR4DoweU6e4OBj4HMCRkwOo3e1EmRE
+         t2AycMe1DcVib0PDW6UibQjQz0QlgK4PjIy/N8YeQbgK6gpSrsxtx1mu+Oa+2V9CUZj+
+         O+AFtFAUP1/Oi4mWshFDPj+1ET3+H2uG9e2l29/xpWpkptiv/W+FIh8pBPkYOERaojfB
+         2C9mQtcosTanuV2fzUNDYAYQV62I6hsbKG4NvshCdRshMKTdfM/3gUM5gFIC2jdOYgF/
+         8ZOBWQge2fDZqC/qZip/3aWUwuOq5jPJY7Yz5SGKl2dVovYvMA0R6CX6JOXlFoWBeAHz
+         y8aQ==
+X-Gm-Message-State: AOJu0YwYGLaGYJxXfLP8RQhBWefnuMEqi6t9EydbySpoEzdn/M0J0csd
+	Wixa/cW7zQ0L2kNd/dH9g1cDVR5WnBgSoHLp6kwdPmz8B2sOhw==
+X-Google-Smtp-Source: AGHT+IEt4FcYgwiJ+RvbrnNEVIu2GxjVd8DA4w5y327tZzh600THXhzhZmn5DJ9puaUsbq5W0+5P5w==
+X-Received: by 2002:a05:6512:3885:b0:50e:7709:a06e with SMTP id n5-20020a056512388500b0050e7709a06emr4433137lft.99.1704172658104;
+        Mon, 01 Jan 2024 21:17:38 -0800 (PST)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id r25-20020ac252b9000000b0050e810689e5sm2081827lfm.33.2024.01.01.21.17.36
+        by smtp.gmail.com with ESMTPSA id r25-20020ac252b9000000b0050e810689e5sm2081827lfm.33.2024.01.01.21.17.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 01 Jan 2024 21:17:37 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 02 Jan 2024 07:17:35 +0200
-Subject: [PATCH v7 15/22] ARM: dts: qcom: ipq4019: rename SAW nodes to
+Date: Tue, 02 Jan 2024 07:17:36 +0200
+Subject: [PATCH v7 16/22] ARM: dts: qcom: ipq8064: rename SAW nodes to
  power-manager
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -69,7 +69,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240102-saw2-spm-regulator-v7-15-0472ec237f49@linaro.org>
+Message-Id: <20240102-saw2-spm-regulator-v7-16-0472ec237f49@linaro.org>
 References: <20240102-saw2-spm-regulator-v7-0-0472ec237f49@linaro.org>
 In-Reply-To: <20240102-saw2-spm-regulator-v7-0-0472ec237f49@linaro.org>
 To: Rob Herring <robh+dt@kernel.org>, 
@@ -79,16 +79,16 @@ To: Rob Herring <robh+dt@kernel.org>,
 Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  linux-arm-msm@vger.kernel.org
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1745;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1213;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=XVou/NnyWvS3EHe+IFLMBNA2Nv7Te161u7cedLfvtoY=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlk5xlShXIbS/y+ae/hWdoHH3NTkMb1qF85YgfR
- +TFs/+KS3mJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZZOcZQAKCRCLPIo+Aiko
- 1dZaB/9ixJJeJVH5VlscDvxqMVW7dsWftAIb/mbsoFUC6KYoy8MqgrGUdIikFfBX5f3ADEtN+Jd
- kI1z3juktUztKZ1ST1gBRMlTXGVfyInlLBTRvC5ZQRHn8ErVtU+jzhjZkvin7KvLifZlsQ3/ISs
- y533UXmGDV8DjDSr4gMji4Tb6vWchHaH3oSEDqk2Svc0FccDWYcWOowxg5zMNnVeSIfP8x7eJd1
- emSDRZhhHx1mN2JQAt3nG0sq9P4ZyacazKapqBskg5PdQB3f73ZgrbT3hPhAYRLbZJgoDWHf03U
- hbfw+8SAoYjPCwW7RB4Lr/T1J2pp8dTX9rZvdCXw+Hu8zqq6
+ bh=2cuZin9s0YRpL0zAWyoOjhE4ZNwfyDKxmXZtrb98axM=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlk5xl8J3AZsVN1vvBTmM1EVxCy2x8IWoCjCNAn
+ jwCeVzpC0+JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZZOcZQAKCRCLPIo+Aiko
+ 1ahoCACKzGQAg4bSRNN/jdXwpx83VTbHBy3YIX+VOZalqgZ47vR5ikBK2ZnnOxCcxzi0vQtra8q
+ 6QdtFXyFFm2oRV1kGndXRoN8UPJvLGbVzgIfnH+Vbs9kmTqpfr7NgVm9RNZmpkCUsTL7QulMgqi
+ 6emliMdIa9BCmWCTAJiDT+5/7BPVepZM+NrPxY3935u3bJFy1QRR9YSRCajUDgq365husUzOMBY
+ /sas0WGLzB+m4CnOPwiLK0go41ctmfGMl3v/8ullG3JGxrYaWwSvEpiGZx6t02zUMCgZ+Ud+utj
+ z9VaPfsVpKbSO9IE4bIdgUR4Wy6Yo0G9m5t51cAx1+KK+sUR
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
@@ -99,49 +99,30 @@ qcom,saw2.yaml
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi
-index 948c6fd91f62..cc94942db468 100644
---- a/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi
-@@ -350,31 +350,31 @@ acc3: power-manager@b0b8000 {
- 			reg = <0x0b0b8000 0x1000>, <0xb008000 0x1000>;
+diff --git a/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi
+index 0621853c24dd..4b35b1fd4b58 100644
+--- a/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi
+@@ -586,7 +586,7 @@ acc0: clock-controller@2088000 {
+ 			#clock-cells = <0>;
  		};
  
--		saw0: regulator@b089000 {
-+		saw0: power-manager@b089000 {
- 			compatible = "qcom,ipq4019-saw2-cpu", "qcom,saw2";
- 			reg = <0x0b089000 0x1000>, <0x0b009000 0x1000>;
+-		saw0: regulator@2089000 {
++		saw0: power-manager@2089000 {
+ 			compatible = "qcom,ipq8064-saw2-cpu", "qcom,saw2";
+ 			reg = <0x02089000 0x1000>, <0x02009000 0x1000>;
  			regulator;
+@@ -601,7 +601,7 @@ acc1: clock-controller@2098000 {
+ 			#clock-cells = <0>;
  		};
  
--		saw1: regulator@b099000 {
-+		saw1: power-manager@b099000 {
- 			compatible = "qcom,ipq4019-saw2-cpu", "qcom,saw2";
- 			reg = <0x0b099000 0x1000>, <0x0b009000 0x1000>;
- 			regulator;
- 		};
- 
--		saw2: regulator@b0a9000 {
-+		saw2: power-manager@b0a9000 {
- 			compatible = "qcom,ipq4019-saw2-cpu", "qcom,saw2";
- 			reg = <0x0b0a9000 0x1000>, <0x0b009000 0x1000>;
- 			regulator;
- 		};
- 
--		saw3: regulator@b0b9000 {
-+		saw3: power-manager@b0b9000 {
- 			compatible = "qcom,ipq4019-saw2-cpu", "qcom,saw2";
- 			reg = <0x0b0b9000 0x1000>, <0x0b009000 0x1000>;
- 			regulator;
- 		};
- 
--		saw_l2: regulator@b012000 {
-+		saw_l2: power-manager@b012000 {
- 			compatible = "qcom,ipq4019-saw2-l2", "qcom,saw2";
- 			reg = <0xb012000 0x1000>;
+-		saw1: regulator@2099000 {
++		saw1: power-manager@2099000 {
+ 			compatible = "qcom,ipq8064-saw2-cpu", "qcom,saw2";
+ 			reg = <0x02099000 0x1000>, <0x02009000 0x1000>;
  			regulator;
 
 -- 
