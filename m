@@ -1,263 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-6196-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6197-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01EEF82166E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 03:20:52 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03686821674
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 03:25:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6D1D1B21206
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 02:20:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AC32F1F215BE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 02:25:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44A21EBC;
-	Tue,  2 Jan 2024 02:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 792B046A3;
+	Tue,  2 Jan 2024 02:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lhzNXiWf"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lmpQ2aUR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F13CA3C;
-	Tue,  2 Jan 2024 02:20:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60FA468C;
+	Tue,  2 Jan 2024 02:25:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4021N2Zd007630;
-	Tue, 2 Jan 2024 02:19:59 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4022NrNt006991;
+	Tue, 2 Jan 2024 02:25:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=ZGxsmnDMc0vbTKGtH4YJqhEz5lvxf1xws5Jq2QyBRnw=; b=lh
-	zNXiWfi4qdUlLMM8qujDNCv3SGLhdKdgXAzAJfMrG0SI7M8XCH//UqLWTandHt2q
-	bgPEyGWMR/G0QK6VZJYEPcGVJFfg9ugTOr9vW1r0fkGVSdKzGtwl9b6BI+TJgYfe
-	DofAcrV1KZzdmNUxV1HluuccluCzXdOn0iLmfV9L0VQkMc9xTwHlmA8+sOnYd8DF
-	rJNci9xBGIHcq5nXTf9qYIz7VngxX0c7RmvwXW42OeKLHDpLRs6bSzuUCEyCbSWo
-	yAD6q4L4qm20jorNHKvbVqzRz+GCsljj5UCdcfkb0MQSkRy0+GJd1tALIArNauQn
-	GCeXUKnVIEEE3/Nr/SBw==
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=LJOUtUc
+	TF/R4WfEckhIyQSw22FUju7HZ22zDBTo2u28=; b=lmpQ2aUR7Q+eSqSYFqfzwQQ
+	5gPo4SMyRvZG6VOKWlhU9/rsTEedVZ/3g3CLtweHP6ULdHj0fYtLnBep4Yb1Yksb
+	/rWEXm2FFWrA586V1zOUwia+UlrCXPQvw6MuBCIYNAxBz70UAp2w9tl23KqND9d8
+	8LQHVnbUY39plKsP9HaTf+Z/xqufNVOJeXBAQVQspU797NESl/lU9SDKMdVOf2ec
+	mnaTsRsWjK+3pocZr0pA7FlYHzOJZ19Sqtk9TEgtKIxl+JgUjeNiUYHH3p5EF95E
+	2SRBWp67IV94ri7AUai+YvD5yAyEFiyCBIoPrNKzvp6nRyWVQtKEcNl3bl7oevA=
+	=
 Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vaa7cbx2u-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vabkbbv6f-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 02 Jan 2024 02:19:59 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4022JwdX031534
+	Tue, 02 Jan 2024 02:25:27 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4022PQEB004756
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 2 Jan 2024 02:19:58 GMT
-Received: from [10.239.132.150] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 1 Jan
- 2024 18:19:50 -0800
-Message-ID: <cd0f6613-9aa9-4698-bebe-0f61286d7552@quicinc.com>
-Date: Tue, 2 Jan 2024 10:19:47 +0800
+	Tue, 2 Jan 2024 02:25:26 GMT
+Received: from hu-taozhan-sha.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Mon, 1 Jan 2024 18:25:21 -0800
+From: Tao Zhang <quic_taozhan@quicinc.com>
+To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>
+Subject: [PATCH] qcom: smem: remove hwspinlock from item get routine
+Date: Tue, 2 Jan 2024 07:55:12 +0530
+Message-ID: <20240102022512.999635-1-quic_taozhan@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] kernel: Introduce a write lock/unlock wrapper for
- tasklist_lock
-Content-Language: en-US
-To: Matthew Wilcox <willy@infradead.org>,
-        "Eric W. Biederman"
-	<ebiederm@xmission.com>,
-        Hillf Danton <hdanton@sina.com>
-CC: <kernel@quicinc.com>, <quic_pkondeti@quicinc.com>, <keescook@chromium.or>,
-        <viro@zeniv.linux.org.uk>, <brauner@kernel.org>, <oleg@redhat.com>,
-        <dhowells@redhat.com>, <jarkko@kernel.org>, <paul@paul-moore.com>,
-        <jmorris@namei.org>, <serge@hallyn.com>, <linux-mm@kvack.org>,
-        <linux-fsdevel@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <keyrings@vger.kernel.org>, <linux-security-module@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20231213101745.4526-1-quic_aiquny@quicinc.com>
- <ZXnaNSrtaWbS2ivU@casper.infradead.org>
- <87o7eu7ybq.fsf@email.froward.int.ebiederm.org>
- <ZY30k7OCtxrdR9oP@casper.infradead.org>
-From: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>
-In-Reply-To: <ZY30k7OCtxrdR9oP@casper.infradead.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ieBhQjEar3H5w9T9G5k9p8BSV-vJJDVH
-X-Proofpoint-ORIG-GUID: ieBhQjEar3H5w9T9G5k9p8BSV-vJJDVH
+X-Proofpoint-ORIG-GUID: TmWLeD2LZ-zk7hICnCegMN8T8WHfXKhv
+X-Proofpoint-GUID: TmWLeD2LZ-zk7hICnCegMN8T8WHfXKhv
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
- spamscore=0 phishscore=0 impostorscore=0 lowpriorityscore=0
- priorityscore=1501 adultscore=0 bulkscore=0 mlxscore=0 mlxlogscore=518
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401020017
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 mlxlogscore=999 spamscore=0 malwarescore=0 mlxscore=0
+ clxscore=1011 impostorscore=0 bulkscore=0 lowpriorityscore=0
+ suspectscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2311290000 definitions=main-2401020017
 
+During an SSR(Sub-System Restart) process, the remoteproc driver will
+try to read the crash reason from SMEM. The qcom_smem_get() backing such
+operations does however take the hwspinlock (tcsr mutex), which might be
+held by the dying remoteproc.
 
+The associated timeout on the hwspin_lock_timeout_irqsave() would take
+care of the system not hanging forever, but the get operation will fail,
+unnecessarily delaying the process for the 'HWSPINLOCK_TIMEOUT' duration
+(currently is '1s'), and finally resulting in failure to get crash
+information from SMEM.
 
-On 12/29/2023 6:20 AM, Matthew Wilcox wrote:
-> On Wed, Dec 13, 2023 at 12:27:05PM -0600, Eric W. Biederman wrote:
->> Matthew Wilcox <willy@infradead.org> writes:
->>> I think the right way to fix this is to pass a boolean flag to
->>> queued_write_lock_slowpath() to let it know whether it can re-enable
->>> interrupts while checking whether _QW_WAITING is set.
->>
->> Yes.  It seems to make sense to distinguish between write_lock_irq and
->> write_lock_irqsave and fix this for all of write_lock_irq.
-> 
-> I wasn't planning on doing anything here, but Hillf kind of pushed me into
-> it.  I think it needs to be something like this.  Compile tested only.
-> If it ends up getting used,
-Happy new year!
-Thx Metthew for chiming into this. I think more thoughts will gain more 
-perfect designs.
-> 
-> Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-> 
-> diff --git a/include/asm-generic/qrwlock.h b/include/asm-generic/qrwlock.h
-> index 75b8f4601b28..1152e080c719 100644
-> --- a/include/asm-generic/qrwlock.h
-> +++ b/include/asm-generic/qrwlock.h
-> @@ -33,8 +33,8 @@
->   /*
->    * External function declarations
->    */
-> -extern void queued_read_lock_slowpath(struct qrwlock *lock);
-> -extern void queued_write_lock_slowpath(struct qrwlock *lock);
-> +void queued_read_lock_slowpath(struct qrwlock *lock);
-> +void queued_write_lock_slowpath(struct qrwlock *lock, bool irq);
->   
->   /**
->    * queued_read_trylock - try to acquire read lock of a queued rwlock
-> @@ -98,7 +98,21 @@ static inline void queued_write_lock(struct qrwlock *lock)
->   	if (likely(atomic_try_cmpxchg_acquire(&lock->cnts, &cnts, _QW_LOCKED)))
->   		return;
->   
-> -	queued_write_lock_slowpath(lock);
-> +	queued_write_lock_slowpath(lock, false);
-> +}
-> +
-> +/**
-> + * queued_write_lock_irq - acquire write lock of a queued rwlock
-> + * @lock : Pointer to queued rwlock structure
-> + */
-> +static inline void queued_write_lock_irq(struct qrwlock *lock)
-> +{
-> +	int cnts = 0;
-> +	/* Optimize for the unfair lock case where the fair flag is 0. */
-> +	if (likely(atomic_try_cmpxchg_acquire(&lock->cnts, &cnts, _QW_LOCKED)))
-> +		return;
-> +
-> +	queued_write_lock_slowpath(lock, true);
->   }
->   
->   /**
-> @@ -138,6 +152,7 @@ static inline int queued_rwlock_is_contended(struct qrwlock *lock)
->    */
->   #define arch_read_lock(l)		queued_read_lock(l)
->   #define arch_write_lock(l)		queued_write_lock(l)
-> +#define arch_write_lock_irq(l)		queued_write_lock_irq(l)
->   #define arch_read_trylock(l)		queued_read_trylock(l)
->   #define arch_write_trylock(l)		queued_write_trylock(l)
->   #define arch_read_unlock(l)		queued_read_unlock(l)
-> diff --git a/include/linux/rwlock.h b/include/linux/rwlock.h
-> index c0ef596f340b..897010b6ba0a 100644
-> --- a/include/linux/rwlock.h
-> +++ b/include/linux/rwlock.h
-> @@ -33,6 +33,7 @@ do {								\
->    extern int do_raw_read_trylock(rwlock_t *lock);
->    extern void do_raw_read_unlock(rwlock_t *lock) __releases(lock);
->    extern void do_raw_write_lock(rwlock_t *lock) __acquires(lock);
-> + extern void do_raw_write_lock_irq(rwlock_t *lock) __acquires(lock);
->    extern int do_raw_write_trylock(rwlock_t *lock);
->    extern void do_raw_write_unlock(rwlock_t *lock) __releases(lock);
->   #else
-> @@ -40,6 +41,7 @@ do {								\
->   # define do_raw_read_trylock(rwlock)	arch_read_trylock(&(rwlock)->raw_lock)
->   # define do_raw_read_unlock(rwlock)	do {arch_read_unlock(&(rwlock)->raw_lock); __release(lock); } while (0)
->   # define do_raw_write_lock(rwlock)	do {__acquire(lock); arch_write_lock(&(rwlock)->raw_lock); } while (0)
-> +# define do_raw_write_lock_irq(rwlock)	do {__acquire(lock); arch_write_lock_irq(&(rwlock)->raw_lock); } while (0)
->   # define do_raw_write_trylock(rwlock)	arch_write_trylock(&(rwlock)->raw_lock)
->   # define do_raw_write_unlock(rwlock)	do {arch_write_unlock(&(rwlock)->raw_lock); __release(lock); } while (0)
->   #endif
-> diff --git a/include/linux/rwlock_api_smp.h b/include/linux/rwlock_api_smp.h
-> index dceb0a59b692..6257976dfb72 100644
-> --- a/include/linux/rwlock_api_smp.h
-> +++ b/include/linux/rwlock_api_smp.h
-> @@ -193,7 +193,7 @@ static inline void __raw_write_lock_irq(rwlock_t *lock)
->   	local_irq_disable();
->   	preempt_disable();
->   	rwlock_acquire(&lock->dep_map, 0, 0, _RET_IP_);
-> -	LOCK_CONTENDED(lock, do_raw_write_trylock, do_raw_write_lock);
-> +	LOCK_CONTENDED(lock, do_raw_write_trylock, do_raw_write_lock_irq);
->   }
->   
->   static inline void __raw_write_lock_bh(rwlock_t *lock)
-> diff --git a/kernel/locking/qrwlock.c b/kernel/locking/qrwlock.c
-> index d2ef312a8611..6c644a71b01d 100644
-> --- a/kernel/locking/qrwlock.c
-> +++ b/kernel/locking/qrwlock.c
-> @@ -61,9 +61,10 @@ EXPORT_SYMBOL(queued_read_lock_slowpath);
->   
->   /**
->    * queued_write_lock_slowpath - acquire write lock of a queued rwlock
-> - * @lock : Pointer to queued rwlock structure
-> + * @lock: Pointer to queued rwlock structure
-> + * @irq: True if we can enable interrupts while spinning
->    */
-> -void __lockfunc queued_write_lock_slowpath(struct qrwlock *lock)
-> +void __lockfunc queued_write_lock_slowpath(struct qrwlock *lock, bool irq)
->   {
->   	int cnts;
->   
-> @@ -82,7 +83,11 @@ void __lockfunc queued_write_lock_slowpath(struct qrwlock *lock)
->   
-Also a new state showed up after the current design:
-1. locked flag with _QW_WAITING, while irq enabled.
-2. And this state will be only in interrupt context.
-3. lock->wait_lock is hold by the write waiter.
-So per my understanding, a different behavior also needed to be done in 
-queued_write_lock_slowpath:
-   when (unlikely(in_interrupt())) , get the lock directly.
-So needed to be done in release path. This is to address Hillf's concern 
-on possibility of deadlock.
+This timeout can be avoided by removing the hwspinlock in the
+qcom_smem_get routine. SMEM ensures that the allocated item will only be
+visible after the new item is safe to use by following a specific order
+of updates.
 
-Add Hillf here to merge thread. I am going to have a tested patch V2 
-accordingly.
-Feel free to let me know your thoughts prior on that.
->   	/* When no more readers or writers, set the locked flag */
->   	do {
-> +		if (irq)
-> +			local_irq_enable();
-I think write_lock_irqsave also needs to be take account. So 
-loal_irq_save(flags) should be take into account here.
->   		cnts = atomic_cond_read_relaxed(&lock->cnts, VAL == _QW_WAITING);
-> +		if (irq)
-> +			local_irq_disable();
-ditto.
->   	} while (!atomic_try_cmpxchg_acquire(&lock->cnts, &cnts, _QW_LOCKED));
->   unlock:
->   	arch_spin_unlock(&lock->wait_lock);
-> diff --git a/kernel/locking/spinlock_debug.c b/kernel/locking/spinlock_debug.c
-> index 87b03d2e41db..bf94551d7435 100644
-> --- a/kernel/locking/spinlock_debug.c
-> +++ b/kernel/locking/spinlock_debug.c
-> @@ -212,6 +212,13 @@ void do_raw_write_lock(rwlock_t *lock)
->   	debug_write_lock_after(lock);
->   }
->   
-> +void do_raw_write_lock_irq(rwlock_t *lock)
-> +{
-> +	debug_write_lock_before(lock);
-> +	arch_write_lock_irq(&lock->raw_lock);
-> +	debug_write_lock_after(lock);
-> +}
-> +
->   int do_raw_write_trylock(rwlock_t *lock)
->   {
->   	int ret = arch_write_trylock(&lock->raw_lock);
+In the private partition case, qcom_smem_get_private() will use
+'offset_free_uncached' as a loop boundary when looking for existing
+allocated items. The corresponding allocation will only update
+offset_free_uncached once the item is fully initialized.
 
+    hdr->canary = SMEM_PRIVATE_CANARY;
+    hdr->item = cpu_to_le16(item);
+    hdr->size = cpu_to_le32(ALIGN(size, 8));
+    hdr->padding_data = cpu_to_le16(le32_to_cpu(hdr->size) - size);
+    hdr->padding_hdr = 0;
+
+    wmb();
+    le32_add_cpu(&phdr->offset_free_uncached, alloc_size);
+
+The global partition is similar but uses the "entry->allocated" variable
+to ensure the item is not visible to qcom_smem_get_global().
+
+Signed-off-by: Tao Zhang <quic_taozhan@quicinc.com>
+---
+ drivers/soc/qcom/smem.c | 11 -----------
+ 1 file changed, 11 deletions(-)
+
+diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+index 690afc9a12f4..7191fa0c087f 100644
+--- a/drivers/soc/qcom/smem.c
++++ b/drivers/soc/qcom/smem.c
+@@ -655,8 +655,6 @@ static void *qcom_smem_get_private(struct qcom_smem *smem,
+ void *qcom_smem_get(unsigned host, unsigned item, size_t *size)
+ {
+ 	struct smem_partition *part;
+-	unsigned long flags;
+-	int ret;
+ 	void *ptr = ERR_PTR(-EPROBE_DEFER);
+ 
+ 	if (!__smem)
+@@ -665,12 +663,6 @@ void *qcom_smem_get(unsigned host, unsigned item, size_t *size)
+ 	if (WARN_ON(item >= __smem->item_count))
+ 		return ERR_PTR(-EINVAL);
+ 
+-	ret = hwspin_lock_timeout_irqsave(__smem->hwlock,
+-					  HWSPINLOCK_TIMEOUT,
+-					  &flags);
+-	if (ret)
+-		return ERR_PTR(ret);
+-
+ 	if (host < SMEM_HOST_COUNT && __smem->partitions[host].virt_base) {
+ 		part = &__smem->partitions[host];
+ 		ptr = qcom_smem_get_private(__smem, part, item, size);
+@@ -681,10 +673,7 @@ void *qcom_smem_get(unsigned host, unsigned item, size_t *size)
+ 		ptr = qcom_smem_get_global(__smem, item, size);
+ 	}
+ 
+-	hwspin_unlock_irqrestore(__smem->hwlock, &flags);
+-
+ 	return ptr;
+-
+ }
+ EXPORT_SYMBOL_GPL(qcom_smem_get);
+ 
+
+base-commit: 39676dfe52331dba909c617f213fdb21015c8d10
 -- 
-Thx and BRs,
-Aiqun(Maria) Yu
+2.25.1
+
 
