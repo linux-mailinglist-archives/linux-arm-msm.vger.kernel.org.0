@@ -1,125 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-6277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6278-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA1EE82229E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 21:34:17 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 95BEB8222D7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 22:01:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 64A45B213E4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 20:34:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3E9002813E3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 21:01:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDEF116417;
-	Tue,  2 Jan 2024 20:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5129168A5;
+	Tue,  2 Jan 2024 21:01:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="USUEz1at"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LKTUzykS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5377616410;
-	Tue,  2 Jan 2024 20:34:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 402KTbF2012670;
-	Tue, 2 Jan 2024 20:33:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=vmjxe9XwHidyB+gjEeLkZQFfIRNKZJrOImocyOmQabs=; b=US
-	UEz1atSMTOHCJVCNjWRj6XFMwUr1Xn2oojZJOQWwTOCFODutx3yhJ3cZQeclRQMF
-	tcb5HTUxlYnD3JmhB0fbrdH1cK0jiKJU1naZ4Ng5mplMmPt2sI/L5UKQrb0MTzOr
-	eEwzT6M5H5VSe+3QidqTqumS8OSY3GffDJzMUKy2OtDmvRjzpwPKXQDot61r8bOC
-	9JFUCTyNxUIjIrX66btJop71g4xaOIUJo+Un03suTF9ntL6d7rb54gf7y+RQVwEC
-	8Bu5ee2D/GdqtSVOnEoYfnO+V2qfBEndcjRtna47Z+KUVsJmaE3rmNf0dPjlV4Yb
-	88hdjoThs2xADwFD9ZFg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vcg41977q-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 02 Jan 2024 20:33:22 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 402KXLl2028048
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 2 Jan 2024 20:33:21 GMT
-Received: from [192.168.143.77] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 2 Jan
- 2024 12:33:20 -0800
-Message-ID: <76fb76cc-70d6-7a5f-7fcd-e8161ae72299@quicinc.com>
-Date: Tue, 2 Jan 2024 12:33:20 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5DE16428
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jan 2024 21:01:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-336979a566aso8192477f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jan 2024 13:01:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704229264; x=1704834064; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=dstAtoDhSyAt9Ec6YxAr7xXLaqmXSKwXbZxFdyWhN30=;
+        b=LKTUzykSY0J/6pugrhNIxol79TNuqsI872SrAzA+IHKraf8tsaK2ermhd/BxjpH7aC
+         YaHRtlmEGswcVnMdnUbVmtrYWk6P6WNIdylWSvJAY0DhWf5jTTCdxdZIXDjMkObQOgdI
+         WIJNjKKCr9Aac6ftiBfTM2I07SxvU9C33/P9X4PwR7IRkY/IA70gucl/YVT1Tp7dChwl
+         Iwtl5x6hYMDxifgXxLiINUXppoVjrlUAtIH/AAJGFmCOmdcczQ1zFVaC0o2MiNI94QEn
+         5kqD840NaoKzG7Pw1J2MmuP0eQn/5sHQBTlU5AISpoyqlJzFuLfEG0Lj0muajc08/Ugv
+         ARqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704229264; x=1704834064;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dstAtoDhSyAt9Ec6YxAr7xXLaqmXSKwXbZxFdyWhN30=;
+        b=EHgfJY1c5MAZaB+KPudzuAAHJeV3eK5nu4Zb87EfcGuKj5kERinY1MxRKjhTxSillg
+         niOw2zljcpmc9hFQHosVZAsHj+lbZB1+On3xdRVsY5v6yzAs4v/5AnN7D+F3+tXmRIXK
+         PcIgqIq27MEvgJOgBJZaIapSKlMuxWn0PY7fpLpbMACrLC3zXdrY5GQtu3q7mnp4lUVS
+         W9Gm1S6L3RxQ6Gp0AdTpqa2sFzyTt+H9TL2Jd1+0O5o0r2noitPXx2vh16fe6GRkEyb3
+         M0mLL690QVgARFJasAYo7uraqcRlPJKWqaiVymfE/E6Q4NOXuaSAEi+NF/hIxSSPH5mh
+         oUcg==
+X-Gm-Message-State: AOJu0YzyUF4xqD14jwTCcqN5q7kxixk2eAoC4A318oB0knD18REmhlFe
+	YC2rtpFoCup6OC9Rf/zwA0l0qfEBHgcKzA==
+X-Google-Smtp-Source: AGHT+IHvYwQImOhlq5Jp5m7IRZTN6U6G0Gn2nqnXfeZK6+8tzjH/oqKq0tXr+YROcRTWiW8zh4HCSQ==
+X-Received: by 2002:a05:600c:4ed0:b0:40d:878d:6f81 with SMTP id g16-20020a05600c4ed000b0040d878d6f81mr2090256wmq.146.1704229264433;
+        Tue, 02 Jan 2024 13:01:04 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.27])
+        by smtp.gmail.com with ESMTPSA id v10-20020a05600c470a00b0040d839e7bb3sm134119wmo.19.2024.01.02.13.01.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Jan 2024 13:01:03 -0800 (PST)
+Message-ID: <e9ce1ead-d78b-4a89-b330-0f17cd57decc@linaro.org>
+Date: Tue, 2 Jan 2024 22:00:57 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH] scsi: ufs: core: Let the sq_lock protect sq_tail_slot
- access
-To: Can Guo <quic_cang@quicinc.com>, <bvanassche@acm.org>, <mani@kernel.org>,
-        <adrian.hunter@intel.com>, <beanhuo@micron.com>, <avri.altman@wdc.com>,
-        <junwoo80.lee@samsung.com>, <martin.petersen@oracle.com>
-CC: <linux-scsi@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Alim Akhtar
-	<alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Asutosh Das
-	<quic_asutoshd@quicinc.com>,
-        Peter Wang <peter.wang@mediatek.com>,
-        "Arthur
- Simchaev" <Arthur.Simchaev@wdc.com>,
-        open list <linux-kernel@vger.kernel.org>
-References: <1702913550-20631-1-git-send-email-quic_cang@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] dt-bindings: interconnect: Remove bogus interconnect
+ nodes
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Georgi Djakov <djakov@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Rajendra Nayak
+ <quic_rjendra@quicinc.com>, Sibi Sankar <quic_sibis@quicinc.com>,
+ Abel Vesa <abel.vesa@linaro.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20240102-topic-x1e_fixes-v1-0-70723e08d5f6@linaro.org>
+ <20240102-topic-x1e_fixes-v1-2-70723e08d5f6@linaro.org>
 Content-Language: en-US
-From: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
-In-Reply-To: <1702913550-20631-1-git-send-email-quic_cang@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20240102-topic-x1e_fixes-v1-2-70723e08d5f6@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: wsIyvjIJr7V944lrYzvcDlEk0rKbpo45
-X-Proofpoint-ORIG-GUID: wsIyvjIJr7V944lrYzvcDlEk0rKbpo45
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 mlxscore=0
- phishscore=0 spamscore=0 bulkscore=0 adultscore=0 priorityscore=1501
- impostorscore=0 mlxlogscore=999 malwarescore=0 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401020153
 
-On 12/18/2023 7:32 AM, Can Guo wrote:
-> If access sq_tail_slot without the protection from the sq_lock, race
-> condition can have multiple SQEs copied to duplicate SQE slot(s), which can
-> lead to multiple incredible stability issues. Fix it by moving the *dest
-> initialization, in ufshcd_send_command(), back under protection from the
-> sq_lock.
+On 02/01/2024 19:29, Konrad Dybcio wrote:
+> The downstream kernel has infrastructure for passing votes from different
+> interconnect nodes onto different RPMh RSCs. This neither implemented, not
+> is going to be implemented upstream (in favor of a different solution
+> using ICC tags through the same node).
 > 
-> Fixes: 3c85f087faec ("scsi: ufs: mcq: Use pointer arithmetic in ufshcd_send_command()")
-> Signed-off-by: Can Guo <quic_cang@quicinc.com>
+> Unfortunately, as it happens, meaningless (in the upstream context) parts
+> of the vendor driver were copied, ending up causing havoc - since all
+> "per-RSC" (in quotes because they all point to the main APPS one) BCMs
+> defined within the driver overwrite the value in RPMh on every
+> aggregation.
 > 
-> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-> index ae9936f..2994aac 100644
-> --- a/drivers/ufs/core/ufshcd.c
-> +++ b/drivers/ufs/core/ufshcd.c
-> @@ -2274,9 +2274,10 @@ void ufshcd_send_command(struct ufs_hba *hba, unsigned int task_tag,
->   	if (is_mcq_enabled(hba)) {
->   		int utrd_size = sizeof(struct utp_transfer_req_desc);
->   		struct utp_transfer_req_desc *src = lrbp->utr_descriptor_ptr;
-> -		struct utp_transfer_req_desc *dest = hwq->sqe_base_addr + hwq->sq_tail_slot;
-> +		struct utp_transfer_req_desc *dest;
->   
->   		spin_lock(&hwq->sq_lock);
-> +		dest = hwq->sqe_base_addr + hwq->sq_tail_slot;
->   		memcpy(dest, src, utrd_size);
->   		ufshcd_inc_sq_tail(hwq);
->   		spin_unlock(&hwq->sq_lock);
+> To both avoid keeping bogus code around and possibly introducing
+> impossible-to-track-down bugs (busses shutting down for no reason), get
+> rid of the duplicated ICC node definitions.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Reviewed and Tested-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
 
