@@ -1,273 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-6232-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6233-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04442821B5C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 13:05:33 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F0DE821C6A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 14:15:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 62E1F1F22949
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 12:05:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 913AA1C21258
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 13:15:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EA60EAFF;
-	Tue,  2 Jan 2024 12:05:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iRzhq4E5"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DE01F9E0;
+	Tue,  2 Jan 2024 13:15:47 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from IND01-BMX-obe.outbound.protection.outlook.com (mail-bmxind01on2079.outbound.protection.outlook.com [40.107.239.79])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932CCF9CC
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jan 2024 12:05:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-da7ea62e76cso7514787276.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jan 2024 04:05:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704197120; x=1704801920; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=r7dyv4CcIU9mcvBuepSVkLmk0uNvBhGYSbHRwghn+UA=;
-        b=iRzhq4E5qXsvFK2f52/mzrj8tkI/EnoNYTeVhNIs2CEZObhBI5z0Ep0NLleuFSHh30
-         M2ILvdX3fnKw79aZm0v9owhF/a7Fr1qOhdTPGqfCuoYP6NfEZcTOWxxQew4pZno5+2U+
-         cnNk2PdYqDAAEIURo9v00MdVJVuli8nHntMF9qT0nrhHEXvB0cXguAbacxudBnC7cyR7
-         gv+/I5+6qtFS4JiMF7YRyqpiI/C9/o3MLCikM+uvEjaKXGs3SHH5kM4ApUf+OG2JnOND
-         iSR2HIeEw+dXG6NFXCE8MgRbV3VH50O/JDX4EYQOlBAtZBXvwk1gQjKkbNI32dpPsTOa
-         JLZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704197120; x=1704801920;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=r7dyv4CcIU9mcvBuepSVkLmk0uNvBhGYSbHRwghn+UA=;
-        b=X8Nz41mafIZELGXQsYwvIX2U3hgGWkG2ITwWUdGFzy0tJeYwfDa7KVXlelSHSqSUuf
-         7WabfHqg2LnzYwvXgjp7vBdfIZw0IIu9YZeSR5aykDllReoeqfHM3PL4xUm+SMlGB5AX
-         8u897VcVhJoPDLkoMOYDGakK7yhnXWow25mkY31xp1VNHdU6e7MZH19opZeipoBZyGN5
-         tfmkzm4XWxuo1UADncTWGU/8AAaaaV5FRBd+iezNb+cIcvW0QjzPtQnZPSksgxpD4D3I
-         Pd4ca2Btt87KvOLjKvIRVg10pm40uQEylAxSOPbTd4bTonuQtygKh6MhPkcmR5lgPmt1
-         gV0Q==
-X-Gm-Message-State: AOJu0Ywhrmi+FCzKIhqZeNKmW7CJQ+YBBL/WkKIM88fcRLPwLXfsbVML
-	TrJ1zcPuFVLAxel3lhQ8dRvtXAK1DgbFyRYVtGmrB7R934/Ciw==
-X-Google-Smtp-Source: AGHT+IEeXcgSMZejIaCJRLPq2x5vR0P7iAZihrqFzc//NjqYOvq4btaXpo77KUSX72yNiNFkRjmDTr0E4xzqSgpOy28=
-X-Received: by 2002:a25:b310:0:b0:dbd:986e:2e9f with SMTP id
- l16-20020a25b310000000b00dbd986e2e9fmr8149442ybj.91.1704197120329; Tue, 02
- Jan 2024 04:05:20 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D030FBE2;
+	Tue,  2 Jan 2024 13:15:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=siliconsignals.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=siliconsignals.io
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=EmCtO0ViOiSNOZIE5F6WrHopMvAef+sfkSJmFvFPJPf/tvocy6x99oInli+iq/WW/yYTcLZ9AA5rQynHilvrA5f3gRMusDqagjYS+RI+TN21d12LnfsKKWSeN+LM7AsaYn115TOG2mUqJZi1F2SRLW23QDSs7y25f0vMEvKMlsnq07UBxc3bPYh5Vhef1WdDcX37ZXx6JoIf+0mwlbHpOB2QRGNh7n/oGFebr1LbLbvKOnkfGiAEag6v0pNaMCCLDNBqh5jRK4hoCZFw9FHtHu8cGSOyNyUxViGMJbavLqA4bsTgI82niVl2pLkxGqSk0XC/mduC0bQgtIEqLAUbFA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pk2k7HCUO2fW3r8o+R4rlpx/u5bswYcg4/m43ayJwdQ=;
+ b=l3TzO/NOCT8cIH3ACK9Es7XT5ufHFBlJH5a69l6eUiZvZm/pdHT6lIvC11WEerQFRcIkVjLm4NJ1S2eS2tyCOIjaTrZHNM9sVIjyjqHOV5JB5HInECO8jTpHR4gZwVbokVV8QYfcunHommkNhxuA2UmCmNkp34TulvX3ID2UUEEBsntNETvqSDDCtQsMlEhjmk4lv+d3+OSrMltQ/146AbzQRE3UTJ5aCM7vGPjZkVEsUpWWOMQ/4nwesOauiSsrPE7sNPFjXI3ZV5cpI0WpXl2on9NFBEYlLaxMphs/UtBWNJTZN0Zp27v2Z0WxA993UImQ9hrBRwi1cok9vycU6g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=siliconsignals.io; dmarc=pass action=none
+ header.from=siliconsignals.io; dkim=pass header.d=siliconsignals.io; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=siliconsignals.io;
+Received: from PN3PR01MB10135.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:1df::8)
+ by MAZPR01MB7376.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:59::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7135.25; Tue, 2 Jan
+ 2024 13:15:41 +0000
+Received: from PN3PR01MB10135.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::e2fc:c41e:7375:e933]) by PN3PR01MB10135.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::e2fc:c41e:7375:e933%3]) with mapi id 15.20.7135.023; Tue, 2 Jan 2024
+ 13:15:41 +0000
+From: Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>
+To: stanimir.k.varbanov@gmail.com,
+	quic_vgarodia@quicinc.com,
+	agross@kernel.org,
+	andersson@kernel.org,
+	konrad.dybcio@linaro.org,
+	mchehab@kernel.org,
+	quic_dikshita@quicinc.com
+Cc: himanshu.bhavani@siliconsignals.io,
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+	linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v2] media: venus: use div64_u64() instead of do_div()
+Date: Tue,  2 Jan 2024 18:45:09 +0530
+Message-Id: <20240102131509.1733215-1-himanshu.bhavani@siliconsignals.io>
+X-Mailer: git-send-email 2.25.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: BM1P287CA0010.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:b00:40::20) To PN3PR01MB10135.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:1df::8)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231231-hfpll-yaml-v1-0-359d44a4e194@z3ntu.xyz> <20231231-hfpll-yaml-v1-1-359d44a4e194@z3ntu.xyz>
-In-Reply-To: <20231231-hfpll-yaml-v1-1-359d44a4e194@z3ntu.xyz>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 2 Jan 2024 14:05:09 +0200
-Message-ID: <CAA8EJpqF=3n8vUrEzrGGLc4JtQ-s4EcOOr_NKC0rknwE0tuShw@mail.gmail.com>
-Subject: Re: [PATCH 1/3] dt-bindings: clock: qcom,hfpll: Convert to YAML
-To: Luca Weiss <luca@z3ntu.xyz>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PN3PR01MB10135:EE_|MAZPR01MB7376:EE_
+X-MS-Office365-Filtering-Correlation-Id: efdd9e03-e5cc-477d-c5ac-08dc0b94eb68
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	zjgWzbURvx6kv8VYV7+Sh5+aa1gG08b1qc06cKnNcWiY2mhdH+cwrejKTFkDUrat9usF5SKLlknCugxULEtzcFdAldkAiLYOPcJlxsC9P1MMrZbPuOlkq4h4GZ10jcHFlIypd91gnUeX6e6q+3b34g9yYl/vmZGpXdWzeKrcMYMQJ9vTqraUohhpdXwdhThfnsVH3KoHOmBMPQPcgAG9L6PodSgeqdeCNrQDAURmpO8qJLXTMHCYZs/0durwmHraGvrOEvdeY9milnT8muSsHNMN5wFJAwzJUSfjRDe6zM02QvtVYlHGJkJOzOz3b9nDp65EB7acFaBOIrOsy2X82ykuM4dq3bcOd0KFeeLH0hUcEqlGqHjSC+SobuS5NrBygWJexMh09Cg91PFPT+Ec+qjqqsOx/dS21pfbxPGlEn1v5d3SMP4F8bhSUiIvENcIYxFtdgPpEBzipA300OQ5WM4FBQqQTleO6QbbnKGWkvbPnSG1o6eP2esjzTf20WtHY63kI6L0jmOoHghxt4kxzqYuhYTdtOIEFAvvtDtbSQLqezp27bfAqFIvhxP5sMG7f/MmTv/5Pk/2MtACw62fp5NppbtavyQt1PAEaYP+Bf9hlFGN13ilA3zDWkH/Xz84SuInhEdX8k6on2XqcESap25XoyP4fO+ns1CHTYPlwLc=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PN3PR01MB10135.INDPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230031)(39830400003)(396003)(376002)(136003)(346002)(366004)(230922051799003)(230273577357003)(230173577357003)(64100799003)(1800799012)(451199024)(186009)(6512007)(52116002)(6666004)(478600001)(6506007)(6486002)(83380400001)(26005)(1076003)(2616005)(7416002)(2906002)(41300700001)(66476007)(5660300002)(4326008)(8676002)(8936002)(66556008)(44832011)(66946007)(316002)(38100700002)(38350700005)(86362001)(36756003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?bNxJMJFbXGuGI3khobvxl59izhEzDQ/Y55l00+2CoQnpW7NirtRefA3ioRHA?=
+ =?us-ascii?Q?VnaM8QdCDKBCooVPK0pPXmwK7gGPcQ9jooO/4MfwDNx+8ebd8v6bx384GM5W?=
+ =?us-ascii?Q?ArCg7mcb318nRGcDveSROJpyanBaf/hm49UO3fLYEj6OuL9QkOQKEID3LB9t?=
+ =?us-ascii?Q?lSHc5VGJh69rbS5jPR2eTUgqPRkdQTohqcgMxggd/OTuj0FUdldO3lTXEIYN?=
+ =?us-ascii?Q?YqXlnapI+6djd6thCQQ7NZxezT/JNi0PxYWyO5PDH4XHlAsTmHHeeALz0xbU?=
+ =?us-ascii?Q?Abphjbg/zJwYABeBXZrc4eWa+aWeSfRAZKWQ1NznwoGvMGGAXYYTfzYrIL6C?=
+ =?us-ascii?Q?WyVCatsw7/7jo8/ozkK9ULhSTYLF3VQ/lb6DikAH9dHcivusRYKUQYOQu9Z4?=
+ =?us-ascii?Q?EIQKhEkTFh1u8W+Qw4Z114awps9OeMGlcy+QnMOr8Q0MT+U5PLjUUqdrSkRg?=
+ =?us-ascii?Q?jVQOnXYIvjvsLyJw/0lbcTbd3gTVOStCn7t+fRZc/KZQjk4JkJWQmUuvh4ME?=
+ =?us-ascii?Q?4nMoL6/pzgaiXLKICSzXttPYWhEgW+E1Lz+dP50kD7quX3JnqpoOrbQgDpzB?=
+ =?us-ascii?Q?GbqFb5XZ5+n4I/TTBPlnK8c6RpnG8unTJWkw9OuWPAnn+qPIPDdRtQp9Sk6y?=
+ =?us-ascii?Q?0YmfYV2AqmqlMtgQDxnXUPapxIXkSW+fL7reRFqurK7QULPJY01TYszLat1q?=
+ =?us-ascii?Q?UZ3STLNB/EcIkm8X0nQ/mcFdnGWZK3kc3Alh+2dcexNNID4xgT7Dus/ugRDH?=
+ =?us-ascii?Q?bMaJK5x1PbJ0vPYFvhRf7H+2hIRPO0vXmOaxcxQF+zPvfmkETKVRG7LWn8ua?=
+ =?us-ascii?Q?KSl7YyIkr7qtTytVdVGsoygpVHHR5n9wTjJ7xY3cyswNm/CFABCYm197iPjq?=
+ =?us-ascii?Q?SXlcRJyBJu5XrlabddRWw+B5UJ3zbaqv6lm9PwExw1kH/TSBMCtC5F6MLgyM?=
+ =?us-ascii?Q?Tp50A/U0UUn3Snb8bq4ZXo8PJGGcIO9Jc5kyw1Eq1lpglzs8XP5ZuzPkJjdI?=
+ =?us-ascii?Q?swgYaaztzUbSInZOEPLAkg5X1WS9aSZVsfe6sUR9vTTGRwLep9htwYxmtu/S?=
+ =?us-ascii?Q?HfID3V2APm4t90V8HM4bFs2LVyA3NiVTQIKlGcygIVjcn2BCJE5r6lhsxusV?=
+ =?us-ascii?Q?sfgSKE35RG61YUhQebrmSSCOhMrPAS0Yp5xzLBR1MWyRs1FG2cHB7OcTZKNk?=
+ =?us-ascii?Q?DdV4DeSCH2HVjwiRbVDwhjmjYKVbWSYm98XsLCqA5D6lDwkAow70rPRqq61U?=
+ =?us-ascii?Q?X2aihtQHbre0bQE+17UTlNNV1ms36/h9QrC5zqAj9jc8LgZP6p5UVc8CD99g?=
+ =?us-ascii?Q?SjRkHhylaaYpKkcAlkCfXt/Pbpqq15BCwOo4hLyxjNISu4pC+bN2aUtA87KI?=
+ =?us-ascii?Q?x0R4uCCmH+5FFLYBxo+WHp5bZWLm8Mu8W3gWg42GcjQJHS9i8l6J/OfciE82?=
+ =?us-ascii?Q?XLD5o7EvBbVPC775Q8YtSBZVYfmPTBBiNRh78p0RdCHU1dcgv4YEZ/4QTXgf?=
+ =?us-ascii?Q?aHizuNJ0AEXRdpObMntNaWF40h2oQoPi6ev6/kLeBr0nKNChzQ0Oapwq3S+X?=
+ =?us-ascii?Q?XSWZaaFDRXq+tuOnyXH+AQ4HCNMGY5DUq2VHq4C32PMSsqLwNNPaPRSdUgWl?=
+ =?us-ascii?Q?3mGqJbJ53/HxchX4HlzMdfU=3D?=
+X-OriginatorOrg: siliconsignals.io
+X-MS-Exchange-CrossTenant-Network-Message-Id: efdd9e03-e5cc-477d-c5ac-08dc0b94eb68
+X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB10135.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jan 2024 13:15:41.3505
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 7ec5089e-a433-4bd1-a638-82ee62e21d37
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6nM3eJd84V2rLH225x1/rI60yyBqy7qR92w41PSonjQR4PHY48Lx2lKzlr5hUqeX8HHHzkKaHjqX2iW2wTU5i+ybPdf083StOS6hdsC6ZBDVCREc3RdlFjV8LGxIYD8w
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MAZPR01MB7376
 
-On Sun, 31 Dec 2023 at 16:49, Luca Weiss <luca@z3ntu.xyz> wrote:
->
-> Convert the .txt documentation to .yaml.
->
-> Take the liberty to change the compatibles for ipq8064, apq8064, msm8974
-> and msm8960 to follow the updated naming schema. These compatibles are
-> not used upstream yet.
->
-> Also add a compatible for QCS404 since that SoC upstream already uses
-> qcom,hfpll compatible but without an SoC-specific string.
->
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
->  .../devicetree/bindings/clock/qcom,hfpll.txt       | 63 -----------------
->  .../devicetree/bindings/clock/qcom,hfpll.yaml      | 82 ++++++++++++++++++++++
->  2 files changed, 82 insertions(+), 63 deletions(-)
->
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,hfpll.txt b/Documentation/devicetree/bindings/clock/qcom,hfpll.txt
-> deleted file mode 100644
-> index 5769cbbe76be..000000000000
-> --- a/Documentation/devicetree/bindings/clock/qcom,hfpll.txt
-> +++ /dev/null
-> @@ -1,63 +0,0 @@
-> -High-Frequency PLL (HFPLL)
-> -
-> -PROPERTIES
-> -
-> -- compatible:
-> -       Usage: required
-> -       Value type: <string>:
-> -               shall contain only one of the following. The generic
-> -               compatible "qcom,hfpll" should be also included.
-> -
-> -                        "qcom,hfpll-ipq8064", "qcom,hfpll"
-> -                        "qcom,hfpll-apq8064", "qcom,hfpll"
-> -                        "qcom,hfpll-msm8974", "qcom,hfpll"
-> -                        "qcom,hfpll-msm8960", "qcom,hfpll"
-> -                        "qcom,msm8976-hfpll-a53", "qcom,hfpll"
-> -                        "qcom,msm8976-hfpll-a72", "qcom,hfpll"
-> -                        "qcom,msm8976-hfpll-cci", "qcom,hfpll"
-> -
-> -- reg:
-> -       Usage: required
-> -       Value type: <prop-encoded-array>
-> -       Definition: address and size of HPLL registers. An optional second
-> -                   element specifies the address and size of the alias
-> -                   register region.
-> -
-> -- clocks:
-> -       Usage: required
-> -       Value type: <prop-encoded-array>
-> -       Definition: reference to the xo clock.
-> -
-> -- clock-names:
-> -       Usage: required
-> -       Value type: <stringlist>
-> -       Definition: must be "xo".
-> -
-> -- clock-output-names:
-> -       Usage: required
-> -       Value type: <string>
-> -       Definition: Name of the PLL. Typically hfpllX where X is a CPU number
-> -                   starting at 0. Otherwise hfpll_Y where Y is more specific
-> -                   such as "l2".
-> -
-> -Example:
-> -
-> -1) An HFPLL for the L2 cache.
-> -
-> -       clock-controller@f9016000 {
-> -               compatible = "qcom,hfpll-ipq8064", "qcom,hfpll";
-> -               reg = <0xf9016000 0x30>;
-> -               clocks = <&xo_board>;
-> -               clock-names = "xo";
-> -               clock-output-names = "hfpll_l2";
-> -       };
-> -
-> -2) An HFPLL for CPU0. This HFPLL has the alias register region.
-> -
-> -       clock-controller@f908a000 {
-> -               compatible = "qcom,hfpll-ipq8064", "qcom,hfpll";
-> -               reg = <0xf908a000 0x30>, <0xf900a000 0x30>;
-> -               clocks = <&xo_board>;
-> -               clock-names = "xo";
-> -               clock-output-names = "hfpll0";
-> -       };
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,hfpll.yaml b/Documentation/devicetree/bindings/clock/qcom,hfpll.yaml
-> new file mode 100644
-> index 000000000000..2cb4098012bc
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/clock/qcom,hfpll.yaml
-> @@ -0,0 +1,82 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/clock/qcom,hfpll.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm High-Frequency PLL
-> +
-> +maintainers:
-> +  - Bjorn Andersson <andersson@kernel.org>
-> +
-> +description:
-> +  The HFPLL is used as CPU PLL on various Qualcomm SoCs.
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - enum:
-> +          - qcom,apq8064-hfpll
-> +          - qcom,ipq8064-hfpll
-> +          - qcom,msm8960-hfpll
+do_div() does a 64-by-32 division.
+When the divisor is u64, do_div() truncates it to 32 bits,
+this means it can test non-zero and be truncated to zero for
+division.
 
-I think we should drop these entries. On msm8960 / apq8064 / ipq8064
-the HFPLLs are a part of GCC, so there is no need for a separate
-compat entry.
+fix do_div.cocci warning:
+do_div() does a 64-by-32 division, please consider using div64_u64
+instead.
 
-> +          - qcom,msm8974-hfpll
+Signed-off-by: Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>
+---
+ drivers/media/platform/qcom/venus/venc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-This one is good, the HFPLL is separate, next to the acc / saw
-
-> +          - qcom,msm8976-hfpll-a53
-> +          - qcom,msm8976-hfpll-a72
-> +          - qcom,msm8976-hfpll-cci
-
-Ok.
-
-> +          - qcom,qcs404-hfpll
-> +      - const: qcom,hfpll
-> +
-> +  reg:
-> +    items:
-> +      - description: Base address and size of the register region
-> +      - description: Optional base address and size of the alias register region
-> +    minItems: 1
-> +
-> +  '#clock-cells':
-> +    const: 0
-> +
-> +  clocks:
-> +    items:
-> +      - description: board XO clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: xo
-> +
-> +  clock-output-names:
-> +    description:
-> +      Name of the PLL. Typically hfpllX where X is a CPU number starting at 0.
-> +      Otherwise hfpll_Y where Y is more specific such as "l2".
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - '#clock-cells'
-> +  - clocks
-> +  - clock-names
-> +  - clock-output-names
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  # Example 1 - HFPLL for L2 cache
-> +  - |
-> +    clock-controller@f9016000 {
-> +        compatible = "qcom,ipq8064-hfpll", "qcom,hfpll";
-> +        reg = <0xf9016000 0x30>;
-> +        clocks = <&xo_board>;
-> +        clock-names = "xo";
-> +        clock-output-names = "hfpll_l2";
-> +        #clock-cells = <0>;
-> +    };
-> +  # Example 2 - HFPLL for CPU0
-> +  - |
-> +    clock-controller@f908a000 {
-> +        compatible = "qcom,ipq8064-hfpll", "qcom,hfpll";
-> +        reg = <0xf908a000 0x30>, <0xf900a000 0x30>;
-> +        clocks = <&xo_board>;
-> +        clock-names = "xo";
-> +        clock-output-names = "hfpll0";
-> +        #clock-cells = <0>;
-> +    };
->
-> --
-> 2.43.0
->
->
-
-
+diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+index 44b13696cf82..ad6c31c272ac 100644
+--- a/drivers/media/platform/qcom/venus/venc.c
++++ b/drivers/media/platform/qcom/venus/venc.c
+@@ -409,13 +409,13 @@ static int venc_s_parm(struct file *file, void *fh, struct v4l2_streamparm *a)
+ 	out->capability = V4L2_CAP_TIMEPERFRAME;
+ 
+ 	us_per_frame = timeperframe->numerator * (u64)USEC_PER_SEC;
+-	do_div(us_per_frame, timeperframe->denominator);
++	us_per_frame = div64_u64(us_per_frame, timeperframe->denominator);
+ 
+ 	if (!us_per_frame)
+ 		return -EINVAL;
+ 
+ 	fps = (u64)USEC_PER_SEC;
+-	do_div(fps, us_per_frame);
++	fps = div64_u64(fps, us_per_frame);
+ 
+ 	inst->timeperframe = *timeperframe;
+ 	inst->fps = fps;
 -- 
-With best wishes
-Dmitry
+2.25.1
+
 
