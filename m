@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6228-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6229-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A0C4821A0F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 11:39:09 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E635C821A26
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 11:41:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C2D1A283055
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 10:39:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 62DCB1F2241E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 10:41:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80854DDB8;
-	Tue,  2 Jan 2024 10:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0721D535;
+	Tue,  2 Jan 2024 10:41:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Wnk585Hk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YApoG8uR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25E8D528
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jan 2024 10:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71601D304
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jan 2024 10:41:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3366e78d872so8993664f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jan 2024 02:38:47 -0800 (PST)
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-33687627ad0so8669475f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jan 2024 02:41:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704191926; x=1704796726; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1704192090; x=1704796890; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=6I/ZeMGGOiFDUJYSRFCMtUApKW3uRQm4MZAuRqFbg8Y=;
-        b=Wnk585HkUWWDh7ed7ct259xTJu7owl9KJe/5AX/AtroMaCCkAb53mAypDaeuZrm6H+
-         N4aHIpDCWq1Ewk56bJ6QqE37m+nQRmDAKLbrKLaQpSrKqSVIWKidibE812iYGdrph1P+
-         FbnR+Y2u6DGGXnk7m4wusALyKavAxK5vaqD9h+g7DAI912SHVw76Pvl7wttRX28YNzJu
-         2pLXm8Xlg2Mhle/snu6prhYIl6iEegtOE1jJ7sk0WSjdm8LNqs4N1hq7eOWn0X4Lc0YI
-         LzlRsgGb7nNzhbLpP3rmLlATs5f39sY/4XBEnyDQEfyYre95ATwt2ViJjPhlDmvjiOYB
-         7GAw==
+        bh=Kn/QlAf4t9SOdAjXlkSpXP0+ZhhUlaDRKsb1I/vJ8iA=;
+        b=YApoG8uRbn/F8y75BPN4FqzPKTJtebFHn2jgG6DGWTtNoG3kAgaNKaHCI4hTmB20is
+         r6wewm9yE65hexpU17+TnuKCxxTNsTRWhBuO0SdV+kpLwavGcm/P64xgfHLmVlKOymU1
+         MzgfwhTecARkr0w7XVJj9wy2/Z+RvBTEcObQgwD83jYapln9ci1V7LsvZC/zt2sxxfeI
+         VqrkhFa5WrnwGfis7t9qPpgixoAM6V9PxRJq8bNipaOUw6mIzbGQa/NQb/1nwTzdBsmB
+         qAvtUAlyeBIX0hFO83WZnZLo22AK+IKXMP73dPOL9CXFKGB59c1ewKN3YvSLSGqSfZJa
+         QweA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704191926; x=1704796726;
+        d=1e100.net; s=20230601; t=1704192090; x=1704796890;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6I/ZeMGGOiFDUJYSRFCMtUApKW3uRQm4MZAuRqFbg8Y=;
-        b=EOqQ2fz42ZC87GulBrNWjEt8vrki3NpkZUgp1I6vXwKS8cOolWF0Z8qVrCfthn6ayf
-         CgeqYSERVnbNP+naXZr8Tna06XlcOAMWP4nW9bAP/dB6n2ZQLL+NqFGcPeYTRtkdpyfH
-         68NRmj0V0h1TkMaWVmeqkhr2aaNNq8A8ZZQAfr6kYHndkUMrIGkZ1GghzNhYcZLHY2Bw
-         2TltiTKHBB+5IbpSfP+2AwCDCAKNwo6SKoFsP1bt82d2R2V1my1AlSNomJaOQ7RT+MaN
-         ERe21RsWAA6tJhBMIWMWnGncIQ/uCiImXIsHCbuuSqllSTK+AxZDC39/ogECp1HSdvJG
-         lQLQ==
-X-Gm-Message-State: AOJu0YzPu89jNfUm1ueZDGO2/D9m7qx138+wqY3xf/CQfT+gw8WmtsIZ
-	ZY1AXGQnDMsVQpnCZ39C8TqD99tJTtLJbg==
-X-Google-Smtp-Source: AGHT+IErOCtDk9wNBdpZ/uy911tsGlu8buysXBUvu2I2VZ6sByz6cS4lYzFvhVejJxiBXN4PQ7DWCQ==
-X-Received: by 2002:a05:600c:1ca6:b0:40d:5b15:8df0 with SMTP id k38-20020a05600c1ca600b0040d5b158df0mr2918349wms.208.1704191925879;
-        Tue, 02 Jan 2024 02:38:45 -0800 (PST)
+        bh=Kn/QlAf4t9SOdAjXlkSpXP0+ZhhUlaDRKsb1I/vJ8iA=;
+        b=Q2vIgCss4Zae8OqtCOLSwRg+rU3rpIIMtFBl0KB/pvEx32a6jZggwIBZPBHWTGnwnu
+         CEYua/7pSsShL0Fst7aCwVm8BQq57v06SEfriheH4MsU9fi41lNRDB1l+rUnT5g8EtgE
+         7sI4R575l0H3fZD4NeGJXhpSQCaUndZ+qXoeSwvVIWDN8tXpOgvrLc+x1j+cwL/6eBQw
+         KH8PMMp4+BY9OtArLrFhxl306j9uHd7e3tcskZ2FZKgnVj9F098NHZ1j7CO1PQH9NeSp
+         ZiI026CteXnwdTPTESB3uTMiV7jmbau4Ag1O8JUIIeYpla9E4fPNfrOrwX03wDIO54aI
+         buVQ==
+X-Gm-Message-State: AOJu0Yx7JmkwnAMG9elNU2QCgfHQnNsJKAY8NOwkglSMOVxOiRDEO50B
+	80uONAO64sYx5P+hSiARwx1SYmX7Bh5psA==
+X-Google-Smtp-Source: AGHT+IGbL4lkIUFTCjdwF2aifTu9tovrlFxMwIFZZ4HlOFeeTZ6z/vxdKG5J9Qn2sERBzJDdtSA6mw==
+X-Received: by 2002:adf:fa09:0:b0:337:404d:4e9f with SMTP id m9-20020adffa09000000b00337404d4e9fmr1115990wrr.79.1704192089842;
+        Tue, 02 Jan 2024 02:41:29 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id m2-20020adfe0c2000000b00337464bf723sm1851055wri.18.2024.01.02.02.38.43
+        by smtp.gmail.com with ESMTPSA id v1-20020a5d6101000000b003372c11625dsm9215634wrt.76.2024.01.02.02.41.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Jan 2024 02:38:45 -0800 (PST)
-Message-ID: <f3ece04e-78a8-4d0a-9bf2-22656e31d491@linaro.org>
-Date: Tue, 2 Jan 2024 11:38:42 +0100
+        Tue, 02 Jan 2024 02:41:29 -0800 (PST)
+Message-ID: <588dd6c3-7d2b-48db-b5ea-48a07077dc5d@linaro.org>
+Date: Tue, 2 Jan 2024 11:41:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,7 +66,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: clock: qcom,hfpll: Convert to YAML
+Subject: Re: [PATCH 2/3] clk: qcom: hfpll: Add QCS404-specific compatible
 Content-Language: en-US
 To: Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
  phone-devel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
@@ -78,7 +78,7 @@ To: Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
 Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20231231-hfpll-yaml-v1-0-359d44a4e194@z3ntu.xyz>
- <20231231-hfpll-yaml-v1-1-359d44a4e194@z3ntu.xyz>
+ <20231231-hfpll-yaml-v1-2-359d44a4e194@z3ntu.xyz>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -124,89 +124,55 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231231-hfpll-yaml-v1-1-359d44a4e194@z3ntu.xyz>
+In-Reply-To: <20231231-hfpll-yaml-v1-2-359d44a4e194@z3ntu.xyz>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 31/12/2023 15:48, Luca Weiss wrote:
-> Convert the .txt documentation to .yaml.
+> It doesn't appear that the configuration is for the HFPLL is generic, so
+
+That's ok...
+
+> add a qcs404-specific compatible and rename the existing struct to
+
+but why this is the solution? If the qcom,hfpll compatible was
+deprecated, but it is not. This commit is contradictory to the bindings.
+
+
+> qcs404.
 > 
-> Take the liberty to change the compatibles for ipq8064, apq8064, msm8974
-> and msm8960 to follow the updated naming schema. These compatibles are
-> not used upstream yet.
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> ---
+>  drivers/clk/qcom/hfpll.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 > 
+> diff --git a/drivers/clk/qcom/hfpll.c b/drivers/clk/qcom/hfpll.c
+> index dac27e31ef60..5b12982519be 100644
+> --- a/drivers/clk/qcom/hfpll.c
+> +++ b/drivers/clk/qcom/hfpll.c
+> @@ -14,7 +14,7 @@
+>  #include "clk-regmap.h"
+>  #include "clk-hfpll.h"
+>  
+> -static const struct hfpll_data hdata = {
+> +static const struct hfpll_data qcs404 = {
+>  	.mode_reg = 0x00,
+>  	.l_reg = 0x04,
+>  	.m_reg = 0x08,
+> @@ -84,10 +84,12 @@ static const struct hfpll_data msm8976_cci = {
+>  };
+>  
+>  static const struct of_device_id qcom_hfpll_match_table[] = {
+> -	{ .compatible = "qcom,hfpll", .data = &hdata },
+>  	{ .compatible = "qcom,msm8976-hfpll-a53", .data = &msm8976_a53 },
+>  	{ .compatible = "qcom,msm8976-hfpll-a72", .data = &msm8976_a72 },
+>  	{ .compatible = "qcom,msm8976-hfpll-cci", .data = &msm8976_cci },
+> +	{ .compatible = "qcom,qcs404-hfpll", .data = &qcs404 },
+> +	/* deprecated, use SoC-specific compatible */
 
-
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - enum:
-> +          - qcom,apq8064-hfpll
-> +          - qcom,ipq8064-hfpll
-> +          - qcom,msm8960-hfpll
-> +          - qcom,msm8974-hfpll
-> +          - qcom,msm8976-hfpll-a53
-> +          - qcom,msm8976-hfpll-a72
-> +          - qcom,msm8976-hfpll-cci
-> +          - qcom,qcs404-hfpll
-> +      - const: qcom,hfpll
-> +
-> +  reg:
-> +    items:
-> +      - description: Base address and size of the register region
-
-HPLL registers
-
-> +      - description: Optional base address and size of the alias register region
-
-Alias register region
-
-> +    minItems: 1
-> +
-> +  '#clock-cells':
-> +    const: 0
-> +
-> +  clocks:
-> +    items:
-> +      - description: board XO clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: xo
-> +
-> +  clock-output-names:
-> +    description:
-> +      Name of the PLL. Typically hfpllX where X is a CPU number starting at 0.
-> +      Otherwise hfpll_Y where Y is more specific such as "l2".
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - '#clock-cells'
-> +  - clocks
-> +  - clock-names
-> +  - clock-output-names
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  # Example 1 - HFPLL for L2 cache
-> +  - |
-> +    clock-controller@f9016000 {
-> +        compatible = "qcom,ipq8064-hfpll", "qcom,hfpll";
-> +        reg = <0xf9016000 0x30>;
-> +        clocks = <&xo_board>;
-> +        clock-names = "xo";
-> +        clock-output-names = "hfpll_l2";
-> +        #clock-cells = <0>;
-> +    };
-> +  # Example 2 - HFPLL for CPU0
-
-Just keep one example, they are the same. And then drop the comment.
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Why? That's not a deprecated compatible. You now expect to create many
+unnecessary entries, which is not really needed. This is opposite of
+what we try to achieve with compatibility lists.
 
 Best regards,
 Krzysztof
