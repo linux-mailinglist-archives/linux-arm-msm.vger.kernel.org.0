@@ -1,66 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-6201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6198-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D2C2821723
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 06:18:00 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48CC482171E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 06:17:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 086A42821B7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 05:17:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 391C71C210DD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jan 2024 05:17:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16AAF2591;
-	Tue,  2 Jan 2024 05:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58C9515C5;
+	Tue,  2 Jan 2024 05:17:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YNpYQWr7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IX2BZhQz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F262106
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4751B23AD
 	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jan 2024 05:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2ccc6e509c8so53400241fa.0
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2ccae380df2so74222121fa.1
         for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jan 2024 21:17:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1704172649; x=1704777449; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=fPwf5mMASUhFtnDK4+mUIJwZeVNmPGTZR6zF8QblZ8o=;
-        b=YNpYQWr7IL4hOaU5yxVIdTPptESp3yMTxaK1uYWg1wJSu5BEE1mJtZsd6lXDa+iv2v
-         IKQHp0HCfXeQUlJhYnM50nTrCcFT38EzFI/brB9yF+O4qOZXNSIVatlePpf7J0FC2OD2
-         s/01+OVVyFxmX2pA7P66A3i/wAQ9VbHKhd0AbwoHccFKr+z0HxypFi4BktPVd11jvv6t
-         aIPwG3ebXiUup//ETMRwN6w8jtPUPWl/wvoZij/W0ZCquk1dmWjE2MydfDoJZI5isBRd
-         BqxlZ8hSnsDypNZ6RZiDX7K4/E6zBLBw7H3ES952yPgAa50Qk4me77PHrnAF7WIOSPQw
-         JDpA==
+        bh=iFfqk3GWi73d7yO0PZohPdWTnuursIgEws3IpamTyAY=;
+        b=IX2BZhQzHjADXoCVn8ZF0mgNwzQb8E+rqrCvVcd8NemeKyxZTPNTaxyLeacGX50cTD
+         Yo8nnZPI6B5izbrprD2aAnX2Np9VgVz0yegN1s3kMcfvoXZ8WXdDWM/Y6XB4+HmeEzvy
+         nkFkaiF7EMjLKH3msWXwx9VmRol4ZkSCA69tsOM+A8aRl7Yx8inOAVhtir8HOiIMfOlx
+         XpyhbZ7Gm5YrcD3OQzkJ6pr7dMh0p1EQhbIxL85EFt9j2af9eqLVOprNGV6+6IlbGRLU
+         dpxSYkubfoyWg8FgtvWDJRyvqh36D7D9ajEWTEZd8tmjW9dF880bBHmNbJsm2c2QQXAf
+         vH3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1704172649; x=1704777449;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fPwf5mMASUhFtnDK4+mUIJwZeVNmPGTZR6zF8QblZ8o=;
-        b=ljizRkTP8xxIXi7oUfPkjcKpDSyQLhBlaJ1KTHVe8P7Nd+YOGHe+xCyvc3wLWNiC0d
-         3PLNWM9UVA8RuRDRqTMoWMrkUo5GUuYQKl0gZSvBDZxSzUt+ILG8LW6nnO0U6/yaWZij
-         LzYt1p6fsCO5fXon3zwVUCG2Dkf1fU+Bj09prlXvddMg0DqFnNvEZpuQiLzZLbMJ+knl
-         lpHYgplSfDMDYzQsvyEj3nuF6/EEdnzmVdl8HJvd5DyVEdSXgGrX+zE6ukLbezE8kud/
-         ZlbC+m/PLP3JxNgNx6+hI7CzJPF0qTFUBbBxvlEPLekSUXPW5F64LTUv0u13murkQcpu
-         xKcQ==
-X-Gm-Message-State: AOJu0YxTNnV2NlxkPbE6BjA8fOrsN7lAbQm2QPOp3JAk9YA+Pl71eL+5
-	rmIHcjPREGg4/jREUN/DFzlQglgoWSeTbqo1cAzrw4X232+mOQ==
-X-Google-Smtp-Source: AGHT+IGP2a3jv25ft1O7cKwbk2WYAreFkcKjV4s03h932dx8uphgz5a1GimK4cicrDURdjPTCu0j4g==
-X-Received: by 2002:a05:6512:10ca:b0:50e:6a65:fa97 with SMTP id k10-20020a05651210ca00b0050e6a65fa97mr11257535lfg.33.1704172648329;
-        Mon, 01 Jan 2024 21:17:28 -0800 (PST)
+        bh=iFfqk3GWi73d7yO0PZohPdWTnuursIgEws3IpamTyAY=;
+        b=qQBTzQpYri+TulC5F8zahxyImMpeKTz4PCQ+E0tfX/2culYxrgxK57dSPSqanRXPVl
+         ru6WGK9OG/GVchs/sYD4dICjJWWwW4tlRXgG2Yr188lGj4tAV/APIWRDTq3S8h1d3YhD
+         v97lO0BMtDlob2FUhjEaMQ32dQ1xa4YOu4nEk7+nsbcggryyWq+CmYuMd4+9MNmZA0fL
+         YPkT/FMbK3ph84Fik8Vsg4C0TotKjEXHpxnWRIcTHjaXWqXMdrL30pk+p6A3yrpax4q0
+         ItOUUPL8pvyDdbEP/c5ukkRGv3WlyV8/X0wr8dKvCPUYXgiqYvAZ2VJELZE7EzKW3UVm
+         +4Yg==
+X-Gm-Message-State: AOJu0YyREbm3TubJz+uk1daYB8XqYgqNoE30vrDHSxCCC4nh8AxA2FII
+	KfN9BIhghYuQ2JfuGx/b1pPKFJ9N6/0pPOVFtCFd5A2AP9oImQ==
+X-Google-Smtp-Source: AGHT+IG/WNw4muoX745dS5qB40CKnhR0IDcIaPIVC39JGhCXwvBqLuzo3CcT4o6hbJhKAPucFsq8Yg==
+X-Received: by 2002:a19:ee13:0:b0:50e:73fe:c118 with SMTP id g19-20020a19ee13000000b0050e73fec118mr5108491lfb.71.1704172649116;
+        Mon, 01 Jan 2024 21:17:29 -0800 (PST)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id r25-20020ac252b9000000b0050e810689e5sm2081827lfm.33.2024.01.01.21.17.27
+        by smtp.gmail.com with ESMTPSA id r25-20020ac252b9000000b0050e810689e5sm2081827lfm.33.2024.01.01.21.17.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Jan 2024 21:17:27 -0800 (PST)
+        Mon, 01 Jan 2024 21:17:28 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 02 Jan 2024 07:17:21 +0200
-Subject: [PATCH v7 01/22] dt-bindings: soc: qcom: merge qcom,saw2.txt into
- qcom,spm.yaml
+Date: Tue, 02 Jan 2024 07:17:22 +0200
+Subject: [PATCH v7 02/22] dt-bindings: soc: qcom: qcom,saw2: add missing
+ compatible strings
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,7 +69,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240102-saw2-spm-regulator-v7-1-0472ec237f49@linaro.org>
+Message-Id: <20240102-saw2-spm-regulator-v7-2-0472ec237f49@linaro.org>
 References: <20240102-saw2-spm-regulator-v7-0-0472ec237f49@linaro.org>
 In-Reply-To: <20240102-saw2-spm-regulator-v7-0-0472ec237f49@linaro.org>
 To: Rob Herring <robh+dt@kernel.org>, 
@@ -77,156 +77,61 @@ To: Rob Herring <robh+dt@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross <agross@kernel.org>
 Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, Rob Herring <robh@kernel.org>
+ linux-arm-msm@vger.kernel.org
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5475;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1624;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=Rrl8DtWc9AmZbJUOzG7UFbQ4ctK1eNIS/E5EO9aSnJA=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlk5xjUAq+5V4Wav7GyfrgtpfPAnAoRabcrZfXm
- 1D3yp5HU/mJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZZOcYwAKCRCLPIo+Aiko
- 1a3kB/9eOTG4L/XtFSEHGCYu7J6fxIb05v6BMr0xre4ItctmDeO9R1WBnT9F7qvXCpIGwCc2z1S
- IJGstmETrCzba+dbZMYXpnmaX5xlfapylIGM7jGVtxWCcAKIGDezf7nBE20vGQS0P+aTOqyzfsr
- SQTbJIj+1wixzh3rjKiIbSH8xQ+B2uoQxJVkiYsYJZ5lBxyjTr/VfqEBnWW99PIs3efwMlJhnDt
- ASOJCYhgftnzq3vZvDVHI5JvhGNEdNIBwgknSRX3oVqVHTK+DNfgcFMs3bj2wPQ0wWC31KGAqP/
- mqpkCs0j4aL0s+/HVgf8Nxh5ZG6tHkvOFUk9B6+ElqfgamZ/
+ bh=6seBHQpdQthfiGxSf/xd1qZ7pEbCXNhrQ7ROvS0olF0=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlk5xjy3ovISs7HIkTtLCBZJAdKtskDPCJ378hp
+ fmmCa9oojuJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZZOcYwAKCRCLPIo+Aiko
+ 1ShDB/49KRDWmMLGG76SIc7wmOFsbA8X2E7Wx2ZIb4SXpJzhOsRh0moBeNCw91cLTkfBHkvu6LG
+ aG3rDRZNJj7IReL6f2Q6jiGROWjI3A+9TpbclpJv8wnPI4LOWhCoSfEI8ymOqWaiy90bbAFbu3K
+ Yy/uFFH+z/y2BdxE6BE+xKcgCnjQmEOOAucPTUdARy9Vu1DFZLAeB+KD32fRMNsGTeholAxV/kE
+ 2TR5LY1fSGsYcc8y2ycN7Ubypw0Y9KVt/SKgc+PCoJvq/15//QHW0XTq+SrKToNJnP03S3WkbLL
+ PRV78B8sQpFpPZnm4RmPQGxdrDmYUrgxRJPrPVVXAc9jA5CF
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-The Qualcomm SPM / SAW2 device is described in two bindigns files:
-arm/msm/qcom,saw2.txt and soc/qcom/qcom,spm.yaml. Merge the former into
-the latter, adding detailed device node description. While we are at it,
-also rename qcom,spm.yaml to qcom,saw2.yaml to follow the actual
-compatible used for these devices.
+Define compatible strings for SAW2 units present on MSM8960, IPQ4019
+and IPQ8064.  There is no need to include SAW version into the compat
+string, so just use the SoC and SAW2 kind.
 
-The regulator property is retained as is. It will be changed in the
-later patches.
+Also add missing L2 SAW2 compatibles for MSM8974 and APQ8084, they
+follow the existing CPU SAW2 strings.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../devicetree/bindings/arm/msm/qcom,saw2.txt      | 58 ----------------------
- .../soc/qcom/{qcom,spm.yaml => qcom,saw2.yaml}     | 26 +++++++---
- 2 files changed, 20 insertions(+), 64 deletions(-)
+ Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,saw2.txt b/Documentation/devicetree/bindings/arm/msm/qcom,saw2.txt
-deleted file mode 100644
-index c0e3c3a42bea..000000000000
---- a/Documentation/devicetree/bindings/arm/msm/qcom,saw2.txt
-+++ /dev/null
-@@ -1,58 +0,0 @@
--SPM AVS Wrapper 2 (SAW2)
--
--The SAW2 is a wrapper around the Subsystem Power Manager (SPM) and the
--Adaptive Voltage Scaling (AVS) hardware. The SPM is a programmable
--power-controller that transitions a piece of hardware (like a processor or
--subsystem) into and out of low power modes via a direct connection to
--the PMIC. It can also be wired up to interact with other processors in the
--system, notifying them when a low power state is entered or exited.
--
--Multiple revisions of the SAW hardware are supported using these Device Nodes.
--SAW2 revisions differ in the register offset and configuration data. Also, the
--same revision of the SAW in different SoCs may have different configuration
--data due the differences in hardware capabilities. Hence the SoC name, the
--version of the SAW hardware in that SoC and the distinction between cpu (big
--or Little) or cache, may be needed to uniquely identify the SAW register
--configuration and initialization data. The compatible string is used to
--indicate this parameter.
--
--PROPERTIES
--
--- compatible:
--	Usage: required
--	Value type: <string>
--	Definition: Must have
--			"qcom,saw2"
--		    A more specific value could be one of:
--			"qcom,apq8064-saw2-v1.1-cpu"
--			"qcom,msm8226-saw2-v2.1-cpu"
--			"qcom,msm8974-saw2-v2.1-cpu"
--			"qcom,apq8084-saw2-v2.1-cpu"
--
--- reg:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: the first element specifies the base address and size of
--		    the register region. An optional second element specifies
--		    the base address and size of the alias register region.
--
--- regulator:
--	Usage: optional
--	Value type: boolean
--	Definition: Indicates that this SPM device acts as a regulator device
--			device for the core (CPU or Cache) the SPM is attached
--			to.
--
--Example 1:
--
--	power-controller@2099000 {
--		compatible = "qcom,saw2";
--		reg = <0x02099000 0x1000>, <0x02009000 0x1000>;
--		regulator;
--	};
--
--Example 2:
--	saw0: power-controller@f9089000 {
--		compatible = "qcom,apq8084-saw2-v2.1-cpu", "qcom,saw2";
--		reg = <0xf9089000 0x1000>, <0xf9009000 0x1000>;
--	};
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
-similarity index 64%
-rename from Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
-rename to Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
-index 20c8cd38ff0d..84b3f01d590c 100644
---- a/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
+index 84b3f01d590c..2178fea37b8c 100644
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
 +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
-@@ -1,18 +1,25 @@
- # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
- %YAML 1.2
- ---
--$id: http://devicetree.org/schemas/soc/qcom/qcom,spm.yaml#
-+$id: http://devicetree.org/schemas/soc/qcom/qcom,saw2.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: Qualcomm Subsystem Power Manager
-+title: Qualcomm Subsystem Power Manager / SPM AVS Wrapper 2 (SAW2)
- 
- maintainers:
-   - Andy Gross <agross@kernel.org>
-   - Bjorn Andersson <bjorn.andersson@linaro.org>
- 
- description: |
--  This binding describes the Qualcomm Subsystem Power Manager, used to control
--  the peripheral logic surrounding the application cores in Qualcomm platforms.
-+  The Qualcomm Subsystem Power Manager is used to control the peripheral logic
-+  surrounding the application cores in Qualcomm platforms.
-+
-+  The SAW2 is a wrapper around the Subsystem Power Manager (SPM) and the
-+  Adaptive Voltage Scaling (AVS) hardware. The SPM is a programmable
-+  power-controller that transitions a piece of hardware (like a processor or
-+  subsystem) into and out of low power modes via a direct connection to
-+  the PMIC. It can also be wired up to interact with other processors in the
-+  system, notifying them when a low power state is entered or exited.
- 
- properties:
+@@ -25,6 +25,9 @@ properties:
    compatible:
-@@ -34,8 +41,15 @@ properties:
+     items:
+       - enum:
++          - qcom,ipq4019-saw2-cpu
++          - qcom,ipq4019-saw2-l2
++          - qcom,ipq8064-saw2-cpu
+           - qcom,sdm660-gold-saw2-v4.1-l2
+           - qcom,sdm660-silver-saw2-v4.1-l2
+           - qcom,msm8998-gold-saw2-v4.1-l2
+@@ -33,10 +36,13 @@ properties:
+           - qcom,msm8916-saw2-v3.0-cpu
+           - qcom,msm8939-saw2-v3.0-cpu
+           - qcom,msm8226-saw2-v2.1-cpu
++          - qcom,msm8960-saw2-cpu
+           - qcom,msm8974-saw2-v2.1-cpu
++          - qcom,msm8974-saw2-v2.1-l2
+           - qcom,msm8976-gold-saw2-v2.3-l2
+           - qcom,msm8976-silver-saw2-v2.3-l2
+           - qcom,apq8084-saw2-v2.1-cpu
++          - qcom,apq8084-saw2-v2.1-l2
+           - qcom,apq8064-saw2-v1.1-cpu
        - const: qcom,saw2
  
-   reg:
--    description: Base address and size of the SPM register region
--    maxItems: 1
-+    items:
-+      - description: Base address and size of the SPM register region
-+      - description: Base address and size of the alias register region
-+    minItems: 1
-+
-+  regulator:
-+    type: boolean
-+    description: Indicates that this SPM device acts as a regulator device
-+      device for the core (CPU or Cache) the SPM is attached to.
- 
- required:
-   - compatible
 
 -- 
 2.39.2
