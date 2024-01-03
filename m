@@ -1,59 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-6358-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6359-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4DD32822B2E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 11:18:49 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 666EE822B7C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 11:40:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C582E284ED4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 10:18:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8B7561C22819
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 10:40:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E5BB18AE6;
-	Wed,  3 Jan 2024 10:18:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3632B18C1D;
+	Wed,  3 Jan 2024 10:40:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JB3TyGPo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CdE6J6YD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F4318657;
-	Wed,  3 Jan 2024 10:18:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C46BC433C7;
-	Wed,  3 Jan 2024 10:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105A918C17;
+	Wed,  3 Jan 2024 10:40:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A478C433C8;
+	Wed,  3 Jan 2024 10:40:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704277121;
-	bh=Y3pBM4Uxbyl6bJL+EyV7rY92Ok2OHNDeN46fbDf5Lo4=;
+	s=k20201202; t=1704278421;
+	bh=PzZyxGoJo4itwp7LCQZOTQ6nb/jmCq7cpRucX8CCrZ0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JB3TyGPobr8IHhL2GlLPKFHPu24e3PGp0QET/v6IIV76JIslAi4GrtmjMHfpTx0qX
-	 haqxuH5qrXe60cRwhBaHFgX42TONYk93P3zuacq+7dtktdxT8NcVwdmLE/FuilI06D
-	 wlD7GOIHqtv/A8GySPXJTpF0kbHHCGs7aSELAmyVzUGXkG8wSDa2UaUg9NuAxus5CC
-	 HU/tTaZ1waH0P0FbVxtMITnpOhzOWUnZXwbqztvpkn2Gdtz6mSgY0vw0Z55QdQK1uy
-	 FGlmH3peDTgDHlPM/TOzTCb3e/n9g/ihsgMy05SkNksc6mZkyuBseBDo8pdQ5m2bDw
-	 uptE2pk5am1Xg==
+	b=CdE6J6YDCZ6DF3b3SSWz8ZSlHKxG6XKLuVhbA4iu6Ouem1gd+qLvg7qiKHFckyuLC
+	 Hkuvbw+vkhBE349YCoj5Wf4EDNUg4KeCTDN2WAuGtJ6uj4GEh59CyiCC40ftqwPGrS
+	 mFud03uz5rFP+SY8uGcvQ0UKG5YDzhgVWcs43e26DMsEEDW5Kdzc/mKJdTOFtRCH73
+	 OgNoMilUpZmlJvbWlL5hcSMt25y+Z+XZKsf9Skyf59ED9jkt75oYMpajiZm7Dkk+fZ
+	 XB+09BVOsTRVfAgcKlzuHXcBNumKS0zw6JixXUs84iDpDN4K40GCIme7n5SuxH68GF
+	 XniKl+7bOeCjQ==
 Received: from johan by xi.lan with local (Exim 4.96.2)
 	(envelope-from <johan@kernel.org>)
-	id 1rKyKY-0000kn-1x;
-	Wed, 03 Jan 2024 11:18:35 +0100
-Date: Wed, 3 Jan 2024 11:18:34 +0100
+	id 1rKyfW-00010q-27;
+	Wed, 03 Jan 2024 11:40:15 +0100
+Date: Wed, 3 Jan 2024 11:40:14 +0100
 From: Johan Hovold <johan@kernel.org>
 To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
+Cc: Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Stanimir Varbanov <svarbanov@mm-sol.com>,
+	Andrew Murray <amurray@thegoodpenguin.co.uk>,
+	Vinod Koul <vkoul@kernel.org>,
 	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: Re: [PATCH v4 02/12] clk: qcom: Use qcom_branch_set_clk_en()
-Message-ID: <ZZU0eiw_1qSOklRN@hovoldconsulting.com>
-References: <20230717-topic-branch_aon_cleanup-v4-0-32c293ded915@linaro.org>
- <20230717-topic-branch_aon_cleanup-v4-2-32c293ded915@linaro.org>
- <ZZPnAvXB8oqds4KM@hovoldconsulting.com>
- <90749db5-a803-4bf0-8543-f049249b1df0@linaro.org>
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/4] PCI: qcom: Reshuffle reset logic in 2_7_0 .init
+Message-ID: <ZZU5jqJ14HscR1Ed@hovoldconsulting.com>
+References: <20231227-topic-8280_pcie-v1-0-095491baf9e4@linaro.org>
+ <20231227-topic-8280_pcie-v1-1-095491baf9e4@linaro.org>
+ <ZY7R581pgn3uO6kk@hovoldconsulting.com>
+ <fa0fbadc-a7c3-4bea-bed7-0006db0616dc@linaro.org>
+ <ZY7l828-mSGXVwrk@hovoldconsulting.com>
+ <598ede70-bc01-4137-b68b-981c3d420735@linaro.org>
+ <ZZPiwk1pbhLyfthB@hovoldconsulting.com>
+ <07b20408-4b45-48c3-9356-730a7a827743@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,50 +69,75 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <90749db5-a803-4bf0-8543-f049249b1df0@linaro.org>
+In-Reply-To: <07b20408-4b45-48c3-9356-730a7a827743@linaro.org>
 
-On Tue, Jan 02, 2024 at 03:27:29PM +0100, Konrad Dybcio wrote:
-> On 2.01.2024 11:35, Johan Hovold wrote:
-> > On Sat, Dec 30, 2023 at 02:04:04PM +0100, Konrad Dybcio wrote:
+On Tue, Jan 02, 2024 at 06:03:36PM +0100, Konrad Dybcio wrote:
+> On 2.01.2024 11:17, Johan Hovold wrote:
+> > On Sat, Dec 30, 2023 at 02:16:18AM +0100, Konrad Dybcio wrote:
+> >> On 29.12.2023 16:29, Johan Hovold wrote:
+> >>> On Fri, Dec 29, 2023 at 04:01:27PM +0100, Konrad Dybcio wrote:
+> >>>> On 29.12.2023 15:04, Johan Hovold wrote:
+> >>>>> On Wed, Dec 27, 2023 at 11:17:19PM +0100, Konrad Dybcio wrote:
+> >>>>>> At least on SC8280XP, if the PCIe reset is asserted, the corresponding
+> >>>>>> AUX_CLK will be stuck at 'off'.
+> >>>>>
+> >>>>> No, this path is exercised on every boot without the aux clock ever
+> >>>>> being stuck at off. So something is clearly missing in this description.
+> >>>
+> >>>> That's likely because the hardware has been initialized and not cleanly
+> >>>> shut down by your bootloader. When you reset it, or your bootloader
+> >>>> wasn't so kind, you need to start initialization from scratch.
+> >>>
+> >>> What does that even mean? I'm telling you that this reset is asserted on
+> >>> each boot, on all sc8280xp platforms I have access to, and never have I
+> >>> seen the aux clk stuck at off.
+> >>>
+> >>> So clearly your claim above is too broad and the commit message is
+> >>> incorrect or incomplete.
 
-> >> @@ -3010,10 +3010,8 @@ static int camcc_sc8280xp_probe(struct platform_device *pdev)
-> >>  	clk_lucid_pll_configure(&camcc_pll6, regmap, &camcc_pll6_config);
-> >>  	clk_lucid_pll_configure(&camcc_pll7, regmap, &camcc_pll7_config);
-> >>  
-> >> -	/*
-> >> -	 * Keep camcc_gdsc_clk always enabled:
-> >> -	 */
-> >> -	regmap_update_bits(regmap, 0xc1e4, BIT(0), 1);
-> >> +	/* Keep the critical clocks always-on */
-> >> +	qcom_branch_set_clk_en(regmap, 0xc1e4); /* CAMCC_GDSC_CLK */
-> > 
-> > I still think something along the lines of
-> > 
-> > 	/* Keep some clocks always on */
-> > 
-> > is preferred as it is far from obvious why a camera clock would be
-> > considered "critical".
-> > 
-> > Or perhaps you can come up with a better description of why we've
-> > decided not to model these clocks and just leave them ungated.
-
-> Technically they're not really super critical if the hardware is
-> not in use.. It's just that at one point Qualcomm decided to take
-> the lazy decision to keep them always-on downstream and we seem to
-> have agreed on going with that, instead of pm_clk (remember my old
-> attempt at getting rid of this on dispcc-sc8280xp?)..
+> > We're clearly talking past each other. When I'm saying reset is asserted
+> > on each boot, I'm referring to reset being asserted in
+> > qcom_pcie_init_2_7_0(), whereas you appear to be referring to whether
+> > the reset has been left asserted by the bootloader when the driver
+> > probes.
 > 
-> For now, I was just trying to clean this up a bit before looking
-> into a better solution for this (probably a whole lot of pm_clks
-> with some clever handle-getting due to different ways of grabbing
-> clock sources.. by-name vs by-index vs global lookup that we've
-> accumulated over the years).
+> OK, "boot" meant "booting the device" to me, not the PCIe controller.
 
-Yeah, that's fine. I'm not saying you have to come up with a better way
-of describing these for this series, but I find calling them "critical"
-throughout is more confusing than the current unspecified comments about
-leaving some clocks on (i.e. without a proper motivation or even hint
-about why they are being kept always on).
+Still not getting across to you apparently.
+
+Again, the code in question is exercised on every boot and not once have
+I seen a stuck clock due to reset being asserted *in*
+qcom_pcie_init_2_7_0().
+
+Now that's not what you were trying to describe as you were thinking of
+reset having been left asserted *before* the driver probes (or before
+qcom_pcie_init_2_7_0() is called).
+
+See? Do you understand now what I was trying to say and why my
+misinterpretation of your terse commit message lead me to claim that it
+was clearly false?
+
+> > I understand what you meant to say now, but I think you should rephrase:
+> > 
+> > 	At least on SC8280XP, if the PCIe reset is asserted, the
+> > 	corresponding AUX_CLK will be stuck at 'off'.
+> > 
+> > because as it stands, it sounds like the problem happens when the driver
+> > asserts reset.
+> 
+> Does this sound good?
+> 
+> "At least on SC8280XP, trying to enable the AUX_CLK associated with
+> a PCIe host fails if the corresponding PCIe reset is asserted."
+
+Yes, but you need to also say something about how this would happen, for
+example, your hypothetical bootloader leaving it asserted and your actual
+motivation for this change which is that it appears to be needed after
+suspend. 
+
+A commit message should be clear and self-contained and not force
+reviewers to have to try to interpret what it means and guess what the
+motivation for the change really is.
 
 Johan
 
