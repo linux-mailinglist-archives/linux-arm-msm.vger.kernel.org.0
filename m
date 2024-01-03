@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C420822ECC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 14:43:32 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1CE2822ED7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 14:45:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CEC99B209D2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 13:43:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1811BB20F3A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 13:45:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D276199DF;
-	Wed,  3 Jan 2024 13:42:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1478919BB2;
+	Wed,  3 Jan 2024 13:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eaFmddNB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="z3x2HOcp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF4B19BBB
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jan 2024 13:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74FCF19BAF
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jan 2024 13:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-50e7f58c5fbso8000237e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jan 2024 05:42:54 -0800 (PST)
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a235eb41251so1178985266b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jan 2024 05:45:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704289372; x=1704894172; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1704289520; x=1704894320; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ywm1NJM84MFVbNs8Kn4Mu02P9WC9fu63PnwufUkYyus=;
-        b=eaFmddNB4wQQ6+LzNAHt0op2ZK3Cqm5zFKktcbxDa5pLixURkQqsakepP+CCKwog/g
-         k95vv9wAyEhZJMBnlHnpJRzyIwpJBsLK78S824Sc0IwKteyNtGVZXnWkFubEAg/4lbWo
-         uGzZsySL8E9v5F9gDnlR/meLHYTbSdUgLgGZwRvJa+SkN0TrttrzncTJM7qCqFdJPavC
-         2i6YKLvnmc6O6PDDJhwKq3GiMKA/sZLeEcTyu3ybYZX7K0GvO9UJ3p8MnxSMnlI6yVdn
-         OPWa4RCSJdvGlOJwpCs8sxJr9+tyaWFmcP4NLbRNaOJUCfiyFvt70xTinw3nAVUEeuXQ
-         l1MA==
+        bh=UsIhcx0F5Z1NtIOJr0Hzom+dK6vehkOAFF2M48jCfJ8=;
+        b=z3x2HOcpcqXU9pgEYLM5jo5dwXicJ6JxwXnuKF9mWtZ9iBUwGgMFDK4G6ig/tH8o4X
+         eejxUPWjQ9ctQueybVMp9ACNN5NHOxDRuly2vGeTFbVH+9pDe9MoTqtQRtrXoM9OdHdN
+         8Y8SP4LG3yI7SHgf2d26THNwf95vS4k2tyS5Stz7Ed/OnGgjOXOxQk3ORx5/lhqLhc3u
+         wMJm97YDo7nBH4RkHKP8SLbPNvTeYdlCS7PNydRKcfwkQF14HGZSkH9+uXVAE48awafu
+         eDcsY4xAbo55R99VjrPObRGAtL5QP9b3ATuLg1O9r8Jn1Ois6VzvoMq+QRylHddvBBxg
+         91CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704289372; x=1704894172;
+        d=1e100.net; s=20230601; t=1704289520; x=1704894320;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ywm1NJM84MFVbNs8Kn4Mu02P9WC9fu63PnwufUkYyus=;
-        b=VKUbwo7QwkWsnSaFxGS88aU7g7YNGdLoUHTYvvk20HlcXreNkh7iJdS7WOMQkpvHuF
-         4b7VntQTsUbXR7yKbkPc37bJOfwgiW0zfG1xn7YQtZ3LO9GqQDbhUuw0MYG3PyA3JOX9
-         KsqdKTLjxJql5+HkLFS9kSnsyiMJ6lu6W4rFslhhA+uO/N7otwhOM4MQrr57A5Zl5pzf
-         xhwO/FgvAAK9bB2pwfRKLQedVGO4X9NhYWQ8WzsWKNiYin4AL4M3+80OUc1tfoebePCV
-         XjRUCpLlvkqlLGy9Eh6UUIGWzwvnfaUcsbZk952p5XpXMzSq4zrPRkAJFqHxvsIY30Q1
-         MZwA==
-X-Gm-Message-State: AOJu0YxKs/hnFANzu49bBZqsS5U1gkWp7GopAHKXtYMMJHm6tO9JFgRb
-	1FBDRFKZXcBU0xCMsKlxUH8hMDix0PZ6RA==
-X-Google-Smtp-Source: AGHT+IF/E3O4/SeJ3/L03JtNje4HPHmKSxk1jYT6GhkDV/vLGOKfuXNGpS6l0kqQGCl2uDjt2JUZ0A==
-X-Received: by 2002:a05:6512:39d4:b0:50e:8158:1fae with SMTP id k20-20020a05651239d400b0050e81581faemr7183741lfu.99.1704289372403;
-        Wed, 03 Jan 2024 05:42:52 -0800 (PST)
+        bh=UsIhcx0F5Z1NtIOJr0Hzom+dK6vehkOAFF2M48jCfJ8=;
+        b=UrP+TfQwDKTTAG4zBpW3N+N1Ej/f34kNo1HGnCwAYZszZ0Po2nBFVbbrwYHtKFAuK+
+         cFm2ADCS2xUF5lWAfBKGJBBSZTClChPiTIs2Gu2HKPf9kRpSKepjBbRL/teTIn5oCwtc
+         wmJEgJ152Fv+9sSjajnXfel1hcjC0FFV5j8jCqTZYj2C7Ha2EpKKk8zdvHrfzgPYx5Fk
+         ElQvy0L+ineWjWxehvVQD/IjsKtHMyYwgCuRB+NnTrBcu5qRzfOooUQEZHXhi1kH+yRT
+         U5tCjfDBoAkt5v0mSQ70Fj+xAiLLRQeJbMoadGrst+wPIa+bFGMY6py3XYn0WH2guOC5
+         02eQ==
+X-Gm-Message-State: AOJu0Yx5nzenVTUFwkSXIuhasq77bNqqekoeTNFQkm6/gGflr9KhW7yg
+	QkTxETk/KZw+0WM7fz/WhGeLxkVGwD3JvQdv0kHI3bNeoPQ=
+X-Google-Smtp-Source: AGHT+IEyt8SRxfZ1kEROdTfCF8MqxjEm/Hy0O7yhWovad1YkbKXSAV7pYdHWIEcCgU/PV1ncPiG1gg==
+X-Received: by 2002:a17:906:5184:b0:a1d:2e32:d28c with SMTP id y4-20020a170906518400b00a1d2e32d28cmr6205909ejk.146.1704289519725;
+        Wed, 03 Jan 2024 05:45:19 -0800 (PST)
 Received: from [192.168.199.125] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
-        by smtp.gmail.com with ESMTPSA id a5-20020a17090680c500b00a26a4458241sm12720131ejx.18.2024.01.03.05.42.50
+        by smtp.gmail.com with ESMTPSA id ad21-20020a170907259500b00a26af11a335sm7461729ejc.2.2024.01.03.05.45.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Jan 2024 05:42:52 -0800 (PST)
-Message-ID: <6179e3c7-f399-4b0f-abb0-aaf5e549d8d9@linaro.org>
-Date: Wed, 3 Jan 2024 14:42:49 +0100
+        Wed, 03 Jan 2024 05:45:19 -0800 (PST)
+Message-ID: <c2cb26f6-dea5-4b37-9854-96fb0bbad59d@linaro.org>
+Date: Wed, 3 Jan 2024 14:45:17 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,20 +66,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] phy: qcom: edp: Add support for DT phy mode
- configuration
+Subject: Re: [PATCH v2 07/34] media: iris: initialize power resources
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Abel Vesa <abel.vesa@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
- <kishon@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Johan Hovold <johan@kernel.org>,
- linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20231219-x1e80100-phy-edp-compatible-refactor-v1-0-f9e77752953d@linaro.org>
- <CAA8EJpr8rKMBzcm-=HGu7-C5hPkNMrnG1cA78O00UjgJVT7p6Q@mail.gmail.com>
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+ stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com, agross@kernel.org,
+ andersson@kernel.org, mchehab@kernel.org, bryan.odonoghue@linaro.org
+Cc: linux-arm-msm@vger.kernel.org, quic_abhinavk@quicinc.com
+References: <1702899149-21321-1-git-send-email-quic_dikshita@quicinc.com>
+ <1702899149-21321-8-git-send-email-quic_dikshita@quicinc.com>
+ <6c2e7cac-6f3d-42f0-84de-72a14e8f9ef5@linaro.org>
+ <5c3c686a-1500-7261-b112-1ea94d9e346e@quicinc.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -116,55 +113,84 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <CAA8EJpr8rKMBzcm-=HGu7-C5hPkNMrnG1cA78O00UjgJVT7p6Q@mail.gmail.com>
+In-Reply-To: <5c3c686a-1500-7261-b112-1ea94d9e346e@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 21.12.2023 17:27, Dmitry Baryshkov wrote:
-> On Tue, 19 Dec 2023 at 22:55, Abel Vesa <abel.vesa@linaro.org> wrote:
->>
->> Until now, all platform that supported both eDP and DP had different
->> compatibles for each mode. Using different compatibles for basically
->> the same IP block but for a different configuration is bad way all
->> around. There is a new compute platform from Qualcomm that supports
->> both eDP and DP with the same PHY. So instead of following the old
->> method, we should allow the mode to be configured from devicetree.
->>
->> There has been an off-list discussion on what would be the right way
->> to pass on the PHY mode information to the driver and it has been
->> concluded that phy-cells is the way to go. This means that basically
->> the controller will pass another value (that is, the PHY type) to
->> its 'phys' DT property.
->>
->> For this, we need both the bindings value and the PHY mode value to be
->> added as well.
->>
->> The controller part will follow shortly. But for now, lets see where
->> this is going.
->>
->> There has been another attempt at this here:
->> https://lore.kernel.org/all/20231122-phy-qualcomm-edp-x1e80100-v3-3-576fc4e9559d@linaro.org/
->>
->> Compared to that version, this one uses the phy-cells method and drops
->> the X1E80100 support. The X1E80100 support will be a separate patchset.
+On 20.12.2023 09:04, Dikshita Agarwal wrote:
 > 
-> After several back and forth discussions, I think that this approach
-> is not correct and not that easy to extend. Instead I'd like to
-> suggest adding a property to the DP controller, which enables eDP
-> behaviour (and thus makes DP driver call phy_set_mode()). Something
-> like this:
-> dp: displayport-controller@ae0000 {
->     compatible = "qcom,sm8000-dp";
->     /* reg, interrupts, etc */
->    edp-interface;
->    /* or simpler */
->    is-edp;
-> };
 > 
-> What do you think?
+> On 12/18/2023 8:39 PM, Konrad Dybcio wrote:
+>> On 18.12.2023 12:32, Dikshita Agarwal wrote:
+>>> Add support for initializing Iris "resources", which are clocks,
+>>> interconnects, power domains, reset clocks, and clock frequencies
+>>> used for Iris hardware.
+>>>
+>>> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+>>> ---
+[...]
 
-Please excuse my alzheimer, but why did we not go with phy-type after
-the last discussion?
+>>> +
+>>> +	for (i = 0; i < core->clk_count; i++) {
+>>> +		cinfo = &core->clock_tbl[i];
+>>> +		cinfo->name = plat_clk_table[i].name;
+>>> +		cinfo->clk_id = plat_clk_table[i].clk_id;
+>>> +		cinfo->has_scaling = plat_clk_table[i].has_scaling;
+>>> +		cinfo->clk = devm_clk_get(core->dev, cinfo->name);
+>>> +		if (IS_ERR(cinfo->clk)) {
+>>> +			dev_err(core->dev,
+>>> +				"%s: failed to get clock: %s\n", __func__, cinfo->name);
+>>> +			return PTR_ERR(cinfo->clk);
+>>> +		}
+>>> +	}
+>> Are you not going to use OPP for scaling the main RPMhPD with the core
+>> clock?
+>>
+> We are using OPP for scaling the vcodec clk.
+> Could you please elaborate you query here, may be I didn't understand fully.
+
+It's just that this approach of scanning everything we know and
+expect about the clock seems a bit unnecessary.. Going with the
+approach I suggested below (i.e. separate struct clk for important
+ones like core or mem clock) simplify this to the point where you
+just set opp_set_rate on the imporant ones and you can throw
+clk_bulk_ operations at the ones that simply need to be en/disabled.
 
 Konrad
+
+[...]
+
+>>> +
+>>> +struct power_domain_info {
+>>> +	struct device	*genpd_dev;
+>>> +	const char	*name;
+>>> +};
+>>> +
+>>> +struct clock_info {
+>>> +	struct clk	*clk;
+>>> +	const char	*name;
+>> I'm not sure why you need it
+>>
+>>> +	u32		clk_id;
+>> Or this
+>>
+>>> +	bool		has_scaling;
+>> Or this
+>>
+>> you could probably do something like this:
+>>
+>> struct big_iris_struct {
+>> 	[...]
+>> 	struct clk *core_clk;
+>> 	struct clk *memory_clk;
+>> 	struct clk *some_important_scaled_clock;
+>> 	struct clk_bulk_data less_important_nonscaling_clocks[X]
+>> }
+>>
+>> and then make use of all of the great common upstream APIs to manage
+>> them!
+>>
+> Will explore this and get back.
+
+
 
