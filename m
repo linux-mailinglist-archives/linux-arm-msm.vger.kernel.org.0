@@ -1,31 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6360-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B824822C31
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 12:34:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B1CFA822CC0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 13:11:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7ED4F281867
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 11:34:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3496828332C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 12:11:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A014A18EA2;
-	Wed,  3 Jan 2024 11:33:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02AC418EBC;
+	Wed,  3 Jan 2024 12:11:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ld+M1dXX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13D2418E1A;
-	Wed,  3 Jan 2024 11:33:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0BE85C15;
-	Wed,  3 Jan 2024 03:34:40 -0800 (PST)
-Received: from [10.57.45.90] (unknown [10.57.45.90])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6156E3F7A6;
-	Wed,  3 Jan 2024 03:33:52 -0800 (PST)
-Message-ID: <b2b6cccb-ede0-4f19-bfaf-efdc203de7f2@arm.com>
-Date: Wed, 3 Jan 2024 11:33:51 +0000
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC8B18EB0
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jan 2024 12:11:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-50e67e37661so11190528e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jan 2024 04:11:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704283875; x=1704888675; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XdQroxQMY0CAUOnPN6Lq2UpzoiJXdM4zW7jMQqGjKoE=;
+        b=Ld+M1dXXwqU3eUMoG9Ozy3h4+qXPYbc7wNV0+VT+ASNVL65jb4oNTsmaV+xNgTooTT
+         RHuVacO09sxC1NOLGwH7MtCzsM6hMmyGAv9bgYRC4mZnc+iz5fbnUvKUCNwNPGd8ko5L
+         8NY46TVOPZWaGJI3FTM3yfRmmebliZVP4T8EsRkfW0WFx181Ao544Zy24z1CPFwpCdRo
+         sXyJvPXYb4MT+47rEmhpefFi4/NmziL7lJoBGDhTXbLRSPtFoS7GGd1cJO/2qzmCaJBZ
+         udIuYjfex0K7Z6y3bSTdICEMyBw/r7tFNQC9qRJI/udtfHSwpxC0FwP9VCuYa+1m28BA
+         iTow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704283875; x=1704888675;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XdQroxQMY0CAUOnPN6Lq2UpzoiJXdM4zW7jMQqGjKoE=;
+        b=qMwLuMEQoeSmdq/62MEgxw44DDdlwl0zJoEqvTXCEim93LfDVnmY/vbiXEJD4XgWKQ
+         gxIgdlPPn4Uc8QgPPFbchC9kSM6w4io/d9LK58hl6gSGaErzqm57KTKHua6bsQfRPnyy
+         S8akXZfrjROFtQ/RTOGJCofaHJ17zvrhinvu7SiNyKnikuy50vmk3R0IpI3S36YNyEVl
+         Q2ODHehtkvVUVQBd5dfWQ5cJvFpAtow7gGR/BdC8pYq9OYRRZ4gKXB7KynZoZb/maA7E
+         55WlrNlGCi0x/b/FYqYR9i6ojA21Mb5M+xdyx6KxLNr/l6fECrWcHrJPkvlc5eP3FX5F
+         yq+A==
+X-Gm-Message-State: AOJu0YzjcCxTgNLiLksNikUnDTIlWDEm/0cMLJOC0Hj+TgOiy2YxTggM
+	6VXOWfXDHksjLKOFCyOfLmq+EfVihYQ07Q==
+X-Google-Smtp-Source: AGHT+IEJSmiIDd0Av6b4r0cslbTQQe+UZVinCqcUaPpwIlxKD7Xx0P4Jnagz+XySJEieo1EnbH/LGg==
+X-Received: by 2002:ac2:4433:0:b0:50e:a6f8:aacf with SMTP id w19-20020ac24433000000b0050ea6f8aacfmr374443lfl.14.1704283875144;
+        Wed, 03 Jan 2024 04:11:15 -0800 (PST)
+Received: from [192.168.199.125] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
+        by smtp.gmail.com with ESMTPSA id xo3-20020a170907bb8300b00a2534aebc21sm12620285ejc.40.2024.01.03.04.11.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Jan 2024 04:11:14 -0800 (PST)
+Message-ID: <bd75f372-8ffe-415f-9464-3b78fd92e3f9@linaro.org>
+Date: Wed, 3 Jan 2024 13:11:12 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -33,192 +66,147 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] coresight: Add coresight name support
-Content-Language: en-GB
-To: James Clark <james.clark@arm.com>, Mao Jinlong
- <quic_jinlmao@quicinc.com>, Mike Leach <mike.leach@linaro.org>
-Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- Tingwei Zhang <quic_tingweiz@quicinc.com>,
- Yuanfang Zhang <quic_yuanfang@quicinc.com>,
- Tao Zhang <quic_taozha@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-References: <20231228093321.5522-1-quic_jinlmao@quicinc.com>
- <12ce6e5d-6e4d-fb99-eb82-dece97423bfb@arm.com>
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <12ce6e5d-6e4d-fb99-eb82-dece97423bfb@arm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH 1/4] PCI: qcom: Reshuffle reset logic in 2_7_0 .init
+Content-Language: en-US
+To: Johan Hovold <johan@kernel.org>
+Cc: Manivannan Sadhasivam <mani@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ Stanimir Varbanov <svarbanov@mm-sol.com>,
+ Andrew Murray <amurray@thegoodpenguin.co.uk>, Vinod Koul <vkoul@kernel.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20231227-topic-8280_pcie-v1-0-095491baf9e4@linaro.org>
+ <20231227-topic-8280_pcie-v1-1-095491baf9e4@linaro.org>
+ <ZY7R581pgn3uO6kk@hovoldconsulting.com>
+ <fa0fbadc-a7c3-4bea-bed7-0006db0616dc@linaro.org>
+ <ZY7l828-mSGXVwrk@hovoldconsulting.com>
+ <598ede70-bc01-4137-b68b-981c3d420735@linaro.org>
+ <ZZPiwk1pbhLyfthB@hovoldconsulting.com>
+ <07b20408-4b45-48c3-9356-730a7a827743@linaro.org>
+ <ZZU5jqJ14HscR1Ed@hovoldconsulting.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <ZZU5jqJ14HscR1Ed@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 28/12/2023 11:26, James Clark wrote:
+On 3.01.2024 11:40, Johan Hovold wrote:
+> On Tue, Jan 02, 2024 at 06:03:36PM +0100, Konrad Dybcio wrote:
+>> On 2.01.2024 11:17, Johan Hovold wrote:
+>>> On Sat, Dec 30, 2023 at 02:16:18AM +0100, Konrad Dybcio wrote:
+>>>> On 29.12.2023 16:29, Johan Hovold wrote:
+>>>>> On Fri, Dec 29, 2023 at 04:01:27PM +0100, Konrad Dybcio wrote:
+>>>>>> On 29.12.2023 15:04, Johan Hovold wrote:
+>>>>>>> On Wed, Dec 27, 2023 at 11:17:19PM +0100, Konrad Dybcio wrote:
+>>>>>>>> At least on SC8280XP, if the PCIe reset is asserted, the corresponding
+>>>>>>>> AUX_CLK will be stuck at 'off'.
+>>>>>>>
+>>>>>>> No, this path is exercised on every boot without the aux clock ever
+>>>>>>> being stuck at off. So something is clearly missing in this description.
+>>>>>
+>>>>>> That's likely because the hardware has been initialized and not cleanly
+>>>>>> shut down by your bootloader. When you reset it, or your bootloader
+>>>>>> wasn't so kind, you need to start initialization from scratch.
+>>>>>
+>>>>> What does that even mean? I'm telling you that this reset is asserted on
+>>>>> each boot, on all sc8280xp platforms I have access to, and never have I
+>>>>> seen the aux clk stuck at off.
+>>>>>
+>>>>> So clearly your claim above is too broad and the commit message is
+>>>>> incorrect or incomplete.
 > 
-> 
-> On 28/12/2023 09:33, Mao Jinlong wrote:
->> Add coresight name support for custom names which will be
->> easy to identify the device by the name.
+>>> We're clearly talking past each other. When I'm saying reset is asserted
+>>> on each boot, I'm referring to reset being asserted in
+>>> qcom_pcie_init_2_7_0(), whereas you appear to be referring to whether
+>>> the reset has been left asserted by the bootloader when the driver
+>>> probes.
 >>
+>> OK, "boot" meant "booting the device" to me, not the PCIe controller.
 > 
-> I suppose this is more of a V2 because the subject is the same as the
-> one sent earlier this year. But it looks like the discussion on the
-> previous one wasn't resolved.
+> Still not getting across to you apparently.
 > 
-> With the main issues to solve being:
+> Again, the code in question is exercised on every boot and not once have
+> I seen a stuck clock due to reset being asserted *in*
+> qcom_pcie_init_2_7_0().
 > 
->   * It would be nice to use the existing root node name instead of adding
->     a new property. But at the same time DT nodes are supposed to have
->     generic names.
+> Now that's not what you were trying to describe as you were thinking of
+> reset having been left asserted *before* the driver probes (or before
+> qcom_pcie_init_2_7_0() is called).
 > 
->   * This only works for DT and not ACPI
-> 
-> To me it seems like adding the new property is just a "cheat" to get
-> around not being allowed to have a specific name for the root node. But
-> if we admit that we need a name I don't see the benefit of not putting
-> the name where the node is already named.
-> 
-> Using the root node name at this point would also undo the hard coded
-> per-cpu naming of the CTI and ETM devices, so maybe it would be nice,
-> but it's just too late. That means that a new field is necessary.
+> See? Do you understand now what I was trying to say and why my
+> misinterpretation of your terse commit message lead me to claim that it
+> was clearly false?
 
-The CTI and ETM can be handled as special cases, like they are
-already done and fall back to the nodename for the rest ?
-But, I thought the node names must be generic (e.g, cti) and doesn't
-really solve the naming requirements for naming CTIs. (e.g,
-<device>_tpda, etr_cti). Is there something I missed ?
+No, my response was an acknowledgement of having understood you. Maybe
+it's a direct translation of some Polish idiom that's not obvious to
+others, but I definitely tried to say that "we were talking about
+different things, I had been previously thinking of something else,
+but now we're on the same page".
 
-> Although that field could be a boolean like "use-root-name-for-display"
-> or something like that. In the end it probably doesn't really make a
-> difference whether it's that or a name string. >
-> And maybe the answer to the ACPI question is just that if anyone needs
-> it, they can add it in the future. It doesn't seem like it would
-> conflict with anything we do here.
+
 > 
->> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->> ---
->>   .../hwtracing/coresight/coresight-cti-core.c  | 20 ++++++++------
->>   drivers/hwtracing/coresight/coresight-dummy.c | 10 ++++---
->>   .../hwtracing/coresight/coresight-platform.c  | 27 +++++++++++++++++++
->>   drivers/hwtracing/coresight/coresight-tpdm.c  | 10 ++++---
->>   include/linux/coresight.h                     |  1 +
->>   5 files changed, 53 insertions(+), 15 deletions(-)
+>>> I understand what you meant to say now, but I think you should rephrase:
+>>>
+>>> 	At least on SC8280XP, if the PCIe reset is asserted, the
+>>> 	corresponding AUX_CLK will be stuck at 'off'.
+>>>
+>>> because as it stands, it sounds like the problem happens when the driver
+>>> asserts reset.
 >>
->> diff --git a/drivers/hwtracing/coresight/coresight-cti-core.c b/drivers/hwtracing/coresight/coresight-cti-core.c
->> index 3999d0a2cb60..60a1e76064a9 100644
->> --- a/drivers/hwtracing/coresight/coresight-cti-core.c
->> +++ b/drivers/hwtracing/coresight/coresight-cti-core.c
->> @@ -902,14 +902,18 @@ static int cti_probe(struct amba_device *adev, const struct amba_id *id)
->>   	/* default to powered - could change on PM notifications */
->>   	drvdata->config.hw_powered = true;
->>   
->> -	/* set up device name - will depend if cpu bound or otherwise */
->> -	if (drvdata->ctidev.cpu >= 0)
->> -		cti_desc.name = devm_kasprintf(dev, GFP_KERNEL, "cti_cpu%d",
->> -					       drvdata->ctidev.cpu);
->> -	else
->> -		cti_desc.name = coresight_alloc_device_name(&cti_sys_devs, dev);
+>> Does this sound good?
+>>
+>> "At least on SC8280XP, trying to enable the AUX_CLK associated with
+>> a PCIe host fails if the corresponding PCIe reset is asserted."
 > 
-> Can we put the new name stuff inside coresight_alloc_device_name()? Then
-> it happens by default for every device.
-
-+1
-
+> Yes, but you need to also say something about how this would happen, for
+> example, your hypothetical bootloader leaving it asserted and your actual
+> motivation for this change which is that it appears to be needed after
+> suspend. 
 > 
-> I know Suzuki said previously to do it per-device, but the new DT
-> property is just "coresight-name", so it's generic. Rather than being
-> specific like "cti-name". So I don't see the benefit of duplicating the
-> code at this point if we do decide to do it.
+> A commit message should be clear and self-contained and not force
+> reviewers to have to try to interpret what it means and guess what the
+> motivation for the change really is.
 
-My suggestion was to name the device based on the specific device rather
-than following a generic rule for all device. e.g., A TPDM connected to 
-modem, could be named as such based on the platform information. It
-could be any means, for e.g., tpdm nodes are always children nodes of
-the devices they are connected to ? or could have a phandle to point to 
-the device they are monitoring etc. And the name could be created from
-the "monitoring device name" + tpdm. Also, we do this for CPU bound CTI
-and ETMs already, where we name them based on the CPU.
+Got it
 
-But then the "nodename" is something we explored and it looks like
-may not be an option.
-
-> 
->> -	if (!cti_desc.name)
->> -		return -ENOMEM;
->> +	cti_desc.name = coresight_get_device_name(dev);
->> +	if (!cti_desc.name) {
->> +		/* set up device name - will depend if cpu bound or otherwise */
->> +		if (drvdata->ctidev.cpu >= 0)
->> +			cti_desc.name = devm_kasprintf(dev, GFP_KERNEL, "cti_cpu%d",
->> +						       drvdata->ctidev.cpu);
->> +		else {
->> +			cti_desc.name = coresight_alloc_device_name(&cti_sys_devs, dev);
->> +			if (!cti_desc.name)
->> +				return -ENOMEM;
->> +		}
->> +	}
-
-For these special cases, i.e., CPU bound, we should handle them with 
-priority.
-
-if (drvdata->ctidev.cpu >= 0)
-	name = devm_kasprintf(... "cti_cpu%d", .. cpu);
-else
-         name = coresight_alloc_device_name(...);
-
-> 
->>   
->>   	/* setup CPU power management handling for CPU bound CTI devices. */
->>   	ret = cti_pm_setup(drvdata);
->> diff --git a/drivers/hwtracing/coresight/coresight-dummy.c b/drivers/hwtracing/coresight/coresight-dummy.c
->> index e4deafae7bc2..b19cd400df79 100644
->> --- a/drivers/hwtracing/coresight/coresight-dummy.c
->> +++ b/drivers/hwtracing/coresight/coresight-dummy.c
->> @@ -76,10 +76,12 @@ static int dummy_probe(struct platform_device *pdev)
->>   	struct coresight_desc desc = { 0 };
->>   
->>   	if (of_device_is_compatible(node, "arm,coresight-dummy-source")) {
->> -
->> -		desc.name = coresight_alloc_device_name(&source_devs, dev);
->> -		if (!desc.name)
->> -			return -ENOMEM;
->> +		desc.name = coresight_get_device_name(dev);
->> +		if (!desc.name) {
->> +			desc.name = coresight_alloc_device_name(&source_devs, dev);
->> +			if (!desc.name)
->> +				return -ENOMEM;
->> +		}
->>   
->>   		desc.type = CORESIGHT_DEV_TYPE_SOURCE;
->>   		desc.subtype.source_subtype =
->> diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/drivers/hwtracing/coresight/coresight-platform.c
->> index 9d550f5697fa..284aa22a06b7 100644
->> --- a/drivers/hwtracing/coresight/coresight-platform.c
->> +++ b/drivers/hwtracing/coresight/coresight-platform.c
->> @@ -183,6 +183,18 @@ static int of_coresight_get_cpu(struct device *dev)
->>   	return cpu;
->>   }
->>   
->> +static const char *of_coresight_get_device_name(struct device *dev)
->> +{
->> +	const char *name = NULL;
->> +
->> +	if (!dev->of_node)
->> +		return NULL;
->> +
->> +	of_property_read_string(dev->of_node, "coresight-name", &name);
-> 
-> Do you need to update the binding docs with this new property?
-> 
-> Also a minor nit: Maybe "display-name" is better? "Coresight" is
-> implied, and the node is already named, although that node name isn't
-> used for display purposes, but this one is.
-
-On that front, the name is used as a "device" name and not simply 
-display. So, even "device-name" sounds more appropriate.
-
-Suzuki
-
-> 
-> Thanks
-> James
-
+Konrad
 
