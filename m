@@ -1,50 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-6392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 00E8E8233E9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 18:54:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E71382343A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 19:18:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8EA93286B52
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 17:54:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CF0F6286C2A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 18:18:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAF1D1C2A8;
-	Wed,  3 Jan 2024 17:54:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8215E1C68A;
+	Wed,  3 Jan 2024 18:18:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ROahT/8a"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="mNYekl/c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E521C6AE;
-	Wed,  3 Jan 2024 17:54:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 718D2C433C7;
-	Wed,  3 Jan 2024 17:54:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704304467;
-	bh=bjY+TelhsJhVcAkpYhMDsUdz6i9JvN3gBf3gtTujZ1c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ROahT/8aY0QDu/FZ89Eg8rXfrfU5CK/zMWmuIs4IO9BtDTHJYEVvJ2TZylO3ELRx+
-	 nf3rGE1oyjfqSwMC+DwtjCtZMfxH6aktMcSY4QCuzCPNOd8jV/MHtHLHtx+9VavmfN
-	 UPUkYbZq49tykJj4ZUXgfo73yWqrAibYvUy0Dro9/aP5cy17x0zTPVPaAmlTQ+nYKg
-	 JndllnIxg9gw7KvLDWY66qYcd+WBXJuWXNIAXyoFpnS/bkmeTuc/lY2jGr10+PN0gQ
-	 4tqVaZhdFo9/jd1MQADboEpJ0kNYDQExoyFXPdGZxl/wN4kjAzqlkqVIfvZpHuqzLc
-	 c70ZtlQgFDw+A==
-Received: (nullmailer pid 1445325 invoked by uid 1000);
-	Wed, 03 Jan 2024 17:54:24 -0000
-Date: Wed, 3 Jan 2024 10:54:24 -0700
-From: Rob Herring <robh@kernel.org>
-To: Bryan O'Donoghue <pure.logic@nexus-software.ie>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] media: dt-bindings: media: camss: Add
- qcom,sc8280xp-camss binding
-Message-ID: <20240103175424.GA1440392-robh@kernel.org>
-References: <20240103-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v1-0-abacaa63a961@linaro.org>
- <20240103-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v1-1-abacaa63a961@linaro.org>
- <87bcff40-b5ff-41c9-a33f-95f5e80a2f22@linaro.org>
- <62995a12-e835-40ff-966f-8522f2ab53dc@nexus-software.ie>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF831CA81;
+	Wed,  3 Jan 2024 18:18:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=FmcnlJXDQ98odN/WIJ37kgFC20dlWMFiiPEysBR0RLo=; b=mNYekl/cRuUCgREXI6BMiAqoL/
+	WKPwXmHicaLj/SoyAyhEl4lwc1JY9ho99XeqYCADJfovFEgcmKtKxbzHtZ23d0x+GrjTXAp/nAXYg
+	6m55AvIuQOxvVhpkh70jRdbDVoJuollTmjQmR5eqGNyq6/mm5fwDk6fn4LwBqgrBstcXYATXDKTwf
+	P6+NOcN82q5Xp9FeAKjKuLv52WprkRqG/XUtFj8Pm35WDZ3lKo1SrK/w7C5LJRZCNiokxNKao0itW
+	ILPXteBeUi1q+KqxjWo30XinMlvhI0WgyRJGkhNj/qbivwdDJuv/kTYK34e+83w4UBYTiiG03sIGY
+	1lnCH5JQ==;
+Received: from willy by casper.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1rL5od-00DHx5-Kt; Wed, 03 Jan 2024 18:18:07 +0000
+Date: Wed, 3 Jan 2024 18:18:07 +0000
+From: Matthew Wilcox <willy@infradead.org>
+To: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>,
+	Hillf Danton <hdanton@sina.com>, kernel@quicinc.com,
+	quic_pkondeti@quicinc.com, keescook@chromium.org,
+	viro@zeniv.linux.org.uk, brauner@kernel.org, oleg@redhat.com,
+	dhowells@redhat.com, jarkko@kernel.org, paul@paul-moore.com,
+	jmorris@namei.org, serge@hallyn.com, linux-mm@kvack.org,
+	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
+	keyrings@vger.kernel.org, linux-security-module@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] kernel: Introduce a write lock/unlock wrapper for
+ tasklist_lock
+Message-ID: <ZZWk368hZpOc25X0@casper.infradead.org>
+References: <20231213101745.4526-1-quic_aiquny@quicinc.com>
+ <ZXnaNSrtaWbS2ivU@casper.infradead.org>
+ <87o7eu7ybq.fsf@email.froward.int.ebiederm.org>
+ <ZY30k7OCtxrdR9oP@casper.infradead.org>
+ <cd0f6613-9aa9-4698-bebe-0f61286d7552@quicinc.com>
+ <ZZPT8hMiuT1pCBP7@casper.infradead.org>
+ <99c44790-5f1b-4535-9858-c5e9c752159c@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,35 +64,43 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <62995a12-e835-40ff-966f-8522f2ab53dc@nexus-software.ie>
+In-Reply-To: <99c44790-5f1b-4535-9858-c5e9c752159c@quicinc.com>
 
-On Wed, Jan 03, 2024 at 09:40:02AM +0000, Bryan O'Donoghue wrote:
-> On 03/01/2024 07:40, Krzysztof Kozlowski wrote:
-> > On 03/01/2024 03:18, Bryan O'Donoghue wrote:
-> > > Add bindings for qcom,sc8280xp-camss in order to support the camera
-> > > subsystem for sc8280xp as found in the Lenovo x13s Laptop.
-> > > 
-> > > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> > > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > > ---
-> > >   .../bindings/media/qcom,sc8280xp-camss.yaml        | 512 +++++++++++++++++++++
-> > >   1 file changed, 512 insertions(+)
-> > > 
+On Wed, Jan 03, 2024 at 10:58:33AM +0800, Aiqun Yu (Maria) wrote:
+> On 1/2/2024 5:14 PM, Matthew Wilcox wrote:
+> > > > -void __lockfunc queued_write_lock_slowpath(struct qrwlock *lock)
+> > > > +void __lockfunc queued_write_lock_slowpath(struct qrwlock *lock, bool irq)
+> > > >    {
+> > > >    	int cnts;
+> > > > @@ -82,7 +83,11 @@ void __lockfunc queued_write_lock_slowpath(struct qrwlock *lock)
+> > > Also a new state showed up after the current design:
+> > > 1. locked flag with _QW_WAITING, while irq enabled.
+> > > 2. And this state will be only in interrupt context.
+> > > 3. lock->wait_lock is hold by the write waiter.
+> > > So per my understanding, a different behavior also needed to be done in
+> > > queued_write_lock_slowpath:
+> > >    when (unlikely(in_interrupt())) , get the lock directly.
 > > 
-> > This patch fails, as pointed out by Robot.
-> > 
-> > Best regards,
-> > Krzysztof
-> > 
-> > 
+> > I don't think so.  Remember that write_lock_irq() can only be called in
+> > process context, and when interrupts are enabled.
+> In current kernel drivers, I can see same lock called with write_lock_irq
+> and write_lock_irqsave in different drivers.
 > 
-> Ah its in Bjorn's 6.8 clock pull tree.
+> And this is the scenario I am talking about:
+> 1. cpu0 have task run and called write_lock_irq.(Not in interrupt context)
+> 2. cpu0 hold the lock->wait_lock and re-enabled the interrupt.
+
+Oh, I missed that it was holding the wait_lock.  Yes, we also need to
+release the wait_lock before spinning with interrupts disabled.
+
+> I was thinking to support both write_lock_irq and write_lock_irqsave with
+> interrupt enabled together in queued_write_lock_slowpath.
 > 
-> I will repost when it hits -next
+> That's why I am suggesting in write_lock_irqsave when (in_interrupt()),
+> instead spin for the lock->wait_lock, spin to get the lock->cnts directly.
 
-How is that helpful? It will still fail, and the media maintainers still 
-can't apply this. If you work on linux-next, you'd better be 
-aware of and explain the dependencies.
+Mmm, but the interrupt could come in on a different CPU and that would
+lead to it stealing the wait_lock from the CPU which is merely waiting
+for the readers to go away.
 
-Rob
 
