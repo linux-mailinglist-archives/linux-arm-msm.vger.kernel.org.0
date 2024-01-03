@@ -1,133 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-6388-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6389-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9F69822FE2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 15:52:37 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 294BA823089
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 16:28:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 52471283554
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 14:52:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D1C3A1F245C4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 15:28:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D21641A708;
-	Wed,  3 Jan 2024 14:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00D151A731;
+	Wed,  3 Jan 2024 15:28:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kzSq1G1N"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BBz2ctHS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5165C1A5BA;
-	Wed,  3 Jan 2024 14:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACFF1A730;
+	Wed,  3 Jan 2024 15:28:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 403CVfJe030588;
-	Wed, 3 Jan 2024 14:52:25 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 403DlAVu001467;
+	Wed, 3 Jan 2024 15:27:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=t3ywbodv99MLGzJ90Zc5rriRMeJOoLGuSei3ncrMzv4=; b=kz
-	Sq1G1N7XkK0i0nDevXJy3TWQp1er+JeZZZ3RB9EUQuPk70sb/PsLjpjSrUGIPB4M
-	ireRq9WlDVooPw62ipRxlJJ9SUMvrsyBWrlYD8PdHNoQbx5uxwBQ1DJemhpwjtBM
-	DKv3uTDksj3TX14oI1s/9c9LUtcU27iKDWHVtq32o1/XqMT6QCgiAQZoJYO5yXbN
-	CCxT5NJr0N+PiNrH8jAcACb5WXkh0Bz0g8GwlDErnFL538a4+Mv0Brem3JtzlXA1
-	FfyQEjWtSYOu8kidsfxboSx3m2kxEOHVtm/vFCymmeNOp+EahJyeX+USCD29RS25
-	Pz64L6bbjkrFH2/967iw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vcum1235h-1
+	qcppdkim1; bh=Nu8lunzViOUpOfegZsY+Z05a/poHdYSCSroiiueke/4=; b=BB
+	z2ctHSJD5dquHTYRfOF1AtFzzDiAGhOtvEXPnoGkGSSys0dg3J2a1lkPCqOVLCQ2
+	cpXHWWf9EJEcP7zO7SNQGvCXsFgWJF1xSYmjfV0xhUogTTxrM9VyeyZeC2LSJdwd
+	ZPR/8gnpoDdbEFb03FMC602ms+bbciRyAMd71Tk3NhNEHTvjFIZhoovyx48GL8Ho
+	mnMSZsJ2ieM+nP54aTQMzoCzkkjoq89m9b2gdA0oM9phOslVmEScO0sn3fREyUGo
+	kcYlpiqA4pVUne7jfLzmCm7WaOg6TXhgWe6muJDeaItueS9pNeFlWn9GCTbzhsnP
+	SXlf9BvoRZnzQGxyNDgA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vd8dpr8pe-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 03 Jan 2024 14:52:25 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 403EqOSg027425
+	Wed, 03 Jan 2024 15:27:46 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 403FRiTq029569
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 3 Jan 2024 14:52:24 GMT
-Received: from [10.216.35.57] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+	Wed, 3 Jan 2024 15:27:44 GMT
+Received: from [10.216.8.10] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 3 Jan
- 2024 06:52:19 -0800
-Message-ID: <814824d9-9509-4b5d-84ad-de0cbf5808a0@quicinc.com>
-Date: Wed, 3 Jan 2024 20:22:15 +0530
+ 2024 07:27:33 -0800
+Message-ID: <520e377d-e990-c185-4a20-07806873e506@quicinc.com>
+Date: Wed, 3 Jan 2024 20:57:13 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/2] dt-bindings: usb: dwc3: Clean up hs_phy_irq in
- binding
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: RESEND: Re: [Patch v6 03/12] docs: qcom: Add qualcomm minidump
+ guide
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>
-CC: <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>, Andy Gross
-	<agross@kernel.org>,
-        Johan Hovold <johan@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <20231222063648.11193-1-quic_kriskura@quicinc.com>
- <20231222063648.11193-2-quic_kriskura@quicinc.com>
- <e6419898-0d77-4286-a04b-7240eb90d8df@linaro.org>
- <268f9f54-8b2a-42bb-9a5d-10bd930cb282@quicinc.com>
- <55c478c7-abcc-4487-b81c-479df47d5666@linaro.org>
-From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <55c478c7-abcc-4487-b81c-479df47d5666@linaro.org>
+To: Ruipeng Qi <ruipengqi7@gmail.com>
+CC: <agross@kernel.org>, <alim.akhtar@samsung.com>, <andersson@kernel.org>,
+        <bmasney@redhat.com>, <conor+dt@kernel.org>, <corbet@lwn.net>,
+        <gpiccoli@igalia.com>, <keescook@chromium.org>, <kernel@quicinc.com>,
+        <kgene@kernel.org>, <konrad.dybcio@linaro.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-hardening@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-mediatek@lists.infradead.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        <linux-samsung-soc@vger.kernel.org>, <mathieu.poirier@linaro.org>,
+        <matthias.bgg@gmail.com>, <nm@ti.com>, <robh+dt@kernel.org>,
+        <tony.luck@intel.com>, <vigneshr@ti.com>, <qiruipeng@lixiang.com>
+References: <1700864395-1479-4-git-send-email-quic_mojha@quicinc.com>
+ <20231225135542.1789-1-ruipengqi7@gmail.com>
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <20231225135542.1789-1-ruipengqi7@gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: z7O5ULuuphWKyvnzm97uhQPzQJuAP6_L
-X-Proofpoint-GUID: z7O5ULuuphWKyvnzm97uhQPzQJuAP6_L
+X-Proofpoint-GUID: Eq10y8K3OI3Kx2Zzds3mwvzzBPYT1-u_
+X-Proofpoint-ORIG-GUID: Eq10y8K3OI3Kx2Zzds3mwvzzBPYT1-u_
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
- mlxlogscore=429 clxscore=1015 lowpriorityscore=0 adultscore=0
- malwarescore=0 priorityscore=1501 phishscore=0 impostorscore=0
- suspectscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401030122
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ priorityscore=1501 phishscore=0 impostorscore=0 spamscore=0
+ lowpriorityscore=0 mlxscore=0 malwarescore=0 mlxlogscore=826 adultscore=0
+ clxscore=1011 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401030127
 
 
->>>>            interrupt-names:
->>>> -          minItems: 3
->>>>              items:
->>>> +            - const: pwr_event
->>>>                - const: hs_phy_irq
->>>> -            - const: dp_hs_phy_irq
->>>> -            - const: dm_hs_phy_irq
->>>> +            - const: qusb2_phy
->>>
->>> Why qusb2_phy is after hs_phy_irq? In the earlier if:then: it is the
->>> second one.
->>>
->>
->> In v3 as well, the hs_phy_irq is before qusb2_phy interrupt:
->> https://lore.kernel.org/all/20231211121124.4194-2-quic_kriskura@quicinc.com/
+
+On 12/25/2023 7:25 PM, Ruipeng Qi wrote:
+> <+How a kernel client driver can register region with minidump
+> <+------------------------------------------------------------
+> <+
+> <+Client driver can use ``qcom_minidump_region_register`` API's to register
+> <+and ``qcom_minidump_region_unregister`` to unregister their region from
+> <+minidump driver.
+> <+
+> <+Client needs to fill their region by filling ``qcom_minidump_region``
+> <+structure object which consists of the region name, region's virtual
+> <+and physical address and its size.
 > 
-> ? How v3 matters?
+> Hi, Mukesh, wish you a good holiday :)
+
+Hope you had the same..:-)
+
 > 
+> I have the following idea, please help me to assess whether this can be
+> implemented or not. As we all know, most of the kernel objects are
+> allocated by the slab sub-system.I wonder if we can dump all memory
+> keeped by the slab sub-system? If so,  we got most of the kernel objects
+> which will be helpful to fix problems when we run with system issues.
+> 
+> How can we do this? From the description above, I think we should
+> register one region for each slab,  for each slab will have some pages,
+> and the memory between each slab is non-continuous. As we all
+> know, there are millions of slabs in the system, so if we dump slabs
+> in this way, it will introduce a heavy overhead.
+> 
+> I am not very familiar with qualcomm minidump, maybe my thought
+> is wrong. Looking forward to your reply!
 
-I was thinking whether I modified the order between v3 and v5 and didn't 
-mention in change log and hence I compared with v3. Thanks for the catch.
+In the current state and in simple terms, Qualcomm Minidump can not do
+this, Minidump is more of a consumer driver so, what ever gets
+registered with it, it can dump. Qualcomm Minidump serves bigger purpose
+to dump content in any kind of crash whether it is kernel or non-kernel
+like NOC errors/XPUs etc and both kernel/non-kernel entity can register 
+to it, so we gets dump in any kind of system crash.
 
-I made qusb2_phy the second one in the list and pushed v6: 
-https://lore.kernel.org/all/20231227091951.685-1-quic_kriskura@quicinc.com/
+One more thing, kernel part of minidump, we are calling it APSS Minidump
+has limitation of no of entries so it will be difficult to dump 
+non-continuous regions after a certain number of registration ~200. However,
+we do have a solution in downstream kernel for it like to create a big 
+CMA buffer and register this buffer with Minidump so that whatever gets 
+dumped in that buffer gets captured during crash and fill up this buffer 
+and create elf during panic. I think, similar thing you are also doing 
+with your OS-minidump.
 
-Can you help provide you review on v6 as well.
+I have just glanced into your implementation of OS-minidump, it
+more of relying on basic concept of RAM content preserved
+across boot and later reading it through procfs but this basic
+stuff is common to pstore(ram) as well and pstore has file system 
+support why don't you make your driver as one of pstore record and that 
+way Qualcomm minidump also gets benefited where entire OS-minidump 
+record gets registered with Qualcomm minidump and we get this on panic 
+and you get this via pstorefs.
 
-Regards,
-Krishna,
+-Mukesh
+
+> 
+> Best Regards
+> Ruipeng
 
