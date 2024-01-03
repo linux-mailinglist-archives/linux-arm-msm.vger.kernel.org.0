@@ -1,106 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-6393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E71382343A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 19:18:45 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE47282347F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 19:31:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CF0F6286C2A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 18:18:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D67FF1F247D9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 18:31:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8215E1C68A;
-	Wed,  3 Jan 2024 18:18:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B7971CA81;
+	Wed,  3 Jan 2024 18:31:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="mNYekl/c"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EvvCEh+o"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF831CA81;
-	Wed,  3 Jan 2024 18:18:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=FmcnlJXDQ98odN/WIJ37kgFC20dlWMFiiPEysBR0RLo=; b=mNYekl/cRuUCgREXI6BMiAqoL/
-	WKPwXmHicaLj/SoyAyhEl4lwc1JY9ho99XeqYCADJfovFEgcmKtKxbzHtZ23d0x+GrjTXAp/nAXYg
-	6m55AvIuQOxvVhpkh70jRdbDVoJuollTmjQmR5eqGNyq6/mm5fwDk6fn4LwBqgrBstcXYATXDKTwf
-	P6+NOcN82q5Xp9FeAKjKuLv52WprkRqG/XUtFj8Pm35WDZ3lKo1SrK/w7C5LJRZCNiokxNKao0itW
-	ILPXteBeUi1q+KqxjWo30XinMlvhI0WgyRJGkhNj/qbivwdDJuv/kTYK34e+83w4UBYTiiG03sIGY
-	1lnCH5JQ==;
-Received: from willy by casper.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1rL5od-00DHx5-Kt; Wed, 03 Jan 2024 18:18:07 +0000
-Date: Wed, 3 Jan 2024 18:18:07 +0000
-From: Matthew Wilcox <willy@infradead.org>
-To: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>
-Cc: "Eric W. Biederman" <ebiederm@xmission.com>,
-	Hillf Danton <hdanton@sina.com>, kernel@quicinc.com,
-	quic_pkondeti@quicinc.com, keescook@chromium.org,
-	viro@zeniv.linux.org.uk, brauner@kernel.org, oleg@redhat.com,
-	dhowells@redhat.com, jarkko@kernel.org, paul@paul-moore.com,
-	jmorris@namei.org, serge@hallyn.com, linux-mm@kvack.org,
-	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
-	keyrings@vger.kernel.org, linux-security-module@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] kernel: Introduce a write lock/unlock wrapper for
- tasklist_lock
-Message-ID: <ZZWk368hZpOc25X0@casper.infradead.org>
-References: <20231213101745.4526-1-quic_aiquny@quicinc.com>
- <ZXnaNSrtaWbS2ivU@casper.infradead.org>
- <87o7eu7ybq.fsf@email.froward.int.ebiederm.org>
- <ZY30k7OCtxrdR9oP@casper.infradead.org>
- <cd0f6613-9aa9-4698-bebe-0f61286d7552@quicinc.com>
- <ZZPT8hMiuT1pCBP7@casper.infradead.org>
- <99c44790-5f1b-4535-9858-c5e9c752159c@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB701CA85
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jan 2024 18:31:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-5e7c1012a42so89120207b3.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jan 2024 10:31:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704306708; x=1704911508; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=EypQhAgpKSEMykAt8XH3pIpDrlPGwlaMgIPyvp4cOig=;
+        b=EvvCEh+oHP9y1/R1VkUJgY2ufo18kVUGg4W9BBMg1+YynN39weGaqB1r5EQzfyFkhA
+         jKz/DZYO9mmj1HUMkA1M+/IualHMGEA9ysrbbhY8KdcKlY4rcWzRtuxqRmEC68G4zRPA
+         6BtaLZin+73p3oQgcZomDYttr9rW3VJfZJFtcU3ZUZsjvVWPQMLyTeD5bdQeRn5OY87I
+         y04URxFbHEIlztzZ24sp26z6Qsna895rg0e5aFXLicIWmMI6mb9dlUvPE/LWMv+QA4Nc
+         mnJAAm0/X3IWhpZBbAvurR2r0OIHeqDDJTjr4D6Tk+9lUPIVnVuEjRT+JCnqbXZdpuFY
+         VvpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704306708; x=1704911508;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EypQhAgpKSEMykAt8XH3pIpDrlPGwlaMgIPyvp4cOig=;
+        b=wXBCt8YB8bqYAIPoMMJAF8Gqxn/wuAbte4w+qzulCadJE8mYRwPWRo0uuiT7IM5drJ
+         W8L8OrqssxNzJUb3H3p/0SCYZ9KivF4lzgFgkhwl6hm+C2wzzbgjOy0pG368FjF0CfKs
+         cIIFCfSGEq+QtqX/0GPcclNx3fQgj3shqUJYMeP8eAToB56hXa5pF79eKWBMKS0AL9Gd
+         4nCAywJtt9Tz0jZ5BtKyXCoaODc3sZb7gTcnturCYva9OypyC/MOW/AZ00hBBjLJq3qq
+         77cAa0+QJYbw0wPG10SK+EFYtiBAkejweOxmmRdRmRHx0TWZ5OLscyjNCGsJJHty3rhG
+         vm1g==
+X-Gm-Message-State: AOJu0YzWVVjENml1BZPnIRXboi3SaGXLr7w771dT5wSw4xdYdOpLQO+E
+	qBQxptGP1AbPQEMKi74iLyI1DMWXhsk32HyT1peyJlAhEio60A==
+X-Google-Smtp-Source: AGHT+IEQaGZC78gwYzc0Wr0wMm3mAfxWGbAd6xhpfKYekxpolfrbYTx7PWQbn4KbdEk8ecio6aLPYFKObUXDUav2YpM=
+X-Received: by 2002:a0d:d812:0:b0:5e9:4c7a:5036 with SMTP id
+ a18-20020a0dd812000000b005e94c7a5036mr10125804ywe.85.1704306708080; Wed, 03
+ Jan 2024 10:31:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <99c44790-5f1b-4535-9858-c5e9c752159c@quicinc.com>
+References: <20231227-topic-rpm_vreg_cleanup-v1-1-949da0864ac5@linaro.org>
+ <ae1c1cb6-00f9-41ce-afd1-d557fbf3034f@linaro.org> <8ef0364b-2649-4bef-81bf-30934afb1e38@linaro.org>
+In-Reply-To: <8ef0364b-2649-4bef-81bf-30934afb1e38@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 3 Jan 2024 20:31:37 +0200
+Message-ID: <CAA8EJpr_HR9vfsjr=NeWAc34FyfHAHXLJxxVPqfD=2KGzoppDg@mail.gmail.com>
+Subject: Re: [PATCH] regulator: qcom_smd: Keep one rpm handle for all vregs
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, 
+	Mark Brown <broonie@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Jan 03, 2024 at 10:58:33AM +0800, Aiqun Yu (Maria) wrote:
-> On 1/2/2024 5:14 PM, Matthew Wilcox wrote:
-> > > > -void __lockfunc queued_write_lock_slowpath(struct qrwlock *lock)
-> > > > +void __lockfunc queued_write_lock_slowpath(struct qrwlock *lock, bool irq)
-> > > >    {
-> > > >    	int cnts;
-> > > > @@ -82,7 +83,11 @@ void __lockfunc queued_write_lock_slowpath(struct qrwlock *lock)
-> > > Also a new state showed up after the current design:
-> > > 1. locked flag with _QW_WAITING, while irq enabled.
-> > > 2. And this state will be only in interrupt context.
-> > > 3. lock->wait_lock is hold by the write waiter.
-> > > So per my understanding, a different behavior also needed to be done in
-> > > queued_write_lock_slowpath:
-> > >    when (unlikely(in_interrupt())) , get the lock directly.
-> > 
-> > I don't think so.  Remember that write_lock_irq() can only be called in
-> > process context, and when interrupts are enabled.
-> In current kernel drivers, I can see same lock called with write_lock_irq
-> and write_lock_irqsave in different drivers.
-> 
-> And this is the scenario I am talking about:
-> 1. cpu0 have task run and called write_lock_irq.(Not in interrupt context)
-> 2. cpu0 hold the lock->wait_lock and re-enabled the interrupt.
+On Wed, 3 Jan 2024 at 12:03, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+> On 27.12.2023 12:48, Dmitry Baryshkov wrote:
+> > On 27/12/2023 03:29, Konrad Dybcio wrote:
+> >> For no apparent reason (as there's just one RPM per SoC), all vregs
+> >> currently store a copy of a pointer to smd_rpm. Introduce a single,
+> >> global one to save up on space in each definition.
+> >>
+> >> bloat-o-meter reports:
+> >>
+> >> Total: Before=43944, After=43924, chg -0.05%
+> >>
+> >> plus sizeof(ptr) on every dynamically allocated regulator :)
+> >>
+> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >> ---
+>
+> [...]
+>
+> >>   @@ -1440,11 +1438,10 @@ static int rpm_reg_probe(struct platform_device *pdev)
+> >>       const struct rpm_regulator_data *vreg_data;
+> >>       struct device_node *node;
+> >>       struct qcom_rpm_reg *vreg;
+> >> -    struct qcom_smd_rpm *rpm;
+> >>       int ret;
+> >>   -    rpm = dev_get_drvdata(pdev->dev.parent);
+> >> -    if (!rpm) {
+> >> +    smd_vreg_rpm = dev_get_drvdata(pdev->dev.parent);
+> >> +    if (!smd_vreg_rpm) {
+> >
+> > I thought about having a mutex around (I don't remember if secondary PMICs and/or chargers can be routed through RPM or not).
+>
+> A mutex for assigning this?
 
-Oh, I missed that it was holding the wait_lock.  Yes, we also need to
-release the wait_lock before spinning with interrupts disabled.
+Yep.
 
-> I was thinking to support both write_lock_irq and write_lock_irqsave with
-> interrupt enabled together in queued_write_lock_slowpath.
-> 
-> That's why I am suggesting in write_lock_irqsave when (in_interrupt()),
-> instead spin for the lock->wait_lock, spin to get the lock->cnts directly.
+>
+> Konrad
+> >
+> > Then I went on checking other RPM and SMD-RPM drivers.
+> >
+> > clk-rpm: global variable, field
+> > clk-smd-rpm: struct field
+> > regulator_qcom-smd-rpm: struct field
+> >
+> > Probably it's worth using the same approach in all four drivers?
+>
+>
 
-Mmm, but the interrupt could come in on a different CPU and that would
-lead to it stealing the wait_lock from the CPU which is merely waiting
-for the readers to go away.
 
+-- 
+With best wishes
+Dmitry
 
