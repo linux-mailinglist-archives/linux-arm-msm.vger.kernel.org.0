@@ -1,120 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-6365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6366-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id F4096822D94
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 13:54:52 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B855B822DFB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 14:06:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A2EEE28310C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 12:54:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A0B49B218D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 13:06:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FC2F1946B;
-	Wed,  3 Jan 2024 12:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBCA319464;
+	Wed,  3 Jan 2024 13:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cOnw9bNd"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="o1HORcO6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD0301944F
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jan 2024 12:54:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-dbdacafe012so6760305276.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jan 2024 04:54:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704286478; x=1704891278; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=pOGNoa+uoP67gG3C3OdO7eu3hZWCRo+rAfnDqGQ6OWk=;
-        b=cOnw9bNdlSS3KGMy113cvsKHQg220lVPEWJP/CZ7zG7S+/DxwKnQUPhjSflJmYpQaW
-         sPB3bi3+/OIPqpGVpyBpXZ0t+seoM1IALVU9tFE1ikGEhabSNlc8n8qxiV5nL4ThcCEk
-         5BN2jEM5EajpBRzTJIF6+Tex9JcFcZV7OHdKxF56cwGznan4RfKRwlds2/r034FvdHvY
-         n1zk2S9R4vrvHiNIIYPl1eSnngSUPg1PBoZXsQXHTzCEE4IhuBQqrK+Lf5ninxygGTgr
-         bQQDQFHfEzCXZcsd1b5mxViC5gCkavQ1VWjmSCP+Ggj44tRQkrQYjSNtoTEyZWp013P5
-         nYGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704286478; x=1704891278;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pOGNoa+uoP67gG3C3OdO7eu3hZWCRo+rAfnDqGQ6OWk=;
-        b=o++McalUgLlR8wpG7YcPCQJZxn3UJVRvQMV9D/Ryg4rst1YUMSXXwN9z5QWhN508bQ
-         nuwZpMCEGCS5WP2uk3bVK6q6MAkX7v3IHELOthW9W35DymzBng+j8jlWYNAgrLoOgxum
-         cfBvdNtx7BkPM3BDcx0BEwIfzUkSGYbNS8XD/gxyD5sWP525cOQHiKY5VwPFvXlPtM+a
-         ICPHdvc/zqP1K7OMYDD4OEsRvJ5EFJ5j1tMES4i/EyxPJ8yj5DKdxZGunE3GaSmCj+DV
-         LfvdRWkwptXK9SSuzefLv8v/wQFW84F25Hb2t467K0JLrubDH6yvhyGegCX/KnCZJj7L
-         g53A==
-X-Gm-Message-State: AOJu0Yz+19iOvGxV8UOHZGcy9Z1EbqSDQ6rhNnNGsYocCJlL/+b3lv0i
-	wjmXJDG6dYL5CpJZZtCXpDI2dP1sfBKZXQ355qC6G4SvnXNwOA==
-X-Google-Smtp-Source: AGHT+IEixB+WBNhbDXVIfjA3/lNv5WlNF7f1gcgq06js9K5QExKPJiNz8iPEs2JGsGvCguUuLd4AYEFxFy6bIiDoz20=
-X-Received: by 2002:a25:d245:0:b0:dbc:f8ff:c7d7 with SMTP id
- j66-20020a25d245000000b00dbcf8ffc7d7mr9690250ybg.37.1704286478608; Wed, 03
- Jan 2024 04:54:38 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2743C1945E;
+	Wed,  3 Jan 2024 13:06:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 403CICU4030794;
+	Wed, 3 Jan 2024 13:06:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=6AihegcrHuKOKVAT22QfdIlNLXan2cC61758qMqmqts=; b=o1
+	HORcO66e7KRXO79u2YP06PNJvhOWBc8QJui8Vd6ufOk4RNIY117WyGj/IZkwCaOC
+	WHtxgIKdnq0CKl7zNTpNimaajPO49ZlbWZ6CoKLglZ/SiHCt1GvHrmbA8QClWQZe
+	MfIvm/QQNmY08T+DImeXjYMJIT+3yRoKZoXKHJ8+JT2xCHdbGcv8FGfFrvtXsj6o
+	rjOuSEOQnCYyxO22pKEiYO/5XMi6bhWBQwt48D1ep+NFP+u8iL4BBOsE5W4rsDr4
+	r8+cZ1rzvSDBnMoGUxqoWN5z3qEQnrnX0yEZou0jhP88MG9HSsOPy9siBkE8wy0r
+	RnJTNgmmauFLh6c0MIvA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vcg41ba7j-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 03 Jan 2024 13:06:19 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 403D6IZw032623
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 3 Jan 2024 13:06:18 GMT
+Received: from [10.253.72.77] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 3 Jan
+ 2024 05:06:13 -0800
+Message-ID: <365d76a4-db05-40ac-a453-fb7e8b6db423@quicinc.com>
+Date: Wed, 3 Jan 2024 21:06:10 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231220-sa8295p-gpu-v2-0-4763246b72c0@quicinc.com> <20231220-sa8295p-gpu-v2-4-4763246b72c0@quicinc.com>
-In-Reply-To: <20231220-sa8295p-gpu-v2-4-4763246b72c0@quicinc.com>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Wed, 3 Jan 2024 13:54:02 +0100
-Message-ID: <CAPDyKFoD-+2q4sDZL3J-2a2kGUmBXpUc6vj8zxzaO72O_Ksj7g@mail.gmail.com>
-Subject: Re: [PATCH v2 4/8] soc: qcom: rpmhpd: Drop SA8540P gfx.lvl
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Taniya Das <quic_tdas@quicinc.com>, Johan Hovold <johan+linaro@kernel.org>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/5] net: mdio: ipq4019: configure CMN PLL clock for
+ ipq5332
+Content-Language: en-US
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <andrew@lunn.ch>, <hkallweit1@gmail.com>, <linux@armlinux.org.uk>,
+        <robert.marko@sartura.hr>
+CC: <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_srichara@quicinc.com>
+References: <20231225084424.30986-1-quic_luoj@quicinc.com>
+ <20231225084424.30986-4-quic_luoj@quicinc.com>
+ <1d7ef6cc-5c25-4a59-ad7f-38870ac132c4@linaro.org>
+From: Jie Luo <quic_luoj@quicinc.com>
+In-Reply-To: <1d7ef6cc-5c25-4a59-ad7f-38870ac132c4@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: TdYOiUNuml-WWw9-fiDVZ4SKAWquoQeD
+X-Proofpoint-ORIG-GUID: TdYOiUNuml-WWw9-fiDVZ4SKAWquoQeD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ phishscore=0 spamscore=0 bulkscore=0 adultscore=0 priorityscore=1501
+ impostorscore=0 mlxlogscore=999 malwarescore=0 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401030107
 
-On Fri, 22 Dec 2023 at 05:39, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
->
-> On SA8295P and SA8540P gfx.lvl is not provdied by rpmh, but rather is
-> handled by an external regulator (max20411). Drop gfx.lvl from the list
-> of power-domains exposed on this platform.
->
-> Fixes: f68f1cb3437d ("soc: qcom: rpmhpd: add sc8280xp & sa8540p rpmh power-domains")
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-I guess it's easier if you funnel this through the soc tree - or you
-prefer if I take it through my pmdomain tree?
 
-No matter what, feel free to add:
-Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
-
-Kind regards
-Uffe
+On 1/3/2024 5:50 PM, Bryan O'Donoghue wrote:
+> On 25/12/2023 08:44, Luo Jie wrote:
+>> The reference clock of CMN PLL block is selectable, the internal
+>> 48MHZ is used by default.
+>>
+>> The output clock of CMN PLL block is for providing the clock
+>> source of ethernet device(such as qca8084), there are 1 * 25MHZ
+>> and 3 * 50MHZ output clocks available for the ethernet devices.
+>>
+>> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+>> ---
+>>   drivers/net/mdio/mdio-ipq4019.c | 129 +++++++++++++++++++++++++++++++-
+>>   1 file changed, 128 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/net/mdio/mdio-ipq4019.c 
+>> b/drivers/net/mdio/mdio-ipq4019.c
+>> index e24b0e688b10..e4862ac02026 100644
+>> --- a/drivers/net/mdio/mdio-ipq4019.c
+>> +++ b/drivers/net/mdio/mdio-ipq4019.c
+>> @@ -44,6 +44,17 @@
+>>   /* Maximum SOC PCS(uniphy) number on IPQ platform */
+>>   #define ETH_LDO_RDY_CNT                3
+>> +#define CMN_PLL_REFERENCE_SOURCE_SEL        0x28
+>> +#define CMN_PLL_REFCLK_SOURCE_DIV        GENMASK(9, 8)
+>> +
+>> +#define CMN_PLL_REFERENCE_CLOCK            0x784
+>> +#define CMN_PLL_REFCLK_EXTERNAL            BIT(9)
+>> +#define CMN_PLL_REFCLK_DIV            GENMASK(8, 4)
+>> +#define CMN_PLL_REFCLK_INDEX            GENMASK(3, 0)
+>> +
+>> +#define CMN_PLL_POWER_ON_AND_RESET        0x780
+>> +#define CMN_ANA_EN_SW_RSTN            BIT(6)
+>> +
+>>   enum mdio_clk_id {
+>>       MDIO_CLK_MDIO_AHB,
+>>       MDIO_CLK_UNIPHY0_AHB,
+>> @@ -55,6 +66,7 @@ enum mdio_clk_id {
+>>   struct ipq4019_mdio_data {
+>>       void __iomem *membase;
+>> +    void __iomem *cmn_membase;
+>>       void __iomem *eth_ldo_rdy[ETH_LDO_RDY_CNT];
+>>       struct clk *clk[MDIO_CLK_CNT];
+>>   };
+>> @@ -227,12 +239,116 @@ static int ipq4019_mdio_write_c22(struct 
+>> mii_bus *bus, int mii_id, int regnum,
+>>       return 0;
+>>   }
+>> +/* For the CMN PLL block, the reference clock can be configured 
+>> according to
+>> + * the device tree property "qcom,cmn-ref-clock-frequency", the 
+>> internal 48MHZ
+>> + * is used by default.
+>> + *
+>> + * The output clock of CMN PLL block is provided to the ethernet 
+>> devices,
+>> + * threre are 4 CMN PLL output clocks (1*25MHZ + 3*50MHZ) enabled by 
+>> default.
+>> + *
+>> + * Such as the output 50M clock for the qca8084 ethernet PHY.
+>> + */
+>> +static int ipq_cmn_clock_config(struct mii_bus *bus)
+>> +{
+>> +    struct ipq4019_mdio_data *priv;
+>> +    u32 reg_val, src_sel, ref_clk;
+>> +    int ret;
+>> +
+>> +    priv = bus->priv;
+>> +    if (priv->cmn_membase) {
+> 
+> if (!priv->cnm_membase)
+>      return 0;
+> 
+> then move the indentation here one tab left.
+> 
+Ok, will update this, Thanks.
 
 > ---
->  drivers/pmdomain/qcom/rpmhpd.c | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/drivers/pmdomain/qcom/rpmhpd.c b/drivers/pmdomain/qcom/rpmhpd.c
-> index 3078896b1300..27a73ff72614 100644
-> --- a/drivers/pmdomain/qcom/rpmhpd.c
-> +++ b/drivers/pmdomain/qcom/rpmhpd.c
-> @@ -217,7 +217,6 @@ static struct rpmhpd *sa8540p_rpmhpds[] = {
->         [SC8280XP_CX] = &cx,
->         [SC8280XP_CX_AO] = &cx_ao,
->         [SC8280XP_EBI] = &ebi,
-> -       [SC8280XP_GFX] = &gfx,
->         [SC8280XP_LCX] = &lcx,
->         [SC8280XP_LMX] = &lmx,
->         [SC8280XP_MMCX] = &mmcx,
->
-> --
-> 2.25.1
->
+> bod
 
