@@ -1,128 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-6394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE47282347F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 19:31:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 317C58234E6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 19:49:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D67FF1F247D9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 18:31:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D6C521F25666
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 18:49:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B7971CA81;
-	Wed,  3 Jan 2024 18:31:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C23E11CA89;
+	Wed,  3 Jan 2024 18:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EvvCEh+o"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BeI406Dh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB701CA85
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jan 2024 18:31:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-5e7c1012a42so89120207b3.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jan 2024 10:31:48 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1301CA84;
+	Wed,  3 Jan 2024 18:49:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2cca5d81826so129221071fa.2;
+        Wed, 03 Jan 2024 10:49:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704306708; x=1704911508; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=EypQhAgpKSEMykAt8XH3pIpDrlPGwlaMgIPyvp4cOig=;
-        b=EvvCEh+oHP9y1/R1VkUJgY2ufo18kVUGg4W9BBMg1+YynN39weGaqB1r5EQzfyFkhA
-         jKz/DZYO9mmj1HUMkA1M+/IualHMGEA9ysrbbhY8KdcKlY4rcWzRtuxqRmEC68G4zRPA
-         6BtaLZin+73p3oQgcZomDYttr9rW3VJfZJFtcU3ZUZsjvVWPQMLyTeD5bdQeRn5OY87I
-         y04URxFbHEIlztzZ24sp26z6Qsna895rg0e5aFXLicIWmMI6mb9dlUvPE/LWMv+QA4Nc
-         mnJAAm0/X3IWhpZBbAvurR2r0OIHeqDDJTjr4D6Tk+9lUPIVnVuEjRT+JCnqbXZdpuFY
-         VvpQ==
+        d=gmail.com; s=20230601; t=1704307749; x=1704912549; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HSwdtsY61fYy46M5QE5KizBE3QaiBoSxLHAq5Tnp4Uw=;
+        b=BeI406DhtL43bJdoswKGH9lYnxQg8I2S8m+gN/oP0d+Bts86WkJnjKvkHR3Zup7Bpl
+         XNPzQr183n8N9soX/l+KKUg7kMjIZHouuPzJQ8WKvE3xKlCqBoEunD8anjRLyP1aa+Ve
+         ro9Y9YVqqrcqSKI8EOFPC/YdqNMen6+EuHRcUGZE/11DgpoVSM7JfQgW78PP9RsfhHla
+         WnJdgXrq9kmPOE687UxbLz+g6Pwupc+3Vdl6o7oiay8rlaTWPg3gdBWtQu0uAc0wW8vd
+         fJDnDjM1xxXDKe2LtdEsr7b/7kRh00ccNhzfhsB6fuudYayeytqwYuggv/DRNEQU7UCV
+         BfsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704306708; x=1704911508;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EypQhAgpKSEMykAt8XH3pIpDrlPGwlaMgIPyvp4cOig=;
-        b=wXBCt8YB8bqYAIPoMMJAF8Gqxn/wuAbte4w+qzulCadJE8mYRwPWRo0uuiT7IM5drJ
-         W8L8OrqssxNzJUb3H3p/0SCYZ9KivF4lzgFgkhwl6hm+C2wzzbgjOy0pG368FjF0CfKs
-         cIIFCfSGEq+QtqX/0GPcclNx3fQgj3shqUJYMeP8eAToB56hXa5pF79eKWBMKS0AL9Gd
-         4nCAywJtt9Tz0jZ5BtKyXCoaODc3sZb7gTcnturCYva9OypyC/MOW/AZ00hBBjLJq3qq
-         77cAa0+QJYbw0wPG10SK+EFYtiBAkejweOxmmRdRmRHx0TWZ5OLscyjNCGsJJHty3rhG
-         vm1g==
-X-Gm-Message-State: AOJu0YzWVVjENml1BZPnIRXboi3SaGXLr7w771dT5wSw4xdYdOpLQO+E
-	qBQxptGP1AbPQEMKi74iLyI1DMWXhsk32HyT1peyJlAhEio60A==
-X-Google-Smtp-Source: AGHT+IEQaGZC78gwYzc0Wr0wMm3mAfxWGbAd6xhpfKYekxpolfrbYTx7PWQbn4KbdEk8ecio6aLPYFKObUXDUav2YpM=
-X-Received: by 2002:a0d:d812:0:b0:5e9:4c7a:5036 with SMTP id
- a18-20020a0dd812000000b005e94c7a5036mr10125804ywe.85.1704306708080; Wed, 03
- Jan 2024 10:31:48 -0800 (PST)
+        d=1e100.net; s=20230601; t=1704307749; x=1704912549;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HSwdtsY61fYy46M5QE5KizBE3QaiBoSxLHAq5Tnp4Uw=;
+        b=bMatfZnjyly7FG+XvvFanyGEQFrLTvTvkh7KjYo8aMFZ9Ew7o28o/c+Y9iOFSFhf4J
+         OWXfAcRJYP3FxiaHMPRlBVFEVNc1m4FaLROG8/ZhMe1NQeKwEq8pTDxC+IHg194zGbic
+         UIDl+2R/oaUGPPEyCO8/F0w1e+sRqaHxfWXC7lw0BbIVV8HNg3nMgjhjidZj2PVa0a7e
+         /4skkTh2JDrMLm++E33TGpnSSH06pE57aLEE7qzyRcYGKTiry/5nx2dtDUtUQel3zCNE
+         qxiD9mXEXkTDV3DED25xfy69ih3e0otxfmextHJSbiYzCwG6HCnQ/aF7RtEippyVttf1
+         /wDQ==
+X-Gm-Message-State: AOJu0Yx+n3aDalVLWEAypzDhd0WTFrX0BDNEYjWdFbdcYy//r0NtrQH5
+	giKzD5zQXDLVMBvsbhp/MrzPQOpLzMorxfzJ5I0=
+X-Google-Smtp-Source: AGHT+IG+OC/fH5CHJHM4KYYgGuSRIAloVFSbQRrYKWlazIMzUbmSodkBi162LLgz+u6vZOa9YXsBO0vakCfp0mrOPbY=
+X-Received: by 2002:a05:651c:4c6:b0:2cd:dfe:74bb with SMTP id
+ e6-20020a05651c04c600b002cd0dfe74bbmr2277411lji.49.1704307748788; Wed, 03 Jan
+ 2024 10:49:08 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231227-topic-rpm_vreg_cleanup-v1-1-949da0864ac5@linaro.org>
- <ae1c1cb6-00f9-41ce-afd1-d557fbf3034f@linaro.org> <8ef0364b-2649-4bef-81bf-30934afb1e38@linaro.org>
-In-Reply-To: <8ef0364b-2649-4bef-81bf-30934afb1e38@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 3 Jan 2024 20:31:37 +0200
-Message-ID: <CAA8EJpr_HR9vfsjr=NeWAc34FyfHAHXLJxxVPqfD=2KGzoppDg@mail.gmail.com>
-Subject: Re: [PATCH] regulator: qcom_smd: Keep one rpm handle for all vregs
+References: <20240102193348.250917-1-robdclark@gmail.com> <fd88a067-63f6-4467-9787-989890287083@linaro.org>
+In-Reply-To: <fd88a067-63f6-4467-9787-989890287083@linaro.org>
+From: Rob Clark <robdclark@gmail.com>
+Date: Wed, 3 Jan 2024 10:48:56 -0800
+Message-ID: <CAF6AEGtk7qS5hPYDGKVnrcEfcQEkr1J4=UTL7sikVJB3AvDBFQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/a7xx: Fix LLC typo
 To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, 
-	Mark Brown <broonie@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Akhil P Oommen <quic_akhilpo@quicinc.com>, Danylo Piliaiev <dpiliaiev@igalia.com>, 
+	Bjorn Andersson <andersson@kernel.org>, open list <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 3 Jan 2024 at 12:03, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+On Tue, Jan 2, 2024 at 12:12=E2=80=AFPM Konrad Dybcio <konrad.dybcio@linaro=
+.org> wrote:
 >
-> On 27.12.2023 12:48, Dmitry Baryshkov wrote:
-> > On 27/12/2023 03:29, Konrad Dybcio wrote:
-> >> For no apparent reason (as there's just one RPM per SoC), all vregs
-> >> currently store a copy of a pointer to smd_rpm. Introduce a single,
-> >> global one to save up on space in each definition.
-> >>
-> >> bloat-o-meter reports:
-> >>
-> >> Total: Before=43944, After=43924, chg -0.05%
-> >>
-> >> plus sizeof(ptr) on every dynamically allocated regulator :)
-> >>
-> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> >> ---
->
-> [...]
->
-> >>   @@ -1440,11 +1438,10 @@ static int rpm_reg_probe(struct platform_device *pdev)
-> >>       const struct rpm_regulator_data *vreg_data;
-> >>       struct device_node *node;
-> >>       struct qcom_rpm_reg *vreg;
-> >> -    struct qcom_smd_rpm *rpm;
-> >>       int ret;
-> >>   -    rpm = dev_get_drvdata(pdev->dev.parent);
-> >> -    if (!rpm) {
-> >> +    smd_vreg_rpm = dev_get_drvdata(pdev->dev.parent);
-> >> +    if (!smd_vreg_rpm) {
+> On 2.01.2024 20:33, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
 > >
-> > I thought about having a mutex around (I don't remember if secondary PMICs and/or chargers can be routed through RPM or not).
+> > We'd miss actually activating LLC.
+> >
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/ms=
+m/adreno/a6xx_gpu.c
+> > index a5660d63535b..54dc5eb37f70 100644
+> > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > @@ -1646,7 +1646,7 @@ static int a6xx_gmu_pm_resume(struct msm_gpu *gpu=
+)
+> >
+> >       msm_devfreq_resume(gpu);
+> >
+> > -     adreno_is_a7xx(adreno_gpu) ? a7xx_llc_activate : a6xx_llc_activat=
+e(a6xx_gpu);
+> > +     adreno_is_a7xx(adreno_gpu) ? a7xx_llc_activate(a6xx_gpu) : a6xx_l=
+lc_activate(a6xx_gpu);
 >
-> A mutex for assigning this?
-
-Yep.
-
+> /me cleans glasses
 >
+> oh..
+>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+I suppose I should also add,
+
+Fixes: af66706accdf ("drm/msm/a6xx: Add skeleton A7xx support")
+
 > Konrad
-> >
-> > Then I went on checking other RPM and SMD-RPM drivers.
-> >
-> > clk-rpm: global variable, field
-> > clk-smd-rpm: struct field
-> > regulator_qcom-smd-rpm: struct field
-> >
-> > Probably it's worth using the same approach in all four drivers?
->
->
-
-
--- 
-With best wishes
-Dmitry
 
