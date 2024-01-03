@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0817E822A72
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 10:48:22 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 605CB822A76
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 10:48:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 872411F23FA0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 09:48:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 84C1B1C231F4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jan 2024 09:48:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60B1F18AEF;
-	Wed,  3 Jan 2024 09:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D96F0154B9;
+	Wed,  3 Jan 2024 09:48:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C8WMt4xA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DKURrIJW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFDDC18AE7
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jan 2024 09:47:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4D018635
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jan 2024 09:48:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-50e7aed09adso8308480e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jan 2024 01:47:51 -0800 (PST)
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-33674f60184so10307305f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jan 2024 01:48:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704275270; x=1704880070; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1704275297; x=1704880097; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=WcKFRTyJ6uhyfUighyIoDtu8qJHzqwvV5rC+59LKaj8=;
-        b=C8WMt4xAjdott9YUNGzSbbv0hfrva1AUz9n3/MbPVqqPXbWZPBlppCi+ov2K3XmSfG
-         JJohCuextH1GTTbMS7SpKkcpaFF32jVqcw7MP6l2d7UfAqwA9/lAKMADJJDXlY9C4+tD
-         dUcccqMlHQz1HJ0oiHMc0ZN/KsTBXN/tGEPRwMQd/uhtR9eRaB+vmZQNhPrNngzw8hSS
-         KQPYdbhnlGKWD9XWmsUl5bxfuhXcKKPfmBJi+Z0V+bvLJI2oB72IEn7wZBYtDkCYbqp/
-         4clLDyoYk1g42xw0w+af6V7VzWeXMKHGTDLZnWj6FEaXrEXjUOD3Jf+8z+f1TOKOd2Uu
-         o4Vw==
+        bh=9ygiQ5GZ7AaDONBWvS2tDIrOeQ15Rvo3O1ywNhmUg6E=;
+        b=DKURrIJWUdAW9g81u035uyQjPPYqxC3IHf5y4D4x5F8/0+SupR0ZqLxRH9INT9swMz
+         QjuATZjny7Qb/fZ+VfKUhm8vn8jLTz1DGrtS+2qrcZFaHliPgBDCKtOlv0nMn534Yltz
+         nyl3fqupsaG+BnycDn65a3Ff/oWhfOC3129AjlJYHbKy5qB0gHED6NSCwg+MltvCRqvV
+         /jOaYutSu4MzBlr3GoJgC245W2BJVY1DePS2sDHH3CQGoAuC4Si22qtnMCzbGkzTXTCD
+         BCP6RVnpYKayfcjeL9zvqwekBQXNi4b1O2TBTb2cjGN08fk9JdBF4HtXtGnlDXufeO7d
+         Y6RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704275270; x=1704880070;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1704275297; x=1704880097;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WcKFRTyJ6uhyfUighyIoDtu8qJHzqwvV5rC+59LKaj8=;
-        b=EVs6ApNRDlm/Yi0X1KOrLDmlr6tY8PDx094UrPH9mVKWmW5fsUHDmjMRBnW+onkyvN
-         r8mSftTNqrbWwENcHCohugFKJd5XZ2Ye5VUNUhaEV5wKOUFGY+vgftWuclevWxlgidI0
-         19vjRG0JAc+35RnQNpGXM4dylsDCJqps/EuLqPE7Li+gVHVekx2TWbewN2hULZqQJ8qU
-         2G3OaenX5tcOr5X4uihW2ECwEXqlsWVmODZgkDRHwMXGMBlrBQoU8T6gjKaLl5oTRiOn
-         e+9X/nISNftLY6aUKRqNRNxL46rR/XezcCjl6o1j9k2esPJiYlL99OoRgXl4dQdZcDCD
-         y2gg==
-X-Gm-Message-State: AOJu0Yxc8Uj0snBwDKLOQDwdN+Hcm0ESq5tkqTaSKcqUjpofsbOtdcTY
-	pS53CwcDhxApbvqxovqbrQEZUr+mOMPu/ewktoEyWdtZzmA=
-X-Google-Smtp-Source: AGHT+IFi1FnTfHCdSl9J27oAr0x7YyLT35aOEJvcA6lyiThombT3L7ieDIviZGQUus3WAfgMFcecqQ==
-X-Received: by 2002:a05:6512:3e7:b0:50e:84c4:cec7 with SMTP id n7-20020a05651203e700b0050e84c4cec7mr4460725lfq.138.1704275269966;
-        Wed, 03 Jan 2024 01:47:49 -0800 (PST)
-Received: from [192.168.199.125] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
-        by smtp.gmail.com with ESMTPSA id gi16-20020a1709070c9000b00a19b7362dcfsm12592779ejc.139.2024.01.03.01.47.48
+        bh=9ygiQ5GZ7AaDONBWvS2tDIrOeQ15Rvo3O1ywNhmUg6E=;
+        b=nwuFKoY0kzW2pHba311FL2rWE+eKCZBfI7D17b05dYaZRs1r/gyZUrIH+RP7W4FWas
+         oNXao/53xEKlea05WQ1NcJu38kmM6M90fJN2+KaqccySMhizbxaPbSwfMgg5HraF1cnE
+         VuKk50d/ZICwafjFD3DMQQnXGC1yvnPUtWawd1obVlFf1aAwJIjDGua41IYYuf9I0sbs
+         6Xcym0U9g82aTLwiVRSwQhtBOkPQfTQccddMablRCl8niN/mlqoq6zfsUROkMlo2YrvW
+         qwKOPpf7y9h5HtM8zvDo87/L5xKaKQZqEmtgcT9TFs0BcG7Vw2MGpiXoKMYSh6vl2F4G
+         tJtQ==
+X-Gm-Message-State: AOJu0YzQx6rfxPc41t0fTGdEqSFjvCyvNJLgt8x3j3+td2M0nHPs2jOG
+	oWPr3tsdnugwMNMKbn86YicPUF3tz2A4hQ==
+X-Google-Smtp-Source: AGHT+IHSLGf/w+/4nLJY24qGtbeXFaHszE9j+MVClx84jKy+oClHc3nv8SAWdrAvyz8Wu3CyLWhQYQ==
+X-Received: by 2002:a05:6000:368:b0:337:2aa3:ac80 with SMTP id f8-20020a056000036800b003372aa3ac80mr3811982wrf.68.1704275297315;
+        Wed, 03 Jan 2024 01:48:17 -0800 (PST)
+Received: from [192.168.100.86] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id z13-20020adfe54d000000b00333359b522dsm30539123wrm.77.2024.01.03.01.48.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Jan 2024 01:47:49 -0800 (PST)
-Message-ID: <d8b2867f-7fc6-4147-ae48-11bbf580b5bf@linaro.org>
-Date: Wed, 3 Jan 2024 10:47:47 +0100
+        Wed, 03 Jan 2024 01:48:16 -0800 (PST)
+Message-ID: <e0926d70-09d1-40ab-939a-7e110d718448@linaro.org>
+Date: Wed, 3 Jan 2024 09:48:15 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,131 +66,113 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sc8280xp: camss: Add CCI
- definitions
+Subject: Re: [PATCH v4 2/5] net: mdio: ipq4019: enable the SoC uniphy clocks
+ for ipq5332 platform
 Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring
- <robh+dt@kernel.org>, Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240103-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v1-0-abacaa63a961@linaro.org>
- <20240103-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v1-2-abacaa63a961@linaro.org>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20240103-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v1-2-abacaa63a961@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+To: Luo Jie <quic_luoj@quicinc.com>, agross@kernel.org, andersson@kernel.org,
+ konrad.dybcio@linaro.org, davem@davemloft.net, edumazet@google.com,
+ kuba@kernel.org, pabeni@redhat.com, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, andrew@lunn.ch,
+ hkallweit1@gmail.com, linux@armlinux.org.uk, robert.marko@sartura.hr
+Cc: linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ quic_srichara@quicinc.com
+References: <20231225084424.30986-1-quic_luoj@quicinc.com>
+ <20231225084424.30986-3-quic_luoj@quicinc.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20231225084424.30986-3-quic_luoj@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 3.01.2024 03:18, Bryan O'Donoghue wrote:
-> sc8280xp has four Camera Control Interface (CCI) blocks which pinout to
-> two I2C master controllers for each CCI.
+On 25/12/2023 08:44, Luo Jie wrote:
+> On the platform ipq5332, the related SoC uniphy GCC clocks need
+> to be enabled for making the MDIO slave devices accessible.
 > 
-> The CCI I2C pins are not muxed so we define them in the dtsi.
+> These UNIPHY clocks are from the SoC platform GCC clock provider,
+> which are enabled for the connected PHY devices working.
 > 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 324 +++++++++++++++++++++++++++++++++
->  1 file changed, 324 insertions(+)
+>   drivers/net/mdio/mdio-ipq4019.c | 75 ++++++++++++++++++++++++++++-----
+>   1 file changed, 64 insertions(+), 11 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index febf28356ff8..4f6acd4a3f00 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -3451,6 +3451,170 @@ usb_1_role_switch: endpoint {
->  			};
->  		};
->  
-> +		cci0: cci@ac4a000 {
-> +			compatible = "qcom,sm8250-cci", "qcom,msm8996-cci";
-
-8280, 8250 instead
-
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
+> diff --git a/drivers/net/mdio/mdio-ipq4019.c b/drivers/net/mdio/mdio-ipq4019.c
+> index 5273864fabb3..e24b0e688b10 100644
+> --- a/drivers/net/mdio/mdio-ipq4019.c
+> +++ b/drivers/net/mdio/mdio-ipq4019.c
+> @@ -35,15 +35,36 @@
+>   /* MDIO clock source frequency is fixed to 100M */
+>   #define IPQ_MDIO_CLK_RATE	100000000
+>   
+> +/* SoC UNIPHY fixed clock */
+> +#define IPQ_UNIPHY_AHB_CLK_RATE	100000000
+> +#define IPQ_UNIPHY_SYS_CLK_RATE	24000000
 > +
-> +			reg = <0 0x0ac4a000 0 0x1000>;
-> +			interrupts = <GIC_SPI 460 IRQ_TYPE_EDGE_RISING>;
-> +			power-domains = <&camcc TITAN_TOP_GDSC>;
+>   #define IPQ_PHY_SET_DELAY_US	100000
+>   
+>   /* Maximum SOC PCS(uniphy) number on IPQ platform */
+>   #define ETH_LDO_RDY_CNT				3
+>   
+> +enum mdio_clk_id {
+> +	MDIO_CLK_MDIO_AHB,
+> +	MDIO_CLK_UNIPHY0_AHB,
+> +	MDIO_CLK_UNIPHY0_SYS,
+> +	MDIO_CLK_UNIPHY1_AHB,
+> +	MDIO_CLK_UNIPHY1_SYS,
+> +	MDIO_CLK_CNT
+> +};
 > +
-> +			clocks = <&camcc CAMCC_CAMNOC_AXI_CLK>,
-> +				 <&camcc CAMCC_SLOW_AHB_CLK_SRC>,
-> +				 <&camcc CAMCC_CPAS_AHB_CLK>,
-> +				 <&camcc CAMCC_CCI_0_CLK>,
-> +				 <&camcc CAMCC_CCI_0_CLK_SRC>;
-
-Is this _src really necessary? (the one above seems to be)
-
-> +			clock-names = "camnoc_axi",
-> +				      "slow_ahb_src",
-> +				      "cpas_ahb",
-> +				      "cci",
-> +				      "cci_src";
-
+>   struct ipq4019_mdio_data {
+>   	void __iomem *membase;
+>   	void __iomem *eth_ldo_rdy[ETH_LDO_RDY_CNT];
+> -	struct clk *mdio_clk;
+> +	struct clk *clk[MDIO_CLK_CNT];
+> +};
 > +
-> +			pinctrl-0 = <&cci0_default>;
-> +			pinctrl-1 = <&cci0_sleep>;
-> +			pinctrl-names = "default", "sleep";
+> +static const char *const mdio_clk_name[] = {
+> +	"gcc_mdio_ahb_clk",
+> +	"uniphy0_ahb",
+> +	"uniphy0_sys",
+> +	"uniphy1_ahb",
+> +	"uniphy1_sys"
+>   };
+>   
+>   static int ipq4019_mdio_wait_busy(struct mii_bus *bus)
+> @@ -209,14 +230,43 @@ static int ipq4019_mdio_write_c22(struct mii_bus *bus, int mii_id, int regnum,
+>   static int ipq_mdio_reset(struct mii_bus *bus)
+>   {
+>   	struct ipq4019_mdio_data *priv = bus->priv;
+> -	int ret;
+> +	unsigned long rate;
+> +	int ret, index;
+>   
+> -	/* Configure MDIO clock source frequency if clock is specified in the device tree */
+> -	ret = clk_set_rate(priv->mdio_clk, IPQ_MDIO_CLK_RATE);
+> -	if (ret)
+> -		return ret;
+> +	/* For the platform ipq5332, there are two SoC uniphies available
+> +	 * for connecting with ethernet PHY, the SoC uniphy gcc clock
+> +	 * should be enabled for resetting the connected device such
+> +	 * as qca8386 switch, qca8081 PHY or other PHYs effectively.
+> +	 *
+> +	 * Configure MDIO/UNIPHY clock source frequency if clock instance
+> +	 * is specified in the device tree.
+> +	 */
+> +	for (index = MDIO_CLK_MDIO_AHB; index < MDIO_CLK_CNT; index++) {
 
-please refer to Documentation/devicetree/bindings/dts-coding-style.rst
+you could do a
 
-[...]
+if (!priv->clk[index])
+	continue;
 
-> +			cci0_default: cci0-default-state {
-> +				cci0_i2c0_default: cci0-i2c0-default-pins {
-> +					/* cci_i2c_sda0, cci_i2c_scl0 */
-> +					pins = "gpio113", "gpio114";
-> +					function = "cci_i2c";
-> +
-> +					bias-pull-up;
-> +					drive-strength = <2>; /* 2 mA */
+here and save a few cycles executing code for absent clocks. ipq6018 has 
+just 1/5 of the clocks you are checking for here.
 
-The mA comments seem unnecessary
+Better still capture the number of clocks you find in probe() in a 
+variable priv->num_clocks and only step through the array
 
-Also, please follow the style of existing pin nodes:
+for (i = 0; i < priv->num_clocks; i++) {}
 
-pins
-function
-drive-strength
-bias-
-output-
-
-Konrad
+---
+bod
 
