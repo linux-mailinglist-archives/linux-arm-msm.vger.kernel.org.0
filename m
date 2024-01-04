@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6462-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E434482434F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 15:10:13 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DAC598243A2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 15:22:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 961291F23268
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 14:10:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8A0052828D4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 14:22:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F131F224E3;
-	Thu,  4 Jan 2024 14:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A6A4224FA;
+	Thu,  4 Jan 2024 14:22:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FrMIc0/b"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TfHpK3Om"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E11224D2
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jan 2024 14:10:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A09224E8
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jan 2024 14:22:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2ccabf5a4beso6323661fa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jan 2024 06:10:05 -0800 (PST)
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-40d60c49ee7so5436415e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jan 2024 06:22:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704377403; x=1704982203; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1704378134; x=1704982934; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=QvyBwEaiMbUvG2bcyPLm6XlY6v4Hxt5APwIYm1XSkrE=;
-        b=FrMIc0/bg63yGw8pviWosTx9WqTOaB3Yhmamf1wOrXyiwywX8XOqTDNTA1HncN8WtV
-         HHe7Efb2devZ/OnYaX4iwXMaDH2pESREbJxKwzofwJvCdbHvoBWrJrGiQz482zRvk8ZW
-         nu+wrG7cSBTgUVhYFt04aU7BWFansoknyi+BjJ1rvip0KtzbTNXPDui2cJxgGs5x4BpY
-         DnBeoCtgkr128NIq/l9BeUdrtE5OSg3ofKXe6Xj0l4S9CMqBVjy/2ekk3wNiO5GN2NvC
-         aSIGRjsg2+lTWNxfGPqzieQk3io79NATZfVRNdrAcSb9bhljlSrZUqplMee7IUZItkZH
-         ppfg==
+        bh=pOIhKXF7biqxz+aA/XDTJ2jcGS5EMuYmWEXbjvsxFhY=;
+        b=TfHpK3Om4QDogYBdE6MnE3msalOcbX+pIXqJiAeHDryTFddbbG7dstHJbWAriphTI8
+         aozIdqm7uaFZ1kBfhATrLEHdVMWW5KGYXBtQfztF9f++TXRV3yEcUTR8ev/A5OK8lBei
+         hmBvD+ItDq6yoT8ztiRdfav0nikyePx0kR4dAPbXZ53/0DGMhVH0LRIVnqamAMCQkbLs
+         tblDrXoruVXyw+ocPTj0kEwqjZ3Q6FFc7fKg20q4Fm5WPrb/VRFhVC7nnHL5cFUqM34r
+         I1XkJHF7DADnxG8uomP1K1h31vDUnIwCn+dAtrxLKicfR54Kj/6LAbIuaEJ0bvvJLxwp
+         XWDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704377403; x=1704982203;
+        d=1e100.net; s=20230601; t=1704378134; x=1704982934;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QvyBwEaiMbUvG2bcyPLm6XlY6v4Hxt5APwIYm1XSkrE=;
-        b=FMGLzc85zv3g2DBE5a9T31brzapD9GEMdRdwwraJeei+RQGlZZB+ef3LfHv/PALuvV
-         8P2ePdVNdgBzt5H5mFAlUGZdGe47mcF69vIHm776HUACeFxqwT7WJnyIjLiduUB+IdRT
-         7V5tLNhjVKfoPBagJJ4BOmh+IfEu072gt7pwRBvmwqBDciEVwYq7cndhzdZJy82HJzWO
-         x2FAccyWoaiAJbA5U6Rl97YqFecjDZ7JJMl4h5ChsY99e0zQLNSIOuPIoY2hu7c7wb12
-         qA9kfzo+YrkLGK9HGAIDEFb/5TTSc0P21s3rMJ4QU8bLGUmZCoKDmFoAFxIzsHHqK5GZ
-         guQA==
-X-Gm-Message-State: AOJu0YzniC7ecEnQdKSdY4BxLaaHMiEdV8muPWNbW6IsaG5O0qMRue4L
-	697mmSzp8h+djtA2JFvpHlHz5QlPi6BJOQ==
-X-Google-Smtp-Source: AGHT+IG0lzZDESK7ygOFl5Ea/ju6snk5+bN5kdUcnPQ8W0V8q1L5nCMWaYuaUq4yiByYpdIAEKbzWw==
-X-Received: by 2002:a05:651c:607:b0:2cc:7578:3ce6 with SMTP id k7-20020a05651c060700b002cc75783ce6mr152556lje.10.1704377403284;
-        Thu, 04 Jan 2024 06:10:03 -0800 (PST)
-Received: from [192.168.100.86] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id dr15-20020a5d5f8f000000b003373ece28efsm10611785wrb.29.2024.01.04.06.10.02
+        bh=pOIhKXF7biqxz+aA/XDTJ2jcGS5EMuYmWEXbjvsxFhY=;
+        b=GVKkBPpuO4akpSF4Exuh+52jr2I2oYr52exk/b4vRp/NYr+y8ds3bS118XrJThYlJ0
+         YsGnpc5OgYgyrf4B6TP57Ayk6/GA6qpFHB5Yi7cn7X37cYx78u49cveFxMKJhw1A4LmU
+         TyLNfqZf6M2ORXV/BYuuXd0UZBzRhbRInJZy1IF346NCFiT7NKsoWfj2SurGdOZGXi2T
+         0pP9enYNqy8kZdTiklP4pQPyrkNIfvt92WGkKa9/HPsPcA6DjzOlwvFefdYqyb1957Xc
+         ewSWvL/sGQQqpoUzZwmTTrVOqFhW7kwirokA3WuzH2PVU38UNWL3J2z0wrZTMWa0yKWu
+         EoKA==
+X-Gm-Message-State: AOJu0Yyb+aYX+LahMPmlSUl56AzdOoJILYBG6wuq5+X8aZFT20oSK4Ga
+	EDIZfF9hY2woy4AsUelsXDyD3g6C5dpYdDtstYmf6B8ZLTVILg==
+X-Google-Smtp-Source: AGHT+IF5WicewklRFmMcWPw5W2zfn/1Y+Xf1MSh9HNXvJ0S8BzwdJIf9dtkChqe702hWNWojBcL1HQ==
+X-Received: by 2002:a1c:4b08:0:b0:40d:628a:1230 with SMTP id y8-20020a1c4b08000000b0040d628a1230mr384503wma.61.1704378134059;
+        Thu, 04 Jan 2024 06:22:14 -0800 (PST)
+Received: from [192.168.1.83] (host-92-17-96-230.as13285.net. [92.17.96.230])
+        by smtp.gmail.com with ESMTPSA id u21-20020a05600c139500b0040d7c3d5454sm5933073wmf.3.2024.01.04.06.22.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Jan 2024 06:10:02 -0800 (PST)
-Message-ID: <db83302e-0f2a-4611-b8c9-345668d0bbef@linaro.org>
-Date: Thu, 4 Jan 2024 14:10:01 +0000
+        Thu, 04 Jan 2024 06:22:13 -0800 (PST)
+Message-ID: <641e8800-4735-406b-8555-d4a80201f0b9@linaro.org>
+Date: Thu, 4 Jan 2024 14:22:12 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,47 +66,57 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] media: dt-bindings: media: camss: Add
- qcom,sc8280xp-camss binding
+Subject: Re: [PATCH] clk: qcom: dispcc-sdm845: Adjust internal GDSC wait times
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Rob Herring <robh@kernel.org>,
- Bryan O'Donoghue <pure.logic@nexus-software.ie>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Taniya Das <quic_tdas@quicinc.com>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  linux-kernel@vger.kernel.org
-References: <20240103-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v1-0-abacaa63a961@linaro.org>
- <20240103-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v1-1-abacaa63a961@linaro.org>
- <87bcff40-b5ff-41c9-a33f-95f5e80a2f22@linaro.org>
- <62995a12-e835-40ff-966f-8522f2ab53dc@nexus-software.ie>
- <20240103175424.GA1440392-robh@kernel.org>
- <3627b156-a4e4-458e-9cf0-ca6c62366e7e@linaro.org>
- <36dfbb05-d538-4f83-9e0d-898e3d35f3dc@linaro.org>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <36dfbb05-d538-4f83-9e0d-898e3d35f3dc@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+References: <20240103-topic-845gdsc-v1-1-368efbe1a61d@linaro.org>
+From: Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <20240103-topic-845gdsc-v1-1-368efbe1a61d@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 04/01/2024 12:40, Krzysztof Kozlowski wrote:
->> https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240103-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v1-1-abacaa63a961@linaro.org/
->>
->> If not - what is the base of the build ?
-> master
+
+
+On 03/01/2024 20:20, Konrad Dybcio wrote:
+> SDM845 downstream uses non-default values for GDSC internal waits.
+> Program them accordingly to avoid surprises.
 > 
-> Anyway, the base of the build matters less. The main problem is that you
-> have dependency which is nowhere explained. This cannot go via media
-> tree, because of that dependency.
+> Fixes: 81351776c9fb ("clk: qcom: Add display clock controller driver for SDM845")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Obvs my mistake I'd have assumed the dts stuff built against -next, 
-clearly not how this works.
+This doesn't break anything, but I'm not exactly sure what it fixes :P
 
-I'll ensure I spell out the base dep in v2.
+Tested-by: Caleb Connolly <caleb.connolly@linaro.org> # OnePlus 6
+> ---
+>  drivers/clk/qcom/dispcc-sdm845.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/dispcc-sdm845.c b/drivers/clk/qcom/dispcc-sdm845.c
+> index 735adfefc379..e792e0b130d3 100644
+> --- a/drivers/clk/qcom/dispcc-sdm845.c
+> +++ b/drivers/clk/qcom/dispcc-sdm845.c
+> @@ -759,6 +759,8 @@ static struct clk_branch disp_cc_mdss_vsync_clk = {
+>  
+>  static struct gdsc mdss_gdsc = {
+>  	.gdscr = 0x3000,
+> +	.en_few_wait_val = 0x6,
+> +	.en_rest_wait_val = 0x5,
+>  	.pd = {
+>  		.name = "mdss_gdsc",
+>  	},
+> 
+> ---
+> base-commit: 0fef202ac2f8e6d9ad21aead648278f1226b9053
+> change-id: 20240103-topic-845gdsc-bcd9d549f153
+> 
+> Best regards,
 
----
-bod
+-- 
+// Caleb (they/them)
 
