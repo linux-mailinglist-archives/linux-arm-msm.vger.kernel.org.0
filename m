@@ -1,217 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-6410-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6411-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51F85823A74
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 03:02:52 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7DA96823A81
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 03:09:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DABF0288153
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 02:02:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EFF85B21C29
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 02:09:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A77C05681;
-	Thu,  4 Jan 2024 02:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A33441878;
+	Thu,  4 Jan 2024 02:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uQ8BOyiO"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="eSKyqzqq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB52E5394
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jan 2024 02:02:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-5f2aab1c0c5so8258947b3.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jan 2024 18:02:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704333738; x=1704938538; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZBDVHhfPXBsz1dl6LhzU57fMc54pKkm8OgQTIWPCiJY=;
-        b=uQ8BOyiOrPTPmOP8NMcngaKAP8mFcCDJd7XQ9DMXsoyk9ViFtm8uOVFFKCNHyqVn+j
-         c+Mn+BGByxWHCHXCmiLyi/KLIE0uO8FahbVT1XvfCxYcVciaI8uXx1oWR36fCfjmz85F
-         Joes8l0aZxSeSI9j2QyYGIw7Jbf9R/jtxVzP4DZoxZmmjAodTWpKOrUgdUGulWxKJyTI
-         Ak/R9tGS1/TsNbbz3ZiImBtZ+sP60Aj9LLZ7MSWZBr90ZRplUEgXu5cilwdDNyGzb17x
-         ivvr9aVVfvqrMRWG38Ws5ap+ozrU/nd8d8c6vjXw96KTxQigwAPI8t7a/8IQNbGihUNT
-         h/pA==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2120184F
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jan 2024 02:09:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1704334183;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=MclevP00/a49Tz6ecs2iDiu7gt4OPIMJiub0BqcUnDM=;
+	b=eSKyqzqqe+ghBTLPX5H2cN9bZlus5dcHzgjE88+zY62fMnMCk81/zl064rOSW4qvmC12GJ
+	1pel1DTmTk/XZSIwr1SRgYcJQWIVrl0WcxqDKcPnxpTa6mcWdgqQS7WaDf+R7QneeOdAx0
+	00l99zc7Kz3YVjjU1u4nMzka/fg2FLc=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-393-CMAUZx2mNVWmdFLOcor9wQ-1; Wed, 03 Jan 2024 21:09:41 -0500
+X-MC-Unique: CMAUZx2mNVWmdFLOcor9wQ-1
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-67fb96f8d9cso589006d6.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jan 2024 18:09:41 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704333738; x=1704938538;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZBDVHhfPXBsz1dl6LhzU57fMc54pKkm8OgQTIWPCiJY=;
-        b=UM0akkBibZyulUZ0TKwhvwUpdu/IcybjdefYriaUmGY0IySe4SpwrIP3z/GAZfs2RE
-         DDmf4rFcCt0/YBYgoBTvtbhtPU7JoCABPoWpIFhx5Gwaftt5O92evU3yt4BiNL9fIZ0T
-         2y/9liAgY2IAnhHScK3ja4YXFew1SRWUSiXOoflueGGghlHJvtpmKgV5xdJwZjjTcTsO
-         /DPmEk7JFBnzgErHmBGCevFo9XQ2+FlxIjcLzOGe4iAMFA06d0MWlUGchyxIFJFSQa4O
-         fb/pKksQf4LJty1OKh8zDeq6Kh7Qmkdenof55OO+l9Nsj7XFr/ghM6VVgjUfRsRhSUpG
-         hRbA==
-X-Gm-Message-State: AOJu0Yxl5P/nXLLViG9H3Nl7dFrvTVaS+NLQP/FJ1ykh/lugeOOiJ6Bc
-	P5JQSg7nsT4b88blDiU3+hdCqXUUGazVuwOE17C245MnfF6XDQ==
-X-Google-Smtp-Source: AGHT+IHQ6cXIsXzRc6XakmymCwoA7mv+zss2o4SvQ0KqdNTkZnHNCUPr3fyvzAazRLNXNEDo4i+YVf+M75DFe0sgi5g=
-X-Received: by 2002:a0d:e854:0:b0:5d7:1940:3ef4 with SMTP id
- r81-20020a0de854000000b005d719403ef4mr1292274ywe.37.1704333737727; Wed, 03
- Jan 2024 18:02:17 -0800 (PST)
+        d=1e100.net; s=20230601; t=1704334180; x=1704938980;
+        h=user-agent:content-disposition:mime-version:message-id:subject:to
+         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MclevP00/a49Tz6ecs2iDiu7gt4OPIMJiub0BqcUnDM=;
+        b=TA2wtq1/3Q4S+YoZJLQ/HqVJ91XRUDVuf7QsIm2A9W38bS446rrbRtM7Fp+nrSnCG3
+         dw35tzg1u/LEYdTriNa2nR8EtRn9xwOjvXeYbPdlZ0pu2zqszQCCFJ9mmIOnmVjs0KJ/
+         AzLy60+xjSrH4kAyQEPwGD7O8mWwiI2i73ookhX1fS/lKYwNOXGKRbysxToE1rFfMuMa
+         i0w04wbRVv7NQ0HjZSJt7kaA3ClGAEKgObxJCerP5IYXSgQjYOXNZG9YkBEfPd22Er6P
+         gN6JBwSLkJ15hMXnS3EodqWM+A0z3Vq0vCXHHWcCoEsZ6r/veRH4FefW6dnDlRqNKb5b
+         XqBw==
+X-Gm-Message-State: AOJu0YxwSTG7KRrMuUDqmSGrMR6ec3lt8AjbMODe+3zjTn4P0O8kyhr5
+	6n5e5y+Pr6lrAz6lE68m05y0H19VRH4Gbw8dspzZ7X4LXaa6ogFris4jQn03w8DnBhsvhpMPlrY
+	6tglqkCWKxSiF4Q6h3z2FY30JHi0tAjby3roLKclBBIpx5MTXGbOpU2tNdZet607ABzswgnxdrw
+	rrC1wC0uXj/6ImDr6J
+X-Received: by 2002:a05:6214:2684:b0:67a:a721:cb16 with SMTP id gm4-20020a056214268400b0067aa721cb16mr24553401qvb.119.1704334180400;
+        Wed, 03 Jan 2024 18:09:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGDX8v3aZFq3R1Bc7VbX+yHpg5Xj6CHEXxbQAIVpy9NDF/Rp1uysTIZqWf3d1+yX6Wkgjakrg==
+X-Received: by 2002:a05:6214:2684:b0:67a:a721:cb16 with SMTP id gm4-20020a056214268400b0067aa721cb16mr24553389qvb.119.1704334179970;
+        Wed, 03 Jan 2024 18:09:39 -0800 (PST)
+Received: from x1 (c-24-2-114-156.hsd1.pa.comcast.net. [24.2.114.156])
+        by smtp.gmail.com with ESMTPSA id l2-20020a0ce842000000b0067f8152861dsm11101978qvo.62.2024.01.03.18.09.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Jan 2024 18:09:39 -0800 (PST)
+Date: Wed, 3 Jan 2024 21:09:38 -0500
+From: Brian Masney <bmasney@redhat.com>
+To: linux-arm-msm@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Eric Chanudet <echanude@redhat.com>,
+	Shazad Hussain <shazhuss@qti.qualcomm.com>,
+	Prasad Sodagudi <psodagud@quicinc.com>
+Subject: sa8755p ufs ice bug: gcc_ufs_phy_ice_core_clk status stuck at 'off'
+Message-ID: <ZZYTYsaNUuWQg3tR@x1>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20230827115033.935089-1-dmitry.baryshkov@linaro.org>
- <20230827115033.935089-9-dmitry.baryshkov@linaro.org> <20231011154935.GA785564-robh@kernel.org>
- <CAA8EJpqf4Q7wh657==C45Ka8YmmyopkCQnyEFcXkaoRwnCRZLQ@mail.gmail.com> <CAL_JsqKwWyoPdt3C0FdsgN087xK0jGyp3PVgiCaETZK9FX2JdQ@mail.gmail.com>
-In-Reply-To: <CAL_JsqKwWyoPdt3C0FdsgN087xK0jGyp3PVgiCaETZK9FX2JdQ@mail.gmail.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 4 Jan 2024 04:02:06 +0200
-Message-ID: <CAA8EJpqNRrpcK50FRLcrSdyHFadU1=6yRqBOCFv=fnTBYJs9=g@mail.gmail.com>
-Subject: Re: [PATCH v4 08/23] soc: qcom: Add driver for Qualcomm Krait L2
- cache scaling
-To: Rob Herring <robh@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>
-Cc: Viresh Kumar <viresh.kumar@linaro.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Ilia Lin <ilia.lin@kernel.org>, 
-	Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Georgi Djakov <djakov@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-pm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	Christian Marangi <ansuelsmth@gmail.com>, Stephan Gerhold <stephan@gerhold.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/2.2.10 (2023-03-25)
 
-HI Rob,
+Right now when we boot the RideSX4 (sa8775p) board on linux-next with
+a quiet kernel log (specifically loglevel=4 - warning) about 50% of
+the boots fail since UFS cannot be mounted. Changing the loglevel to
+5 (notice) or higher to show more logging makes the race condition
+and error go away. I tracked the error down to the following:
 
-Resurrecting old thread, but I think it's better as it has context.
+  - The ice driver fails to probe due to the error
+    "gcc_ufs_phy_ice_core_clk status stuck at 'off'" and returns
+    -EBUSY and is not retried. platform_set_drvdata() is never
+    called as expected.
 
-Added driver core maintainers, see discussion points below.
+  - The qcom UFS host driver calls of_qcom_ice_get(), however this
+    will always return -EPROBE_DEFER since the ice probe failed,
+    and platform_get_drvdata() is always null.
 
-On Wed, 11 Oct 2023 at 21:44, Rob Herring <robh@kernel.org> wrote:
->
-> On Wed, Oct 11, 2023 at 1:20=E2=80=AFPM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > On Wed, 11 Oct 2023 at 18:49, Rob Herring <robh@kernel.org> wrote:
-> > >
-> > > On Sun, Aug 27, 2023 at 02:50:18PM +0300, Dmitry Baryshkov wrote:
-> > > > Add a simple driver that handles scaling of L2 frequency and voltag=
-es.
-> > > >
-> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > ---
-> > >
-> > > [...]
-> > >
-> > > > +static const struct of_device_id krait_l2_match_table[] =3D {
-> > > > +     { .compatible =3D "qcom,krait-l2-cache" },
-> > > > +     {}
-> > > > +};
-> > > > +MODULE_DEVICE_TABLE(of, krait_l2_match_table);
-> > > > +
-> > > > +static struct platform_driver krait_l2_driver =3D {
-> > > > +     .probe =3D krait_l2_probe,
-> > > > +     .remove =3D krait_l2_remove,
-> > > > +     .driver =3D {
-> > > > +             .name =3D "qcom-krait-l2",
-> > > > +             .of_match_table =3D krait_l2_match_table,
-> > > > +             .sync_state =3D icc_sync_state,
-> > > > +     },
-> > > > +};
-> > >
-> > > As I mentioned in the other thread, cache devices already have a stru=
-ct
-> > > device. Specifically, they have a struct device (no subclass) on the
-> > > cpu_subsys bus type. So there should be no need for a platform device
-> > > and second struct device.
-> > >
-> > > See drivers/acpi/processor_driver.c for an example. Or grep any use o=
-f
-> > > "cpu_subsys".
-> >
-> > Most likely you mean drivers/base/cacheinfo.c. I saw this code, I
-> > don't think it makes a good fit here. The cacheinfo devices provide
-> > information only, they are not tied to DT nodes in any way.
->
-> They are completely tied to DT nodes beyond L1.
->
-> >  cpu_subsys
-> > doesn't provide a way to match drivers with subsys devices in the
-> > non-ACPI case, etc.
->
-> That's a 2 line addition to add DT support.
->
-> > Moreover, the whole cacheinfo subsys is
-> > non-existing on arm32, there is no cacheinfo implementation there,
-> > thanks to the overall variety of architectures.
->
-> Humm, well I don't think it would be too hard to add, but I won't ask
-> you to do that. All the info comes from DT or can come from DT, so it
-> should be just a matter of arm32 calling the cacheinfo init.
->
-> > Thus said, I don't think cacheinfo makes a good fit for the case of
-> > scaling L2 cache.
->
-> I still disagree. It's not really cacheinfo. That is what creates the
-> devices, but it's the cpu_subsys bus type. Why do you care that it is
-> platform bus vs. cpu_subsys?
+Here's the relevant log messages that I was able to get from a failed
+boot once I configured dracut to time out:
 
-I finally found a timeslot to look at cacheinfo. I added support for
-arm32 cacheinfo (which is fine) and tried using cacheinfo devices for
-L2 driver mapping (the RFC has been posted at [1]).
-But after I actually tried using it for the L2 cache driver.  I
-stumbled upon several issues, which I'd like to discuss before rushing
-to code.
+    gcc_ufs_phy_ice_core_clk status stuck at 'off' 
+    qcom-ice: probe of 1d88000.crypto failed with error -16
+    ufshcd-qcom 1d84000.ufs: Cannot get ice instance from 1d88000.crypto
+    ufshcd-qcom 1d84000.ufs: Cannot get ice instance from 1d88000.crypto
+    platform 1d84000.ufs: deferred probe pending: ufshcd-qcom: ufshcd_pltfrm_init() failed
 
-First, you supposed that cacheinfo devices land onto the cpu_subsys
-bus. However only actual CPU devices end up on cpu_subsys. CPU cache
-devices are created using cpu_device_create(), but despite its name
-they don't go to cpu_subsys.
+I assume that there's some kind of vote (icc, clk, regulator, etc)
+that's missing from the ice driver, and another driver is performing
+the necessary votes. However, I don't have access to the hardware docs
+to tell if that's the case. Can someone that has access take a look? I
+can post patch(es) if someone can point me to what needs configured.
 
-Second and more important, these devices are created without any
-attempt to share them. So on a 4-core system I have 4 distinct devices
-for L2 cache even though it is shared between all cores.
+Brian
 
-root@qcom-armv7a:~# stat -c "%N %i" /sys/bus/cpu/devices/cpu*/cache/index2/=
-level
-/sys/bus/cpu/devices/cpu0/cache/index2/level 15537
-/sys/bus/cpu/devices/cpu1/cache/index2/level 15560
-/sys/bus/cpu/devices/cpu2/cache/index2/level 15583
-/sys/bus/cpu/devices/cpu3/cache/index2/level 15606
-
-I think it makes sense to rework cacheinfo to create actual CPU cache
-devices (maybe having a separate cache bus).
-In my case it should become something like:
-
-cpu0-2-unified (shared between all 4 cores)
-cpu0-1-icache
-cpu0-1-dcache
-cpu1-1-icache
-cpu1-1-dcache
-...
-
-I'm not sure if it's worth supporting more than one instance of the
-same kind per level (e.g. I think current cacheinfo has nothing
-against having two I-cache or two D-cache devices)
-
-The cpuN/cache/indexM should become symlinks to those cache devices.
-
-What do you think?
-
-[1] https://lore.kernel.org/linux-arm-msm/CAA8EJppCRzknaujKFyLa_i7x4UnX31YF=
-Syjtux+zJ0harixrbA@mail.gmail.com
-
-> On a separate issue, I'd propose you move this to drivers/cache/
-> instead of the dumping ground that is drivers/soc/. It's nothing more
-> than a location to collect cache related drivers ATM because we seem
-> to be accumulating more of them.
-
-I thought about reusing drivers/devfreq, it already has the Mediatek CCI dr=
-iver.
-
---=20
-With best wishes
-Dmitry
 
