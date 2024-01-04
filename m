@@ -1,208 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-6489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A591182497E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 21:17:03 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2459C824A62
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 22:36:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 599581F2277E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 20:17:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B52E41F233BD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 21:36:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A5F22C1B8;
-	Thu,  4 Jan 2024 20:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABA762C6B4;
+	Thu,  4 Jan 2024 21:36:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ElQqqKfL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZB32WZeX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01BD22C68A;
-	Thu,  4 Jan 2024 20:16:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1704399419; x=1735935419;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=QG7cZgfLPqhPz+2RD5M13z2nw+gbzX0cHbb88mnsuxA=;
-  b=ElQqqKfLYZL7LOVLMVp3LOF7gkUhKtLoaCa8pR6GkPhCzCH/ORBMxfRX
-   7Aa1bFa/j1JdU83bnXi1TbQVuYaMJMYccwK7k1bvY/03kMyx6vAqsuhpb
-   vYar8zhChmP7hVdQh70gpBp/ROHmLjVq1Xldotzl3HYneELe5Sz6YGxDA
-   hpCzpz8It9OaZVZiApJZiJtrDqZisKRRsirpNfTBEzTXzVL0sPNoB4eNn
-   Wh1bD+GWHB6FmW4xlw/2pPPUPVhmr92VBGWI/fcQlMbGI3AEk42t3awBO
-   GH6t9CjmM/oJkEgYWYqMVusX9xKwEypmhC7XBbICZ0CqdmaZpZV/Hezit
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10943"; a="15976716"
-X-IronPort-AV: E=Sophos;i="6.04,331,1695711600"; 
-   d="scan'208";a="15976716"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jan 2024 12:16:58 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10943"; a="871037934"
-X-IronPort-AV: E=Sophos;i="6.04,331,1695711600"; 
-   d="scan'208";a="871037934"
-Received: from pdelarag-mobl.ger.corp.intel.com (HELO localhost) ([10.252.36.32])
-  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jan 2024 12:16:50 -0800
-From: Jani Nikula <jani.nikula@intel.com>
-To: dri-devel@lists.freedesktop.org,
-	intel-gfx@lists.freedesktop.org
-Cc: jani.nikula@intel.com,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	linux-sound@vger.kernel.org,
-	Maxime Ripard <mripard@kernel.org>
-Subject: [PATCH 3/3] ASoC: hdmi-codec: drop drm/drm_edid.h include
-Date: Thu,  4 Jan 2024 22:16:32 +0200
-Message-Id: <20240104201632.1100753-3-jani.nikula@intel.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240104201632.1100753-1-jani.nikula@intel.com>
-References: <20240104201632.1100753-1-jani.nikula@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8330D2C681;
+	Thu,  4 Jan 2024 21:36:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD073C433C7;
+	Thu,  4 Jan 2024 21:36:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1704404204;
+	bh=/gPJhI0luavzDAMUU3piZFqDvBPXXQmqih0y6CbPkDo=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=ZB32WZeXi9pWrXUs4nFLQOKWQKvgsLCPhg8HTDvMQhFsZ49JD/Jw1deYXZPm3o/SX
+	 x52TbzbuJ7w7zaPewansJqg+zHb8lttmaWATUuJ4SzSl2jH0rDh8pyJ0iU5ZL7JpUG
+	 vFdiAbo3/Wr0UkClMHKumsYsjy4P6fS5q0ps/1H+5gWzENdb1M7jhPF3lcCu88uGgd
+	 +kSOVjghQwtXpWwsXrwqrQtKVeiA5ju118sbwaMmC//4Joihr8xYDaOi0xhWHdOMRH
+	 S5Xl1Es0N99dCoAyn/X2I5yqMKsNE+B3EYqNsYzomPekVxXw++Ccp437MMTItRCG3i
+	 3UMzW9jMRxsjA==
+Message-ID: <988ae72846dc680382f98b63b61a8c32.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20240104-sm8150-dfs-support-v1-1-a5eebfdc1b12@quicinc.com>
+References: <20240104-sm8150-dfs-support-v1-0-a5eebfdc1b12@quicinc.com> <20240104-sm8150-dfs-support-v1-1-a5eebfdc1b12@quicinc.com>
+Subject: Re: [PATCH 1/3] clk: qcom: gcc-sm8150: Register QUPv3 RCGs for DFS on SM8150
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, Ajit Pandey <quic_ajipan@quicinc.com>, Imran Shaik <quic_imrashai@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>, Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Deepak Katragadda <dkatraga@codeaurora.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Michael Turquette <mturquette@baylibre.com>, Rob Herring <robh+dt@kernel.org>, Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>, Vinod Koul <vkoul@kernel.org>
+Date: Thu, 04 Jan 2024 13:36:41 -0800
+User-Agent: alot/0.10
 
-hdmi-codec.h does not appear to directly need drm/drm_edid.h for
-anything. Remove it.
+Quoting Satya Priya Kakitapalli (2024-01-04 06:23:04)
+> diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
+> index 05d115c52dfe..6d76fd344ddf 100644
+> --- a/drivers/clk/qcom/gcc-sm8150.c
+> +++ b/drivers/clk/qcom/gcc-sm8150.c
+> @@ -453,19 +453,29 @@ static const struct freq_tbl ftbl_gcc_qupv3_wrap0_s=
+0_clk_src[] =3D {
+>         { }
+>  };
+> =20
+> +static struct clk_init_data gcc_qupv3_wrap0_s0_clk_src_init =3D {
 
-There are some files that get drm/drm_edid.h by proxy; include it where
-needed.
+Can these be const?
 
-v2-v4: Fix build (kernel test robot <lkp@intel.com>)
+> +       .name =3D "gcc_qupv3_wrap0_s0_clk_src",
+> +       .parent_data =3D gcc_parents_0,
+> +       .num_parents =3D ARRAY_SIZE(gcc_parents_0),
+> +       .flags =3D CLK_SET_RATE_PARENT,
+> +       .ops =3D &clk_rcg2_ops,
+> +};
+> +
+>  static struct clk_rcg2 gcc_qupv3_wrap0_s0_clk_src =3D {
+>         .cmd_rcgr =3D 0x17148,
+>         .mnd_width =3D 16,
+>         .hid_width =3D 5,
+>         .parent_map =3D gcc_parent_map_0,
+>         .freq_tbl =3D ftbl_gcc_qupv3_wrap0_s0_clk_src,
+> -       .clkr.hw.init =3D &(struct clk_init_data){
+> -               .name =3D "gcc_qupv3_wrap0_s0_clk_src",
+[...]
+> @@ -3786,6 +3850,13 @@ static int gcc_sm8150_probe(struct platform_device=
+ *pdev)
+>         regmap_update_bits(regmap, 0x4d110, 0x3, 0x3);
+>         regmap_update_bits(regmap, 0x71028, 0x3, 0x3);
+> =20
+> +       ret =3D qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks,
+> +                                      ARRAY_SIZE(gcc_dfs_clocks));
+> +       if (ret) {
+> +               dev_err(&pdev->dev, "Failed to register with DFS!\n");
 
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Sean Paul <sean@poorly.run>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: freedreno@lists.freedesktop.org
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Robert Foss <rfoss@kernel.org>
-Cc: Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-Cc: Jonas Karlman <jonas@kwiboo.se>
-Cc: Jernej Skrabec <jernej.skrabec@gmail.com>
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Cc: linux-sound@vger.kernel.org
-Acked-by: Maxime Ripard <mripard@kernel.org>
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
----
- drivers/gpu/drm/bridge/lontium-lt9611.c    | 1 +
- drivers/gpu/drm/bridge/lontium-lt9611uxc.c | 1 +
- drivers/gpu/drm/bridge/synopsys/dw-hdmi.c  | 1 +
- drivers/gpu/drm/msm/dp/dp_display.c        | 1 +
- drivers/gpu/drm/tegra/hdmi.c               | 1 +
- drivers/gpu/drm/vc4/vc4_hdmi.c             | 1 +
- include/sound/hdmi-codec.h                 | 1 -
- 7 files changed, 6 insertions(+), 1 deletion(-)
+Use=20
 
-diff --git a/drivers/gpu/drm/bridge/lontium-lt9611.c b/drivers/gpu/drm/bridge/lontium-lt9611.c
-index 9663601ce098..b9205d14d943 100644
---- a/drivers/gpu/drm/bridge/lontium-lt9611.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
-@@ -18,6 +18,7 @@
- 
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_bridge.h>
-+#include <drm/drm_edid.h>
- #include <drm/drm_mipi_dsi.h>
- #include <drm/drm_of.h>
- #include <drm/drm_print.h>
-diff --git a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-index e971b75e90ad..f3f130c1ef0a 100644
---- a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-@@ -21,6 +21,7 @@
- 
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_bridge.h>
-+#include <drm/drm_edid.h>
- #include <drm/drm_mipi_dsi.h>
- #include <drm/drm_print.h>
- #include <drm/drm_probe_helper.h>
-diff --git a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c b/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
-index 52d91a0df85e..fa63a21bdd1c 100644
---- a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
-+++ b/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
-@@ -31,6 +31,7 @@
- #include <drm/drm_atomic.h>
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_bridge.h>
-+#include <drm/drm_edid.h>
- #include <drm/drm_of.h>
- #include <drm/drm_print.h>
- #include <drm/drm_probe_helper.h>
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index d37d599aec27..c8e1bbebdffe 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -11,6 +11,7 @@
- #include <linux/of_irq.h>
- #include <linux/delay.h>
- #include <drm/display/drm_dp_aux_bus.h>
-+#include <drm/drm_edid.h>
- 
- #include "msm_drv.h"
- #include "msm_kms.h"
-diff --git a/drivers/gpu/drm/tegra/hdmi.c b/drivers/gpu/drm/tegra/hdmi.c
-index 417fb884240a..09987e372e3e 100644
---- a/drivers/gpu/drm/tegra/hdmi.c
-+++ b/drivers/gpu/drm/tegra/hdmi.c
-@@ -24,6 +24,7 @@
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_crtc.h>
- #include <drm/drm_debugfs.h>
-+#include <drm/drm_edid.h>
- #include <drm/drm_eld.h>
- #include <drm/drm_file.h>
- #include <drm/drm_fourcc.h>
-diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
-index f05e2c95a60d..34f807ed1c31 100644
---- a/drivers/gpu/drm/vc4/vc4_hdmi.c
-+++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
-@@ -35,6 +35,7 @@
- #include <drm/display/drm_scdc_helper.h>
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_drv.h>
-+#include <drm/drm_edid.h>
- #include <drm/drm_probe_helper.h>
- #include <drm/drm_simple_kms_helper.h>
- #include <linux/clk.h>
-diff --git a/include/sound/hdmi-codec.h b/include/sound/hdmi-codec.h
-index 9b162ac1e08e..5e1a9eafd10f 100644
---- a/include/sound/hdmi-codec.h
-+++ b/include/sound/hdmi-codec.h
-@@ -12,7 +12,6 @@
- 
- #include <linux/of_graph.h>
- #include <linux/hdmi.h>
--#include <drm/drm_edid.h>
- #include <sound/asoundef.h>
- #include <sound/soc.h>
- #include <uapi/sound/asound.h>
--- 
-2.39.2
-
+		return dev_err_probe(...);
 
