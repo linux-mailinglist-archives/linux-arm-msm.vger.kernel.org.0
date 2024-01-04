@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37E92823DE5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 09:49:57 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8D9F823DFD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 09:57:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C2733282296
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 08:49:55 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3F967B2288C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 08:57:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BEFD91EA7D;
-	Thu,  4 Jan 2024 08:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DDC31E539;
+	Thu,  4 Jan 2024 08:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ep7KmPSv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w/w4HxSL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 445481E530
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jan 2024 08:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2E020309
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jan 2024 08:57:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-556fc91aba9so358841a12.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jan 2024 00:49:51 -0800 (PST)
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-556e6a6d5b3so223645a12.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jan 2024 00:57:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704358190; x=1704962990; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1704358644; x=1704963444; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=H6d2hoV+CMCDXiyVETKBfHf7BI3f+eUUz5X6xaP23KQ=;
-        b=Ep7KmPSve2xMLajcubqL9tvrWMBTjVUnEYb8CTFMR5i8LZyB48oW7sOfP93x2oJmVg
-         vii+8UictteJo9pNPy/kRKsj0RTc8lnw84LQJAPDnGhsjv0GUQ6zgFmdST05tc3Dtm1J
-         y6wVR0IWZcUoFRqr4a2WHmrqmIwTx9+3Zrht+7/qPi1RtjYCmZ5ZpbHyj6tRw0l2iZ4d
-         Kbl2ATjI77vWYnnc0UfVfZA+y2JlvMPTD2cuzS56MZo3jJqAG+1uvD2BDn2Rcif/Y/5+
-         QZAcTs2JSi5lPkkSLR3B/43o2LoIrPS1VAxDlNDtWApBn/Jcq8LNPiLpt7T5MUgkbRI7
-         5iAw==
+        bh=7NM+lSy2JFxNYRdnQ3pFJqK0nq1Xog5/qHx1MD7yLMc=;
+        b=w/w4HxSLQFMKgByHRUGmfX28BYcufxhX6qasbzuG+zWoPS7sHh9Onk0L1bVY4LAoeU
+         1cjBdw5jVoAqi378ptS820c4MoB0eQqYBhtW8Pa2H+StvqJAQ42m2aH62MMEumdvNOnf
+         3mHsMHXB4znYelItSt9HuM0TLv4uHvDawMJiHo30zHF1iJGBzTeVqkftvIonG8N4obTd
+         748ShNQLo+bYB9CruWTtCeY+Vr2UpKd9OCdlLch5gTP03nKTWOo3VAJukvuRDFS5pC1j
+         BkKWDqMUBBhJ8TBW87kmx505aOiNSPEJ36scLCAzeljZ72oMg1fhWexXSpzOiiW6S4A2
+         LmIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704358190; x=1704962990;
+        d=1e100.net; s=20230601; t=1704358644; x=1704963444;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=H6d2hoV+CMCDXiyVETKBfHf7BI3f+eUUz5X6xaP23KQ=;
-        b=lsuojZ5aHvpqkmeRaDtmlLeeN+Y7UOIuCMXUtzmd91k6q040v/Iu/66vh7tnUPchNL
-         gjfXYxcbnsGk5zOXJ7rdWAkpWYVQnUrHwdHZMx4q6/AJLgMHcr4Gkbfb1AaNy2CZPYsd
-         z7qR2AmathfzVXqcm2Nm6YsFzfNKhkSk2+ZdjYE2mpxNfsKEmvThlXxudRde25Jg2FLs
-         3oAAN0VoMIPcc4iYiXkd586JuRRriZ8cKnwk1oa0TyX52sEiruM1cFl/FWGyHI5YY4KG
-         cLnqUPtZjFd27U+xllS+UkVZf5p2RMXw50k/nA6JUrcb6tJUMK6UI93IiPpxaTZaGJiE
-         UE+g==
-X-Gm-Message-State: AOJu0Yyh8Dg4EVPCZbqUu8TzBYXKlLBXov9porO8PcgM94yT8Ki3xKnF
-	6Rll7ZdDmgzb/i6i5/8nhwnBjhbQNOqmbA==
-X-Google-Smtp-Source: AGHT+IGknWQdCXHRNKIM6P5o72zBMwwM66aP1OHLzjClmD+vu+dMk7I3GPvrdOR2ZaAkeND7eX3NBA==
-X-Received: by 2002:a17:906:8d6:b0:a27:9c3c:8c85 with SMTP id o22-20020a17090608d600b00a279c3c8c85mr171235eje.36.1704358190542;
-        Thu, 04 Jan 2024 00:49:50 -0800 (PST)
+        bh=7NM+lSy2JFxNYRdnQ3pFJqK0nq1Xog5/qHx1MD7yLMc=;
+        b=up635aZBuhGubLV82kIhQv3uxEjDiINnFmaB3jtqVito0l68/wpUT7dq5q1Zghab3a
+         h7kBtcMJoB8XD5GhjFk5Fj3ndjayxvC+dYyVC7x8qrEgvpgHwgbChjo6oJI4X8CNwRJS
+         iIX173Ojq/BUEuUCkWUnDYPN/1lD6sRo9MRqo/XOd2Zi5FMK4kUcDmo3Gb2qTUgpFigu
+         BZjAVOCKCAdinwle2HNcJFWDysQx30izAh0Cah2+AEwAVPGSt3DvYp9urCgzW3WKNiA8
+         CwM1j0hV0QFiQvBrZ10a7RrLM0Q1aGjJv89pxt1MEuSMDHy6X6X5G2ecwzxtRA8+4//a
+         rM3g==
+X-Gm-Message-State: AOJu0Yzb8btQRINITE5/TdTYqrPYS39x+zHtPBeEmOHXH21Gwdk1PKIJ
+	+djwKzsC5N1+5sckBuSyFq9eWnYkKy2baQ==
+X-Google-Smtp-Source: AGHT+IEQlUMy9peGvgc3YEyUx/m3a0L7XKMOxnVNhL9drrpoC27NW8FsiiouncEBPpsG07FDZagAnw==
+X-Received: by 2002:a17:906:b247:b0:a27:6570:adbc with SMTP id ce7-20020a170906b24700b00a276570adbcmr187783ejb.33.1704358643864;
+        Thu, 04 Jan 2024 00:57:23 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id ka24-20020a170907921800b00a26a80a58fcsm13126060ejb.196.2024.01.04.00.49.49
+        by smtp.gmail.com with ESMTPSA id li4-20020a170906f98400b00a26f5eb0554sm9020697ejb.63.2024.01.04.00.57.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Jan 2024 00:49:50 -0800 (PST)
-Message-ID: <f1168212-bc6e-4570-869c-2870d6f248ad@linaro.org>
-Date: Thu, 4 Jan 2024 09:49:49 +0100
+        Thu, 04 Jan 2024 00:57:23 -0800 (PST)
+Message-ID: <88bd6668-7e67-42c7-97b6-d7029f371349@linaro.org>
+Date: Thu, 4 Jan 2024 09:57:21 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,20 +66,24 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Add additional MSI interrupts
+Subject: Re: [PATCH 2/4] reset: add GPIO-based reset controller
 Content-Language: en-US
-To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
- cros-qcom-dts-watchers@chromium.org, Andy Gross <agross@kernel.org>,
+To: Sean Anderson <sean.anderson@seco.com>,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <swboyd@chromium.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
- quic_ramkri@quicinc.com, quic_nitegupt@quicinc.com,
- quic_skananth@quicinc.com, quic_parass@quicinc.com, stable@vger.kernel.org
-References: <20231218-additional_msi-v1-1-c872ce861a97@quicinc.com>
- <07b35821-3b95-ce9b-8a62-7eb8cb7a8ddf@quicinc.com>
+ Conor Dooley <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+ linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>
+References: <20231222150133.732662-1-krzysztof.kozlowski@linaro.org>
+ <20231222150133.732662-3-krzysztof.kozlowski@linaro.org>
+ <530e3473-eb3b-477c-8599-e7aa12779640@seco.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -125,16 +129,54 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <07b35821-3b95-ce9b-8a62-7eb8cb7a8ddf@quicinc.com>
+In-Reply-To: <530e3473-eb3b-477c-8599-e7aa12779640@seco.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 04/01/2024 09:44, Krishna Chaitanya Chundru wrote:
-> Hi All,
+On 28/12/2023 17:05, Sean Anderson wrote:
+> On 12/22/23 10:01, Krzysztof Kozlowski wrote:
+>> Add simple driver to control GPIO-based resets using the reset
+>> controller API for the cases when the GPIOs are shared and reset should
+>> be coordinated.  The driver is expected to be used by reset core
+>> framework for ad-hoc reset controllers.
 > 
-> Can you please review this.
+> How do we handle power sequencing? Often GPIOs need some pre/post delay in
+> order to ensure proper power sequencing. For regular reset drivers, this is
+> internal to the driver.
 
-Please look at the kernel release schedule and how it affects SoC trees.
+It's not part of this patchset. Power sequencing is an old topic and
+generic solutions were failing, rejected, did not solve the problems,
+etc (choose your reason).
+
+Delays are device specific, so they go to drivers (depending on the
+compatible). Complex power sequencing is way too much for simplified
+reset-framework handling, so anyway it is expected you do it in your driver.
+
+
+> 
+> Maybe something like
+> 
+> my-device {
+> 	reset-gpios = <&gpio 555 GPIO_ACTIVE_LOW>;
+>         reset-gpios-post-deassert-us = <100>;
+
+Feel free to add it later. This patchset, and actually all patches
+should, solves one problem while allowing you to extend it later.
+
+If there is a architectural problem in my approach not allowing you to
+extend it later, then we should discuss it.
+
+> };
+> 
+> Of course, this is a bit ambiguous if you have multiple devices using the same
+> GPIO with different delays. Maybe we take the max? But the driver below seems
+> to only have access to one device. Which I suppose begs the question: how do
+> we know when it's safe to deassert the reset (e.g. we've gotten to the point
+> where all devices using this reset gpio have gotten far enough to detect that
+> they use it)?
+
+The driver (reset consumer) knows when it is safe or not. You must
+implement proper reset handling in your driver.
 
 Best regards,
 Krzysztof
