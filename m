@@ -1,149 +1,246 @@
-Return-Path: <linux-arm-msm+bounces-6478-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6479-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECA62824543
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 16:44:59 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B326824576
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 16:54:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8D4672835CA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 15:44:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EA4F51F23D98
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 15:54:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8496D2421D;
-	Thu,  4 Jan 2024 15:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67398249E8;
+	Thu,  4 Jan 2024 15:53:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wLJpEuyN"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pgGa/3xJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E915824217
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jan 2024 15:44:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-555144cd330so875503a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jan 2024 07:44:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704383091; x=1704987891; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Tubds6RL8BfJvxnz4IGYcV/XELCKRxYk4kk1CPB39m0=;
-        b=wLJpEuyNNaQ2uK0rw8XaEw/N95r4MBf5A2TJuV0PI2lg7SK4kw3HoaLg3tkKbRbLmV
-         qVqRTxScknBwM1L2gjOmC5LJk3fIDKkkYGI46sihLb5wHS72Z+b4ibrlqTOEbagXM3bs
-         onQKQnE2CoeX7zaPKuyxzLrnfSBGwd6czYGOnhvStp2VyuE8dzR7NLfwNPozbHGABWpp
-         Pqq81bu3HgIWEehJN+2YzsSzUjG/JFksW9xapoalVYyvZE0kScfB+oL7nq/E5bI8tDz/
-         TrNtSW1K7gELr2ciUKvYQFQrNRhEQnShuLG19X+tfHq0L3QT624nC1VojzDn6srA6EKw
-         dhVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704383091; x=1704987891;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Tubds6RL8BfJvxnz4IGYcV/XELCKRxYk4kk1CPB39m0=;
-        b=mtYUqSO8+jYuJiGCxsMSa3yLCDnzmh0U1HyWVJIIpjaIXwA80mjwk0UQICCLWZzUBK
-         jLXmEbZTrmuBZ1H5wvsIViJDyll8wcIHjUTC/Y8fsMxSJPS+uwufrWjk6mG+YtLvK0P9
-         J0YqbBF5pbdxK9I4v1E5yBUz4lhzFdchOXLLE3sqbuweaNKZQ1Ua/qcLzibLbA678Hqq
-         ua6EJ/3s+8eW70XXQe4uavaiq1u/RcBVHAFDS+EaFofVooZfuJdodICbuqH5wHGQwfUD
-         RMHNOKsbpiQz+9YNh7z69+i7BLBlvjFKnytqxWBV5nsyySvbKQiz3ifoWseIfayYnvwd
-         4X1w==
-X-Gm-Message-State: AOJu0Yybuux7qUuQzKkllDq8+4jaNtysyvW3+vhtNR1ErX3rWrfiFcG2
-	x2xfDDDiuxykxbs53hOLakW7cejb1yY1Lw==
-X-Google-Smtp-Source: AGHT+IEmJ49VDkZN8QpWTiAWHH7AcXY9ND/OMm7IkK9llm9jh3JKs2nWm/KV0Ahe49nCtP21V0ZWsQ==
-X-Received: by 2002:a17:906:229a:b0:a28:b71d:5e3a with SMTP id p26-20020a170906229a00b00a28b71d5e3amr467584eja.67.1704383091216;
-        Thu, 04 Jan 2024 07:44:51 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id wi22-20020a170906fd5600b00a2693ce340csm13898856ejb.59.2024.01.04.07.44.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Jan 2024 07:44:50 -0800 (PST)
-Message-ID: <d4f79e6c-2803-4ffd-b8b9-74b902597aad@linaro.org>
-Date: Thu, 4 Jan 2024 16:44:49 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93ADE249E0;
+	Thu,  4 Jan 2024 15:53:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 404EmNW3031338;
+	Thu, 4 Jan 2024 15:53:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=d3t/AKtV8S2PoPtQjZ+XrZmQLRnPZJO8bd1SUsUW0Q0=; b=pg
+	Ga/3xJA8Wiv+yInqVKKn4IT9se0Z5qp4ITaZaROU8TUVkfKg5bcE0p9X1kTnYbHo
+	Qc7IKWlBUVs8/kUTTQZn+ga+Yl22CDqypx3NFq1kXnw9Fl422S1bto6OCpD2/ATS
+	QJC4YOv/jIVCTqJXfajoVzmZNd76qF0j4iU/2CY10DIX7MGlOMs3DCeV6NFg4Af1
+	eNYx+myiYlxzL1FIOa9wkliBv3KkOlfoN+7q3mj1WhrycQIVIcG9YqJ+VzdLz9Ap
+	HA5G/cMT0YuhbTMtBP79FMyM3r4lNvlKoJ9VekxIorogp+h77WkuZIZWw32O9IAS
+	xSBiF4INGzNYQTpndeVw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vdx2809b3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 04 Jan 2024 15:53:50 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 404FrnsB017663
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 4 Jan 2024 15:53:49 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 4 Jan
+ 2024 07:53:48 -0800
+Message-ID: <1dfa480c-d200-ff64-3c96-93a7a5a1a490@quicinc.com>
+Date: Thu, 4 Jan 2024 08:53:47 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] clk: qcom: gcc-sm8150: Register QUPv3 RCGs for DFS on
- SM8150
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH] bus: mhi: host: Add MHI_PM_SYS_ERR_FAIL state
 Content-Language: en-US
-To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Deepak Katragadda <dkatraga@codeaurora.org>,
- Vinod Koul <vkoul@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- Ajit Pandey <quic_ajipan@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>,
- Jagadeesh Kona <quic_jkona@quicinc.com>
-References: <20240104-sm8150-dfs-support-v1-0-a5eebfdc1b12@quicinc.com>
- <20240104-sm8150-dfs-support-v1-1-a5eebfdc1b12@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240104-sm8150-dfs-support-v1-1-a5eebfdc1b12@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To: Manivannan Sadhasivam <mani@kernel.org>
+CC: <quic_pkanojiy@quicinc.com>, <quic_carlv@quicinc.com>,
+        <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>
+References: <20231208221353.1560177-1-quic_jhugo@quicinc.com>
+ <20240104112625.GD3031@thinkpad>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <20240104112625.GD3031@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 6LcukBZnS9sttJLfCTC22VMbrT9Tnogd
+X-Proofpoint-ORIG-GUID: 6LcukBZnS9sttJLfCTC22VMbrT9Tnogd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ priorityscore=1501 mlxscore=0 impostorscore=0 phishscore=0 clxscore=1015
+ malwarescore=0 adultscore=0 mlxlogscore=999 suspectscore=0 bulkscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401040125
 
-On 04/01/2024 15:23, Satya Priya Kakitapalli wrote:
-> QUPv3 clocks support DFS and thus register the RCGs which require
-> support for the same.
+On 1/4/2024 4:26 AM, Manivannan Sadhasivam wrote:
+> On Fri, Dec 08, 2023 at 03:13:53PM -0700, Jeffrey Hugo wrote:
+>> When processing a SYSERR, if the device does not respond to the MHI_RESET
+>> from the host, the host will be stuck in a difficult to recover state.
 > 
-> Fixes: 2a1d7eb854bb ("clk: qcom: gcc: Add global clock controller driver for SM8150")
+> Under what scenario this can happen? Is the device not honoring MHI_RESET state
+> or crashed completely?
 
-Please describe user-observable issues you are fixing here. It's not
-obvious to me.
+Digging up my notes from this patch, it was originally discovered via 
+soc_reset stress testing.
 
-Best regards,
-Krzysztof
+On AIC100 (and I assume other MHI devices because the hardware 
+implementation is common), soc_reset is processed entirely in hardware. 
+  When the register write hits the endpoint, it causes the soc to reset 
+without firmware involvement.
+
+If you stress test soc_reset and hit the timing just right, you can have 
+PBL signal syserr (fatal error) for soc_reset N, and then before PBL can 
+process the MHI_RESET request from the host, soc_reset N+1 hits the 
+endpoint causing the soc to reset, and re-run PBL from the beginning 
+which causes PBL to lose all state.  This is how we discovered this 
+issue, although the reproduction rate was rather low.
+
+I was able to hack the AMSS EE firmware (QSM) to synthetically reproduce 
+the issue as well.  Send a trigger to QSM via an unused MHI register to 
+invoke syserr (non-fatal error), and then have QSM ignore the MHI_RESET 
+request which would simulate some kind of FW hang.  soc_reset would not 
+recover the device.
+
+> 
+> - Mani
+> 
+>> The host will remain in MHI_PM_SYS_ERR_PROCESS and not clean up the host
+>> channels.  Clients will not be notified of the SYSERR via the destruction
+>> of their channel devices, which means clients may think that the device is
+>> still up.  Subsequent SYSERR events such as a device fatal error will not
+>> be processed as the state machine cannot transition from PROCESS back to
+>> DETECT.  The only way to recover from this is to unload the mhi module
+>> (wipe the state machine state) or for the mhi controller to initiate
+>> SHUTDOWN.
+>>
+>> In this failure case, to recover the device, we need a state similar to
+>> PROCESS, but can transition to DETECT.  There is not a viable existing
+>> state to use.  POR has the needed transitions, but assumes the device is
+>> in a good state and could allow the host to attempt to use the device.
+>> Allowing PROCESS to transition to DETECT invites the possibility of
+>> parallel SYSERR processing which could get the host and device out of
+>> sync.
+>>
+>> Thus, invent a new state - MHI_PM_SYS_ERR_FAIL
+>>
+>> This essentially a holding state.  It allows us to clean up the host
+>> elements that are based on the old state of the device (channels), but
+>> does not allow us to directly advance back to an operational state.  It
+>> does allow the detection and processing of another SYSERR which may
+>> recover the device, or allows the controller to do a clean shutdown.
+>>
+>> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+>> Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
+>> ---
+>>   drivers/bus/mhi/host/init.c     |  1 +
+>>   drivers/bus/mhi/host/internal.h |  9 ++++++---
+>>   drivers/bus/mhi/host/pm.c       | 20 +++++++++++++++++---
+>>   3 files changed, 24 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+>> index e2c2f510b04f..d3f919277cf9 100644
+>> --- a/drivers/bus/mhi/host/init.c
+>> +++ b/drivers/bus/mhi/host/init.c
+>> @@ -62,6 +62,7 @@ static const char * const mhi_pm_state_str[] = {
+>>   	[MHI_PM_STATE_FW_DL_ERR] = "Firmware Download Error",
+>>   	[MHI_PM_STATE_SYS_ERR_DETECT] = "SYS ERROR Detect",
+>>   	[MHI_PM_STATE_SYS_ERR_PROCESS] = "SYS ERROR Process",
+>> +	[MHI_PM_STATE_SYS_ERR_FAIL] = "SYS ERROR Failure",
+>>   	[MHI_PM_STATE_SHUTDOWN_PROCESS] = "SHUTDOWN Process",
+>>   	[MHI_PM_STATE_LD_ERR_FATAL_DETECT] = "Linkdown or Error Fatal Detect",
+>>   };
+>> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
+>> index 30ac415a3000..4b6deea17bcd 100644
+>> --- a/drivers/bus/mhi/host/internal.h
+>> +++ b/drivers/bus/mhi/host/internal.h
+>> @@ -88,6 +88,7 @@ enum mhi_pm_state {
+>>   	MHI_PM_STATE_FW_DL_ERR,
+>>   	MHI_PM_STATE_SYS_ERR_DETECT,
+>>   	MHI_PM_STATE_SYS_ERR_PROCESS,
+>> +	MHI_PM_STATE_SYS_ERR_FAIL,
+>>   	MHI_PM_STATE_SHUTDOWN_PROCESS,
+>>   	MHI_PM_STATE_LD_ERR_FATAL_DETECT,
+>>   	MHI_PM_STATE_MAX
+>> @@ -104,14 +105,16 @@ enum mhi_pm_state {
+>>   #define MHI_PM_FW_DL_ERR				BIT(7)
+>>   #define MHI_PM_SYS_ERR_DETECT				BIT(8)
+>>   #define MHI_PM_SYS_ERR_PROCESS				BIT(9)
+>> -#define MHI_PM_SHUTDOWN_PROCESS				BIT(10)
+>> +#define MHI_PM_SYS_ERR_FAIL				BIT(10)
+>> +#define MHI_PM_SHUTDOWN_PROCESS				BIT(11)
+>>   /* link not accessible */
+>> -#define MHI_PM_LD_ERR_FATAL_DETECT			BIT(11)
+>> +#define MHI_PM_LD_ERR_FATAL_DETECT			BIT(12)
+>>   
+>>   #define MHI_REG_ACCESS_VALID(pm_state)			((pm_state & (MHI_PM_POR | MHI_PM_M0 | \
+>>   						MHI_PM_M2 | MHI_PM_M3_ENTER | MHI_PM_M3_EXIT | \
+>>   						MHI_PM_SYS_ERR_DETECT | MHI_PM_SYS_ERR_PROCESS | \
+>> -						MHI_PM_SHUTDOWN_PROCESS | MHI_PM_FW_DL_ERR)))
+>> +						MHI_PM_SYS_ERR_FAIL | MHI_PM_SHUTDOWN_PROCESS |  \
+>> +						MHI_PM_FW_DL_ERR)))
+>>   #define MHI_PM_IN_ERROR_STATE(pm_state)			(pm_state >= MHI_PM_FW_DL_ERR)
+>>   #define MHI_PM_IN_FATAL_STATE(pm_state)			(pm_state == MHI_PM_LD_ERR_FATAL_DETECT)
+>>   #define MHI_DB_ACCESS_VALID(mhi_cntrl)			(mhi_cntrl->pm_state & mhi_cntrl->db_access)
+>> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+>> index a2f2feef1476..d0d033ce9984 100644
+>> --- a/drivers/bus/mhi/host/pm.c
+>> +++ b/drivers/bus/mhi/host/pm.c
+>> @@ -36,7 +36,10 @@
+>>    *     M0 <--> M0
+>>    *     M0 -> FW_DL_ERR
+>>    *     M0 -> M3_ENTER -> M3 -> M3_EXIT --> M0
+>> - * L1: SYS_ERR_DETECT -> SYS_ERR_PROCESS --> POR
+>> + * L1: SYS_ERR_DETECT -> SYS_ERR_PROCESS
+>> + *     SYS_ERR_PROCESS -> SYS_ERR_FAIL
+>> + *     SYS_ERR_FAIL -> SYS_ERR_DETECT
+>> + *     SYS_ERR_PROCESS --> POR
+>>    * L2: SHUTDOWN_PROCESS -> LD_ERR_FATAL_DETECT
+>>    *     SHUTDOWN_PROCESS -> DISABLE
+>>    * L3: LD_ERR_FATAL_DETECT <--> LD_ERR_FATAL_DETECT
+>> @@ -93,7 +96,12 @@ static const struct mhi_pm_transitions dev_state_transitions[] = {
+>>   	},
+>>   	{
+>>   		MHI_PM_SYS_ERR_PROCESS,
+>> -		MHI_PM_POR | MHI_PM_SHUTDOWN_PROCESS |
+>> +		MHI_PM_POR | MHI_PM_SYS_ERR_FAIL | MHI_PM_SHUTDOWN_PROCESS |
+>> +		MHI_PM_LD_ERR_FATAL_DETECT
+>> +	},
+>> +	{
+>> +		MHI_PM_SYS_ERR_FAIL,
+>> +		MHI_PM_SYS_ERR_DETECT | MHI_PM_SHUTDOWN_PROCESS |
+>>   		MHI_PM_LD_ERR_FATAL_DETECT
+>>   	},
+>>   	/* L2 States */
+>> @@ -629,7 +637,13 @@ static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
+>>   					!in_reset, timeout);
+>>   		if (!ret || in_reset) {
+>>   			dev_err(dev, "Device failed to exit MHI Reset state\n");
+>> -			goto exit_sys_error_transition;
+>> +			write_lock_irq(&mhi_cntrl->pm_lock);
+>> +			cur_state = mhi_tryset_pm_state(mhi_cntrl,
+>> +							MHI_PM_SYS_ERR_FAIL);
+>> +			write_unlock_irq(&mhi_cntrl->pm_lock);
+>> +			/* Shutdown may have occurred, otherwise cleanup now */
+>> +			if (cur_state != MHI_PM_SYS_ERR_FAIL)
+>> +				goto exit_sys_error_transition;
+>>   		}
+>>   
+>>   		/*
+>> -- 
+>> 2.34.1
+>>
+>>
+> 
 
 
