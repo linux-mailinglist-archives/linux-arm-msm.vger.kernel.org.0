@@ -1,54 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6435-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6436-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC840823F4D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 11:14:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7168C823F59
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 11:17:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 26AF5B20F96
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 10:14:11 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C54B6B20A8E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 10:17:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5B8820B0B;
-	Thu,  4 Jan 2024 10:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F900208D8;
+	Thu,  4 Jan 2024 10:17:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="d+2dV+LL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yCeaDL41"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724FC210E7;
-	Thu,  4 Jan 2024 10:14:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4045c2b3002185;
-	Thu, 4 Jan 2024 10:14:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=KwMij2SG2PvQhi8h7xHrNorkASMycb45hj8OGRx8f0Q=; b=d+
-	2dV+LLfapkEOh6/uM4goiFijaeB/awEXX5FrrBpyj9RI3xSCWEkJqX8Xa3ATIIGM
-	vJKkyVuZ6DABpsD1cNWh0J1+1CAhVfYkiCjTOeitladNakBSI1/Ny4MHbtAcF35R
-	yc3vVFN9p1ANTegIsGq0r89IZJQi0zmraSycVndoivKeMujaV6oWIwswe1P1beZc
-	8a6FbTkvOABmcNFeFcDYjOAqIDFWesa+TegxSEZJkLXJLz8+8n8XhUlffK4Tr3vl
-	O/3a24ZZA97mG+T4oS/01mUl6dqFeVGJak7yLlCSU0VHsW1JwgWPC+FXi5d12zyW
-	q1MLVSCwUoMdylNegnaw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vdchnhxhn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 04 Jan 2024 10:14:02 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 404AE15a031170
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 4 Jan 2024 10:14:01 GMT
-Received: from [10.239.154.73] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 4 Jan
- 2024 02:13:55 -0800
-Message-ID: <724f608a-cbfe-48f6-a1f7-59b961a7d724@quicinc.com>
-Date: Thu, 4 Jan 2024 18:13:52 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633EA20B16
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jan 2024 10:17:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a2821884a09so26841766b.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jan 2024 02:17:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704363419; x=1704968219; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=axVHCLogiFwlowqKF1yqwuJ21Ur8/u8wrrCsdFwy9zI=;
+        b=yCeaDL41QQRMIUdmUHpgXf+H/HovvQPgFK4XOUdCHgeMBeCmqFUvzumXkOWE0drRcv
+         4AnE+DGK5wFspopKF5sMaSC0vXb8d/LkZiw8FuHkd/0XBenxJmMWERnjreo9Tgsxrfeu
+         q/4dbMjHG+9vvcXlfN27r47uHSmd1rOYtXC0Vf+eFtP0YfmIDiCdAGZQGHLE1KkYwgAO
+         5zvXgeoxhZqwhK2bdoAKMhE0GvA+62vxCwCJZlprGTCWTpjaeQkmIQ+IfNa+l7Rcoodn
+         Rtw8WB/bA7AL/nO3bXy+t0FJQgCuMipFqtB82qD8M0s1/LzX4EwjcsWnMF+Tvi8I5ytT
+         fj4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704363419; x=1704968219;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=axVHCLogiFwlowqKF1yqwuJ21Ur8/u8wrrCsdFwy9zI=;
+        b=dmJ8WY8M5V2jnjbT/s6pmgPxLcVhKxKBrGgEdQT8kFkDKaDY7lFTzysUsxxcJ2GwOD
+         iVa4q4ZpvuKGSR/lE7exry92fcqmESdjkNsm9h52o2p5/LjLMnBPipTtbIpA6Xcv0ecD
+         dIIxsSOkYdNOD+uPG3TGCelqkM5GthJ/2NS0QAd4HElkqYLBYYp18Vbt0v4/ql64p8mz
+         ZZ4VPx/oNPEPVqzT0if5Pzm9wneRQF029z8LkdFoVfTc8qs8IvA+7uqSvaMONCN2SFWA
+         Il7Nj7wgHvznDmoJzMK9SrsbrXQZjH1mhSd5DSWCQ0aWsYu5l3EnecIpJSo3PtGaTEmS
+         bpLw==
+X-Gm-Message-State: AOJu0Yza7ZATxBdqoYWl8ANkEVpGzGif2gthDWApU6KjIyXLdrUgrgrC
+	I3V6+wWClMxfkxuT75F9iG07vxRXCJUw/w==
+X-Google-Smtp-Source: AGHT+IHdymu8t3HtyUPiEU28onagVr5wHHe1WM/EeHGHy0yvUD5I1K2Ao7taHvX1UNV5uRAu4jjxdQ==
+X-Received: by 2002:a17:906:73c5:b0:a28:e159:b598 with SMTP id n5-20020a17090673c500b00a28e159b598mr251487ejl.60.1704363418584;
+        Thu, 04 Jan 2024 02:16:58 -0800 (PST)
+Received: from [192.168.199.125] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
+        by smtp.gmail.com with ESMTPSA id z16-20020a1709063ad000b00a28bf7969cdsm777767ejd.180.2024.01.04.02.16.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Jan 2024 02:16:58 -0800 (PST)
+Message-ID: <56ee556d-ec31-4553-bce3-0c1e12c111ed@linaro.org>
+Date: Thu, 4 Jan 2024 11:16:56 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,100 +69,84 @@ User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] arm64: dts: qcom: ipq6018: add #power-domain-cells for
  gcc node
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, <quic_tdas@quicinc.com>,
-        <quic_aiquny@quicinc.com>
-CC: <kernel@quicinc.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring
-	<robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+To: Fenglin Wu <quic_fenglinw@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, quic_tdas@quicinc.com,
+ quic_aiquny@quicinc.com
+Cc: kernel@quicinc.com, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20240104-gcc-docs-update-v1-1-127e4816b798@quicinc.com>
  <CAA8EJprsGke9zZBy_x=YSxz7R1aSpx8r3ndjjXVVKhjKBxd=QQ@mail.gmail.com>
-From: Fenglin Wu <quic_fenglinw@quicinc.com>
-In-Reply-To: <CAA8EJprsGke9zZBy_x=YSxz7R1aSpx8r3ndjjXVVKhjKBxd=QQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: baXiAJOpXXOGjiqjqKgU4U7boWzG372q
-X-Proofpoint-GUID: baXiAJOpXXOGjiqjqKgU4U7boWzG372q
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
- priorityscore=1501 malwarescore=0 adultscore=0 clxscore=1011
- suspectscore=0 impostorscore=0 mlxscore=0 spamscore=0 bulkscore=0
- mlxlogscore=999 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2311290000 definitions=main-2401040075
+ <724f608a-cbfe-48f6-a1f7-59b961a7d724@quicinc.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <724f608a-cbfe-48f6-a1f7-59b961a7d724@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-
-
-On 1/4/2024 5:53 PM, Dmitry Baryshkov wrote:
-> On Thu, 4 Jan 2024 at 10:06, Fenglin Wu via B4 Relay
-> <devnull+quic_fenglinw.quicinc.com@kernel.org> wrote:
->>
->> From: Fenglin Wu <quic_fenglinw@quicinc.com>
->>
->> Property '#power-domain-cells' is required as per defined in qcom,gcc.yaml
->> so add it for ipq6018 gcc device node to eliminate following warning in
->> dtbs_check:
->>
->> arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dtb: gcc@1800000:
->>          '#power-domain-cells' is a required property
->> from schema $id: http://devicetree.org/schemas/clock/qcom,gcc-ipq6018.yaml#
-> 
-> But ipq6018 doesn't implement GDSC support. So for the sake of fixing
-> the warning you are adding a bogus property.
-> 
-I agree. However, there are also some gcc drivers not implementing GDSC 
-support but the bindings are adding '#power-domain-cells' in the DT 
-example, such as: qcom,gcc-apq8064.yaml, qcom,gcc-ipq4019.yaml, 
-qcom,gcc-ipq6018.yaml, qcom,gcc-ipq8064.yaml, qcom,gcc-msm8660.yaml.
-
-Actually I thought that maybe we should do a clean up by removing 
-'#power-domain-cells' out of the qcom,gcc.yaml binding and only adding 
-it into individual qcom,gcc-xxx.yaml for the driver which has 
-implemented GDSC support. I checked this with Taniya offline, but she 
-prefers only fixing it in ipq6018.dtsi as it doesn't hurt anything by 
-adding the property, and she expects the GDSC support should be existing 
-in most of qcom,gcc drivers especially the newer Qcom chipsets.
-
-
->>
->> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/ipq6018.dtsi | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
->> index 39cd6b76b4c1..54914912d610 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
->> @@ -386,6 +386,7 @@ gcc: gcc@1800000 {
->>                          reg = <0x0 0x01800000 0x0 0x80000>;
->>                          clocks = <&xo>, <&sleep_clk>;
->>                          clock-names = "xo", "sleep_clk";
->> +                       #power-domain-cells = <1>;
->>                          #clock-cells = <1>;
->>                          #reset-cells = <1>;
->>                  };
->>
->> ---
->> base-commit: 17cb8a20bde66a520a2ca7aad1063e1ce7382240
->> change-id: 20240103-gcc-docs-update-fa604579e468
->>
->> Best regards,
->> --
->> Fenglin Wu <quic_fenglinw@quicinc.com>
->>
->>
+On 4.01.2024 11:13, Fenglin Wu wrote:
 > 
 > 
+> On 1/4/2024 5:53 PM, Dmitry Baryshkov wrote:
+>> On Thu, 4 Jan 2024 at 10:06, Fenglin Wu via B4 Relay
+>> <devnull+quic_fenglinw.quicinc.com@kernel.org> wrote:
+>>>
+>>> From: Fenglin Wu <quic_fenglinw@quicinc.com>
+>>>
+>>> Property '#power-domain-cells' is required as per defined in qcom,gcc.yaml
+>>> so add it for ipq6018 gcc device node to eliminate following warning in
+>>> dtbs_check:
+>>>
+>>> arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dtb: gcc@1800000:
+>>>          '#power-domain-cells' is a required property
+>>> from schema $id: http://devicetree.org/schemas/clock/qcom,gcc-ipq6018.yaml#
+>>
+>> But ipq6018 doesn't implement GDSC support. So for the sake of fixing
+>> the warning you are adding a bogus property.
+>>
+> I agree. However, there are also some gcc drivers not implementing GDSC support but the bindings are adding '#power-domain-cells' in the DT example, such as: qcom,gcc-apq8064.yaml, qcom,gcc-ipq4019.yaml, qcom,gcc-ipq6018.yaml, qcom,gcc-ipq8064.yaml, qcom,gcc-msm8660.yaml.
+> 
+> Actually I thought that maybe we should do a clean up by removing '#power-domain-cells' out of the qcom,gcc.yaml binding and only adding it into individual qcom,gcc-xxx.yaml for the driver which has implemented GDSC support. I checked this with Taniya offline, but she prefers only fixing it in ipq6018.dtsi as it doesn't hurt anything by adding the property, and she expects the GDSC support should be existing in most of qcom,gcc drivers especially the newer Qcom chipsets.
+
+Before we start changing anything, we should assess whether these
+platforms actually have GDSCs within this clock controller block,
+even if they are (currently) not described in the clk driver.
+
+Konrad
 
