@@ -1,98 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-6467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA8598243D7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 15:33:29 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8662F824415
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 15:47:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 98911284D93
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 14:33:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1744E285A1C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 14:47:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B76621101;
-	Thu,  4 Jan 2024 14:33:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC4F123747;
+	Thu,  4 Jan 2024 14:47:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nHJ54JlZ"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dPlcMVr2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133F5225D0;
-	Thu,  4 Jan 2024 14:33:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05CFFC433C7;
-	Thu,  4 Jan 2024 14:33:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704378804;
-	bh=aZr4dV3GXhJqOdhebHaFoYyGkow84PQTHg9dzYarFFc=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=nHJ54JlZbk4BdUkdoP5hZ3kixKIu4DNvGIkcvZqvaXk/2k9hIGXJc4nC9RuELRxVS
-	 2yR7pVE4mTE8qeV55ItBYYLXHSSGYiXFP5Hk6UveY08SusZ2aQ2iWs6sfHFEvezEZ8
-	 7fUD56Wi8hYHfcMnLUbeBP8eRLOZMHbPtzL0g1anlWGpMOrH6KbrL4JVNqm6X1k3mH
-	 CIdjKc5cDwCsnJAL6nkjmy6s3g8lDxR+X50lYqWSP8uaXXzySxRK/gMmGhnLo1sP12
-	 /E6h79KFcqRmnzKMBiY7OC9I+/jQlH0hW4zWurvl5ADmehzvcRnEUuQiPEWnaXYWV9
-	 RMjUD3feAZY4g==
-Received: (nullmailer pid 175802 invoked by uid 1000);
-	Thu, 04 Jan 2024 14:33:20 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D044223748;
+	Thu,  4 Jan 2024 14:47:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1704379623; x=1735915623;
+  h=message-id:date:mime-version:to:cc:references:from:
+   subject:in-reply-to:content-transfer-encoding;
+  bh=AgNpe/rQhXH4s/zrVu4O6NOZqlKS54MKFZBPb9+vKyQ=;
+  b=dPlcMVr2hjex705BPBxtdxY+dPlW18/Ezfq2Y+Gf/Bklt9mQDB9NPdYq
+   e62DRDhuO8OoxmfrS9G8T+alzrRnX4VZ05nL7jYu/BuB8c20OMnjPqF2D
+   GkrGWTbGofB65Gmt/q7wxNk9XtDPf3L9XEY90WXBwCiMPQPGmuWOlxgqR
+   YrDuA3gbCnytS/RcKV2TdylGTRGFG0XDPRqbHfddwViXZLKbGBTDmZncJ
+   9XZaojziSZs38fXvgvjsecLJa2AU2EYW8iisvQ7qgPA98rpB5VDk1hgNw
+   XKVH6QrNBRXi6pao4dcKO1taAtwaboCEJ5oKJg9BabegH42AxSOZtI9J+
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10943"; a="15895923"
+X-IronPort-AV: E=Sophos;i="6.04,331,1695711600"; 
+   d="scan'208";a="15895923"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jan 2024 06:47:01 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10943"; a="773536659"
+X-IronPort-AV: E=Sophos;i="6.04,330,1695711600"; 
+   d="scan'208";a="773536659"
+Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.199]) ([10.237.72.199])
+  by orsmga007.jf.intel.com with ESMTP; 04 Jan 2024 06:46:52 -0800
+Message-ID: <734591a1-50b4-6dc7-0b93-077355ec12e4@linux.intel.com>
+Date: Thu, 4 Jan 2024 16:48:19 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: =?utf-8?q?N=C3=ADcolas_F_=2E_R_=2E_A_=2E_Prado?= <nfraprado@collabora.com>, =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, Konrad Dybcio <konrad.dybcio@linaro.org>, Robert Richter <rrichter@amd.com>, Paolo Abeni <pabeni@redhat.com>, linux-wireless@vger.kernel.org, Catalin Marinas <catalin.marinas@arm.com>, Linus Walleij <linus.walleij@linaro.org>, Arnd Bergmann <arnd@arndb.de>, Peng Fan <peng.fan@nxp.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Bjorn Andersson <andersson@kernel.org>, Jakub Kicinski <kuba@kernel.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, Eric Dumazet <edumazet@google.com>, Huacai Chen <chenhuacai@kernel.org>, linux-pci@vger.kernel.org, Kalle Valo <kvalo@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Alex Elder <elder@linaro.org>, linux-arm-msm@vger.kernel.org, Geert Uytterhoeven <geert+renesas@glider.be>, Heiko Stuebner <heiko@sntech.de>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Dan Williams <dan.j.williams@i
- ntel.com>, Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>, Chris Morgan <macromorgan@hotmail.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Will Deacon <will@kernel.org>, Terry Bowman <terry.bowman@amd.com>, linux-arm-kernel@lists.infradead.org, netdev@vger.kernel.org, Marek Szyprowski <m.szyprowski@samsung.com>, Jonathan Cameron <Jonathan.Cameron@huawei.com>, Rob Herring <robh+dt@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, "David S . Miller" <davem@davemloft.net>, Bjorn Helgaas <bhelgaas@google.com>
-In-Reply-To: <20240104130123.37115-7-brgl@bgdev.pl>
-References: <20240104130123.37115-1-brgl@bgdev.pl>
- <20240104130123.37115-7-brgl@bgdev.pl>
-Message-Id: <170437880007.175780.12569173368621506971.robh@kernel.org>
-Subject: Re: [RFC 6/9] dt-bindings: vendor-prefixes: add a PCI prefix for
- Qualcomm Atheros
-Date: Thu, 04 Jan 2024 07:33:20 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.13.0
+Content-Language: en-US
+To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
+ mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
+ corbet@lwn.net, gregkh@linuxfoundation.org, lgirdwood@gmail.com,
+ andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+ konrad.dybcio@linaro.org, Thinh.Nguyen@synopsys.com, broonie@kernel.org,
+ bgoswami@quicinc.com, tiwai@suse.com, robh+dt@kernel.org, agross@kernel.org
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+ alsa-devel@alsa-project.org
+References: <20240102214549.22498-1-quic_wcheng@quicinc.com>
+ <20240102214549.22498-5-quic_wcheng@quicinc.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: Re: [PATCH v12 04/41] usb: host: xhci-mem: Cleanup pending secondary
+ event ring events
+In-Reply-To: <20240102214549.22498-5-quic_wcheng@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-
-On Thu, 04 Jan 2024 14:01:20 +0100, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 2.1.2024 23.45, Wesley Cheng wrote:
+> As part of xHCI bus suspend, the XHCI is halted.  However, if there are
+> pending events in the secondary event ring, it is observed that the xHCI
+> controller stops responding to further commands upon host or device
+> initiated bus resume.  Iterate through all pending events and update the
+> dequeue pointer to the beginning of the event ring.
 > 
-> Document the PCI vendor prefix for Qualcomm Atheros so that we can
-> define the QCA PCI devices on device tree.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
->  Documentation/devicetree/bindings/vendor-prefixes.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
+> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+...
+> +/*
+> + * Move the event ring dequeue pointer to skip events kept in the secondary
+> + * event ring.  This is used to ensure that pending events in the ring are
+> + * acknowledged, so the XHCI HCD can properly enter suspend/resume.  The
+> + * secondary ring is typically maintained by an external component.
+> + */
+> +void xhci_skip_sec_intr_events(struct xhci_hcd *xhci,
+> +	struct xhci_ring *ring,	struct xhci_interrupter *ir)
+> +{
+> +	union xhci_trb *erdp_trb, *current_trb;
+> +	u64 erdp_reg;
+> +	u32 iman_reg;
+> +	dma_addr_t deq;
+> +
+> +	/* disable irq, ack pending interrupt and ack all pending events */
+> +	xhci_disable_interrupter(ir);
+> +	iman_reg = readl_relaxed(&ir->ir_set->irq_pending);
+> +	if (iman_reg & IMAN_IP)
+> +		writel_relaxed(iman_reg, &ir->ir_set->irq_pending);
+> +
+> +	/* last acked event trb is in erdp reg  */
+> +	erdp_reg = xhci_read_64(xhci, &ir->ir_set->erst_dequeue);
+> +	deq = (dma_addr_t)(erdp_reg & ERST_PTR_MASK);
+> +	if (!deq) {
+> +		xhci_err(xhci, "event ring handling not required\n");
+> +		return;
+> +	}
+> +
+> +	erdp_trb = current_trb = ir->event_ring->dequeue;
+> +	/* read cycle state of the last acked trb to find out CCS */
+> +	ring->cycle_state = le32_to_cpu(current_trb->event_cmd.flags) & TRB_CYCLE;
+> +
+> +	while (1) {
+> +		inc_deq(xhci, ir->event_ring);
+> +		erdp_trb = ir->event_ring->dequeue;
+> +		/* cycle state transition */
+> +		if ((le32_to_cpu(erdp_trb->event_cmd.flags) & TRB_CYCLE) !=
+> +		    ring->cycle_state)
+> +			break;
+> +	}
+> +
+> +	xhci_update_erst_dequeue(xhci, ir, current_trb, true);
+> +}
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Code above is very similar to the existing event ring processing parts of xhci_irq()
+and xhci_handle_event()
 
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/vendor-prefixes.yaml:1116:13: [error] empty value in block mapping (empty-values)
+I'll see if I can refactor the existing event ring processing, decouple it from
+event handling so that it could be used by primary and secondary interrupters with
+handlers, and this case where we just want to clear the event ring.
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/vendor-prefixes.yaml: patternProperties:^qca,.*: None is not of type 'object', 'boolean'
-	from schema $id: http://json-schema.org/draft-07/schema#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/vendor-prefixes.yaml: ignoring, error in schema: patternProperties: ^qca,.*
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240104130123.37115-7-brgl@bgdev.pl
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+Thanks
+Mathias
 
 
