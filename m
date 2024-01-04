@@ -1,96 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-6490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2459C824A62
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 22:36:50 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9BC7F824B1F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 23:46:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B52E41F233BD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 21:36:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9D8891C21A61
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 22:46:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABA762C6B4;
-	Thu,  4 Jan 2024 21:36:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 158D02CCD1;
+	Thu,  4 Jan 2024 22:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZB32WZeX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Pr1eCYjd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8330D2C681;
-	Thu,  4 Jan 2024 21:36:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD073C433C7;
-	Thu,  4 Jan 2024 21:36:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704404204;
-	bh=/gPJhI0luavzDAMUU3piZFqDvBPXXQmqih0y6CbPkDo=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=ZB32WZeXi9pWrXUs4nFLQOKWQKvgsLCPhg8HTDvMQhFsZ49JD/Jw1deYXZPm3o/SX
-	 x52TbzbuJ7w7zaPewansJqg+zHb8lttmaWATUuJ4SzSl2jH0rDh8pyJ0iU5ZL7JpUG
-	 vFdiAbo3/Wr0UkClMHKumsYsjy4P6fS5q0ps/1H+5gWzENdb1M7jhPF3lcCu88uGgd
-	 +kSOVjghQwtXpWwsXrwqrQtKVeiA5ju118sbwaMmC//4Joihr8xYDaOi0xhWHdOMRH
-	 S5Xl1Es0N99dCoAyn/X2I5yqMKsNE+B3EYqNsYzomPekVxXw++Ccp437MMTItRCG3i
-	 3UMzW9jMRxsjA==
-Message-ID: <988ae72846dc680382f98b63b61a8c32.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD6A2CCBC
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jan 2024 22:46:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-33748c4f33dso856055f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jan 2024 14:46:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704408367; x=1705013167; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=alNrLSr0vpGWNK/6L+uLnjjf3nOao06SX6CzGEth2ao=;
+        b=Pr1eCYjdLHEWZo3h0ad4oPgvbDgkObSLuRHrpKty0jdEDqWzWUjv58E2dnnLaQwJnv
+         qXipdoDKh5bjU6MjkGL5X65Sj6CPc0Koy0KEfbFRZCylBZRRLYB0ht9+thgAijDQEsMF
+         Tp0++x8GTKL85qfOuYyTZm+45iA7zz6J6YlJ0ERB1Ku1+QdsPTe0uhgmjTeOqcNVrlgl
+         8cVbr1d8lFkEryQCp1IDJN5cx8uKmWgMsHMRzifpyL3s1qRg/sHMrWAV98H2fZhbY9vu
+         gDOquBoWPLtC+Un1zfTMAmvyrcLc8rHhOZDVNfrVdWLN9mm3Fngq2/0ZP+vFVmD+gMyr
+         fI7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704408367; x=1705013167;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=alNrLSr0vpGWNK/6L+uLnjjf3nOao06SX6CzGEth2ao=;
+        b=uwardxNF8jUYbmNl3PS2YyyP8K0tAsVUqaUeS/5XkofkyKCpshcsTj77TyLf16UOom
+         8jzCXhO57uj5I+lAWrwH3umyfiUJJANBB6dqfnWAp31gD20plxoK68tC/s7ulw3rhvjy
+         uHU5jjM/nHdaGp5TlKYTRRBl0x3P/rVb3iiMYmsqKylCj5CJZkl0ldioB1wLY4nchgj1
+         TF7FJL1ElY0s3oALcohWShbs/L0iyBGOe0sULSOtvClZdOVr+sYWpKG2LKrmfMAWj1M6
+         sEfSiVra0lw/Q3e/LBAeFG3qI9KQ02W5Gq6slyqOWDoMS3cKL/C/TeSTeNNcCsYeq6JS
+         XtZQ==
+X-Gm-Message-State: AOJu0YwjDfRAWzE7dxrfPS4KAxu977b9k7zOaZheHhbOFELz7wOb/BvR
+	WxEsHkcMWcYP+Ikd9IcxCzTing57GpKNag==
+X-Google-Smtp-Source: AGHT+IF4IaO9vRFD0mkUsLeLZL7V2E2O2Y9xw6r19GiUl+eNn8vovriXD3avgbVJznPdRs1iAIg/rQ==
+X-Received: by 2002:a05:600c:1d1b:b0:408:3696:3d51 with SMTP id l27-20020a05600c1d1b00b0040836963d51mr727112wms.4.1704408367640;
+        Thu, 04 Jan 2024 14:46:07 -0800 (PST)
+Received: from [192.168.199.125] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
+        by smtp.gmail.com with ESMTPSA id yy4-20020a170906dc0400b00a28fa7838bbsm147829ejb.65.2024.01.04.14.46.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Jan 2024 14:46:07 -0800 (PST)
+Message-ID: <8d6c659a-5164-4f85-a90c-6d3f439821b6@linaro.org>
+Date: Thu, 4 Jan 2024 23:46:05 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20240104-sm8150-dfs-support-v1-1-a5eebfdc1b12@quicinc.com>
-References: <20240104-sm8150-dfs-support-v1-0-a5eebfdc1b12@quicinc.com> <20240104-sm8150-dfs-support-v1-1-a5eebfdc1b12@quicinc.com>
-Subject: Re: [PATCH 1/3] clk: qcom: gcc-sm8150: Register QUPv3 RCGs for DFS on SM8150
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, Ajit Pandey <quic_ajipan@quicinc.com>, Imran Shaik <quic_imrashai@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>, Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Deepak Katragadda <dkatraga@codeaurora.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Michael Turquette <mturquette@baylibre.com>, Rob Herring <robh+dt@kernel.org>, Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>, Vinod Koul <vkoul@kernel.org>
-Date: Thu, 04 Jan 2024 13:36:41 -0800
-User-Agent: alot/0.10
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] phy: qualcomm: eusb2-repeater: Fix the regfields for
+ multiple instances
+Content-Language: en-US
+To: Abel Vesa <abel.vesa@linaro.org>, Bjorn Andersson <andersson@kernel.org>,
+ Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-kernel@vger.kernel.org
+References: <20240104-phy-qcom-eusb2-repeater-fixes-v1-0-047b7b6b8333@linaro.org>
+ <20240104-phy-qcom-eusb2-repeater-fixes-v1-1-047b7b6b8333@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240104-phy-qcom-eusb2-repeater-fixes-v1-1-047b7b6b8333@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Quoting Satya Priya Kakitapalli (2024-01-04 06:23:04)
-> diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
-> index 05d115c52dfe..6d76fd344ddf 100644
-> --- a/drivers/clk/qcom/gcc-sm8150.c
-> +++ b/drivers/clk/qcom/gcc-sm8150.c
-> @@ -453,19 +453,29 @@ static const struct freq_tbl ftbl_gcc_qupv3_wrap0_s=
-0_clk_src[] =3D {
->         { }
->  };
-> =20
-> +static struct clk_init_data gcc_qupv3_wrap0_s0_clk_src_init =3D {
+On 4.01.2024 15:52, Abel Vesa wrote:
+> The global regmap fields offsets currently get incremented with the base
+> address of the repeater. This issue doesn't get noticed unless the probe
+> defers or there are multiple repeaters on that platform. So instead of
+> incrementing the global ones, copy them for each instance of the
+> repeater.
+> 
+> Fixes: 4ba2e52718c0 ("phy: qualcomm: phy-qcom-eusb2-repeater: Use regmap_fields")
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+Ohh I wouldn't have thought about this.. Nice spot!
 
-Can these be const?
-
-> +       .name =3D "gcc_qupv3_wrap0_s0_clk_src",
-> +       .parent_data =3D gcc_parents_0,
-> +       .num_parents =3D ARRAY_SIZE(gcc_parents_0),
-> +       .flags =3D CLK_SET_RATE_PARENT,
-> +       .ops =3D &clk_rcg2_ops,
-> +};
-> +
->  static struct clk_rcg2 gcc_qupv3_wrap0_s0_clk_src =3D {
->         .cmd_rcgr =3D 0x17148,
->         .mnd_width =3D 16,
->         .hid_width =3D 5,
->         .parent_map =3D gcc_parent_map_0,
->         .freq_tbl =3D ftbl_gcc_qupv3_wrap0_s0_clk_src,
-> -       .clkr.hw.init =3D &(struct clk_init_data){
-> -               .name =3D "gcc_qupv3_wrap0_s0_clk_src",
 [...]
-> @@ -3786,6 +3850,13 @@ static int gcc_sm8150_probe(struct platform_device=
- *pdev)
->         regmap_update_bits(regmap, 0x4d110, 0x3, 0x3);
->         regmap_update_bits(regmap, 0x71028, 0x3, 0x3);
-> =20
-> +       ret =3D qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks,
-> +                                      ARRAY_SIZE(gcc_dfs_clocks));
-> +       if (ret) {
-> +               dev_err(&pdev->dev, "Failed to register with DFS!\n");
 
-Use=20
+> -	struct reg_field *regfields = eusb2_repeater_tune_reg_fields;
+>  	struct eusb2_repeater *rptr = phy_get_drvdata(phy);
+> +	struct reg_field *regfields = rptr->regfields;
+Without this:
 
-		return dev_err_probe(...);
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
 
