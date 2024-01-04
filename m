@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9BC7F824B1F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 23:46:16 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6FF6824B34
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 23:51:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9D8891C21A61
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 22:46:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F40AE1C22999
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 22:51:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 158D02CCD1;
-	Thu,  4 Jan 2024 22:46:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 378FC2D036;
+	Thu,  4 Jan 2024 22:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Pr1eCYjd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wLu6oKyv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD6A2CCBC
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jan 2024 22:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B930D2D021
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jan 2024 22:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-33748c4f33dso856055f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jan 2024 14:46:09 -0800 (PST)
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3368b9bbeb4so877675f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jan 2024 14:50:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704408367; x=1705013167; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1704408651; x=1705013451; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=alNrLSr0vpGWNK/6L+uLnjjf3nOao06SX6CzGEth2ao=;
-        b=Pr1eCYjdLHEWZo3h0ad4oPgvbDgkObSLuRHrpKty0jdEDqWzWUjv58E2dnnLaQwJnv
-         qXipdoDKh5bjU6MjkGL5X65Sj6CPc0Koy0KEfbFRZCylBZRRLYB0ht9+thgAijDQEsMF
-         Tp0++x8GTKL85qfOuYyTZm+45iA7zz6J6YlJ0ERB1Ku1+QdsPTe0uhgmjTeOqcNVrlgl
-         8cVbr1d8lFkEryQCp1IDJN5cx8uKmWgMsHMRzifpyL3s1qRg/sHMrWAV98H2fZhbY9vu
-         gDOquBoWPLtC+Un1zfTMAmvyrcLc8rHhOZDVNfrVdWLN9mm3Fngq2/0ZP+vFVmD+gMyr
-         fI7Q==
+        bh=VcPQ9Xa0tJ4XfKkhqDvXF2rtEgjcj5MLQaEjWV4A5Kg=;
+        b=wLu6oKyvqKym5n2thVBOaqmsPYWZRUDg7Ox3RVvC3rROi8bYrh7JNO8kbHacdHswG7
+         LPp6JiSieyrj2CFNRU5bY5IJvqWGHlalums2crw2rXw20GCtiKdOgyJlSaCc8kWXRPx0
+         Icah3ubIlmqMjFN1YgPzsKTGZPWp14tud3hzXhwAr3UQlPvcDGWelcKHicOi+JZHj/GL
+         JY1Bsnq2d4b2cf6TK4jQ+QhtSzWW15BsvpngRaRN8QujCQAxkqO+xMthrHDTNUorGXXq
+         es3Ls1F8LMgZlajGY48u7QPsmYNYmJRu9vrx3i3mRfIsMTZy/srIbL7btqaMGmiGoY3s
+         eLMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704408367; x=1705013167;
+        d=1e100.net; s=20230601; t=1704408651; x=1705013451;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=alNrLSr0vpGWNK/6L+uLnjjf3nOao06SX6CzGEth2ao=;
-        b=uwardxNF8jUYbmNl3PS2YyyP8K0tAsVUqaUeS/5XkofkyKCpshcsTj77TyLf16UOom
-         8jzCXhO57uj5I+lAWrwH3umyfiUJJANBB6dqfnWAp31gD20plxoK68tC/s7ulw3rhvjy
-         uHU5jjM/nHdaGp5TlKYTRRBl0x3P/rVb3iiMYmsqKylCj5CJZkl0ldioB1wLY4nchgj1
-         TF7FJL1ElY0s3oALcohWShbs/L0iyBGOe0sULSOtvClZdOVr+sYWpKG2LKrmfMAWj1M6
-         sEfSiVra0lw/Q3e/LBAeFG3qI9KQ02W5Gq6slyqOWDoMS3cKL/C/TeSTeNNcCsYeq6JS
-         XtZQ==
-X-Gm-Message-State: AOJu0YwjDfRAWzE7dxrfPS4KAxu977b9k7zOaZheHhbOFELz7wOb/BvR
-	WxEsHkcMWcYP+Ikd9IcxCzTing57GpKNag==
-X-Google-Smtp-Source: AGHT+IF4IaO9vRFD0mkUsLeLZL7V2E2O2Y9xw6r19GiUl+eNn8vovriXD3avgbVJznPdRs1iAIg/rQ==
-X-Received: by 2002:a05:600c:1d1b:b0:408:3696:3d51 with SMTP id l27-20020a05600c1d1b00b0040836963d51mr727112wms.4.1704408367640;
-        Thu, 04 Jan 2024 14:46:07 -0800 (PST)
+        bh=VcPQ9Xa0tJ4XfKkhqDvXF2rtEgjcj5MLQaEjWV4A5Kg=;
+        b=VtqQ8BEP6FatvQyBQGgclNeNxZW1iBv2EWypteBb2MFFxhV3hrVmIzWLPGjlCFgNhb
+         T4s8nltpHxDq2NCveolUHOz5fhS7lOqDP3yEnTmA6Jkmsd2HIQ5aV+Ts1klAKm7ziqAO
+         PCSuuqtTM7W5ymYT1DQvwWTnXfEmeEoFn7imLeXD4bSMxvFlRQ4VBQNeZmdsenWYvhO9
+         ohd3GkJ2S0R8LhdM+GRgn7y/5Y8gDQ67h2TxEXa8utQ7fL3Ot/Kn2c1ESLEcxqVr8s/9
+         6WFOTxjY1VBqjDTB4DzAqFcvlOSKz8yXAh7u/iZKPX6VPW1r9VvL5ZEfpUkfDMYsCSwb
+         whwg==
+X-Gm-Message-State: AOJu0YxJJGUMhxiEwHXyeoSWIMmVcS8xOtWM63jPvzkmBBlR1AtQNqlc
+	HfzfR3uFzs1aA42Aan7yVgSW2RwTRp9Q5w==
+X-Google-Smtp-Source: AGHT+IE3+wslo/R5fktyBQLHhO2GpT5lUe0uUiBgWQLm5rhL1CAYSVuuqQ/iTdjnpdLjsRGK7bgkOg==
+X-Received: by 2002:a5d:464a:0:b0:337:43c2:d17b with SMTP id j10-20020a5d464a000000b0033743c2d17bmr377479wrs.77.1704408650907;
+        Thu, 04 Jan 2024 14:50:50 -0800 (PST)
 Received: from [192.168.199.125] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
-        by smtp.gmail.com with ESMTPSA id yy4-20020a170906dc0400b00a28fa7838bbsm147829ejb.65.2024.01.04.14.46.06
+        by smtp.gmail.com with ESMTPSA id co22-20020a0564020c1600b00556cf695da0sm214100edb.78.2024.01.04.14.50.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Jan 2024 14:46:07 -0800 (PST)
-Message-ID: <8d6c659a-5164-4f85-a90c-6d3f439821b6@linaro.org>
-Date: Thu, 4 Jan 2024 23:46:05 +0100
+        Thu, 04 Jan 2024 14:50:50 -0800 (PST)
+Message-ID: <33b32e2b-fa35-448c-8b4c-c5c51a514922@linaro.org>
+Date: Thu, 4 Jan 2024 23:50:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,15 +66,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] phy: qualcomm: eusb2-repeater: Fix the regfields for
- multiple instances
+Subject: Re: [PATCH 2/2] phy: qualcomm: eusb2-repeater: Drop the redundant
+ zeroing
 Content-Language: en-US
 To: Abel Vesa <abel.vesa@linaro.org>, Bjorn Andersson <andersson@kernel.org>,
  Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
  linux-kernel@vger.kernel.org
 References: <20240104-phy-qcom-eusb2-repeater-fixes-v1-0-047b7b6b8333@linaro.org>
- <20240104-phy-qcom-eusb2-repeater-fixes-v1-1-047b7b6b8333@linaro.org>
+ <20240104-phy-qcom-eusb2-repeater-fixes-v1-2-047b7b6b8333@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -111,30 +111,48 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240104-phy-qcom-eusb2-repeater-fixes-v1-1-047b7b6b8333@linaro.org>
+In-Reply-To: <20240104-phy-qcom-eusb2-repeater-fixes-v1-2-047b7b6b8333@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 4.01.2024 15:52, Abel Vesa wrote:
-> The global regmap fields offsets currently get incremented with the base
-> address of the repeater. This issue doesn't get noticed unless the probe
-> defers or there are multiple repeaters on that platform. So instead of
-> incrementing the global ones, copy them for each instance of the
-> repeater.
+> The local init_tlb is already zero initialized, so the entire zeroing loop
+> is useless in this case, since the initial values are copied over anyway,
+> before being written.
 > 
-> Fixes: 4ba2e52718c0 ("phy: qualcomm: phy-qcom-eusb2-repeater: Use regmap_fields")
+> Fixes: 99a517a582fc ("phy: qualcomm: phy-qcom-eusb2-repeater: Zero out untouched tuning regs")
 > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
-Ohh I wouldn't have thought about this.. Nice spot!
 
-[...]
+That's another good spot.. partial struct initialization of
+pm8550b_init_tbl zeroes out the uninitialized fields.
 
-> -	struct reg_field *regfields = eusb2_repeater_tune_reg_fields;
->  	struct eusb2_repeater *rptr = phy_get_drvdata(phy);
-> +	struct reg_field *regfields = rptr->regfields;
-Without this:
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>  drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c | 10 ----------
+>  1 file changed, 10 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
+> index 5f5862a68b73..3060c0749797 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
+> @@ -156,16 +156,6 @@ static int eusb2_repeater_init(struct phy *phy)
+>  
+>  	regmap_field_update_bits(rptr->regs[F_EN_CTL1], EUSB2_RPTR_EN, EUSB2_RPTR_EN);
+>  
+> -	for (i = 0; i < F_NUM_TUNE_FIELDS; i++) {
+> -		if (init_tbl[i]) {
+> -			regmap_field_update_bits(rptr->regs[i], init_tbl[i], init_tbl[i]);
+> -		} else {
+> -			/* Write 0 if there's no value set */
+> -			u32 mask = GENMASK(regfields[i].msb, regfields[i].lsb);
+> -
+> -			regmap_field_update_bits(rptr->regs[i], mask, 0);
+> -		}
+> -	}
+>  	memcpy(init_tbl, rptr->cfg->init_tbl, sizeof(init_tbl));
+
+I think this patchset can be made even better, this memcpy is also
+useless and we can simply initialize init_tbl=rptr->cfg->init_tbl.
 
 Konrad
 
