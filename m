@@ -1,65 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6415-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6416-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CF2F823CC8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 08:34:04 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9BF4E823CEB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 08:47:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3517B1C237D0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 07:34:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 116441F26189
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 07:47:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AB6B1DFF2;
-	Thu,  4 Jan 2024 07:34:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C78121F5F0;
+	Thu,  4 Jan 2024 07:47:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tG995bZ7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mkFEL6Hz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A00B200A6
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jan 2024 07:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E02200A8
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jan 2024 07:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-556ab8b85e3so329391a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jan 2024 23:33:58 -0800 (PST)
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-554e902064aso269063a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jan 2024 23:47:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704353637; x=1704958437; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=DP6M+yDlXDj3yagLaZ2w6HOzz3bnG4toPFPTwIxDIE8=;
-        b=tG995bZ7YixVIDyHIQO3Td8nxkk64GUkbUGNFfSRngtHgHgd0mx3NxgYFEgGLXwE8S
-         i9RJkSSUJhQspjn14xeEF2ZLyw+jhmU8YoLXeyCbyQkyCxPMwvD+pvw+7+M71Uwkx4fr
-         Rm7u1VY0vtSqGMtP3qRtCLVymHhyz0MpeX38M/ZyR2calLKsFJpGORfaWZDXWHkud+78
-         /Kdhpge7TOhZVCGplZUbmctmZBI/MDa3BeKXDRsd9GShP2/T3CM5nVIrPp9YikU2uQZ0
-         zPkOiEYRdougWkctr9E1e9kfpJBIT2IrnRwx0Un2azu6w35/H6egkITLn4mwgzJy3lsS
-         BViA==
+        d=linaro.org; s=google; t=1704354434; x=1704959234; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=oGF4/vmIJ8o7IJvlJQyYKaxW9KtTtwYjR9BBLu19fK4=;
+        b=mkFEL6HzI8xj4xcJEgGtfq2/GQfxmpYfCM6qKsp/DwjdhHavpkkdYUNWqZe4tZnbpj
+         nummQLXCZGmtl3W/LPaBOpVBxSLlENm/joY/SgTTfbouINsw8USktKevRISs8zFuewb+
+         olIiZzsqmf5C/b1WyvS/jRc5qi85L6TnOlQLeAkSk2IRBghZDeJDDm6ZiFjNfxK13lJW
+         syVCKMHEvRgKxAlpM1R6Q9agccCRPEosXITT7OS9ZEW71GKv6c3KdBCJXwrFS46CG6ML
+         J/uCEciNYweY5UKPtX5e562LGcpzjXKpA0HLXCRJ6TzEKHT0gMGgjksWdv726GiysYfN
+         YcGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704353637; x=1704958437;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DP6M+yDlXDj3yagLaZ2w6HOzz3bnG4toPFPTwIxDIE8=;
-        b=Trg5xIyavhx6/dPPGmt9JchKMgDi0ogkT02uq4MyO9YtwdwPqOlR1pV1f3SkCzdNWn
-         cUHtg6XTJCscJ3XjQ3CqcJUotdz1WVnuo9WTcarybR9wWL727SUunA41l5B+F+UMoBai
-         b5T87Nlz5Hz6cfvSd7wlNH2gcvkD8TagdfR5bG54e6H3ZcyQiiNINQwnV+yr4OqbPpvy
-         aGFinDaFHp9m3iS4CkDsEGBD/s288DwBFV4c7Jww8BjhxXVpJRrNxMTpQLYZdn8I7jSw
-         82HoTAe8RGrQIpz5GqVNnCLn8lEHPEt1HXc2io+EI0YN9266/mHcHDpb3WZEzC3yO71s
-         AUkw==
-X-Gm-Message-State: AOJu0YzT6bLsvPJzsZtYFpTsnlC8p5eDytNUd/cPf6HMvUCaL0PeyWPD
-	Dl3ntHQx3iLyGIunufG1sIpBkPCLvPKBdg==
-X-Google-Smtp-Source: AGHT+IFHJbTkMKbaRRRuUG4J5MwvcTPbcC2ULkVPb5k3m+oW6sp/GtFnGeon3VCpyur6EUd/QUacRw==
-X-Received: by 2002:a05:6402:30b2:b0:557:c42:977 with SMTP id df18-20020a05640230b200b005570c420977mr105466edb.1.1704353636915;
-        Wed, 03 Jan 2024 23:33:56 -0800 (PST)
+        d=1e100.net; s=20230601; t=1704354434; x=1704959234;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=oGF4/vmIJ8o7IJvlJQyYKaxW9KtTtwYjR9BBLu19fK4=;
+        b=Z3sI1a9jHiwgLGBzp9cEneSmFtVVZXwKYbjxCjWjGkxU/+Aams800vzqlVENDPwY4k
+         sAWdGyW6mWpMRY0BZxshfnS4+Kmdqpww7YBPrZJncCMULfVMTUk8jaq+OugLacnI9FIu
+         Id/7W4YRR7vtnkAp3AX454xt5JowuZa8W2u1okhMJNMvYbFYGjuVZdFXa6iddZ7SRyDJ
+         GXBh8EjHofQnStc1KwO5M+hF2LejFuQ++W5kRUsmlSe0AR5OvLBJ8UVK0TLjo0a2a0/2
+         db2q3z3qaFaX4Ik7PvaXBbradD6jhSHVzY09QOjlIXoAp4CeXpGA19mcUqRUzHwpDJlp
+         Qu5w==
+X-Gm-Message-State: AOJu0YzaVFzwvUdImQ2e4GP5j1QpKmhJOf/xoHoPvLFRIxCEKrx0lddd
+	YleNPvYIooePKMC8kGKxem0blYzIRa7vVw==
+X-Google-Smtp-Source: AGHT+IHD4M0r8yDP/YsO00ANonos/KjanteYCjmiTxyH/zJvMcNhKtTUPBA9N36eVzDrvVyTOgmzew==
+X-Received: by 2002:a50:9b4f:0:b0:555:ea2f:a97f with SMTP id a15-20020a509b4f000000b00555ea2fa97fmr98511edj.13.1704354434368;
+        Wed, 03 Jan 2024 23:47:14 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id cq8-20020a056402220800b0055507ee70a4sm12374444edb.23.2024.01.03.23.33.55
+        by smtp.gmail.com with ESMTPSA id p12-20020a05640243cc00b0055493aa8905sm14982937edc.63.2024.01.03.23.47.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Jan 2024 23:33:56 -0800 (PST)
-Message-ID: <3542a18d-0fc4-40b5-8f16-c70cd0dde5b8@linaro.org>
-Date: Thu, 4 Jan 2024 08:33:54 +0100
+        Wed, 03 Jan 2024 23:47:13 -0800 (PST)
+Message-ID: <c4831e26-5ff0-40b1-98d4-addfdc1ee5a8@linaro.org>
+Date: Thu, 4 Jan 2024 08:47:12 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,20 +66,25 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/9] dt-bindings: usb: qcom,dwc3: Fix SDM660 clock
- description
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230721-topic-rpm_clk_cleanup-v3-0-a66e698932e3@linaro.org>
- <20230721-topic-rpm_clk_cleanup-v3-1-a66e698932e3@linaro.org>
+Subject: Re: [PATCH v4 5/5] dt-bindings: net: ipq4019-mdio: Document ipq5332
+ platform
 Content-Language: en-US
+To: Jie Luo <quic_luoj@quicinc.com>, agross@kernel.org, andersson@kernel.org,
+ konrad.dybcio@linaro.org, davem@davemloft.net, edumazet@google.com,
+ kuba@kernel.org, pabeni@redhat.com, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, andrew@lunn.ch,
+ hkallweit1@gmail.com, linux@armlinux.org.uk, robert.marko@sartura.hr
+Cc: linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ quic_srichara@quicinc.com
+References: <20231225084424.30986-1-quic_luoj@quicinc.com>
+ <20231225084424.30986-6-quic_luoj@quicinc.com>
+ <dee72ce8-b24e-467a-b265-1b965588807f@linaro.org>
+ <aeb364a3-6c05-4a1b-ba32-e687a89f20f8@quicinc.com>
+ <58dde1a7-ed4a-442c-bb5c-c3f6d926fb7e@linaro.org>
+ <06ddbae8-1502-41fb-8cf8-9a3390dad557@quicinc.com>
+ <28c8b31c-8dcb-4a19-9084-22c77a74b9a1@linaro.org>
+ <d231b7e2-51f5-4676-8fc0-e4bc6154e2d7@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -126,18 +130,81 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20230721-topic-rpm_clk_cleanup-v3-1-a66e698932e3@linaro.org>
+In-Reply-To: <d231b7e2-51f5-4676-8fc0-e4bc6154e2d7@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 03/01/2024 21:15, Konrad Dybcio wrote:
-> SDM660 was abusingly referencing one of the internal bus clocks, that
-> were recently dropped from Linux (because the original implementation
-> did not make much sense), circumventing the interconnect framework.
+On 28/12/2023 08:38, Jie Luo wrote:
+>>> Sorry for this confusion.
+>>> Rob said the internal reference source can be decided by the absence of
+>>> the property combined with compatible string, because i said the
+>>
+>> So all your three DT maintainers agree that lack of property for
+>> choosing clock, defines the usage of interrupt source.
 > 
-> Drop it.
+> This is the reference clock source selection of CMN block, which
+> generates the clocks for the Ethernet devices.
+> 
+>>
+>> Now we had huge amount of arguments that you do not represent properly
+>> the clock relationships. Still.
+> 
+> here is the clock topology.
+> reference clock sources ---> CMN PLL ---> various output clocks
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+How do you guarantee that these clocks are enabled without proper
+relationships described in DT? In current and future designs?
+
+> 
+> the output clocks are provided to the Ethernet devices(such as the
+> qca808x PHY devices).
+> 
+> These information is also provided the commit message of the patch
+> <net: mdio: ipq4019: configure CMN PLL clock for ipq5332>.
+> 
+>>
+>>> internal 96MHZ is used on ipq5018 currently in the previous message.
+>>>
+>>> per double checked the current IPQ platforms, the internal 96MHZ is also
+>>> possible on ipq9574, and the reference clock source should be kept as
+>>> configurable instead of limited by the compatible string, maybe the
+>>> different reference clock source is acquired in the future, even
+>>> currently it is not used on the special platform for now.
+>>>
+>>> so i update the solution with a little bit of changes.
+>>
+>> You still do not want to implement our suggestions and I don't
+>> understand your arguments. Nothing in above paragraph explains me why
+>> you cannot use clock provider/consumer relationships.
+> 
+> Hi Krzysztof,
+> 
+> The reference clock source can be registered as the fix clock provider,
+>  From the current fix clock provider, the clock rate is useful for the
+> clock consumer, the fix clock rate is used to generate the output clocks
+> by the divider or multiplier.
+> 
+> For the CMN block to select reference clock, which is configuring the
+> clock source, we don't know the formula to get the output clock value
+> based on the reference clock value.
+
+I don't understand what does it mean. You do not know how to program CMN
+block?
+
+> 
+> i also see there is an example in the upstream code, which is same as
+> the CMN block to select the reference clock source.
+
+Oh, the old argument. So if there is a bug in the code, you are going
+for example to implement it as well?
+
+> 
+> the property "ref-clock-frequency" is defined in the yaml file below.
+> Documentation/devicetree/bindings/net/wireless/ti,wlcore.yaml.
+
+And how does the hardware look like there? It's TI, so how do you even know?
+
+
 
 Best regards,
 Krzysztof
