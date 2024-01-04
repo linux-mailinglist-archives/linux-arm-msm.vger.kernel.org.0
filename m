@@ -1,168 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-6472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8AE11824441
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 15:59:11 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 78AB5824423
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 15:52:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9ACE61C219F8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 14:59:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2DA861F22834
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 14:52:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60C9D22F1E;
-	Thu,  4 Jan 2024 14:59:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9E4D23758;
+	Thu,  4 Jan 2024 14:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="1U7QDAes"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rT0trL4T"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C070523759;
-	Thu,  4 Jan 2024 14:59:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1704380342;
-	bh=KDp1KlxW4ztxSeOSFhN1rEoylXsyLJ5JvkhJpgJgJnc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=1U7QDAesD642Grt4u1zAfoqQt6hKMbSTMEJ88MrJmPD9TQmpuQLQgsmdPiKZ2WRLl
-	 ISAUdMUyuuarEOF0rXNiYySX4DaXGudcUkVSnKsS0vKtv/Y1q89i0WNrGjfRymA+4I
-	 OFvzMPYBhBLIKlXlMc00snMWVlF3h/FzUQi6O0kc4Odcm4W/ALnLDK89d2Ln523yN7
-	 JLLr0+3yO6rnvF0G9p9lcOJjH6dyjYL0xqV8yXdSmkTxrdzSVCENaMqL0V8niycSOM
-	 i1MUcBnVBUINqa5vsU/Ozp9P15YD2XngxAYpfvYQyhqubeEno1GgfOQQjaCwN06osR
-	 1rmCzbcfMMz3w==
-Received: from mercury (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: sre)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 79B0A378200D;
-	Thu,  4 Jan 2024 14:59:02 +0000 (UTC)
-Received: by mercury (Postfix, from userid 1000)
-	id 69A7D106062F; Thu,  4 Jan 2024 15:49:21 +0100 (CET)
-Date: Thu, 4 Jan 2024 15:49:21 +0100
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Kalle Valo <kvalo@kernel.org>, 
-	"David S . Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Catalin Marinas <catalin.marinas@arm.com>, 
-	Will Deacon <will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Heiko Stuebner <heiko@sntech.de>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Chris Morgan <macromorgan@hotmail.com>, Linus Walleij <linus.walleij@linaro.org>, 
-	Geert Uytterhoeven <geert+renesas@glider.be>, Arnd Bergmann <arnd@arndb.de>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, 
-	=?utf-8?B?TsOtY29sYXMgRiAuIFIgLiBBIC4=?= Prado <nfraprado@collabora.com>, Marek Szyprowski <m.szyprowski@samsung.com>, 
-	Peng Fan <peng.fan@nxp.com>, Robert Richter <rrichter@amd.com>, 
-	Dan Williams <dan.j.williams@intel.com>, Jonathan Cameron <Jonathan.Cameron@huawei.com>, 
-	Terry Bowman <terry.bowman@amd.com>, 
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>, Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
-	Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>, 
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	linux-wireless@vger.kernel.org, netdev@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [RFC 6/9] dt-bindings: vendor-prefixes: add a PCI prefix for
- Qualcomm Atheros
-Message-ID: <rhs5bzjx3cljxa6xhlzlozmgi44tbohsqnznjhr3piz7ekv3ra@mi6yiljza5oe>
-References: <20240104130123.37115-1-brgl@bgdev.pl>
- <20240104130123.37115-7-brgl@bgdev.pl>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3805623741
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jan 2024 14:52:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5542a7f1f3cso751639a12.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jan 2024 06:52:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704379947; x=1704984747; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zZIogcHqx9uTCJq4N+XqsoGveT+CoaQkQRlLlJgbysk=;
+        b=rT0trL4T+rPH20VUfXhX+AJENp6UiC0NJ3ShflemLgDGYmV/5T5kCLCO/IyR003m7f
+         Wc1WcsGTY/xY6j4QRXXuhUZdv4ihScZQwHFqCy26hH8hjkkjmAdQn453LD1DQSY029PS
+         5Z17HxJTOsm/RNR0Cmq+gmsyfGzS3E4g9Q8chCfM/tR3BlEbIMsqXm3qLnuLLZQJ1M6D
+         4pdChcNKfkM+Xx3zR6PkcbJfMjoJYNyjpDcMnutz0h6HB1HDxYG7Ap/DIM3yxhsQ8x7L
+         xtdDJhQ21wMB5+fN4t/PJu7YKati70soKRX3aPYht7QFhriCWbC3mDrxR10PMYSgCRw1
+         bQ9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704379947; x=1704984747;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zZIogcHqx9uTCJq4N+XqsoGveT+CoaQkQRlLlJgbysk=;
+        b=Z2UDGIuN5mCKJK/faRCtXH3nve3tGcm7Rea1AzbQmu8EHIgIxzQHXq8ODDzEbwufRt
+         jAjtYWwTNfFn5qAEJQpxPiizvl8Lj6z8v2Z0O9nOJWaovGY74p/qhYKwXQCZ/v2mCi8u
+         j4W8zoRIW3JHmT0zHpBVdGdk5krnnT1wMviOzK6QGeu7Gx+Ty2yAaDPOA0vtix8fu/wg
+         yCHJVocET9q9y/yz/DAuOClDbkohjOYqKtpGfXQ0kC62keBIuo5Jr0gAufTIiFYRgMDh
+         Y11tMltjqWqYm7kbQSvXHsLZHl34hf+EvjXWGBy8VNYLN27cSahVxzzxUsa7G1QSfhh0
+         lpbQ==
+X-Gm-Message-State: AOJu0YwqkS6HmGuud7+2ijs1ojEfeNVul+bZkLkPDJ/CUXRKo9e+Rj2g
+	v5TPSf1OZHm9uUaf39YxIL5GPfkYUG9rTQ==
+X-Google-Smtp-Source: AGHT+IFXAx2ANimczd8Sgl4948w4u3Nl18N4rN5i/YkygdtqRa/cmktNNtOAN3WAuyYeZwnltT6Z0w==
+X-Received: by 2002:a50:c259:0:b0:557:c43:1e51 with SMTP id t25-20020a50c259000000b005570c431e51mr311959edf.23.1704379947335;
+        Thu, 04 Jan 2024 06:52:27 -0800 (PST)
+Received: from [127.0.1.1] ([79.115.23.25])
+        by smtp.gmail.com with ESMTPSA id k24-20020a056402049800b00555e52fed52sm7970592edv.91.2024.01.04.06.52.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Jan 2024 06:52:26 -0800 (PST)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH 0/2] phy: qualcomm: eusb2-repeater: Some fixes after the
+ regmap rework
+Date: Thu, 04 Jan 2024 16:52:10 +0200
+Message-Id: <20240104-phy-qcom-eusb2-repeater-fixes-v1-0-047b7b6b8333@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="jsminobfkp6hba2d"
-Content-Disposition: inline
-In-Reply-To: <20240104130123.37115-7-brgl@bgdev.pl>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABrGlmUC/x3MQQrCQAxG4auUrA0kaTd6FXFRx1+bhe2YqCild
+ 3dw+fHgrZQIR9KhWynw9vRlbtBdR2Ua5xvYL81kYoOoDFynLz/Kcme88mwcqBifCL76B8llb6K
+ qvfRWqD1q4B/a4njath9VivBTbwAAAA==
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=639; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=c+pvrccSCpOgqh7ydKwxbBRfYF462jh89UpoQ5iwwdk=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBllsYmbj67PZ2TtbJqISo/ydyuy6XlIWLzEi/YC
+ RLLrn2b6wSJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZZbGJgAKCRAbX0TJAJUV
+ VtK/EADFV3NeX2ydmpryOIbecPaE7INDEqVyyKUK0wmtewgsUL+Z04L7kGWr9dB42XrpBKSjr3M
+ /io8L/lcSjgBSNHQP+NZCD+4t6ce1kyI+GmPxg/A/1CuI8QARQr8eKm96/hOw5c+M16TshuYy6t
+ VERh3FlNrt7JFRa1eHQfNUrVPkfyVzfGwIo7hjyBpadNB43yBamxlWhTBIxsR5f5WW2S9/KK/qA
+ NCgb+3oqLR5pwe2fEAm+Crrc1QZjX3necfvdTf2cCcTANUJ8W07OHPeFaLB4P9bVuhRdXQU5+Bx
+ Wn4eJCcs17xQW3i/ATAOn7NX8/3vY1uiXdSPJ0r64SF4BDKOicoGXH3Ej8I2aUJyKYWMAQUZ31N
+ /0bRVXCd0+0wLiEZDLj2WpQu/jQFZypgbZX3Fo7oiM8taOYDEa60ati6YivJj2CPpx6/rImiS6q
+ njArJwRyZqNFUduN8gFFZCPtsluxUUG5k10IMpnwS4BXn/RdhM8Ce83y/vUdzCfe1Vn2g07ZSpD
+ eSQAQh49FK1UfBR2LCsVvEEcv15hhu0bM6xGr6Aaus1Wi90efLSXg+njYRWnAk7sNrkDVKITTIy
+ PL1Q6l3q2GUn+DVglE7rUcsuje8Ylf+Bvs5tpUKM472dt1Wb+4Fsr/XwzOWkfV4/eYERjR4r+9I
+ ySvKGnl1XeZlUkw==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
+Found the first issue (from first patch) while adding support
+for X Elite (X1E80100) which comes with more than one repeaters.
+The second fix is just bonus.
 
---jsminobfkp6hba2d
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+---
+Abel Vesa (2):
+      phy: qualcomm: eusb2-repeater: Fix the regfields for multiple instances
+      phy: qualcomm: eusb2-repeater: Drop the redundant zeroing
 
-Hi,
+ drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c | 23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
+---
+base-commit: 0fef202ac2f8e6d9ad21aead648278f1226b9053
+change-id: 20240104-phy-qcom-eusb2-repeater-fixes-c9201113032c
 
-On Thu, Jan 04, 2024 at 02:01:20PM +0100, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->=20
-> Document the PCI vendor prefix for Qualcomm Atheros so that we can
-> define the QCA PCI devices on device tree.
->=20
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
->  Documentation/devicetree/bindings/vendor-prefixes.yaml | 1 +
->  1 file changed, 1 insertion(+)
->=20
-> diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Doc=
-umentation/devicetree/bindings/vendor-prefixes.yaml
-> index 2dc098b39234..297d6037cd12 100644
-> --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-> +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-> @@ -1128,6 +1128,7 @@ patternProperties:
->    "^purism,.*":
->      description: Purism, SPC
->    "^qca,.*":
-> +  "^pci17cb,.*":
+Best regards,
+-- 
+Abel Vesa <abel.vesa@linaro.org>
 
-I don't think it's a good idea to list all the PCI vendor IDs
-in vendor-prefixes.yaml. To please the tooling, I suggest to
-have a generic entry instead. Something like this (untested):
-
-"^pci[0-9a-f][0-9a-f][0-9a-f][0-9a-f],.*":
-  description: PCI SIG Vendor ID
-
-Note, that we we already have a bunch of them:
-
-grep -ho 'pci[0-9a-f][0-9a-f][0-9a-f][0-9a-f],' **/*.dts* | sort | uniq -c
-     70 pci0014,
-      3 pci10b5,
-      1 pci10ee,
-      6 pci14e4,
-      1 pci16c3,
-      2 pci17a0,
-      1 pci17cb,
-      1 pci1b4b,
-     63 pci8086,
-
-Greetings,
-
--- Sebastian
-
->      description: Qualcomm Atheros, Inc.
->    "^qcom,.*":
->      description: Qualcomm Technologies, Inc
-> --=20
-> 2.40.1
->=20
->=20
-
---jsminobfkp6hba2d
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmWWxWEACgkQ2O7X88g7
-+pq9NBAAoxlfauETIkIrDgJNle3ZizR1pfBMZu2EGdroqNk8sONiP9ITABAB3GtY
-TeGTr1dYr+gq+Vj8n+BqThMbvUCJdrO8KXgUt/bFQm2IJvHkTUzskAv1gHybmS0Z
-/1qQWzRz2KDoy6I6Is3GDnhlrgSoUlHqfkSj9OP4fAyZ4rCg/RIS+l1BE3qrft6X
-DdkWV5BsmvG+tEAJ0e8FILIv1igb2DU2zdakioYpsftC4eDsOHYI90q1zuMjDWLY
-3HhOX3MvAZnyMYgzKn+i2EJMdUtIOdg1oAr2ZGRghiCQ5WZjzZjXPWPi+WOkY8t3
-g7/0jD8/4IxncHHxai+zhfOxwXhPPSRtiLMOEg6oDM5CQsfdeC14k3iznXZygr+X
-8wZ1GTuz0srs87MZ/n9wolg0ZdBvuwymoO5BU3jptSJ+wR2Xte4uERJgoxbZAlmB
-m9J7qI++us6b8zH2Az2wAce1Lb0j5FtPZ1oXW22+QNbMzyneQJGuB/5gFR6/iJBC
-th648oqH0zRgsWEIPgexNXCxBRZt3HDb2xD7//3c9TEwvJg2C0n3qr+KqQKuuC31
-NjcIt698FfE7izgbv9goadO9cmCMnxxam0YvQaPO2LRlB376Tv9gdbwybCL4pWvl
-G3MWmmmGzLDU55WxS9x3FD4yO69M0LHnXHfjLal9y+7oCMZC24w=
-=qTtZ
------END PGP SIGNATURE-----
-
---jsminobfkp6hba2d--
 
