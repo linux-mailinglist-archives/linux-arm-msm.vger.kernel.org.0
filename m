@@ -1,183 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-6474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6475-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 48CA58244B8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 16:13:52 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB1308244ED
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 16:28:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A8A9AB20FA0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 15:13:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6E26CB223C7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 15:28:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 984D7241E7;
-	Thu,  4 Jan 2024 15:13:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D26824206;
+	Thu,  4 Jan 2024 15:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="B2V/7Luf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ldJYBbwd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E0723764
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jan 2024 15:13:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-4b71b86ef81so185874e0c.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jan 2024 07:13:39 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDC2241E7
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jan 2024 15:27:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-40d899205c7so5232165e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jan 2024 07:27:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1704381218; x=1704986018; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Uo3GncCKNR0AkCV/1DPqjQ0hOppoX5B784xjEgiLIT0=;
-        b=B2V/7Lufa01ra+BQx/BCUI+1EvXD+HJntVatc7ihvYQb3uyRveLNHeTF++ZjMZgjOv
-         Qs5oTydMw9ifdMHzbvReE9Le8l+bbtchpxCxyYFrKiaJwJIb1sMUuVMU5bhBwdcjBROj
-         Ue0cRmcuSHRxq9X1TQ1nc50Nno34utaFim19ldizvhbLMdu1HmSRgpvHZ+3xigYGQf6J
-         C+r7UiHdsOcSxwk8f3EruqbT7NS+sEI94BEGEHztD3KvhYp02xS1hFlfLz2lh7diVcj0
-         0yw3pQPVepL0+qabCdNwTo9gONEADVQzQMNB033E+O3Dlb0VzapjBxXDOgC5Kz2Wa0To
-         Mo3A==
+        d=linaro.org; s=google; t=1704382072; x=1704986872; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gtdq0SrgO0k3fu2GrlQuTjv3qKZgCLrSfrhsu6oYX/o=;
+        b=ldJYBbwdRLZRG4AruKy4uGnHTmGgjCtXHHg0HWVgiGVOTmDN/z7ZcGx/9uxBrdUieg
+         VaXTCXB+SB6ZAziwGQP7NVcWA7EmfzPfCKUEOs5PeaFVmoTGzXF2DJJjDAoNselQzymM
+         meuR18i/0EXRTfSL5E2O/8pN8HKm84FV+y/HajE3Tub6W5sm/S5HMY03E9PiVKe6OE5N
+         ryi6P0OgxSDPma/zvHdFB2qcLA+xteA7XXIo3GFbAyA0CvUTp/V/FFKl5pHxDdLRcWJ6
+         RItKfCPxuGqQ7Hnzmhq177yN2IPNGLD3evL7MRGoKJh6ruRapHPpVT6MzpSMpL/E4g5r
+         A1Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704381218; x=1704986018;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Uo3GncCKNR0AkCV/1DPqjQ0hOppoX5B784xjEgiLIT0=;
-        b=AYSfOulGRZUpmdWvyZmqqiAfG/mppzYJXDu0rDlJhTM9womC7GjjB8zS9MsIz7m5lc
-         TuywGTkBEkaLbyHnUH/5sDZqpGEHAS7NWIanqMiJzXV30SBxfAN5II2XAeP7nqjFY6h1
-         HopubdOH8/Bx2mNNys4THj8hNUQ4kxHkXC32E6fIJyCHpwJ15bO6zRFubSY+tWj2FVTn
-         N2MsjaTXqqGT4FcVquuwQFd/QSxcLkEovDUf+qXb3Hs53J4LBTNzMhE4nqyyuUciESDm
-         whU7QejdBx+q6MRbmNdZindVW/+OIEYm3DlHfEh85GkiqXAa/RC98Nr557ea7fG1hNCF
-         s79Q==
-X-Gm-Message-State: AOJu0YzzgD2aIAcRiJSH5FJa09eVTQ5XT7DB8KpMOz4cNixtTy2xbdFI
-	DMvyIR4qd+qzlBYDQHoAszVdVUplgiyoz4HYhI9d4cDoy1THhg==
-X-Google-Smtp-Source: AGHT+IGaU5XfoSCmXhPgB9dPZjVC5ipLctZH7E/xd+njpdt3eUTn/nDydi+QSdw8aSiqRs0d+1vMZ53MS8OTwZuJ5V8=
-X-Received: by 2002:ac5:c9ab:0:b0:4b7:295d:a048 with SMTP id
- f11-20020ac5c9ab000000b004b7295da048mr619470vkm.29.1704381218190; Thu, 04 Jan
- 2024 07:13:38 -0800 (PST)
+        d=1e100.net; s=20230601; t=1704382072; x=1704986872;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gtdq0SrgO0k3fu2GrlQuTjv3qKZgCLrSfrhsu6oYX/o=;
+        b=kPKe30SybiCnAepWU33EMlqz/eU63SvUM+YC6dDtSx2WJTwQTapAUCi7U2WXICgEXB
+         KhlKG6jLNUTmQI146iRN+Xzbnfq184D7UP6UJZYbq7ATh+ERb/G91NQ+4QgbwN9lilPx
+         nqr/xwB0CyxAyqw/hf+eebtElq/lXmi8a37MDQ8iH4blfyjISu0lOG7uO/PfUfNJPYcY
+         W/YusA8q/PLtQrH4ZG09KUa3aAcluNWer9zSaVQK32IfFn6QoUzDndBnheqm0MNRZTk3
+         FM0g0PevktwjC85rOEshWUaFpnS+cAzr9rhTa8sePgs5BwgpZwMC7cHMEsx1aqMtKwPM
+         c75g==
+X-Gm-Message-State: AOJu0YyNJMY9hglWViT19eUNO9ezjeggVJvEwj1PKFw8RKViXwvKm3hs
+	DlmfQeDIuKGXQqtfGzYzTZyhW/woQsHXZg==
+X-Google-Smtp-Source: AGHT+IFmi1/jiWhUQs7PjY7Dh23Nh9Tlpcyy34mUPD3sb3aLzgD0Jvux4q5yB79GBUpKiBF7aD/FmA==
+X-Received: by 2002:a05:600c:219:b0:40d:60a5:b34e with SMTP id 25-20020a05600c021900b0040d60a5b34emr409320wmi.109.1704382072426;
+        Thu, 04 Jan 2024 07:27:52 -0800 (PST)
+Received: from [192.168.100.125] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id r16-20020a05600c35d000b0040d7b1ef521sm6122802wmq.15.2024.01.04.07.27.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Jan 2024 07:27:52 -0800 (PST)
+Message-ID: <7744ff07-80e4-4010-b7af-0d6d74ae31db@linaro.org>
+Date: Thu, 4 Jan 2024 15:27:51 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240104130123.37115-1-brgl@bgdev.pl> <20240104130123.37115-3-brgl@bgdev.pl>
- <CAA8EJpqZ8zbNcK1BsJaaoK3Fje9KhrvFvJpgdBa-US3eMhOmOw@mail.gmail.com>
-In-Reply-To: <CAA8EJpqZ8zbNcK1BsJaaoK3Fje9KhrvFvJpgdBa-US3eMhOmOw@mail.gmail.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Thu, 4 Jan 2024 16:13:27 +0100
-Message-ID: <CAMRc=McmhPMb9bykwKXmQ-1DL4sJW+7caXkxUq=8v16hT1k_oA@mail.gmail.com>
-Subject: Re: [RFC 2/9] arm64: dts: qcom: qrb5165-rb5: describe the WLAN module
- of QCA6390
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Kalle Valo <kvalo@kernel.org>, "David S . Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Heiko Stuebner <heiko@sntech.de>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Chris Morgan <macromorgan@hotmail.com>, 
-	Linus Walleij <linus.walleij@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Arnd Bergmann <arnd@arndb.de>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	=?UTF-8?B?TsOtY29sYXMgRiAuIFIgLiBBIC4gUHJhZG8=?= <nfraprado@collabora.com>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Peng Fan <peng.fan@nxp.com>, 
-	Robert Richter <rrichter@amd.com>, Dan Williams <dan.j.williams@intel.com>, 
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>, Terry Bowman <terry.bowman@amd.com>, 
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>, 
-	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
-	Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>, 
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-wireless@vger.kernel.org, 
-	netdev@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] arm64: dts: qcom: sc8280xp: Add CAMSS core dtsi
+ support
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring
+ <robh+dt@kernel.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240103-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v1-0-abacaa63a961@linaro.org>
+ <360ff767-e48f-4a02-a2cf-f6c99048fd93@linaro.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <360ff767-e48f-4a02-a2cf-f6c99048fd93@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jan 4, 2024 at 2:44=E2=80=AFPM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Thu, 4 Jan 2024 at 15:03, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
-> >
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > Describe the ath11k WLAN on-board the QCA6390 module. Include the
-> > relevant regulators and the enable GPIO.
-> >
-> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 24 ++++++++++++++++++++++++
-> >  1 file changed, 24 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot=
-/dts/qcom/qrb5165-rb5.dts
-> > index cd0db4f31d4a..721f86af952b 100644
-> > --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> > +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> > @@ -734,6 +734,22 @@ &pcie0_phy {
-> >         vdda-pll-supply =3D <&vreg_l9a_1p2>;
-> >  };
-> >
-> > +&pcieport0 {
-> > +       wifi@0 {
-> > +               compatible =3D "pci17cb,1101";
-> > +               reg =3D <0x10000 0x0 0x0 0x0 0x0>;
-> > +
-> > +               pinctrl-names =3D "default";
-> > +               pinctrl-0 =3D <&wlan_en_state>;
-> > +
-> > +               enable-gpios =3D <&tlmm 20 GPIO_ACTIVE_HIGH>;
-> > +
-> > +               vddpmu-supply =3D <&vreg_s2f_0p95>;
-> > +               vddpcie1-supply =3D <&vreg_s8c_1p3>;
-> > +               vddpcie2-supply =3D <&vreg_s5a_1p9>;
->
-> If I remember correctly, qca6390 has at least 8 power supplies AON,
-> PMU, 3xRFA, 2xPCIe and VDDIO.
->
-> Moreover, these bindings do not solve another problem: the PMU is
-> shared between WiFi and BT parts. For the next gen (WCN6855) this
-> becomes even more important, see the code in msm-5.10 which makes sure
-> that there is a proper time between one of the units going down and
-> another one being powered on.
->
+On 04/01/2024 12:42, Krzysztof Kozlowski wrote:
+> On 03/01/2024 03:18, Bryan O'Donoghue wrote:
+>> This series adds the yaml, CAMSS and CCI dts definitions for the sc8280xp.
+>>
+>> 4 x CCI master busses
+>> 4 x VFE
+>> 4 x VFE Lite
+>> 4 x CSID
+>> 4 x CSIPHY
+>>
+>> Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-24-01-02-sc8280xp-camss-core-dtsi
+>>
+>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>> ---
+>> Bryan O'Donoghue (3):
+>>        media: dt-bindings: media: camss: Add qcom,sc8280xp-camss binding
+>>        arm64: dts: qcom: sc8280xp: camss: Add CCI definitions
+>>        arm64: dts: qcom: sc8280xp: camss: Add CAMSS block definition
+>>
+>>   .../bindings/media/qcom,sc8280xp-camss.yaml        | 512 +++++++++++++++++++
+>>   arch/arm64/boot/dts/qcom/sc8280xp.dtsi             | 563 +++++++++++++++++++++
+>>   2 files changed, 1075 insertions(+)
+>> ---
+>> base-commit: ab0b3e6ef50d305278b1971891cf1d82ab050b35
+> 
+> BTW, this also does not help, when used on random commit or random tree:
+> 
+> $ git show ab0b3e6ef50d305278b1971891cf1d82ab050b35
+> fatal: bad object ab0b3e6ef50d305278b1971891cf1d82ab050b35
+> 
+> Best regards,
+> Krzysztof
+> 
 
-Unified, shared power sequencing for this type of loosely coupled MFD
-devices is something I have in mind and that will be orthogonal to
-this. It will come on top of the PCIe power sequencing driver. I
-wanted to address a simpler issue first.
+That's a b4 thing I think, not sure what it uses it for.
 
-Bartosz
-
-> > +       };
-> > +};
-> > +
-> >  &pcie1 {
-> >         status =3D "okay";
-> >  };
-> > @@ -1303,6 +1319,14 @@ sdc2_card_det_n: sd-card-det-n-state {
-> >                 function =3D "gpio";
-> >                 bias-pull-up;
-> >         };
-> > +
-> > +       wlan_en_state: wlan-default-state {
-> > +               pins =3D "gpio20";
-> > +               function =3D "gpio";
-> > +               drive-strength =3D <16>;
-> > +               output-low;
-> > +               bias-pull-up;
-> > +       };
-> >  };
-> >
-> >  &uart6 {
-> > --
-> > 2.40.1
-> >
-> >
->
->
-> --
-> With best wishes
-> Dmitry
+---
+bod
 
