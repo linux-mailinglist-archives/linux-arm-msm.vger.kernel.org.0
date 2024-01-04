@@ -1,163 +1,272 @@
-Return-Path: <linux-arm-msm+bounces-6418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F26DE823D2E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 09:08:47 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E98C823D3B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 09:15:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 62AA81F25545
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 08:08:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E3236287B29
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 08:15:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60E78200DB;
-	Thu,  4 Jan 2024 08:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4150020300;
+	Thu,  4 Jan 2024 08:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jvN769tr"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="ZB/5N7iV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D3F200C1
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jan 2024 08:08:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-50e7d6565b5so249678e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jan 2024 00:08:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704355709; x=1704960509; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=b/PGdF3B3iwuG0k3TXxzXDW9ol0S69WmnY8YmNGg6IE=;
-        b=jvN769tr24gS2Lw/Ac92JDgNSL3S5olVF4/bSE/LlAw6FwYhlwKkHqY7BXIv9yQoFB
-         p8Ylh7IAr0yEyAzVujGFa9eNNRgccbVz2Ie95bd4gpI4uEdwSxZCWpwaWCp6Yi2VAfOM
-         ySI2Vc0b7Q04uVphlwWCmrdT1akvUVYU7eaNObGn6Bm3I0fbNsehKVD48gBTcqxxKpZx
-         N3BElRrW9zavqo0J2we3FgM2rLWri+xxUJyf4F0yZVk5m8IkM/hTP7bzYKlwEOo3K+4f
-         EQ3JP278agOep3R1c2nOo42F7AoNj9jZnJhTJ96Kwvp0Qiqs1XVcrKQuHpncrfbk8oWh
-         bnJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704355709; x=1704960509;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=b/PGdF3B3iwuG0k3TXxzXDW9ol0S69WmnY8YmNGg6IE=;
-        b=Pg9K67oQjqkEe4eYJhCngsSDVjlrfMQSN9dYalKjM9OtgxoHToPmtmuOjZf9ZOaJR0
-         0u9xZEYTrI8oSrLRPIb8qVpQ0s44XG4i5qqFXil/0b1tGVaXSVSdpqIdAWZ7kIJ9eBUq
-         zhEUgp2Yv/4KavrJW2OB0Hiw07CuL2jiu55Qm31Kn38UJeghrCaRa1+eaemzlMzXT3zR
-         t3C2GUNSTLNXdgm1e459VaBTjUSbwJufNppIbsmvaPi8BG8bBHCq3Kc1czV1wH0ODN/R
-         759isQsoAWhTQ6pOZIhZdxFAEojFdlNuNH9oZi35v9XZxEXCw/M2+0h5qiiksoZWOrx/
-         Tcdg==
-X-Gm-Message-State: AOJu0YyQ/akq5ofJaxCRZj6J5MiAIQn0tATjNYfT6mG8pEanEqxQqZB+
-	xoU00xZTT5SfCOUKJRB3YgnHaj0oToAxxg==
-X-Google-Smtp-Source: AGHT+IEzPIXCpC5wNAhe/Kl6nJVFzUV7wggmA6I9V4zMkVgC9G7SBO1wv6hnkExB3aIpDRWSX0USDQ==
-X-Received: by 2002:a05:6512:34ce:b0:50e:7c9b:9e20 with SMTP id w14-20020a05651234ce00b0050e7c9b9e20mr116426lfr.19.1704355709624;
-        Thu, 04 Jan 2024 00:08:29 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id u23-20020aa7d0d7000000b005533a9934b6sm18460918edo.54.2024.01.04.00.08.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Jan 2024 00:08:29 -0800 (PST)
-Message-ID: <8aea46d8-0ecd-4f16-92a2-96ec5ae07240@linaro.org>
-Date: Thu, 4 Jan 2024 09:08:25 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE532031B;
+	Thu,  4 Jan 2024 08:14:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1704356094;
+	bh=ncd3XYdroNJ1ztYRtxUH+GhX1SePVlp2/xSXN9MvZ2g=;
+	h=From:To:Cc:Subject:Date:From;
+	b=ZB/5N7iVC4SLBbk6KhzT9dXGCjW4qDdrMHdOJLvYYiJAu/sIp1nme8mEyDmbyN+y4
+	 OT9fV4XkAav4hdMqQlLfaNJa/ClRbEPjI4Y17GBAzkcYjUrut25KgrGf9lPfS7kp+b
+	 rRLd538wVdHJxKCmQ8CjlQO5rstxaNWt/ufRWx8Q2W3ziygRC3672h/NgZx7Eein+0
+	 h0XseszQ8r2/xxxckwdfZJN73Vf8SDVcfWtqj05X55Tiu7g7W/EXMpyW3CaxP1ZDoD
+	 3dnz45z8Y0WS0g+nGXlvZ94m1mdC3iOfeG6YwmIfYU8C5avi0XDCAwsRb1DPaKgCvP
+	 g09xN8Cyun6bA==
+Received: from localhost.localdomain (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: vignesh)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id D77A33780629;
+	Thu,  4 Jan 2024 08:14:48 +0000 (UTC)
+From: Vignesh Raman <vignesh.raman@collabora.com>
+To: linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org
+Cc: airlied@gmail.com,
+	daniel@ffwll.ch,
+	daniels@collabora.com,
+	helen.koike@collabora.com,
+	david.heidelberg@collabora.com,
+	guilherme.gallo@collabora.com,
+	sergi.blanch.torne@collabora.com,
+	robdclark@gmail.com,
+	quic_abhinavk@quicinc.com,
+	dmitry.baryshkov@linaro.org,
+	sean@poorly.run,
+	marijn.suijten@somainline.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v1] drm/ci: add sc7180-trogdor-kingoftown
+Date: Thu,  4 Jan 2024 13:44:35 +0530
+Message-Id: <20240104081435.1936059-1-vignesh.raman@collabora.com>
+X-Mailer: git-send-email 2.40.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] dt-bindings: iio/adc: Move QCOM ADC bindings to
- iio/adc folder
-Content-Language: en-US
-To: Jishnu Prakash <quic_jprakash@quicinc.com>, jic23@kernel.org,
- robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
- andersson@kernel.org, konrad.dybcio@linaro.org, lee@kernel.org,
- andriy.shevchenko@linux.intel.com, daniel.lezcano@linaro.org,
- dmitry.baryshkov@linaro.org
-Cc: lars@metafoo.de, luca@z3ntu.xyz, marijn.suijten@somainline.org,
- agross@kernel.org, sboyd@kernel.org, rafael@kernel.org, rui.zhang@intel.com,
- lukasz.luba@arm.com, linus.walleij@linaro.org, quic_subbaram@quicinc.com,
- quic_collinsd@quicinc.com, quic_amelende@quicinc.com,
- quic_kamalw@quicinc.com, kernel@quicinc.com, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org,
- linux-iio@vger.kernel.org, linux-pm@vger.kernel.org,
- devicetree@vger.kernel.org, cros-qcom-dts-watchers@chromium.org,
- Rob Herring <robh@kernel.org>
-References: <20231231171237.3322376-1-quic_jprakash@quicinc.com>
- <20231231171237.3322376-2-quic_jprakash@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231231171237.3322376-2-quic_jprakash@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 31/12/2023 18:12, Jishnu Prakash wrote:
-> There are several files containing QCOM ADC macros for channel names
-> right now in the include/dt-bindings/iio folder. Since all of these
-> are specifically for adc, move the files to the
-> include/dt-bindings/iio/adc folder.
-> 
-> Also update all affected devicetree and driver files to fix compilation
-> errors seen with this move and update documentation files to fix
-> dtbinding check errors for the same.
-> 
-> Changes since v2:
-> - Updated some more new devicetree files requiring this change.
+Add job that executes the IGT test suite for sc7180-trogdor-kingoftown.
+This commit also updates xfails for sc7180-trogdor-lazor-limozeen.
 
-Changelog goes under ---
+Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
+---
 
-> 
-> Acked-by: Lee Jones <lee@kernel.org>
-> Acked-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Jishnu Prakash <quic_jprakash@quicinc.com>
+See pipeline: https://gitlab.freedesktop.org/vigneshraman/linux/-/pipelines/1069934
 
-No dependencies mentioned and this has build failures. Please test your
-patches before sending.
+---
+ drivers/gpu/drm/ci/build.sh                   |  1 +
+ drivers/gpu/drm/ci/test.yml                   | 25 ++++++++++++----
+ .../gpu/drm/ci/xfails/msm-sc7180-fails.txt    | 30 -------------------
+ .../gpu/drm/ci/xfails/msm-sc7180-flakes.txt   | 17 -----------
+ .../gpu/drm/ci/xfails/msm-sc7180-skips.txt    |  7 -----
+ .../msm-sc7180-trogdor-kingoftown-fails.txt   | 17 +++++++++++
+ ...sm-sc7180-trogdor-lazor-limozeen-fails.txt | 17 +++++++++++
+ 7 files changed, 55 insertions(+), 59 deletions(-)
+ delete mode 100644 drivers/gpu/drm/ci/xfails/msm-sc7180-fails.txt
+ delete mode 100644 drivers/gpu/drm/ci/xfails/msm-sc7180-flakes.txt
+ delete mode 100644 drivers/gpu/drm/ci/xfails/msm-sc7180-skips.txt
+ create mode 100644 drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-fails.txt
+ create mode 100644 drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-fails.txt
 
-Best regards,
-Krzysztof
+diff --git a/drivers/gpu/drm/ci/build.sh b/drivers/gpu/drm/ci/build.sh
+index 97ff43759b91..331a61e0d25a 100644
+--- a/drivers/gpu/drm/ci/build.sh
++++ b/drivers/gpu/drm/ci/build.sh
+@@ -26,6 +26,7 @@ if [[ "$KERNEL_ARCH" = "arm64" ]]; then
+     DEVICE_TREES+=" arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-juniper-sku16.dtb"
+     DEVICE_TREES+=" arch/arm64/boot/dts/mediatek/mt8192-asurada-spherion-r0.dtb"
+     DEVICE_TREES+=" arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dtb"
++    DEVICE_TREES+=" arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtb"
+ elif [[ "$KERNEL_ARCH" = "arm" ]]; then
+     GCC_ARCH="arm-linux-gnueabihf"
+     DEBIAN_ARCH="armhf"
+diff --git a/drivers/gpu/drm/ci/test.yml b/drivers/gpu/drm/ci/test.yml
+index a079f3632a95..0c7920c0254d 100644
+--- a/drivers/gpu/drm/ci/test.yml
++++ b/drivers/gpu/drm/ci/test.yml
+@@ -82,20 +82,35 @@
+   tags:
+     - $RUNNER_TAG
+ 
+-msm:sc7180:
++.msm-sc7180:
+   extends:
+     - .lava-igt:arm64
+   stage: msm
+-  parallel: 4
+   variables:
+     DRIVER_NAME: msm
+-    DEVICE_TYPE: sc7180-trogdor-lazor-limozeen
+-    DTB: sc7180-trogdor-lazor-limozeen-nots-r5
+     BOOT_METHOD: depthcharge
+     KERNEL_IMAGE_TYPE: ""
+-    GPU_VERSION: sc7180
++
++msm:sc7180-trogdor-lazor-limozeen:
++  extends:
++    - .msm-sc7180
++  parallel: 4
++  variables:
++    DEVICE_TYPE: sc7180-trogdor-lazor-limozeen
++    DTB: sc7180-trogdor-lazor-limozeen-nots-r5
++    GPU_VERSION: ${DEVICE_TYPE}
+     RUNNER_TAG: mesa-ci-x86-64-lava-sc7180-trogdor-lazor-limozeen
+ 
++msm:sc7180-trogdor-kingoftown:
++  extends:
++    - .msm-sc7180
++  parallel: 6
++  variables:
++    DEVICE_TYPE: sc7180-trogdor-kingoftown
++    DTB: sc7180-trogdor-kingoftown
++    GPU_VERSION: ${DEVICE_TYPE}
++    RUNNER_TAG: mesa-ci-x86-64-lava-sc7180-trogdor-kingoftown
++
+ msm:apq8016:
+   extends:
+     - .baremetal-igt-arm64
+diff --git a/drivers/gpu/drm/ci/xfails/msm-sc7180-fails.txt b/drivers/gpu/drm/ci/xfails/msm-sc7180-fails.txt
+deleted file mode 100644
+index f71166a57731..000000000000
+--- a/drivers/gpu/drm/ci/xfails/msm-sc7180-fails.txt
++++ /dev/null
+@@ -1,30 +0,0 @@
+-kms_color@ctm-0-25,Fail
+-kms_color@ctm-0-50,Fail
+-kms_color@ctm-0-75,Fail
+-kms_color@ctm-blue-to-red,Fail
+-kms_color@ctm-green-to-red,Fail
+-kms_color@ctm-negative,Fail
+-kms_color@ctm-red-to-blue,Fail
+-kms_color@ctm-signed,Fail
+-kms_cursor_legacy@cursor-vs-flip-toggle,Fail
+-kms_cursor_legacy@cursor-vs-flip-varying-size,Fail
+-kms_cursor_legacy@cursorA-vs-flipA-atomic-transitions,Crash
+-kms_flip@flip-vs-modeset-vs-hang,Fail
+-kms_flip@flip-vs-panning-vs-hang,Fail
+-kms_pipe_crc_basic@compare-crc-sanitycheck-nv12,Fail
+-kms_plane_alpha_blend@alpha-7efc,Fail
+-kms_plane_alpha_blend@coverage-7efc,Fail
+-kms_plane_alpha_blend@coverage-vs-premult-vs-constant,Fail
+-kms_plane_alpha_blend@pipe-A-alpha-7efc,Fail
+-kms_plane_alpha_blend@pipe-A-coverage-7efc,Fail
+-kms_plane_alpha_blend@pipe-A-coverage-vs-premult-vs-constant,Fail
+-kms_plane_alpha_blend@pipe-B-alpha-7efc,Fail
+-kms_plane_alpha_blend@pipe-B-alpha-basic,Fail
+-kms_plane_alpha_blend@pipe-B-alpha-opaque-fb,Fail
+-kms_plane_alpha_blend@pipe-B-constant-alpha-max,Fail
+-kms_plane_alpha_blend@pipe-B-constant-alpha-mid,Fail
+-kms_plane_alpha_blend@pipe-B-coverage-7efc,Fail
+-kms_plane_alpha_blend@pipe-B-coverage-vs-premult-vs-constant,Fail
+-kms_rmfb@close-fd,Fail
+-kms_universal_plane@disable-primary-vs-flip-pipe-b,Fail
+-kms_universal_plane@universal-plane-pipe-B-sanity,Fail
+diff --git a/drivers/gpu/drm/ci/xfails/msm-sc7180-flakes.txt b/drivers/gpu/drm/ci/xfails/msm-sc7180-flakes.txt
+deleted file mode 100644
+index 04730044ed12..000000000000
+--- a/drivers/gpu/drm/ci/xfails/msm-sc7180-flakes.txt
++++ /dev/null
+@@ -1,17 +0,0 @@
+-kms_color@ctm-0-25
+-kms_color@ctm-0-50
+-kms_color@ctm-0-75
+-kms_color@ctm-blue-to-red
+-kms_color@ctm-green-to-red
+-kms_color@ctm-negative
+-kms_color@ctm-red-to-blue
+-kms_color@ctm-signed
+-kms_flip@flip-vs-modeset-vs-hang
+-kms_flip@flip-vs-panning-vs-hang
+-kms_plane@pixel-format
+-kms_plane@pixel-format-source-clamping
+-kms_plane@plane-position-covered
+-kms_plane@plane-position-hole
+-kms_plane@plane-position-hole-dpms
+-kms_writeback@writeback-fb-id
+-kms_writeback@writeback-invalid-parameters
+diff --git a/drivers/gpu/drm/ci/xfails/msm-sc7180-skips.txt b/drivers/gpu/drm/ci/xfails/msm-sc7180-skips.txt
+deleted file mode 100644
+index e59a2fddfde0..000000000000
+--- a/drivers/gpu/drm/ci/xfails/msm-sc7180-skips.txt
++++ /dev/null
+@@ -1,7 +0,0 @@
+-# Suspend to RAM seems to be broken on this machine
+-.*suspend.*
+-
+-# Test incorrectly assumes that CTM support implies gamma/degamma
+-# LUT support.  None of the subtests handle the case of only having
+-# CTM support
+-#kms_color.*
+diff --git a/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-fails.txt b/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-fails.txt
+new file mode 100644
+index 000000000000..7e4d8744fcc6
+--- /dev/null
++++ b/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-fails.txt
+@@ -0,0 +1,17 @@
++kms_color@ctm-0-25,Fail
++kms_color@ctm-0-50,Fail
++kms_color@ctm-0-75,Fail
++kms_color@ctm-blue-to-red,Fail
++kms_color@ctm-green-to-red,Fail
++kms_color@ctm-negative,Fail
++kms_color@ctm-red-to-blue,Fail
++kms_color@ctm-signed,Fail
++kms_cursor_legacy@cursor-vs-flip-toggle,Fail
++kms_cursor_legacy@cursor-vs-flip-varying-size,Fail
++kms_flip@flip-vs-modeset-vs-hang,Fail
++kms_flip@flip-vs-panning-vs-hang,Fail
++kms_pipe_crc_basic@compare-crc-sanitycheck-nv12,Fail
++kms_plane_alpha_blend@alpha-7efc,Fail
++kms_plane_alpha_blend@coverage-7efc,Fail
++kms_plane_alpha_blend@coverage-vs-premult-vs-constant,Fail
++kms_rmfb@close-fd,Fail
+diff --git a/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-fails.txt b/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-fails.txt
+new file mode 100644
+index 000000000000..7e4d8744fcc6
+--- /dev/null
++++ b/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-fails.txt
+@@ -0,0 +1,17 @@
++kms_color@ctm-0-25,Fail
++kms_color@ctm-0-50,Fail
++kms_color@ctm-0-75,Fail
++kms_color@ctm-blue-to-red,Fail
++kms_color@ctm-green-to-red,Fail
++kms_color@ctm-negative,Fail
++kms_color@ctm-red-to-blue,Fail
++kms_color@ctm-signed,Fail
++kms_cursor_legacy@cursor-vs-flip-toggle,Fail
++kms_cursor_legacy@cursor-vs-flip-varying-size,Fail
++kms_flip@flip-vs-modeset-vs-hang,Fail
++kms_flip@flip-vs-panning-vs-hang,Fail
++kms_pipe_crc_basic@compare-crc-sanitycheck-nv12,Fail
++kms_plane_alpha_blend@alpha-7efc,Fail
++kms_plane_alpha_blend@coverage-7efc,Fail
++kms_plane_alpha_blend@coverage-vs-premult-vs-constant,Fail
++kms_rmfb@close-fd,Fail
+-- 
+2.40.1
 
 
