@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6477-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6478-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 344F082453D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 16:44:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id ECA62824543
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 16:44:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A76372826D2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 15:44:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8D4672835CA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 15:44:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5A682421A;
-	Thu,  4 Jan 2024 15:44:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8496D2421D;
+	Thu,  4 Jan 2024 15:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UPM6Mi0u"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wLJpEuyN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3449A241FD
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jan 2024 15:44:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E915824217
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jan 2024 15:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a2814fa68eeso53980766b.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jan 2024 07:44:11 -0800 (PST)
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-555144cd330so875503a12.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jan 2024 07:44:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704383050; x=1704987850; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1704383091; x=1704987891; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=FIse23e7h0zCx/8fVm5yx266lHNMUYxbBuafezKM2vM=;
-        b=UPM6Mi0uw4GmZfC6K7a6Q+UqgWyYHWGRBTnz2CrkzXOoLdpF+oajpjuFhbxWxN7rim
-         wPcCaU8g5INWRO7prxmBCGqbjWGnvPZ12zfLHwbBAGws4G0LwMqhg9auHEu9Hog866YF
-         NamJa+WsDjtlKux7fX6sv2kd3jyGRbpZw7833/ZDr/cG3lT/wAVuU2ytpECh7tl9KbMF
-         D5BxxBMxjj+cYamzrBfuwkWW58O/QjzOnw1PJ+DsIqecqcrsGOk8V2ogBSvdYIWEfMiZ
-         wcfkVhsXs4NRvzmolbCuKYTjrI9qzJACbuDsYOtMxAqwCEUkkWKcFtMeL2JgS6YpHtls
-         cGKQ==
+        bh=Tubds6RL8BfJvxnz4IGYcV/XELCKRxYk4kk1CPB39m0=;
+        b=wLJpEuyNNaQ2uK0rw8XaEw/N95r4MBf5A2TJuV0PI2lg7SK4kw3HoaLg3tkKbRbLmV
+         qVqRTxScknBwM1L2gjOmC5LJk3fIDKkkYGI46sihLb5wHS72Z+b4ibrlqTOEbagXM3bs
+         onQKQnE2CoeX7zaPKuyxzLrnfSBGwd6czYGOnhvStp2VyuE8dzR7NLfwNPozbHGABWpp
+         Pqq81bu3HgIWEehJN+2YzsSzUjG/JFksW9xapoalVYyvZE0kScfB+oL7nq/E5bI8tDz/
+         TrNtSW1K7gELr2ciUKvYQFQrNRhEQnShuLG19X+tfHq0L3QT624nC1VojzDn6srA6EKw
+         dhVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704383050; x=1704987850;
+        d=1e100.net; s=20230601; t=1704383091; x=1704987891;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FIse23e7h0zCx/8fVm5yx266lHNMUYxbBuafezKM2vM=;
-        b=DV4UtKaZbDVqZXNsiVfW5TZJiZz7Y6uUmQ/09DGwlXzihye2FYSFnzzH33pUfD0K0x
-         kr6xNg5beuCJK5sDv9ho6Gmw3LPIE12L0OicrYy5kWVq1fu9Zr1aNZcfVqk5mI3iGy4A
-         YVMUGb1N1ly1FRwTkH21s0pLx6jJLT2NzRPtIqCvcnpjyO6lrfMM3UzHzoIpjzJ3OoQp
-         EIxuios2GZaI0WaVHuY1ujARjIkyxc1YvCvNO5BHTyYWdqFX4jSHJXjTrNqO9rcXeigC
-         ABNFejWkUk0oWynN/E7YiNOzhRU9mFO3Av10ZVJU08515uf+Cc01+guwwxZBtn7UgqQg
-         qkvw==
-X-Gm-Message-State: AOJu0Yzq9Oi8J9oz8wn67pAKeE55Qh+V8osYmWxmbnpHOej++D6s92B2
-	o2+V5GSVXm6oisvBmsyTdOBrvXLIxTpy1A==
-X-Google-Smtp-Source: AGHT+IGj1h1BkOcjE+uANRjE3W+IvzcZpRTIp7iwNVlmwOljqH46mPQ2lN3cUzzUy/aoCqRi29RZAg==
-X-Received: by 2002:a17:906:7fc7:b0:a28:9ec6:2fe5 with SMTP id r7-20020a1709067fc700b00a289ec62fe5mr305516ejs.77.1704383050512;
-        Thu, 04 Jan 2024 07:44:10 -0800 (PST)
+        bh=Tubds6RL8BfJvxnz4IGYcV/XELCKRxYk4kk1CPB39m0=;
+        b=mtYUqSO8+jYuJiGCxsMSa3yLCDnzmh0U1HyWVJIIpjaIXwA80mjwk0UQICCLWZzUBK
+         jLXmEbZTrmuBZ1H5wvsIViJDyll8wcIHjUTC/Y8fsMxSJPS+uwufrWjk6mG+YtLvK0P9
+         J0YqbBF5pbdxK9I4v1E5yBUz4lhzFdchOXLLE3sqbuweaNKZQ1Ua/qcLzibLbA678Hqq
+         ua6EJ/3s+8eW70XXQe4uavaiq1u/RcBVHAFDS+EaFofVooZfuJdodICbuqH5wHGQwfUD
+         RMHNOKsbpiQz+9YNh7z69+i7BLBlvjFKnytqxWBV5nsyySvbKQiz3ifoWseIfayYnvwd
+         4X1w==
+X-Gm-Message-State: AOJu0Yybuux7qUuQzKkllDq8+4jaNtysyvW3+vhtNR1ErX3rWrfiFcG2
+	x2xfDDDiuxykxbs53hOLakW7cejb1yY1Lw==
+X-Google-Smtp-Source: AGHT+IEmJ49VDkZN8QpWTiAWHH7AcXY9ND/OMm7IkK9llm9jh3JKs2nWm/KV0Ahe49nCtP21V0ZWsQ==
+X-Received: by 2002:a17:906:229a:b0:a28:b71d:5e3a with SMTP id p26-20020a170906229a00b00a28b71d5e3amr467584eja.67.1704383091216;
+        Thu, 04 Jan 2024 07:44:51 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id wi22-20020a170906fd5600b00a2693ce340csm13898856ejb.59.2024.01.04.07.44.09
+        by smtp.gmail.com with ESMTPSA id wi22-20020a170906fd5600b00a2693ce340csm13898856ejb.59.2024.01.04.07.44.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Jan 2024 07:44:10 -0800 (PST)
-Message-ID: <f2a8f12d-1f1a-4717-b837-69c01e57c677@linaro.org>
-Date: Thu, 4 Jan 2024 16:44:08 +0100
+        Thu, 04 Jan 2024 07:44:50 -0800 (PST)
+Message-ID: <d4f79e6c-2803-4ffd-b8b9-74b902597aad@linaro.org>
+Date: Thu, 4 Jan 2024 16:44:49 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,7 +66,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] clk: qcom: gcc-sm8150: Update the gcc resets
+Subject: Re: [PATCH 1/3] clk: qcom: gcc-sm8150: Register QUPv3 RCGs for DFS on
+ SM8150
 Content-Language: en-US
 To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
@@ -83,7 +84,7 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  Imran Shaik <quic_imrashai@quicinc.com>,
  Jagadeesh Kona <quic_jkona@quicinc.com>
 References: <20240104-sm8150-dfs-support-v1-0-a5eebfdc1b12@quicinc.com>
- <20240104-sm8150-dfs-support-v1-3-a5eebfdc1b12@quicinc.com>
+ <20240104-sm8150-dfs-support-v1-1-a5eebfdc1b12@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -129,18 +130,18 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240104-sm8150-dfs-support-v1-3-a5eebfdc1b12@quicinc.com>
+In-Reply-To: <20240104-sm8150-dfs-support-v1-1-a5eebfdc1b12@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 04/01/2024 15:23, Satya Priya Kakitapalli wrote:
-> Add all the available resets for the global clock controller
-> on sm8150.
+> QUPv3 clocks support DFS and thus register the RCGs which require
+> support for the same.
 > 
 > Fixes: 2a1d7eb854bb ("clk: qcom: gcc: Add global clock controller driver for SM8150")
 
-If this is a fix, then please describe observable issue and how users
-are affected. See stable kernel rules document.
+Please describe user-observable issues you are fixing here. It's not
+obvious to me.
 
 Best regards,
 Krzysztof
