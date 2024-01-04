@@ -1,168 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-6414-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6415-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 511B6823C57
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 07:46:46 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1CF2F823CC8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 08:34:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DEC7D287721
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 06:46:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3517B1C237D0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 07:34:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E78F1CAAA;
-	Thu,  4 Jan 2024 06:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AB6B1DFF2;
+	Thu,  4 Jan 2024 07:34:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MkgD6ie0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tG995bZ7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302B11DFE2;
-	Thu,  4 Jan 2024 06:46:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA301C433C7;
-	Thu,  4 Jan 2024 06:46:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704350802;
-	bh=61el/WiI879t1DHghJI3lgj4viEgX+BHLxFEmwNMI3A=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MkgD6ie0F7fL9lvgos6WTMczUuxFkFPlOGeSWINTlIPDW72drlAjtFo/uNjWlGOG0
-	 Wi9ggcj4TJ4NfMA7t8nxQ0TLf7DJ6O7wP3lNx5X79Cg4cHeJACNF+Q91Jsu5nSCUAn
-	 f64sdVYlLmfXSOzW0jxTZXUR7Pj6Yyz4h8BZ8GLYpJUsmV1CiIsFqAS8dXOZhTiWAs
-	 TnNqv8Lpaz7war2QcMEmQmie42h6JZktaBoN41LjFkmG3ZGwOHfS9gTdIaN4WP16sz
-	 uXE8Xh+fQCQe2jLr9OBydAUGHUeNDiENrVa9JXaduAY+I5XmmQBtcbfOc8gS+PUjCq
-	 dS2l2OT+/jDaA==
-Date: Thu, 4 Jan 2024 12:16:36 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc: quic_pkanojiy@quicinc.com, quic_carlv@quicinc.com, mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: host: Read PK HASH dynamically
-Message-ID: <20240104064636.GC3031@thinkpad>
-References: <20231208165938.1340587-1-quic_jhugo@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A00B200A6
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jan 2024 07:33:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-556ab8b85e3so329391a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jan 2024 23:33:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704353637; x=1704958437; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=DP6M+yDlXDj3yagLaZ2w6HOzz3bnG4toPFPTwIxDIE8=;
+        b=tG995bZ7YixVIDyHIQO3Td8nxkk64GUkbUGNFfSRngtHgHgd0mx3NxgYFEgGLXwE8S
+         i9RJkSSUJhQspjn14xeEF2ZLyw+jhmU8YoLXeyCbyQkyCxPMwvD+pvw+7+M71Uwkx4fr
+         Rm7u1VY0vtSqGMtP3qRtCLVymHhyz0MpeX38M/ZyR2calLKsFJpGORfaWZDXWHkud+78
+         /Kdhpge7TOhZVCGplZUbmctmZBI/MDa3BeKXDRsd9GShP2/T3CM5nVIrPp9YikU2uQZ0
+         zPkOiEYRdougWkctr9E1e9kfpJBIT2IrnRwx0Un2azu6w35/H6egkITLn4mwgzJy3lsS
+         BViA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704353637; x=1704958437;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DP6M+yDlXDj3yagLaZ2w6HOzz3bnG4toPFPTwIxDIE8=;
+        b=Trg5xIyavhx6/dPPGmt9JchKMgDi0ogkT02uq4MyO9YtwdwPqOlR1pV1f3SkCzdNWn
+         cUHtg6XTJCscJ3XjQ3CqcJUotdz1WVnuo9WTcarybR9wWL727SUunA41l5B+F+UMoBai
+         b5T87Nlz5Hz6cfvSd7wlNH2gcvkD8TagdfR5bG54e6H3ZcyQiiNINQwnV+yr4OqbPpvy
+         aGFinDaFHp9m3iS4CkDsEGBD/s288DwBFV4c7Jww8BjhxXVpJRrNxMTpQLYZdn8I7jSw
+         82HoTAe8RGrQIpz5GqVNnCLn8lEHPEt1HXc2io+EI0YN9266/mHcHDpb3WZEzC3yO71s
+         AUkw==
+X-Gm-Message-State: AOJu0YzT6bLsvPJzsZtYFpTsnlC8p5eDytNUd/cPf6HMvUCaL0PeyWPD
+	Dl3ntHQx3iLyGIunufG1sIpBkPCLvPKBdg==
+X-Google-Smtp-Source: AGHT+IFHJbTkMKbaRRRuUG4J5MwvcTPbcC2ULkVPb5k3m+oW6sp/GtFnGeon3VCpyur6EUd/QUacRw==
+X-Received: by 2002:a05:6402:30b2:b0:557:c42:977 with SMTP id df18-20020a05640230b200b005570c420977mr105466edb.1.1704353636915;
+        Wed, 03 Jan 2024 23:33:56 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.27])
+        by smtp.gmail.com with ESMTPSA id cq8-20020a056402220800b0055507ee70a4sm12374444edb.23.2024.01.03.23.33.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Jan 2024 23:33:56 -0800 (PST)
+Message-ID: <3542a18d-0fc4-40b5-8f16-c70cd0dde5b8@linaro.org>
+Date: Thu, 4 Jan 2024 08:33:54 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20231208165938.1340587-1-quic_jhugo@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/9] dt-bindings: usb: qcom,dwc3: Fix SDM660 clock
+ description
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230721-topic-rpm_clk_cleanup-v3-0-a66e698932e3@linaro.org>
+ <20230721-topic-rpm_clk_cleanup-v3-1-a66e698932e3@linaro.org>
+Content-Language: en-US
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20230721-topic-rpm_clk_cleanup-v3-1-a66e698932e3@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Dec 08, 2023 at 09:59:38AM -0700, Jeffrey Hugo wrote:
-> The OEM PK HASH registers in the BHI region are read once during firmware
-> load (boot), cached, and displayed on demand via sysfs. This has a few
-> problems - if firmware load is skipped, the registers will not be read and
-> if the register values change over the life of the device the local cache
-> will be out of sync.
+On 03/01/2024 21:15, Konrad Dybcio wrote:
+> SDM660 was abusingly referencing one of the internal bus clocks, that
+> were recently dropped from Linux (because the original implementation
+> did not make much sense), circumventing the interconnect framework.
 > 
-> Qualcomm Cloud AI 100 can expose both these problems. It is possible for
-> mhi_async_power_up() to be invoked while the device is in AMSS EE, which
-> would bypass firmware loading. Also, Qualcomm Cloud AI 100 has 5 PK HASH
-> slots which can be dynamically provisioned while the device is active,
-> which would result in the values changing and users may want to know what
-> keys are active.
-> 
-> Address these concerns by reading the PK HASH registers on-demand during
-> the sysfs read. This will result in showing the most current information.
-> 
-> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-> ---
->  drivers/bus/mhi/host/boot.c | 11 +----------
->  drivers/bus/mhi/host/init.c | 16 ++++++++++++----
->  include/linux/mhi.h         |  2 --
->  3 files changed, 13 insertions(+), 16 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
-> index edc0ec5a0933..dedd29ca8db3 100644
-> --- a/drivers/bus/mhi/host/boot.c
-> +++ b/drivers/bus/mhi/host/boot.c
-> @@ -395,7 +395,7 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
->  	void *buf;
->  	dma_addr_t dma_addr;
->  	size_t size, fw_sz;
-> -	int i, ret;
-> +	int ret;
->  
->  	if (MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)) {
->  		dev_err(dev, "Device MHI is not in valid state\n");
-> @@ -408,15 +408,6 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
->  	if (ret)
->  		dev_err(dev, "Could not capture serial number via BHI\n");
->  
-> -	for (i = 0; i < ARRAY_SIZE(mhi_cntrl->oem_pk_hash); i++) {
-> -		ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_OEMPKHASH(i),
-> -				   &mhi_cntrl->oem_pk_hash[i]);
-> -		if (ret) {
-> -			dev_err(dev, "Could not capture OEM PK HASH via BHI\n");
-> -			break;
-> -		}
-> -	}
-> -
->  	/* wait for ready on pass through or any other execution environment */
->  	if (!MHI_FW_LOAD_CAPABLE(mhi_cntrl->ee))
->  		goto fw_load_ready_state;
-> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-> index 65ceac1837f9..e2c2f510b04f 100644
-> --- a/drivers/bus/mhi/host/init.c
-> +++ b/drivers/bus/mhi/host/init.c
-> @@ -97,11 +97,19 @@ static ssize_t oem_pk_hash_show(struct device *dev,
->  {
->  	struct mhi_device *mhi_dev = to_mhi_device(dev);
->  	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> -	int i, cnt = 0;
-> +	u32 hash_segment[MHI_MAX_OEM_PK_HASH_SEGMENTS];
-> +	int i, cnt = 0, ret;
->  
-> -	for (i = 0; i < ARRAY_SIZE(mhi_cntrl->oem_pk_hash); i++)
-> -		cnt += sysfs_emit_at(buf, cnt, "OEMPKHASH[%d]: 0x%x\n",
-> -				i, mhi_cntrl->oem_pk_hash[i]);
-> +	for (i = 0; i < MHI_MAX_OEM_PK_HASH_SEGMENTS; i++) {
-> +		ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_OEMPKHASH(i), &hash_segment[i]);
-> +		if (ret) {
-> +			dev_err(dev, "Could not capture OEM PK HASH\n");
-> +			return cnt;
+> Drop it.
 
-return ret?
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-- Mani
+Best regards,
+Krzysztof
 
-> +		}
-> +	}
-> +
-> +	for (i = 0; i < MHI_MAX_OEM_PK_HASH_SEGMENTS; i++)
-> +		cnt += sysfs_emit_at(buf, cnt, "OEMPKHASH[%d]: 0x%x\n", i, hash_segment[i]);
->  
->  	return cnt;
->  }
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index d0f9b522f328..474d32cb0520 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -325,7 +325,6 @@ struct mhi_controller_config {
->   * @major_version: MHI controller major revision number
->   * @minor_version: MHI controller minor revision number
->   * @serial_number: MHI controller serial number obtained from BHI
-> - * @oem_pk_hash: MHI controller OEM PK Hash obtained from BHI
->   * @mhi_event: MHI event ring configurations table
->   * @mhi_cmd: MHI command ring configurations table
->   * @mhi_ctxt: MHI device context, shared memory between host and device
-> @@ -413,7 +412,6 @@ struct mhi_controller {
->  	u32 major_version;
->  	u32 minor_version;
->  	u32 serial_number;
-> -	u32 oem_pk_hash[MHI_MAX_OEM_PK_HASH_SEGMENTS];
->  
->  	struct mhi_event *mhi_event;
->  	struct mhi_cmd *mhi_cmd;
-> -- 
-> 2.34.1
-> 
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
 
