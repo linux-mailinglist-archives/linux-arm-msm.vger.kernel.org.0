@@ -1,61 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-6450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC867824232
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 14:02:46 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32B5D824238
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 14:03:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D441F1C215BF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 13:02:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BDAE828785F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jan 2024 13:03:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63C6F224F7;
-	Thu,  4 Jan 2024 13:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9430A22EE3;
+	Thu,  4 Jan 2024 13:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="WK1xaleo"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="e1s7/3EE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBA4224D8
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jan 2024 13:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B1F2230A
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jan 2024 13:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3366ddd1eddso425531f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jan 2024 05:02:03 -0800 (PST)
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-336c5b5c163so256512f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jan 2024 05:02:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1704373322; x=1704978122; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=opVDF4AOHQah3OrT16oGMK2ccRRJHeIMJXkpc+aZwFs=;
-        b=WK1xaleoMk7IVXPllfXEUF4Xo7mTNqo5t2Eu1pESyW/Y+enVzlgw2jNS6NG0ix03uW
-         R3eEPFGjgzWgVBUx6oChjpFfyhCOFLNySVeIg9x/1AyeyCOnHphPJBYjCU11dCsbNd67
-         jD4Hsp6G8K54zNh+9zAbbMQJODkn84rl4B92p9Efk6QQ1cboEVYDHPFVdBH2wLBTzHyc
-         o33J/zut+6c66m+g+0Qjkogk7AG+SVphmFVCUlA04TUnXWHsucHF8yBrWPh9MbphLmYk
-         Xjo7Y2Xsk+yhKozFeEUyIquoRJwCHZylOWw21UfOv/pobf7YH8XTUf/8rvEGFVGuVWCy
-         ABaA==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1704373324; x=1704978124; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HQIEpNJctaz16RzA/leTZqNcUN7vsgkXc8Xvi93qAho=;
+        b=e1s7/3EE+MeuNW95g+yb4nI2EfzKykj8shaTLoibDu7D3m/ffNrI6tEAU6DA6QSoTA
+         mbnGXGkLbXqOvSFgn1mDXvBUqyIV91SKIGuKK7zJPhRjRXPwh4eMBYE9UOX9lndUWwPw
+         fCfoSjPUPU4PGZn2Q3DO5UfmCX8Ql7GfM1BtQ4AfGNg9CxcR40b4tn5XkYVhadTUsCpJ
+         TFaJULVT6u5l6SYVa9Z9hqAzB6+liviUn725RIMw31MnRlyZFwUpIjUIKQN6BF2+NDnZ
+         O4CwH+t/AGZoWaEy/u3AAn2Ug/tiCKBUj4FeAjcxA/5pwS+ZB9sYFG1Zkht3aWPNu4Gl
+         lncA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704373322; x=1704978122;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=opVDF4AOHQah3OrT16oGMK2ccRRJHeIMJXkpc+aZwFs=;
-        b=YEYkgXRVow4xkp2d1waZT3CiO8+a9t79EiauRjjfNHEh32s7GtamOG67q2usrFQfc+
-         HOXSDOp5ynLYVgMwhkZvy2MhIlECOrzl/6hVZNjjYe5fz5hS8XwvbbhiBPDg5WM0gZdW
-         6Reje8emTRjA7afSal90xf+XIl1R46gtkRC7DFkVX8EQ8qdCPWbDLgIyx1tJRs/SSqmF
-         mEeqY15+18PExptV+pUiBTNtOK8rUssUmJXEVwIuFVcQu3s8P3GcFVhTi7HoHqwtR/kv
-         VcbCppkzZ/ED9iMEmwm3tbN/CV1l80jePZuF7Xo6/6Y1uaHvbxbqKvPI9TUjYCaKt8f4
-         2UsQ==
-X-Gm-Message-State: AOJu0Yy4PcmoSG0J7x4xK8CSMJtYL5Dslf05czeIY1UOlxRJ81vPYub9
-	sF0Nq++Ru+8UsyoFFOYPPW2NVcTU6dqvoQ==
-X-Google-Smtp-Source: AGHT+IFsoUaWFe3hNCg6/b09WcRv7wsIMJMlEiNm/lu4Y1OTN1yICGktvfbzMdrteuCPKZTBntbM6g==
-X-Received: by 2002:adf:cc86:0:b0:337:157:2d3e with SMTP id p6-20020adfcc86000000b0033701572d3emr161961wrj.222.1704373322145;
-        Thu, 04 Jan 2024 05:02:02 -0800 (PST)
+        d=1e100.net; s=20230601; t=1704373324; x=1704978124;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HQIEpNJctaz16RzA/leTZqNcUN7vsgkXc8Xvi93qAho=;
+        b=HJRQDH0ZacwmqdL3094vy0fsPAE9AomPSXRFrYnX9HI6tF2wkHQYScZcITmLV9LOpr
+         XHw+aUn8A3U1/RwRwSORfqqSDMcYt26frkKutzHjk8dSBTsiQuiW3EPaxwZRNMixWIkS
+         gI3MInlhSuMFrn0LgcipIY7o5Cn48sX3TWvHMtlpFxP5sIPbKrvMfiUq/NnE2V6gOo7r
+         LOfwhMZElAnBkYQx9avqNYnhtCF/h52rm2N2brCTpt1zDxZUmCS11RNSFCWa8U8X1MRK
+         K7uo7GwbxGAo5Z1jUWx77KCAwunyy+C9Wewd7bEFcvgXsUYpJHykKhd8WQ/Od+IDEOLC
+         DOXw==
+X-Gm-Message-State: AOJu0Yxv6Un08gjwr8Ae8ByTQvMqfVDkmPUdP17l26txnUDrO8zdyhTY
+	hGKfkwNN2AHH4GEqVnoMJGXPlQPexcwFuw==
+X-Google-Smtp-Source: AGHT+IEYrrjaOaf5/IBZBDz2VUcMEHweLF977kWhWHW+xRF7Tv9rMBKm8dg3stU9d6EnW3pR2nQiEQ==
+X-Received: by 2002:a5d:4576:0:b0:337:4f04:933c with SMTP id a22-20020a5d4576000000b003374f04933cmr318898wrc.54.1704373323681;
+        Thu, 04 Jan 2024 05:02:03 -0800 (PST)
 Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:5b69:3768:8459:8fee])
-        by smtp.gmail.com with ESMTPSA id w5-20020a5d5445000000b0033660f75d08sm32887387wrv.116.2024.01.04.05.02.00
+        by smtp.gmail.com with ESMTPSA id w5-20020a5d5445000000b0033660f75d08sm32887387wrv.116.2024.01.04.05.02.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jan 2024 05:02:01 -0800 (PST)
+        Thu, 04 Jan 2024 05:02:03 -0800 (PST)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
 To: Kalle Valo <kvalo@kernel.org>,
 	"David S . Miller" <davem@davemloft.net>,
@@ -98,10 +99,12 @@ Cc: linux-wireless@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	linux-pci@vger.kernel.org,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [RFC 0/9] PCI: introduce the concept of power sequencing of PCIe devices
-Date: Thu,  4 Jan 2024 14:01:14 +0100
-Message-Id: <20240104130123.37115-1-brgl@bgdev.pl>
+Subject: [RFC 1/9] arm64: dts: qcom: sm8250: describe the PCIe port
+Date: Thu,  4 Jan 2024 14:01:15 +0100
+Message-Id: <20240104130123.37115-2-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20240104130123.37115-1-brgl@bgdev.pl>
+References: <20240104130123.37115-1-brgl@bgdev.pl>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -112,61 +115,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-During last year's Linux Plumbers we had several discussions centered
-around the need to power-on PCI devices before they can be detected on
-the bus.
+Improve the description of the PCIe topology by defining the port node
+at the SoC level.
 
-The consensus during the conference was that we need to introduce a
-class of "PCI slot drivers" that would handle the power-sequencing.
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-After some additional brain-storming with Manivannan and the realization
-that the DT maintainers won't like adding any "fake" nodes not
-representing actual devices, we decided to reuse the existing
-infrastructure provided by the PCIe port drivers.
-
-The general idea is to instantiate platform devices for child nodes of
-the PCIe port DT node. For those nodes for which a power-sequencing
-driver exists, we bind it and let it probe. The driver then triggers a
-rescan of the PCI bus with the aim of detecting the now powered-on
-device. The device will consume the same DT node as the platform,
-power-sequencing device. We use device links to make the latter become
-the parent of the former.
-
-The main advantage of this approach is not modifying the existing DT in
-any way and especially not adding any "fake" platform devices.
-
-Bartosz Golaszewski (9):
-  arm64: dts: qcom: sm8250: describe the PCIe port
-  arm64: dts: qcom: qrb5165-rb5: describe the WLAN module of QCA6390
-  PCI/portdrv: create platform devices for child OF nodes
-  PCI: hold the rescan mutex when scanning for the first time
-  PCI/pwrseq: add pwrseq core code
-  dt-bindings: vendor-prefixes: add a PCI prefix for Qualcomm Atheros
-  dt-bindings: wireless: ath11k: describe QCA6390
-  PCI/pwrseq: add a pwrseq driver for QCA6390
-  arm64: defconfig: enable the PCIe power sequencing for QCA6390
-
- .../net/wireless/qcom,ath11k-pci.yaml         |  14 ++
- .../devicetree/bindings/vendor-prefixes.yaml  |   1 +
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts      |  24 +++
- arch/arm64/boot/dts/qcom/sm8250.dtsi          |  10 +
- arch/arm64/configs/defconfig                  |   2 +
- drivers/pci/pcie/Kconfig                      |   2 +
- drivers/pci/pcie/Makefile                     |   2 +
- drivers/pci/pcie/portdrv.c                    |   3 +-
- drivers/pci/pcie/pwrseq/Kconfig               |  19 ++
- drivers/pci/pcie/pwrseq/Makefile              |   4 +
- drivers/pci/pcie/pwrseq/pcie-pwrseq-qca6390.c | 197 ++++++++++++++++++
- drivers/pci/pcie/pwrseq/pwrseq.c              |  83 ++++++++
- drivers/pci/probe.c                           |   2 +
- include/linux/pcie-pwrseq.h                   |  24 +++
- 14 files changed, 386 insertions(+), 1 deletion(-)
- create mode 100644 drivers/pci/pcie/pwrseq/Kconfig
- create mode 100644 drivers/pci/pcie/pwrseq/Makefile
- create mode 100644 drivers/pci/pcie/pwrseq/pcie-pwrseq-qca6390.c
- create mode 100644 drivers/pci/pcie/pwrseq/pwrseq.c
- create mode 100644 include/linux/pcie-pwrseq.h
-
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 760501c1301a..fef9c314ce55 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -2197,6 +2197,16 @@ pcie0: pcie@1c00000 {
+ 			dma-coherent;
+ 
+ 			status = "disabled";
++
++			pcieport0: pcie@0 {
++				device_type = "pci";
++				reg = <0x0 0x0 0x0 0x0 0x0>;
++				#address-cells = <3>;
++				#size-cells = <2>;
++				ranges;
++
++				bus-range = <0x01 0xff>;
++			};
+ 		};
+ 
+ 		pcie0_phy: phy@1c06000 {
 -- 
 2.40.1
 
