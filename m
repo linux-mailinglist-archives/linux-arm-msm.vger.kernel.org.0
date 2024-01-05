@@ -1,90 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-6514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 602FE8254AE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 14:52:26 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91813825549
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 15:31:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 13B381F214A5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 13:52:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E1520286312
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 14:31:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8632F2D781;
-	Fri,  5 Jan 2024 13:52:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E4B63174F;
+	Fri,  5 Jan 2024 14:29:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="hMBOzfsB"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="wfIf5PxI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADCD2D78A;
-	Fri,  5 Jan 2024 13:52:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=Ye4MthzdCrdscO8xZ8bE4MdMFIQJf4C4n/xCw/V+vdw=; b=hMBOzfsB2KhNhK662KY1ZfRmXZ
-	jT6sW8hQ0c87Esk5Lb/BnKUInouwfXzMrIy6TaqpF7/UfG86O8pnqx5lSrgVhTTnhxUZUKWI53RaL
-	9vlhfBK5m+deAl6l3Wz+YysSVgawrXLN0oU+BUT2m2V36fisGGfdgv84cMowAXHTqtqw=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1rLkcK-004SPP-Ok; Fri, 05 Jan 2024 14:52:08 +0100
-Date: Fri, 5 Jan 2024 14:52:08 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Sergey Ryazanov <ryazanov.s.a@gmail.com>
-Cc: Jie Luo <quic_luoj@quicinc.com>, agross@kernel.org,
-	andersson@kernel.org, konrad.dybcio@linaro.org, davem@davemloft.net,
-	edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
-	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org, hkallweit1@gmail.com, linux@armlinux.org.uk,
-	robert.marko@sartura.hr, linux-arm-msm@vger.kernel.org,
-	netdev@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_srichara@quicinc.com
-Subject: Re: [PATCH v4 0/5] support ipq5332 platform
-Message-ID: <8ef607b9-1fc6-485b-a6fb-a8d468cc1954@lunn.ch>
-References: <20231225084424.30986-1-quic_luoj@quicinc.com>
- <a6a50fb6-871f-424c-a146-12b2628b8b64@gmail.com>
- <cfb04c82-3cc3-49f6-9a8a-1f6d1a22df40@quicinc.com>
- <dd05a599-247a-4516-8ad3-7550ceea99f7@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 866452DF88
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jan 2024 14:29:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-55642663ac4so1873951a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jan 2024 06:29:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1704464960; x=1705069760; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=u39RBCFFtI0yX9VLekdwvDVmxDIhVLYsBRs0wCaV+pU=;
+        b=wfIf5PxIhbv59uVTDplNx/P2tqOV2TlZsjHTk5ze5uyAPFSYWkRd/x316xClzEEQcv
+         YPuOL2DgYdi47DzbRfijahzgOgVaDsnCRfZvUP5lmolHs6KN7cwVCqfNld6qxhPNKzAh
+         G0aRw7a7Gt7QUvA7hhFhIktbZitF/04pf0Ena1LQ9oq3l51P0JDqZvxF7J3M4NZWyTdN
+         Nd8jfZSxnI8fqlOqFcfPul+kPR1+s2blQEFg3WJZqjCdiWP5+8p5XOxAmbc3jIft5UL7
+         w7liKrnGsvYModZp7YfVnyOs+wqIK1DcgxLk/UU8LRytIm28GWbSkOhufzVTi+bN4wou
+         jV3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704464960; x=1705069760;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=u39RBCFFtI0yX9VLekdwvDVmxDIhVLYsBRs0wCaV+pU=;
+        b=syJYNL+iP+McsT2vobtoxQy9/7nbI+6EmI8I/AFmwfBzI7hSrtxxYRx9n5iTE5x9GQ
+         DGrCSTplthCZlcoa6eQP2MxZMoIV/8yIWiwNzSRrAztRiBxNe7YTI6zZbtfEcNs0hMJC
+         4dispyAkrj49mwSmMta1LYI/HzXsLDf973IeK66tGUEnl99s/xh+pqqXBozPqtiVTea6
+         jgwlDcyKziobfWkVEJaiwWSXTNj2aZQSKSa/m5Ks48UwpLgPHWF4cYe1jo4LLgOk50W1
+         YKAFGzePic6is9HKiJ2t76cs+6wQB7e7fUWsQHiFIfhynI2F6tiUnvLftWgKs4lvSv0w
+         nxdw==
+X-Gm-Message-State: AOJu0Ywxz/5FiVVMKGlHGZntYXPXx1Y4A4YbxnPGb9OQwkVQ+8UGHssQ
+	NIW6qpcxTOBfiV7cLAPnvw8tSQJWOT3S9g==
+X-Google-Smtp-Source: AGHT+IFC8mQP7zYTa3qScnA9e4FhaBfqsr8V6I6BOY6f96K6u4BAyNvPTsxb81TwxVoCl0xiM/3dSw==
+X-Received: by 2002:a17:906:d92a:b0:a28:b12e:324d with SMTP id rn10-20020a170906d92a00b00a28b12e324dmr1131944ejb.10.1704464960408;
+        Fri, 05 Jan 2024 06:29:20 -0800 (PST)
+Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id u7-20020a1709067d0700b00a26b057df46sm927006ejo.126.2024.01.05.06.29.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Jan 2024 06:29:19 -0800 (PST)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 0/3] Add display support for Fairphone 4
+Date: Fri, 05 Jan 2024 15:29:11 +0100
+Message-Id: <20240105-fp4-panel-v1-0-1afbabc55276@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <dd05a599-247a-4516-8ad3-7550ceea99f7@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADcSmGUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDQwNT3bQCE92CxLzUHF1Tg8SkRAtTY7NEg0QloPqCotS0zAqwWdGxtbU
+ ABQmog1sAAAA=
+To: Neil Armstrong <neil.armstrong@linaro.org>, 
+ Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.12.4
 
-On Fri, Jan 05, 2024 at 04:48:31AM +0200, Sergey Ryazanov wrote:
-> Hi Luo,
-> 
-> thank you for explaining the case in such details. I also have checked the
-> related DTSs in the Linaro repository to be more familiar with the I/O mem
-> layout. Specifically I checked these two, hope they are relevant to the
-> discussion:
-> https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/blob/NHSS.QSDK.12.4.r3/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/blob/NHSS.QSDK.12.4.r3/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> 
-> Please find my comments below.
+Introduce the bindings and panel driver for the DJN LCD panel using
+HX83112A driver IC.
 
-Hi Sergey
+Then we can add the panel to the device dts and also enable the GPU.
 
-There is a second thread going on, focused around the quad PHY. See:
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Luca Weiss (3):
+      dt-bindings: display: panel: Add Himax HX83112A
+      drm/panel: Add driver for DJN HX83112A LCD panel
+      arm64: dts: qcom: sm7225-fairphone-fp4: Enable display and GPU
 
-https://lore.kernel.org/netdev/60b9081c-76fa-4122-b7ae-5c3dcf7229f9@lunn.ch/
+ .../bindings/display/panel/himax,hx83112a.yaml     |  75 +++++
+ arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts  |  62 +++-
+ drivers/gpu/drm/panel/Kconfig                      |   9 +
+ drivers/gpu/drm/panel/Makefile                     |   1 +
+ drivers/gpu/drm/panel/panel-himax-hx83112a.c       | 372 +++++++++++++++++++++
+ 5 files changed, 510 insertions(+), 9 deletions(-)
+---
+base-commit: e9ad8e6186dbc420e26d2ffbb05cdce33fbf041d
+change-id: 20240105-fp4-panel-50aba8536a0a
 
-Since it is very hard to get consistent information out of Luo, he has
-annoyed nearly all the PHY maintainers and all the DT maintainers, i'm
-going back to baby steps, focusing on just the quad pure PHY, and
-trying to get that understood and correctly described in DT.
+Best regards,
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
 
-However, does Linaro have any interest in just taking over this work,
-or mentoring Luo?
-
-	  Andrew
 
