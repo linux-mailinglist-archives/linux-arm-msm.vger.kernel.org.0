@@ -1,98 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-6540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 060CA825B88
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 21:23:37 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5CDD7825BB7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 21:39:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AC86D1F23EEA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 20:23:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E17E91F2416E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 20:39:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC62F3608F;
-	Fri,  5 Jan 2024 20:23:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DA7820310;
+	Fri,  5 Jan 2024 20:39:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DBE0tVst"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hwR3NPCz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D58A3608A;
-	Fri,  5 Jan 2024 20:23:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A241AC433C8;
-	Fri,  5 Jan 2024 20:23:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704486211;
-	bh=PkcN2ihSIABo+ff9pBaTl7f7CQyvSNcHmHiCSRdPILI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DBE0tVstwRQZzEgx2TpLnt8egBNvIGcSyAbSQL0n1ApRitECJjcQV6dE3tlP+i/Ql
-	 TGd7Cw0ffituK6zO+pBsX86qfiSgyL1XGqz0tAWrxZXV3Cku/A4ud0qPWJa1+eK1PX
-	 9qsT4nE9bOmjN2oF4DsBH8PM/TZ950/e0TfI7EJIOwChHSceRz9hVvsJe4S2dQ/QzJ
-	 xLUeSdLquFgpWBdyHs4bTrZ0bi7pmtNmk/M2ZBfs30u+T3+bp4hb6nttcNxLBWMvSr
-	 2ByvkFdM3b3dbHpaw8rDh3WqjEPkCI3QY+LHqhLgUIjieqmcR/Hkj9m5S8WuNTHaqN
-	 04o1AxqVZmt2g==
-Date: Fri, 5 Jan 2024 20:23:26 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] regulator: qcom_smd: Keep one rpm handle for all vregs
-Message-ID: <3ccef53c-3333-4d1c-a3fc-32b05cd473fc@sirena.org.uk>
-References: <20231227-topic-rpm_vreg_cleanup-v2-1-04c79c4f9166@linaro.org>
- <b5a2f511-2758-452d-b6ac-399262b3734d@sirena.org.uk>
- <7271846f-c03f-4d0f-a54b-7424ddd72724@linaro.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D122D059
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jan 2024 20:39:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-40d76fefd6bso16906595e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jan 2024 12:39:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704487151; x=1705091951; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CUvhbp1vrlSO3B3no127g/8Plmrc4jTzNiIeG+FMCGU=;
+        b=hwR3NPCzvJEJKMUFAB5wIWYTqxIHddY/lQ4mP7DY2DdC47lpYjPrYlK86eq5N3RNcS
+         T578NtldM9haCijB/26GniTf9yppouVOojYRaBXLPK8Hw40Pwf8WHLub5l+q16JdDN7R
+         zsDYL7iGOs+BX4Vue3ojrnBNR+393/ezykIco4KfJmyzjED6QbBvym3jKYO3pPkcdLBO
+         D228Dv1SgB2L/75CqFXYDPBIaZryc8yO1NwIRqjegGDiQrCa7n4WyJCtQLKUepsdPJ/u
+         GwtwP420bqSZKbrVgmE1EGN6AXwguaZJhdSvbrM/pSMApOJeSCYiUw3rfQR0kn/pkk2n
+         BH7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704487151; x=1705091951;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CUvhbp1vrlSO3B3no127g/8Plmrc4jTzNiIeG+FMCGU=;
+        b=GDm+RWjp6H/lcV3UuNwssDOehTU9swEgpo/9ENouNYA9Ni8YjQw+DY1hi7dBqLwiLK
+         7A4rXatQ8ibSbrujjqGvQ+TUTcuZGCAgQcaq2/fXepHWu5i8S3p4n3B3/TlAC10nVatU
+         9t7w3MtoeQC+vL/QfZs1AqCglDysGMamQCAJ+XbA9kPhGXAIVsoAhALR1hh7H4plg8oa
+         ieqnsiCEONWHEubvpkH7Je0MgrLrBYrqznQvQltMHzK/LBvMDCCApcuxSOF9RyouAH72
+         nqQ8EtZLdtCm2kbLE8ToE4nY0CcvOpIT3Bfnv78msNLq+236ByxmmTyvITu4dnBp7oXD
+         iCVg==
+X-Gm-Message-State: AOJu0YwKDhjCgBjBzT4Q9nDjv4oRCpI7sYdMg/DPpLxRpVRUJoijkSvs
+	ym3k5DnINFpA7CJZTLr1hXKTnL/2Xt0blQ==
+X-Google-Smtp-Source: AGHT+IFQ+G9s/mU4uIzKfd4L9U+1AGEkYS1QNHCxc6B5GoZ1kfJSUHc11iQzacUHXmxgvCwlvHpITw==
+X-Received: by 2002:a05:600c:1d97:b0:40e:3518:ba7c with SMTP id p23-20020a05600c1d9700b0040e3518ba7cmr19322wms.71.1704487150759;
+        Fri, 05 Jan 2024 12:39:10 -0800 (PST)
+Received: from [127.0.1.1] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id hn3-20020a05600ca38300b0040e398f8cafsm2283890wmb.31.2024.01.05.12.39.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Jan 2024 12:39:10 -0800 (PST)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v2 0/4] arm64: dts: qcom: sc8280xp: Add CAMSS core dtsi
+ support
+Date: Fri, 05 Jan 2024 20:39:04 +0000
+Message-Id: <20240105-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v2-0-7a57b8b07398@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="okGAQarU2f8A9pZu"
-Content-Disposition: inline
-In-Reply-To: <7271846f-c03f-4d0f-a54b-7424ddd72724@linaro.org>
-X-Cookie: Your step will soil many countries.
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOhomGUC/5WNQQ6CMBBFr0K6dkxbENCV9zAsxjLAJEpJB0kN4
+ e5WEg/g8v2f/9+qhAKTqEu2qkALC/sxgT1kyg049gTcJlZW20IbbeHB4yvCSHEGW4A2kDJxta1
+ 1nMDhUwScDwTtLAy2yjWeuoq6c63S5RSo47jrbk3igWX24b3bF/NNf6L8P9GSasA7OsQyx3Npr
+ mmOwR996FWzbdsHunqTpOkAAAA=
+To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.13-dev-4e032
 
+This series adds the yaml, CAMSS and CCI dts definitions for the sc8280xp.
 
---okGAQarU2f8A9pZu
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+4 x CCI master busses
+4 x VFE
+4 x VFE Lite
+4 x CSID
+4 x CSIPHY
 
-On Fri, Jan 05, 2024 at 09:15:49PM +0100, Konrad Dybcio wrote:
-> On 5.01.2024 17:31, Mark Brown wrote:
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-24-01-02-sc8280xp-camss-core-dtsi
 
-> > It'd be slightly more robust to have a check here that we do get the
-> > same RPM back if the variable is already set, just on the off chance
-> > that something changes in some future system and we do end up with a
-> > second RPM somehow.
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+Changes in v2:
+- This series depends on "clk: qcom: camcc-sc8280xp: Add sc8280xp CAMCC"
+  in linux-next. - Rob, Krzysztof, dts Robot
+- Drops cci_src clock - Konrad
+- Adds sc8280xp-cci - Konrad
 
-> Knowing how improbable this is (currently RPM is responsible for almost all
-> power and some clock rails, including DDR), I'd say it's excessive, but if
-> you wish, I can add it.
+Link to v1: https://lore.kernel.org/r/20240103-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v1-0-abacaa63a961@linaro.org
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-24-01-02-sc8280xp-camss-core-dtsi-v2
 
-It really feels like something where if this was a good idea we'd have
-an API to do this directly rather than passing around through driver
-data.  The fact that it's used for all power management doesn't
-immediately preclude having two instances managing the power for two
-different bits of the system (eg, a low power island).
+---
+Bryan O'Donoghue (4):
+      dt-bindings: i2c: qcom-cci: Document sc8280xp compatible
+      media: dt-bindings: media: camss: Add qcom,sc8280xp-camss binding
+      arm64: dts: qcom: sc8280xp: camss: Add CCI definitions
+      arm64: dts: qcom: sc8280xp: camss: Add CAMSS block definition
 
---okGAQarU2f8A9pZu
-Content-Type: application/pgp-signature; name="signature.asc"
+ .../devicetree/bindings/i2c/qcom,i2c-cci.yaml      |  19 +
+ .../bindings/media/qcom,sc8280xp-camss.yaml        | 512 +++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi             | 555 +++++++++++++++++++++
+ 3 files changed, 1086 insertions(+)
+---
+base-commit: ab0b3e6ef50d305278b1971891cf1d82ab050b35
+change-id: 20240102-linux-next-24-01-02-sc8280xp-camss-core-dtsi-2730a5f7ef98
 
------BEGIN PGP SIGNATURE-----
+Best regards,
+-- 
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmWYZT0ACgkQJNaLcl1U
-h9CkTAf/SyvlUQy6c7giS1ICGR00AlRStxV04y1DY4uwCc26V1lL2TX7UNC76a4m
-KMqlLOQPh5DN3EqASjWGqjEXfbzR7/imN6WX3SoJL2oITruU4Gm1UXL6jgl6Xxtt
-yscAy310pvsZD8BVMI+wAossXHfcw4W0zBzkhoVGtxGvAhxv4S7sXMERXZnXmLbC
-4YpqzHI2SQ8ak9oSD449wd2DtEe3IInLVfbBmMJjqXp/BPUdJqYysfHBQlCFXzx7
-+Gnzq6hraUyxMeSq7XYbttewaRKL+zR+xGRb6flJV18/9z/YS4Rpi+pIJGJn4plz
-sCtCPu63pWdjy5MGqEcMPCJ6Imew+A==
-=MjPg
------END PGP SIGNATURE-----
-
---okGAQarU2f8A9pZu--
 
