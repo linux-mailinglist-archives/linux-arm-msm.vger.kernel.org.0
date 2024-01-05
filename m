@@ -1,288 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-6535-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 567E0825868
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 17:40:09 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D99E5825944
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 18:43:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D59351F240F8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 16:40:08 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1F6E0B210A7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 17:43:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90DC728E34;
-	Fri,  5 Jan 2024 16:40:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03667321BC;
+	Fri,  5 Jan 2024 17:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=bp.renesas.com header.i=@bp.renesas.com header.b="bVkA0W2q"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Lxz+7RJC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from JPN01-OS0-obe.outbound.protection.outlook.com (mail-os0jpn01on2115.outbound.protection.outlook.com [40.107.113.115])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137321E507;
-	Fri,  5 Jan 2024 16:39:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bp.renesas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bp.renesas.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=G6PUzpQuJJAYpIYkED8iaWKoTIl0o8GE9FB/DGp1hu8F7BFop2G1kwy/W/e5AU3lM456bwxElyWakn/SEHVo3r9KU4VgW8d9r0gspVikEpZi7NJKKq/RVE6aWmkT3ZCwAmgh6E/9nw9ISuazRw9QB3VdtsUxWDLYTU7qjlT49DtY2lkstQ52w0tL1fKinhaFDVaSQhpGXQSOoWtkq0AMs8ckF+XQS7rwM1bplQjK8XQMLZ8V/7ouaTFpqpYJnIQey/3SlQiGcb2D7D24rLi/jPj+zv6s1WcTNN0EPW4KM2/PKVPzLDlu31PYVdfTL1req7eJBWz8B9dAF9FIoPx6jg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=w0k/V8C3LLLpC9xJrkIadpQyZcFBUEusZ1QCseXgXds=;
- b=TG64j0M4p+L480BZ5PfHEEVub7jaJLXr43VQelGJDR7JYFNni2wUVfLVHA2iflujDtFQHBKp98ldkVzZN8onPUGg/B6N71A6ID+pEUAn1Y7nrLu3o0h7jlq1NuPnnikTl6ph0+4Y2yjo1RAnRC4go8tbI4pvMRsX2b84M+2cGMvQwLzkjtoT/VRfnw++fQQOjsd/9VHwKJIy0HL60M9t8aKT22kL5JUmOrGZ9eJeiYi1B7iqMJCa0sA+tKi65+lBF2twwriraEJ65Kw1rEtZT9Nl8mOjxgK5BJbcijtw0icc3xA5b5+ra8rBnK877yObs6kwPUi5vqbIEip5M6/qWw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=bp.renesas.com; dmarc=pass action=none
- header.from=bp.renesas.com; dkim=pass header.d=bp.renesas.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bp.renesas.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=w0k/V8C3LLLpC9xJrkIadpQyZcFBUEusZ1QCseXgXds=;
- b=bVkA0W2qyFjSSsX+xjS7L4y5g+ITUxhcp8kM1kyBWKb7CCMRfktIzzFhSTcU0gb9oAvSIv6bzYnYEkTI5i/RTf/j79GX8R/Wii5FL0LLccPXZxLdMyVDftFJN15OxIQDhFXDJ0IJKFkOhGDEsBotVcLdBtYsBb6OGhWxpJa4GaQ=
-Received: from TYCPR01MB11269.jpnprd01.prod.outlook.com
- (2603:1096:400:3c0::10) by OS7PR01MB11583.jpnprd01.prod.outlook.com
- (2603:1096:604:241::14) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7181.10; Fri, 5 Jan
- 2024 16:39:53 +0000
-Received: from TYCPR01MB11269.jpnprd01.prod.outlook.com
- ([fe80::8d12:a02a:9fdc:9c78]) by TYCPR01MB11269.jpnprd01.prod.outlook.com
- ([fe80::8d12:a02a:9fdc:9c78%5]) with mapi id 15.20.7181.009; Fri, 5 Jan 2024
- 16:39:51 +0000
-From: Biju Das <biju.das.jz@bp.renesas.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Srinivas Kandagatla
-	<srinivas.kandagatla@linaro.org>, Banajit Goswami <bgoswami@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio
-	<konrad.dybcio@linaro.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown
-	<broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>, Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>, "alsa-devel@alsa-project.org"
-	<alsa-devel@alsa-project.org>, "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>, "linux-sound@vger.kernel.org"
-	<linux-sound@vger.kernel.org>, "devicetree@vger.kernel.org"
-	<devicetree@vger.kernel.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>
-CC: Bartosz Golaszewski <brgl@bgdev.pl>, Sean Anderson
-	<sean.anderson@seco.com>
-Subject: RE: [PATCH v2 1/4] reset: gpio: Add GPIO-based reset controller
-Thread-Topic: [PATCH v2 1/4] reset: gpio: Add GPIO-based reset controller
-Thread-Index: AQHaP/BMp3VkzdSHW0qQi1Uk8IEbbrDLaurw
-Date: Fri, 5 Jan 2024 16:39:51 +0000
-Message-ID:
- <TYCPR01MB11269ABEDCD115064D449267486662@TYCPR01MB11269.jpnprd01.prod.outlook.com>
-References: <20240105155918.279657-1-krzysztof.kozlowski@linaro.org>
- <20240105155918.279657-2-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20240105155918.279657-2-krzysztof.kozlowski@linaro.org>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=bp.renesas.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYCPR01MB11269:EE_|OS7PR01MB11583:EE_
-x-ms-office365-filtering-correlation-id: 31ca393c-e14c-429d-539a-08dc0e0cf064
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- UAyvrKT44mEBEyXr/DaPKeQGfklXEpAXTtcUntPnWjgIiSdCmJmQxt39iZT5cRRAUeVK1cH/RywEbeYum/PX+QvGKJ8BONn2uLgFACmiB1ZI/JWAZ+IGrDDGPlsBBd2Mml5Wk+rHuJ2bbYOu81SHC22QrXe7x1otXnO/5vcwbIDBA8X4/2BAfe9g1nHou9fUt5C8dxgkOntYy4t+paW0DztHOvJ3jYXrlIC69c3EcgR6vAYUdR7tojMQEVxj93I79JSf56wqKr79Ul0DdgEtDj76fSYqiSY5fQN3OxXS004py5g4pbIzT1+TUI5wZUjhj7Dfg9Z7Kdi02m3vKx3UtGPUiYFb4wxWDmLGKwPmPfYu1vTzf+8mvs5AlG8F4K4nlJqcrVpXiI1LaCKG5ZSNjHMOhkAwlifq55n66sBclLbH4QrymR1uBn4cj42PTsCdIcMN/7Vu0Te0kNj8vf3TI7RCdlL4PWqOsLVpMGkFw4XMHlM1xM85Fy/HqEjUmQQfhH8Bxq80OpB56YRwor2faHnkTzRAldBGVjtmlmBDzYRPJihO2g5kzFdZJEEhZ53q/SKDP4zBOBx3xXPbFCqzVQ9QJYyYNAo26P3pKAyTMi2aa16tYdmTTyp20M/TLrAyjmgptAJnoR79yGrZU4IuFA==
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYCPR01MB11269.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(396003)(136003)(346002)(39860400002)(366004)(230922051799003)(1800799012)(186009)(64100799003)(451199024)(26005)(71200400001)(53546011)(9686003)(7696005)(6506007)(478600001)(83380400001)(7416002)(2906002)(41300700001)(76116006)(66556008)(54906003)(66446008)(316002)(66476007)(64756008)(66946007)(110136005)(8936002)(8676002)(52536014)(4326008)(38070700009)(921011)(38100700002)(5660300002)(122000001)(86362001)(33656002)(55016003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?tNZ834xSi/r+mn4wBzGL9vKnm0SKBlX5qchn4RF9/IE2o1vf/3E3WNt0JUzo?=
- =?us-ascii?Q?B9usNobUhoDz2V35nBLULQr/G3dvNe9XClY4XfU+FZOXulWMSSJt4skqJBEk?=
- =?us-ascii?Q?JZ/WuhVmtimXyasBLU9mLnLrrsKWZxo82UHJSEi2V/FGtSsqE7hLS7wge00Z?=
- =?us-ascii?Q?m59hACrdgu2RSL40GzJjwwx6qtGCXR/WkO52VgJTb6b0RjBNpveQR8YW2v3/?=
- =?us-ascii?Q?njPZ3RPZEAlgYE8c37FdNrh2AcLkz8CTRW/DA0Bghk9EiHT3U+F7M6VSdACe?=
- =?us-ascii?Q?kLgYGy8iXTRs/iHc+Y02iWhWDJqHE8JKrtdYVh7Jy2AxZJBHF0TeIf5sVZpG?=
- =?us-ascii?Q?Jd0UmDo1SCyQe/k6jcXsZGsqTiBoPY8rEdvmpSqDfO0vjg1nOS6ioqqx7m3l?=
- =?us-ascii?Q?UsDE2gG54MyfX1d7L5tnqdppbpL8mgYVsIAJkA7Rs8F9+Oj+cbtkW87XRQDX?=
- =?us-ascii?Q?ol8l06nz4kY83ozvZVcMyyuSXKJ4VYz97O2fHicVCUAB/jAi6djvIJeGaNbO?=
- =?us-ascii?Q?i/6xXScOQ1aA/mJbXDiXMLHYKEAtPHlMiAqhe1SOu+muEpLR6bHj5FbKO0Yg?=
- =?us-ascii?Q?YC4cOOQLOLTPjM0NMEnclVLQuAqNRJe6YRWmah8RcGNj3CkAuevJ5A2m2CjW?=
- =?us-ascii?Q?dCLwptpmE2QFoDAP+H4YE+h2gN1IcFSpi3r7HXMUg6AbX+sG8gHq3zcj+Xvh?=
- =?us-ascii?Q?gee7t4KhaNn+PLdz2A4SyqC1bniAuMQh2GWPBHLVXmvEkpoFkyGDjXY/h3D3?=
- =?us-ascii?Q?1dwJmRnTGpb8fVdyosniPohRbpiAGqpjnE+FKoQJyj5kY17txpcvFFt41Ygo?=
- =?us-ascii?Q?i9GJ9FCzpD+zIoXIYimRBn+kYNBMJZw5WJorVDJGC05uVjfh5iD8wC/VNvdQ?=
- =?us-ascii?Q?1AV5vYqf3AbItn1pnRBOQcwB5EyzWliOKj3Ee/GY5qRWcv+Nte39fsObQRGC?=
- =?us-ascii?Q?rQ1ZR3KSQB8ZNLnMQLsOEUmbivOqz9K339kCW88MmttK79oUVnzlhnnMqozN?=
- =?us-ascii?Q?/tBJAcTIZkT9TrifHBdwTWp+JDGnds15Sx6f09iTpfWNddM1klLpoiidwbJj?=
- =?us-ascii?Q?GaJplVKovhMZtu9EMK/WAgbKMgJwTWN9tLWHEHw+kE3lHT9lkYp2DOzBlBJ7?=
- =?us-ascii?Q?aj1K+L4cUXGHz3JsGAYvQqt5BpA0Qn+t4eoEiDiPlnTVYeDIhLYbDWbCTM/i?=
- =?us-ascii?Q?6eywG+JPrW90fOW+bGqudMJG0cOVS9bezU4im6FirByyeWcjF2APPyM0FNUr?=
- =?us-ascii?Q?z9v6a207KWufvpl/6nV5cy8VZDs3CCzjH2VUpqfX97VKF6CG/kxituaaIPqg?=
- =?us-ascii?Q?xjMD5BkIDUHZMrOicLcp/9+iC7tybgU3rszfue0ZF8zHNsE1Q7SlSd/iESYC?=
- =?us-ascii?Q?DcxC3omB0rg6SJi/h+qPAt/SxSRR3qOnt9KcgdEVyCUU4t+adtA6MlRhcTAz?=
- =?us-ascii?Q?Lcjy5pGQs4BESLgXNLvYNyjHTLk8d5p1g3aia3QjRkeEyNTU+vYTZdFd+73s?=
- =?us-ascii?Q?tMHx9qIzuIii+DeQCjqdMbwgVohpUrZoS0pq/70ud+U/e6YLcvXHT6Ab8FpR?=
- =?us-ascii?Q?OBnbmohbBKQdu66z/OyCtVdHCZpyLAHxiq+jR+b+FwPY8DJVq2LQ/xIDbmqn?=
- =?us-ascii?Q?Vw=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46CEB321A1;
+	Fri,  5 Jan 2024 17:43:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 405FU5Gi007348;
+	Fri, 5 Jan 2024 17:43:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=BfdeZ43
+	n14/vI7Q5GngZJhAODUo/eMvrOFifkvCSI34=; b=Lxz+7RJCAq8JYRRr01jy37m
+	1Ac/MK2J68DwUliDl+mfaT10UvC6Bv49QGJXB5ukBGsFOgCrS4UoSsqM2Y710fZP
+	3q5l5/py50jj+KTP0dJKAuKVKxnBE2FOeVmUsgs9CViDAC7ypCz3KcgW7Mv+pPQQ
+	zDyfNLk/4U0UpAexxrPapWBQl5hu1lS6L8GhougrLzE8gXizky2UzX0SqerOeJjQ
+	ampWI5qzYEZdrAWxvtx2XBHm5iE8pZSu4goWKHJmO09785eRrVgMgFx5EnkkYjZU
+	azshqDp4TkWen8kzSlcAMmf86iWxVovUzZya4PtNbjiGEI1V0F2vKPVZobhAzVw=
+	=
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ve96qss2j-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 05 Jan 2024 17:43:11 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 405HhAWD020080
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 5 Jan 2024 17:43:11 GMT
+Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Fri, 5 Jan 2024 09:43:10 -0800
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+To: <mani@kernel.org>
+CC: <quic_pkanojiy@quicinc.com>, <quic_carlv@quicinc.com>,
+        <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        Jeffrey Hugo
+	<quic_jhugo@quicinc.com>
+Subject: [PATCH v2] bus: mhi: host: Read PK HASH dynamically
+Date: Fri, 5 Jan 2024 10:42:53 -0700
+Message-ID: <20240105174253.863388-1-quic_jhugo@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: bp.renesas.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYCPR01MB11269.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 31ca393c-e14c-429d-539a-08dc0e0cf064
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Jan 2024 16:39:51.4745
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: OWn45HBXGTa3cHv1UincSWRwRWrBz6gnU1gaJauGHqAuhxVa7XIi0yoh74n7Q+4qpQPNKigmd+KRKwj3LN5vQemQLZkTcNuAFgdJzFumbis=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS7PR01MB11583
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: hFIykELhAnzQj3h6LteLlwlSXPI-u5iq
+X-Proofpoint-GUID: hFIykELhAnzQj3h6LteLlwlSXPI-u5iq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ suspectscore=0 impostorscore=0 adultscore=0 clxscore=1015 bulkscore=0
+ malwarescore=0 spamscore=0 mlxscore=0 priorityscore=1501
+ lowpriorityscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2311290000 definitions=main-2401050146
 
-Hi Krzysztof Kozlowski,
+The OEM PK HASH registers in the BHI region are read once during firmware
+load (boot), cached, and displayed on demand via sysfs. This has a few
+problems - if firmware load is skipped, the registers will not be read and
+if the register values change over the life of the device the local cache
+will be out of sync.
 
-Thanks for the patch.
+Qualcomm Cloud AI 100 can expose both these problems. It is possible for
+mhi_async_power_up() to be invoked while the device is in AMSS EE, which
+would bypass firmware loading. Also, Qualcomm Cloud AI 100 has 5 PK HASH
+slots which can be dynamically provisioned while the device is active,
+which would result in the values changing and users may want to know what
+keys are active.
 
-> -----Original Message-----
-> From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Sent: Friday, January 5, 2024 3:59 PM
-> Subject: [PATCH v2 1/4] reset: gpio: Add GPIO-based reset controller
->=20
-> Add a simple driver to control GPIO-based resets using the reset
-> controller API for the cases when the GPIOs are shared and reset should b=
-e
-> coordinated.  The driver is expected to be used by reset core framework
-> for ad-hoc reset controllers.
->=20
-> Cc: Bartosz Golaszewski <brgl@bgdev.pl>
-> Cc: Sean Anderson <sean.anderson@seco.com>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  MAINTAINERS                |   5 ++
->  drivers/reset/Kconfig      |   9 +++
->  drivers/reset/Makefile     |   1 +
->  drivers/reset/reset-gpio.c | 121 +++++++++++++++++++++++++++++++++++++
->  4 files changed, 136 insertions(+)
->  create mode 100644 drivers/reset/reset-gpio.c
->=20
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 7fe27cd60e1b..a0fbd4814bc7 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -8866,6 +8866,11 @@ F:	Documentation/i2c/muxes/i2c-mux-gpio.rst
->  F:	drivers/i2c/muxes/i2c-mux-gpio.c
->  F:	include/linux/platform_data/i2c-mux-gpio.h
->=20
-> +GENERIC GPIO RESET DRIVER
-> +M:	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> +S:	Maintained
-> +F:	drivers/reset/reset-gpio.c
-> +
->  GENERIC HDLC (WAN) DRIVERS
->  M:	Krzysztof Halasa <khc@pm.waw.pl>
->  S:	Maintained
-> diff --git a/drivers/reset/Kconfig b/drivers/reset/Kconfig index
-> ccd59ddd7610..bb1b5a326eb7 100644
-> --- a/drivers/reset/Kconfig
-> +++ b/drivers/reset/Kconfig
-> @@ -66,6 +66,15 @@ config RESET_BRCMSTB_RESCAL
->  	  This enables the RESCAL reset controller for SATA, PCIe0, or PCIe1
-> on
->  	  BCM7216.
->=20
-> +config RESET_GPIO
-> +	tristate "GPIO reset controller"
-> +	help
-> +	  This enables a generic reset controller for resets attached via
-> +	  GPIOs.  Typically for OF platforms this driver expects "reset-
-> gpios"
-> +	  property.
-> +
-> +	  If compiled as module, it will be called reset-gpio.
-> +
->  config RESET_HSDK
->  	bool "Synopsys HSDK Reset Driver"
->  	depends on HAS_IOMEM
-> diff --git a/drivers/reset/Makefile b/drivers/reset/Makefile index
-> 8270da8a4baa..fd8b49fa46fc 100644
-> --- a/drivers/reset/Makefile
-> +++ b/drivers/reset/Makefile
-> @@ -11,6 +11,7 @@ obj-$(CONFIG_RESET_BCM6345) +=3D reset-bcm6345.o
->  obj-$(CONFIG_RESET_BERLIN) +=3D reset-berlin.o
->  obj-$(CONFIG_RESET_BRCMSTB) +=3D reset-brcmstb.o
->  obj-$(CONFIG_RESET_BRCMSTB_RESCAL) +=3D reset-brcmstb-rescal.o
-> +obj-$(CONFIG_RESET_GPIO) +=3D reset-gpio.o
->  obj-$(CONFIG_RESET_HSDK) +=3D reset-hsdk.o
->  obj-$(CONFIG_RESET_IMX7) +=3D reset-imx7.o
->  obj-$(CONFIG_RESET_INTEL_GW) +=3D reset-intel-gw.o diff --git
-> a/drivers/reset/reset-gpio.c b/drivers/reset/reset-gpio.c new file mode
-> 100644 index 000000000000..cf0a867cbc5f
-> --- /dev/null
-> +++ b/drivers/reset/reset-gpio.c
-> @@ -0,0 +1,121 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +
-> +#include <linux/gpio/consumer.h>
-> +#include <linux/mod_devicetable.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/reset-controller.h>
-> +
-> +struct reset_gpio_priv {
-> +	struct reset_controller_dev rc;
-> +	struct gpio_desc *reset;
-> +};
-> +
-> +static inline struct reset_gpio_priv
-> +*rc_to_reset_gpio(struct reset_controller_dev *rc) {
-> +	return container_of(rc, struct reset_gpio_priv, rc); }
-> +
-> +static int reset_gpio_assert(struct reset_controller_dev *rc, unsigned
-> +long id) {
-> +	struct reset_gpio_priv *priv =3D rc_to_reset_gpio(rc);
-> +
-> +	gpiod_set_value_cansleep(priv->reset, 1);
-> +
-> +	return 0;
-> +}
-> +
-> +static int reset_gpio_deassert(struct reset_controller_dev *rc,
-> +			       unsigned long id)
-> +{
-> +	struct reset_gpio_priv *priv =3D rc_to_reset_gpio(rc);
-> +
-> +	gpiod_set_value_cansleep(priv->reset, 0);
-> +
-> +	return 0;
-> +}
-> +
-> +static int reset_gpio_status(struct reset_controller_dev *rc, unsigned
-> +long id) {
-> +	struct reset_gpio_priv *priv =3D rc_to_reset_gpio(rc);
-> +
-> +	return gpiod_get_value_cansleep(priv->reset);
-> +}
-> +
-> +static const struct reset_control_ops reset_gpio_ops =3D {
-> +	.assert =3D reset_gpio_assert,
-> +	.deassert =3D reset_gpio_deassert,
-> +	.status =3D reset_gpio_status,
-> +};
-> +
-> +static void reset_gpio_of_args_put(void *data) {
-> +	of_node_put(data);
-> +}
-> +
-> +static int reset_gpio_probe(struct platform_device *pdev) {
-> +	struct device *dev =3D &pdev->dev;
-> +	struct device_node **platdata =3D dev_get_platdata(dev);
-> +	struct of_phandle_args gpio_args;
-> +	struct reset_gpio_priv *priv;
-> +	int ret;
-> +
-> +	if (!platdata || !*platdata)
+Address these concerns by reading the PK HASH registers on-demand during
+the sysfs read. This will result in showing the most current information.
 
-Maybe, if (!(platdata && *platdata)) which reduces 1 inversion operation.
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+---
 
-Cheers,
-Biju
+v2:
+-Return ret instead of cnt on error in show()
+
+ drivers/bus/mhi/host/boot.c | 11 +----------
+ drivers/bus/mhi/host/init.c | 16 ++++++++++++----
+ include/linux/mhi.h         |  2 --
+ 3 files changed, 13 insertions(+), 16 deletions(-)
+
+diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
+index edc0ec5a0933..dedd29ca8db3 100644
+--- a/drivers/bus/mhi/host/boot.c
++++ b/drivers/bus/mhi/host/boot.c
+@@ -395,7 +395,7 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
+ 	void *buf;
+ 	dma_addr_t dma_addr;
+ 	size_t size, fw_sz;
+-	int i, ret;
++	int ret;
+ 
+ 	if (MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)) {
+ 		dev_err(dev, "Device MHI is not in valid state\n");
+@@ -408,15 +408,6 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
+ 	if (ret)
+ 		dev_err(dev, "Could not capture serial number via BHI\n");
+ 
+-	for (i = 0; i < ARRAY_SIZE(mhi_cntrl->oem_pk_hash); i++) {
+-		ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_OEMPKHASH(i),
+-				   &mhi_cntrl->oem_pk_hash[i]);
+-		if (ret) {
+-			dev_err(dev, "Could not capture OEM PK HASH via BHI\n");
+-			break;
+-		}
+-	}
+-
+ 	/* wait for ready on pass through or any other execution environment */
+ 	if (!MHI_FW_LOAD_CAPABLE(mhi_cntrl->ee))
+ 		goto fw_load_ready_state;
+diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+index f78aefd2d7a3..15c1740a2c88 100644
+--- a/drivers/bus/mhi/host/init.c
++++ b/drivers/bus/mhi/host/init.c
+@@ -97,11 +97,19 @@ static ssize_t oem_pk_hash_show(struct device *dev,
+ {
+ 	struct mhi_device *mhi_dev = to_mhi_device(dev);
+ 	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+-	int i, cnt = 0;
++	u32 hash_segment[MHI_MAX_OEM_PK_HASH_SEGMENTS];
++	int i, cnt = 0, ret;
+ 
+-	for (i = 0; i < ARRAY_SIZE(mhi_cntrl->oem_pk_hash); i++)
+-		cnt += sysfs_emit_at(buf, cnt, "OEMPKHASH[%d]: 0x%x\n",
+-				i, mhi_cntrl->oem_pk_hash[i]);
++	for (i = 0; i < MHI_MAX_OEM_PK_HASH_SEGMENTS; i++) {
++		ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_OEMPKHASH(i), &hash_segment[i]);
++		if (ret) {
++			dev_err(dev, "Could not capture OEM PK HASH\n");
++			return ret;
++		}
++	}
++
++	for (i = 0; i < MHI_MAX_OEM_PK_HASH_SEGMENTS; i++)
++		cnt += sysfs_emit_at(buf, cnt, "OEMPKHASH[%d]: 0x%x\n", i, hash_segment[i]);
+ 
+ 	return cnt;
+ }
+diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+index 039943ec4d4e..e46c68218fe4 100644
+--- a/include/linux/mhi.h
++++ b/include/linux/mhi.h
+@@ -323,7 +323,6 @@ struct mhi_controller_config {
+  * @major_version: MHI controller major revision number
+  * @minor_version: MHI controller minor revision number
+  * @serial_number: MHI controller serial number obtained from BHI
+- * @oem_pk_hash: MHI controller OEM PK Hash obtained from BHI
+  * @mhi_event: MHI event ring configurations table
+  * @mhi_cmd: MHI command ring configurations table
+  * @mhi_ctxt: MHI device context, shared memory between host and device
+@@ -410,7 +409,6 @@ struct mhi_controller {
+ 	u32 major_version;
+ 	u32 minor_version;
+ 	u32 serial_number;
+-	u32 oem_pk_hash[MHI_MAX_OEM_PK_HASH_SEGMENTS];
+ 
+ 	struct mhi_event *mhi_event;
+ 	struct mhi_cmd *mhi_cmd;
+-- 
+2.34.1
+
 
