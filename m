@@ -1,191 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-6537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6538-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D99E5825944
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 18:43:24 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 16762825B6E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 21:14:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1F6E0B210A7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 17:43:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A3E68285ECD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 20:14:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03667321BC;
-	Fri,  5 Jan 2024 17:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9325236083;
+	Fri,  5 Jan 2024 20:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Lxz+7RJC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UKq2+axj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46CEB321A1;
-	Fri,  5 Jan 2024 17:43:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 405FU5Gi007348;
-	Fri, 5 Jan 2024 17:43:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version
-	:content-transfer-encoding:content-type; s=qcppdkim1; bh=BfdeZ43
-	n14/vI7Q5GngZJhAODUo/eMvrOFifkvCSI34=; b=Lxz+7RJCAq8JYRRr01jy37m
-	1Ac/MK2J68DwUliDl+mfaT10UvC6Bv49QGJXB5ukBGsFOgCrS4UoSsqM2Y710fZP
-	3q5l5/py50jj+KTP0dJKAuKVKxnBE2FOeVmUsgs9CViDAC7ypCz3KcgW7Mv+pPQQ
-	zDyfNLk/4U0UpAexxrPapWBQl5hu1lS6L8GhougrLzE8gXizky2UzX0SqerOeJjQ
-	ampWI5qzYEZdrAWxvtx2XBHm5iE8pZSu4goWKHJmO09785eRrVgMgFx5EnkkYjZU
-	azshqDp4TkWen8kzSlcAMmf86iWxVovUzZya4PtNbjiGEI1V0F2vKPVZobhAzVw=
-	=
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ve96qss2j-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 05 Jan 2024 17:43:11 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 405HhAWD020080
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 5 Jan 2024 17:43:11 GMT
-Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Fri, 5 Jan 2024 09:43:10 -0800
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-To: <mani@kernel.org>
-CC: <quic_pkanojiy@quicinc.com>, <quic_carlv@quicinc.com>,
-        <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        Jeffrey Hugo
-	<quic_jhugo@quicinc.com>
-Subject: [PATCH v2] bus: mhi: host: Read PK HASH dynamically
-Date: Fri, 5 Jan 2024 10:42:53 -0700
-Message-ID: <20240105174253.863388-1-quic_jhugo@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F343635F0E;
+	Fri,  5 Jan 2024 20:14:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-40d5336986cso21630335e9.1;
+        Fri, 05 Jan 2024 12:14:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1704485674; x=1705090474; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=H5v4lJQ5FBDH9m0m4us0aR2gRwVokV9Ch1chBRNOEtk=;
+        b=UKq2+axjFBtD1DSjVqVbHlMCgZ7zdQMKV/XmZHPqhTVL4P3YeEQMkEvcDVMB9DXcr6
+         n4Z32Kb0SpBLZ8xpwOpuYWJ1oy3RWEsgkNpbdYjOc4qUu1Bq4sgSH5SG2WHis4LvoiL0
+         aT9EC1VKrIzMw+Hsl1BeYjqYRGmKHhXuGgCVAh18fRn30bljEsNzjo9wwqMU5tfw68ix
+         n44vpC30hlf4Z57hA2CCx2xsDvpulYaP16i4UIK7MFj9YoT2tXx26s0MRMU+pfkyfC2v
+         kkDNvyhxzMlMGPUWg0xgYwOhzyNpse6/jHCcj1BkjDNbTH2Heqx5m9XPPCn/pz8jYH6g
+         Ssew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704485674; x=1705090474;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=H5v4lJQ5FBDH9m0m4us0aR2gRwVokV9Ch1chBRNOEtk=;
+        b=BVSnH6Qvkv9z7DIwoEy5Ve2M9as68/5l2b/N4E9DLdEcwwgscfcp3wU95yzDIsQmqg
+         gqQS8WCQ3Qu9fp4xrGad/ARfebsw5QZhZOHP1UXkHWVz9tfFDDIwDpHUXcOHMENQqa3i
+         AhsFi8lzyLTVKaPh8o+z8XgWwrE1Y+KgvKQyK5AyQGdnUUui6W4vmsmfICNnh0sBycEm
+         1xx33kolP1WSRrZWfJGGre76RoCH3h2oXMJYhc8fa7/8Xj96l24ZuZtyxxOOIZa/z37v
+         F2ZQSeifLTkdQRQpnA9H3BPMOCEXNpombe6Hr8FtUpa3G04mI+BE5IEpfKZy7/T7eCjy
+         8rfw==
+X-Gm-Message-State: AOJu0YwDVsp0Irt/ozKqdbWLg3J6nf0Rk9trYI7ZgdAltsckxK8jG2Te
+	VHwi1kr/qDMTfhUrwN3/8BE=
+X-Google-Smtp-Source: AGHT+IFze9sCHhyNc+zVvhduYpNez49M+qfUp0nS1bBjaYDBY+nfbVYc0kUsXXE5eZyWK9FZdIoybg==
+X-Received: by 2002:a05:600c:2284:b0:40e:3524:4a53 with SMTP id 4-20020a05600c228400b0040e35244a53mr28919wmf.76.1704485673912;
+        Fri, 05 Jan 2024 12:14:33 -0800 (PST)
+Received: from [192.168.0.3] ([69.6.8.124])
+        by smtp.gmail.com with ESMTPSA id h12-20020a05600c314c00b0040d5ac00dc6sm2554821wmo.8.2024.01.05.12.14.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 Jan 2024 12:14:33 -0800 (PST)
+Message-ID: <d639824c-74e2-45f4-bd8a-7e20fad8d61b@gmail.com>
+Date: Fri, 5 Jan 2024 22:14:31 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: hFIykELhAnzQj3h6LteLlwlSXPI-u5iq
-X-Proofpoint-GUID: hFIykELhAnzQj3h6LteLlwlSXPI-u5iq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- suspectscore=0 impostorscore=0 adultscore=0 clxscore=1015 bulkscore=0
- malwarescore=0 spamscore=0 mlxscore=0 priorityscore=1501
- lowpriorityscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2311290000 definitions=main-2401050146
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/5] support ipq5332 platform
+Content-Language: en-US
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Jie Luo <quic_luoj@quicinc.com>, agross@kernel.org, andersson@kernel.org,
+ konrad.dybcio@linaro.org, davem@davemloft.net, edumazet@google.com,
+ kuba@kernel.org, pabeni@redhat.com, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+ hkallweit1@gmail.com, linux@armlinux.org.uk, robert.marko@sartura.hr,
+ linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ quic_srichara@quicinc.com
+References: <20231225084424.30986-1-quic_luoj@quicinc.com>
+ <a6a50fb6-871f-424c-a146-12b2628b8b64@gmail.com>
+ <cfb04c82-3cc3-49f6-9a8a-1f6d1a22df40@quicinc.com>
+ <dd05a599-247a-4516-8ad3-7550ceea99f7@gmail.com>
+ <8ef607b9-1fc6-485b-a6fb-a8d468cc1954@lunn.ch>
+From: Sergey Ryazanov <ryazanov.s.a@gmail.com>
+In-Reply-To: <8ef607b9-1fc6-485b-a6fb-a8d468cc1954@lunn.ch>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-The OEM PK HASH registers in the BHI region are read once during firmware
-load (boot), cached, and displayed on demand via sysfs. This has a few
-problems - if firmware load is skipped, the registers will not be read and
-if the register values change over the life of the device the local cache
-will be out of sync.
+Hi Andrew,
 
-Qualcomm Cloud AI 100 can expose both these problems. It is possible for
-mhi_async_power_up() to be invoked while the device is in AMSS EE, which
-would bypass firmware loading. Also, Qualcomm Cloud AI 100 has 5 PK HASH
-slots which can be dynamically provisioned while the device is active,
-which would result in the values changing and users may want to know what
-keys are active.
+On 05.01.2024 15:52, Andrew Lunn wrote:
+> On Fri, Jan 05, 2024 at 04:48:31AM +0200, Sergey Ryazanov wrote:
+>> Hi Luo,
+>>
+>> thank you for explaining the case in such details. I also have checked the
+>> related DTSs in the Linaro repository to be more familiar with the I/O mem
+>> layout. Specifically I checked these two, hope they are relevant to the
+>> discussion:
+>> https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/blob/NHSS.QSDK.12.4.r3/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+>> https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/blob/NHSS.QSDK.12.4.r3/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>>
+>> Please find my comments below.
+> 
+> Hi Sergey
+> 
+> There is a second thread going on, focused around the quad PHY. See:
+> 
+> https://lore.kernel.org/netdev/60b9081c-76fa-4122-b7ae-5c3dcf7229f9@lunn.ch/
 
-Address these concerns by reading the PK HASH registers on-demand during
-the sysfs read. This will result in showing the most current information.
+Yeah. I had read your discussion yesterday before coming back to this 
+clock discussion. It is a monster chip and looks like you have a hard 
+time figuring out how it works and looking for a good code/DT model.
 
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
----
+> Since it is very hard to get consistent information out of Luo, he has
+> annoyed nearly all the PHY maintainers and all the DT maintainers, i'm
+> going back to baby steps, focusing on just the quad pure PHY, and
+> trying to get that understood and correctly described in DT.
+> 
+> However, does Linaro have any interest in just taking over this work,
+> or mentoring Luo?
 
-v2:
--Return ret instead of cnt on error in show()
+I should clarify here a bit. I found this discussion while looking for a 
+way to port one open source firmware to my router based on previous IPQ 
+generation. And since I am a bit familiar with this chip family, I chose 
+to put my 2c to make implementation discussion more structured. Long 
+story short, I have no idea about Linaro's plans :)
 
- drivers/bus/mhi/host/boot.c | 11 +----------
- drivers/bus/mhi/host/init.c | 16 ++++++++++++----
- include/linux/mhi.h         |  2 --
- 3 files changed, 13 insertions(+), 16 deletions(-)
+If I am allowed to speak, the chosen baby steps approach to focus on 
+pure PHY seems to be the only sane method in that case. Considering 
+Alex's promise, we can assume that the next release will support this PHY.
 
-diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
-index edc0ec5a0933..dedd29ca8db3 100644
---- a/drivers/bus/mhi/host/boot.c
-+++ b/drivers/bus/mhi/host/boot.c
-@@ -395,7 +395,7 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
- 	void *buf;
- 	dma_addr_t dma_addr;
- 	size_t size, fw_sz;
--	int i, ret;
-+	int ret;
- 
- 	if (MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)) {
- 		dev_err(dev, "Device MHI is not in valid state\n");
-@@ -408,15 +408,6 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
- 	if (ret)
- 		dev_err(dev, "Could not capture serial number via BHI\n");
- 
--	for (i = 0; i < ARRAY_SIZE(mhi_cntrl->oem_pk_hash); i++) {
--		ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_OEMPKHASH(i),
--				   &mhi_cntrl->oem_pk_hash[i]);
--		if (ret) {
--			dev_err(dev, "Could not capture OEM PK HASH via BHI\n");
--			break;
--		}
--	}
--
- 	/* wait for ready on pass through or any other execution environment */
- 	if (!MHI_FW_LOAD_CAPABLE(mhi_cntrl->ee))
- 		goto fw_load_ready_state;
-diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-index f78aefd2d7a3..15c1740a2c88 100644
---- a/drivers/bus/mhi/host/init.c
-+++ b/drivers/bus/mhi/host/init.c
-@@ -97,11 +97,19 @@ static ssize_t oem_pk_hash_show(struct device *dev,
- {
- 	struct mhi_device *mhi_dev = to_mhi_device(dev);
- 	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
--	int i, cnt = 0;
-+	u32 hash_segment[MHI_MAX_OEM_PK_HASH_SEGMENTS];
-+	int i, cnt = 0, ret;
- 
--	for (i = 0; i < ARRAY_SIZE(mhi_cntrl->oem_pk_hash); i++)
--		cnt += sysfs_emit_at(buf, cnt, "OEMPKHASH[%d]: 0x%x\n",
--				i, mhi_cntrl->oem_pk_hash[i]);
-+	for (i = 0; i < MHI_MAX_OEM_PK_HASH_SEGMENTS; i++) {
-+		ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_OEMPKHASH(i), &hash_segment[i]);
-+		if (ret) {
-+			dev_err(dev, "Could not capture OEM PK HASH\n");
-+			return ret;
-+		}
-+	}
-+
-+	for (i = 0; i < MHI_MAX_OEM_PK_HASH_SEGMENTS; i++)
-+		cnt += sysfs_emit_at(buf, cnt, "OEMPKHASH[%d]: 0x%x\n", i, hash_segment[i]);
- 
- 	return cnt;
- }
-diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-index 039943ec4d4e..e46c68218fe4 100644
---- a/include/linux/mhi.h
-+++ b/include/linux/mhi.h
-@@ -323,7 +323,6 @@ struct mhi_controller_config {
-  * @major_version: MHI controller major revision number
-  * @minor_version: MHI controller minor revision number
-  * @serial_number: MHI controller serial number obtained from BHI
-- * @oem_pk_hash: MHI controller OEM PK Hash obtained from BHI
-  * @mhi_event: MHI event ring configurations table
-  * @mhi_cmd: MHI command ring configurations table
-  * @mhi_ctxt: MHI device context, shared memory between host and device
-@@ -410,7 +409,6 @@ struct mhi_controller {
- 	u32 major_version;
- 	u32 minor_version;
- 	u32 serial_number;
--	u32 oem_pk_hash[MHI_MAX_OEM_PK_HASH_SEGMENTS];
- 
- 	struct mhi_event *mhi_event;
- 	struct mhi_cmd *mhi_cmd;
--- 
-2.34.1
-
+--
+Sergey
 
