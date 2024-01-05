@@ -1,139 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-6539-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id AEFBE825B73
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 21:16:02 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 060CA825B88
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 21:23:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2AB47B223EE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 20:16:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AC86D1F23EEA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 20:23:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 013CF3608F;
-	Fri,  5 Jan 2024 20:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC62F3608F;
+	Fri,  5 Jan 2024 20:23:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cIxmNUxN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DBE0tVst"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CBD036083
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jan 2024 20:15:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2cd0f4f306fso23808561fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jan 2024 12:15:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704485752; x=1705090552; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=B49zd4rGVpOEQ3g+hpM+Q91n3Dq8VqenteoL/h06scs=;
-        b=cIxmNUxN7X/oFcR27Yx+C7sOPU53d2MkVX1AOLfuNUF2QkUNFwkJQVuq3AoqlIN1eq
-         M9A/NPtvQPFaCJ15vB/q7Ja/bLic7qdMaws6GG3jrwGrxpVA+xZNDiWp6DqG166Elo/w
-         DElYTzepCCvNQfTW8st9G3Nna5q1L4Yrn8UonWgpAxbWjUbkipk4F6Ww85U4rAeyiDkY
-         xfbGSN2V98nPdTbdJmQS0ld90MQycr2NI1nsxHzMlbmiLAL5+Vl0M1dFp3DxwuJCpsIS
-         d3Q7jLW7k3JYGgoSydUpf6JCxCUBSN8M4XJZtsvaWyZDzaFK3VG9cfU9WQPuiSOMlGai
-         XLrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704485752; x=1705090552;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=B49zd4rGVpOEQ3g+hpM+Q91n3Dq8VqenteoL/h06scs=;
-        b=ZwN7dalv+4oJRNezg06YnS8m2hg6pB/0nvvwFboDRn7iq8KnIfuuzf+IJ4fYYSfjCH
-         c4BdapFhxaiJubWwSmFW7MDcLlfeTOTcd4OsXnungAL9ACVuK2guehquQi6NGM/MQBVu
-         cM8VHulECOGZsca4ESuMt2Z+6G8FFn17uZYmTgrG2dxHgDxmb7PONJJen47qyyPQFqpn
-         QGf4Lu3caffQpqmqDyXNixWwyJI9ULxaK6ucch9nR+9Ukg48NCvniZYpIjtZKoZIWvYY
-         a46S179bmnkl7pyyrkxKGmMEIurMZ3bfnnjgAoyGFQvZZMAnn13Zw4lYvgibQ7/BP0SG
-         RGnw==
-X-Gm-Message-State: AOJu0YwbBYAXS2grgf8RP3wlGRE7tXpPt/c9WqHSNK7sy8F+mPDRATOs
-	e8rRGpU8Sqkj/ACZo11ZvadFhNc78v7jrg==
-X-Google-Smtp-Source: AGHT+IFm+9G7NhZ/QCfHM2cXlnn2TEnHYoC6V1iLFWAmWFiJ8jnLtq4cn356Sqca9dkZwrj29DZphQ==
-X-Received: by 2002:a05:651c:4c6:b0:2cd:1d5d:322b with SMTP id e6-20020a05651c04c600b002cd1d5d322bmr1758186lji.57.1704485751978;
-        Fri, 05 Jan 2024 12:15:51 -0800 (PST)
-Received: from [192.168.199.125] (178235179036.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.36])
-        by smtp.gmail.com with ESMTPSA id v9-20020aa7cd49000000b005533a9934b6sm1315856edw.54.2024.01.05.12.15.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Jan 2024 12:15:51 -0800 (PST)
-Message-ID: <7271846f-c03f-4d0f-a54b-7424ddd72724@linaro.org>
-Date: Fri, 5 Jan 2024 21:15:49 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D58A3608A;
+	Fri,  5 Jan 2024 20:23:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A241AC433C8;
+	Fri,  5 Jan 2024 20:23:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1704486211;
+	bh=PkcN2ihSIABo+ff9pBaTl7f7CQyvSNcHmHiCSRdPILI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=DBE0tVstwRQZzEgx2TpLnt8egBNvIGcSyAbSQL0n1ApRitECJjcQV6dE3tlP+i/Ql
+	 TGd7Cw0ffituK6zO+pBsX86qfiSgyL1XGqz0tAWrxZXV3Cku/A4ud0qPWJa1+eK1PX
+	 9qsT4nE9bOmjN2oF4DsBH8PM/TZ950/e0TfI7EJIOwChHSceRz9hVvsJe4S2dQ/QzJ
+	 xLUeSdLquFgpWBdyHs4bTrZ0bi7pmtNmk/M2ZBfs30u+T3+bp4hb6nttcNxLBWMvSr
+	 2ByvkFdM3b3dbHpaw8rDh3WqjEPkCI3QY+LHqhLgUIjieqmcR/Hkj9m5S8WuNTHaqN
+	 04o1AxqVZmt2g==
+Date: Fri, 5 Jan 2024 20:23:26 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] regulator: qcom_smd: Keep one rpm handle for all vregs
+Message-ID: <3ccef53c-3333-4d1c-a3fc-32b05cd473fc@sirena.org.uk>
+References: <20231227-topic-rpm_vreg_cleanup-v2-1-04c79c4f9166@linaro.org>
+ <b5a2f511-2758-452d-b6ac-399262b3734d@sirena.org.uk>
+ <7271846f-c03f-4d0f-a54b-7424ddd72724@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] regulator: qcom_smd: Keep one rpm handle for all vregs
-Content-Language: en-US
-To: Mark Brown <broonie@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Liam Girdwood <lgirdwood@gmail.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231227-topic-rpm_vreg_cleanup-v2-1-04c79c4f9166@linaro.org>
- <b5a2f511-2758-452d-b6ac-399262b3734d@sirena.org.uk>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <b5a2f511-2758-452d-b6ac-399262b3734d@sirena.org.uk>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="okGAQarU2f8A9pZu"
+Content-Disposition: inline
+In-Reply-To: <7271846f-c03f-4d0f-a54b-7424ddd72724@linaro.org>
+X-Cookie: Your step will soil many countries.
 
-On 5.01.2024 17:31, Mark Brown wrote:
-> On Wed, Jan 03, 2024 at 09:18:37PM +0100, Konrad Dybcio wrote:
-> 
->> -	rpm = dev_get_drvdata(pdev->dev.parent);
->> -	if (!rpm) {
->> +	smd_vreg_rpm = dev_get_drvdata(pdev->dev.parent);
->> +	if (!smd_vreg_rpm) {
->>  		dev_err(&pdev->dev, "Unable to retrieve handle to rpm\n");
->>  		return -ENODEV;
->>  	}
-> 
-> It'd be slightly more robust to have a check here that we do get the
-> same RPM back if the variable is already set, just on the off chance
-> that something changes in some future system and we do end up with a
-> second RPM somehow.
 
-Knowing how improbable this is (currently RPM is responsible for almost all
-power and some clock rails, including DDR), I'd say it's excessive, but if
-you wish, I can add it.
+--okGAQarU2f8A9pZu
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Konrad
+On Fri, Jan 05, 2024 at 09:15:49PM +0100, Konrad Dybcio wrote:
+> On 5.01.2024 17:31, Mark Brown wrote:
+
+> > It'd be slightly more robust to have a check here that we do get the
+> > same RPM back if the variable is already set, just on the off chance
+> > that something changes in some future system and we do end up with a
+> > second RPM somehow.
+
+> Knowing how improbable this is (currently RPM is responsible for almost all
+> power and some clock rails, including DDR), I'd say it's excessive, but if
+> you wish, I can add it.
+
+It really feels like something where if this was a good idea we'd have
+an API to do this directly rather than passing around through driver
+data.  The fact that it's used for all power management doesn't
+immediately preclude having two instances managing the power for two
+different bits of the system (eg, a low power island).
+
+--okGAQarU2f8A9pZu
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmWYZT0ACgkQJNaLcl1U
+h9CkTAf/SyvlUQy6c7giS1ICGR00AlRStxV04y1DY4uwCc26V1lL2TX7UNC76a4m
+KMqlLOQPh5DN3EqASjWGqjEXfbzR7/imN6WX3SoJL2oITruU4Gm1UXL6jgl6Xxtt
+yscAy310pvsZD8BVMI+wAossXHfcw4W0zBzkhoVGtxGvAhxv4S7sXMERXZnXmLbC
+4YpqzHI2SQ8ak9oSD449wd2DtEe3IInLVfbBmMJjqXp/BPUdJqYysfHBQlCFXzx7
++Gnzq6hraUyxMeSq7XYbttewaRKL+zR+xGRb6flJV18/9z/YS4Rpi+pIJGJn4plz
+sCtCPu63pWdjy5MGqEcMPCJ6Imew+A==
+=MjPg
+-----END PGP SIGNATURE-----
+
+--okGAQarU2f8A9pZu--
 
