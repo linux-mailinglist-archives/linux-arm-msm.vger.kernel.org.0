@@ -1,207 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-6518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED1D882554E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 15:31:37 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id EDC5E825554
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 15:32:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5894EB237A8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 14:31:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 638B41F220F2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 14:32:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1769834569;
-	Fri,  5 Jan 2024 14:29:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="DkM4cPMl"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A618C2E3F8;
+	Fri,  5 Jan 2024 14:31:42 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0ED31A97
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jan 2024 14:29:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a29a4f610b1so13497766b.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jan 2024 06:29:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1704464965; x=1705069765; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LcIsCf9lD/knWhOV4w5QILuSqh1F/UU7FLo8OWJM7Io=;
-        b=DkM4cPMlk668IK5AVgd/FHKm3S+y9baq+hqydxVqB0RyqnYaxYh34jRVIkN+qAvmDv
-         eainLksGwxRyPiioDbIncVUZ9V2bjaBwh5Le0a+ad4lNLC77iVgiriVkRL58ko/9N9/X
-         CKjYQRt+1UgeLfLkCwHdib4/PEMcN79rgIxQLOuN6/Ca/gyfpgOiDWF+lmRz29xJyncH
-         kpFmSc6wkAOdATDQCzfbQNojOTr4NvFoxkaC4TFXsfBQAeJ4lsI+hO7rkWpSeDxm6w01
-         JchTmhGdTVh/C83orGBtyVNklNzMhBH23EiH5+6y+nbPUAeLEG6KmTeLASt///mC14n5
-         7SEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704464965; x=1705069765;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LcIsCf9lD/knWhOV4w5QILuSqh1F/UU7FLo8OWJM7Io=;
-        b=cOjzj/Sbg0zIgTsq5wbNibSr0UansHOxdBQfI+0MyMW/En7WhZtc+V24lXalSJdefq
-         thy1MN8GIcTgkMoyUZuP/6zHTykg0V80fjvKfb4W6Iu0ba6ksDQhULwl/K1BIdqf+3D1
-         uec4e2QkD7arqyhi3Rsf3pa9RDijIHnbe53kv79ww8m8fXqrRIBhx0re3Dhy105BdOHA
-         nL9qkDoxlV3+HUDrelaEkrqqvxPv8DX8H9RXXnESWgPfvlc2NImHrjCtz1iqyW+QyMoB
-         i+90qWuqHYMzwGoHMqVCMVkGME+v3c3ZCcqoRt+KZQOr5NZvznnv4yX+XM+wiHE7T0Jr
-         qjVg==
-X-Gm-Message-State: AOJu0Yyul0G46mQHY0rp9t5iGsjYAIUNFg6yKaRj9+Ql+iTyLv6t3xgf
-	KWYTdmn9++QDfT+fowQ778TqsRENvBFcsw==
-X-Google-Smtp-Source: AGHT+IFG3RJXE6tYpwVAbEAn7QPS50WJ+2cJRim2jdSJpfqmulybpFQu+xxg4rk4FJSzZPs+mAwQag==
-X-Received: by 2002:a17:906:6d3:b0:a28:be7f:3ef4 with SMTP id v19-20020a17090606d300b00a28be7f3ef4mr1170053ejb.24.1704464964761;
-        Fri, 05 Jan 2024 06:29:24 -0800 (PST)
-Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id u7-20020a1709067d0700b00a26b057df46sm927006ejo.126.2024.01.05.06.29.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jan 2024 06:29:23 -0800 (PST)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Fri, 05 Jan 2024 15:29:14 +0100
-Subject: [PATCH 3/3] arm64: dts: qcom: sm7225-fairphone-fp4: Enable display
- and GPU
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E362E3F1
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jan 2024 14:31:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1rLlEH-0002Kr-D9; Fri, 05 Jan 2024 15:31:21 +0100
+Received: from [2a0a:edc0:0:900:1d::4e] (helo=lupine)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1rLlEF-000baM-VY; Fri, 05 Jan 2024 15:31:19 +0100
+Received: from pza by lupine with local (Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1rLlEF-000BgI-2u;
+	Fri, 05 Jan 2024 15:31:19 +0100
+Message-ID: <c15f1a71b01f7d3985ee8d3b42b6e1ae0dddd235.camel@pengutronix.de>
+Subject: Re: [PATCH 2/4] reset: add GPIO-based reset controller
+From: Philipp Zabel <p.zabel@pengutronix.de>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Sean Anderson
+ <sean.anderson@seco.com>, Bjorn Andersson <andersson@kernel.org>, Konrad
+ Dybcio <konrad.dybcio@linaro.org>, Srinivas Kandagatla
+ <srinivas.kandagatla@linaro.org>,  Banajit Goswami <bgoswami@quicinc.com>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,  Rob
+ Herring <robh+dt@kernel.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+ linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org, 
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Fri, 05 Jan 2024 15:31:19 +0100
+In-Reply-To: <d2d17b94-6f29-423d-a7e0-e24513a8e59f@linaro.org>
+References: <20231222150133.732662-1-krzysztof.kozlowski@linaro.org>
+	 <20231222150133.732662-3-krzysztof.kozlowski@linaro.org>
+	 <530e3473-eb3b-477c-8599-e7aa12779640@seco.com>
+	 <88bd6668-7e67-42c7-97b6-d7029f371349@linaro.org>
+	 <075990bb-5fdb-4d30-9484-9df6b978e805@seco.com>
+	 <fcbae47b-3b28-42f0-b93f-f83932025dc1@linaro.org>
+	 <2be19fbf-4c73-4594-be42-31587dc7b747@seco.com>
+	 <d2d17b94-6f29-423d-a7e0-e24513a8e59f@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240105-fp4-panel-v1-3-1afbabc55276@fairphone.com>
-References: <20240105-fp4-panel-v1-0-1afbabc55276@fairphone.com>
-In-Reply-To: <20240105-fp4-panel-v1-0-1afbabc55276@fairphone.com>
-To: Neil Armstrong <neil.armstrong@linaro.org>, 
- Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.12.4
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 
-Add the description for the display panel found on this phone and remove
-the simple-framebuffer that was in place until now. Unfortunately the
-LCDB module on PM6150L isn't yet supported upstream so we need to use a
-dummy regulator-fixed in the meantime.
+On Do, 2024-01-04 at 20:08 +0100, Krzysztof Kozlowski wrote:
+> On 04/01/2024 17:30, Sean Anderson wrote:
+> > On 1/4/24 11:08, Krzysztof Kozlowski wrote:
+> > > On 04/01/2024 17:04, Sean Anderson wrote:
+> > > > On 1/4/24 03:57, Krzysztof Kozlowski wrote:
+> > > > > The driver (reset consumer) knows when it is safe or not. You mus=
+t
+> > > > > implement proper reset handling in your driver.
+> > > >=20
+> > > > The driver has no idea whether it is safe or not. It just calls
+> > > > reset_assert/deassert at the appropriate time, and the reset
+> > > > framework/controller is supposed to coordinate things so e.g. the d=
+evice
+> > > > doesn't get reset multiple times as multiple drivers all probe.
+> > >=20
+> > > Sorry, then I don't get what you refer to. The driver calls deassert
+> > > when it is safe for it to do it, so the driver *knows*. Now, you clai=
+m
+> > > that driver does not know that... core also does not know, so no one =
+knows.
+> >=20
+> > Yes! That is the problem with this design. Someone has to coordinate th=
+e
+> > reset, and it can't be the driver. But the core also doesn't have enoug=
+h
+> > information. So no one can do it.
+>=20
+> The point is that the driver coordinates.
 
-And with this done we can also enable the GPU.
+Currently the reset controller API supports two types of shared resets.
+I hope distinguishing the two types and illustrating them helps the
+discussion:
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts | 62 +++++++++++++++++++----
- 1 file changed, 53 insertions(+), 9 deletions(-)
+1) For devices that just require the reset to be deasserted while they
+are active, and don't care otherwise, there is the clk-like behavior
+described in [1].
 
-diff --git a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-index ade619805519..8eb376f2db46 100644
---- a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-+++ b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-@@ -45,15 +45,6 @@ chosen {
- 		ranges;
- 
- 		stdout-path = "serial0:115200n8";
--
--		framebuffer0: framebuffer@a000000 {
--			compatible = "simple-framebuffer";
--			reg = <0 0xa0000000 0 (2340 * 1080 * 4)>;
--			width = <1080>;
--			height = <2340>;
--			stride = <(1080 * 4)>;
--			format = "a8r8g8b8";
--		};
- 	};
- 
- 	gpio-keys {
-@@ -68,6 +59,14 @@ key-volume-up {
- 		};
- 	};
- 
-+	/* Dummy regulator until PM6150L has LCDB VSP/VSN support */
-+	lcdb_dummy: regulator-lcdb-dummy {
-+		compatible = "regulator-fixed";
-+		regulator-name = "lcdb_dummy";
-+		regulator-min-microvolt = <5500000>;
-+		regulator-max-microvolt = <5500000>;
-+	};
-+
- 	reserved-memory {
- 		/*
- 		 * The rmtfs memory region in downstream is 'dynamically allocated'
-@@ -365,6 +364,10 @@ &cdsp {
- 	status = "okay";
- };
- 
-+&gmu {
-+	status = "okay";
-+};
-+
- &gpi_dma0 {
- 	status = "okay";
- };
-@@ -373,6 +376,10 @@ &gpi_dma1 {
- 	status = "okay";
- };
- 
-+&gpu {
-+	status = "okay";
-+};
-+
- &i2c0 {
- 	clock-frequency = <400000>;
- 	status = "okay";
-@@ -404,6 +411,43 @@ &ipa {
- 	status = "okay";
- };
- 
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mdss_dsi0 {
-+	vdda-supply = <&vreg_l22a>;
-+	status = "okay";
-+
-+	panel@0 {
-+		compatible = "fairphone,fp4-hx83112a-djn", "himax,hx83112a";
-+		reg = <0>;
-+
-+		backlight = <&pm6150l_wled>;
-+		reset-gpios = <&pm6150l_gpios 9 GPIO_ACTIVE_LOW>;
-+
-+		vdd1-supply = <&vreg_l1e>;
-+		vsn-supply = <&lcdb_dummy>;
-+		vsp-supply = <&lcdb_dummy>;
-+
-+		port {
-+			panel_in: endpoint {
-+				remote-endpoint = <&mdss_dsi0_out>;
-+			};
-+		};
-+	};
-+};
-+
-+&mdss_dsi0_out {
-+	data-lanes = <0 1 2 3>;
-+	remote-endpoint = <&panel_in>;
-+};
-+
-+&mdss_dsi0_phy {
-+	vdds-supply = <&vreg_l18a>;
-+	status = "okay";
-+};
-+
- &mpss {
- 	firmware-name = "qcom/sm7225/fairphone4/modem.mdt";
- 	status = "okay";
+  requested reset signal via reset_control_deassert/assert():
+    device A: =E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=
+=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA\=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=
+=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=
+=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD/=E2=8E=BA=E2=8E=BA=
+=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=
+=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=
+=BA
+    device B: =E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=
+=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=
+=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA\=E2=8E=BD=E2=8E=BD=E2=8E=BD=
+=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=
+=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD/=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=
+=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=
+=BA
 
--- 
-2.43.0
+  actual reset signal to both devices:
+              =E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=
+=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA\=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=
+=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=
+=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=
+=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD/=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=
+=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=BA=E2=8E=
+=BA
+
+In this scenario, there should be no delays in the reset controller
+driver. reset_control_deassert() may return as soon as the physical
+reset signal is deasserted [2]. Any post-deassert delays required by
+the devices are handled in the device drivers,=C2=A0and they can be
+different for each device. The devices have to be able to cope with a
+(much) longer post-deassert delay than expected (e.g. device B in this
+case). It is assumed that the reset signal is initially asserted.
+
+The reset-gpio patchset supports this.
+
+2) The second type is for devices that require a single reset pulse for
+initialization, at any time before they become active. This is
+described in [3].
+
+  requested reset signal via reset_control_reset/rearm():
+    device A: =E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=
+=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD/=E2=8E=BA=E2=8E=BA\=E2=8E=BD=E2=8E=BD=E2=8E=
+=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=
+=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=
+=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=
+=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD
+    device B: =E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=
+=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=
+=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD/=E2=8E=BA=E2=8E=BA\=E2=8E=BD=
+=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=
+=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=
+=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD
+
+  actual reset signal to both devices:
+              =E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=
+=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD/=E2=8E=BA=E2=8E=BA\=E2=8E=BD=E2=8E=BD=E2=8E=
+=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=
+=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=
+=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=
+=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD=E2=8E=BD
+
+Here the reset controller needs to know the delay between assertion and
+deassertion - either baked into the hardware or as a delay call in the
+.reset callback.
+
+This is not supported by the reset-gpio patchset. It could be
+implemented via a delay property in the device tree that would have to
+be the same for all devices sharing the reset line, and by adding the
+.reset callback to the reset controller driver. The only issue is that
+the initial state of the reset line should be deasserted, and at
+reset_control_get() time, when the reset-gpio controller is
+instantiated, it is not yet known which type the driver will use.
+
+Sharing a reset line between devices of different type is not
+supported. Unfortunately, this will only fail at
+reset_control_deassert() / reset_control_reset() time when the second
+device tries to use the reset control in a different way than the
+first.
+
+[1] https://docs.kernel.org/driver-api/reset.html#assertion-and-deassertion
+[2] https://docs.kernel.org/driver-api/reset.html#c.reset_control_deassert
+[3] https://docs.kernel.org/driver-api/reset.html#triggering
+
+> > For example, say we want to share a reset GPIO between two devices. Eac=
+h
+> > device has the following constraints:
+> >=20
+> > device post-assert delay post-deassert delay
+> > =3D=3D=3D=3D=3D=3D =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D =
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > A                  500us                 1ms
+> > B                    1ms               300us
+>=20
+> And now imagine that these values are incompatible between them, so
+> using 1ms on device A is wrong - too long.
+>=20
+> This is just not doable. You invented some imaginary case to prove that
+> hardware is broken.
+>=20
+> Now, if we are back to realistic cases - use just the longest reset time.
+
+Right. This all only works if no device has an upper bound to the
+allowed delays on the shared reset line.
+
+I interpret the post-assert delay to be the desired length of the reset
+pulse between the rising edge and the falling edge in case 2) above,
+since in case 1) a post-assert delay is not useful.
+
+The post-deassert delays are not supposed to be handled by the reset
+controller drivers at all, except where they are needed to reach the
+deasserted state on the reset line. Reset drivers that do have post-
+deassert delays in the .deassert callback might be bending the rules a
+bit for convenience.
+
+regards
+Philipp
+
 
 
