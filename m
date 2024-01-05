@@ -1,120 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-6520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65CEF82555A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 15:33:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B599825625
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 15:54:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A575A1C22E16
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 14:33:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 10B341C23002
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 14:54:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA1A71E4A9;
-	Fri,  5 Jan 2024 14:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B78B2D78C;
+	Fri,  5 Jan 2024 14:54:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eutmiK8m"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="lald7/Ga"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD03024B5A;
-	Fri,  5 Jan 2024 14:33:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435F0C433C8;
-	Fri,  5 Jan 2024 14:33:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704465208;
-	bh=PgXaKGN8DqZgvzqxm7EM/leplkV3k/W5tK0CswY8nxw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eutmiK8mS7otKfg6XPGuMelGNRsbSuK9AVVvVKyRcSMEKSCGJCcM3oI0VFgUuBExW
-	 3lSEarA0liHmqyg1YBMLz6mDQJ1U8t1uKiVqFSPhB0unRzFwwAfoRw4EPEMSxkYEU+
-	 Z/0d0A6E6W4PNk+kVaGpZ2/FT4ZNrWs5bTR0be8EpZA8PZIdmN//fPUZffx/IZlvWR
-	 qSpmzpE6JcSmia1EWxAXjf9BVhKkp2AjRsMOPpi4f6a+Asuw14u2q+2uA+lgvK4gtu
-	 9rry/bIyj+eKO2dpcVWYjXm0tNIheQvePJQeGGrGWb9aOgJ1+bhVpNKFwgsRweBLb2
-	 iA8pe9otNIa3w==
-Date: Fri, 5 Jan 2024 14:33:21 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Sean Anderson <sean.anderson@seco.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Banajit Goswami <bgoswami@quicinc.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-	linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Bartosz Golaszewski <brgl@bgdev.pl>
-Subject: Re: [PATCH 2/4] reset: add GPIO-based reset controller
-Message-ID: <758c4fe3-1ea1-4a8c-bb6f-3a3df588da75@sirena.org.uk>
-References: <20231222150133.732662-1-krzysztof.kozlowski@linaro.org>
- <20231222150133.732662-3-krzysztof.kozlowski@linaro.org>
- <530e3473-eb3b-477c-8599-e7aa12779640@seco.com>
- <88bd6668-7e67-42c7-97b6-d7029f371349@linaro.org>
- <075990bb-5fdb-4d30-9484-9df6b978e805@seco.com>
- <fcbae47b-3b28-42f0-b93f-f83932025dc1@linaro.org>
- <2be19fbf-4c73-4594-be42-31587dc7b747@seco.com>
- <d2d17b94-6f29-423d-a7e0-e24513a8e59f@linaro.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9234F2E629
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jan 2024 14:54:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-555f95cc2e4so2023950a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jan 2024 06:54:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1704466480; x=1705071280; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EAo+/5UMblvp2yGXfA0v9Z3b5D8zBuz/YoaB+OeYIrE=;
+        b=lald7/GaAyTUCwVUEZ6z7eP92qUZpWqcnu5KxcLCAgE2j8yjdFgC2fHq1yGVmbRaXY
+         89/slULpx1vhC4bu4pPJPW7IlfOFSQ7mWsICxLiuvky6hWGvhDJeLjgLJM077nRd91kS
+         +L1rvhaaAOCridAotqXSlt/gHs0VAofWjTfiWD8/oLCJTU2/n9ugYJ7a1zrf4/xP1B2V
+         6zt0ynwHYV+CFljq0ItChIgZLnYeQncihCeDe/ENZpvuaqxFwJgadyLieEu3/Z0gpf+a
+         Z7XnwUCmkW6wT4wKC4fseluMyIktJCOSfbGQjff81w0nPXoD1Ou/PmiKSHlprKVHXXKF
+         WE3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704466480; x=1705071280;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EAo+/5UMblvp2yGXfA0v9Z3b5D8zBuz/YoaB+OeYIrE=;
+        b=E3bpJmSfCYTQvviqcERmBPyjClsTsh+AaUhyJTpYyDUGCMM7uuH3/5U2G1Y69oCnjr
+         F+P6u9RgVZddHuxShB9yOJ7TNfHPc4SwZlzDy3XTEi60nFsLc8ALTMP36ptYslVLktP0
+         87B4zLKPrBRC3fbfBH/0H2BoCsI8BVuL7R8Ninx5ezUBexCZRdKHUsRDc0VCyWsKlzmL
+         yHt2pUawrnjlzoZJR3e5hG4KToRoj2yTk3ScmCiEKPEkn6rBponuSfxdwU5PcK5N9WHg
+         JhCALhNk9Aih+VUYWovH+nsgotZZEUvkdvICYC/lRaSXuM62drwjEHQrp3Vee7ZVJMQp
+         kUNA==
+X-Gm-Message-State: AOJu0YxEeE8QtEQUgxd5V2VWt6US1FqFvYqeteykh4eSTI4yC4N3eA3Q
+	g8N7RXPCWhQL6c8zXrGiF0itoM1S/x3LOw==
+X-Google-Smtp-Source: AGHT+IGn+Y4YT3T2PJ4K147KHuH6YnDPE1udmtzVWQPQsBZaJbBPCebO8Q7GFNHFzPX14gOS0yomTg==
+X-Received: by 2002:a17:906:6d3:b0:a28:5597:6253 with SMTP id v19-20020a17090606d300b00a2855976253mr1171606ejb.21.1704466479847;
+        Fri, 05 Jan 2024 06:54:39 -0800 (PST)
+Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a17-20020a1709065f9100b00a2471bb0d11sm963140eju.31.2024.01.05.06.54.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Jan 2024 06:54:39 -0800 (PST)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 0/2] More thermal configuration for Fairphone 4
+Date: Fri, 05 Jan 2024 15:54:26 +0100
+Message-Id: <20240105-fp4-thermals-v1-0-f95875a536b7@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="vImSMy+icUlzjZXl"
-Content-Disposition: inline
-In-Reply-To: <d2d17b94-6f29-423d-a7e0-e24513a8e59f@linaro.org>
-X-Cookie: Your step will soil many countries.
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACIYmGUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDQwNT3bQCE92SjNSi3MScYt0042SLVAMTQ/MkcwMloJaCotS0zAqwcdG
+ xtbUAFbh4wV4AAAA=
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.12.4
 
+Add the thermal configuration for the thermistors connected to PMK8003
+and PM6150L. With that all the external thermistors on the phone should
+be present in the dts.
 
---vImSMy+icUlzjZXl
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Luca Weiss (2):
+      arm64: dts: qcom: sm7225-fairphone-fp4: Add PMK8003 thermals
+      arm64: dts: qcom: sm7225-fairphone-fp4: Add PM6150L thermals
 
-On Thu, Jan 04, 2024 at 08:08:50PM +0100, Krzysztof Kozlowski wrote:
-> On 04/01/2024 17:30, Sean Anderson wrote:
+ arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts | 216 ++++++++++++++++++++++
+ 1 file changed, 216 insertions(+)
+---
+base-commit: 50c107ee601a3d57e4fb13a9ecd9cf6c8df187f2
+change-id: 20240105-fp4-thermals-f3c8e0417b70
 
-> > device post-assert delay post-deassert delay
-> > ====== ================= ===================
-> > A                  500us                 1ms
-> > B                    1ms               300us
+Best regards,
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
 
-...
-
-> Now, if we are back to realistic cases - use just the longest reset time.
-
-Isn't the main concern here that when one device probes we don't yet
-know the times for the other devices?
-
-> > If we leave things up to the drivers, then whoever probes first will get
-> > to decide the reset sequence.
-
-> In current design yes, but it's not a problem to change it. Where is the
-> limitation? Just read other values and update the reset time.
-
-We might have already done a reset by that time and earlier devices
-might prevent later devices from resetting again.  It shouldn't be such
-an issue for the post delay, but might be one for the pre delay.
-
---vImSMy+icUlzjZXl
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmWYEzAACgkQJNaLcl1U
-h9AUFQf8DiBunWd33PprmdlKCI899IHnZ7UxbOoI6wrUZN2Sv3Eo8tBt+XXsK2ZV
-h61S9/tKulQcEi1z6NLrCKslrceGCewQP3dzTMmas5F14hBDSXE4WEfCrHpcLgtZ
-r6eqUUCKIQSDhBDodrHOPSHFxvizmJqcGoFNlj+UUF6U0Mqxo1S3DY3Q4/6edGqj
-p35k9Tud8KLEQJ4By0206b90rthRaUicLXQXuEqRYrrkLWQsKLIjjnZSZmrOogEb
-OmGTeyk5lY67DXPrhGxYnHI0R+XiaDK4SJm07EfQmJoBfD0ShMgMicPBXod/kkG1
-UUYU+vv8YIrLd/0AWrfdWORkiyteAA==
-=xDYl
------END PGP SIGNATURE-----
-
---vImSMy+icUlzjZXl--
 
