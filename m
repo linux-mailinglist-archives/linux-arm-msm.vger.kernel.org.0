@@ -1,127 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-6553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F081825D3C
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jan 2024 00:50:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C3D3F825D4B
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jan 2024 01:04:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D37EBB22893
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jan 2024 23:50:22 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3191AB21FF5
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jan 2024 00:04:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC419360BA;
-	Fri,  5 Jan 2024 23:50:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0898515AB;
+	Sat,  6 Jan 2024 00:04:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YT6YAHVI"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mjf0SGT4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BD6360A4
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jan 2024 23:50:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2cc7b9281d1so725221fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jan 2024 15:50:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704498613; x=1705103413; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=zgIr5KjeQ801ktUcvEq9tOSFsZbUarwYEDM+BV8WLFA=;
-        b=YT6YAHVInHs/bJP5lG0FPUcvm3FtjDcTXWb4ehVMppo7UNNZ69xiYhXcMVosCmkiXE
-         RrvFcpddWLXKKtrKAlONQNIpTF8jXdyHjnQ76WYNYJxxtoyc+5Ilth8IPFKX48sajmUd
-         lYxbvmg1cJbIWRFZjfS+g4vUqYWmhtOxzFXsR52ABPHUGWnpgzb7z0r+/5gzSOvOgWfs
-         7U2H70PRyZlxPC3V5zLL15Pp5ARtvhb3KfIppX7K8eq5c7KYSYZWitenYSM6MvMuK0IH
-         mxjwtowBZGwFxdIrjFAFmGbdWMLYzTWsRQisEq8yXdisOWUBJ39WMzso3TBfkMTSMXn7
-         u4Dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704498613; x=1705103413;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zgIr5KjeQ801ktUcvEq9tOSFsZbUarwYEDM+BV8WLFA=;
-        b=X8kYBW9BeMki1nM1T6F3C5PsTBwlSus3wvEpUN0uUGqlfJjzLxRq+LETxvqvcgPg4/
-         DQcMOLxEy8G/K075le9KMGJEKKrCzBjWXpSVKiGiUKQS8mE4sj+YKMaYAOKJYmopt7ol
-         zcntmT88b+jkjflaZns6yhg+gBFgXkAlyxLH/puTbM3XnJLQypdzNLHsQCJ+zYttPnZE
-         ZJEw+EqOSDsvxUcdit/2fyCblI8voEVlci9V6VdH/g6iu3SpxCjIhD6PG7WPhjzoH/3q
-         lRWNazYdNQvKtVHQUADAJFw9hBxBcI1G88IyH7gNaMQ8E3qYzFfpXADaqERTsW+89mi0
-         qINw==
-X-Gm-Message-State: AOJu0Yy9+76sGN5jHop/nT00DwGZvs20a5twEj1sXk/fBZvGQ/F+liqI
-	tQVyY4V/MIXdgc/1GW6aHam/bCN90SDVRMnE3ROPhRra53q8UQ==
-X-Google-Smtp-Source: AGHT+IEeBbWCgqwqpQYOR/iZ1DVjP4wiVNLe6VxZxGScfvx35vnY4HypTMhHt3kImH3vRzo4e9Vr8g==
-X-Received: by 2002:a2e:9ed4:0:b0:2cc:675a:10ee with SMTP id h20-20020a2e9ed4000000b002cc675a10eemr50853ljk.78.1704498612830;
-        Fri, 05 Jan 2024 15:50:12 -0800 (PST)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id x26-20020a2ea99a000000b002cceac0fdacsm465056ljq.126.2024.01.05.15.50.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jan 2024 15:50:12 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 06 Jan 2024 01:50:11 +0200
-Subject: [PATCH] drm/msm/dpu: make "vblank timeout" more useful
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E7315A8;
+	Sat,  6 Jan 2024 00:04:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 405LIUMG019395;
+	Sat, 6 Jan 2024 00:04:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=As75EitWRrYPFDkoeJblxIa+0pEysES3yZycpSeCVpk=; b=mj
+	f0SGT4cHNoD0jrutYp547/QvEa3BflHFx4KUVper+V1n5YSOp1CUCFFcQ5ksk2tx
+	WiWaE78ZANsT7Vqisf8vlxhAz68EhVPYI5LrNTFnxaq/szGwzUQXs/+BwoRPTKW/
+	1YD/y+Reb3HJ/AlQHyRS2tCD1j8qOtL9ZaLL8oY2zaS+gsekyvOg1qxiyeB/FDkk
+	H7bPvpgbyVBzpHFr8yqpVUhYls2mkrnCHldKPMANw0gEusSkKYYbAf3YJkeRqbIn
+	+bn5ihsHBwtt7NRT/CBJP31UoXvx6f1qP1OMH8DKxUu5gzCBTumZeAnbbl6N9PxI
+	YypWgLuLf6lCudmDKMnA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ve94rak56-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 06 Jan 2024 00:04:33 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40604W6C022634
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 6 Jan 2024 00:04:32 GMT
+Received: from [10.110.102.225] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 5 Jan
+ 2024 16:04:31 -0800
+Message-ID: <c8d6769b-eb28-337c-fa55-4dae86611da5@quicinc.com>
+Date: Fri, 5 Jan 2024 16:04:30 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/4] drm/msm: add a kernel param to select between MDP5
+ and DPU drivers
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul
+	<sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David
+ Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+CC: <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        "Stephen
+ Boyd" <swboyd@chromium.org>
+References: <20240106-fd-migrate-mdp5-v3-0-3d2750378063@linaro.org>
+ <20240106-fd-migrate-mdp5-v3-3-3d2750378063@linaro.org>
+From: Carl Vanderlip <quic_carlv@quicinc.com>
+In-Reply-To: <20240106-fd-migrate-mdp5-v3-3-3d2750378063@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240106-fd-dpu-debug-timeout-v1-1-6d9762884641@linaro.org>
-X-B4-Tracking: v=1; b=H4sIALKVmGUC/x3MSQqAMAxA0atI1gZSlTpcRVyoTWsWDrRWBPHuF
- pdv8f8Dgb1wgC57wPMlQfYtQeUZzMu4OUYxyVBQUZEijdagOSIanqLDU1be44ncqtrSNDekS0j
- p4dnK/W/74X0/OpMcKGYAAAA=
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1232;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=YlE6Y0Xns3P31n5Refq7dS9qQ/5BgtlDWj7ZX0gAmHE=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlmJW0SyaFLLT16qHzBkNy9w9VfQQTtHjumXc8G
- ehTggFWw26JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZZiVtAAKCRCLPIo+Aiko
- 1Y/XCACauqkupaBDpfAh57h+imFyIUuQC+PVqXl/Xj6YmYMMfhgQSaWUbh+a7qObFJKzI/rc+Sm
- Tzqf9gSWXcgGZCbsHKj9K0f0eapMiGVOWCzYncRwOrSvDfZJ34Q5j42eRkpsFdl+iM0uFbOV9Mq
- 6e2RRnhEhHBxMgge7rkFNXZhjhAjI4PL/wVtAB/3M82FFy125DUo0nmUb3RNfomh+UXLJCPS377
- ahwF4ewfR+2orJ0zHbYWIaxd+5d7dqF2sD4fbUdHMmq6P5z0BqGg8Cw4/ptyTstV3Zx9lMoPPCm
- mAEvZOMyhdjwZwssqGYGHpggNu8Nnn04tznaNUy+aAcQkWCp
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ryZi8V0l36XY5wTVDl89TDtQDTlscZ3q
+X-Proofpoint-GUID: ryZi8V0l36XY5wTVDl89TDtQDTlscZ3q
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 phishscore=0
+ impostorscore=0 malwarescore=0 priorityscore=1501 suspectscore=0
+ adultscore=0 mlxlogscore=999 spamscore=0 bulkscore=0 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401050183
 
-We have several reports of vblank timeout messages. However after some
-debugging it was found that there might be different causes to that.
-Include the actual CTL_FLUSH value into the timeout message. This allows
-us to identify the DPU block that gets stuck.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 1/5/2024 3:34 PM, Dmitry Baryshkov wrote:
+> For some of the platforms (e.g. SDM660, SDM630, MSM8996, etc.) it is
+> possible to support this platform via the DPU driver (e.g. to provide
+> support for DP, multirect, etc). Add a modparam to be able to switch
+> between these two drivers.
+> 
+> All platforms supported by both drivers are by default handled by the
+> MDP5 driver. To let them be handled by the DPU driver pass the
+> `msm.prefer_mdp5=false` kernel param.
+> 
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  |  3 +++
+>   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c |  3 +++
+>   drivers/gpu/drm/msm/msm_drv.c            | 31 +++++++++++++++++++++++++++++++
+>   drivers/gpu/drm/msm/msm_drv.h            |  1 +
+>   4 files changed, 38 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index aa9e0ad33ebb..8f11a98491a1 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -1276,6 +1276,9 @@ static int dpu_dev_probe(struct platform_device *pdev)
+>   	int irq;
+>   	int ret = 0;
+>   
+> +	if (!msm_disp_drv_should_bind(&pdev->dev, true))
+> +		return -ENODEV;
+> +
+>   	dpu_kms = devm_kzalloc(dev, sizeof(*dpu_kms), GFP_KERNEL);
+>   	if (!dpu_kms)
+>   		return -ENOMEM;
+> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> index 0827634664ae..43d05851c54d 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> @@ -866,6 +866,9 @@ static int mdp5_dev_probe(struct platform_device *pdev)
+>   
+>   	DBG("");
+>   
+> +	if (!msm_disp_drv_should_bind(&pdev->dev, false))
+> +		return -ENODEV;
+> +
+>   	mdp5_kms = devm_kzalloc(&pdev->dev, sizeof(*mdp5_kms), GFP_KERNEL);
+>   	if (!mdp5_kms)
+>   		return -ENOMEM;
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index 50b65ffc24b1..ef57586fbeca 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -969,6 +969,37 @@ static int add_components_mdp(struct device *master_dev,
+>   	return 0;
+>   }
+>   
+> +#if !IS_REACHABLE(CONFIG_DRM_MSM_MDP5) || !IS_REACHABLE(CONFIG_DRM_MSM_DPU)
+> +bool msm_disp_drv_should_bind(struct device *dev, bool mdp5_driver)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-index d0f56c5c4cce..fb34067ab6af 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-@@ -489,7 +489,7 @@ static int dpu_encoder_phys_vid_wait_for_commit_done(
- 		(hw_ctl->ops.get_flush_register(hw_ctl) == 0),
- 		msecs_to_jiffies(50));
- 	if (ret <= 0) {
--		DPU_ERROR("vblank timeout\n");
-+		DPU_ERROR("vblank timeout: %x\n", hw_ctl->ops.get_flush_register(hw_ctl));
- 		return -ETIMEDOUT;
- 	}
- 
+s/mdp5_driver/dpu_driver/
 
----
-base-commit: 39676dfe52331dba909c617f213fdb21015c8d10
-change-id: 20240106-fd-dpu-debug-timeout-e917f0bc8063
+> +{
+> +	/* If just a single driver is enabled, use it no matter what */
+> +	return true;
+> +}
 
-Best regards,
--- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+This will cause both MDP/DPU probes to return -ENODEV, rather than
+select the enabled one.
 
+> +#else
+> +
+> +static bool prefer_mdp5 = true;
+> +MODULE_PARM_DESC(prefer_mdp5, "Select whether MDP5 or DPU driver should be preferred");
+> +module_param(prefer_mdp5, bool, 0444);
+> +
+> +/* list all platforms supported by both mdp5 and dpu drivers */
+> +static const char *const msm_mdp5_dpu_migration[] = {
+> +	NULL,
+> +};
+> +
+> +bool msm_disp_drv_should_bind(struct device *dev, bool dpu_driver)
+> +{
+> +	/* If it is not an MDP5 device, do not try MDP5 driver */
+> +	if (!of_device_is_compatible(dev->of_node, "qcom,mdp5"))
+> +		return dpu_driver;
+> +
+> +	/* If it is not in the migration list, use MDP5 */
+> +	if (!of_device_compatible_match(dev->of_node, msm_mdp5_dpu_migration))
+> +		return !dpu_driver;
+> +
+> +	return prefer_mdp5 ? !dpu_driver : dpu_driver;
+> +}
+> +#endif
+> +
+>   /*
+>    * We don't know what's the best binding to link the gpu with the drm device.
+>    * Fow now, we just hunt for all the possible gpus that we support, and add them
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index 01e783130054..762e13e2df74 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -563,5 +563,6 @@ int msm_drv_probe(struct device *dev,
+>   	struct msm_kms *kms);
+>   void msm_kms_shutdown(struct platform_device *pdev);
+>   
+> +bool msm_disp_drv_should_bind(struct device *dev, bool dpu_driver);
+>   
+>   #endif /* __MSM_DRV_H__ */
+> 
 
