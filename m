@@ -1,65 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C40E82601C
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jan 2024 16:26:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8AC5A826024
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jan 2024 16:28:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 92A391C20E38
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jan 2024 15:25:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 898A01C20F7F
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jan 2024 15:28:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 331AC847B;
-	Sat,  6 Jan 2024 15:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4482E847B;
+	Sat,  6 Jan 2024 15:28:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DdDSQofk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wsrEzVO7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656A279EC
-	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Jan 2024 15:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84AC279F9
+	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Jan 2024 15:28:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a29da3d61f6so45397466b.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Jan 2024 07:25:51 -0800 (PST)
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a28e6392281so46802066b.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Jan 2024 07:28:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704554750; x=1705159550; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=OcjHfgODRNt+KFLJZW+qt8wg+xFuzUGbD/7t6KtlsPc=;
-        b=DdDSQofknDd7UUpCZ5h7u7Gyfdc416oilOljBG1Z5TYPCdDdcAMcvMH0WkK/dDUwLs
-         74Coa15Dg0+2ITbL5NS8wvjeKDm1YCt1YNNURI2Qb4qmlfm1+McEDxf6aDi5TaRcfXxl
-         Yt/1GfR2JsPKiX4pIbig+41swWO80EuG+d/epcOMutUhG2Ig4HYSi4j9oeKsJM0vn+qi
-         glgoVmc68Xa3qKvFIkiR0FPBuubWvaP8tgpv8K+0TuG5FtJmoHKcDOawYZMkOaCTsBER
-         PNyRIkeiT7z83P46um0ktGBKOu7/umW7aaThTfIEBEBb/M/5pQ4p1KUxCOhh1jXLfhyf
-         /Rnw==
+        d=linaro.org; s=google; t=1704554927; x=1705159727; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JqQSYLD6Y1gr/LDRvUK1g3O32845VQpwLDm/7pkTGqc=;
+        b=wsrEzVO7RJ6GSeK5TG60cdu7n9z+Vvg0yUjpwHoFo6PtALB9kfQHcn0hDhvWFCfl+z
+         D2M0GaTp5DQADm5tk1vGXLadg/QjDp9sKs3/bG/rFJa4u9/mOePkCBR4RFWzsELGPYuZ
+         mCiYWUiiBFDBeAbMPcBePEoYmj/JLGYZFIms0HSmXFBC5EnTvAWuGLQfaYuQFGOmST0c
+         h0kZmln6Ml72MRTEKfDuqDbJwEqb9fDQcBBMT/luAHfq4B8tY0bC3lpd4PFcukwh5QAg
+         wvRwz3xll2i+FhriHJLFMtTI1S+oARcU2dInQ7UuN5IMTboBaS7k+JZM/9WMxlDgYaCp
+         l6MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704554750; x=1705159550;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OcjHfgODRNt+KFLJZW+qt8wg+xFuzUGbD/7t6KtlsPc=;
-        b=f+whuK1xKwj4SOUEi6vJchpDeQnIAy68wRbuxkJeUdmFGqsEqKitCKU940f1GjMJMI
-         VwrIf8n3YUfPcC5MUSAfo8h2Z3r1Qal52xfnm+msFWogYLoV+HzjDsfnykI8PACKyyj8
-         6sPL3sj/c4qVvW197ZRTwruBP6YYZ5czawJqFF+sAVY/Vvz3AHNZ9dWNOclEd2h46Qe7
-         F3NKotatyw5IMzH/PRRFZH5yg8Jk2GlDCBQKhfd/fkQc+MrO3pmMbU638c5uIShFYavs
-         k3zBACElhDpCi6w/bphiXhaAY/gJ6P/PiRSSxmLBanT0SNfBNWTMp+PeuG7gp8IcltCN
-         omKw==
-X-Gm-Message-State: AOJu0YwZptsf3fpkfbpvpjQ4sw8fR6MrQ6zn4nuNEyNrpsfnRo8u6yKU
-	eoShd3yTx1EcNWfTARWUFcWdP/pWRJjgRA==
-X-Google-Smtp-Source: AGHT+IFB0zGz9gSAgm1ISn8yYjF8oEreli2U1lqQx7WM65GroIfSdMClbQh9kAKJ7fNVREJ/zVWMwQ==
-X-Received: by 2002:a17:906:80ca:b0:a28:ad2c:f0e4 with SMTP id a10-20020a17090680ca00b00a28ad2cf0e4mr476053ejx.42.1704554749609;
-        Sat, 06 Jan 2024 07:25:49 -0800 (PST)
+        d=1e100.net; s=20230601; t=1704554927; x=1705159727;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JqQSYLD6Y1gr/LDRvUK1g3O32845VQpwLDm/7pkTGqc=;
+        b=D8T4tt/TOgj6eJB+Keofdh0tEB6ulujbanOTYWlWa7OyLBt+ZTBbalA5OhuXt8VRsD
+         kkI1Yx5j2zDgtbDSEHtfxXhbcY/SeM6rhg3bb0hzydqU3+PlVVPhlbdOpJgMNjiwlZNy
+         C96h6ywYCa3ZZflGcwEGSCnp3ATyULfwpTy8V0baZaf5ScVEVXj7+Ra7mE/xC5p/9n+R
+         0sPc8SqwXXZ/dhJZXjLpYlBC6ogmrqxdPcFOoD4ZcFwFbIDkKCyDDY0a9/Up7aDxsCuJ
+         YbbaJvcKNIH5A3eN+NA2x6LvHM5+tLjV4RTlQ9wQ2O/5Quo8zxgqaFYReD/aWKJfyw00
+         sUiA==
+X-Gm-Message-State: AOJu0YyQUuwOlg5kozfd0LR1+rj2KsDFZsusaq55ab4A+SDGm+DFT8c4
+	nZfyY1ExubjOadbd2O18jF+U2kYK38aiXw==
+X-Google-Smtp-Source: AGHT+IGsjSq59vSgfMblBL5/zjbLkXeESIfE0JYSbwYvKQ4C5Xqepl3SPwcwDY4p/oZsX7cU4fe2oQ==
+X-Received: by 2002:a17:906:fc0d:b0:a28:afd9:8576 with SMTP id ov13-20020a170906fc0d00b00a28afd98576mr396374ejb.109.1704554926840;
+        Sat, 06 Jan 2024 07:28:46 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.223.112])
-        by smtp.gmail.com with ESMTPSA id jo21-20020a170906f6d500b00a275637e699sm2050304ejb.166.2024.01.06.07.25.48
+        by smtp.gmail.com with ESMTPSA id dq16-20020a170907735000b00a269357c2e7sm2068038ejc.36.2024.01.06.07.28.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 06 Jan 2024 07:25:49 -0800 (PST)
-Message-ID: <bbe3bc57-1d5e-42d4-b860-15a27c7c57bd@linaro.org>
-Date: Sat, 6 Jan 2024 16:25:46 +0100
+        Sat, 06 Jan 2024 07:28:46 -0800 (PST)
+Message-ID: <40b4d29e-fa5c-43d5-8ccb-4a5a41150546@linaro.org>
+Date: Sat, 6 Jan 2024 16:28:44 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,21 +66,28 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] clk: qcom: hfpll: Add QCS404-specific compatible
-To: Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
- phone-devel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231231-hfpll-yaml-v1-0-359d44a4e194@z3ntu.xyz>
- <20231231-hfpll-yaml-v1-2-359d44a4e194@z3ntu.xyz>
- <588dd6c3-7d2b-48db-b5ea-48a07077dc5d@linaro.org>
- <6706261.DvuYhMxLoT@z3ntu.xyz>
+Subject: Re: [PATCH v2 1/4] reset: gpio: Add GPIO-based reset controller
 Content-Language: en-US
+To: Biju Das <biju.das.jz@bp.renesas.com>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Banajit Goswami <bgoswami@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood
+ <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+ "alsa-devel@alsa-project.org" <alsa-devel@alsa-project.org>,
+ "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+ "linux-sound@vger.kernel.org" <linux-sound@vger.kernel.org>,
+ "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
+ Sean Anderson <sean.anderson@seco.com>
+References: <20240105155918.279657-1-krzysztof.kozlowski@linaro.org>
+ <20240105155918.279657-2-krzysztof.kozlowski@linaro.org>
+ <TYCPR01MB11269ABEDCD115064D449267486662@TYCPR01MB11269.jpnprd01.prod.outlook.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -127,93 +133,165 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <6706261.DvuYhMxLoT@z3ntu.xyz>
+In-Reply-To: <TYCPR01MB11269ABEDCD115064D449267486662@TYCPR01MB11269.jpnprd01.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 06/01/2024 11:19, Luca Weiss wrote:
-> On Dienstag, 2. Jänner 2024 11:41:26 CET Krzysztof Kozlowski wrote:
->> On 31/12/2023 15:48, Luca Weiss wrote:
->>> It doesn't appear that the configuration is for the HFPLL is generic, so
->>
->> That's ok...
->>
->>> add a qcs404-specific compatible and rename the existing struct to
->>
->> but why this is the solution? If the qcom,hfpll compatible was
->> deprecated, but it is not. This commit is contradictory to the bindings.
->>
->>> qcs404.
->>>
->>> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
->>> ---
->>>
->>>  drivers/clk/qcom/hfpll.c | 6 ++++--
->>>  1 file changed, 4 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/drivers/clk/qcom/hfpll.c b/drivers/clk/qcom/hfpll.c
->>> index dac27e31ef60..5b12982519be 100644
->>> --- a/drivers/clk/qcom/hfpll.c
->>> +++ b/drivers/clk/qcom/hfpll.c
->>> @@ -14,7 +14,7 @@
->>>
->>>  #include "clk-regmap.h"
->>>  #include "clk-hfpll.h"
->>>
->>> -static const struct hfpll_data hdata = {
->>> +static const struct hfpll_data qcs404 = {
->>>
->>>  	.mode_reg = 0x00,
->>>  	.l_reg = 0x04,
->>>  	.m_reg = 0x08,
->>>
->>> @@ -84,10 +84,12 @@ static const struct hfpll_data msm8976_cci = {
->>>
->>>  };
->>>  
->>>  static const struct of_device_id qcom_hfpll_match_table[] = {
->>>
->>> -	{ .compatible = "qcom,hfpll", .data = &hdata },
->>>
->>>  	{ .compatible = "qcom,msm8976-hfpll-a53", .data = &msm8976_a53 },
->>>  	{ .compatible = "qcom,msm8976-hfpll-a72", .data = &msm8976_a72 },
->>>  	{ .compatible = "qcom,msm8976-hfpll-cci", .data = &msm8976_cci },
->>>
->>> +	{ .compatible = "qcom,qcs404-hfpll", .data = &qcs404 },
->>> +	/* deprecated, use SoC-specific compatible */
->>
->> Why? That's not a deprecated compatible. You now expect to create many
->> unnecessary entries, which is not really needed. This is opposite of
->> what we try to achieve with compatibility lists.
+On 05/01/2024 17:39, Biju Das wrote:
+> Hi Krzysztof Kozlowski,
 > 
-> Just "qcom,hfpll" is not allowed by the bindings.
-
-Okay... sentence is correct but how is it related to the driver?
-
-> The problem is that it's actually unclear to me what "qcom,hfpll" was supposed 
-> to be currently. It was added originally for MSM8974 and friends (see git log) 
-> but then is currently only used by QCS404 while in QCS404 downstream msm-4.4 
-> (I think it was 4.4) I see different driver data than what's here.
-
-I discourage from using generic compatibles, because their meaning is
-too often fluid, but if we already have it then: it is supposed to be
-whatever driver and bindings defined it when they were added.
-
+> Thanks for the patch.
 > 
-> So I wanted to just move what's used here to be qcs404-specific and then in an 
-> upcoming patch add a msm8974-specific compatible with different driver data.
+>> -----Original Message-----
+>> From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> Sent: Friday, January 5, 2024 3:59 PM
+>> Subject: [PATCH v2 1/4] reset: gpio: Add GPIO-based reset controller
+>>
+>> Add a simple driver to control GPIO-based resets using the reset
+>> controller API for the cases when the GPIOs are shared and reset should be
+>> coordinated.  The driver is expected to be used by reset core framework
+>> for ad-hoc reset controllers.
+>>
+>> Cc: Bartosz Golaszewski <brgl@bgdev.pl>
+>> Cc: Sean Anderson <sean.anderson@seco.com>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  MAINTAINERS                |   5 ++
+>>  drivers/reset/Kconfig      |   9 +++
+>>  drivers/reset/Makefile     |   1 +
+>>  drivers/reset/reset-gpio.c | 121 +++++++++++++++++++++++++++++++++++++
+>>  4 files changed, 136 insertions(+)
+>>  create mode 100644 drivers/reset/reset-gpio.c
+>>
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index 7fe27cd60e1b..a0fbd4814bc7 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -8866,6 +8866,11 @@ F:	Documentation/i2c/muxes/i2c-mux-gpio.rst
+>>  F:	drivers/i2c/muxes/i2c-mux-gpio.c
+>>  F:	include/linux/platform_data/i2c-mux-gpio.h
+>>
+>> +GENERIC GPIO RESET DRIVER
+>> +M:	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> +S:	Maintained
+>> +F:	drivers/reset/reset-gpio.c
+>> +
+>>  GENERIC HDLC (WAN) DRIVERS
+>>  M:	Krzysztof Halasa <khc@pm.waw.pl>
+>>  S:	Maintained
+>> diff --git a/drivers/reset/Kconfig b/drivers/reset/Kconfig index
+>> ccd59ddd7610..bb1b5a326eb7 100644
+>> --- a/drivers/reset/Kconfig
+>> +++ b/drivers/reset/Kconfig
+>> @@ -66,6 +66,15 @@ config RESET_BRCMSTB_RESCAL
+>>  	  This enables the RESCAL reset controller for SATA, PCIe0, or PCIe1
+>> on
+>>  	  BCM7216.
+>>
+>> +config RESET_GPIO
+>> +	tristate "GPIO reset controller"
+>> +	help
+>> +	  This enables a generic reset controller for resets attached via
+>> +	  GPIOs.  Typically for OF platforms this driver expects "reset-
+>> gpios"
+>> +	  property.
+>> +
+>> +	  If compiled as module, it will be called reset-gpio.
+>> +
+>>  config RESET_HSDK
+>>  	bool "Synopsys HSDK Reset Driver"
+>>  	depends on HAS_IOMEM
+>> diff --git a/drivers/reset/Makefile b/drivers/reset/Makefile index
+>> 8270da8a4baa..fd8b49fa46fc 100644
+>> --- a/drivers/reset/Makefile
+>> +++ b/drivers/reset/Makefile
+>> @@ -11,6 +11,7 @@ obj-$(CONFIG_RESET_BCM6345) += reset-bcm6345.o
+>>  obj-$(CONFIG_RESET_BERLIN) += reset-berlin.o
+>>  obj-$(CONFIG_RESET_BRCMSTB) += reset-brcmstb.o
+>>  obj-$(CONFIG_RESET_BRCMSTB_RESCAL) += reset-brcmstb-rescal.o
+>> +obj-$(CONFIG_RESET_GPIO) += reset-gpio.o
+>>  obj-$(CONFIG_RESET_HSDK) += reset-hsdk.o
+>>  obj-$(CONFIG_RESET_IMX7) += reset-imx7.o
+>>  obj-$(CONFIG_RESET_INTEL_GW) += reset-intel-gw.o diff --git
+>> a/drivers/reset/reset-gpio.c b/drivers/reset/reset-gpio.c new file mode
+>> 100644 index 000000000000..cf0a867cbc5f
+>> --- /dev/null
+>> +++ b/drivers/reset/reset-gpio.c
+>> @@ -0,0 +1,121 @@
+>> +// SPDX-License-Identifier: GPL-2.0
+>> +
+>> +#include <linux/gpio/consumer.h>
+>> +#include <linux/mod_devicetable.h>
+>> +#include <linux/module.h>
+>> +#include <linux/of.h>
+>> +#include <linux/platform_device.h>
+>> +#include <linux/reset-controller.h>
+>> +
+>> +struct reset_gpio_priv {
+>> +	struct reset_controller_dev rc;
+>> +	struct gpio_desc *reset;
+>> +};
+>> +
+>> +static inline struct reset_gpio_priv
+>> +*rc_to_reset_gpio(struct reset_controller_dev *rc) {
+>> +	return container_of(rc, struct reset_gpio_priv, rc); }
+>> +
+>> +static int reset_gpio_assert(struct reset_controller_dev *rc, unsigned
+>> +long id) {
+>> +	struct reset_gpio_priv *priv = rc_to_reset_gpio(rc);
+>> +
+>> +	gpiod_set_value_cansleep(priv->reset, 1);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int reset_gpio_deassert(struct reset_controller_dev *rc,
+>> +			       unsigned long id)
+>> +{
+>> +	struct reset_gpio_priv *priv = rc_to_reset_gpio(rc);
+>> +
+>> +	gpiod_set_value_cansleep(priv->reset, 0);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int reset_gpio_status(struct reset_controller_dev *rc, unsigned
+>> +long id) {
+>> +	struct reset_gpio_priv *priv = rc_to_reset_gpio(rc);
+>> +
+>> +	return gpiod_get_value_cansleep(priv->reset);
+>> +}
+>> +
+>> +static const struct reset_control_ops reset_gpio_ops = {
+>> +	.assert = reset_gpio_assert,
+>> +	.deassert = reset_gpio_deassert,
+>> +	.status = reset_gpio_status,
+>> +};
+>> +
+>> +static void reset_gpio_of_args_put(void *data) {
+>> +	of_node_put(data);
+>> +}
+>> +
+>> +static int reset_gpio_probe(struct platform_device *pdev) {
+>> +	struct device *dev = &pdev->dev;
+>> +	struct device_node **platdata = dev_get_platdata(dev);
+>> +	struct of_phandle_args gpio_args;
+>> +	struct reset_gpio_priv *priv;
+>> +	int ret;
+>> +
+>> +	if (!platdata || !*platdata)
 > 
-> Also wouldn't the "don't extend driver lists when not neccessary" mean using 
-> something like "qcom,msm1234-hfpll", "qcom,qcs404-hfpll", "qcom,hfpll" then?
+> Maybe, if (!(platdata && *platdata)) which reduces 1 inversion operation.
 
-qcs404 and hfpll are the same aren't they? Then why would third
-compatible appear?
+I would not call it easier to understand... To me !A and !*A are quite
+obvious and easy to read instantly because !A is obvious: check if it is
+not NULL. Therefore original check is obvious: is NULL or points to
+NULL? Then exit.
 
-> That was kind of my idea if some other SoC can reuse e.g. qcs404 data?
-
-If any other SoC wants to reuse qcs404, why that SoC cannot use hfpll?
-If hfpll compatible is not correct, it should be deprecated, which is
-not happening in this patchset.
+Now your check is a bit more complicated. It is not even frequent code
+pattern which my brain used to see. You want to check if both are not
+NULL and then negate it, wait, no, opposite, check if they are something
+and then negate? To me it is really opposite of readable code.
 
 Best regards,
 Krzysztof
