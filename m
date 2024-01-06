@@ -1,205 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-6554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6555-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3D3F825D4B
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jan 2024 01:04:51 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9302F825D68
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jan 2024 01:39:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3191AB21FF5
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jan 2024 00:04:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AB4521C23573
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jan 2024 00:39:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0898515AB;
-	Sat,  6 Jan 2024 00:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09AFC33FF;
+	Sat,  6 Jan 2024 00:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mjf0SGT4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cRJXwrrv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E7315A8;
-	Sat,  6 Jan 2024 00:04:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 405LIUMG019395;
-	Sat, 6 Jan 2024 00:04:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=As75EitWRrYPFDkoeJblxIa+0pEysES3yZycpSeCVpk=; b=mj
-	f0SGT4cHNoD0jrutYp547/QvEa3BflHFx4KUVper+V1n5YSOp1CUCFFcQ5ksk2tx
-	WiWaE78ZANsT7Vqisf8vlxhAz68EhVPYI5LrNTFnxaq/szGwzUQXs/+BwoRPTKW/
-	1YD/y+Reb3HJ/AlQHyRS2tCD1j8qOtL9ZaLL8oY2zaS+gsekyvOg1qxiyeB/FDkk
-	H7bPvpgbyVBzpHFr8yqpVUhYls2mkrnCHldKPMANw0gEusSkKYYbAf3YJkeRqbIn
-	+bn5ihsHBwtt7NRT/CBJP31UoXvx6f1qP1OMH8DKxUu5gzCBTumZeAnbbl6N9PxI
-	YypWgLuLf6lCudmDKMnA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ve94rak56-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 06 Jan 2024 00:04:33 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40604W6C022634
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 6 Jan 2024 00:04:32 GMT
-Received: from [10.110.102.225] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 5 Jan
- 2024 16:04:31 -0800
-Message-ID: <c8d6769b-eb28-337c-fa55-4dae86611da5@quicinc.com>
-Date: Fri, 5 Jan 2024 16:04:30 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8F533F7
+	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Jan 2024 00:39:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-dae7cc31151so111687276.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jan 2024 16:39:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704501548; x=1705106348; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=CWItgsviLevELUTQOy8l4EFaye3LXQAVmYfKWfZE4dg=;
+        b=cRJXwrrvzfoQSIVoDoO9eaWRXf5v3av1Lonxx9Koywhr65fO9CHKjURRDUyxqOAWk0
+         F2NeJdeHmMbFblx5f1MK3/rWgojPts/7KwWvtkxg92cly2O+Juf7aVHKVXSjO0y3NltH
+         odTNnt67s6BX5+zikAQ/+KQ9Yg755I1BSQhBMDE/0eYytxWvvWUTrEWa3NVZbreRdAlY
+         3twhmuYHyjB18LTCkdtrZa69x32oN4UvWYRbR63IuRXPq4X/rIFlzMhHYTrq/p9Y3VaW
+         TLjgASPu2mNSw22QNIa1L48wQfqZt+2h4DD5NA1FcpgrotX4zia5OlkfGOVMaa4ObnRT
+         Q5Lg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704501548; x=1705106348;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CWItgsviLevELUTQOy8l4EFaye3LXQAVmYfKWfZE4dg=;
+        b=b4Y0pQOGmbRF8KxosO99x/20WIQ+LRSbQj+s85fkHnX/uAMwG07dtJNzAScnvHHv7D
+         0iSaB5QBnZ7FkDfbLI1NnpyY8nAF1dYX6EfKa1ELEkuYFYJouSb8d6xCCVsrJkJHyrcl
+         0ZHgdwMe/qlOr0rNZd4mNkFiEIrZiAM1UyVElS/cTCXUtPMZ/FAuHOt1dkHIsLezfyBR
+         C6ficFQ03nEHFhN2jtvgtO+T4EC0ZRQYSt8sKTw1R58sDKUPu49fLiKCScdUjNsKN0nX
+         afnZkIX095eXJhLzX0vNmwNOd82SsdhW71YrgFI1xlmicE6WwZ17XrITBJ8uoONVl1eZ
+         jIPQ==
+X-Gm-Message-State: AOJu0YzbPaVjHKAvlTew+N2zVom8hNcQ5hmIWvikolCv2megMtJLdHNR
+	mqy9b2cAcQqk/bLtYCZfgnMsSrKS9AELJeNWStW/WtN4eNK9WA==
+X-Google-Smtp-Source: AGHT+IGnvK2SJ9w6gTmUsRLVRNS3RTVaJ8/Pp4IUrvSHuf9v1HiVqYLlHIA28KAi30M1XBd80naFcN+Tklt5i2+a/aU=
+X-Received: by 2002:a25:f624:0:b0:dbe:3500:a42b with SMTP id
+ t36-20020a25f624000000b00dbe3500a42bmr135029ybd.42.1704501548600; Fri, 05 Jan
+ 2024 16:39:08 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+References: <20240106-fd-migrate-mdp5-v3-0-3d2750378063@linaro.org>
+ <20240106-fd-migrate-mdp5-v3-3-3d2750378063@linaro.org> <c8d6769b-eb28-337c-fa55-4dae86611da5@quicinc.com>
+In-Reply-To: <c8d6769b-eb28-337c-fa55-4dae86611da5@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Sat, 6 Jan 2024 02:38:57 +0200
+Message-ID: <CAA8EJpoF3uKobGzjHbLMKYvcQbdqYzur7Mn1cNDPyc+wiiZ+SQ@mail.gmail.com>
 Subject: Re: [PATCH v3 3/4] drm/msm: add a kernel param to select between MDP5
  and DPU drivers
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul
-	<sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        "David
- Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-CC: <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        "Stephen
- Boyd" <swboyd@chromium.org>
-References: <20240106-fd-migrate-mdp5-v3-0-3d2750378063@linaro.org>
- <20240106-fd-migrate-mdp5-v3-3-3d2750378063@linaro.org>
-From: Carl Vanderlip <quic_carlv@quicinc.com>
-In-Reply-To: <20240106-fd-migrate-mdp5-v3-3-3d2750378063@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ryZi8V0l36XY5wTVDl89TDtQDTlscZ3q
-X-Proofpoint-GUID: ryZi8V0l36XY5wTVDl89TDtQDTlscZ3q
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 phishscore=0
- impostorscore=0 malwarescore=0 priorityscore=1501 suspectscore=0
- adultscore=0 mlxlogscore=999 spamscore=0 bulkscore=0 mlxscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401050183
+To: Carl Vanderlip <quic_carlv@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, Stephen Boyd <swboyd@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+
+On Sat, 6 Jan 2024 at 02:04, Carl Vanderlip <quic_carlv@quicinc.com> wrote:
+>
+>
+> On 1/5/2024 3:34 PM, Dmitry Baryshkov wrote:
+> > For some of the platforms (e.g. SDM660, SDM630, MSM8996, etc.) it is
+> > possible to support this platform via the DPU driver (e.g. to provide
+> > support for DP, multirect, etc). Add a modparam to be able to switch
+> > between these two drivers.
+> >
+> > All platforms supported by both drivers are by default handled by the
+> > MDP5 driver. To let them be handled by the DPU driver pass the
+> > `msm.prefer_mdp5=false` kernel param.
+> >
+> > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  |  3 +++
+> >   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c |  3 +++
+> >   drivers/gpu/drm/msm/msm_drv.c            | 31 +++++++++++++++++++++++++++++++
+> >   drivers/gpu/drm/msm/msm_drv.h            |  1 +
+> >   4 files changed, 38 insertions(+)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > index aa9e0ad33ebb..8f11a98491a1 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > @@ -1276,6 +1276,9 @@ static int dpu_dev_probe(struct platform_device *pdev)
+> >       int irq;
+> >       int ret = 0;
+> >
+> > +     if (!msm_disp_drv_should_bind(&pdev->dev, true))
+> > +             return -ENODEV;
+> > +
+> >       dpu_kms = devm_kzalloc(dev, sizeof(*dpu_kms), GFP_KERNEL);
+> >       if (!dpu_kms)
+> >               return -ENOMEM;
+> > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> > index 0827634664ae..43d05851c54d 100644
+> > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> > @@ -866,6 +866,9 @@ static int mdp5_dev_probe(struct platform_device *pdev)
+> >
+> >       DBG("");
+> >
+> > +     if (!msm_disp_drv_should_bind(&pdev->dev, false))
+> > +             return -ENODEV;
+> > +
+> >       mdp5_kms = devm_kzalloc(&pdev->dev, sizeof(*mdp5_kms), GFP_KERNEL);
+> >       if (!mdp5_kms)
+> >               return -ENOMEM;
+> > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> > index 50b65ffc24b1..ef57586fbeca 100644
+> > --- a/drivers/gpu/drm/msm/msm_drv.c
+> > +++ b/drivers/gpu/drm/msm/msm_drv.c
+> > @@ -969,6 +969,37 @@ static int add_components_mdp(struct device *master_dev,
+> >       return 0;
+> >   }
+> >
+> > +#if !IS_REACHABLE(CONFIG_DRM_MSM_MDP5) || !IS_REACHABLE(CONFIG_DRM_MSM_DPU)
+> > +bool msm_disp_drv_should_bind(struct device *dev, bool mdp5_driver)
+>
+> s/mdp5_driver/dpu_driver/
+
+Well, ignored_driver, but your suggestion is better.
+
+>
+> > +{
+> > +     /* If just a single driver is enabled, use it no matter what */
+> > +     return true;
+> > +}
+>
+> This will cause both MDP/DPU probes to return -ENODEV, rather than
+> select the enabled one.
+
+No. The code (e.g. for DPU) is:
+
+       if (!msm_disp_drv_should_bind(&pdev->dev, true))
+                return -ENODEV;
+
+So the driver returns -ENODEV if msm_disp_drv_should_bind() returns
+false. Which is logical from the function name point of view.
+
+>
+> > +#else
+> > +
+> > +static bool prefer_mdp5 = true;
+> > +MODULE_PARM_DESC(prefer_mdp5, "Select whether MDP5 or DPU driver should be preferred");
+> > +module_param(prefer_mdp5, bool, 0444);
+> > +
+> > +/* list all platforms supported by both mdp5 and dpu drivers */
+> > +static const char *const msm_mdp5_dpu_migration[] = {
+> > +     NULL,
+> > +};
+> > +
+> > +bool msm_disp_drv_should_bind(struct device *dev, bool dpu_driver)
+> > +{
+> > +     /* If it is not an MDP5 device, do not try MDP5 driver */
+> > +     if (!of_device_is_compatible(dev->of_node, "qcom,mdp5"))
+> > +             return dpu_driver;
+> > +
+> > +     /* If it is not in the migration list, use MDP5 */
+> > +     if (!of_device_compatible_match(dev->of_node, msm_mdp5_dpu_migration))
+> > +             return !dpu_driver;
+> > +
+> > +     return prefer_mdp5 ? !dpu_driver : dpu_driver;
+> > +}
+> > +#endif
+> > +
+> >   /*
+> >    * We don't know what's the best binding to link the gpu with the drm device.
+> >    * Fow now, we just hunt for all the possible gpus that we support, and add them
+> > diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> > index 01e783130054..762e13e2df74 100644
+> > --- a/drivers/gpu/drm/msm/msm_drv.h
+> > +++ b/drivers/gpu/drm/msm/msm_drv.h
+> > @@ -563,5 +563,6 @@ int msm_drv_probe(struct device *dev,
+> >       struct msm_kms *kms);
+> >   void msm_kms_shutdown(struct platform_device *pdev);
+> >
+> > +bool msm_disp_drv_should_bind(struct device *dev, bool dpu_driver);
+> >
+> >   #endif /* __MSM_DRV_H__ */
+> >
 
 
-On 1/5/2024 3:34 PM, Dmitry Baryshkov wrote:
-> For some of the platforms (e.g. SDM660, SDM630, MSM8996, etc.) it is
-> possible to support this platform via the DPU driver (e.g. to provide
-> support for DP, multirect, etc). Add a modparam to be able to switch
-> between these two drivers.
-> 
-> All platforms supported by both drivers are by default handled by the
-> MDP5 driver. To let them be handled by the DPU driver pass the
-> `msm.prefer_mdp5=false` kernel param.
-> 
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  |  3 +++
->   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c |  3 +++
->   drivers/gpu/drm/msm/msm_drv.c            | 31 +++++++++++++++++++++++++++++++
->   drivers/gpu/drm/msm/msm_drv.h            |  1 +
->   4 files changed, 38 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index aa9e0ad33ebb..8f11a98491a1 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -1276,6 +1276,9 @@ static int dpu_dev_probe(struct platform_device *pdev)
->   	int irq;
->   	int ret = 0;
->   
-> +	if (!msm_disp_drv_should_bind(&pdev->dev, true))
-> +		return -ENODEV;
-> +
->   	dpu_kms = devm_kzalloc(dev, sizeof(*dpu_kms), GFP_KERNEL);
->   	if (!dpu_kms)
->   		return -ENOMEM;
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> index 0827634664ae..43d05851c54d 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> @@ -866,6 +866,9 @@ static int mdp5_dev_probe(struct platform_device *pdev)
->   
->   	DBG("");
->   
-> +	if (!msm_disp_drv_should_bind(&pdev->dev, false))
-> +		return -ENODEV;
-> +
->   	mdp5_kms = devm_kzalloc(&pdev->dev, sizeof(*mdp5_kms), GFP_KERNEL);
->   	if (!mdp5_kms)
->   		return -ENOMEM;
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index 50b65ffc24b1..ef57586fbeca 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -969,6 +969,37 @@ static int add_components_mdp(struct device *master_dev,
->   	return 0;
->   }
->   
-> +#if !IS_REACHABLE(CONFIG_DRM_MSM_MDP5) || !IS_REACHABLE(CONFIG_DRM_MSM_DPU)
-> +bool msm_disp_drv_should_bind(struct device *dev, bool mdp5_driver)
 
-s/mdp5_driver/dpu_driver/
-
-> +{
-> +	/* If just a single driver is enabled, use it no matter what */
-> +	return true;
-> +}
-
-This will cause both MDP/DPU probes to return -ENODEV, rather than
-select the enabled one.
-
-> +#else
-> +
-> +static bool prefer_mdp5 = true;
-> +MODULE_PARM_DESC(prefer_mdp5, "Select whether MDP5 or DPU driver should be preferred");
-> +module_param(prefer_mdp5, bool, 0444);
-> +
-> +/* list all platforms supported by both mdp5 and dpu drivers */
-> +static const char *const msm_mdp5_dpu_migration[] = {
-> +	NULL,
-> +};
-> +
-> +bool msm_disp_drv_should_bind(struct device *dev, bool dpu_driver)
-> +{
-> +	/* If it is not an MDP5 device, do not try MDP5 driver */
-> +	if (!of_device_is_compatible(dev->of_node, "qcom,mdp5"))
-> +		return dpu_driver;
-> +
-> +	/* If it is not in the migration list, use MDP5 */
-> +	if (!of_device_compatible_match(dev->of_node, msm_mdp5_dpu_migration))
-> +		return !dpu_driver;
-> +
-> +	return prefer_mdp5 ? !dpu_driver : dpu_driver;
-> +}
-> +#endif
-> +
->   /*
->    * We don't know what's the best binding to link the gpu with the drm device.
->    * Fow now, we just hunt for all the possible gpus that we support, and add them
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index 01e783130054..762e13e2df74 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -563,5 +563,6 @@ int msm_drv_probe(struct device *dev,
->   	struct msm_kms *kms);
->   void msm_kms_shutdown(struct platform_device *pdev);
->   
-> +bool msm_disp_drv_should_bind(struct device *dev, bool dpu_driver);
->   
->   #endif /* __MSM_DRV_H__ */
-> 
+-- 
+With best wishes
+Dmitry
 
