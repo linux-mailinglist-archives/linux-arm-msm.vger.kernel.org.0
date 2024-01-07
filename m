@@ -1,25 +1,25 @@
-Return-Path: <linux-arm-msm+bounces-6581-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 979F7826599
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jan 2024 19:32:22 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA1078265AB
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jan 2024 19:44:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 20B2428148D
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jan 2024 18:32:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 051AD1C20832
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jan 2024 18:44:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD0DE7462;
-	Sun,  7 Jan 2024 18:32:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 350E310A1F;
+	Sun,  7 Jan 2024 18:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="CNd4uLQZ"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="zVfDGiXp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF1610A1B;
-	Sun,  7 Jan 2024 18:32:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7102811183;
+	Sun,  7 Jan 2024 18:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
@@ -27,16 +27,16 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
 	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
 	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=3ITLUw3/wwzNbCgnrBc39myl7J+F3NZ5Z7SwgjR2fQQ=; b=CNd4uLQZPqShcuU+wNi7F7AamO
-	TJ50Wk/4AoY4GAayKb6qKIen+J3kf1sMDWzFNwkEiTJncIBb/JBcjnKAnMRoZkQWH/6cs+Y8TSZQg
-	IV/+I6GhLRGCUGX8AnZjObGq5zVrHF/XnzKDlkQUIhq6Mqk6i93h+NO30OHI3hpohq2w=;
+	bh=0jaV7ovbzbIte+b19ohi0bhK6HoVIw2c2WB+T5GbL3w=; b=zVfDGiXp6wfbV4hPykKINDsu5o
+	bTNMbvJfQbUbj+0Yq4aQOmAJzZjomgTN6WGOFgvTmV14HyQ17z0v39+IkD3N89/rL0nbaor+uITc5
+	lcxAn35uNW/cP0ogR2PHGYr7s3Vqu5wHzHa8nx8eSX3C7niVUEGzmGxC5xA6oKpmV3aI=;
 Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
 	(envelope-from <andrew@lunn.ch>)
-	id 1rMXwB-004aDT-G4; Sun, 07 Jan 2024 19:31:55 +0100
-Date: Sun, 7 Jan 2024 19:31:55 +0100
+	id 1rMY8S-004aGA-Bh; Sun, 07 Jan 2024 19:44:36 +0100
+Date: Sun, 7 Jan 2024 19:44:36 +0100
 From: Andrew Lunn <andrew@lunn.ch>
-To: Sergey Ryazanov <ryazanov.s.a@gmail.com>
-Cc: Christian Marangi <ansuelsmth@gmail.com>,
+To: Christian Marangi <ansuelsmth@gmail.com>
+Cc: Sergey Ryazanov <ryazanov.s.a@gmail.com>,
 	Robert Marko <robert.marko@sartura.hr>,
 	Vladimir Oltean <olteanv@gmail.com>,
 	Rob Herring <robh+dt@kernel.org>, Luo Jie <quic_luoj@quicinc.com>,
@@ -57,10 +57,11 @@ Cc: Christian Marangi <ansuelsmth@gmail.com>,
 	linux-mediatek@lists.infradead.org
 Subject: Re: [net-next PATCH RFC v3 1/8] dt-bindings: net: document ethernet
  PHY package nodes
-Message-ID: <1437d9df-2868-43f5-aebd-e0c57fe4d905@lunn.ch>
+Message-ID: <a6a155ab-0852-4f08-b49b-952ac74124a8@lunn.ch>
 References: <20231126015346.25208-1-ansuelsmth@gmail.com>
  <20231126015346.25208-2-ansuelsmth@gmail.com>
  <0926ea46-1ce4-4118-a04c-b6badc0b9e15@gmail.com>
+ <659aedb1.df0a0220.35691.1853@mx.google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,29 +70,19 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0926ea46-1ce4-4118-a04c-b6badc0b9e15@gmail.com>
+In-Reply-To: <659aedb1.df0a0220.35691.1853@mx.google.com>
 
-> And I would like to ask you about another issue raised by Vladimir [1].
-> These phy chips become SoC with all these built-in PHYs, PCSs, clocks,
-> interrupt controllers, etc. Should we address this now? Or should we go with
-> the proposed solution for now and postpone modeling of other peripherals
-> until we get a real hardware, as Andrew suggested?
-> 
-> I'm asking because it looks like we have got a real hardware. Luo currently
-> trying to push QCA8084 (multi-phy/switch chip) support, and this chip
-> exactly contains a huge clock/reset controller [2,3].
+> Honestly I would postpone untile we have a clear idea of what is
+> actually part of the PHY and what can be handled externally... Example
+> setting the clock in gcc, writing a specific driver...
 
-Ideally the reset controller is modelled as a Linux reset
-controller. The clock part of it is modelled using the common clock
-framework. When done correctly, the PHY should not really care. All it
-does is ask for its clock to be enabled, and its reset to be disabled.
-
-Also, given how difficult it is proving to be to make any progress at
-all, i want to get one little part correctly described, the pure
-PHY. Once we have that, we can start on the next little part. So long
-as we keep to the Linux architecture of blocks or hardware with
-standard Linux drivers, and DT to glue them together, a small step by
-step approach should work out.
+That is really core of the problem here. We have no reliable
+description of the hardware. The datasheet often starts with a block
+diagram of the PHY package. Sometimes there is a product brief with
+the same diagram. We need that published. I'm not asking for the full
+data sheet, just the introductory text which gives a high level
+overview of what the hardware actually is. Then we can sketch out a
+high level Linux architecture for the PHY package.
 
      Andrew
 
