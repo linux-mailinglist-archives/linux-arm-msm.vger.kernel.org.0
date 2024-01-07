@@ -1,104 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-6577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DC92826407
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jan 2024 13:29:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4466A8264EB
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jan 2024 17:08:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 492C9282062
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jan 2024 12:29:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C6989281BC0
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jan 2024 16:08:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E38612E73;
-	Sun,  7 Jan 2024 12:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0492134DC;
+	Sun,  7 Jan 2024 16:08:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="A0UzMRz0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m12820.netease.com (mail-m12820.netease.com [103.209.128.20])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BA412E4F;
-	Sun,  7 Jan 2024 12:28:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
-Received: from amadeus-Vostro-3710.lan (unknown [113.118.189.127])
-	by mail-m121145.qiye.163.com (Hmail) with ESMTPA id 9C296800058;
-	Sun,  7 Jan 2024 20:28:26 +0800 (CST)
-From: Chukun Pan <amadeus@jmu.edu.cn>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Chukun Pan <amadeus@jmu.edu.cn>
-Subject: [PATCH 1/1] arm64: dts: qcom: ipq6018: enable sdhci node
-Date: Sun,  7 Jan 2024 20:28:21 +0800
-Message-Id: <20240107122822.21667-1-amadeus@jmu.edu.cn>
-X-Mailer: git-send-email 2.25.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA6013AC6;
+	Sun,  7 Jan 2024 16:08:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=W5XQx5jK8PhLssysir7FrxPUWqgxrh2IPRl7HIJNB6Y=; b=A0UzMRz0uVAfd4BdgjKVl99KY4
+	PoGXuGRXaplrb0PFHRXrP5fZcXjJcCDQCbaQtoIfYCZEel6fUlO7AyBQW9+ChliajIhuLEvQRZzvu
+	hD/Z1Vxuwo1Qqkl2LxwryCDzzdLOrC5RInVjAwynuv59SOMuapLIyzDriSPLn65v01QM=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1rMVhK-004Zle-Tc; Sun, 07 Jan 2024 17:08:26 +0100
+Date: Sun, 7 Jan 2024 17:08:26 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Sergey Ryazanov <ryazanov.s.a@gmail.com>
+Cc: Jie Luo <quic_luoj@quicinc.com>, agross@kernel.org,
+	andersson@kernel.org, konrad.dybcio@linaro.org, davem@davemloft.net,
+	edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org, hkallweit1@gmail.com, linux@armlinux.org.uk,
+	robert.marko@sartura.hr, linux-arm-msm@vger.kernel.org,
+	netdev@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_srichara@quicinc.com
+Subject: Re: [PATCH v4 0/5] support ipq5332 platform
+Message-ID: <227543b0-e7a6-4ef6-a0ea-271165f51a6b@lunn.ch>
+References: <20231225084424.30986-1-quic_luoj@quicinc.com>
+ <a6a50fb6-871f-424c-a146-12b2628b8b64@gmail.com>
+ <cfb04c82-3cc3-49f6-9a8a-1f6d1a22df40@quicinc.com>
+ <dd05a599-247a-4516-8ad3-7550ceea99f7@gmail.com>
+ <ac1977f5-cd6a-4f16-b0a0-f4322c34c5f5@quicinc.com>
+ <bdeca791-f2e5-4256-b386-a75c03f93686@gmail.com>
+ <895eadd7-1631-4b6b-8db4-d371f2e52611@lunn.ch>
+ <1df87389-d78c-48e0-b743-0fd11bd82b85@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZH0xCVh0ZSxgdQktNHxlJGVUTARMWGhIXJBQOD1
-	lXWRgSC1lBWUpKSFVKSkNVSkNCVUpJTFlXWRYaDxIVHRRZQVlPS0hVSkhDTEhKVUpLS1VLWQY+
-X-HM-Tid: 0a8ce3e555a7b03akuuu9c296800058
-X-HM-MType: 10
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6PEk6Kgw4SzwjSTwaDSJKLx4r
-	STYaCxxVSlVKTEtPTUhLTktMTk1CVTMWGhIXVRoWGh8eDgg7ERYOVR4fDlUYFUVZV1kSC1lBWUpK
-	SFVKSkNVSkNCVUpJTFlXWQgBWUFJTktPNwY+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1df87389-d78c-48e0-b743-0fd11bd82b85@gmail.com>
 
-Enable mmc device found on ipq6018 devices.
-This node supports both eMMC and SD cards.
+> Andrew, thank you so much for pointing me to that API and Christian's work.
+> I have checked the DT change proposal and it fits this QCA8084 case
+> perfectly.
 
-Tested with:
-  eMMC (HS200)
-  SD Card (SDR50/SDR104)
+Not too surprising, since Christian is working on another Qualcomm PHY
+which is very similar.
 
-Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
----
- arch/arm64/boot/dts/qcom/ipq6018.dtsi | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+> Am I right that all one has to do to solve this QCA8084 initialization case
+> is wrap phys in a ethernet-phy-package node and use devm_phy_package_join()
+> / phy_package_init_once() to do the basic initialization? So simple?
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index 5e1277fea725..39fb38914a1e 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -436,6 +436,28 @@ dwc_1: usb@7000000 {
- 			};
- 		};
- 
-+		sdhc: mmc@7804000 {
-+			compatible = "qcom,ipq6018-sdhci", "qcom,sdhci-msm-v5";
-+			reg = <0x0 0x7804000 0x0 0x1000>,
-+			      <0x0 0x7805000 0x0 0x1000>;
-+			reg-names = "hc", "cqhci";
-+
-+			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hc_irq", "pwr_irq";
-+
-+			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-+				 <&gcc GCC_SDCC1_APPS_CLK>,
-+				 <&xo>;
-+			clock-names = "iface", "core", "xo";
-+			resets = <&gcc GCC_SDCC1_BCR>;
-+			max-frequency = <192000000>;
-+			mmc-ddr-1_8v;
-+			mmc-hs200-1_8v;
-+
-+			status = "disabled";
-+		};
-+
- 		blsp_dma: dma-controller@7884000 {
- 			compatible = "qcom,bam-v1.7.0";
- 			reg = <0x0 0x07884000 0x0 0x2b000>;
--- 
-2.25.1
+I hope so. Once the correct kernel abstracts are used, it should be
+reasonably straight forward. The clock stuff should be made into a
+common clock driver, so all the consumer needs to do is enable the one
+clock its needs and common clock driver core goes up the tree and
+enables what ever needs enabling. It could be we need to use ID values
+in the compatible get the PHY driver probed, rather than enumerate it.
 
+Hopefully Lenaro can help get this all done correctly.
+
+    Andrew
 
