@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6575-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6576-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49EFF8263DF
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jan 2024 12:08:37 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6552D8263F8
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jan 2024 12:57:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B00CF1F21518
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jan 2024 11:08:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 766D31C20B66
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jan 2024 11:57:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7175012E6F;
-	Sun,  7 Jan 2024 11:08:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AECE912B9E;
+	Sun,  7 Jan 2024 11:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y7kQ+YdX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="W3tdgJbF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A962C12E46
-	for <linux-arm-msm@vger.kernel.org>; Sun,  7 Jan 2024 11:08:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140FE12E46
+	for <linux-arm-msm@vger.kernel.org>; Sun,  7 Jan 2024 11:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-55590da560dso1023154a12.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 07 Jan 2024 03:08:22 -0800 (PST)
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-55783b7b47aso443072a12.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 07 Jan 2024 03:57:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704625701; x=1705230501; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1704628621; x=1705233421; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=st1+8bhIrSIgmjya+Y1Yx6Q0DetFGsUb9xjG84ScjLI=;
-        b=y7kQ+YdXYo9WuemkHtI+nYO2L/pt7Zi7WCcJOTodPbWmSx2kNuRLHYCp9bvsu7V7ic
-         Zw0bizivRyBEAQ38+S7br8oWw/vG+wOC+58cgXh1BsO3M8FXPoWnzRbzIdvmpBStJ6Ha
-         HxQXTrlKQvyLQ2qQ2+QL+YhD8/N07ECOcegdOUpLYBtI2ScVB+AXk52InQI1e/p3XBgQ
-         0n5d6teNLd8UicjR9y2jnSBH0lKtx6+fBUHeMyysjIinWjJtpO4k4LPXKVKcD/qYX2rM
-         +aWuQvqBubH2NEhwqdeOo/L7TWJgH80ARaLltVTQSn8LhrE79OXfpGm7T/Hh5niYroSd
-         F27A==
+        bh=60gxa1noVk5cpuesKhyJXaBSd7M6NODkl1WRf8H+12E=;
+        b=W3tdgJbFdyfzgCnYO+PivXNUvKZislgrsknGVDl8aSjs+ASYtV9IjprlkHNAlPxoa+
+         EjlX+v8MDHwuSBihGh5h4m04L7xfbkoi2GxJPahVbFO4Wu5m/LdAG+06z3+qLpvBK4tc
+         SqapV8Hnm82dhaRw+IpzlGVZKBK9ge1rIhfYeKS3zrp9ZULzbIx3kGHoiRKU0fd6KkEr
+         Iu6wO+ley7RQDTa9Q69+YqJdu7rS0jL0BNwg1Wil18IUMJ9jAGg4D5a/emKtMtlwKw5T
+         /gAwrNFkLFsFRKllAe08r4fMeAce/wNUm6tTW4JWr+CCFcpAGcPI3I7FFUYKrNg740YL
+         cGiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704625701; x=1705230501;
+        d=1e100.net; s=20230601; t=1704628621; x=1705233421;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=st1+8bhIrSIgmjya+Y1Yx6Q0DetFGsUb9xjG84ScjLI=;
-        b=TgkeZ+8+4OwgtcJXbxQCEfTcwt4mfTCWZKin86XN2WjrvfFbEp/cSFin0VqiM1AUlO
-         RkubS/M483RQtVxSFR14dBJJyKb8NXIX+14fB/e29pS1E5ofTTOmh5KGkwRpGlM6aTMa
-         ka3A7qf29sEUlkKE4l/3h11vc2YDVpFiTUbjF4Ix+UB0/qIBeCFqxHJEGdiQKjlPr4Lo
-         33VfWxFZ5+LOGP3dNF05aDkFs8rGGlm/Zs1f3pnxiSREKJfUFvoxTBbPI3OOHClYoqBi
-         wfVHOwor0dQOahjiSiwJk8r4LyMHNC8acQiXAAXOSbWq1O9mzVpXy2RGcvKa9zVh42WB
-         JiXg==
-X-Gm-Message-State: AOJu0YzD0DOKAqbSxhHe4sCZVO+DB634e2BhEVFq8enGMJD8TC1gZpy4
-	vZJ4BnujWDY/+/eIxBIoBxgWBlezyTslVw==
-X-Google-Smtp-Source: AGHT+IEdZgz61Nfqx4oHm1CeCLo6aMj+uMfhDW02HyruB6m8lCsdbNdz/l1+Ofra5LFRV6h3br21SA==
-X-Received: by 2002:a50:a459:0:b0:553:73c4:87db with SMTP id v25-20020a50a459000000b0055373c487dbmr944634edb.15.1704625700636;
-        Sun, 07 Jan 2024 03:08:20 -0800 (PST)
+        bh=60gxa1noVk5cpuesKhyJXaBSd7M6NODkl1WRf8H+12E=;
+        b=Se2bt84yF6k+sX9NIWAVn7GkTnCswboC72E2S1yvI2dCe3TpMSlRI+hUSxzFRzxrGW
+         phwIXXiacjx2TX0RwCuOs0mRTfp80qWRA5kUjRwY6NX9lISxWJarcPpA06WqpReALXW2
+         rP5pZXrdl86uXobvs3k0DCqxQ3Yx9nmI13oNDYDZ96ls6G4ksnHgtG9ocMiIY4XdlPUw
+         pPr6JPrKIoWHgUbuSeBRqfVNYCFBJN1cvxG6MQWmITFSXLBgN/m/J6UcaVib5PSJfhXW
+         bgcEfCScDMZMwF/qtAfmIciRIyKUZ3xinEsOD/Zh2P+L0cHB52kKZaK397pbHjch/msf
+         /P2Q==
+X-Gm-Message-State: AOJu0YxC9cIwmf9PDsAaR0yad2hV3fu3+A/sJaBWTWOxSYL4dg1UjL51
+	TPfHLSiNaw3TFefPlkHoZ8ljtp9Yq1O8Rw==
+X-Google-Smtp-Source: AGHT+IFku5eS7Ul7qfzXlwcUsJ4e+3uDpOZuFp4Pldnu0jDHe+8V8bUzwqcmq5VS+NlcV3j+QcRHHg==
+X-Received: by 2002:a50:9b4f:0:b0:557:639e:ae21 with SMTP id a15-20020a509b4f000000b00557639eae21mr1099610edj.23.1704628621347;
+        Sun, 07 Jan 2024 03:57:01 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.223.112])
-        by smtp.gmail.com with ESMTPSA id m14-20020a50ef0e000000b00554930be765sm3137154eds.97.2024.01.07.03.08.18
+        by smtp.gmail.com with ESMTPSA id q4-20020a056402248400b005579c887effsm529167eda.79.2024.01.07.03.56.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 07 Jan 2024 03:08:20 -0800 (PST)
-Message-ID: <e30051ae-ddb0-447e-9874-ebbc8f37898b@linaro.org>
-Date: Sun, 7 Jan 2024 12:08:17 +0100
+        Sun, 07 Jan 2024 03:57:00 -0800 (PST)
+Message-ID: <ea1c6c7d-08f2-4fc5-96cb-a6cfdd144f66@linaro.org>
+Date: Sun, 7 Jan 2024 12:56:58 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,23 +66,30 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: display: panel: Add Himax HX83112A
+Subject: Re: [PATCH v2 1/4] reset: gpio: Add GPIO-based reset controller
 Content-Language: en-US
-To: Luca Weiss <luca.weiss@fairphone.com>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+To: Biju Das <biju.das.jz@bp.renesas.com>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Banajit Goswami <bgoswami@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood
+ <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
  Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20240105-fp4-panel-v1-0-1afbabc55276@fairphone.com>
- <20240105-fp4-panel-v1-1-1afbabc55276@fairphone.com>
+ Conor Dooley <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+ "alsa-devel@alsa-project.org" <alsa-devel@alsa-project.org>,
+ "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+ "linux-sound@vger.kernel.org" <linux-sound@vger.kernel.org>,
+ "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
+ Sean Anderson <sean.anderson@seco.com>
+References: <20240105155918.279657-1-krzysztof.kozlowski@linaro.org>
+ <20240105155918.279657-2-krzysztof.kozlowski@linaro.org>
+ <TYCPR01MB11269ABEDCD115064D449267486662@TYCPR01MB11269.jpnprd01.prod.outlook.com>
+ <40b4d29e-fa5c-43d5-8ccb-4a5a41150546@linaro.org>
+ <TYVPR01MB1127920B611C25FD57DFBF75486642@TYVPR01MB11279.jpnprd01.prod.outlook.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -128,21 +135,33 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240105-fp4-panel-v1-1-1afbabc55276@fairphone.com>
+In-Reply-To: <TYVPR01MB1127920B611C25FD57DFBF75486642@TYVPR01MB11279.jpnprd01.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 05/01/2024 15:29, Luca Weiss wrote:
-> Himax HX83112A is a display driver IC used to drive LCD DSI panels.
-> Describe it.
+On 07/01/2024 11:46, Biju Das wrote:
+>>>> +
+>>>> +	if (!platdata || !*platdata)
+>>>
+>>> Maybe, if (!(platdata && *platdata)) which reduces 1 inversion
+>> operation.
+>>
+>> I would not call it easier to understand... To me !A and !*A are quite
+>> obvious and easy to read instantly because !A is obvious: check if it is
+>> not NULL. Therefore original check is obvious: is NULL or points to NULL?
+>> Then exit.
+>>
+>> Now your check is a bit more complicated. It is not even frequent code
+>> pattern which my brain used to see. You want to check if both are not NULL
+>> and then negate it, wait, no, opposite, check if they are something and
+>> then negate? To me it is really opposite of readable code.
 > 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->  .../bindings/display/panel/himax,hx83112a.yaml     | 75 ++++++++++++++++++++++
->  1 file changed, 75 insertions(+)
+> I agree maybe it is not readable, even though it reduces 1 extra operation.
 > 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Number of operations does not matter. Code readability matters.
+Compilers are nowadays smarter than us, so don't write code more
+difficult to read just to optimize some instruction like this.
 
 Best regards,
 Krzysztof
