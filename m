@@ -1,117 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-6679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8EBAF82787C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 20:23:01 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A911C82789D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 20:31:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 252591F23D27
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 19:23:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 59E3C281FB5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 19:30:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45F7154FB6;
-	Mon,  8 Jan 2024 19:22:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6705A4645C;
+	Mon,  8 Jan 2024 19:30:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="15/oa8U4"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="5lEDdSOX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF3B54FAB
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jan 2024 19:22:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-7cc970f8156so455480241.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 11:22:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1704741774; x=1705346574; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=t630KAds7hYgoJ0f0LCQ0AiFafn/yi4jTUENLdj9Tv0=;
-        b=15/oa8U4pdYzJkHwwrBD/ZBIkmGcfTosoOL6LTbBCbW9PSojKpdH1liW5vWEyMcehQ
-         vEx6D2purj1hfQkQAL3p7NY67GY3BgKuLDFWxCiRsNi9pB6cnKjGzbPHUmnWKyKCjdtf
-         kCENjprM5m6D9ONGevgO16eUiQJ7c+XnFGq+uwkdXxbjjwgNVYwk/gCf4oAdEpUEQ8L7
-         0OqmMouljJgrcrBqjkntsuGjj4ZJzLOSxVVK8UYut5H65FahRmMsln2nAHcgAK9SzAQK
-         YKS8MBcUY3csqZgpL3Yov7vR97sH6qVXqaOH+q/SooB/SUXyoRfC9X0cu4mQNvPb/ONS
-         J0tQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704741774; x=1705346574;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=t630KAds7hYgoJ0f0LCQ0AiFafn/yi4jTUENLdj9Tv0=;
-        b=i9qVN/esT02YE4GnSEUoIMmg9tz1eVmbHK4tkmjeIjTTy9vTqbbxXzIZb8I2hAvq7N
-         Lz2R4Lx/88/0YeNd+SJQK5Qb0z0EQiq579AvxmwyQnlhdjB3Mcle0dtajgEwa7KUgofu
-         oagIVWXeREijpJ4skoWZy3xKuwpaGf/pkc2+KN3xtpkWtUlaCFHU7S0y7SnMquiqT/d5
-         L1oTjXI4ENBD6nQFpAvumS1ZdiUh0p9UEKKOQjgGBbu8hdCNleIzMB0l8lSSA4Id1v+r
-         frqWL5bK+MZZYWkPGlCxsVrIdbd2ZfSjAVKy9vdkwzZSk8pr6aCOWtVS232I6gfCyNC2
-         gFkQ==
-X-Gm-Message-State: AOJu0YzfOPOvDtFy2NNzh1hx1tqaT8lLN9bOAE8TBuNsGs1goSACy8gS
-	BRVHwNwTGc8ECPgcLBBD5CDmot8zMgQ43Y3V5WQX2b64W3AISg==
-X-Google-Smtp-Source: AGHT+IEah3V2Xy4oFA525rnBCO8YyKWJvg7Na5/wUj76Z4lWssvjCk0GeQpBn6QxzFQI/HexZWRnBZrcb5Awcliqtng=
-X-Received: by 2002:a05:6122:17a6:b0:4b6:aeb7:3f1d with SMTP id
- o38-20020a05612217a600b004b6aeb73f1dmr1198020vkf.9.1704741773775; Mon, 08 Jan
- 2024 11:22:53 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E9D53801;
+	Mon,  8 Jan 2024 19:30:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=F/NA599aFhBFXwECvVMGWs2VaVppQqKK8L8EV5T6GHU=; b=5lEDdSOXuYx9BWxsWLtwGZ2ZkR
+	sMpqgGbg0f2RkMO95B/OlW7pvDQus8ALxQzTRpVIWzBr0rW8Tds9r6tUNnWDU8oiEKumF8Mtyr18x
+	VJInXXN4ZXU0UEPV5wDmLPg1TwyZ/WIhGqamUtmQ+lYL3C8xP0hv3HqKNfRRjn4TXm40=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1rMvKW-004g2X-Ez; Mon, 08 Jan 2024 20:30:36 +0100
+Date: Mon, 8 Jan 2024 20:30:36 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Sneh Shah <quic_snehshah@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	kernel@quicinc.com, Andrew Halaney <ahalaney@redhat.com>
+Subject: Re: [PATCH v2] net: stmmac: dwmac-qcom-ethqos: Add support for 2.5G
+ SGMII
+Message-ID: <4216bcbb-730d-4c51-a9ce-d3f0a0846e31@lunn.ch>
+References: <20240108121128.30071-1-quic_snehshah@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240104130123.37115-1-brgl@bgdev.pl> <20240104130123.37115-7-brgl@bgdev.pl>
- <20240108191052.GA1893484-robh@kernel.org>
-In-Reply-To: <20240108191052.GA1893484-robh@kernel.org>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Mon, 8 Jan 2024 20:22:42 +0100
-Message-ID: <CAMRc=Mc7D1rVHaA4yoOC2DHDkkCptF4wjAm=24Rr=kkqM1ztjg@mail.gmail.com>
-Subject: Re: [RFC 6/9] dt-bindings: vendor-prefixes: add a PCI prefix for
- Qualcomm Atheros
-To: Rob Herring <robh@kernel.org>
-Cc: Kalle Valo <kvalo@kernel.org>, "David S . Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Heiko Stuebner <heiko@sntech.de>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Chris Morgan <macromorgan@hotmail.com>, 
-	Linus Walleij <linus.walleij@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Arnd Bergmann <arnd@arndb.de>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	=?UTF-8?B?TsOtY29sYXMgRiAuIFIgLiBBIC4gUHJhZG8=?= <nfraprado@collabora.com>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Peng Fan <peng.fan@nxp.com>, 
-	Robert Richter <rrichter@amd.com>, Dan Williams <dan.j.williams@intel.com>, 
-	Terry Bowman <terry.bowman@amd.com>, 
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>, 
-	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
-	Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>, 
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-wireless@vger.kernel.org, 
-	netdev@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240108121128.30071-1-quic_snehshah@quicinc.com>
 
-On Mon, Jan 8, 2024 at 8:10=E2=80=AFPM Rob Herring <robh@kernel.org> wrote:
->
-> On Thu, Jan 04, 2024 at 02:01:20PM +0100, Bartosz Golaszewski wrote:
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > Document the PCI vendor prefix for Qualcomm Atheros so that we can
-> > define the QCA PCI devices on device tree.
->
-> Why? vendor-prefixes.yaml is only applied to property names. 'qca'
-> should be the prefix for those.
->
-> Rob
+On Mon, Jan 08, 2024 at 05:41:28PM +0530, Sneh Shah wrote:
+> Serdes phy needs to operate at 2500 mode for 2.5G speed and 1000
+> mode for 1G/100M/10M speed.
+> Added changes to configure serdes phy and mac based on link speed.
 
-I didn't have any better idea. PCI devices on DT are defined by their
-"pci<vendor ID>,<model ID>" compatible, not regular human-readable
-strings and this makes checkpatch.pl complain.
+Please take a look at:
 
-I'm open to suggestions.
+https://www.kernel.org/doc/html/next/process/maintainer-netdev.html
 
-Bartosz
+The Subject is missing which tree this is for. Also, net-next is
+closed at the moment.
+
+>  	switch (ethqos->speed) {
+> +	case SPEED_2500:
+> +		val &= ~ETHQOS_MAC_CTRL_PORT_SEL;
+> +		rgmii_updatel(ethqos, RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
+> +			      RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
+> +			      RGMII_IO_MACRO_CONFIG2);
+> +		if (ethqos->serdes_speed != SPEED_2500)
+> +			phy_set_speed(ethqos->serdes_phy, SPEED_2500);
+
+Is calling phy_set_speed() expensive? Why not just unconditionally
+call it?
+
+     Andrew
 
