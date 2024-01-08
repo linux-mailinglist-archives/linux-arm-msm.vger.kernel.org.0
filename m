@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-6599-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6600-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F261B826BEC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 11:58:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4CA69826C51
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 12:14:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6547B1F22491
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 10:58:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B0DE61F22800
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 11:14:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F05713FFC;
-	Mon,  8 Jan 2024 10:58:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BEC3A14266;
+	Mon,  8 Jan 2024 11:14:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pLarAbX3"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gSwj9aSw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F8713FF5;
-	Mon,  8 Jan 2024 10:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2606914A89;
+	Mon,  8 Jan 2024 11:14:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4087MLIK011734;
-	Mon, 8 Jan 2024 10:58:12 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4086SBHx016678;
+	Mon, 8 Jan 2024 11:13:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=S079r9jYCR0DomVPX3bgVSZv0E0kNgudacRbaJeq880=; b=pL
-	arAbX3Aj6adRAB8ZCh37rFQ7tYgCv6IfZdZb2FMefSP+Hwfkb2TjCLG8m96nLc8F
-	n4I8m4oUJPimQDS8H8LRAzC7UI/adVbAz4ZBKox8l6Hcm3A/ooxEMO5ZZpPPy++Q
-	2OLd+GWJGCPxWnCyXJCJWnb+LMbPQ4PmfEJ3/TlSOYeuGuZHe4wykpwkY3LNSct3
-	A9DyKWHKHLWCy7CStrTrRK9f0VBFO+J7KUWtWe/Yc02SMnFOQVKzZfI5GVhxJ6UA
-	sFoqNayNckQ61+ZON8YiJmcfFPPAGil1E8Sw1xI7MzGvYbtW6O/fkUQpO9mcW+p3
-	3eQ6mCh6YtE01Lap2Hzg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3veymmbpgp-1
+	qcppdkim1; bh=36H5GjphPYvxeORwQa+KRPMjUEAJvfmLyoyu0hL94pE=; b=gS
+	wj9aSwld33hJ5lXcBLAsQMtLaHNrnhuKQB3PSXEkgeFf1IkckOOK/leALbYwzXXx
+	KjJf0yisHGw2scCkhRWPGflMxfd/fHhTHsWhfO0JIvQzqYuhMIC4v1Cpzd+a5GS7
+	OCmGjke5xUiDjapqmANw66tSE90ok6+FvwtvDjtcH/ujxlW7RbUtadpfk8ak/wom
+	S8hVC0NLP4nG+IB/QflJX+TBJa+CsyOr5OmxMaImoYwSFjxCLu0J15M7Mj3ByKHY
+	Ymx+krDECAC43b1xM1Z1sIAthKzHXMhgdiYeeqhOk7RB7rHSrNFfddJ9hE4piv4E
+	QbGwTHoM4Pb07MZq6rsA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vg97b0t45-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 08 Jan 2024 10:58:12 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 408AwBbc000514
+	Mon, 08 Jan 2024 11:13:47 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 408BDknW002923
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 8 Jan 2024 10:58:11 GMT
-Received: from [10.217.90.28] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+	Mon, 8 Jan 2024 11:13:46 GMT
+Received: from [10.253.76.26] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 8 Jan
- 2024 02:58:00 -0800
-Message-ID: <689f7d06-54db-4634-9986-f0a0b0998a34@quicinc.com>
-Date: Mon, 8 Jan 2024 16:27:57 +0530
+ 2024 03:13:38 -0800
+Message-ID: <b75e6267-7d54-412e-8882-af4d9a0b54e6@quicinc.com>
+Date: Mon, 8 Jan 2024 19:13:34 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,372 +56,291 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v8 3/3] net: stmmac: Add driver support for
- DWMAC5 common safety IRQ
+Subject: Re: [net-next PATCH RFC v3 1/8] dt-bindings: net: document ethernet
+ PHY package nodes
 Content-Language: en-US
-To: Serge Semin <fancer.lancer@gmail.com>
-CC: "David S. Miller" <davem@davemloft.net>,
+To: Andrew Lunn <andrew@lunn.ch>, Sergey Ryazanov <ryazanov.s.a@gmail.com>
+CC: Christian Marangi <ansuelsmth@gmail.com>,
+        Robert Marko
+	<robert.marko@sartura.hr>,
+        Vladimir Oltean <olteanv@gmail.com>, Rob Herring
+	<robh+dt@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
         Eric Dumazet
 	<edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
         Paolo Abeni
-	<pabeni@redhat.com>, Vinod Koul <vkoul@kernel.org>,
-        Bhupesh Sharma
-	<bhupesh.sharma@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
+	<pabeni@redhat.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn
+ Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring
-	<robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Jose Abreu
-	<joabreu@synopsys.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>, <netdev@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        Prasad Sodagudi
-	<psodagud@quicinc.com>,
-        Andrew Halaney <ahalaney@redhat.com>, Rob Herring
-	<robh@kernel.org>,
-        <kernel@quicinc.com>
-References: <20231221073620.232619-1-quic_jsuraj@quicinc.com>
- <20231221073620.232619-4-quic_jsuraj@quicinc.com>
- <yromhtr73rwsr6hizr4tq37vfvyzfue7wzpmufqyscwspzffza@uhfcrn573acd>
- <aec2dc6a-ffa4-4753-a764-77dfe1af995a@quicinc.com>
- <xdcrwxh7e4t2zkgdcfwzjr2z4ouwgv3vr4drwvshadxmpwyqkd@j3kj3p2u7nd7>
- <2685432c-a086-4730-9dd6-8b8da1070697@quicinc.com>
- <bb77706b-0685-4992-b49e-49bef0d11800@quicinc.com>
- <6tog5feuvgsfootirmbidgl7gakort7tax2gponudo3l574dam@jzdavh4wmkc4>
-From: Suraj Jaiswal <quic_jsuraj@quicinc.com>
-In-Reply-To: <6tog5feuvgsfootirmbidgl7gakort7tax2gponudo3l574dam@jzdavh4wmkc4>
-Content-Type: text/plain; charset="UTF-8"
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno
+	<angelogioacchino.delregno@collabora.com>,
+        <netdev@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-mediatek@lists.infradead.org>
+References: <20231126015346.25208-1-ansuelsmth@gmail.com>
+ <20231126015346.25208-2-ansuelsmth@gmail.com>
+ <0926ea46-1ce4-4118-a04c-b6badc0b9e15@gmail.com>
+ <1437d9df-2868-43f5-aebd-e0c57fe4d905@lunn.ch>
+From: Jie Luo <quic_luoj@quicinc.com>
+In-Reply-To: <1437d9df-2868-43f5-aebd-e0c57fe4d905@lunn.ch>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Mky4ySpRZExFLzejjLiexeaBKl7MQcPe
-X-Proofpoint-GUID: Mky4ySpRZExFLzejjLiexeaBKl7MQcPe
+X-Proofpoint-GUID: rmDs5m9z-QNWKbr2VGYfsgblG9aS_q-T
+X-Proofpoint-ORIG-GUID: rmDs5m9z-QNWKbr2VGYfsgblG9aS_q-T
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- mlxlogscore=999 spamscore=0 phishscore=0 malwarescore=0 bulkscore=0
- suspectscore=0 adultscore=0 mlxscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401080093
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ impostorscore=0 phishscore=0 clxscore=1011 mlxscore=0 bulkscore=0
+ priorityscore=1501 malwarescore=0 mlxlogscore=999 suspectscore=0
+ spamscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401080096
 
-Hi Seren,
-Please find updated comment.
 
-Thanks
-Suraj
 
-On 1/8/2024 1:23 AM, Serge Semin wrote:
-> On Wed, Dec 27, 2023 at 04:33:33PM +0530, Suraj Jaiswal wrote:
->> Hi Seren,
->> please find the updated comment .
+On 1/8/2024 2:31 AM, Andrew Lunn wrote:
+>> And I would like to ask you about another issue raised by Vladimir [1].
+>> These phy chips become SoC with all these built-in PHYs, PCSs, clocks,
+>> interrupt controllers, etc. Should we address this now? Or should we go with
+>> the proposed solution for now and postpone modeling of other peripherals
+>> until we get a real hardware, as Andrew suggested?
 >>
->> Thanks
->> Suraj
->>
->> On 12/26/2023 4:40 PM, Suraj Jaiswal wrote:
->>> Hi seren
->>> let me check below on test setup once & get back
->>>
->>> Thanks
->>> Suraj
->>>
->>> On 12/22/2023 8:05 PM, Serge Semin wrote:
->>>> On Fri, Dec 22, 2023 at 02:13:49PM +0530, Suraj Jaiswal wrote:
->>>>> HI Serge,
->>>>> please find commnet inline.
->>>>>
->>>>> Thanks
->>>>> Suraj
->>>>>
->>>>> On 12/21/2023 6:19 PM, Serge Semin wrote:
->>>>>> Hi Suraj
->>>>>>
->>>>>> On Thu, Dec 21, 2023 at 01:06:20PM +0530, Suraj Jaiswal wrote:
->>>>>>> Add support to listen HW safety IRQ like ECC(error
->>>>>>> correction code), DPP(data path parity), FSM(finite state
->>>>>>> machine) fault in common IRQ line.
->>>>>>>
->>>>>>> Signed-off-by: Suraj Jaiswal <quic_jsuraj@quicinc.com>
->>>>>>
->>>>>> Thanks for taking my notes into account. One more comment is further
->>>>>> below.
->>>>>>
->>>>>>> ---
->>>>>>>  drivers/net/ethernet/stmicro/stmmac/common.h  |  1 +
->>>>>>>  drivers/net/ethernet/stmicro/stmmac/stmmac.h  |  3 ++
->>>>>>>  .../net/ethernet/stmicro/stmmac/stmmac_main.c | 37 +++++++++++++++++++
->>>>>>>  .../ethernet/stmicro/stmmac/stmmac_platform.c |  8 ++++
->>>>>>>  4 files changed, 49 insertions(+)
->>>>>>>
->>>>>>> diff --git a/drivers/net/ethernet/stmicro/stmmac/common.h b/drivers/net/ethernet/stmicro/stmmac/common.h
->>>>>>> index 721c1f8e892f..b9233b09b80f 100644
->>>>>>> --- a/drivers/net/ethernet/stmicro/stmmac/common.h
->>>>>>> +++ b/drivers/net/ethernet/stmicro/stmmac/common.h
->>>>>>> @@ -344,6 +344,7 @@ enum request_irq_err {
->>>>>>>  	REQ_IRQ_ERR_ALL,
->>>>>>>  	REQ_IRQ_ERR_TX,
->>>>>>>  	REQ_IRQ_ERR_RX,
->>>>>>> +	REQ_IRQ_ERR_SFTY,
->>>>>>>  	REQ_IRQ_ERR_SFTY_UE,
->>>>>>>  	REQ_IRQ_ERR_SFTY_CE,
->>>>>>>  	REQ_IRQ_ERR_LPI,
->>>>>>> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
->>>>>>> index 9f89acf31050..ca3d93851bed 100644
->>>>>>> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
->>>>>>> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
->>>>>>> @@ -31,6 +31,7 @@ struct stmmac_resources {
->>>>>>>  	int wol_irq;
->>>>>>>  	int lpi_irq;
->>>>>>>  	int irq;
->>>>>>> +	int sfty_irq;
->>>>>>>  	int sfty_ce_irq;
->>>>>>>  	int sfty_ue_irq;
->>>>>>>  	int rx_irq[MTL_MAX_RX_QUEUES];
->>>>>>> @@ -297,6 +298,7 @@ struct stmmac_priv {
->>>>>>>  	void __iomem *ptpaddr;
->>>>>>>  	void __iomem *estaddr;
->>>>>>>  	unsigned long active_vlans[BITS_TO_LONGS(VLAN_N_VID)];
->>>>>>> +	int sfty_irq;
->>>>>>>  	int sfty_ce_irq;
->>>>>>>  	int sfty_ue_irq;
->>>>>>>  	int rx_irq[MTL_MAX_RX_QUEUES];
->>>>>>> @@ -305,6 +307,7 @@ struct stmmac_priv {
->>>>>>>  	char int_name_mac[IFNAMSIZ + 9];
->>>>>>>  	char int_name_wol[IFNAMSIZ + 9];
->>>>>>>  	char int_name_lpi[IFNAMSIZ + 9];
->>>>>>> +	char int_name_sfty[IFNAMSIZ + 10];
->>>>>>>  	char int_name_sfty_ce[IFNAMSIZ + 10];
->>>>>>>  	char int_name_sfty_ue[IFNAMSIZ + 10];
->>>>>>>  	char int_name_rx_irq[MTL_MAX_TX_QUEUES][IFNAMSIZ + 14];
->>>>>>> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
->>>>>>> index 47de466e432c..7d4e827dfeab 100644
->>>>>>> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
->>>>>>> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
->>>>>>> @@ -3592,6 +3592,10 @@ static void stmmac_free_irq(struct net_device *dev,
->>>>>>>  		if (priv->wol_irq > 0 && priv->wol_irq != dev->irq)
->>>>>>>  			free_irq(priv->wol_irq, dev);
->>>>>>>  		fallthrough;
->>>>>>> +	case REQ_IRQ_ERR_SFTY:
->>>>>>> +		if (priv->sfty_irq > 0 && priv->sfty_irq != dev->irq)
->>>>>>> +			free_irq(priv->sfty_irq, dev);
->>>>>>> +		fallthrough;
->>>>>>>  	case REQ_IRQ_ERR_WOL:
->>>>>>>  		free_irq(dev->irq, dev);
->>>>>>>  		fallthrough;
->>>>>>> @@ -3661,6 +3665,23 @@ static int stmmac_request_irq_multi_msi(struct net_device *dev)
->>>>>>>  		}
->>>>>>>  	}
->>>>>>>  
->>>>>>> +	/* Request the common Safety Feature Correctible/Uncorrectible
->>>>>>> +	 * Error line in case of another line is used
->>>>>>> +	 */
->>>>>>> +	if (priv->sfty_irq > 0 && priv->sfty_irq != dev->irq) {
->>>>>>> +		int_name = priv->int_name_sfty;
->>>>>>> +		sprintf(int_name, "%s:%s", dev->name, "safety");
->>>>>>> +		ret = request_irq(priv->sfty_irq, stmmac_safety_interrupt,
->>>>>>> +				  0, int_name, dev);
->>>>>>> +		if (unlikely(ret < 0)) {
->>>>>>> +			netdev_err(priv->dev,
->>>>>>> +				   "%s: alloc sfty MSI %d (error: %d)\n",
->>>>>>> +				   __func__, priv->sfty_irq, ret);
->>>>>>> +			irq_err = REQ_IRQ_ERR_SFTY;
->>>>>>> +			goto irq_error;
->>>>>>> +		}
->>>>>>> +	}
->>>>>>> +
->>>>>>>  	/* Request the Safety Feature Correctible Error line in
->>>>>>>  	 * case of another line is used
->>>>>>>  	 */
->>>>>>> @@ -3798,6 +3819,21 @@ static int stmmac_request_irq_single(struct net_device *dev)
->>>>>>>  		}
->>>>>>>  	}
->>>>>>>  
->>>>>>> +	/* Request the common Safety Feature Correctible/Uncorrectible
->>>>>>> +	 * Error line in case of another line is used
->>>>>>> +	 */
->>>>>>> +	if (priv->sfty_irq > 0 && priv->sfty_irq != dev->irq) {
->>>>>>
->>>>>>> +		ret = request_irq(priv->sfty_irq, stmmac_safety_interrupt,
->>>>>>> +				  IRQF_SHARED, dev->name, dev);
->>>>>>
->>>>>> Just noticed yesterday that stmmac_safety_interrupt() is also called
->>>>>> from the stmmac_interrupt() handler which is supposed to be registered
->>>>>> on the generic "mac" IRQ. Won't it cause races around the CSRs
->>>>>> (doubtfully but still worth to note) and the errors handling
->>>>>> (stmmac_global_err()) in case if both IRQs are raised simultaneously?
->>>>>> At the very least it looks suspicious and worth double-checking.
->>>>>>
->>>>>> I also found out that nobody seemed to care that the same handler is
->>>>>> registered on MAC, WoL and LPI IRQ lines. Hmm, no race-related
->>>>>> problems have been reported so far for the platforms with separate
->>>>>> WoL/LPI IRQs. It's either a lucky coincident or the IRQs are always
->>>>>> assigned to the same CPU or the IRQs handle is indeed free of races.
->>>>>> In anyway it looks suspicious too. At the very least AFAICS the DMA
->>>>>> IRQ-handler is indeed racy on the status CSR access. It isn't
->>>>>> cleared-on-read, but write-one-to-clear. So the statistics might be
->>>>>> calculated more than once for the same CSR state. There might be some
->>>>>> other problems I failed to spot on the first glance.
->>>>>>
->>>>>> David, Eric, Jacub, Paolo, your opinion about the note above?
->>>>>>
->>>>>> -Serge(y)
->>>>>>
->>>>
->>>>> <Suraj> We are adding common IRQ similar to already present code for correcteable/uncorrecable https://elixir.bootlin.com/linux/latest/source/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c#L3592.
->>>>
->>>> From that perspective your change in stmmac_request_irq_multi_msi() is
->>>> correct, but stmmac_request_irq_single() is another story. The first
->>>> one method implies assigning the individual IRQ handlers to all
->>>> available lines. The later method assigns the _common_ handler to all
->>>> the lines. The common handler already calls the Safety IRQ handler -
->>>> stmmac_safety_feat_interrupt(). So should the safety IRQ line is
->>>> separately available it's possible to have the Safety IRQ handlers
->>>> executed concurrently - in framework of the common IRQ events handling
->>>> (if safety IRQ is raised during the common IRQ being handled) and
->>>> individual Safety IRQ. It's prune to the race condition I pointed out
->>>> to in my message above. Did you consider that problem?
->>>>
->>>>> Also, we need the sfty IRQ handling as soon as the fault occured & that can only be handled if we have handler attached with sfty IRQ.
->>>>> stmmac_interrupt() will only be triggerd when interrupt triggered for rx/tx packet .
->>>>> while registerting with sfty IRQ will get triggered as soon as emac HW detect the fault. 
->>>>
->>>> Please read my comment more carefully. The safety IRQ can be raised
->>>> during the common IRQ handling, thus the
->>>> stmmac_safety_feat_interrupt() method might get to be concurrently
->>>> executed.
->>>>
->>>> -Serge(y)
->>>>
->> <Suraj> Have testing this on device . We have added print in the both the places stmmac_interrupt() as well as sfty interrupt handler.
->> We can see that sfty interrupt handler is getting triggred first & stmmac_safety_feat_interrupt () code added in stmmac_intterupt() is not getting triggred because looks like interrupt status bit register is already getting cleared as part of sfty interrupt handler. So it looks good . Please let us know if any further comment. 
->>
->> Please find the log below .
->>
->>
->> / # [ 1505.602173] sj: stmmac_safety_interrupt from sfty IRQ handler
->> [ 1505.607274] qcom-ethqos 23040000.ethernet eth1: Found correctable error in MTL: 'RXCES: MTL RX Memory Error'
->> [ 1505.617395] sj: stmmac_safety_interrupt from sfty IRQ handler
->> [ 1505.622494] qcom-ethqos 23040000.ethernet eth1: Found correctable error in MTL: 'TXCES: MTL TX Memory Error'
->> [ 1505.888913] sj: stmmac_safety_interrupt from sfty IRQ handler
->> [ 1505.894010] qcom-ethqos 23040000.ethernet eth1: Found correctable error in MTL: 'RXCES: MTL RX Memory Error'
->> [ 1506.605821] sj: stmmac_safety_interrupt from sfty IRQ handler
->> [ 1506.610919] qcom-ethqos 23040000.ethernet eth1: Found correctable error in MTL: 'RXCES: MTL RX Memory Error'
->> [ 1506.621034] sj: stmmac_safety_interrupt from sfty IRQ handler
->> [ 1506.626131] qcom-ethqos 23040000.ethernet eth1: Found correctable error in MTL: 'TXCES: MTL TX Memory Error'
->> [ 1507.613036] sj: stmmac_safety_interrupt from sfty IRQ handler
->> [ 1507.618133] qcom-ethqos 23040000.ethernet eth1: Found correctable error in MTL: 'RXCES: MTL RX Memory Error'
->> [ 1507.628249] sj: stmmac_safety_interrupt from sfty IRQ handler
->> [ 1507.633346] qcom-ethqos 23040000.ethernet eth1: Found correctable error in MTL: 'TXCES: MTL TX Memory Error'
->> [ 1508.619034] sj: stmmac_safety_interrupt from sfty IRQ handler
->> [ 1508.624132] qcom-ethqos 23040000.ethernet eth1: Found correctable error in MTL: 'RXCES: MTL RX Memory Error'
->> [ 1508.634245] sj: stmmac_safety_interrupt from sfty IRQ handler
->> [ 1508.639343] qcom-ethqos 23040000.ethernet eth1: Found correctable error in MTL: 'TXCES: MTL TX Memory Error'
->> [ 1509.631151] sj: stmmac_safety_interrupt from sfty IRQ handler
->> [ 1509.636249] qcom-ethqos 23040000.ethernet eth1: Found correctable error in MTL: 'RXCES: MTL RX Memory Error'
->>
+>> I'm asking because it looks like we have got a real hardware. Luo currently
+>> trying to push QCA8084 (multi-phy/switch chip) support, and this chip
+>> exactly contains a huge clock/reset controller [2,3].
 > 
-> The log and the way you were trying to model out the problem don't
-> prove that the race condition doesn't exist. They just indicate that
-> your test-case doesn't catch the simultaneous MAC and Safety IRQs
-> handling.
+> Ideally the reset controller is modelled as a Linux reset
+> controller. The clock part of it is modelled using the common clock
+> framework. When done correctly, the PHY should not really care. All it
+> does is ask for its clock to be enabled, and its reset to be disabled.
 > 
-> Moreover AFAICS from the way the stmmac_ops->safety_feat_irq_status()
-> callbacks are defined in DW QoS Eth and DW XGMAC modules, the race is
-> there. Both
-> dwmac5_safety_feat_irq_status()
-> and
-> dwxgmac3_safety_feat_irq_status()
-> get to read the MTL and DMA Safety Interrupts Status register in order
-> to check whether the Correctable/Uncorrectable errors have actually
-> happened. After that the respective MAC, MTL or DMA error handlers are
-> called, which get to clear the IRQs statue by reading and then writing
-> the respective MAC DPP FRM, MTL/DMA ECC IRQ status registers. So if
-> the stmmac_safety_feat_interrupt() method is concurrently called the
-> driver at the very least may end up with printing the errors twice.
+> Also, given how difficult it is proving to be to make any progress at
+> all, i want to get one little part correctly described, the pure
+> PHY. Once we have that, we can start on the next little part. So long
+> as we keep to the Linux architecture of blocks or hardware with
+> standard Linux drivers, and DT to glue them together, a small step by
+> step approach should work out.
 > 
-> -Serge(y)
-> 
-<Suraj> We did not see issue reported 2 time in the verfication. 
-Also, we can add below change to completetly avoid call of sfty hadling as part of stmmac interrupt if irq is already defined like
-below . Let me if below looks good .
+>       Andrew
 
-static irqreturn_t stmmac_interrupt(int irq, void *dev_id)
-{
-	struct net_device *dev = (struct net_device *)dev_id;
-	struct stmmac_priv *priv = netdev_priv(dev);
+Since qca8075 PHY is also multiple port PHY, which is same as qca8084,
+but qca8084 also includes the integrated clock controller, this is the
+first qcom PHY chip integrating the clock controller internally.
+can we also consider designing the clocks and resets DT models in the
+PHY package DT.
 
-	/* Check if adapter is up */
-	if (test_bit(STMMAC_DOWN, &priv->state))
-		return IRQ_HANDLED;
+For qca8084 PURE PHY chip, which is the quad PHY chip and two PCSes,
+it integrates the clock controller that generates the clocks to be used
+by the link of PHYs, the integrated controller also provides the resets
+to the PHY,  the clock controller(NSSCC) driver of qca8084 works at the
+same way of the GCC of SoC(IPQ), qca8084 needs to be initialized with
+the clocks and resets for the qca8084 PHY package, these clocks and
+resets are generated by the NSSCC, even for PURE phy chip qca8084, there
+is also some PHY package level clocks needs to be initialized.
 
-	+ if (priv->sfty_irq <=0) {
-		/* Check if a fatal error happened */
-		if (stmmac_safety_feat_interrupt(priv))
-			return IRQ_HANDLED;
-	+ }
-	/* To handle Common interrupts */
-	stmmac_common_interrupt(priv);
+here is the diagram of qca8084.
+__| |_______________| |__
+| PCS0 |          |PCS1 |
+|______|          |_____|
+|_________________      |
+|                |      |
+|     NSSCC      |      |
+|________________|      |
+|_______________________|
+|     |     |     |     |
+|PHY1 |PHY2 |PHY3 |PHY4 |
+|_____|_____|_____|_____|
 
-	/* To handle DMA interrupts */
-	stmmac_dma_interrupt(priv);
+let me example the initial clocks and resets for the pure PHY chip 
+qca8084 as below, the clocks and resets should be put into the first
+MDIO node to be initialized firstly before qca8084 PHY will work.
 
-	return IRQ_HANDLED;
-}
+ethernet-phy-package@0 { 
 
->>>>>    
->>>>>>> +		if (unlikely(ret < 0)) {
->>>>>>> +			netdev_err(priv->dev,
->>>>>>> +				   "%s: ERROR: allocating the sfty IRQ %d (%d)\n",
->>>>>>> +				   __func__, priv->sfty_irq, ret);
->>>>>>> +			irq_err = REQ_IRQ_ERR_SFTY;
->>>>>>> +			goto irq_error;
->>>>>>> +		}
->>>>>>> +	}
->>>>>>> +
->>>>>>>  	return 0;
->>>>>>>  
->>>>>>>  irq_error:
->>>>>>> @@ -7462,6 +7498,7 @@ int stmmac_dvr_probe(struct device *device,
->>>>>>>  	priv->dev->irq = res->irq;
->>>>>>>  	priv->wol_irq = res->wol_irq;
->>>>>>>  	priv->lpi_irq = res->lpi_irq;
->>>>>>> +	priv->sfty_irq = res->sfty_irq;
->>>>>>>  	priv->sfty_ce_irq = res->sfty_ce_irq;
->>>>>>>  	priv->sfty_ue_irq = res->sfty_ue_irq;
->>>>>>>  	for (i = 0; i < MTL_MAX_RX_QUEUES; i++)
->>>>>>> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
->>>>>>> index 70eadc83ca68..ab250161fd79 100644
->>>>>>> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
->>>>>>> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
->>>>>>> @@ -743,6 +743,14 @@ int stmmac_get_platform_resources(struct platform_device *pdev,
->>>>>>>  		dev_info(&pdev->dev, "IRQ eth_lpi not found\n");
->>>>>>>  	}
->>>>>>>  
->>>>>>> +	stmmac_res->sfty_irq =
->>>>>>> +		platform_get_irq_byname_optional(pdev, "sfty");
->>>>>>> +	if (stmmac_res->sfty_irq < 0) {
->>>>>>> +		if (stmmac_res->sfty_irq == -EPROBE_DEFER)
->>>>>>> +			return -EPROBE_DEFER;
->>>>>>> +		dev_info(&pdev->dev, "IRQ safety IRQ not found\n");
->>>>>>> +	}
->>>>>>> +
->>>>>>>  	stmmac_res->addr = devm_platform_ioremap_resource(pdev, 0);
->>>>>>>  
->>>>>>>  	return PTR_ERR_OR_ZERO(stmmac_res->addr);
->>>>>>> -- 
->>>>>>> 2.25.1
->>>>>>>
->>>>>>>
->>>
+         #address-cells = <1>; 
+
+         #size-cells = <0>; 
+
+         compatible = "ethernet-phy-package"; 
+
+         reg = <0>; 
+
+ 
+
+         /* initial PHY package level clocks */ 
+
+         clocks = <&qca8k_nsscc NSS_CC_APB_BRIDGE_CLK>, 
+
+                <&qca8k_nsscc NSS_CC_AHB_CLK>, 
+
+                <&qca8k_nsscc NSS_CC_SEC_CTRL_AHB_CLK>, 
+
+                <&qca8k_nsscc NSS_CC_TLMM_CLK>, 
+
+                <&qca8k_nsscc NSS_CC_TLMM_AHB_CLK>, 
+
+                <&qca8k_nsscc NSS_CC_CNOC_AHB_CLK>, 
+
+                <&qca8k_nsscc NSS_CC_MDIO_AHB_CLK>; 
+
+         clock-names = "apb_bridge", 
+
+                 "ahb", 
+
+                 "sec_ctrl_ahb", 
+
+                 "tlmm", 
+
+                 "tlmm_ahb", 
+
+                 "cnoc_ahb", 
+
+                 "mdio_ahb"; 
+
+ 
+
+         /* initial PHY package level reset */ 
+
+         resets = <&qca8k_nsscc NSS_CC_DSP_ARES>; 
+
+         reset-names = "gephy_dsp"; 
+
+ 
+
+         /* initial clocks and resets for first phy */ 
+
+         phy0 { 
+
+                 reg = <0>; 
+
+                 clocks = <&qca8k_nsscc NSS_CC_GEPHY0_SYS_CLK>; 
+
+                 clock-names = "gephy0_sys"; 
+
+                 resets = <&qca8k_nsscc NSS_CC_GEPHY0_SYS_ARES>, 
+
+                        <&qca8k_nsscc NSS_CC_GEPHY0_ARES>; 
+
+                 reset-names = "gephy0_sys", 
+
+                         "gephy0_soft"; 
+
+         }; 
+
+ 
+
+         /* initial clocks and resets for second phy */ 
+
+         phy1 { 
+
+                 reg = <1>; 
+
+                 clocks = <&qca8k_nsscc NSS_CC_GEPHY1_SYS_CLK>; 
+
+                 clock-names = "gephy1_sys"; 
+
+                 resets = <&qca8k_nsscc NSS_CC_GEPHY1_SYS_ARES>, 
+
+                        <&qca8k_nsscc NSS_CC_GEPHY1_ARES>; 
+
+                 reset-names = "gephy1_sys", 
+
+                         "gephy1_soft"; 
+
+         }; 
+
+ 
+
+         /* initial clocks and resets for third phy */ 
+
+         phy2 { 
+
+                 reg = <2>; 
+
+                 clocks = <&qca8k_nsscc NSS_CC_GEPHY2_SYS_CLK>; 
+
+                 clock-names = "gephy2_sys";
+                 resets = <&qca8k_nsscc NSS_CC_GEPHY2_SYS_ARES>, 
+
+                        <&qca8k_nsscc NSS_CC_GEPHY2_ARES>; 
+
+                 reset-names = "gephy2_sys", 
+
+                         "gephy2_soft"; 
+
+         }; 
+
+ 
+
+         /* initial clocks and resets for fourth phy */ 
+
+         phy3 { 
+
+                 reg = <3>; 
+
+                 clocks = <&qca8k_nsscc NSS_CC_GEPHY3_SYS_CLK>; 
+
+                 clock-names = "gephy3_sys"; 
+
+                 resets = <&qca8k_nsscc NSS_CC_GEPHY3_SYS_ARES>, 
+
+                        <&qca8k_nsscc NSS_CC_GEPHY3_ARES>; 
+
+                 reset-names = "gephy3_sys", 
+
+                         "gephy3_soft"; 
+
+         }; 
+
+ 
+
+         /* initial clocks and resets for pcs0. */ 
+
+         pcs0 { 
+
+                 reg = <4>; 
+
+                 clocks = <&qca8k_nsscc NSS_CC_SRDS0_SYS_CLK>; 
+
+                 clock-names = "srds0_sys"; 
+
+                 resets = <&qca8k_nsscc NSS_CC_SRDS0_SYS_ARES>; 
+
+                 reset-names = "srds0_sys"; 
+
+         }; 
+
+ 
+
+         /* initial clocks and resets for pcs1. */ 
+
+         pcs1 { 
+
+                 reg = <5>; 
+
+                 clocks = <&qca8k_nsscc NSS_CC_SRDS1_SYS_CLK>; 
+
+                 clock-names = "srds1_sys"; 
+
+                 resets = <&qca8k_nsscc NSS_CC_SRDS1_SYS_ARES>; 
+
+                 reset-names = "srds1_sys"; 
+
+         }; 
+ 
+
+};
+
+appreciated for the PHY package level DT model design.
 
