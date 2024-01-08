@@ -1,54 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6600-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6601-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4CA69826C51
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 12:14:19 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08581826CDA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 12:32:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B0DE61F22800
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 11:14:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A92082810B3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 11:32:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BEC3A14266;
-	Mon,  8 Jan 2024 11:14:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 605CE14AB4;
+	Mon,  8 Jan 2024 11:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gSwj9aSw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TlAG+kqG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2606914A89;
-	Mon,  8 Jan 2024 11:14:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4086SBHx016678;
-	Mon, 8 Jan 2024 11:13:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=36H5GjphPYvxeORwQa+KRPMjUEAJvfmLyoyu0hL94pE=; b=gS
-	wj9aSwld33hJ5lXcBLAsQMtLaHNrnhuKQB3PSXEkgeFf1IkckOOK/leALbYwzXXx
-	KjJf0yisHGw2scCkhRWPGflMxfd/fHhTHsWhfO0JIvQzqYuhMIC4v1Cpzd+a5GS7
-	OCmGjke5xUiDjapqmANw66tSE90ok6+FvwtvDjtcH/ujxlW7RbUtadpfk8ak/wom
-	S8hVC0NLP4nG+IB/QflJX+TBJa+CsyOr5OmxMaImoYwSFjxCLu0J15M7Mj3ByKHY
-	Ymx+krDECAC43b1xM1Z1sIAthKzHXMhgdiYeeqhOk7RB7rHSrNFfddJ9hE4piv4E
-	QbGwTHoM4Pb07MZq6rsA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vg97b0t45-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 08 Jan 2024 11:13:47 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 408BDknW002923
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 8 Jan 2024 11:13:46 GMT
-Received: from [10.253.76.26] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 8 Jan
- 2024 03:13:38 -0800
-Message-ID: <b75e6267-7d54-412e-8882-af4d9a0b54e6@quicinc.com>
-Date: Mon, 8 Jan 2024 19:13:34 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C1214A93
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jan 2024 11:32:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-336dcebcdb9so1916206f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 03:32:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704713533; x=1705318333; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=uimCBHCQHsez7psI7ZTry0K7+PAJVXBNStv3yV/6sIw=;
+        b=TlAG+kqGMKxASiEedLCpKJ02aM2sXwQp3F2ErYpQnkOf0PW42n640W5d2SkbF0pZK9
+         08soJip2AvGy2rUFADyffVWfGbdY/j9cEbjktRJ4N2H2amm2jaiwC58jJc0jk4tBkwew
+         C47ms8jhVjLcwvlaEAz0oLb90PRHCj4ldXse4rCfVhTqyrs85UDskyIShZ2wBSaKiiZT
+         jjO8j8pzujxznpthYT4ZPorOiaA1lwJeZwk440l3NhbfgAFF0JgmuO1+vX0pjjUctyIr
+         BZLfsb1V6+ymbpz/AdgV0xnEQSqY00asX3h3eV1VWzVi5OjMCKYOp0XsdK78PlMZh3iM
+         7opQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704713533; x=1705318333;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uimCBHCQHsez7psI7ZTry0K7+PAJVXBNStv3yV/6sIw=;
+        b=lt4o3wjOmXQF70nAvZ1vWT4fv8UVQ3QIXQmW1Qg3ybFfNNiE0r+I474Ua/hojfQinv
+         PVIj0fVn58ErxW6j1l48pT26ydoml1UnvkOq8y+JmLEW+Izl4K1ud9DLeK6TGvn6erhN
+         XBNyhAa3cscf1KJTVdrzBaUBffJyUM7nHPZcLxFDuqn1xYI43IRcgV7W8RVMcbj6r7Cc
+         dM7abTpoi6E2D8VJ/8pfBfn3e71d3Fp1t4K89IACHSyeZknCPT8eh835PUxj83CsWuat
+         ieGjZIWIk8idT3dt4HLrELI03OrEFaZuHqqADWVyTCNtuJdWI/rKH10khob8jRlmgXN+
+         58uw==
+X-Gm-Message-State: AOJu0Yxy9qunjW6U9HjH9elbYgcUxi70GdY/2r4u1bFfhJIq1oDpq9BJ
+	voRvi4SR9PT/+NKDuYnGF8VnC1qwF4/VVA==
+X-Google-Smtp-Source: AGHT+IHUA9bAvQQCRf/GXd+0/1CSx6SkPaAgPnUyOv4ZPWFSjLIIANgegL8HSa/VK7ux5/+yF7ifcg==
+X-Received: by 2002:a05:6000:4ec:b0:336:4b84:1e79 with SMTP id cr12-20020a05600004ec00b003364b841e79mr1063757wrb.194.1704713533299;
+        Mon, 08 Jan 2024 03:32:13 -0800 (PST)
+Received: from [192.168.100.86] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id u3-20020a5d4343000000b003376d4248a9sm1349637wrr.71.2024.01.08.03.32.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Jan 2024 03:32:12 -0800 (PST)
+Message-ID: <2ba3cef1-cdd3-4f38-b378-b91474c0ff5f@linaro.org>
+Date: Mon, 8 Jan 2024 11:32:11 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,291 +66,57 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [net-next PATCH RFC v3 1/8] dt-bindings: net: document ethernet
- PHY package nodes
+Subject: Re: [PATCH] media: venus: flush all buffers in output plane streamoff
 Content-Language: en-US
-To: Andrew Lunn <andrew@lunn.ch>, Sergey Ryazanov <ryazanov.s.a@gmail.com>
-CC: Christian Marangi <ansuelsmth@gmail.com>,
-        Robert Marko
-	<robert.marko@sartura.hr>,
-        Vladimir Oltean <olteanv@gmail.com>, Rob Herring
-	<robh+dt@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet
-	<edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni
-	<pabeni@redhat.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn
- Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno
-	<angelogioacchino.delregno@collabora.com>,
-        <netdev@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-mediatek@lists.infradead.org>
-References: <20231126015346.25208-1-ansuelsmth@gmail.com>
- <20231126015346.25208-2-ansuelsmth@gmail.com>
- <0926ea46-1ce4-4118-a04c-b6badc0b9e15@gmail.com>
- <1437d9df-2868-43f5-aebd-e0c57fe4d905@lunn.ch>
-From: Jie Luo <quic_luoj@quicinc.com>
-In-Reply-To: <1437d9df-2868-43f5-aebd-e0c57fe4d905@lunn.ch>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <1704695615-1036-1-git-send-email-quic_dikshita@quicinc.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <1704695615-1036-1-git-send-email-quic_dikshita@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: rmDs5m9z-QNWKbr2VGYfsgblG9aS_q-T
-X-Proofpoint-ORIG-GUID: rmDs5m9z-QNWKbr2VGYfsgblG9aS_q-T
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- impostorscore=0 phishscore=0 clxscore=1011 mlxscore=0 bulkscore=0
- priorityscore=1501 malwarescore=0 mlxlogscore=999 suspectscore=0
- spamscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401080096
 
-
-
-On 1/8/2024 2:31 AM, Andrew Lunn wrote:
->> And I would like to ask you about another issue raised by Vladimir [1].
->> These phy chips become SoC with all these built-in PHYs, PCSs, clocks,
->> interrupt controllers, etc. Should we address this now? Or should we go with
->> the proposed solution for now and postpone modeling of other peripherals
->> until we get a real hardware, as Andrew suggested?
->>
->> I'm asking because it looks like we have got a real hardware. Luo currently
->> trying to push QCA8084 (multi-phy/switch chip) support, and this chip
->> exactly contains a huge clock/reset controller [2,3].
+On 08/01/2024 06:33, Dikshita Agarwal wrote:
+> For scenarios, when source change is followed by VIDIOC_STREAMOFF
+> on output plane, driver should discard any queued OUTPUT
+> buffers, which are not decoded or dequeued.
+> Flush with HFI_FLUSH_INPUT does not have any actual impact.
+> So, fix it, by invoking HFI_FLUSH_ALL, which will flush all
+> queued buffers.
 > 
-> Ideally the reset controller is modelled as a Linux reset
-> controller. The clock part of it is modelled using the common clock
-> framework. When done correctly, the PHY should not really care. All it
-> does is ask for its clock to be enabled, and its reset to be disabled.
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> ---
+>   drivers/media/platform/qcom/venus/vdec.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> Also, given how difficult it is proving to be to make any progress at
-> all, i want to get one little part correctly described, the pure
-> PHY. Once we have that, we can start on the next little part. So long
-> as we keep to the Linux architecture of blocks or hardware with
-> standard Linux drivers, and DT to glue them together, a small step by
-> step approach should work out.
-> 
->       Andrew
-
-Since qca8075 PHY is also multiple port PHY, which is same as qca8084,
-but qca8084 also includes the integrated clock controller, this is the
-first qcom PHY chip integrating the clock controller internally.
-can we also consider designing the clocks and resets DT models in the
-PHY package DT.
-
-For qca8084 PURE PHY chip, which is the quad PHY chip and two PCSes,
-it integrates the clock controller that generates the clocks to be used
-by the link of PHYs, the integrated controller also provides the resets
-to the PHY,  the clock controller(NSSCC) driver of qca8084 works at the
-same way of the GCC of SoC(IPQ), qca8084 needs to be initialized with
-the clocks and resets for the qca8084 PHY package, these clocks and
-resets are generated by the NSSCC, even for PURE phy chip qca8084, there
-is also some PHY package level clocks needs to be initialized.
-
-here is the diagram of qca8084.
-__| |_______________| |__
-| PCS0 |          |PCS1 |
-|______|          |_____|
-|_________________      |
-|                |      |
-|     NSSCC      |      |
-|________________|      |
-|_______________________|
-|     |     |     |     |
-|PHY1 |PHY2 |PHY3 |PHY4 |
-|_____|_____|_____|_____|
-
-let me example the initial clocks and resets for the pure PHY chip 
-qca8084 as below, the clocks and resets should be put into the first
-MDIO node to be initialized firstly before qca8084 PHY will work.
-
-ethernet-phy-package@0 { 
-
-         #address-cells = <1>; 
-
-         #size-cells = <0>; 
-
-         compatible = "ethernet-phy-package"; 
-
-         reg = <0>; 
-
- 
-
-         /* initial PHY package level clocks */ 
-
-         clocks = <&qca8k_nsscc NSS_CC_APB_BRIDGE_CLK>, 
-
-                <&qca8k_nsscc NSS_CC_AHB_CLK>, 
-
-                <&qca8k_nsscc NSS_CC_SEC_CTRL_AHB_CLK>, 
-
-                <&qca8k_nsscc NSS_CC_TLMM_CLK>, 
-
-                <&qca8k_nsscc NSS_CC_TLMM_AHB_CLK>, 
-
-                <&qca8k_nsscc NSS_CC_CNOC_AHB_CLK>, 
-
-                <&qca8k_nsscc NSS_CC_MDIO_AHB_CLK>; 
-
-         clock-names = "apb_bridge", 
-
-                 "ahb", 
-
-                 "sec_ctrl_ahb", 
-
-                 "tlmm", 
-
-                 "tlmm_ahb", 
-
-                 "cnoc_ahb", 
-
-                 "mdio_ahb"; 
-
- 
-
-         /* initial PHY package level reset */ 
-
-         resets = <&qca8k_nsscc NSS_CC_DSP_ARES>; 
-
-         reset-names = "gephy_dsp"; 
-
- 
-
-         /* initial clocks and resets for first phy */ 
-
-         phy0 { 
-
-                 reg = <0>; 
-
-                 clocks = <&qca8k_nsscc NSS_CC_GEPHY0_SYS_CLK>; 
-
-                 clock-names = "gephy0_sys"; 
-
-                 resets = <&qca8k_nsscc NSS_CC_GEPHY0_SYS_ARES>, 
-
-                        <&qca8k_nsscc NSS_CC_GEPHY0_ARES>; 
-
-                 reset-names = "gephy0_sys", 
-
-                         "gephy0_soft"; 
-
-         }; 
-
- 
-
-         /* initial clocks and resets for second phy */ 
-
-         phy1 { 
-
-                 reg = <1>; 
-
-                 clocks = <&qca8k_nsscc NSS_CC_GEPHY1_SYS_CLK>; 
-
-                 clock-names = "gephy1_sys"; 
-
-                 resets = <&qca8k_nsscc NSS_CC_GEPHY1_SYS_ARES>, 
-
-                        <&qca8k_nsscc NSS_CC_GEPHY1_ARES>; 
-
-                 reset-names = "gephy1_sys", 
-
-                         "gephy1_soft"; 
-
-         }; 
-
- 
-
-         /* initial clocks and resets for third phy */ 
-
-         phy2 { 
-
-                 reg = <2>; 
-
-                 clocks = <&qca8k_nsscc NSS_CC_GEPHY2_SYS_CLK>; 
-
-                 clock-names = "gephy2_sys";
-                 resets = <&qca8k_nsscc NSS_CC_GEPHY2_SYS_ARES>, 
-
-                        <&qca8k_nsscc NSS_CC_GEPHY2_ARES>; 
-
-                 reset-names = "gephy2_sys", 
-
-                         "gephy2_soft"; 
-
-         }; 
-
- 
-
-         /* initial clocks and resets for fourth phy */ 
-
-         phy3 { 
-
-                 reg = <3>; 
-
-                 clocks = <&qca8k_nsscc NSS_CC_GEPHY3_SYS_CLK>; 
-
-                 clock-names = "gephy3_sys"; 
-
-                 resets = <&qca8k_nsscc NSS_CC_GEPHY3_SYS_ARES>, 
-
-                        <&qca8k_nsscc NSS_CC_GEPHY3_ARES>; 
-
-                 reset-names = "gephy3_sys", 
-
-                         "gephy3_soft"; 
-
-         }; 
-
- 
-
-         /* initial clocks and resets for pcs0. */ 
-
-         pcs0 { 
-
-                 reg = <4>; 
-
-                 clocks = <&qca8k_nsscc NSS_CC_SRDS0_SYS_CLK>; 
-
-                 clock-names = "srds0_sys"; 
-
-                 resets = <&qca8k_nsscc NSS_CC_SRDS0_SYS_ARES>; 
-
-                 reset-names = "srds0_sys"; 
-
-         }; 
-
- 
-
-         /* initial clocks and resets for pcs1. */ 
-
-         pcs1 { 
-
-                 reg = <5>; 
-
-                 clocks = <&qca8k_nsscc NSS_CC_SRDS1_SYS_CLK>; 
-
-                 clock-names = "srds1_sys"; 
-
-                 resets = <&qca8k_nsscc NSS_CC_SRDS1_SYS_ARES>; 
-
-                 reset-names = "srds1_sys"; 
-
-         }; 
- 
-
-};
-
-appreciated for the PHY package level DT model design.
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index 29130a9..0d2ab95 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -1255,7 +1255,7 @@ static int vdec_stop_output(struct venus_inst *inst)
+>   		break;
+>   	case VENUS_DEC_STATE_INIT:
+>   	case VENUS_DEC_STATE_CAPTURE_SETUP:
+> -		ret = hfi_session_flush(inst, HFI_FLUSH_INPUT, true);
+> +		ret = hfi_session_flush(inst, HFI_FLUSH_ALL, true);
+>   		break;
+>   	default:
+>   		break;
+
+Missing
+
+Fixes: 85872f861d4c ("media: venus: Mark last capture buffer")
+
+Once fixed
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
+---
+bod
 
