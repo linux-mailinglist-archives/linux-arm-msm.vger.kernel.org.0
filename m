@@ -1,116 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-6688-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6689-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53C9B827A53
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 22:42:03 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CA05827ABE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 23:43:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 03ADC284BA2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 21:42:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DC8BB2846A4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 22:43:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDB9956464;
-	Mon,  8 Jan 2024 21:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EC5656467;
+	Mon,  8 Jan 2024 22:43:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kWqWR2BV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Zulj4hRQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D1356466
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jan 2024 21:41:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 408LfScv024334;
-	Mon, 8 Jan 2024 21:41:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=mJCwMMMfxkhuZVL0gzk8j+yfK5Ar9Kj1Saa4MLJv/EU=; b=kW
-	qWR2BVd7zL7Iv0LvQIK9wx1d7Pkfjf3uLIAyckSCGs6GsEjCQQv7/bPVL1IkUPxM
-	dAEYqSrn2sQzfQa3smnsagbz/e1XOsPVVN3U1JxMpptUKu7u0IRkJV+4IKlwuFAg
-	XaM+YSAiMtVDqwCnjGdg3cZ5nQaEaA3anhafX8CR9Lmhm4sRpz4+Ci4DsFY91FN4
-	BgDnq48SRYVW1A3X7lh2QJ3EMlFvt0n4OktuuOE0C0LJI8mEqtGvaqaY4V7TeXKe
-	tqktB2b1heEllZC0eZTlXVdnlPGAsatNX1NlmTGS2NFljtNAVOtC1GUVsM9NsxbM
-	x4pWBL5vBl5ZjYh/3nAQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vgbjyhwun-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 08 Jan 2024 21:41:35 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 408LfXkf017140
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 8 Jan 2024 21:41:33 GMT
-Received: from [10.110.115.78] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 8 Jan
- 2024 13:41:33 -0800
-Message-ID: <d19ce547-56be-3524-0832-05388ebbe8f7@quicinc.com>
-Date: Mon, 8 Jan 2024 13:41:32 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8171556444
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jan 2024 22:43:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-dbeff495c16so923183276.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 14:43:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704753823; x=1705358623; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=yWZ/93/0FZh/gn5cm1zBSBRnDMVQRiaGGWGBlyAPerw=;
+        b=Zulj4hRQBQqUsrVTWYLTCh3nADDUu0H68KFPSFSZR8A1qBm01R+qj4gE224SInKaSk
+         OzNHK4iqpf3qXnC5pBmxW+KKZuWhvApUz2bSEi2gxOUN3c9qu6UhSuKORTIlDYb3M749
+         oaVqoEHr5QUgy9UUGsL5bBM2sgfu7LKIfYvTC6v8HCmkTFjmF+z3jmEeSFgvrY07qdMb
+         xORPyJCYYgSGyA00VARmpKpyiLEFQi/kKsITpErGXBt1rZmrCmL1LneoilJZcDEAKx74
+         KvRGSMDpa+2LLnmz0i5CHuLCwN8DP71TQKBgIE9DGqCpQJKT+4f7I6SI9V3+kkSceclR
+         GgNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704753823; x=1705358623;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yWZ/93/0FZh/gn5cm1zBSBRnDMVQRiaGGWGBlyAPerw=;
+        b=MepG388wgF27EV2O7aPoh4YTdmFxdDOichPSQp4Yj8ZyaqcraxpVQt36B4VG+7VdZn
+         bXxKPir2blNwixKiYVtsBxZ07nKOJk8YnbawSkJGj2Bqwdjx4wghDMG0vnvTkm3RXyXr
+         I2TvdB/CTC0VmW38HJwdobjiSVZBB6VbHf4ZQVnczcAqHH7DD48Od2Zp9GVpp/A5r+sn
+         +9P5hOpIWQiCKPDhteUAoo+GT8XVnCvO0PKNAc+k6IZyf/dyfAI74jd4CNH8h0l5ePQJ
+         NRkYAu7b+mF5wdusfcYl6FuQ0q5+/XtRtbItm00IsBhof4ytI63zMPBzO1Ws34CUUPcG
+         DZZg==
+X-Gm-Message-State: AOJu0Yz1vpc5E9MzpqY8Zvj1CYFu9TK/jdKD+4v4Y3XH9E/8wzkvbWoN
+	cjz3RE3nFRqTFQLQw5xobyV13Bz0zr6X24rxArIq/51I4qfMKtnw2x1Ef+vxDmI=
+X-Google-Smtp-Source: AGHT+IFdl1xSh3s2jD5qgED4ACRR92qOyXXHTlK0brp8aUmpvjPvWC95g+KDfZXY9Fwki8NSHqhSBb3lWuSIPGPXyf8=
+X-Received: by 2002:a05:6902:2510:b0:db5:4d4b:d8a7 with SMTP id
+ dt16-20020a056902251000b00db54d4bd8a7mr2127690ybb.50.1704753823315; Mon, 08
+ Jan 2024 14:43:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 0/5] drm/msm/dpu: remove
- dpu_encoder_phys_ops::atomic_mode_set callback
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>
-CC: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
 References: <20231225130853.3659424-1-dmitry.baryshkov@linaro.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20231225130853.3659424-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: pcLXBdzkQ-Pgb-hzovKEdD4K1_vi0qsu
-X-Proofpoint-ORIG-GUID: pcLXBdzkQ-Pgb-hzovKEdD4K1_vi0qsu
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- mlxlogscore=999 impostorscore=0 bulkscore=0 phishscore=0 suspectscore=0
- adultscore=0 spamscore=0 clxscore=1015 priorityscore=1501
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401080178
+ <20231225130853.3659424-5-dmitry.baryshkov@linaro.org> <2a536654-b5ec-3599-6f0a-2e369b080c70@quicinc.com>
+In-Reply-To: <2a536654-b5ec-3599-6f0a-2e369b080c70@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 9 Jan 2024 00:43:32 +0200
+Message-ID: <CAA8EJpohQoApcvJuxt5_Xxjx88xSCxPyCkeAbXHsG7s1_6o3wA@mail.gmail.com>
+Subject: Re: [PATCH v3 4/5] drm/msm/dpu: move writeback's atomic_check to dpu_writeback.c
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Stephen Boyd <swboyd@chromium.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 
+On Mon, 8 Jan 2024 at 23:39, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+>
+>
+> On 12/25/2023 5:08 AM, Dmitry Baryshkov wrote:
+> > dpu_encoder_phys_wb is the only user of encoder's atomic_check callback.
+> > Move corresponding checks to drm_writeback_connector's implementation
+> > and drop the dpu_encoder_phys_wb_atomic_check() function.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >   .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   | 54 ------------------
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  9 ++-
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c | 57 ++++++++++++++++++-
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.h |  3 +-
+> >   4 files changed, 64 insertions(+), 59 deletions(-)
+> >
+>
+> I am fine with this change with respect to how the code is today.
+>
+> Hence,
+>
+> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>
+> But if we start noticing a pattern like below in dpu_encoder.c's
+> atomic_check,
+>
+> if (INTF_WB)
+> .....
+> else if (INTF_DP || INTF_DSI)
+> .....
+>
+> then, it will demand bringing back a phys specific callback.
 
+The problem is that INTF_DP || INTF_DSI does not have the
+phys-specific implementation. So while I agree about the INTF_WB part,
+INTF_DP || INTF_DSI either should go as is, or it should be refactored
+into output-specific handlers.
 
-On 12/25/2023 5:08 AM, Dmitry Baryshkov wrote:
-> The dpu_encoder_phys_ops::atomic_mode_set() callback is mostly
-> redundant. Implementations only set the IRQ indices there. Move
-> statically allocated IRQs to dpu_encoder_phys_*_init() and set
-> dynamically allocated IRQs in the irq_enable() callback.
-> 
-> The writeback backend of the dpu_encoder is the only user of the
-> dpu_encoder_phys_ops::atomic_check() callback. Move corresponding code
-> to the DPU's drm_writeback_connector implementation (dpu_writeback.c)
-> and drop corresponding callback code.
-> 
-> Changes since v2:
-> - Rebase on top of linux-next
-> - Also incorporate the dpu_encoder_phys::atomic_check series
-> 
-> Changes since v1:
-> - Split trace events into enable/disable pairs (Abhinav).
-> 
-
-We will provide a Tested-by for this series soon after re-validating WB 
-and CDM with WB with this.
+-- 
+With best wishes
+Dmitry
 
