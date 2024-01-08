@@ -1,139 +1,284 @@
-Return-Path: <linux-arm-msm+bounces-6667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6668-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C7958274B1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 17:10:45 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA5E3827505
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 17:25:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A7C97283E1C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 16:10:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 93501284171
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 16:25:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2135D524A7;
-	Mon,  8 Jan 2024 16:10:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 239DB524D5;
+	Mon,  8 Jan 2024 16:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="Hq+RPIwQ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HL8tnVM+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2F2537F7
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jan 2024 16:10:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-46777099deeso237356137.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 08:10:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1704730213; x=1705335013; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8JlDxMUsqbGectUh8EIxrkNYT83uPUecoA8VWJ2a5gw=;
-        b=Hq+RPIwQMKBmofXa4sCQcFnurU/20bnMoA1FCPLVo/bDHvLug6jbgMaDlIV2dRb3mW
-         gjMDZPv9bwTfJDwMWRNiUUo44BwUaifWtG5m7eXz4Vf/2eAL6dCQDoC5lxayiP4yQtzG
-         BOAxoxF+YyouDRkd37iWUwaWm0XNDOxj8ga3kLKnVN25bEkD1HL8qSYgzNlQC98/YUEV
-         jp2k45begzs/Xl2Nqyi2qSYfw8bBeWXdUlcT9Ptuf5+qNq0to5Izqe+H72kJc+WtiCYK
-         4cna/q7uJ8ZGF0T7PX9TflEqfQmLCfKntOWaFzthuLsDga8S8OrM5daOe7zIy7SNwHBL
-         0dSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704730213; x=1705335013;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8JlDxMUsqbGectUh8EIxrkNYT83uPUecoA8VWJ2a5gw=;
-        b=C8e6vUvGdzAPDgShu3IaNkvNXOX558/GR3fQ+m4Cs9u8VQDHHxe/0L/+ajsKuTm3bD
-         Vrh1fNa0pexqrp620cxIucqQur3jcZBpTyxXfccUHF660OZ1vQXk0UUufDWEHeNl9RiB
-         gThj7R8ViqFdByx0Nd0ZweWRDVsFRvQO+EBtz+S3dj0K4y+kmTbbhoQDkFsn0P3Y2s9t
-         39l/b8xqWq2VSjNEJ2GDgrabJkOBlgnERoMQ0AuGp+Kw/1Efhjuz/kde5FR2hQQWI/JJ
-         ZP9rzPUSAMCBZLhvYJWvGEqYnpxSu9klyd8DPxJveS9RSGOXUMw8KaQose2oUrhRvCBS
-         nybg==
-X-Gm-Message-State: AOJu0YyPWhAROP2wNZgWzy9LusKbP60ksMf2b7+zfdhsp4zS0v2c+oAH
-	+WL/wBGmvfMjV582UOa+jHzm7WmpL7Bo35NQRXWGkMtDtQzgbw==
-X-Google-Smtp-Source: AGHT+IH2ohe7yImgJmTTE/Wko3CMU+zS3sQUItHcrSLheScuDG9+B0iL9MMp/HN2zRHrDOfHcElD6gfDz+jUZpk0DV8=
-X-Received: by 2002:a05:6122:2513:b0:4b7:53cf:bec6 with SMTP id
- cl19-20020a056122251300b004b753cfbec6mr1204475vkb.0.1704730213337; Mon, 08
- Jan 2024 08:10:13 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D4452F6C;
+	Mon,  8 Jan 2024 16:25:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 408FD2Nu032201;
+	Mon, 8 Jan 2024 16:25:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=7BtvbYPfzK5Tc5wemztcm
+	NVEcPSSVbRXg2K0DQH70H0=; b=HL8tnVM+qpCC9dZrAVqV0bOAT2URW+mzvr7Wf
+	ZehzEWqm19kc8OxLmrtRRQ5st+xF62RLuWiF8Xa8THosKHw3J9xXT9g3MN6zNzOk
+	wO07+pmUpcowfpv5VOWE4j2UggAiJqWm4XHHpwUIhHGIO2SFy/6VX89p1GhqvGE3
+	PtqBiJDHx0tFh9ccV4aw/Jtj3rYVsfhIxKIV32rc/z9z+mKLhjebAFKdblH7f9Rl
+	qv21ETjP/omaF+w7DBNfuGN+SrkFdHvnYOb8A130H2bcbzJ8AOOARPnOLsBtBZ0j
+	zIFWhaP7YkAid2lUydcXzA/lMTSWSyf/hFHsy3KytXtRmCBiQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vgfwjrpcx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 08 Jan 2024 16:25:19 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 408GPIW7020674
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 8 Jan 2024 16:25:18 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Mon, 8 Jan 2024 08:25:18 -0800
+Date: Mon, 8 Jan 2024 08:25:16 -0800
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+To: Johan Hovold <johan@kernel.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Thinh Nguyen
+	<Thinh.Nguyen@synopsys.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Philipp Zabel
+	<p.zabel@pengutronix.de>,
+        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Krishna Kurapati PSSNV
+	<quic_kriskura@quicinc.com>
+Subject: Re: [PATCH 03/12] usb: dwc3: qcom: Merge resources from urs_usb
+ device
+Message-ID: <20240108162516.GH1315173@hu-bjorande-lv.qualcomm.com>
+References: <20231016-dwc3-refactor-v1-0-ab4a84165470@quicinc.com>
+ <20231016-dwc3-refactor-v1-3-ab4a84165470@quicinc.com>
+ <ZV3WxwxmqH8wRo0A@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240104130123.37115-1-brgl@bgdev.pl> <abefffc7-35d0-4c29-a892-48ec606acbf8@linaro.org>
-In-Reply-To: <abefffc7-35d0-4c29-a892-48ec606acbf8@linaro.org>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Mon, 8 Jan 2024 17:10:02 +0100
-Message-ID: <CAMRc=MdUgY2XScpe6FjyPoC0hxWcxZ5eaa+qKFjNUrin--updg@mail.gmail.com>
-Subject: Re: [RFC 0/9] PCI: introduce the concept of power sequencing of PCIe devices
-To: neil.armstrong@linaro.org
-Cc: Kalle Valo <kvalo@kernel.org>, "David S . Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Heiko Stuebner <heiko@sntech.de>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Chris Morgan <macromorgan@hotmail.com>, 
-	Linus Walleij <linus.walleij@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Arnd Bergmann <arnd@arndb.de>, =?UTF-8?B?TsOtY29sYXMgRiAuIFIgLiBBIC4gUHJhZG8=?= <nfraprado@collabora.com>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Peng Fan <peng.fan@nxp.com>, 
-	Robert Richter <rrichter@amd.com>, Dan Williams <dan.j.williams@intel.com>, 
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>, Terry Bowman <terry.bowman@amd.com>, 
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>, 
-	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
-	Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>, 
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-wireless@vger.kernel.org, 
-	netdev@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <ZV3WxwxmqH8wRo0A@hovoldconsulting.com>
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: pXTZRqHywNPisdlQCuK5blcXasM8QHJ5
+X-Proofpoint-GUID: pXTZRqHywNPisdlQCuK5blcXasM8QHJ5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1011
+ impostorscore=0 lowpriorityscore=0 phishscore=0 mlxlogscore=999
+ suspectscore=0 priorityscore=1501 mlxscore=0 malwarescore=0 adultscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401080139
 
-On Mon, Jan 8, 2024 at 4:24=E2=80=AFPM Neil Armstrong <neil.armstrong@linar=
-o.org> wrote:
->
-> Hi,
->
-> On 04/01/2024 14:01, Bartosz Golaszewski wrote:
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > During last year's Linux Plumbers we had several discussions centered
-> > around the need to power-on PCI devices before they can be detected on
-> > the bus.
-> >
-> > The consensus during the conference was that we need to introduce a
-> > class of "PCI slot drivers" that would handle the power-sequencing.
-> >
-> > After some additional brain-storming with Manivannan and the realizatio=
-n
-> > that the DT maintainers won't like adding any "fake" nodes not
-> > representing actual devices, we decided to reuse the existing
-> > infrastructure provided by the PCIe port drivers.
-> >
-> > The general idea is to instantiate platform devices for child nodes of
-> > the PCIe port DT node. For those nodes for which a power-sequencing
-> > driver exists, we bind it and let it probe. The driver then triggers a
-> > rescan of the PCI bus with the aim of detecting the now powered-on
-> > device. The device will consume the same DT node as the platform,
-> > power-sequencing device. We use device links to make the latter become
-> > the parent of the former.
-> >
-> > The main advantage of this approach is not modifying the existing DT in
-> > any way and especially not adding any "fake" platform devices.
->
-> I've successfully tested this serie for the WCN7850 Wifi/BT combo onboard=
- chip
-> present on the SM8550-QRD and SM8650-QRD boards and it works just fine.
->
-> Here's a branch with the wcn7850 vreg table added to the pwrseq driver,
-> and the DT changes:
-> https://git.codelinaro.org/neil.armstrong/linux/-/commits/topic/sm8x50/wc=
-n7850-wifi-pwrseq/?ref_type=3Dheads
+On Wed, Nov 22, 2023 at 11:24:07AM +0100, Johan Hovold wrote:
+> On Mon, Oct 16, 2023 at 08:11:11PM -0700, Bjorn Andersson wrote:
+> > With some ACPI DSDT tables, such as the one found in SC8180X devices,
+> > the USB resources are split between the URSn and it's child USBn device
+> > nodes, in particular the interrupts are placed in the child nodes.
+> > 
+> > The solution that was chosen for handling this is to allocate a
+> > platform_device from the child node and selectively pick interrupts
+> > from the main platform_device, or from this created child device, when
+> > creating the platform_device for the DWC3 core.
+> > 
+> > This does however not work with the upcoming change where the DWC3 core
+> > is instantiated from the same platform_device as the glue, as the DRD
+> > and host code will attempt to resolve their interrupts from the shared
+> > device, and not the child device.
+> > 
+> > Work around this by merging the resources of the child device into the
+> > glue device node, to present a single platform_device with all the
+> > resources necessary.
+> 
+> Nice approach.
+> 
+> An alternative would be to drop ACPI support completely as Konrad
+> suggested. Should simplify both this series and the multiport one.
+> 
+> Is anyone really using the ACPI support here anymore?
+> 
 
-Thanks, I'll integrate them into v2.
+At the introduction of SC8180X and the Lenovo Flex 5G we where able to
+run the Debian installer off the ACPI support in the kernel.
 
-Bart
+Since then, at least the UFS support has regressed to the point that
+this would no longer be possible - without anyone noticing.
+
+
+I would like to see ACPI supported again in the future, but I can't
+really argue for its existence currently. In the end the new flattened
+code path is mostly shared with the ACPI path, so perhaps it makes sense
+to drop the support after this refactor, perhaps not. I will re-evaluate
+this.
+
+> > -static struct platform_device *
+> > -dwc3_qcom_create_urs_usb_platdev(struct device *dev)
+> > +static int dwc3_qcom_acpi_merge_urs_resources(struct platform_device *pdev)
+> >  {
+> > +	struct device *dev = &pdev->dev;
+> > +	struct list_head resource_list;
+> > +	struct resource_entry *rentry;
+> > +	struct resource *resources;
+> >  	struct fwnode_handle *fwh;
+> >  	struct acpi_device *adev;
+> >  	char name[8];
+> > +	int count;
+> >  	int ret;
+> >  	int id;
+> > +	int i;
+> >  
+> >  	/* Figure out device id */
+> >  	ret = sscanf(fwnode_get_name(dev->fwnode), "URS%d", &id);
+> >  	if (!ret)
+> > -		return NULL;
+> > +		return -EINVAL;
+> >  
+> >  	/* Find the child using name */
+> >  	snprintf(name, sizeof(name), "USB%d", id);
+> >  	fwh = fwnode_get_named_child_node(dev->fwnode, name);
+> >  	if (!fwh)
+> > -		return NULL;
+> > +		return 0;
+> >  
+> >  	adev = to_acpi_device_node(fwh);
+> >  	if (!adev)
+> > -		return NULL;
+> > +		return -EINVAL;
+> 
+> This is currently leaking a reference to the fwnode, I fixed that up
+> here:
+> 
+> 	https://lore.kernel.org/linux-usb/20231117173650.21161-4-johan+linaro@kernel.org/
+> 
+> > +	INIT_LIST_HEAD(&resource_list);
+> > +
+> > +	count = acpi_dev_get_resources(adev, &resource_list, NULL, NULL);
+> > +	if (count <= 0)
+> > +		return count;
+> > +
+> > +	count += pdev->num_resources;
+> > +
+> > +	resources = kcalloc(count, sizeof(*resources), GFP_KERNEL);
+> > +	if (!resources) {
+> > +		acpi_dev_free_resource_list(&resource_list);
+> > +		return -ENOMEM;
+> > +	}
+> > +
+> > +	memcpy(resources, pdev->resource, sizeof(struct resource) * pdev->num_resources);
+> > +	count = pdev->num_resources;
+> > +	list_for_each_entry(rentry, &resource_list, node) {
+> > +		/* Avoid inserting duplicate entries, in case this is called more than once */
+> 
+> Either shorten this one or make it a multiline comment to stay within 80
+> chars.
+> 
+> > +		for (i = 0; i < count; i++) {
+> 
+> Should this not be pdev->num_resources?
+> 
+
+count is first used to denote the number of entries to allocate in the
+new list, it's then reset to pdev->num_resources 3 lines above this and
+after this list_for_each_entry() it would be the total number of
+resources in the new list (which could be less than the allocated number
+of items).
+
+I can avoid reusing the variable, to clarify this - if I choose to keep
+the ACPI support through the series.
+
+> > +			if (resource_type(&resources[i]) == resource_type(rentry->res) &&
+> > +			    resources[i].start == rentry->res->start &&
+> > +			    resources[i].end == rentry->res->end)
+> > +				break;
+> > +		}
+> > +
+> > +		if (i == count)
+> 
+> Same here.
+> 
+> > +			resources[count++] = *rentry->res;
+> > +	}
+> >  
+> > -	return acpi_create_platform_device(adev, NULL);
+> > +	ret = platform_device_add_resources(pdev, resources, count);
+> > +	if (ret)
+> > +		dev_err(&pdev->dev, "failed to add resources\n");
+> > +
+> > +	acpi_dev_free_resource_list(&resource_list);
+> > +	kfree(resources);
+> > +
+> > +	return ret;
+> >  }
+> >  
+> >  static int dwc3_qcom_probe(struct platform_device *pdev)
+> > @@ -817,6 +853,12 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+> >  			dev_err(&pdev->dev, "no supporting ACPI device data\n");
+> >  			return -EINVAL;
+> >  		}
+> > +
+> > +		if (qcom->acpi_pdata->is_urs) {
+> > +			ret = dwc3_qcom_acpi_merge_urs_resources(pdev);
+> > +			if (ret < 0)
+> > +				goto clk_disable;
+> 
+> The clocks have not been enabled here, just return ret.
+> 
+
+Right.
+
+Thanks,
+Bjorn
+
+> > +		}
+> >  	}
+> >  
+> >  	qcom->resets = devm_reset_control_array_get_optional_exclusive(dev);
+> > @@ -857,18 +899,6 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+> >  			qcom->acpi_pdata->qscratch_base_offset;
+> >  		parent_res->end = parent_res->start +
+> >  			qcom->acpi_pdata->qscratch_base_size;
+> > -
+> > -		if (qcom->acpi_pdata->is_urs) {
+> > -			qcom->urs_usb = dwc3_qcom_create_urs_usb_platdev(dev);
+> > -			if (IS_ERR_OR_NULL(qcom->urs_usb)) {
+> > -				dev_err(dev, "failed to create URS USB platdev\n");
+> > -				if (!qcom->urs_usb)
+> > -					ret = -ENODEV;
+> > -				else
+> > -					ret = PTR_ERR(qcom->urs_usb);
+> > -				goto clk_disable;
+> > -			}
+> > -		}
+> >  	}
+> >  
+> >  	qcom->qscratch_base = devm_ioremap_resource(dev, parent_res);
+> 
+> Johan
 
