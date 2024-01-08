@@ -1,128 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-6665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6666-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A38A827377
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 16:35:14 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D604827483
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 16:53:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D3FA41F2256E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 15:35:13 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DDEDEB21AE9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 15:53:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5AE551020;
-	Mon,  8 Jan 2024 15:35:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A041251037;
+	Mon,  8 Jan 2024 15:53:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xw4uyfIo"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="odd55ff7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211DF51037;
-	Mon,  8 Jan 2024 15:35:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3376ead25e1so623632f8f.3;
-        Mon, 08 Jan 2024 07:35:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704728101; x=1705332901; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0dSkJ2ZiJqHanlAP+HAK0y6zusm5LzCHKOPBAF01RGI=;
-        b=Xw4uyfIoslfLqcwYTa5Fp5lyDdT6ZJ+ZvZO78hDXPQ5kjj8YNUt5mKPPG4iVdUO6Xe
-         dEjjLm5gr8mgFUCzsMgoa1WxgCbq63B90vFpPse1Ag+KvOrT8YIcDhBUbutTJDpKAk7L
-         NcL4pDRNZwm99wpRiGJyxLpHp4scVAk2s47HnHbx5pMr2yus9vtVXv5y35eZBQjkg3QD
-         PCXobg/OffJNTbRkIRyj+kcfBVTSPSfpnYe3ZBYHwS+F3WeZ5Q6PB/hU+d3N0zclLNI6
-         mobOT92LM2dmIez80EjOQ41xd3ZDgmzESYeb1mMrHNRHoruwdSXG92cC7Xs1Gk4uy/Pc
-         vBXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704728101; x=1705332901;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0dSkJ2ZiJqHanlAP+HAK0y6zusm5LzCHKOPBAF01RGI=;
-        b=pto6BW95nCWoaA3MXBQbD5krY0UrsSrPNFqAeCFi9k4jWHJffjaQdug8BGrM+REGqn
-         A1h8rcHGnQ4xmgHYG5mlWvTjm40kFfX9lVVQCwrjqi2TELiCWHq6xz3KSDSJAsS8d9m/
-         4dUmOAVvyj7iGA+7Z2HWKgfwksW0ZVzv7n0bxbFhkwNfAxNiZ+6sQIG/mI+48RUQieZ5
-         Tsjon/HNtZ+kGPiUAyMatQ1AEDmUFifOwL2JoRh9xsiG89EOXgKKi4kfs1o3kpoFX+3j
-         ArQ/zqbl5UG+P3goiLd+4Rlaf4da3W43uxL/xXRe7nTo/+ematrHVTe7L9UCpugI6Dlv
-         +v/w==
-X-Gm-Message-State: AOJu0YyFA8pLD4q8tPOgOmfrRnl1y7bx2DoBfFwOvH12uSkFskUhk/cK
-	LbMfYjQZHQCaaA4swuooRhNlwKFAt2iaAb6ps5w=
-X-Google-Smtp-Source: AGHT+IEDyiUE/fCZgQ2fiflpohBhP714EYsyUDi/vkkXfWWGgss80RDHy8tK389zVkT20aui+pSoTQyf4TXc3l08ehI=
-X-Received: by 2002:adf:f0d2:0:b0:337:4c69:d6b with SMTP id
- x18-20020adff0d2000000b003374c690d6bmr1755895wro.6.1704728101148; Mon, 08 Jan
- 2024 07:35:01 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB2E451C30;
+	Mon,  8 Jan 2024 15:53:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=oyblU9fS9RIJhRfq92DSb7yUSCuEu12wiegVylc2g30=; b=odd55ff7qVX3LGHrloljObiz1O
+	v2p/97U82lb9laxeFxsG3dQ6za8J5Q/HPzXk6Gsv9WaXA3PTPRXeDZOxJPz1XGlTfO82eaZIj14U9
+	JLnVdnniUiBE2p/5QOoIzO32zAzlMcDICGN9t1Ydbx0khVNbx8jgj+4tMgDgEfuprlmYZPAOeaK4W
+	iLe7w3jD18HHkjB6hHS2oh1PTJQraW4OS9BNS94QYqTJ5KsKOeV2fmNUmJhtRlPJErXhc4rbsJIM3
+	Q0llvh+RPy0yoDh3b545p3E4shhJdRF8rug1bfVCVE1BIpOOTiUa2Za278kUvLqAtVCZWm25p4cMC
+	gCS5fKlw==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:36992)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1rMrwC-0003BF-0e;
+	Mon, 08 Jan 2024 15:53:16 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1rMrwD-0003MQ-F2; Mon, 08 Jan 2024 15:53:17 +0000
+Date: Mon, 8 Jan 2024 15:53:17 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Sergey Ryazanov <ryazanov.s.a@gmail.com>,
+	Jie Luo <quic_luoj@quicinc.com>, agross@kernel.org,
+	andersson@kernel.org, konrad.dybcio@linaro.org, davem@davemloft.net,
+	edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org, hkallweit1@gmail.com, robert.marko@sartura.hr,
+	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_srichara@quicinc.com
+Subject: Re: [PATCH v4 0/5] support ipq5332 platform
+Message-ID: <ZZwabT7pmwDof8Cs@shell.armlinux.org.uk>
+References: <20231225084424.30986-1-quic_luoj@quicinc.com>
+ <a6a50fb6-871f-424c-a146-12b2628b8b64@gmail.com>
+ <cfb04c82-3cc3-49f6-9a8a-1f6d1a22df40@quicinc.com>
+ <dd05a599-247a-4516-8ad3-7550ceea99f7@gmail.com>
+ <ac1977f5-cd6a-4f16-b0a0-f4322c34c5f5@quicinc.com>
+ <bdeca791-f2e5-4256-b386-a75c03f93686@gmail.com>
+ <895eadd7-1631-4b6b-8db4-d371f2e52611@lunn.ch>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <1700864395-1479-4-git-send-email-quic_mojha@quicinc.com>
- <20231225135542.1789-1-ruipengqi7@gmail.com> <520e377d-e990-c185-4a20-07806873e506@quicinc.com>
-In-Reply-To: <520e377d-e990-c185-4a20-07806873e506@quicinc.com>
-From: Ruipeng Qi <ruipengqi7@gmail.com>
-Date: Mon, 8 Jan 2024 23:34:50 +0800
-Message-ID: <CADHLONEn4oyRFrNWEbt2mxMczyc8FrDLMzaZ7fsijzm9Y8VTBA@mail.gmail.com>
-Subject: Re: RESEND: Re: [Patch v6 03/12] docs: qcom: Add qualcomm minidump guide
-To: Mukesh Ojha <quic_mojha@quicinc.com>
-Cc: agross@kernel.org, alim.akhtar@samsung.com, andersson@kernel.org, 
-	bmasney@redhat.com, conor+dt@kernel.org, corbet@lwn.net, gpiccoli@igalia.com, 
-	keescook@chromium.org, kernel@quicinc.com, kgene@kernel.org, 
-	konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org, 
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	linux-doc@vger.kernel.org, linux-hardening@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org, 
-	linux-remoteproc@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
-	mathieu.poirier@linaro.org, matthias.bgg@gmail.com, nm@ti.com, 
-	robh+dt@kernel.org, tony.luck@intel.com, vigneshr@ti.com, 
-	qiruipeng@lixiang.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <895eadd7-1631-4b6b-8db4-d371f2e52611@lunn.ch>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-On Wed, Jan 3, 2024 at 11:27=E2=80=AFPM Mukesh Ojha <quic_mojha@quicinc.com=
-> wrote:
->
->
-> One more thing, kernel part of minidump, we are calling it APSS Minidump
-> has limitation of no of entries so it will be difficult to dump
-> non-continuous regions after a certain number of registration ~200. Howev=
-er,
-> we do have a solution in downstream kernel for it like to create a big
-> CMA buffer and register this buffer with Minidump so that whatever gets
-> dumped in that buffer gets captured during crash and fill up this buffer
-> and create elf during panic. I think, similar thing you are also doing
-> with your OS-minidump.
->
-> I have just glanced into your implementation of OS-minidump, it
-> more of relying on basic concept of RAM content preserved
-> across boot and later reading it through procfs but this basic
-> stuff is common to pstore(ram) as well and pstore has file system
-> support why don't you make your driver as one of pstore record and that
-> way Qualcomm minidump also gets benefited where entire OS-minidump
-> record gets registered with Qualcomm minidump and we get this on panic
-> and you get this via pstorefs.
->
-Thanks Mukesh=EF=BC=81It is a good suggestion to move OS-minidump forward!
-By the way, I have some questions here for which I need your assistance.
+On Sat, Jan 06, 2024 at 04:45:08PM +0100, Andrew Lunn wrote:
+> > I just realized that the UNIPHY block is a MII (probably SGMII) controller.
+> > Isn't it? And I expect that it responsible more then just for clock
+> > enabling. It should also activate and perform a basic configuration of MII
+> > for actual data transmission. If so, then it should placed somewhere under
+> > drivers/net/phy or drivers/net/pcs.
+> 
+> Before we decide that, we need a description of what the UNIPHY
+> actually does, what registers it has, etc. Sometimes blocks like this
+> get split into a generic PHY, aka drivers/phy/ and a PCS driver. This
+> would be true if the UNIPHY is also used for USB SERDES, SATA SERDES
+> etc. The SERDES parts go into a generic PHY driver, and the SGMII on
+> to of the SERDES is placed is a PCS driver.
+> 
+> The problem i have so far is that there is no usable description of
+> any of this hardware, and the developers trying to produce drivers for
+> this hardware don't actually seem to understand the Linux architecture
+> for things like this.
 
-Firstly,I can reimplement OS-minidump as one of the pstore records to
-dump data. The resulting dump file would contain thousands of
-non-contiguous memory regions, each with only the virtual address and
-size recorded. As far as I know, Qualcomm's minidump can handle
-several memory regions, each with a physical address and size.
-This seems to be a difference, and I'm curious as to how you deal with
-data dumped by OS-minidump. I would really appreciate it if you could
-provide more details on your approach.
++1. I think it's now more convoluted than ever, and someone needs to
+take a step back, look at the hardware, look at the kernel model, and
+work out how to implement this. It needs to be explained in a clear
+and concise way in _one_ go, not spread over multiple emails. Probably
+with ASCII art diagrams showing the structure.
 
-Secondly, what tools do you use to analyze the dump data, and does it
-support crash tool?
+If that isn't possible, then someone needs to provide a detailed
+description of the hardware so that the subsystem maintainers get a
+proper view of what this hardware is so they can advise. This is the
+least preferable option due to the maintainer time it takes.
 
-Lastly, is Qualcomm minidump compatible with non-Qualcomm SoCs,
-and if so, how can one use it?
+If neither of these two things happen, then I'm afraid all bets are
+off for getting this into the kernel.
 
-Best Regards
-Ruipeng Qi
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
