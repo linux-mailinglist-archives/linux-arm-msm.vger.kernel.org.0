@@ -1,122 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-6601-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6602-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08581826CDA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 12:32:25 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 02EE3826D29
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 12:48:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A92082810B3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 11:32:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A816E1F226E0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 11:48:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 605CE14AB4;
-	Mon,  8 Jan 2024 11:32:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E135721A15;
+	Mon,  8 Jan 2024 11:48:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TlAG+kqG"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XwK15PFa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C1214A93
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jan 2024 11:32:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-336dcebcdb9so1916206f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 03:32:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704713533; x=1705318333; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uimCBHCQHsez7psI7ZTry0K7+PAJVXBNStv3yV/6sIw=;
-        b=TlAG+kqGMKxASiEedLCpKJ02aM2sXwQp3F2ErYpQnkOf0PW42n640W5d2SkbF0pZK9
-         08soJip2AvGy2rUFADyffVWfGbdY/j9cEbjktRJ4N2H2amm2jaiwC58jJc0jk4tBkwew
-         C47ms8jhVjLcwvlaEAz0oLb90PRHCj4ldXse4rCfVhTqyrs85UDskyIShZ2wBSaKiiZT
-         jjO8j8pzujxznpthYT4ZPorOiaA1lwJeZwk440l3NhbfgAFF0JgmuO1+vX0pjjUctyIr
-         BZLfsb1V6+ymbpz/AdgV0xnEQSqY00asX3h3eV1VWzVi5OjMCKYOp0XsdK78PlMZh3iM
-         7opQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704713533; x=1705318333;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uimCBHCQHsez7psI7ZTry0K7+PAJVXBNStv3yV/6sIw=;
-        b=lt4o3wjOmXQF70nAvZ1vWT4fv8UVQ3QIXQmW1Qg3ybFfNNiE0r+I474Ua/hojfQinv
-         PVIj0fVn58ErxW6j1l48pT26ydoml1UnvkOq8y+JmLEW+Izl4K1ud9DLeK6TGvn6erhN
-         XBNyhAa3cscf1KJTVdrzBaUBffJyUM7nHPZcLxFDuqn1xYI43IRcgV7W8RVMcbj6r7Cc
-         dM7abTpoi6E2D8VJ/8pfBfn3e71d3Fp1t4K89IACHSyeZknCPT8eh835PUxj83CsWuat
-         ieGjZIWIk8idT3dt4HLrELI03OrEFaZuHqqADWVyTCNtuJdWI/rKH10khob8jRlmgXN+
-         58uw==
-X-Gm-Message-State: AOJu0Yxy9qunjW6U9HjH9elbYgcUxi70GdY/2r4u1bFfhJIq1oDpq9BJ
-	voRvi4SR9PT/+NKDuYnGF8VnC1qwF4/VVA==
-X-Google-Smtp-Source: AGHT+IHUA9bAvQQCRf/GXd+0/1CSx6SkPaAgPnUyOv4ZPWFSjLIIANgegL8HSa/VK7ux5/+yF7ifcg==
-X-Received: by 2002:a05:6000:4ec:b0:336:4b84:1e79 with SMTP id cr12-20020a05600004ec00b003364b841e79mr1063757wrb.194.1704713533299;
-        Mon, 08 Jan 2024 03:32:13 -0800 (PST)
-Received: from [192.168.100.86] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id u3-20020a5d4343000000b003376d4248a9sm1349637wrr.71.2024.01.08.03.32.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Jan 2024 03:32:12 -0800 (PST)
-Message-ID: <2ba3cef1-cdd3-4f38-b378-b91474c0ff5f@linaro.org>
-Date: Mon, 8 Jan 2024 11:32:11 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A35F219E2;
+	Mon,  8 Jan 2024 11:48:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 408AaSjt001674;
+	Mon, 8 Jan 2024 11:48:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version:content-type; s=
+	qcppdkim1; bh=MeiW+hkPgx74Q6DWyTwZl/EShtcH742eJKFOhUlm+AY=; b=Xw
+	K15PFateT3kgmd2UhzJifzBWXkGpVFK8bzLLBJD7Kz2Elh9BwNn8nuvoclGo7+UM
+	v5OVthdTPIIw8Za5RdeEr12qWC0FEN3MH7WLNYt5XaCHzP3xXYjizQXbAziAI6S7
+	hLlk4NZIXC9RBMqQIM9o8mphW0tHdeQ4hJQKuz+alpvF//99/WWyv7C/ImLwfaLU
+	mBlHeKQ0llJDt6Xh8rcMn29qKwyA5yrNEUkwrX9DilXtnIAPPdMS36TfffR+DAsY
+	+vH1Q8Dc7H4s9kKaNFY+w0pIopfRf5x+Y3HxQrLymLZQWDomwI5Lx53HWIrUrphM
+	c1Rp5B0Qhs+0EdFcGOlA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vg8mx8yth-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 08 Jan 2024 11:48:44 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 408Bmhi6006798
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 8 Jan 2024 11:48:43 GMT
+Received: from hu-ekangupt-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Mon, 8 Jan 2024 03:48:41 -0800
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+To: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
+CC: <gregkh@linuxfoundation.org>, <linux-kernel@vger.kernel.org>,
+        stable
+	<stable@kernel.org>
+Subject: [PATCH v1] misc: fastrpc: Mark all sessions as invalid in cb_remove
+Date: Mon, 8 Jan 2024 17:18:33 +0530
+Message-ID: <20240108114833.20480-1-quic_ekangupt@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: venus: flush all buffers in output plane streamoff
-Content-Language: en-US
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <1704695615-1036-1-git-send-email-quic_dikshita@quicinc.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <1704695615-1036-1-git-send-email-quic_dikshita@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ozVec1aNJKFPgAmPCD-jliLZ9qEeFKjg
+X-Proofpoint-ORIG-GUID: ozVec1aNJKFPgAmPCD-jliLZ9qEeFKjg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ malwarescore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
+ mlxlogscore=851 adultscore=0 impostorscore=0 mlxscore=0 spamscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401080101
 
-On 08/01/2024 06:33, Dikshita Agarwal wrote:
-> For scenarios, when source change is followed by VIDIOC_STREAMOFF
-> on output plane, driver should discard any queued OUTPUT
-> buffers, which are not decoded or dequeued.
-> Flush with HFI_FLUSH_INPUT does not have any actual impact.
-> So, fix it, by invoking HFI_FLUSH_ALL, which will flush all
-> queued buffers.
-> 
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> ---
->   drivers/media/platform/qcom/venus/vdec.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-> index 29130a9..0d2ab95 100644
-> --- a/drivers/media/platform/qcom/venus/vdec.c
-> +++ b/drivers/media/platform/qcom/venus/vdec.c
-> @@ -1255,7 +1255,7 @@ static int vdec_stop_output(struct venus_inst *inst)
->   		break;
->   	case VENUS_DEC_STATE_INIT:
->   	case VENUS_DEC_STATE_CAPTURE_SETUP:
-> -		ret = hfi_session_flush(inst, HFI_FLUSH_INPUT, true);
-> +		ret = hfi_session_flush(inst, HFI_FLUSH_ALL, true);
->   		break;
->   	default:
->   		break;
+In remoteproc shutdown sequence, rpmsg_remove will get called which
+would depopulate all the child nodes that have been created during
+rpmsg_probe. This would result in cb_remove call for all the context
+banks for the remoteproc. In cb_remove function, session 0 is
+getting skipped which is not correct as session 0 will never become
+available again. Add changes to mark session 0 also as invalid.
 
-Missing
-
-Fixes: 85872f861d4c ("media: venus: Mark last capture buffer")
-
-Once fixed
-
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-
+Fixes: f6f9279f2bf0 ("misc: fastrpc: Add Qualcomm fastrpc basic driver model")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
 ---
-bod
+ drivers/misc/fastrpc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index 1c6c62a7f7f5..03319a1fa97f 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -2191,7 +2191,7 @@ static int fastrpc_cb_remove(struct platform_device *pdev)
+ 	int i;
+ 
+ 	spin_lock_irqsave(&cctx->lock, flags);
+-	for (i = 1; i < FASTRPC_MAX_SESSIONS; i++) {
++	for (i = 0; i < FASTRPC_MAX_SESSIONS; i++) {
+ 		if (cctx->session[i].sid == sess->sid) {
+ 			cctx->session[i].valid = false;
+ 			cctx->sesscount--;
+-- 
+2.17.1
+
 
