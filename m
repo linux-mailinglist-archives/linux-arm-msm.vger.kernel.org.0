@@ -1,117 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-6689-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6690-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3CA05827ABE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 23:43:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6176F827AC0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 23:46:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DC8BB2846A4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 22:43:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 110E0284E34
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 22:46:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EC5656467;
-	Mon,  8 Jan 2024 22:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B21C2EB14;
+	Mon,  8 Jan 2024 22:45:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Zulj4hRQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PNWqQl/F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8171556444
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jan 2024 22:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D295726AD1
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jan 2024 22:45:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-dbeff495c16so923183276.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 14:43:44 -0800 (PST)
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-dbe78430946so1525556276.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 14:45:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704753823; x=1705358623; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1704753957; x=1705358757; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=yWZ/93/0FZh/gn5cm1zBSBRnDMVQRiaGGWGBlyAPerw=;
-        b=Zulj4hRQBQqUsrVTWYLTCh3nADDUu0H68KFPSFSZR8A1qBm01R+qj4gE224SInKaSk
-         OzNHK4iqpf3qXnC5pBmxW+KKZuWhvApUz2bSEi2gxOUN3c9qu6UhSuKORTIlDYb3M749
-         oaVqoEHr5QUgy9UUGsL5bBM2sgfu7LKIfYvTC6v8HCmkTFjmF+z3jmEeSFgvrY07qdMb
-         xORPyJCYYgSGyA00VARmpKpyiLEFQi/kKsITpErGXBt1rZmrCmL1LneoilJZcDEAKx74
-         KvRGSMDpa+2LLnmz0i5CHuLCwN8DP71TQKBgIE9DGqCpQJKT+4f7I6SI9V3+kkSceclR
-         GgNA==
+        bh=61vUXi0tgd4fMed9J9uoxBpNCsey8YSSXrnUW+ulNLI=;
+        b=PNWqQl/FdRpVM9bj0dlCNnvlPBNmoraXuMJeoobUvFRXA9udGmmyK7IpHit3gUEhIo
+         QJ2RxcHbdnVpNxR/9baDf2RehFed898pqwI7jZ0Ui7yfD1tBZXwpgfH7cBP/aGRx3SZ3
+         e3KAf05cVU0e5ZO/old7O5pPhhAqXJExU1KFjnsxOJc5Ft+4pLYl2I697jUtxchkGaZY
+         ID6lKj8uGU0oGbbbreVf5EMtZgYglxpa6ozD+6NrEoovU6sCpJ3KFG1GcmRMmdncavG1
+         +oAhuUO7kfYwulBgb+awis4v2u9/kp1X5PIjwtkGrcjsTm37X3olbNtUDl+yxuaQpkti
+         2wOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704753823; x=1705358623;
+        d=1e100.net; s=20230601; t=1704753957; x=1705358757;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=yWZ/93/0FZh/gn5cm1zBSBRnDMVQRiaGGWGBlyAPerw=;
-        b=MepG388wgF27EV2O7aPoh4YTdmFxdDOichPSQp4Yj8ZyaqcraxpVQt36B4VG+7VdZn
-         bXxKPir2blNwixKiYVtsBxZ07nKOJk8YnbawSkJGj2Bqwdjx4wghDMG0vnvTkm3RXyXr
-         I2TvdB/CTC0VmW38HJwdobjiSVZBB6VbHf4ZQVnczcAqHH7DD48Od2Zp9GVpp/A5r+sn
-         +9P5hOpIWQiCKPDhteUAoo+GT8XVnCvO0PKNAc+k6IZyf/dyfAI74jd4CNH8h0l5ePQJ
-         NRkYAu7b+mF5wdusfcYl6FuQ0q5+/XtRtbItm00IsBhof4ytI63zMPBzO1Ws34CUUPcG
-         DZZg==
-X-Gm-Message-State: AOJu0Yz1vpc5E9MzpqY8Zvj1CYFu9TK/jdKD+4v4Y3XH9E/8wzkvbWoN
-	cjz3RE3nFRqTFQLQw5xobyV13Bz0zr6X24rxArIq/51I4qfMKtnw2x1Ef+vxDmI=
-X-Google-Smtp-Source: AGHT+IFdl1xSh3s2jD5qgED4ACRR92qOyXXHTlK0brp8aUmpvjPvWC95g+KDfZXY9Fwki8NSHqhSBb3lWuSIPGPXyf8=
-X-Received: by 2002:a05:6902:2510:b0:db5:4d4b:d8a7 with SMTP id
- dt16-20020a056902251000b00db54d4bd8a7mr2127690ybb.50.1704753823315; Mon, 08
- Jan 2024 14:43:43 -0800 (PST)
+        bh=61vUXi0tgd4fMed9J9uoxBpNCsey8YSSXrnUW+ulNLI=;
+        b=qRknA/xu7L3MtIZlbVvDzX/xwCcQFa1aeHQzPA0RetyBenmbWWdgF2R8Bc/DrCi3gS
+         RrdiZo1Ke+j3kz8GEe6jprB4/NEQ3xM53C39xHFkCDyUqtiNRG1HhGmiwg8HlG2fyOEG
+         XGAYMemkn0v0bvlHq5dNZY/agQRuz3EnDGzHE5QJaEY2amRpH8HVp2ba3WCKPrcozKPK
+         DFjcgMD2/m4u0I+qNE6r8fsEi0CeUrzLNcUD0wpUjALqHRHvk0ndbsprJvljtq8jKf98
+         ajG1GZ61L/735FXdsU1pFi8PjiASi/EWlBJ+Zh5YR/iDydLIoZr8+5Mw806ZIlKuxbaL
+         1v8A==
+X-Gm-Message-State: AOJu0Yy0KJ1VY3kqTujciaZHb56l0DkYOcMbABMyTCnUOVwhIkoYLLdD
+	7o8cmExCtJ62uv/adIt7j0+y2NT3hX9VCj99S21UcTEa8cGBTQ==
+X-Google-Smtp-Source: AGHT+IEbTUjqNatHT4gZuq1lWHFVUpKFk7infbpl05RXJCta6U4kfHgnNQE1QCFhn2fuxApi7ertKDi3IRZ9ZKYgkJE=
+X-Received: by 2002:a25:ab47:0:b0:dbd:497a:f546 with SMTP id
+ u65-20020a25ab47000000b00dbd497af546mr2316231ybi.0.1704753956710; Mon, 08 Jan
+ 2024 14:45:56 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231225130853.3659424-1-dmitry.baryshkov@linaro.org>
- <20231225130853.3659424-5-dmitry.baryshkov@linaro.org> <2a536654-b5ec-3599-6f0a-2e369b080c70@quicinc.com>
-In-Reply-To: <2a536654-b5ec-3599-6f0a-2e369b080c70@quicinc.com>
+References: <20240108-sm8350-qce-v1-1-b7d586ff38af@fairphone.com>
+ <a5923bf7-0a05-43bd-b282-b45e5653ac4d@linaro.org> <CY9E4ZCHOMWU.C18NR0H7V1QX@fairphone.com>
+In-Reply-To: <CY9E4ZCHOMWU.C18NR0H7V1QX@fairphone.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 9 Jan 2024 00:43:32 +0200
-Message-ID: <CAA8EJpohQoApcvJuxt5_Xxjx88xSCxPyCkeAbXHsG7s1_6o3wA@mail.gmail.com>
-Subject: Re: [PATCH v3 4/5] drm/msm/dpu: move writeback's atomic_check to dpu_writeback.c
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Stephen Boyd <swboyd@chromium.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Date: Tue, 9 Jan 2024 00:45:45 +0200
+Message-ID: <CAA8EJppCAMXds5F4bgeb9VJSwph-+4ekVsJ=rGib5=RR5m0DPg@mail.gmail.com>
+Subject: Re: [PATCH RFT] arm64: dts: qcom: sm8350: Reenable crypto & cryptobam
+To: Luca Weiss <luca.weiss@fairphone.com>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross <agross@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bhupesh Sharma <bhupesh.linux@gmail.com>, David Heidelberg <david@ixit.cz>, 
+	Stephan Gerhold <stephan@gerhold.net>, ~postmarketos/upstreaming@lists.sr.ht, 
+	phone-devel@vger.kernel.org, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 8 Jan 2024 at 23:39, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+On Mon, 8 Jan 2024 at 16:23, Luca Weiss <luca.weiss@fairphone.com> wrote:
 >
->
->
-> On 12/25/2023 5:08 AM, Dmitry Baryshkov wrote:
-> > dpu_encoder_phys_wb is the only user of encoder's atomic_check callback.
-> > Move corresponding checks to drm_writeback_connector's implementation
-> > and drop the dpu_encoder_phys_wb_atomic_check() function.
+> On Mon Jan 8, 2024 at 3:18 PM CET, Konrad Dybcio wrote:
+> > On 8.01.2024 14:49, Luca Weiss wrote:
+> > > When num-channels and qcom,num-ees is not provided in devicetree, the
+> > > driver will try to read these values from the registers during probe but
+> > > this fails if the interconnect is not on and then crashes the system.
+> > >
+> > > So we can provide these properties in devicetree (queried after patching
+> > > BAM driver to enable the necessary interconnect) so we can probe
+> > > cryptobam without reading registers and then also use the QCE as
+> > > expected.
 > >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >   .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   | 54 ------------------
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  9 ++-
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c | 57 ++++++++++++++++++-
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.h |  3 +-
-> >   4 files changed, 64 insertions(+), 59 deletions(-)
-> >
+> > This really feels a bit backwards.. Enable the resource to query the
+> > hardware for numbers, so that said resource can be enabled, but
+> > slightly later :/
 >
-> I am fine with this change with respect to how the code is today.
->
-> Hence,
->
-> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->
-> But if we start noticing a pattern like below in dpu_encoder.c's
-> atomic_check,
->
-> if (INTF_WB)
-> .....
-> else if (INTF_DP || INTF_DSI)
-> .....
->
-> then, it will demand bringing back a phys specific callback.
+> If you think adding interconnect support to driver and dtsi is better,
+> let me know.
 
-The problem is that INTF_DP || INTF_DSI does not have the
-phys-specific implementation. So while I agree about the INTF_WB part,
-INTF_DP || INTF_DSI either should go as is, or it should be refactored
-into output-specific handlers.
+I'd say, adding the proper interconnect is a better option. Otherwise
+we just depend on the QCE itself to set up the vote for us.
+
+>
+> Stephan (+CC) mentioned it should be okay like this *shrug*
+>
+> For the record, this is the same way I got the values for sc7280[0] and
+> sm6350[1].
+>
+> [0] https://lore.kernel.org/linux-arm-msm/20231229-sc7280-cryptobam-fixup-v1-1-bd8f68589b80@fairphone.com/
+> [1] https://lore.kernel.org/linux-arm-msm/20240105-sm6350-qce-v1-0-416e5c7319ac@fairphone.com/
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> index b46236235b7f..cd4dd9852d9e 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> @@ -1756,8 +1756,8 @@ cryptobam: dma-controller@1dc4000 {
+>                         qcom,controlled-remotely;
+>                         iommus = <&apps_smmu 0x594 0x0011>,
+>                                  <&apps_smmu 0x596 0x0011>;
+> -                       /* FIXME: Probing BAM DMA causes some abort and system hang */
+> -                       status = "fail";
+> +                       interconnects = <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
+> +                       interconnect-names = "memory";
+>                 };
+>
+>                 crypto: crypto@1dfa000 {
+> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> index 5e7d332731e0..9de28f615639 100644
+> --- a/drivers/dma/qcom/bam_dma.c
+> +++ b/drivers/dma/qcom/bam_dma.c
+> @@ -40,6 +40,7 @@
+>  #include <linux/circ_buf.h>
+>  #include <linux/clk.h>
+>  #include <linux/dmaengine.h>
+> +#include <linux/interconnect.h>
+>  #include <linux/pm_runtime.h>
+>
+>  #include "../dmaengine.h"
+> @@ -394,6 +395,7 @@ struct bam_device {
+>         const struct reg_offset_data *layout;
+>
+>         struct clk *bamclk;
+> +       struct icc_path *mem_path;
+>         int irq;
+>
+>         /* dma start transaction tasklet */
+> @@ -1206,6 +1208,7 @@ static int bam_init(struct bam_device *bdev)
+>                 bdev->num_channels = val & BAM_NUM_PIPES_MASK;
+>         }
+>
+> +       printk(KERN_ERR "%s:%d DBG num_ees=%u num_channels=%u\n", __func__, __LINE__, bdev->num_ees, bdev->num_channels);
+>         /* Reset BAM now if fully controlled locally */
+>         if (!bdev->controlled_remotely && !bdev->powered_remotely)
+>                 bam_reset(bdev);
+> @@ -1298,6 +1301,14 @@ static int bam_dma_probe(struct platform_device *pdev)
+>                 return ret;
+>         }
+>
+> +       bdev->mem_path = devm_of_icc_get(bdev->dev, "memory");
+> +       if (IS_ERR(bdev->mem_path))
+> +               return PTR_ERR(bdev->mem_path);
+> +
+> +       ret = icc_set_bw(bdev->mem_path, 1, 1);
+
+Probably this needs some more sensible value.
+
+> +       if (ret)
+> +               return ret;
+> +
+>         ret = bam_init(bdev);
+>         if (ret)
+>                 goto err_disable_clk;
+>
+
 
 -- 
 With best wishes
