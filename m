@@ -1,145 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-6596-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5A4F826B4F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 11:05:34 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CBD73826B92
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 11:29:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 533F52827F2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 10:05:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6A2C01F22144
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 10:29:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3667134C3;
-	Mon,  8 Jan 2024 10:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E44CE13AE2;
+	Mon,  8 Jan 2024 10:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BXnEhf8H"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="scJNIGOu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F71134C8;
-	Mon,  8 Jan 2024 10:05:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4088OuKU003159;
-	Mon, 8 Jan 2024 10:05:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version:content-type; s=
-	qcppdkim1; bh=eVg6xNPnAthWRp6dVUFjU+PI9OyT+fFbgWrhWYJmdiI=; b=BX
-	nEhf8HVQY6vg5hCKldgGPzEwrw8z8UrQXR7AeOuS7zwRWgEjDDqsKkT7QZwZE7c6
-	vkf0wNWDN8tz+iPqTKBWqgT4FP7KUhQumvzcz0eHhnGxoIxsfxTelLwA2qnmfAIt
-	zcS021ifFiy8xYI9XWVoK6sPaiszJFpYA5CgSDkdk+uuANdn2BkSNC5JPSVZamZd
-	T/gnX5lAhktln0chS4duYpKMnItKPA4zGGDAKxjF8T+3VoFNDak9XV4GMLG0g0JV
-	S/kZZz4XzRPH9WYLOZc6DH7YquNUqzyxJF87p3Dmz4xLdwkvhgpuIlwOXHdmnzuv
-	hMJi4TzTsy7nwTJ+1RNg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vfxrk1d19-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 08 Jan 2024 10:05:24 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 408A5NgR003022
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 8 Jan 2024 10:05:23 GMT
-Received: from hu-ekangupt-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Mon, 8 Jan 2024 02:05:21 -0800
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
-To: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
-CC: <gregkh@linuxfoundation.org>, <linux-kernel@vger.kernel.org>,
-        stable
-	<stable@kernel.org>
-Subject: [PATCH v1] misc: fastrpc: Pass proper arguments to scm call
-Date: Mon, 8 Jan 2024 15:35:13 +0530
-Message-ID: <20240108100513.19993-1-quic_ekangupt@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4073513AD8
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jan 2024 10:29:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-557c46872d3so318389a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 02:29:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704709772; x=1705314572; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=J0INKQiw2jrwahwrMOC10qIoex00EN2Y17N016vNomw=;
+        b=scJNIGOuUufXBGVqX57JZXkgZoD8aSN7t1bkJKf5U5CWj9jUq/JCTq5YRIgriRI0ij
+         RrCxDEW02sUQtQt9gHML+J/ZaPQVqoc8pJ3gNojamPbHbPfw6M1y1uWv9VOSwMzZvAnJ
+         +DKtGhzcVOmHRhNKwExMb1zMDcusJr+WEFI4e/CFoIhAHCkwuSgRbAMVNiq2ApR4ZrNI
+         XRl1o8/JHcQb8IVOTQBx20UT8I5W4yw7YtrwcXsnHhm0iNvAKNiEoXVypOb4i3zzOk5B
+         fcyzyq+q5ht/Yr4nwNUaXKGO9f2y/a72buYBbwLE2Y1fPeLEjdtrh9PfZjN6T82MUoFQ
+         wlsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704709772; x=1705314572;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=J0INKQiw2jrwahwrMOC10qIoex00EN2Y17N016vNomw=;
+        b=k4qB6hxT8oLB6QZgorGN9KDA/oilkKLvJQ7efsyg4bNAZj212u/+jBErhSj62WyA35
+         XStCf9RYOVKUCR/SsDXKdlJ271AN9TSy6R4huYhzjCd1t3XyafhKe5Ol0NykSljppA2h
+         OGtjOzF6vdyXltH+s7BUCECnAME9v1Fcx6P4hR/3oW0Yfgz1b5Z2LK0mQKCZYmiOd0Zq
+         ehkzLFnCtBAKgANVc0o5GclvC+FyW/PmRqD2ekGZQ8j9a4Y50hUzHCqB288kFsiZPYwd
+         9nAdYO9J0qGjW6NbT2y478tJ8/PK+ibwP5kA/Aw5/pYUNOyq0EpQKlbANtMe1753aenj
+         70lg==
+X-Gm-Message-State: AOJu0YyBDIU/pBcyqrdGyjTIM09iJ6F3hZmGHyGGVqKiWxT0T1OmPJYe
+	g8L97V/f+8h1dj2dZ6wIv0g8RGcBjveE0Q==
+X-Google-Smtp-Source: AGHT+IGZ5RCgxVpuPDDy9Yc9IgdivJoTADBX0bICoB3ZlcPnD70Nyp9tnjnsp7CWxfv8Dn3p9svcuA==
+X-Received: by 2002:a50:8707:0:b0:557:1b48:b931 with SMTP id i7-20020a508707000000b005571b48b931mr1961869edb.32.1704709772514;
+        Mon, 08 Jan 2024 02:29:32 -0800 (PST)
+Received: from linaro.org ([79.115.23.25])
+        by smtp.gmail.com with ESMTPSA id b5-20020a50ccc5000000b0055504002a5fsm4273174edj.72.2024.01.08.02.29.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 Jan 2024 02:29:32 -0800 (PST)
+Date: Mon, 8 Jan 2024 12:29:30 +0200
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Elliot Berman <quic_eberman@quicinc.com>,
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] phy: qualcomm: eusb2-repeater: Rework init to
+ drop redundant zero-out loop
+Message-ID: <ZZvOih+gTTnxPkUr@linaro.org>
+References: <20240105-phy-qcom-eusb2-repeater-fixes-v2-0-775d98e7df05@linaro.org>
+ <20240105-phy-qcom-eusb2-repeater-fixes-v2-2-775d98e7df05@linaro.org>
+ <158df3b2-a7fa-449d-9cc8-1e4cdf6ef49b@linaro.org>
+ <CAA8EJpq88bhFFY2RcSEqaecoTw4a_ps6Osx5rJs3s0Mi7toXyQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Aj6xEq-F1cEWqhAy-o7OlZ-c77Z_RFjK
-X-Proofpoint-ORIG-GUID: Aj6xEq-F1cEWqhAy-o7OlZ-c77Z_RFjK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- lowpriorityscore=0 malwarescore=0 mlxlogscore=942 priorityscore=1501
- impostorscore=0 suspectscore=0 mlxscore=0 clxscore=1011 adultscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401080084
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpq88bhFFY2RcSEqaecoTw4a_ps6Osx5rJs3s0Mi7toXyQ@mail.gmail.com>
 
-For CMA memory allocation, ownership is assigned to DSP to make it
-accessible by the PD running on the DSP. With current implementation
-HLOS VM is stored in the channel structure during rpmsg_probe and
-this VM is passed to qcom_scm call as the source VM.
+On 24-01-05 14:22:50, Dmitry Baryshkov wrote:
+> On Fri, 5 Jan 2024 at 13:44, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >
+> > On 5.01.2024 11:16, Abel Vesa wrote:
+> > > The device match config init table already has zero values, so rework
+> > > the container struct to hold a copy of the init table that can be
+> > > override be the DT specified values. By doing this, only the number of
+> > > vregs remain in the device match config that will be later needed, so
+> > > instead of holding the cfg after probe, store the number of vregs in the
+> > > container struct.
+> > >
+> > > Fixes: 99a517a582fc ("phy: qualcomm: phy-qcom-eusb2-repeater: Zero out untouched tuning regs")
+> > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > > ---
+> >
+> > This looks good as-is, though I think my proposal of storing the
+> > peripheral base reg instead is still better, as it'd require less
+> > memory (no kmemdup as the regs wouldn't be modified).
+> 
+> I'd second this. We usually handle such cases via the base + offset
+> rather than patching the data. If regfields can not handle this, then
+> the regfield should be fixed.
+> 
 
-The qcom_scm call will overwrite the passed source VM with the next
-VM which would cause a problem in case the scm call is again needed.
-Adding a local copy of source VM whereever scm call is made to avoid
-this problem.
+Sure. Will do that instead.
 
-Fixes: 0871561055e6 ("misc: fastrpc: Add support for audiopd")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
----
- drivers/misc/fastrpc.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 1c6c62a7f7f5..c13efa7727e0 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -263,7 +263,6 @@ struct fastrpc_channel_ctx {
- 	int domain_id;
- 	int sesscount;
- 	int vmcount;
--	u64 perms;
- 	struct qcom_scm_vmperm vmperms[FASTRPC_MAX_VMIDS];
- 	struct rpmsg_device *rpdev;
- 	struct fastrpc_session_ctx session[FASTRPC_MAX_SESSIONS];
-@@ -1279,9 +1278,11 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
- 
- 		/* Map if we have any heap VMIDs associated with this ADSP Static Process. */
- 		if (fl->cctx->vmcount) {
-+			u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
-+
- 			err = qcom_scm_assign_mem(fl->cctx->remote_heap->phys,
- 							(u64)fl->cctx->remote_heap->size,
--							&fl->cctx->perms,
-+							&src_perms,
- 							fl->cctx->vmperms, fl->cctx->vmcount);
- 			if (err) {
- 				dev_err(fl->sctx->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d",
-@@ -1915,8 +1916,10 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
- 
- 	/* Add memory to static PD pool, protection thru hypervisor */
- 	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR && fl->cctx->vmcount) {
-+		u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
-+
- 		err = qcom_scm_assign_mem(buf->phys, (u64)buf->size,
--			&fl->cctx->perms, fl->cctx->vmperms, fl->cctx->vmcount);
-+			&src_perms, fl->cctx->vmperms, fl->cctx->vmcount);
- 		if (err) {
- 			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
- 					buf->phys, buf->size, err);
-@@ -2290,7 +2293,6 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- 
- 	if (vmcount) {
- 		data->vmcount = vmcount;
--		data->perms = BIT(QCOM_SCM_VMID_HLOS);
- 		for (i = 0; i < data->vmcount; i++) {
- 			data->vmperms[i].vmid = vmids[i];
- 			data->vmperms[i].perm = QCOM_SCM_PERM_RWX;
--- 
-2.17.1
-
+> -- 
+> With best wishes
+> Dmitry
 
