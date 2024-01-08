@@ -1,127 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-6676-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6677-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03DF4827750
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 19:23:51 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F8B2827820
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 20:08:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2B0EC1C21098
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 18:23:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0FB3D1F23733
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 19:08:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5805B54BED;
-	Mon,  8 Jan 2024 18:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38F3154F8B;
+	Mon,  8 Jan 2024 19:08:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pqpNI8Rj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ihxtPQbl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB6454F9C;
-	Mon,  8 Jan 2024 18:23:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 408IHepa024137;
-	Mon, 8 Jan 2024 18:23:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=uHY3fQLsNHWDaKV+dXru0
-	SBvr/s3dbPl29fFLxwGtjg=; b=pqpNI8Rjihhn5C/FPeVII7fBTbYbpwp9BkbEf
-	B1v9CFO1Xl5uLWoR9Ulo7ijKPYf75Xa8OOBGMFdROFV5J3GBVG82JkJdmIpJi3rL
-	KPjlELd95b5sJBojSZp0ClrQYEfdl8U+tfeXSwEsKo4/Wd4SYowsEkuehmILglCU
-	Wo5I6G9TV5GGIwTuSD8aK74Q4UmeW4d1NGuX0eAKEdfbmWGq6UrqFoyCenTQq9zE
-	+ejwKDOK9Ld6MAyNsWSQ+9WuoJyz1bw2aEz0ji74Qku0Dz6PoFlAlxae5/5gk8bH
-	jRgGeUi3tfMcwX3uCwCHhZx1Ug86Bc6fkzyLvFsBJWqTMf45g==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vgfwjry3u-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 08 Jan 2024 18:23:11 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 408INApm012620
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 8 Jan 2024 18:23:10 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Mon, 8 Jan 2024 10:23:09 -0800
-Date: Mon, 8 Jan 2024 10:23:08 -0800
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Catalin Marinas
-	<catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        "Dmitry
- Baryshkov" <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v2 3/8] clk: qcom: gpucc-sc8280xp: Add external supply
- for GX gdsc
-Message-ID: <20240108182308.GL1315173@hu-bjorande-lv.qualcomm.com>
-References: <20231220-sa8295p-gpu-v2-0-4763246b72c0@quicinc.com>
- <20231220-sa8295p-gpu-v2-3-4763246b72c0@quicinc.com>
- <0d20be70-7db2-4d8b-aecb-5256a42ba62e@linaro.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C2054F8D
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jan 2024 19:08:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-dbed4b03b48so1258906276.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 11:08:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704740882; x=1705345682; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=SM3aC6olapTfRcKgxOoQ7CTMu8MLMwnZq6KcPmvWqC0=;
+        b=ihxtPQblgyUl5mkpU2abXMU++S4ZvzmCIzJiOeEjsGkqvDL2VcESp9opbwgrdka/9c
+         b4GKTAC5wpLlLobu51JlaaREIK6YeOyHGGE5ugMrHOYpGv4tNxMSLjxTjrciQC0lpVXG
+         PAfYWFuMXh6YK4ZdD49b4ANrtj0ASOnlRRfOeVDOGf1EK2Qg+4VypFkXqmmrw8MmQiCG
+         G3JvEPbO9AXKl2fzTCj7qyJgdLYqOuWW8uT2cCahauv0Z4UAPtRvmneoi2x5G37Gm1cX
+         /TqjqfFNpOuITp6tXs046JAqMHcQNl4WhwmVDSbpjiovA+VegVQbqwf8lXQXqcd6BT3Y
+         D4sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704740882; x=1705345682;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SM3aC6olapTfRcKgxOoQ7CTMu8MLMwnZq6KcPmvWqC0=;
+        b=uVl5lwIY4ACRFMn2KH31I/xxXBgBWCp5JxP/sSfuz/iQgZ1hjl8p2HKAqPNqcWpyK/
+         R4pY0F/POKIeKPlwHSpWx8wxnoGO6FRM11hO77M3+ZQmcIKDWcJTXXoOJuWt8rKEzLqt
+         1PAjZqMhmjCHuzs6C3zTNlFRwmrvdfhsDhCSZmH+vBAudV/qafqBtvqGZA4VtA8ZEv3k
+         /yF9rra8/oZIHcRddPL7fBbjktuR9iHSgRT2+FcAqGV81lB8f0es08KaC1ky2cHSHNfC
+         KbT6vGzMmrkC1YOfpNpYcyKV4+zh9baZsRrxpGrU8C0HHiDPcotKK8GFBrsCTYNYnntv
+         EeOA==
+X-Gm-Message-State: AOJu0Yw5PdGAEESWwaDPllRiYd8Oti5cI77wOfZwcsT6jFKSkmJsPICG
+	mBNzQ1QW/InZ15E28uLynTZRneHVniodR054QzOqqj5sbx3ueg==
+X-Google-Smtp-Source: AGHT+IFUDrKtN6+cLggfKBa01OY/UJnyibyg/gt78qguBxgUpnHsr3JF10cBom9sAGfl7XW03Vr81pUVakoZkhwEwFk=
+X-Received: by 2002:a25:ce10:0:b0:dbd:d4ea:7b7 with SMTP id
+ x16-20020a25ce10000000b00dbdd4ea07b7mr1916063ybe.60.1704740882574; Mon, 08
+ Jan 2024 11:08:02 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <0d20be70-7db2-4d8b-aecb-5256a42ba62e@linaro.org>
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: AWHDRG9Pdm-ZMgbxBVL6ZrxrNndmMuFG
-X-Proofpoint-GUID: AWHDRG9Pdm-ZMgbxBVL6ZrxrNndmMuFG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
- impostorscore=0 lowpriorityscore=0 phishscore=0 mlxlogscore=778
- suspectscore=0 priorityscore=1501 mlxscore=0 malwarescore=0 adultscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401080154
+References: <20240106-fd-migrate-mdp5-v3-0-3d2750378063@linaro.org>
+ <20240106-fd-migrate-mdp5-v3-3-3d2750378063@linaro.org> <c8d6769b-eb28-337c-fa55-4dae86611da5@quicinc.com>
+ <CAA8EJpoF3uKobGzjHbLMKYvcQbdqYzur7Mn1cNDPyc+wiiZ+SQ@mail.gmail.com> <9807bb4a-98d9-8f4b-b24d-0134f42f6cd3@quicinc.com>
+In-Reply-To: <9807bb4a-98d9-8f4b-b24d-0134f42f6cd3@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 8 Jan 2024 21:07:51 +0200
+Message-ID: <CAA8EJpqmkzOaewrW8tqSV5wz+0zovZx-kpMdVWp_nW_g1KrRzA@mail.gmail.com>
+Subject: Re: [PATCH v3 3/4] drm/msm: add a kernel param to select between MDP5
+ and DPU drivers
+To: Carl Vanderlip <quic_carlv@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, Stephen Boyd <swboyd@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Dec 27, 2023 at 02:07:52AM +0100, Konrad Dybcio wrote:
-> On 22.12.2023 05:39, Bjorn Andersson wrote:
-> > On SA8295P and SA8540P the GFX rail is powered by a dedicated external
-> > regulator, instead of the rpmh-controlled "gfx.lvl".
-> > 
-> > Define the "vdd-gfx" as the supply regulator for the GDSC, to cause the
-> > gdsc logic to look for, and control, this external power supply.
-> > 
-> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> > ---
-> Worth noting the regulator framework will create a virtual supply
-> for the normal 8280
-> 
+On Mon, 8 Jan 2024 at 19:57, Carl Vanderlip <quic_carlv@quicinc.com> wrote:
+>
+>
+>
+> On 1/5/2024 4:38 PM, Dmitry Baryshkov wrote:
+> > On Sat, 6 Jan 2024 at 02:04, Carl Vanderlip <quic_carlv@quicinc.com> wrote:
+> >>
+> >>
+> >> On 1/5/2024 3:34 PM, Dmitry Baryshkov wrote:
+> >>> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> >>> index 50b65ffc24b1..ef57586fbeca 100644
+> >>> --- a/drivers/gpu/drm/msm/msm_drv.c
+> >>> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> >>> @@ -969,6 +969,37 @@ static int add_components_mdp(struct device *master_dev,
+> >>>        return 0;
+> >>>    }
+> >>>
+> >>> +#if !IS_REACHABLE(CONFIG_DRM_MSM_MDP5) || !IS_REACHABLE(CONFIG_DRM_MSM_DPU)
+> >>> +bool msm_disp_drv_should_bind(struct device *dev, bool mdp5_driver)
+> >>> +{
+> >>> +     /* If just a single driver is enabled, use it no matter what */
+> >>> +     return true;
+> >>> +}
+> >>
+> >> This will cause both MDP/DPU probes to return -ENODEV, rather than
+> >> select the enabled one.
+> >
+> > No. The code (e.g. for DPU) is:
+> >
+> >         if (!msm_disp_drv_should_bind(&pdev->dev, true))
+> >                  return -ENODEV;
+> >
+> > So the driver returns -ENODEV if msm_disp_drv_should_bind() returns
+> > false. Which is logical from the function name point of view.
+> >
+>
+> but msm_disp_drv_should_bind() is returning true in the #if !REACHABLE()
+> case?
+>
+> at minimum the comment is incorrect since returning true causes the
+> driver to NOT be used.
 
-You're right. No functional harm, but that's not very nice.
+No. Returning _false_ causes the driver to not be used.
 
-I don't think we have any benefit from having a dummy supply, if the DT
-author failed to provide a proper one, so it seems reasonable to switch
-gdsc to devm_regulator_get_optional().
-
-Regards,
-Bjorn
-
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> 
-> Konrad
+-- 
+With best wishes
+Dmitry
 
