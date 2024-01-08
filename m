@@ -1,210 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-6643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EC40827049
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 14:50:35 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0D0B827055
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 14:51:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 961971C216DB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 13:50:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5E63A1F22FA7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 13:51:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA30C46558;
-	Mon,  8 Jan 2024 13:48:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00B6245972;
+	Mon,  8 Jan 2024 13:50:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="chVFedUY"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="MdOVdgNC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C5845979
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jan 2024 13:48:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-40d5aefcc2fso21579305e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 05:48:57 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB994642A
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jan 2024 13:50:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a26ed1e05c7so192548466b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 05:50:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704721736; x=1705326536; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=q6tS/zmA8jTmUGQmD7ZGbI7KJfpIZIi+8GuPTUd/kRc=;
-        b=chVFedUYM36NKkGOYXAqT/Lo0iBTj1e+0nxYmADVdc4KsN5scXoT0CuAvi6rAnMiGO
-         HLCZE58JC3b1z466Y5LJVfzwHlLnyrzqHmj6XHxgSmbfGZk2oyaROYDB5P00e2UkVsRF
-         xdVh6hYmm09TILJy1DjghxcxUH5w1tiqr2ab9x92uXoSbqmX5r92texj6dk4JvjFBKGx
-         3Qw8E2vXOxvt7vPwjOXy4v3pgVJGlBWQzjZm+e5uul1p6roosO8FQ7mMhPCazTHoc62D
-         hNgjf8NXSooYAl4OEMOaqW+5hkfe8x1hzG5gh5Fi0BI/7egl7tUBsKc0DNPlXvWJaWXC
-         73og==
+        d=fairphone.com; s=fair; t=1704721814; x=1705326614; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=N7LXM3KgfbgyguER3OfUGbhzrMJWhuXRU6uPC0haymU=;
+        b=MdOVdgNCBMnZDVPiTA0fmGyibHCz6I7zC7igsHiAw8LZSYQuTCPduz6lWQ2Csx9G2G
+         LMciZ2wfRMwop/K8klJ4yZZMRrQRsJRHR49WCGI5ajcUROYx9pGKQOJsKCVRZuMapAqL
+         O80iZXdooDYJsga72TYmpSoUBTli1UVwCLtqDta6hxDYGDW6eh6bXXo27nBWrNcOwS1Q
+         sstxOj04eLxnYCqtZ2qzTrHlbG7MZ4eu89JklhCBHbVHL7S1HBMQZ4qevJ30BMI+jIX4
+         7bIb/ffNRXMeQKBkNNQGE/0VKwLVttCHdlINwQR8Wt8/0KSx5murK022GaT3InpBBs+/
+         0OMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704721736; x=1705326536;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=q6tS/zmA8jTmUGQmD7ZGbI7KJfpIZIi+8GuPTUd/kRc=;
-        b=Bp3uerZHo/ll6XrY4rCoSyeofXOH3zbJ55xEKMKoObuLfZcq37U+1ztqEOT6qLkzW8
-         EFAqW2d01bO6n7klhWqzfbQ0UAzJlOHDCsoyCNvTXNhe3Thazq+9V/tEM4S0yqdC0h6A
-         WOZLw1Esc1wS/UEpc90uppL54zPH3chOl2vTYSf6sR3Ybyyd1uB/lsBBqKIlGeHQ86cc
-         mcjHFno84DORGH0GJg9/QdKm+SMxHYf2BaZw3vT5sbKFt/nlxhgHyRWl+6IqoMnfDJly
-         fly+anm68Ca4KwUGjbxNh7Hy2y66UjHEW7E1RJv2G3zOgWwUVtdvOKHpKIhxE53OvqrZ
-         MWoQ==
-X-Gm-Message-State: AOJu0Yym8lbIUaIamGjPIgfW1JJoG3czrBPLes1u/bXhtekUpZC+j5Ee
-	+we+D/jBWQhm+iQ0/X1P/MO3T9/1UoLUfw==
-X-Google-Smtp-Source: AGHT+IExBXWbVBsi6lW0nbPs92Y11blHgXhSiv0yCc/BePGdHEv57ZAi/RZ/fcIrf0iFuASaoWVAHA==
-X-Received: by 2002:a05:600c:5403:b0:40e:4b6d:c9fa with SMTP id he3-20020a05600c540300b0040e4b6dc9famr30807wmb.147.1704721736518;
-        Mon, 08 Jan 2024 05:48:56 -0800 (PST)
-Received: from vingu-book.. ([2a01:e0a:f:6020:53aa:59bc:34ea:bb2c])
-        by smtp.gmail.com with ESMTPSA id n34-20020a05600c3ba200b0040d5b984668sm11165003wms.9.2024.01.08.05.48.52
+        d=1e100.net; s=20230601; t=1704721814; x=1705326614;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=N7LXM3KgfbgyguER3OfUGbhzrMJWhuXRU6uPC0haymU=;
+        b=TefCEHEJudJIWoZhD/gYmIqxvi0eN087LHlEwE6KikDlMzOfUBN6wdFL8nPl2UuCpu
+         AZ8LobIyBCtfPkaHddwjbqI45vJfHfhzIPrBIXgOiD7hpn4+f9HIx8abyRFX3zpxSeSz
+         KV+Wx7OokjlIOwRPyRHKa0gGDTwDQEiuzE1F6Koqob+vKVIGKmHC3MiSLkSjLcd6lw1d
+         BIPm3Xy+kCZg4KhSnVUpFJkqqGdiRs6N/wqnC/tzVXLl4FPR45UnnIjHj1MrMS4cX4xy
+         1JMA17JAPZiyRSRrmQ7Y2v/oEAbfT3Cl2KBvyipJbBmYpDZpPU5UOE2BSdp7i0lEFaeE
+         wucQ==
+X-Gm-Message-State: AOJu0YwZaR9PATdS3Y8xYtwCHLUSWIKe4Ws5PO4wp/2gLLVYIi1vScfh
+	FCaqix3JIDrhR0tlX5Og0PrcdgDe+F8RZHru9xWENHnuBkOydA==
+X-Google-Smtp-Source: AGHT+IGM5+CmWIg9M/4CszE6SvRMtGuh7gRrlse6pdfdbou4+pHKIRI/SPkLVIYVE8jFlP9FC8RDHw==
+X-Received: by 2002:a17:906:f587:b0:a28:aab8:c4e7 with SMTP id cm7-20020a170906f58700b00a28aab8c4e7mr1281438ejd.34.1704721813712;
+        Mon, 08 Jan 2024 05:50:13 -0800 (PST)
+Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id fx19-20020a170906b75300b00a2362c5e3dbsm3930173ejb.151.2024.01.08.05.50.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jan 2024 05:48:55 -0800 (PST)
-From: Vincent Guittot <vincent.guittot@linaro.org>
-To: linux@armlinux.org.uk,
-	catalin.marinas@arm.com,
-	will@kernel.org,
-	sudeep.holla@arm.com,
-	rafael@kernel.org,
-	viresh.kumar@linaro.org,
-	agross@kernel.org,
-	andersson@kernel.org,
-	konrad.dybcio@linaro.org,
-	mingo@redhat.com,
-	peterz@infradead.org,
-	juri.lelli@redhat.com,
-	dietmar.eggemann@arm.com,
-	rostedt@goodmis.org,
-	bsegall@google.com,
-	mgorman@suse.de,
-	bristot@redhat.com,
-	vschneid@redhat.com,
-	lukasz.luba@arm.com,
-	rui.zhang@intel.com,
-	mhiramat@kernel.org,
-	daniel.lezcano@linaro.org,
-	amit.kachhap@gmail.com,
-	corbet@lwn.net,
-	gregkh@linuxfoundation.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-trace-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org
-Cc: qyousef@layalina.io,
-	Vincent Guittot <vincent.guittot@linaro.org>
-Subject: [PATCH v3 5/5] sched/pelt: Remove shift of thermal clock
-Date: Mon,  8 Jan 2024 14:48:43 +0100
-Message-Id: <20240108134843.429769-6-vincent.guittot@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240108134843.429769-1-vincent.guittot@linaro.org>
-References: <20240108134843.429769-1-vincent.guittot@linaro.org>
+        Mon, 08 Jan 2024 05:50:12 -0800 (PST)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Date: Mon, 08 Jan 2024 14:49:57 +0100
+Subject: [PATCH RFT] arm64: dts: qcom: sm8350: Reenable crypto & cryptobam
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240108-sm8350-qce-v1-1-b7d586ff38af@fairphone.com>
+X-B4-Tracking: v=1; b=H4sIAIT9m2UC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDQwML3eJcC2NTA93C5FRds8SURBPLNEsDM1NzJaCGgqLUtMwKsGHRSkF
+ uIUqxtbUA3+epsGEAAAA=
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Bhupesh Sharma <bhupesh.linux@gmail.com>, David Heidelberg <david@ixit.cz>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.12.4
 
-The optional shift of the clock used by thermal/hw load avg has been
-introduced to handle case where the signal was not always a high frequency
-hw signal. Now that cpufreq provides a signal for firmware and
-SW pressure, we can remove this exception and always keep this PELT signal
-aligned with other signals.
-Mark deprecated sched_thermal_decay_shift boot parameter.
+When num-channels and qcom,num-ees is not provided in devicetree, the
+driver will try to read these values from the registers during probe but
+this fails if the interconnect is not on and then crashes the system.
 
-Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+So we can provide these properties in devicetree (queried after patching
+BAM driver to enable the necessary interconnect) so we can probe
+cryptobam without reading registers and then also use the QCE as
+expected.
+
+Fixes: 4d29db204361 ("arm64: dts: qcom: sm8350: fix BAM DMA crash and reboot")
+Fixes: f1040a7fe8f0 ("arm64: dts: qcom: sm8350: Add Crypto Engine support")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
- .../admin-guide/kernel-parameters.txt          |  1 +
- kernel/sched/core.c                            |  2 +-
- kernel/sched/fair.c                            | 10 ++--------
- kernel/sched/sched.h                           | 18 ------------------
- 4 files changed, 4 insertions(+), 27 deletions(-)
+Not tested myself, but David Heidelberg was so nice and ran it on a
+SM8350 board in a test farm and it seems to be working as expected.
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index 65731b060e3f..2ee15522b15d 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -5722,6 +5722,7 @@
- 			but is useful for debugging and performance tuning.
+But still please test it on some other boards so make sure it actually
+works as expected there also.
+---
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index b46236235b7f..3cd75ab552c5 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -1754,10 +1754,10 @@ cryptobam: dma-controller@1dc4000 {
+ 			#dma-cells = <1>;
+ 			qcom,ee = <0>;
+ 			qcom,controlled-remotely;
++			num-channels = <16>;
++			qcom,num-ees = <4>;
+ 			iommus = <&apps_smmu 0x594 0x0011>,
+ 				 <&apps_smmu 0x596 0x0011>;
+-			/* FIXME: Probing BAM DMA causes some abort and system hang */
+-			status = "fail";
+ 		};
  
- 	sched_thermal_decay_shift=
-+			[Deprecated]
- 			[KNL, SMP] Set a decay shift for scheduler thermal
- 			pressure signal. Thermal pressure signal follows the
- 			default decay period of other scheduler pelt
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index a6f084bdf1c5..c68e47bfd5ae 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -5670,7 +5670,7 @@ void scheduler_tick(void)
+ 		crypto: crypto@1dfa000 {
+@@ -1769,8 +1769,6 @@ crypto: crypto@1dfa000 {
+ 				 <&apps_smmu 0x596 0x0011>;
+ 			interconnects = <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
+ 			interconnect-names = "memory";
+-			/* FIXME: dependency BAM DMA is disabled */
+-			status = "disabled";
+ 		};
  
- 	update_rq_clock(rq);
- 	hw_pressure = arch_scale_hw_pressure(cpu_of(rq));
--	update_hw_load_avg(rq_clock_hw(rq), rq, hw_pressure);
-+	update_hw_load_avg(rq_clock_task(rq), rq, hw_pressure);
- 	curr->sched_class->task_tick(rq, curr, 0);
- 	if (sched_feat(LATENCY_WARN))
- 		resched_latency = cpu_resched_latency(rq);
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index f1c3d600d6d6..d5ba6cdb141c 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -78,15 +78,9 @@ static unsigned int normalized_sysctl_sched_base_slice	= 750000ULL;
- 
- const_debug unsigned int sysctl_sched_migration_cost	= 500000UL;
- 
--int sched_hw_decay_shift;
- static int __init setup_sched_thermal_decay_shift(char *str)
- {
--	int _shift = 0;
--
--	if (kstrtoint(str, 0, &_shift))
--		pr_warn("Unable to set scheduler thermal pressure decay shift parameter\n");
--
--	sched_hw_decay_shift = clamp(_shift, 0, 10);
-+	pr_warn("Ignoring the deprecated sched_thermal_decay_shift= option\n");
- 	return 1;
- }
- __setup("sched_thermal_decay_shift=", setup_sched_thermal_decay_shift);
-@@ -9247,7 +9241,7 @@ static bool __update_blocked_others(struct rq *rq, bool *done)
- 
- 	decayed = update_rt_rq_load_avg(now, rq, curr_class == &rt_sched_class) |
- 		  update_dl_rq_load_avg(now, rq, curr_class == &dl_sched_class) |
--		  update_hw_load_avg(rq_clock_hw(rq), rq, hw_pressure) |
-+		  update_hw_load_avg(now, rq, hw_pressure) |
- 		  update_irq_load_avg(rq, 0);
- 
- 	if (others_have_blocked(rq))
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 677d24202eec..6fc6718a1060 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -1520,24 +1520,6 @@ static inline u64 rq_clock_task(struct rq *rq)
- 	return rq->clock_task;
- }
- 
--/**
-- * By default the decay is the default pelt decay period.
-- * The decay shift can change the decay period in
-- * multiples of 32.
-- *  Decay shift		Decay period(ms)
-- *	0			32
-- *	1			64
-- *	2			128
-- *	3			256
-- *	4			512
-- */
--extern int sched_hw_decay_shift;
--
--static inline u64 rq_clock_hw(struct rq *rq)
--{
--	return rq_clock_task(rq) >> sched_hw_decay_shift;
--}
--
- static inline void rq_clock_skip_update(struct rq *rq)
- {
- 	lockdep_assert_rq_held(rq);
+ 		ipa: ipa@1e40000 {
+
+---
+base-commit: 0dd3ee31125508cd67f7e7172247f05b7fd1753a
+change-id: 20240108-sm8350-qce-6ada49f90657
+
+Best regards,
 -- 
-2.34.1
+Luca Weiss <luca.weiss@fairphone.com>
 
 
