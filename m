@@ -1,153 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-6681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6682-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 889388278BB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 20:50:28 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 74C7582795A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 21:50:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 296062849E8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 19:50:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9A9A71C20FEE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 20:50:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DEB254FAB;
-	Mon,  8 Jan 2024 19:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F18B15467C;
+	Mon,  8 Jan 2024 20:50:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z7a3EmDK"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="iYqMdiv/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B71854F9B;
-	Mon,  8 Jan 2024 19:50:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-5cdbc4334edso669436a12.3;
-        Mon, 08 Jan 2024 11:50:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704743422; x=1705348222; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=2R0zlBz2DXccrkgQnIyzHmDUvfxpJFjGNN3AHHEOyFM=;
-        b=Z7a3EmDKCPf9p96AQ9Y6lgZ7+k61GL9Ep5sxPG0ISmsgTpJM6NnrFN+ySdDbzLZIev
-         8QllqVIps5glSAybDDAmVgubf2kb3jIcAtC2LmSRoDrEABc2uRhitG8w0tp2YrdrSFDD
-         vEj0h95a82RB+VU2uEC/AYThamKkDcJMPdEYF5InSG0eOLaXd+K6RThvVdEc5HziKL4Q
-         5mPvIRZYJQonvQ9uvJsy9wRWY3ILbsb5/qZjX+EOQRLLrZCFfIun5mgBV1d1WBkMRTmJ
-         41QD79JA8OVZXGI0iWeXOZfn3VecJOhiUnPX63mQ0aGA+oWWBk31vF7377DhCUfMz6IV
-         Cs2A==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513B454BDA
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jan 2024 20:50:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1704747033;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=mn8zF56qQqaxcdSRbUuqhYtScI9w6bUxhtcouXyELto=;
+	b=iYqMdiv/V30q4VITFbcYsgYrJ8geYh53OeizSyvc6sIC3hu2U1+vNQrmzRwxNGKmHwtCRp
+	KtuShCYCqih08oRssNGV6y0tYk+XR13U211FgXtqYDo/zHlFuF88wv4OlPjlp86ZT30u6j
+	u4WUiLLQWTCB9KIYz52MW4Uhyb+0Dmo=
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-493-3IViW1PxPaahxe14ZJsVxA-1; Mon, 08 Jan 2024 15:50:26 -0500
+X-MC-Unique: 3IViW1PxPaahxe14ZJsVxA-1
+Received: by mail-yw1-f199.google.com with SMTP id 00721157ae682-5e744f7ca3bso30750517b3.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 12:50:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704743422; x=1705348222;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2R0zlBz2DXccrkgQnIyzHmDUvfxpJFjGNN3AHHEOyFM=;
-        b=u1wyWlldSOlqA7MeKan088GIiOUwBtVVF0h9XvUR9uul1ejlMcNNViQugwr1QHFN9e
-         dzGn+8bV7TI8lrWDtMMsg237RJ6b8qtOaujXQ7R70UMRg8CjfsCTVJNDfNMTTQ90K1aj
-         iZh47aPZGaX2zMvOKBGZMZz5soGUDHDk+UEiS1rcfo1xCmMRAgYcb2C9tWsnJhrsrKfP
-         ilG4IJki1eCHfqQCTgBwFk4OzifgiiqeUq527SnvyiPlbQEwelsLfLXoKW35n6lfIG0U
-         z6ljcHAtBhvw7rfwULjufqKXMOqVZqF1oSxT6QO5a4l2RQkLxsGBTvw4vGxzKiSZlYFb
-         66Dw==
-X-Gm-Message-State: AOJu0YxuhrsM6QAtYfbUm9JSSVChiL+4nJcAmkP7A6dG/+fd44Q1NmNC
-	7wa2qlDuAXmyzXN52JJKEUs=
-X-Google-Smtp-Source: AGHT+IFf7bb+iQyGZCfeOZ4yETzKVzgPT8q475MfZ+Nn78kr9SK7zahR4amHIomcUp8eIV9KVHXxbw==
-X-Received: by 2002:a17:90a:9742:b0:28d:7b8c:1038 with SMTP id i2-20020a17090a974200b0028d7b8c1038mr863770pjw.43.1704743422053;
-        Mon, 08 Jan 2024 11:50:22 -0800 (PST)
-Received: from localhost ([2a00:79e1:2e00:1301:e1c5:6354:b45d:8ffc])
-        by smtp.gmail.com with ESMTPSA id fr18-20020a17090ae2d200b0028ae0184bfasm6753441pjb.49.2024.01.08.11.50.21
+        d=1e100.net; s=20230601; t=1704747026; x=1705351826;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mn8zF56qQqaxcdSRbUuqhYtScI9w6bUxhtcouXyELto=;
+        b=IqJr47UVx7AvJFXdEXiGITzVKD0ZyNQzYA6tjNnVp2Jv47m9GvY4P/K4bn0LEVNvbQ
+         orqsoqtGKxBniY+dlWJL3diwATaUtESVzWqs6tw8vn8pEGRPG+WkAaEYSVLA/9uB1K28
+         7NvHQJFZSkXES2MR5wZzF7bWuzACPjsroAGvVqdP7OE2+NNn8WsQji2v5wnsN1VYCmvn
+         qlRos80TfJZHSHF3m8D69E3WobQ0W+4QTwMXTOgH5LP0GcAbcGEk+PZpHuG2U+6oUZx/
+         M5HXL/1nE544GPmmD5TwZRGZxmLZasrlThP9fuNmOH+VBTo78MP+SnLOtHhB/8JzLG+H
+         0Hug==
+X-Gm-Message-State: AOJu0YzQe9awURxZE5fjzcwM3XgHJ1PfjFgttFshc+r6sZNo0H72chQO
+	QolYVTcZ9/MPGUf+I9Jotl4ZOKTjovtLHrEJfvRDg20ieMpB1XcHjNBmnkEczmSywewzY/9coKG
+	swWDsghbjPxiMniRiI6RCscRTJT0iJQWuVg==
+X-Received: by 2002:a81:8804:0:b0:5e8:ca4c:b981 with SMTP id y4-20020a818804000000b005e8ca4cb981mr3341428ywf.28.1704747026137;
+        Mon, 08 Jan 2024 12:50:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGhJi7ppbJ/V45mlpOBVKsCqrqBzYnljADA31fkTs4foRlp7uENPbxR2e/zGenbe4U8PExetA==
+X-Received: by 2002:a81:8804:0:b0:5e8:ca4c:b981 with SMTP id y4-20020a818804000000b005e8ca4cb981mr3341422ywf.28.1704747025873;
+        Mon, 08 Jan 2024 12:50:25 -0800 (PST)
+Received: from x1 ([2600:382:1a01:8f9c:c88a:1625:2635:eb3c])
+        by smtp.gmail.com with ESMTPSA id a4-20020a0df104000000b005e92fd632e0sm174135ywf.24.2024.01.08.12.50.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jan 2024 11:50:21 -0800 (PST)
-From: Rob Clark <robdclark@gmail.com>
-To: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	Rob Clark <robdclark@chromium.org>,
-	Helen Koike <helen.koike@collabora.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/ci: Add msm tests
-Date: Mon,  8 Jan 2024 11:50:15 -0800
-Message-ID: <20240108195016.156583-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.43.0
+        Mon, 08 Jan 2024 12:50:24 -0800 (PST)
+Date: Mon, 8 Jan 2024 15:50:16 -0500
+From: Brian Masney <bmasney@redhat.com>
+To: Shazad Hussain <quic_shazhuss@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Eric Chanudet <echanude@redhat.com>,
+	Prasad Sodagudi <psodagud@quicinc.com>
+Subject: Re: sa8755p ufs ice bug: gcc_ufs_phy_ice_core_clk status stuck at
+ 'off'
+Message-ID: <ZZxgCKQmQdUL81pX@x1>
+References: <ZZYTYsaNUuWQg3tR@x1>
+ <49d85352-d022-4b59-a3f2-d8f7ef3028ac@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <49d85352-d022-4b59-a3f2-d8f7ef3028ac@quicinc.com>
+User-Agent: Mutt/2.2.10 (2023-03-25)
 
-From: Rob Clark <robdclark@chromium.org>
+On Mon, Jan 08, 2024 at 11:44:35PM +0530, Shazad Hussain wrote:
+> I can see that gcc_ufs_phy_ice_core_clk needs the gcc_ufs_phy_gdsc to be
+> enabled before this particular clk is enabled. But that required
+> power-domain I do not see in the ice DT node. That can cause this
+> problem.
 
-The msm tests should skip on non-msm hw, so I think it should be safe to
-enable everywhere.
+Thank you! I'll work on and post a patch set as I find free time over
+the next week or two.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/ci/testlist.txt | 49 +++++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
-
-diff --git a/drivers/gpu/drm/ci/testlist.txt b/drivers/gpu/drm/ci/testlist.txt
-index f82cd90372f4..eaeb751bb0ad 100644
---- a/drivers/gpu/drm/ci/testlist.txt
-+++ b/drivers/gpu/drm/ci/testlist.txt
-@@ -2910,3 +2910,52 @@ kms_writeback@writeback-invalid-parameters
- kms_writeback@writeback-fb-id
- kms_writeback@writeback-check-output
- prime_mmap_kms@buffer-sharing
-+msm_shrink@copy-gpu-sanitycheck-8
-+msm_shrink@copy-gpu-sanitycheck-32
-+msm_shrink@copy-gpu-8
-+msm_shrink@copy-gpu-32
-+msm_shrink@copy-gpu-madvise-8
-+msm_shrink@copy-gpu-madvise-32
-+msm_shrink@copy-gpu-oom-8
-+msm_shrink@copy-gpu-oom-32
-+msm_shrink@copy-mmap-sanitycheck-8
-+msm_shrink@copy-mmap-sanitycheck-32
-+msm_shrink@copy-mmap-8
-+msm_shrink@copy-mmap-32
-+msm_shrink@copy-mmap-madvise-8
-+msm_shrink@copy-mmap-madvise-32
-+msm_shrink@copy-mmap-oom-8
-+msm_shrink@copy-mmap-oom-32
-+msm_shrink@copy-mmap-dmabuf-sanitycheck-8
-+msm_shrink@copy-mmap-dmabuf-sanitycheck-32
-+msm_shrink@copy-mmap-dmabuf-8
-+msm_shrink@copy-mmap-dmabuf-32
-+msm_shrink@copy-mmap-dmabuf-madvise-8
-+msm_shrink@copy-mmap-dmabuf-madvise-32
-+msm_shrink@copy-mmap-dmabuf-oom-8
-+msm_shrink@copy-mmap-dmabuf-oom-32
-+msm_mapping@ring
-+msm_mapping@sqefw
-+msm_mapping@shadow
-+msm_submitoverhead@submitbench-10-bos
-+msm_submitoverhead@submitbench-10-bos-no-implicit-sync
-+msm_submitoverhead@submitbench-100-bos
-+msm_submitoverhead@submitbench-100-bos-no-implicit-sync
-+msm_submitoverhead@submitbench-250-bos
-+msm_submitoverhead@submitbench-250-bos-no-implicit-sync
-+msm_submitoverhead@submitbench-500-bos
-+msm_submitoverhead@submitbench-500-bos-no-implicit-sync
-+msm_submitoverhead@submitbench-1000-bos
-+msm_submitoverhead@submitbench-1000-bos-no-implicit-sync
-+msm_recovery@hangcheck
-+msm_recovery@gpu-fault
-+msm_recovery@gpu-fault-parallel
-+msm_recovery@iova-fault
-+msm_submit@empty-submit
-+msm_submit@invalid-queue-submit
-+msm_submit@invalid-flags-submit
-+msm_submit@invalid-in-fence-submit
-+msm_submit@invalid-duplicate-bo-submit
-+msm_submit@invalid-cmd-idx-submit
-+msm_submit@invalid-cmd-type-submit
-+msm_submit@valid-submit
--- 
-2.43.0
+Brian
 
 
