@@ -1,99 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-6682-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6683-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74C7582795A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 21:50:43 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 068F08279B1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 21:54:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9A9A71C20FEE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 20:50:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AF4481F23F8C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 20:54:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F18B15467C;
-	Mon,  8 Jan 2024 20:50:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8E8556454;
+	Mon,  8 Jan 2024 20:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="iYqMdiv/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="C40OVGRf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513B454BDA
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jan 2024 20:50:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1704747033;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=mn8zF56qQqaxcdSRbUuqhYtScI9w6bUxhtcouXyELto=;
-	b=iYqMdiv/V30q4VITFbcYsgYrJ8geYh53OeizSyvc6sIC3hu2U1+vNQrmzRwxNGKmHwtCRp
-	KtuShCYCqih08oRssNGV6y0tYk+XR13U211FgXtqYDo/zHlFuF88wv4OlPjlp86ZT30u6j
-	u4WUiLLQWTCB9KIYz52MW4Uhyb+0Dmo=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-493-3IViW1PxPaahxe14ZJsVxA-1; Mon, 08 Jan 2024 15:50:26 -0500
-X-MC-Unique: 3IViW1PxPaahxe14ZJsVxA-1
-Received: by mail-yw1-f199.google.com with SMTP id 00721157ae682-5e744f7ca3bso30750517b3.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 12:50:26 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704747026; x=1705351826;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mn8zF56qQqaxcdSRbUuqhYtScI9w6bUxhtcouXyELto=;
-        b=IqJr47UVx7AvJFXdEXiGITzVKD0ZyNQzYA6tjNnVp2Jv47m9GvY4P/K4bn0LEVNvbQ
-         orqsoqtGKxBniY+dlWJL3diwATaUtESVzWqs6tw8vn8pEGRPG+WkAaEYSVLA/9uB1K28
-         7NvHQJFZSkXES2MR5wZzF7bWuzACPjsroAGvVqdP7OE2+NNn8WsQji2v5wnsN1VYCmvn
-         qlRos80TfJZHSHF3m8D69E3WobQ0W+4QTwMXTOgH5LP0GcAbcGEk+PZpHuG2U+6oUZx/
-         M5HXL/1nE544GPmmD5TwZRGZxmLZasrlThP9fuNmOH+VBTo78MP+SnLOtHhB/8JzLG+H
-         0Hug==
-X-Gm-Message-State: AOJu0YzQe9awURxZE5fjzcwM3XgHJ1PfjFgttFshc+r6sZNo0H72chQO
-	QolYVTcZ9/MPGUf+I9Jotl4ZOKTjovtLHrEJfvRDg20ieMpB1XcHjNBmnkEczmSywewzY/9coKG
-	swWDsghbjPxiMniRiI6RCscRTJT0iJQWuVg==
-X-Received: by 2002:a81:8804:0:b0:5e8:ca4c:b981 with SMTP id y4-20020a818804000000b005e8ca4cb981mr3341428ywf.28.1704747026137;
-        Mon, 08 Jan 2024 12:50:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGhJi7ppbJ/V45mlpOBVKsCqrqBzYnljADA31fkTs4foRlp7uENPbxR2e/zGenbe4U8PExetA==
-X-Received: by 2002:a81:8804:0:b0:5e8:ca4c:b981 with SMTP id y4-20020a818804000000b005e8ca4cb981mr3341422ywf.28.1704747025873;
-        Mon, 08 Jan 2024 12:50:25 -0800 (PST)
-Received: from x1 ([2600:382:1a01:8f9c:c88a:1625:2635:eb3c])
-        by smtp.gmail.com with ESMTPSA id a4-20020a0df104000000b005e92fd632e0sm174135ywf.24.2024.01.08.12.50.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jan 2024 12:50:24 -0800 (PST)
-Date: Mon, 8 Jan 2024 15:50:16 -0500
-From: Brian Masney <bmasney@redhat.com>
-To: Shazad Hussain <quic_shazhuss@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Eric Chanudet <echanude@redhat.com>,
-	Prasad Sodagudi <psodagud@quicinc.com>
-Subject: Re: sa8755p ufs ice bug: gcc_ufs_phy_ice_core_clk status stuck at
- 'off'
-Message-ID: <ZZxgCKQmQdUL81pX@x1>
-References: <ZZYTYsaNUuWQg3tR@x1>
- <49d85352-d022-4b59-a3f2-d8f7ef3028ac@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5256C5467C;
+	Mon,  8 Jan 2024 20:53:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 408KQdwX009770;
+	Mon, 8 Jan 2024 20:52:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=PQMgwo5v8yBuXGGB1Ie/PPOVUlA7ykfCipsRApxniaE=; b=C4
+	0OVGRflLQsXRQU4qbFsHilnQoE9bxWtZ1d3oLCtQ1X4Db4vrdVfWIWLZyLT6baVz
+	7HqyX5JZj2yyzCplVCD+P1fwvKLk66+qxIVqNt0WgRoz/e4uqwk9iw3j0rwHz+gj
+	GiiEf1EzoL4Jq2r1HFdnpf0RxbLfXQt//A+WW2i67m+Xhnf+zAh4A6G8JcuZDTq/
+	URVeT8eCU40mRwA9FXA31lgRyCjCbxBH9kgVfL/UWX0KVhgPtpUmsgjW7e5CEZqA
+	+wRUU4PHR7y8j2EK4l3QG1GVU5upMfMHkleMaC5fblrZqlcshg1/pJN6DiP1NAwZ
+	8oO62aJTPPlJvvw8EHtw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vgkkh8rmf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 08 Jan 2024 20:52:01 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 408Kq0He011437
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 8 Jan 2024 20:52:00 GMT
+Received: from [10.110.97.125] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 8 Jan
+ 2024 12:51:59 -0800
+Message-ID: <7b2ec96b-b72f-c848-7c35-36e61a4072ac@quicinc.com>
+Date: Mon, 8 Jan 2024 12:51:58 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <49d85352-d022-4b59-a3f2-d8f7ef3028ac@quicinc.com>
-User-Agent: Mutt/2.2.10 (2023-03-25)
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v12 04/41] usb: host: xhci-mem: Cleanup pending secondary
+ event ring events
+Content-Language: en-US
+To: Mathias Nyman <mathias.nyman@linux.intel.com>,
+        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
+        <gregkh@linuxfoundation.org>, <lgirdwood@gmail.com>,
+        <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <konrad.dybcio@linaro.org>, <Thinh.Nguyen@synopsys.com>,
+        <broonie@kernel.org>, <bgoswami@quicinc.com>, <tiwai@suse.com>,
+        <robh+dt@kernel.org>, <agross@kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>
+References: <20240102214549.22498-1-quic_wcheng@quicinc.com>
+ <20240102214549.22498-5-quic_wcheng@quicinc.com>
+ <734591a1-50b4-6dc7-0b93-077355ec12e4@linux.intel.com>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <734591a1-50b4-6dc7-0b93-077355ec12e4@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: h1WdLni0I-RNQn7WJw5CZxOmyf6I2X9g
+X-Proofpoint-ORIG-GUID: h1WdLni0I-RNQn7WJw5CZxOmyf6I2X9g
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1015
+ spamscore=0 suspectscore=0 priorityscore=1501 mlxlogscore=748
+ impostorscore=0 malwarescore=0 lowpriorityscore=0 bulkscore=0 mlxscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401080172
 
-On Mon, Jan 08, 2024 at 11:44:35PM +0530, Shazad Hussain wrote:
-> I can see that gcc_ufs_phy_ice_core_clk needs the gcc_ufs_phy_gdsc to be
-> enabled before this particular clk is enabled. But that required
-> power-domain I do not see in the ice DT node. That can cause this
-> problem.
+Hi Mathias,
 
-Thank you! I'll work on and post a patch set as I find free time over
-the next week or two.
+On 1/4/2024 6:48 AM, Mathias Nyman wrote:
+> On 2.1.2024 23.45, Wesley Cheng wrote:
+>> As part of xHCI bus suspend, the XHCI is halted.  However, if there are
+>> pending events in the secondary event ring, it is observed that the xHCI
+>> controller stops responding to further commands upon host or device
+>> initiated bus resume.  Iterate through all pending events and update the
+>> dequeue pointer to the beginning of the event ring.
+>>
+>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> ...
+>> +/*
+>> + * Move the event ring dequeue pointer to skip events kept in the 
+>> secondary
+>> + * event ring.  This is used to ensure that pending events in the 
+>> ring are
+>> + * acknowledged, so the XHCI HCD can properly enter suspend/resume.  The
+>> + * secondary ring is typically maintained by an external component.
+>> + */
+>> +void xhci_skip_sec_intr_events(struct xhci_hcd *xhci,
+>> +    struct xhci_ring *ring,    struct xhci_interrupter *ir)
+>> +{
+>> +    union xhci_trb *erdp_trb, *current_trb;
+>> +    u64 erdp_reg;
+>> +    u32 iman_reg;
+>> +    dma_addr_t deq;
+>> +
+>> +    /* disable irq, ack pending interrupt and ack all pending events */
+>> +    xhci_disable_interrupter(ir);
+>> +    iman_reg = readl_relaxed(&ir->ir_set->irq_pending);
+>> +    if (iman_reg & IMAN_IP)
+>> +        writel_relaxed(iman_reg, &ir->ir_set->irq_pending);
+>> +
+>> +    /* last acked event trb is in erdp reg  */
+>> +    erdp_reg = xhci_read_64(xhci, &ir->ir_set->erst_dequeue);
+>> +    deq = (dma_addr_t)(erdp_reg & ERST_PTR_MASK);
+>> +    if (!deq) {
+>> +        xhci_err(xhci, "event ring handling not required\n");
+>> +        return;
+>> +    }
+>> +
+>> +    erdp_trb = current_trb = ir->event_ring->dequeue;
+>> +    /* read cycle state of the last acked trb to find out CCS */
+>> +    ring->cycle_state = le32_to_cpu(current_trb->event_cmd.flags) & 
+>> TRB_CYCLE;
+>> +
+>> +    while (1) {
+>> +        inc_deq(xhci, ir->event_ring);
+>> +        erdp_trb = ir->event_ring->dequeue;
+>> +        /* cycle state transition */
+>> +        if ((le32_to_cpu(erdp_trb->event_cmd.flags) & TRB_CYCLE) !=
+>> +            ring->cycle_state)
+>> +            break;
+>> +    }
+>> +
+>> +    xhci_update_erst_dequeue(xhci, ir, current_trb, true);
+>> +}
+> 
+> Code above is very similar to the existing event ring processing parts 
+> of xhci_irq()
+> and xhci_handle_event()
+> 
+> I'll see if I can refactor the existing event ring processing, decouple 
+> it from
+> event handling so that it could be used by primary and secondary 
+> interrupters with
+> handlers, and this case where we just want to clear the event ring.
+> 
 
-Brian
+Thanks, that makes sense.  Will take a look as well.
 
+Thanks
+Wesley Cheng
 
