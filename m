@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6594-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6595-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E2999826B00
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 10:44:32 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75CF7826B0B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 10:46:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8C58C2829CA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 09:44:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D1A11C21DE7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 09:46:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A8BC125A2;
-	Mon,  8 Jan 2024 09:44:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF4BC125C1;
+	Mon,  8 Jan 2024 09:45:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="By94m35f"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zjYxn+AS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F6E13FEE
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jan 2024 09:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4641400A
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jan 2024 09:45:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-557c188f313so611080a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 01:44:29 -0800 (PST)
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-554fe147ddeso1777919a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 01:45:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704707067; x=1705311867; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1704707154; x=1705311954; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=lBTM4p91xiyIakQ7lifaR+/L5ks2liOhF9cL3JRcytM=;
-        b=By94m35fO1WtnwrRQ+xcoMPajyQDpu8HfenWaD9EGVq1YqSh72sEo8Q4AiiOiL+nWg
-         Wmvzu497r4cVZoLsP4zYLR1HYtTXy/aiEuiPz3Hp7xvVf2/ww7DXZjgeJoHB2xkCZ9m0
-         B+h297aFx0HhJSWAdfJ8P9xdAk6vv3znvujECHyIBqHk4RpS0gqpRtw9PPKHGKUFxs/h
-         hjvqutUzGH0k3EVhTxWdz5ukC8iugysMgJtR0QGnOarRthhrSr+nqYzAxT78mi6Gm/N3
-         MgJ1Wcy1aZ09xrEVLu1mNsK7WpP+gWf9jYKwc6weh2+3yQLLtghE3uXCk4p6IK+OEASf
-         wY0A==
+        bh=TIwQczn+Y5dalGs5MoFPfMVHR6EjPyab7UopB3QtbtQ=;
+        b=zjYxn+AS9rLSQs7pJ1yIEBE+jJGxXY9NVvvXmdBhdCBiTLK3d3o/lVb9URNjraBKPD
+         vJNYgzG+F+sn5/byavF/+bOUwuL+3I9cloWcsJ4mFvxnraTF/shImrjbAziZoiM5a7Jw
+         wXoHUXV3SbU4JCJTzk3Rrxr7fgIxJ7+ymZ29dbphYe75+m1YqVmENsppDAbCmSGfZJkI
+         kB3LyCJv8iFKIQ/4eb0LPg6jYpJELfJSdusRRSDpi9uzv91zvt91oe8fJZBPYSQTJL18
+         iSr7/R2A3VkFZFYMKHK6IpDpEr195Bk0AGgApUIdwlK8PxHuPwTHAfeyyAyfPlBUVQ6U
+         GyoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704707067; x=1705311867;
+        d=1e100.net; s=20230601; t=1704707154; x=1705311954;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lBTM4p91xiyIakQ7lifaR+/L5ks2liOhF9cL3JRcytM=;
-        b=MUZYDo+iKq0ix/OCp6vpN70Auuesb03U/SKe6H8hE59lvYlMjhQYPJfz6mup3/F43Q
-         o6JhP+nRJGZG6/NjbG9gH+fEs08yqKKMSIkLEQKaAn2xT0qwEqk43ax7SwgYLOFezRka
-         LUVXzOT7KfSwFFXQub3eG3ivpa1oFriTNQ0GKPiXj+RlbuCECr7dpO2vXZShZSSvclG/
-         jlLQgLyjAn2j8XF/3g9fVzL0ej9Yin59IZO24jMWdgnS2s+Ht4uMfGb1pS/4DLxv6pJN
-         epKhRHO0IxATFg3hJwvdD3zlHDpT2GZRdTg1QDQ1XM9EaU/U7egH8P/mqbTETP5zBFEe
-         S4mw==
-X-Gm-Message-State: AOJu0YzFJXpv90HZpZiNqtJGHpNI48WO4+p4wwrkFX/zduBsukCI/fPV
-	eyhxttid2p0IuAOq1RnYHebRFO83RDieIA==
-X-Google-Smtp-Source: AGHT+IHgd2Ld22/tWfwOkwfLPcMM3STU1AtC1pRCGdOUdxPOVnC0D7xBIdf53zvtjFCEUO69GPgU2w==
-X-Received: by 2002:a05:6402:b45:b0:557:ddbe:f48b with SMTP id bx5-20020a0564020b4500b00557ddbef48bmr71751edb.2.1704707067687;
-        Mon, 08 Jan 2024 01:44:27 -0800 (PST)
+        bh=TIwQczn+Y5dalGs5MoFPfMVHR6EjPyab7UopB3QtbtQ=;
+        b=Nq1POVjRHLxZguTadHCQ7T5HvJIZ9OlhSG1J3PQe359N3jueH9QSAZtxj8SWUNqC0R
+         MfAL6U48bunLWJaS8dLqhi+3q7Jb3Wza/rw3MJhN915t4lNZBtLXpNQgdePVpSCoxs98
+         dhTnQe+I/zwBf+13v9tB4oLPe4SJU/bHsapx4ZBAJVYkX3dPo7JqOTZlD39lEbPsr9oa
+         my+UsN+nx1WxVJuQJUEH3C+j1jZTNIyYrXMUFCkJdaCmBYeP0KQ065ieum+Tg/zduoHi
+         rKMjmF8ZliALRqw+juDtxCSXBd8vbcskyErWWAf/PoZQt82R6yFnnrW9GFQh8S5ymHgj
+         UzCQ==
+X-Gm-Message-State: AOJu0YwgECWo87dpnvC1J7RFlFtFbzyLiJL+o07X/2TblenGBNakwbxc
+	8h9w5dHkuqlXfZoOVGfbTSvS1Oh2Ri7gEA==
+X-Google-Smtp-Source: AGHT+IHZIc4sGgKl2kQJZOpf5txIMoq9/p7LOCtnH7VMnyeWEDFHfra+B3LeKmCB/dk0l9IwA+zm+g==
+X-Received: by 2002:a50:d001:0:b0:557:c9bb:1cb with SMTP id j1-20020a50d001000000b00557c9bb01cbmr106804edf.54.1704707154297;
+        Mon, 08 Jan 2024 01:45:54 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.223.112])
-        by smtp.gmail.com with ESMTPSA id f24-20020a50a6d8000000b00555ec66a440sm4203598edc.59.2024.01.08.01.44.25
+        by smtp.gmail.com with ESMTPSA id f24-20020a50a6d8000000b00555ec66a440sm4203598edc.59.2024.01.08.01.45.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Jan 2024 01:44:27 -0800 (PST)
-Message-ID: <a9997d11-99ee-4df7-b0ab-a8f45e4b5ad8@linaro.org>
-Date: Mon, 8 Jan 2024 10:44:24 +0100
+        Mon, 08 Jan 2024 01:45:53 -0800 (PST)
+Message-ID: <9d6db4af-fe83-4f95-9d63-df5f5cadd4f8@linaro.org>
+Date: Mon, 8 Jan 2024 10:45:53 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,27 +66,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/4] reset: gpio: ASoC: shared GPIO resets
+Subject: Re: [PATCH v2 1/4] dt-bindings: i2c: qcom-cci: Document sc8280xp
+ compatible
 Content-Language: en-US
-To: Chris Packham <Chris.Packham@alliedtelesis.co.nz>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Banajit Goswami <bgoswami@quicinc.com>,
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood
- <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
- Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
- "alsa-devel@alsa-project.org" <alsa-devel@alsa-project.org>,
- "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
- "linux-sound@vger.kernel.org" <linux-sound@vger.kernel.org>,
- "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
- Sean Anderson <sean.anderson@seco.com>
-References: <20240105155918.279657-1-krzysztof.kozlowski@linaro.org>
- <d86f0d2c-40fc-44d2-94f6-e67068e55594@alliedtelesis.co.nz>
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring
+ <robh+dt@kernel.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240105-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v2-0-7a57b8b07398@linaro.org>
+ <20240105-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v2-1-7a57b8b07398@linaro.org>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -132,25 +125,17 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <d86f0d2c-40fc-44d2-94f6-e67068e55594@alliedtelesis.co.nz>
+In-Reply-To: <20240105-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v2-1-7a57b8b07398@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 07/01/2024 22:35, Chris Packham wrote:
-> Hi Krzysztof,
+On 05/01/2024 21:39, Bryan O'Donoghue wrote:
+> Add sc8280xp compatible consistent with recent CAMSS CCI interfaces.
 > 
-> On 6/01/24 04:59, Krzysztof Kozlowski wrote:
-> 
-> Hi,
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
 
-You quoting got broken.
-
-> 
-> 
-> 
-> I'll try and take these for a spin on my hardware. I think I'll need to update the pca954x mux driver along similar lines to your changes to the wsa884x. Do you happen to have an example of what the reset-controller usage looks like in a devicetree? I can probably figure it out based on the code but I figured I'd ask just in case you already had an example handy.
-
-Just add "reset-gpios" property in the device node, not the bus.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
