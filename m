@@ -1,99 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-6605-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6606-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 813EE826DB0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 13:22:07 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C3AB826DD5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 13:28:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3156F283777
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 12:22:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 931531C22431
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 12:28:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EF34405CB;
-	Mon,  8 Jan 2024 12:21:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F7EF405F6;
+	Mon,  8 Jan 2024 12:27:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LZXI+cGg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2FC2405C8
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jan 2024 12:21:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1rModK-0007ah-HH; Mon, 08 Jan 2024 13:21:34 +0100
-Received: from [2a0a:edc0:0:900:1d::4e] (helo=lupine)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1rModJ-001FLl-AR; Mon, 08 Jan 2024 13:21:33 +0100
-Received: from pza by lupine with local (Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1rModJ-00090a-0m;
-	Mon, 08 Jan 2024 13:21:33 +0100
-Message-ID: <eb41618782e1cd80d469a65bcdbf640ebbfb4f5c.camel@pengutronix.de>
-Subject: Re: [PATCH v2 1/4] reset: gpio: Add GPIO-based reset controller
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Srinivas
- Kandagatla <srinivas.kandagatla@linaro.org>, Banajit Goswami
- <bgoswami@quicinc.com>,  Bjorn Andersson <andersson@kernel.org>, Konrad
- Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley
- <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai
- <tiwai@suse.com>,  alsa-devel@alsa-project.org,
- linux-arm-msm@vger.kernel.org,  linux-sound@vger.kernel.org,
- devicetree@vger.kernel.org,  linux-kernel@vger.kernel.org
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Sean Anderson
- <sean.anderson@seco.com>
-Date: Mon, 08 Jan 2024 13:21:33 +0100
-In-Reply-To: <20240105155918.279657-2-krzysztof.kozlowski@linaro.org>
-References: <20240105155918.279657-1-krzysztof.kozlowski@linaro.org>
-	 <20240105155918.279657-2-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF2B40BEA;
+	Mon,  8 Jan 2024 12:27:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE886C433CB;
+	Mon,  8 Jan 2024 12:27:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1704716873;
+	bh=1lexW2BtbdnsU7sj5WuiLgGQQK/Pkc4qG3Tgh0ZgQE0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=LZXI+cGgqSb9NQOvk120HQqFwqwpMFuqljiD8sGc72aCpJ7NCd16WJJRZ0SXnbt/2
+	 dzASgOmGzEqArnJIY0DYq3kCUnBK/AI7A/ufyJf3OasW1Hwd5XfcAC3u5wR2Ous8gj
+	 jTYqF7zN0DFGs6+hp1+9xo+67xp6TAebGlRHTrDK4qLzCfx31NmO5gR/WRaBtQt47T
+	 1dbOHzLuYhL86Iw/7T77OnMHvpP214Iihtc6vX81Q1jSHLi3DAbgWbjuZkI32X4O6K
+	 SZGWo2OkcbLYQgcEf9Kx6wE6eNCMuBulMueQW1570q8s9T2aHbqlsJ2bwes0o2+jF3
+	 fpwFUJxfTBxuQ==
+From: Sasha Levin <sashal@kernel.org>
+To: linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Cc: Sarannya S <quic_sarannya@quicinc.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S . Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	linux-arm-msm@vger.kernel.org,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 3/8] net: qrtr: ns: Return 0 if server port is not present
+Date: Mon,  8 Jan 2024 07:27:19 -0500
+Message-ID: <20240108122745.2090122-3-sashal@kernel.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240108122745.2090122-1-sashal@kernel.org>
+References: <20240108122745.2090122-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.6.10
+Content-Transfer-Encoding: 8bit
 
-On Fr, 2024-01-05 at 16:59 +0100, Krzysztof Kozlowski wrote:
-> Add a simple driver to control GPIO-based resets using the reset
-> controller API for the cases when the GPIOs are shared and reset should
-> be coordinated.  The driver is expected to be used by reset core
-> framework for ad-hoc reset controllers.
+From: Sarannya S <quic_sarannya@quicinc.com>
 
-I don't know how evil it is to set a parent-less platform device's
-of_node to another device's node, but I like the simplicity of a
-single-GPIO reset controller driver more that I had expected.
+[ Upstream commit 9bf2e9165f90dc9f416af53c902be7e33930f728 ]
 
-[...]
-> diff --git a/drivers/reset/reset-gpio.c b/drivers/reset/reset-gpio.c
-> new file mode 100644
-> index 000000000000..cf0a867cbc5f
-> --- /dev/null
-> +++ b/drivers/reset/reset-gpio.c
-> @@ -0,0 +1,121 @@
-[...]
-> +static void reset_gpio_of_args_put(void *data)
+When a 'DEL_CLIENT' message is received from the remote, the corresponding
+server port gets deleted. A DEL_SERVER message is then announced for this
+server. As part of handling the subsequent DEL_SERVER message, the name-
+server attempts to delete the server port which results in a '-ENOENT' error.
+The return value from server_del() is then propagated back to qrtr_ns_worker,
+causing excessive error prints.
+To address this, return 0 from control_cmd_del_server() without checking the
+return value of server_del(), since the above scenario is not an error case
+and hence server_del() doesn't have any other error return value.
 
-This should probably be called reset_gpio_of_node_put().
+Signed-off-by: Sarannya Sasikumar <quic_sarannya@quicinc.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ net/qrtr/ns.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-> +{
-> +	of_node_put(data);
-> +}
-[...]
+diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+index b1db0b519179b..abb0c70ffc8b0 100644
+--- a/net/qrtr/ns.c
++++ b/net/qrtr/ns.c
+@@ -512,7 +512,9 @@ static int ctrl_cmd_del_server(struct sockaddr_qrtr *from,
+ 	if (!node)
+ 		return -ENOENT;
+ 
+-	return server_del(node, port, true);
++	server_del(node, port, true);
++
++	return 0;
+ }
+ 
+ static int ctrl_cmd_new_lookup(struct sockaddr_qrtr *from,
+-- 
+2.43.0
 
-regards
-Philipp
 
