@@ -1,120 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-6628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 755E7826E8E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 13:42:51 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 230F8826EB2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 13:46:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 13A421F22D4A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 12:42:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AEA81283473
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 12:46:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2837A55C1A;
-	Mon,  8 Jan 2024 12:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 091DF4778A;
+	Mon,  8 Jan 2024 12:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jwHWKG+Y"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eZqHEl/h"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7A455C00
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jan 2024 12:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386DC4777D
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jan 2024 12:40:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-50e5a9bcec9so2010574e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 04:33:04 -0800 (PST)
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-557535489d0so1977367a12.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 04:40:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704717183; x=1705321983; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qAbsh2raT0T0gFCQooD4qLMuLwM2nwWqes0FR90GOPQ=;
-        b=jwHWKG+Y1RX6AMZO0dHmwAJDlr1y9JaKKeEa8R7rJ4uN7tmIoEmJQ3IoS8Z589VCdQ
-         Gq2UqbkXRU8qOqFKPLeIfyE7M+a+Qpi2S+72MdZeMo3Ljj9mjSrtj7MLcayVb/UbZW1e
-         bJx2nfSBEPgphgbDid0WJm8wYUQE2HDsZWUYn9dcZ4Bs178t6Zi1FP1dad72LR8FPsMa
-         IljsWX2HbhfBWj7IcfGNylFQTJ32FMuXH/z0LxXJoG7AAMSG7KnCYjMyv3jc6H8r4vQm
-         yi8qpXSEHuPgOSl4w4rNcJS4Lg9+1RKNZbMWva/wQmeoL7lQZtxWCY7YVoQuVXVn9VWz
-         97Lg==
+        d=linaro.org; s=google; t=1704717625; x=1705322425; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=H32R+tMa1fM7nReMumPNtbL6GgMPNJ5zXeSLfAS8c1M=;
+        b=eZqHEl/hgmMw4+rbix+h2DNRdNaqydANI6WWQnUd6eL+K1DbY7AAX5iAdSpr+yV7d+
+         rmUI3Lto16fbjMGyxuP5yOoWuvGf+McK47atq9Rb3ybtgZGjDD7v1KFOZ1ErN/+VmICz
+         kH8JGAKWsK2yqtX4Fon4foPB+WZiAAMXP1SOg3TDba2KAiVSecnVb5PTdQaMkL+VXJ58
+         GO5JGYoIqfdl3uaO8kMIO2U3oTOhmNh1rBU3Uf7ZrpV0KIs9CH7hha99f+nKm/agXGLm
+         tz/+3bB18RORdylmLTWaFU0PQS2hymqhp1ApfH2IonFtecmiFMavg/vditmCac35MAKk
+         eCIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704717183; x=1705321983;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qAbsh2raT0T0gFCQooD4qLMuLwM2nwWqes0FR90GOPQ=;
-        b=D+5FAEx1BTz4BsROK2vtSzmifGWM0Pphew/ti6Oc113ucFr2KnrDtdABvec5izdhG5
-         JV+tPEWKM62TvMf9dQ4MNLBmGXqMvQIsfRD56p7mSvahlquYyvPR8D6BqZKMc/0aXScJ
-         Z1DGcBpLjXtCuzTa36zHndOPd4fKwM5rVN0Yxx2TzPgAHm6rPn9v63r5AIuTh+mZXFl0
-         Ks5y7/5vc5mNfN9PjFtcAPN1pfjbZZxHV1Vlqpf9xWPRD8DxLngb8JSBWG0kKjNr91L0
-         pZXvC3Jm6nqwTZTB2JHmeEwrsDLW1oGL+xzvTpAgMM2U0I0zpkQfg6tR5A2QFtHuPgLP
-         BiVw==
-X-Gm-Message-State: AOJu0YyLqAc1mhHUHJ0biMqFzsEkVljCLbeVWvhPogfJ2m+6YwjpN8op
-	yauBEdBd/mL4AwipQEpE9Lml7LHS6Rnvkg==
-X-Google-Smtp-Source: AGHT+IFYUuWFbF92DbLRI3ofhjcvCWjuhJs6/xR0HUwQ2WQiMchCs7oplVKkz6Elf8Lrch1L9GMPFQ==
-X-Received: by 2002:ac2:4822:0:b0:50e:6ddb:551d with SMTP id 2-20020ac24822000000b0050e6ddb551dmr1300789lft.73.1704717182919;
-        Mon, 08 Jan 2024 04:33:02 -0800 (PST)
-Received: from [10.167.154.1] (178235179081.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.81])
-        by smtp.gmail.com with ESMTPSA id bs18-20020a170906d1d200b00a2808ee8ab1sm3892978ejb.150.2024.01.08.04.33.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jan 2024 04:33:02 -0800 (PST)
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Mon, 08 Jan 2024 13:32:35 +0100
-Subject: [PATCH 18/18] clk: qcom: videocc-sm8550: Set delay for Venus CLK
- resets
+        d=1e100.net; s=20230601; t=1704717625; x=1705322425;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=H32R+tMa1fM7nReMumPNtbL6GgMPNJ5zXeSLfAS8c1M=;
+        b=aILhP69RS7i/FhM9yFJwlVaSwA+qCSnFGaoE3J8J6batHYaSztA07sBdHjOyEZwWL5
+         AU2WUBfYWZMuZxcEVULAPskZjYElAh4u4OSi+BPfoyc25SmVHdZYFEcEjlqSkGvnAL8j
+         Gy6NaC3e8LP36t+JnKt+KGASAw6qaYlrV+S1Efd84rBE31mm5A59/xw6xXcDuLmqlDc/
+         0alHZnIPAaNUvZVyujkn60ogFX3Z4TpmXLM7MU3/8S7wD7skgFx/NHyr89TS+5fMixUh
+         l4H50OkBhD3qCnzxBLNC53OSTMas8iiBqiymaJORMfQgAJUlKtt8ekkeVC2+hP06JzTN
+         a5kw==
+X-Gm-Message-State: AOJu0YylfehE3oxm5F+38mhm8O4Qm1NzasSE+m4/Fct7VOIiCrM7OzM4
+	qXOKGDGkr1Z/EoAZNlWSHfdkSJch6VKsGg==
+X-Google-Smtp-Source: AGHT+IH898cK1RhoFcQWVV9A7Y9eBRji8sMp9LSWyq80sKSXbnxTjPYGqPynIMsnf37N0Tflolu6Qw==
+X-Received: by 2002:a50:d68f:0:b0:557:bf64:81ae with SMTP id r15-20020a50d68f000000b00557bf6481aemr489412edi.34.1704717625554;
+        Mon, 08 Jan 2024 04:40:25 -0800 (PST)
+Received: from [192.168.199.125] (178235179081.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.81])
+        by smtp.gmail.com with ESMTPSA id n19-20020aa7c453000000b005550844cd1dsm4250800edr.30.2024.01.08.04.40.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Jan 2024 04:40:25 -0800 (PST)
+Message-ID: <c3e82c7a-fc03-44c6-bf83-97dffaf22dba@linaro.org>
+Date: Mon, 8 Jan 2024 13:40:22 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] Add Crypto Engine support for SM6350
+To: Luca Weiss <luca.weiss@fairphone.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Thara Gopinath <thara.gopinath@gmail.com>,
+ Herbert Xu <herbert@gondor.apana.org.au>,
+ "David S. Miller" <davem@davemloft.net>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240105-sm6350-qce-v1-0-416e5c7319ac@fairphone.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240105-sm6350-qce-v1-0-416e5c7319ac@fairphone.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240105-topic-venus_reset-v1-18-981c7a624855@linaro.org>
-References: <20240105-topic-venus_reset-v1-0-981c7a624855@linaro.org>
-In-Reply-To: <20240105-topic-venus_reset-v1-0-981c7a624855@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Dikshita Agarwal <quic_dikshita@quicinc.com>, 
- Vikash Garodia <quic_vgarodia@quicinc.com>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Manivannan Sadhasivam <mani@kernel.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1704717148; l=986;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=nUkji27joUy4z7sSoyVsNLtQaWjmCqTk31+xfHWXM8I=;
- b=w4g8AeDrPElFZuWnShULIUezl/D8Mown8pWJMvSQi8+U6rX64xETD1nQ/r4IjQuIvmP9ljfUk
- P7na2O9tyb4B4xcuvQv5tDQcZWCiODy4K8z0qMFVpLRR81QOZKxrfOy
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-Some Venus resets may require more time when toggling. Describe that.
+On 5.01.2024 17:15, Luca Weiss wrote:
+> Add the compatible and nodes for the QCE found on SM6350 SoC.
+> 
+> Not completely sure how to fully test it but "kcapi-speed --all" shows
+> no issues. Let me know if I can/should test this more.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/clk/qcom/videocc-sm8550.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+I think I used `cryptsetup benchmark` with and without the ICE enabled
+a couple years back. IIRC the CPU should be faaar faster but also chug
+power while at it.
 
-diff --git a/drivers/clk/qcom/videocc-sm8550.c b/drivers/clk/qcom/videocc-sm8550.c
-index f3c9dfaee968..e3f146347da7 100644
---- a/drivers/clk/qcom/videocc-sm8550.c
-+++ b/drivers/clk/qcom/videocc-sm8550.c
-@@ -378,8 +378,8 @@ static const struct qcom_reset_map video_cc_sm8550_resets[] = {
- 	[CVP_VIDEO_CC_MVS0C_BCR] = { 0x8048 },
- 	[CVP_VIDEO_CC_MVS1_BCR] = { 0x80c8 },
- 	[CVP_VIDEO_CC_MVS1C_BCR] = { 0x8074 },
--	[VIDEO_CC_MVS0C_CLK_ARES] = { 0x8064, 2 },
--	[VIDEO_CC_MVS1C_CLK_ARES] = { 0x8090, 2 },
-+	[VIDEO_CC_MVS0C_CLK_ARES] = { .reg = 0x8064, .bit = 2, .udelay = 1000 },
-+	[VIDEO_CC_MVS1C_CLK_ARES] = { .reg = 0x8090, .bit = 2, .udelay = 1000 },
- };
- 
- static const struct regmap_config video_cc_sm8550_regmap_config = {
-
--- 
-2.43.0
-
+Konrad
 
