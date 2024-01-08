@@ -1,411 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-6656-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13BFC827106
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 15:21:38 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7FAA9827121
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 15:23:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7D37F1F2338D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 14:21:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 309171F22CFA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 14:23:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7666A5103A;
-	Mon,  8 Jan 2024 14:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B43A47783;
+	Mon,  8 Jan 2024 14:22:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eAjcPQCo"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Z8T0L5q4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+Received: from mail-ed1-f68.google.com (mail-ed1-f68.google.com [209.85.208.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7FC51C2B
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jan 2024 14:19:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-50e835800adso1660372e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 06:19:43 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF6947775
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jan 2024 14:22:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f68.google.com with SMTP id 4fb4d7f45d1cf-55719cdc0e1so2070130a12.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 06:22:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704723581; x=1705328381; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zJIr3gLxozsh7CrXcoARrwWHbGQibktk/tx+W6SEOMk=;
-        b=eAjcPQCoABPBvTmhBccIsIIXWorb7W8R+ECv+z4v4rVoiMo4F4iN/Nafz2bAP/kdpV
-         bljSF/cqwLBaA9yh4VQNgRTWx0V8jzt4WbRoGz48a4tv0wTwedseTijoXeCAwzPQzYPB
-         PT+TVvaGbRm2szaxqJKjhh82o+K8oqyDsXUvMzwIbOkFQuA1qnZTkOwDodGKPnAwO/Qh
-         EOszQXiE3LP1HYAyDSDQOe9oRpQU59uM9qI/OqccG+yAra/RbwB52b6ny/IefZtdqWsp
-         g1RbEUMX24AlesPEQSl2MNkSgll6tXk9K0qsQTyTwnxLBl/EtxewJjAjjvEMJqp62CJN
-         maAw==
+        d=fairphone.com; s=fair; t=1704723759; x=1705328559; darn=vger.kernel.org;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OMMgLl4XRQ9TLf0vUhTzomvNdXTeUOyP7FWSiUcr6oQ=;
+        b=Z8T0L5q4j5AqzRGryoPzRdRWGrL2nOridhnSiCHpPzMRMjY576uZ1tqfG3KUiMcRSX
+         gGmc0sB2rTI47mzYSeUJs0I0A4ItLpL2OvIWf7Fub3I0EGbtRFyTPwMq7pKp+43l1XxV
+         Ob1Ck8xLVwX0Dnv95ZsUQ1AmShw8+6yYlBOHyQQLtgf8fkI8qT+S9akIfp7HD46ztOPd
+         wkk+tB1WzGIY/pRrdXOvAhM+/bp3b8RHXve/Gc77x9HbuZxR5W67e1UVN9mFTpmtXeOq
+         rHMasYauoH9JbGIvgEziHufqa16BhwFQoD8dZnfodWu8n2trFYxnd7YL7+I806ikjmkF
+         R4iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704723581; x=1705328381;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zJIr3gLxozsh7CrXcoARrwWHbGQibktk/tx+W6SEOMk=;
-        b=M3KJbMfetTyM6f7GzaSdfknNK98fUVI9BKAZdSVihNL8WVgNAQjcPAozfGJGx5Z62P
-         wLOBAA528lCpcwKefuk077uGW1VipRRrVldSlIY1ayTRB7wFggOglxbJV3YevOy1mLXP
-         YdKGrUla2jPZWAsIVE56WDCEuBaWRsouy1+xsRJD3zmB8ByvUtm6lJ/fwhkimxVKGNoQ
-         UXyQG/rr4+/yypiGTYS9O0UPy5Q6nxvVztnJBZtHorBmW/vLzEOCfTUiNSdkK2ZsrsOu
-         9BGjrSR/eQqalavA39jD+0GMBl6K6CZPciJqodKkItNTAQfALeU/eCIBVcvb8MVWuKLZ
-         dtHg==
-X-Gm-Message-State: AOJu0YyvDsirnDNMAj7cTvum45DL/doML6jG73orrHa3zl/Ep39Ug1wx
-	15hAgpy0m+PNiWKvmqGsCzUpR5tiz+N8f8swUhYzxoUlOAQ=
-X-Google-Smtp-Source: AGHT+IF6BF3WEmz+iyt90io9cKDJUXePQXotDy57DSR1o8XX/a4S2qlPJsh8wZxYkt7svMovVscD5Q==
-X-Received: by 2002:a05:6512:3c98:b0:50e:9872:ae78 with SMTP id h24-20020a0565123c9800b0050e9872ae78mr1212160lfv.196.1704723581042;
-        Mon, 08 Jan 2024 06:19:41 -0800 (PST)
-Received: from [127.0.1.1] ([178.197.223.112])
-        by smtp.gmail.com with ESMTPSA id cm25-20020a0564020c9900b00556ee10cfe3sm4319832edb.92.2024.01.08.06.19.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jan 2024 06:19:40 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Mon, 08 Jan 2024 15:19:19 +0100
-Subject: [PATCH 6/6] dt-bindings: PCI: qcom,pcie-sc8280xp: move SC8280XP to
- dedicated schema
+        d=1e100.net; s=20230601; t=1704723759; x=1705328559;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=OMMgLl4XRQ9TLf0vUhTzomvNdXTeUOyP7FWSiUcr6oQ=;
+        b=hHHoiRXA6Zf3Dyr8h110mtnpPrjjpuojTZkrbI8uuYxLpx4YsuGcvCXUWPIBX4vGPZ
+         GEbhopjCDjovHAnadYdg2vymmQY50bMy4EM64Ie1lg+WXG5Nl3V1Tt4z0lG7n3yo+mTo
+         Wm/r6GllNxGmr7jIf7pXZJU4qxEFBctTm/7ku0ednQGosaWVJJzIKhKWBHIApMSu/RFT
+         vMiTtEZzn4tm+soMpcVQPEvCasiLRPOuOQOhnIJ427g2ccTQhWbgO80fkWUfnZpREALm
+         6/numegQYdJDGkYbe4K3/zpFV6siZglXkzZzUljeZt6umjPgAUOn+OwNuI5PSe5YTskz
+         +YXA==
+X-Gm-Message-State: AOJu0Yx9Uw1Ix3GTfn4A4SESY0Q8GwBuxEK3rsIsXnP1I+7UZ8ii/FMX
+	pQOfVPQeevLnldnEk1jkgWEHdoMtxOf41w==
+X-Google-Smtp-Source: AGHT+IHemUG5qaZGoETj95zldC92QIk78YaPkA4snM+h6XObqyWR81gB9QZGYvlmTpVCVXCM/O+zLQ==
+X-Received: by 2002:a50:c29a:0:b0:557:aba8:631 with SMTP id o26-20020a50c29a000000b00557aba80631mr1026886edf.19.1704723759382;
+        Mon, 08 Jan 2024 06:22:39 -0800 (PST)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id t8-20020a056402020800b0055712dec5a6sm4367215edv.2.2024.01.08.06.22.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Jan 2024 06:22:39 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240108-dt-bindings-pci-qcom-split-v1-6-d541f05f4de0@linaro.org>
-References: <20240108-dt-bindings-pci-qcom-split-v1-0-d541f05f4de0@linaro.org>
-In-Reply-To: <20240108-dt-bindings-pci-qcom-split-v1-0-d541f05f4de0@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
- Bjorn Helgaas <bhelgaas@google.com>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Rob Herring <robh+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
- Manivannan Sadhasivam <mani@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9760;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=KUGAXveuGUxtLUDN9Q/9x0zJbEyqON8MU6FY9snIhUA=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBlnARwxAW+ymdGztyYbyrxrHfjah6+4fz4ZjDHB
- 3is/3+4Z7aJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZZwEcAAKCRDBN2bmhouD
- 11I+D/sHtyMZ7xKrBk9rTRBibxvh30ude8J7B9O3qHoGJ47tubPvVCgwTviGhiAFRf+98+NcJ+j
- 0POGYhbCDf+jElbHshaGxnYMzjoHCo1tHoTUma1YCXIPYVaNaJ+362rU6UTlp3r10SJy/HxM82Y
- LdQ4RBKKIAYFH4dr3mn5xo2FiqSNvjUiY6kpNiufeEOInNseTcho9tJADSgKVP2pJa43yF5VFqM
- ke7TTj7t8SJ1KRtUOugpinL4t6dJLc0+W+6Q/g1N9DGqOuhGB/5Wca0ktDIlODc5CfBbxy+y36a
- ZlWjdlEGl5sRcXuEuBDI1yaDi4cTD99hBEkflOuwHGdaCrwv7TrLMUEVOUIQO2oFzXeXNuFNCY+
- akD1iMGaYTfAXo+9oI/NrR41VZ/y2Yn2EbNQVewdBy+az5x5DNz7jRQXl68eC1aYjFSA0yGYiLR
- Vym74BIafRrU81Lkv0omfXsJLKsLCFtEh1wTRcWFRsK8Goybm1hEwCTTeAUOQae3A7tbEBX0xFi
- HrLYkk6nVIfhOJ8qU1reCzeDO8c9bMWwXyEGpUtljo7xKMKD/darIv1/zPs3+POa7qD6GRCAL6A
- ZWxQZO9nI2lpCpSfa848RMI26JJDeUDRT922WZJz+hD6FVLeud8F7zEws/w90zhWoTHET0p0XVO
- ilIEfX5RededRmw==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 08 Jan 2024 15:22:38 +0100
+Message-Id: <CY9E4ZCHOMWU.C18NR0H7V1QX@fairphone.com>
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Konrad Dybcio" <konrad.dybcio@linaro.org>, "Andy Gross"
+ <agross@kernel.org>, "Bjorn Andersson" <andersson@kernel.org>, "Rob
+ Herring" <robh+dt@kernel.org>, "Krzysztof Kozlowski"
+ <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Bhupesh Sharma" <bhupesh.linux@gmail.com>, "David Heidelberg"
+ <david@ixit.cz>, "Stephan Gerhold" <stephan@gerhold.net>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+ <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH RFT] arm64: dts: qcom: sm8350: Reenable crypto &
+ cryptobam
+X-Mailer: aerc 0.15.2
+References: <20240108-sm8350-qce-v1-1-b7d586ff38af@fairphone.com>
+ <a5923bf7-0a05-43bd-b282-b45e5653ac4d@linaro.org>
+In-Reply-To: <a5923bf7-0a05-43bd-b282-b45e5653ac4d@linaro.org>
 
-Move SC8280XP compatible PCIe devices from qcom,pcie.yaml binding to a
-dedicated file to make reviewing easier.
+On Mon Jan 8, 2024 at 3:18 PM CET, Konrad Dybcio wrote:
+> On 8.01.2024 14:49, Luca Weiss wrote:
+> > When num-channels and qcom,num-ees is not provided in devicetree, the
+> > driver will try to read these values from the registers during probe bu=
+t
+> > this fails if the interconnect is not on and then crashes the system.
+> >=20
+> > So we can provide these properties in devicetree (queried after patchin=
+g
+> > BAM driver to enable the necessary interconnect) so we can probe
+> > cryptobam without reading registers and then also use the QCE as
+> > expected.
+>
+> This really feels a bit backwards.. Enable the resource to query the
+> hardware for numbers, so that said resource can be enabled, but
+> slightly later :/
 
-This creates equivalent schema file, except missing required compatible
-which is actually redundant.
+If you think adding interconnect support to driver and dtsi is better,
+let me know.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../bindings/pci/qcom,pcie-sc8280xp.yaml           | 180 +++++++++++++++++++++
- .../devicetree/bindings/pci/qcom,pcie.yaml         |  54 -------
- 2 files changed, 180 insertions(+), 54 deletions(-)
+Stephan (+CC) mentioned it should be okay like this *shrug*
 
-diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-sc8280xp.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-sc8280xp.yaml
-new file mode 100644
-index 000000000000..25c9f13ae977
---- /dev/null
-+++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sc8280xp.yaml
-@@ -0,0 +1,180 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/pci/qcom,pcie-sc8280xp.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm SC8280XP PCI Express Root Complex
-+
-+maintainers:
-+  - Bjorn Andersson <andersson@kernel.org>
-+  - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-+
-+description:
-+  Qualcomm SC8280XP SoC PCIe root complex controller is based on the Synopsys
-+  DesignWare PCIe IP.
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,pcie-sa8540p
-+      - qcom,pcie-sc8280xp
-+
-+  reg:
-+    minItems: 5
-+    maxItems: 6
-+
-+  reg-names:
-+    minItems: 5
-+    items:
-+      - const: parf # Qualcomm specific registers
-+      - const: dbi # DesignWare PCIe registers
-+      - const: elbi # External local bus interface registers
-+      - const: atu # ATU address space
-+      - const: config # PCIe configuration space
-+      - const: mhi # MHI registers
-+
-+  clocks:
-+    minItems: 8
-+    maxItems: 9
-+
-+  clock-names:
-+    minItems: 8
-+    items:
-+      - const: aux # Auxiliary clock
-+      - const: cfg # Configuration clock
-+      - const: bus_master # Master AXI clock
-+      - const: bus_slave # Slave AXI clock
-+      - const: slave_q2a # Slave Q2A clock
-+      - const: ddrss_sf_tbu # PCIe SF TBU clock
-+      - const: noc_aggr_4 # NoC aggregate 4 clock
-+      - const: noc_aggr_south_sf # NoC aggregate South SF clock
-+      - const: cnoc_qx # Configuration NoC QX clock
-+
-+  resets:
-+    maxItems: 1
-+
-+  reset-names:
-+    items:
-+      - const: pci
-+
-+  vddpe-3v3-supply:
-+    description: A phandle to the PCIe endpoint power supply
-+
-+required:
-+  - interconnects
-+  - interconnect-names
-+
-+allOf:
-+  - $ref: qcom,pcie-common.yaml#
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,pcie-sc8280xp
-+    then:
-+      properties:
-+        interrupts:
-+          minItems: 4
-+          maxItems: 4
-+        interrupt-names:
-+          items:
-+            - const: msi0
-+            - const: msi1
-+            - const: msi2
-+            - const: msi3
-+    else:
-+      properties:
-+        interrupts:
-+          maxItems: 1
-+        interrupt-names:
-+          items:
-+            - const: msi
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-sc8280xp.h>
-+    #include <dt-bindings/gpio/gpio.h>
-+    #include <dt-bindings/interconnect/qcom,sc8280xp.h>
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+
-+    soc {
-+        #address-cells = <2>;
-+        #size-cells = <2>;
-+
-+        pcie@1c20000 {
-+            compatible = "qcom,pcie-sc8280xp";
-+            reg = <0x0 0x01c20000 0x0 0x3000>,
-+                  <0x0 0x3c000000 0x0 0xf1d>,
-+                  <0x0 0x3c000f20 0x0 0xa8>,
-+                  <0x0 0x3c001000 0x0 0x1000>,
-+                  <0x0 0x3c100000 0x0 0x100000>,
-+                  <0x0 0x01c23000 0x0 0x1000>;
-+            reg-names = "parf", "dbi", "elbi", "atu", "config", "mhi";
-+            ranges = <0x01000000 0x0 0x00000000 0x0 0x3c200000 0x0 0x100000>,
-+                     <0x02000000 0x0 0x3c300000 0x0 0x3c300000 0x0 0x1d00000>;
-+
-+            bus-range = <0x00 0xff>;
-+            device_type = "pci";
-+            linux,pci-domain = <2>;
-+            num-lanes = <4>;
-+
-+            #address-cells = <3>;
-+            #size-cells = <2>;
-+
-+            assigned-clocks = <&gcc GCC_PCIE_2A_AUX_CLK>;
-+            assigned-clock-rates = <19200000>;
-+            clocks = <&gcc GCC_PCIE_2A_AUX_CLK>,
-+                     <&gcc GCC_PCIE_2A_CFG_AHB_CLK>,
-+                     <&gcc GCC_PCIE_2A_MSTR_AXI_CLK>,
-+                     <&gcc GCC_PCIE_2A_SLV_AXI_CLK>,
-+                     <&gcc GCC_PCIE_2A_SLV_Q2A_AXI_CLK>,
-+                     <&gcc GCC_DDRSS_PCIE_SF_TBU_CLK>,
-+                     <&gcc GCC_AGGRE_NOC_PCIE_4_AXI_CLK>,
-+                     <&gcc GCC_AGGRE_NOC_PCIE_SOUTH_SF_AXI_CLK>;
-+            clock-names = "aux",
-+                          "cfg",
-+                          "bus_master",
-+                          "bus_slave",
-+                          "slave_q2a",
-+                          "ddrss_sf_tbu",
-+                          "noc_aggr_4",
-+                          "noc_aggr_south_sf";
-+
-+            dma-coherent;
-+
-+            interrupts = <GIC_SPI 86 IRQ_TYPE_LEVEL_HIGH>,
-+                         <GIC_SPI 523 IRQ_TYPE_LEVEL_HIGH>,
-+                         <GIC_SPI 524 IRQ_TYPE_LEVEL_HIGH>,
-+                         <GIC_SPI 525 IRQ_TYPE_LEVEL_HIGH>;
-+            interrupt-names = "msi0", "msi1", "msi2", "msi3";
-+            #interrupt-cells = <1>;
-+            interrupt-map-mask = <0 0 0 0x7>;
-+            interrupt-map = <0 0 0 1 &intc 0 0 GIC_SPI 530 IRQ_TYPE_LEVEL_HIGH>,
-+                            <0 0 0 2 &intc 0 0 GIC_SPI 531 IRQ_TYPE_LEVEL_HIGH>,
-+                            <0 0 0 3 &intc 0 0 GIC_SPI 532 IRQ_TYPE_LEVEL_HIGH>,
-+                            <0 0 0 4 &intc 0 0 GIC_SPI 533 IRQ_TYPE_LEVEL_HIGH>;
-+
-+            interconnects = <&aggre2_noc MASTER_PCIE_2A 0 &mc_virt SLAVE_EBI1 0>,
-+                            <&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_2A 0>;
-+            interconnect-names = "pcie-mem", "cpu-pcie";
-+
-+            phys = <&pcie2a_phy>;
-+            phy-names = "pciephy";
-+
-+            pinctrl-0 = <&pcie2a_default>;
-+            pinctrl-names = "default";
-+
-+            power-domains = <&gcc PCIE_2A_GDSC>;
-+
-+            resets = <&gcc GCC_PCIE_2A_BCR>;
-+            reset-names = "pci";
-+
-+            perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
-+            wake-gpios = <&tlmm 145 GPIO_ACTIVE_LOW>;
-+            vddpe-3v3-supply = <&vreg_nvme>;
-+        };
-+    };
-diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-index 6e03a1bce5d4..c8f36978a94c 100644
---- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-+++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-@@ -28,11 +28,9 @@ properties:
-           - qcom,pcie-ipq8074-gen3
-           - qcom,pcie-msm8996
-           - qcom,pcie-qcs404
--          - qcom,pcie-sa8540p
-           - qcom,pcie-sa8775p
-           - qcom,pcie-sc7280
-           - qcom,pcie-sc8180x
--          - qcom,pcie-sc8280xp
-           - qcom,pcie-sdm845
-           - qcom,pcie-sdx55
-       - items:
-@@ -210,7 +208,6 @@ allOf:
-               - qcom,pcie-sa8775p
-               - qcom,pcie-sc7280
-               - qcom,pcie-sc8180x
--              - qcom,pcie-sc8280xp
-               - qcom,pcie-sdx55
-     then:
-       properties:
-@@ -538,36 +535,6 @@ allOf:
-           items:
-             - const: pci # PCIe core reset
- 
--  - if:
--      properties:
--        compatible:
--          contains:
--            enum:
--              - qcom,pcie-sa8540p
--              - qcom,pcie-sc8280xp
--    then:
--      properties:
--        clocks:
--          minItems: 8
--          maxItems: 9
--        clock-names:
--          minItems: 8
--          items:
--            - const: aux # Auxiliary clock
--            - const: cfg # Configuration clock
--            - const: bus_master # Master AXI clock
--            - const: bus_slave # Slave AXI clock
--            - const: slave_q2a # Slave Q2A clock
--            - const: ddrss_sf_tbu # PCIe SF TBU clock
--            - const: noc_aggr_4 # NoC aggregate 4 clock
--            - const: noc_aggr_south_sf # NoC aggregate South SF clock
--            - const: cnoc_qx # Configuration NoC QX clock
--        resets:
--          maxItems: 1
--        reset-names:
--          items:
--            - const: pci # PCIe core reset
--
-   - if:
-       properties:
-         compatible:
-@@ -623,9 +590,7 @@ allOf:
-         compatible:
-           contains:
-             enum:
--              - qcom,pcie-sa8540p
-               - qcom,pcie-sa8775p
--              - qcom,pcie-sc8280xp
-     then:
-       required:
-         - interconnects
-@@ -692,24 +657,6 @@ allOf:
-                 - const: msi6
-                 - const: msi7
- 
--  - if:
--      properties:
--        compatible:
--          contains:
--            enum:
--              - qcom,pcie-sc8280xp
--    then:
--      properties:
--        interrupts:
--          minItems: 4
--          maxItems: 4
--        interrupt-names:
--          items:
--            - const: msi0
--            - const: msi1
--            - const: msi2
--            - const: msi3
--
-   - if:
-       properties:
-         compatible:
-@@ -724,7 +671,6 @@ allOf:
-               - qcom,pcie-ipq8074
-               - qcom,pcie-ipq8074-gen3
-               - qcom,pcie-qcs404
--              - qcom,pcie-sa8540p
-     then:
-       properties:
-         interrupts:
+For the record, this is the same way I got the values for sc7280[0] and
+sm6350[1].
 
--- 
-2.34.1
+[0] https://lore.kernel.org/linux-arm-msm/20231229-sc7280-cryptobam-fixup-v=
+1-1-bd8f68589b80@fairphone.com/
+[1] https://lore.kernel.org/linux-arm-msm/20240105-sm6350-qce-v1-0-416e5c73=
+19ac@fairphone.com/
 
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qco=
+m/sm8350.dtsi
+index b46236235b7f..cd4dd9852d9e 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -1756,8 +1756,8 @@ cryptobam: dma-controller@1dc4000 {
+ 			qcom,controlled-remotely;
+ 			iommus =3D <&apps_smmu 0x594 0x0011>,
+ 				 <&apps_smmu 0x596 0x0011>;
+-			/* FIXME: Probing BAM DMA causes some abort and system hang */
+-			status =3D "fail";
++			interconnects =3D <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
++			interconnect-names =3D "memory";
+ 		};
+=20
+ 		crypto: crypto@1dfa000 {
+diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+index 5e7d332731e0..9de28f615639 100644
+--- a/drivers/dma/qcom/bam_dma.c
++++ b/drivers/dma/qcom/bam_dma.c
+@@ -40,6 +40,7 @@
+ #include <linux/circ_buf.h>
+ #include <linux/clk.h>
+ #include <linux/dmaengine.h>
++#include <linux/interconnect.h>
+ #include <linux/pm_runtime.h>
+=20
+ #include "../dmaengine.h"
+@@ -394,6 +395,7 @@ struct bam_device {
+ 	const struct reg_offset_data *layout;
+=20
+ 	struct clk *bamclk;
++	struct icc_path *mem_path;
+ 	int irq;
+=20
+ 	/* dma start transaction tasklet */
+@@ -1206,6 +1208,7 @@ static int bam_init(struct bam_device *bdev)
+ 		bdev->num_channels =3D val & BAM_NUM_PIPES_MASK;
+ 	}
+=20
++	printk(KERN_ERR "%s:%d DBG num_ees=3D%u num_channels=3D%u\n", __func__, _=
+_LINE__, bdev->num_ees, bdev->num_channels);
+ 	/* Reset BAM now if fully controlled locally */
+ 	if (!bdev->controlled_remotely && !bdev->powered_remotely)
+ 		bam_reset(bdev);
+@@ -1298,6 +1301,14 @@ static int bam_dma_probe(struct platform_device *pde=
+v)
+ 		return ret;
+ 	}
+=20
++	bdev->mem_path =3D devm_of_icc_get(bdev->dev, "memory");
++	if (IS_ERR(bdev->mem_path))
++		return PTR_ERR(bdev->mem_path);
++
++	ret =3D icc_set_bw(bdev->mem_path, 1, 1);
++	if (ret)
++		return ret;
++
+ 	ret =3D bam_init(bdev);
+ 	if (ret)
+ 		goto err_disable_clk;
 
