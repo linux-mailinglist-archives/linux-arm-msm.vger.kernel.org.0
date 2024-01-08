@@ -1,206 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-6659-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6660-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B0B28272F1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 16:24:58 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CD5D827308
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 16:28:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 120111F23A6C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 15:24:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CCA041F24C9A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 15:28:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A013C4C629;
-	Mon,  8 Jan 2024 15:24:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2E314C624;
+	Mon,  8 Jan 2024 15:28:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HfRsZzVp"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MyHYK5TC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8E451015
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jan 2024 15:24:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-50e7abe4be4so2272469e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 07:24:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704727486; x=1705332286; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VDfXxaJLBdAHE/PCKaUTkc4Ha2Yd2YR4JkUzxupj3v0=;
-        b=HfRsZzVpwz7gN1C4c+TM9/cOZ8kaQoM3VdD27geWtxvv2YEovQWTC7auApwsG7sQTI
-         HZTqnrBTHyTfDORhzOjlkSNGvlawYk51wrZeucPuXF/NFwU2QDaNfsKPiQlGdws7oTFg
-         CFLv+02uUINvfdMlN/MTAnVS50d7yAf6pWGVIhaDpRfTurt4yHp6tVhy4XcETpAJT/Qm
-         XzfCzooqf0khLb+zcDw2fXgNkojc79cmcOQbuRwfreTuzMTszmtICANJl2V/I29HZttg
-         y4YPX2aLgdtEJwW8D08E8CI4i+mim1JJMOzTv+E1zIcQEFPiRQ9nAt7ULYPptKvP1g+u
-         VPlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704727486; x=1705332286;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=VDfXxaJLBdAHE/PCKaUTkc4Ha2Yd2YR4JkUzxupj3v0=;
-        b=aV3F4hoVWToS7faeXOdVl6q7YKZwpd8bUmykCfHq8WTUe6coW6roFFyIxLHBTO4NgK
-         l4SDJYa515N5gaGL7tSAiUgPVndl1nUJ7FjNrsRptu4ekjMTXzzifzeV7ZWG0cgAl/+O
-         I7OzBMHTdD5JOABGhfkxlh6kjuAZWyM40pCsIbPNbJxKAayFXELnNNQXKnz7RFdWQkjd
-         zyklFwVq8g+xvicoOfawMgbhVJaE6UfBwdTDQW9p9sWzsPnl25BDL/INGvdOKFCFGQA8
-         bTModVQSkjkr+ktIp8w0J9Im5EQxNdEp/aNCvrbCf7mG9BOQUuTJMFXMQZw3+MypwKPc
-         EB9Q==
-X-Gm-Message-State: AOJu0Yw12+A5QRfq8iDAe7/saGPA1Hi+4l1LHUXqLStF/cqWm4jcSabP
-	VAYkU0IHj6v5U9C+8+xgjAto6Y5HDcmvbg==
-X-Google-Smtp-Source: AGHT+IHYCa4xZPwbtgnWPlFUxuQ1nlQ0aFXos10SnAsRHcyZ7Yew62wRDqXCpkRZOGiwrgwv3o6ftQ==
-X-Received: by 2002:ac2:4822:0:b0:50e:6ddb:551d with SMTP id 2-20020ac24822000000b0050e6ddb551dmr1425719lft.73.1704727485712;
-        Mon, 08 Jan 2024 07:24:45 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:32b:5e85:79f9:3fde? ([2a01:e0a:982:cbb0:32b:5e85:79f9:3fde])
-        by smtp.gmail.com with ESMTPSA id qu27-20020a170907111b00b00a2af877a85dsm457794ejb.6.2024.01.08.07.24.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Jan 2024 07:24:45 -0800 (PST)
-Message-ID: <abefffc7-35d0-4c29-a892-48ec606acbf8@linaro.org>
-Date: Mon, 8 Jan 2024 16:24:40 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2775951C21;
+	Mon,  8 Jan 2024 15:28:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4089cFQ7008037;
+	Mon, 8 Jan 2024 15:28:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version:content-type; s=
+	qcppdkim1; bh=CYB+yZ7CYnJ3JgARwyARaz8EHaN6Gp5CvcbnUwoEwwA=; b=My
+	HYK5TCDIy+Jkz2sieVdLV5IngFTKAfzSaD1kHtI1pZJu3GFqPg9c4eNbV1Q1LBx7
+	wJgXgnOP27JDBpKyxMSTxGlkRDCypf7g7jqB6RuT/a/kot0ViuT1Ufii7dgFTjm6
+	p3oYTp2mQtPl8CIvnqZg3ohKPEHPlB/ocIVcssyh8YBBb5BeJStv3ZkVc5SXdVJV
+	ze5MYkHVLecP+HSTZGjAZjgxPls35vPfiIKE9MEf87vKMa3f7gaNU0bMeeMgS9us
+	oIzDKOhwi47IzTwuCRS3J3Ng2LP4jBFkHNoeMkLiZfZOeHdjJ7PImHZLFCnycTQT
+	KrF9H/Sb+jndeGiIbJCA==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vgch50yts-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 08 Jan 2024 15:27:59 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 408FRw80020765
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 8 Jan 2024 15:27:58 GMT
+Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Mon, 8 Jan 2024 07:27:56 -0800
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <linus.walleij@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, Mukesh Ojha <quic_mojha@quicinc.com>
+Subject: [PATCH v11 0/4] Misc SCM driver changes
+Date: Mon, 8 Jan 2024 20:57:30 +0530
+Message-ID: <1704727654-13999-1-git-send-email-quic_mojha@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [RFC 0/9] PCI: introduce the concept of power sequencing of PCIe
- devices
-Content-Language: en-US, fr
-To: Bartosz Golaszewski <brgl@bgdev.pl>, Kalle Valo <kvalo@kernel.org>,
- "David S . Miller" <davem@davemloft.net>, Eric Dumazet
- <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- Bjorn Helgaas <bhelgaas@google.com>, Heiko Stuebner <heiko@sntech.de>,
- Jernej Skrabec <jernej.skrabec@gmail.com>,
- Chris Morgan <macromorgan@hotmail.com>,
- Linus Walleij <linus.walleij@linaro.org>,
- Geert Uytterhoeven <geert+renesas@glider.be>, Arnd Bergmann <arnd@arndb.de>,
- =?UTF-8?Q?N=C3=ADcolas_F_=2E_R_=2E_A_=2E_Prado?= <nfraprado@collabora.com>,
- Marek Szyprowski <m.szyprowski@samsung.com>, Peng Fan <peng.fan@nxp.com>,
- Robert Richter <rrichter@amd.com>, Dan Williams <dan.j.williams@intel.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Terry Bowman <terry.bowman@amd.com>,
- Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
- =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
- Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>,
- Srini Kandagatla <srinivas.kandagatla@linaro.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-pci@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20240104130123.37115-1-brgl@bgdev.pl>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <20240104130123.37115-1-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: dHtLPICOnwYmwbO7JDkSuNh2Uk8iuz1R
+X-Proofpoint-GUID: dHtLPICOnwYmwbO7JDkSuNh2Uk8iuz1R
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1011
+ lowpriorityscore=0 malwarescore=0 mlxscore=0 adultscore=0 impostorscore=0
+ phishscore=0 suspectscore=0 priorityscore=1501 mlxlogscore=999 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
+ definitions=main-2401080132
 
-Hi,
+First two changes changes are needed to enable download mode on
+chipset like IPQ9574 and IPQ5332 SoCs as for these targets others
+bits in download mode registers are used for different purpose
+and earlier kernel code was mistakenly overwrite the other bits.
 
-On 04/01/2024 14:01, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> During last year's Linux Plumbers we had several discussions centered
-> around the need to power-on PCI devices before they can be detected on
-> the bus.
-> 
-> The consensus during the conference was that we need to introduce a
-> class of "PCI slot drivers" that would handle the power-sequencing.
-> 
-> After some additional brain-storming with Manivannan and the realization
-> that the DT maintainers won't like adding any "fake" nodes not
-> representing actual devices, we decided to reuse the existing
-> infrastructure provided by the PCIe port drivers.
-> 
-> The general idea is to instantiate platform devices for child nodes of
-> the PCIe port DT node. For those nodes for which a power-sequencing
-> driver exists, we bind it and let it probe. The driver then triggers a
-> rescan of the PCI bus with the aim of detecting the now powered-on
-> device. The device will consume the same DT node as the platform,
-> power-sequencing device. We use device links to make the latter become
-> the parent of the former.
-> 
-> The main advantage of this approach is not modifying the existing DT in
-> any way and especially not adding any "fake" platform devices.
+First three changes(1/4-3/4) are SCM driver specific while 4/4 from
+pinctrl try to use the introduced API(1/3).
 
-I've successfully tested this serie for the WCN7850 Wifi/BT combo onboard chip
-present on the SM8550-QRD and SM8650-QRD boards and it works just fine.
+Changes from v10:
+ - Rebased on linux-next tag 20240108
 
-Here's a branch with the wcn7850 vreg table added to the pwrseq driver,
-and the DT changes:
-https://git.codelinaro.org/neil.armstrong/linux/-/commits/topic/sm8x50/wcn7850-wifi-pwrseq/?ref_type=heads
+Changes from v9: https://lore.kernel.org/lkml/1698648967-974-1-git-send-email-quic_mojha@quicinc.com/
+ - Added 3/4 new patch.
+ - commit subject modification.
 
-Thanks,
-Neil
+Change from v8: https://lore.kernel.org/lkml/1698235506-16993-1-git-send-email-quic_mojha@quicinc.com/
+ - Introduce enum for dload mode constants as per suggestion from [Elliot].
+ - Rebased on linux-next.
 
-> 
-> Bartosz Golaszewski (9):
->    arm64: dts: qcom: sm8250: describe the PCIe port
->    arm64: dts: qcom: qrb5165-rb5: describe the WLAN module of QCA6390
->    PCI/portdrv: create platform devices for child OF nodes
->    PCI: hold the rescan mutex when scanning for the first time
->    PCI/pwrseq: add pwrseq core code
->    dt-bindings: vendor-prefixes: add a PCI prefix for Qualcomm Atheros
->    dt-bindings: wireless: ath11k: describe QCA6390
->    PCI/pwrseq: add a pwrseq driver for QCA6390
->    arm64: defconfig: enable the PCIe power sequencing for QCA6390
-> 
->   .../net/wireless/qcom,ath11k-pci.yaml         |  14 ++
->   .../devicetree/bindings/vendor-prefixes.yaml  |   1 +
->   arch/arm64/boot/dts/qcom/qrb5165-rb5.dts      |  24 +++
->   arch/arm64/boot/dts/qcom/sm8250.dtsi          |  10 +
->   arch/arm64/configs/defconfig                  |   2 +
->   drivers/pci/pcie/Kconfig                      |   2 +
->   drivers/pci/pcie/Makefile                     |   2 +
->   drivers/pci/pcie/portdrv.c                    |   3 +-
->   drivers/pci/pcie/pwrseq/Kconfig               |  19 ++
->   drivers/pci/pcie/pwrseq/Makefile              |   4 +
->   drivers/pci/pcie/pwrseq/pcie-pwrseq-qca6390.c | 197 ++++++++++++++++++
->   drivers/pci/pcie/pwrseq/pwrseq.c              |  83 ++++++++
->   drivers/pci/probe.c                           |   2 +
->   include/linux/pcie-pwrseq.h                   |  24 +++
->   14 files changed, 386 insertions(+), 1 deletion(-)
->   create mode 100644 drivers/pci/pcie/pwrseq/Kconfig
->   create mode 100644 drivers/pci/pcie/pwrseq/Makefile
->   create mode 100644 drivers/pci/pcie/pwrseq/pcie-pwrseq-qca6390.c
->   create mode 100644 drivers/pci/pcie/pwrseq/pwrseq.c
->   create mode 100644 include/linux/pcie-pwrseq.h
-> 
+Changes from v7: https://lore.kernel.org/lkml/1696440338-12561-1-git-send-email-quic_mojha@quicinc.com/
+ - Rebased it on next-20231025.
+ - Added reviewed-by tag and take care of comment made about
+   commit text should be in imperative mode.
+ - Modified the name of the API to qcom_scm_io_rmw() as per suggestion
+   made by [Dmitry]
+ - Moved spinlock inside qcom_scm structure.
+ - Corrected the patch order as per subsystem SCM first then pinctrl.
+
+Change from minidump-v5(13/17-15/17):https://lore.kernel.org/lkml/1694429639-21484-1-git-send-email-quic_mojha@quicinc.com/ - Removed mistakenly added macros.
+   https://lore.kernel.org/lkml/9da888dc-401a-4cbb-b616-b4654fa79e35@quicinc.com/
+ - Added Acked-by tag from Linus.w to 2/3.
+Change from minidump-v5(13/17-15/17):https://lore.kernel.org/lkml/1694429639-21484-1-git-send-email-quic_mojha@quicinc.com/
+ - Removed mistakenly added macros.
+   https://lore.kernel.org/lkml/9da888dc-401a-4cbb-b616-b4654fa79e35@quicinc.com/
+ - Added Acked-by tag from Linus.w to 2/3.
+
+Changes in v6: https://lore.kernel.org/lkml/1680076012-10785-1-git-send-email-quic_mojha@quicinc.com/
+ - Rebased it on latest tag available on linux-next
+ - Added missed Poovendhan sign-off on 15/17 and tested-by tag from
+   Kathiravan. Thanks to him for testing and reminding me of missing sign-off.
+ - Addressed comments made on dload mode patch v6 version
+
+Changes in v5: https://lore.kernel.org/lkml/1680017869-22421-1-git-send-email-quic_mojha@quicinc.com/
+  - Tried to fix the issue reported by kernel test robot
+    https://lore.kernel.org/lkml/202303280535.acb66sQT-lkp@intel.com/
+
+  - Applied some of the improvement suggested by [Bjorn.andersson]
+
+    . Dropped 'both' instead support full,mini or mini,full for setting download
+    mode to collect both minidump and full dump.
+
+    . logging improvement.
+
+Changes in v4: https://lore.kernel.org/lkml/1679935281-18445-1-git-send-email-quic_mojha@quicinc.com/
+  - val should be shifted within the function [srinivas.kandagatla]
+    i.e new = (old & ~mask) | (val << ffs(mask) - 1);
+  - Added Acked-by [linus.walleij] on pinctrl change.
+
+Changes in v3 : https://lore.kernel.org/lkml/1679070482-8391-1-git-send-email-quic_mojha@quicinc.com/
+ - Removed [1] from the series and sent as a separate patch[2], although this series
+   should be applied on top [2].
+  [1] https://lore.kernel.org/lkml/1677664555-30191-2-git-send-email-quic_mojha@quicinc.com/
+  [2] https://lore.kernel.org/lkml/1678979666-551-1-git-send-email-quic_mojha@quicinc.com/
+ - Introduce new exported symbol on suggestion from [srinivas.kandagatla]
+ - Use the symbol from drivers/pinctrl/qcom/pinctrl-msm.c.
+ - Addressed comment given by [dmitry.baryshkov]
+ - Converted non-standard Originally-by to Signed-off-by.
+
+Changes in v2: https://lore.kernel.org/lkml/1677664555-30191-1-git-send-email-quic_mojha@quicinc.com/
+ - Addressed comment made by [bjorn]
+ - Added download mask.
+ - Passed download mode as parameter
+ - Accept human accepatable download mode string.
+ - enable = !!dload_mode
+ - Shifted module param callback to somewhere down in
+   the file so that it no longer need to know the
+   prototype of qcom_scm_set_download_mode()
+ - updated commit text.
+
+Mukesh Ojha (4):
+  firmware: qcom: scm: provide a read-modify-write function
+  firmware: qcom: scm: Modify only the download bits in TCSR register
+  firmware: qcom: scm: Rework dload mode availability check
+  pinctrl: qcom: Use qcom_scm_io_rmw() function
+
+ drivers/firmware/qcom/qcom_scm.c       | 50 ++++++++++++++++++++++++++++------
+ drivers/pinctrl/qcom/pinctrl-msm.c     | 10 +++----
+ include/linux/firmware/qcom/qcom_scm.h |  1 +
+ 3 files changed, 47 insertions(+), 14 deletions(-)
+
+-- 
+2.7.4
 
 
