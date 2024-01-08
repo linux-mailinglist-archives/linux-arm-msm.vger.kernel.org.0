@@ -1,37 +1,37 @@
-Return-Path: <linux-arm-msm+bounces-6606-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6607-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C3AB826DD5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 13:28:26 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69BA7826DFA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 13:31:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 931531C22431
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 12:28:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 27E2B1F21638
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jan 2024 12:31:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F7EF405F6;
-	Mon,  8 Jan 2024 12:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC3E842062;
+	Mon,  8 Jan 2024 12:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LZXI+cGg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Db3kakRG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF2B40BEA;
-	Mon,  8 Jan 2024 12:27:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE886C433CB;
-	Mon,  8 Jan 2024 12:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C429144373;
+	Mon,  8 Jan 2024 12:28:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77FD4C433C7;
+	Mon,  8 Jan 2024 12:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704716873;
-	bh=1lexW2BtbdnsU7sj5WuiLgGQQK/Pkc4qG3Tgh0ZgQE0=;
+	s=k20201202; t=1704716910;
+	bh=0pMd2NkwNypVAaJM69uyrT+5T8QfS6QQ5RO+ZUtRpXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LZXI+cGgqSb9NQOvk120HQqFwqwpMFuqljiD8sGc72aCpJ7NCd16WJJRZ0SXnbt/2
-	 dzASgOmGzEqArnJIY0DYq3kCUnBK/AI7A/ufyJf3OasW1Hwd5XfcAC3u5wR2Ous8gj
-	 jTYqF7zN0DFGs6+hp1+9xo+67xp6TAebGlRHTrDK4qLzCfx31NmO5gR/WRaBtQt47T
-	 1dbOHzLuYhL86Iw/7T77OnMHvpP214Iihtc6vX81Q1jSHLi3DAbgWbjuZkI32X4O6K
-	 SZGWo2OkcbLYQgcEf9Kx6wE6eNCMuBulMueQW1570q8s9T2aHbqlsJ2bwes0o2+jF3
-	 fpwFUJxfTBxuQ==
+	b=Db3kakRGAwSdt/FNxpSsXNmSuivh5BEfLvgZGP5d2puphSjMxbxep1aVv1bI8VfJ+
+	 NP8jT80GvL5Q3+tCuRgWXzbd/b+IwLh3QHovRYSNDUH2Mt1sETL/PsfINLFOvSVNFy
+	 LWdUYqv6sOhbZ/GBX/CQjvXMNahAgDiHhGpjolGg82FVW5dMtunojXBtkpG+Wkqf9e
+	 2jrW4FZgbn4wP6dBsGQS4MIzRt76Hl72wNo819xd1hU77fkP+EpEGqVwaP198WIWu/
+	 2szOxDeMcdWHpGd7vH3+28zdd0oh1HZMQCigCiGzZGkFNlb2A/XwebOYoTRULr/VZ8
+	 RSkcdcbxEYXlA==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -44,12 +44,12 @@ Cc: Sarannya S <quic_sarannya@quicinc.com>,
 	pabeni@redhat.com,
 	linux-arm-msm@vger.kernel.org,
 	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 3/8] net: qrtr: ns: Return 0 if server port is not present
-Date: Mon,  8 Jan 2024 07:27:19 -0500
-Message-ID: <20240108122745.2090122-3-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.1 3/5] net: qrtr: ns: Return 0 if server port is not present
+Date: Mon,  8 Jan 2024 07:28:14 -0500
+Message-ID: <20240108122823.2090312-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240108122745.2090122-1-sashal@kernel.org>
-References: <20240108122745.2090122-1-sashal@kernel.org>
+In-Reply-To: <20240108122823.2090312-1-sashal@kernel.org>
+References: <20240108122823.2090312-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,7 +58,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.6.10
+X-stable-base: Linux 6.1.71
 Content-Transfer-Encoding: 8bit
 
 From: Sarannya S <quic_sarannya@quicinc.com>
@@ -84,10 +84,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
-index b1db0b519179b..abb0c70ffc8b0 100644
+index 3e40a1ba48f79..4a13b9f7abb44 100644
 --- a/net/qrtr/ns.c
 +++ b/net/qrtr/ns.c
-@@ -512,7 +512,9 @@ static int ctrl_cmd_del_server(struct sockaddr_qrtr *from,
+@@ -569,7 +569,9 @@ static int ctrl_cmd_del_server(struct sockaddr_qrtr *from,
  	if (!node)
  		return -ENOENT;
  
