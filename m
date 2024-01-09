@@ -1,128 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-6733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B80D8283F6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 11:27:01 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B10C7828400
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 11:27:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CDC151F240F5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 10:27:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3979FB23D84
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 10:27:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B463360AC;
-	Tue,  9 Jan 2024 10:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A7CD36AE3;
+	Tue,  9 Jan 2024 10:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gR8WJl1J"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="VhkYgAMh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3C5360A8
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jan 2024 10:26:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-dbed729a4f2so1966804276.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jan 2024 02:26:55 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6167B364BC
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jan 2024 10:27:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2cd64022164so7301821fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jan 2024 02:27:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704796015; x=1705400815; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=kgqGlkcMY7u56Ey8Ssan/W4yPE2JFQtM3N3GgOR/j04=;
-        b=gR8WJl1J//qv9if6koihIbit0Zd7NxTDX7R0irdnFoqdnSsM5W4AYuMSN/Q1P+Lq9k
-         vc/6hEtrPhFqo9ZNhdcH2Zm/QJ1vQFQOiOU87J6V14C2vYYdc53AZt2Q7JXBnrBUC5Cm
-         FtbqfYYhpdiRIioTF7l2TbUMNd0uz3azs+u7705vmcZ8wqCAcE5DlMTzMZ1FVH8PBtPV
-         nf6oN/wvRmysmK+WpdAgfi2AdzAx1SFcz+WA46hi5WCMIz3JsYjGXCQyc44AkhJsoMLH
-         1k1VKlpdkFSer1fVr9XSWFbLjya6Hjux4gYI28JqoQzhLn1gtFsuLRS1ZpsFcbBoHt9D
-         HCQQ==
+        d=chromium.org; s=google; t=1704796019; x=1705400819; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KqCs7xVcoH/Y335TS6+AvlQypI4PD3ESEDIAEMa+9Hk=;
+        b=VhkYgAMhO7m5TnvRWFXeaN2j+exrFFMz8//NhnccrsQpqArRU14OviQGQvA1MwKXnr
+         gqFoaFUaj9/R/5kFHRT9SnSjTWEHKis1grFmiExoXzBomhK7+m3JA9oqUkfR37s+MekT
+         ECIdVndwnRfI3TwD8B17VCb07O2FKUDlDBf2U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704796015; x=1705400815;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kgqGlkcMY7u56Ey8Ssan/W4yPE2JFQtM3N3GgOR/j04=;
-        b=HSBoygn6Ys7LUs9tN5akIkCHoAeni2SWdt52dIQe8cG4H7/PrI6OpDzYh90Kk6CwUp
-         T6RdHPVI3/22O5UovipVJru/dqqHgJ6c563lIXwZktwqXRd+R8L00zMNNYf0WHGGgRh2
-         pnbd3ckepH4N0Gk3bAuQK+D3gL85Gw5JnLr14aLWL9Vr7ESOZibPYGdxYehd/oEishsh
-         p3p4nAbqT7CxW86VQ0wwSWO8OQp1FdG0Y73lhzsuSND9k0MqBBgxR7MW1N2ZZhUOtVzr
-         czfFFWg3dX2hqrwfKxqHwl1krb+T3NFMO6BU/VFVCSaQsWt/vhADjTqAem1O/rwValn4
-         f7QA==
-X-Gm-Message-State: AOJu0YxB3H3v5asSbQnqXgGjBfT8HJIhbM02dOTCucmBm9kEexvYXkmk
-	pc/thfwgJ8Z1XYK1pH2+jVecRoILtYPKP2QkLOC8q3lQQSTlaA==
-X-Google-Smtp-Source: AGHT+IEQcZ6P9lXrBSBQ98idjcrgG87Zex/N/4zJ2/Drg8bOifKzxnfvcNAyWLYxJMhEyMuLNyRozZ9WLgS7M5DCWzc=
-X-Received: by 2002:a25:fe10:0:b0:dbe:ab5b:c659 with SMTP id
- k16-20020a25fe10000000b00dbeab5bc659mr2117007ybe.37.1704796014777; Tue, 09
- Jan 2024 02:26:54 -0800 (PST)
+        d=1e100.net; s=20230601; t=1704796019; x=1705400819;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KqCs7xVcoH/Y335TS6+AvlQypI4PD3ESEDIAEMa+9Hk=;
+        b=MKIyjHOf6syleP/dN8R/Ja1fEquHu7IIHqyzVn2TTnM5z0eZFE1Yun0qSCWZbFXCN0
+         GMP5lJZi4+NJ7wCUoITu1KNiurCgieiis+ZWFQ/XGrR/ROasjWPa1MLTpMuD5o003yxg
+         NIPOqJRdM1qkVUjqHbMeFpxZaTobHkC8BuJM4o2TxKYySoj7BgvY5hdm8s3EW9/hq5ID
+         Q2RS6Jhp1SrQQZRG2QDWmqwB2kOktVPTbcMFQOW19GfpHPSm4lEl+ALvPOBIDBimf7PG
+         zN8X7zFA5e1EPgd3whOMTHH8BXzfEGLkSORyOz/urboYO3Ev0ZCePW9zBayTegkPrFiV
+         FW4Q==
+X-Gm-Message-State: AOJu0YysHEJUN93islhm8W/ZEf3hKRh1ymnkkngorO7S2c0xqeuPKr0M
+	TyKSM3MLW+/ZKOPtI5YT7QfuTgDEDtAPh36vtXBYE7LgWxEt
+X-Google-Smtp-Source: AGHT+IGQso15KMjS2y4XlmEYUeEkRxHzMQ28n8NcqMI0p1GE1exj8UpVAFn8ANEkOOkgRsxqhphrTsJBnkvvGkjEwO8=
+X-Received: by 2002:a2e:c42:0:b0:2cc:9882:4cb5 with SMTP id
+ o2-20020a2e0c42000000b002cc98824cb5mr2242827ljd.45.1704796019352; Tue, 09 Jan
+ 2024 02:26:59 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240105-fp4-thermals-v1-0-f95875a536b7@fairphone.com>
- <20240105-fp4-thermals-v1-2-f95875a536b7@fairphone.com> <18dc5f88-6590-4e2d-948f-fd77f4713f8b@linaro.org>
-In-Reply-To: <18dc5f88-6590-4e2d-948f-fd77f4713f8b@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 9 Jan 2024 12:26:43 +0200
-Message-ID: <CAA8EJpp5ZwJUJbbt7YG=1aAdGoScA+PTEf==7gJk3RUP2yu8uw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm7225-fairphone-fp4: Add PM6150L thermals
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Luca Weiss <luca.weiss@fairphone.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Rob Herring <robh+dt@kernel.org>, 
+References: <20240104130123.37115-1-brgl@bgdev.pl> <20240104130123.37115-9-brgl@bgdev.pl>
+ <15443d5d-6544-45d0-afeb-b23e6a041ecf@quicinc.com> <87jzoizwz7.fsf@kernel.org>
+ <CAGXv+5FhYY+qyyT8wxY5DggvWPibfM2ypHVKQbsJZ30VkZDAkQ@mail.gmail.com>
+ <87bk9uzum9.fsf@kernel.org> <5904461c-ca3c-4eb1-a44a-876872234545@app.fastmail.com>
+In-Reply-To: <5904461c-ca3c-4eb1-a44a-876872234545@app.fastmail.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
+Date: Tue, 9 Jan 2024 18:26:48 +0800
+Message-ID: <CAGXv+5EHc08sv5+=tnFmoDAQhbD7ZS+XBOyaiSndaiSFhMksAA@mail.gmail.com>
+Subject: Re: [RFC 8/9] PCI/pwrseq: add a pwrseq driver for QCA6390
+To: Arnd Bergmann <arnd@arndb.de>
+Cc: Kalle Valo <kvalo@kernel.org>, Jeff Johnson <quic_jjohnson@quicinc.com>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, "David S . Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh+dt@kernel.org>, 
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, =?UTF-8?Q?Heiko_St=C3=BCbner?= <heiko@sntech.de>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Chris Morgan <macromorgan@hotmail.com>, 
+	Linus Walleij <linus.walleij@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, 
+	=?UTF-8?B?TsOtY29sYXMgRi4gUi4gQS4gUHJhZG8=?= <nfraprado@collabora.com>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Peng Fan <peng.fan@nxp.com>, 
+	Robert Richter <rrichter@amd.com>, Dan Williams <dan.j.williams@intel.com>, 
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>, Terry Bowman <terry.bowman@amd.com>, 
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>, 
+	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+	Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>, 
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-wireless@vger.kernel.org, 
+	Netdev <netdev@vger.kernel.org>, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 9 Jan 2024 at 12:10, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+On Tue, Jan 9, 2024 at 6:15=E2=80=AFPM Arnd Bergmann <arnd@arndb.de> wrote:
 >
->
->
-> On 1/5/24 15:54, Luca Weiss wrote:
-> > Configure the thermals for the PA_THERM1, MSM_THERM, PA_THERM0,
-> > RFC_CAM_THERM, CAM_FLASH_THERM and QUIET_THERM thermistors connected to
-> > PM6150L.
+> On Tue, Jan 9, 2024, at 11:09, Kalle Valo wrote:
+> > Chen-Yu Tsai <wenst@chromium.org> writes:
+> >> On Tue, Jan 9, 2024 at 5:18=E2=80=AFPM Kalle Valo <kvalo@kernel.org> w=
+rote:
+> >>> Jeff Johnson <quic_jjohnson@quicinc.com> writes:
+> >>>
+> >>> > On 1/4/2024 5:01 AM, Bartosz Golaszewski wrote:
+> >>> >> diff --git a/drivers/pci/pcie/pwrseq/Kconfig b/drivers/pci/pcie/pw=
+rseq/Kconfig
+> >>> >> index 010e31f432c9..f9fe555b8506 100644
+> >>> >> --- a/drivers/pci/pcie/pwrseq/Kconfig
+> >>> >> +++ b/drivers/pci/pcie/pwrseq/Kconfig
+> >>> >> @@ -6,3 +6,14 @@ menuconfig PCIE_PWRSEQ
+> >>> >>      help
+> >>> >>        Say yes here to enable support for PCIe power sequencing
+> >>> >>        drivers.
+> >>> >> +
+> >>> >> +if PCIE_PWRSEQ
+> >>> >> +
+> >>> >> +config PCIE_PWRSEQ_QCA6390
+> >>> >> +    tristate "PCIe Power Sequencing driver for QCA6390"
+> >>> >> +    depends on ARCH_QCOM || COMPILE_TEST
+> >>> >> +    help
+> >>> >> +      Enable support for the PCIe power sequencing driver for the
+> >>> >> +      ath11k module of the QCA6390 WLAN/BT chip.
+> >>> >> +
+> >>> >> +endif
+> >>> >
+> >>> > As I mentioned in the 5/9 patch I'm concerned that the current
+> >>> > definition of PCIE_PWRSEQ and PCIE_PWRSEQ_QCA6390 will effectively =
+hide
+> >>> > the fact that QCA6390 may need additional configuration since the m=
+enu
+> >>> > item will only show up if you have already enabled PCIE_PWRSEQ.
+> >>> > Yes I see that these are set in the defconfig in 9/9 but I'm concer=
+ned
+> >>> > about the more generic case.
+> >>> >
+> >>> > I'm wondering if there should be a separate config QCA6390 within a=
+th11k
+> >>> > which would then select PCIE_PWRSEQ and PCIE_PWRSEQ_QCA6390
+> >>>
+> >>> Or is it possible to provide an optional dependency in Kconfig (I gue=
+ss
+> >>
+> >> imply PCIE_PWRSEQ
+> >> imply PCIE_PWRSEQ_QCA6390
+> >> ?
 > >
-> > Due to hardware constraints we can only register 4 zones with
-> > pm6150l_adc_tm, the other 2 we can register via generic-adc-thermal.
+> > Nice, I had forgotten imply altogether. Would 'imply
+> > PCIE_PWRSEQ_QCA6390' in ath11k Kconfig be enough to address Jeff's
+> > concern?
 >
-> Ugh.. so the ADC can support more inputs than the ADC_TM that was
-> designed to ship alongside it can?
+> Please don't use imply (ever), it doesn't normally do
+> what you want. In this case, the only effect the
+> 'imply' has is to change the default of the PCIE_PWRSEQ_QCA6390
+> option when a defconfig contains QCA6390.
+>
+> If this is indeed what you want, it's still better to do the
+> equivalent expression in PCIE_PWRSEQ_QCA6390 rather than ATH11K:
+>
+> config PCIE_PWRSEQ_QCA6390
+>       tristate "PCIe Power Sequencing driver for QCA6390"
+>       default ATH11K && ARCH_QCOM
 
-Yes. ADC_TM can support monitoring of 8 channels in total.
+PCIE_PWRSEQ_QCA6390 is also guarded by PCIE_PWRSEQ though. That would
+require the default statement to be duplicated to the PCIE_PWRSEQ option
+as well.
 
->
-> And that's why the "generic-adc-thermal"-provided zones need to
-> be polled?
->
-> >
-> > The trip points can really only be considered as placeholders, more
-> > configuration with cooling etc. can be added later.
-> >
-> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > ---
-> [...]
->
-> I've read the sentence above, but..
-> > +             sdm-skin-thermal {
-> > +                     polling-delay-passive = <1000>;
-> > +                     polling-delay = <5000>;
-> > +                     thermal-sensors = <&msm_therm_sensor>;
-> > +
-> > +                     trips {
-> > +                             active-config0 {
-> > +                                     temperature = <125000>;
-> > +                                     hysteresis = <1000>;
-> > +                                     type = "passive";
->
-> I don't fancy burnt fingers for dinner!
->
-> Konrad
->
+Presumably we'd get a few more power sequencing drivers, and the list of
+default statements for PCIE_PWRSEQ would grow.
 
+If that's acceptable then Arnd's proposal plus duplicating it to
+PCIE_PWRSEQ should work as described.
 
--- 
-With best wishes
-Dmitry
+ChenYu
 
