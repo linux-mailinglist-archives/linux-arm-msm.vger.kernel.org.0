@@ -1,110 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-6766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2777828862
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 15:43:46 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 097E6828876
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 15:48:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 738221F24759
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 14:43:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2F2001C24517
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 14:48:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 448E539ACB;
-	Tue,  9 Jan 2024 14:43:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35E3039AD6;
+	Tue,  9 Jan 2024 14:48:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bfrccbyQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bmailout3.hostsharing.net (bmailout3.hostsharing.net [176.9.242.62])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FDE1A41;
-	Tue,  9 Jan 2024 14:43:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=h08.hostsharing.net
-Received: from h08.hostsharing.net (h08.hostsharing.net [83.223.95.28])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
-	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
-	(Client CN "*.hostsharing.net", Issuer "RapidSSL TLS RSA CA G1" (verified OK))
-	by bmailout3.hostsharing.net (Postfix) with ESMTPS id B616B100DA1A2;
-	Tue,  9 Jan 2024 15:43:27 +0100 (CET)
-Received: by h08.hostsharing.net (Postfix, from userid 100393)
-	id 875212C3E10; Tue,  9 Jan 2024 15:43:27 +0100 (CET)
-Date: Tue, 9 Jan 2024 15:43:27 +0100
-From: Lukas Wunner <lukas@wunner.de>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Kalle Valo <kvalo@kernel.org>, "David S . Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chris Morgan <macromorgan@hotmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	=?iso-8859-1?Q?N=EDcolas_F_=2E_R_=2E_A_=2E?= Prado <nfraprado@collabora.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Peng Fan <peng.fan@nxp.com>, Robert Richter <rrichter@amd.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Terry Bowman <terry.bowman@amd.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>,
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-pci@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [RFC 3/9] PCI/portdrv: create platform devices for child OF nodes
-Message-ID: <20240109144327.GA10780@wunner.de>
-References: <20240104130123.37115-1-brgl@bgdev.pl>
- <20240104130123.37115-4-brgl@bgdev.pl>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3C239ACD;
+	Tue,  9 Jan 2024 14:48:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 409EhXLc003595;
+	Tue, 9 Jan 2024 14:47:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=OqL20283cmYa
+	nVhhOuIWVS4+G1Vk8TrfvNXYNcu5O1c=; b=bfrccbyQ7eR4Han5QJ/8bfYfj9pf
+	0LY5d7ketSbvFHfYHh/NkYQDMmGc6sfj7l50YYWIKZzUrXb5X8e9K1UToDTcfeW5
+	UCbQWuXvgYDaTmIXmZUFOGBDGzjtiS/uokyuFtgJa4IvdMcxnbxoYTifxb+66FPJ
+	DE4yv3PLavyuBc3A+2KdxFNKtJ1Etsk8y8bHGdN/4KYzkx811lTkZD1zuuJEzNsF
+	W5YQ4b+NZnX/duqB4RQSue01CQn/1CqeItl/TkKwqpp2qptf7j+G6WosSpQlcJ/1
+	tB5L3ijNOUxVi45AMBE/zFKsCTpi/V7ShFjxArNsyAS2b5bccsF89LTbXQ==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vh3g68k2b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 09 Jan 2024 14:47:45 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 409EjEb0032298;
+	Tue, 9 Jan 2024 14:47:33 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3veyxmx1pd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Tue, 09 Jan 2024 14:47:33 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 409ElWuU001731;
+	Tue, 9 Jan 2024 14:47:32 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-snehshah-hyd.qualcomm.com [10.147.246.35])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 409ElWix001730;
+	Tue, 09 Jan 2024 14:47:32 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2319345)
+	id B160F5000AA; Tue,  9 Jan 2024 20:17:31 +0530 (+0530)
+From: Sneh Shah <quic_snehshah@quicinc.com>
+To: Vinod Koul <vkoul@kernel.org>, Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Jose Abreu <joabreu@synopsys.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Cc: Sneh Shah <quic_snehshah@quicinc.com>, kernel@quicinc.com,
+        Andrew Halaney <ahalaney@redhat.com>
+Subject: [PATCH net v3] net: stmmac: Fix ethool link settings ops for integrated PCS
+Date: Tue,  9 Jan 2024 20:17:29 +0530
+Message-Id: <20240109144729.26102-1-quic_snehshah@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 38MMQMc2tCZ9xTxqaQEs9u4mVVIrzy58
+X-Proofpoint-ORIG-GUID: 38MMQMc2tCZ9xTxqaQEs9u4mVVIrzy58
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ bulkscore=0 spamscore=0 malwarescore=0 phishscore=0 clxscore=1015
+ impostorscore=0 suspectscore=0 lowpriorityscore=0 mlxlogscore=999
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401090122
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240104130123.37115-4-brgl@bgdev.pl>
-User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Thu, Jan 04, 2024 at 02:01:17PM +0100, Bartosz Golaszewski wrote:
-> In order to introduce PCIe power-sequencing, we need to create platform
-> devices for child nodes of the port driver node. They will get matched
-> against the pwrseq drivers (if one exists) and then the actuak PCIe
-> device will reuse the node once it's detected on the bus.
-[...]
-> --- a/drivers/pci/pcie/portdrv.c
-> +++ b/drivers/pci/pcie/portdrv.c
-> @@ -715,7 +716,7 @@ static int pcie_portdrv_probe(struct pci_dev *dev,
->  		pm_runtime_allow(&dev->dev);
->  	}
->  
-> -	return 0;
-> +	return devm_of_platform_populate(&dev->dev);
->  }
+Currently get/set_link_ksettings ethtool ops are dependent on PCS.
+When PCS is integrated, it will not have separate link config.
+Bypass configuring and checking PCS for integrated PCS.
 
-I think this belongs in of_pci_make_dev_node(), portdrv seems totally
-the wrong place.  Note that you're currently calling this for RCECs
-(Root Complex Event Collectors) as well, which is likely not what
-you want.
+Fixes: aa571b6275fb ("net: stmmac: add new switch to struct plat_stmmacenet_data")
+Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8775p-ride
+Signed-off-by: Sneh Shah <quic_snehshah@quicinc.com>
+---
+V3 changelog:
+- Updated Fixes tag
+v2 changelog:
+- Added tested by tag.
+- Added Fixes tag.
+---
+ drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-devm functions can't be used in the PCI core, so symmetrically call
-of_platform_unpopulate() from of_pci_remove_node().
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+index f628411ae4ae..e3ba4cd47b8d 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+@@ -311,8 +311,9 @@ static int stmmac_ethtool_get_link_ksettings(struct net_device *dev,
+ {
+ 	struct stmmac_priv *priv = netdev_priv(dev);
+ 
+-	if (priv->hw->pcs & STMMAC_PCS_RGMII ||
+-	    priv->hw->pcs & STMMAC_PCS_SGMII) {
++	if (!(priv->plat->flags & STMMAC_FLAG_HAS_INTEGRATED_PCS) &&
++	    (priv->hw->pcs & STMMAC_PCS_RGMII ||
++	     priv->hw->pcs & STMMAC_PCS_SGMII)) {
+ 		struct rgmii_adv adv;
+ 		u32 supported, advertising, lp_advertising;
+ 
+@@ -397,8 +398,9 @@ stmmac_ethtool_set_link_ksettings(struct net_device *dev,
+ {
+ 	struct stmmac_priv *priv = netdev_priv(dev);
+ 
+-	if (priv->hw->pcs & STMMAC_PCS_RGMII ||
+-	    priv->hw->pcs & STMMAC_PCS_SGMII) {
++	if (!(priv->plat->flags & STMMAC_FLAG_HAS_INTEGRATED_PCS) &&
++	    (priv->hw->pcs & STMMAC_PCS_RGMII ||
++	     priv->hw->pcs & STMMAC_PCS_SGMII)) {
+ 		/* Only support ANE */
+ 		if (cmd->base.autoneg != AUTONEG_ENABLE)
+ 			return -EINVAL;
+-- 
+2.17.1
 
-Thanks,
-
-Lukas
 
