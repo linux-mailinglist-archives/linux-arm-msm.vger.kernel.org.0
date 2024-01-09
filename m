@@ -1,123 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-6765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id F36CE828822
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 15:31:21 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D2777828862
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 15:43:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 822A0B23FDF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 14:31:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 738221F24759
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 14:43:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8B723608F;
-	Tue,  9 Jan 2024 14:31:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uNCafcL3"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 448E539ACB;
+	Tue,  9 Jan 2024 14:43:40 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bmailout3.hostsharing.net (bmailout3.hostsharing.net [176.9.242.62])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69CC72EB07
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jan 2024 14:31:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-517ab9a4a13so2283784a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jan 2024 06:31:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704810663; x=1705415463; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=d3HXRcKDVxJPTXyXJSN6jduIbifNRx9OK443HIjFR3c=;
-        b=uNCafcL3BbzriyQNRDfLPsysHiWA0xiGo1soCwY9H5k4/YXABvsNn+ch3oLKdxHBgK
-         0xBcwdCI6eDD283MK41rFiTEHJXGzx5f+8jTrBWF8PkvC1Y+SL9a6W9+ZNQ1qOqXtdrW
-         zNdDa80CyA5jrt/2AGxZuKQKaX5RemiAcBm94SpDGmhRCws7DsPislkMFGy5FHBAGs8P
-         EUa/k6CDUM8trkRKY5Yl7aqeGH9R4185NUbQeBNDOWFCGKl5ixOdukYr1d4IpITzZI/c
-         +4hqgqluZEoRKpWh21xf8eW7r9gz+ECGdIpG9hDOoIhbM/YElNbORxQKTC9mH4Wh7rAo
-         8Dbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704810663; x=1705415463;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=d3HXRcKDVxJPTXyXJSN6jduIbifNRx9OK443HIjFR3c=;
-        b=qrtAscTHdrwSRYW/kRcoLELEHuNVpmDOR30Qf18DtX8k7VyOsC4NvQtTYdRypjvEle
-         Pxb7GMeSxaSut6kTFq5xsidfYqQ0KqyRfKYIzoAppGcfU8lPZgfKhhHSjt464C2Xg/Zi
-         E2FjOMpq8RxeOX4wB/TaFvc9YwDUxqXuFnUPzyh2kQtYUApehRQpN2WkR9m2bN8a/Sdq
-         IN2CEAXRz6fxT+j6McXyP3NOvYaKfB0tgjQ5lH6iILrUdQqKAINtaRCaaFUUqutCbuTt
-         c8c0NlI8oeKGdSGKwSt5mb7QtFja3Xtn/DPmtFxReMGq+LH/dasFb3gtmyLRuzcT87kN
-         gJzQ==
-X-Gm-Message-State: AOJu0Yw7AMqyR/Xb6kZC1nedbiiA5d29j+Cd3s8etCl8KiDlrObj9Th4
-	5bhA8+RlqRnB9rHnpLXPf5yNk10jiextRvXMUEHMraw2ZLETDA==
-X-Google-Smtp-Source: AGHT+IGCrRv2Xox8IoTKAK1tK0lI+F5UQ2lc3D09T7sRQDvvxo2IzFqkGcHCcK2S942TMjaLqrnQP9OX3vcm21L/yJk=
-X-Received: by 2002:a17:90a:ea83:b0:28c:8ec9:6330 with SMTP id
- h3-20020a17090aea8300b0028c8ec96330mr3145262pjz.15.1704810662738; Tue, 09 Jan
- 2024 06:31:02 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FDE1A41;
+	Tue,  9 Jan 2024 14:43:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=h08.hostsharing.net
+Received: from h08.hostsharing.net (h08.hostsharing.net [83.223.95.28])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
+	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
+	(Client CN "*.hostsharing.net", Issuer "RapidSSL TLS RSA CA G1" (verified OK))
+	by bmailout3.hostsharing.net (Postfix) with ESMTPS id B616B100DA1A2;
+	Tue,  9 Jan 2024 15:43:27 +0100 (CET)
+Received: by h08.hostsharing.net (Postfix, from userid 100393)
+	id 875212C3E10; Tue,  9 Jan 2024 15:43:27 +0100 (CET)
+Date: Tue, 9 Jan 2024 15:43:27 +0100
+From: Lukas Wunner <lukas@wunner.de>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Kalle Valo <kvalo@kernel.org>, "David S . Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Chris Morgan <macromorgan@hotmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	=?iso-8859-1?Q?N=EDcolas_F_=2E_R_=2E_A_=2E?= Prado <nfraprado@collabora.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Peng Fan <peng.fan@nxp.com>, Robert Richter <rrichter@amd.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Terry Bowman <terry.bowman@amd.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>,
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-pci@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [RFC 3/9] PCI/portdrv: create platform devices for child OF nodes
+Message-ID: <20240109144327.GA10780@wunner.de>
+References: <20240104130123.37115-1-brgl@bgdev.pl>
+ <20240104130123.37115-4-brgl@bgdev.pl>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240108134843.429769-1-vincent.guittot@linaro.org>
- <20240108134843.429769-3-vincent.guittot@linaro.org> <fb25afab-9586-455a-b8c1-47949035c95a@arm.com>
-In-Reply-To: <fb25afab-9586-455a-b8c1-47949035c95a@arm.com>
-From: Vincent Guittot <vincent.guittot@linaro.org>
-Date: Tue, 9 Jan 2024 15:30:51 +0100
-Message-ID: <CAKfTPtDEKzup63H0iwHkTQCZOdQLUurACCYfEB-MpW+v7JEfag@mail.gmail.com>
-Subject: Re: [PATCH v3 2/5] sched: Take cpufreq feedback into account
-To: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Cc: linux@armlinux.org.uk, catalin.marinas@arm.com, will@kernel.org, 
-	sudeep.holla@arm.com, rafael@kernel.org, viresh.kumar@linaro.org, 
-	agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, 
-	mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com, 
-	rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de, bristot@redhat.com, 
-	vschneid@redhat.com, lukasz.luba@arm.com, rui.zhang@intel.com, 
-	mhiramat@kernel.org, daniel.lezcano@linaro.org, amit.kachhap@gmail.com, 
-	corbet@lwn.net, gregkh@linuxfoundation.org, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-trace-kernel@vger.kernel.org, linux-doc@vger.kernel.org, 
-	qyousef@layalina.io
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240104130123.37115-4-brgl@bgdev.pl>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Tue, 9 Jan 2024 at 12:22, Dietmar Eggemann <dietmar.eggemann@arm.com> wrote:
->
-> On 08/01/2024 14:48, Vincent Guittot wrote:
-> > Aggregate the different pressures applied on the capacity of CPUs and
-> > create a new function that returns the actual capacity of the CPU:
-> >   get_actual_cpu_capacity()
->
->    function name                scaling
->
-> (1) arch_scale_cpu_capacity() - uarch
->
-> (2) get_actual_cpu_capacity() - hw + cpufreq/thermal of (1)
->
-> (3) capacity_of()             - rt (rt/dl/irq) of (2) (used by fair)
->
-> Although (1) - (3) are very close to each other from the functional
+On Thu, Jan 04, 2024 at 02:01:17PM +0100, Bartosz Golaszewski wrote:
+> In order to introduce PCIe power-sequencing, we need to create platform
+> devices for child nodes of the port driver node. They will get matched
+> against the pwrseq drivers (if one exists) and then the actuak PCIe
+> device will reuse the node once it's detected on the bus.
+[...]
+> --- a/drivers/pci/pcie/portdrv.c
+> +++ b/drivers/pci/pcie/portdrv.c
+> @@ -715,7 +716,7 @@ static int pcie_portdrv_probe(struct pci_dev *dev,
+>  		pm_runtime_allow(&dev->dev);
+>  	}
+>  
+> -	return 0;
+> +	return devm_of_platform_populate(&dev->dev);
+>  }
 
-I don't get your point as name of (1) and (3) have not been changed by the patch
+I think this belongs in of_pci_make_dev_node(), portdrv seems totally
+the wrong place.  Note that you're currently calling this for RCECs
+(Root Complex Event Collectors) as well, which is likely not what
+you want.
 
-> standpoint, their names are not very coherent.
->
-> I assume this makes it hard to understand all of this when reading the
-> code w/o knowing these patches before.
->
-> Why is (2) tagged with 'actual'?
+devm functions can't be used in the PCI core, so symmetrically call
+of_platform_unpopulate() from of_pci_remove_node().
 
-This is the actual max compute capacity of the cpu at now  i.e.
-possibly reduced because of temporary frequency capping
+Thanks,
 
-So (2) equals (1) minus temporary performance capping and (3)
-additionally subtracts the time used by other class to (2)
-
-
->
-> This is especially visible in feec() where local variable cpu_cap
-> relates to (3) whereas cpu_actual_cap related to (2).
->
-> [...]
->
+Lukas
 
