@@ -1,132 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-6764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E71B282877F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 15:00:00 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id F36CE828822
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 15:31:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 18B461C20D16
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 14:00:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 822A0B23FDF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 14:31:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9ED6039855;
-	Tue,  9 Jan 2024 13:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8B723608F;
+	Tue,  9 Jan 2024 14:31:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=embeddedor.com header.i=@embeddedor.com header.b="r5WFhP2+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uNCafcL3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3211F39AC8
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jan 2024 13:59:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=embeddedor.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=embeddedor.com
-Received: from eig-obgw-5006a.ext.cloudfilter.net ([10.0.29.179])
-	by cmsmtp with ESMTPS
-	id NB7srTNyK8uLRNCdorW05c; Tue, 09 Jan 2024 13:59:40 +0000
-Received: from gator4166.hostgator.com ([108.167.133.22])
-	by cmsmtp with ESMTPS
-	id NCdnrXqDeim6ENCdnrcAKp; Tue, 09 Jan 2024 13:59:39 +0000
-X-Authority-Analysis: v=2.4 cv=Qft1A+Xv c=1 sm=1 tr=0 ts=659d514b
- a=1YbLdUo/zbTtOZ3uB5T3HA==:117 a=GfQleyYEO+cc22AUyTT7qQ==:17
- a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
- a=IkcTkHD0fZMA:10 a=dEuoMetlWLkA:10 a=wYkD_t78qR0A:10
- a=jCw2ex66E_5x05uIvzYA:9 a=QEXdDO2ut3YA:10
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=embeddedor.com; s=default; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=Y2CE/Hs6RAOXjZmVqnvf/IR9hVOQliV1xVMEpOaNeSM=; b=r5WFhP2+75l5rixF+KzySrozXk
-	Em5yzbvm+7Ph8FfkFi1jYJqU1p7OjImbmmn69lEkRzQGLCpnX0ZjBI5fyeVORQXekDp1QsE3VejGI
-	LDIOp1zMKjqde7+a+sAeVwIE4zjQhornHY4VzgVxDmefdWOAWfZjDOLpRLjJoVpVG2jACjt59CiQ6
-	A3U1GJ+betZgIhQjgCJRuelB5T6k5a1udLstM3MifyPgChl79UZcp7KtdRawCN4eobptrE6RKaMqj
-	PcwOgDWaPUOuMeQTvEjB+zO+VgD6l9SQh0xr3CvsOz3fFOUG2YmqB18aVcIxkabyyh5IurA2tNG/g
-	XigtOfQw==;
-Received: from 187.184.157.186.cable.dyn.cableonline.com.mx ([187.184.157.186]:12259 helo=[192.168.0.10])
-	by gator4166.hostgator.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96.2)
-	(envelope-from <gustavo@embeddedor.com>)
-	id 1rNCdl-004NMd-01;
-	Tue, 09 Jan 2024 07:59:37 -0600
-Message-ID: <d7ac4bae-3ab5-446b-9230-58dd01637375@embeddedor.com>
-Date: Tue, 9 Jan 2024 07:59:33 -0600
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69CC72EB07
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jan 2024 14:31:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-517ab9a4a13so2283784a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jan 2024 06:31:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704810663; x=1705415463; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=d3HXRcKDVxJPTXyXJSN6jduIbifNRx9OK443HIjFR3c=;
+        b=uNCafcL3BbzriyQNRDfLPsysHiWA0xiGo1soCwY9H5k4/YXABvsNn+ch3oLKdxHBgK
+         0xBcwdCI6eDD283MK41rFiTEHJXGzx5f+8jTrBWF8PkvC1Y+SL9a6W9+ZNQ1qOqXtdrW
+         zNdDa80CyA5jrt/2AGxZuKQKaX5RemiAcBm94SpDGmhRCws7DsPislkMFGy5FHBAGs8P
+         EUa/k6CDUM8trkRKY5Yl7aqeGH9R4185NUbQeBNDOWFCGKl5ixOdukYr1d4IpITzZI/c
+         +4hqgqluZEoRKpWh21xf8eW7r9gz+ECGdIpG9hDOoIhbM/YElNbORxQKTC9mH4Wh7rAo
+         8Dbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704810663; x=1705415463;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=d3HXRcKDVxJPTXyXJSN6jduIbifNRx9OK443HIjFR3c=;
+        b=qrtAscTHdrwSRYW/kRcoLELEHuNVpmDOR30Qf18DtX8k7VyOsC4NvQtTYdRypjvEle
+         Pxb7GMeSxaSut6kTFq5xsidfYqQ0KqyRfKYIzoAppGcfU8lPZgfKhhHSjt464C2Xg/Zi
+         E2FjOMpq8RxeOX4wB/TaFvc9YwDUxqXuFnUPzyh2kQtYUApehRQpN2WkR9m2bN8a/Sdq
+         IN2CEAXRz6fxT+j6McXyP3NOvYaKfB0tgjQ5lH6iILrUdQqKAINtaRCaaFUUqutCbuTt
+         c8c0NlI8oeKGdSGKwSt5mb7QtFja3Xtn/DPmtFxReMGq+LH/dasFb3gtmyLRuzcT87kN
+         gJzQ==
+X-Gm-Message-State: AOJu0Yw7AMqyR/Xb6kZC1nedbiiA5d29j+Cd3s8etCl8KiDlrObj9Th4
+	5bhA8+RlqRnB9rHnpLXPf5yNk10jiextRvXMUEHMraw2ZLETDA==
+X-Google-Smtp-Source: AGHT+IGCrRv2Xox8IoTKAK1tK0lI+F5UQ2lc3D09T7sRQDvvxo2IzFqkGcHCcK2S942TMjaLqrnQP9OX3vcm21L/yJk=
+X-Received: by 2002:a17:90a:ea83:b0:28c:8ec9:6330 with SMTP id
+ h3-20020a17090aea8300b0028c8ec96330mr3145262pjz.15.1704810662738; Tue, 09 Jan
+ 2024 06:31:02 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH][next] media: venus: hfi_cmds: Replace one-element array
- with flex-array member and use __counted_by
-Content-Language: en-US
-To: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Kees Cook <keescook@chromium.org>,
- "Gustavo A. R. Silva" <gustavoars@kernel.org>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Andy Gross
- <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-hardening@vger.kernel.org
-References: <ZSRJfRdUXQOzagKr@work> <202310091252.660CFA9@keescook>
- <20240109124026.GA1012017@google.com>
- <b8686724-9351-4f40-a587-fcbba5b0eb14@embeddedor.com>
- <20240109132831.GD1012017@google.com>
-From: "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-In-Reply-To: <20240109132831.GD1012017@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - embeddedor.com
-X-BWhitelist: no
-X-Source-IP: 187.184.157.186
-X-Source-L: No
-X-Exim-ID: 1rNCdl-004NMd-01
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: 187.184.157.186.cable.dyn.cableonline.com.mx ([192.168.0.10]) [187.184.157.186]:12259
-X-Source-Auth: gustavo@embeddedor.com
-X-Email-Count: 17
-X-Org: HG=hgshared;ORG=hostgator;
-X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfKAs50yz7MbtXaGuYnKaIYlxx13+NfKoa5dQOpsU1jpoLsBsFRkzPoqutHllmP9sCp9/xYMBNuWgOcKsd38YaK91iudgRUfQVj3uHogeWln6VgOpKh4y
- CT51tLlruVxexs+bthk5qKmtRwusFDbwDq1pWIobtr7e5arAxJYJdDcSfDe1JdQisTg+o/az9zArSH+/Nunf1/SwpiGpn+O17rPDR9xbeyzyAdkw1aDzDw1Z
+References: <20240108134843.429769-1-vincent.guittot@linaro.org>
+ <20240108134843.429769-3-vincent.guittot@linaro.org> <fb25afab-9586-455a-b8c1-47949035c95a@arm.com>
+In-Reply-To: <fb25afab-9586-455a-b8c1-47949035c95a@arm.com>
+From: Vincent Guittot <vincent.guittot@linaro.org>
+Date: Tue, 9 Jan 2024 15:30:51 +0100
+Message-ID: <CAKfTPtDEKzup63H0iwHkTQCZOdQLUurACCYfEB-MpW+v7JEfag@mail.gmail.com>
+Subject: Re: [PATCH v3 2/5] sched: Take cpufreq feedback into account
+To: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Cc: linux@armlinux.org.uk, catalin.marinas@arm.com, will@kernel.org, 
+	sudeep.holla@arm.com, rafael@kernel.org, viresh.kumar@linaro.org, 
+	agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, 
+	mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com, 
+	rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de, bristot@redhat.com, 
+	vschneid@redhat.com, lukasz.luba@arm.com, rui.zhang@intel.com, 
+	mhiramat@kernel.org, daniel.lezcano@linaro.org, amit.kachhap@gmail.com, 
+	corbet@lwn.net, gregkh@linuxfoundation.org, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-trace-kernel@vger.kernel.org, linux-doc@vger.kernel.org, 
+	qyousef@layalina.io
+Content-Type: text/plain; charset="UTF-8"
+
+On Tue, 9 Jan 2024 at 12:22, Dietmar Eggemann <dietmar.eggemann@arm.com> wrote:
+>
+> On 08/01/2024 14:48, Vincent Guittot wrote:
+> > Aggregate the different pressures applied on the capacity of CPUs and
+> > create a new function that returns the actual capacity of the CPU:
+> >   get_actual_cpu_capacity()
+>
+>    function name                scaling
+>
+> (1) arch_scale_cpu_capacity() - uarch
+>
+> (2) get_actual_cpu_capacity() - hw + cpufreq/thermal of (1)
+>
+> (3) capacity_of()             - rt (rt/dl/irq) of (2) (used by fair)
+>
+> Although (1) - (3) are very close to each other from the functional
+
+I don't get your point as name of (1) and (3) have not been changed by the patch
+
+> standpoint, their names are not very coherent.
+>
+> I assume this makes it hard to understand all of this when reading the
+> code w/o knowing these patches before.
+>
+> Why is (2) tagged with 'actual'?
+
+This is the actual max compute capacity of the cpu at now  i.e.
+possibly reduced because of temporary frequency capping
+
+So (2) equals (1) minus temporary performance capping and (3)
+additionally subtracts the time used by other class to (2)
 
 
-
-On 1/9/24 07:28, Sergey Senozhatsky wrote:
-> On (24/01/09 07:17), Gustavo A. R. Silva wrote:
->>
->>> Sorry for shameless plug, a quick question: has any compiler implemented
->>> support for counted_by() at this point?
->>>
->>
->> Not yet. And at least for GCC, it's expected to be released in v15.
-> 
-> I see. Thank you.
-> 
-> I got confused by include/linux/compiler_attributes.h comment, as I'm on
-> clang-18 currently, seems that we need to bump min compilers version.
-
-Ah yes, compiler devs have been running into some issues, and they had to
-postpone the release of the attribute.
-
-> Oh, and clang link 404-s on me. I'll send a quick patch, I guess.
-> 
-
-You're right, ick!
-
---
-Gustavo
+>
+> This is especially visible in feec() where local variable cpu_cap
+> relates to (3) whereas cpu_actual_cap related to (2).
+>
+> [...]
+>
 
