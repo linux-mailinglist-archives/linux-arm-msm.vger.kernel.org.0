@@ -1,59 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-6769-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6770-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1EAE68288C5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 16:14:19 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3F688288DD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 16:21:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1C7061C237DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 15:14:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4FC4A2829FD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 15:21:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D6F139AEE;
-	Tue,  9 Jan 2024 15:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 502DA39FD1;
+	Tue,  9 Jan 2024 15:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="EhgJ5JBZ"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="NcDQdF9l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D948D39AE8;
-	Tue,  9 Jan 2024 15:14:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=gRiZiJWOoVL6Oa5TlXweb+aZfLgTD3/mvROJ7Dpd6vo=; b=EhgJ5JBZ0knWO1CRq06h9bTbXZ
-	ZF4H3dqITWvmqEbmUSX+49PXuSy0FBPA26c2MLmyPJtmBFYFq3bUYA6VFLywYgnE7ZlX/jh2JCA/X
-	34HRmL1Sy/FR2AmKPpCon150+fczB7SXbtw4EgxEsc4X31/Dw4HSYckK4+DxBc+dvTEk=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1rNDng-004qNW-I3; Tue, 09 Jan 2024 16:13:56 +0100
-Date: Tue, 9 Jan 2024 16:13:56 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Sneh Shah <quic_snehshah@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Jose Abreu <joabreu@synopsys.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	kernel@quicinc.com, Andrew Halaney <ahalaney@redhat.com>
-Subject: Re: [PATCH v2] net: stmmac: dwmac-qcom-ethqos: Add support for 2.5G
- SGMII
-Message-ID: <c9290a44-a239-4ccf-9e14-4647b68aac2f@lunn.ch>
-References: <20240108121128.30071-1-quic_snehshah@quicinc.com>
- <4216bcbb-730d-4c51-a9ce-d3f0a0846e31@lunn.ch>
- <6f97e753-435e-4b86-bd47-290097f6a3f0@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E435439AFC
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jan 2024 15:21:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1704813662;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=vn1ce8hywqQSUdzE/tq3PAQDOHuc7M+muFOo7RqI5C0=;
+	b=NcDQdF9l8+9zIF96irLq9TVr9K4MG+GNybtjRs3eSA6O7uXu7A3nkBXZvMJ1r/5IOGWcqF
+	lwXopGYW6TLi/DIEmMO0yEFHnp2PpI0+yPxxfhkrb01f/UJk5PZLgQdLhuFj/H5WblgAhM
+	5+fuk+Tngzzicz+mf55CR3qL3mclhg4=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-488-14bBpoGBOve5Hm4TbcZuKg-1; Tue, 09 Jan 2024 10:21:01 -0500
+X-MC-Unique: 14bBpoGBOve5Hm4TbcZuKg-1
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-78330275051so60719785a.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jan 2024 07:21:01 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704813661; x=1705418461;
+        h=user-agent:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vn1ce8hywqQSUdzE/tq3PAQDOHuc7M+muFOo7RqI5C0=;
+        b=IbFHffRL8c3WbeBwD/Mz+33kRrx/Jq3RIYPL8je2sopHrJFWC4g+bay/aNMOnfPErS
+         I/Hh/v+c000qnZWaQUcB56kLuDsZYu1HlewfWbst6YcURvSD7ftC+QLuHIzPmXsG1WtP
+         sEK217A+CK8HajWArKl1Zf1UJ1kbhH3+yiYcw1DEwazN8QmnpMHIQEPSztLV2dn08Iee
+         0uau8yBJDDXyZE09XNXTi6MZeG/oBoIeeKYatk1wN4cGlHwG4Ex0pAPUShivemyagJ/P
+         R2PKo97gHohGNZj/3qfx+u273MH/lxDMRTCJY7etONLSGl5RG9R7JgfhIaCtmubZBPvj
+         UMpg==
+X-Gm-Message-State: AOJu0Yw4YfcD1AbhPHqgvdb9alh5hQ5+6FqDD3iB+h4TTApMfiISXJft
+	muPwpaRD7o4yVEIxNM3OoOi/jubXJ9CjrtuCj1P8YVI8ykvmAdZ/H745RtJ/Uci9ttXsiI86moR
+	Gg0LF0urXmXFHH7apirPfaAj47ZsqCYs9og==
+X-Received: by 2002:a05:620a:4008:b0:783:314c:48c4 with SMTP id h8-20020a05620a400800b00783314c48c4mr605888qko.96.1704813660950;
+        Tue, 09 Jan 2024 07:21:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEn8hS9/EPAk99SwHPz6Ctm7qGK+fZo5cmWdV36DyjYJZKlNIvEBawV15ZkWLFEopPcYMNuVQ==
+X-Received: by 2002:a05:620a:4008:b0:783:314c:48c4 with SMTP id h8-20020a05620a400800b00783314c48c4mr605875qko.96.1704813660554;
+        Tue, 09 Jan 2024 07:21:00 -0800 (PST)
+Received: from fedora ([174.91.39.234])
+        by smtp.gmail.com with ESMTPSA id h2-20020a05620a13e200b007832016a732sm874832qkl.83.2024.01.09.07.20.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Jan 2024 07:21:00 -0800 (PST)
+Date: Tue, 9 Jan 2024 10:20:50 -0500
+From: Lucas Karpinski <lkarpins@redhat.com>
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v2] arm64: dts: qcom: sa8540p-ride: disable pcie2a node
+Message-ID: <qcoqksikfvdqxk6stezbzc7l2br37ccgqswztzqejmhrkhbrwt@ta4npsm35mqk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,52 +78,44 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6f97e753-435e-4b86-bd47-290097f6a3f0@quicinc.com>
+User-Agent: NeoMutt/20231103
 
-On Tue, Jan 09, 2024 at 08:22:40PM +0530, Sneh Shah wrote:
-> 
-> 
-> On 1/9/2024 1:00 AM, Andrew Lunn wrote:
-> > On Mon, Jan 08, 2024 at 05:41:28PM +0530, Sneh Shah wrote:
-> >> Serdes phy needs to operate at 2500 mode for 2.5G speed and 1000
-> >> mode for 1G/100M/10M speed.
-> >> Added changes to configure serdes phy and mac based on link speed.
-> > 
-> > Please take a look at:
-> > 
-> > https://www.kernel.org/doc/html/next/process/maintainer-netdev.html
-> > 
-> > The Subject is missing which tree this is for. Also, net-next is
-> > closed at the moment.
-> 
-> It was supposed to be net-next. Missed updating in subject.
-> Sorry for that!
-> If net-next is closed at the moment, how to proceed further?
-> Should I wait until it gets reopened?
+pcie2a and pcie3a both cause interrupt storms to occur. However, when
+both are enabled simultaneously, the two combined interrupt storms will
+lead to rcu stalls. Red Hat is the only company still using this board
+and since we still need pcie3a, just disable pcie2a.
 
-Yes, please repost in two weeks time.
+Signed-off-by: Lucas Karpinski <lkarpins@redhat.com>
+---
+v2:
+- don't remove the entire pcie2a node, just set status to disabled.
+- update commit message.
 
-> >>  	switch (ethqos->speed) {
-> >> +	case SPEED_2500:
-> >> +		val &= ~ETHQOS_MAC_CTRL_PORT_SEL;
-> >> +		rgmii_updatel(ethqos, RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
-> >> +			      RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
-> >> +			      RGMII_IO_MACRO_CONFIG2);
-> >> +		if (ethqos->serdes_speed != SPEED_2500)
-> >> +			phy_set_speed(ethqos->serdes_phy, SPEED_2500);
-> > 
-> > Is calling phy_set_speed() expensive? Why not just unconditionally
-> > call it?
-> > 
-> It reconfigures whole serdes phy block, with lots of register read/writes.
-> So I feel it is better to avoid doing this unconditionally
+ arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-O.K, please add this to the commit message.
+diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+index b04f72ec097c..177b9dad6ff7 100644
+--- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
++++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+@@ -376,14 +376,14 @@ &pcie2a {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pcie2a_default>;
+ 
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &pcie2a_phy {
+ 	vdda-phy-supply = <&vreg_l11a>;
+ 	vdda-pll-supply = <&vreg_l3a>;
+ 
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &pcie3a {
+-- 
+2.43.0
 
-Part of the purpose of the commit message is to try to answer
-questions the reviewers are going to ask when they look at the
-code. Its better to put more in the commit message than less, it helps
-get your code merged faster, and reduces the load on reviewers.
-
-     Andrew
 
