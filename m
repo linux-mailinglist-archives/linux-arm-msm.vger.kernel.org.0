@@ -1,140 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-6763-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6056382875F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 14:48:46 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E71B282877F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 15:00:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BF8ACB238E5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 13:48:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 18B461C20D16
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 14:00:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AFF738FB2;
-	Tue,  9 Jan 2024 13:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9ED6039855;
+	Tue,  9 Jan 2024 13:59:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="GH4SbNxa"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=embeddedor.com header.i=@embeddedor.com header.b="r5WFhP2+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED9F38FA3;
-	Tue,  9 Jan 2024 13:48:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=wvVG2KQV/oETOX0CukFpt/vsd01F13tBQ9AIaAYqp6w=; b=GH4SbNxaChv564U3M/bDK7+b6W
-	e4yuHL2BbR4aMHapx53lmIvMyxVTYAtqrdRkQYktWCIpUKceG2nUrXqGw2/b97QNGnEZNL4DgCO+j
-	9qS+8VnvXTjPKZu+ILIS9TiPBkLrHFksXOg3/HhB2VxLn1JefXhhBq2PT6SUrN1OF6DY=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1rNCSm-004pw9-Bx; Tue, 09 Jan 2024 14:48:16 +0100
-Date: Tue, 9 Jan 2024 14:48:16 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Jie Luo <quic_luoj@quicinc.com>
-Cc: Sergey Ryazanov <ryazanov.s.a@gmail.com>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Robert Marko <robert.marko@sartura.hr>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	netdev@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: Re: [net-next PATCH RFC v3 1/8] dt-bindings: net: document ethernet
- PHY package nodes
-Message-ID: <2f2328ee-205b-4b4f-a683-2df4fbb22dde@lunn.ch>
-References: <20231126015346.25208-1-ansuelsmth@gmail.com>
- <20231126015346.25208-2-ansuelsmth@gmail.com>
- <0926ea46-1ce4-4118-a04c-b6badc0b9e15@gmail.com>
- <1437d9df-2868-43f5-aebd-e0c57fe4d905@lunn.ch>
- <b75e6267-7d54-412e-8882-af4d9a0b54e6@quicinc.com>
- <841ef784-b27e-4f7a-94f2-f04f93178c61@lunn.ch>
- <07c01c11-0cc2-4837-b371-1404f2ce3359@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3211F39AC8
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jan 2024 13:59:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=embeddedor.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=embeddedor.com
+Received: from eig-obgw-5006a.ext.cloudfilter.net ([10.0.29.179])
+	by cmsmtp with ESMTPS
+	id NB7srTNyK8uLRNCdorW05c; Tue, 09 Jan 2024 13:59:40 +0000
+Received: from gator4166.hostgator.com ([108.167.133.22])
+	by cmsmtp with ESMTPS
+	id NCdnrXqDeim6ENCdnrcAKp; Tue, 09 Jan 2024 13:59:39 +0000
+X-Authority-Analysis: v=2.4 cv=Qft1A+Xv c=1 sm=1 tr=0 ts=659d514b
+ a=1YbLdUo/zbTtOZ3uB5T3HA==:117 a=GfQleyYEO+cc22AUyTT7qQ==:17
+ a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
+ a=IkcTkHD0fZMA:10 a=dEuoMetlWLkA:10 a=wYkD_t78qR0A:10
+ a=jCw2ex66E_5x05uIvzYA:9 a=QEXdDO2ut3YA:10
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=embeddedor.com; s=default; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=Y2CE/Hs6RAOXjZmVqnvf/IR9hVOQliV1xVMEpOaNeSM=; b=r5WFhP2+75l5rixF+KzySrozXk
+	Em5yzbvm+7Ph8FfkFi1jYJqU1p7OjImbmmn69lEkRzQGLCpnX0ZjBI5fyeVORQXekDp1QsE3VejGI
+	LDIOp1zMKjqde7+a+sAeVwIE4zjQhornHY4VzgVxDmefdWOAWfZjDOLpRLjJoVpVG2jACjt59CiQ6
+	A3U1GJ+betZgIhQjgCJRuelB5T6k5a1udLstM3MifyPgChl79UZcp7KtdRawCN4eobptrE6RKaMqj
+	PcwOgDWaPUOuMeQTvEjB+zO+VgD6l9SQh0xr3CvsOz3fFOUG2YmqB18aVcIxkabyyh5IurA2tNG/g
+	XigtOfQw==;
+Received: from 187.184.157.186.cable.dyn.cableonline.com.mx ([187.184.157.186]:12259 helo=[192.168.0.10])
+	by gator4166.hostgator.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <gustavo@embeddedor.com>)
+	id 1rNCdl-004NMd-01;
+	Tue, 09 Jan 2024 07:59:37 -0600
+Message-ID: <d7ac4bae-3ab5-446b-9230-58dd01637375@embeddedor.com>
+Date: Tue, 9 Jan 2024 07:59:33 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <07c01c11-0cc2-4837-b371-1404f2ce3359@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH][next] media: venus: hfi_cmds: Replace one-element array
+ with flex-array member and use __counted_by
+Content-Language: en-US
+To: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Kees Cook <keescook@chromium.org>,
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Andy Gross
+ <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-hardening@vger.kernel.org
+References: <ZSRJfRdUXQOzagKr@work> <202310091252.660CFA9@keescook>
+ <20240109124026.GA1012017@google.com>
+ <b8686724-9351-4f40-a587-fcbba5b0eb14@embeddedor.com>
+ <20240109132831.GD1012017@google.com>
+From: "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+In-Reply-To: <20240109132831.GD1012017@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - embeddedor.com
+X-BWhitelist: no
+X-Source-IP: 187.184.157.186
+X-Source-L: No
+X-Exim-ID: 1rNCdl-004NMd-01
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: 187.184.157.186.cable.dyn.cableonline.com.mx ([192.168.0.10]) [187.184.157.186]:12259
+X-Source-Auth: gustavo@embeddedor.com
+X-Email-Count: 17
+X-Org: HG=hgshared;ORG=hostgator;
+X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfKAs50yz7MbtXaGuYnKaIYlxx13+NfKoa5dQOpsU1jpoLsBsFRkzPoqutHllmP9sCp9/xYMBNuWgOcKsd38YaK91iudgRUfQVj3uHogeWln6VgOpKh4y
+ CT51tLlruVxexs+bthk5qKmtRwusFDbwDq1pWIobtr7e5arAxJYJdDcSfDe1JdQisTg+o/az9zArSH+/Nunf1/SwpiGpn+O17rPDR9xbeyzyAdkw1aDzDw1Z
 
+
+
+On 1/9/24 07:28, Sergey Senozhatsky wrote:
+> On (24/01/09 07:17), Gustavo A. R. Silva wrote:
+>>
+>>> Sorry for shameless plug, a quick question: has any compiler implemented
+>>> support for counted_by() at this point?
+>>>
+>>
+>> Not yet. And at least for GCC, it's expected to be released in v15.
 > 
-> __| |_______________| |__
-> | PCS0 |          |PCS1 |
-> |______|          |_____|
-> |_______                |<---- REF clock 50MHZ
-> |      |------------    |
-> |NSSCC |    |clks  |rsts|<---- GPIO reset
-> |______|    |      |    |
-> |           V      V    |
-> |_______________________|
-> |     |     |     |     |
-> |PHY1 |PHY2 |PHY3 |PHY4 |
-> |_____|_____|_____|_____|
-
-Not the best of improvements. So the ref clock goes to the package,
-and then magically somehow gets to the NSSCC? Are there any more
-blocks it goes through before reaching the NSSCC? How does the GPIO
-reset get converted into multiple reset inside the package? Details,
-details, details.
-
-> There are difference clock trees generated from NSSCC for the different
-> PHYs, all clocks and resets for qca8084 CHIP working are internally
-> provided by the NSSCC.
-
-So show this in the block diagram.
-
-> Yes, Andrew, the NSSCC provider driver is probed based on the MDIO
-> device, the PHY CHIP occupies the MDIO addresses, so the NSSCC is
-> registered as the MDIO device.
+> I see. Thank you.
 > 
-> DT of the NSSCC device node:
-> mdio {
->       #address-cells = <1>;
->       #size-cells = <0>;
+> I got confused by include/linux/compiler_attributes.h comment, as I'm on
+> clang-18 currently, seems that we need to bump min compilers version.
+
+Ah yes, compiler devs have been running into some issues, and they had to
+postpone the release of the attribute.
+
+> Oh, and clang link 404-s on me. I'll send a quick patch, I guess.
 > 
->       clock-controller@18 {
->         compatible = "qcom,qca8084-nsscc";
->         reg = <0x18>;
->         clocks = <&qca8k_xo>,
->                  <&qca8k_uniphy0_rx>,
->                  <&qca8k_uniphy0_tx>,
->                  <&qca8k_uniphy1_rx>,
->                  <&qca8k_uniphy1_tx>,
->                  <&qca8k_uniphy1_rx312p5m>,
->                  <&qca8k_uniphy1_tx312p5m>;
->         #clock-cells = <1>;
->         #reset-cells = <1>;
->         #power-domain-cells = <1>;
->       };
->     };
- 
-This does not make any sense. You have one clock input, 50MHz. So why
-are you listing 6 consumer clocks, not one? And where are the clocks
-this clock controller provides, clock-output-names=<...>;
 
-I give up. Please consider this PHY driver NACKed.
+You're right, ick!
 
-Get Linaro, or some other organisation with a lot of experience with
-mainline to take over the work.
-
-	 Andrew
+--
+Gustavo
 
