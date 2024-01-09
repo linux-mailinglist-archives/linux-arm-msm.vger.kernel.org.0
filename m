@@ -1,161 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-6711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED940827DBB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 05:08:47 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7903827E07
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 06:05:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 210171C2350D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 04:08:47 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 625D4B2337B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 05:05:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0D635686;
-	Tue,  9 Jan 2024 04:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79513646;
+	Tue,  9 Jan 2024 05:05:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mzQpVpKe"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GPFETII6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72CF813AF8;
-	Tue,  9 Jan 2024 04:08:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1d3e416f303so7056215ad.0;
-        Mon, 08 Jan 2024 20:08:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704773318; x=1705378118; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=I/XC7+Hzrqaul1JzDjqFzwqKQMzBB3vpvjl8qHZ5in8=;
-        b=mzQpVpKeXwKSKcLWKuNiVogLVrykrSt+T9LetCfOZdRtvCZEodDvqYjY581i7y5Vu/
-         6bgdpjnR4R6AWDeKAG07+BtF2VyDe1J13/De7jLDPBRsLBnQqjPu3LrRrzMSqN3iug51
-         T02KBWeNwZk2ntZAXW51sfabCLnavW9Rp8k2KEz5uE89yWg/9BOwgvb6huoby+LwTUny
-         TjBIWpeR9Xyrzcfx6bOMTAu2Cuk0m7ZmDK7Ar3kVmKoSwYeBglmVEc5ZbXGnrUZp94PR
-         VR1WfYEKtStPNx4ecMRK3tb/Azk6TvJKKJypAHKJZdmoEe1fDSCGD3PlGe9IyRNMmCfI
-         Buzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704773318; x=1705378118;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=I/XC7+Hzrqaul1JzDjqFzwqKQMzBB3vpvjl8qHZ5in8=;
-        b=hohrWUeNRgY+MVbEFwWM9ItMTuLR2pqP/Qdapj/sR6DJO9CiRmNsrEi1UDySHJZVVT
-         clwajkP9RLspWFj62wttbC8xBaIaNKszOhwFbB0lR3n2mHquLcjCSlFt2jkTZ5Emg5/1
-         D3HE0d4Yailxth98CiLKjJ646PrZrTQD9wVH4G1FgLD9GyLl4cZ52U+dQwukoPxewYWo
-         R7x8BrgeDcVpzhSDUA5KYU3KcqMwVTJcLJMxi+DSdsbHe86CuZ5o90jr2y03yVcdnI/D
-         tSdEt1sKQdtQC3qU2HsUjk1/9ial+BVtHVOi7ogLIwvGIyAIuoYAB9/R9TJCKFZtyAc2
-         9XUA==
-X-Gm-Message-State: AOJu0Yxa6XUBETVailmVRUk8oVO8q4Y0iW4BxY0kTUWg3zJjMhHLf0pO
-	yhxBn8x4Q0f9jBc2YHJYtGg=
-X-Google-Smtp-Source: AGHT+IHY1ya+YrOLTHexV8PosRb/mNRrliidXjZM2nUEIVPtdG0nc7kbSmQlzxZRWYZv+xROvd6Tgg==
-X-Received: by 2002:a17:902:dac8:b0:1d4:524d:96cb with SMTP id q8-20020a170902dac800b001d4524d96cbmr2692987plx.109.1704773317516;
-        Mon, 08 Jan 2024 20:08:37 -0800 (PST)
-Received: from ?IPV6:2600:8802:b00:ba1:c927:f415:d49b:1377? ([2600:8802:b00:ba1:c927:f415:d49b:1377])
-        by smtp.gmail.com with ESMTPSA id z3-20020a170902834300b001d1d6f6b67dsm651885pln.147.2024.01.08.20.08.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Jan 2024 20:08:36 -0800 (PST)
-Message-ID: <a85dbfc3-e327-442a-9aab-5115f86944f7@gmail.com>
-Date: Mon, 8 Jan 2024 20:08:33 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF09639;
+	Tue,  9 Jan 2024 05:05:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4094I7mh012490;
+	Tue, 9 Jan 2024 05:05:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=HapUkiGBY9kujzPn31TvG
+	bVnGF5rJxbzFQeZddrdLBg=; b=GPFETII66CX/WhjAvpDeoz4VVBPvnMgt3fE7L
+	DeCwhmZqAt9GJv05J1lpG4hlY0CIkD5Ik+NYSpk9FE8zqV8LiwpqYvxUoiKs1TJF
+	YnvYkVBnxpMJOr1MqZwR14jMITTywzoqMeY3grfy4OXoeXi+F6S2rR2fZRB0Bbj1
+	+csIb1AMZKLWCJOZjMLvRD3mp3hSPMoeIJ0ZIenSysJu57zmGbmLc5PDIAUQe6Bv
+	JOBnIvcBIBFboi88ctLniZ8IyM8tl4WlFZdWkV8BUCc2EFatLT0XHH1ao9shz9Xy
+	/GhQHIPweHFLaXAiI1NCjED01OXgP2ENCTL7+CgPoz3FDoWWw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vgwq1r6w7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 09 Jan 2024 05:05:24 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4095509P022216
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 9 Jan 2024 05:05:00 GMT
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Mon, 8 Jan 2024 21:04:57 -0800
+Date: Tue, 9 Jan 2024 10:34:54 +0530
+From: Pavan Kondeti <quic_pkondeti@quicinc.com>
+To: Mukesh Ojha <quic_mojha@quicinc.com>
+CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <linus.walleij@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-gpio@vger.kernel.org>
+Subject: Re: [PATCH v11 1/4] firmware: qcom: scm: provide a read-modify-write
+ function
+Message-ID: <6e99c4ff-a377-4385-b79c-60438e3e8735@quicinc.com>
+References: <1704727654-13999-1-git-send-email-quic_mojha@quicinc.com>
+ <1704727654-13999-2-git-send-email-quic_mojha@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 0/9] PCI: introduce the concept of power sequencing of PCIe
- devices
-Content-Language: en-US
-To: Bartosz Golaszewski <brgl@bgdev.pl>, Kalle Valo <kvalo@kernel.org>,
- "David S . Miller" <davem@davemloft.net>, Eric Dumazet
- <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- Bjorn Helgaas <bhelgaas@google.com>, Heiko Stuebner <heiko@sntech.de>,
- Jernej Skrabec <jernej.skrabec@gmail.com>,
- Chris Morgan <macromorgan@hotmail.com>,
- Linus Walleij <linus.walleij@linaro.org>,
- Geert Uytterhoeven <geert+renesas@glider.be>, Arnd Bergmann <arnd@arndb.de>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- =?UTF-8?Q?N=C3=ADcolas_F_=2E_R_=2E_A_=2E_Prado?= <nfraprado@collabora.com>,
- Marek Szyprowski <m.szyprowski@samsung.com>, Peng Fan <peng.fan@nxp.com>,
- Robert Richter <rrichter@amd.com>, Dan Williams <dan.j.williams@intel.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Terry Bowman <terry.bowman@amd.com>,
- Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
- =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
- Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>,
- Srini Kandagatla <srinivas.kandagatla@linaro.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Jim Quinlan <jim2101024@gmail.com>, james.quinlan@broadcom.com
-Cc: linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-pci@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20240104130123.37115-1-brgl@bgdev.pl>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20240104130123.37115-1-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <1704727654-13999-2-git-send-email-quic_mojha@quicinc.com>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: MZJY4oSui7IA64-2MonCZ-_Yj3so-ANf
+X-Proofpoint-ORIG-GUID: MZJY4oSui7IA64-2MonCZ-_Yj3so-ANf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ clxscore=1011 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ adultscore=0 phishscore=0 impostorscore=0 mlxlogscore=852 spamscore=0
+ bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401090034
 
-Hello,
-
-On 1/4/2024 5:01 AM, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Mon, Jan 08, 2024 at 08:57:31PM +0530, Mukesh Ojha wrote:
+> It was realized by Srinivas K. that there is a need of
+> read-modify-write scm exported function so that it can
+> be used by multiple clients.
 > 
-> During last year's Linux Plumbers we had several discussions centered
-> around the need to power-on PCI devices before they can be detected on
-> the bus.
+> Let's introduce qcom_scm_io_rmw() which masks out the bits
+> and write the passed value to that bit-offset.
 > 
-> The consensus during the conference was that we need to introduce a
-> class of "PCI slot drivers" that would handle the power-sequencing.
+> Suggested-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> Tested-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com> # IPQ9574 and IPQ5332
+> ---
+>  drivers/firmware/qcom/qcom_scm.c       | 26 ++++++++++++++++++++++++++
+>  include/linux/firmware/qcom/qcom_scm.h |  1 +
+>  2 files changed, 27 insertions(+)
 > 
-> After some additional brain-storming with Manivannan and the realization
-> that the DT maintainers won't like adding any "fake" nodes not
-> representing actual devices, we decided to reuse the existing
-> infrastructure provided by the PCIe port drivers.
-> 
-> The general idea is to instantiate platform devices for child nodes of
-> the PCIe port DT node. For those nodes for which a power-sequencing
-> driver exists, we bind it and let it probe. The driver then triggers a
-> rescan of the PCI bus with the aim of detecting the now powered-on
-> device. The device will consume the same DT node as the platform,
-> power-sequencing device. We use device links to make the latter become
-> the parent of the former.
-> 
-> The main advantage of this approach is not modifying the existing DT in
-> any way and especially not adding any "fake" platform devices.
+> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> index 520de9b5633a..25549178a30f 100644
+> --- a/drivers/firmware/qcom/qcom_scm.c
+> +++ b/drivers/firmware/qcom/qcom_scm.c
+> @@ -19,6 +19,7 @@
+>  #include <linux/of_irq.h>
+>  #include <linux/of_platform.h>
+>  #include <linux/platform_device.h>
+> +#include <linux/spinlock.h>
+>  #include <linux/reset-controller.h>
+>  #include <linux/types.h>
+>  
+> @@ -41,6 +42,8 @@ struct qcom_scm {
+>  	int scm_vote_count;
+>  
+>  	u64 dload_mode_addr;
+> +	/* Atomic context only */
+> +	spinlock_t lock;
 
-There is prior work in that area which was applied, but eventually reverted:
+IMHO, this comment can be confusing later. one might think that
+qcom_scm_call_atomic() needs to be called with this lock, but that does
+not seems to be the intention here.
 
-https://www.spinics.net/lists/linux-pci/msg119136.html
+>  };
+>  
+>  struct qcom_scm_current_perm_info {
+> @@ -481,6 +484,28 @@ static int qcom_scm_disable_sdi(void)
+>  	return ret ? : res.result[0];
+>  }
+>  
+> +int qcom_scm_io_rmw(phys_addr_t addr, unsigned int mask, unsigned int val)
+> +{
+> +	unsigned int old, new;
+> +	int ret;
+> +
+> +	if (!__scm)
+> +		return -EINVAL;
+> +
+> +	spin_lock(&__scm->lock);
 
-and finally re-applied albeit in a different shape:
+So, this function can't be called from hardirq context. If that ever
+happens, with this new spinlock (without disabling interrupts), can
+result in deadlock.
 
-https://lore.kernel.org/all/20220716222454.29914-1-jim2101024@gmail.com/
+> +	ret = qcom_scm_io_readl(addr, &old);
+> +	if (ret)
+> +		goto unlock;
+> +
+> +	new = (old & ~mask) | (val & mask);
+> +
+> +	ret = qcom_scm_io_writel(addr, new);
+> +unlock:
+> +	spin_unlock(&__scm->lock);
+> +	return ret;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_scm_io_rmw);
 
-so we might want to think about how to have pcie-brcmstb.c converted 
-over your proposed approach. AFAIR there is also pcie-rockchip.c which 
-has some rudimentary support for voltage regulators of PCIe end-points.
-
-What does not yet appear in this RFC is support for suspend/resume, 
-especially for power states where both the RC and the EP might be losing 
-power. There also needs to be some thoughts given to wake-up enabled 
-PCIe devices like Wi-Fi which might need to remain powered on to service 
-Wake-on-WLAN frames if nothing else.
-
-I sense a potential for a lot of custom power sequencing drivers being 
-added and ultimately leading to the decision to create a "generic" one 
-which is entirely driven by Device Tree properties...
-
-Thanks for doing this!
--- 
-Florian
+Thanks,
+Pavan
 
