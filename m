@@ -1,122 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-6720-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6721-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD9E38282F2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 10:20:09 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D26D828308
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 10:22:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3E0591C248FE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 09:20:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6CE221C240EA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 09:22:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65AA737147;
-	Tue,  9 Jan 2024 09:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29E0E3588B;
+	Tue,  9 Jan 2024 09:20:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QgUePAhV"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OANuaXVM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A5FF35890;
-	Tue,  9 Jan 2024 09:18:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83CBBC433F1;
-	Tue,  9 Jan 2024 09:18:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704791893;
-	bh=HPNvwBlDoURqcR228aqjUvaE1RRrnKS4myuXXAyaAog=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=QgUePAhVgYTKdCDir8lW5xgFglt6GgowMR6umaf1kI3jYuBEyAmb3yDBh9xym6xHX
-	 LYtGNIHNc69u/mOhR53YaK9NOoKsPWFj+jU3O2j3Np73y601KPh5DUUOqnWcRj4Lhj
-	 XpMCreey5P1dYUlyEXvoFoTiUDnlH7/pyH//6WxJS9X9AhfbmWaWjhZhCXMSxaHivi
-	 1BTV9Sbg1gUGII3VJS46zGejC9vFQtb3DF3whKvRqSF7hHkWlR8y9B8X7CXGLMMaKx
-	 Ev1vbmAKdBil9IiXRIqBic3d7NkU5RMgjwhZnuy35LAFMQ2jJUBDhkqGH49yuoq/Ph
-	 F1d1/82OwuaTA==
-From: Kalle Valo <kvalo@kernel.org>
-To: Jeff Johnson <quic_jjohnson@quicinc.com>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>,  "David S . Miller"
- <davem@davemloft.net>,  Eric Dumazet <edumazet@google.com>,  Jakub
- Kicinski <kuba@kernel.org>,  Paolo Abeni <pabeni@redhat.com>,  Rob Herring
- <robh+dt@kernel.org>,  Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley <conor+dt@kernel.org>,
-  Bjorn Andersson <andersson@kernel.org>,  Konrad Dybcio
- <konrad.dybcio@linaro.org>,  Catalin Marinas <catalin.marinas@arm.com>,
-  Will Deacon <will@kernel.org>,  Bjorn Helgaas <bhelgaas@google.com>,
-  Heiko Stuebner <heiko@sntech.de>,  Jernej Skrabec
- <jernej.skrabec@gmail.com>,  Chris Morgan <macromorgan@hotmail.com>,
-  Linus Walleij <linus.walleij@linaro.org>,  Geert Uytterhoeven
- <geert+renesas@glider.be>,  Arnd Bergmann <arnd@arndb.de>,  Neil Armstrong
- <neil.armstrong@linaro.org>,  =?utf-8?Q?N=C3=ADcolas?= F . R . A . Prado
- <nfraprado@collabora.com>,  Marek Szyprowski <m.szyprowski@samsung.com>,
-  Peng Fan <peng.fan@nxp.com>,  Robert Richter <rrichter@amd.com>,  Dan
- Williams <dan.j.williams@intel.com>,  Jonathan Cameron
- <Jonathan.Cameron@huawei.com>,  Terry Bowman <terry.bowman@amd.com>,
-  Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-  Ilpo =?utf-8?Q?J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,  Huacai
- Chen
- <chenhuacai@kernel.org>,  Alex Elder <elder@linaro.org>,  Srini Kandagatla
- <srinivas.kandagatla@linaro.org>,  Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>,  <linux-wireless@vger.kernel.org>,
-  <netdev@vger.kernel.org>,  <devicetree@vger.kernel.org>,
-  <linux-kernel@vger.kernel.org>,  <linux-arm-msm@vger.kernel.org>,
-  <linux-arm-kernel@lists.infradead.org>,  <linux-pci@vger.kernel.org>,
-  Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [RFC 8/9] PCI/pwrseq: add a pwrseq driver for QCA6390
-References: <20240104130123.37115-1-brgl@bgdev.pl>
-	<20240104130123.37115-9-brgl@bgdev.pl>
-	<15443d5d-6544-45d0-afeb-b23e6a041ecf@quicinc.com>
-Date: Tue, 09 Jan 2024 11:18:04 +0200
-In-Reply-To: <15443d5d-6544-45d0-afeb-b23e6a041ecf@quicinc.com> (Jeff
-	Johnson's message of "Fri, 5 Jan 2024 17:31:47 -0800")
-Message-ID: <87jzoizwz7.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4882575B;
+	Tue,  9 Jan 2024 09:20:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4093SbOe010422;
+	Tue, 9 Jan 2024 09:20:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=HzuWPpbwZVSHJ1aJFEu6jy0rsDjgywdk2juJPX406wQ=; b=OA
+	NuaXVMe7jOQsTbcorcqhluaRKmT7dEhtPVjQLw1a9DG2Lw1LbzC0Oku3DNCbVZ8G
+	iSM6OF0SB29N1a4PdHanmKvUGjZjP67brVG5D/GUZ4hO0bJmy5xm7EAhL+rX96eT
+	DAjAIGeiJTXecWl6sypeWl7akQvdHUzNbTpLaFrRO4g5wLSTcPdfZ3HRszpVUlkA
+	FQTqmS3PUWjdNEfZIr2m5osBPPURA9EAtTcmvYxx/5EDvyC2ygW2+hH+y6KMKCb6
+	uQgQjmp6BOodwhomD/T9xDiaD2+EdUw8UDMBn4sTRgVoBNkwfBadcH1+HSV2bFSL
+	X+x8Il63RpvFWhSoe+/g==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vgwhs8p6x-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 09 Jan 2024 09:20:43 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4099Kg0x026714
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 9 Jan 2024 09:20:42 GMT
+Received: from [10.253.78.145] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 9 Jan
+ 2024 01:20:39 -0800
+Message-ID: <90c0a654-a02f-46e2-96a9-34f6a30c95a0@quicinc.com>
+Date: Tue, 9 Jan 2024 17:20:37 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] bus: mhi: host: Add sysfs entry to force device to enter
+ EDL
+Content-Language: en-US
+To: Manivannan Sadhasivam <mani@kernel.org>,
+        Jeffrey Hugo
+	<quic_jhugo@quicinc.com>
+CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
+        <quic_mrana@quicinc.com>, Bhaumik Bhatt <quic_bbhatt@quicinc.com>
+References: <1703490474-84730-1-git-send-email-quic_qianyu@quicinc.com>
+ <cff4b828-9566-a2bd-287a-138d74a76a59@quicinc.com>
+ <20240102165229.GC4917@thinkpad>
+From: Qiang Yu <quic_qianyu@quicinc.com>
+In-Reply-To: <20240102165229.GC4917@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: QAzX4sz7Hd2CUePXAnk6Lnk9hhMDNg2n
+X-Proofpoint-GUID: QAzX4sz7Hd2CUePXAnk6Lnk9hhMDNg2n
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxlogscore=931
+ suspectscore=0 lowpriorityscore=0 phishscore=0 mlxscore=0 adultscore=0
+ spamscore=0 malwarescore=0 priorityscore=1501 impostorscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
+ definitions=main-2401090073
 
-Jeff Johnson <quic_jjohnson@quicinc.com> writes:
 
-> On 1/4/2024 5:01 AM, Bartosz Golaszewski wrote:
->> diff --git a/drivers/pci/pcie/pwrseq/Kconfig b/drivers/pci/pcie/pwrseq/Kconfig
->> index 010e31f432c9..f9fe555b8506 100644
->> --- a/drivers/pci/pcie/pwrseq/Kconfig
->> +++ b/drivers/pci/pcie/pwrseq/Kconfig
->> @@ -6,3 +6,14 @@ menuconfig PCIE_PWRSEQ
->>  	help
->>  	  Say yes here to enable support for PCIe power sequencing
->>  	  drivers.
->> +
->> +if PCIE_PWRSEQ
->> +
->> +config PCIE_PWRSEQ_QCA6390
->> +	tristate "PCIe Power Sequencing driver for QCA6390"
->> +	depends on ARCH_QCOM || COMPILE_TEST
->> +	help
->> +	  Enable support for the PCIe power sequencing driver for the
->> +	  ath11k module of the QCA6390 WLAN/BT chip.
->> +
->> +endif
+On 1/3/2024 12:52 AM, Manivannan Sadhasivam wrote:
+> On Tue, Jan 02, 2024 at 08:31:15AM -0700, Jeffrey Hugo wrote:
+>> On 12/25/2023 12:47 AM, Qiang Yu wrote:
+>>> From: Bhaumik Bhatt <quic_bbhatt@quicinc.com>
+>>>
+>>> Forcing the device (eg. SDX75) to enter Emergency Download Mode involves
+>>> writing the 0xEDEDEDED cookie to the channel 91 doorbell register and
+>>> forcing an SOC reset afterwards. Allow users of the MHI bus to exercise the
+>>> sequence using a sysfs entry.
+>> I don't see this documented in the spec anywhere.  Is this standard behavior
+>> for all MHI devices?
+>>
+>> What about devices that don't support EDL mode?
+>>
+>> How should the host avoid using this special cookie when EDL mode is not
+>> desired?
+>>
+> All points raised by Jeff are valid. I had discussions with Hemant and Bhaumik
+> previously on allowing the devices to enter EDL mode in a generic manner and we
+> didn't conclude on one final approach.
 >
-> As I mentioned in the 5/9 patch I'm concerned that the current
-> definition of PCIE_PWRSEQ and PCIE_PWRSEQ_QCA6390 will effectively hide
-> the fact that QCA6390 may need additional configuration since the menu
-> item will only show up if you have already enabled PCIE_PWRSEQ.
-> Yes I see that these are set in the defconfig in 9/9 but I'm concerned
-> about the more generic case.
+> Whatever way we come up with, it should be properly described in the MHI spec
+> and _should_ be backwards compatible.
+
+Hi Mani, Jeff. The method of entering EDL mode is documented in MHI spec 
+v1.2, Chapter 13.2.
+
+Could you please check once?
+
 >
-> I'm wondering if there should be a separate config QCA6390 within ath11k
-> which would then select PCIE_PWRSEQ and PCIE_PWRSEQ_QCA6390
-
-Or is it possible to provide an optional dependency in Kconfig (I guess
-not)? Or what about mentioning about PCIE_PWRSEQ_QCA6390 in ATH11K_PCI
-help text?
-
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+> - Mani
+>
+>> -Jeff
 
