@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-6697-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6698-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 191A4827C57
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 02:02:25 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C52B827C68
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 02:12:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AAF891F241D4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 01:02:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 05FE61F24238
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 01:12:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A454D259D;
-	Tue,  9 Jan 2024 01:02:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE665A5E;
+	Tue,  9 Jan 2024 01:12:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UQ2qAH3G"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EpeXGelN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 218622573;
-	Tue,  9 Jan 2024 01:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A34A49;
+	Tue,  9 Jan 2024 01:12:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 408NLtfS011415;
-	Tue, 9 Jan 2024 01:02:15 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4090eVOA023723;
+	Tue, 9 Jan 2024 01:12:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=GhuqgLT+Edx80P5u459iv8Evf80C0H/EK5npkY8dxAE=; b=UQ
-	2qAH3GHCTtXpKJ641DRLLEokiTL73k/Lm3PsIDyQVD4uXfeqmrr2swKMsKL38W+W
-	XMVWfj+F86ttXfHKYgwHwQmPn6WyainRv/G1ms0rhQbH5VGU+vOf9UG//BTACLli
-	vPNadH0JWPjH05fj2itXK1br3unHWprQ4EtFDesYBG68UPafRVqKENSRQufcdYbS
-	B6XnkNZxTx2ffA3eqpD7z40zZxYxsozL3P39YFAg0bFQtCir3Gjm3KQ/Fl/wxjYA
-	BAAnIXjPDAJ6TJ+IAgMqmPtGgSLK4RkaJ7HoDTCNmwA4nyLpHI9Seye+JY3FPjBU
-	oq+hmsexNcDineb5lM/Q==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vgch524pc-1
+	qcppdkim1; bh=qB7JK/rvHV/oMoLxNfOgyhrs98zc89tbNG9XG8X+Hi0=; b=Ep
+	eXGelN/Uh5iU1xIZ90UmahpgUmni4+UPLqTLEaTmxEob6kTHCfJLF3rkua97MwRw
+	2iZSKkNwXdwuA+14YenL23iTlcKwnBW97Ij+6y1FPZayXZmKVkB9lZvzfdE2GWwl
+	D9LOsqkE65l+hHnxAid4IgpTFp+vEOah6TfuSPhETdr7oTeHTctKmLMauIP8tNlt
+	YNGgzeK26DL1WGZA8FCY4ySbyGetEBHTDaCUcSQC4JKAaY0/U5B+n0PO7oOP0m7M
+	Vu1V5KkDt3s3PP4lyur+kg6Qfcq/fNSSgo+NUl2d1LufeMzvXfxMarCjEYOKH5oR
+	ZMrIElIBNdk3nNJCDHJg==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vgkkh962x-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 09 Jan 2024 01:02:14 +0000 (GMT)
+	Tue, 09 Jan 2024 01:12:32 +0000 (GMT)
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40912EPG008386
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4091CWWP021026
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 9 Jan 2024 01:02:14 GMT
+	Tue, 9 Jan 2024 01:12:32 GMT
 Received: from [10.71.108.105] (10.80.80.8) by nasanex01b.na.qualcomm.com
  (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 8 Jan
- 2024 17:02:13 -0800
-Message-ID: <55a0eb43-f740-4efc-8f1b-67911781cd39@quicinc.com>
-Date: Mon, 8 Jan 2024 17:02:13 -0800
+ 2024 17:12:31 -0800
+Message-ID: <79851641-8b56-4d25-b4c9-2d56a5bf41e9@quicinc.com>
+Date: Mon, 8 Jan 2024 17:12:30 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,78 +56,101 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 3/4] firmware: qcom: scm: Rework dload mode
- availability check
+Subject: Re: [PATCH v1] misc: fastrpc: Pass proper arguments to scm call
 Content-Language: en-US
-To: Mukesh Ojha <quic_mojha@quicinc.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <linus.walleij@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>
-References: <1704727654-13999-1-git-send-email-quic_mojha@quicinc.com>
- <1704727654-13999-4-git-send-email-quic_mojha@quicinc.com>
+To: Ekansh Gupta <quic_ekangupt@quicinc.com>, <srinivas.kandagatla@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>
+CC: <gregkh@linuxfoundation.org>, <linux-kernel@vger.kernel.org>,
+        stable
+	<stable@kernel.org>
+References: <20240108100513.19993-1-quic_ekangupt@quicinc.com>
 From: Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <1704727654-13999-4-git-send-email-quic_mojha@quicinc.com>
+In-Reply-To: <20240108100513.19993-1-quic_ekangupt@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: mhTxCQ2YaepcWBdPgSvl3b_QaQQQ3LRf
-X-Proofpoint-GUID: mhTxCQ2YaepcWBdPgSvl3b_QaQQQ3LRf
+X-Proofpoint-GUID: OK__ZbRzyjVHWeDIwxlQFIGchDtepcbW
+X-Proofpoint-ORIG-GUID: OK__ZbRzyjVHWeDIwxlQFIGchDtepcbW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- lowpriorityscore=0 malwarescore=0 mlxscore=0 adultscore=0 impostorscore=0
- phishscore=0 suspectscore=0 priorityscore=1501 mlxlogscore=999 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
- definitions=main-2401090004
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1011
+ spamscore=0 suspectscore=0 priorityscore=1501 mlxlogscore=999
+ impostorscore=0 malwarescore=0 lowpriorityscore=0 bulkscore=0 mlxscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401090005
 
 
 
-On 1/8/2024 7:27 AM, Mukesh Ojha wrote:
-> QCOM_SCM_BOOT_SET_DLOAD_MODE was only valid for very older
-> target and firmware and for recent targets there is dload
-> mode tcsr registers is available to set the download mode.
+On 1/8/2024 2:05 AM, Ekansh Gupta wrote:
+> For CMA memory allocation, ownership is assigned to DSP to make it
+> accessible by the PD running on the DSP. With current implementation
+> HLOS VM is stored in the channel structure during rpmsg_probe and
+> this VM is passed to qcom_scm call as the source VM.
 > 
-> So, it is better to keep it as fallback check instead of
-> checking its availability and failing it always.
+> The qcom_scm call will overwrite the passed source VM with the next
+> VM which would cause a problem in case the scm call is again needed.
+> Adding a local copy of source VM whereever scm call is made to avoid
+> this problem.
 > 
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
 
-Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
+The perms in fastrpc_channel_ctx should always reflect the current
+permission bits, so I'm surprised you see problem.
 
+What is the scenario where that's not the case?
+
+> Fixes: 0871561055e6 ("misc: fastrpc: Add support for audiopd")> Cc: stable <stable@kernel.org>
+> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
 > ---
->  drivers/firmware/qcom/qcom_scm.c | 12 +++++-------
->  1 file changed, 5 insertions(+), 7 deletions(-)
+>  drivers/misc/fastrpc.c | 10 ++++++----
+>  1 file changed, 6 insertions(+), 4 deletions(-)
 > 
-> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-> index 4421f219fe9a..87bcd5c02f2b 100644
-> --- a/drivers/firmware/qcom/qcom_scm.c
-> +++ b/drivers/firmware/qcom/qcom_scm.c
-> @@ -532,18 +532,16 @@ static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
->  static void qcom_scm_set_download_mode(bool enable)
->  {
->  	u32 val = enable ? QCOM_DLOAD_FULLDUMP : QCOM_DLOAD_NODUMP;
-> -	bool avail;
->  	int ret = 0;
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index 1c6c62a7f7f5..c13efa7727e0 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -263,7 +263,6 @@ struct fastrpc_channel_ctx {
+>  	int domain_id;
+>  	int sesscount;
+>  	int vmcount;
+> -	u64 perms;
+>  	struct qcom_scm_vmperm vmperms[FASTRPC_MAX_VMIDS];
+>  	struct rpmsg_device *rpdev;
+>  	struct fastrpc_session_ctx session[FASTRPC_MAX_SESSIONS];
+> @@ -1279,9 +1278,11 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
 >  
-> -	avail = __qcom_scm_is_call_available(__scm->dev,
-> -					     QCOM_SCM_SVC_BOOT,
-> -					     QCOM_SCM_BOOT_SET_DLOAD_MODE);
-> -	if (avail) {
-> -		ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
-> -	} else if (__scm->dload_mode_addr) {
-> +	if (__scm->dload_mode_addr) {
->  		ret = qcom_scm_io_rmw(__scm->dload_mode_addr,
->  				      QCOM_DLOAD_MASK,
->  				      FIELD_PREP(QCOM_DLOAD_MASK, val));
-> +	} else if (__qcom_scm_is_call_available(__scm->dev,
-> +						QCOM_SCM_SVC_BOOT,
-> +						QCOM_SCM_BOOT_SET_DLOAD_MODE)) {
-> +		ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
->  	} else {
->  		dev_err(__scm->dev,
->  			"No available mechanism for setting download mode\n");
+>  		/* Map if we have any heap VMIDs associated with this ADSP Static Process. */
+>  		if (fl->cctx->vmcount) {
+> +			u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
+> +
+>  			err = qcom_scm_assign_mem(fl->cctx->remote_heap->phys,
+>  							(u64)fl->cctx->remote_heap->size,
+> -							&fl->cctx->perms,
+> +							&src_perms,
+>  							fl->cctx->vmperms, fl->cctx->vmcount);
+>  			if (err) {
+>  				dev_err(fl->sctx->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d",
+> @@ -1915,8 +1916,10 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+>  
+>  	/* Add memory to static PD pool, protection thru hypervisor */
+>  	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR && fl->cctx->vmcount) {
+> +		u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
+> +
+>  		err = qcom_scm_assign_mem(buf->phys, (u64)buf->size,
+> -			&fl->cctx->perms, fl->cctx->vmperms, fl->cctx->vmcount);
+> +			&src_perms, fl->cctx->vmperms, fl->cctx->vmcount);
+>  		if (err) {
+>  			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
+>  					buf->phys, buf->size, err);
+> @@ -2290,7 +2293,6 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>  
+>  	if (vmcount) {
+>  		data->vmcount = vmcount;
+> -		data->perms = BIT(QCOM_SCM_VMID_HLOS);
+>  		for (i = 0; i < data->vmcount; i++) {
+>  			data->vmperms[i].vmid = vmids[i];
+>  			data->vmperms[i].perm = QCOM_SCM_PERM_RWX;
 
