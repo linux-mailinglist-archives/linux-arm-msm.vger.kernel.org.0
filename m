@@ -1,179 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-6713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6379A827E62
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 06:39:04 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB858827F0A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 08:08:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 129D628595A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 05:39:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0CA3A1C2127D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 07:08:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6372417C3;
-	Tue,  9 Jan 2024 05:38:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4918D8F69;
+	Tue,  9 Jan 2024 07:08:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LaIDiLb2"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="BR3uNY2a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E396B15A7;
-	Tue,  9 Jan 2024 05:38:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4093wwaL020733;
-	Tue, 9 Jan 2024 05:38:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=U+lcuxDe7O11/MzKnHWkDOfp0ywpOp5eG391IDLVbfY=; b=La
-	IDiLb2PLc4HXguJzU08uSzecECe+ucaYh2WJhrkZndntfL+QzNEXMHtaeLwdBXai
-	/ombnrzMp8sYRi8bRe/YH1PnKCwXi/GEM0u6cpbFq1hwpfaofnQw3RLOA6jYKMpA
-	p00JP2xTpx10kRe2NEr0BFEkaU9j0lLJC28KoHV6EVvuHdzz6TGNr0I+TJGcrOQR
-	WzCih1SJvFFQR0OEsWXcGR5bHXDvB6zP8Dsqe9vax9tGJWuhelgoVXZycRNkMP+z
-	iIH3XGRV5Sj3VDY/mDhEZDIEJZfoSMNYzt0J6qOs1Wsaju09sLkPVdoIALXMtolW
-	EM4/bjlyewe7qxb/JWPw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vgr1sgv15-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 09 Jan 2024 05:38:52 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4095cp0E004093
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 9 Jan 2024 05:38:51 GMT
-Received: from [10.204.67.150] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 8 Jan
- 2024 21:38:49 -0800
-Message-ID: <04500984-6bc0-4a07-9940-235e4b932172@quicinc.com>
-Date: Tue, 9 Jan 2024 11:08:45 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F1E8F51
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jan 2024 07:08:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2cd46e7ae8fso25996681fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 23:08:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1704784124; x=1705388924; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LKZ+huI8zyF9y64Tci/e9CKNNCnYcIoMFreFA1gzux0=;
+        b=BR3uNY2aqxJmT75o7xwDgxeATb4y9fom4lRLSxsyllBe4QDRq2d0GDZQ/OGt7N8LnX
+         1VYqXJ8lSMOZUvQiOTUjnqzIFT7ExjFMPLl5Lh8hTzl/FND/cT2ZEvzEX35ic27taei9
+         66Ymdhj+sS5Y0+j9M0Iti3pUvgQ13Bxv0xIDQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704784124; x=1705388924;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LKZ+huI8zyF9y64Tci/e9CKNNCnYcIoMFreFA1gzux0=;
+        b=J2dVz01TsaAbGVwsTkl4R2d89l9e3Tzwj57Q5Kz3K0uF1vvq4ppk7O9qfGQmEhZcS4
+         qTPGMggz+6UncrxMKDJwSM/sMAVV/S+L/BMZBHnLni3gvZKUZr9NA/9J788A3N65KZSP
+         bGezzzBxftzX39r6Mpl93toEHUJ6qDMMv0+yHrUH6lb5scACQ+ul7Jrg40YpwWack3v8
+         ZJtt+R+HZW4i9v0Iw8o1j9Ib1AJSHfyCkmQcnfGJiLBwXEJj8QfEq5Vb3JAt4BkwAka1
+         JjSiX+rIUQkGKDbvau46EaslDwDg1BSQIWey+/zhSLwiCBHVHoJx0rTmLLg/sbJt96tc
+         32ow==
+X-Gm-Message-State: AOJu0Yy/cxZ6xvxvAvVd6AkFCJjPDgM7usvGiiGy+oPYmi15g4htHfk9
+	v78l/5M3dLooml87uncYOcxNZXxwJ994AAB7sSkRozy5P0Wx
+X-Google-Smtp-Source: AGHT+IHuV7ZXffeImPrQxW5h78uhSNEY4eppTSaVCMuaEKuHEsMq7+O1LGba2p8gHRlJMVF9kVGnSOLYolVvVTYKveM=
+X-Received: by 2002:a2e:a404:0:b0:2cd:1b40:5725 with SMTP id
+ p4-20020a2ea404000000b002cd1b405725mr1063109ljn.212.1704784123625; Mon, 08
+ Jan 2024 23:08:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] misc: fastrpc: Pass proper arguments to scm call
-Content-Language: en-US
-To: Elliot Berman <quic_eberman@quicinc.com>, <srinivas.kandagatla@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>
-CC: <gregkh@linuxfoundation.org>, <linux-kernel@vger.kernel.org>,
-        stable
-	<stable@kernel.org>
-References: <20240108100513.19993-1-quic_ekangupt@quicinc.com>
- <79851641-8b56-4d25-b4c9-2d56a5bf41e9@quicinc.com>
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
-In-Reply-To: <79851641-8b56-4d25-b4c9-2d56a5bf41e9@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ryAL2WnwQ3Yeqy1nUohN_soRBrPfsa7M
-X-Proofpoint-GUID: ryAL2WnwQ3Yeqy1nUohN_soRBrPfsa7M
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
- lowpriorityscore=0 mlxscore=0 priorityscore=1501 suspectscore=0
- bulkscore=0 impostorscore=0 adultscore=0 phishscore=0 spamscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401090039
+References: <20240104130123.37115-1-brgl@bgdev.pl> <a85dbfc3-e327-442a-9aab-5115f86944f7@gmail.com>
+In-Reply-To: <a85dbfc3-e327-442a-9aab-5115f86944f7@gmail.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
+Date: Tue, 9 Jan 2024 15:08:32 +0800
+Message-ID: <CAGXv+5EtvMgbr9oZ7cfnDCDN15BKqgpuiacHHf8_T5kLqYJpJw@mail.gmail.com>
+Subject: Re: [RFC 0/9] PCI: introduce the concept of power sequencing of PCIe devices
+To: Florian Fainelli <f.fainelli@gmail.com>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Kalle Valo <kvalo@kernel.org>, 
+	"David S . Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Heiko Stuebner <heiko@sntech.de>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Chris Morgan <macromorgan@hotmail.com>, 
+	Linus Walleij <linus.walleij@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Arnd Bergmann <arnd@arndb.de>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	=?UTF-8?B?TsOtY29sYXMgRiAuIFIgLiBBIC4gUHJhZG8=?= <nfraprado@collabora.com>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Peng Fan <peng.fan@nxp.com>, 
+	Robert Richter <rrichter@amd.com>, Dan Williams <dan.j.williams@intel.com>, 
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>, Terry Bowman <terry.bowman@amd.com>, 
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>, 
+	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+	Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jim Quinlan <jim2101024@gmail.com>, 
+	james.quinlan@broadcom.com, linux-wireless@vger.kernel.org, 
+	netdev@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-On 1/9/2024 6:42 AM, Elliot Berman wrote:
+On Tue, Jan 9, 2024 at 12:09=E2=80=AFPM Florian Fainelli <f.fainelli@gmail.=
+com> wrote:
 >
-> On 1/8/2024 2:05 AM, Ekansh Gupta wrote:
->> For CMA memory allocation, ownership is assigned to DSP to make it
->> accessible by the PD running on the DSP. With current implementation
->> HLOS VM is stored in the channel structure during rpmsg_probe and
->> this VM is passed to qcom_scm call as the source VM.
->>
->> The qcom_scm call will overwrite the passed source VM with the next
->> VM which would cause a problem in case the scm call is again needed.
->> Adding a local copy of source VM whereever scm call is made to avoid
->> this problem.
->>
-> The perms in fastrpc_channel_ctx should always reflect the current
-> permission bits, so I'm surprised you see problem.
+> Hello,
 >
-> What is the scenario where that's not the case?
-
-Thanks for reviewing the changes, Elliot. FastRPC driver is storing
-the bitfield of HLOS VMID in fastrpc_channel_ctx in perms(cctx->perms)
-and remoteproc specific VMID information from device tree in vmperms(cctx->vmperms).
-This information is intended to be passed to qcom_scm call when there is
-a requirement to move the ownership of memory to any remoteproc VM. As
-the srcvm is overwritten with the new VM, cctx->perms cannot be reused if
-the same request comes for any other memory allocation.
-
-The problem is seen with audioPD daemon. When the daemon is stated, it
-allocates some memory for audioPD and moves the ownership from HLOS to
-ADSP VM using qcom_scm call. After this, audioPD makes a request for some
-more memory which is again allocated in kernel and as per current
-implementation, qcom_scm call is again made with cctx->perms as srcVm
-which is no longer storing HLOS vmid. Hence using a local variable to
-make qcom_scm call where there is a need to move ownership from HLOS
-to remoteproc VM.
-
-Please let me know if you have any more queries.
-
---ekansh
-
+> On 1/4/2024 5:01 AM, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > During last year's Linux Plumbers we had several discussions centered
+> > around the need to power-on PCI devices before they can be detected on
+> > the bus.
+> >
+> > The consensus during the conference was that we need to introduce a
+> > class of "PCI slot drivers" that would handle the power-sequencing.
+> >
+> > After some additional brain-storming with Manivannan and the realizatio=
+n
+> > that the DT maintainers won't like adding any "fake" nodes not
+> > representing actual devices, we decided to reuse the existing
+> > infrastructure provided by the PCIe port drivers.
+> >
+> > The general idea is to instantiate platform devices for child nodes of
+> > the PCIe port DT node. For those nodes for which a power-sequencing
+> > driver exists, we bind it and let it probe. The driver then triggers a
+> > rescan of the PCI bus with the aim of detecting the now powered-on
+> > device. The device will consume the same DT node as the platform,
+> > power-sequencing device. We use device links to make the latter become
+> > the parent of the former.
+> >
+> > The main advantage of this approach is not modifying the existing DT in
+> > any way and especially not adding any "fake" platform devices.
 >
->> Fixes: 0871561055e6 ("misc: fastrpc: Add support for audiopd")> Cc: stable <stable@kernel.org>
->> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
->> ---
->>   drivers/misc/fastrpc.c | 10 ++++++----
->>   1 file changed, 6 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->> index 1c6c62a7f7f5..c13efa7727e0 100644
->> --- a/drivers/misc/fastrpc.c
->> +++ b/drivers/misc/fastrpc.c
->> @@ -263,7 +263,6 @@ struct fastrpc_channel_ctx {
->>   	int domain_id;
->>   	int sesscount;
->>   	int vmcount;
->> -	u64 perms;
->>   	struct qcom_scm_vmperm vmperms[FASTRPC_MAX_VMIDS];
->>   	struct rpmsg_device *rpdev;
->>   	struct fastrpc_session_ctx session[FASTRPC_MAX_SESSIONS];
->> @@ -1279,9 +1278,11 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->>   
->>   		/* Map if we have any heap VMIDs associated with this ADSP Static Process. */
->>   		if (fl->cctx->vmcount) {
->> +			u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
->> +
->>   			err = qcom_scm_assign_mem(fl->cctx->remote_heap->phys,
->>   							(u64)fl->cctx->remote_heap->size,
->> -							&fl->cctx->perms,
->> +							&src_perms,
->>   							fl->cctx->vmperms, fl->cctx->vmcount);
->>   			if (err) {
->>   				dev_err(fl->sctx->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d",
->> @@ -1915,8 +1916,10 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
->>   
->>   	/* Add memory to static PD pool, protection thru hypervisor */
->>   	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR && fl->cctx->vmcount) {
->> +		u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
->> +
->>   		err = qcom_scm_assign_mem(buf->phys, (u64)buf->size,
->> -			&fl->cctx->perms, fl->cctx->vmperms, fl->cctx->vmcount);
->> +			&src_perms, fl->cctx->vmperms, fl->cctx->vmcount);
->>   		if (err) {
->>   			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
->>   					buf->phys, buf->size, err);
->> @@ -2290,7 +2293,6 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->>   
->>   	if (vmcount) {
->>   		data->vmcount = vmcount;
->> -		data->perms = BIT(QCOM_SCM_VMID_HLOS);
->>   		for (i = 0; i < data->vmcount; i++) {
->>   			data->vmperms[i].vmid = vmids[i];
->>   			data->vmperms[i].perm = QCOM_SCM_PERM_RWX;
+> There is prior work in that area which was applied, but eventually revert=
+ed:
+>
+> https://www.spinics.net/lists/linux-pci/msg119136.html
+>
+> and finally re-applied albeit in a different shape:
+>
+> https://lore.kernel.org/all/20220716222454.29914-1-jim2101024@gmail.com/
+>
+> so we might want to think about how to have pcie-brcmstb.c converted
+> over your proposed approach. AFAIR there is also pcie-rockchip.c which
+> has some rudimentary support for voltage regulators of PCIe end-points.
+
+I think the current in-tree approaches mostly target either PCIe slots,
+whether full size or mini-PCIe or M.2, or soldered-on components that
+either only have a single power rail, have internal regulators, or have
+surrounding circuitry that would be incorporated on a PCIe card.
+
+These all have standardized power rails (+12V, +3.3V, +3.3V aux, etc.).
+
+> What does not yet appear in this RFC is support for suspend/resume,
+> especially for power states where both the RC and the EP might be losing
+> power. There also needs to be some thoughts given to wake-up enabled
+> PCIe devices like Wi-Fi which might need to remain powered on to service
+> Wake-on-WLAN frames if nothing else.
+>
+> I sense a potential for a lot of custom power sequencing drivers being
+> added and ultimately leading to the decision to create a "generic" one
+> which is entirely driven by Device Tree properties...
+
+We can have one "generic" slot power sequencing driver, which just
+enables all the power rails together. I would very much like to see that.
+
+I believe the power sequencing in this series is currently targeting more
+tightly coupled designs that use power rails directly from the PMIC, and
+thus require more explicit power sequencing.
+
+ChenYu
+
+
+> Thanks for doing this!
+> --
+> Florian
+>
+> _______________________________________________
+> linux-arm-kernel mailing list
+> linux-arm-kernel@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
 
