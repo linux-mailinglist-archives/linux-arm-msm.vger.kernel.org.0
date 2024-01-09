@@ -1,54 +1,43 @@
-Return-Path: <linux-arm-msm+bounces-6841-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89763828F56
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 22:56:43 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7DE6A8290DD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 00:31:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C3F7EB209D5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 21:56:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7E7951C24F61
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 23:31:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF6843DB87;
-	Tue,  9 Jan 2024 21:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EF4A3E47E;
+	Tue,  9 Jan 2024 23:31:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WewYTVQD"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="MFsa/ZBZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2DB3DB84
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jan 2024 21:56:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 409L9tLt019170;
-	Tue, 9 Jan 2024 21:56:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=gF65zN3fZ/bv/jCZHzzEHAnO1tSXedmWZcmQmp291xg=; b=We
-	wYTVQDc7W6WukSY5HlT1LJFXQFVgqdrItLW47BC+LQAi7STG3skQHntVRtlzTT3N
-	umXTr+2qoc2WBhVDqgbbFfoMqsvZitV2G4SN25NfLJk18pdDDgieS+dAbMPsK08f
-	XIqOiFJDVztEe4FnpI/40Tj9Wcv4pkVMEI1XupwuvqkRuBzXv+9qVRTys188bMK7
-	ftnibET3aFYG536iwbPVEHzH9Rdnaf08dGHJdeS870r23yoJlQXW/hdET2OHk4wf
-	8bKG22uSnkPUdWWMAlZrY0ZhmXMmljyxRbuchampii7rlfHHUUSv49BUvyvNL27R
-	qkARV681rurajG7me5Xw==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vh9vfgnup-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 09 Jan 2024 21:56:32 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 409LuViq020253
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 9 Jan 2024 21:56:31 GMT
-Received: from [10.71.108.105] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 9 Jan
- 2024 13:56:31 -0800
-Message-ID: <37ff80b1-62fa-45ce-b181-955cc887d47d@quicinc.com>
-Date: Tue, 9 Jan 2024 13:56:30 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2196C3D553;
+	Tue,  9 Jan 2024 23:31:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
+	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
+	bh=nigpUfVa2mUkzqljgO+KeSAqnJRyVTsXj/vLragc/Ak=; b=MFsa/ZBZDhYIlYvLVLWkNk4zWD
+	eHNFpkvAgh0CEyn9Hkm60/1OI5QJmyUAqyB8HyW+LjjfVNOOg/64b7Z2PWd5TIePcWppnt5cMiorN
+	fkGbeNq8CIBDpBnpQ2EHQKWuFoRj2WaT4AtiFbeKG7Lvy8VLYsdfedivVPaIhzgvN0ltBP3lEcq8Y
+	IzFWRuQiA8sdciifcbhWiTUG1Y5q6sEbuRwM2oTbRo7gymb5fb43rrzdXrAOrkLKNK8Yn/auTndh2
+	WimNXLeYSCFwUOs919tTl4Lb92XzQCX63LfcqXJWZiezYVxmO5esiLTmUbte3dkxZAyNyde3RXj1Y
+	12MUo2cA==;
+Received: from [50.53.46.231] (helo=[192.168.254.15])
+	by bombadil.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
+	id 1rNLZK-009qvy-08;
+	Tue, 09 Jan 2024 23:31:38 +0000
+Message-ID: <d5b041d9-1691-4259-a76c-176c5b3d8be3@infradead.org>
+Date: Tue, 9 Jan 2024 15:31:36 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,93 +45,308 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: sa8755p ufs ice bug: gcc_ufs_phy_ice_core_clk status stuck at
- 'off'
+Subject: Re: [PATCH v16 01/34] docs: gunyah: Introduce Gunyah Hypervisor
 Content-Language: en-US
-To: Brian Masney <bmasney@redhat.com>,
-        Shazad Hussain
-	<quic_shazhuss@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>,
-        Bartosz Golaszewski
-	<bartosz.golaszewski@linaro.org>,
-        Eric Chanudet <echanude@redhat.com>,
-        "Prasad Sodagudi" <psodagud@quicinc.com>,
-        Neil Armstrong
-	<neil.armstrong@linaro.org>
-References: <ZZYTYsaNUuWQg3tR@x1>
- <49d85352-d022-4b59-a3f2-d8f7ef3028ac@quicinc.com> <ZZxgCKQmQdUL81pX@x1>
- <d9335515-157b-4b6a-ba41-c31ca76362ee@quicinc.com> <ZZ2-P1xzsDwk91Yq@x1>
-From: Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <ZZ2-P1xzsDwk91Yq@x1>
-Content-Type: text/plain; charset="UTF-8"
+To: Elliot Berman <quic_eberman@quicinc.com>, Alex Elder <elder@linaro.org>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Murali Nalajal <quic_mnalajal@quicinc.com>,
+ Trilok Soni <quic_tsoni@quicinc.com>,
+ Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+ Carl van Schaik <quic_cvanscha@quicinc.com>,
+ Philip Derrin <quic_pderrin@quicinc.com>,
+ Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+ Jonathan Corbet <corbet@lwn.net>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Catalin Marinas
+ <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Fuad Tabba
+ <tabba@google.com>, Sean Christopherson <seanjc@google.com>,
+ Andrew Morton <akpm@linux-foundation.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-mm@kvack.org
+References: <20240109-gunyah-v16-0-634904bf4ce9@quicinc.com>
+ <20240109-gunyah-v16-1-634904bf4ce9@quicinc.com>
+From: Randy Dunlap <rdunlap@infradead.org>
+In-Reply-To: <20240109-gunyah-v16-1-634904bf4ce9@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -CUg7fooChiaC_VHHOTSQ_4-AO4sYc5S
-X-Proofpoint-ORIG-GUID: -CUg7fooChiaC_VHHOTSQ_4-AO4sYc5S
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- lowpriorityscore=0 suspectscore=0 clxscore=1015 priorityscore=1501
- impostorscore=0 adultscore=0 bulkscore=0 mlxlogscore=770 spamscore=0
- phishscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401090175
 
 
 
-On 1/9/2024 1:44 PM, Brian Masney wrote:
-> On Mon, Jan 08, 2024 at 03:35:55PM -0800, Elliot Berman wrote:
->> On 1/8/2024 12:50 PM, Brian Masney wrote:
->>> On Mon, Jan 08, 2024 at 11:44:35PM +0530, Shazad Hussain wrote:
->>>> I can see that gcc_ufs_phy_ice_core_clk needs the gcc_ufs_phy_gdsc to be
->>>> enabled before this particular clk is enabled. But that required
->>>> power-domain I do not see in the ice DT node. That can cause this
->>>> problem.
->>>
->>> Thank you! I'll work on and post a patch set as I find free time over
->>> the next week or two.
->> I think I observe the same issue on sm8650. Symptoms seem to be same as
->> you've described. I'll test out the following diff and see if things
->> seem more reliable:
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->> index fd4f9dac48a3..c9ea50834dc9 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->> @@ -2526,6 +2526,7 @@ ice: crypto@1d88000 {
->>                                      "qcom,inline-crypto-engine";
->>                         reg = <0 0x01d88000 0 0x8000>;
->>  
->> +                       power-domains = <&gcc UFS_PHY_GDSC>;
->>                         clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
->>                 };
->>  
->>
->> If yes, I can post a patch for sm8650 if no else has yet.
+On 1/9/24 11:37, Elliot Berman wrote:
+> Gunyah is an open-source Type-1 hypervisor developed by Qualcomm. It
+> does not depend on any lower-privileged OS/kernel code for its core
+> functionality. This increases its security and can support a smaller
+> trusted computing based when compared to Type-2 hypervisors.
 > 
-> The intermittent boot issue is still present against
-> linux-next-20240109 with the following patch:
+> Add documentation describing the Gunyah hypervisor and the main
+> components of the Gunyah hypervisor which are of interest to Linux
+> virtualization development.
 > 
-> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> @@ -1556,6 +1556,7 @@ ice: crypto@1d88000 {
->                         compatible = "qcom,sa8775p-inline-crypto-engine",
->                                      "qcom,inline-crypto-engine";
->                         reg = <0x0 0x01d88000 0x0 0x8000>;
-> +                       power-domains = <&gcc UFS_PHY_GDSC>;
->                         clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
->                 };
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> ---
+>  Documentation/virt/gunyah/index.rst         | 134 ++++++++++++++++++++++++++++
+>  Documentation/virt/gunyah/message-queue.rst |  68 ++++++++++++++
+>  Documentation/virt/index.rst                |   1 +
+>  3 files changed, 203 insertions(+)
+> 
+> diff --git a/Documentation/virt/gunyah/index.rst b/Documentation/virt/gunyah/index.rst
+> new file mode 100644
+> index 000000000000..da8e5e4b9cac
+> --- /dev/null
+> +++ b/Documentation/virt/gunyah/index.rst
+> @@ -0,0 +1,134 @@
+> +.. SPDX-License-Identifier: GPL-2.0
+> +
+> +=================
+> +Gunyah Hypervisor
+> +=================
+> +
+> +.. toctree::
+> +   :maxdepth: 1
+> +
+> +   message-queue
+> +
+> +Gunyah is a Type-1 hypervisor which is independent of any OS kernel, and runs in
+> +a higher CPU privilege level. It does not depend on any lower-privileged
+
+Is this the usual meaning of higher and lower? Seems backwards to me.
+
+> +operating system for its core functionality. This increases its security and can
+> +support a much smaller trusted computing base than a Type-2 hypervisor.
+> +
+> +Gunyah is an open source hypervisor. The source repo is available at
+
+s/repo/repository/
+
+> +https://github.com/quic/gunyah-hypervisor.
+> +
+> +Gunyah provides these following features.
+> +
+> +- Scheduling:
+> +
+> +  A scheduler for virtual CPUs (vCPUs) on physical CPUs enables time-sharing
+> +  of the CPUs. Gunyah supports two models of scheduling which can co-exist on
+
+s/co-exist/coexist/
+
+> +  a running system:
+> +
+> +    1. Hypervisor vCPU scheduling in which Gunyah hypervisor schedules vCPUS on
+> +       its own. The default is a real-time priority with round-robin scheduler.
+> +    2. "Proxy" scheduling in which an owner-VM can donate the remainder of its
+> +       own vCPU's time slice to an owned-VM's vCPU via a hypercall.
+> +
+> +- Memory Management:
+> +
+> +  APIs handling memory, abstracted as objects, limiting direct use of physical
+> +  addresses. Memory ownership and usage tracking of all memory under its control.
+> +  Memory partitioning between VMs is a fundamental security feature.
+> +
+> +- Interrupt Virtualization:
+> +
+> +  Interrupt ownership is tracked and interrupt delivery is directly to the
+> +  assigned VM. Gunyah makes use of hardware interrupt virtualization where
+> +  possible.
+> +
+> +- Inter-VM Communication:
+> +
+> +  There are several different mechanisms provided for communicating between VMs.
+> +
+> +    1. Message queues
+> +    2. Doorbells
+> +    3. Virtio MMIO transport
+> +    4. Shared memory
+> +
+> +- Virtual platform:
+> +
+> +  Architectural devices such as interrupt controllers and CPU timers are
+> +  directly provided by the hypervisor as well as core virtual platform devices
+> +  and system APIs such as ARM PSCI.
+> +
+> +- Device Virtualization:
+> +
+> +  Para-virtualization of devices is supported using inter-VM communication and
+> +  virtio transport support. Select stage 2 faults by virtual machines that use
+> +  proxy-scheduled vCPUs can be handled directly by Linux to provide Type-2
+> +  hypervisor style on-demand paging and/or device emulation.
+> +
+> +Architectures supported
+> +=======================
+> +AArch64 with a GICv3 or GICv4.1
+> +
+> +Resources and Capabilities
+> +==========================
+> +
+> +Services/resources provided by the Gunyah hypervisor are accessible to a
+> +virtual machine through capabilities. A capability is an access control
+> +token granting the holder a set of permissions to operate on a specific
+> +hypervisor object (conceptually similar to a file-descriptor).
+> +For example, inter-VM communication using Gunyah doorbells and message queues
+> +is performed using hypercalls taking Capability ID arguments for the required
+> +IPC objects. These resources are described in Linux as a struct gunyah_resource.
+> +
+> +Unlike UNIX file descriptors, there is no path-based or similar lookup of
+> +an object to create a new Capability, meaning simpler security analysis.
+> +Creation of a new Capability requires the holding of a set of privileged
+> +Capabilities which are typically never given out by the Resource Manager (RM).
+> +
+> +Gunyah itself provides no APIs for Capability ID discovery. Enumeration of
+> +Capability IDs is provided by RM as a higher level service to VMs.
+> +
+> +Resource Manager
+> +================
+> +
+> +The Gunyah Resource Manager (RM) is a privileged application VM supporting the
+> +Gunyah Hypervisor. It provides policy enforcement aspects of the virtualization
+> +system. The resource manager can be treated as an extension of the Hypervisor
+> +but is separated to its own partition to ensure that the hypervisor layer itself
+> +remains small and secure and to maintain a separation of policy and mechanism in
+> +the platform. The resource manager runs at arm64 NS-EL1, similar to other
+> +virtual machines.
+> +
+> +Communication with the resource manager from other virtual machines happens with
+
+                                                                       happens as
+   described in  ...
+?
+
+> +message-queue.rst. Details about the specific messages can be found in
+> +drivers/virt/gunyah/rsc_mgr.c
+> +
+> +::
+> +
+> +  +-------+   +--------+   +--------+
+> +  |  RM   |   |  VM_A  |   |  VM_B  |
+> +  +-.-.-.-+   +---.----+   +---.----+
+> +    | |           |            |
+> +  +-.-.-----------.------------.----+
+> +  | | \==========/             |    |
+> +  |  \========================/     |
+> +  |            Gunyah               |
+> +  +---------------------------------+
+> +
+> +The source for the resource manager is available at
+> +https://github.com/quic/gunyah-resource-manager.
+> +
+> +The resource manager provides the following features:
+> +
+> +- VM lifecycle management: allocating a VM, starting VMs, destruction of VMs
+> +- VM access control policy, including memory sharing and lending
+> +- Interrupt routing configuration
+> +- Forwarding of system-level events (e.g. VM shutdown) to owner VM
+> +- Resource (capability) discovery
+> +
+> +A VM requires boot configuration to establish communication with the resource
+> +manager. This is provided to VMs via a 'hypervisor' device tree node which is
+> +overlayed to the VMs DT by the RM. This node lets guests know they are running
+
+It seems that "overlaid" is preferred, both according to the internet and to
+git grep -i overlaid | wc
+54
+vs
+git grep -i overlayed | wc
+12
+
+> +as a Gunyah guest VM, how to communicate with resource manager, and basic
+> +description and capabilities of this VM. See
+> +Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml for a
+> +description of this node.
+
+> diff --git a/Documentation/virt/gunyah/message-queue.rst b/Documentation/virt/gunyah/message-queue.rst
+> new file mode 100644
+> index 000000000000..cd94710e381a
+> --- /dev/null
+> +++ b/Documentation/virt/gunyah/message-queue.rst
+> @@ -0,0 +1,68 @@
+> +.. SPDX-License-Identifier: GPL-2.0
+> +
+> +Message Queues
+> +==============
+> +Message queue is a simple low-capacity IPC channel between two virtual machines.
+> +It is intended for sending small control and configuration messages. Each
+> +message queue is unidirectional and buffered in the hypervisor. A full-duplex
+> +IPC channel requires a pair of queues.
+> +
+> +The size of the queue and the maximum size of the message that can be passed is
+> +fixed at creation of the message queue. Resource manager is presently the only
+> +use case for message queues, and creates messages queues between itself and VMs
+> +with a fixed maximum message size of 240 bytes. Longer messages require a
+> +further protocol on top of the message queue messages themselves. For instance,
+> +communication with the resource manager adds a header field for sending longer
+> +messages which are split into smaller fragments.
+> +
+> +The diagram below shows how message queue works. A typical configuration
+> +involves 2 message queues. Message queue 1 allows VM_A to send messages to VM_B.
+> +Message queue 2 allows VM_B to send messages to VM_A.
+> +
+> +1. VM_A sends a message of up to 240 bytes in length. It makes a hypercall
+> +   with the message to request the hypervisor to add the message to
+> +   message queue 1's queue. The hypervisor copies memory into the internal
+> +   message queue buffer; the memory doesn't need to be shared between
+> +   VM_A and VM_B.
+> +
+> +2. Gunyah raises the corresponding interrupt for VM_B (Rx vIRQ) when any of
+> +   these happens:
+> +
+> +   a. gunyah_msgq_send() has PUSH flag. This is a typical case when the message
+> +      queue is being used to implement an RPC-like interface.
+> +   b. Explicility with gunyah_msgq_push hypercall from VM_A.
+
+         Explicitly
+
+> +   c. Message queue has reached a threshold depth. Typically, this threshold
+> +      depth is the size of the queue (in other words: when queue is full, Rx
+> +      vIRQ is raised).
+> +
+> +3. VM_B calls gunyah_msgq_recv() and Gunyah copies message to requested buffer.
+> +
+> +4. Gunyah raises the corresponding interrupt for VM_A (Tx vIRQ) when the message
+> +   queue falls below a watermark depth. Typically, this is when the queue is
+> +   drained. Note the watermark depth and the threshold depth for the Rx vIRQ are
+> +   independent values. Coincidentally, this signal is conceptually similar to
+> +   Clear-to-Send.
+> +
+> +For VM_B to send a message to VM_A, the process is identical, except that
+> +hypercalls reference message queue 2's capability ID. The IRQ will be different
+> +for the second message queue.
+> +
+> +::
+> +
+> +      +-------------------+         +-----------------+         +-------------------+
+> +      |        VM_A       |         |Gunyah hypervisor|         |        VM_B       |
+> +      |                   |         |                 |         |                   |
+> +      |                   |         |                 |         |                   |
+> +      |                   |   Tx    |                 |         |                   |
+> +      |                   |-------->|                 | Rx vIRQ |                   |
+> +      |gunyah_msgq_send() | Tx vIRQ |Message queue 1  |-------->|gunyah_msgq_recv() |
+> +      |                   |<------- |                 |         |                   |
+> +      |                   |         |                 |         |                   |
+> +      |                   |         |                 |         |                   |
+> +      |                   |         |                 |   Tx    |                   |
+> +      |                   | Rx vIRQ |                 |<--------|                   |
+> +      |gunyah_msgq_recv() |<--------|Message queue 2  | Tx vIRQ |gunyah_msgq_send() |
+> +      |                   |         |                 |-------->|                   |
+> +      |                   |         |                 |         |                   |
+> +      |                   |         |                 |         |                   |
+> +      +-------------------+         +-----------------+         +---------------+
+> diff --git a/Documentation/virt/index.rst b/Documentation/virt/index.rst
+> index 7fb55ae08598..15869ee059b3 100644
+> --- a/Documentation/virt/index.rst
+> +++ b/Documentation/virt/index.rst
+> @@ -16,6 +16,7 @@ Virtualization Support
+>     coco/sev-guest
+>     coco/tdx-guest
+>     hyperv/index
+> +   gunyah/index
+>  
+>  .. only:: html and subproject
+>  
 > 
 
-Things have been a bit more reliable for me after adding the power-domains.
-
-Are you getting stuck at the same spot or somewhere else?
-
-I've been looking at a similar issue to [1], so I wonder if maybe you're
-facing that instead.
-
-[1]: https://lore.kernel.org/linux-arm-msm/20240104101735.48694-1-laura.nao@collabora.com/T/#m39f7c80b59c750ee4c0082474c5c15b6055927ef
+-- 
+#Randy
 
