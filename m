@@ -1,140 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-6774-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6775-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73935828978
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 16:54:15 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BEE8282897B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 16:54:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DDD1C1F259DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 15:54:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 59F0728822E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 15:54:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19BF63A278;
-	Tue,  9 Jan 2024 15:53:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C243F39FE7;
+	Tue,  9 Jan 2024 15:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MoUyfniE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hb5FMXcK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A238E3A8C0;
-	Tue,  9 Jan 2024 15:53:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 409D9rjh019968;
-	Tue, 9 Jan 2024 15:52:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:from:subject:to:cc:references
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=RREJkIe8cnOR7GAB9rHBcmsq2eRW8v6ksqyBes3HyDo=; b=Mo
-	UyfniEBPohj6dKvVtxtGYWjrOOT+RSOnJdbL2vbi50wmYJ/yT06YzqqDymGfw8k0
-	sm/1BRslvSMa5DYbYsgVUkAHb82DtPnmjFsvESZXdOTW5E3CkOP+F6RP8HF1hGxe
-	DiPaFnbh2ceg1y0gD2DTrBcksesr7edEy5Qo9QA0IUTRFsrGHah5gUBLBTGCxCWJ
-	Dck5fiplOZSn3NDcA5OKinMQOwAUzuvUkKbxrkDFeBwpO9CrDUSPzHCX1FQmPJCz
-	Tm3LYrdW6FY3WwnoMrCCNRmfhevlhLJqsnbpKT1ueVKKEnOW/AR3kzLWmyxexY2e
-	SSOZkZXDeXqMPaxjJyHw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vgwsjsckx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 09 Jan 2024 15:52:58 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 409FqvfF002774
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 9 Jan 2024 15:52:57 GMT
-Received: from [10.216.60.40] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 9 Jan
- 2024 07:52:53 -0800
-Message-ID: <960ea567-eed5-4908-a3ad-82add0c6f26c@quicinc.com>
-Date: Tue, 9 Jan 2024 21:22:17 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F8539FF4
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jan 2024 15:54:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-5f2d4aaa2fdso31551097b3.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jan 2024 07:54:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704815654; x=1705420454; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=4Ldk2xHvhyxy1bWq9YLzjnpGm/58hFkzg9pcqfNBBmU=;
+        b=hb5FMXcKsUq7fX0vXAKCCNvET5wEaaBu/xkUeybkiU0niekxL4UGng4PsPUzJTQvcw
+         iLqHS1ipgKlVuDs7GbvE336ShcpzLzikxc6E+K3XVBD4Ump0vAxBxLa5UajeGz31PsAU
+         TV15uHSAvKPHbGhdrJFUtUV+WYDc6WFS3TI3ADMKig0BhJ6QVKFE2it5MPrTeaGg868b
+         6T6U4aFof/Yfu+LJo48nM7jJvjEQQfzZdVWzbk80WHDpax/zFkm5CBkPNRWP4Z2WLqWI
+         q2tv//Bki5N1svNhUTgsgoB5tTZ9PBJkx93DVmlqtEOUR5Dq3boA8n2BzmVikfIOux7Y
+         QhQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704815654; x=1705420454;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4Ldk2xHvhyxy1bWq9YLzjnpGm/58hFkzg9pcqfNBBmU=;
+        b=lPokuMbC2oTtZGVJL5TpdbUhIkzu0wnwWHgHAYmuiOKlnJ9WrocWBn0wt2D0auKdzs
+         ndMu9SCAkDLlJuyNxbTDZqLZX55X+71NUduoHJo+9a3AeUy4TBXp7ZhfI7W0nImMMJf6
+         eBeasvzuvRShmyva7IJdCPJ3mgggjZ7PWOa2yHyOismDcR491V6jEZjLrfd5MALkIhAH
+         bfGi0Y1YLpNfhsfFPGgXxA77zVMBp2+JlCUe3zbsVdMchJhMVeKOjSaTWVHFVewFY2Ok
+         rynoK9TvP+JGccjev9xoU2h8unWHFug8JW67NPN+YxiMb5eynesB68UmVmDy65yNqwZR
+         pfPg==
+X-Gm-Message-State: AOJu0Yyd0JfBgnqIVS8sCuUwS9dMbVtsjt2ws+TW1EPP83baFDJxslsW
+	A6DHnrYqmIk3G9ekfRQ4rr2W6WoFyp6N0o8Dbfpp9ECrkY4sDA==
+X-Google-Smtp-Source: AGHT+IFQLx02meGGq6nOyBFkOTpO0En98GI9sGvhPt+XmfUE9q14ZOEEaIb6XJ1QuivkoqSvqoF4dv8hq42FRAIxTWo=
+X-Received: by 2002:a0d:f1c2:0:b0:5e8:7687:77c9 with SMTP id
+ a185-20020a0df1c2000000b005e8768777c9mr4837433ywf.1.1704815654195; Tue, 09
+ Jan 2024 07:54:14 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com>
-Subject: Re: [PATCH] arm64: dts: qcom: qcm6490: Update PSCI suspend param for
- cluster sleep
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <luca.weiss@fairphone.com>, <cros-qcom-dts-watchers@chromium.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_lsrao@quicinc.com>
-References: <20240105070223.11415-1-quic_mkshah@quicinc.com>
- <9e79a460-9a1d-493c-a430-63c416e3d992@linaro.org>
-Content-Language: en-US
-In-Reply-To: <9e79a460-9a1d-493c-a430-63c416e3d992@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: AiWVUXmCwn6Z0UL_-XDQG_jRTuqZ9VpG
-X-Proofpoint-ORIG-GUID: AiWVUXmCwn6Z0UL_-XDQG_jRTuqZ9VpG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
- lowpriorityscore=0 phishscore=0 priorityscore=1501 adultscore=0
- spamscore=0 impostorscore=0 mlxscore=0 bulkscore=0 mlxlogscore=918
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401090129
+References: <20240109-phy-qmp-merge-common-v1-0-572899a14318@linaro.org> <20240109-phy-qmp-merge-common-v1-8-572899a14318@linaro.org>
+In-Reply-To: <20240109-phy-qmp-merge-common-v1-8-572899a14318@linaro.org>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Date: Tue, 9 Jan 2024 16:54:03 +0100
+Message-ID: <CACMJSetxG33D5JH=2N5LtGuznp-Q_6Bv0RL+jwCPaOsz7LwV6g@mail.gmail.com>
+Subject: Re: [PATCH 8/8] phy: qcom: sgmii-eth: move PCS registers to separate header
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-phy@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 1/5/2024 3:35 PM, Konrad Dybcio wrote:
-> On 5.01.2024 08:02, Maulik Shah wrote:
->> QCM6490 uses Trustzone as firmware whereas SC7280 uses arm trusted
->> firmware. The PSCI suspend param is different in Trustzone for cluster
->> sleep. Update the same for qcm6490 based idp and fairphone fp5 boards.
->>
->> Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
->> ---
-> 
-> Nice spot!
-> 
-> For things that are chrome-specific, I'd prefer them to be moved to
-> -chrome.dtsi and then the "normal" (LA+LE+WP+friends) values to
-> stay as default.
+On Tue, 9 Jan 2024 at 04:04, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> Follow the example of the rest of the QMP PHY drivers and move SGMII PCS
+> registers to a separate header file.
+>
+> Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
 
-Thanks for the review.
-Moved the chrome specific changes to sc7280-chrome-common.dtsi in v2.
+I'm typically opposed to the idea of putting defines used by a single
+driver in a separate header (for what reason?) but if that's
+consistent with the rest of existing drivers then ok.
 
-> 
->>   arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 4 ++++
->>   arch/arm64/boot/dts/qcom/qcm6490-idp.dts           | 4 ++++
->>   2 files changed, 8 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
->> index 176898c9dbbd..b56f6f26d96f 100644
->> --- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
->> +++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
->> @@ -446,6 +446,10 @@
->>   	};
->>   };
->>   
->> +&CLUSTER_SLEEP_0 {
->> +	arm,psci-suspend-param = <0x4100b344>;
->>
-> 
-> I think the residency times should also be updated here.
-> 
-> Moreover, I'm seeing additional sleep states here (APSS PC, CX RET
-> and this one being AOSS SLEEP), with values 0x4<<4, 0x134<<4,
-> 0xb34<<4 (the one you added here) respectively.
-> 
-> Could you please add them as well, similar to [1]?
-> 
-> Konrad
-> 
-> [1] https://lore.kernel.org/linux-arm-msm/20230619-topic-sc8280xp-idle-v2-1-cde50bf02f3c@linaro.org/
-
-Sure, added additional sleep stats with updated residency time in v2.
-
-Thanks,
-Maulik
+Bartosz
 
