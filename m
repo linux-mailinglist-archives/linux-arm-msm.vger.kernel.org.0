@@ -1,230 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-6715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76ED9827F9C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 08:43:06 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CFA738281E6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 09:38:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1FED728137F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 07:43:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5A16A1F273A6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 08:38:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03EFE947F;
-	Tue,  9 Jan 2024 07:43:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3970229428;
+	Tue,  9 Jan 2024 08:29:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rzR+v8jR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BJfda8C1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71AF52CA7
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jan 2024 07:42:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-28c9d424cceso1812596a91.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 23:42:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704786179; x=1705390979; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=hbh9aOHx7+CSCvz+p9Wnk1Alp9/EgNmTd2TSmQXJErs=;
-        b=rzR+v8jRYlcV6Du2wjV9SWn/leGlSxC2xqyL2rlmiqdSltIK5DjRyYmjpE/pmpJK+O
-         sydKGwyjCh4x6VFYcjoKMhTXDZlJj9k1+ttsomsQxlGv2k8mI5j1nqlxeGIGORjfPq7d
-         JLhDFFHFU1d957w5czZAy/H68MUIK7COMZsSXXn2w2MlrFxq1ERIoWZUfrw3QWfiPdPp
-         U6QWmOWa6jDNlPT0zVTjRFzS2vZWeh/GfW125WTC4ltk7LQ5/Y6R2Xm5zsxLEgGGNpAP
-         d3jQLu4SHPkh+dju8hNV7IiQDsXDzOFzKxRRWlk1pjj73nn/0SiobOs+x7MwDNEyxTaa
-         +A6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704786179; x=1705390979;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hbh9aOHx7+CSCvz+p9Wnk1Alp9/EgNmTd2TSmQXJErs=;
-        b=a6VxnlIPk3l3uK47PFLZdrl5Zw2PJlzeY1ob/8PmfoLtGiTO4AsrVT+lm4KyEe/1E3
-         kegQSZeoTn8XAZvn+RyJDVxa4bnAuh/hy2XhAGp4AD+m54awI1wUNvV768ganpJzh4DX
-         Rp3MrzJi9DsVRTQkI1GgFhnxI+ihFawDJ1zh41IcKpyenREifidl2smv6Tr14Zgfn2W6
-         jpiDgw31HbmQR9XtyWLO4j1NC6Fe0HNLkBCCfZEjj9ol4HsDymZeuvIsLBhjQYQzC2xA
-         +SjOf7qHtgSkktPkliFEu+KLf9QdRPun9C/dZ4Y2wJPLTUZjGs6dYQHIKkCyi8cMBpn+
-         UgFw==
-X-Gm-Message-State: AOJu0YwTuigzNMOLwHmpcGzxoTyyjE/8ymu/fgSkNcOuYKX84EwBNXwn
-	zsnRA6VLTIY9JzRmroHaTVVfvrw79/Dr
-X-Google-Smtp-Source: AGHT+IFcxvhYW0JAZdJq+N+9m95XOtUpUXsjOgoxUB/mRwSbbeb71nZBw7f0ddc9ml/vx8VlhUFUbA==
-X-Received: by 2002:a17:90b:f0f:b0:28d:9b5b:e70b with SMTP id br15-20020a17090b0f0f00b0028d9b5be70bmr429191pjb.0.1704786178748;
-        Mon, 08 Jan 2024 23:42:58 -0800 (PST)
-Received: from thinkpad ([117.213.102.45])
-        by smtp.gmail.com with ESMTPSA id g7-20020a1709029f8700b001d425d495c9sm1083349plq.190.2024.01.08.23.41.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jan 2024 23:42:57 -0800 (PST)
-Date: Tue, 9 Jan 2024 13:11:24 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Chen-Yu Tsai <wenst@chromium.org>
-Cc: Florian Fainelli <f.fainelli@gmail.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>, Kalle Valo <kvalo@kernel.org>,
-	"David S . Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chris Morgan <macromorgan@hotmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	=?iso-8859-1?Q?N=EDcolas_F_=2E_R_=2E_A_=2E?= Prado <nfraprado@collabora.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Peng Fan <peng.fan@nxp.com>, Robert Richter <rrichter@amd.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Terry Bowman <terry.bowman@amd.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>,
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jim Quinlan <jim2101024@gmail.com>, james.quinlan@broadcom.com,
-	linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-pci@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [RFC 0/9] PCI: introduce the concept of power sequencing of PCIe
- devices
-Message-ID: <20240109074124.GA3303@thinkpad>
-References: <20240104130123.37115-1-brgl@bgdev.pl>
- <a85dbfc3-e327-442a-9aab-5115f86944f7@gmail.com>
- <CAGXv+5EtvMgbr9oZ7cfnDCDN15BKqgpuiacHHf8_T5kLqYJpJw@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E33D29423;
+	Tue,  9 Jan 2024 08:29:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4098Aatk030120;
+	Tue, 9 Jan 2024 08:29:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=XCLdJ0e/Bd3E8o6EOrKg5ZcKtjQ7aRyzG5ZKf+9ziCU=; b=BJ
+	fda8C1lqJRjmxN28FUYHnf1uc6atqJmo7U2bJE8k8mOsCaqKthZxrKuqUHtJteiR
+	A7wY0ilF9P3pORVsE3IY0mk8iSBgWnckL6lxGGZ+s/fsisZSSmmK2Vf9jyWKhLND
+	0P34E9D6zHlYIb9iGlORDujP3upOkrUeCGJ8N0yiSQB/eyPmjZuZ0YnLiPm8pqDe
+	8RjwSjzWNAsaqhriN9ukzS4HUxx3+OvPhDb+PfzCUQFQvdUkpJ9ETTcy2PYdEUmq
+	Ftf3iHYcOiCUx7AR+30n2xN+0a4nKA1pXPzV1/kojucPesoD0mE6gP0R3x5sSQOk
+	X6sOlF/KGep5at/ejnCQ==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vgwsjrhp2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 09 Jan 2024 08:29:10 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4098T8PB002926
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 9 Jan 2024 08:29:08 GMT
+Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 9 Jan
+ 2024 00:27:12 -0800
+Message-ID: <209abe99-734d-f571-d930-4493437983bf@quicinc.com>
+Date: Tue, 9 Jan 2024 13:57:09 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: RESEND: Re: [Patch v6 03/12] docs: qcom: Add qualcomm minidump
+ guide
+Content-Language: en-US
+To: Ruipeng Qi <ruipengqi7@gmail.com>
+CC: <agross@kernel.org>, <alim.akhtar@samsung.com>, <andersson@kernel.org>,
+        <bmasney@redhat.com>, <conor+dt@kernel.org>, <corbet@lwn.net>,
+        <gpiccoli@igalia.com>, <keescook@chromium.org>, <kernel@quicinc.com>,
+        <kgene@kernel.org>, <konrad.dybcio@linaro.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-hardening@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-mediatek@lists.infradead.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        <linux-samsung-soc@vger.kernel.org>, <mathieu.poirier@linaro.org>,
+        <matthias.bgg@gmail.com>, <nm@ti.com>, <robh+dt@kernel.org>,
+        <tony.luck@intel.com>, <vigneshr@ti.com>, <qiruipeng@lixiang.com>
+References: <1700864395-1479-4-git-send-email-quic_mojha@quicinc.com>
+ <20231225135542.1789-1-ruipengqi7@gmail.com>
+ <520e377d-e990-c185-4a20-07806873e506@quicinc.com>
+ <CADHLONEn4oyRFrNWEbt2mxMczyc8FrDLMzaZ7fsijzm9Y8VTBA@mail.gmail.com>
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <CADHLONEn4oyRFrNWEbt2mxMczyc8FrDLMzaZ7fsijzm9Y8VTBA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAGXv+5EtvMgbr9oZ7cfnDCDN15BKqgpuiacHHf8_T5kLqYJpJw@mail.gmail.com>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: mmGVKHzYwm-iQH9vrziQjsvmW2EMUnvr
+X-Proofpoint-ORIG-GUID: mmGVKHzYwm-iQH9vrziQjsvmW2EMUnvr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
+ lowpriorityscore=0 phishscore=0 priorityscore=1501 adultscore=0
+ spamscore=0 impostorscore=0 mlxscore=0 bulkscore=0 mlxlogscore=999
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401090065
 
-On Tue, Jan 09, 2024 at 03:08:32PM +0800, Chen-Yu Tsai wrote:
-> On Tue, Jan 9, 2024 at 12:09 PM Florian Fainelli <f.fainelli@gmail.com> wrote:
-> >
-> > Hello,
-> >
-> > On 1/4/2024 5:01 AM, Bartosz Golaszewski wrote:
-> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > >
-> > > During last year's Linux Plumbers we had several discussions centered
-> > > around the need to power-on PCI devices before they can be detected on
-> > > the bus.
-> > >
-> > > The consensus during the conference was that we need to introduce a
-> > > class of "PCI slot drivers" that would handle the power-sequencing.
-> > >
-> > > After some additional brain-storming with Manivannan and the realization
-> > > that the DT maintainers won't like adding any "fake" nodes not
-> > > representing actual devices, we decided to reuse the existing
-> > > infrastructure provided by the PCIe port drivers.
-> > >
-> > > The general idea is to instantiate platform devices for child nodes of
-> > > the PCIe port DT node. For those nodes for which a power-sequencing
-> > > driver exists, we bind it and let it probe. The driver then triggers a
-> > > rescan of the PCI bus with the aim of detecting the now powered-on
-> > > device. The device will consume the same DT node as the platform,
-> > > power-sequencing device. We use device links to make the latter become
-> > > the parent of the former.
-> > >
-> > > The main advantage of this approach is not modifying the existing DT in
-> > > any way and especially not adding any "fake" platform devices.
-> >
-> > There is prior work in that area which was applied, but eventually reverted:
-> >
-> > https://www.spinics.net/lists/linux-pci/msg119136.html
-> >
-> > and finally re-applied albeit in a different shape:
-> >
-> > https://lore.kernel.org/all/20220716222454.29914-1-jim2101024@gmail.com/
-> >
-> > so we might want to think about how to have pcie-brcmstb.c converted
-> > over your proposed approach. AFAIR there is also pcie-rockchip.c which
-> > has some rudimentary support for voltage regulators of PCIe end-points.
+
+
+On 1/8/2024 9:04 PM, Ruipeng Qi wrote:
+> On Wed, Jan 3, 2024 at 11:27 PM Mukesh Ojha <quic_mojha@quicinc.com> wrote:
+>>
+>>
+>> One more thing, kernel part of minidump, we are calling it APSS Minidump
+>> has limitation of no of entries so it will be difficult to dump
+>> non-continuous regions after a certain number of registration ~200. However,
+>> we do have a solution in downstream kernel for it like to create a big
+>> CMA buffer and register this buffer with Minidump so that whatever gets
+>> dumped in that buffer gets captured during crash and fill up this buffer
+>> and create elf during panic. I think, similar thing you are also doing
+>> with your OS-minidump.
+>>
+>> I have just glanced into your implementation of OS-minidump, it
+>> more of relying on basic concept of RAM content preserved
+>> across boot and later reading it through procfs but this basic
+>> stuff is common to pstore(ram) as well and pstore has file system
+>> support why don't you make your driver as one of pstore record and that
+>> way Qualcomm minidump also gets benefited where entire OS-minidump
+>> record gets registered with Qualcomm minidump and we get this on panic
+>> and you get this via pstorefs.
+>>
+> Thanks Mukesh！It is a good suggestion to move OS-minidump forward!
+> By the way, I have some questions here for which I need your assistance.
 > 
-> I think the current in-tree approaches mostly target either PCIe slots,
-> whether full size or mini-PCIe or M.2, or soldered-on components that
-> either only have a single power rail, have internal regulators, or have
-> surrounding circuitry that would be incorporated on a PCIe card.
+> Firstly,I can reimplement OS-minidump as one of the pstore records to
+> dump data. The resulting dump file would contain thousands of
+> non-contiguous memory regions, each with only the virtual address and
+> size recorded. As far as I know, Qualcomm's minidump can handle
+> several memory regions, each with a physical address and size.
+> This seems to be a difference, and I'm curious as to how you deal with
+> data dumped by OS-minidump. I would really appreciate it if you could
+> provide more details on your approach.
+
+What my thought was to think your OS-minidump to be one of pstore record 
+similar to existing records like console, ftrace, pmsg, dmesg etc.,
+If you follow this series patch 11/12 and 12/12 is trying to get the
+pstore(ram) record information and registering with minidump and here
+the physical address are of the ramoops record addresses.
+
+So, once you are capturing everything inside in a record, all minidump
+has to do is get your Os-minidump record physical address and size
+and register with minidump.
 > 
-> These all have standardized power rails (+12V, +3.3V, +3.3V aux, etc.).
+> Secondly, what tools do you use to analyze the dump data, and does it
+> support crash tool?
+
+Currently, we are trying to capture only pstore ramoops region in text
+format and not been using any tool.
+
+Since, Qualcomm minidump is controlled from boot firmware and it can
+not be used on non-Qualcomm SoCs so here minidump driver and its usecase
+is limited to capture only pstore (ram)records for targets where RAM
+content is not guaranteed to be preserved across boots.
+
+So, you can think minidump as one of ramoops backend which will be
+dumping all the ramoops regions/records/zones.
+
++---------+     +---------+   +--------+      +---------+
+  | console |     | pmsg    |   | ftrace |     | dmesg   | ...Os-minidump
+  +---------+     +---------+   +--------+     +---------+
+        |             |             |              |
+        |             |             |              |
+        +------------------------------------------+
+                           |
+                          \ /
+                   +----------------+
+             (1)   |pstore frontends|
+                   +----------------+
+                           |
+                          \ /
+                  +------------------- +
+             (2)  | pstore backend(ram)|
+                  +--------------------+
+                           |
+                          \ /
+
+                    +---------------+
+             (3)    | qcom_minidump |
+                    +---------------+
+
+
 > 
+> Lastly, is Qualcomm minidump compatible with non-Qualcomm SoCs,
+> and if so, how can one use it?
 
-Right. But ideally, they should also be converted to use this power sequencing
-driver at some point in the future.
+I already replied it above.
 
-> > What does not yet appear in this RFC is support for suspend/resume,
-> > especially for power states where both the RC and the EP might be losing
-> > power. There also needs to be some thoughts given to wake-up enabled
-> > PCIe devices like Wi-Fi which might need to remain powered on to service
-> > Wake-on-WLAN frames if nothing else.
-> >
+-Mukesh
 
-I don't think it is necessary to add PM support in this series itself. Even
-though PM support is always nice to have or even necessary for controllers
-pulling the power plug during suspend, it makes sense to merge this basic
-implementation and add features on top.
-
-It should be noted that both the controller drivers and the power sequencing
-drivers should be in sync during suspend i.e., if the controller driver decides
-to put the device into D3Cold and turning off the controller power supplies,
-then this driver should also power off the device. But if the controller driver
-decides to keep the device in low power states (ASPM), then this driver
-_should_not_ turn off the device power.
-
-Right now, there is no global policy for controller drivers and each one does a
-different job. IMO this should also be fixed, but that also requires an
-agreement from PM folks.
-
-(Well there is one more entity in this loop, PCIe device drivers... sigh)
-
-> > I sense a potential for a lot of custom power sequencing drivers being
-> > added and ultimately leading to the decision to create a "generic" one
-> > which is entirely driven by Device Tree properties...
 > 
-> We can have one "generic" slot power sequencing driver, which just
-> enables all the power rails together. I would very much like to see that.
-> 
-
-Yeah. And that "generic" driver could be used for simple usecases mentioned
-above.
-
-> I believe the power sequencing in this series is currently targeting more
-> tightly coupled designs that use power rails directly from the PMIC, and
-> thus require more explicit power sequencing.
-> 
-
-Precisely!
-
-- Mani
-
-> ChenYu
-> 
-> 
-> > Thanks for doing this!
-> > --
-> > Florian
-> >
-> > _______________________________________________
-> > linux-arm-kernel mailing list
-> > linux-arm-kernel@lists.infradead.org
-> > http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+> Best Regards
+> Ruipeng Qi
 
