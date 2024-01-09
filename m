@@ -1,121 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-6770-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3F688288DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 16:21:10 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F606828909
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 16:31:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4FC4A2829FD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 15:21:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 93DF41C2393F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 15:31:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 502DA39FD1;
-	Tue,  9 Jan 2024 15:21:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86E1839FDD;
+	Tue,  9 Jan 2024 15:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="NcDQdF9l"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S3Xc8aoZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E435439AFC
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jan 2024 15:21:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1704813662;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
-	bh=vn1ce8hywqQSUdzE/tq3PAQDOHuc7M+muFOo7RqI5C0=;
-	b=NcDQdF9l8+9zIF96irLq9TVr9K4MG+GNybtjRs3eSA6O7uXu7A3nkBXZvMJ1r/5IOGWcqF
-	lwXopGYW6TLi/DIEmMO0yEFHnp2PpI0+yPxxfhkrb01f/UJk5PZLgQdLhuFj/H5WblgAhM
-	5+fuk+Tngzzicz+mf55CR3qL3mclhg4=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-488-14bBpoGBOve5Hm4TbcZuKg-1; Tue, 09 Jan 2024 10:21:01 -0500
-X-MC-Unique: 14bBpoGBOve5Hm4TbcZuKg-1
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-78330275051so60719785a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jan 2024 07:21:01 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 087E639AD5;
+	Tue,  9 Jan 2024 15:31:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-55719cdc0e1so3483532a12.1;
+        Tue, 09 Jan 2024 07:31:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1704814278; x=1705419078; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PxBXHYFAM9hT0OPdpUiDaQH1QeZpaAp07NJ8WhXUbqI=;
+        b=S3Xc8aoZZNpHFSldBJefvBVkUBMCWa1y1yNNxYeQfE/hUmWGHbTD2ku90TH4hlBSGS
+         MHpbsGqSpmCHSx4N2HUahJIECbhLpomd/0bi5Y9sm/U4VnIFKtEMDqTGGZE3Vostbyay
+         eJxiutr/VFyseKU7P1z4zNghyZQ3keje+7IJiiDigjHhwdkCRyZ8HK/SZU3996ItEot2
+         T1pPFhGyv1hapcP2MmmJkaLswayG4LI4UapJE3zW2J83ZeEMN0h2IWSI97XVtguovW4c
+         zfybgEAwOALh0539GMt8gkGgGupbG35nk0rItkoO3pqXn/s9Gmp349/TayScHmVMzKkD
+         rk4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704813661; x=1705418461;
-        h=user-agent:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vn1ce8hywqQSUdzE/tq3PAQDOHuc7M+muFOo7RqI5C0=;
-        b=IbFHffRL8c3WbeBwD/Mz+33kRrx/Jq3RIYPL8je2sopHrJFWC4g+bay/aNMOnfPErS
-         I/Hh/v+c000qnZWaQUcB56kLuDsZYu1HlewfWbst6YcURvSD7ftC+QLuHIzPmXsG1WtP
-         sEK217A+CK8HajWArKl1Zf1UJ1kbhH3+yiYcw1DEwazN8QmnpMHIQEPSztLV2dn08Iee
-         0uau8yBJDDXyZE09XNXTi6MZeG/oBoIeeKYatk1wN4cGlHwG4Ex0pAPUShivemyagJ/P
-         R2PKo97gHohGNZj/3qfx+u273MH/lxDMRTCJY7etONLSGl5RG9R7JgfhIaCtmubZBPvj
-         UMpg==
-X-Gm-Message-State: AOJu0Yw4YfcD1AbhPHqgvdb9alh5hQ5+6FqDD3iB+h4TTApMfiISXJft
-	muPwpaRD7o4yVEIxNM3OoOi/jubXJ9CjrtuCj1P8YVI8ykvmAdZ/H745RtJ/Uci9ttXsiI86moR
-	Gg0LF0urXmXFHH7apirPfaAj47ZsqCYs9og==
-X-Received: by 2002:a05:620a:4008:b0:783:314c:48c4 with SMTP id h8-20020a05620a400800b00783314c48c4mr605888qko.96.1704813660950;
-        Tue, 09 Jan 2024 07:21:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEn8hS9/EPAk99SwHPz6Ctm7qGK+fZo5cmWdV36DyjYJZKlNIvEBawV15ZkWLFEopPcYMNuVQ==
-X-Received: by 2002:a05:620a:4008:b0:783:314c:48c4 with SMTP id h8-20020a05620a400800b00783314c48c4mr605875qko.96.1704813660554;
-        Tue, 09 Jan 2024 07:21:00 -0800 (PST)
-Received: from fedora ([174.91.39.234])
-        by smtp.gmail.com with ESMTPSA id h2-20020a05620a13e200b007832016a732sm874832qkl.83.2024.01.09.07.20.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jan 2024 07:21:00 -0800 (PST)
-Date: Tue, 9 Jan 2024 10:20:50 -0500
-From: Lucas Karpinski <lkarpins@redhat.com>
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v2] arm64: dts: qcom: sa8540p-ride: disable pcie2a node
-Message-ID: <qcoqksikfvdqxk6stezbzc7l2br37ccgqswztzqejmhrkhbrwt@ta4npsm35mqk>
+        d=1e100.net; s=20230601; t=1704814278; x=1705419078;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PxBXHYFAM9hT0OPdpUiDaQH1QeZpaAp07NJ8WhXUbqI=;
+        b=o5URns1UxysY2Whxo8et7vIQj07aZ0pUe/0Ik7bgvtztyEgh7fUfC2sryuXacD2H15
+         Re0U16r6TQ4aF0PW00fiqVjugTHs6vrJ1oBXQXGUyXVeGmaOkbCtroPkGqidbdnkvKnc
+         amUcL1BCDRJA3KuL0TFNWe1a7Lfei6b3nE7lxKS+1+S9/Uahw7Aj2IUTwt+OTF7xdDbg
+         CoyXmQhclap2Odwzw2sQVx99KoUlY3H4XZJVMFkQBmefl66RTUM9n2tMDRGNmrZPSs9Y
+         iE7mj683/bvEu+5CTowXi96/lUUwO/8NtA9UlR98mKpUHV8ZQ64xb3eA3m5btmpRdRlc
+         3Qvg==
+X-Gm-Message-State: AOJu0YxrMN06fERUH6ynVMYyegbSjIneUNTTNVwwyd1MYyBIePJ4Pdy9
+	FrnCzprlUinNuu1R1RlzPpOdwj5qluRTOaCohro=
+X-Google-Smtp-Source: AGHT+IGZyO4AEfnMfLYPKR2LNX1qm2urfpVyDpvn02M9tLIi+tBjOPpZ/2hQu1bO1hbBogEOEOu71wclHwHHjR9FC0U=
+X-Received: by 2002:a50:934a:0:b0:557:375e:6dfa with SMTP id
+ n10-20020a50934a000000b00557375e6dfamr3382250eda.13.1704814278180; Tue, 09
+ Jan 2024 07:31:18 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: NeoMutt/20231103
+References: <20240108195016.156583-1-robdclark@gmail.com> <454873e5-1b5a-28d3-ffed-c1e502898d17@quicinc.com>
+ <CAF6AEGuVk=a-SwHyVwqOew-+WAdH1Gt011H50kvkSBe1j5ri_A@mail.gmail.com>
+In-Reply-To: <CAF6AEGuVk=a-SwHyVwqOew-+WAdH1Gt011H50kvkSBe1j5ri_A@mail.gmail.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Tue, 9 Jan 2024 07:31:06 -0800
+Message-ID: <CAF6AEGs7NxB2ox+JMW0tP_XOkFie=f=w1sWSQjTUM8AZQ0V3TQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/ci: Add msm tests
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>, 
+	Helen Koike <helen.koike@collabora.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-pcie2a and pcie3a both cause interrupt storms to occur. However, when
-both are enabled simultaneously, the two combined interrupt storms will
-lead to rcu stalls. Red Hat is the only company still using this board
-and since we still need pcie3a, just disable pcie2a.
+On Mon, Jan 8, 2024 at 6:13=E2=80=AFPM Rob Clark <robdclark@gmail.com> wrot=
+e:
+>
+> On Mon, Jan 8, 2024 at 2:58=E2=80=AFPM Abhinav Kumar <quic_abhinavk@quici=
+nc.com> wrote:
+> >
+> >
+> >
+> > On 1/8/2024 11:50 AM, Rob Clark wrote:
+> > > From: Rob Clark <robdclark@chromium.org>
+> > >
+> > > The msm tests should skip on non-msm hw, so I think it should be safe=
+ to
+> > > enable everywhere.
+> > >
+> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > > ---
+> > >   drivers/gpu/drm/ci/testlist.txt | 49 ++++++++++++++++++++++++++++++=
++++
+> > >   1 file changed, 49 insertions(+)
+> > >
+> >
+> > I do see that all these tests use igt_msm_dev_open() to make sure it
+> > opens only the MSM card.
+> >
+> > But if igt_msm_dev_open() fails, I dont see a igt_require() on some of
+> > the tests to skip them. So how will it safely skip on non-msm HW?
+> >
+> > Unless i am missing something here ....
+>
+> hmm, at the time I added the initial msm tests, and
+> igt_msm_dev_open(), I verified that they skipped on intel.. but since
+> then I'd switched from intel to sc8280xp device for primary dev
+> device, so I'd need to re-test to remember how it works.  If these
+> aren't skipping on !msm, it is a bug
 
-Signed-off-by: Lucas Karpinski <lkarpins@redhat.com>
----
-v2:
-- don't remove the entire pcie2a node, just set status to disabled.
-- update commit message.
+I double checked, these tests skip in drm_open_driver() with "No known
+gpu found for chipset flags 0x64 (msm)", so no problem to run them on
+all CI runners.
 
- arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+BR,
+-R
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-index b04f72ec097c..177b9dad6ff7 100644
---- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-@@ -376,14 +376,14 @@ &pcie2a {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pcie2a_default>;
- 
--	status = "okay";
-+	status = "disabled";
- };
- 
- &pcie2a_phy {
- 	vdda-phy-supply = <&vreg_l11a>;
- 	vdda-pll-supply = <&vreg_l3a>;
- 
--	status = "okay";
-+	status = "disabled";
- };
- 
- &pcie3a {
--- 
-2.43.0
 
+> BR,
+> -R
+>
+> > > diff --git a/drivers/gpu/drm/ci/testlist.txt b/drivers/gpu/drm/ci/tes=
+tlist.txt
+> > > index f82cd90372f4..eaeb751bb0ad 100644
+> > > --- a/drivers/gpu/drm/ci/testlist.txt
+> > > +++ b/drivers/gpu/drm/ci/testlist.txt
+> > > @@ -2910,3 +2910,52 @@ kms_writeback@writeback-invalid-parameters
+> > >   kms_writeback@writeback-fb-id
+> > >   kms_writeback@writeback-check-output
+> > >   prime_mmap_kms@buffer-sharing
+> > > +msm_shrink@copy-gpu-sanitycheck-8
+> > > +msm_shrink@copy-gpu-sanitycheck-32
+> > > +msm_shrink@copy-gpu-8
+> > > +msm_shrink@copy-gpu-32
+> > > +msm_shrink@copy-gpu-madvise-8
+> > > +msm_shrink@copy-gpu-madvise-32
+> > > +msm_shrink@copy-gpu-oom-8
+> > > +msm_shrink@copy-gpu-oom-32
+> > > +msm_shrink@copy-mmap-sanitycheck-8
+> > > +msm_shrink@copy-mmap-sanitycheck-32
+> > > +msm_shrink@copy-mmap-8
+> > > +msm_shrink@copy-mmap-32
+> > > +msm_shrink@copy-mmap-madvise-8
+> > > +msm_shrink@copy-mmap-madvise-32
+> > > +msm_shrink@copy-mmap-oom-8
+> > > +msm_shrink@copy-mmap-oom-32
+> > > +msm_shrink@copy-mmap-dmabuf-sanitycheck-8
+> > > +msm_shrink@copy-mmap-dmabuf-sanitycheck-32
+> > > +msm_shrink@copy-mmap-dmabuf-8
+> > > +msm_shrink@copy-mmap-dmabuf-32
+> > > +msm_shrink@copy-mmap-dmabuf-madvise-8
+> > > +msm_shrink@copy-mmap-dmabuf-madvise-32
+> > > +msm_shrink@copy-mmap-dmabuf-oom-8
+> > > +msm_shrink@copy-mmap-dmabuf-oom-32
+> > > +msm_mapping@ring
+> > > +msm_mapping@sqefw
+> > > +msm_mapping@shadow
+> > > +msm_submitoverhead@submitbench-10-bos
+> > > +msm_submitoverhead@submitbench-10-bos-no-implicit-sync
+> > > +msm_submitoverhead@submitbench-100-bos
+> > > +msm_submitoverhead@submitbench-100-bos-no-implicit-sync
+> > > +msm_submitoverhead@submitbench-250-bos
+> > > +msm_submitoverhead@submitbench-250-bos-no-implicit-sync
+> > > +msm_submitoverhead@submitbench-500-bos
+> > > +msm_submitoverhead@submitbench-500-bos-no-implicit-sync
+> > > +msm_submitoverhead@submitbench-1000-bos
+> > > +msm_submitoverhead@submitbench-1000-bos-no-implicit-sync
+> > > +msm_recovery@hangcheck
+> > > +msm_recovery@gpu-fault
+> > > +msm_recovery@gpu-fault-parallel
+> > > +msm_recovery@iova-fault
+> > > +msm_submit@empty-submit
+> > > +msm_submit@invalid-queue-submit
+> > > +msm_submit@invalid-flags-submit
+> > > +msm_submit@invalid-in-fence-submit
+> > > +msm_submit@invalid-duplicate-bo-submit
+> > > +msm_submit@invalid-cmd-idx-submit
+> > > +msm_submit@invalid-cmd-type-submit
+> > > +msm_submit@valid-submit
 
