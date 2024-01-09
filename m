@@ -1,173 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-6699-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6700-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DAE94827CC4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 03:13:21 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A904B827D1C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 03:56:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E91E41C23388
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 02:13:20 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DE46AB235E2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 02:56:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 475A728EC;
-	Tue,  9 Jan 2024 02:13:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B93D6D6CA;
+	Tue,  9 Jan 2024 02:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iL1m7Rrq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I+gGxxSN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C27B28E8;
-	Tue,  9 Jan 2024 02:13:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-55770379ed4so2307866a12.3;
-        Mon, 08 Jan 2024 18:13:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704766394; x=1705371194; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GanZIXSi0lvbqxqGS2oZbCZuJ/1CzDIHjm38iw98S94=;
-        b=iL1m7Rrq3PHVXP+sA7DVmJbgbgTNyLZonBjlYNaNAn6QVqrgyfl73DEWsCihzGoWrk
-         hKYkO/4QpdwCCjchrQsEUVog6RkPC5pYJs5kh1VZSYX/4bM3egKRIuNCpGFrZEZJ5vWQ
-         wI1uGSD1ICfid7u/ZEXEQi+dHGbtEZNNV2gT5fgXZPlgEucDk47EShGYvEyISPMRBLJz
-         9t2jhaOSocTCSJLslx0fJ5CkQNHcUW5xd5EaKlcRtxSGtWZ+YIRscYuKCCovy9Wkrsxr
-         ZTXoWr70GPVQqlMCIz5MtlDSyv4ddeoHGj09epUFrBCTR68RkKO0vqqwbTUP9vuN0hDB
-         6UxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704766394; x=1705371194;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GanZIXSi0lvbqxqGS2oZbCZuJ/1CzDIHjm38iw98S94=;
-        b=nqMFwfVAf/U3nn5y/Vrg7hnNYIo38jOjaHF0eSfw7TPWzesLZEiGQDoO8J41gWs3aH
-         SH1lHuWQVyqBBzXTF9lmHVHdx6d9KJlgeMV+jHX99tJxLZh+vD76gLS63tPZwhC34WSd
-         qMuy06BdPJTY2LsWcikTI/PXU11mPfy+VMaY7OC9rpbXDqYgIUzB+sT51vPq20VhN+vt
-         0s2L2vqQHM3XTFzvx8C4DVUqpFeFWcTANo6Nywye4FqlvxrMi2CvT4enYa6iyYm8Cykw
-         Zj43BAsMi3L8HPayiZgpTKjOBGG0wHeGFMrno0nI/iNUKEwq+JUotyZSsYfr3qCD0AT7
-         z9Fg==
-X-Gm-Message-State: AOJu0YzCn7ZyaATJY+OgnvcWS8dFzPDamIU607dBCrpdIXDN0mMjJs1n
-	zicvSrtDZ2XY90De1+jO5oWVvPV8b/bIh5hR3xQ=
-X-Google-Smtp-Source: AGHT+IHbPrN1RypImXOGgmrR3yfC9TeGq1oGmnJ6HbhZRd3v/jJrYwKGt00TwH3VeZzUkZlvncohucMcaq2bQKMhXzM=
-X-Received: by 2002:a50:9993:0:b0:556:e686:ba4 with SMTP id
- m19-20020a509993000000b00556e6860ba4mr2112395edb.84.1704766393585; Mon, 08
- Jan 2024 18:13:13 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08EFC5665;
+	Tue,  9 Jan 2024 02:56:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80EB9C43390;
+	Tue,  9 Jan 2024 02:56:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1704768993;
+	bh=b4jGBQYI3SAR2SqDXJaYSqlSOJc84bSHKk28Q7eQgnw=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=I+gGxxSNtyHRtO2VzhAKG1nYxNlizcmiZoXKFCvtLD/bgKnVZGF5THvcV9vOW7Y05
+	 yUZgE0r1M3irhKm3qay8Y69ltwwDSXV2AI9B0sipIr/4srk23nvmBjZoTL8WoIafpO
+	 WG29mqY7ZkOyanTcGEs7uBduM+Wt+Yj2iEKdthTMAljDgW50WynNYvHtr6dn4ffuH/
+	 llRnMeOprdU7EPuL1qqzKYnVFUNQrpzul6nnayxvMmngpwI1P2cmQYo64JNrKFFfZ/
+	 Vi+k4ksax1JmRik1uyJnNoXTg9oTqQrmjMIX1W/sTViYDlaqk0PBgvorXSKtuIrIyI
+	 sFImw2+6UsTCQ==
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2ccec119587so28352311fa.0;
+        Mon, 08 Jan 2024 18:56:33 -0800 (PST)
+X-Gm-Message-State: AOJu0Yzze1mVJlQ+S04p1QibOWengBh4t3O5kMef8019KWu8RJc5fHYg
+	n0zNzitpLos038mBSSW1/tj3aXJHUkk/3o1ZkA==
+X-Google-Smtp-Source: AGHT+IFHEy7UAVttPiN+sVOsHl8ngscwYS/9Rb/gv44VqIDfv2qtD5du9ju0uTnDbeescX9gPj6PS5hAvBUURaQ0pxw=
+X-Received: by 2002:a2e:b7d5:0:b0:2cc:7814:11b with SMTP id
+ p21-20020a2eb7d5000000b002cc7814011bmr2061459ljo.65.1704768991715; Mon, 08
+ Jan 2024 18:56:31 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240108195016.156583-1-robdclark@gmail.com> <454873e5-1b5a-28d3-ffed-c1e502898d17@quicinc.com>
-In-Reply-To: <454873e5-1b5a-28d3-ffed-c1e502898d17@quicinc.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Mon, 8 Jan 2024 18:13:01 -0800
-Message-ID: <CAF6AEGuVk=a-SwHyVwqOew-+WAdH1Gt011H50kvkSBe1j5ri_A@mail.gmail.com>
-Subject: Re: [PATCH] drm/ci: Add msm tests
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>, 
-	Helen Koike <helen.koike@collabora.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	open list <linux-kernel@vger.kernel.org>
+References: <20240104130123.37115-1-brgl@bgdev.pl> <20240104130123.37115-7-brgl@bgdev.pl>
+ <20240108191052.GA1893484-robh@kernel.org> <CAMRc=Mc7D1rVHaA4yoOC2DHDkkCptF4wjAm=24Rr=kkqM1ztjg@mail.gmail.com>
+In-Reply-To: <CAMRc=Mc7D1rVHaA4yoOC2DHDkkCptF4wjAm=24Rr=kkqM1ztjg@mail.gmail.com>
+From: Rob Herring <robh@kernel.org>
+Date: Mon, 8 Jan 2024 19:56:19 -0700
+X-Gmail-Original-Message-ID: <CAL_JsqKGrW-v=fr_9NYKg-8cho_-XbVQ92eXpjYYC1ma0_8UuA@mail.gmail.com>
+Message-ID: <CAL_JsqKGrW-v=fr_9NYKg-8cho_-XbVQ92eXpjYYC1ma0_8UuA@mail.gmail.com>
+Subject: Re: [RFC 6/9] dt-bindings: vendor-prefixes: add a PCI prefix for
+ Qualcomm Atheros
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Kalle Valo <kvalo@kernel.org>, "David S . Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Heiko Stuebner <heiko@sntech.de>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Chris Morgan <macromorgan@hotmail.com>, 
+	Linus Walleij <linus.walleij@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Arnd Bergmann <arnd@arndb.de>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	=?UTF-8?B?TsOtY29sYXMgRiAuIFIgLiBBIC4gUHJhZG8=?= <nfraprado@collabora.com>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Peng Fan <peng.fan@nxp.com>, 
+	Robert Richter <rrichter@amd.com>, Dan Williams <dan.j.williams@intel.com>, 
+	Terry Bowman <terry.bowman@amd.com>, 
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>, 
+	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+	Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-wireless@vger.kernel.org, 
+	netdev@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 8, 2024 at 2:58=E2=80=AFPM Abhinav Kumar <quic_abhinavk@quicinc=
-.com> wrote:
+On Mon, Jan 8, 2024 at 12:22=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl>=
+ wrote:
 >
->
->
-> On 1/8/2024 11:50 AM, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
+> On Mon, Jan 8, 2024 at 8:10=E2=80=AFPM Rob Herring <robh@kernel.org> wrot=
+e:
 > >
-> > The msm tests should skip on non-msm hw, so I think it should be safe t=
-o
-> > enable everywhere.
+> > On Thu, Jan 04, 2024 at 02:01:20PM +0100, Bartosz Golaszewski wrote:
+> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > >
+> > > Document the PCI vendor prefix for Qualcomm Atheros so that we can
+> > > define the QCA PCI devices on device tree.
 > >
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> >   drivers/gpu/drm/ci/testlist.txt | 49 ++++++++++++++++++++++++++++++++=
-+
-> >   1 file changed, 49 insertions(+)
+> > Why? vendor-prefixes.yaml is only applied to property names. 'qca'
+> > should be the prefix for those.
 > >
+> > Rob
 >
-> I do see that all these tests use igt_msm_dev_open() to make sure it
-> opens only the MSM card.
+> I didn't have any better idea. PCI devices on DT are defined by their
+> "pci<vendor ID>,<model ID>" compatible, not regular human-readable
+> strings and this makes checkpatch.pl complain.
 >
-> But if igt_msm_dev_open() fails, I dont see a igt_require() on some of
-> the tests to skip them. So how will it safely skip on non-msm HW?
->
-> Unless i am missing something here ....
+> I'm open to suggestions.
 
-hmm, at the time I added the initial msm tests, and
-igt_msm_dev_open(), I verified that they skipped on intel.. but since
-then I'd switched from intel to sc8280xp device for primary dev
-device, so I'd need to re-test to remember how it works.  If these
-aren't skipping on !msm, it is a bug
+The checkpatch.pl check predates schemas and we could consider just
+dropping it. The only thing it provides is checking a patch rather
+than the tree (which the schema do). It's pretty hacky because it just
+greps the tree for a compatible string which is not entirely accurate.
+Also, we can extract an exact list of compatibles with
+"dt-extract-compatibles" which would make a better check, but I'm not
+sure making dtschema a dependency on checkpatch would be good.
 
-BR,
--R
+The other option is just ignore the warning. PCI compatibles are fairly rar=
+e.
 
-> > diff --git a/drivers/gpu/drm/ci/testlist.txt b/drivers/gpu/drm/ci/testl=
-ist.txt
-> > index f82cd90372f4..eaeb751bb0ad 100644
-> > --- a/drivers/gpu/drm/ci/testlist.txt
-> > +++ b/drivers/gpu/drm/ci/testlist.txt
-> > @@ -2910,3 +2910,52 @@ kms_writeback@writeback-invalid-parameters
-> >   kms_writeback@writeback-fb-id
-> >   kms_writeback@writeback-check-output
-> >   prime_mmap_kms@buffer-sharing
-> > +msm_shrink@copy-gpu-sanitycheck-8
-> > +msm_shrink@copy-gpu-sanitycheck-32
-> > +msm_shrink@copy-gpu-8
-> > +msm_shrink@copy-gpu-32
-> > +msm_shrink@copy-gpu-madvise-8
-> > +msm_shrink@copy-gpu-madvise-32
-> > +msm_shrink@copy-gpu-oom-8
-> > +msm_shrink@copy-gpu-oom-32
-> > +msm_shrink@copy-mmap-sanitycheck-8
-> > +msm_shrink@copy-mmap-sanitycheck-32
-> > +msm_shrink@copy-mmap-8
-> > +msm_shrink@copy-mmap-32
-> > +msm_shrink@copy-mmap-madvise-8
-> > +msm_shrink@copy-mmap-madvise-32
-> > +msm_shrink@copy-mmap-oom-8
-> > +msm_shrink@copy-mmap-oom-32
-> > +msm_shrink@copy-mmap-dmabuf-sanitycheck-8
-> > +msm_shrink@copy-mmap-dmabuf-sanitycheck-32
-> > +msm_shrink@copy-mmap-dmabuf-8
-> > +msm_shrink@copy-mmap-dmabuf-32
-> > +msm_shrink@copy-mmap-dmabuf-madvise-8
-> > +msm_shrink@copy-mmap-dmabuf-madvise-32
-> > +msm_shrink@copy-mmap-dmabuf-oom-8
-> > +msm_shrink@copy-mmap-dmabuf-oom-32
-> > +msm_mapping@ring
-> > +msm_mapping@sqefw
-> > +msm_mapping@shadow
-> > +msm_submitoverhead@submitbench-10-bos
-> > +msm_submitoverhead@submitbench-10-bos-no-implicit-sync
-> > +msm_submitoverhead@submitbench-100-bos
-> > +msm_submitoverhead@submitbench-100-bos-no-implicit-sync
-> > +msm_submitoverhead@submitbench-250-bos
-> > +msm_submitoverhead@submitbench-250-bos-no-implicit-sync
-> > +msm_submitoverhead@submitbench-500-bos
-> > +msm_submitoverhead@submitbench-500-bos-no-implicit-sync
-> > +msm_submitoverhead@submitbench-1000-bos
-> > +msm_submitoverhead@submitbench-1000-bos-no-implicit-sync
-> > +msm_recovery@hangcheck
-> > +msm_recovery@gpu-fault
-> > +msm_recovery@gpu-fault-parallel
-> > +msm_recovery@iova-fault
-> > +msm_submit@empty-submit
-> > +msm_submit@invalid-queue-submit
-> > +msm_submit@invalid-flags-submit
-> > +msm_submit@invalid-in-fence-submit
-> > +msm_submit@invalid-duplicate-bo-submit
-> > +msm_submit@invalid-cmd-idx-submit
-> > +msm_submit@invalid-cmd-type-submit
-> > +msm_submit@valid-submit
+Rob
 
