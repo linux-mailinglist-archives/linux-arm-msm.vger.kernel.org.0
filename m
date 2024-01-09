@@ -1,171 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-6739-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 578308284EC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 12:25:13 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C9458284F2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 12:25:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 064D2282BD6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 11:25:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EF12E2833B0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 11:25:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 132AC37160;
-	Tue,  9 Jan 2024 11:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97E563716B;
+	Tue,  9 Jan 2024 11:24:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="od+aAxu1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pqP4Q7qr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F7237142;
-	Tue,  9 Jan 2024 11:23:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4099xltc003856;
-	Tue, 9 Jan 2024 11:23:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=BUOV8m+4DEEUF6xZdv136lnIKPlCxnHVKDVFqa6I66A=; b=od
-	+aAxu1TB3wRFXEFGLOAQDtNHrrmoPg7KXrSbQMSytbLqNIC40mp7FnCn8Rqpgqhd
-	Jzo4l9NiFuXCNWUISXD411YwfkpaZe1uwre7Ij23pise/k/J6Qr87Lwmohw3fq/X
-	gtNiaL5a+lDOmKUA+qHyUn6Fv8nrGKjO26HMEajFgaunxbcPAmmBsj8nMoeVL9hS
-	T4z+ZJ2u9jJW24DiuCtzzFtaM6o13tjGCUVt3KrQciT06slFBnjx+1VrNOtG6+U0
-	itZsc0v9XcWpglMOBg9eUaw7JMkQ9D8y2mp1ZSJmrL9ePHZv6JVxBI6dSb5015cc
-	AKkxGXAtzVLgiK45NH0A==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vgr1shfkg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 09 Jan 2024 11:23:05 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 409BN5of031079
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 9 Jan 2024 11:23:05 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 9 Jan
- 2024 03:23:02 -0800
-Message-ID: <b4066862-3d41-3932-379a-9c6358c65962@quicinc.com>
-Date: Tue, 9 Jan 2024 16:52:58 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E4EF37166
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jan 2024 11:24:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-58e256505f7so1622905eaf.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jan 2024 03:24:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704799462; x=1705404262; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=S4SDTApmECBjOzEfaLEaZeXHNRvaFB8n31mQspM0kzI=;
+        b=pqP4Q7qrtH13LVzQQIbkrFcZWOdvC1Nr4902rbwIxXZ+X2JUqI5XEJVMrke+xCFYRi
+         BVDyRjp8sn98Ac20qQyNK1rp5kirGRPn4381TYVG/XtRTuxwfvr3XLVzus/zsqOTk/MM
+         pUUFV/VLpK3SZhB3tWJstw8S3GxYZukPyouWgj3LTIPKpAtGPEbhSng+20CRVWbn2Us2
+         HBaETC/cxP0n7VMVyfMdy+UN5raCKUzYJJtUGgAbFV7T+p12mAEZPP0VtwHxjyootKgC
+         WD6mpH7Mtkp41RpSFGDGh5Er/UkMXLl9My1yPiBUyW4vv7L5ZVyp5dbE2FQ+VRWbPyAP
+         D8sA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704799462; x=1705404262;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=S4SDTApmECBjOzEfaLEaZeXHNRvaFB8n31mQspM0kzI=;
+        b=ZMZDSccMxqGv8yuFWxGBEcoWqbA+EF423n81++n4qvurlPpUscm0z1K/9oOZmBAMd6
+         Ltuyfy1OknyrQr0cPeO+9hgT+WbEu9D4NkC5jFSlyw3WRpcbT6D1BHZSiS3H4BMug8WE
+         rpFnRfON2uO0+GA9W5Atlt6s/BntLrmIjd4dZKqGUncSaQJNzD5ipSj6xXMzD9D1CxX6
+         PrUGHnDN9s8LbL81ZUF/8I+YcH4sYZqa8aZQtNFA6r8AKyXBvApuu1NVFQ6AqfVm7zhE
+         2ufSTlZ1uh8IYR14DdjMdRO2qjsHN1nKcZGuRmRVgo3gRmWKoLX7KmzhxmUMFUwSiqn0
+         kp6A==
+X-Gm-Message-State: AOJu0Yyhh+y3jgZ04RxEN+ixPTB14WOxWWLo0odH714hsUhmEWNyU9uA
+	YJSEP0GKpKqqFAO2TEYE1Qw6qMmVzNJZ/vGxsmIBWetVMIb/fA==
+X-Google-Smtp-Source: AGHT+IHCLgsnZU5IHiP8NOccH6UwDy+IAfkge3Z3hsXsWEacGqaX4OClBqm4E9R659NzB4EBGfLT1yi7Zncj2QY5gMo=
+X-Received: by 2002:a05:6358:2928:b0:172:d2ac:1e with SMTP id
+ y40-20020a056358292800b00172d2ac001emr3729385rwb.5.1704799462214; Tue, 09 Jan
+ 2024 03:24:22 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v11 1/4] firmware: qcom: scm: provide a read-modify-write
- function
-Content-Language: en-US
-To: Pavan Kondeti <quic_pkondeti@quicinc.com>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linus.walleij@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-gpio@vger.kernel.org>
-References: <1704727654-13999-1-git-send-email-quic_mojha@quicinc.com>
- <1704727654-13999-2-git-send-email-quic_mojha@quicinc.com>
- <6e99c4ff-a377-4385-b79c-60438e3e8735@quicinc.com>
-From: Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <6e99c4ff-a377-4385-b79c-60438e3e8735@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ZnSPnutS7mcQcXXDJdevXhpS83Y09Tkw
-X-Proofpoint-GUID: ZnSPnutS7mcQcXXDJdevXhpS83Y09Tkw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
- lowpriorityscore=0 mlxscore=0 priorityscore=1501 suspectscore=0
- bulkscore=0 impostorscore=0 adultscore=0 phishscore=0 spamscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401090092
+References: <20240108134843.429769-1-vincent.guittot@linaro.org>
+ <20240108134843.429769-2-vincent.guittot@linaro.org> <158a8c60-cb54-43c1-8232-6a0a46cc6d42@arm.com>
+In-Reply-To: <158a8c60-cb54-43c1-8232-6a0a46cc6d42@arm.com>
+From: Vincent Guittot <vincent.guittot@linaro.org>
+Date: Tue, 9 Jan 2024 12:24:11 +0100
+Message-ID: <CAKfTPtBv5=Td2o_fEcq0E7JumyH6XW705kkKR=sPf+_YzB0aPQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/5] cpufreq: Add a cpufreq pressure feedback for the scheduler
+To: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Cc: linux@armlinux.org.uk, catalin.marinas@arm.com, will@kernel.org, 
+	sudeep.holla@arm.com, rafael@kernel.org, viresh.kumar@linaro.org, 
+	agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, 
+	mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com, 
+	rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de, bristot@redhat.com, 
+	vschneid@redhat.com, lukasz.luba@arm.com, rui.zhang@intel.com, 
+	mhiramat@kernel.org, daniel.lezcano@linaro.org, amit.kachhap@gmail.com, 
+	corbet@lwn.net, gregkh@linuxfoundation.org, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-trace-kernel@vger.kernel.org, linux-doc@vger.kernel.org, 
+	qyousef@layalina.io
+Content-Type: text/plain; charset="UTF-8"
 
+On Mon, 8 Jan 2024 at 17:35, Dietmar Eggemann <dietmar.eggemann@arm.com> wrote:
+>
+> On 08/01/2024 14:48, Vincent Guittot wrote:
+> > Provide to the scheduler a feedback about the temporary max available
+> > capacity. Unlike arch_update_thermal_pressure, this doesn't need to be
+> > filtered as the pressure will happen for dozens ms or more.
+>
+> Is this then related to the 'medium pace system pressure' you mentioned
+> in your OSPM '23 talk?
 
-
-On 1/9/2024 10:34 AM, Pavan Kondeti wrote:
-> On Mon, Jan 08, 2024 at 08:57:31PM +0530, Mukesh Ojha wrote:
->> It was realized by Srinivas K. that there is a need of
->> read-modify-write scm exported function so that it can
->> be used by multiple clients.
->>
->> Let's introduce qcom_scm_io_rmw() which masks out the bits
->> and write the passed value to that bit-offset.
->>
->> Suggested-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
->> Tested-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com> # IPQ9574 and IPQ5332
->> ---
->>   drivers/firmware/qcom/qcom_scm.c       | 26 ++++++++++++++++++++++++++
->>   include/linux/firmware/qcom/qcom_scm.h |  1 +
->>   2 files changed, 27 insertions(+)
->>
->> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
->> index 520de9b5633a..25549178a30f 100644
->> --- a/drivers/firmware/qcom/qcom_scm.c
->> +++ b/drivers/firmware/qcom/qcom_scm.c
->> @@ -19,6 +19,7 @@
->>   #include <linux/of_irq.h>
->>   #include <linux/of_platform.h>
->>   #include <linux/platform_device.h>
->> +#include <linux/spinlock.h>
->>   #include <linux/reset-controller.h>
->>   #include <linux/types.h>
->>   
->> @@ -41,6 +42,8 @@ struct qcom_scm {
->>   	int scm_vote_count;
->>   
->>   	u64 dload_mode_addr;
->> +	/* Atomic context only */
->> +	spinlock_t lock;
-> 
-> IMHO, this comment can be confusing later. one might think that
-> qcom_scm_call_atomic() needs to be called with this lock, but that does
-> not seems to be the intention here.
-> 
->>   };
->>   
->>   struct qcom_scm_current_perm_info {
->> @@ -481,6 +484,28 @@ static int qcom_scm_disable_sdi(void)
->>   	return ret ? : res.result[0];
->>   }
->>   
->> +int qcom_scm_io_rmw(phys_addr_t addr, unsigned int mask, unsigned int val)
->> +{
->> +	unsigned int old, new;
->> +	int ret;
->> +
->> +	if (!__scm)
->> +		return -EINVAL;
->> +
->> +	spin_lock(&__scm->lock);
-> 
-> So, this function can't be called from hardirq context. If that ever
-> happens, with this new spinlock (without disabling interrupts), can
-> result in deadlock.
-
-Ok, let's make it fully atomic with spin_lock_irqsave();
-
--Mukesh
-> 
->> +	ret = qcom_scm_io_readl(addr, &old);
->> +	if (ret)
->> +		goto unlock;
->> +
->> +	new = (old & ~mask) | (val & mask);
->> +
->> +	ret = qcom_scm_io_writel(addr, new);
->> +unlock:
->> +	spin_unlock(&__scm->lock);
->> +	return ret;
->> +}
->> +EXPORT_SYMBOL_GPL(qcom_scm_io_rmw);
-> 
-> Thanks,
-> Pavan
+Sorry I forgot to answer this question. Yes this is the medium pace
+system pressure that I mentioned at OSPM'23
+>
+> >
 
