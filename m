@@ -1,156 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-6698-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6699-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C52B827C68
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 02:12:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id DAE94827CC4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 03:13:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 05FE61F24238
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 01:12:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E91E41C23388
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 02:13:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE665A5E;
-	Tue,  9 Jan 2024 01:12:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 475A728EC;
+	Tue,  9 Jan 2024 02:13:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EpeXGelN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iL1m7Rrq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A34A49;
-	Tue,  9 Jan 2024 01:12:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4090eVOA023723;
-	Tue, 9 Jan 2024 01:12:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=qB7JK/rvHV/oMoLxNfOgyhrs98zc89tbNG9XG8X+Hi0=; b=Ep
-	eXGelN/Uh5iU1xIZ90UmahpgUmni4+UPLqTLEaTmxEob6kTHCfJLF3rkua97MwRw
-	2iZSKkNwXdwuA+14YenL23iTlcKwnBW97Ij+6y1FPZayXZmKVkB9lZvzfdE2GWwl
-	D9LOsqkE65l+hHnxAid4IgpTFp+vEOah6TfuSPhETdr7oTeHTctKmLMauIP8tNlt
-	YNGgzeK26DL1WGZA8FCY4ySbyGetEBHTDaCUcSQC4JKAaY0/U5B+n0PO7oOP0m7M
-	Vu1V5KkDt3s3PP4lyur+kg6Qfcq/fNSSgo+NUl2d1LufeMzvXfxMarCjEYOKH5oR
-	ZMrIElIBNdk3nNJCDHJg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vgkkh962x-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 09 Jan 2024 01:12:32 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4091CWWP021026
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 9 Jan 2024 01:12:32 GMT
-Received: from [10.71.108.105] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 8 Jan
- 2024 17:12:31 -0800
-Message-ID: <79851641-8b56-4d25-b4c9-2d56a5bf41e9@quicinc.com>
-Date: Mon, 8 Jan 2024 17:12:30 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C27B28E8;
+	Tue,  9 Jan 2024 02:13:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-55770379ed4so2307866a12.3;
+        Mon, 08 Jan 2024 18:13:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1704766394; x=1705371194; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GanZIXSi0lvbqxqGS2oZbCZuJ/1CzDIHjm38iw98S94=;
+        b=iL1m7Rrq3PHVXP+sA7DVmJbgbgTNyLZonBjlYNaNAn6QVqrgyfl73DEWsCihzGoWrk
+         hKYkO/4QpdwCCjchrQsEUVog6RkPC5pYJs5kh1VZSYX/4bM3egKRIuNCpGFrZEZJ5vWQ
+         wI1uGSD1ICfid7u/ZEXEQi+dHGbtEZNNV2gT5fgXZPlgEucDk47EShGYvEyISPMRBLJz
+         9t2jhaOSocTCSJLslx0fJ5CkQNHcUW5xd5EaKlcRtxSGtWZ+YIRscYuKCCovy9Wkrsxr
+         ZTXoWr70GPVQqlMCIz5MtlDSyv4ddeoHGj09epUFrBCTR68RkKO0vqqwbTUP9vuN0hDB
+         6UxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704766394; x=1705371194;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GanZIXSi0lvbqxqGS2oZbCZuJ/1CzDIHjm38iw98S94=;
+        b=nqMFwfVAf/U3nn5y/Vrg7hnNYIo38jOjaHF0eSfw7TPWzesLZEiGQDoO8J41gWs3aH
+         SH1lHuWQVyqBBzXTF9lmHVHdx6d9KJlgeMV+jHX99tJxLZh+vD76gLS63tPZwhC34WSd
+         qMuy06BdPJTY2LsWcikTI/PXU11mPfy+VMaY7OC9rpbXDqYgIUzB+sT51vPq20VhN+vt
+         0s2L2vqQHM3XTFzvx8C4DVUqpFeFWcTANo6Nywye4FqlvxrMi2CvT4enYa6iyYm8Cykw
+         Zj43BAsMi3L8HPayiZgpTKjOBGG0wHeGFMrno0nI/iNUKEwq+JUotyZSsYfr3qCD0AT7
+         z9Fg==
+X-Gm-Message-State: AOJu0YzCn7ZyaATJY+OgnvcWS8dFzPDamIU607dBCrpdIXDN0mMjJs1n
+	zicvSrtDZ2XY90De1+jO5oWVvPV8b/bIh5hR3xQ=
+X-Google-Smtp-Source: AGHT+IHbPrN1RypImXOGgmrR3yfC9TeGq1oGmnJ6HbhZRd3v/jJrYwKGt00TwH3VeZzUkZlvncohucMcaq2bQKMhXzM=
+X-Received: by 2002:a50:9993:0:b0:556:e686:ba4 with SMTP id
+ m19-20020a509993000000b00556e6860ba4mr2112395edb.84.1704766393585; Mon, 08
+ Jan 2024 18:13:13 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] misc: fastrpc: Pass proper arguments to scm call
-Content-Language: en-US
-To: Ekansh Gupta <quic_ekangupt@quicinc.com>, <srinivas.kandagatla@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>
-CC: <gregkh@linuxfoundation.org>, <linux-kernel@vger.kernel.org>,
-        stable
-	<stable@kernel.org>
-References: <20240108100513.19993-1-quic_ekangupt@quicinc.com>
-From: Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <20240108100513.19993-1-quic_ekangupt@quicinc.com>
+References: <20240108195016.156583-1-robdclark@gmail.com> <454873e5-1b5a-28d3-ffed-c1e502898d17@quicinc.com>
+In-Reply-To: <454873e5-1b5a-28d3-ffed-c1e502898d17@quicinc.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Mon, 8 Jan 2024 18:13:01 -0800
+Message-ID: <CAF6AEGuVk=a-SwHyVwqOew-+WAdH1Gt011H50kvkSBe1j5ri_A@mail.gmail.com>
+Subject: Re: [PATCH] drm/ci: Add msm tests
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>, 
+	Helen Koike <helen.koike@collabora.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	open list <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: OK__ZbRzyjVHWeDIwxlQFIGchDtepcbW
-X-Proofpoint-ORIG-GUID: OK__ZbRzyjVHWeDIwxlQFIGchDtepcbW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1011
- spamscore=0 suspectscore=0 priorityscore=1501 mlxlogscore=999
- impostorscore=0 malwarescore=0 lowpriorityscore=0 bulkscore=0 mlxscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401090005
+Content-Transfer-Encoding: quoted-printable
 
+On Mon, Jan 8, 2024 at 2:58=E2=80=AFPM Abhinav Kumar <quic_abhinavk@quicinc=
+.com> wrote:
+>
+>
+>
+> On 1/8/2024 11:50 AM, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > The msm tests should skip on non-msm hw, so I think it should be safe t=
+o
+> > enable everywhere.
+> >
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >   drivers/gpu/drm/ci/testlist.txt | 49 ++++++++++++++++++++++++++++++++=
++
+> >   1 file changed, 49 insertions(+)
+> >
+>
+> I do see that all these tests use igt_msm_dev_open() to make sure it
+> opens only the MSM card.
+>
+> But if igt_msm_dev_open() fails, I dont see a igt_require() on some of
+> the tests to skip them. So how will it safely skip on non-msm HW?
+>
+> Unless i am missing something here ....
 
+hmm, at the time I added the initial msm tests, and
+igt_msm_dev_open(), I verified that they skipped on intel.. but since
+then I'd switched from intel to sc8280xp device for primary dev
+device, so I'd need to re-test to remember how it works.  If these
+aren't skipping on !msm, it is a bug
 
-On 1/8/2024 2:05 AM, Ekansh Gupta wrote:
-> For CMA memory allocation, ownership is assigned to DSP to make it
-> accessible by the PD running on the DSP. With current implementation
-> HLOS VM is stored in the channel structure during rpmsg_probe and
-> this VM is passed to qcom_scm call as the source VM.
-> 
-> The qcom_scm call will overwrite the passed source VM with the next
-> VM which would cause a problem in case the scm call is again needed.
-> Adding a local copy of source VM whereever scm call is made to avoid
-> this problem.
-> 
+BR,
+-R
 
-The perms in fastrpc_channel_ctx should always reflect the current
-permission bits, so I'm surprised you see problem.
-
-What is the scenario where that's not the case?
-
-> Fixes: 0871561055e6 ("misc: fastrpc: Add support for audiopd")> Cc: stable <stable@kernel.org>
-> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> ---
->  drivers/misc/fastrpc.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 1c6c62a7f7f5..c13efa7727e0 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -263,7 +263,6 @@ struct fastrpc_channel_ctx {
->  	int domain_id;
->  	int sesscount;
->  	int vmcount;
-> -	u64 perms;
->  	struct qcom_scm_vmperm vmperms[FASTRPC_MAX_VMIDS];
->  	struct rpmsg_device *rpdev;
->  	struct fastrpc_session_ctx session[FASTRPC_MAX_SESSIONS];
-> @@ -1279,9 +1278,11 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->  
->  		/* Map if we have any heap VMIDs associated with this ADSP Static Process. */
->  		if (fl->cctx->vmcount) {
-> +			u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
-> +
->  			err = qcom_scm_assign_mem(fl->cctx->remote_heap->phys,
->  							(u64)fl->cctx->remote_heap->size,
-> -							&fl->cctx->perms,
-> +							&src_perms,
->  							fl->cctx->vmperms, fl->cctx->vmcount);
->  			if (err) {
->  				dev_err(fl->sctx->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d",
-> @@ -1915,8 +1916,10 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
->  
->  	/* Add memory to static PD pool, protection thru hypervisor */
->  	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR && fl->cctx->vmcount) {
-> +		u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
-> +
->  		err = qcom_scm_assign_mem(buf->phys, (u64)buf->size,
-> -			&fl->cctx->perms, fl->cctx->vmperms, fl->cctx->vmcount);
-> +			&src_perms, fl->cctx->vmperms, fl->cctx->vmcount);
->  		if (err) {
->  			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
->  					buf->phys, buf->size, err);
-> @@ -2290,7 +2293,6 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->  
->  	if (vmcount) {
->  		data->vmcount = vmcount;
-> -		data->perms = BIT(QCOM_SCM_VMID_HLOS);
->  		for (i = 0; i < data->vmcount; i++) {
->  			data->vmperms[i].vmid = vmids[i];
->  			data->vmperms[i].perm = QCOM_SCM_PERM_RWX;
+> > diff --git a/drivers/gpu/drm/ci/testlist.txt b/drivers/gpu/drm/ci/testl=
+ist.txt
+> > index f82cd90372f4..eaeb751bb0ad 100644
+> > --- a/drivers/gpu/drm/ci/testlist.txt
+> > +++ b/drivers/gpu/drm/ci/testlist.txt
+> > @@ -2910,3 +2910,52 @@ kms_writeback@writeback-invalid-parameters
+> >   kms_writeback@writeback-fb-id
+> >   kms_writeback@writeback-check-output
+> >   prime_mmap_kms@buffer-sharing
+> > +msm_shrink@copy-gpu-sanitycheck-8
+> > +msm_shrink@copy-gpu-sanitycheck-32
+> > +msm_shrink@copy-gpu-8
+> > +msm_shrink@copy-gpu-32
+> > +msm_shrink@copy-gpu-madvise-8
+> > +msm_shrink@copy-gpu-madvise-32
+> > +msm_shrink@copy-gpu-oom-8
+> > +msm_shrink@copy-gpu-oom-32
+> > +msm_shrink@copy-mmap-sanitycheck-8
+> > +msm_shrink@copy-mmap-sanitycheck-32
+> > +msm_shrink@copy-mmap-8
+> > +msm_shrink@copy-mmap-32
+> > +msm_shrink@copy-mmap-madvise-8
+> > +msm_shrink@copy-mmap-madvise-32
+> > +msm_shrink@copy-mmap-oom-8
+> > +msm_shrink@copy-mmap-oom-32
+> > +msm_shrink@copy-mmap-dmabuf-sanitycheck-8
+> > +msm_shrink@copy-mmap-dmabuf-sanitycheck-32
+> > +msm_shrink@copy-mmap-dmabuf-8
+> > +msm_shrink@copy-mmap-dmabuf-32
+> > +msm_shrink@copy-mmap-dmabuf-madvise-8
+> > +msm_shrink@copy-mmap-dmabuf-madvise-32
+> > +msm_shrink@copy-mmap-dmabuf-oom-8
+> > +msm_shrink@copy-mmap-dmabuf-oom-32
+> > +msm_mapping@ring
+> > +msm_mapping@sqefw
+> > +msm_mapping@shadow
+> > +msm_submitoverhead@submitbench-10-bos
+> > +msm_submitoverhead@submitbench-10-bos-no-implicit-sync
+> > +msm_submitoverhead@submitbench-100-bos
+> > +msm_submitoverhead@submitbench-100-bos-no-implicit-sync
+> > +msm_submitoverhead@submitbench-250-bos
+> > +msm_submitoverhead@submitbench-250-bos-no-implicit-sync
+> > +msm_submitoverhead@submitbench-500-bos
+> > +msm_submitoverhead@submitbench-500-bos-no-implicit-sync
+> > +msm_submitoverhead@submitbench-1000-bos
+> > +msm_submitoverhead@submitbench-1000-bos-no-implicit-sync
+> > +msm_recovery@hangcheck
+> > +msm_recovery@gpu-fault
+> > +msm_recovery@gpu-fault-parallel
+> > +msm_recovery@iova-fault
+> > +msm_submit@empty-submit
+> > +msm_submit@invalid-queue-submit
+> > +msm_submit@invalid-flags-submit
+> > +msm_submit@invalid-in-fence-submit
+> > +msm_submit@invalid-duplicate-bo-submit
+> > +msm_submit@invalid-cmd-idx-submit
+> > +msm_submit@invalid-cmd-type-submit
+> > +msm_submit@valid-submit
 
