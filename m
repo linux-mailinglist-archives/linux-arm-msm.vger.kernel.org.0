@@ -1,135 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-6732-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C0688283CE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 11:17:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B80D8283F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 11:27:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B2B701F22008
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 10:17:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CDC151F240F5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 10:27:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0E933608A;
-	Tue,  9 Jan 2024 10:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B463360AC;
+	Tue,  9 Jan 2024 10:26:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nj/vhEfB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gR8WJl1J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A4235EE4;
-	Tue,  9 Jan 2024 10:17:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5537dd673e5so2348511a12.0;
-        Tue, 09 Jan 2024 02:17:33 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3C5360A8
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jan 2024 10:26:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-dbed729a4f2so1966804276.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jan 2024 02:26:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704795452; x=1705400252; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TUx5YfOUHTwUc/o3z6EZn3jsreLu3xGXc2zzEZ5pNSk=;
-        b=nj/vhEfBY1sfHAXr0vWcwvKyIX59dVixrbbdqC/qI/mOYSTuNMOQhkXRkRv5zqRHEc
-         e33uw3tT6Yxzje7YWe3BN6ZGqMK6n4AdmcrRf7q/N+tYwUj1uSYhy0e3HGoYoaF7WIJh
-         ydAZEjqKypXAGGT9QWN16ZZOBNO57lCV+LAzPR3esEUpBpMluUrMkyIAct17BQwviBUZ
-         DLQmAUwC5lteMY7f1Obi7wvEnf9l/MHhiBFC432iEKG/0MMaac9fJ0llBlSebCplTdBT
-         Wjh40xZ1SLukWJDktVm/1lcq+L59srJnh49UTF0MUdzODjr6FevNnUOkhpltdzjb9l7w
-         M2lQ==
+        d=linaro.org; s=google; t=1704796015; x=1705400815; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=kgqGlkcMY7u56Ey8Ssan/W4yPE2JFQtM3N3GgOR/j04=;
+        b=gR8WJl1J//qv9if6koihIbit0Zd7NxTDX7R0irdnFoqdnSsM5W4AYuMSN/Q1P+Lq9k
+         vc/6hEtrPhFqo9ZNhdcH2Zm/QJ1vQFQOiOU87J6V14C2vYYdc53AZt2Q7JXBnrBUC5Cm
+         FtbqfYYhpdiRIioTF7l2TbUMNd0uz3azs+u7705vmcZ8wqCAcE5DlMTzMZ1FVH8PBtPV
+         nf6oN/wvRmysmK+WpdAgfi2AdzAx1SFcz+WA46hi5WCMIz3JsYjGXCQyc44AkhJsoMLH
+         1k1VKlpdkFSer1fVr9XSWFbLjya6Hjux4gYI28JqoQzhLn1gtFsuLRS1ZpsFcbBoHt9D
+         HCQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704795452; x=1705400252;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TUx5YfOUHTwUc/o3z6EZn3jsreLu3xGXc2zzEZ5pNSk=;
-        b=JF95Blydlex35+BCPZ2KaAdRMAJ+ERr/SDkG3+NZcetk3xKPvumH5XzbwfPv77Xg2E
-         38V4Tl05SLXMgt8+uAiRg9n8YWbkHByR4cACt+fr31jBiPMp2F+hwrauS5+z7/9t/joS
-         C+L4Txtt/vxJDRDdR3N2arL2njFFrJ76oUaVwLvoPgol7YO4IyRvZXAzLwVXdCjim4Ad
-         gzpKToeXcZ30rERKbRH8PRI54FO+f0/FP0TuTTrqndOlAXDNMobig2MBGJ4HASMJKyVE
-         YkVYLaqyc567EApkreMTsh/CJ9YKAvCVa5kLMdu099mAmooV65nRpuuDzCsMfm52p2T2
-         QNrA==
-X-Gm-Message-State: AOJu0YwpTHz3p7Btzwt9Lk0S0FFUGuOOggL0kOmjZ6lH/RA5aqV0aby+
-	KbPMMmlQQghUMGNPGQIHvts=
-X-Google-Smtp-Source: AGHT+IGrB+NzGjdHpyQpXmMe/xk2t2sEptEit2krxfTtmkP5A/+YAVfYYnWPBKqqNNpKZDZb7Bc6jg==
-X-Received: by 2002:a50:d59a:0:b0:554:5ab4:85a0 with SMTP id v26-20020a50d59a000000b005545ab485a0mr3216311edi.81.1704795452141;
-        Tue, 09 Jan 2024 02:17:32 -0800 (PST)
-Received: from [192.168.3.32] (dh207-96-108.xnet.hr. [88.207.96.108])
-        by smtp.gmail.com with ESMTPSA id n20-20020aa7db54000000b00557aa373d71sm781677edt.45.2024.01.09.02.17.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Jan 2024 02:17:31 -0800 (PST)
-Message-ID: <ddc610d5-5047-4921-869b-47bdafb38d9a@gmail.com>
-Date: Tue, 9 Jan 2024 11:17:30 +0100
+        d=1e100.net; s=20230601; t=1704796015; x=1705400815;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kgqGlkcMY7u56Ey8Ssan/W4yPE2JFQtM3N3GgOR/j04=;
+        b=HSBoygn6Ys7LUs9tN5akIkCHoAeni2SWdt52dIQe8cG4H7/PrI6OpDzYh90Kk6CwUp
+         T6RdHPVI3/22O5UovipVJru/dqqHgJ6c563lIXwZktwqXRd+R8L00zMNNYf0WHGGgRh2
+         pnbd3ckepH4N0Gk3bAuQK+D3gL85Gw5JnLr14aLWL9Vr7ESOZibPYGdxYehd/oEishsh
+         p3p4nAbqT7CxW86VQ0wwSWO8OQp1FdG0Y73lhzsuSND9k0MqBBgxR7MW1N2ZZhUOtVzr
+         czfFFWg3dX2hqrwfKxqHwl1krb+T3NFMO6BU/VFVCSaQsWt/vhADjTqAem1O/rwValn4
+         f7QA==
+X-Gm-Message-State: AOJu0YxB3H3v5asSbQnqXgGjBfT8HJIhbM02dOTCucmBm9kEexvYXkmk
+	pc/thfwgJ8Z1XYK1pH2+jVecRoILtYPKP2QkLOC8q3lQQSTlaA==
+X-Google-Smtp-Source: AGHT+IEQcZ6P9lXrBSBQ98idjcrgG87Zex/N/4zJ2/Drg8bOifKzxnfvcNAyWLYxJMhEyMuLNyRozZ9WLgS7M5DCWzc=
+X-Received: by 2002:a25:fe10:0:b0:dbe:ab5b:c659 with SMTP id
+ k16-20020a25fe10000000b00dbeab5bc659mr2117007ybe.37.1704796014777; Tue, 09
+ Jan 2024 02:26:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] arm64: dts: qcom: ipq6018: enable sdhci node
-To: Chukun Pan <amadeus@jmu.edu.cn>, Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20240107122822.21667-1-amadeus@jmu.edu.cn>
-Content-Language: en-US
-From: Robert Marko <robimarko@gmail.com>
-In-Reply-To: <20240107122822.21667-1-amadeus@jmu.edu.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20240105-fp4-thermals-v1-0-f95875a536b7@fairphone.com>
+ <20240105-fp4-thermals-v1-2-f95875a536b7@fairphone.com> <18dc5f88-6590-4e2d-948f-fd77f4713f8b@linaro.org>
+In-Reply-To: <18dc5f88-6590-4e2d-948f-fd77f4713f8b@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 9 Jan 2024 12:26:43 +0200
+Message-ID: <CAA8EJpp5ZwJUJbbt7YG=1aAdGoScA+PTEf==7gJk3RUP2yu8uw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm7225-fairphone-fp4: Add PM6150L thermals
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Luca Weiss <luca.weiss@fairphone.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+
+On Tue, 9 Jan 2024 at 12:10, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+>
+>
+> On 1/5/24 15:54, Luca Weiss wrote:
+> > Configure the thermals for the PA_THERM1, MSM_THERM, PA_THERM0,
+> > RFC_CAM_THERM, CAM_FLASH_THERM and QUIET_THERM thermistors connected to
+> > PM6150L.
+> >
+> > Due to hardware constraints we can only register 4 zones with
+> > pm6150l_adc_tm, the other 2 we can register via generic-adc-thermal.
+>
+> Ugh.. so the ADC can support more inputs than the ADC_TM that was
+> designed to ship alongside it can?
+
+Yes. ADC_TM can support monitoring of 8 channels in total.
+
+>
+> And that's why the "generic-adc-thermal"-provided zones need to
+> be polled?
+>
+> >
+> > The trip points can really only be considered as placeholders, more
+> > configuration with cooling etc. can be added later.
+> >
+> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> > ---
+> [...]
+>
+> I've read the sentence above, but..
+> > +             sdm-skin-thermal {
+> > +                     polling-delay-passive = <1000>;
+> > +                     polling-delay = <5000>;
+> > +                     thermal-sensors = <&msm_therm_sensor>;
+> > +
+> > +                     trips {
+> > +                             active-config0 {
+> > +                                     temperature = <125000>;
+> > +                                     hysteresis = <1000>;
+> > +                                     type = "passive";
+>
+> I don't fancy burnt fingers for dinner!
+>
+> Konrad
+>
 
 
-On 07. 01. 2024. 13:28, Chukun Pan wrote:
-> Enable mmc device found on ipq6018 devices.
-> This node supports both eMMC and SD cards.
->
-> Tested with:
->    eMMC (HS200)
->    SD Card (SDR50/SDR104)
->
-> Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
-L2 LDO should be used as VQMMC supply, otherwise you cannot change 
-between 3 and 1.8V.
-
-Regards,
-Robert
-> ---
->   arch/arm64/boot/dts/qcom/ipq6018.dtsi | 22 ++++++++++++++++++++++
->   1 file changed, 22 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> index 5e1277fea725..39fb38914a1e 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> @@ -436,6 +436,28 @@ dwc_1: usb@7000000 {
->   			};
->   		};
->   
-> +		sdhc: mmc@7804000 {
-> +			compatible = "qcom,ipq6018-sdhci", "qcom,sdhci-msm-v5";
-> +			reg = <0x0 0x7804000 0x0 0x1000>,
-> +			      <0x0 0x7805000 0x0 0x1000>;
-> +			reg-names = "hc", "cqhci";
-> +
-> +			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "hc_irq", "pwr_irq";
-> +
-> +			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-> +				 <&gcc GCC_SDCC1_APPS_CLK>,
-> +				 <&xo>;
-> +			clock-names = "iface", "core", "xo";
-> +			resets = <&gcc GCC_SDCC1_BCR>;
-> +			max-frequency = <192000000>;
-> +			mmc-ddr-1_8v;
-> +			mmc-hs200-1_8v;
-> +
-> +			status = "disabled";
-> +		};
-> +
->   		blsp_dma: dma-controller@7884000 {
->   			compatible = "qcom,bam-v1.7.0";
->   			reg = <0x0 0x07884000 0x0 0x2b000>;
+-- 
+With best wishes
+Dmitry
 
