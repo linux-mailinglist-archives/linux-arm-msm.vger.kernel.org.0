@@ -1,119 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-6717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2CB5482825D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 09:46:15 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C33F78282C6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 10:14:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D0029281489
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 08:46:13 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0863DB25B8B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 09:14:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C63BD2C6B7;
-	Tue,  9 Jan 2024 08:43:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0049429433;
+	Tue,  9 Jan 2024 09:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SuhjkCPm"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="naGn6h5G"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398C92E636;
-	Tue,  9 Jan 2024 08:43:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4096fE0p006338;
-	Tue, 9 Jan 2024 08:43:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=BGibbLuPsp6YqJ9RGSe1cHagl2jLZ2fUPegRL4mMGKs=; b=Su
-	hjkCPmGfC9mIlqDcxdKxhVpvVCMtFIqmk3qiOG48qOe93iC7AqWGse1H3Re9rhO/
-	xGW4DQfGeRBtkcaTZwqWuSuty0Tc++3hodT+Zgf5u+ppYpzrZlNhNQphj5xC9Arm
-	/X6sKkRrW9HN5bDRYWyjoMp8Wn8yB/0eBiFt5lunTcqz6NPD8TqrSppnbL7hs9rh
-	nk3PgYCFHHpdwPw/momyqggqKCcOFffOPFIN19AFAAY64ow1uzwwAFAO/BSFUlBH
-	aECfqq9ukbVIkouqP6cOYQEA/aOgJ6097y6UpHRde3htF6JQkOQkIerCFbwXyCls
-	t+3qCdg9J1EF0Ssz4/PA==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vgwq1rjxs-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 09 Jan 2024 08:43:19 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4098hIn8022107
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 9 Jan 2024 08:43:18 GMT
-Received: from [10.253.78.145] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 9 Jan
- 2024 00:43:15 -0800
-Message-ID: <78b0b2c0-20b5-4682-8020-335395d0af68@quicinc.com>
-Date: Tue, 9 Jan 2024 16:43:13 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8822EAF9;
+	Tue,  9 Jan 2024 09:14:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13FA4C433F1;
+	Tue,  9 Jan 2024 09:13:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1704791644;
+	bh=+06NMjLMy7+S0OcYAENUNHQLBwEXKnqYTwCvjFTXoVo=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=naGn6h5G/6LHXS86a+lEsUu6Z0GXyfdbelfib8WBnJgW8wCSOppf2X8p2llo/pSnM
+	 /c3R7m5/EQyL4cwZNRgIVXFQmvp+KJg5lTHNLqL/ztc359qhvQaHOQeRtUOB311KjO
+	 HhQVXTJw3Nhq0BvsCqw7vuEgkGvJfqo7daporh375JTpqat7AX81VZ2ZzVQ3Lan7h8
+	 haEwOfoNrZmYNPjQQB9nyKmx/9LDDWJRW/1qjFZAH1XHihrWapFpeQejQx2JrvOxPN
+	 NbeoHoMkTkaaIOXgmqDbamqDtjHSxyFeYCWwGTb+k2oxYqoGnLfWAWSJBpBhmIXmrs
+	 X/5GNfkYry1hA==
+From: Kalle Valo <kvalo@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>,  "David S . Miller"
+ <davem@davemloft.net>,  Eric Dumazet <edumazet@google.com>,  Jakub
+ Kicinski <kuba@kernel.org>,  Paolo Abeni <pabeni@redhat.com>,  Rob Herring
+ <robh+dt@kernel.org>,  Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley <conor+dt@kernel.org>,
+  Bjorn Andersson <andersson@kernel.org>,  Konrad Dybcio
+ <konrad.dybcio@linaro.org>,  Catalin Marinas <catalin.marinas@arm.com>,
+  Will Deacon <will@kernel.org>,  Bjorn Helgaas <bhelgaas@google.com>,
+  Heiko Stuebner <heiko@sntech.de>,  Jernej Skrabec
+ <jernej.skrabec@gmail.com>,  Chris Morgan <macromorgan@hotmail.com>,
+  Linus Walleij <linus.walleij@linaro.org>,  Geert Uytterhoeven
+ <geert+renesas@glider.be>,  Arnd Bergmann <arnd@arndb.de>,  Neil Armstrong
+ <neil.armstrong@linaro.org>,  =?utf-8?Q?N=C3=ADcolas?= F . R . A . Prado
+ <nfraprado@collabora.com>,  Marek Szyprowski <m.szyprowski@samsung.com>,
+  Peng Fan <peng.fan@nxp.com>,  Robert Richter <rrichter@amd.com>,  Dan
+ Williams <dan.j.williams@intel.com>,  Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>,  Terry Bowman <terry.bowman@amd.com>,
+  Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+  Ilpo =?utf-8?Q?J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,  Huacai
+ Chen
+ <chenhuacai@kernel.org>,  Alex Elder <elder@linaro.org>,  Srini Kandagatla
+ <srinivas.kandagatla@linaro.org>,  Greg Kroah-Hartman
+ <gregkh@linuxfoundation.org>,  linux-wireless@vger.kernel.org,
+  netdev@vger.kernel.org,  devicetree@vger.kernel.org,
+  linux-kernel@vger.kernel.org,  linux-arm-msm@vger.kernel.org,
+  linux-arm-kernel@lists.infradead.org,  linux-pci@vger.kernel.org,
+  Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [RFC 7/9] dt-bindings: wireless: ath11k: describe QCA6390
+References: <20240104130123.37115-1-brgl@bgdev.pl>
+	<20240104130123.37115-8-brgl@bgdev.pl>
+	<82a669f5-259d-427c-b290-6fa1470fec79@linaro.org>
+Date: Tue, 09 Jan 2024 11:13:54 +0200
+In-Reply-To: <82a669f5-259d-427c-b290-6fa1470fec79@linaro.org> (Krzysztof
+	Kozlowski's message of "Thu, 4 Jan 2024 16:57:52 +0100")
+Message-ID: <87o7duzx65.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] bus: mhi: host: Add sysfs entry to force device to enter
- EDL
-Content-Language: en-US
-To: Jeffrey Hugo <quic_jhugo@quicinc.com>, <mani@kernel.org>
-CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
-        <quic_mrana@quicinc.com>, Bhaumik Bhatt <quic_bbhatt@quicinc.com>
-References: <1703490474-84730-1-git-send-email-quic_qianyu@quicinc.com>
- <cff4b828-9566-a2bd-287a-138d74a76a59@quicinc.com>
-From: Qiang Yu <quic_qianyu@quicinc.com>
-In-Reply-To: <cff4b828-9566-a2bd-287a-138d74a76a59@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: sMM0X-rw5YV5v5z0lL21EP0t4MCX79PI
-X-Proofpoint-ORIG-GUID: sMM0X-rw5YV5v5z0lL21EP0t4MCX79PI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- clxscore=1015 lowpriorityscore=0 suspectscore=0 malwarescore=0
- adultscore=0 phishscore=0 impostorscore=0 mlxlogscore=706 spamscore=0
- bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401090068
+Content-Type: text/plain
 
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> writes:
 
-On 1/2/2024 11:31 PM, Jeffrey Hugo wrote:
-> On 12/25/2023 12:47 AM, Qiang Yu wrote:
->> From: Bhaumik Bhatt <quic_bbhatt@quicinc.com>
->>
->> Forcing the device (eg. SDX75) to enter Emergency Download Mode involves
->> writing the 0xEDEDEDED cookie to the channel 91 doorbell register and
->> forcing an SOC reset afterwards. Allow users of the MHI bus to 
->> exercise the
->> sequence using a sysfs entry.
+> On 04/01/2024 14:01, Bartosz Golaszewski wrote:
 >
-> I don't see this documented in the spec anywhere.  Is this standard 
-> behavior for all MHI devices?
-
-This is documented in MHI spec v1.2, 13.2 Emergency download (EDL) mode 
-cookie. So I think
-
-it is standard behavior. At least, SDX65 and SDX75 support it.
-
+>> diff --git a/Documentation/devicetree/bindings/net/wireless/qcom,ath11k-pci.yaml b/Documentation/devicetree/bindings/net/wireless/qcom,ath11k-pci.yaml
+>> index 817f02a8b481..f584c25f4276 100644
+>> --- a/Documentation/devicetree/bindings/net/wireless/qcom,ath11k-pci.yaml
+>> +++ b/Documentation/devicetree/bindings/net/wireless/qcom,ath11k-pci.yaml
+>> @@ -16,6 +16,7 @@ description: |
+>>  properties:
+>>    compatible:
+>>      enum:
+>> +      - pci17cb,1101  # QCA6390
+>>        - pci17cb,1103  # WCN6855
+>>  
+>>    reg:
+>> @@ -27,6 +28,19 @@ properties:
+>>        string to uniquely identify variant of the calibration data for designs
+>>        with colliding bus and device ids
+>>  
+>> +  enable-gpios:
+>> +    description: GPIO line enabling the ATH11K module when asserted.
+>> +    maxItems: 1
+>> +
+>> +  vddpmu-supply:
+>> +    description: VDD_PMU supply regulator handle
+>> +
+>> +  vddpcie1-supply:
+>> +    description: VDD_PCIE1 supply regulator handle
+>> +
+>> +  vddpcie2-supply:
+>> +    description: VDD_PCIE2 supply regulator handle
 >
-> What about devices that don't support EDL mode?
->
-> How should the host avoid using this special cookie when EDL mode is 
-> not desired?
+> Looks like these are valid only for specific variant, so you should have
+> allOf:if:then disallowing other properties when not applicable. The same
+> applies for existing properties which might not exist on qca6390.
 
-Can I include another flag in mhi_pci_dev_info and mhi_controller and 
-check this flag
+And it would be good to provide more information in the commit log about
+the platforms where this is used, otherwise the context might not be
+clear. Or maybe document that in the bindings file, not sure.
 
-before writing EDL cookie?
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
 
->
-> -Jeff
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
