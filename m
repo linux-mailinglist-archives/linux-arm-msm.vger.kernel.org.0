@@ -1,149 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-6832-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6837-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE1ED828E03
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 20:45:53 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48DF2828E94
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 21:41:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 47B72285BA4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 19:45:47 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E1443B24CFA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 20:41:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3129B4123A;
-	Tue,  9 Jan 2024 19:38:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38F5F3D978;
+	Tue,  9 Jan 2024 20:41:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="meB4l/v4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="woXjqTph"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00507481C7;
-	Tue,  9 Jan 2024 19:38:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 409IPgvb009679;
-	Tue, 9 Jan 2024 19:38:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:date:subject:mime-version:content-type
-	:content-transfer-encoding:message-id:references:in-reply-to:to
-	:cc; s=qcppdkim1; bh=9IXiRln2Duun1O80Yl8EsvifJ9A2nUavg62PHcy0yVQ
-	=; b=meB4l/v4NDsiJs4wRPv7TjhWtf35qjgjlmEZdoe6KtorlH+6+aiyx81qcU+
-	2PSK4XQz5UnVSN7jdEk3INrccSurEXaoUxv6HwXV4Wah+dTHkNcoBGW9Vt1tUYTn
-	D2ystJCaVc519dsmgvFk6EuCPq7DBthg36dkc45Bl06AFbeeR9wVfuQNr3KbslTq
-	bbOqGJJ92LXThkRfDH4ZqQ/f1fPny87Fohj//lhFl6ybLPMoUFkX4+F7nnGa8yq/
-	agQE6NwlTYsZ8lCvPa6yFPR//EvHF5c7jYZR+kKK+EBBCLDnXnWXyd8EgCxS1Bbc
-	5zZpkb70VQJq9PwSBRJrKT+xo6Q==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vh85t0pp9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 09 Jan 2024 19:38:12 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 409JcBhQ003587
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 9 Jan 2024 19:38:11 GMT
-Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 9 Jan 2024 11:38:10 -0800
-From: Elliot Berman <quic_eberman@quicinc.com>
-Date: Tue, 9 Jan 2024 11:38:12 -0800
-Subject: [PATCH v16 34/34] MAINTAINERS: Add Gunyah hypervisor drivers
- section
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868713D971
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jan 2024 20:41:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-50e7c6f0487so3346845e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jan 2024 12:41:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704832869; x=1705437669; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1IMTrLGXL3DoYuQMmQ7qjtoDUmoVxjKFdnyiQCYD2qI=;
+        b=woXjqTphg5R8CrzfOPm/87Cz+YzTD7Y6zJsWds2TwJHRacVGf/3H0FoM5gwu/KpT1Z
+         fnAAiapqWTaHGiaZaDFx2KYJjEQE9QEtPXmvsqVhEK0A3pHxOoC96edrfIFyVs0RwwVc
+         VsS0qD2fijXTlzYqSMfJgFz1QLA7pe3sOijcg0v9Bs5ixOdUoiruJDB1oMRy6zMZN7kI
+         11FXFKySFdQkYOPNIcBN9Du+4vBdM+TUv6VSum74BuQGylg6ruUJ+0fPWDMV0A7gHcFs
+         fFVY0cm94y5cxa3C0Ys1TsYcS91R/WAMbT/UVMLLgRiafPOl76s1OzJQpD3qrBlobvuQ
+         n5cA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704832869; x=1705437669;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1IMTrLGXL3DoYuQMmQ7qjtoDUmoVxjKFdnyiQCYD2qI=;
+        b=RNxLLX7C2r5j2W0rkT33IqksY7B80PyTpBDVgrLpcMfDukgGLxjcvaRNKFy2KIhitC
+         GnZLxa45Au+sCw2P2kSeUyJJNtBx6pPXYzYgCWxEuKDi6NRrTR3DPbStc59LHZGJHBgV
+         xb94jiRdrGQO1ID5h9o8DQ+QOqXNjL2MERo5RIioPvotbOnzi+vVEAU8m2+1jxRabm31
+         Egcia9QxJsligLZAOLrLRKRqDbP7ToORgkZbEkpXWFKD53bSGV9qK3fSXkMvAcK5eQKh
+         z/LtU3DpEi0SVkCfvxq9rhF/qclUOFYTGTqipWnGyyQPTgdHU9y/oSvZdoEMCL0Y6gTY
+         /KBQ==
+X-Gm-Message-State: AOJu0YxXkcki3Hm24uXouJpDHt5H1/Umo2WQ6kKNNTO8+udI9BzNDRoT
+	97fUy+mZVT00grCugAsZI2A0UVKDVdKZPQ==
+X-Google-Smtp-Source: AGHT+IGq5218wvaogJueOD/DpYuKLoXmu4W+n/+HB2kF4j3PUDGcL22+DHFIx6i8j3H6hWkaN3FnnA==
+X-Received: by 2002:a05:6512:2023:b0:50e:64f5:ad71 with SMTP id s3-20020a056512202300b0050e64f5ad71mr1476328lfs.146.1704832869503;
+        Tue, 09 Jan 2024 12:41:09 -0800 (PST)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id y3-20020a197503000000b0050e7e19b692sm448489lfe.154.2024.01.09.12.41.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Jan 2024 12:41:09 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Rob Clark <robdclark@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>
+Cc: Stephen Boyd <swboyd@chromium.org>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Bjorn Andersson <andersson@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org
+Subject: [PATCH] drm/msm/a6xx: set highest_bank_bit to 13 for a610
+Date: Tue,  9 Jan 2024 22:41:08 +0200
+Message-Id: <20240109204108.3385496-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20240109-gunyah-v16-34-634904bf4ce9@quicinc.com>
-References: <20240109-gunyah-v16-0-634904bf4ce9@quicinc.com>
-In-Reply-To: <20240109-gunyah-v16-0-634904bf4ce9@quicinc.com>
-To: Alex Elder <elder@linaro.org>,
-        Srinivas Kandagatla
-	<srinivas.kandagatla@linaro.org>,
-        Murali Nalajal <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri
-	<quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Philip Derrin <quic_pderrin@quicinc.com>,
-        Prakruthi Deepak Heragu
-	<quic_pheragu@quicinc.com>,
-        Jonathan Corbet <corbet@lwn.net>, Rob Herring
-	<robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Fuad
- Tabba" <tabba@google.com>,
-        Sean Christopherson <seanjc@google.com>,
-        "Andrew
- Morton" <akpm@linux-foundation.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-mm@kvack.org>,
-        Elliot Berman
-	<quic_eberman@quicinc.com>
-X-Mailer: b4 0.13-dev
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: kzM0F7NTMKnUvtJCJV2bCf88yMAs95Pq
-X-Proofpoint-GUID: kzM0F7NTMKnUvtJCJV2bCf88yMAs95Pq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
- malwarescore=0 suspectscore=0 mlxlogscore=744 clxscore=1015
- priorityscore=1501 adultscore=0 impostorscore=0 phishscore=0 spamscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401090158
+Content-Transfer-Encoding: 8bit
 
-Add myself and Prakruthi as maintainers of Gunyah hypervisor drivers.
+During the testing of Gnome on Qualcomm Robotics platform screen
+corruption has been observed. Lowering GPU's highest_bank_bit from 14 to
+13 seems to fix the screen corruption.
 
-Reviewed-by: Alex Elder <elder@linaro.org>
-Signed-off-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+Note, the MDSS and DPU drivers use HBB=1 (which maps to the
+highest_bank_bit = 14). So this change merely works around the UBWC
+swizzling issue on this platform until the real cause is found.
+
+Fixes: e7fc9398e608 ("drm/msm/a6xx: Add A610 support")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- MAINTAINERS | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index fa67e2624723..64f70ef1ef91 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -9306,6 +9306,18 @@ L:	linux-efi@vger.kernel.org
- S:	Maintained
- F:	block/partitions/efi.*
+The photo of screen corruption:
+https://photos.app.goo.gl/k4MPzpBKPUD3AKR37
+
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index c0bc924cd302..c9c55e2ea584 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1287,7 +1287,7 @@ static void a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
+ 	gpu->ubwc_config.highest_bank_bit = 15;
  
-+GUNYAH HYPERVISOR DRIVER
-+M:	Elliot Berman <quic_eberman@quicinc.com>
-+M:	Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-+L:	linux-arm-msm@vger.kernel.org
-+S:	Supported
-+F:	Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
-+F:	Documentation/virt/gunyah/
-+F:	arch/arm64/gunyah/
-+F:	drivers/virt/gunyah/
-+F:	include/linux/gunyah*.h
-+K:	gunyah
-+
- HABANALABS PCI DRIVER
- M:	Oded Gabbay <ogabbay@kernel.org>
- L:	dri-devel@lists.freedesktop.org
-
+ 	if (adreno_is_a610(gpu)) {
+-		gpu->ubwc_config.highest_bank_bit = 14;
++		gpu->ubwc_config.highest_bank_bit = 13;
+ 		gpu->ubwc_config.min_acc_len = 1;
+ 		gpu->ubwc_config.ubwc_mode = 1;
+ 	}
 -- 
-2.34.1
+2.39.2
 
 
