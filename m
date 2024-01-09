@@ -1,205 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-6794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6795-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4F3E828AD8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 18:16:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2766C828B3F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 18:29:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 29DA81F21F5E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 17:16:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id ADEA01F25753
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 17:29:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C79823B19B;
-	Tue,  9 Jan 2024 17:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E8073B2A6;
+	Tue,  9 Jan 2024 17:29:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="StDNcWHj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h0eRHKFL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E3A3B198;
-	Tue,  9 Jan 2024 17:16:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 409GDcW8002997;
-	Tue, 9 Jan 2024 17:16:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=3svU7b0tyFCpSBoa3yLQ52v339bU9u/QNEENmlt0W+E=; b=St
-	DNcWHjRUH1bPF1HGvbVTXE2WRNLOnIK1GiYgNDsg9nNE3UDcgN+pQkgaE1FoSaJc
-	jOsI06cu5WLQ29HaA8KUF7m+kevkxhliZpHI/pYzjdbKwYz7DuK4CCnEFuqkD40y
-	qyTXegK4BtD+KW7JMxpNLAGtcnogXWCE+cYVdKQNg3FhEDoTF1z7w39xCnlt6iVs
-	dYzZiP1j1XxqX/D8No95TjTGkYELKmarT1VWcIBstzVDp6nJjNuw6oA3mPVOzgQS
-	VoukeDflxjqIykUBbiAuQ1JcDi4bh5KYwrg3oUadErPvRwCUpcp+tUhng5OeUhHj
-	q357ovpM1sxOWoV0yB6Q==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vh9evr53b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 09 Jan 2024 17:16:04 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 409HG2SF011247
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 9 Jan 2024 17:16:02 GMT
-Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 9 Jan
- 2024 09:16:02 -0800
-Message-ID: <865486be-df38-c732-b329-13b4cfdafe1c@quicinc.com>
-Date: Tue, 9 Jan 2024 09:16:01 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8923BB24;
+	Tue,  9 Jan 2024 17:29:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30B37C43390;
+	Tue,  9 Jan 2024 17:29:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1704821366;
+	bh=c+gLcfL86VXXDQGcoWlKSAU2T+iwkLzgo1A26ePprwY=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=h0eRHKFLFczLzYmZog7EpW5yCoNe8k9dsIan0ZkJ5pABPRcEvZXA/urUm5UwgvXVo
+	 JTl9f+57vN37PZRMLyOuPSIukfnrO5NqyqmEcTV1qLfVjizWGZjALV9hg/w+CpzAkw
+	 PHxCBh171p9rIrcCWqJ0TAmMIUa88NWL1OGfQ2ioWObbXBvmZ6F9C4yhbkQo2q81pe
+	 i3lgndJr8VaexH21F2X1uLbyS5OFhaXihv0zRfViuDSv0lrKeHsTGW8L2EoRf2gmep
+	 KPMFdYqiBq1wX8E2fyqV9twGC9CCTUZLC5HmA5xy0vOita9BvsoPLasS2z6SNfRhhb
+	 x2XwgFxtYO1GA==
+Received: (nullmailer pid 2805791 invoked by uid 1000);
+	Tue, 09 Jan 2024 17:29:24 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH] drm/ci: Add msm tests
-Content-Language: en-US
-To: Rob Clark <robdclark@gmail.com>
-CC: Rob Clark <robdclark@chromium.org>, <linux-arm-msm@vger.kernel.org>,
-        open
- list <linux-kernel@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        Helen
- Koike <helen.koike@collabora.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas
- Zimmermann <tzimmermann@suse.de>,
-        <freedreno@lists.freedesktop.org>
-References: <20240108195016.156583-1-robdclark@gmail.com>
- <454873e5-1b5a-28d3-ffed-c1e502898d17@quicinc.com>
- <CAF6AEGuVk=a-SwHyVwqOew-+WAdH1Gt011H50kvkSBe1j5ri_A@mail.gmail.com>
- <CAF6AEGs7NxB2ox+JMW0tP_XOkFie=f=w1sWSQjTUM8AZQ0V3TQ@mail.gmail.com>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAF6AEGs7NxB2ox+JMW0tP_XOkFie=f=w1sWSQjTUM8AZQ0V3TQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: yA1HLDZbL39XdULj4kQn7-QSriDkRYc0
-X-Proofpoint-ORIG-GUID: yA1HLDZbL39XdULj4kQn7-QSriDkRYc0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- mlxlogscore=999 lowpriorityscore=0 mlxscore=0 priorityscore=1501
- adultscore=0 suspectscore=0 clxscore=1015 spamscore=0 phishscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401090140
+From: Rob Herring <robh@kernel.org>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: linux-kernel@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-media@vger.kernel.org, Todor Tomov <todor.too@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Rob Herring <robh+dt@kernel.org>, Robert Foss <rfoss@kernel.org>, Mauro Carvalho Chehab <mchehab@kernel.org>
+In-Reply-To: <20240109-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v3-2-b8e3a74a6e6a@linaro.org>
+References: <20240109-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v3-0-b8e3a74a6e6a@linaro.org>
+ <20240109-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v3-2-b8e3a74a6e6a@linaro.org>
+Message-Id: <170482136406.2805773.11743678782463697327.robh@kernel.org>
+Subject: Re: [PATCH v3 2/4] dt-bindings: media: camss: Add
+ qcom,sc8280xp-camss binding
+Date: Tue, 09 Jan 2024 11:29:24 -0600
 
 
-
-On 1/9/2024 7:31 AM, Rob Clark wrote:
-> On Mon, Jan 8, 2024 at 6:13 PM Rob Clark <robdclark@gmail.com> wrote:
->>
->> On Mon, Jan 8, 2024 at 2:58 PM Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->>>
->>>
->>>
->>> On 1/8/2024 11:50 AM, Rob Clark wrote:
->>>> From: Rob Clark <robdclark@chromium.org>
->>>>
->>>> The msm tests should skip on non-msm hw, so I think it should be safe to
->>>> enable everywhere.
->>>>
->>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
->>>> ---
->>>>    drivers/gpu/drm/ci/testlist.txt | 49 +++++++++++++++++++++++++++++++++
->>>>    1 file changed, 49 insertions(+)
->>>>
->>>
->>> I do see that all these tests use igt_msm_dev_open() to make sure it
->>> opens only the MSM card.
->>>
->>> But if igt_msm_dev_open() fails, I dont see a igt_require() on some of
->>> the tests to skip them. So how will it safely skip on non-msm HW?
->>>
->>> Unless i am missing something here ....
->>
->> hmm, at the time I added the initial msm tests, and
->> igt_msm_dev_open(), I verified that they skipped on intel.. but since
->> then I'd switched from intel to sc8280xp device for primary dev
->> device, so I'd need to re-test to remember how it works.  If these
->> aren't skipping on !msm, it is a bug
+On Tue, 09 Jan 2024 16:06:03 +0000, Bryan O'Donoghue wrote:
+> Add bindings for qcom,sc8280xp-camss in order to support the camera
+> subsystem for sc8280xp as found in the Lenovo x13s Laptop.
 > 
-> I double checked, these tests skip in drm_open_driver() with "No known
-> gpu found for chipset flags 0x64 (msm)", so no problem to run them on
-> all CI runners.
-> 
-> BR,
-> -R
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  .../bindings/media/qcom,sc8280xp-camss.yaml        | 512 +++++++++++++++++++++
+>  1 file changed, 512 insertions(+)
 > 
 
-Ack, thanks for checking
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
+yamllint warnings/errors:
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.example.dts:26:18: fatal error: dt-bindings/clock/qcom,sc8280xp-camcc.h: No such file or directory
+   26 |         #include <dt-bindings/clock/qcom,sc8280xp-camcc.h>
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make[2]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.example.dtb] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1424: dt_binding_check] Error 2
+make: *** [Makefile:234: __sub-make] Error 2
 
-> 
->> BR,
->> -R
->>
->>>> diff --git a/drivers/gpu/drm/ci/testlist.txt b/drivers/gpu/drm/ci/testlist.txt
->>>> index f82cd90372f4..eaeb751bb0ad 100644
->>>> --- a/drivers/gpu/drm/ci/testlist.txt
->>>> +++ b/drivers/gpu/drm/ci/testlist.txt
->>>> @@ -2910,3 +2910,52 @@ kms_writeback@writeback-invalid-parameters
->>>>    kms_writeback@writeback-fb-id
->>>>    kms_writeback@writeback-check-output
->>>>    prime_mmap_kms@buffer-sharing
->>>> +msm_shrink@copy-gpu-sanitycheck-8
->>>> +msm_shrink@copy-gpu-sanitycheck-32
->>>> +msm_shrink@copy-gpu-8
->>>> +msm_shrink@copy-gpu-32
->>>> +msm_shrink@copy-gpu-madvise-8
->>>> +msm_shrink@copy-gpu-madvise-32
->>>> +msm_shrink@copy-gpu-oom-8
->>>> +msm_shrink@copy-gpu-oom-32
->>>> +msm_shrink@copy-mmap-sanitycheck-8
->>>> +msm_shrink@copy-mmap-sanitycheck-32
->>>> +msm_shrink@copy-mmap-8
->>>> +msm_shrink@copy-mmap-32
->>>> +msm_shrink@copy-mmap-madvise-8
->>>> +msm_shrink@copy-mmap-madvise-32
->>>> +msm_shrink@copy-mmap-oom-8
->>>> +msm_shrink@copy-mmap-oom-32
->>>> +msm_shrink@copy-mmap-dmabuf-sanitycheck-8
->>>> +msm_shrink@copy-mmap-dmabuf-sanitycheck-32
->>>> +msm_shrink@copy-mmap-dmabuf-8
->>>> +msm_shrink@copy-mmap-dmabuf-32
->>>> +msm_shrink@copy-mmap-dmabuf-madvise-8
->>>> +msm_shrink@copy-mmap-dmabuf-madvise-32
->>>> +msm_shrink@copy-mmap-dmabuf-oom-8
->>>> +msm_shrink@copy-mmap-dmabuf-oom-32
->>>> +msm_mapping@ring
->>>> +msm_mapping@sqefw
->>>> +msm_mapping@shadow
->>>> +msm_submitoverhead@submitbench-10-bos
->>>> +msm_submitoverhead@submitbench-10-bos-no-implicit-sync
->>>> +msm_submitoverhead@submitbench-100-bos
->>>> +msm_submitoverhead@submitbench-100-bos-no-implicit-sync
->>>> +msm_submitoverhead@submitbench-250-bos
->>>> +msm_submitoverhead@submitbench-250-bos-no-implicit-sync
->>>> +msm_submitoverhead@submitbench-500-bos
->>>> +msm_submitoverhead@submitbench-500-bos-no-implicit-sync
->>>> +msm_submitoverhead@submitbench-1000-bos
->>>> +msm_submitoverhead@submitbench-1000-bos-no-implicit-sync
->>>> +msm_recovery@hangcheck
->>>> +msm_recovery@gpu-fault
->>>> +msm_recovery@gpu-fault-parallel
->>>> +msm_recovery@iova-fault
->>>> +msm_submit@empty-submit
->>>> +msm_submit@invalid-queue-submit
->>>> +msm_submit@invalid-flags-submit
->>>> +msm_submit@invalid-in-fence-submit
->>>> +msm_submit@invalid-duplicate-bo-submit
->>>> +msm_submit@invalid-cmd-idx-submit
->>>> +msm_submit@invalid-cmd-type-submit
->>>> +msm_submit@valid-submit
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240109-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v3-2-b8e3a74a6e6a@linaro.org
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
 
