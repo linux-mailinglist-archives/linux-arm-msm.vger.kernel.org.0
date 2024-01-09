@@ -1,352 +1,522 @@
-Return-Path: <linux-arm-msm+bounces-6842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6843-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7DE6A8290DD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 00:31:52 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 251F48290F6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 00:43:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7E7951C24F61
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 23:31:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C3DB3288525
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 23:43:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EF4A3E47E;
-	Tue,  9 Jan 2024 23:31:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64EA13E47E;
+	Tue,  9 Jan 2024 23:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="MFsa/ZBZ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hTkAn3qv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2196C3D553;
-	Tue,  9 Jan 2024 23:31:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
-	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
-	bh=nigpUfVa2mUkzqljgO+KeSAqnJRyVTsXj/vLragc/Ak=; b=MFsa/ZBZDhYIlYvLVLWkNk4zWD
-	eHNFpkvAgh0CEyn9Hkm60/1OI5QJmyUAqyB8HyW+LjjfVNOOg/64b7Z2PWd5TIePcWppnt5cMiorN
-	fkGbeNq8CIBDpBnpQ2EHQKWuFoRj2WaT4AtiFbeKG7Lvy8VLYsdfedivVPaIhzgvN0ltBP3lEcq8Y
-	IzFWRuQiA8sdciifcbhWiTUG1Y5q6sEbuRwM2oTbRo7gymb5fb43rrzdXrAOrkLKNK8Yn/auTndh2
-	WimNXLeYSCFwUOs919tTl4Lb92XzQCX63LfcqXJWZiezYVxmO5esiLTmUbte3dkxZAyNyde3RXj1Y
-	12MUo2cA==;
-Received: from [50.53.46.231] (helo=[192.168.254.15])
-	by bombadil.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
-	id 1rNLZK-009qvy-08;
-	Tue, 09 Jan 2024 23:31:38 +0000
-Message-ID: <d5b041d9-1691-4259-a76c-176c5b3d8be3@infradead.org>
-Date: Tue, 9 Jan 2024 15:31:36 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FF2A364C1;
+	Tue,  9 Jan 2024 23:43:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 409NadZJ015473;
+	Tue, 9 Jan 2024 23:43:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:from:to:cc:references
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=5vsgqYN1xMICRac8a9jc/Xitc5cxzbAO0Ciy0hjnofU=; b=hT
+	kAn3qvFo7ObgGy5OksxJP1DXLtgxdlzkXk5f2Z5u8o5a3zUNWc2+oim9rutnsg6s
+	7Pq3KafEl2D1NoBbdLKf5Gna3fSfxIO6fV9ebb9uOL9ChHCm+uSe7m4auLG4/IxH
+	t3LbU087/+J/Fe4gNYmZoO6DAVG/3w7xGPu/suOj8kO2SzUVqHfHLuHfh0tMm6zA
+	IgX7v+KxT2g0yaXEaLyM/nCIawiOG2Gj1/4lTPveV7lFjjR6cXlmClczxNJVXBjD
+	p6j8P4nQn8NwpUUHiWpdtpVkeimaZhdQ6l+rv+Z6Jbl8bh1CH9N0hJT8vzEJNdcY
+	u0Q1GQRDfOpiGk4mu14w==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vh9vfguf0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 09 Jan 2024 23:43:01 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 409Nh0Dn002252
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 9 Jan 2024 23:43:00 GMT
+Received: from [10.110.97.125] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 9 Jan
+ 2024 15:42:59 -0800
+Message-ID: <b254f73b-a1bc-3dd4-f485-a3acf556835d@quicinc.com>
+Date: Tue, 9 Jan 2024 15:42:59 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 01/34] docs: gunyah: Introduce Gunyah Hypervisor
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v12 04/41] usb: host: xhci-mem: Cleanup pending secondary
+ event ring events
 Content-Language: en-US
-To: Elliot Berman <quic_eberman@quicinc.com>, Alex Elder <elder@linaro.org>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Murali Nalajal <quic_mnalajal@quicinc.com>,
- Trilok Soni <quic_tsoni@quicinc.com>,
- Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
- Carl van Schaik <quic_cvanscha@quicinc.com>,
- Philip Derrin <quic_pderrin@quicinc.com>,
- Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
- Jonathan Corbet <corbet@lwn.net>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Catalin Marinas
- <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Fuad Tabba
- <tabba@google.com>, Sean Christopherson <seanjc@google.com>,
- Andrew Morton <akpm@linux-foundation.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-mm@kvack.org
-References: <20240109-gunyah-v16-0-634904bf4ce9@quicinc.com>
- <20240109-gunyah-v16-1-634904bf4ce9@quicinc.com>
-From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <20240109-gunyah-v16-1-634904bf4ce9@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+To: Mathias Nyman <mathias.nyman@linux.intel.com>,
+        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
+        <gregkh@linuxfoundation.org>, <lgirdwood@gmail.com>,
+        <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <konrad.dybcio@linaro.org>, <Thinh.Nguyen@synopsys.com>,
+        <broonie@kernel.org>, <bgoswami@quicinc.com>, <tiwai@suse.com>,
+        <robh+dt@kernel.org>, <agross@kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>
+References: <20240102214549.22498-1-quic_wcheng@quicinc.com>
+ <20240102214549.22498-5-quic_wcheng@quicinc.com>
+ <734591a1-50b4-6dc7-0b93-077355ec12e4@linux.intel.com>
+ <7b2ec96b-b72f-c848-7c35-36e61a4072ac@quicinc.com>
+In-Reply-To: <7b2ec96b-b72f-c848-7c35-36e61a4072ac@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: DPckguU-3nXYKirH72rirGdGbZdDUF1O
+X-Proofpoint-ORIG-GUID: DPckguU-3nXYKirH72rirGdGbZdDUF1O
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 suspectscore=0 clxscore=1015 priorityscore=1501
+ impostorscore=0 adultscore=0 bulkscore=0 mlxlogscore=999 spamscore=0
+ phishscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401090191
 
+Hi Mathias,
 
-
-On 1/9/24 11:37, Elliot Berman wrote:
-> Gunyah is an open-source Type-1 hypervisor developed by Qualcomm. It
-> does not depend on any lower-privileged OS/kernel code for its core
-> functionality. This increases its security and can support a smaller
-> trusted computing based when compared to Type-2 hypervisors.
+On 1/8/2024 12:51 PM, Wesley Cheng wrote:
+> Hi Mathias,
 > 
-> Add documentation describing the Gunyah hypervisor and the main
-> components of the Gunyah hypervisor which are of interest to Linux
-> virtualization development.
+> On 1/4/2024 6:48 AM, Mathias Nyman wrote:
+>> On 2.1.2024 23.45, Wesley Cheng wrote:
+>>> As part of xHCI bus suspend, the XHCI is halted.  However, if there are
+>>> pending events in the secondary event ring, it is observed that the xHCI
+>>> controller stops responding to further commands upon host or device
+>>> initiated bus resume.  Iterate through all pending events and update the
+>>> dequeue pointer to the beginning of the event ring.
+>>>
+>>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+>> ...
+>>> +/*
+>>> + * Move the event ring dequeue pointer to skip events kept in the 
+>>> secondary
+>>> + * event ring.  This is used to ensure that pending events in the 
+>>> ring are
+>>> + * acknowledged, so the XHCI HCD can properly enter suspend/resume.  
+>>> The
+>>> + * secondary ring is typically maintained by an external component.
+>>> + */
+>>> +void xhci_skip_sec_intr_events(struct xhci_hcd *xhci,
+>>> +    struct xhci_ring *ring,    struct xhci_interrupter *ir)
+>>> +{
+>>> +    union xhci_trb *erdp_trb, *current_trb;
+>>> +    u64 erdp_reg;
+>>> +    u32 iman_reg;
+>>> +    dma_addr_t deq;
+>>> +
+>>> +    /* disable irq, ack pending interrupt and ack all pending events */
+>>> +    xhci_disable_interrupter(ir);
+>>> +    iman_reg = readl_relaxed(&ir->ir_set->irq_pending);
+>>> +    if (iman_reg & IMAN_IP)
+>>> +        writel_relaxed(iman_reg, &ir->ir_set->irq_pending);
+>>> +
+>>> +    /* last acked event trb is in erdp reg  */
+>>> +    erdp_reg = xhci_read_64(xhci, &ir->ir_set->erst_dequeue);
+>>> +    deq = (dma_addr_t)(erdp_reg & ERST_PTR_MASK);
+>>> +    if (!deq) {
+>>> +        xhci_err(xhci, "event ring handling not required\n");
+>>> +        return;
+>>> +    }
+>>> +
+>>> +    erdp_trb = current_trb = ir->event_ring->dequeue;
+>>> +    /* read cycle state of the last acked trb to find out CCS */
+>>> +    ring->cycle_state = le32_to_cpu(current_trb->event_cmd.flags) & 
+>>> TRB_CYCLE;
+>>> +
+>>> +    while (1) {
+>>> +        inc_deq(xhci, ir->event_ring);
+>>> +        erdp_trb = ir->event_ring->dequeue;
+>>> +        /* cycle state transition */
+>>> +        if ((le32_to_cpu(erdp_trb->event_cmd.flags) & TRB_CYCLE) !=
+>>> +            ring->cycle_state)
+>>> +            break;
+>>> +    }
+>>> +
+>>> +    xhci_update_erst_dequeue(xhci, ir, current_trb, true);
+>>> +}
+>>
+>> Code above is very similar to the existing event ring processing parts 
+>> of xhci_irq()
+>> and xhci_handle_event()
+>>
+>> I'll see if I can refactor the existing event ring processing, 
+>> decouple it from
+>> event handling so that it could be used by primary and secondary 
+>> interrupters with
+>> handlers, and this case where we just want to clear the event ring.
+>>
 > 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> ---
->  Documentation/virt/gunyah/index.rst         | 134 ++++++++++++++++++++++++++++
->  Documentation/virt/gunyah/message-queue.rst |  68 ++++++++++++++
->  Documentation/virt/index.rst                |   1 +
->  3 files changed, 203 insertions(+)
-> 
-> diff --git a/Documentation/virt/gunyah/index.rst b/Documentation/virt/gunyah/index.rst
-> new file mode 100644
-> index 000000000000..da8e5e4b9cac
-> --- /dev/null
-> +++ b/Documentation/virt/gunyah/index.rst
-> @@ -0,0 +1,134 @@
-> +.. SPDX-License-Identifier: GPL-2.0
-> +
-> +=================
-> +Gunyah Hypervisor
-> +=================
-> +
-> +.. toctree::
-> +   :maxdepth: 1
-> +
-> +   message-queue
-> +
-> +Gunyah is a Type-1 hypervisor which is independent of any OS kernel, and runs in
-> +a higher CPU privilege level. It does not depend on any lower-privileged
-
-Is this the usual meaning of higher and lower? Seems backwards to me.
-
-> +operating system for its core functionality. This increases its security and can
-> +support a much smaller trusted computing base than a Type-2 hypervisor.
-> +
-> +Gunyah is an open source hypervisor. The source repo is available at
-
-s/repo/repository/
-
-> +https://github.com/quic/gunyah-hypervisor.
-> +
-> +Gunyah provides these following features.
-> +
-> +- Scheduling:
-> +
-> +  A scheduler for virtual CPUs (vCPUs) on physical CPUs enables time-sharing
-> +  of the CPUs. Gunyah supports two models of scheduling which can co-exist on
-
-s/co-exist/coexist/
-
-> +  a running system:
-> +
-> +    1. Hypervisor vCPU scheduling in which Gunyah hypervisor schedules vCPUS on
-> +       its own. The default is a real-time priority with round-robin scheduler.
-> +    2. "Proxy" scheduling in which an owner-VM can donate the remainder of its
-> +       own vCPU's time slice to an owned-VM's vCPU via a hypercall.
-> +
-> +- Memory Management:
-> +
-> +  APIs handling memory, abstracted as objects, limiting direct use of physical
-> +  addresses. Memory ownership and usage tracking of all memory under its control.
-> +  Memory partitioning between VMs is a fundamental security feature.
-> +
-> +- Interrupt Virtualization:
-> +
-> +  Interrupt ownership is tracked and interrupt delivery is directly to the
-> +  assigned VM. Gunyah makes use of hardware interrupt virtualization where
-> +  possible.
-> +
-> +- Inter-VM Communication:
-> +
-> +  There are several different mechanisms provided for communicating between VMs.
-> +
-> +    1. Message queues
-> +    2. Doorbells
-> +    3. Virtio MMIO transport
-> +    4. Shared memory
-> +
-> +- Virtual platform:
-> +
-> +  Architectural devices such as interrupt controllers and CPU timers are
-> +  directly provided by the hypervisor as well as core virtual platform devices
-> +  and system APIs such as ARM PSCI.
-> +
-> +- Device Virtualization:
-> +
-> +  Para-virtualization of devices is supported using inter-VM communication and
-> +  virtio transport support. Select stage 2 faults by virtual machines that use
-> +  proxy-scheduled vCPUs can be handled directly by Linux to provide Type-2
-> +  hypervisor style on-demand paging and/or device emulation.
-> +
-> +Architectures supported
-> +=======================
-> +AArch64 with a GICv3 or GICv4.1
-> +
-> +Resources and Capabilities
-> +==========================
-> +
-> +Services/resources provided by the Gunyah hypervisor are accessible to a
-> +virtual machine through capabilities. A capability is an access control
-> +token granting the holder a set of permissions to operate on a specific
-> +hypervisor object (conceptually similar to a file-descriptor).
-> +For example, inter-VM communication using Gunyah doorbells and message queues
-> +is performed using hypercalls taking Capability ID arguments for the required
-> +IPC objects. These resources are described in Linux as a struct gunyah_resource.
-> +
-> +Unlike UNIX file descriptors, there is no path-based or similar lookup of
-> +an object to create a new Capability, meaning simpler security analysis.
-> +Creation of a new Capability requires the holding of a set of privileged
-> +Capabilities which are typically never given out by the Resource Manager (RM).
-> +
-> +Gunyah itself provides no APIs for Capability ID discovery. Enumeration of
-> +Capability IDs is provided by RM as a higher level service to VMs.
-> +
-> +Resource Manager
-> +================
-> +
-> +The Gunyah Resource Manager (RM) is a privileged application VM supporting the
-> +Gunyah Hypervisor. It provides policy enforcement aspects of the virtualization
-> +system. The resource manager can be treated as an extension of the Hypervisor
-> +but is separated to its own partition to ensure that the hypervisor layer itself
-> +remains small and secure and to maintain a separation of policy and mechanism in
-> +the platform. The resource manager runs at arm64 NS-EL1, similar to other
-> +virtual machines.
-> +
-> +Communication with the resource manager from other virtual machines happens with
-
-                                                                       happens as
-   described in  ...
-?
-
-> +message-queue.rst. Details about the specific messages can be found in
-> +drivers/virt/gunyah/rsc_mgr.c
-> +
-> +::
-> +
-> +  +-------+   +--------+   +--------+
-> +  |  RM   |   |  VM_A  |   |  VM_B  |
-> +  +-.-.-.-+   +---.----+   +---.----+
-> +    | |           |            |
-> +  +-.-.-----------.------------.----+
-> +  | | \==========/             |    |
-> +  |  \========================/     |
-> +  |            Gunyah               |
-> +  +---------------------------------+
-> +
-> +The source for the resource manager is available at
-> +https://github.com/quic/gunyah-resource-manager.
-> +
-> +The resource manager provides the following features:
-> +
-> +- VM lifecycle management: allocating a VM, starting VMs, destruction of VMs
-> +- VM access control policy, including memory sharing and lending
-> +- Interrupt routing configuration
-> +- Forwarding of system-level events (e.g. VM shutdown) to owner VM
-> +- Resource (capability) discovery
-> +
-> +A VM requires boot configuration to establish communication with the resource
-> +manager. This is provided to VMs via a 'hypervisor' device tree node which is
-> +overlayed to the VMs DT by the RM. This node lets guests know they are running
-
-It seems that "overlaid" is preferred, both according to the internet and to
-git grep -i overlaid | wc
-54
-vs
-git grep -i overlayed | wc
-12
-
-> +as a Gunyah guest VM, how to communicate with resource manager, and basic
-> +description and capabilities of this VM. See
-> +Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml for a
-> +description of this node.
-
-> diff --git a/Documentation/virt/gunyah/message-queue.rst b/Documentation/virt/gunyah/message-queue.rst
-> new file mode 100644
-> index 000000000000..cd94710e381a
-> --- /dev/null
-> +++ b/Documentation/virt/gunyah/message-queue.rst
-> @@ -0,0 +1,68 @@
-> +.. SPDX-License-Identifier: GPL-2.0
-> +
-> +Message Queues
-> +==============
-> +Message queue is a simple low-capacity IPC channel between two virtual machines.
-> +It is intended for sending small control and configuration messages. Each
-> +message queue is unidirectional and buffered in the hypervisor. A full-duplex
-> +IPC channel requires a pair of queues.
-> +
-> +The size of the queue and the maximum size of the message that can be passed is
-> +fixed at creation of the message queue. Resource manager is presently the only
-> +use case for message queues, and creates messages queues between itself and VMs
-> +with a fixed maximum message size of 240 bytes. Longer messages require a
-> +further protocol on top of the message queue messages themselves. For instance,
-> +communication with the resource manager adds a header field for sending longer
-> +messages which are split into smaller fragments.
-> +
-> +The diagram below shows how message queue works. A typical configuration
-> +involves 2 message queues. Message queue 1 allows VM_A to send messages to VM_B.
-> +Message queue 2 allows VM_B to send messages to VM_A.
-> +
-> +1. VM_A sends a message of up to 240 bytes in length. It makes a hypercall
-> +   with the message to request the hypervisor to add the message to
-> +   message queue 1's queue. The hypervisor copies memory into the internal
-> +   message queue buffer; the memory doesn't need to be shared between
-> +   VM_A and VM_B.
-> +
-> +2. Gunyah raises the corresponding interrupt for VM_B (Rx vIRQ) when any of
-> +   these happens:
-> +
-> +   a. gunyah_msgq_send() has PUSH flag. This is a typical case when the message
-> +      queue is being used to implement an RPC-like interface.
-> +   b. Explicility with gunyah_msgq_push hypercall from VM_A.
-
-         Explicitly
-
-> +   c. Message queue has reached a threshold depth. Typically, this threshold
-> +      depth is the size of the queue (in other words: when queue is full, Rx
-> +      vIRQ is raised).
-> +
-> +3. VM_B calls gunyah_msgq_recv() and Gunyah copies message to requested buffer.
-> +
-> +4. Gunyah raises the corresponding interrupt for VM_A (Tx vIRQ) when the message
-> +   queue falls below a watermark depth. Typically, this is when the queue is
-> +   drained. Note the watermark depth and the threshold depth for the Rx vIRQ are
-> +   independent values. Coincidentally, this signal is conceptually similar to
-> +   Clear-to-Send.
-> +
-> +For VM_B to send a message to VM_A, the process is identical, except that
-> +hypercalls reference message queue 2's capability ID. The IRQ will be different
-> +for the second message queue.
-> +
-> +::
-> +
-> +      +-------------------+         +-----------------+         +-------------------+
-> +      |        VM_A       |         |Gunyah hypervisor|         |        VM_B       |
-> +      |                   |         |                 |         |                   |
-> +      |                   |         |                 |         |                   |
-> +      |                   |   Tx    |                 |         |                   |
-> +      |                   |-------->|                 | Rx vIRQ |                   |
-> +      |gunyah_msgq_send() | Tx vIRQ |Message queue 1  |-------->|gunyah_msgq_recv() |
-> +      |                   |<------- |                 |         |                   |
-> +      |                   |         |                 |         |                   |
-> +      |                   |         |                 |         |                   |
-> +      |                   |         |                 |   Tx    |                   |
-> +      |                   | Rx vIRQ |                 |<--------|                   |
-> +      |gunyah_msgq_recv() |<--------|Message queue 2  | Tx vIRQ |gunyah_msgq_send() |
-> +      |                   |         |                 |-------->|                   |
-> +      |                   |         |                 |         |                   |
-> +      |                   |         |                 |         |                   |
-> +      +-------------------+         +-----------------+         +---------------+
-> diff --git a/Documentation/virt/index.rst b/Documentation/virt/index.rst
-> index 7fb55ae08598..15869ee059b3 100644
-> --- a/Documentation/virt/index.rst
-> +++ b/Documentation/virt/index.rst
-> @@ -16,6 +16,7 @@ Virtualization Support
->     coco/sev-guest
->     coco/tdx-guest
->     hyperv/index
-> +   gunyah/index
->  
->  .. only:: html and subproject
->  
+> Thanks, that makes sense.  Will take a look as well.
 > 
 
--- 
-#Randy
+How about something like the below?  Tested this on my set up and 
+everything looks to be working fine.  Had to add another param to struct 
+xhci_interrupters to tell the XHCI interrupt handler to say if that 
+particular interrupter wants to skip_events (handling).  This way, its 
+something that the class driver utilizing the interrupter will have to 
+tell XHCI sideband.  It would allow the user to determine if they want 
+to use the interrupter to actually handle events or not on the proc 
+running Linux.
+
+Thanks
+Wesley Cheng
+
+---------------------------------------------------------------------
+
+
+diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
+index 4460fa7e9fab..5bf74c37cbf6 100644
+--- a/drivers/usb/host/xhci-mem.c
++++ b/drivers/usb/host/xhci-mem.c
+@@ -1827,7 +1827,7 @@ xhci_remove_interrupter(struct xhci_hcd *xhci, 
+struct xhci_interrupter *ir)
+  		tmp &= ERST_SIZE_MASK;
+  		writel(tmp, &ir->ir_set->erst_size);
+
+-		xhci_write_64(xhci, ERST_EHB, &ir->ir_set->erst_dequeue);
++		xhci_update_erst_dequeue(xhci, ir, ir->event_ring->first_seg->trbs, 
+true);
+  	}
+  }
+
+@@ -1865,11 +1865,12 @@ void xhci_remove_secondary_interrupter(struct 
+usb_hcd *hcd, struct xhci_interrup
+  	if (!ir || !ir->intr_num || ir->intr_num >= xhci->max_interrupters)
+  		xhci_dbg(xhci, "Invalid secondary interrupter, can't remove\n");
+
+-	/* fixme, should we check xhci->interrupter[intr_num] == ir */
+-	/* fixme locking */
+-
+  	spin_lock_irq(&xhci->lock);
+-
++	/*
++	 * Cleanup secondary interrupter to ensure there are no pending events.
++	 * This also updates event ring dequeue pointer back to the start.
++	 */
++	xhci_skip_sec_intr_events(xhci, ir->event_ring, ir);
+  	intr_num = ir->intr_num;
+
+  	xhci_remove_interrupter(xhci, ir);
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index 33806ae966f9..1d69da07ffdd 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -2905,6 +2905,46 @@ static int handle_tx_event(struct xhci_hcd *xhci,
+  	return -ENODEV;
+  }
+
++static void xhci_clear_interrupt_pending(struct xhci_hcd *xhci, struct 
+xhci_interrupter *ir)
++{
++	struct usb_hcd *hcd = xhci_to_hcd(xhci);
++
++	if (!hcd->msi_enabled) {
++		u32 irq_pending;
++		irq_pending = readl(&ir->ir_set->irq_pending);
++		irq_pending |= IMAN_IP;
++		writel(irq_pending, &ir->ir_set->irq_pending);
++	}
++}
++
++static void xhci_handle_event_trb(struct xhci_hcd *xhci,
++				   struct xhci_interrupter *ir, union xhci_trb *event)
++{
++	u32 trb_type;
++
++	trb_type = TRB_FIELD_TO_TYPE(le32_to_cpu(event->event_cmd.flags));
++
++	switch (trb_type) {
++	case TRB_COMPLETION:
++		handle_cmd_completion(xhci, &event->event_cmd);
++		break;
++	case TRB_PORT_STATUS:
++		handle_port_status(xhci, ir, event);
++		break;
++	case TRB_TRANSFER:
++		handle_tx_event(xhci, ir, &event->trans_event);
++		break;
++	case TRB_DEV_NOTE:
++		handle_device_notification(xhci, event);
++		break;
++	default:
++		if (trb_type >= TRB_VENDOR_DEFINED_LOW)
++			handle_vendor_event(xhci, event, trb_type);
++		else
++			xhci_warn(xhci, "ERROR unknown event type %d\n", trb_type);
++	}
++}
++
+  /*
+   * This function handles all OS-owned events on the event ring.  It 
+may drop
+   * xhci->lock between event processing (e.g. to pass up port status 
+changes).
+@@ -2914,7 +2954,6 @@ static int handle_tx_event(struct xhci_hcd *xhci,
+  static int xhci_handle_event(struct xhci_hcd *xhci, struct 
+xhci_interrupter *ir)
+  {
+  	union xhci_trb *event;
+-	u32 trb_type;
+
+  	/* Event ring hasn't been allocated yet. */
+  	if (!ir || !ir->event_ring || !ir->event_ring->dequeue) {
+@@ -2935,28 +2974,9 @@ static int xhci_handle_event(struct xhci_hcd 
+*xhci, struct xhci_interrupter *ir)
+  	 * speculative reads of the event's flags/data below.
+  	 */
+  	rmb();
+-	trb_type = TRB_FIELD_TO_TYPE(le32_to_cpu(event->event_cmd.flags));
+-	/* FIXME: Handle more event types. */
++	if (!ir->skip_events)
++		xhci_handle_event_trb(xhci, ir, event);
+
+-	switch (trb_type) {
+-	case TRB_COMPLETION:
+-		handle_cmd_completion(xhci, &event->event_cmd);
+-		break;
+-	case TRB_PORT_STATUS:
+-		handle_port_status(xhci, ir, event);
+-		break;
+-	case TRB_TRANSFER:
+-		handle_tx_event(xhci, ir, &event->trans_event);
+-		break;
+-	case TRB_DEV_NOTE:
+-		handle_device_notification(xhci, event);
+-		break;
+-	default:
+-		if (trb_type >= TRB_VENDOR_DEFINED_LOW)
+-			handle_vendor_event(xhci, event, trb_type);
+-		else
+-			xhci_warn(xhci, "ERROR unknown event type %d\n", trb_type);
+-	}
+  	/* Any of the above functions may drop and re-acquire the lock, so check
+  	 * to make sure a watchdog timer didn't mark the host as non-responsive.
+  	 */
+@@ -2980,7 +3000,7 @@ static int xhci_handle_event(struct xhci_hcd 
+*xhci, struct xhci_interrupter *ir)
+   * - When all events have finished
+   * - To avoid "Event Ring Full Error" condition
+   */
+-static void xhci_update_erst_dequeue(struct xhci_hcd *xhci,
++void xhci_update_erst_dequeue(struct xhci_hcd *xhci,
+  				     struct xhci_interrupter *ir,
+  				     union xhci_trb *event_ring_deq,
+  				     bool clear_ehb)
+@@ -3013,6 +3033,75 @@ static void xhci_update_erst_dequeue(struct 
+xhci_hcd *xhci,
+  	xhci_write_64(xhci, temp_64, &ir->ir_set->erst_dequeue);
+  }
+
++static irqreturn_t xhci_handle_events(struct xhci_hcd *xhci, struct 
+xhci_interrupter *ir)
++{
++	union xhci_trb *event_ring_deq;
++	irqreturn_t ret = IRQ_NONE;
++	int event_loop = 0;
++	u64 temp_64;
++
++	xhci_clear_interrupt_pending(xhci, ir);
++
++	if (xhci->xhc_state & XHCI_STATE_DYING ||
++	    xhci->xhc_state & XHCI_STATE_HALTED) {
++		xhci_dbg(xhci, "xHCI dying, ignoring interrupt. "
++				"Shouldn't IRQs be disabled?\n");
++		/* Clear the event handler busy flag (RW1C);
++		 * the event ring should be empty.
++		 */
++		temp_64 = xhci_read_64(xhci, &ir->ir_set->erst_dequeue);
++		xhci_write_64(xhci, temp_64 | ERST_EHB,
++				&ir->ir_set->erst_dequeue);
++		ret = IRQ_HANDLED;
++		goto out;
++	}
++
++	event_ring_deq = ir->event_ring->dequeue;
++	/* FIXME this should be a delayed service routine
++	 * that clears the EHB.
++	 */
++	while (xhci_handle_event(xhci, ir) > 0) {
++		if (event_loop++ < TRBS_PER_SEGMENT / 2)
++			continue;
++		xhci_update_erst_dequeue(xhci, ir, event_ring_deq, false);
++		event_ring_deq = ir->event_ring->dequeue;
++
++		/* ring is half-full, force isoc trbs to interrupt more often */
++		if (xhci->isoc_bei_interval > AVOID_BEI_INTERVAL_MIN)
++			xhci->isoc_bei_interval = xhci->isoc_bei_interval / 2;
++
++		event_loop = 0;
++	}
++
++	xhci_update_erst_dequeue(xhci, ir, event_ring_deq, true);
++	ret = IRQ_HANDLED;
++
++out:
++	return ret;
++
++}
++
++/*
++ * Move the event ring dequeue pointer to skip events kept in the secondary
++ * event ring.  This is used to ensure that pending events in the ring are
++ * acknowledged, so the XHCI HCD can properly enter suspend/resume.  The
++ * secondary ring is typically maintained by an external component.
++ */
++void xhci_skip_sec_intr_events(struct xhci_hcd *xhci,
++	struct xhci_ring *ring,	struct xhci_interrupter *ir)
++{
++	union xhci_trb *current_trb;
++
++	/* disable irq, ack pending interrupt and ack all pending events */
++	xhci_disable_interrupter(ir);
++
++	current_trb = ir->event_ring->dequeue;
++	/* read cycle state of the last acked trb to find out CCS */
++	ring->cycle_state = le32_to_cpu(current_trb->event_cmd.flags) & TRB_CYCLE;
++
++	xhci_handle_events(xhci, ir);
++}
++
+  /*
+   * xHCI spec says we can get an interrupt, and if the HC has an error 
+condition,
+   * we might get bad data out of the event ring.  Section 4.10.2.7 has 
+a list of
+@@ -3021,12 +3110,8 @@ static void xhci_update_erst_dequeue(struct 
+xhci_hcd *xhci,
+  irqreturn_t xhci_irq(struct usb_hcd *hcd)
+  {
+  	struct xhci_hcd *xhci = hcd_to_xhci(hcd);
+-	union xhci_trb *event_ring_deq;
+-	struct xhci_interrupter *ir;
+  	irqreturn_t ret = IRQ_NONE;
+-	u64 temp_64;
+  	u32 status;
+-	int event_loop = 0;
+
+  	spin_lock(&xhci->lock);
+  	/* Check if the xHC generated the interrupt, or the irq is shared */
+@@ -3060,48 +3145,7 @@ irqreturn_t xhci_irq(struct usb_hcd *hcd)
+  	status |= STS_EINT;
+  	writel(status, &xhci->op_regs->status);
+
+-	/* This is the handler of the primary interrupter */
+-	ir = xhci->interrupters[0];
+-	if (!hcd->msi_enabled) {
+-		u32 irq_pending;
+-		irq_pending = readl(&ir->ir_set->irq_pending);
+-		irq_pending |= IMAN_IP;
+-		writel(irq_pending, &ir->ir_set->irq_pending);
+-	}
+-
+-	if (xhci->xhc_state & XHCI_STATE_DYING ||
+-	    xhci->xhc_state & XHCI_STATE_HALTED) {
+-		xhci_dbg(xhci, "xHCI dying, ignoring interrupt. "
+-				"Shouldn't IRQs be disabled?\n");
+-		/* Clear the event handler busy flag (RW1C);
+-		 * the event ring should be empty.
+-		 */
+-		temp_64 = xhci_read_64(xhci, &ir->ir_set->erst_dequeue);
+-		xhci_write_64(xhci, temp_64 | ERST_EHB,
+-				&ir->ir_set->erst_dequeue);
+-		ret = IRQ_HANDLED;
+-		goto out;
+-	}
+-
+-	event_ring_deq = ir->event_ring->dequeue;
+-	/* FIXME this should be a delayed service routine
+-	 * that clears the EHB.
+-	 */
+-	while (xhci_handle_event(xhci, ir) > 0) {
+-		if (event_loop++ < TRBS_PER_SEGMENT / 2)
+-			continue;
+-		xhci_update_erst_dequeue(xhci, ir, event_ring_deq, false);
+-		event_ring_deq = ir->event_ring->dequeue;
+-
+-		/* ring is half-full, force isoc trbs to interrupt more often */
+-		if (xhci->isoc_bei_interval > AVOID_BEI_INTERVAL_MIN)
+-			xhci->isoc_bei_interval = xhci->isoc_bei_interval / 2;
+-
+-		event_loop = 0;
+-	}
+-
+-	xhci_update_erst_dequeue(xhci, ir, event_ring_deq, true);
+-	ret = IRQ_HANDLED;
++	ret = xhci_handle_events(xhci, xhci->interrupters[0]);
+
+  out:
+  	spin_unlock(&xhci->lock);
+diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+index 573ca5c4f31a..eb15c63e6775 100644
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -333,7 +333,7 @@ static int xhci_enable_interrupter(struct 
+xhci_interrupter *ir)
+  	return 0;
+  }
+
+-static int xhci_disable_interrupter(struct xhci_interrupter *ir)
++int xhci_disable_interrupter(struct xhci_interrupter *ir)
+  {
+  	u32 iman;
+
+diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
+index e98099b960e4..a4126dfbd77a 100644
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -1691,6 +1691,7 @@ struct xhci_interrupter {
+  	struct xhci_erst	erst;
+  	struct xhci_intr_reg __iomem *ir_set;
+  	unsigned int		intr_num;
++	bool			skip_events;
+  	/* For interrupter registers save and restore over suspend/resume */
+  	u32	s3_irq_pending;
+  	u32	s3_irq_control;
+@@ -2093,6 +2094,9 @@ struct xhci_interrupter *
+  xhci_create_secondary_interrupter(struct usb_hcd *hcd, int num_seg);
+  void xhci_remove_secondary_interrupter(struct usb_hcd
+  				       *hcd, struct xhci_interrupter *ir);
++void xhci_skip_sec_intr_events(struct xhci_hcd *xhci,
++	struct xhci_ring *ring,	struct xhci_interrupter *ir);
++int xhci_disable_interrupter(struct xhci_interrupter *ir);
+
+  /* xHCI host controller glue */
+  typedef void (*xhci_get_quirks_t)(struct device *, struct xhci_hcd *);
+@@ -2180,6 +2184,10 @@ void inc_deq(struct xhci_hcd *xhci, struct 
+xhci_ring *ring);
+  unsigned int count_trbs(u64 addr, u64 len);
+  int xhci_stop_endpoint_sync(struct xhci_hcd *xhci, struct xhci_virt_ep 
+*ep,
+  			    int suspend, gfp_t gfp_flags);
++void xhci_update_erst_dequeue(struct xhci_hcd *xhci,
++				     struct xhci_interrupter *ir,
++				     union xhci_trb *event_ring_deq,
++				     bool clear_ehb);
+
+  /* xHCI roothub code */
+  void xhci_set_link_state(struct xhci_hcd *xhci, struct xhci_port *port,
+
 
