@@ -1,129 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-6710-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6AFCF827D37
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 04:06:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id ED940827DBB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 05:08:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 920391C22EDB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 03:06:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 210171C2350D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 04:08:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC0E65390;
-	Tue,  9 Jan 2024 03:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0D635686;
+	Tue,  9 Jan 2024 04:08:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OpulYR5e"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mzQpVpKe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732EE5395
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jan 2024 03:06:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-5e7c1012a42so21215387b3.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jan 2024 19:06:42 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72CF813AF8;
+	Tue,  9 Jan 2024 04:08:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1d3e416f303so7056215ad.0;
+        Mon, 08 Jan 2024 20:08:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704769601; x=1705374401; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=26JP9y1F4cMVTf91bkP52Z8nKjtVJapFjy43p2aiDF0=;
-        b=OpulYR5eZQF12d8gtxCocpTnTVD8GHPmlhonVHu2fxeWXjM5WGTU5JRCiDBRxBT6ST
-         GI1YmmXTxH1mU4g3QL7QBeAISLRcDMLlo7pfku/lgoUEEVBjK9J6fjUw0r4wRCuKi7t9
-         Yhi0owJnXiIRcdx9N+NxLAvii70xwr9N4SufGPfyYZ0NXmoV2QV+03BMEp4yqNuWLbhX
-         1W5MhoP4Ssj4w4GK+jWrstfwFXZsGHj1loU5S0FLjyppLp15/QH2ivemW8Col/bvde/i
-         50APAgB7eFvCUqurv3e88olDfYXKFzZ0++kZNb4qQ49ezEa5mQW0nXwU+Bjuih1HZBhV
-         7iFg==
+        d=gmail.com; s=20230601; t=1704773318; x=1705378118; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=I/XC7+Hzrqaul1JzDjqFzwqKQMzBB3vpvjl8qHZ5in8=;
+        b=mzQpVpKeXwKSKcLWKuNiVogLVrykrSt+T9LetCfOZdRtvCZEodDvqYjY581i7y5Vu/
+         6bgdpjnR4R6AWDeKAG07+BtF2VyDe1J13/De7jLDPBRsLBnQqjPu3LrRrzMSqN3iug51
+         T02KBWeNwZk2ntZAXW51sfabCLnavW9Rp8k2KEz5uE89yWg/9BOwgvb6huoby+LwTUny
+         TjBIWpeR9Xyrzcfx6bOMTAu2Cuk0m7ZmDK7Ar3kVmKoSwYeBglmVEc5ZbXGnrUZp94PR
+         VR1WfYEKtStPNx4ecMRK3tb/Azk6TvJKKJypAHKJZdmoEe1fDSCGD3PlGe9IyRNMmCfI
+         Buzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704769601; x=1705374401;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=26JP9y1F4cMVTf91bkP52Z8nKjtVJapFjy43p2aiDF0=;
-        b=W9CR2WUnZowofMwS1ALea/XvXW6NWV6akYZfBtESDxgzoyUib0E4bgvDpLUCaCAy3r
-         zePon4BijKl4d/3s61Tg/QlRrNE5Y31oumScjOCCspRTnp9g06wdjvvsfjqgwSwVNhr5
-         AUd9zueO4FpVTrlXhU9Kkp5HDgIJ3BaUDRUjaT/vOrvd9PeR0aa7kAziFYhRloEz2FWn
-         ykN3Vtc6ewPZTHyJ+q36xWX6nk3DBqSoLHJKGhHJ6AC74NjrMwyzc0gOX5hy0tI1Lt9P
-         olCwuiZhpyeiOLufNpAH4Gq+gDPFPNhSktT8WRN9rM1KrEJTSiLF1/FfDIxUh5DRh15X
-         EeiA==
-X-Gm-Message-State: AOJu0YxPf7XffR0VV7eMLnY/mxbb4eBntcMI+gL5EaS4n6McFffmq6R0
-	eGul4lUtSLNSrGjwqnfRlItgH9cSdTW/Z44XufuKjBgGaNf2GYpe+H+0OXm14aE=
-X-Google-Smtp-Source: AGHT+IHS+E1oSB20aZLFgtENwyGxUcHbyRkiNyRCDWyRdZW5jlDKLhXMRV8NPOJypNxa26Fdje8wLmkpx1h0Bk/d6CA=
-X-Received: by 2002:a0d:d7d1:0:b0:5ee:1ca0:b7ef with SMTP id
- z200-20020a0dd7d1000000b005ee1ca0b7efmr2614627ywd.42.1704769601306; Mon, 08
- Jan 2024 19:06:41 -0800 (PST)
+        d=1e100.net; s=20230601; t=1704773318; x=1705378118;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=I/XC7+Hzrqaul1JzDjqFzwqKQMzBB3vpvjl8qHZ5in8=;
+        b=hohrWUeNRgY+MVbEFwWM9ItMTuLR2pqP/Qdapj/sR6DJO9CiRmNsrEi1UDySHJZVVT
+         clwajkP9RLspWFj62wttbC8xBaIaNKszOhwFbB0lR3n2mHquLcjCSlFt2jkTZ5Emg5/1
+         D3HE0d4Yailxth98CiLKjJ646PrZrTQD9wVH4G1FgLD9GyLl4cZ52U+dQwukoPxewYWo
+         R7x8BrgeDcVpzhSDUA5KYU3KcqMwVTJcLJMxi+DSdsbHe86CuZ5o90jr2y03yVcdnI/D
+         tSdEt1sKQdtQC3qU2HsUjk1/9ial+BVtHVOi7ogLIwvGIyAIuoYAB9/R9TJCKFZtyAc2
+         9XUA==
+X-Gm-Message-State: AOJu0Yxa6XUBETVailmVRUk8oVO8q4Y0iW4BxY0kTUWg3zJjMhHLf0pO
+	yhxBn8x4Q0f9jBc2YHJYtGg=
+X-Google-Smtp-Source: AGHT+IHY1ya+YrOLTHexV8PosRb/mNRrliidXjZM2nUEIVPtdG0nc7kbSmQlzxZRWYZv+xROvd6Tgg==
+X-Received: by 2002:a17:902:dac8:b0:1d4:524d:96cb with SMTP id q8-20020a170902dac800b001d4524d96cbmr2692987plx.109.1704773317516;
+        Mon, 08 Jan 2024 20:08:37 -0800 (PST)
+Received: from ?IPV6:2600:8802:b00:ba1:c927:f415:d49b:1377? ([2600:8802:b00:ba1:c927:f415:d49b:1377])
+        by smtp.gmail.com with ESMTPSA id z3-20020a170902834300b001d1d6f6b67dsm651885pln.147.2024.01.08.20.08.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Jan 2024 20:08:36 -0800 (PST)
+Message-ID: <a85dbfc3-e327-442a-9aab-5115f86944f7@gmail.com>
+Date: Mon, 8 Jan 2024 20:08:33 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240109-phy-qmp-merge-common-v1-0-572899a14318@linaro.org>
-In-Reply-To: <20240109-phy-qmp-merge-common-v1-0-572899a14318@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 9 Jan 2024 05:06:30 +0200
-Message-ID: <CAA8EJppOtG2xBY+t0G_WrXDZs8DfN1dEdWjnqGOtzRYJ2ysezw@mail.gmail.com>
-Subject: Re: [PATCH 0/8] phy: qcom: merge common register defines in QMP drivers
-To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 0/9] PCI: introduce the concept of power sequencing of PCIe
+ devices
+Content-Language: en-US
+To: Bartosz Golaszewski <brgl@bgdev.pl>, Kalle Valo <kvalo@kernel.org>,
+ "David S . Miller" <davem@davemloft.net>, Eric Dumazet
+ <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Bjorn Helgaas <bhelgaas@google.com>, Heiko Stuebner <heiko@sntech.de>,
+ Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Chris Morgan <macromorgan@hotmail.com>,
+ Linus Walleij <linus.walleij@linaro.org>,
+ Geert Uytterhoeven <geert+renesas@glider.be>, Arnd Bergmann <arnd@arndb.de>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ =?UTF-8?Q?N=C3=ADcolas_F_=2E_R_=2E_A_=2E_Prado?= <nfraprado@collabora.com>,
+ Marek Szyprowski <m.szyprowski@samsung.com>, Peng Fan <peng.fan@nxp.com>,
+ Robert Richter <rrichter@amd.com>, Dan Williams <dan.j.williams@intel.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Terry Bowman <terry.bowman@amd.com>,
+ Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+ =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+ Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>,
+ Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jim Quinlan <jim2101024@gmail.com>, james.quinlan@broadcom.com
+Cc: linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-pci@vger.kernel.org,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20240104130123.37115-1-brgl@bgdev.pl>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20240104130123.37115-1-brgl@bgdev.pl>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, 9 Jan 2024 at 05:04, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> After the split of the gigantic QMP PHY driver, individual drivers
-> contained common regster bits definitions. Move them to the global
-> header. While we are at it, also remove register definitions from the
-> phy-qcom-sgmi-eth driver, which is yet another QMP driver with its own
-> embedde register defines.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> Dmitry Baryshkov (8):
->       phy: qcom: qmp-usb-legacy: drop single-lane support
->       phy: qcom: qmp-usb-legacy: drop qmp_usb_legacy_iomap
->       phy: qcom: qmp: move common functions to common header
->       phy: qcom: qmp: split DP PHY registers to separate headers
->       phy: qcom: qmp: move common bits definitions to common header
->       fixup! phy: qcom: qmp: move common functions to common header
+Hello,
 
-I haven't noticed the non-squashed fixup. I'll squash it for v2.
+On 1/4/2024 5:01 AM, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> During last year's Linux Plumbers we had several discussions centered
+> around the need to power-on PCI devices before they can be detected on
+> the bus.
+> 
+> The consensus during the conference was that we need to introduce a
+> class of "PCI slot drivers" that would handle the power-sequencing.
+> 
+> After some additional brain-storming with Manivannan and the realization
+> that the DT maintainers won't like adding any "fake" nodes not
+> representing actual devices, we decided to reuse the existing
+> infrastructure provided by the PCIe port drivers.
+> 
+> The general idea is to instantiate platform devices for child nodes of
+> the PCIe port DT node. For those nodes for which a power-sequencing
+> driver exists, we bind it and let it probe. The driver then triggers a
+> rescan of the PCI bus with the aim of detecting the now powered-on
+> device. The device will consume the same DT node as the platform,
+> power-sequencing device. We use device links to make the latter become
+> the parent of the former.
+> 
+> The main advantage of this approach is not modifying the existing DT in
+> any way and especially not adding any "fake" platform devices.
 
->       phy: qcom: sgmii-eth: use existing register definitions
->       phy: qcom: sgmii-eth: move PCS registers to separate header
->
->  drivers/phy/qualcomm/phy-qcom-edp.c              |   3 +-
->  drivers/phy/qualcomm/phy-qcom-qmp-combo.c        | 127 ++-----
->  drivers/phy/qualcomm/phy-qcom-qmp-common.h       |  59 +++
->  drivers/phy/qualcomm/phy-qcom-qmp-dp-com-v3.h    |  18 +
->  drivers/phy/qualcomm/phy-qcom-qmp-dp-phy-v3.h    |  21 ++
->  drivers/phy/qualcomm/phy-qcom-qmp-dp-phy-v4.h    |  19 +
->  drivers/phy/qualcomm/phy-qcom-qmp-dp-phy-v5.h    |  13 +
->  drivers/phy/qualcomm/phy-qcom-qmp-dp-phy-v6.h    |  13 +
->  drivers/phy/qualcomm/phy-qcom-qmp-dp-phy.h       |  62 ++++
->  drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c |  70 +---
->  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c         |  90 +----
->  drivers/phy/qualcomm/phy-qcom-qmp-pcs-sgmii.h    |  20 +
->  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c          |  72 +---
->  drivers/phy/qualcomm/phy-qcom-qmp-usb-legacy.c   |  76 +---
->  drivers/phy/qualcomm/phy-qcom-qmp-usb.c          | 101 +-----
->  drivers/phy/qualcomm/phy-qcom-qmp.h              | 111 ++----
->  drivers/phy/qualcomm/phy-qcom-sgmii-eth.c        | 441 ++++++++++-------------
->  17 files changed, 516 insertions(+), 800 deletions(-)
-> ---
-> base-commit: 39676dfe52331dba909c617f213fdb21015c8d10
-> change-id: 20240108-phy-qmp-merge-common-d681dd1d1995
->
-> Best regards,
-> --
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
+There is prior work in that area which was applied, but eventually reverted:
 
+https://www.spinics.net/lists/linux-pci/msg119136.html
 
+and finally re-applied albeit in a different shape:
+
+https://lore.kernel.org/all/20220716222454.29914-1-jim2101024@gmail.com/
+
+so we might want to think about how to have pcie-brcmstb.c converted 
+over your proposed approach. AFAIR there is also pcie-rockchip.c which 
+has some rudimentary support for voltage regulators of PCIe end-points.
+
+What does not yet appear in this RFC is support for suspend/resume, 
+especially for power states where both the RC and the EP might be losing 
+power. There also needs to be some thoughts given to wake-up enabled 
+PCIe devices like Wi-Fi which might need to remain powered on to service 
+Wake-on-WLAN frames if nothing else.
+
+I sense a potential for a lot of custom power sequencing drivers being 
+added and ultimately leading to the decision to create a "generic" one 
+which is entirely driven by Device Tree properties...
+
+Thanks for doing this!
 -- 
-With best wishes
-Dmitry
+Florian
 
