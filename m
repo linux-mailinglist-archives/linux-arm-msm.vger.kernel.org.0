@@ -1,114 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-6793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8DB13828AC7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 18:12:58 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4F3E828AD8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 18:16:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3AC21287899
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 17:12:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 29DA81F21F5E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 17:16:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D8173A8ED;
-	Tue,  9 Jan 2024 17:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C79823B19B;
+	Tue,  9 Jan 2024 17:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nMjAqNkO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="StDNcWHj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E9D3A8DC;
-	Tue,  9 Jan 2024 17:12:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82155C433C7;
-	Tue,  9 Jan 2024 17:12:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704820347;
-	bh=R68MSDBYhZXBw3JD8klsX3dJnjsUWkASMAeLu74RGAM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nMjAqNkOT8bGrVlAgY2467bcJ4tXSA624As8/+CoYze0gJLu1e1yk+CJ6waXbTOoh
-	 YXP8M+3w8gr6cKZKA9FDWXBn/XxD4IxvhW8E7OALTRrF3ik99qPfFGg9r2925ww9c1
-	 ttssWGQ3Oqsr+ctV2+0izp2L9rpiDx3ls/Y64uE9oU7mxRxUpdhDtJzT4crTnpBRx4
-	 KUTEZkcvZzMkki1TjdoAty9aGYAzL4XAm4h1aEX31KjLdXUlCQzMLGqdoxsk7jgffn
-	 JOd+4I+pbwD1ftitAA1FM+cSdmF/6egwP8c9NiQg7ONTkgwEufeTOV1nMT7kQOXTwI
-	 Pdpa+N1HPFKDA==
-Received: from johan by xi.lan with local (Exim 4.96.2)
-	(envelope-from <johan@kernel.org>)
-	id 1rNFeM-0005Ty-0f;
-	Tue, 09 Jan 2024 18:12:26 +0100
-Date: Tue, 9 Jan 2024 18:12:26 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Matthias Kaehlcke <mka@chromium.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Johan Hedberg <johan.hedberg@gmail.com>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
-	Doug Anderson <dianders@google.com>,
-	Stephen Boyd <swboyd@google.com>
-Subject: Re: [PATCH] Bluetooth: qca: fix device-address endianness
-Message-ID: <ZZ1-ehpU-g6i9Qem@hovoldconsulting.com>
-References: <20231227180306.6319-1-johan+linaro@kernel.org>
- <ZZ15c1HUQIH2cY5o@google.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E3A3B198;
+	Tue,  9 Jan 2024 17:16:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 409GDcW8002997;
+	Tue, 9 Jan 2024 17:16:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=3svU7b0tyFCpSBoa3yLQ52v339bU9u/QNEENmlt0W+E=; b=St
+	DNcWHjRUH1bPF1HGvbVTXE2WRNLOnIK1GiYgNDsg9nNE3UDcgN+pQkgaE1FoSaJc
+	jOsI06cu5WLQ29HaA8KUF7m+kevkxhliZpHI/pYzjdbKwYz7DuK4CCnEFuqkD40y
+	qyTXegK4BtD+KW7JMxpNLAGtcnogXWCE+cYVdKQNg3FhEDoTF1z7w39xCnlt6iVs
+	dYzZiP1j1XxqX/D8No95TjTGkYELKmarT1VWcIBstzVDp6nJjNuw6oA3mPVOzgQS
+	VoukeDflxjqIykUBbiAuQ1JcDi4bh5KYwrg3oUadErPvRwCUpcp+tUhng5OeUhHj
+	q357ovpM1sxOWoV0yB6Q==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vh9evr53b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 09 Jan 2024 17:16:04 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 409HG2SF011247
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 9 Jan 2024 17:16:02 GMT
+Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 9 Jan
+ 2024 09:16:02 -0800
+Message-ID: <865486be-df38-c732-b329-13b4cfdafe1c@quicinc.com>
+Date: Tue, 9 Jan 2024 09:16:01 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZZ15c1HUQIH2cY5o@google.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] drm/ci: Add msm tests
+Content-Language: en-US
+To: Rob Clark <robdclark@gmail.com>
+CC: Rob Clark <robdclark@chromium.org>, <linux-arm-msm@vger.kernel.org>,
+        open
+ list <linux-kernel@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        Helen
+ Koike <helen.koike@collabora.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas
+ Zimmermann <tzimmermann@suse.de>,
+        <freedreno@lists.freedesktop.org>
+References: <20240108195016.156583-1-robdclark@gmail.com>
+ <454873e5-1b5a-28d3-ffed-c1e502898d17@quicinc.com>
+ <CAF6AEGuVk=a-SwHyVwqOew-+WAdH1Gt011H50kvkSBe1j5ri_A@mail.gmail.com>
+ <CAF6AEGs7NxB2ox+JMW0tP_XOkFie=f=w1sWSQjTUM8AZQ0V3TQ@mail.gmail.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAF6AEGs7NxB2ox+JMW0tP_XOkFie=f=w1sWSQjTUM8AZQ0V3TQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: yA1HLDZbL39XdULj4kQn7-QSriDkRYc0
+X-Proofpoint-ORIG-GUID: yA1HLDZbL39XdULj4kQn7-QSriDkRYc0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
+ mlxlogscore=999 lowpriorityscore=0 mlxscore=0 priorityscore=1501
+ adultscore=0 suspectscore=0 clxscore=1015 spamscore=0 phishscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401090140
 
-On Tue, Jan 09, 2024 at 04:50:59PM +0000, Matthias Kaehlcke wrote:
 
-> On Wed, Dec 27, 2023 at 07:03:06PM +0100, Johan Hovold wrote:
-> > The WCN6855 firmware on the Lenovo ThinkPad X13s expects the Bluetooth
-> > device address in MSB order when setting it using the
-> > EDL_WRITE_BD_ADDR_OPCODE command.
-> > 
-> > Presumably, this is the case for all non-ROME devices which all use the
-> > EDL_WRITE_BD_ADDR_OPCODE command for this (unlike the ROME devices which
-> > use a different command and expect the address in LSB order).
-> > 
-> > Reverse the little-endian address before setting it to make sure that
-> > the address can be configured using tools like btmgmt or using the
-> > 'local-bd-address' devicetree property.
-> > 
-> > Note that this can potentially break systems with boot firmware which
-> > has started relying on the broken behaviour and is incorrectly passing
-> > the address via devicetree in MSB order.
+
+On 1/9/2024 7:31 AM, Rob Clark wrote:
+> On Mon, Jan 8, 2024 at 6:13 PM Rob Clark <robdclark@gmail.com> wrote:
+>>
+>> On Mon, Jan 8, 2024 at 2:58 PM Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>>
+>>>
+>>>
+>>> On 1/8/2024 11:50 AM, Rob Clark wrote:
+>>>> From: Rob Clark <robdclark@chromium.org>
+>>>>
+>>>> The msm tests should skip on non-msm hw, so I think it should be safe to
+>>>> enable everywhere.
+>>>>
+>>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+>>>> ---
+>>>>    drivers/gpu/drm/ci/testlist.txt | 49 +++++++++++++++++++++++++++++++++
+>>>>    1 file changed, 49 insertions(+)
+>>>>
+>>>
+>>> I do see that all these tests use igt_msm_dev_open() to make sure it
+>>> opens only the MSM card.
+>>>
+>>> But if igt_msm_dev_open() fails, I dont see a igt_require() on some of
+>>> the tests to skip them. So how will it safely skip on non-msm HW?
+>>>
+>>> Unless i am missing something here ....
+>>
+>> hmm, at the time I added the initial msm tests, and
+>> igt_msm_dev_open(), I verified that they skipped on intel.. but since
+>> then I'd switched from intel to sc8280xp device for primary dev
+>> device, so I'd need to re-test to remember how it works.  If these
+>> aren't skipping on !msm, it is a bug
 > 
-> We should not break existing devices. Their byte order for
-> 'local-bd-address' may not adhere to the 'spec', however in practice
-> it is the correct format for existing kernels.
+> I double checked, these tests skip in drm_open_driver() with "No known
+> gpu found for chipset flags 0x64 (msm)", so no problem to run them on
+> all CI runners.
+> 
+> BR,
+> -R
+> 
 
-That depends on in what way the current devices are broken.
+Ack, thanks for checking
 
-Any machines that correctly specify their address in little-endian order
-in the devicetree would no longer be configured using the wrong address.
-So no problem there (except requiring users to re-pair their gadgets).
 
-And tools like btgmt is broken on all of these Qualcomm machine in any
-case and would now start working as expected. So no problem there either
-(unless user space had adapted an inverted the addresses to btmgmt).
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-So the first question is whether there actually is any boot firmware out
-there which passes the BD_ADDR in reverse order?
-
-> I suggest adding a quirk like 'local-bd-address-msb-quirk' or
-> 'qcom,local-bd-address-msb-quirk' to make sure existing devices keep
-> working properly.
-
-I don't think that would work. If this is something that we really need
-to handle, then there's probably no way around introducing new
-compatible strings for boot firmware that isn't broken while maintaining
-the current broken behaviour with respect to 'local-bd-address' for some
-of the current ones.
-
-Johan
+> 
+>> BR,
+>> -R
+>>
+>>>> diff --git a/drivers/gpu/drm/ci/testlist.txt b/drivers/gpu/drm/ci/testlist.txt
+>>>> index f82cd90372f4..eaeb751bb0ad 100644
+>>>> --- a/drivers/gpu/drm/ci/testlist.txt
+>>>> +++ b/drivers/gpu/drm/ci/testlist.txt
+>>>> @@ -2910,3 +2910,52 @@ kms_writeback@writeback-invalid-parameters
+>>>>    kms_writeback@writeback-fb-id
+>>>>    kms_writeback@writeback-check-output
+>>>>    prime_mmap_kms@buffer-sharing
+>>>> +msm_shrink@copy-gpu-sanitycheck-8
+>>>> +msm_shrink@copy-gpu-sanitycheck-32
+>>>> +msm_shrink@copy-gpu-8
+>>>> +msm_shrink@copy-gpu-32
+>>>> +msm_shrink@copy-gpu-madvise-8
+>>>> +msm_shrink@copy-gpu-madvise-32
+>>>> +msm_shrink@copy-gpu-oom-8
+>>>> +msm_shrink@copy-gpu-oom-32
+>>>> +msm_shrink@copy-mmap-sanitycheck-8
+>>>> +msm_shrink@copy-mmap-sanitycheck-32
+>>>> +msm_shrink@copy-mmap-8
+>>>> +msm_shrink@copy-mmap-32
+>>>> +msm_shrink@copy-mmap-madvise-8
+>>>> +msm_shrink@copy-mmap-madvise-32
+>>>> +msm_shrink@copy-mmap-oom-8
+>>>> +msm_shrink@copy-mmap-oom-32
+>>>> +msm_shrink@copy-mmap-dmabuf-sanitycheck-8
+>>>> +msm_shrink@copy-mmap-dmabuf-sanitycheck-32
+>>>> +msm_shrink@copy-mmap-dmabuf-8
+>>>> +msm_shrink@copy-mmap-dmabuf-32
+>>>> +msm_shrink@copy-mmap-dmabuf-madvise-8
+>>>> +msm_shrink@copy-mmap-dmabuf-madvise-32
+>>>> +msm_shrink@copy-mmap-dmabuf-oom-8
+>>>> +msm_shrink@copy-mmap-dmabuf-oom-32
+>>>> +msm_mapping@ring
+>>>> +msm_mapping@sqefw
+>>>> +msm_mapping@shadow
+>>>> +msm_submitoverhead@submitbench-10-bos
+>>>> +msm_submitoverhead@submitbench-10-bos-no-implicit-sync
+>>>> +msm_submitoverhead@submitbench-100-bos
+>>>> +msm_submitoverhead@submitbench-100-bos-no-implicit-sync
+>>>> +msm_submitoverhead@submitbench-250-bos
+>>>> +msm_submitoverhead@submitbench-250-bos-no-implicit-sync
+>>>> +msm_submitoverhead@submitbench-500-bos
+>>>> +msm_submitoverhead@submitbench-500-bos-no-implicit-sync
+>>>> +msm_submitoverhead@submitbench-1000-bos
+>>>> +msm_submitoverhead@submitbench-1000-bos-no-implicit-sync
+>>>> +msm_recovery@hangcheck
+>>>> +msm_recovery@gpu-fault
+>>>> +msm_recovery@gpu-fault-parallel
+>>>> +msm_recovery@iova-fault
+>>>> +msm_submit@empty-submit
+>>>> +msm_submit@invalid-queue-submit
+>>>> +msm_submit@invalid-flags-submit
+>>>> +msm_submit@invalid-in-fence-submit
+>>>> +msm_submit@invalid-duplicate-bo-submit
+>>>> +msm_submit@invalid-cmd-idx-submit
+>>>> +msm_submit@invalid-cmd-type-submit
+>>>> +msm_submit@valid-submit
 
