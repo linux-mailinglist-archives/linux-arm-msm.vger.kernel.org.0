@@ -1,310 +1,444 @@
-Return-Path: <linux-arm-msm+bounces-6934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6935-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C3FA829A2D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 13:07:46 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3058829A3A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 13:11:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 763E0B21C97
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 12:07:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CB72E1C21A77
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 12:10:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A0E447F7D;
-	Wed, 10 Jan 2024 12:07:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30E66481AF;
+	Wed, 10 Jan 2024 12:10:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="GXo0dVIc";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="A7gouSP8";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="qkiPF+SU";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="5HbnFhyF"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="BPlam8zE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEAE947A7D;
-	Wed, 10 Jan 2024 12:07:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id B0C2421B33;
-	Wed, 10 Jan 2024 12:07:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1704888453; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GkPRohHGBk2H8lU4le6T3CfYLQeGNdahHf4aZdqwAOQ=;
-	b=GXo0dVIcry/Ug2colfyMyFtyaGMPbcSfOJ0dPgkWWTIWjEgJgKW4BLQdKRLBFIyazoWkqn
-	IFbOUPGQhm+jVB5Iw3p9Yrq5KYy2npwLzbgOjn6cgfexccABIpxyad2FoBKGrrrYAj7/Dl
-	1/XoQhEXyLj4WZlHQb23dubAB6qQSlM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1704888453;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GkPRohHGBk2H8lU4le6T3CfYLQeGNdahHf4aZdqwAOQ=;
-	b=A7gouSP8isLENUdI3ZjSwa44IRvIjtey3+W0j7WVVFvuxxHlSuFLzKDgL2SMGCJBJL6s8O
-	fU14qFbLpebdmAAw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1704888452; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GkPRohHGBk2H8lU4le6T3CfYLQeGNdahHf4aZdqwAOQ=;
-	b=qkiPF+SUTo1bBsfQ4nDCJvuHKTQBZq3t4O4/PUTWlL+LO8AMf5Kz/3q7/tP4lPDwylWwH8
-	Tku2YPxze68USwyBVeeZQKfdYnJrbY0JCFySOa9fboZ5eJXeY1u4ettVoDydKnBOgPUFgJ
-	NiBRWpSdrWD78Z70dcM/eD1o6v8Xw2Q=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1704888452;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GkPRohHGBk2H8lU4le6T3CfYLQeGNdahHf4aZdqwAOQ=;
-	b=5HbnFhyFjuLRk17+6YWbxDDXkVuIsgo/Da+Gio8/OTYLUWOSLETdUXw6BLZCJQsmd04xvv
-	Erm1wrMFiTTWGTCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1113E1398A;
-	Wed, 10 Jan 2024 12:07:31 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id TRJ9AIOInmV3GgAAD6G6ig
-	(envelope-from <dkirjanov@suse.de>); Wed, 10 Jan 2024 12:07:31 +0000
-Message-ID: <633ff61d-f73d-4221-a2fd-79f913880761@suse.de>
-Date: Wed, 10 Jan 2024 15:07:30 +0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E473481CE;
+	Wed, 10 Jan 2024 12:10:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=g6FjsW6gcbXoo05ZiR/fBosPgD4QkGHgrQaNDBsI150=; b=BPlam8zEPkslhcOpMUX+3qp+Qd
+	GEVWvYIJ9xXV2E37LMPwaRL/BJglsLq9bWd7iHFzmiI8tCj+ukcAeTgLlIkT+SZo/HP8cz41cPOWA
+	kWQ2KPnnQSZiHXKsKGZAPrzgJmM81m0KuOaTgvGqx3o+sVZvYAA0WkeXDXVKk15X8qDIhjIuDAdZl
+	kgSYYcK+pd7UACB2sIZmpc5MRxhjFwi9YKI9JolKoB9Ec6qvhjXVEmOoNWcjMnpQOm+VWjJtTiM08
+	/xnzxrhSTxHGmQWLvWx/bnCnEg+j6o2OU35h3elunp0+eKiNAKPeVIvTBY92MXcCWBQwufYQDiwe1
+	qZqSvexg==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:56506)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1rNXP2-0005Lc-2a;
+	Wed, 10 Jan 2024 12:09:48 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1rNXOy-0005IK-BV; Wed, 10 Jan 2024 12:09:44 +0000
+Date: Wed, 10 Jan 2024 12:09:44 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Luo Jie <quic_luoj@quicinc.com>
+Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+	pabeni@redhat.com, robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+	corbet@lwn.net, catalin.marinas@arm.com, will@kernel.org,
+	p.zabel@pengutronix.de, shannon.nelson@amd.com,
+	anthony.l.nguyen@intel.com, jasowang@redhat.com,
+	brett.creeley@amd.com, rrameshbabu@nvidia.com,
+	joshua.a.hay@intel.com, arnd@arndb.de, geert+renesas@glider.be,
+	neil.armstrong@linaro.org, dmitry.baryshkov@linaro.org,
+	nfraprado@collabora.com, m.szyprowski@samsung.com, u-kumar1@ti.com,
+	jacob.e.keller@intel.com, andrew@lunn.ch, netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, ryazanov.s.a@gmail.com,
+	ansuelsmth@gmail.com, quic_kkumarcs@quicinc.com,
+	quic_suruchia@quicinc.com, quic_soni@quicinc.com,
+	quic_pavir@quicinc.com, quic_souravp@quicinc.com,
+	quic_linchen@quicinc.com, quic_leiwei@quicinc.com
+Subject: Re: [PATCH net-next 17/20] net: ethernet: qualcomm: Add PPE UNIPHY
+ support for phylink
+Message-ID: <ZZ6JCIQSimPy0TVY@shell.armlinux.org.uk>
+References: <20240110114033.32575-1-quic_luoj@quicinc.com>
+ <20240110114033.32575-18-quic_luoj@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v9 3/3] net: stmmac: Add driver support for
- DWMAC5 common safety IRQ
-Content-Language: en-US
-To: Suraj Jaiswal <quic_jsuraj@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
- Bhupesh Sharma <bhupesh.sharma@linaro.org>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Jose Abreu <joabreu@synopsys.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
- Prasad Sodagudi <psodagud@quicinc.com>, Andrew Halaney
- <ahalaney@redhat.com>, Rob Herring <robh@kernel.org>
-Cc: kernel@quicinc.com
-References: <20240110111649.2256450-1-quic_jsuraj@quicinc.com>
- <20240110111649.2256450-4-quic_jsuraj@quicinc.com>
-From: Denis Kirjanov <dkirjanov@suse.de>
-In-Reply-To: <20240110111649.2256450-4-quic_jsuraj@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Flag: NO
-X-Spamd-Result: default: False [-3.80 / 50.00];
-	 RCVD_VIA_SMTP_AUTH(0.00)[];
-	 XM_UA_NO_VERSION(0.01)[];
-	 RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	 TO_DN_SOME(0.00)[];
-	 R_RATELIMIT(0.00)[to_ip_from(RLxjbr97tr36oppoipqx4dezfa)];
-	 RCVD_COUNT_THREE(0.00)[3];
-	 DKIM_TRACE(0.00)[suse.de:+];
-	 MX_GOOD(-0.01)[];
-	 FREEMAIL_TO(0.00)[quicinc.com,kernel.org,linaro.org,davemloft.net,google.com,foss.st.com,synopsys.com,gmail.com,vger.kernel.org,st-md-mailman.stormreply.com,redhat.com];
-	 FROM_EQ_ENVFROM(0.00)[];
-	 MIME_TRACE(0.00)[0:+];
-	 MID_RHS_MATCH_FROM(0.00)[];
-	 BAYES_HAM(-3.00)[100.00%];
-	 ARC_NA(0.00)[];
-	 R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	 FROM_HAS_DN(0.00)[];
-	 DWL_DNSWL_MED(-2.00)[suse.de:dkim];
-	 FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	 TAGGED_RCPT(0.00)[dt];
-	 MIME_GOOD(-0.10)[text/plain];
-	 TO_MATCH_ENVRCPT_SOME(0.00)[];
-	 DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	 RCPT_COUNT_TWELVE(0.00)[24];
-	 DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,quicinc.com:email];
-	 FUZZY_BLOCKED(0.00)[rspamd.com];
-	 RCVD_TLS_ALL(0.00)[];
-	 SUSPICIOUS_RECIPS(1.50)[];
-	 RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]
-X-Spam-Score: -3.80
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: B0C2421B33
-X-Spam-Level: 
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=qkiPF+SU;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=5HbnFhyF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240110114033.32575-18-quic_luoj@quicinc.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
+On Wed, Jan 10, 2024 at 07:40:29PM +0800, Luo Jie wrote:
+> +static int clk_uniphy_set_rate(struct clk_hw *hw, unsigned long rate,
+> +			       unsigned long parent_rate)
+> +{
+> +	struct clk_uniphy *uniphy = to_clk_uniphy(hw);
+> +
+> +	if (rate != UNIPHY_CLK_RATE_125M && rate != UNIPHY_CLK_RATE_312P5M)
+> +		return -1;
 
+Sigh. I get very annoyed off by stuff like this. It's lazy programming,
+and makes me wonder why I should be bothered to spend time reviewing if
+the programmer can't be bothered to pay attention to details. It makes
+me wonder what else is done lazily in the patch.
 
-On 1/10/24 14:16, Suraj Jaiswal wrote:
-> Add support to listen HW safety IRQ like ECC(error
-> correction code), DPP(data path parity), FSM(finite state
-> machine) fault in common IRQ line.
+-1 is -EPERM "Operation not permitted". This is highly likely not an
+appropriate error code for this code.
 
-As I see .safety_feat_irq_status available not just in dwmac5 but 
-in dwxgmac2_core and that means that the subject line is not just about dwmac5
-
-> 
-> Signed-off-by: Suraj Jaiswal <quic_jsuraj@quicinc.com>
-> ---
->  drivers/net/ethernet/stmicro/stmmac/common.h  |  1 +
->  drivers/net/ethernet/stmicro/stmmac/stmmac.h  |  3 ++
->  .../net/ethernet/stmicro/stmmac/stmmac_main.c | 41 ++++++++++++++++++-
->  .../ethernet/stmicro/stmmac/stmmac_platform.c |  8 ++++
->  4 files changed, 51 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/net/ethernet/stmicro/stmmac/common.h b/drivers/net/ethernet/stmicro/stmmac/common.h
-> index 721c1f8e892f..b9233b09b80f 100644
-> --- a/drivers/net/ethernet/stmicro/stmmac/common.h
-> +++ b/drivers/net/ethernet/stmicro/stmmac/common.h
-> @@ -344,6 +344,7 @@ enum request_irq_err {
->  	REQ_IRQ_ERR_ALL,
->  	REQ_IRQ_ERR_TX,
->  	REQ_IRQ_ERR_RX,
-> +	REQ_IRQ_ERR_SFTY,
->  	REQ_IRQ_ERR_SFTY_UE,
->  	REQ_IRQ_ERR_SFTY_CE,
->  	REQ_IRQ_ERR_LPI,
-> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-> index 9f89acf31050..ca3d93851bed 100644
-> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-> @@ -31,6 +31,7 @@ struct stmmac_resources {
->  	int wol_irq;
->  	int lpi_irq;
->  	int irq;
-> +	int sfty_irq;
->  	int sfty_ce_irq;
->  	int sfty_ue_irq;
->  	int rx_irq[MTL_MAX_RX_QUEUES];
-> @@ -297,6 +298,7 @@ struct stmmac_priv {
->  	void __iomem *ptpaddr;
->  	void __iomem *estaddr;
->  	unsigned long active_vlans[BITS_TO_LONGS(VLAN_N_VID)];
-> +	int sfty_irq;
->  	int sfty_ce_irq;
->  	int sfty_ue_irq;
->  	int rx_irq[MTL_MAX_RX_QUEUES];
-> @@ -305,6 +307,7 @@ struct stmmac_priv {
->  	char int_name_mac[IFNAMSIZ + 9];
->  	char int_name_wol[IFNAMSIZ + 9];
->  	char int_name_lpi[IFNAMSIZ + 9];
-> +	char int_name_sfty[IFNAMSIZ + 10];
->  	char int_name_sfty_ce[IFNAMSIZ + 10];
->  	char int_name_sfty_ue[IFNAMSIZ + 10];
->  	char int_name_rx_irq[MTL_MAX_TX_QUEUES][IFNAMSIZ + 14];
-> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-> index 47de466e432c..e0192a282121 100644
-> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-> @@ -3592,6 +3592,10 @@ static void stmmac_free_irq(struct net_device *dev,
->  		if (priv->wol_irq > 0 && priv->wol_irq != dev->irq)
->  			free_irq(priv->wol_irq, dev);
->  		fallthrough;
-> +	case REQ_IRQ_ERR_SFTY:
-> +		if (priv->sfty_irq > 0 && priv->sfty_irq != dev->irq)
-> +			free_irq(priv->sfty_irq, dev);
-> +		fallthrough;
->  	case REQ_IRQ_ERR_WOL:
->  		free_irq(dev->irq, dev);
->  		fallthrough;
-> @@ -3661,6 +3665,23 @@ static int stmmac_request_irq_multi_msi(struct net_device *dev)
->  		}
->  	}
->  
-> +	/* Request the common Safety Feature Correctible/Uncorrectible
-> +	 * Error line in case of another line is used
-> +	 */
-> +	if (priv->sfty_irq > 0 && priv->sfty_irq != dev->irq) {
-> +		int_name = priv->int_name_sfty;
-> +		sprintf(int_name, "%s:%s", dev->name, "safety");
-> +		ret = request_irq(priv->sfty_irq, stmmac_safety_interrupt,
-> +				  0, int_name, dev);
-> +		if (unlikely(ret < 0)) {
-> +			netdev_err(priv->dev,
-> +				   "%s: alloc sfty MSI %d (error: %d)\n",
-> +				   __func__, priv->sfty_irq, ret);
-> +			irq_err = REQ_IRQ_ERR_SFTY;
-> +			goto irq_error;
+> +int ppe_uniphy_autoneg_complete_check(struct ppe_uniphy *uniphy, int port)
+> +{
+> +	u32 reg, val;
+> +	int channel, ret;
+> +
+> +	if (uniphy->interface == PHY_INTERFACE_MODE_USXGMII ||
+> +	    uniphy->interface == PHY_INTERFACE_MODE_QUSGMII) {
+> +		/* Only uniphy0 may have multi channels */
+> +		channel = (uniphy->index == 0) ? (port - 1) : 0;
+> +		reg = (channel == 0) ? VR_MII_AN_INTR_STS_ADDR :
+> +		       VR_MII_AN_INTR_STS_CHANNEL_ADDR(channel);
+> +
+> +		/* Wait auto negotiation complete */
+> +		ret = read_poll_timeout(ppe_uniphy_read, val,
+> +					(val & CL37_ANCMPLT_INTR),
+> +					1000, 100000, true,
+> +					uniphy, reg);
+> +		if (ret) {
+> +			dev_err(uniphy->ppe_dev->dev,
+> +				"uniphy %d auto negotiation timeout\n", uniphy->index);
+> +			return ret;
 > +		}
+> +
+> +		/* Clear auto negotiation complete interrupt */
+> +		ppe_uniphy_mask(uniphy, reg, CL37_ANCMPLT_INTR, 0);
 > +	}
 > +
->  	/* Request the Safety Feature Correctible Error line in
->  	 * case of another line is used
->  	 */
-> @@ -3798,6 +3819,21 @@ static int stmmac_request_irq_single(struct net_device *dev)
->  		}
->  	}
->  
-> +	/* Request the common Safety Feature Correctible/Uncorrectible
-> +	 * Error line in case of another line is used
-> +	 */
-> +	if (priv->sfty_irq > 0 && priv->sfty_irq != dev->irq) {
-> +		ret = request_irq(priv->sfty_irq, stmmac_safety_interrupt,
-> +				  IRQF_SHARED, dev->name, dev);
-> +		if (unlikely(ret < 0)) {
-> +			netdev_err(priv->dev,
-> +				   "%s: ERROR: allocating the sfty IRQ %d (%d)\n",
-> +				   __func__, priv->sfty_irq, ret);
-> +			irq_err = REQ_IRQ_ERR_SFTY;
-> +			goto irq_error;
+> +	return 0;
+> +}
+
+Why is this necessary? Why is it callable outside this file? Shouldn't
+this be done in the .pcs_get_state method? If negotiation hasn't
+completed (and negotiation is being used) then .pcs_get_state should not
+report that the link is up.
+
+> +
+> +int ppe_uniphy_speed_set(struct ppe_uniphy *uniphy, int port, int speed)
+> +{
+> +	u32 reg, val;
+> +	int channel;
+> +
+> +	if (uniphy->interface == PHY_INTERFACE_MODE_USXGMII ||
+> +	    uniphy->interface == PHY_INTERFACE_MODE_QUSGMII) {
+> +		/* Only uniphy0 may have multiple channels */
+> +		channel = (uniphy->index == 0) ? (port - 1) : 0;
+> +
+> +		reg = (channel == 0) ? SR_MII_CTRL_ADDR :
+> +		       SR_MII_CTRL_CHANNEL_ADDR(channel);
+> +
+> +		switch (speed) {
+> +		case SPEED_100:
+> +			val = USXGMII_SPEED_100;
+> +			break;
+> +		case SPEED_1000:
+> +			val = USXGMII_SPEED_1000;
+> +			break;
+> +		case SPEED_2500:
+> +			val = USXGMII_SPEED_2500;
+> +			break;
+> +		case SPEED_5000:
+> +			val = USXGMII_SPEED_5000;
+> +			break;
+> +		case SPEED_10000:
+> +			val = USXGMII_SPEED_10000;
+> +			break;
+> +		case SPEED_10:
+> +			val = USXGMII_SPEED_10;
+> +			break;
+> +		default:
+> +			val = 0;
+> +			break;
 > +		}
+> +
+> +		ppe_uniphy_mask(uniphy, reg, USXGMII_SPEED_MASK, val);
 > +	}
 > +
->  	return 0;
->  
->  irq_error:
-> @@ -6022,8 +6058,8 @@ static irqreturn_t stmmac_interrupt(int irq, void *dev_id)
->  	if (test_bit(STMMAC_DOWN, &priv->state))
->  		return IRQ_HANDLED;
->  
-> -	/* Check if a fatal error happened */
-> -	if (stmmac_safety_feat_interrupt(priv))
-> +	/* Check ASP error if it isn't delivered via an individual IRQ */
-> +	if (priv->sfty_irq <= 0 && stmmac_safety_feat_interrupt(priv))
->  		return IRQ_HANDLED;
->  
->  	/* To handle Common interrupts */
-> @@ -7462,6 +7498,7 @@ int stmmac_dvr_probe(struct device *device,
->  	priv->dev->irq = res->irq;
->  	priv->wol_irq = res->wol_irq;
->  	priv->lpi_irq = res->lpi_irq;
-> +	priv->sfty_irq = res->sfty_irq;
->  	priv->sfty_ce_irq = res->sfty_ce_irq;
->  	priv->sfty_ue_irq = res->sfty_ue_irq;
->  	for (i = 0; i < MTL_MAX_RX_QUEUES; i++)
-> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-> index 70eadc83ca68..ab250161fd79 100644
-> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-> @@ -743,6 +743,14 @@ int stmmac_get_platform_resources(struct platform_device *pdev,
->  		dev_info(&pdev->dev, "IRQ eth_lpi not found\n");
->  	}
->  
-> +	stmmac_res->sfty_irq =
-> +		platform_get_irq_byname_optional(pdev, "sfty");
-> +	if (stmmac_res->sfty_irq < 0) {
-> +		if (stmmac_res->sfty_irq == -EPROBE_DEFER)
-> +			return -EPROBE_DEFER;
-> +		dev_info(&pdev->dev, "IRQ safety IRQ not found\n");
+> +	return 0;
+> +}
+> +
+> +int ppe_uniphy_duplex_set(struct ppe_uniphy *uniphy, int port, int duplex)
+> +{
+> +	u32 reg;
+> +	int channel;
+> +
+> +	if (uniphy->interface == PHY_INTERFACE_MODE_USXGMII &&
+> +	    uniphy->interface == PHY_INTERFACE_MODE_QUSGMII) {
+> +		/* Only uniphy0 may have multiple channels */
+> +		channel = (uniphy->index == 0) ? (port - 1) : 0;
+> +
+> +		reg = (channel == 0) ? SR_MII_CTRL_ADDR :
+> +		       SR_MII_CTRL_CHANNEL_ADDR(channel);
+> +
+> +		ppe_uniphy_mask(uniphy, reg, USXGMII_DUPLEX_FULL,
+> +				(duplex == DUPLEX_FULL) ? USXGMII_DUPLEX_FULL : 0);
 > +	}
 > +
->  	stmmac_res->addr = devm_platform_ioremap_resource(pdev, 0);
->  
->  	return PTR_ERR_OR_ZERO(stmmac_res->addr);
+> +	return 0;
+> +}
+
+What calls the above two functions? Surely this should be called from
+the .pcs_link_up method? I would also imagine that you call each of
+these consecutively. So why not modify the register in one go rather
+than piecemeal like this. I'm not a fan of one-function-to-control-one-
+parameter-in-a-register style when it results in more register accesses
+than are really necessary.
+
+> +static void ppe_pcs_get_state(struct phylink_pcs *pcs,
+> +			      struct phylink_link_state *state)
+> +{
+> +	struct ppe_uniphy *uniphy = pcs_to_ppe_uniphy(pcs);
+> +	u32 val;
+> +
+> +	switch (state->interface) {
+> +	case PHY_INTERFACE_MODE_10GBASER:
+> +		val = ppe_uniphy_read(uniphy, SR_XS_PCS_KR_STS1_ADDR);
+> +		state->link = (val & SR_XS_PCS_KR_STS1_PLU) ? 1 : 0;
+
+Unnecessary tenary operation.
+
+		state->link = !!(val & SR_XS_PCS_KR_STS1_PLU);
+
+> +		state->duplex = DUPLEX_FULL;
+> +		state->speed = SPEED_10000;
+> +		state->pause |= (MLO_PAUSE_RX | MLO_PAUSE_TX);
+
+Excessive parens.
+
+> +		break;
+> +	case PHY_INTERFACE_MODE_2500BASEX:
+> +		val = ppe_uniphy_read(uniphy, UNIPHY_CHANNEL0_INPUT_OUTPUT_6_ADDR);
+> +		state->link = (val & NEWADDEDFROMHERE_CH0_LINK_MAC) ? 1 : 0;
+
+Ditto.
+
+> +		state->duplex = DUPLEX_FULL;
+> +		state->speed = SPEED_2500;
+> +		state->pause |= (MLO_PAUSE_RX | MLO_PAUSE_TX);
+
+Ditto.
+
+> +		break;
+> +	case PHY_INTERFACE_MODE_1000BASEX:
+> +	case PHY_INTERFACE_MODE_SGMII:
+> +		val = ppe_uniphy_read(uniphy, UNIPHY_CHANNEL0_INPUT_OUTPUT_6_ADDR);
+> +		state->link = (val & NEWADDEDFROMHERE_CH0_LINK_MAC) ? 1 : 0;
+> +		state->duplex = (val & NEWADDEDFROMHERE_CH0_DUPLEX_MODE_MAC) ?
+> +			DUPLEX_FULL : DUPLEX_HALF;
+> +		if (FIELD_GET(NEWADDEDFROMHERE_CH0_SPEED_MODE_MAC, val) == UNIPHY_SPEED_10M)
+> +			state->speed = SPEED_10;
+> +		else if (FIELD_GET(NEWADDEDFROMHERE_CH0_SPEED_MODE_MAC, val) == UNIPHY_SPEED_100M)
+> +			state->speed = SPEED_100;
+> +		else if (FIELD_GET(NEWADDEDFROMHERE_CH0_SPEED_MODE_MAC, val) == UNIPHY_SPEED_1000M)
+> +			state->speed = SPEED_1000;
+
+Looks like a switch(FIELD_GET(NEWADDEDFROMHERE_CH0_SPEED_MODE_MAC, val)
+would be better here. Also "NEWADDEDFROMHERE" ?
+
+> +		state->pause |= (MLO_PAUSE_RX | MLO_PAUSE_TX);
+
+Ditto.
+
+As you make no differentiation between 1000base-X and SGMII, I question
+whether your hardware supports 1000base-X. I seem to recall in previous
+discussions that it doesn't. So, that means it doesn't support the
+inband negotiation word format for 1000base-X. Thus, 1000base-X should
+not be included in any of these switch statements, and 1000base-X won't
+be usable.
+
+> +/* [register] UNIPHY_MODE_CTRL */
+> +#define UNIPHY_MODE_CTRL_ADDR				0x46c
+> +#define NEWADDEDFROMHERE_CH0_AUTONEG_MODE		BIT(0)
+> +#define NEWADDEDFROMHERE_CH1_CH0_SGMII			BIT(1)
+> +#define NEWADDEDFROMHERE_CH4_CH1_0_SGMII		BIT(2)
+> +#define NEWADDEDFROMHERE_SGMII_EVEN_LOW			BIT(3)
+> +#define NEWADDEDFROMHERE_CH0_MODE_CTRL_25M		GENMASK(6, 4)
+> +#define NEWADDEDFROMHERE_CH0_QSGMII_SGMII		BIT(8)
+> +#define NEWADDEDFROMHERE_CH0_PSGMII_QSGMII		BIT(9)
+> +#define NEWADDEDFROMHERE_SG_MODE			BIT(10)
+> +#define NEWADDEDFROMHERE_SGPLUS_MODE			BIT(11)
+> +#define NEWADDEDFROMHERE_XPCS_MODE			BIT(12)
+> +#define NEWADDEDFROMHERE_USXG_EN			BIT(13)
+> +#define NEWADDEDFROMHERE_SW_V17_V18			BIT(15)
+
+Again, why "NEWADDEDFROMHERE" ?
+
+> +/* [register] VR_XS_PCS_EEE_MCTRL0 */
+> +#define VR_XS_PCS_EEE_MCTRL0_ADDR			0x38006
+> +#define LTX_EN						BIT(0)
+> +#define LRX_EN						BIT(1)
+> +#define SIGN_BIT					BIT(6)
+
+"SIGN_BIT" is likely too generic a name.
+
+> +#define MULT_FACT_100NS					GENMASK(11, 8)
+> +
+> +/* [register] VR_XS_PCS_KR_CTRL */
+> +#define VR_XS_PCS_KR_CTRL_ADDR	0x38007
+> +#define USXG_MODE					GENMASK(12, 10)
+> +#define QUXGMII_MODE					(FIELD_PREP(USXG_MODE, 0x5))
+> +
+> +/* [register] VR_XS_PCS_EEE_TXTIMER */
+> +#define VR_XS_PCS_EEE_TXTIMER_ADDR			0x38008
+> +#define TSL_RES						GENMASK(5, 0)
+> +#define T1U_RES						GENMASK(7, 6)
+> +#define TWL_RES						GENMASK(12, 8)
+> +#define UNIPHY_XPCS_TSL_TIMER				(FIELD_PREP(TSL_RES, 0xa))
+> +#define UNIPHY_XPCS_T1U_TIMER				(FIELD_PREP(TSL_RES, 0x3))
+> +#define UNIPHY_XPCS_TWL_TIMER				(FIELD_PREP(TSL_RES, 0x16))
+> +
+> +/* [register] VR_XS_PCS_EEE_RXTIMER  */
+> +#define VR_XS_PCS_EEE_RXTIMER_ADDR			0x38009
+> +#define RES_100U					GENMASK(7, 0)
+> +#define TWR_RES						GENMASK(13, 8)
+> +#define UNIPHY_XPCS_100US_TIMER				(FIELD_PREP(RES_100U, 0xc8))
+> +#define UNIPHY_XPCS_TWR_TIMER				(FIELD_PREP(RES_100U, 0x1c))
+> +
+> +/* [register] VR_XS_PCS_DIG_STS */
+> +#define VR_XS_PCS_DIG_STS_ADDR				0x3800a
+> +#define AM_COUNT					GENMASK(14, 0)
+> +#define QUXGMII_AM_COUNT				(FIELD_PREP(AM_COUNT, 0x6018))
+> +
+> +/* [register] VR_XS_PCS_EEE_MCTRL1 */
+> +#define VR_XS_PCS_EEE_MCTRL1_ADDR			0x3800b
+> +#define TRN_LPI						BIT(0)
+> +#define TRN_RXLPI					BIT(8)
+> +
+> +/* [register] VR_MII_1_DIG_CTRL1 */
+> +#define VR_MII_DIG_CTRL1_CHANNEL1_ADDR			0x1a8000
+> +#define VR_MII_DIG_CTRL1_CHANNEL2_ADDR			0x1b8000
+> +#define VR_MII_DIG_CTRL1_CHANNEL3_ADDR			0x1c8000
+> +#define VR_MII_DIG_CTRL1_CHANNEL_ADDR(x)		(0x1a8000 + 0x10000 * ((x) - 1))
+> +#define CHANNEL_USRA_RST				BIT(5)
+> +
+> +/* [register] VR_MII_AN_CTRL */
+> +#define VR_MII_AN_CTRL_ADDR				0x1f8001
+> +#define VR_MII_AN_CTRL_CHANNEL1_ADDR			0x1a8001
+> +#define VR_MII_AN_CTRL_CHANNEL2_ADDR			0x1b8001
+> +#define VR_MII_AN_CTRL_CHANNEL3_ADDR			0x1c8001
+> +#define VR_MII_AN_CTRL_CHANNEL_ADDR(x)			(0x1a8001 + 0x10000 * ((x) - 1))
+> +#define MII_AN_INTR_EN					BIT(0)
+> +#define MII_CTRL					BIT(8)
+
+Too generic a name.
+
+> +
+> +/* [register] VR_MII_AN_INTR_STS */
+> +#define VR_MII_AN_INTR_STS_ADDR				0x1f8002
+> +#define VR_MII_AN_INTR_STS_CHANNEL1_ADDR		0x1a8002
+> +#define VR_MII_AN_INTR_STS_CHANNEL2_ADDR		0x1b8002
+> +#define VR_MII_AN_INTR_STS_CHANNEL3_ADDR		0x1c8002
+> +#define VR_MII_AN_INTR_STS_CHANNEL_ADDR(x)		(0x1a8002 + 0x10000 * ((x) - 1))
+> +#define CL37_ANCMPLT_INTR				BIT(0)
+> +
+> +/* [register] VR_XAUI_MODE_CTRL */
+> +#define VR_XAUI_MODE_CTRL_ADDR				0x1f8004
+> +#define VR_XAUI_MODE_CTRL_CHANNEL1_ADDR			0x1a8004
+> +#define VR_XAUI_MODE_CTRL_CHANNEL2_ADDR			0x1b8004
+> +#define VR_XAUI_MODE_CTRL_CHANNEL3_ADDR			0x1c8004
+> +#define VR_XAUI_MODE_CTRL_CHANNEL_ADDR(x)		(0x1a8004 + 0x10000 * ((x) - 1))
+> +#define IPG_CHECK					BIT(0)
+> +
+> +/* [register] SR_MII_CTRL */
+> +#define SR_MII_CTRL_ADDR				0x1f0000
+> +#define SR_MII_CTRL_CHANNEL1_ADDR			0x1a0000
+> +#define SR_MII_CTRL_CHANNEL2_ADDR			0x1b0000
+> +#define SR_MII_CTRL_CHANNEL3_ADDR			0x1c0000
+> +#define SR_MII_CTRL_CHANNEL_ADDR(x)			(0x1a0000 + 0x10000 * ((x) - 1))
+
+
+> +#define AN_ENABLE					BIT(12)
+
+Looks like MDIO_AN_CTRL1_ENABLE
+
+> +#define USXGMII_DUPLEX_FULL				BIT(8)
+> +#define USXGMII_SPEED_MASK				(BIT(13) | BIT(6) | BIT(5))
+> +#define USXGMII_SPEED_10000				(BIT(13) | BIT(6))
+> +#define USXGMII_SPEED_5000				(BIT(13) | BIT(5))
+> +#define USXGMII_SPEED_2500				BIT(5)
+> +#define USXGMII_SPEED_1000				BIT(6)
+> +#define USXGMII_SPEED_100				BIT(13)
+> +#define USXGMII_SPEED_10				0
+
+Looks rather like the standard IEEE 802.3 definitions except for the
+2.5G and 5G speeds. Probably worth a comment stating that they're
+slightly different.
+
+> +
+> +/* PPE UNIPHY data type */
+> +struct ppe_uniphy {
+> +	void __iomem *base;
+> +	struct ppe_device *ppe_dev;
+> +	unsigned int index;
+> +	phy_interface_t interface;
+> +	struct phylink_pcs pcs;
+> +};
+> +
+> +#define pcs_to_ppe_uniphy(_pcs)				container_of(_pcs, struct ppe_uniphy, pcs)
+
+As this should only be used in the .c file, I suggest making this a
+static function in the .c file. There should be no requirement to use
+it outside of the .c file.
+
+> +
+> +struct ppe_uniphy *ppe_uniphy_setup(struct platform_device *pdev);
+> +
+> +int ppe_uniphy_speed_set(struct ppe_uniphy *uniphy,
+> +			 int port, int speed);
+> +
+> +int ppe_uniphy_duplex_set(struct ppe_uniphy *uniphy,
+> +			  int port, int duplex);
+> +
+> +int ppe_uniphy_adapter_reset(struct ppe_uniphy *uniphy,
+> +			     int port);
+> +
+> +int ppe_uniphy_autoneg_complete_check(struct ppe_uniphy *uniphy,
+> +				      int port);
+> +
+> +int ppe_uniphy_port_gcc_clock_en_set(struct ppe_uniphy *uniphy,
+> +				     int port, bool enable);
+> +
+> +#endif /* _PPE_UNIPHY_H_ */
+> diff --git a/include/linux/soc/qcom/ppe.h b/include/linux/soc/qcom/ppe.h
+> index 268109c823ad..d3cb18df33fa 100644
+> --- a/include/linux/soc/qcom/ppe.h
+> +++ b/include/linux/soc/qcom/ppe.h
+> @@ -20,6 +20,7 @@ struct ppe_device {
+>  	struct dentry *debugfs_root;
+>  	bool is_ppe_probed;
+>  	void *ppe_priv;
+> +	void *uniphy;
+
+Not struct ppe_uniphy *uniphy? You can declare the struct before use
+via:
+
+struct ppe_uniphy;
+
+so you don't need to include ppe_uniphy.h in this header.
+
+Thanks.
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
