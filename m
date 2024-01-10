@@ -1,107 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-6871-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6872-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CFB228297FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 11:50:30 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D1E3B829805
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 11:51:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DFD011C218E3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 10:50:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 58C94B236A3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 10:51:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D68FE4777D;
-	Wed, 10 Jan 2024 10:49:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0D8647F78;
+	Wed, 10 Jan 2024 10:50:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iHMKf8Ik"
+	dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b="ZIX2cBfx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6F846450
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 10:49:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-50eabbc3dccso4272620e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 02:49:33 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10FC47F6E
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 10:50:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ffwll.ch
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a2b27a67b7fso63288266b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 02:50:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704883772; x=1705488572; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4HAwidvb0e6ayLYLy7I8ixYSx1g7DRV+B9kcqw/hieg=;
-        b=iHMKf8IkXh7fOSlSG15azryW47XKx238o+gr8RPX3CubNzw9MSfg9cLZ9P0dZTLjZt
-         qmeG20Ey4S7kC8mKbEijqtUBLXkwRzN+ybH5XU/K0+t9Ru7Megl2TY1MaPD+SCdJAQKS
-         IGd3JQrN99lewOzjhWMSjncpSBz4CgqIErtFFRypnzwtsHn31v/IQAWvdVRgzAxBT5ka
-         vrBmYaTeibRwxfpsEwYyHJZoxw+GshaLKKOzXmuOxcfVKLFU1rutA56G9j9LMRPoiCmA
-         mmBFu45NjfAvuyEODbI5zwIIIiblz6CTrxJHRVcT+ChkSOwrv4K/cLj7oZWwHbEaDyHU
-         YTvA==
+        d=ffwll.ch; s=google; t=1704883811; x=1705488611; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pMG+VgwiuImv+J4aaZoTzNj8WyK0Rb5bzsnLEuXbNa0=;
+        b=ZIX2cBfxPnnW+YjfjQVPVywl/CpyKomR7fGj8KN3SsBjF7JrjcUTpPn9CF+fIJcnww
+         aPdXFDVne38/fHPGUGRs7ZT7dPgEV2AL5oD+J0wtLz8m+iKGQggiDiK55d30Epz/+rlc
+         TlXimReiPNYCsmLNwNixhqSlvlA2yH8QFrXIs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704883772; x=1705488572;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1704883811; x=1705488611;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4HAwidvb0e6ayLYLy7I8ixYSx1g7DRV+B9kcqw/hieg=;
-        b=DgaaPGHcfQIxHzJT9qSWQByD1QYrl9QsT86ijTQ8Lp25YSVX77qriUx21m4JMqaUnM
-         7touboJewHJvpwo7liZhO4YIVBfPaskhryVoMP8DIacpt7jDbWO5dbuKtEhdjMnYAvH2
-         5vS5wiGhovGaGjezuVTQNJBHjBUbIp10wnvrQ7brULr8zxmpToZu1JDZHKZQeEcgHwky
-         xesz2pMi47Hz5mzEJhPcYNUznqZkppxjn4TXWZ7gVkNnxIHtT9Qu609NxdB4ZFr72BSE
-         vqelgiGH4KIYBI5EJJ1uPwgn4iG4grNga937+Ueg+VamwY2k1TryRwsRPi3nqZBLQ+8K
-         eIkQ==
-X-Gm-Message-State: AOJu0YwnAjNBz0ojXFAU3ki8Zk4Rs2ICsMRGRHkzB+dM1ZH1kLUgjY1P
-	lb+y3CDV3LVJKwmYINplEy8p//tM8Vrcgg==
-X-Google-Smtp-Source: AGHT+IGH4Qz7/5tf/bBFWTnAs92jT0yCKBWnsVfiMJH5KiWKl3BVTMjQvfanZ3xGGYxdJZu1ZO+YtQ==
-X-Received: by 2002:a19:5f50:0:b0:50e:700:bdbb with SMTP id a16-20020a195f50000000b0050e0700bdbbmr145927lfj.21.1704883771729;
-        Wed, 10 Jan 2024 02:49:31 -0800 (PST)
-Received: from [172.30.205.119] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id o5-20020ac24bc5000000b0050ecae41c51sm590120lfq.135.2024.01.10.02.49.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Jan 2024 02:49:31 -0800 (PST)
-Message-ID: <45314345-36ba-4d85-9d3b-298de26eb069@linaro.org>
-Date: Wed, 10 Jan 2024 11:49:27 +0100
+        bh=pMG+VgwiuImv+J4aaZoTzNj8WyK0Rb5bzsnLEuXbNa0=;
+        b=OLmBgg+tDcb+mhEHxKBQCwa7fwowuzgueBFTNRKkdlZzySQkA6q6+0oCBi7Vckd027
+         nigoLW4xLI10Ao4RdqM48eyz0vhfo0RgudQvJwmgQ3Wo18tChe1KbcLAqHKHmMh6a2mA
+         lnXUzzj094dFANF6Hg6BCONu8xWNzeUztNprizNz4kHc6OcpLy7JBosctjLVjzNqm26z
+         fUEZ0Z7SUqHKsUV9V1RY4f4zX7rzA2fLGzMc/h4bUINGANjdscjIziDIQAVF9C/v8YB6
+         GOsX4t/+cH/Q9DlU1MCQ0x3cvZHvLSELp2Fz825TTNHqchHEMkxFGKLV4EuJeOU6DNcw
+         IMJA==
+X-Gm-Message-State: AOJu0YyDBEBVQc313GxccMR2+ckA00tmFIQw3VJC+0+QaNpgQqa6oJhj
+	TkunE4eCZxosSUy/OaSc6AP78lpaaXB6Lw==
+X-Google-Smtp-Source: AGHT+IFmGBGjq+Stq8bSSseVf5E1hjSMX8cwJxnKryCkxLuDIS16HaXyqwkrbnPVGgV8P0B6D4RcWg==
+X-Received: by 2002:a17:906:c2d9:b0:a2b:d12c:ee48 with SMTP id ch25-20020a170906c2d900b00a2bd12cee48mr784942ejb.1.1704883811018;
+        Wed, 10 Jan 2024 02:50:11 -0800 (PST)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id s24-20020a1709060c1800b00a19afc16d23sm1964347ejf.104.2024.01.10.02.50.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Jan 2024 02:50:10 -0800 (PST)
+Date: Wed, 10 Jan 2024 11:50:08 +0100
+From: Daniel Vetter <daniel@ffwll.ch>
+To: Rob Clark <robdclark@gmail.com>
+Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] Revert "drm/msm/gpu: Push gpu lock down past runpm"
+Message-ID: <ZZ52YNc-TkeG7PZO@phenom.ffwll.local>
+Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
+	dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	open list <linux-kernel@vger.kernel.org>
+References: <20240109182218.193804-1-robdclark@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 4/5] iommu/arm-smmu: add ACTLR data and support for
- SM8550
-To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>, will@kernel.org,
- robin.murphy@arm.com, joro@8bytes.org, dmitry.baryshkov@linaro.org,
- jsnitsel@redhat.com, quic_bjorande@quicinc.com, mani@kernel.org,
- quic_eberman@quicinc.com, robdclark@chromium.org,
- u.kleine-koenig@pengutronix.de, robh@kernel.org, vladimir.oltean@nxp.com,
- quic_pkondeti@quicinc.com, quic_molvera@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
- qipl.kernel.upstream@quicinc.com
-References: <20240109114220.30243-1-quic_bibekkum@quicinc.com>
- <20240109114220.30243-5-quic_bibekkum@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240109114220.30243-5-quic_bibekkum@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240109182218.193804-1-robdclark@gmail.com>
+X-Operating-System: Linux phenom 6.5.0-4-amd64 
 
-
-
-On 1/9/24 12:42, Bibek Kumar Patro wrote:
-> Add ACTLR data table for SM8550 along with support for
-> same including SM8550 specific implementation operations.
+On Tue, Jan 09, 2024 at 10:22:17AM -0800, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+> This reverts commit abe2023b4cea192ab266b351fd38dc9dbd846df0.
+> 
+> Changing the locking order means that scheduler/msm_job_run() can race
+> with the recovery kthread worker, with the result that the GPU gets an
+> extra runpm get when we are trying to power it off.  Leaving the GPU in
+> an unrecovered state.
+
+The recovery kthread is supposed to stop all the relevant schedulers,
+which should remove any possible race conditions. So unless there's more
+going on, or you have your own recovery kthread (don't, reuse the one from
+the scheduler with your own work items, that's why you can provide that)
+this looks like an incomplete/incorrect explanation ... ?
+
+Slightly confused
+-Sima
+
+> 
+> I'll need to come up with a different scheme for appeasing lockdep.
+> 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
-[...]
+>  drivers/gpu/drm/msm/msm_gpu.c        | 11 +++++------
+>  drivers/gpu/drm/msm/msm_ringbuffer.c |  7 +++++--
+>  2 files changed, 10 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+> index 095390774f22..655002b21b0d 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> @@ -751,12 +751,14 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>  	struct msm_ringbuffer *ring = submit->ring;
+>  	unsigned long flags;
+>  
+> -	pm_runtime_get_sync(&gpu->pdev->dev);
+> +	WARN_ON(!mutex_is_locked(&gpu->lock));
+>  
+> -	mutex_lock(&gpu->lock);
+> +	pm_runtime_get_sync(&gpu->pdev->dev);
+>  
+>  	msm_gpu_hw_init(gpu);
+>  
+> +	submit->seqno = submit->hw_fence->seqno;
+> +
+>  	update_sw_cntrs(gpu);
+>  
+>  	/*
+> @@ -781,11 +783,8 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>  	gpu->funcs->submit(gpu, submit);
+>  	gpu->cur_ctx_seqno = submit->queue->ctx->seqno;
+>  
+> -	hangcheck_timer_reset(gpu);
+> -
+> -	mutex_unlock(&gpu->lock);
+> -
+>  	pm_runtime_put(&gpu->pdev->dev);
+> +	hangcheck_timer_reset(gpu);
+>  }
+>  
+>  /*
+> diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
+> index e0ed27739449..548f5266a7d3 100644
+> --- a/drivers/gpu/drm/msm/msm_ringbuffer.c
+> +++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
+> @@ -21,8 +21,6 @@ static struct dma_fence *msm_job_run(struct drm_sched_job *job)
+>  
+>  	msm_fence_init(submit->hw_fence, fctx);
+>  
+> -	submit->seqno = submit->hw_fence->seqno;
+> -
+>  	mutex_lock(&priv->lru.lock);
+>  
+>  	for (i = 0; i < submit->nr_bos; i++) {
+> @@ -35,8 +33,13 @@ static struct dma_fence *msm_job_run(struct drm_sched_job *job)
+>  
+>  	mutex_unlock(&priv->lru.lock);
+>  
+> +	/* TODO move submit path over to using a per-ring lock.. */
+> +	mutex_lock(&gpu->lock);
+> +
+>  	msm_gpu_submit(gpu, submit);
+>  
+> +	mutex_unlock(&gpu->lock);
+> +
+>  	return dma_fence_get(submit->hw_fence);
+>  }
+>  
+> -- 
+> 2.43.0
+> 
 
-> +static const struct actlr_variant sm8550_actlr[] = {
-> +	{ sm8550_apps_actlr_cfg, 0x15000000 },
-> +	{ sm8550_gfx_actlr_cfg, 0x03da0000 },
-> +	{},
-> +};
-
-Please use C99 designated initializers and put the address first.
-
-Konrad
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
 
