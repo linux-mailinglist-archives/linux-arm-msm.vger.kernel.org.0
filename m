@@ -1,64 +1,31 @@
-Return-Path: <linux-arm-msm+bounces-6973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1F49829FEF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 18:57:24 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A42F82A01C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 19:10:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C6C5D1C215D5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 17:57:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AF6D9281F9E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 18:10:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A55324D597;
-	Wed, 10 Jan 2024 17:56:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="O4d8NFhA"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C4654D127;
+	Wed, 10 Jan 2024 18:10:17 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECAAB4D58A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 17:56:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2cceb5f0918so47924581fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 09:56:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704909414; x=1705514214; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=YPUG8wGHjUncLfJR9e1hMbIghHR8x5XwILqQc+Upn/A=;
-        b=O4d8NFhAWvFdco7lDdy84yi5s557ETyKeOojaijEXSRSt6geSkN8tMRkuCugnl0BCE
-         EXufD6OHOXkF60uPjjXUgQY64cKUc4m5x3PU3Sq1UooB4NWttp3D9SJw4YR4JXB12sDr
-         wBQdcB0sHidI0z9tVmzv3O14PJZtB6+ZuqN7w3Oo1UT5H8BQQQsnXg/hjxuwROaGazWz
-         4G8R+Kk8jNMCYGNKY8n5QC4iGxt7oLJDrwmnMsna20ETSBPsGYX/LpW+m2A9IcA2KfhV
-         w1jXBcoNKOhWRSBk7mL9ARRktmkcIiV2UyDm1xkk7rI6O1rV4IIcOMh2i1MgFE4rso62
-         J83w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704909414; x=1705514214;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YPUG8wGHjUncLfJR9e1hMbIghHR8x5XwILqQc+Upn/A=;
-        b=nbaUl2Uw8NgtT4JRoG/DwOriUN1BpSy0pJfpiuPfuxnKdSxI0OTVtn1um7H5hTe9pN
-         3JWAtrR4MtoAT9Ljsyknm+jZLwI+fN8XQYBJR5vF7bbmO6YMjjePDxKjn4R+HHX/UabL
-         vYP9XX45ldCmaOJgp7/4UxRFQka82qSfFqVS/atOwk+9DFFiBqbJnu+Mb1SoZsU1KFC6
-         0dUpV/FFNSchoFy671WC9MA11937h4HISDE5vIHVwrnb2hW4ylhWSyYfzXf0Opjw4ofX
-         Qb4sHe+/mQOI6+ncYA1pv6bkyVaMBOdLFQieQmF5e2ZjOW28aJ0d+E2mHR8qxyAafuIA
-         mB3g==
-X-Gm-Message-State: AOJu0YxS0HrQwNX5rASTbCltgf6cOW6ZCcKl2q1VJ9Cn6GV97AaUuA8V
-	DjhSc3KZIQYUmhhIn2UIBbxbAFANgobLsg==
-X-Google-Smtp-Source: AGHT+IHvrOZ0aqeCr586qVWcuhFyKWtM901HK7CwO0DiO3YJfPrWwlIUBPh0GgYU2a0lKt1fMyeUlQ==
-X-Received: by 2002:a05:651c:b23:b0:2cd:7fe1:39c with SMTP id b35-20020a05651c0b2300b002cd7fe1039cmr334267ljr.72.1704909413963;
-        Wed, 10 Jan 2024 09:56:53 -0800 (PST)
-Received: from [172.30.205.123] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id v17-20020a2ea451000000b002cd1a3bdecbsm829614ljn.22.2024.01.10.09.56.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Jan 2024 09:56:53 -0800 (PST)
-Message-ID: <492aeca3-a4df-47a3-9c77-02ea4235d736@linaro.org>
-Date: Wed, 10 Jan 2024 18:56:51 +0100
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD9734CDF8;
+	Wed, 10 Jan 2024 18:10:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8EE252F4;
+	Wed, 10 Jan 2024 10:10:59 -0800 (PST)
+Received: from [192.168.178.6] (unknown [172.31.20.19])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 659FF3F5A1;
+	Wed, 10 Jan 2024 10:10:09 -0800 (PST)
+Message-ID: <5ac0df44-82b6-463b-a805-65f93d181215@arm.com>
+Date: Wed, 10 Jan 2024 19:10:08 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,106 +33,108 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 3/5] iommu/arm-smmu: introduction of ACTLR for custom
- prefetcher settings
+Subject: Re: [PATCH v3 0/5] Rework system pressure interface to the scheduler
 Content-Language: en-US
-To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>,
- Pavan Kondeti <quic_pkondeti@quicinc.com>
-Cc: will@kernel.org, robin.murphy@arm.com, joro@8bytes.org,
- dmitry.baryshkov@linaro.org, jsnitsel@redhat.com, quic_bjorande@quicinc.com,
- mani@kernel.org, quic_eberman@quicinc.com, robdclark@chromium.org,
- u.kleine-koenig@pengutronix.de, robh@kernel.org, vladimir.oltean@nxp.com,
- quic_molvera@quicinc.com, linux-arm-msm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
- linux-kernel@vger.kernel.org, qipl.kernel.upstream@quicinc.com
-References: <20240109114220.30243-1-quic_bibekkum@quicinc.com>
- <20240109114220.30243-4-quic_bibekkum@quicinc.com>
- <2ad70157-27d1-41df-8866-c226af690cf6@quicinc.com>
- <ec31fafa-b912-454a-8b64-e0593911aaf2@quicinc.com>
- <4a595815-7fcc-47e2-b22c-dac349af6d79@quicinc.com>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <4a595815-7fcc-47e2-b22c-dac349af6d79@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+To: Vincent Guittot <vincent.guittot@linaro.org>
+Cc: linux@armlinux.org.uk, catalin.marinas@arm.com, will@kernel.org,
+ sudeep.holla@arm.com, rafael@kernel.org, viresh.kumar@linaro.org,
+ agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+ mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com,
+ rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
+ bristot@redhat.com, vschneid@redhat.com, lukasz.luba@arm.com,
+ rui.zhang@intel.com, mhiramat@kernel.org, daniel.lezcano@linaro.org,
+ amit.kachhap@gmail.com, corbet@lwn.net, gregkh@linuxfoundation.org,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-trace-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+ qyousef@layalina.io
+References: <20240108134843.429769-1-vincent.guittot@linaro.org>
+ <d37e3d06-d9fc-4fc3-ad92-e7031489660a@arm.com>
+ <CAKfTPtAOSgnStDSao1QarHuUW9BTfk1o7r6NO4LhwEJMhq1drg@mail.gmail.com>
+From: Dietmar Eggemann <dietmar.eggemann@arm.com>
+In-Reply-To: <CAKfTPtAOSgnStDSao1QarHuUW9BTfk1o7r6NO4LhwEJMhq1drg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-
-
-On 1/10/24 13:55, Bibek Kumar Patro wrote:
-> 
-> 
-> On 1/10/2024 4:46 PM, Bibek Kumar Patro wrote:
+On 09/01/2024 14:29, Vincent Guittot wrote:
+> On Tue, 9 Jan 2024 at 12:34, Dietmar Eggemann <dietmar.eggemann@arm.com> wrote:
 >>
->>
->> On 1/10/2024 9:36 AM, Pavan Kondeti wrote:
-> 
-> [...]
-> 
->>>> @@ -274,6 +321,21 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
->>>>   static int qcom_smmu_init_context(struct arm_smmu_domain *smmu_domain,
->>>>           struct io_pgtable_cfg *pgtbl_cfg, struct device *dev)
->>>>   {
->>>> +    struct arm_smmu_device *smmu = smmu_domain->smmu;
->>>> +    struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
->>>> +    const struct actlr_variant *actlrvar;
->>>> +    int cbndx = smmu_domain->cfg.cbndx;
->>>> +
->>>> +    if (qsmmu->data->actlrvar) {
->>>> +        actlrvar = qsmmu->data->actlrvar;
->>>> +        for (; actlrvar->io_start; actlrvar++) {
->>>> +            if (actlrvar->io_start == smmu->ioaddr) {
->>>> +                qcom_smmu_set_actlr(dev, smmu, cbndx, actlrvar->actlrcfg);
->>>> +                break;
->>>> +            }
->>>> +        }
->>>> +    }
->>>> +
+>> On 08/01/2024 14:48, Vincent Guittot wrote:
+>>> Following the consolidation and cleanup of CPU capacity in [1], this serie
+>>> reworks how the scheduler gets the pressures on CPUs. We need to take into
+>>> account all pressures applied by cpufreq on the compute capacity of a CPU
+>>> for dozens of ms or more and not only cpufreq cooling device or HW
+>>> mitigiations. we split the pressure applied on CPU's capacity in 2 parts:
+>>> - one from cpufreq and freq_qos
+>>> - one from HW high freq mitigiation.
 >>>
->>> This block and the one in qcom_adreno_smmu_init_context() are exactly
->>> the same. Possible to do some refactoring?
->>>
+>>> The next step will be to add a dedicated interface for long standing
+>>> capping of the CPU capacity (i.e. for seconds or more) like the
+>>> scaling_max_freq of cpufreq sysfs. The latter is already taken into
+>>> account by this serie but as a temporary pressure which is not always the
+>>> best choice when we know that it will happen for seconds or more.
 >>
->> I will check if this repeated blocks can be accomodated this into qcom_smmu_set_actlr function if that would be fine.
->>
+>> I guess this is related to the 'user space system pressure' (*) slide of
+>> your OSPM '23 talk.
 > 
-> Also adding to this, this might increase the number of indentation inside qcom_smmu_set_actlr as well, to around 5. So wouldn't this
-> be an issue?
+> yes
+> 
+>>
+>> Where do you draw the line when it comes to time between (*) and the
+>> 'medium pace system pressure' (e.g. thermal and FREQ_QOS).
+> 
+> My goal is to consider the /sys/../scaling_max_freq as the 'user space
+> system pressure'
+> 
+>>
+>> IIRC, with (*) you want to rebuild the sched domains etc.
+> 
+> The easiest way would be to rebuild the sched_domain but the cost is
+> not small so I would prefer to skip the rebuild and add a new signal
+> that keep track on this capped capacity
 
-By the way, we can refactor this:
+Are you saying that you don't need to rebuild sched domains since
+cpu_capacity information of the sched domain hierarchy is
+independently updated via: 
 
-if (qsmmu->data->actlrvar) {
-	actlrvar = qsmmu->data->actlrvar;
-	for (; actlrvar->io_start; actlrvar++) {
-		if (actlrvar->io_start == smmu->ioaddr) {
-			qcom_smmu_set_actlr(dev, smmu, cbndx, actlrvar->actlrcfg);
-			break;
-		}
-	}
+update_sd_lb_stats() {
+
+  update_group_capacity() {
+
+    if (!child)
+      update_cpu_capacity(sd, cpu) {
+
+        capacity = scale_rt_capacity(cpu) {
+
+          max = get_actual_cpu_capacity(cpu) <- (*)
+        }
+
+        sdg->sgc->capacity = capacity;
+        sdg->sgc->min_capacity = capacity;
+        sdg->sgc->max_capacity = capacity;
+      }
+
+  }
+
 }
-
-into
-
-// add const u8 num_actlrcfgs to struct actrl_variant to
-// save on sentinel space:
-//   sizeof(u8) < sizeof(ptr) + sizeof(resource_size_t)
+        
+(*) influence of temporary and permanent (to be added) frequency
+pressure on cpu_capacity (per-cpu and in sd data)
 
 
-[declarations]
-const struct actlr_variant *actlrvar = qsmmu->data->actlrvar;
-int i;
-
-[rest of the functions]
-
-if (!actlrvar)
-	return 0;
-
-for (i = 0; i < actrlvar->num_actrlcfgs; i++) {
-	if (actlrvar[i].io_start == smmu->ioaddr) {
-		qcom_smmu_set_actlr(dev, smmu, cbndx, actlrvar->actlrcfg);
-		break;
-	}
-}
-
-Saving both on .TEXT size and indentation levels :)
-
-Konrad
+example: hackbench on h960 with IPA:
+                                                                                  cap  min  max
+...
+hackbench-2284 [007] .Ns..  2170.796726: update_group_capacity: sdg !child cpu=7 1017 1017 1017
+hackbench-2456 [007] ..s..  2170.920729: update_group_capacity: sdg !child cpu=7 1018 1018 1018
+    <...>-2314 [007] ..s1.  2171.044724: update_group_capacity: sdg !child cpu=7 1011 1011 1011
+hackbench-2541 [007] ..s..  2171.168734: update_group_capacity: sdg !child cpu=7  918  918  918
+hackbench-2558 [007] .Ns..  2171.228716: update_group_capacity: sdg !child cpu=7  912  912  912
+    <...>-2321 [007] ..s..  2171.352718: update_group_capacity: sdg !child cpu=7  812  812  812
+hackbench-2553 [007] ..s..  2171.476721: update_group_capacity: sdg !child cpu=7  640  640  640
+    <...>-2446 [007] ..s2.  2171.600743: update_group_capacity: sdg !child cpu=7  610  610  610
+hackbench-2347 [007] ..s..  2171.724738: update_group_capacity: sdg !child cpu=7  406  406  406
+hackbench-2331 [007] .Ns1.  2171.848768: update_group_capacity: sdg !child cpu=7  390  390  390
+hackbench-2421 [007] ..s..  2171.972733: update_group_capacity: sdg !child cpu=7  388  388  388
+...
 
