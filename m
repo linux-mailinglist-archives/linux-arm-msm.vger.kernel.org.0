@@ -1,123 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-6902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 453ED829937
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 12:35:56 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CC90829954
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 12:42:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C37EEB247DF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 11:35:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3349DB26604
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 11:42:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2356A47A5F;
-	Wed, 10 Jan 2024 11:35:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E06547A79;
+	Wed, 10 Jan 2024 11:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L9sEmcEL"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LHZTJjvn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E20945256;
-	Wed, 10 Jan 2024 11:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81CB5481A4;
+	Wed, 10 Jan 2024 11:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40A8eRnS025173;
-	Wed, 10 Jan 2024 11:35:25 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40A8gFV3025511;
+	Wed, 10 Jan 2024 11:41:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=zZr3ydscPJEtSmuUGIcDASkCGcSCsQLJWNIpwguKSA8=; b=L9
-	sEmcELyrU+GDg3cUoufiRehahIJlEMCzq5uTnBRZF7jD1WT5j6nGYGKBB8IS6zOY
-	jFYtgZUN+MivLHCbo2GB9iuTTgkfVLuTwYNv56Jm7sXagl3pnHWSxVXwZlkfoYMn
-	R++tfgJ+f2Qixl4uiW/vdpOKu6Gq5r4LYEv/vXxfNH6T0L+1UzuapT9g5OtZy60i
-	3wEkKQbHIVB0BmhjkLtLQXkGR0WQ7Wpai/HTsczG6X/stA0aaSwPgZC/49tnjvT+
-	rX8QkwFuTfZZOvrFmaRWeAHn5VJzKdS71KP8UWQb9GO92l15OG5xqTR66lW6bffN
-	aPtix9i9b635A2da2uZQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vhjh2s1eg-1
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=Uc6HnQG
+	HRycirauuXTF2iF/cVs7k4R8jSd2350aueSQ=; b=LHZTJjvnF5eF9WA78W9G/tk
+	G4WqHnz2doW6L/FV1tWXggg1qUK52NbukhBzKXA6wtYmfoWrItLqe7TcimRp9DQF
+	hEu/Dimy0n8NBrFaOOuXIX8h6J3VMkZgjWebHsZhFeaNBSoYNIrsMokwnd9XEz7U
+	ZV39JzazmEK766V8hQi4mBe5cM4NL6oRLNcgpHV4XBARe9MrYfcauQd3/KoBYn0+
+	WPCBaqfvosyZVsbrObtAPCk26yX9zL80Nv5dpnmDxncge5Ql70dtXjdopczgnDBW
+	kRmmhsgWPDmQKn2X8wUj8AcasYf8TvCg6tL1/Jn590O2pBFH8fJtveDEEmbsayA=
+	=
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vh85t2dvm-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jan 2024 11:35:24 +0000 (GMT)
+	Wed, 10 Jan 2024 11:41:06 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40ABZNj3032150
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40ABf5Bs018623
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jan 2024 11:35:23 GMT
-Received: from [10.214.66.253] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 10 Jan
- 2024 03:35:17 -0800
-Message-ID: <9d143762-da25-4bdc-b33f-66a03a144c2e@quicinc.com>
-Date: Wed, 10 Jan 2024 17:05:14 +0530
+	Wed, 10 Jan 2024 11:41:05 GMT
+Received: from akronite-sh-dev02.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Wed, 10 Jan 2024 03:40:55 -0800
+From: Luo Jie <quic_luoj@quicinc.com>
+To: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <corbet@lwn.net>, <catalin.marinas@arm.com>, <will@kernel.org>,
+        <p.zabel@pengutronix.de>, <linux@armlinux.org.uk>,
+        <shannon.nelson@amd.com>, <anthony.l.nguyen@intel.com>,
+        <jasowang@redhat.com>, <brett.creeley@amd.com>,
+        <rrameshbabu@nvidia.com>, <joshua.a.hay@intel.com>, <arnd@arndb.de>,
+        <geert+renesas@glider.be>, <neil.armstrong@linaro.org>,
+        <dmitry.baryshkov@linaro.org>, <nfraprado@collabora.com>,
+        <m.szyprowski@samsung.com>, <u-kumar1@ti.com>,
+        <jacob.e.keller@intel.com>, <andrew@lunn.ch>
+CC: <netdev@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <ryazanov.s.a@gmail.com>, <ansuelsmth@gmail.com>,
+        <quic_kkumarcs@quicinc.com>, <quic_suruchia@quicinc.com>,
+        <quic_soni@quicinc.com>, <quic_pavir@quicinc.com>,
+        <quic_souravp@quicinc.com>, <quic_linchen@quicinc.com>,
+        <quic_leiwei@quicinc.com>
+Subject: [PATCH net-next 00/20] net: ethernet: Add qcom PPE driver
+Date: Wed, 10 Jan 2024 19:40:12 +0800
+Message-ID: <20240110114033.32575-1-quic_luoj@quicinc.com>
+X-Mailer: git-send-email 2.42.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 4/5] iommu/arm-smmu: add ACTLR data and support for
- SM8550
-Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, <will@kernel.org>,
-        <robin.murphy@arm.com>, <joro@8bytes.org>,
-        <dmitry.baryshkov@linaro.org>, <jsnitsel@redhat.com>,
-        <quic_bjorande@quicinc.com>, <mani@kernel.org>,
-        <quic_eberman@quicinc.com>, <robdclark@chromium.org>,
-        <u.kleine-koenig@pengutronix.de>, <robh@kernel.org>,
-        <vladimir.oltean@nxp.com>, <quic_pkondeti@quicinc.com>,
-        <quic_molvera@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <iommu@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-        <qipl.kernel.upstream@quicinc.com>
-References: <20240109114220.30243-1-quic_bibekkum@quicinc.com>
- <20240109114220.30243-5-quic_bibekkum@quicinc.com>
- <45314345-36ba-4d85-9d3b-298de26eb069@linaro.org>
-From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-In-Reply-To: <45314345-36ba-4d85-9d3b-298de26eb069@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: De980EDPawXSdyqq1M4nDTubxLRsR_An
-X-Proofpoint-GUID: De980EDPawXSdyqq1M4nDTubxLRsR_An
+X-Proofpoint-ORIG-GUID: z3Hzf9LUPOgDMX764m98likxAW2pcZsy
+X-Proofpoint-GUID: z3Hzf9LUPOgDMX764m98likxAW2pcZsy
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=837 clxscore=1015 bulkscore=0 malwarescore=0 spamscore=0
- phishscore=0 priorityscore=1501 adultscore=0 impostorscore=0
- suspectscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401100094
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
+ malwarescore=0 suspectscore=0 mlxlogscore=841 clxscore=1011
+ priorityscore=1501 adultscore=0 impostorscore=0 phishscore=0 spamscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401100095
+
+The PPE(packet process engine) hardware block is available in Qualcomm
+IPQ chipsets that support PPE architecture, such as IPQ9574 and IPQ5332.
+The PPE includes integrated ethernet MAC and PCS(uniphy), which is used
+to connect with external PHY devices by PCS. The PPE also includes
+various packet processing offload capabilities such as routing and
+briding offload, L2 switch capability, VLAN and tunnel processing
+offload.
+
+This patch series enables support for the PPE driver which intializes
+and configures the PPE, and provides various services for higher level
+network drivers in the system such as EDMA (Ethernet DMA) driver or a
+DSA switch driver for PPE L2 Switch, for Qualcomm IPQ SoCs.
+
+The PPE driver provides following functions:
+
+1. Initialize PPE device hardware functions such as buffer management,
+   queue management, TDM, scheduler and clocks in order to bring up PPE
+   device.
+
+2. Register the PCS driver and uniphy raw clock provider. The uniphy
+   raw clock is selected as the parent clock of the NSSCC clocks. The
+   NSSCC clocks are registered by the dependent patchset at the link
+   below.(Note: There are 3 PCS on IPQ9574, 2 PCS on IPQ5332 platform.)
+
+3. Export the PPE control path API (ppe_device_ops) for use by higher
+   level network drivers such as  the EDMA(Ethernet DMA) driver. The
+   EDMA netdevice driver depends on this PPE driver and  registers the
+   netdevices to receive and transmit packets using the ethernet ports.
+
+4. Register debugfs file to provide access to various PPE packet counters.
+   These statistics are recorded by the various HW counters, such as port
+   RX/TX, CPU code and HW queue counters.
+
+The diagram and detail introduction of PPE are described in the added file:
+Documentation/networking/device_drivers/ethernet/qualcomm/ppe/ppe.rst,
+which is added by the first patch.
+<Documentation: networking: qcom PPE driver documentation>.
+
+PPE driver depends on the NSSCC clock driver below, which provides the
+clocks for the PPE driver.
+https://lore.kernel.org/linux-arm-msm/20230825091234.32713-1-quic_devipriy@quicinc.com/
+https://lore.kernel.org/linux-arm-msm/20231211-ipq5332-nsscc-v3-0-ad13bef9b137@quicinc.com/
+
+PPE driver also depens on the device tree patch series to bring up PPE
+device as below link.
+https://lore.kernel.org/all/20240110112059.2498-1-quic_luoj@quicinc.com/
+
+Lei Wei (5):
+  Documentation: networking: qcom PPE driver documentation
+  net: ethernet: qualcomm: Add PPE L2 bridge initialization
+  net: ethernet: qualcomm: Add PPE UNIPHY support for phylink
+  net: ethernet: qualcomm: Add PPE MAC support for phylink
+  net: ethernet: qualcomm: Add PPE MAC functions
+
+Luo Jie (15):
+  dt-bindings: net: qcom,ppe: Add bindings yaml file
+  net: ethernet: qualcomm: Add qcom PPE driver
+  net: ethernet: qualcomm: Add PPE buffer manager configuration
+  net: ethernet: qualcomm: Add PPE queue management config
+  net: ethernet: qualcomm: Add PPE TDM config
+  net: ethernet: qualcomm: Add PPE port scheduler resource
+  net: ethernet: qualcomm: Add PPE scheduler config
+  net: ethernet: qualcomm: Add PPE queue config
+  net: ethernet: qualcomm: Add PPE service code config
+  net: ethernet: qualcomm: Add PPE port control config
+  net: ethernet: qualcomm: Add PPE RSS hash config
+  net: ethernet: qualcomm: Export PPE function set_maxframe
+  net: ethernet: qualcomm: Add PPE AC(admission control) function
+  net: ethernet: qualcomm: Add PPE debugfs counters
+  arm64: defconfig: Enable qcom PPE driver
+
+ .../devicetree/bindings/net/qcom,ppe.yaml     | 1330 +++++++
+ .../device_drivers/ethernet/index.rst         |    1 +
+ .../ethernet/qualcomm/ppe/ppe.rst             |  305 ++
+ MAINTAINERS                                   |    9 +
+ arch/arm64/configs/defconfig                  |    1 +
+ drivers/net/ethernet/qualcomm/Kconfig         |   17 +
+ drivers/net/ethernet/qualcomm/Makefile        |    1 +
+ drivers/net/ethernet/qualcomm/ppe/Makefile    |    7 +
+ drivers/net/ethernet/qualcomm/ppe/ppe.c       | 3070 +++++++++++++++++
+ drivers/net/ethernet/qualcomm/ppe/ppe.h       |  315 ++
+ .../net/ethernet/qualcomm/ppe/ppe_debugfs.c   |  953 +++++
+ .../net/ethernet/qualcomm/ppe/ppe_debugfs.h   |   25 +
+ drivers/net/ethernet/qualcomm/ppe/ppe_ops.c   |  628 ++++
+ drivers/net/ethernet/qualcomm/ppe/ppe_ops.h   |  256 ++
+ drivers/net/ethernet/qualcomm/ppe/ppe_regs.h  | 1106 ++++++
+ .../net/ethernet/qualcomm/ppe/ppe_uniphy.c    |  789 +++++
+ .../net/ethernet/qualcomm/ppe/ppe_uniphy.h    |  227 ++
+ include/linux/soc/qcom/ppe.h                  |  105 +
+ 18 files changed, 9145 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/net/qcom,ppe.yaml
+ create mode 100644 Documentation/networking/device_drivers/ethernet/qualcomm/ppe/ppe.rst
+ create mode 100644 drivers/net/ethernet/qualcomm/ppe/Makefile
+ create mode 100644 drivers/net/ethernet/qualcomm/ppe/ppe.c
+ create mode 100644 drivers/net/ethernet/qualcomm/ppe/ppe.h
+ create mode 100644 drivers/net/ethernet/qualcomm/ppe/ppe_debugfs.c
+ create mode 100644 drivers/net/ethernet/qualcomm/ppe/ppe_debugfs.h
+ create mode 100644 drivers/net/ethernet/qualcomm/ppe/ppe_ops.c
+ create mode 100644 drivers/net/ethernet/qualcomm/ppe/ppe_ops.h
+ create mode 100644 drivers/net/ethernet/qualcomm/ppe/ppe_regs.h
+ create mode 100644 drivers/net/ethernet/qualcomm/ppe/ppe_uniphy.c
+ create mode 100644 drivers/net/ethernet/qualcomm/ppe/ppe_uniphy.h
+ create mode 100644 include/linux/soc/qcom/ppe.h
 
 
+base-commit: a7fe0881d9b78d402bbd9067dd4503a57c57a1d9
+-- 
+2.42.0
 
-On 1/10/2024 4:19 PM, Konrad Dybcio wrote:
-> 
-> 
-> On 1/9/24 12:42, Bibek Kumar Patro wrote:
->> Add ACTLR data table for SM8550 along with support for
->> same including SM8550 specific implementation operations.
->>
->> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
->> ---
-> [...]
-> 
->> +static const struct actlr_variant sm8550_actlr[] = {
->> +    { sm8550_apps_actlr_cfg, 0x15000000 },
->> +    { sm8550_gfx_actlr_cfg, 0x03da0000 },
->> +    {},
->> +};
-> 
-> Please use C99 designated initializers and put the address first.
-> 
-
-Noted, thanks for this input. Will take care of this in next patch.
-
-Thanks & regards,
-Bibek
-
-> Konrad
 
