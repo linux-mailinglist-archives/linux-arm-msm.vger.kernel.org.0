@@ -1,109 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-6990-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6991-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DACDB82A4FD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 00:39:33 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E73A82A514
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 00:50:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 79E20B2155C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 23:39:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DDC7E1F217D7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 23:50:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3373E50246;
-	Wed, 10 Jan 2024 23:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C87874F8A2;
+	Wed, 10 Jan 2024 23:50:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VLA8PK2U"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Bmo+oYOS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C847750243;
-	Wed, 10 Jan 2024 23:39:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40ANQ5HD009384;
-	Wed, 10 Jan 2024 23:39:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=zRipWfFdSVdCns+xvov2FS2oYSIqI3pCJzj5zKaV9k0=; b=VL
-	A8PK2UolkVn334isYXNt0I0qfMwKiHcBUHxUCmZ4mztGkjbASDhUY6igaZVQ9KOp
-	bwuzCuBY0+dNvcgLZkd4LJmRYONICBXCWINlniQT+2X4XFMhPnocG1xjqSuofM1r
-	4nwyfjT4qZ3/ucvgjTK2sKoa8MIgMXdAZLGMx5k1IqlBafQQaj3p1FNNoQW+M4uS
-	mAw/vreCUCHX/FvjGzfFZ4gx9TfW0fjMEbH56sxtIOh9DoLVHaCMfanMxQRbuZ/j
-	IqIk3IZfnlHcLopwhIWBuclIOa3Lw3vu5w2LZ9Kr3o1oUHnkq9GfnJEKT8MbTgx0
-	/9g8U0Mmy/BpAhTN4DGA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vhvhp16wg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jan 2024 23:39:02 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40ANd1VS017282
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jan 2024 23:39:01 GMT
-Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 10 Jan
- 2024 15:39:00 -0800
-Message-ID: <f9d79d63-3d88-8394-3797-3bedd8542de9@quicinc.com>
-Date: Wed, 10 Jan 2024 15:39:00 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E8401C30
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 23:50:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-db3a09e96daso3895054276.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 15:50:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704930648; x=1705535448; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=IY2WHo656dlJft78J6VUeykbQH3OBUSeMuyIpTpTn1Y=;
+        b=Bmo+oYOSaJ0xZ16vSCdSpMyXzm5gawk84S0rDaHGmBG6nUqLh2QUliuy/Ciwl83hfZ
+         pOwx76LQFrCxRdc5aenk7sW2+2w7NI7H5y92f371xaoNUrjWkIseY+Pi6gC1PgcSRbhO
+         AwQKiQAAYspqERWNpNBloPKn76f/xeX96UWsgUGaE+Y3pUErP9noqI13bJIBY6wcPWnP
+         Ezik3MyFwNqgXxgar+teYEw0oHMHciPou675m9qY73vo9pr+j52mBWbzD5kdQkLlsTku
+         N1ByQ32B9VZO/g3npNTkWo7gljN9J3Yttty/1ngd0qcwhZ8PohWX3W03uTG7X1D3TNZ5
+         vepw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704930648; x=1705535448;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IY2WHo656dlJft78J6VUeykbQH3OBUSeMuyIpTpTn1Y=;
+        b=foLXqfSVNS0M2lvVcoZcRFg9aNMoymTVbZpJLeEE95u/3Ab962x3UllmV+fWyTnhGx
+         FZseLtdVvmLNuLapr//xO3t1s/EZRPmJU9HDgDOdapSJ8dLOqVEMVjq2ZK4ROD9tCc/u
+         Dj7Np5jyBLDTiGf3MvDvSDQckad2zjGE2u7S2u9Ptrx5Ba03xpFKC/WJWcrAfKXoTcWK
+         GUYlRB7WqUohhjKGZ7KzYz/nyqTp9P3221wn1aXWl3IWTJAGkXOOLLfUxPrvvQ9jAr9O
+         kQ8yVwfySyMgoh39nfpH20W7d73/b3zfxmVzkwnBLp1ltsPAWxWPXpe3LItSgJ9ob2xq
+         xJ+g==
+X-Gm-Message-State: AOJu0YyhGNrb3jWP6nYY4aeWtlCT0+J5sMK9zgKoqq0u7ZBRN55nPr4E
+	bTQwO4dYOrmch3tIPj+sHx4yTk/qffmTz3xTAkXq4dCgRNkPLQ==
+X-Google-Smtp-Source: AGHT+IE0M9W/0P2Ae6mYe8PCrJ9dMKg+/Sc+SJ/3RpX4hnY2c5YNeNuY5R4SrTJIFAZOV6C8lq2rU9YH1tu7XsHEaA4=
+X-Received: by 2002:a5b:651:0:b0:dbd:b17c:802 with SMTP id o17-20020a5b0651000000b00dbdb17c0802mr409911ybq.52.1704930648185;
+ Wed, 10 Jan 2024 15:50:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
+References: <1704917931-30133-1-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1704917931-30133-1-git-send-email-quic_khsieh@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 11 Jan 2024 01:50:37 +0200
+Message-ID: <CAA8EJppcsQtS7h4g+hK+sss7pDuvKjkJX1o7_DUO-rTg1BtWLQ@mail.gmail.com>
 Subject: Re: [PATCH v1] drm/msms/dp: fixed link clock divider bits be over
  written in BPC unknown case
-Content-Language: en-US
-To: Kuogee Hsieh <quic_khsieh@quicinc.com>, <dri-devel@lists.freedesktop.org>,
-        <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
-        <airlied@gmail.com>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <andersson@kernel.org>
-CC: <quic_jesszhan@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <marijn.suijten@somainline.org>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <1704917931-30133-1-git-send-email-quic_khsieh@quicinc.com>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <1704917931-30133-1-git-send-email-quic_khsieh@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Pk_YRuNpcRqcaHgNxKc7DX7asfTftLic
-X-Proofpoint-ORIG-GUID: Pk_YRuNpcRqcaHgNxKc7DX7asfTftLic
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 malwarescore=0
- impostorscore=0 adultscore=0 bulkscore=0 priorityscore=1501
- lowpriorityscore=0 spamscore=0 clxscore=1011 mlxscore=0 mlxlogscore=999
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401100187
+To: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc: dri-devel@lists.freedesktop.org, robdclark@gmail.com, sean@poorly.run, 
+	swboyd@chromium.org, dianders@chromium.org, vkoul@kernel.org, daniel@ffwll.ch, 
+	airlied@gmail.com, agross@kernel.org, andersson@kernel.org, 
+	quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com, 
+	quic_sbillaka@quicinc.com, marijn.suijten@somainline.org, 
+	freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-
-
-On 1/10/2024 12:18 PM, Kuogee Hsieh wrote:
+On Wed, 10 Jan 2024 at 22:19, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>
 > Since the value of DP_TEST_BIT_DEPTH_8 is already left shifted, in the
 > BPC unknown case, the additional shift causes spill over to the other
 > bits of the [DP_CONFIGURATION_CTRL] register.
 > Fix this by changing the return value of dp_link_get_test_bits_depth()
 > in the BPC unknown case to (DP_TEST_BIT_DEPTH_8 >> DP_TEST_BIT_DEPTH_SHIFT).
-> 
+>
 > Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
 > Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/dp/dp_ctrl.c |  5 -----
->   drivers/gpu/drm/msm/dp/dp_link.c | 10 +++++++---
->   2 files changed, 7 insertions(+), 8 deletions(-)
-> 
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+For the patch itself:
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Additional note. Since this made me look at how DP_TEST_BIT_DEPTH is
+handled in the driver, I stumbled upon dp_link_bit_depth_to_bpc() vs
+dp_link_bit_depth_to_bpp(). These two functions look pretty redundant.
+Since the former one is used only for the debugfs, please consider
+sending a patch that removes it for the sake of using the latter one
+and /3 in dp_test_data_show().
+
+
+-- 
+With best wishes
+Dmitry
 
