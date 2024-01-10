@@ -1,144 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-6941-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 328E7829AB6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 13:55:36 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5820B829AC0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 13:56:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C45481F270C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 12:55:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8744D1C259CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 12:56:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C093D48785;
-	Wed, 10 Jan 2024 12:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E26948CD2;
+	Wed, 10 Jan 2024 12:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="s20dKFSX"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pTKqrjD+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48B87482F6
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 12:55:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-7cc7bae27b5so1303556241.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 04:55:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1704891329; x=1705496129; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7Ee+hHkfAfIFS6WHvmIg35YEx3vQHJAhovJ3w3cPXwo=;
-        b=s20dKFSXv9X0Dth46Eq9po8i1zw++gJAeAovANgJUWtSt/94qMDdNE6z161bIEdp2Z
-         atELqW/ToP33dGrkoHBTOChulkv8Cw7Kv4FTMAuyypFZUkfrX5/Kh6YB3DlBueZvYdEp
-         hzs/zmifuFPCqPeNZwb1WQVnPJHOBHxMIazawurhzd9sIsPVuFMU+IygCX8PilCPsQUr
-         6rZIP5SHmB3SL+0nfD6hPl1tSEpU7f7BOl8k2oh7MKxCiO5WWpJ4hE5B1l1pVP8bf94c
-         1gmLonYfjIGcPzZ8dzA2N7wL0S6x5gcjnngKgw86LHphKpQvU/fy+Ut4dVwNSwtJoZS8
-         MS1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704891329; x=1705496129;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7Ee+hHkfAfIFS6WHvmIg35YEx3vQHJAhovJ3w3cPXwo=;
-        b=t8vVZcKUDXB4OvwUhnxwTuLd6nruJ63uDdnVFpsIphQow7ts1oWKo6LaaSU1Ja+Fgw
-         JDobQwM0cO3++4xp7QIR0rKCh0XZSXahssHFsB3zpEBwKfqfBpPLu4CP//l+5TOKxTuk
-         0g2Mxv3mK4Oyf0pS5jEq7pjNOHCbKn9DGSZAKKxsUxX8oZJqeqpEdTCS1/+Yta77stPq
-         8cASH97JKLpuHz+hlyIwkOYjUu2fULzrgvPLpRvq+XiBnnjbdy2GSPHiAIAa5iXqui+l
-         iGI/ZVpmYNPFDss6qu4oTJKMdHc2d6w2T3vwExipE3hgV1kEjSZZyV9Nj4QDMVoyKeNY
-         MLdA==
-X-Gm-Message-State: AOJu0YxzY4LMXd/ifo37uTHanum64Z0Bts1J6626zlgARguFBZv66jvn
-	T2WP7vJufgTh7YAHIikE57//+Q88vLk8N+1+1CGzt905aUgiSIshFBdDCvVrxVE=
-X-Google-Smtp-Source: AGHT+IFJf1lA0zydsqWg4MMlDwI7GY7aqZwXYX8MZwXUGKbgxRrG/GbjToxomMdYf3iIjG2NRkt8G9T0sjS/5fZgDGY=
-X-Received: by 2002:a05:6102:6248:b0:466:fd31:def8 with SMTP id
- gd8-20020a056102624800b00466fd31def8mr866005vsb.55.1704891329157; Wed, 10 Jan
- 2024 04:55:29 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D148D48CD9;
+	Wed, 10 Jan 2024 12:55:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40ACekq5010668;
+	Wed, 10 Jan 2024 12:55:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:from:to:cc:references
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=7vMT1hFktDJAz+gNb9eLyhKcykMUQ9DQvdKP5jgUOYE=; b=pT
+	KqrjD+iOnFyCEzjMKBY747zU++IgyPUaVXqCHy4E6ey2aWTyA2WYTtaSjkxXGBOw
+	BEXbvxFk6xRzD/aS5+gtvJva4/RKBepI+OJO107W7Nc6HQ2r7z3tBOWkQ1CHJkIj
+	k38b/G6Ghfyozl/ZGM9rrGJ1PlzzVWfJGwHYhxrPshBLil6ooJRop3yuCQRj0Xbk
+	4hfrz3pObkliri1w/C8z8cPYMYEdq1kUi4GqVfrz2cEiNSOY7FtG9R1Na5a5zu+y
+	3UEh8w1MHXZejkAgK0HVj2e5nHCoVPwZ84NLxZ7IHpcM4AdnAj8uqg6Ex4MThK9V
+	pze0+lLjwuRSLMjSoj8w==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vhkem15c9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jan 2024 12:55:34 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40ACtXZ6007220
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jan 2024 12:55:33 GMT
+Received: from [10.214.66.253] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 10 Jan
+ 2024 04:55:27 -0800
+Message-ID: <4a595815-7fcc-47e2-b22c-dac349af6d79@quicinc.com>
+Date: Wed, 10 Jan 2024 18:25:24 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240104130123.37115-1-brgl@bgdev.pl> <20240104130123.37115-4-brgl@bgdev.pl>
- <20240109144327.GA10780@wunner.de>
-In-Reply-To: <20240109144327.GA10780@wunner.de>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 10 Jan 2024 13:55:18 +0100
-Message-ID: <CAMRc=MdXO6c6asvRSn_Z8-oFS48hroT+dazGKB6WWY1_Zu7f1Q@mail.gmail.com>
-Subject: Re: [RFC 3/9] PCI/portdrv: create platform devices for child OF nodes
-To: Lukas Wunner <lukas@wunner.de>
-Cc: Kalle Valo <kvalo@kernel.org>, "David S . Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Heiko Stuebner <heiko@sntech.de>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Chris Morgan <macromorgan@hotmail.com>, 
-	Linus Walleij <linus.walleij@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Arnd Bergmann <arnd@arndb.de>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	=?UTF-8?B?TsOtY29sYXMgRiAuIFIgLiBBIC4gUHJhZG8=?= <nfraprado@collabora.com>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Peng Fan <peng.fan@nxp.com>, 
-	Robert Richter <rrichter@amd.com>, Dan Williams <dan.j.williams@intel.com>, 
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>, Terry Bowman <terry.bowman@amd.com>, 
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>, 
-	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
-	Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>, 
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-wireless@vger.kernel.org, 
-	netdev@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 3/5] iommu/arm-smmu: introduction of ACTLR for custom
+ prefetcher settings
+Content-Language: en-US
+From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+To: Pavan Kondeti <quic_pkondeti@quicinc.com>
+CC: <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
+        <dmitry.baryshkov@linaro.org>, <konrad.dybcio@linaro.org>,
+        <jsnitsel@redhat.com>, <quic_bjorande@quicinc.com>, <mani@kernel.org>,
+        <quic_eberman@quicinc.com>, <robdclark@chromium.org>,
+        <u.kleine-koenig@pengutronix.de>, <robh@kernel.org>,
+        <vladimir.oltean@nxp.com>, <quic_molvera@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+        <linux-kernel@vger.kernel.org>, <qipl.kernel.upstream@quicinc.com>
+References: <20240109114220.30243-1-quic_bibekkum@quicinc.com>
+ <20240109114220.30243-4-quic_bibekkum@quicinc.com>
+ <2ad70157-27d1-41df-8866-c226af690cf6@quicinc.com>
+ <ec31fafa-b912-454a-8b64-e0593911aaf2@quicinc.com>
+In-Reply-To: <ec31fafa-b912-454a-8b64-e0593911aaf2@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: hiHoHz-1KztRZSPuXEpqyxfs5P7xS_HR
+X-Proofpoint-GUID: hiHoHz-1KztRZSPuXEpqyxfs5P7xS_HR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ mlxlogscore=940 impostorscore=0 phishscore=0 bulkscore=0 suspectscore=0
+ lowpriorityscore=0 spamscore=0 priorityscore=1501 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401100106
 
-On Tue, Jan 9, 2024 at 3:43=E2=80=AFPM Lukas Wunner <lukas@wunner.de> wrote=
-:
->
-> On Thu, Jan 04, 2024 at 02:01:17PM +0100, Bartosz Golaszewski wrote:
-> > In order to introduce PCIe power-sequencing, we need to create platform
-> > devices for child nodes of the port driver node. They will get matched
-> > against the pwrseq drivers (if one exists) and then the actuak PCIe
-> > device will reuse the node once it's detected on the bus.
-> [...]
-> > --- a/drivers/pci/pcie/portdrv.c
-> > +++ b/drivers/pci/pcie/portdrv.c
-> > @@ -715,7 +716,7 @@ static int pcie_portdrv_probe(struct pci_dev *dev,
-> >               pm_runtime_allow(&dev->dev);
-> >       }
-> >
-> > -     return 0;
-> > +     return devm_of_platform_populate(&dev->dev);
-> >  }
->
-> I think this belongs in of_pci_make_dev_node(), portdrv seems totally
-> the wrong place.  Note that you're currently calling this for RCECs
-> (Root Complex Event Collectors) as well, which is likely not what
-> you want.
->
 
-of_pci_make_dev_node() is only called when the relevant PCI device is
-instantiated which doesn't happen until it's powered-up and scanned -
-precisely the problem I'm trying to address.
 
-Calling this for whomever isn't really a problem though, is it? We
-will create a platform device alright - if it's defined on the DT -
-and at worst it won't match against any driver. It seems harmless IMO.
+On 1/10/2024 4:46 PM, Bibek Kumar Patro wrote:
+> 
+> 
+> On 1/10/2024 9:36 AM, Pavan Kondeti wrote:
 
-> devm functions can't be used in the PCI core, so symmetrically call
-> of_platform_unpopulate() from of_pci_remove_node().
+[...]
 
-I don't doubt what you're saying is true (I've seen worse things) but
-this is the probe() callback of a driver using the driver model. Why
-wouldn't devres work?
+>>> @@ -274,6 +321,21 @@ static const struct of_device_id 
+>>> qcom_smmu_client_of_match[] __maybe_unused = {
+>>>   static int qcom_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+>>>           struct io_pgtable_cfg *pgtbl_cfg, struct device *dev)
+>>>   {
+>>> +    struct arm_smmu_device *smmu = smmu_domain->smmu;
+>>> +    struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
+>>> +    const struct actlr_variant *actlrvar;
+>>> +    int cbndx = smmu_domain->cfg.cbndx;
+>>> +
+>>> +    if (qsmmu->data->actlrvar) {
+>>> +        actlrvar = qsmmu->data->actlrvar;
+>>> +        for (; actlrvar->io_start; actlrvar++) {
+>>> +            if (actlrvar->io_start == smmu->ioaddr) {
+>>> +                qcom_smmu_set_actlr(dev, smmu, cbndx, 
+>>> actlrvar->actlrcfg);
+>>> +                break;
+>>> +            }
+>>> +        }
+>>> +    }
+>>> +
+>>
+>> This block and the one in qcom_adreno_smmu_init_context() are exactly
+>> the same. Possible to do some refactoring?
+>>
+> 
+> I will check if this repeated blocks can be accomodated this into 
+> qcom_smmu_set_actlr function if that would be fine.
+> 
 
-Bart
+Also adding to this, this might increase the number of indentation 
+inside qcom_smmu_set_actlr as well, to around 5. So wouldn't this
+be an issue?
 
->
-> Thanks,
->
-> Lukas
->
+Thanks,
+Bibek
 
