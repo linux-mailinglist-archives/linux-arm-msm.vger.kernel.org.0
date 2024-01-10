@@ -1,124 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-6861-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6862-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3C068294DC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 09:12:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10D508294F5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 09:25:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 92A9F1F24D29
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 08:12:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A073A28704F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 08:25:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32E8F364B4;
-	Wed, 10 Jan 2024 08:12:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SQlp1VWr"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B0183DB85;
+	Wed, 10 Jan 2024 08:25:09 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 065753EA70;
-	Wed, 10 Jan 2024 08:12:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB37C433F1;
-	Wed, 10 Jan 2024 08:12:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704874326;
-	bh=R1kRyvFyie9bKSVcbmLw40Yht8pGWPEU2b8QAHOxWHQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=SQlp1VWrNtN5sqOM/Q21XGCkCRIJ51Cm9y4InIlGy6zFI1LtK9h1hKXQuIZu+Aknu
-	 Mqp6WcYpif4RMZi3CvhSAL/4fsysfOi6Cif/njrdgAcgti+OxL1uBZ2Ls8AJTUhzMy
-	 e6uDISvtKraYM7U/8/kLuIPoPKFSs/KOUdqA6ndeQH6P+PJRUBHspDEyUJ74MpKhTi
-	 j7wmFeZUJR9WBt7KMIP/l0BOjqjhYP21f43dOxOSx+Nf8T7jP1F5abcPxRBhkSo655
-	 KzM0FNx4SD5wIW2Gy2CoWr9kNyZjtZhAvTC3S03bs0SC8kpy5TEP/Ja/JZ0kRdLn5x
-	 LzMJi9ttPpf7w==
-Received: from johan by xi.lan with local (Exim 4.96.2)
-	(envelope-from <johan@kernel.org>)
-	id 1rNTh0-0007J5-21;
-	Wed, 10 Jan 2024 09:12:07 +0100
-Date: Wed, 10 Jan 2024 09:12:06 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Matthias Kaehlcke <mka@chromium.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Johan Hedberg <johan.hedberg@gmail.com>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
-	Doug Anderson <dianders@google.com>,
-	Stephen Boyd <swboyd@google.com>
-Subject: Re: [PATCH] Bluetooth: qca: fix device-address endianness
-Message-ID: <ZZ5RVpL88XNbgKIy@hovoldconsulting.com>
-References: <20231227180306.6319-1-johan+linaro@kernel.org>
- <ZZ15c1HUQIH2cY5o@google.com>
- <ZZ1-ehpU-g6i9Qem@hovoldconsulting.com>
- <ZZ2IOQEekFffJoHQ@google.com>
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68CCD3C461;
+	Wed, 10 Jan 2024 08:25:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CBF482F4;
+	Wed, 10 Jan 2024 00:25:50 -0800 (PST)
+Received: from [10.57.87.179] (unknown [10.57.87.179])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 38B753F73F;
+	Wed, 10 Jan 2024 00:25:03 -0800 (PST)
+Message-ID: <94aad654-4f20-4b82-b978-77f1f9376dab@arm.com>
+Date: Wed, 10 Jan 2024 08:26:25 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZZ2IOQEekFffJoHQ@google.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] cpufreq: scmi: Register for limit change
+ notifications
+Content-Language: en-US
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: linux-arm-kernel@lists.infradead.org, viresh.kumar@linaro.org,
+ rafael@kernel.org, cristian.marussi@arm.com, sudeep.holla@arm.com,
+ linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ quic_mdtipton@quicinc.com, linux-arm-msm@vger.kernel.org,
+ Morten Rasmussen <morten.rasmussen@arm.com>,
+ Dietmar Eggemann <dietmar.eggemann@arm.com>
+References: <20240108140118.1596-1-quic_sibis@quicinc.com>
+ <20240108140118.1596-4-quic_sibis@quicinc.com>
+From: Lukasz Luba <lukasz.luba@arm.com>
+In-Reply-To: <20240108140118.1596-4-quic_sibis@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jan 09, 2024 at 05:54:01PM +0000, Matthias Kaehlcke wrote:
-> On Tue, Jan 09, 2024 at 06:12:26PM +0100, Johan Hovold wrote:
+Hi Sibi,
 
-> > That depends on in what way the current devices are broken.
-> > 
-> > Any machines that correctly specify their address in little-endian order
-> > in the devicetree would no longer be configured using the wrong address.
-> > So no problem there (except requiring users to re-pair their gadgets).
-> > 
-> > And tools like btgmt is broken on all of these Qualcomm machine in any
-> > case and would now start working as expected. So no problem there either
-> > (unless user space had adapted an inverted the addresses to btmgmt).
-> > 
-> > So the first question is whether there actually is any boot firmware out
-> > there which passes the BD_ADDR in reverse order?
++ Morten and Dietmar on CC
+
+On 1/8/24 14:01, Sibi Sankar wrote:
+> Register for limit change notifications if supported with the help of
+> perf_notify_support interface and determine the throttled frequency
+> using the perf_opp_xlate to apply HW pressure.
 > 
-> Yes, (at least) the boot firmware for sc7180-trogdor devices.
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+>   drivers/cpufreq/scmi-cpufreq.c | 42 +++++++++++++++++++++++++++++++++-
+>   1 file changed, 41 insertions(+), 1 deletion(-)
 > 
-> hexdump -C /proc/device-tree/soc\@0/geniqup\@8c0000/serial\@88c000/bluetooth/local-bd-address
-> 00000000  8c fd f0 40 15 dc
+> diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
+> index 4ee23f4ebf4a..53bc8868455d 100644
+> --- a/drivers/cpufreq/scmi-cpufreq.c
+> +++ b/drivers/cpufreq/scmi-cpufreq.c
+> @@ -25,9 +25,13 @@ struct scmi_data {
+>   	int domain_id;
+>   	int nr_opp;
+>   	struct device *cpu_dev;
+> +	struct cpufreq_policy *policy;
+>   	cpumask_var_t opp_shared_cpus;
+> +	struct notifier_block limit_notify_nb;
+>   };
+>   
+> +const struct scmi_handle *handle;
+> +static struct scmi_device *scmi_dev;
+>   static struct scmi_protocol_handle *ph;
+>   static const struct scmi_perf_proto_ops *perf_ops;
+>   
+> @@ -144,6 +148,22 @@ scmi_get_cpu_power(struct device *cpu_dev, unsigned long *power,
+>   	return 0;
+>   }
+>   
+> +static int scmi_limit_notify_cb(struct notifier_block *nb, unsigned long event, void *data)
+> +{
+> +	unsigned long freq_hz;
+> +	struct scmi_perf_limits_report *limit_notify = data;
+> +	struct scmi_data *priv = container_of(nb, struct scmi_data, limit_notify_nb);
+> +	struct cpufreq_policy *policy = priv->policy;
+> +
+> +	if (perf_ops->perf_opp_xlate(ph, priv->domain_id, limit_notify->range_max, &freq_hz))
+> +		return NOTIFY_OK;
+> +
+> +	/* Update HW pressure (the boost frequencies are accepted) */
+> +	arch_update_hw_pressure(policy->related_cpus, (freq_hz / HZ_PER_KHZ));
 
-Indeed, this should have been LE order.
+This is wrong. The whole idea of the new HW pressure was that I wanted
+to get rid of the 'signal smoothing' mechanism in order to get
+instantaneous value from FW to task scheduler. Vincent created
+2 interfaces in that new HW pressure:
+1. cpufreq_update_pressure(policy) - raw variable
+2. arch_update_hw_pressure(policy->related_cpus, (freq_hz / HZ_PER_KHZ))
+    - smoothing PELT mechanism, good for raw IRQ in drivers
 
-> hciconfig
-> hci0:   Type: Primary  Bus: UART
->         BD Address: 8C:FD:F0:40:15:DC  ACL MTU: 1024:8  SCO MTU: 240:8
->         UP RUNNING 
->         RX bytes:1700 acl:0 sco:0 events:95 errors:0
->         TX bytes:128949 acl:0 sco:0 commands:578 errors:0
+In our SCMI cpufreq driver we need the 1st one:
+cpufreq_update_pressure(policy)
 
-And any user space tool overriding the address would currently need to
-provide the address in reverse order on Qualcomm platforms like this
-one (e.g. if generating the address for privacy reasons).
- 
-> > > I suggest adding a quirk like 'local-bd-address-msb-quirk' or
-> > > 'qcom,local-bd-address-msb-quirk' to make sure existing devices keep
-> > > working properly.
-> > 
-> > I don't think that would work. If this is something that we really need
-> > to handle, then there's probably no way around introducing new
-> > compatible strings for boot firmware that isn't broken while maintaining
-> > the current broken behaviour with respect to 'local-bd-address' for some
-> > of the current ones.
-> 
-> I think it should work for sc7180-trogdor. For these devices the device tree
-> is bundled with the kernel image and can be updated. That might not be true
-> for other devices though.
+The FW will do the 'signal smoothing or filtering' and won't
+flood the kernel with hundreds of notifications.
 
-Thanks for confirming.
+So, please change that bit and add me, Morten and Dietmar on CC.
+I would like to review it.
 
-I'm still hoping we can get away with not having to add quirks to
-Bluetooth core for broken Qualcomm boot firmware. Let's see if anyone
-knows of a use case that makes that impossible to avoid.
-
-Johan
+Regards,
+Lukasz
 
