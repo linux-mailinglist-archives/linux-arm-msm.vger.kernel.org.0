@@ -1,143 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-6853-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6854-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E54EA829306
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 05:36:01 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8CF17829399
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 07:13:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EC64F1C253AA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 04:36:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 44ED528922D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 06:13:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DF8963A0;
-	Wed, 10 Jan 2024 04:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B942224A14;
+	Wed, 10 Jan 2024 06:12:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="E104Hi3Q"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="c4V0veSQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21EDF28F9;
-	Wed, 10 Jan 2024 04:35:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C5F8C1A;
+	Wed, 10 Jan 2024 06:12:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40A1HKmd023345;
-	Wed, 10 Jan 2024 04:35:33 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40A307fi013283;
+	Wed, 10 Jan 2024 06:12:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=X63gzUmEEGsbVDOfkQ8Ne
-	QKbQcNVWrhZyddVnKT5YCc=; b=E104Hi3Q2gLElgoPVQoObFxpXajBVWPPw3jfJ
-	iyIrLDQqSgdnWheZiDAgHqFTQuaHabHXmCGqztsUbY98XQGpMOXVz+R2Bkw5O3HZ
-	0cVSGLI6j4spWfRFuLpUM36gyK0fu+EnGVRVrlaHyc08qrmiQLUP35OfeuH1k/L5
-	kY4B2dsPikzZyAeK88sATjfIkhpAb94kJekbfXqgI5V4ifbJ7a7P/BCt7QqIC/Mr
-	LVOJq8pL225o+2A9JSpJr1VhnY8g/ID1WEgBu3F+C0LojhY3oqlHGD/B5cza1Au+
-	X5EsYQSEEQCJQjgTazQ6C7P+P/5fXr7YTPPTXMI8AK8GS7Eig==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vhg8g0f9x-1
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=B5ouaHYiX5AW
+	dbZ7NSH7SvAb5JmdaWdv865fJJ5wI9Y=; b=c4V0veSQI3N4KmTf17J1RxsG1cau
+	vH9SUaqDvTs4W2CxxZZcMOWpTXFvpzUVGwr0y6VDmdmH7iASJ99TPw0I0KwLHtUd
+	RNkVC49ZVJNvxJgLXAhwad2niVvn6Ig3F3YdTSfmQijbMJxKRXSr5Q2+mL5/n7+x
+	Olc/T/8U/PCslPmYc7KZ0jLRKsvPJiSzjrwfvIsLMl+1hG7I/iJRLt0k0f22UQKX
+	t2mNQU6idQLUsgXWMuM105ZqL2Zdik/PYzQWYv5LtYMhqQd1uSWKz6NZ/IQqbsxR
+	5GivRhoU+umvA8Wgla3tp6ECLXhH24R42AOH3PwvXZd3YJYg0OXsnmddng==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vh9vfhghg-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jan 2024 04:35:32 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40A4ZWZb017075
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jan 2024 04:35:32 GMT
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 9 Jan 2024 20:35:25 -0800
-Date: Wed, 10 Jan 2024 10:05:22 +0530
-From: Pavan Kondeti <quic_pkondeti@quicinc.com>
-To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-CC: <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
-        <dmitry.baryshkov@linaro.org>, <konrad.dybcio@linaro.org>,
-        <jsnitsel@redhat.com>, <quic_bjorande@quicinc.com>, <mani@kernel.org>,
-        <quic_eberman@quicinc.com>, <robdclark@chromium.org>,
-        <u.kleine-koenig@pengutronix.de>, <robh@kernel.org>,
-        <vladimir.oltean@nxp.com>, <quic_pkondeti@quicinc.com>,
-        <quic_molvera@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
-        <linux-kernel@vger.kernel.org>, <qipl.kernel.upstream@quicinc.com>
-Subject: Re: [PATCH v7 4/5] iommu/arm-smmu: add ACTLR data and support for
- SM8550
-Message-ID: <56742d27-e7ca-43b4-8e26-3391d2056ac2@quicinc.com>
-References: <20240109114220.30243-1-quic_bibekkum@quicinc.com>
- <20240109114220.30243-5-quic_bibekkum@quicinc.com>
+	Wed, 10 Jan 2024 06:12:41 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 40A6CbAs006500;
+	Wed, 10 Jan 2024 06:12:37 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3veyxku493-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Wed, 10 Jan 2024 06:12:37 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40A6Cb5m006494;
+	Wed, 10 Jan 2024 06:12:37 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-dikshita-hyd.qualcomm.com [10.213.110.13])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 40A6Cb6e006493;
+	Wed, 10 Jan 2024 06:12:37 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 347544)
+	id 32E1B2511; Wed, 10 Jan 2024 11:42:36 +0530 (+0530)
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>
+Subject: [PATCH v2] media: venus: flush all buffers in output plane streamoff
+Date: Wed, 10 Jan 2024 11:42:14 +0530
+Message-Id: <1704867134-5522-1-git-send-email-quic_dikshita@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Xkb_cSNPdyGiOr_mKzcLSTF42cKVBzKm
+X-Proofpoint-ORIG-GUID: Xkb_cSNPdyGiOr_mKzcLSTF42cKVBzKm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 suspectscore=0 clxscore=1011 priorityscore=1501
+ impostorscore=0 adultscore=0 bulkscore=0 mlxlogscore=862 spamscore=0
+ phishscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401100049
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240109114220.30243-5-quic_bibekkum@quicinc.com>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: WJJohVTo47dAbAojGS8qNkzH0_ecVfZs
-X-Proofpoint-GUID: WJJohVTo47dAbAojGS8qNkzH0_ecVfZs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 spamscore=0 mlxscore=0 adultscore=0 mlxlogscore=960
- impostorscore=0 bulkscore=0 suspectscore=0 phishscore=0 priorityscore=1501
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401100034
 
-On Tue, Jan 09, 2024 at 05:12:19PM +0530, Bibek Kumar Patro wrote:
-> +static const struct actlr_variant sm8550_actlr[] = {
-> +	{ sm8550_apps_actlr_cfg, 0x15000000 },
-> +	{ sm8550_gfx_actlr_cfg, 0x03da0000 },
-> +	{},
-> +};
-> +
->  static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
->  {
->  	return container_of(smmu, struct qcom_smmu, smmu);
-> @@ -597,6 +673,14 @@ static const struct qcom_smmu_match_data sdm845_smmu_500_data = {
->  	/* Also no debug configuration. */
->  };
-> 
-> +
-> +static const struct qcom_smmu_match_data sm8550_smmu_500_impl0_data = {
-> +	.impl = &qcom_smmu_500_impl,
-> +	.adreno_impl = &qcom_adreno_smmu_500_impl,
-> +	.cfg = &qcom_smmu_impl0_cfg,
-> +	.actlrvar = sm8550_actlr,
-> +};
-> +
+For scenarios, when source change is followed by VIDIOC_STREAMOFF
+on output plane, driver should discard any queued OUTPUT
+buffers, which are not decoded or dequeued.
+Flush with HFI_FLUSH_INPUT does not have any actual impact.
+So, fix it, by invoking HFI_FLUSH_ALL, which will flush all
+queued buffers.
 
-I wish there is Rust like struct update syntax possible here. All we need
-here is to update qcom_smmu_match_data::actlrvar member here to the generic
-qcom_smmu_500_impl0_data struct data.
+Fixes: 85872f861d4c ("media: venus: Mark last capture buffer")
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+---
+Changes since v1:
+- Added fixes tag (Bryan)
 
->  static const struct qcom_smmu_match_data qcom_smmu_500_impl0_data = {
->  	.impl = &qcom_smmu_500_impl,
->  	.adreno_impl = &qcom_adreno_smmu_500_impl,
-> @@ -631,6 +715,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
->  	{ .compatible = "qcom,sm8250-smmu-500", .data = &qcom_smmu_500_impl0_data },
->  	{ .compatible = "qcom,sm8350-smmu-500", .data = &qcom_smmu_500_impl0_data },
->  	{ .compatible = "qcom,sm8450-smmu-500", .data = &qcom_smmu_500_impl0_data },
-> +	{ .compatible = "qcom,sm8550-smmu-500", .data = &sm8550_smmu_500_impl0_data },
->  	{ .compatible = "qcom,smmu-500", .data = &qcom_smmu_500_impl0_data },
->  	{ }
->  };
+ drivers/media/platform/qcom/venus/vdec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Given that ACTLR data is different across SoCs, would it be a good idea
-to decouple it from the qcom_smmu_match_data struct and directly get it
-via of_device_is_compatible() from context init functions.  The ACTLR
-data will have a compatible string associated with it, we lookup for the
-device compatible in this table and select the ACTLR accordingly. This
-way, we don't need to add more entries to qcom_smmu_impl_of_match and
-keep using the "qcom,smmu-500" for driver match data. 
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index 29130a9..0d2ab95 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -1255,7 +1255,7 @@ static int vdec_stop_output(struct venus_inst *inst)
+ 		break;
+ 	case VENUS_DEC_STATE_INIT:
+ 	case VENUS_DEC_STATE_CAPTURE_SETUP:
+-		ret = hfi_session_flush(inst, HFI_FLUSH_INPUT, true);
++		ret = hfi_session_flush(inst, HFI_FLUSH_ALL, true);
+ 		break;
+ 	default:
+ 		break;
+-- 
+2.7.4
 
-I have made this suggestion to keep the rule introduced in commit
-80b71080720e ("iommu/arm-smmu-qcom: Add generic qcom,smmu-500 match
-entry") relavant. I will let Dmitry to provide the guidance here.
-
-Thanks,
-Pavan
 
