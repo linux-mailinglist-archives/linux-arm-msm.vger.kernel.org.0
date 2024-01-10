@@ -1,123 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-6854-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6855-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8CF17829399
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 07:13:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E55878293C7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 07:43:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 44ED528922D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 06:13:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7D47E287A8E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 06:43:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B942224A14;
-	Wed, 10 Jan 2024 06:12:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4790032C6D;
+	Wed, 10 Jan 2024 06:43:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="c4V0veSQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GkckBDl9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C5F8C1A;
-	Wed, 10 Jan 2024 06:12:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40A307fi013283;
-	Wed, 10 Jan 2024 06:12:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=B5ouaHYiX5AW
-	dbZ7NSH7SvAb5JmdaWdv865fJJ5wI9Y=; b=c4V0veSQI3N4KmTf17J1RxsG1cau
-	vH9SUaqDvTs4W2CxxZZcMOWpTXFvpzUVGwr0y6VDmdmH7iASJ99TPw0I0KwLHtUd
-	RNkVC49ZVJNvxJgLXAhwad2niVvn6Ig3F3YdTSfmQijbMJxKRXSr5Q2+mL5/n7+x
-	Olc/T/8U/PCslPmYc7KZ0jLRKsvPJiSzjrwfvIsLMl+1hG7I/iJRLt0k0f22UQKX
-	t2mNQU6idQLUsgXWMuM105ZqL2Zdik/PYzQWYv5LtYMhqQd1uSWKz6NZ/IQqbsxR
-	5GivRhoU+umvA8Wgla3tp6ECLXhH24R42AOH3PwvXZd3YJYg0OXsnmddng==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vh9vfhghg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jan 2024 06:12:41 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 40A6CbAs006500;
-	Wed, 10 Jan 2024 06:12:37 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3veyxku493-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Wed, 10 Jan 2024 06:12:37 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40A6Cb5m006494;
-	Wed, 10 Jan 2024 06:12:37 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-dikshita-hyd.qualcomm.com [10.213.110.13])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 40A6Cb6e006493;
-	Wed, 10 Jan 2024 06:12:37 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 347544)
-	id 32E1B2511; Wed, 10 Jan 2024 11:42:36 +0530 (+0530)
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>
-Subject: [PATCH v2] media: venus: flush all buffers in output plane streamoff
-Date: Wed, 10 Jan 2024 11:42:14 +0530
-Message-Id: <1704867134-5522-1-git-send-email-quic_dikshita@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Xkb_cSNPdyGiOr_mKzcLSTF42cKVBzKm
-X-Proofpoint-ORIG-GUID: Xkb_cSNPdyGiOr_mKzcLSTF42cKVBzKm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- lowpriorityscore=0 suspectscore=0 clxscore=1011 priorityscore=1501
- impostorscore=0 adultscore=0 bulkscore=0 mlxlogscore=862 spamscore=0
- phishscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401100049
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3CADECE
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 06:43:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-6d9f94b9186so3236570b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jan 2024 22:43:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704869007; x=1705473807; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ufriYbCxMamJExkyO+DSziDprmr/nvohHV8KvnEcisE=;
+        b=GkckBDl9tyDeaKoq1OlLbr6jEBwdbjzMGB0I45CAU6xI+pgxYAVVcgVcq2AKQpBjM7
+         3wnDntahFoAcep5K8VnjbMQzSJIofcavO4I7WeCodBVsVW8sbbAy3vuCAA23d10llbWQ
+         O0Sa1BdzkP2xMT49yTz2ONeRQ0t3IdlTQum1qPOpfmaOziYsSz+6XZRSr9zXz8ZyI7IT
+         OorO6nPNXk+DvFyUSi31O7tQPj6+WQAiDZdAp8KoiEEuE89AijmVyZCZabZe5dKcdwdV
+         PbKiXXhbg5q2qGY1BdIQLX4bb8S1WkyNIE0CjOlaKMneYqwUl0Y8joqktrM0wx4EbVEw
+         JFlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704869007; x=1705473807;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ufriYbCxMamJExkyO+DSziDprmr/nvohHV8KvnEcisE=;
+        b=Nt9mAPlfpkrtWIhO/+IzRR/OaeiqMjcujJ4qx/yLIxs4+896LaZLy1JCaekkulhZS2
+         xHtkaYzyhHA8B5motyGNTIckaeZB2/mgPgRYmpoNdKDuYmKR16xzpEsmmy2mv9vcBk/i
+         9qh1JbChaCxFwIuHPElUAWEu5+1Urs8lBlBknyKD8OMFEQhtpq+sAaZcJDb43khtGQrv
+         BubDpxzIJMDlXhnfIgTnyTdlfvz+0FEkoHP8afnWJlQTF2Kt31Y1n4n3gnfPmFCJGEiU
+         ifypskue/Ct+cy490iv0Z9pFeZlSCJQYJiuA8iP7qTGe6ZJMy0athF0eG7dJlpWa8kro
+         vJ7g==
+X-Gm-Message-State: AOJu0Yz7yiN2kwzDz9K/BLv/hlXBSg9DEGyG6luqduKrxNsvM3xjMe8Y
+	hBHUpuUje1sYOBs2vZWVVMJIjd4uAXdpSQ==
+X-Google-Smtp-Source: AGHT+IHVmZ9O2UiKApFYg6a+2bvUEeNRE+QH24QgnpIssMtERJd0DP+8Dglnh788IGmlXjBYlPjMPA==
+X-Received: by 2002:a05:6a20:1682:b0:198:7feb:97ae with SMTP id q2-20020a056a20168200b001987feb97aemr365175pzc.123.1704869007250;
+        Tue, 09 Jan 2024 22:43:27 -0800 (PST)
+Received: from localhost ([122.172.81.83])
+        by smtp.gmail.com with ESMTPSA id n5-20020a634005000000b005cd64ff9a42sm2618582pga.64.2024.01.09.22.43.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Jan 2024 22:43:26 -0800 (PST)
+Date: Wed, 10 Jan 2024 12:13:24 +0530
+From: Viresh Kumar <viresh.kumar@linaro.org>
+To: Vincent Guittot <vincent.guittot@linaro.org>
+Cc: linux@armlinux.org.uk, catalin.marinas@arm.com, will@kernel.org,
+	sudeep.holla@arm.com, rafael@kernel.org, agross@kernel.org,
+	andersson@kernel.org, konrad.dybcio@linaro.org, mingo@redhat.com,
+	peterz@infradead.org, juri.lelli@redhat.com,
+	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com,
+	mgorman@suse.de, bristot@redhat.com, vschneid@redhat.com,
+	lukasz.luba@arm.com, rui.zhang@intel.com, mhiramat@kernel.org,
+	daniel.lezcano@linaro.org, amit.kachhap@gmail.com, corbet@lwn.net,
+	gregkh@linuxfoundation.org, linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org, qyousef@layalina.io
+Subject: Re: [PATCH v4 1/5] cpufreq: Add a cpufreq pressure feedback for the
+ scheduler
+Message-ID: <20240110064324.bex3ssej5ghie6cu@vireshk-i7>
+References: <20240109164655.626085-1-vincent.guittot@linaro.org>
+ <20240109164655.626085-2-vincent.guittot@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240109164655.626085-2-vincent.guittot@linaro.org>
 
-For scenarios, when source change is followed by VIDIOC_STREAMOFF
-on output plane, driver should discard any queued OUTPUT
-buffers, which are not decoded or dequeued.
-Flush with HFI_FLUSH_INPUT does not have any actual impact.
-So, fix it, by invoking HFI_FLUSH_ALL, which will flush all
-queued buffers.
+On 09-01-24, 17:46, Vincent Guittot wrote:
+> Provide to the scheduler a feedback about the temporary max available
+> capacity. Unlike arch_update_thermal_pressure, this doesn't need to be
+> filtered as the pressure will happen for dozens ms or more.
+> 
+> Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+> ---
+>  drivers/cpufreq/cpufreq.c | 36 ++++++++++++++++++++++++++++++++++++
+>  include/linux/cpufreq.h   | 10 ++++++++++
+>  2 files changed, 46 insertions(+)
 
-Fixes: 85872f861d4c ("media: venus: Mark last capture buffer")
-Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
----
-Changes since v1:
-- Added fixes tag (Bryan)
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
 
- drivers/media/platform/qcom/venus/vdec.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 29130a9..0d2ab95 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -1255,7 +1255,7 @@ static int vdec_stop_output(struct venus_inst *inst)
- 		break;
- 	case VENUS_DEC_STATE_INIT:
- 	case VENUS_DEC_STATE_CAPTURE_SETUP:
--		ret = hfi_session_flush(inst, HFI_FLUSH_INPUT, true);
-+		ret = hfi_session_flush(inst, HFI_FLUSH_ALL, true);
- 		break;
- 	default:
- 		break;
 -- 
-2.7.4
-
+viresh
 
