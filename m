@@ -1,142 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-6851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6852-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id B84028292BE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 04:17:18 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 135C48292EC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 05:07:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C3692B20C91
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 03:17:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB8EA287FCA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 04:07:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E30B23D5;
-	Wed, 10 Jan 2024 03:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E44046A2;
+	Wed, 10 Jan 2024 04:07:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gewyc9vY"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZltpDA36"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DCB723B1;
-	Wed, 10 Jan 2024 03:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E10F4689;
+	Wed, 10 Jan 2024 04:07:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40A1hmDC028430;
-	Wed, 10 Jan 2024 03:16:59 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40A2S8jq015649;
+	Wed, 10 Jan 2024 04:06:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=eT2RFPcUzBjCFcgmYWvFX29+fptit5SqWct6bYbB0rY=; b=ge
-	wyc9vYJ7JP7/kYqmB2apNJZVwkC2sUOu7LIFCWZlTgKnwzqgSy917cWJBs12+niL
-	ctJ9AvMCEpWiHL+RFbuNmYaTahO21uOe8taj1BgVC75+gY7J2xexl8vpQn61iCjk
-	4n+T115+I+U56PMTT0rFpiOROpBiYmVdcbyV+AzrBaSaI4qERr5px2kxJ2y3epeQ
-	advp2/vM2xPT51JLrLxf2cT9IcKlW6GsBuTHFz62nUqk0QppcoNZyo02VMSQewI7
-	MfHNFG/P95e8yoWEfe/ypmT68wdcFXM9AId6cAWGYAWwexAxw1edhs4o4xsLefRx
-	ppD1wHV16ocCIKbHBfPw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vh3g6a22r-1
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=5V6c1LzqqYZg8TMxdl30r
+	TLW5Ff08OXxDu3yme8YK+0=; b=ZltpDA36jiTLkHsV4xikipJjp/scJIQjx8abb
+	ZcMVrpMGwNXf66QpHKCNcDazJQb9b9ykcuzfEwrwEAZr1gHnWMswVgZqx+MuugIB
+	VVp3IHH3fuRd4IxDx9JWkJSm5SPPOzDJ76+Lv7sBKDTkSthoiqBcecKlzrgytTfQ
+	oNtKkzzd+UKmJ+QVdyfghNcRuOgr7Yxv3OyfGGUqQr6PNaV3BOVIY7183yN7+J9a
+	BfrTwfvbf+KsW7KJQLJdM+MqP+CRhGlIYsiTWOWfXzLGinox0hv2qPOv3lXTbSIJ
+	nfvMUX3JwFqSewMlRiLq0d4XstYyrv3QfrxupNOnXoHdatGFQ==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vh9evsc0b-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jan 2024 03:16:58 +0000 (GMT)
+	Wed, 10 Jan 2024 04:06:44 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40A3GvUb013535
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40A46hFp026739
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jan 2024 03:16:57 GMT
-Received: from [10.216.11.180] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 9 Jan
- 2024 19:16:48 -0800
-Message-ID: <16efa89e-6a9d-4e9a-9020-239b9750119d@quicinc.com>
-Date: Wed, 10 Jan 2024 08:46:40 +0530
+	Wed, 10 Jan 2024 04:06:43 GMT
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Tue, 9 Jan 2024 20:06:37 -0800
+Date: Wed, 10 Jan 2024 09:36:34 +0530
+From: Pavan Kondeti <quic_pkondeti@quicinc.com>
+To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+CC: <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
+        <dmitry.baryshkov@linaro.org>, <konrad.dybcio@linaro.org>,
+        <jsnitsel@redhat.com>, <quic_bjorande@quicinc.com>, <mani@kernel.org>,
+        <quic_eberman@quicinc.com>, <robdclark@chromium.org>,
+        <u.kleine-koenig@pengutronix.de>, <robh@kernel.org>,
+        <vladimir.oltean@nxp.com>, <quic_pkondeti@quicinc.com>,
+        <quic_molvera@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+        <linux-kernel@vger.kernel.org>, <qipl.kernel.upstream@quicinc.com>
+Subject: Re: [PATCH v7 3/5] iommu/arm-smmu: introduction of ACTLR for custom
+ prefetcher settings
+Message-ID: <2ad70157-27d1-41df-8866-c226af690cf6@quicinc.com>
+References: <20240109114220.30243-1-quic_bibekkum@quicinc.com>
+ <20240109114220.30243-4-quic_bibekkum@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/12] usb: dwc3: qcom: Instantiate dwc3 core directly
-Content-Language: en-US
-To: Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Wesley Cheng
-	<quic_wcheng@quicinc.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        "Johan
- Hovold" <johan@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, Felipe Balbi <balbi@kernel.org>,
-        Rob Herring
-	<robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Philipp Zabel" <p.zabel@pengutronix.de>
-References: <20231016-dwc3-refactor-v1-0-ab4a84165470@quicinc.com>
- <20231016-dwc3-refactor-v1-7-ab4a84165470@quicinc.com>
-From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <20231016-dwc3-refactor-v1-7-ab4a84165470@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20240109114220.30243-4-quic_bibekkum@quicinc.com>
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mTqddsODM1Z5spr7u8a0eebT_TPOR2qa
-X-Proofpoint-ORIG-GUID: mTqddsODM1Z5spr7u8a0eebT_TPOR2qa
+X-Proofpoint-GUID: Gn6vGfAZGqcs-xlk-Tqt3qmnR_DbkUtU
+X-Proofpoint-ORIG-GUID: Gn6vGfAZGqcs-xlk-Tqt3qmnR_DbkUtU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- bulkscore=0 spamscore=0 malwarescore=0 phishscore=0 clxscore=1015
- impostorscore=0 suspectscore=0 lowpriorityscore=0 mlxlogscore=794
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401100025
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
+ mlxlogscore=999 lowpriorityscore=0 mlxscore=0 priorityscore=1501
+ adultscore=0 suspectscore=0 clxscore=1011 spamscore=0 phishscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401100031
 
+On Tue, Jan 09, 2024 at 05:12:18PM +0530, Bibek Kumar Patro wrote:
+>  static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+>  		struct io_pgtable_cfg *pgtbl_cfg, struct device *dev)
+>  {
+> +	struct arm_smmu_device *smmu = smmu_domain->smmu;
+> +	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
+> +	const struct actlr_variant *actlrvar;
+> +	int cbndx = smmu_domain->cfg.cbndx;
+>  	struct adreno_smmu_priv *priv;
+> 
+>  	smmu_domain->cfg.flush_walk_prefer_tlbiasid = true;
+> @@ -248,6 +285,16 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+>  	priv->set_stall = qcom_adreno_smmu_set_stall;
+>  	priv->resume_translation = qcom_adreno_smmu_resume_translation;
+> 
+> +	if (qsmmu->data->actlrvar) {
+> +		actlrvar = qsmmu->data->actlrvar;
+> +		for (; actlrvar->io_start; actlrvar++) {
+> +			if (actlrvar->io_start == smmu->ioaddr) {
+> +				qcom_smmu_set_actlr(dev, smmu, cbndx, actlrvar->actlrcfg);
+> +				break;
+> +			}
+> +		}
+> +	}
+> +
+>  	return 0;
+>  }
+> 
+> @@ -274,6 +321,21 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
+>  static int qcom_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+>  		struct io_pgtable_cfg *pgtbl_cfg, struct device *dev)
+>  {
+> +	struct arm_smmu_device *smmu = smmu_domain->smmu;
+> +	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
+> +	const struct actlr_variant *actlrvar;
+> +	int cbndx = smmu_domain->cfg.cbndx;
+> +
+> +	if (qsmmu->data->actlrvar) {
+> +		actlrvar = qsmmu->data->actlrvar;
+> +		for (; actlrvar->io_start; actlrvar++) {
+> +			if (actlrvar->io_start == smmu->ioaddr) {
+> +				qcom_smmu_set_actlr(dev, smmu, cbndx, actlrvar->actlrcfg);
+> +				break;
+> +			}
+> +		}
+> +	}
+> +
 
+This block and the one in qcom_adreno_smmu_init_context() are exactly
+the same. Possible to do some refactoring?
 
-On 10/17/2023 8:41 AM, Bjorn Andersson wrote:
-> The Qualcomm DWC3 glue builds up a platform_device programmatically in
-> order to probe the DWC3 core when running off ACPI data. But with the
-> newly introduced support for instantiating the core directly from the
-> glue, this code can be replaced with a single function call.
+>  	smmu_domain->cfg.flush_walk_prefer_tlbiasid = true;
+> 
+>  	return 0;
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
+> index f3b91963e234..29d26dfa2ed9 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
+> @@ -1,6 +1,6 @@
+>  /* SPDX-License-Identifier: GPL-2.0-only */
+>  /*
+> - * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
+> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+>   */
 > 
 
+It should be 2022-2023 . 
 
+>  #ifndef _ARM_SMMU_QCOM_H
+> @@ -24,8 +24,17 @@ struct qcom_smmu_config {
+>  	const u32 *reg_offset;
+>  };
+> 
+> +struct actlr_config;
+> +
+> +struct actlr_variant {
+> +	const struct actlr_config *actlrcfg;
+> +	const resource_size_t io_start;
+> +};
+> +
+>  struct qcom_smmu_match_data {
+> +	const struct actlr_variant *actlrvar;
+>  	const struct qcom_smmu_config *cfg;
+> +	const int num_smmu;
+>  	const struct arm_smmu_impl *impl;
+>  	const struct arm_smmu_impl *adreno_impl;
+>  };
 
-> @@ -942,7 +889,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
->   	if (np)
->   		ret = dwc3_qcom_of_register_core(pdev);
->   	else
-> -		ret = dwc3_qcom_acpi_register_core(pdev);
-> +		ret = dwc3_qcom_probe_core(pdev, qcom);
->   
->   	if (ret) {
->   		dev_err(dev, "failed to register DWC3 Core, err=%d\n", ret);
-> @@ -986,10 +933,10 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
->   interconnect_exit:
->   	dwc3_qcom_interconnect_exit(qcom);
->   depopulate:
-> -	if (np)
-> +	if (qcom->dwc_dev)
->   		of_platform_depopulate(&pdev->dev);
->   	else
-> -		platform_device_put(pdev);
-> +		dwc3_remove(qcom->dwc);
+qcom_smmu_match_data::num_smmu needs cleanup.
 
-Hi Bjorn
-
-  I was testing this patch and I suspect there is one issue.
-
-  In the event dwc3_qcom_probe_core fails because dwc3_probe failed, 
-then the variable (qcom->dwc) is NULL. We then exercise the depopulate 
-path and we call dwc_remove(NULL) causing a crash.
-
-Regards,
-Krishna,
+Thanks,
+Pavan
 
