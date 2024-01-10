@@ -1,111 +1,289 @@
-Return-Path: <linux-arm-msm+bounces-6988-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6989-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5730F82A4ED
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 00:23:05 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B7AF82A4FB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 00:39:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 954DEB22119
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 23:23:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C1CF128AA86
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 23:39:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B0054F898;
-	Wed, 10 Jan 2024 23:22:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C0C54F8A5;
+	Wed, 10 Jan 2024 23:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="saJu6Dke"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MNiLLEb8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA5CB4F895
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 23:22:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9C43EA74
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 23:39:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-5f68af028afso41251597b3.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 15:22:57 -0800 (PST)
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-5f68e2e1749so40694077b3.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 15:39:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704928976; x=1705533776; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1704929946; x=1705534746; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=IP0kPmjJQz5xdnO9Zw1vVvFueYTNz/6OxEEXA7YZ1Dg=;
-        b=saJu6DkenM0ZJoqYC/Q74oz9oZNEHhReX1lvm6Da4KwSU0uVL0Try+anM/085hwOMn
-         9ea6qWFKhkW940eutF0T/y+pQYaGMSbtjJhS45q6xYjrbb2D3hXEN8nFO68odFd/iMUH
-         lKZB7haaQzFZAtNvzHz8sWs3Gv2OqE1deJxti6TF1SxOl+3OyoJRNCQOZq74vUa/A46N
-         8NlTMgJVkVjaGKRV+apq+CaLVtAlatT/h9VY7+fNB1Xh7eJsRGrcuECvjapVRJzU5o2m
-         6Yhxxa1cNvXfTlibVuYb7QUmS+jJuMePraPsYvZV+XG/KRom+tWGSIaI8u4wYknQBWtA
-         q8xw==
+        bh=Qv5xXL6A+2J+1KA1k07jEHKx6VrItsmSJjrNVSwQV2Q=;
+        b=MNiLLEb89MjDv+SlIesiLEhemSSr2QymW4D/gBkE5J66QjseJehWY8jZUYhqhT8CJf
+         t2R7OSMAowPqkks8Se4mw8pA8h6Y35urXpznNw5WsYfVxaDmP4Ch/9OumbAxbtGUgCoX
+         96YUe04MaMjUyrizhMG8XZW1CcpWpEv4/fddTmBJT7oqdGvOLlyYVkR258lytQLnFFuy
+         FAHnkaVaspkUyAI7IerojQXJe/EhlBVRlv4MZjrbY/LB3K132B3lxtdmhQYxTVt6xWZa
+         tMca2hqabrdUFnKO4SrXmzy3LmTRUeCMj82jmC8q7/M+GEpK9j0fZPRKTlCyvqT+ehnJ
+         8m5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704928976; x=1705533776;
+        d=1e100.net; s=20230601; t=1704929946; x=1705534746;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=IP0kPmjJQz5xdnO9Zw1vVvFueYTNz/6OxEEXA7YZ1Dg=;
-        b=YQHiFIQioeftovrpEQfJ3a0p+0m33+p7VUzMdugaqE+BTjaVo3wwCgSm3ofI3Zc8q2
-         /W3AVhX+U5s7/sWhpX/Yi4BhdFNIG1yFs+LOAkQqjN3ZHVAQXwrYfj7iJG30IepajRIG
-         CP5B1V+MDTRAqHlaVm8zGRvHOClnVnLTKYleDhh2CGw1FUHHetWjiy+gX+RiPTmO8BqE
-         TBlNWw2N4bKSAkFqCEB+cCABKhoqUHKb5VoLouR2Rw2x+zVAKJp651Ie47YKXctJLE6b
-         fdwikIXQMI4ZLkt6Kok54fgNsgAHT2xz0JDfmA314VKdjXRa7RYUobXJSJpmtClUA77z
-         F1pQ==
-X-Gm-Message-State: AOJu0YwJHEFV5RCY7iysgr9/KQyWtVkYz7u1I0UBDl9RaAr5uYUqaold
-	l0Ogwj7zi9NPn/JIE9zCDRRMe2zRpocRodWC4ITOrNThmBANSA==
-X-Google-Smtp-Source: AGHT+IFqBQqIGJ/G1jHMlkSuLZ9HFAiFLALAjQuy4Zj7oSL4IC41zFAAgk0OSkkJdHgkbDhmybdpD7SWug2Rj/DJZhQ=
-X-Received: by 2002:a81:a1d6:0:b0:5eb:9192:114 with SMTP id
- y205-20020a81a1d6000000b005eb91920114mr396803ywg.72.1704928976306; Wed, 10
- Jan 2024 15:22:56 -0800 (PST)
+        bh=Qv5xXL6A+2J+1KA1k07jEHKx6VrItsmSJjrNVSwQV2Q=;
+        b=CERAEv/n2PpX2k8mRQcIPI9AoT3gOK9BJyvAYHfW5Oek+dCHCQAOdx46Sg0QwkXWJw
+         DMXkqrFdgU9VUzA+F8OLvRrKhZ1SSe1yupWaGjYPuInwSsOJjH6qfPQTgFxI0kOREmkx
+         IOC8ZULBV3zaVqc+QpjVCne2WSylI3lXdF4YRtj8wIp6CGrO9R4hvvNXhp1XcoUhhd9/
+         1IrAX5jpW7MLTd/9MeCvYIX9leO2hUiF2YNQiZLmkQMnHLnSE9Rc+jS9UV9EcJUq9O9D
+         oIlUoPrKOyobP49y1EJ+BBTw2ZdmUW6Oi2smZg4ak4V6s07EauExe7Q661AtpbEUUnnN
+         KSlw==
+X-Gm-Message-State: AOJu0YxPoQ8Ra+tajoUz93GDByn1LsDUENmMT+kvLaUy/F3phPHSGmDg
+	FcP1o4wSt7e8ywh0DXdSNJ1J21CNT6dO2BmnHTVGmP5nFarlnQ==
+X-Google-Smtp-Source: AGHT+IELbhs6J/vYJKH6p9upru1FLiSNRZUYT+IjljI5i3mV9Lgk53N2Nt8oekCONRvnRPwD07Z7MNCLhbwBqWQFrCE=
+X-Received: by 2002:a81:ee04:0:b0:5f8:f50e:bd36 with SMTP id
+ l4-20020a81ee04000000b005f8f50ebd36mr347845ywm.96.1704929945816; Wed, 10 Jan
+ 2024 15:39:05 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231009205727.2781802-1-dmitry.baryshkov@linaro.org>
- <20231009205727.2781802-6-dmitry.baryshkov@linaro.org> <d11ffecb-010d-769a-2d3c-9634a046a453@quicinc.com>
-In-Reply-To: <d11ffecb-010d-769a-2d3c-9634a046a453@quicinc.com>
+References: <1704917888-30039-1-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1704917888-30039-1-git-send-email-quic_khsieh@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 11 Jan 2024 01:22:45 +0200
-Message-ID: <CAA8EJpqBgLxd6kRsi2zgnah55fPHJE5_9_xv9PHR6ec40Dk-0w@mail.gmail.com>
-Subject: Re: [PATCH 5/5] drm/msm/mdp5: drop split display support
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Stephen Boyd <swboyd@chromium.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Date: Thu, 11 Jan 2024 01:38:54 +0200
+Message-ID: <CAA8EJprkotYgo8je2+N=aZGxEReHgLR_rooKQBOWqRn+dgKtSQ@mail.gmail.com>
+Subject: Re: [PATCH v1] drm/msm/dp: correct configure Colorimetry Indicator
+ Field at MISC0
+To: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc: dri-devel@lists.freedesktop.org, robdclark@gmail.com, sean@poorly.run, 
+	swboyd@chromium.org, dianders@chromium.org, vkoul@kernel.org, daniel@ffwll.ch, 
+	airlied@gmail.com, agross@kernel.org, andersson@kernel.org, 
+	quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com, 
+	quic_sbillaka@quicinc.com, marijn.suijten@somainline.org, 
+	freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 11 Jan 2024 at 01:01, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+On Wed, 10 Jan 2024 at 22:18, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
 >
->
->
-> On 10/9/2023 1:57 PM, Dmitry Baryshkov wrote:
-> > The MSM DSI driver has dropped support for calling
-> > mdp_kms_funcs::set_split_display() callback. Drop corresponding callback
-> > from the mdp5 driver together with the rest of the infrastructure.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >   .../gpu/drm/msm/disp/mdp5/mdp5_cmd_encoder.c  | 42 -------------------
-> >   drivers/gpu/drm/msm/disp/mdp5/mdp5_encoder.c  | 42 -------------------
-> >   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c      | 14 -------
-> >   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h      |  9 ----
-> >   drivers/gpu/drm/msm/msm_kms.h                 |  4 --
-> >   5 files changed, 111 deletions(-)
-> >
->
-> The programming inside the set_split_display() looks right from what i
-> see, so whenever (if at all) bonded_dsi is implemented for mdp5, this
-> will remain intact. Its just that there are no consumers left for
-> set_split_display anymore so its dead code. If someone wants to add that
-> support, I guess they have to start by reverting this commit first. If
-> thats the plan and agreement,
+> MSA MISC0 bit 1 to 7 contains Colorimetry Indicator Field. At current
+> implementation, Colorimetry Indicator Field of MISC0 is not configured
+> correctly. This patch add support of RGB formats Colorimetry.
 
-Either by reverting this commit or by introducing a wrapper like the
-one present in dpu_encoder_virt.
+https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
+
+Also the commit message doesn't provide any details or what was incorrect.
 
 >
-> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> ---
+>  drivers/gpu/drm/msm/dp/dp_ctrl.c  |  5 ++--
+>  drivers/gpu/drm/msm/dp/dp_link.c  | 26 ++++++++++++++++-----
+>  drivers/gpu/drm/msm/dp/dp_panel.c | 48 +++++++++++++++++++++++++++++++++++++++
+>  drivers/gpu/drm/msm/dp/dp_panel.h |  2 ++
+>  4 files changed, 73 insertions(+), 8 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> index 77a8d93..2ef89fb 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> @@ -1,6 +1,7 @@
+>  // SPDX-License-Identifier: GPL-2.0-only
+>  /*
+> - * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2012-2023, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved
+>   */
+>
+>  #define pr_fmt(fmt)    "[drm-dp] %s: " fmt, __func__
+> @@ -172,7 +173,7 @@ static void dp_ctrl_configure_source_params(struct dp_ctrl_private *ctrl)
+>
+>         tb = dp_link_get_test_bits_depth(ctrl->link,
+>                 ctrl->panel->dp_mode.bpp);
+> -       cc = dp_link_get_colorimetry_config(ctrl->link);
+> +       cc = dp_panel_get_misc_colorimetry_val(ctrl->panel);
+>         dp_catalog_ctrl_config_misc(ctrl->catalog, cc, tb);
+>         dp_panel_timing_cfg(ctrl->panel);
+>  }
+> diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
+> index 98427d4..21fa1a2 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_link.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_link.c
+> @@ -1,6 +1,7 @@
+>  // SPDX-License-Identifier: GPL-2.0-only
+>  /*
+>   * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved
+>   */
+>
+>  #define pr_fmt(fmt)    "[drm-dp] %s: " fmt, __func__
+> @@ -12,6 +13,11 @@
+>
+>  #define DP_TEST_REQUEST_MASK           0x7F
+>
+> +enum dynamic_range {
+> +       DP_DYNAMIC_RANGE_RGB_VESA,
+> +       DP_DYNAMIC_RANGE_RGB_CEA,
+> +};
+> +
+>  enum audio_sample_rate {
+>         AUDIO_SAMPLE_RATE_32_KHZ        = 0x00,
+>         AUDIO_SAMPLE_RATE_44_1_KHZ      = 0x01,
+> @@ -1083,6 +1089,7 @@ int dp_link_process_request(struct dp_link *dp_link)
+>  int dp_link_get_colorimetry_config(struct dp_link *dp_link)
+>  {
+>         u32 cc;
+> +       enum dynamic_range dr;
+>         struct dp_link_private *link;
+>
+>         if (!dp_link) {
+> @@ -1092,14 +1099,21 @@ int dp_link_get_colorimetry_config(struct dp_link *dp_link)
+>
+>         link = container_of(dp_link, struct dp_link_private, dp_link);
+>
+> -       /*
+> -        * Unless a video pattern CTS test is ongoing, use RGB_VESA
+> -        * Only RGB_VESA and RGB_CEA supported for now
+> -        */
+> +       /* unless a video pattern CTS test is ongoing, use CEA_VESA */
+>         if (dp_link_is_video_pattern_requested(link))
+> -               cc = link->dp_link.test_video.test_dyn_range;
+> +               dr = link->dp_link.test_video.test_dyn_range;
 
+test_dyn_range has the value of (dpcd[DP_TEST_MISC0] &
+DP_TEST_DYNAMIC_RANGE_CEA), so it can not be assigned to dr.
+
+I don't feel like this has been tested.
+
+>         else
+> -               cc = DP_TEST_DYNAMIC_RANGE_VESA;
+> +               dr = DP_DYNAMIC_RANGE_RGB_VESA;
+> +
+> +       /* Only RGB_VESA and RGB_CEA supported for now */
+> +       switch (dr) {
+> +       case DP_DYNAMIC_RANGE_RGB_CEA:
+> +               cc = BIT(2);
+
+No undefined magic, please.
+
+> +               break;
+> +       case DP_DYNAMIC_RANGE_RGB_VESA:
+> +       default:
+> +               cc = 0;
+> +       }
+>
+>         return cc;
+>  }
+> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+> index 127f6af..785bb59 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+> @@ -1,6 +1,7 @@
+>  // SPDX-License-Identifier: GPL-2.0-only
+>  /*
+>   * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved
+>   */
+>
+>  #include "dp_panel.h"
+> @@ -386,6 +387,53 @@ int dp_panel_init_panel_info(struct dp_panel *dp_panel)
+>         return 0;
+>  }
+>
+> +/*
+> + * Mapper function which outputs colorimetry to be used for a
+> + * given colorspace value when misc field of MSA is used to
+> + * change the colorimetry. Currently only RGB formats have been
+> + * added. This API will be extended to YUV once it's supported on DP.
+> + */
+> +u8 dp_panel_get_misc_colorimetry_val(struct dp_panel *dp_panel)
+> +{
+> +       u8 colorimetry;
+> +       u32 colorspace;
+> +       u32 cc;
+> +       struct dp_panel_private *panel;
+> +
+> +       panel = container_of(dp_panel, struct dp_panel_private, dp_panel);
+> +
+> +       cc = dp_link_get_colorimetry_config(panel->link);
+> +       /*
+> +        * If there is a non-zero value then compliance test-case
+> +        * is going on, otherwise we can honor the colorspace setting
+> +        */
+> +       if (cc)
+> +               return cc;
+> +
+> +       colorspace = dp_panel->connector->state->colorspace;
+
+The driver doesn't attach the colorspace property, so this part is
+useless. Anyway, I think adding colorimetry support will require more
+changes than just setting the register in the DisplayPort controller.
+
+> +       drm_dbg_dp(panel->drm_dev, "colorspace=%d\n", colorspace);
+> +
+> +       switch (colorspace) {
+> +       case DRM_MODE_COLORIMETRY_DCI_P3_RGB_D65:
+> +       case DRM_MODE_COLORIMETRY_DCI_P3_RGB_THEATER:
+> +               colorimetry = 0x7;
+> +               break;
+> +       case DRM_MODE_COLORIMETRY_RGB_WIDE_FIXED:
+> +               colorimetry = 0x3;
+> +               break;
+> +       case DRM_MODE_COLORIMETRY_RGB_WIDE_FLOAT:
+> +               colorimetry = 0xb;
+> +               break;
+> +       case DRM_MODE_COLORIMETRY_OPRGB:
+> +               colorimetry = 0xc;
+
+Please define these magic values.
+
+> +               break;
+> +       default:
+> +               colorimetry = 0;        /* legacy RGB mode */
+> +       }
+> +
+> +       return colorimetry;
+> +}
+> +
+>  struct dp_panel *dp_panel_get(struct dp_panel_in *in)
+>  {
+>         struct dp_panel_private *panel;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
+> index a0dfc57..c34a51d 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_panel.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_panel.h
+> @@ -1,6 +1,7 @@
+>  /* SPDX-License-Identifier: GPL-2.0-only */
+>  /*
+>   * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved
+>   */
+>
+>  #ifndef _DP_PANEL_H_
+> @@ -65,6 +66,7 @@ int dp_panel_get_modes(struct dp_panel *dp_panel,
+>                 struct drm_connector *connector);
+>  void dp_panel_handle_sink_request(struct dp_panel *dp_panel);
+>  void dp_panel_tpg_config(struct dp_panel *dp_panel, bool enable);
+> +u8 dp_panel_get_misc_colorimetry_val(struct dp_panel *dp_panel);
+>
+>  /**
+>   * is_link_rate_valid() - validates the link rate
+> --
+> 2.7.4
+>
 
 
 -- 
