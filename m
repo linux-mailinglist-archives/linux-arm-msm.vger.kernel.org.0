@@ -1,135 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-6900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35255829912
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 12:30:49 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B0DE5829931
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 12:32:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 75F62B220F3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 11:30:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4E1C1281CCF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 11:32:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CFF847A57;
-	Wed, 10 Jan 2024 11:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E87D147A57;
+	Wed, 10 Jan 2024 11:32:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="oa4UMU8f"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="myUJcrFj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162AB4778F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 11:30:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-557bfc7f7b4so4900900a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 03:30:39 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498E047F43
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 11:32:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-50e67f70f34so4068124e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 03:32:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1704886238; x=1705491038; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Wtz+7SKzz9hrXYk9v1Im5ZeLktUFRpb9DhH87gAT8QU=;
-        b=oa4UMU8f9mjsL1+9gLAnQGc7qlR2gvwXI9/2liENhu3hG/shWwOHGHJeoZZoVO3/OT
-         /XfrHKnYvym70kLKh/tXF67jhJ3vflPY0FmhdnWQYZ34ok3Iz07vFLcR9n8sBxdXDiN0
-         QSZw/ACvCG94iRPlKJ0XmEishyC34ym2aJp+VPeFsd1+OcOSdeKE87xdFGo/46Hc25e4
-         +IVgNrsaD081SIBU2fSwifGJD5Ud8OjaHz1dEiCZABig8o3WO37nEFkwr+HkNlK8KXLZ
-         MAthXvUbhbklKN/8XvWXlJrLj9N0mYPZpKNHejZ06m1NyDyXewJjBHRgKXW8TUyXnhbc
-         tQGQ==
+        d=linaro.org; s=google; t=1704886349; x=1705491149; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pEYNQVl4EfVcsy1yzh6J8gEcbt+r98QebOoStpii/nY=;
+        b=myUJcrFjTl9ZqjZf7AcZxgux1afGCi1RuGuZNA6BAkNg7IcuTQlAvncxiGN/IcgLuc
+         N/xpTyqAyRFd6722pthMi06bm0j+YydQOjTVxUpFje2mWl49K9nT2OuzpPmNQQhfn3h4
+         pqv6bGVKNLMfeHz8eMV5QDsj2J+6tY4KmWxKj0/Q/NvbKRzG3wsRds5lDyZ0uLLypF9r
+         sj4Rf8/VkrbbNET82v2RtNd9DqkxZEMvKVmUiu96/y/tqGfZEP1XGR1/k0DxXi2vW9kc
+         mZXSiXwdEEhIel7W1XTq+B7chKRzlCS7JO/44mV4NMlUx1TpnNZzHlCV9QXoTvt8fHFb
+         DU1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704886238; x=1705491038;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Wtz+7SKzz9hrXYk9v1Im5ZeLktUFRpb9DhH87gAT8QU=;
-        b=m9sX/XQBskYIkxt7+hyn2PZN0mIjF57JsDLZ6PE9foSAPAYFuUGgWdG7zhYPZSoCIO
-         iZCd7QI2cQzyN/p3yFiHJp9cLHhDIOCa6fu2TQz/BM+8NsMruJiy3aukEQ+lcZz72Yxe
-         3f1hqazaYWZxCKRRjzKdOFeICGOgoDrjctTuMvF6VD+ko/RbNU3iXCbfA5zAQbMUwQe8
-         5ScURG6ak8P9snhartfAgPbLI4Lwq2MjfVcH6/rJxIIv5sAAWbb7aUsSOvUgFEdF8ITH
-         LqfyGbDwwKA7C7zJ8TdglU61gw4ODTOOGQsphBKP0DFpowgWXXTZj8edIpQL11cpF8RB
-         +8Gg==
-X-Gm-Message-State: AOJu0Yxykkk5fuZYAjAlKasc+EP+KJnWbaoNqEk1aCEowyxYbQuyhrBM
-	6vskeT0ZB1x1B4+4BBRjslVhFlgygac36g==
-X-Google-Smtp-Source: AGHT+IEB3j3STyR03J4HjEjLzAll3scW8AwBkIZIUi1cKmGpqPuNFR86aXfkJfwks7yIurkH8kGntA==
-X-Received: by 2002:a17:906:f82:b0:a28:26e9:a13d with SMTP id q2-20020a1709060f8200b00a2826e9a13dmr919135ejj.55.1704886238293;
-        Wed, 10 Jan 2024 03:30:38 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id hb21-20020a170906b89500b00a28d438a1b0sm1992896ejb.83.2024.01.10.03.30.37
+        d=1e100.net; s=20230601; t=1704886349; x=1705491149;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pEYNQVl4EfVcsy1yzh6J8gEcbt+r98QebOoStpii/nY=;
+        b=dCUJAj04iEjEoguFJznoxl53LD2xRkqAyqz6+Iu/Tz+zNQ5eriDFmAP7KojObBd7dz
+         Q2VkmD+H7sAcl8jXlWCPHEp4Wip6sOKwN6WV2iVUeDP3NOZIgfgjEZBhOXKFEdCDRtFh
+         7BAB0Mr9hwGeilCpU+/CQg10Ut5KE0RnVgEA+eO+PjF0TVvLH8ku/KabwRDMFjU8JKh1
+         VPGQ9XQlVH2yg7xClGwO+HgQc8rXugcHKrq3MOLjazc9aByI39t2UHj4JZimcCMn9y79
+         8seUivLJ5ll4czZLEnUOnogvQfkN2d975PSpuzLKxQ44nCPlSIA+2M2KEyvAmrBaO8N6
+         sWdw==
+X-Gm-Message-State: AOJu0YxnEreCWEN+9fjAzyAcMauMx1OSgj2Xo3QuMgwSZ466v9Y70Tgt
+	gIlzyF+8L73EDCghE/KbPl/324q6CzmsuQ==
+X-Google-Smtp-Source: AGHT+IGAMkvcpAUqyxRbD5/R78Qb2kagPxgsXLcXC0AOuJ2ThqexDzA5wsbcuzXqLXPlb2wTFi9INw==
+X-Received: by 2002:a19:3856:0:b0:50e:8487:1ec6 with SMTP id d22-20020a193856000000b0050e84871ec6mr253105lfj.56.1704886349316;
+        Wed, 10 Jan 2024 03:32:29 -0800 (PST)
+Received: from [172.30.205.119] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id z22-20020ac25df6000000b0050e6df07728sm629214lfq.180.2024.01.10.03.32.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Jan 2024 03:30:38 -0800 (PST)
+        Wed, 10 Jan 2024 03:32:28 -0800 (PST)
+Message-ID: <0ac211de-e3d4-4a41-b0ed-d2bf393e58cb@linaro.org>
+Date: Wed, 10 Jan 2024 12:32:25 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 10 Jan 2024 12:30:37 +0100
-Message-Id: <CYAZQD6AWM6J.10P13VNGRYNPR@fairphone.com>
-Cc: "Konrad Dybcio" <konrad.dybcio@linaro.org>, "Neil Armstrong"
- <neil.armstrong@linaro.org>, "Jessica Zhang" <quic_jesszhan@quicinc.com>,
- "Sam Ravnborg" <sam@ravnborg.org>, "David Airlie" <airlied@gmail.com>,
- "Daniel Vetter" <daniel@ffwll.ch>, "Maarten Lankhorst"
- <maarten.lankhorst@linux.intel.com>, "Thomas Zimmermann"
- <tzimmermann@suse.de>, "Rob Herring" <robh+dt@kernel.org>, "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley"
- <conor+dt@kernel.org>, "Bjorn Andersson" <andersson@kernel.org>,
- <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <dri-devel@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm7225-fairphone-fp4: Enable
- display and GPU
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Maxime Ripard" <mripard@kernel.org>
-X-Mailer: aerc 0.15.2
-References: <20240105-fp4-panel-v1-0-1afbabc55276@fairphone.com>
- <20240105-fp4-panel-v1-3-1afbabc55276@fairphone.com>
- <3fdc6e74-d817-4341-bf64-9096608990d6@linaro.org>
- <CYAZ37LBKG4E.2096GKVUXN8Y2@fairphone.com>
- <2zkiop7xg7w4vkpjpol25qna5wwbq4ja5o6iwuqh25m34k6mgd@aemrbzqgx2oe>
-In-Reply-To: <2zkiop7xg7w4vkpjpol25qna5wwbq4ja5o6iwuqh25m34k6mgd@aemrbzqgx2oe>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/6] Add PPE device tree node for Qualcomm IPQ SoC
+Content-Language: en-US
+To: Luo Jie <quic_luoj@quicinc.com>, andersson@kernel.org,
+ robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+ quic_kkumarcs@quicinc.com, quic_suruchia@quicinc.com, quic_soni@quicinc.com,
+ quic_pavir@quicinc.com, quic_souravp@quicinc.com, quic_linchen@quicinc.com,
+ quic_leiwei@quicinc.com
+References: <20240110112059.2498-1-quic_luoj@quicinc.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20240110112059.2498-1-quic_luoj@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed Jan 10, 2024 at 12:23 PM CET, Maxime Ripard wrote:
-> On Wed, Jan 10, 2024 at 12:00:23PM +0100, Luca Weiss wrote:
-> > On Wed Jan 10, 2024 at 11:58 AM CET, Konrad Dybcio wrote:
-> > >
-> > >
-> > > On 1/5/24 15:29, Luca Weiss wrote:
-> > > > Add the description for the display panel found on this phone and r=
-emove
-> > > > the simple-framebuffer that was in place until now
-> > >
-> > > Why? They should be able to coexist with a smooth-ish handoff
-> >=20
-> > Does that work upstream? I'm aware that downstream can do this but
-> > thought this was still missing upstream.
->
-> It depends what you call smooth-ish I guess, but KMS handles the
-> handover just fine. You're likely to get a flicker during the transition
-> though.
 
-Right, seems to work. Also visually looks okay.
 
-fairphone-fp4:~$ dmesg | grep "frame buffer device"
-[    0.250511] Console: switching to colour frame buffer device 135x146
-[    0.284146] simple-framebuffer a0000000.framebuffer: [drm] fb0: simpledr=
-mdrmfb frame buffer device
-[    2.576712] Console: switching to colour frame buffer device 135x146
-[    2.604907] msm_dpu ae01000.display-controller: [drm] fb0: msmdrmfb fram=
-e buffer device
+On 1/10/24 12:20, Luo Jie wrote:
+> The PPE(packet process engine) hardware block is supported by Qualcomm
+> IPQ platforms, such as IPQ9574 and IPQ5332. The PPE includes the various
+> packet processing modules such as the routing and bridging flow engines,
+> L2 switch capability, VLAN and tunnels. Also included are integrated
+> ethernet MAC and PCS(uniphy), which is used to connect with the external
+> PHY devices by PCS.
+> 
+> This patch series enables support for the following DTSI functionality
+> for Qualcomm IPQ9574 and IPQ5332 chipsets.
+> 
+> 1. Add PPE (Packet Processing Engine) HW support
+> 
+> 2. Add IPQ9574 RDP433 board support, where the PPE is connected
+>     with qca8075 PHY and AQ PHY.
+> 
+> 3. Add IPQ5332 RDP441 board support, where the PPE is connected
+>     with qca8386 and SFP
+> 
+> PPE DTS depends on the NSSCC clock driver below, which provides the
+> clocks for the PPE driver.
+> https://lore.kernel.org/linux-arm-msm/20230825091234.32713-1-quic_devipriy@quicinc.com/
+> https://lore.kernel.org/linux-arm-msm/20231211-ipq5332-nsscc-v3-0-ad13bef9b137@quicinc.com/
 
-I thought before that having two outputs like this would cause two
-different framebuffers/display devices to appear, but yeah as I said
-seems okay. Will change in v2.
+None of these describe (or even use) the compatible in the first
+patch of this series ("qcom,ipq9574-ppe"). I didn't check the
+subsequent ones, as I assume it's the same situtation, so this
+is a NAK.
 
-Regards
-Luca
+> Lei Wei (2):
+>    arm64: dts: qcom: ipq5332: Add RDP441 board device tree
+>    arm64: dts: qcom: ipq9574: Add RDP433 board device tree
 
->
-> Either way, the DT isn't the right place to choose, you should enable
-> both, and the distro will choose its policy through configuration.
->
-> Maxime
+These two look unrelated?
 
+> 
+> Luo Jie (4):
+>    arm64: dts: qcom: ipq9574: Add PPE device tree node
+>    arm64: dts: qcom: ipq5332: Add PPE device tree node
+>    arm64: dts: qcom: ipq5332: Add MDIO device tree
+>    arm64: dts: qcom: ipq9574: Add MDIO device tree
+
+Konrad
 
