@@ -1,101 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-6944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6945-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41982829AD3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 14:01:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 56937829B31
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 14:29:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CD7A51F25D57
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 13:01:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E29E41F24999
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 13:29:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 741A94878A;
-	Wed, 10 Jan 2024 13:01:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hUFVSIkb"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFB9D48CC1;
+	Wed, 10 Jan 2024 13:28:59 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bmailout3.hostsharing.net (bmailout3.hostsharing.net [176.9.242.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 480EE208A4;
-	Wed, 10 Jan 2024 13:01:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CA3AC433F1;
-	Wed, 10 Jan 2024 13:01:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704891689;
-	bh=lObChVFu8SVeU0CpWZS6IsckF37c9pF9oZGVe4pxJac=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=hUFVSIkb8pTGra0V4ilZBHzmGcdS+r5wRCSoniOe8c2PpqnvKcyIXbzdMFC47XuP1
-	 Ak/lEEquN9Rb5/sv4dfqTlSISU9kWVSTB9Er9I+ZkYCkksmo03ySUiJqsa0yTlw21T
-	 qXMGmCEAJJbkLa8lx0CBX3qWsFbRavAZY5PSK3HJNffYoe2kjLzx7Ryynkxg5BLrMa
-	 PG4caHupbmxWKB8IB9Uq3NVGKyoXKe3C/8MS8YzIkdLv2DI2fuIdqyA/ftgbEAImiY
-	 EEEi70eIi+cxfMSVzT8y4Twm5is5hINR40jau4PoCA2vDUwXWZ/C/uxH37B5LNIlYT
-	 aAKuIWgZq3lSQ==
-Received: (nullmailer pid 1231852 invoked by uid 1000);
-	Wed, 10 Jan 2024 13:01:24 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD43487A9;
+	Wed, 10 Jan 2024 13:28:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=h08.hostsharing.net
+Received: from h08.hostsharing.net (h08.hostsharing.net [IPv6:2a01:37:1000::53df:5f1c:0])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
+	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
+	(Client CN "*.hostsharing.net", Issuer "RapidSSL TLS RSA CA G1" (verified OK))
+	by bmailout3.hostsharing.net (Postfix) with ESMTPS id 95DEA100DE9D6;
+	Wed, 10 Jan 2024 14:28:53 +0100 (CET)
+Received: by h08.hostsharing.net (Postfix, from userid 100393)
+	id 631EE2CD58F; Wed, 10 Jan 2024 14:28:53 +0100 (CET)
+Date: Wed, 10 Jan 2024 14:28:53 +0100
+From: Lukas Wunner <lukas@wunner.de>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Kalle Valo <kvalo@kernel.org>, "David S . Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Chris Morgan <macromorgan@hotmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	=?iso-8859-1?Q?N=EDcolas_F_=2E_R_=2E_A_=2E?= Prado <nfraprado@collabora.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Peng Fan <peng.fan@nxp.com>, Robert Richter <rrichter@amd.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Terry Bowman <terry.bowman@amd.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>,
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-pci@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [RFC 3/9] PCI/portdrv: create platform devices for child OF nodes
+Message-ID: <20240110132853.GA6860@wunner.de>
+References: <20240104130123.37115-1-brgl@bgdev.pl>
+ <20240104130123.37115-4-brgl@bgdev.pl>
+ <20240109144327.GA10780@wunner.de>
+ <CAMRc=MdXO6c6asvRSn_Z8-oFS48hroT+dazGKB6WWY1_Zu7f1Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Luo Jie <quic_luoj@quicinc.com>
-Cc: corbet@lwn.net, linux-kernel@vger.kernel.org, will@kernel.org, quic_leiwei@quicinc.com, quic_souravp@quicinc.com, m.szyprowski@samsung.com, quic_linchen@quicinc.com, u-kumar1@ti.com, quic_kkumarcs@quicinc.com, devicetree@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org, rrameshbabu@nvidia.com, quic_suruchia@quicinc.com, geert+renesas@glider.be, davem@davemloft.net, nfraprado@collabora.com, arnd@arndb.de, linux-arm-msm@vger.kernel.org, quic_soni@quicinc.com, p.zabel@pengutronix.de, andrew@lunn.ch, edumazet@google.com, catalin.marinas@arm.com, conor+dt@kernel.org, brett.creeley@amd.com, pabeni@redhat.com, linux-doc@vger.kernel.org, neil.armstrong@linaro.org, jasowang@redhat.com, dmitry.baryshkov@linaro.org, agross@kernel.org, linux@armlinux.org.uk, netdev@vger.kernel.org, kuba@kernel.org, andersson@kernel.org, anthony.l.nguyen@intel.com, ansuelsmth@gmail.com, linux-arm-kernel@lists.infradead.org, joshua.a.hay@intel.com, jacob.e.keller@intel.com, ryazanov.s.a@gmail.com, quic_pavir
- @quicinc.com, shannon.nelson@amd.com, robh+dt@kernel.org, konrad.dybcio@linaro.org
-In-Reply-To: <20240110114033.32575-3-quic_luoj@quicinc.com>
-References: <20240110114033.32575-1-quic_luoj@quicinc.com>
- <20240110114033.32575-3-quic_luoj@quicinc.com>
-Message-Id: <170489168445.1231814.13885812844445449165.robh@kernel.org>
-Subject: Re: [PATCH net-next 02/20] dt-bindings: net: qcom,ppe: Add
- bindings yaml file
-Date: Wed, 10 Jan 2024 07:01:24 -0600
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMRc=MdXO6c6asvRSn_Z8-oFS48hroT+dazGKB6WWY1_Zu7f1Q@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-
-On Wed, 10 Jan 2024 19:40:14 +0800, Luo Jie wrote:
-> Qualcomm PPE(packet process engine) is supported on
-> IPQ SOC platform.
+On Wed, Jan 10, 2024 at 01:55:18PM +0100, Bartosz Golaszewski wrote:
+> On Tue, Jan 9, 2024 at 3:43???PM Lukas Wunner <lukas@wunner.de> wrote:
+> > On Thu, Jan 04, 2024 at 02:01:17PM +0100, Bartosz Golaszewski wrote:
+> > > In order to introduce PCIe power-sequencing, we need to create platform
+> > > devices for child nodes of the port driver node. They will get matched
+> > > against the pwrseq drivers (if one exists) and then the actuak PCIe
+> > > device will reuse the node once it's detected on the bus.
+> > [...]
+> > > --- a/drivers/pci/pcie/portdrv.c
+> > > +++ b/drivers/pci/pcie/portdrv.c
+> > > @@ -715,7 +716,7 @@ static int pcie_portdrv_probe(struct pci_dev *dev,
+> > >               pm_runtime_allow(&dev->dev);
+> > >       }
+> > >
+> > > -     return 0;
+> > > +     return devm_of_platform_populate(&dev->dev);
+> > >  }
+> >
+> > I think this belongs in of_pci_make_dev_node(), portdrv seems totally
+> > the wrong place.  Note that you're currently calling this for RCECs
+> > (Root Complex Event Collectors) as well, which is likely not what
+> > you want.
+> >
 > 
-> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
-> ---
->  .../devicetree/bindings/net/qcom,ppe.yaml     | 1330 +++++++++++++++++
->  1 file changed, 1330 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/net/qcom,ppe.yaml
+> of_pci_make_dev_node() is only called when the relevant PCI device is
+> instantiated which doesn't happen until it's powered-up and scanned -
+> precisely the problem I'm trying to address.
+
+No, of_pci_make_dev_node() is called *before* device_attach(),
+i.e. before portdrv has even probed.  So it seems this should
+work perfectly well for your use case.
+
+
+> > devm functions can't be used in the PCI core, so symmetrically call
+> > of_platform_unpopulate() from of_pci_remove_node().
 > 
+> I don't doubt what you're saying is true (I've seen worse things) but
+> this is the probe() callback of a driver using the driver model. Why
+> wouldn't devres work?
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+The long term plan is to move the functionality in portdrv to
+the PCI core.  Because devm functions can't be used in the PCI
+core, adding new ones to portdrv will *add* a new roadblock to
+migrating portdrv to the PCI core.  In other words, it makes
+future maintenance more difficult.
 
-yamllint warnings/errors:
+Generally, only PCIe port services which share the same interrupt
+(hotplug, PME, bandwith notification, flit error counter, ...)
+need to live in portdrv.  Arbitrary other stuff should not be
+shoehorned into portdrv.
 
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/net/qcom,ppe.example.dts:20:18: fatal error: dt-bindings/clock/qcom,ipq9574-nsscc.h: No such file or directory
-   20 |         #include <dt-bindings/clock/qcom,ipq9574-nsscc.h>
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-make[2]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/net/qcom,ppe.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1424: dt_binding_check] Error 2
-make: *** [Makefile:234: __sub-make] Error 2
+Thanks,
 
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240110114033.32575-3-quic_luoj@quicinc.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+Lukas
 
