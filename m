@@ -1,138 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-6943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3DB5829ACB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 13:58:48 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 41982829AD3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 14:01:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2E075B258B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 12:58:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CD7A51F25D57
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 13:01:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0D3548788;
-	Wed, 10 Jan 2024 12:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 741A94878A;
+	Wed, 10 Jan 2024 13:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HcyNoWgJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hUFVSIkb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40CE348781;
-	Wed, 10 Jan 2024 12:58:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40AA2mwO013795;
-	Wed, 10 Jan 2024 12:58:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=/vClWtu3HlYBCHjhqdD40ETyVbpVB8kO2AGNHZOK/lQ=; b=Hc
-	yNoWgJbTUxXloJBbWm+gL+LkCAxj2pPEA398P9hwkFjniMuW/J6q/XwJc1RcCwhG
-	uM6UBj38CiJd4a+tqSri87/pPsz4omqUHPoj89csGSTiZtBsqtPvQ7Ky6r028PY+
-	zNL0SEtmBGb6sK+bfPTZf0plly1hSV9UVbn/KMaF/ssJTHYf5bfMGjhrdxeLLiPf
-	pwgrP8r9q9W3mYTrvFNR1bCeDf1KOB+HxCiAQkH/2PbHt2FyHNdlYQT4XHjnw7Xw
-	DTz9s3YY9EjMcd/OUzXQcFBCVn3v0/kO3aI81UaB1IowSbbFxabzpFtljuzG9tul
-	VX8fWzONYFffncqiGR+Q==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vhs4mgf10-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jan 2024 12:58:31 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40ACwUlG002890
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jan 2024 12:58:30 GMT
-Received: from [10.216.48.153] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 10 Jan
- 2024 04:58:22 -0800
-Message-ID: <ba732b1c-223c-ee70-d25b-4c78b312402c@quicinc.com>
-Date: Wed, 10 Jan 2024 18:28:19 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 480EE208A4;
+	Wed, 10 Jan 2024 13:01:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CA3AC433F1;
+	Wed, 10 Jan 2024 13:01:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1704891689;
+	bh=lObChVFu8SVeU0CpWZS6IsckF37c9pF9oZGVe4pxJac=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=hUFVSIkb8pTGra0V4ilZBHzmGcdS+r5wRCSoniOe8c2PpqnvKcyIXbzdMFC47XuP1
+	 Ak/lEEquN9Rb5/sv4dfqTlSISU9kWVSTB9Er9I+ZkYCkksmo03ySUiJqsa0yTlw21T
+	 qXMGmCEAJJbkLa8lx0CBX3qWsFbRavAZY5PSK3HJNffYoe2kjLzx7Ryynkxg5BLrMa
+	 PG4caHupbmxWKB8IB9Uq3NVGKyoXKe3C/8MS8YzIkdLv2DI2fuIdqyA/ftgbEAImiY
+	 EEEi70eIi+cxfMSVzT8y4Twm5is5hINR40jau4PoCA2vDUwXWZ/C/uxH37B5LNIlYT
+	 aAKuIWgZq3lSQ==
+Received: (nullmailer pid 1231852 invoked by uid 1000);
+	Wed, 10 Jan 2024 13:01:24 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v5 5/5] PCI: qcom: Add OPP support to scale performance
- state of power domain
-Content-Language: en-US
-To: Viresh Kumar <viresh.kumar@linaro.org>
-CC: Bjorn Helgaas <helgaas@kernel.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <vireshk@kernel.org>, <nm@ti.com>, <sboyd@kernel.org>,
-        <mani@kernel.org>, <lpieralisi@kernel.org>, <kw@linux.com>,
-        <robh@kernel.org>, <bhelgaas@google.com>, <rafael@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
-        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
-        <quic_ramkri@quicinc.com>, <quic_parass@quicinc.com>
-References: <20231102053013.7yt7pxin5awlu7w7@vireshk-i7>
- <20231102120950.GA115288@bhelgaas>
- <20231103051247.u4cnckzstcvs4lf5@vireshk-i7>
- <15a98ec0-214b-218b-1e3c-c09f770fce2e@quicinc.com>
- <0ba9f2af-169e-a9a2-9ae4-4c6a70b0a94e@quicinc.com>
- <20240110065757.xde2nvpr3z7c4isu@vireshk-i7>
- <376b3716-46ff-2324-73fc-f3afa3f7af1c@quicinc.com>
- <20240110073807.sqwmsyr6nmigg6zc@vireshk-i7>
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20240110073807.sqwmsyr6nmigg6zc@vireshk-i7>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ldLzFosc01dSUdg3R4AmVw9dR3hFeRMF
-X-Proofpoint-ORIG-GUID: ldLzFosc01dSUdg3R4AmVw9dR3hFeRMF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 phishscore=0 lowpriorityscore=0 mlxlogscore=999
- adultscore=0 impostorscore=0 spamscore=0 clxscore=1015 mlxscore=0
- suspectscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401100106
+From: Rob Herring <robh@kernel.org>
+To: Luo Jie <quic_luoj@quicinc.com>
+Cc: corbet@lwn.net, linux-kernel@vger.kernel.org, will@kernel.org, quic_leiwei@quicinc.com, quic_souravp@quicinc.com, m.szyprowski@samsung.com, quic_linchen@quicinc.com, u-kumar1@ti.com, quic_kkumarcs@quicinc.com, devicetree@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org, rrameshbabu@nvidia.com, quic_suruchia@quicinc.com, geert+renesas@glider.be, davem@davemloft.net, nfraprado@collabora.com, arnd@arndb.de, linux-arm-msm@vger.kernel.org, quic_soni@quicinc.com, p.zabel@pengutronix.de, andrew@lunn.ch, edumazet@google.com, catalin.marinas@arm.com, conor+dt@kernel.org, brett.creeley@amd.com, pabeni@redhat.com, linux-doc@vger.kernel.org, neil.armstrong@linaro.org, jasowang@redhat.com, dmitry.baryshkov@linaro.org, agross@kernel.org, linux@armlinux.org.uk, netdev@vger.kernel.org, kuba@kernel.org, andersson@kernel.org, anthony.l.nguyen@intel.com, ansuelsmth@gmail.com, linux-arm-kernel@lists.infradead.org, joshua.a.hay@intel.com, jacob.e.keller@intel.com, ryazanov.s.a@gmail.com, quic_pavir
+ @quicinc.com, shannon.nelson@amd.com, robh+dt@kernel.org, konrad.dybcio@linaro.org
+In-Reply-To: <20240110114033.32575-3-quic_luoj@quicinc.com>
+References: <20240110114033.32575-1-quic_luoj@quicinc.com>
+ <20240110114033.32575-3-quic_luoj@quicinc.com>
+Message-Id: <170489168445.1231814.13885812844445449165.robh@kernel.org>
+Subject: Re: [PATCH net-next 02/20] dt-bindings: net: qcom,ppe: Add
+ bindings yaml file
+Date: Wed, 10 Jan 2024 07:01:24 -0600
 
 
-On 1/10/2024 1:08 PM, Viresh Kumar wrote:
-> On 10-01-24, 12:42, Krishna Chaitanya Chundru wrote:
->> At present we are not changing the link width after link is initialized, but
->> we have plans to
->>
->> add support change link width dynamically at runtime.
-> Hmm okay.
->
->> So, I think it is better to have ICC BW voting in the driver itself.
-> I guess it is better to have more entries in the OPP table then.. 15-20 OPPs
-> isn't too many to be honest.
->
-> Replicating code is the last thing I would like to do.
->
-> Maybe you can show the different layouts of the OPP table if you are concerned.
-> We can then see if it is getting too much or not.
+On Wed, 10 Jan 2024 19:40:14 +0800, Luo Jie wrote:
+> Qualcomm PPE(packet process engine) is supported on
+> IPQ SOC platform.
+> 
+> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+> ---
+>  .../devicetree/bindings/net/qcom,ppe.yaml     | 1330 +++++++++++++++++
+>  1 file changed, 1330 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/net/qcom,ppe.yaml
+> 
 
-Viresh,
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-it might be less only for now may be around 20 opp entries, but PCIe 
-spec is being updated every few years and a new gen
+yamllint warnings/errors:
 
-gen speed will release, right now PCIe GEN6 is released but I don't we 
-had any device in the market now and GEN7 is in process.
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/net/qcom,ppe.example.dts:20:18: fatal error: dt-bindings/clock/qcom,ipq9574-nsscc.h: No such file or directory
+   20 |         #include <dt-bindings/clock/qcom,ipq9574-nsscc.h>
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make[2]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/net/qcom,ppe.example.dtb] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1424: dt_binding_check] Error 2
+make: *** [Makefile:234: __sub-make] Error 2
 
-So in future it might become very big table. Either we need to come up 
-with a framework in the OPP to select the BW based up on lane width
+doc reference errors (make refcheckdocs):
 
-for particular speed or use the driver way.
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240110114033.32575-3-quic_luoj@quicinc.com
 
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
 
-Thanks & Regards,
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
 
-Krishna Chaitanya.
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
 
