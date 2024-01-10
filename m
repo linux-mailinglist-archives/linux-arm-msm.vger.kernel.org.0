@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6877-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BCC3829836
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 12:00:50 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 78AC5829841
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 12:03:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3F5F91C21D45
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 11:00:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1784F1F24A63
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 11:03:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF5B141746;
-	Wed, 10 Jan 2024 11:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91B3546444;
+	Wed, 10 Jan 2024 11:03:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="H/dSOAFw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eY4JI/qZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AAAD41236
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 11:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B2541205
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 11:03:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-50e5a9bcec9so4868250e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 03:00:41 -0800 (PST)
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2cd5b467209so32087511fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 03:03:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704884440; x=1705489240; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1704884603; x=1705489403; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=RfeKeWELsUXSOsoX/4w9IRfss9fiLzU6vIaJLnkhKk8=;
-        b=H/dSOAFwvou2rKPgvKuitSKE7egPG9TAs/Uo9L0LPZt7LR05d2IyDHbS/QWbnOfH2b
-         +ba2tcq/QkjdNY04fuMHG4BkQiT7GLGv0Q3fZCoLlqZWxyIzYTynC6cS2R2RedlTHE7V
-         fbV7WeKKDJlEzhMFDE47Tvq2SK05v+fMIFHl+JSoSQFfsLK2FMKxkCsmYRaow96dMRrg
-         ZePhGjrZ9WfpEx6hqr/YGKgEaFX7FjkzFcBQsPpnG+ZbkTinRM6M0Y9QaL/pwHaKGrGJ
-         o0gRN+CHi/O+Qe2EUOxOSeZ+XM6S0ewy7UZ3FHqRELSglNf/35twUalWuKqB/wk2GyVB
-         UtCw==
+        bh=fZC+BfL7VBFT+MXOIUs1PXUDcw++a29sikma7cyA3NA=;
+        b=eY4JI/qZTahJ4DvULw0zdcJWObw9N92p3webg9fQvPH3MZq3U6XGheFhmr8PHg7PYd
+         kMF56VgVoyoyUvsJECdY+FtNi0Zsx5gNyRqHd/YRTp6RDtTTT4HAlrlEZ5gnnqWNZIYx
+         +R4wb3HZZ4TUK4RQHRzG44T/4U0PzW92k13CIUCrP1tTwuFury23LGo0L4twjABnb0/R
+         D1ccHMQlPBpDtX7KCI0BwhDbZ+XsUtPojaJeR4zSTEy8XNwuwoB44gunIWHs43dooOXd
+         gjX3ZI46f9x3fnc1PMoKhH1//u4IvJRZmU8+5mXzLCHBdRG6La5sZuzqcxOChY1z9q0E
+         rEew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704884440; x=1705489240;
+        d=1e100.net; s=20230601; t=1704884603; x=1705489403;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RfeKeWELsUXSOsoX/4w9IRfss9fiLzU6vIaJLnkhKk8=;
-        b=VP2tpbOBx6p9X7Pxhz6vAxf3I4ylmfoW7uLMPblF29TQB615+Vx495iUeNTSwj6eV9
-         5Z39/wjYLQNcPgf9PNzlU0Uo+ajWE8szZOV1uwrDfeL5FK+8LfIeM4sCOi6OjcAvPPko
-         qyKzCB24HPZAr+xAgmNZFG53FlLWuFfjjnq153iyKU3RqU3fnxLvzXly0IQxa66zuYUd
-         36dDn/jrq9e8rOO0kyiADbH6g87jb/GtkRSVVxRFL0Qi+tImEXWRHmev4IqSBFZeOMh1
-         fXVh9aEcjCvNVclbLv9/1P34B4Z+SL/odS9bqspYLQWVioxPIVEBP1e0iqx84sQx4arz
-         AKsQ==
-X-Gm-Message-State: AOJu0YzKDW+6M4XaE7+igGIu/O55WBn0YsNAd2er1WE0SQkQp1WVBF/R
-	T1ZWvBCkRmEI+Wd4QS02VHZ7GEtKSyjs1Q==
-X-Google-Smtp-Source: AGHT+IHxHBhrhaM+rqV9BsRHT6XAftzD06A/BcYSyyty/0KA0tCunnAFj1XF5aWGoLi7Er3fmNTdWg==
-X-Received: by 2002:a19:9117:0:b0:50e:7be9:52fb with SMTP id t23-20020a199117000000b0050e7be952fbmr326167lfd.82.1704884439955;
-        Wed, 10 Jan 2024 03:00:39 -0800 (PST)
+        bh=fZC+BfL7VBFT+MXOIUs1PXUDcw++a29sikma7cyA3NA=;
+        b=sJGZo7nskwTYoVtxC5T9nopvLP+xEc7LJtH8cJbiLj3qIdNSrgoYFZHFHk0lvZhFTG
+         wjbh/OT8FNshB7ZoVj9+tgt6LnuVenxH9ahfwGnphrXXJBvnlvRD1l0WCoSRQHPLVvhR
+         n+kxAjbL1U+XzLAjH0/m7plqi5tt3rpRewLDP3El5Z8iUTiv2m9cRNiQR83uVtV1W7F/
+         u8vbtI47az/ZRaHH744xGWV+OHKrf7XLoiPVUF3FR9mkE/6O0aLu5Gw4RhfLO8p+rrLZ
+         zaXqdmCkwJGcMyP+L23us6CrkZfQ9UqeNFOEM2DXUKRLAuNpGX7i57YHkxwuQc7jo+s/
+         REeg==
+X-Gm-Message-State: AOJu0YxQxLV41iAKAMOu7uu5IFFnPq6qxnWKBQgKDoP3R7lsICDF+ulo
+	c0XyqIn9UWuKMGgg8ZB5uuIb+OuPSc8bNw==
+X-Google-Smtp-Source: AGHT+IGd/bK2tTxR9PLQGzJbqy7pmb0WxHSefwbKRyb0ZJAHgelmtphi0KReJX4MC04C8QBPA8TDPQ==
+X-Received: by 2002:a05:651c:623:b0:2cd:23ed:19dc with SMTP id k35-20020a05651c062300b002cd23ed19dcmr409303lje.39.1704884603341;
+        Wed, 10 Jan 2024 03:03:23 -0800 (PST)
 Received: from [172.30.205.119] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id eo30-20020a056512481e00b0050e7ed9585asm617280lfb.233.2024.01.10.03.00.36
+        by smtp.gmail.com with ESMTPSA id m7-20020a2ea587000000b002ccd2d688d8sm698861ljp.107.2024.01.10.03.03.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Jan 2024 03:00:39 -0800 (PST)
-Message-ID: <36f9eac0-3086-4d18-9879-02738e99d262@linaro.org>
-Date: Wed, 10 Jan 2024 12:00:35 +0100
+        Wed, 10 Jan 2024 03:03:23 -0800 (PST)
+Message-ID: <4f8aafa2-2145-4090-afba-8a26242d5ac3@linaro.org>
+Date: Wed, 10 Jan 2024 12:03:20 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,78 +66,70 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 1/5] iommu/arm-smmu: re-enable context caching in smmu
- reset operation
+Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: sc8280xp: camss: Add CCI
+ definitions
 Content-Language: en-US
-To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>, will@kernel.org,
- robin.murphy@arm.com, joro@8bytes.org, dmitry.baryshkov@linaro.org,
- jsnitsel@redhat.com, quic_bjorande@quicinc.com, mani@kernel.org,
- quic_eberman@quicinc.com, robdclark@chromium.org,
- u.kleine-koenig@pengutronix.de, robh@kernel.org, vladimir.oltean@nxp.com,
- quic_pkondeti@quicinc.com, quic_molvera@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
- qipl.kernel.upstream@quicinc.com
-References: <20240109114220.30243-1-quic_bibekkum@quicinc.com>
- <20240109114220.30243-2-quic_bibekkum@quicinc.com>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring
+ <robh+dt@kernel.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240109-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v3-0-b8e3a74a6e6a@linaro.org>
+ <20240109-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v3-3-b8e3a74a6e6a@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240109114220.30243-2-quic_bibekkum@quicinc.com>
+In-Reply-To: <20240109-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v3-3-b8e3a74a6e6a@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
-On 1/9/24 12:42, Bibek Kumar Patro wrote:
-> Default MMU-500 reset operation disables context caching in
-> prefetch buffer. It is however expected for context banks using
-> the ACTLR register to retain their prefetch value during reset
-> and runtime suspend.
+On 1/9/24 17:06, Bryan O'Donoghue wrote:
+> sc8280xp has four Camera Control Interface (CCI) blocks which pinout to
+> two I2C master controllers for each CCI.
 > 
-> Replace default MMU-500 reset operation with Qualcomm specific reset
-> operation which envelope the default reset operation and re-enables
-> context caching in prefetch buffer for Qualcomm SoCs.
+> The CCI I2C pins are not muxed so we define them in the dtsi.
 > 
-> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
->   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 37 ++++++++++++++++++++--
->   1 file changed, 34 insertions(+), 3 deletions(-)
+>   arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 307 +++++++++++++++++++++++++++++++++
+>   1 file changed, 307 insertions(+)
 > 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index 549ae4dba3a6..000e207346af 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -14,6 +14,16 @@
-> 
->   #define QCOM_DUMMY_VAL	-1
-> 
-> +/*
-> + * SMMU-500 TRM defines BIT(0) as CMTLB (Enable context caching in the
-> + * macro TLB) and BIT(1) as CPRE (Enable context caching in the prefetch
-> + * buffer). The remaining bits are implementation defined and vary across
-> + * SoCs.
-> + */
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index febf28356ff8..f48dfa5e5f36 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -3451,6 +3451,169 @@ usb_1_role_switch: endpoint {
+>   			};
+>   		};
+>   
+> +		cci0: cci@ac4a000 {
+> +			compatible = "qcom,sc8280xp-cci", "qcom,msm8996-cci";
+> +			reg = <0 0x0ac4a000 0 0x1000>;
 > +
-> +#define CPRE			(1 << 1)
-> +#define CMTLB			(1 << 0)
+> +			interrupts = <GIC_SPI 460 IRQ_TYPE_EDGE_RISING>;
 > +
->   static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
->   {
->   	return container_of(smmu, struct qcom_smmu, smmu);
-> @@ -376,11 +386,32 @@ static int qcom_smmu_def_domain_type(struct device *dev)
->   	return match ? IOMMU_DOMAIN_IDENTITY : 0;
->   }
-> 
-> +static int qcom_smmu500_reset(struct arm_smmu_device *smmu)
-> +{
-> +	int ret;
-> +	u32 val;
-> +	int i;
+> +			clocks = <&camcc CAMCC_CAMNOC_AXI_CLK>,
+> +				 <&camcc CAMCC_SLOW_AHB_CLK_SRC>,
+> +				 <&camcc CAMCC_CPAS_AHB_CLK>,
+> +				 <&camcc CAMCC_CCI_0_CLK>;
+> +			clock-names = "camnoc_axi",
+> +				      "slow_ahb_src",
+> +				      "cpas_ahb",
+> +				      "cci";
 > +
-> +	ret = arm_mmu500_reset(smmu);
+> +			power-domains = <&camcc TITAN_TOP_GDSC>;
 > +
-> +	if (ret)
-Weird empty line.. Please remove it in the next revision since you're
-already going to send a new one..
+> +			pinctrl-names = "default", "sleep";
+> +			pinctrl-0 = <&cci0_default>;
+> +			pinctrl-1 = <&cci0_sleep>;
+> +
+property-names goes below property-n, just like with clocks 10 lines
+above :/
+
+other than that:
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
