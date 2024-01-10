@@ -1,139 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-6960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C021A829D6F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 16:21:35 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BDE6B829D79
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 16:23:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E5A5E1C21A5B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 15:21:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DD3F11C20DE7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 15:23:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 110B54C3A8;
-	Wed, 10 Jan 2024 15:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 652984BAB8;
+	Wed, 10 Jan 2024 15:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="SiMoqZ3k"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WG7zrkZ2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CED94BAAB
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 15:21:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a28bd9ca247so468803166b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 07:21:24 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C2F4BAAE
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 15:22:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a28ee72913aso910494466b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 07:22:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1704900083; x=1705504883; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=sofCmMz+PfMbXOmyDNafy7xizRaFnMwusuGn4gaRgT8=;
-        b=SiMoqZ3k3UEcdKYs6HWfD0qIoiSfbEmdIoYdCOn825Z8KgR+IFdT+XsQW4hNPhtDf9
-         4gaxueQi/SKuTVZZlTppAshIlHkPO2gaHJOG6wTMCg9kOtBwBq291cnwX0VlLlNU4XpP
-         PQ90UYsVuPg8eSdgh1UFaDxr/yiaFgm9fQnXJc7IaNF6lFgUIp7SQZbKs/9utTAZoYcZ
-         J/gWvax4o0MF7602pu2Is157pl45Iige8+hZWiRr/PFX4DVk50HQ3MJ2sZuoyBrOBHUA
-         +SVbmgIwKZgNtrf/iDk9ZL5LkywQMYvhdSURjPMAuMq5YsEUwgetifzQiV5g/R08S+bd
-         LfJw==
+        d=linaro.org; s=google; t=1704900173; x=1705504973; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ocW5g+MfpPGGH+YXBPFbzMDUsowtT7v9pCl5haEEOIY=;
+        b=WG7zrkZ2JrerGmsFJiDWr5TpGvd8pE97cTnAuj7OOlLu8tFgSgcwJn0VhFYocYpsQg
+         2bFqRkTDUd+QRw9gJDibm5nw/BdDgpDqmlHoiI/X8n9XYbP2X9YgLDGi50dwlR3QZNr/
+         IoFLSOeFfMyTF20UrnCX8Igm/QIiyldOpwz0bgEvUnHtwR2h1yBkofuK1Vumc0teKuMN
+         /m4FRACQ5pdmLeRQ3uOW/yG/4l7m4dXyYI0vKLTLtiB+QVg/Jn9a3cCEAt/MbgZ85o5W
+         PTJ6+j5rw4wpYJTMn16Czxa/Nq9GANhSAQFhmwXZFx6HMprIZCr5j4AceQQdCqq7Ycmy
+         J+7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704900083; x=1705504883;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sofCmMz+PfMbXOmyDNafy7xizRaFnMwusuGn4gaRgT8=;
-        b=K3t9SqAZoYSFZE+QUjU4EMyVjMUrNEGl6a8lhoa9kW+gs8rkp1MCjvp0QAO8VjSz07
-         oqOYgicevnWve7UquDHJC1faSYw/Z8/GqzbwTf6r0lB/YbGIrB019QrhXcLJ1eJLlqSg
-         TtGH4xIHHzO+PC9aDPvMIMsSeslEDE1vs/OijKHfIqa5NRCt7kNFWRnPLzf64g1uQ7NV
-         9ELj0EFSUHWJrsYM654dWyAJwLxuXhP/kWR1CiTMb+Y4/sIXSsh3JW8KHu6kqFt9Nsrr
-         ztQVmVZHCVJFrWPk9fKtkMkdQXcpvYgMhy/ldFUSI/wPNakd4cDUwYSQgFshiSVzLhjA
-         pkvg==
-X-Gm-Message-State: AOJu0YznKhLrYbAMaG6EKT/fOMhbSEuzD6w8UCLSdGp0V4hPHu1pg/Gb
-	KOH54YacqKg0lIcbbNTDTCtzXh9xQm2qIA==
-X-Google-Smtp-Source: AGHT+IFoxW8ODeKqVvPsrrto75ezjwGrqmF+sKXQuupMA/y3doioxC0tAqO/cD9zud+OqZpjyXtaGg==
-X-Received: by 2002:a17:907:7816:b0:a27:c453:8706 with SMTP id la22-20020a170907781600b00a27c4538706mr689934ejc.125.1704900082844;
-        Wed, 10 Jan 2024 07:21:22 -0800 (PST)
-Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id l9-20020a1709063d2900b00a2bd8953af2sm639342ejf.55.2024.01.10.07.21.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jan 2024 07:21:22 -0800 (PST)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Wed, 10 Jan 2024 16:21:19 +0100
-Subject: [PATCH] arm64: dts: qcom: sm7225-fairphone-fp4: Switch firmware
- ext to .mbn
+        d=1e100.net; s=20230601; t=1704900173; x=1705504973;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ocW5g+MfpPGGH+YXBPFbzMDUsowtT7v9pCl5haEEOIY=;
+        b=ChpHUQnSjJrxPWo+RFRzkXTYNDK3ntbFenJuS3ukokUFW/fh4LQ3Xnp0ZYAl0t8AFJ
+         8u/j4XQXDyc0dx6PfsOJM09uvmt+Cv6f37nN2v2XRsu/9EbHNZZaf9Ugm5LcB1KVH2r4
+         T8l6xo7Q7epCrc25hB0alIvn9elebh2tEt1/p1e38uVs8yRRI+wvTn1mRgyDX69FUu6h
+         X75NNLoaLAKzIlXaAzlSXrltx0KFY9DTJZONuT/ZA8JSLX7yrVjRLdvEInlbMFliYMpy
+         CnNZd3H+HipC5rqTqNgT6PFMzaGu5ndI2es0bwjQIEa+KSGe2+1McBUNu+gV9C0jOqpJ
+         gekQ==
+X-Gm-Message-State: AOJu0Yw2xdPxl9fa1pD8Sr+xMP9paDFe8mCFybZVJh6lbbaTev1Na2wz
+	PpguSPTIq0cyX+0aZkcHFB6B2k0dDoHY8w==
+X-Google-Smtp-Source: AGHT+IExbouC+KC/ZAVx6mzwntrY7evugoqODglQrHojsF8Id7rsToGoRmMzsvGKdNOGTSo0//Ng2w==
+X-Received: by 2002:a17:906:fa85:b0:a2c:dfa:4f6 with SMTP id lt5-20020a170906fa8500b00a2c0dfa04f6mr246115ejb.16.1704900172981;
+        Wed, 10 Jan 2024 07:22:52 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.223.112])
+        by smtp.gmail.com with ESMTPSA id mb24-20020a170906eb1800b00a27b4e1b189sm2158782ejb.209.2024.01.10.07.22.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Jan 2024 07:22:52 -0800 (PST)
+Message-ID: <4f070678-63b6-4657-ad4f-c32256adbf1f@linaro.org>
+Date: Wed, 10 Jan 2024 16:22:50 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: ipq6018: enable sdhci node
+Content-Language: en-US
+To: Chukun Pan <amadeus@jmu.edu.cn>, Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20240110151040.2155938-1-amadeus@jmu.edu.cn>
+ <20240110151040.2155938-3-amadeus@jmu.edu.cn>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20240110151040.2155938-3-amadeus@jmu.edu.cn>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240110-fp4-mbn-v1-1-45e7e33b1834@fairphone.com>
-X-B4-Tracking: v=1; b=H4sIAO61nmUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDQ0MD3bQCE93cpDxdc5Mkw0RzUxNzYxMjJaDqgqLUtMwKsEnRsbW1ACD
- ubBZZAAAA
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.12.4
 
-Specify the file name for the squashed/non-split firmware with the .mbn
-extension instead of the split .mdt. The kernel can load both but the
-squashed version is preferred in dts nowadays.
+On 10/01/2024 16:10, Chukun Pan wrote:
+> Enable mmc device found on ipq6018 devices.
+> This node supports both eMMC and SD cards.
+> 
+> Tested with:
+>   eMMC (HS200)
+>   SD Card (SDR50/SDR104)
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+How? It is disabled...
 
-diff --git a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-index ade619805519..9ed349ec076a 100644
---- a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-+++ b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-@@ -116,7 +116,7 @@ active-config0 {
- };
- 
- &adsp {
--	firmware-name = "qcom/sm7225/fairphone4/adsp.mdt";
-+	firmware-name = "qcom/sm7225/fairphone4/adsp.mbn";
- 	status = "okay";
- };
- 
-@@ -361,7 +361,7 @@ &cci1_i2c0 {
- };
- 
- &cdsp {
--	firmware-name = "qcom/sm7225/fairphone4/cdsp.mdt";
-+	firmware-name = "qcom/sm7225/fairphone4/cdsp.mbn";
- 	status = "okay";
- };
- 
-@@ -400,12 +400,12 @@ &i2c10 {
- &ipa {
- 	qcom,gsi-loader = "self";
- 	memory-region = <&pil_ipa_fw_mem>;
--	firmware-name = "qcom/sm7225/fairphone4/ipa_fws.mdt";
-+	firmware-name = "qcom/sm7225/fairphone4/ipa_fws.mbn";
- 	status = "okay";
- };
- 
- &mpss {
--	firmware-name = "qcom/sm7225/fairphone4/modem.mdt";
-+	firmware-name = "qcom/sm7225/fairphone4/modem.mbn";
- 	status = "okay";
- };
- 
+...
 
----
-base-commit: 0dd3ee31125508cd67f7e7172247f05b7fd1753a
-change-id: 20240110-fp4-mbn-74b1a7547342
+> +
+> +			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
+> +				 <&gcc GCC_SDCC1_APPS_CLK>,
+> +				 <&xo>;
+> +			clock-names = "iface", "core", "xo";
+> +			resets = <&gcc GCC_SDCC1_BCR>;
+> +			max-frequency = <192000000>;
+> +			mmc-ddr-1_8v;
+> +			mmc-hs200-1_8v;
+
+Aren't these three properties of the board?
 
 Best regards,
--- 
-Luca Weiss <luca.weiss@fairphone.com>
+Krzysztof
 
 
