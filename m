@@ -1,135 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-6846-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E75E3829170
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 01:32:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D881829283
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 03:49:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 987711F2447C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 00:32:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3BC001F26BCF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 02:49:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52B0F38D;
-	Wed, 10 Jan 2024 00:31:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="ClAXZTQc"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E9D01871;
+	Wed, 10 Jan 2024 02:49:45 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from mail-m6039.netease.com (mail-m6039.netease.com [210.79.60.39])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A0DC383;
-	Wed, 10 Jan 2024 00:31:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
-	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
-	bh=9Z+eVnm12UxQBSd/stAX1lfcKTZHfLEybCIQDl9VjPg=; b=ClAXZTQcvmlytmHEW1rReNZPml
-	406IseUvgxd35jLCH3XfSpR6DBkUgUfvGsmo93nhA5bSA8Qw1zESFFt11fJv+5ppab/7dC8aO+8zR
-	D1qou94flnxgj7FOwLV64Ys4/Z1+iJe0iotMg1uD8t6rVK+9dIPkIToFkpE8k0ecYy5sxROe/9iLz
-	snCfD2Nmbgb+wKPY3xL1LpJyOUtZRh8aLFCFYeWFnhsk4/zfHuJHmN+fBq2rAOpf3sr7B+PPjaVEE
-	D17l8Kaqp0uwlL9QkbP00Rb6MB5OENEq+rVE0EKq+GJ6KUEhwGVo8bt6aZzig8XGVLIZxYz3BSwol
-	GEJ44gzA==;
-Received: from [50.53.46.231] (helo=[192.168.254.15])
-	by bombadil.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
-	id 1rNMVU-009xdu-07;
-	Wed, 10 Jan 2024 00:31:44 +0000
-Message-ID: <fbbac337-8414-4903-8a7d-5cb0b6d05282@infradead.org>
-Date: Tue, 9 Jan 2024 16:31:42 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A0323B1;
+	Wed, 10 Jan 2024 02:49:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
+Received: from amadeus-Vostro-3710.lan (unknown [113.118.191.185])
+	by mail-m121145.qiye.163.com (Hmail) with ESMTPA id ADA5A800017;
+	Wed, 10 Jan 2024 10:30:23 +0800 (CST)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: robimarko@gmail.com
+Cc: amadeus@jmu.edu.cn,
+	andersson@kernel.org,
+	conor+dt@kernel.org,
+	devicetree@vger.kernel.org,
+	konrad.dybcio@linaro.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	robh+dt@kernel.org
+Subject: Re: [PATCH 1/1] arm64: dts: qcom: ipq6018: enable sdhci node
+Date: Wed, 10 Jan 2024 10:30:19 +0800
+Message-Id: <20240110023019.10096-1-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <ddc610d5-5047-4921-869b-47bdafb38d9a@gmail.com>
+References: <ddc610d5-5047-4921-869b-47bdafb38d9a@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 01/34] docs: gunyah: Introduce Gunyah Hypervisor
-Content-Language: en-US
-To: Elliot Berman <quic_eberman@quicinc.com>, Alex Elder <elder@linaro.org>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Murali Nalajal <quic_mnalajal@quicinc.com>,
- Trilok Soni <quic_tsoni@quicinc.com>,
- Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
- Carl van Schaik <quic_cvanscha@quicinc.com>,
- Philip Derrin <quic_pderrin@quicinc.com>,
- Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
- Jonathan Corbet <corbet@lwn.net>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Catalin Marinas
- <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Fuad Tabba
- <tabba@google.com>, Sean Christopherson <seanjc@google.com>,
- Andrew Morton <akpm@linux-foundation.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-mm@kvack.org
-References: <20240109-gunyah-v16-0-634904bf4ce9@quicinc.com>
- <20240109-gunyah-v16-1-634904bf4ce9@quicinc.com>
- <d5b041d9-1691-4259-a76c-176c5b3d8be3@infradead.org>
- <731ee7a9-72c8-4ae7-8fcd-2c9bb07b09ac@quicinc.com>
-From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <731ee7a9-72c8-4ae7-8fcd-2c9bb07b09ac@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlDHk0dVkIaHktIHktKQkpITVUTARMWGhIXJBQOD1
+	lXWRgSC1lBWUpKSFVKSkNVSkJKVUpDTllXWRYaDxIVHRRZQVlPS0hVSkpLSEpDVUpLS1VLWQY+
+X-HM-Tid: 0a8cf134e229b03akuuuada5a800017
+X-HM-MType: 10
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6KxQ6Igw4NjwfUTQyAhk3Ez5N
+	TzwKCSxVSlVKTEtPQ05IQ0lPQk5OVTMWGhIXVRoWGh8eDgg7ERYOVR4fDlUYFUVZV1kSC1lBWUpK
+	SFVKSkNVSkJKVUpDTllXWQgBWUFKTklONwY+
 
+Hi, Robert
+> L2 LDO should be used as VQMMC supply, otherwise you cannot change 
+> between 3 and 1.8V.
 
+Some ipq6000 devices do not have pmic chips, resulting in l2 being
+unavailable. So vqmmc-supply should be configured in the dts of the
+device.
 
-On 1/9/24 16:28, Elliot Berman wrote:
-> 
-> 
-> On 1/9/2024 3:31 PM, Randy Dunlap wrote:
->>
->>
->> On 1/9/24 11:37, Elliot Berman wrote:
->>> Gunyah is an open-source Type-1 hypervisor developed by Qualcomm. It
->>> does not depend on any lower-privileged OS/kernel code for its core
->>> functionality. This increases its security and can support a smaller
->>> trusted computing based when compared to Type-2 hypervisors.
->>>
->>> Add documentation describing the Gunyah hypervisor and the main
->>> components of the Gunyah hypervisor which are of interest to Linux
->>> virtualization development.
->>>
->>> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
->>> ---
->>>  Documentation/virt/gunyah/index.rst         | 134 ++++++++++++++++++++++++++++
->>>  Documentation/virt/gunyah/message-queue.rst |  68 ++++++++++++++
->>>  Documentation/virt/index.rst                |   1 +
->>>  3 files changed, 203 insertions(+)
->>>
->>> diff --git a/Documentation/virt/gunyah/index.rst b/Documentation/virt/gunyah/index.rst
->>> new file mode 100644
->>> index 000000000000..da8e5e4b9cac
->>> --- /dev/null
->>> +++ b/Documentation/virt/gunyah/index.rst
->>> @@ -0,0 +1,134 @@
->>> +.. SPDX-License-Identifier: GPL-2.0
->>> +
->>> +=================
->>> +Gunyah Hypervisor
->>> +=================
->>> +
->>> +.. toctree::
->>> +   :maxdepth: 1
->>> +
->>> +   message-queue
->>> +
->>> +Gunyah is a Type-1 hypervisor which is independent of any OS kernel, and runs in
->>> +a higher CPU privilege level. It does not depend on any lower-privileged
->>
->> Is this the usual meaning of higher and lower? Seems backwards to me.
->>
-> 
-> Hmm, I guess this x86 having ring 0 as most privileged and arm using EL3 as most
-> privileged. I'll switch to "more" and "less" privilege rather than implying
-> a numbering scheme.
-
-I suspected that. Thanks for the change.
+Thanks,
+Chukun
 
 -- 
-#Randy
+2.25.1
+
 
