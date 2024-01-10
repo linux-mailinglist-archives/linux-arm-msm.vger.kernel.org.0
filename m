@@ -1,140 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-6942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5820B829AC0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 13:56:30 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D3DB5829ACB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 13:58:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8744D1C259CA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 12:56:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2E075B258B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 12:58:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E26948CD2;
-	Wed, 10 Jan 2024 12:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0D3548788;
+	Wed, 10 Jan 2024 12:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pTKqrjD+"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HcyNoWgJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D148D48CD9;
-	Wed, 10 Jan 2024 12:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40CE348781;
+	Wed, 10 Jan 2024 12:58:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40ACekq5010668;
-	Wed, 10 Jan 2024 12:55:34 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40AA2mwO013795;
+	Wed, 10 Jan 2024 12:58:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:from:to:cc:references
+	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=7vMT1hFktDJAz+gNb9eLyhKcykMUQ9DQvdKP5jgUOYE=; b=pT
-	KqrjD+iOnFyCEzjMKBY747zU++IgyPUaVXqCHy4E6ey2aWTyA2WYTtaSjkxXGBOw
-	BEXbvxFk6xRzD/aS5+gtvJva4/RKBepI+OJO107W7Nc6HQ2r7z3tBOWkQ1CHJkIj
-	k38b/G6Ghfyozl/ZGM9rrGJ1PlzzVWfJGwHYhxrPshBLil6ooJRop3yuCQRj0Xbk
-	4hfrz3pObkliri1w/C8z8cPYMYEdq1kUi4GqVfrz2cEiNSOY7FtG9R1Na5a5zu+y
-	3UEh8w1MHXZejkAgK0HVj2e5nHCoVPwZ84NLxZ7IHpcM4AdnAj8uqg6Ex4MThK9V
-	pze0+lLjwuRSLMjSoj8w==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vhkem15c9-1
+	qcppdkim1; bh=/vClWtu3HlYBCHjhqdD40ETyVbpVB8kO2AGNHZOK/lQ=; b=Hc
+	yNoWgJbTUxXloJBbWm+gL+LkCAxj2pPEA398P9hwkFjniMuW/J6q/XwJc1RcCwhG
+	uM6UBj38CiJd4a+tqSri87/pPsz4omqUHPoj89csGSTiZtBsqtPvQ7Ky6r028PY+
+	zNL0SEtmBGb6sK+bfPTZf0plly1hSV9UVbn/KMaF/ssJTHYf5bfMGjhrdxeLLiPf
+	pwgrP8r9q9W3mYTrvFNR1bCeDf1KOB+HxCiAQkH/2PbHt2FyHNdlYQT4XHjnw7Xw
+	DTz9s3YY9EjMcd/OUzXQcFBCVn3v0/kO3aI81UaB1IowSbbFxabzpFtljuzG9tul
+	VX8fWzONYFffncqiGR+Q==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vhs4mgf10-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jan 2024 12:55:34 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40ACtXZ6007220
+	Wed, 10 Jan 2024 12:58:31 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40ACwUlG002890
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jan 2024 12:55:33 GMT
-Received: from [10.214.66.253] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+	Wed, 10 Jan 2024 12:58:30 GMT
+Received: from [10.216.48.153] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 10 Jan
- 2024 04:55:27 -0800
-Message-ID: <4a595815-7fcc-47e2-b22c-dac349af6d79@quicinc.com>
-Date: Wed, 10 Jan 2024 18:25:24 +0530
+ 2024 04:58:22 -0800
+Message-ID: <ba732b1c-223c-ee70-d25b-4c78b312402c@quicinc.com>
+Date: Wed, 10 Jan 2024 18:28:19 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 3/5] iommu/arm-smmu: introduction of ACTLR for custom
- prefetcher settings
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH v5 5/5] PCI: qcom: Add OPP support to scale performance
+ state of power domain
 Content-Language: en-US
-From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-To: Pavan Kondeti <quic_pkondeti@quicinc.com>
-CC: <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
-        <dmitry.baryshkov@linaro.org>, <konrad.dybcio@linaro.org>,
-        <jsnitsel@redhat.com>, <quic_bjorande@quicinc.com>, <mani@kernel.org>,
-        <quic_eberman@quicinc.com>, <robdclark@chromium.org>,
-        <u.kleine-koenig@pengutronix.de>, <robh@kernel.org>,
-        <vladimir.oltean@nxp.com>, <quic_molvera@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
-        <linux-kernel@vger.kernel.org>, <qipl.kernel.upstream@quicinc.com>
-References: <20240109114220.30243-1-quic_bibekkum@quicinc.com>
- <20240109114220.30243-4-quic_bibekkum@quicinc.com>
- <2ad70157-27d1-41df-8866-c226af690cf6@quicinc.com>
- <ec31fafa-b912-454a-8b64-e0593911aaf2@quicinc.com>
-In-Reply-To: <ec31fafa-b912-454a-8b64-e0593911aaf2@quicinc.com>
+To: Viresh Kumar <viresh.kumar@linaro.org>
+CC: Bjorn Helgaas <helgaas@kernel.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <vireshk@kernel.org>, <nm@ti.com>, <sboyd@kernel.org>,
+        <mani@kernel.org>, <lpieralisi@kernel.org>, <kw@linux.com>,
+        <robh@kernel.org>, <bhelgaas@google.com>, <rafael@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
+        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
+        <quic_ramkri@quicinc.com>, <quic_parass@quicinc.com>
+References: <20231102053013.7yt7pxin5awlu7w7@vireshk-i7>
+ <20231102120950.GA115288@bhelgaas>
+ <20231103051247.u4cnckzstcvs4lf5@vireshk-i7>
+ <15a98ec0-214b-218b-1e3c-c09f770fce2e@quicinc.com>
+ <0ba9f2af-169e-a9a2-9ae4-4c6a70b0a94e@quicinc.com>
+ <20240110065757.xde2nvpr3z7c4isu@vireshk-i7>
+ <376b3716-46ff-2324-73fc-f3afa3f7af1c@quicinc.com>
+ <20240110073807.sqwmsyr6nmigg6zc@vireshk-i7>
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <20240110073807.sqwmsyr6nmigg6zc@vireshk-i7>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: hiHoHz-1KztRZSPuXEpqyxfs5P7xS_HR
-X-Proofpoint-GUID: hiHoHz-1KztRZSPuXEpqyxfs5P7xS_HR
+X-Proofpoint-GUID: ldLzFosc01dSUdg3R4AmVw9dR3hFeRMF
+X-Proofpoint-ORIG-GUID: ldLzFosc01dSUdg3R4AmVw9dR3hFeRMF
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- mlxlogscore=940 impostorscore=0 phishscore=0 bulkscore=0 suspectscore=0
- lowpriorityscore=0 spamscore=0 priorityscore=1501 adultscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 phishscore=0 lowpriorityscore=0 mlxlogscore=999
+ adultscore=0 impostorscore=0 spamscore=0 clxscore=1015 mlxscore=0
+ suspectscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2311290000 definitions=main-2401100106
 
 
-
-On 1/10/2024 4:46 PM, Bibek Kumar Patro wrote:
-> 
-> 
-> On 1/10/2024 9:36 AM, Pavan Kondeti wrote:
-
-[...]
-
->>> @@ -274,6 +321,21 @@ static const struct of_device_id 
->>> qcom_smmu_client_of_match[] __maybe_unused = {
->>>   static int qcom_smmu_init_context(struct arm_smmu_domain *smmu_domain,
->>>           struct io_pgtable_cfg *pgtbl_cfg, struct device *dev)
->>>   {
->>> +    struct arm_smmu_device *smmu = smmu_domain->smmu;
->>> +    struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
->>> +    const struct actlr_variant *actlrvar;
->>> +    int cbndx = smmu_domain->cfg.cbndx;
->>> +
->>> +    if (qsmmu->data->actlrvar) {
->>> +        actlrvar = qsmmu->data->actlrvar;
->>> +        for (; actlrvar->io_start; actlrvar++) {
->>> +            if (actlrvar->io_start == smmu->ioaddr) {
->>> +                qcom_smmu_set_actlr(dev, smmu, cbndx, 
->>> actlrvar->actlrcfg);
->>> +                break;
->>> +            }
->>> +        }
->>> +    }
->>> +
+On 1/10/2024 1:08 PM, Viresh Kumar wrote:
+> On 10-01-24, 12:42, Krishna Chaitanya Chundru wrote:
+>> At present we are not changing the link width after link is initialized, but
+>> we have plans to
 >>
->> This block and the one in qcom_adreno_smmu_init_context() are exactly
->> the same. Possible to do some refactoring?
->>
-> 
-> I will check if this repeated blocks can be accomodated this into 
-> qcom_smmu_set_actlr function if that would be fine.
-> 
+>> add support change link width dynamically at runtime.
+> Hmm okay.
+>
+>> So, I think it is better to have ICC BW voting in the driver itself.
+> I guess it is better to have more entries in the OPP table then.. 15-20 OPPs
+> isn't too many to be honest.
+>
+> Replicating code is the last thing I would like to do.
+>
+> Maybe you can show the different layouts of the OPP table if you are concerned.
+> We can then see if it is getting too much or not.
 
-Also adding to this, this might increase the number of indentation 
-inside qcom_smmu_set_actlr as well, to around 5. So wouldn't this
-be an issue?
+Viresh,
 
-Thanks,
-Bibek
+it might be less only for now may be around 20 opp entries, but PCIe 
+spec is being updated every few years and a new gen
+
+gen speed will release, right now PCIe GEN6 is released but I don't we 
+had any device in the market now and GEN7 is in process.
+
+So in future it might become very big table. Either we need to come up 
+with a framework in the OPP to select the BW based up on lane width
+
+for particular speed or use the driver way.
+
+
+Thanks & Regards,
+
+Krishna Chaitanya.
+
 
