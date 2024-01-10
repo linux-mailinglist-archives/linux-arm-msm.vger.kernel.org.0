@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53565829A58
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 13:23:00 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 04816829A62
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 13:24:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BC5941F21DF7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 12:22:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 834461F221C2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 12:24:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE092482C3;
-	Wed, 10 Jan 2024 12:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A77B4482F7;
+	Wed, 10 Jan 2024 12:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qyXo8YZc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fr3Ej787"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0881482C2
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 12:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0918E482E9
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 12:24:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2cd08f0c12aso43255981fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 04:22:46 -0800 (PST)
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3368d1c7b23so3803674f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 04:24:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704889365; x=1705494165; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1704889451; x=1705494251; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Gv8ChbCx3nZ3IpTPDQn3bgHlvJDlDz1Uz1H3jLH3TfY=;
-        b=qyXo8YZcfQiUCq1zp2vSHcCP5x4TaMawlghFxIMjMxVUeJ2c71KVOzBO1fyjc1cOOY
-         mCiIjPpJcF5d2skMlgUh7BAJh4dyeKS00aa0T0MQo0Tg9UXntICJN8YequmsjpMXH4l9
-         RwaziaguTc5pl+n/YvlC+RblFIcJ6e5y2ZrC9kl4pnegS65FjYTuXbjq51IRxCcLq89T
-         n25nwtg7UdGgFG+ch6obL7iTjO1jQed1GbJtGSMkz3GGnt+xAaVw7Xfpby+Ken987uYc
-         qq5n/g5TJBldzxGjhvS1z+FQKRIGRvtbJ66wtKHYZ0e2hxyJQCbbfDHylbLf9Oin4ywC
-         ewjA==
+        bh=wn2wctXkFyijHoefu9cXmESmdj8+O8W32DJcUS66YaQ=;
+        b=fr3Ej787CJRfAUMzAo3bi3GJvsvf8DjQeF4TS2By+lsEj1JxxCDm6ZvIPo4aGNBdob
+         iA+zEiRueAG+1LoeL9pf8Q4OgdKEETcP/O57V486nviyQIY1TSDizigg25N7Wi842Er6
+         +SA+FCS5NgNUWOALGzI9FJ4Hurjr3UeeM6/pD98uwLTsalXonwLrBDM5Vf/dNvbYKvnQ
+         vbCDctTRAk/VLRtnVvs3zLlB8HYC5gn1nUAnV18dM+l0Fmm5q8Mb6t/xVUd45ZzVylS7
+         g1vQaFDtCQWUP0Nh0cUijh5Zz4fDOqqf99yiXBUkRRuWviGdd8KjbMaUHGDuBLszXsGe
+         kLMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704889365; x=1705494165;
+        d=1e100.net; s=20230601; t=1704889451; x=1705494251;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Gv8ChbCx3nZ3IpTPDQn3bgHlvJDlDz1Uz1H3jLH3TfY=;
-        b=XX4ILRmX2TPMXc6WxrVSTna8nY+YvymSbGLRSbRU7O5Ttzw75QV1hEjje97l23EJoN
-         LtU2BMPvkqH9/b6ZfUkixtQcOaiu1R5fnozYwRhg+xPfB1kPXTbav0+gvOEtwF1cZnTR
-         vXKULzRR44OFzv+baR/6K7fJhh5A+Mdwr16er3N0sNngVYtIbHDEyKiNpD7RzC7EvkAX
-         FUaEIz8tcrHCWJP3yKg0J8AhzJqONfqun84UWSg7DnVo49f86uKN3RE0gYV03VOIiIOr
-         N8AXIonHRVD+D1gepcaLe9tkkV0wEjxe3UFzphK/LBeHzHDVO9ACVNLNg06/Vf6VMxub
-         poLw==
-X-Gm-Message-State: AOJu0Yw3/hIoA4UDkJt49wZkNR18jrMR04mSw4jG2AewsP3APzkih/y9
-	N07moam2igQqgS3q6ZrJvyZ1qfbXl6WtvQ==
-X-Google-Smtp-Source: AGHT+IFnHD3/qxD2lf/iPpepy6B+iOGMcSp2dTS/IauOHAT4aOELl4cpFXvF2XNb/Z6CjvKK8+fIeA==
-X-Received: by 2002:a2e:964f:0:b0:2cd:6402:1f03 with SMTP id z15-20020a2e964f000000b002cd64021f03mr351906ljh.24.1704889364680;
-        Wed, 10 Jan 2024 04:22:44 -0800 (PST)
+        bh=wn2wctXkFyijHoefu9cXmESmdj8+O8W32DJcUS66YaQ=;
+        b=NJhBkNjSv76bt5alxC74V3xRCe175fUmSh2J1Y6RgZSCla70d+LyMAPla+aTRowQwx
+         40+hjqfGD9yKREns7dK7I7biSvzvfDgxIc6KpdcL+WhiEHAuifxOUgYTSuFbHF6sDvjN
+         kN33pK2ceJL8rU+vUNt6LCYkTVtRFUrU176DRYMGs63Qql5hjFrEpILJLw7DVr/kXfVt
+         o0V/3t4fYzrf5gCkpoz1rqRPay/w3w2g8CYX92OnlsqquATW0rIf3ZewywvTK3sBb/A3
+         w2MpjSx1OyUe7H6mUY3WRbO1V4yHhacszsGaOJwMzIvliJ/1jxCtM5au9eA80mzkjifW
+         q9+A==
+X-Gm-Message-State: AOJu0YwsdQbspi+vSrNRrNd5XhFb1yZDXqAhjaZlNykTE4MJILugPQSH
+	WfCSSpD9edcOtPw3rFXmZ9oY9tcK6mOa5w==
+X-Google-Smtp-Source: AGHT+IGPuzAuqhMk+dnPpAXyI++Ue0pJ3s1Bt5NwK7xylGdKvABE9Ph1rEPlQR13+BKcxUfAb8AWsg==
+X-Received: by 2002:a1c:4b05:0:b0:40e:3bba:8080 with SMTP id y5-20020a1c4b05000000b0040e3bba8080mr514925wma.75.1704889451272;
+        Wed, 10 Jan 2024 04:24:11 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.223.112])
-        by smtp.gmail.com with ESMTPSA id e1-20020a056000120100b00333404e9935sm4765719wrx.54.2024.01.10.04.22.40
+        by smtp.gmail.com with ESMTPSA id e1-20020a056000120100b00333404e9935sm4765719wrx.54.2024.01.10.04.24.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Jan 2024 04:22:44 -0800 (PST)
-Message-ID: <1d1116da-9af3-49e4-a180-cff721df5df5@linaro.org>
-Date: Wed, 10 Jan 2024 13:22:39 +0100
+        Wed, 10 Jan 2024 04:24:10 -0800 (PST)
+Message-ID: <a72405c2-c891-4db5-9ac5-42ca1c36cafb@linaro.org>
+Date: Wed, 10 Jan 2024 13:24:06 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,8 +66,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next 02/20] dt-bindings: net: qcom,ppe: Add bindings
- yaml file
+Subject: Re: [PATCH net-next 00/20] net: ethernet: Add qcom PPE driver
 Content-Language: en-US
 To: Luo Jie <quic_luoj@quicinc.com>, agross@kernel.org, andersson@kernel.org,
  konrad.dybcio@linaro.org, davem@davemloft.net, edumazet@google.com,
@@ -87,7 +86,6 @@ Cc: netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  quic_suruchia@quicinc.com, quic_soni@quicinc.com, quic_pavir@quicinc.com,
  quic_souravp@quicinc.com, quic_linchen@quicinc.com, quic_leiwei@quicinc.com
 References: <20240110114033.32575-1-quic_luoj@quicinc.com>
- <20240110114033.32575-3-quic_luoj@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -133,589 +131,25 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240110114033.32575-3-quic_luoj@quicinc.com>
+In-Reply-To: <20240110114033.32575-1-quic_luoj@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 10/01/2024 12:40, Luo Jie wrote:
-> Qualcomm PPE(packet process engine) is supported on
-> IPQ SOC platform.
+> The PPE(packet process engine) hardware block is available in Qualcomm
+> IPQ chipsets that support PPE architecture, such as IPQ9574 and IPQ5332.
+> The PPE includes integrated ethernet MAC and PCS(uniphy), which is used
+> to connect with external PHY devices by PCS. The PPE also includes
+> various packet processing offload capabilities such as routing and
+> briding offload, L2 switch capability, VLAN and tunnel processing
+> offload.
 > 
+> This patch series enables support for the PPE driver which intializes
+> and configures the PPE, and provides various services for higher level
+> network drivers in the system such as EDMA (Ethernet DMA) driver or a
+> DSA switch driver for PPE L2 Switch, for Qualcomm IPQ SoCs.
 
-A nit, subject: drop second/last, redundant "bindings". The
-"dt-bindings" prefix is already stating that these are bindings.
-See also:
-https://elixir.bootlin.com/linux/v6.7-rc8/source/Documentation/devicetree/bindings/submitting-patches.rst#L18
-
-Basically your subject has only prefix and nothing else useful.
-
-Limited review follows, I am not wasting my time much on this.
-
-> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
-> ---
->  .../devicetree/bindings/net/qcom,ppe.yaml     | 1330 +++++++++++++++++
->  1 file changed, 1330 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/net/qcom,ppe.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/net/qcom,ppe.yaml b/Documentation/devicetree/bindings/net/qcom,ppe.yaml
-> new file mode 100644
-> index 000000000000..6afb2ad62707
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/net/qcom,ppe.yaml
-> @@ -0,0 +1,1330 @@
-> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/net/qcom,ppe.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Packet Process Engine Ethernet controller
-
-Where is the ref to ethernet controllers schema?
-
-> +
-> +maintainers:
-> +  - Luo Jie <quic_luoj@quicinc.com>
-> +
-> +description:
-> +  The PPE(packet process engine) is comprised of three componets, Ethernet
-> +  DMA, Switch core and Port wrapper, Ethernet DMA is used to transmit and
-> +  receive packets between Ethernet subsytem and host. The Switch core has
-> +  maximum 8 ports(maximum 6 front panel ports and two FIFO interfaces),
-> +  among which there are GMAC/XGMACs used as external interfaces and FIFO
-> +  interfaces connected the EDMA/EIP, The port wrapper provides connections
-> +  from the GMAC/XGMACS to SGMII/QSGMII/PSGMII/USXGMII/10G-BASER etc, there
-> +  are maximu 3 UNIPHY(PCS) instances supported by PPE.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,ipq5332-ppe
-> +      - qcom,ipq9574-ppe
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  "#address-cells":
-> +    const: 1
-> +
-> +  "#size-cells":
-> +    const: 1
-> +
-> +  ranges: true
-> +
-> +  clocks: true
-
-These cannot be true, we expect here widest constraints.
-
-> +
-> +  clock-names: true
-> +
-> +  resets: true
-> +
-> +  reset-names: true
-> +
-> +  tdm-config:
-> +    type: object
-> +    additionalProperties: false
-> +    description: |
-> +      PPE TDM(time-division multiplexing) config includes buffer management
-> +      and port scheduler.
-> +
-> +    properties:
-> +      qcom,tdm-bm-config:
-> +        $ref: /schemas/types.yaml#/definitions/uint32-array
-> +        description:
-> +          The TDM buffer scheduler configs of PPE, there are multiple
-> +          entries supported, each entry includes valid, direction
-> +          (ingress or egress), port, second port valid, second port.
-> +
-> +      qcom,tdm-port-scheduler-config:
-> +        $ref: /schemas/types.yaml#/definitions/uint32-array
-> +        description:
-> +          The TDM port scheduler management configs of PPE, there
-> +          are multiple entries supported each entry includes ingress
-> +          scheduler port bitmap, ingress scheduler port, egress
-> +          scheduler port, second egress scheduler port valid and
-> +          second egress scheduler port.
-> +
-> +    required:
-> +      - qcom,tdm-bm-config
-> +      - qcom,tdm-port-scheduler-config
-> +
-> +  buffer-management-config:
-> +    type: object
-> +    additionalProperties: false
-> +    description: |
-> +      PPE buffer management config, which supports configuring group
-> +      buffer and per port buffer, which decides the threshold of the
-> +      flow control frame generated.
-> +
-
-I don't understand this sentence. Rephrase it to proper sentence and
-proper hardware, not driver, description.
-
-> +    properties:
-> +      qcom,group-config:
-> +        $ref: /schemas/types.yaml#/definitions/uint32-array
-> +        description:
-> +          The PPE buffer support 4 groups, the entry includes
-> +          the group ID and group buffer numbers, each buffer
-> +          has 256 bytes.
-
-Missing constraints, like min/max and number of items.
-
-> +
-> +      qcom,port-config:
-> +        $ref: /schemas/types.yaml#/definitions/uint32-array
-> +        description:
-> +          The PPE buffer number is also assigned per BM port ID,
-> +          there are 10 BM ports supported on ipq5332, and 15 BM
-> +          ports supported on ipq9574. Each entry includs group
-> +          ID, BM port ID, dedicated buffer, the buffer numbers
-> +          for receiving packet after pause frame sent, the
-> +          threshold for pause frame, weight, restore ceil and
-> +          dynamic buffer or static buffer management.
-> +
-> +    required:
-> +      - qcom,group-config
-> +      - qcom,port-config
-> +
-> +  queue-management-config:
-> +    type: object
-> +    additionalProperties: false
-> +    description: |
-> +      PPE queue management config, which supports configuring group
-> +      and per queue buffer limitation, which decides the threshold
-> +      to drop the packet on the egress port.
-> +
-> +    properties:
-> +      qcom,group-config:
-> +        $ref: /schemas/types.yaml#/definitions/uint32-array
-> +        description:
-> +          The PPE queue management support 4 groups, the entry
-> +          includes the group ID, group buffer number, dedicated
-> +          buffer number, threshold to drop packet and restore
-> +          ceil.
-> +
-> +      qcom,queue-config:
-> +        $ref: /schemas/types.yaml#/definitions/uint32-array
-> +        description:
-> +          PPE has 256 unicast queues and 44 multicast queues, the
-> +          entry includes queue base, queue number, group ID,
-> +          dedicated buffer, the threshold to drop packet, weight,
-> +          restore ceil and dynamic or static queue management.
-> +
-> +    required:
-> +      - qcom,group-config
-> +      - qcom,queue-config
-> +
-> +  port-scheduler-resource:
-> +    type: object
-> +    additionalProperties: false
-> +    description: The scheduler resource available in PPE.
-> +    patternProperties:
-> +      "^port[0-7]$":
-
-port-
-
-> +        description: Each subnode represents the scheduler resource per port.
-> +        type: object
-> +        properties:
-> +          port-id:
-> +            $ref: /schemas/types.yaml#/definitions/uint32
-> +            description: |
-
-Do not need '|' unless you need to preserve formatting. This applies
-everywhere.
-
-> +              The PPE port ID, there are maximum 6 physical port,
-> +              EIP port and CPU port.
-
-Your node  name suffix says 8 ports. Anyway, missing min/max.
-
-All these nodes (before, here and further) looks like dump of vendor code.
-
-I expect some good explanation why we should accept this. Commit msg you
-wrote is meaningless. It literally brings zero information about hardware.
-
-You have been asked to provide accurate hardware description yet you
-keep ignoring people's feedback.
-...
-
-> +
-> +patternProperties:
-
-
-phy@
-
-Node names should be generic. See also an explanation and list of
-examples (not exhaustive) in DT specification:
-https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
-
-
-> +  "^qcom-uniphy@[0-9a-f]+$":
-> +    type: object
-> +    additionalProperties: false
-> +    description: uniphy configuration and clock provider
-> +    properties:
-> +      reg:
-> +        minItems: 2
-> +        items:
-> +          - description: The first uniphy register range
-> +          - description: The second uniphy register range
-> +          - description: The third uniphy register range
-
-first, second and third are really useless descriptions. We expect
-something useful.
-
-> +
-> +      "#clock-cells":
-> +        const: 1
-> +
-> +      clock-output-names:
-> +        minItems: 4
-> +        maxItems: 6
-> +
-> +    required:
-> +      - reg
-> +      - "#clock-cells"
-> +      - clock-output-names
-> +
-> +allOf:
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            const: qcom,ipq5332-ppe
-> +    then:
-> +      properties:
-> +        clocks:
-> +          items:
-> +            - description: Display common AHB clock from gcc
-> +            - description: Display common system clock from gcc
-> +            - description: Display uniphy0 AHB clock from gcc
-> +            - description: Display uniphy1 AHB clock from gcc
-> +            - description: Display uniphy0 system clock from gcc
-> +            - description: Display uniphy1 system clock from gcc
-> +            - description: Display nss clock from gcc
-> +            - description: Display nss noc snoc clock from gcc
-> +            - description: Display nss noc snoc_1 clock from gcc
-> +            - description: Display sleep clock from gcc
-> +            - description: Display PPE clock from nsscc
-> +            - description: Display PPE config clock from nsscc
-> +            - description: Display NSSNOC PPE clock from nsscc
-> +            - description: Display NSSNOC PPE config clock from nsscc
-> +            - description: Display EDMA clock from nsscc
-> +            - description: Display EDMA config clock from nsscc
-> +            - description: Display PPE IPE clock from nsscc
-> +            - description: Display PPE BTQ clock from nsscc
-> +            - description: Display port1 MAC clock from nsscc
-> +            - description: Display port2 MAC clock from nsscc
-> +            - description: Display port1 RX clock from nsscc
-> +            - description: Display port1 TX clock from nsscc
-> +            - description: Display port2 RX clock from nsscc
-> +            - description: Display port2 TX clock from nsscc
-> +            - description: Display UNIPHY port1 RX clock from nsscc
-> +            - description: Display UNIPHY port1 TX clock from nsscc
-> +            - description: Display UNIPHY port2 RX clock from nsscc
-> +            - description: Display UNIPHY port2 TX clock from nsscc
-> +        clock-names:
-> +          items:
-> +            - const: cmn_ahb
-> +            - const: cmn_sys
-> +            - const: uniphy0_ahb
-> +            - const: uniphy1_ahb
-> +            - const: uniphy0_sys
-> +            - const: uniphy1_sys
-> +            - const: gcc_nsscc
-> +            - const: gcc_nssnoc_snoc
-> +            - const: gcc_nssnoc_snoc_1
-> +            - const: gcc_im_sleep
-> +            - const: nss_ppe
-> +            - const: nss_ppe_cfg
-> +            - const: nssnoc_ppe
-> +            - const: nssnoc_ppe_cfg
-> +            - const: nss_edma
-> +            - const: nss_edma_cfg
-> +            - const: nss_ppe_ipe
-> +            - const: nss_ppe_btq
-> +            - const: port1_mac
-> +            - const: port2_mac
-> +            - const: nss_port1_rx
-> +            - const: nss_port1_tx
-> +            - const: nss_port2_rx
-> +            - const: nss_port2_tx
-> +            - const: uniphy_port1_rx
-> +            - const: uniphy_port1_tx
-> +            - const: uniphy_port2_rx
-> +            - const: uniphy_port2_tx
-> +
-> +        resets:
-> +          items:
-> +            - description: Reset PPE
-> +            - description: Reset uniphy0 software config
-> +            - description: Reset uniphy1 software config
-> +            - description: Reset uniphy0 AHB
-> +            - description: Reset uniphy1 AHB
-> +            - description: Reset uniphy0 system
-> +            - description: Reset uniphy1 system
-> +            - description: Reset uniphy0 XPCS
-> +            - description: Reset uniphy1 SPCS
-> +            - description: Reset uniphy port1 RX
-> +            - description: Reset uniphy port1 TX
-> +            - description: Reset uniphy port2 RX
-> +            - description: Reset uniphy port2 TX
-> +            - description: Reset PPE port1 RX
-> +            - description: Reset PPE port1 TX
-> +            - description: Reset PPE port2 RX
-> +            - description: Reset PPE port2 TX
-> +            - description: Reset PPE port1 MAC
-> +            - description: Reset PPE port2 MAC
-> +
-> +        reset-names:
-> +          items:
-> +            - const: ppe
-> +            - const: uniphy0_soft
-> +            - const: uniphy1_soft
-> +            - const: uniphy0_ahb
-> +            - const: uniphy1_ahb
-> +            - const: uniphy0_sys
-> +            - const: uniphy1_sys
-> +            - const: uniphy0_xpcs
-> +            - const: uniphy1_xpcs
-> +            - const: uniphy_port1_rx
-> +            - const: uniphy_port1_tx
-> +            - const: uniphy_port2_rx
-> +            - const: uniphy_port2_tx
-> +            - const: nss_port1_rx
-> +            - const: nss_port1_tx
-> +            - const: nss_port2_rx
-> +            - const: nss_port2_tx
-> +            - const: nss_port1_mac
-> +            - const: nss_port2_mac
-> +
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            const: qcom,ipq9574-ppe
-> +    then:
-> +      properties:
-> +        clocks:
-> +          items:
-> +            - description: Display common AHB clock from gcc
-> +            - description: Display common system clock from gcc
-> +            - description: Display uniphy0 AHB clock from gcc
-> +            - description: Display uniphy1 AHB clock from gcc
-> +            - description: Display uniphy2 AHB clock from gcc
-> +            - description: Display uniphy0 system clock from gcc
-> +            - description: Display uniphy1 system clock from gcc
-> +            - description: Display uniphy2 system clock from gcc
-> +            - description: Display nss clock from gcc
-> +            - description: Display nss noc clock from gcc
-> +            - description: Display nss noc snoc clock from gcc
-> +            - description: Display nss noc snoc_1 clock from gcc
-> +            - description: Display PPE clock from nsscc
-> +            - description: Display PPE config clock from nsscc
-> +            - description: Display NSSNOC PPE clock from nsscc
-> +            - description: Display NSSNOC PPE config clock from nsscc
-> +            - description: Display EDMA clock from nsscc
-> +            - description: Display EDMA config clock from nsscc
-> +            - description: Display PPE IPE clock from nsscc
-> +            - description: Display PPE BTQ clock from nsscc
-> +            - description: Display port1 MAC clock from nsscc
-> +            - description: Display port2 MAC clock from nsscc
-> +            - description: Display port3 MAC clock from nsscc
-> +            - description: Display port4 MAC clock from nsscc
-> +            - description: Display port5 MAC clock from nsscc
-> +            - description: Display port6 MAC clock from nsscc
-> +            - description: Display port1 RX clock from nsscc
-> +            - description: Display port1 TX clock from nsscc
-> +            - description: Display port2 RX clock from nsscc
-> +            - description: Display port2 TX clock from nsscc
-> +            - description: Display port3 RX clock from nsscc
-> +            - description: Display port3 TX clock from nsscc
-> +            - description: Display port4 RX clock from nsscc
-> +            - description: Display port4 TX clock from nsscc
-> +            - description: Display port5 RX clock from nsscc
-> +            - description: Display port5 TX clock from nsscc
-> +            - description: Display port6 RX clock from nsscc
-> +            - description: Display port6 TX clock from nsscc
-> +            - description: Display UNIPHY port1 RX clock from nsscc
-> +            - description: Display UNIPHY port1 TX clock from nsscc
-> +            - description: Display UNIPHY port2 RX clock from nsscc
-> +            - description: Display UNIPHY port2 TX clock from nsscc
-> +            - description: Display UNIPHY port3 RX clock from nsscc
-> +            - description: Display UNIPHY port3 TX clock from nsscc
-> +            - description: Display UNIPHY port4 RX clock from nsscc
-> +            - description: Display UNIPHY port4 TX clock from nsscc
-> +            - description: Display UNIPHY port5 RX clock from nsscc
-> +            - description: Display UNIPHY port5 TX clock from nsscc
-> +            - description: Display UNIPHY port6 RX clock from nsscc
-> +            - description: Display UNIPHY port6 TX clock from nsscc
-> +            - description: Display port5 RX clock source from nsscc
-> +            - description: Display port5 TX clock source from nsscc
-> +        clock-names:
-> +          items:
-> +            - const: cmn_ahb
-> +            - const: cmn_sys
-> +            - const: uniphy0_ahb
-> +            - const: uniphy1_ahb
-> +            - const: uniphy2_ahb
-> +            - const: uniphy0_sys
-> +            - const: uniphy1_sys
-> +            - const: uniphy2_sys
-> +            - const: gcc_nsscc
-> +            - const: gcc_nssnoc_nsscc
-> +            - const: gcc_nssnoc_snoc
-> +            - const: gcc_nssnoc_snoc_1
-> +            - const: nss_ppe
-> +            - const: nss_ppe_cfg
-> +            - const: nssnoc_ppe
-> +            - const: nssnoc_ppe_cfg
-> +            - const: nss_edma
-> +            - const: nss_edma_cfg
-> +            - const: nss_ppe_ipe
-> +            - const: nss_ppe_btq
-> +            - const: port1_mac
-> +            - const: port2_mac
-> +            - const: port3_mac
-> +            - const: port4_mac
-> +            - const: port5_mac
-> +            - const: port6_mac
-> +            - const: nss_port1_rx
-> +            - const: nss_port1_tx
-> +            - const: nss_port2_rx
-> +            - const: nss_port2_tx
-> +            - const: nss_port3_rx
-> +            - const: nss_port3_tx
-> +            - const: nss_port4_rx
-> +            - const: nss_port4_tx
-> +            - const: nss_port5_rx
-> +            - const: nss_port5_tx
-> +            - const: nss_port6_rx
-> +            - const: nss_port6_tx
-> +            - const: uniphy_port1_rx
-> +            - const: uniphy_port1_tx
-> +            - const: uniphy_port2_rx
-> +            - const: uniphy_port2_tx
-> +            - const: uniphy_port3_rx
-> +            - const: uniphy_port3_tx
-> +            - const: uniphy_port4_rx
-> +            - const: uniphy_port4_tx
-> +            - const: uniphy_port5_rx
-> +            - const: uniphy_port5_tx
-> +            - const: uniphy_port6_rx
-> +            - const: uniphy_port6_tx
-> +            - const: nss_port5_rx_clk_src
-> +            - const: nss_port5_tx_clk_src
-> +
-> +        resets:
-> +          items:
-> +            - description: Reset PPE
-> +            - description: Reset uniphy0 software config
-> +            - description: Reset uniphy1 software config
-> +            - description: Reset uniphy2 software config
-> +            - description: Reset uniphy0 AHB
-> +            - description: Reset uniphy1 AHB
-> +            - description: Reset uniphy2 AHB
-> +            - description: Reset uniphy0 system
-> +            - description: Reset uniphy1 system
-> +            - description: Reset uniphy2 system
-> +            - description: Reset uniphy0 XPCS
-> +            - description: Reset uniphy1 XPCS
-> +            - description: Reset uniphy2 XPCS
-> +            - description: Assert uniphy port1
-> +            - description: Assert uniphy port2
-> +            - description: Assert uniphy port3
-> +            - description: Assert uniphy port4
-> +            - description: Reset PPE port1
-> +            - description: Reset PPE port2
-> +            - description: Reset PPE port3
-> +            - description: Reset PPE port4
-> +            - description: Reset PPE port5
-> +            - description: Reset PPE port6
-> +            - description: Reset PPE port1 MAC
-> +            - description: Reset PPE port2 MAC
-> +            - description: Reset PPE port3 MAC
-> +            - description: Reset PPE port4 MAC
-> +            - description: Reset PPE port5 MAC
-> +            - description: Reset PPE port6 MAC
-> +
-> +        reset-names:
-> +          items:
-> +            - const: ppe
-> +            - const: uniphy0_soft
-> +            - const: uniphy1_soft
-> +            - const: uniphy2_soft
-> +            - const: uniphy0_ahb
-> +            - const: uniphy1_ahb
-> +            - const: uniphy2_ahb
-> +            - const: uniphy0_sys
-> +            - const: uniphy1_sys
-> +            - const: uniphy2_sys
-> +            - const: uniphy0_xpcs
-> +            - const: uniphy1_xpcs
-> +            - const: uniphy2_xpcs
-> +            - const: uniphy0_port1_dis
-> +            - const: uniphy0_port2_dis
-> +            - const: uniphy0_port3_dis
-> +            - const: uniphy0_port4_dis
-> +            - const: nss_port1
-> +            - const: nss_port2
-> +            - const: nss_port3
-> +            - const: nss_port4
-> +            - const: nss_port5
-> +            - const: nss_port6
-> +            - const: nss_port1_mac
-> +            - const: nss_port2_mac
-> +            - const: nss_port3_mac
-> +            - const: nss_port4_mac
-> +            - const: nss_port5_mac
-> +            - const: nss_port6_mac
-> +
-> +required:
-
-allOf: goes after required:
-
-> +  - compatible
-> +  - reg
-> +  - "#address-cells"
-> +  - "#size-cells"
-> +  - ranges
-> +  - clocks
-> +  - clock-names
-> +  - resets
-> +  - reset-names
-> +  - tdm-config
-> +  - buffer-management-config
-> +  - queue-management-config
-> +  - port-scheduler-resource
-> +  - port-scheduler-config
-> +
-> +additionalProperties: false
-
-
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
-> +    #include <dt-bindings/reset/qcom,ipq9574-gcc.h>
-> +    #include <dt-bindings/clock/qcom,ipq9574-nsscc.h>
-> +    #include <dt-bindings/reset/qcom,ipq9574-nsscc.h>
-> +
-> +    soc {
-> +      #address-cells = <1>;
-> +      #size-cells = <1>;
-> +      qcom_ppe: qcom-ppe@3a000000 {
-
-Drop label, Generic node names.
-
-> +              compatible = "qcom,ipq9574-ppe";
-
-Entire indentation of example is broken. Use one described in the
-bindings coding style.
+net-next is closed.
 
 Best regards,
 Krzysztof
