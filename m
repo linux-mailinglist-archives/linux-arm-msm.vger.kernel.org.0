@@ -1,31 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-6974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A42F82A01C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 19:10:22 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 301F382A067
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 19:48:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AF6D9281F9E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 18:10:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BD4AA2897D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 18:48:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C4654D127;
-	Wed, 10 Jan 2024 18:10:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46004D51C;
+	Wed, 10 Jan 2024 18:48:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Yy37O5/a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD9734CDF8;
-	Wed, 10 Jan 2024 18:10:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8EE252F4;
-	Wed, 10 Jan 2024 10:10:59 -0800 (PST)
-Received: from [192.168.178.6] (unknown [172.31.20.19])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 659FF3F5A1;
-	Wed, 10 Jan 2024 10:10:09 -0800 (PST)
-Message-ID: <5ac0df44-82b6-463b-a805-65f93d181215@arm.com>
-Date: Wed, 10 Jan 2024 19:10:08 +0100
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96EC54CE11
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 18:48:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-50e6ee8e911so4854617e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 10:48:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704912521; x=1705517321; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=B6mb0czv63qlEAoF67252Cwq/CzM41U890/VQajpAFQ=;
+        b=Yy37O5/aBNKJLMK/i1JsDBJ7DbBSu+pDKXoTfY/l/69BCaYLh5/pLf7aI+kLRp7Cnt
+         PAaTZUfVEXzUwRjjkpGwA/r8bbkDMQQBeqQeG7UZo3cwVeRl/Pmh8aMhvzF9N4JU2sUZ
+         sCakASOhrt6+/fQS8/sVf/svnBYcMYNI2wcghlDR8XLm6S1cDSB25vVtYKmNbphs1Cpp
+         Un2aG9HOkk4dzPUMdKHkKqQOf/1zln9rocRUmShO1mVMeIKv6Xfix2jg5r0zJAFeCxfl
+         6Mv/1ARIQiZbaF4e1nLKGYgXOb4O0JMtth563sx7ffM8J87u/Ta0lT3MNIeV8I8alVP8
+         EP6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704912521; x=1705517321;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=B6mb0czv63qlEAoF67252Cwq/CzM41U890/VQajpAFQ=;
+        b=KBF1Lu3hTNagPDVU0yIxRp8O1FboTuZqEB5EqcUbWpRFdDed4KdmSBDrkdjMDyJ35j
+         fTjGdhcprEkZYgWL3hfWCLIqqbLBVKO/z0OAAKISUca7UdzaCvjJjWWduWQ921pCqXpQ
+         6AI6jbA5KWoYwtJI4JxCX3wtd+AfsTbd6cGkvsNdRtAhurb2rtNzhOTW/4hfJ8xwaWj2
+         B1irs0KBU8kqguR5pkDOTEnOMpkAV+VfqFdA+LtWQte0PY4jSE1/X/uid9hwxpp1jW5D
+         BoSkMEVeU6s0A3chULPGI0J1GlFjgPam/7u5Oa8s4ANIEvby2j/scvVuS6q0ptBPJxJd
+         Yspg==
+X-Gm-Message-State: AOJu0Yw+4PWEPJkg5h5Q7c6x216ZbHfIoT5rT2sB6u92Lrl8ECA3OacQ
+	dHIbJWkzuFLA1hAnk12qeJ26d5p2Z8Pq5A==
+X-Google-Smtp-Source: AGHT+IESqPBfudA5/PiNvgIQQzsX/Vby8wgWwcNRloulQWEzGGWD7r25drolBQukqQG3hrkuXIvglQ==
+X-Received: by 2002:a05:6512:110d:b0:50e:7bf5:5424 with SMTP id l13-20020a056512110d00b0050e7bf55424mr793665lfg.47.1704912521468;
+        Wed, 10 Jan 2024 10:48:41 -0800 (PST)
+Received: from [172.30.205.123] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id f13-20020a05651232cd00b0050e137ef4adsm732212lfg.155.2024.01.10.10.48.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Jan 2024 10:48:41 -0800 (PST)
+Message-ID: <f44c45d8-92fd-44de-a730-4fc3a3df3afe@linaro.org>
+Date: Wed, 10 Jan 2024 19:48:38 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -33,108 +66,83 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/5] Rework system pressure interface to the scheduler
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm7225-fairphone-fp4: Add PMK8003
+ thermals
 Content-Language: en-US
-To: Vincent Guittot <vincent.guittot@linaro.org>
-Cc: linux@armlinux.org.uk, catalin.marinas@arm.com, will@kernel.org,
- sudeep.holla@arm.com, rafael@kernel.org, viresh.kumar@linaro.org,
- agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
- mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com,
- rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
- bristot@redhat.com, vschneid@redhat.com, lukasz.luba@arm.com,
- rui.zhang@intel.com, mhiramat@kernel.org, daniel.lezcano@linaro.org,
- amit.kachhap@gmail.com, corbet@lwn.net, gregkh@linuxfoundation.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-trace-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
- qyousef@layalina.io
-References: <20240108134843.429769-1-vincent.guittot@linaro.org>
- <d37e3d06-d9fc-4fc3-ad92-e7031489660a@arm.com>
- <CAKfTPtAOSgnStDSao1QarHuUW9BTfk1o7r6NO4LhwEJMhq1drg@mail.gmail.com>
-From: Dietmar Eggemann <dietmar.eggemann@arm.com>
-In-Reply-To: <CAKfTPtAOSgnStDSao1QarHuUW9BTfk1o7r6NO4LhwEJMhq1drg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+To: Luca Weiss <luca.weiss@fairphone.com>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240105-fp4-thermals-v1-0-f95875a536b7@fairphone.com>
+ <20240105-fp4-thermals-v1-1-f95875a536b7@fairphone.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20240105-fp4-thermals-v1-1-f95875a536b7@fairphone.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 09/01/2024 14:29, Vincent Guittot wrote:
-> On Tue, 9 Jan 2024 at 12:34, Dietmar Eggemann <dietmar.eggemann@arm.com> wrote:
->>
->> On 08/01/2024 14:48, Vincent Guittot wrote:
->>> Following the consolidation and cleanup of CPU capacity in [1], this serie
->>> reworks how the scheduler gets the pressures on CPUs. We need to take into
->>> account all pressures applied by cpufreq on the compute capacity of a CPU
->>> for dozens of ms or more and not only cpufreq cooling device or HW
->>> mitigiations. we split the pressure applied on CPU's capacity in 2 parts:
->>> - one from cpufreq and freq_qos
->>> - one from HW high freq mitigiation.
->>>
->>> The next step will be to add a dedicated interface for long standing
->>> capping of the CPU capacity (i.e. for seconds or more) like the
->>> scaling_max_freq of cpufreq sysfs. The latter is already taken into
->>> account by this serie but as a temporary pressure which is not always the
->>> best choice when we know that it will happen for seconds or more.
->>
->> I guess this is related to the 'user space system pressure' (*) slide of
->> your OSPM '23 talk.
+
+
+On 1/5/24 15:54, Luca Weiss wrote:
+> Configure the thermals for the XO_THERM thermistor connected to the
+> PMK8003 (which is called PMK8350 in software).
 > 
-> yes
+> The ADC configuration for PMK8350_ADC7_AMUX_THM1_100K_PU has already
+> been added in the past.
 > 
->>
->> Where do you draw the line when it comes to time between (*) and the
->> 'medium pace system pressure' (e.g. thermal and FREQ_QOS).
+> The trip points can really only be considered as placeholders, more
+> configuration with cooling etc. can be added later.
 > 
-> My goal is to consider the /sys/../scaling_max_freq as the 'user space
-> system pressure'
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+>   arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts | 25 +++++++++++++++++++++++
+>   1 file changed, 25 insertions(+)
 > 
->>
->> IIRC, with (*) you want to rebuild the sched domains etc.
-> 
-> The easiest way would be to rebuild the sched_domain but the cost is
-> not small so I would prefer to skip the rebuild and add a new signal
-> that keep track on this capped capacity
+> diff --git a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
+> index ade619805519..b7ccfe4011bb 100644
+> --- a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
+> @@ -112,6 +112,20 @@ active-config0 {
+>   				};
+>   			};
+>   		};
+> +
+> +		xo-thermal {
+> +			polling-delay-passive = <0>;
+> +			polling-delay = <0>;
+> +			thermal-sensors = <&pmk8350_adc_tm 0>;
+> +
+> +			trips {
+> +				active-config0 {
+> +					temperature = <125000>;
+> +					hysteresis = <1000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+>   	};
+>   };
+>   
+> @@ -490,6 +504,17 @@ conn-therm@1 {
+>   	};
+>   };
+>   
+> +&pmk8350_adc_tm {
+> +	status = "okay";
+> +
+> +	xo-therm@0 {
+> +		reg = <0>;
+> +		io-channels = <&pmk8350_vadc PMK8350_ADC7_AMUX_THM1_100K_PU>;
+> +		qcom,ratiometric;
+> +		qcom,hw-settle-time-us = <200>;
 
-Are you saying that you don't need to rebuild sched domains since
-cpu_capacity information of the sched domain hierarchy is
-independently updated via: 
+My ocd would rather see the boolean property at the end
 
-update_sd_lb_stats() {
+anyway
 
-  update_group_capacity() {
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-    if (!child)
-      update_cpu_capacity(sd, cpu) {
-
-        capacity = scale_rt_capacity(cpu) {
-
-          max = get_actual_cpu_capacity(cpu) <- (*)
-        }
-
-        sdg->sgc->capacity = capacity;
-        sdg->sgc->min_capacity = capacity;
-        sdg->sgc->max_capacity = capacity;
-      }
-
-  }
-
-}
-        
-(*) influence of temporary and permanent (to be added) frequency
-pressure on cpu_capacity (per-cpu and in sd data)
-
-
-example: hackbench on h960 with IPA:
-                                                                                  cap  min  max
-...
-hackbench-2284 [007] .Ns..  2170.796726: update_group_capacity: sdg !child cpu=7 1017 1017 1017
-hackbench-2456 [007] ..s..  2170.920729: update_group_capacity: sdg !child cpu=7 1018 1018 1018
-    <...>-2314 [007] ..s1.  2171.044724: update_group_capacity: sdg !child cpu=7 1011 1011 1011
-hackbench-2541 [007] ..s..  2171.168734: update_group_capacity: sdg !child cpu=7  918  918  918
-hackbench-2558 [007] .Ns..  2171.228716: update_group_capacity: sdg !child cpu=7  912  912  912
-    <...>-2321 [007] ..s..  2171.352718: update_group_capacity: sdg !child cpu=7  812  812  812
-hackbench-2553 [007] ..s..  2171.476721: update_group_capacity: sdg !child cpu=7  640  640  640
-    <...>-2446 [007] ..s2.  2171.600743: update_group_capacity: sdg !child cpu=7  610  610  610
-hackbench-2347 [007] ..s..  2171.724738: update_group_capacity: sdg !child cpu=7  406  406  406
-hackbench-2331 [007] .Ns1.  2171.848768: update_group_capacity: sdg !child cpu=7  390  390  390
-hackbench-2421 [007] ..s..  2171.972733: update_group_capacity: sdg !child cpu=7  388  388  388
-...
+Konrad
 
