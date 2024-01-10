@@ -1,64 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-6901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0DE5829931
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 12:32:35 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 453ED829937
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 12:35:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4E1C1281CCF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 11:32:34 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C37EEB247DF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 11:35:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E87D147A57;
-	Wed, 10 Jan 2024 11:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2356A47A5F;
+	Wed, 10 Jan 2024 11:35:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="myUJcrFj"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L9sEmcEL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498E047F43
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 11:32:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-50e67f70f34so4068124e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jan 2024 03:32:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704886349; x=1705491149; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pEYNQVl4EfVcsy1yzh6J8gEcbt+r98QebOoStpii/nY=;
-        b=myUJcrFjTl9ZqjZf7AcZxgux1afGCi1RuGuZNA6BAkNg7IcuTQlAvncxiGN/IcgLuc
-         N/xpTyqAyRFd6722pthMi06bm0j+YydQOjTVxUpFje2mWl49K9nT2OuzpPmNQQhfn3h4
-         pqv6bGVKNLMfeHz8eMV5QDsj2J+6tY4KmWxKj0/Q/NvbKRzG3wsRds5lDyZ0uLLypF9r
-         sj4Rf8/VkrbbNET82v2RtNd9DqkxZEMvKVmUiu96/y/tqGfZEP1XGR1/k0DxXi2vW9kc
-         mZXSiXwdEEhIel7W1XTq+B7chKRzlCS7JO/44mV4NMlUx1TpnNZzHlCV9QXoTvt8fHFb
-         DU1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704886349; x=1705491149;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pEYNQVl4EfVcsy1yzh6J8gEcbt+r98QebOoStpii/nY=;
-        b=dCUJAj04iEjEoguFJznoxl53LD2xRkqAyqz6+Iu/Tz+zNQ5eriDFmAP7KojObBd7dz
-         Q2VkmD+H7sAcl8jXlWCPHEp4Wip6sOKwN6WV2iVUeDP3NOZIgfgjEZBhOXKFEdCDRtFh
-         7BAB0Mr9hwGeilCpU+/CQg10Ut5KE0RnVgEA+eO+PjF0TVvLH8ku/KabwRDMFjU8JKh1
-         VPGQ9XQlVH2yg7xClGwO+HgQc8rXugcHKrq3MOLjazc9aByI39t2UHj4JZimcCMn9y79
-         8seUivLJ5ll4czZLEnUOnogvQfkN2d975PSpuzLKxQ44nCPlSIA+2M2KEyvAmrBaO8N6
-         sWdw==
-X-Gm-Message-State: AOJu0YxnEreCWEN+9fjAzyAcMauMx1OSgj2Xo3QuMgwSZ466v9Y70Tgt
-	gIlzyF+8L73EDCghE/KbPl/324q6CzmsuQ==
-X-Google-Smtp-Source: AGHT+IGAMkvcpAUqyxRbD5/R78Qb2kagPxgsXLcXC0AOuJ2ThqexDzA5wsbcuzXqLXPlb2wTFi9INw==
-X-Received: by 2002:a19:3856:0:b0:50e:8487:1ec6 with SMTP id d22-20020a193856000000b0050e84871ec6mr253105lfj.56.1704886349316;
-        Wed, 10 Jan 2024 03:32:29 -0800 (PST)
-Received: from [172.30.205.119] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id z22-20020ac25df6000000b0050e6df07728sm629214lfq.180.2024.01.10.03.32.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Jan 2024 03:32:28 -0800 (PST)
-Message-ID: <0ac211de-e3d4-4a41-b0ed-d2bf393e58cb@linaro.org>
-Date: Wed, 10 Jan 2024 12:32:25 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E20945256;
+	Wed, 10 Jan 2024 11:35:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40A8eRnS025173;
+	Wed, 10 Jan 2024 11:35:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=zZr3ydscPJEtSmuUGIcDASkCGcSCsQLJWNIpwguKSA8=; b=L9
+	sEmcELyrU+GDg3cUoufiRehahIJlEMCzq5uTnBRZF7jD1WT5j6nGYGKBB8IS6zOY
+	jFYtgZUN+MivLHCbo2GB9iuTTgkfVLuTwYNv56Jm7sXagl3pnHWSxVXwZlkfoYMn
+	R++tfgJ+f2Qixl4uiW/vdpOKu6Gq5r4LYEv/vXxfNH6T0L+1UzuapT9g5OtZy60i
+	3wEkKQbHIVB0BmhjkLtLQXkGR0WQ7Wpai/HTsczG6X/stA0aaSwPgZC/49tnjvT+
+	rX8QkwFuTfZZOvrFmaRWeAHn5VJzKdS71KP8UWQb9GO92l15OG5xqTR66lW6bffN
+	aPtix9i9b635A2da2uZQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vhjh2s1eg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jan 2024 11:35:24 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40ABZNj3032150
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jan 2024 11:35:23 GMT
+Received: from [10.214.66.253] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 10 Jan
+ 2024 03:35:17 -0800
+Message-ID: <9d143762-da25-4bdc-b33f-66a03a144c2e@quicinc.com>
+Date: Wed, 10 Jan 2024 17:05:14 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,64 +56,68 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/6] Add PPE device tree node for Qualcomm IPQ SoC
+Subject: Re: [PATCH v7 4/5] iommu/arm-smmu: add ACTLR data and support for
+ SM8550
 Content-Language: en-US
-To: Luo Jie <quic_luoj@quicinc.com>, andersson@kernel.org,
- robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
- quic_kkumarcs@quicinc.com, quic_suruchia@quicinc.com, quic_soni@quicinc.com,
- quic_pavir@quicinc.com, quic_souravp@quicinc.com, quic_linchen@quicinc.com,
- quic_leiwei@quicinc.com
-References: <20240110112059.2498-1-quic_luoj@quicinc.com>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240110112059.2498-1-quic_luoj@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, <will@kernel.org>,
+        <robin.murphy@arm.com>, <joro@8bytes.org>,
+        <dmitry.baryshkov@linaro.org>, <jsnitsel@redhat.com>,
+        <quic_bjorande@quicinc.com>, <mani@kernel.org>,
+        <quic_eberman@quicinc.com>, <robdclark@chromium.org>,
+        <u.kleine-koenig@pengutronix.de>, <robh@kernel.org>,
+        <vladimir.oltean@nxp.com>, <quic_pkondeti@quicinc.com>,
+        <quic_molvera@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <iommu@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+        <qipl.kernel.upstream@quicinc.com>
+References: <20240109114220.30243-1-quic_bibekkum@quicinc.com>
+ <20240109114220.30243-5-quic_bibekkum@quicinc.com>
+ <45314345-36ba-4d85-9d3b-298de26eb069@linaro.org>
+From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+In-Reply-To: <45314345-36ba-4d85-9d3b-298de26eb069@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: De980EDPawXSdyqq1M4nDTubxLRsR_An
+X-Proofpoint-GUID: De980EDPawXSdyqq1M4nDTubxLRsR_An
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=837 clxscore=1015 bulkscore=0 malwarescore=0 spamscore=0
+ phishscore=0 priorityscore=1501 adultscore=0 impostorscore=0
+ suspectscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401100094
 
 
 
-On 1/10/24 12:20, Luo Jie wrote:
-> The PPE(packet process engine) hardware block is supported by Qualcomm
-> IPQ platforms, such as IPQ9574 and IPQ5332. The PPE includes the various
-> packet processing modules such as the routing and bridging flow engines,
-> L2 switch capability, VLAN and tunnels. Also included are integrated
-> ethernet MAC and PCS(uniphy), which is used to connect with the external
-> PHY devices by PCS.
+On 1/10/2024 4:19 PM, Konrad Dybcio wrote:
 > 
-> This patch series enables support for the following DTSI functionality
-> for Qualcomm IPQ9574 and IPQ5332 chipsets.
 > 
-> 1. Add PPE (Packet Processing Engine) HW support
+> On 1/9/24 12:42, Bibek Kumar Patro wrote:
+>> Add ACTLR data table for SM8550 along with support for
+>> same including SM8550 specific implementation operations.
+>>
+>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+>> ---
+> [...]
 > 
-> 2. Add IPQ9574 RDP433 board support, where the PPE is connected
->     with qca8075 PHY and AQ PHY.
+>> +static const struct actlr_variant sm8550_actlr[] = {
+>> +    { sm8550_apps_actlr_cfg, 0x15000000 },
+>> +    { sm8550_gfx_actlr_cfg, 0x03da0000 },
+>> +    {},
+>> +};
 > 
-> 3. Add IPQ5332 RDP441 board support, where the PPE is connected
->     with qca8386 and SFP
+> Please use C99 designated initializers and put the address first.
 > 
-> PPE DTS depends on the NSSCC clock driver below, which provides the
-> clocks for the PPE driver.
-> https://lore.kernel.org/linux-arm-msm/20230825091234.32713-1-quic_devipriy@quicinc.com/
-> https://lore.kernel.org/linux-arm-msm/20231211-ipq5332-nsscc-v3-0-ad13bef9b137@quicinc.com/
 
-None of these describe (or even use) the compatible in the first
-patch of this series ("qcom,ipq9574-ppe"). I didn't check the
-subsequent ones, as I assume it's the same situtation, so this
-is a NAK.
+Noted, thanks for this input. Will take care of this in next patch.
 
-> Lei Wei (2):
->    arm64: dts: qcom: ipq5332: Add RDP441 board device tree
->    arm64: dts: qcom: ipq9574: Add RDP433 board device tree
+Thanks & regards,
+Bibek
 
-These two look unrelated?
-
-> 
-> Luo Jie (4):
->    arm64: dts: qcom: ipq9574: Add PPE device tree node
->    arm64: dts: qcom: ipq5332: Add PPE device tree node
->    arm64: dts: qcom: ipq5332: Add MDIO device tree
->    arm64: dts: qcom: ipq9574: Add MDIO device tree
-
-Konrad
+> Konrad
 
