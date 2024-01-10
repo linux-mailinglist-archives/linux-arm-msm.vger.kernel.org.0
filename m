@@ -1,167 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-6844-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6845-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C051829100
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 00:46:04 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 62A17829163
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 01:29:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7DF4E1C2514E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jan 2024 23:46:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 10665288F41
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 00:29:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 919C73E47A;
-	Tue,  9 Jan 2024 23:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 560E8383;
+	Wed, 10 Jan 2024 00:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="CRmQFLZL"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UG0OGwXh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA21364B5
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jan 2024 23:45:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1704843954;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=rOO3UIEaa1DOmRPFzE+OZTgeyQIQE8df8WwuPyKWrNo=;
-	b=CRmQFLZLlzpkvXpsbnTECO3Q8UFtLUwyuk/1fD0MneZAdmIjaXMhDyeyijKJxEt5i1b0Ja
-	Us2cG7lh5xJPAQXu/aQSzzS7P7FRwyTnplsqURj8MMbzDxnouSVzrWkqbdyi6hcNXSbaPN
-	8R75h05OUqVF+I7FQtokEcTXb6tR7WI=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-225-vzOsbb_4OnCJXsd20ZQGsg-1; Tue, 09 Jan 2024 18:45:53 -0500
-X-MC-Unique: vzOsbb_4OnCJXsd20ZQGsg-1
-Received: by mail-yw1-f198.google.com with SMTP id 00721157ae682-5f6f51cd7e8so46576957b3.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jan 2024 15:45:53 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704843953; x=1705448753;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rOO3UIEaa1DOmRPFzE+OZTgeyQIQE8df8WwuPyKWrNo=;
-        b=KOi0+WCN+Ej5RL+lo0MIj/v7dntNMxeW3wvp/o/RlCOABsJeVm0SGePoVH/rb7uZ+i
-         5paoI+g1DNQswvnB5Soyvw97XNWyD0ratNHMTgCQhSi6yDeEn6VZav5L6RYgKR+7DDdD
-         43MjZT2QnHfY7MoQcNbsOdNEFERAnRiWHjRrBBuhkz/u2vPla5ibRwO0/2iyJsLA+NUq
-         sWpw07B7HpLXA5T2JMncTpG2NP/05+IIsgegYNNPeOL5yCbqBvIzLhc7HU5ZzJ9CYn5H
-         akkS3mIpvc8nC4qjzttv1IeeyRlFnNjmo+o0C/OttIrTI73kq/qIaucqy58RtmTybUnZ
-         oEVA==
-X-Gm-Message-State: AOJu0YxrBrMXDeUviiQuZAxW/WQdm09zZhZGF6LIcQytdI4+lIRIhav1
-	RrxTek2rUQo81yPYPxXYigf8b2L35r+KNTVlabYTgujeYXybMwNTNPaLNS4a0fG7bTPQqC/v833
-	atsl4GGJJr04ceuDhdDl7zz6WiVKkA0I13g==
-X-Received: by 2002:a0d:dac6:0:b0:5ef:d5e2:eae2 with SMTP id c189-20020a0ddac6000000b005efd5e2eae2mr336622ywe.21.1704843953050;
-        Tue, 09 Jan 2024 15:45:53 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF0YPNLaZINGtIvV1zfFEAX0fK9AacresZK3FYnQ1Qy1KbgWQkBAoGIbVtFC75on/+3oYUEvg==
-X-Received: by 2002:a0d:dac6:0:b0:5ef:d5e2:eae2 with SMTP id c189-20020a0ddac6000000b005efd5e2eae2mr336617ywe.21.1704843952788;
-        Tue, 09 Jan 2024 15:45:52 -0800 (PST)
-Received: from x1 ([2600:381:b81a:c842:2a5f:92bb:b82c:e934])
-        by smtp.gmail.com with ESMTPSA id x6-20020a0dee06000000b005cb1bf4d466sm1136570ywe.82.2024.01.09.15.45.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jan 2024 15:45:52 -0800 (PST)
-Date: Tue, 9 Jan 2024 18:45:49 -0500
-From: Brian Masney <bmasney@redhat.com>
-To: Elliot Berman <quic_eberman@quicinc.com>
-Cc: Shazad Hussain <quic_shazhuss@quicinc.com>,
-	linux-arm-msm@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Eric Chanudet <echanude@redhat.com>,
-	Prasad Sodagudi <psodagud@quicinc.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: sa8755p ufs ice bug: gcc_ufs_phy_ice_core_clk status stuck at
- 'off'
-Message-ID: <ZZ3arUiD95zlVayx@x1>
-References: <ZZYTYsaNUuWQg3tR@x1>
- <49d85352-d022-4b59-a3f2-d8f7ef3028ac@quicinc.com>
- <ZZxgCKQmQdUL81pX@x1>
- <d9335515-157b-4b6a-ba41-c31ca76362ee@quicinc.com>
- <ZZ2-P1xzsDwk91Yq@x1>
- <37ff80b1-62fa-45ce-b181-955cc887d47d@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED757EF;
+	Wed, 10 Jan 2024 00:29:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40A08SZZ015550;
+	Wed, 10 Jan 2024 00:28:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=fcdpkler2Rec7WUNPC8tXx/5Sp8IWWTCEuuRDbJEpAI=; b=UG
+	0OGwXhCZ7UsyphKBnOOZRqvCtGZENhg///tuunm3BpEqr4YdmOqa2pijyqYZWoA6
+	sFvrduplD1RZ4zkZxom/JIWFtsIdpPRseXBrXZDfUYBvTjnSmPHUo5gS7wZS6c75
+	ZjGT6Zi6shBAAQPaEWCD54KNxuftM8IkaQWPuq+fThrMzE3gdqk9Kuyc+YGiRlDv
+	gIXgVWjXAWbm6zrCS3UI4WOISwFG7xonBGIke5xemo/T05EFeBozHGyBPGsUQUk5
+	Q8mShkVnzCy2WVCy23QxX8dWx+xOYR6QTTWXEGgwHlNgJgqwh5liu22iM+3EzfxO
+	J83ABf+fNjL0zlQ0Rv7Q==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vh9bmh04c-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jan 2024 00:28:48 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40A0SlYq027252
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jan 2024 00:28:47 GMT
+Received: from [10.71.108.105] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 9 Jan
+ 2024 16:28:46 -0800
+Message-ID: <731ee7a9-72c8-4ae7-8fcd-2c9bb07b09ac@quicinc.com>
+Date: Tue, 9 Jan 2024 16:28:46 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <37ff80b1-62fa-45ce-b181-955cc887d47d@quicinc.com>
-User-Agent: Mutt/2.2.10 (2023-03-25)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v16 01/34] docs: gunyah: Introduce Gunyah Hypervisor
+Content-Language: en-US
+To: Randy Dunlap <rdunlap@infradead.org>, Alex Elder <elder@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Murali Nalajal
+	<quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        "Srivatsa
+ Vaddagiri" <quic_svaddagi@quicinc.com>,
+        Carl van Schaik
+	<quic_cvanscha@quicinc.com>,
+        Philip Derrin <quic_pderrin@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Jonathan Corbet
+	<corbet@lwn.net>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "Fuad
+ Tabba" <tabba@google.com>,
+        Sean Christopherson <seanjc@google.com>,
+        "Andrew
+ Morton" <akpm@linux-foundation.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-mm@kvack.org>
+References: <20240109-gunyah-v16-0-634904bf4ce9@quicinc.com>
+ <20240109-gunyah-v16-1-634904bf4ce9@quicinc.com>
+ <d5b041d9-1691-4259-a76c-176c5b3d8be3@infradead.org>
+From: Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <d5b041d9-1691-4259-a76c-176c5b3d8be3@infradead.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: -UClUus9G_GkxMyCJNYM4wqqYC_paeay
+X-Proofpoint-GUID: -UClUus9G_GkxMyCJNYM4wqqYC_paeay
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ clxscore=1011 spamscore=0 priorityscore=1501 malwarescore=0
+ mlxlogscore=652 adultscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401100002
 
-On Tue, Jan 09, 2024 at 01:56:30PM -0800, Elliot Berman wrote:
-> 
-> 
-> On 1/9/2024 1:44 PM, Brian Masney wrote:
-> > On Mon, Jan 08, 2024 at 03:35:55PM -0800, Elliot Berman wrote:
-> >> On 1/8/2024 12:50 PM, Brian Masney wrote:
-> >>> On Mon, Jan 08, 2024 at 11:44:35PM +0530, Shazad Hussain wrote:
-> >>>> I can see that gcc_ufs_phy_ice_core_clk needs the gcc_ufs_phy_gdsc to be
-> >>>> enabled before this particular clk is enabled. But that required
-> >>>> power-domain I do not see in the ice DT node. That can cause this
-> >>>> problem.
-> >>>
-> >>> Thank you! I'll work on and post a patch set as I find free time over
-> >>> the next week or two.
-> >> I think I observe the same issue on sm8650. Symptoms seem to be same as
-> >> you've described. I'll test out the following diff and see if things
-> >> seem more reliable:
-> >>
-> >> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> >> index fd4f9dac48a3..c9ea50834dc9 100644
-> >> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> >> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> >> @@ -2526,6 +2526,7 @@ ice: crypto@1d88000 {
-> >>                                      "qcom,inline-crypto-engine";
-> >>                         reg = <0 0x01d88000 0 0x8000>;
-> >>  
-> >> +                       power-domains = <&gcc UFS_PHY_GDSC>;
-> >>                         clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-> >>                 };
-> >>  
-> >>
-> >> If yes, I can post a patch for sm8650 if no else has yet.
-> > 
-> > The intermittent boot issue is still present against
-> > linux-next-20240109 with the following patch:
-> > 
-> > --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> > @@ -1556,6 +1556,7 @@ ice: crypto@1d88000 {
-> >                         compatible = "qcom,sa8775p-inline-crypto-engine",
-> >                                      "qcom,inline-crypto-engine";
-> >                         reg = <0x0 0x01d88000 0x0 0x8000>;
-> > +                       power-domains = <&gcc UFS_PHY_GDSC>;
-> >                         clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-> >                 };
-> > 
-> 
-> Things have been a bit more reliable for me after adding the power-domains.
-> 
-> Are you getting stuck at the same spot or somewhere else?
-> 
-> I've been looking at a similar issue to [1], so I wonder if maybe you're
-> facing that instead.
-> 
-> [1]: https://lore.kernel.org/linux-arm-msm/20240104101735.48694-1-laura.nao@collabora.com/T/#m39f7c80b59c750ee4c0082474c5c15b6055927ef
 
-So it could be that issue that I'm also encountering. Previously I
-could configure a timeout on dracut and it would drop me to a shell
-when the system failed to boot. That's how I was able to get the
-dmesg for the ice error. However, dracut did not always time out, and
-when that happened the system wouldn't respond over the serial console.
 
-Now the boot still hangs for me about 50% of the time, however I have
-not been able to get dracut to time out after probably 20 reboots. I
-have magic sysrq enabled in my kernel, however I haven't been able to
-get it to trigger when going through Beaker. Let me ask internally about
-sysrq to see if I can get an interesting stack dump.
+On 1/9/2024 3:31 PM, Randy Dunlap wrote:
+> 
+> 
+> On 1/9/24 11:37, Elliot Berman wrote:
+>> Gunyah is an open-source Type-1 hypervisor developed by Qualcomm. It
+>> does not depend on any lower-privileged OS/kernel code for its core
+>> functionality. This increases its security and can support a smaller
+>> trusted computing based when compared to Type-2 hypervisors.
+>>
+>> Add documentation describing the Gunyah hypervisor and the main
+>> components of the Gunyah hypervisor which are of interest to Linux
+>> virtualization development.
+>>
+>> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+>> ---
+>>  Documentation/virt/gunyah/index.rst         | 134 ++++++++++++++++++++++++++++
+>>  Documentation/virt/gunyah/message-queue.rst |  68 ++++++++++++++
+>>  Documentation/virt/index.rst                |   1 +
+>>  3 files changed, 203 insertions(+)
+>>
+>> diff --git a/Documentation/virt/gunyah/index.rst b/Documentation/virt/gunyah/index.rst
+>> new file mode 100644
+>> index 000000000000..da8e5e4b9cac
+>> --- /dev/null
+>> +++ b/Documentation/virt/gunyah/index.rst
+>> @@ -0,0 +1,134 @@
+>> +.. SPDX-License-Identifier: GPL-2.0
+>> +
+>> +=================
+>> +Gunyah Hypervisor
+>> +=================
+>> +
+>> +.. toctree::
+>> +   :maxdepth: 1
+>> +
+>> +   message-queue
+>> +
+>> +Gunyah is a Type-1 hypervisor which is independent of any OS kernel, and runs in
+>> +a higher CPU privilege level. It does not depend on any lower-privileged
+> 
+> Is this the usual meaning of higher and lower? Seems backwards to me.
+> 
 
-If I boot with the standard verbose logging, then the race condition
-doesn't occur and -next boots fine for me.
+Hmm, I guess this x86 having ring 0 as most privileged and arm using EL3 as most
+privileged. I'll switch to "more" and "less" privilege rather than implying
+a numbering scheme.
 
-Brian
+Thanks for the rest of suggestions, applied those!
+
+- Elliot
 
 
