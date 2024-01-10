@@ -1,163 +1,269 @@
-Return-Path: <linux-arm-msm+bounces-6977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6979-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E3A282A0FD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 20:23:55 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AF52F82A217
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 21:20:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BF6B7B20E6D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 19:23:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 39E2D1F2B1C4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jan 2024 20:20:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF4C74E1C1;
-	Wed, 10 Jan 2024 19:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 895824F880;
+	Wed, 10 Jan 2024 20:18:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NgrvD+9+"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BnbxP8mS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348BE4D588;
-	Wed, 10 Jan 2024 19:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30424F60B;
+	Wed, 10 Jan 2024 20:18:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40AHsQTF022052;
-	Wed, 10 Jan 2024 19:23:32 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40AIheTU017424;
+	Wed, 10 Jan 2024 20:18:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=nrhDrGFKIB8w2f04JA38b
-	fiMatM+Hu0hgpaDjz3dieM=; b=NgrvD+9+RjJym5sNKEzicNITuWtyU+TPfhW4+
-	0B5x/QECXFaxewlSMRrouj3hViRI56CTq47N4uOhSYBeRO7XmjXHR3mRKYOmoYdy
-	oL+I3ygFBx0mfCdWrx65c3kuTm0EcFk8epQJoeax/hZsE9geJQoBOkgMlQnZggW7
-	QWwg1sBUPwAIRh6zL3r97pmU7DItrFq8bhyS/RWFp5SSsSNncp7uF2SMqD7WClAa
-	mDHszgMh0XiWFROdzeRPAN9apKjRhZhfCkmrn24Kuoy+VuNtVgV9ThwZvk9xhtAo
-	fwxCvyuUDTETOxab23ulVXfQoDfk/ntxKB1bJkSZfA3mWnKPA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vhuak0yty-1
+	from:to:cc:subject:date:message-id:mime-version:content-type; s=
+	qcppdkim1; bh=ysbxujXnPhIjHtzSYlXAMdBSwZYWEn2r0tXEe0Mnbnk=; b=Bn
+	bxP8mSMcUY32JNcC6PVIW8KGgBTA28j4eRXdhRvU/3rdAH6cYzEPxhMEvMtvplex
+	1tUyd4eYO9HBVWT4KfVnESniiL/bIr0GDwrDu6rjX5KfvJTySFMrjLdMHs9PeaNk
+	J5FToME/HjFc91v+0TOXUdVQD2pp2j0jRmWpfWjb0+od4Gu6n6ZNXakSn3uwaTcn
+	HxaFhqjcv5nNZFpSRbY/JeKZ2+p1EDUwkW4OlCeel1JgfnJH2yDXu4P5ubPfmFJZ
+	xyW0wXE3ToHABX2ttWHVGtCupEi5enQC5NZkg3uExekpgalAQ6TEcpMQ9EM/T35y
+	HF4xYypffaaNJiYAcs8A==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vhvqw0vdg-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jan 2024 19:23:31 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40AJNURT008042
+	Wed, 10 Jan 2024 20:18:33 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40AKIWvC013660
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jan 2024 19:23:30 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+	Wed, 10 Jan 2024 20:18:32 GMT
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Wed, 10 Jan 2024 11:23:30 -0800
-Date: Wed, 10 Jan 2024 11:23:29 -0800
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-CC: Wesley Cheng <quic_wcheng@quicinc.com>, Johan Hovold <johan@kernel.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Felipe Balbi
-	<balbi@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Bjorn
- Andersson" <andersson@kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 11/12] usb: dwc3: qcom: Flatten the Qualcomm dwc3 binding
- and implementation
-Message-ID: <20240110192329.GN1315173@hu-bjorande-lv.qualcomm.com>
-References: <20231016-dwc3-refactor-v1-0-ab4a84165470@quicinc.com>
- <20231016-dwc3-refactor-v1-11-ab4a84165470@quicinc.com>
- <1c706807-a216-47cd-a1f6-0546bec27242@quicinc.com>
+ 15.2.1118.40; Wed, 10 Jan 2024 12:18:32 -0800
+From: Kuogee Hsieh <quic_khsieh@quicinc.com>
+To: <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <andersson@kernel.org>
+CC: Kuogee Hsieh <quic_khsieh@quicinc.com>, <quic_abhinavk@quicinc.com>,
+        <quic_jesszhan@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <marijn.suijten@somainline.org>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v1] drm/msm/dp: correct configure Colorimetry Indicator Field at MISC0
+Date: Wed, 10 Jan 2024 12:18:08 -0800
+Message-ID: <1704917888-30039-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <1c706807-a216-47cd-a1f6-0546bec27242@quicinc.com>
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: uOGjTk5EMndLSvJkqKLYerTH2kYHN0Ls
-X-Proofpoint-ORIG-GUID: uOGjTk5EMndLSvJkqKLYerTH2kYHN0Ls
+X-Proofpoint-GUID: bdJQBRI5X5MlpzrR7E1xqCWJ8A7rHsXS
+X-Proofpoint-ORIG-GUID: bdJQBRI5X5MlpzrR7E1xqCWJ8A7rHsXS
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=469
- impostorscore=0 malwarescore=0 bulkscore=0 phishscore=0 suspectscore=0
- adultscore=0 priorityscore=1501 mlxscore=0 lowpriorityscore=0 spamscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401100154
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
+ mlxlogscore=999 adultscore=0 impostorscore=0 spamscore=0
+ lowpriorityscore=0 bulkscore=0 clxscore=1011 malwarescore=0
+ priorityscore=1501 suspectscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2311290000 definitions=main-2401100161
 
-On Wed, Jan 10, 2024 at 08:43:23AM +0530, Krishna Kurapati PSSNV wrote:
-> 
-> 
-> On 10/17/2023 8:41 AM, Bjorn Andersson wrote:
-> > The USB block found in most Qualcomm platforms is modelled as three
-> > different independent device drivers, and represented in DeviceTree as
-> > two layered nodes. But as shown by the already existing layering
-> > violations in the Qualcomm glue driver they can not be operated
-> > independently.
-> > 
-> > In the current model, the probing of the core is asynchronous, and in a
-> > number of places there's risk that the driver dereferences NULL
-> > pointers, as it peeks into the core's drvdata.
-> > 
-> > There is also no way, in the current design to make the core notify the
-> > glue upon DRD mode changes. Among the past proposals have been attempts
-> > to provide a callback registration API, but as there is no way to know
-> > when the core is probed this doesn't work.
-> > 
-> > Based on the recent refactoring its now possible to instantiate the glue
-> > and core from a single representation of the DWC3 IP-block. This will
-> > also allow for the glue to pass a callback to be called for DRD mode
-> > changes.
-> > 
-> > The only overlapping handling between the Qualcomm glue and the core is
-> > the release of reset, which is left to the core to handle.
-> > 
-> 
-> Hi Bjorn,
-> 
->  I think the reset has to be handled by glue itself. I was testing this
-> series and found one issue:
-> 
->  During suspend, we suspend core first which will assert the reset and then
-> suspend the glue which will disable the clocks. This path doesn't seem to
-> have a problem somehow even in flattened implementation.
-> 
->  During resume, we resume the glue first and then resume the core. During
-> resume of glue, we enable the clocks and at this point, the reset is still
-> kept asserted causing the clocks to never turn ON leading to a crash. This
-> is the case in flattened implementation only as in normal case, the reset is
-> handled by glue and we never meddle with reset other than the time of
-> probing.
-> 
-> I tried to check if we explicitly de-assert the reset during start of resume
-> sequence of glue (in addition to the de-assertion present in core) and
-> things worked out fine. But if I try to balance the reset count and add an
-> assert at end of suspend sequence of glue (in addition to the assertion
-> present in core), then it crashes complaining a double assertion happened.
-> So double de-asserting is not causing a problem but double asserting is
-> causing an issue.
-> 
+MSA MISC0 bit 1 to 7 contains Colorimetry Indicator Field. At current
+implementation, Colorimetry Indicator Field of MISC0 is not configured
+correctly. This patch add support of RGB formats Colorimetry.
 
-You're right. I looked at it briefly but ended up moving the reset
-handling in the wrong direction...
+Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+---
+ drivers/gpu/drm/msm/dp/dp_ctrl.c  |  5 ++--
+ drivers/gpu/drm/msm/dp/dp_link.c  | 26 ++++++++++++++++-----
+ drivers/gpu/drm/msm/dp/dp_panel.c | 48 +++++++++++++++++++++++++++++++++++++++
+ drivers/gpu/drm/msm/dp/dp_panel.h |  2 ++
+ 4 files changed, 73 insertions(+), 8 deletions(-)
 
-I expect that in any scenario where a glue driver is used the core can
-not control the reset. So far we've dealt with this by just not telling
-the core about the reset.
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index 77a8d93..2ef89fb 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /*
+- * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2012-2023, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved
+  */
+ 
+ #define pr_fmt(fmt)	"[drm-dp] %s: " fmt, __func__
+@@ -172,7 +173,7 @@ static void dp_ctrl_configure_source_params(struct dp_ctrl_private *ctrl)
+ 
+ 	tb = dp_link_get_test_bits_depth(ctrl->link,
+ 		ctrl->panel->dp_mode.bpp);
+-	cc = dp_link_get_colorimetry_config(ctrl->link);
++	cc = dp_panel_get_misc_colorimetry_val(ctrl->panel);
+ 	dp_catalog_ctrl_config_misc(ctrl->catalog, cc, tb);
+ 	dp_panel_timing_cfg(ctrl->panel);
+ }
+diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
+index 98427d4..21fa1a2 100644
+--- a/drivers/gpu/drm/msm/dp/dp_link.c
++++ b/drivers/gpu/drm/msm/dp/dp_link.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /*
+  * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved
+  */
+ 
+ #define pr_fmt(fmt)	"[drm-dp] %s: " fmt, __func__
+@@ -12,6 +13,11 @@
+ 
+ #define DP_TEST_REQUEST_MASK		0x7F
+ 
++enum dynamic_range {
++	DP_DYNAMIC_RANGE_RGB_VESA,
++	DP_DYNAMIC_RANGE_RGB_CEA,
++};
++
+ enum audio_sample_rate {
+ 	AUDIO_SAMPLE_RATE_32_KHZ	= 0x00,
+ 	AUDIO_SAMPLE_RATE_44_1_KHZ	= 0x01,
+@@ -1083,6 +1089,7 @@ int dp_link_process_request(struct dp_link *dp_link)
+ int dp_link_get_colorimetry_config(struct dp_link *dp_link)
+ {
+ 	u32 cc;
++	enum dynamic_range dr;
+ 	struct dp_link_private *link;
+ 
+ 	if (!dp_link) {
+@@ -1092,14 +1099,21 @@ int dp_link_get_colorimetry_config(struct dp_link *dp_link)
+ 
+ 	link = container_of(dp_link, struct dp_link_private, dp_link);
+ 
+-	/*
+-	 * Unless a video pattern CTS test is ongoing, use RGB_VESA
+-	 * Only RGB_VESA and RGB_CEA supported for now
+-	 */
++	/* unless a video pattern CTS test is ongoing, use CEA_VESA */
+ 	if (dp_link_is_video_pattern_requested(link))
+-		cc = link->dp_link.test_video.test_dyn_range;
++		dr = link->dp_link.test_video.test_dyn_range;
+ 	else
+-		cc = DP_TEST_DYNAMIC_RANGE_VESA;
++		dr = DP_DYNAMIC_RANGE_RGB_VESA;
++
++	/* Only RGB_VESA and RGB_CEA supported for now */
++	switch (dr) {
++	case DP_DYNAMIC_RANGE_RGB_CEA:
++		cc = BIT(2);
++		break;
++	case DP_DYNAMIC_RANGE_RGB_VESA:
++	default:
++		cc = 0;
++	}
+ 
+ 	return cc;
+ }
+diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+index 127f6af..785bb59 100644
+--- a/drivers/gpu/drm/msm/dp/dp_panel.c
++++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /*
+  * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved
+  */
+ 
+ #include "dp_panel.h"
+@@ -386,6 +387,53 @@ int dp_panel_init_panel_info(struct dp_panel *dp_panel)
+ 	return 0;
+ }
+ 
++/*
++ * Mapper function which outputs colorimetry to be used for a
++ * given colorspace value when misc field of MSA is used to
++ * change the colorimetry. Currently only RGB formats have been
++ * added. This API will be extended to YUV once it's supported on DP.
++ */
++u8 dp_panel_get_misc_colorimetry_val(struct dp_panel *dp_panel)
++{
++	u8 colorimetry;
++	u32 colorspace;
++	u32 cc;
++	struct dp_panel_private *panel;
++
++	panel = container_of(dp_panel, struct dp_panel_private, dp_panel);
++
++	cc = dp_link_get_colorimetry_config(panel->link);
++	/*
++	 * If there is a non-zero value then compliance test-case
++	 * is going on, otherwise we can honor the colorspace setting
++	 */
++	if (cc)
++		return cc;
++
++	colorspace = dp_panel->connector->state->colorspace;
++	drm_dbg_dp(panel->drm_dev, "colorspace=%d\n", colorspace);
++
++	switch (colorspace) {
++	case DRM_MODE_COLORIMETRY_DCI_P3_RGB_D65:
++	case DRM_MODE_COLORIMETRY_DCI_P3_RGB_THEATER:
++		colorimetry = 0x7;
++		break;
++	case DRM_MODE_COLORIMETRY_RGB_WIDE_FIXED:
++		colorimetry = 0x3;
++		break;
++	case DRM_MODE_COLORIMETRY_RGB_WIDE_FLOAT:
++		colorimetry = 0xb;
++		break;
++	case DRM_MODE_COLORIMETRY_OPRGB:
++		colorimetry = 0xc;
++		break;
++	default:
++		colorimetry = 0;	/* legacy RGB mode */
++	}
++
++	return colorimetry;
++}
++
+ struct dp_panel *dp_panel_get(struct dp_panel_in *in)
+ {
+ 	struct dp_panel_private *panel;
+diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
+index a0dfc57..c34a51d 100644
+--- a/drivers/gpu/drm/msm/dp/dp_panel.h
++++ b/drivers/gpu/drm/msm/dp/dp_panel.h
+@@ -1,6 +1,7 @@
+ /* SPDX-License-Identifier: GPL-2.0-only */
+ /*
+  * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved
+  */
+ 
+ #ifndef _DP_PANEL_H_
+@@ -65,6 +66,7 @@ int dp_panel_get_modes(struct dp_panel *dp_panel,
+ 		struct drm_connector *connector);
+ void dp_panel_handle_sink_request(struct dp_panel *dp_panel);
+ void dp_panel_tpg_config(struct dp_panel *dp_panel, bool enable);
++u8 dp_panel_get_misc_colorimetry_val(struct dp_panel *dp_panel);
+ 
+ /**
+  * is_link_rate_valid() - validates the link rate
+-- 
+2.7.4
 
-Thanks,
-Bjorn
-
-> Regards,
-> Krishna,
 
