@@ -1,170 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-7046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7047-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D350F82B29B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 17:17:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 18AB782B2F8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 17:30:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 381C01F24222
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 16:17:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 53E98286EFB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 16:30:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DBEE50248;
-	Thu, 11 Jan 2024 16:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD3A450268;
+	Thu, 11 Jan 2024 16:30:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="B2scXr+O"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="xyiwDMkt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF9234F89F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 16:16:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-3bbd1f9e0b8so4484893b6e.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 08:16:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1704989817; x=1705594617; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=M0L8Io9WOaU9zuxGb3WJPoQE4gX/uTxUJ5wFQjECB/w=;
-        b=B2scXr+OKXWnyIR11WNhHl4HnA8sstMVDe5KXjsz/WyqmtmiCB38/AajhI34/s5Zb9
-         Crd5F7aju81hDfjiQs+5gnq8UaWJuK/n9TMraE4vEh1Gg5y78E8xiB6l/bzcuaj6Z/Pe
-         61NPE+Ye0I1ppuwtjod6jxvhHhni9e0TQ+nS9EYK7hTq3mTgGw0XrUMos3m0A5CEkB4I
-         O5wuseypKGTGN3TfA2ZpwDrwE/u3wp/tN/3GKybqgdFvgUbjXUC8OGD1lb2YFc7MaUw9
-         FQYj33p0Wbhbc3fD8yR+tymfYdCD7U5vjcov6VvolmJkaMthF5PkY8/G/jv1jGWet1CB
-         I4LQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704989817; x=1705594617;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=M0L8Io9WOaU9zuxGb3WJPoQE4gX/uTxUJ5wFQjECB/w=;
-        b=M+Hyx87ap/SPQ1Fc3PO16/wYLRu0gwUmUjr7KA1xcLD2IczeFi8nfRInBCpXmErA6a
-         Y4ZbjPIrcKVKMZI1zQsefZK9aa0KOvGtrq7LZFe8o2wUaEj5YAT5Mv6LrbNuLMQPvJdK
-         1tGYRguBcw5XgmrcvGuLbmNBkNGDRuwJdpV25B+Hb+UdELILH+UtP1sIZudfWaOyJ8Uj
-         l+nlGTG4dn2FkLzoMKyDwPYVMVfu3hfXxkyfECPCGOLDQtcTgbyscBhIkjXJwKLZ9gth
-         rk0KJHr8QxSEDUqy+y/9dI4VaGVBieSGSTWVaxFUEFExyrhZeidjJNi26d0O6A492NuA
-         415Q==
-X-Gm-Message-State: AOJu0YxWIiBpNy60xpCm+ahC9mRZ3GsXD+T9Xn3jWAxJxETPWFwOBIjy
-	9gvaw87Uyl5JnB9ZJsEyqO0pGraLIGU1v6KcZR5nsUBC8K8+aQ==
-X-Google-Smtp-Source: AGHT+IGJENwweiSWgpyQ2rt2ZAKEMsGtxTp3hgP1clpfKIQ8hkKdJSDGEsbKitZOWDOeRpTbQTmQIXknw6HKsHnJXYg=
-X-Received: by 2002:a05:6808:1289:b0:3bd:3e96:a8ab with SMTP id
- a9-20020a056808128900b003bd3e96a8abmr1572401oiw.53.1704989816773; Thu, 11 Jan
- 2024 08:16:56 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B6450248;
+	Thu, 11 Jan 2024 16:30:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=RZZYfRnPOO3FwcjRLM0jK60UeYXHjeCKu2AE3qKo9Vk=; b=xyiwDMkt2KpmBS8xYraVAQvlHx
+	ksUXbOKxjUC59W+Z9bFz+QIdkOebEt+meVCMITncKXRGJIwO5iUqPcZkDgta2x7LWy0KFng0VPcd/
+	v4dgoZKkC5Bo919UCr6PatZgwj1ydrRC71urHkxqsxTX+s15PWZXh6EkMC1g4vUgWRyE=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1rNxwk-0050tN-J8; Thu, 11 Jan 2024 17:30:22 +0100
+Date: Thu, 11 Jan 2024 17:30:22 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Jie Luo <quic_luoj@quicinc.com>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+	quic_kkumarcs@quicinc.com, quic_suruchia@quicinc.com,
+	quic_soni@quicinc.com, quic_pavir@quicinc.com,
+	quic_souravp@quicinc.com, quic_linchen@quicinc.com,
+	quic_leiwei@quicinc.com
+Subject: Re: [PATCH 3/6] arm64: dts: qcom: ipq5332: Add MDIO device tree
+Message-ID: <61973012-3f74-4b58-9575-3bc5199f61d9@lunn.ch>
+References: <20240110112059.2498-1-quic_luoj@quicinc.com>
+ <20240110112059.2498-4-quic_luoj@quicinc.com>
+ <4bc0aff5-8a1c-44a6-89d8-460961a61310@lunn.ch>
+ <e893c298-fbfa-4ae4-9b76-72a5030a5530@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240104130123.37115-1-brgl@bgdev.pl> <20240104130123.37115-4-brgl@bgdev.pl>
- <20240109144327.GA10780@wunner.de> <CAMRc=MdXO6c6asvRSn_Z8-oFS48hroT+dazGKB6WWY1_Zu7f1Q@mail.gmail.com>
- <20240110132853.GA6860@wunner.de> <CAMRc=MdBSAb_kEO2r7r-vwLuRAEv7pMODOMtZoCCRAd=zsQb_w@mail.gmail.com>
- <20240110164105.GA13451@wunner.de> <CAMRc=MdQKPN8UbagmswjFx7_JvmJuBeuq8+9=z-+GBNUmdpWEA@mail.gmail.com>
- <20240111104211.GA32504@wunner.de> <CAMRc=MfT_VLo7++K4M89iYrciqWSrX_JyS1LX5kaGTNDNVQiOg@mail.gmail.com>
- <20240111150201.GA28409@wunner.de>
-In-Reply-To: <20240111150201.GA28409@wunner.de>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Thu, 11 Jan 2024 17:16:45 +0100
-Message-ID: <CAMRc=Mcngw1vw9q0DXRWLKk4o9FOY+Mzz-niueT-v2THvbS1Dw@mail.gmail.com>
-Subject: Re: [RFC 3/9] PCI/portdrv: create platform devices for child OF nodes
-To: Lukas Wunner <lukas@wunner.de>
-Cc: Kalle Valo <kvalo@kernel.org>, "David S . Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Heiko Stuebner <heiko@sntech.de>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Chris Morgan <macromorgan@hotmail.com>, 
-	Linus Walleij <linus.walleij@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Arnd Bergmann <arnd@arndb.de>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	=?UTF-8?B?TsOtY29sYXMgRiAuIFIgLiBBIC4gUHJhZG8=?= <nfraprado@collabora.com>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Peng Fan <peng.fan@nxp.com>, 
-	Robert Richter <rrichter@amd.com>, Dan Williams <dan.j.williams@intel.com>, 
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>, Terry Bowman <terry.bowman@amd.com>, 
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>, 
-	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
-	Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>, 
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-wireless@vger.kernel.org, 
-	netdev@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e893c298-fbfa-4ae4-9b76-72a5030a5530@quicinc.com>
 
-On Thu, Jan 11, 2024 at 4:02=E2=80=AFPM Lukas Wunner <lukas@wunner.de> wrot=
-e:
->
-> On Thu, Jan 11, 2024 at 05:09:09AM -0600, Bartosz Golaszewski wrote:
-> > On Thu, 11 Jan 2024 11:42:11 +0100, Lukas Wunner <lukas@wunner.de> said=
-:
-> > > On Wed, Jan 10, 2024 at 02:18:30PM -0600, Bartosz Golaszewski wrote:
-> > >> On Wed, 10 Jan 2024 17:41:05 +0100, Lukas Wunner <lukas@wunner.de> s=
-aid:
-> > >> > On Wed, Jan 10, 2024 at 05:26:52PM +0100, Bartosz Golaszewski wrot=
-e:
-> > >> > > Seems like the following must be true but isn't in my case (from
-> > >> > > pci_bus_add_device()):
-> > >> > >
-> > >> > >     if (pci_is_bridge(dev))
-> > >> > >         of_pci_make_dev_node(dev);
-> > >> > >
-> > >> > > Shouldn't it evaluate to true for ports?
-> > >> >
-> > >> > It should.
-> > >> >
-> > >> > What does "lspci -vvvvxxxx -s BB:DD.F" say for the port in questio=
-n?
-> >
-> > # lspci -vvvvxxxx -s 0000:00:00
-> > 0000:00:00.0 PCI bridge: Qualcomm Technologies, Inc Device 010b
-> > (prog-if 00 [Normal decode])
-> >       Device tree node: /sys/firmware/devicetree/base/soc@0/pcie@1c0000=
-0/pcie@0
-> [...]
-> > 00: cb 17 0b 01 07 05 10 00 00 00 04 06 00 00 01 00
->                                                 ^^
-> The Header Type in config space is 0x1, i.e. PCI_HEADER_TYPE_BRIDGE.
->
-> So pci_is_bridge(dev) does return true (unlike what you write above)
-> and control flow enters of_pci_make_dev_node().
->
-> But perhaps of_pci_make_dev_node() returns immediately because:
->
+> Sorry for the confusion, the pin nodes are for the MDIO and MDC, these
+> PINs are used by the dedicated hardware MDIO block in the SoC. I will update
+> the node name from mux_0 to MDC, mux_1 to MDIO, to make it clear. The driver
+> for this node is drivers/net/mdio/mdio-ipq4019.c, it is not related to the
+> mdio-mux-* code.
 
-No, it was actually a no-op due to CONFIG_PCI_DYNAMIC_OF_NODES not
-being set. But this is only available if CONFIG_OF_DYNAMIC is enabled
-which requires OF_UNITTEST (!).
+So these is all about pinmux.
 
-We definitely don't need to enable dynamic OF nodes. We don't want to
-modify the DT, we want to create devices for existing nodes. Also:
-with the approach in this RFC we maintain a clear hierarchy of devices
-with the port device being the parent of the power sequencing device
-which becomes the parent of the actual PCIe device (the port stays the
-parent of this device too).
+When you say:
+> PINs are used by the dedicated hardware MDIO block in the SoC
 
-Bartosz
+do you actually mean:
 
->         /*
->          * If there is already a device tree node linked to this device,
->          * return immediately.
->          */
->         if (pci_device_to_OF_node(pdev))
->                 return;
->
-> ...and lspci does list a devicetree node for that Root Port.
->
-> In any case, of_pci_make_dev_node() is the right place to add
-> the call to of_platform_populate().  Just make sure it's called
-> even if there is already a DT node for the Root Port itself.
->
-> Thanks,
->
-> Lukas
+PINs are used by the two dedicated hardware MDIO blocks in the SoC.
+
+You have two sets of mdio/mdc configurations here, so i assume there
+are two MDIO hardware blocks, each being an MDIO bus master.
+
+    Andrew
 
