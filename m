@@ -1,62 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-7010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 128FF82A9BA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 09:53:29 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E7FD682A9C6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 09:55:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B8363285F54
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 08:53:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D599B1C20AAE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 08:55:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38519125D5;
-	Thu, 11 Jan 2024 08:53:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E4A7F4E2;
+	Thu, 11 Jan 2024 08:55:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Bw8R10uo"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="hyWHgQPf"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-ed1-f65.google.com (mail-ed1-f65.google.com [209.85.208.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB37125D2
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 08:53:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA133FBFC
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 08:55:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f65.google.com with SMTP id 4fb4d7f45d1cf-5589cfe4b88so360347a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 00:53:19 -0800 (PST)
+Received: by mail-ed1-f65.google.com with SMTP id 4fb4d7f45d1cf-55817a12ad8so2826617a12.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 00:55:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1704963197; x=1705567997; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
+        d=fairphone.com; s=fair; t=1704963334; x=1705568134; darn=vger.kernel.org;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
          :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8fdzAkRigLOJSs0p8z2FKeIqZxw3OTVE9TPYi8cJXf8=;
-        b=Bw8R10uoKP0KsSytiLAWl40hOI9Xxx83fcBSz7qPsGhOQoHG+/MBQxnn90qal8qACj
-         qDxyuoFYJbKTQNylg458HDCQE8WtnOmZ7yi2nG77XkH896e4EafU6Vwztm0W+g/vDdrz
-         r91l37gL+gXuE533w7Pr6S23HcldMz7J5X1GawX+Fhefpfa65qkRax6rHgyWwE4mjMdX
-         fJt9L9ghzzfWvo8o7zM/3aCtKfu/5hWaKMHJyjiPU99jgNs3Iy++EkTgodt/QrcrzUbL
-         /XgrAU54imWmtXyrP6Z18HXpnLzOjIC9LMCW02rs/HBXAnHaxMWN7k+D9ljOikHtPXqI
-         ONrQ==
+        bh=f+urHVCxXYj39IE1pxye+SFmnhznkKtnAt7Qr2ngkeI=;
+        b=hyWHgQPfOCt59gKs95hRuIAfcQjgJoRv/jS+nrBuh7bVX3BEAGbf31AsYf46ZJG/z0
+         K2pnpVocK8miiZ611d21CB5wzF/pr7zd9fp1s9DG5HQs8E2OygkfopLBvKFHxvqzBelX
+         o6fC7B+tcD2d+Sw+yyz3RHcANPOWuhLYQGe1Zc4CujyTL06U6bNas11k26iez4Se31mt
+         cXa8WwSOnQ/nPb/F0yye6z6mk+eBRDVDvD9LPGy9jlZcONXGPPmPQY1Cb21Fl3kGYqZ8
+         rING12D1uNxf61XQntoxcYlKcHNXqaGfYwGw8ItUJ5edI7mkP/HT/x5qWJ7iRg7Hcpdb
+         1sQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704963197; x=1705567997;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
+        d=1e100.net; s=20230601; t=1704963334; x=1705568134;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
          :content-transfer-encoding:mime-version:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=8fdzAkRigLOJSs0p8z2FKeIqZxw3OTVE9TPYi8cJXf8=;
-        b=emTT8bFAU2sNgj0xaOlxi7TuqiBKDgIXJdMyibjvvfMR/AKYe/EodgX6nwJvgF2o5M
-         3Z30DyZ3Io2xWf9R5gAl2ynNhRF/fqXOuhgteLyW8/2/zrn/W2EzCFIL+BJHHQJMjezs
-         giHxocqWQo52pNN15A2/O+5Fkn2HjfQGoz4pf84iKwiE+g1gh7Cv6sIJyZ8TtDIQi3gy
-         7tHSowa70K/bbnyLNf43votuOZOAg8rNg4NbBSzOe+FPUwYWNpz70o7KQNmktuoDRZqr
-         9K4Jsnp5ypuhpW8Y5y/l4MKDML9wnfbOGrUTPbJrt5gHsqcEyfqTunLA6cclkNz7f/m9
-         AA4w==
-X-Gm-Message-State: AOJu0Yx8GknnJVa5oFKC61DL762IkSrh5unmtYrAFAVlvImOwgZXqNnb
-	EOZmroYWc4yi2ujkPq9zXCl4p2CNECdg85P/IhzqM5R4QPIf7koE
-X-Google-Smtp-Source: AGHT+IFq5ynQNEJVSXgc5jOV5wTNN9Vjm/J5WWKvAdAgAN+RMQzy+62aeC55Dtrg2J/oQzlpesDVgA==
-X-Received: by 2002:a17:906:17c4:b0:a28:d427:3959 with SMTP id u4-20020a17090617c400b00a28d4273959mr397730eje.62.1704962870935;
-        Thu, 11 Jan 2024 00:47:50 -0800 (PST)
+        bh=f+urHVCxXYj39IE1pxye+SFmnhznkKtnAt7Qr2ngkeI=;
+        b=stouJkximEMtgyjn7qPor+erraInGwTq2MMJVjGYkV47uZy907hnnzYmJxYu7jlhgR
+         7+Y4z26X+Gl5jLQvpaCtP9eSaItY35HyBHRQu8LgwBud7sDxdqM+PQJbsaGQ8QVHXJds
+         3cQqBz1Fuc3vzOkNqUBGxAhl/4C/7zd8mxjr2hoUgG9Eh+hrsn/hQ6TzKPCZmU4nZt6x
+         T/fzR7FU0PSSGUR0mgrGu7yKcOGm06x11myLNf8a+Srm0yIXTeg2TkALCrXnYJDLixwa
+         ROQKxhNqqdcjnBWytE7ctLkvn/nB+LdwiYHrNREDlHgFSlyr9HiM4lKZDG9bWebO6lDe
+         ZaeA==
+X-Gm-Message-State: AOJu0YwEIKpg1bL4Q/H0r9+7vtNxehp9pwcZwfZbdG0TzGkIkYFjhNy8
+	Np+dlxHV+NU+fCxHFfVxtaAtZDrY7hrmDA==
+X-Google-Smtp-Source: AGHT+IFkOaiX1Qj7iGZDGLUwqNZiH0n8d9X2CJnd6YUgczb+xRKH3UmnXd4YgHnjN2v+RKH3pQQJPg==
+X-Received: by 2002:aa7:c69a:0:b0:558:80c7:5e8f with SMTP id n26-20020aa7c69a000000b0055880c75e8fmr372546edq.9.1704963334132;
+        Thu, 11 Jan 2024 00:55:34 -0800 (PST)
 Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id rv4-20020a17090710c400b00a26e490e3f2sm305391ejb.181.2024.01.11.00.47.50
+        by smtp.gmail.com with ESMTPSA id c10-20020a0564021f8a00b00557d29be289sm362971edc.11.2024.01.11.00.55.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Jan 2024 00:47:50 -0800 (PST)
+        Thu, 11 Jan 2024 00:55:33 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,108 +65,135 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 11 Jan 2024 09:47:49 +0100
-Message-Id: <CYBQW9KRHVJS.3UOHTOMRWDWVK@fairphone.com>
-Cc: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH RESEND v3] arm64: dts: qcom: qcs6490-idp: Add definition
- for three LEDs.
+Date: Thu, 11 Jan 2024 09:55:33 +0100
+Message-Id: <CYBR26JQ2SD4.33ELRAVYZW1PY@fairphone.com>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm7225-fairphone-fp4: Add PM6150L
+ thermals
 From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: <quic_huliu@quicinc.com>, "Andy Gross" <agross@kernel.org>, "Bjorn
- Andersson" <andersson@kernel.org>, "Konrad Dybcio"
- <konrad.dybcio@linaro.org>, "Rob Herring" <robh+dt@kernel.org>, "Krzysztof
+To: "Konrad Dybcio" <konrad.dybcio@linaro.org>, "Bjorn Andersson"
+ <andersson@kernel.org>, "Rob Herring" <robh+dt@kernel.org>, "Krzysztof
  Kozlowski" <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley"
  <conor+dt@kernel.org>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, "AngeloGioacchino Del Regno"
+ <angelogioacchino.delregno@collabora.com>
 X-Mailer: aerc 0.15.2
-References: <20240111-lpg-v3-1-811c9e82dae4@quicinc.com>
-In-Reply-To: <20240111-lpg-v3-1-811c9e82dae4@quicinc.com>
+References: <20240105-fp4-thermals-v1-0-f95875a536b7@fairphone.com>
+ <20240105-fp4-thermals-v1-2-f95875a536b7@fairphone.com>
+ <18dc5f88-6590-4e2d-948f-fd77f4713f8b@linaro.org>
+ <CYA4ZGOQOJXY.2RO98RBCDKK5J@fairphone.com>
+ <f78ce9e6-0a25-4e08-b972-db055b7afd71@linaro.org>
+In-Reply-To: <f78ce9e6-0a25-4e08-b972-db055b7afd71@linaro.org>
 
-On Thu Jan 11, 2024 at 3:52 AM CET, Hui Liu via B4 Relay wrote:
-> From: Hui Liu <quic_huliu@quicinc.com>
+On Wed Jan 10, 2024 at 8:16 PM CET, Konrad Dybcio wrote:
 >
-> Add definition for three LEDs to make sure they can
-> be enabled base on QCOM LPG LED driver.
 >
-> Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
-> ---
-> Changes in v3:
-> - Rephrased commit text and updated the nodes to qcm6490-idp board file.
-> - Link to v2: https://lore.kernel.org/all/20231110-qcom_leds-v2-1-3cad1fb=
-bc65a@quicinc.com/
+> On 1/9/24 12:24, Luca Weiss wrote:
+> > On Tue Jan 9, 2024 at 11:09 AM CET, Konrad Dybcio wrote:
+> >>
+> >>
+> >> On 1/5/24 15:54, Luca Weiss wrote:
+> >>> Configure the thermals for the PA_THERM1, MSM_THERM, PA_THERM0,
+> >>> RFC_CAM_THERM, CAM_FLASH_THERM and QUIET_THERM thermistors connected =
+to
+> >>> PM6150L.
+> >>>
+> >>> Due to hardware constraints we can only register 4 zones with
+> >>> pm6150l_adc_tm, the other 2 we can register via generic-adc-thermal.
+> >>
+> >> Ugh.. so the ADC can support more inputs than the ADC_TM that was
+> >> designed to ship alongside it can?
+> >>
+> >> And that's why the "generic-adc-thermal"-provided zones need to
+> >> be polled?
+> >=20
+> > This part of the code from qcom-spmi-adc-tm5.c was trigerring if I
+> > define more than 4 channels, and looking at downstream I can also see
+> > that only 4 zones are registered properly with adc_tm, the rest is
+> > registered with "qcom,adc-tm5-iio" which skips from what I could tell
+> > basically all the HW bits and only registering the thermal zone.
+> >=20
+> >=20
+> > 	ret =3D adc_tm5_read(chip, ADC_TM5_NUM_BTM,
+> > 			   &channels_available, sizeof(channels_available));
+> > 	if (ret) {
+> > 		dev_err(chip->dev, "read failed for BTM channels\n");
+> > 		return ret;
+> > 	}
+> >=20
+> > 	for (i =3D 0; i < chip->nchannels; i++) {
+> > 		if (chip->channels[i].channel >=3D channels_available) {
+> > 			dev_err(chip->dev, "Invalid channel %d\n", chip->channels[i].channel=
+);
+> > 			return -EINVAL;
+> > 		}
+> > 	}
+> >=20
+> >=20
+> >>
+> >>>
+> >>> The trip points can really only be considered as placeholders, more
+> >>> configuration with cooling etc. can be added later.
+> >>>
+> >>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> >>> ---
+> >> [...]
+> >>
+> >> I've read the sentence above, but..
+> >>> +		sdm-skin-thermal {
+> >>> +			polling-delay-passive =3D <1000>;
+> >>> +			polling-delay =3D <5000>;
+> >>> +			thermal-sensors =3D <&msm_therm_sensor>;
+> >>> +
+> >>> +			trips {
+> >>> +				active-config0 {
+> >>> +					temperature =3D <125000>;
+> >>> +					hysteresis =3D <1000>;
+> >>> +					type =3D "passive";
+> >>
+> >> I don't fancy burnt fingers for dinner!
+> >=20
+> > With passive trip point it wouldn't even do anything now, but at what
+> > temp do you think it should do what? I'd definitely need more time to
+> > understand more of how the thermal setup works in downstream Android,
+> > and then replicate a sane configuration for mainline with proper
+> > temperatures, cooling, etc.
+> If "skin therm" means "the temperature of some part of the phone's
+> body that can be felt with a human hand", then definitely some
+> throttling should happen at 40ish with heavy throttling at 50
+> and crit at 55 or so..
 >
-> Changes in v2:
-> - Rephrased commit text and updated the nodes to board file.
-> - Link to v1: https://lore.kernel.org/r/20231108-qcom_leds-v1-1-c3e1c8572=
-cb0@quicinc.com
-> ---
->  arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 25 +++++++++++++++++++++++++
->  1 file changed, 25 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/d=
-ts/qcom/qcm6490-idp.dts
-> index 37c91fdf3ab9..f801144a1556 100644
-> --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> @@ -5,6 +5,7 @@
-> =20
->  /dts-v1/;
-> =20
-> +#include <dt-bindings/leds/common.h>
->  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->  #include "sc7280.dtsi"
->  #include "pm7325.dtsi"
-> @@ -414,6 +415,30 @@ vreg_bob_3p296: bob {
->  	};
->  };
-> =20
-> +&pm8350c_pwm {
-> +	#address-cells =3D <1>;
-> +	#size-cells =3D <0>;
-> +	status =3D "okay";
-> +
-> +	led@1 {
-> +		reg =3D <1>;
+> We should probably make this a broader topic and keep a single
+> policy for all supported phones.
 
-Hi Hui Liu,
+I agree that this shouldn't be implemented differently per device since
+it's really more a question "what should Linux do" that's quite a
+general question and not device-specific. Of course some device-specific
+tweaks could be here and there, like if the phone has metal back or
+plastic back but it's only minor.
 
-> +		color =3D <LED_COLOR_ID_RED>;
-> +		label =3D "red";
+Based on the config here
+https://gerrit-public.fairphone.software/plugins/gitiles/platform/hardware/=
+qcom/thermal/+/refs/heads/odm/dev/target/13/fp5/thermalConfig.cpp#946
+it looks like throtteling starts for internal components at 95degC with
+a shutdown threshold of 115degC.
+The skin sensor here has a throttling threshold of 40degC and shutdown
+threshold of 95degC.
 
-Please remove the deprecated "label" property. Since you already have
-"color" set you only need to add "function". On phones for the
-notification LED we usually use "function =3D LED_FUNCTION_STATUS;"
+But actually I'm not even sure this config gets active for QCM6490 with
+socid=3D497. So yeah I need more time digging into the thermal code to see
+what it's actually doing.. Not that it would/should be much different
+for socid=3D497 I guess though.
 
-Also depends on what your hardware looks like, if it's 3 separate LEDs
-then with label replaced it would be okay.
-If the 3 LEDs are in one spot (so you can mix the colors with it), then
-please make it a RGB multi-led like e.g. in sm8550-qrd.dts.
+There's also plenty of thermal code in qcom proprietary.
 
 Regards
 Luca
 
-> +	};
-> +
-> +	led@2 {
-> +		reg =3D <2>;
-> +		color =3D <LED_COLOR_ID_GREEN>;
-> +		label =3D "green";
-> +	};
-> +
-> +	led@3 {
-> +		reg =3D <3>;
-> +		color =3D <LED_COLOR_ID_BLUE>;
-> +		label =3D "blue";
-> +	};
-> +};
-> +
->  &qupv3_id_0 {
->  	status =3D "okay";
->  };
 >
-> ---
-> base-commit: 17cb8a20bde66a520a2ca7aad1063e1ce7382240
-> change-id: 20231215-lpg-4aadd374811a
+> + CC AGdR, may be interested in where this leads
 >
-> Best regards,
+> Konrad
 
 
