@@ -1,106 +1,311 @@
-Return-Path: <linux-arm-msm+bounces-7075-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8AE7A82B5B6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 21:13:51 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5698A82B6B4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 22:35:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AFC801C24427
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 20:13:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6EB8E1C21841
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 21:35:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF2865677C;
-	Thu, 11 Jan 2024 20:13:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4516758137;
+	Thu, 11 Jan 2024 21:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EQDz1erv"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AWrg1wFM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272244F8A0
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 20:13:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2cd0f4f306fso68082751fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 12:13:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705004023; x=1705608823; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HLcLQaz4FuWBvN8Bcs9aSQ4aN2O0V7MXEoQjkEjyuLo=;
-        b=EQDz1ervt70Nb4uhkKmuPtN+NHCEkPwdnIDzGyrs2Z5Ppz2Glzh1O68TSQVi53ReBJ
-         Hy00bu10lZgehHyfbuHJMGKlH/IIKkVi5m70vKy317S1EK3aNuY9VPAxReeL6mgfecCq
-         0lKP4ZZxzc2nubC1PUFi6bEjqiCzd8v6ZFVO89/xzkHfFYx9+vxta30caLdCaY3pyeze
-         XQEe0/CRU3r1ML9ypGJhm4Qq2ZUhsDWg2Zy/G9C16RPAOatVkyUuL3ZngaxvbJLwXEUd
-         rz3xzSEgYcfkKTBdC77zIv3TRADKMvvnsvVxYgIehLxTq7mDJOPkzZnropVez227ZR5l
-         p0Qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705004023; x=1705608823;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HLcLQaz4FuWBvN8Bcs9aSQ4aN2O0V7MXEoQjkEjyuLo=;
-        b=BEWNUaHQTEFI4XfSuUidcFrc+lrBkLznv8u2N1APLR/KoDooTPSRF8knaUiCnrXWuc
-         6YOpvuMAnsfymZVW+GOdqtNnVllOpDIOGoHyRJ8Wh1h5q3Vu2TM4110zZvzo0is/V6fu
-         t4GPYiPgTP6u0esEy0typ//8F1J2O6peJDlPafCplooWjS+zZ/aoYPHK+0mquRV6YC4T
-         VshRuxgG92p1gl1wcnvLkM6cSaC6zjk9WE91dexv+U9P49WyOTcoPkgW9rXTbtY0Fuka
-         H9CT28cqnghdGXkxrIxnIcqOEsQg5mpepep/8dcYbXwD8Vy+JGpn2AF3xT3krGjkB8U6
-         XCzQ==
-X-Gm-Message-State: AOJu0YwBeYZ50VZyCAXBm6g6/lHXwagCDKi6s/k2s+cnaZzlEFetubOj
-	YP/sxnsNkNcttzBlDy7aSVw8yRngAshVpQ==
-X-Google-Smtp-Source: AGHT+IGpC/aKy6BH37k6si/AHktDrmWWE8poE0NwjWdn7uSe6GqjYOvq4l9M/gBSDCQxkhs4+Gqjnw==
-X-Received: by 2002:a2e:b1c7:0:b0:2cd:463f:6c2f with SMTP id e7-20020a2eb1c7000000b002cd463f6c2fmr127406lja.72.1705004023125;
-        Thu, 11 Jan 2024 12:13:43 -0800 (PST)
-Received: from [172.30.204.205] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id x4-20020a2e9dc4000000b002ccbcc18e73sm236589ljj.17.2024.01.11.12.13.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Jan 2024 12:13:42 -0800 (PST)
-Message-ID: <cd3d3034-ce98-4b96-8cdc-fbd5b66ca7a8@linaro.org>
-Date: Thu, 11 Jan 2024 21:13:41 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 951FF3B198;
+	Thu, 11 Jan 2024 21:35:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40BLVRYY020187;
+	Thu, 11 Jan 2024 21:35:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=9skgMF499mKm9d9AVt+z+xIQxaH31o4zQYYS34pttdQ=; b=AW
+	rg1wFM51GGQkH89mh8sCCHiPuj1fzqjsqKRE4M68Pbbu1MUO27fBBO55mRV2F83x
+	nmwLtJ4t16QOlKckQ7TQ5YR5ThS3soYuAWNRi+/qfkp4YtCbUIC5tF4bCw/MhkZd
+	b8YgYKd0UBW8fYYmZXwDdccXcGYunmnkNJPa9VWQN5AJfERbWr8CFK38ni+57c0k
+	qMC7pdOrF2X9O3ll1QVnGwt4Ba0fTye3k5B2lMW/agof9ezk5ERP/jSjeXMuwgiZ
+	XPPpONtzUAdd7AJ5H1HJz2HZXSiXPZ+uQXE/APhXdyFIe96+dYoUMGDJcjcjO+U0
+	etkq8A9mwidJMCjtelzw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vj6c8jnmv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 11 Jan 2024 21:35:34 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40BLZXou024192
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 11 Jan 2024 21:35:33 GMT
+Received: from [10.110.91.77] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 11 Jan
+ 2024 13:35:31 -0800
+Message-ID: <d2fc43b0-6a7b-9d50-238b-c95439695a0f@quicinc.com>
+Date: Thu, 11 Jan 2024 13:35:23 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] media: qcom: camss: Add sc8280xp support
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Hans Verkuil <hverkuil-cisco@xs4all.nl>,
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240111-linux-next-24-01-09-sc8280xp-camss-changes-v1-0-b92a650121ba@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v1] drm/msm/dp: correct configure Colorimetry Indicator
+ Field at MISC0
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1704917888-30039-1-git-send-email-quic_khsieh@quicinc.com>
+ <CAA8EJprkotYgo8je2+N=aZGxEReHgLR_rooKQBOWqRn+dgKtSQ@mail.gmail.com>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240111-linux-next-24-01-09-sc8280xp-camss-changes-v1-0-b92a650121ba@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <CAA8EJprkotYgo8je2+N=aZGxEReHgLR_rooKQBOWqRn+dgKtSQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 4UGW-jkM4Od05Vr8fR_pNzvHGV1hb-lE
+X-Proofpoint-GUID: 4UGW-jkM4Od05Vr8fR_pNzvHGV1hb-lE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ clxscore=1015 mlxlogscore=999 adultscore=0 malwarescore=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 suspectscore=0
+ priorityscore=1501 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2311290000 definitions=main-2401110168
 
 
+On 1/10/2024 3:38 PM, Dmitry Baryshkov wrote:
+> On Wed, 10 Jan 2024 at 22:18, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>> MSA MISC0 bit 1 to 7 contains Colorimetry Indicator Field. At current
+>> implementation, Colorimetry Indicator Field of MISC0 is not configured
+>> correctly. This patch add support of RGB formats Colorimetry.
+> https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
+>
+> Also the commit message doesn't provide any details or what was incorrect.
+>
+>> Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/dp/dp_ctrl.c  |  5 ++--
+>>   drivers/gpu/drm/msm/dp/dp_link.c  | 26 ++++++++++++++++-----
+>>   drivers/gpu/drm/msm/dp/dp_panel.c | 48 +++++++++++++++++++++++++++++++++++++++
+>>   drivers/gpu/drm/msm/dp/dp_panel.h |  2 ++
+>>   4 files changed, 73 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+>> index 77a8d93..2ef89fb 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+>> @@ -1,6 +1,7 @@
+>>   // SPDX-License-Identifier: GPL-2.0-only
+>>   /*
+>> - * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
+>> + * Copyright (c) 2012-2023, The Linux Foundation. All rights reserved.
+>> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved
+>>    */
+>>
+>>   #define pr_fmt(fmt)    "[drm-dp] %s: " fmt, __func__
+>> @@ -172,7 +173,7 @@ static void dp_ctrl_configure_source_params(struct dp_ctrl_private *ctrl)
+>>
+>>          tb = dp_link_get_test_bits_depth(ctrl->link,
+>>                  ctrl->panel->dp_mode.bpp);
+>> -       cc = dp_link_get_colorimetry_config(ctrl->link);
+>> +       cc = dp_panel_get_misc_colorimetry_val(ctrl->panel);
+>>          dp_catalog_ctrl_config_misc(ctrl->catalog, cc, tb);
+>>          dp_panel_timing_cfg(ctrl->panel);
+>>   }
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
+>> index 98427d4..21fa1a2 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_link.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_link.c
+>> @@ -1,6 +1,7 @@
+>>   // SPDX-License-Identifier: GPL-2.0-only
+>>   /*
+>>    * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
+>> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved
+>>    */
+>>
+>>   #define pr_fmt(fmt)    "[drm-dp] %s: " fmt, __func__
+>> @@ -12,6 +13,11 @@
+>>
+>>   #define DP_TEST_REQUEST_MASK           0x7F
+>>
+>> +enum dynamic_range {
+>> +       DP_DYNAMIC_RANGE_RGB_VESA,
+>> +       DP_DYNAMIC_RANGE_RGB_CEA,
+>> +};
+>> +
+>>   enum audio_sample_rate {
+>>          AUDIO_SAMPLE_RATE_32_KHZ        = 0x00,
+>>          AUDIO_SAMPLE_RATE_44_1_KHZ      = 0x01,
+>> @@ -1083,6 +1089,7 @@ int dp_link_process_request(struct dp_link *dp_link)
+>>   int dp_link_get_colorimetry_config(struct dp_link *dp_link)
+>>   {
+>>          u32 cc;
+>> +       enum dynamic_range dr;
+>>          struct dp_link_private *link;
+>>
+>>          if (!dp_link) {
+>> @@ -1092,14 +1099,21 @@ int dp_link_get_colorimetry_config(struct dp_link *dp_link)
+>>
+>>          link = container_of(dp_link, struct dp_link_private, dp_link);
+>>
+>> -       /*
+>> -        * Unless a video pattern CTS test is ongoing, use RGB_VESA
+>> -        * Only RGB_VESA and RGB_CEA supported for now
+>> -        */
+>> +       /* unless a video pattern CTS test is ongoing, use CEA_VESA */
+>>          if (dp_link_is_video_pattern_requested(link))
+>> -               cc = link->dp_link.test_video.test_dyn_range;
+>> +               dr = link->dp_link.test_video.test_dyn_range;
+> test_dyn_range has the value of (dpcd[DP_TEST_MISC0] &
+> DP_TEST_DYNAMIC_RANGE_CEA), so it can not be assigned to dr.
+>
+> I don't feel like this has been tested.
 
-On 1/11/24 20:57, Bryan O'Donoghue wrote:
-> A minimal set of patches to switch on sc8280xp support in CAMSS
-> upstream. Most of the SoC dependencies are either merged - CAMCC or very
-> close to being merged - CAMSS/CCI dtsi.
-> 
-> Alot of prior work means we have far less interventions to make in this
-> driver to support this new SoC.
-> 
-> Most of this series is already reviewed however it is gated on merge of
-> the CAMSS compat string here =>
-> 
-> Link: https://lore.kernel.org/linux-arm-msm/20240111-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v4-2-cdd5c57ff1dc@linaro.org/
-> Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-24-01-09-sc8280xp-camss-changes
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
-What happened to the "vN" in the subject and the changelog?
+yes, you are correct.
 
-Konrad
+This code derived from down stream code.
+
+I will fix it.
+
+>>          else
+>> -               cc = DP_TEST_DYNAMIC_RANGE_VESA;
+>> +               dr = DP_DYNAMIC_RANGE_RGB_VESA;
+>> +
+>> +       /* Only RGB_VESA and RGB_CEA supported for now */
+>> +       switch (dr) {
+>> +       case DP_DYNAMIC_RANGE_RGB_CEA:
+>> +               cc = BIT(2);
+> No undefined magic, please.
+>
+>> +               break;
+>> +       case DP_DYNAMIC_RANGE_RGB_VESA:
+>> +       default:
+>> +               cc = 0;
+>> +       }
+>>
+>>          return cc;
+>>   }
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+>> index 127f6af..785bb59 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+>> @@ -1,6 +1,7 @@
+>>   // SPDX-License-Identifier: GPL-2.0-only
+>>   /*
+>>    * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
+>> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved
+>>    */
+>>
+>>   #include "dp_panel.h"
+>> @@ -386,6 +387,53 @@ int dp_panel_init_panel_info(struct dp_panel *dp_panel)
+>>          return 0;
+>>   }
+>>
+>> +/*
+>> + * Mapper function which outputs colorimetry to be used for a
+>> + * given colorspace value when misc field of MSA is used to
+>> + * change the colorimetry. Currently only RGB formats have been
+>> + * added. This API will be extended to YUV once it's supported on DP.
+>> + */
+>> +u8 dp_panel_get_misc_colorimetry_val(struct dp_panel *dp_panel)
+>> +{
+>> +       u8 colorimetry;
+>> +       u32 colorspace;
+>> +       u32 cc;
+>> +       struct dp_panel_private *panel;
+>> +
+>> +       panel = container_of(dp_panel, struct dp_panel_private, dp_panel);
+>> +
+>> +       cc = dp_link_get_colorimetry_config(panel->link);
+>> +       /*
+>> +        * If there is a non-zero value then compliance test-case
+>> +        * is going on, otherwise we can honor the colorspace setting
+>> +        */
+>> +       if (cc)
+>> +               return cc;
+>> +
+>> +       colorspace = dp_panel->connector->state->colorspace;
+> The driver doesn't attach the colorspace property, so this part is
+> useless. Anyway, I think adding colorimetry support will require more
+> changes than just setting the register in the DisplayPort controller.
+
+agree,
+
+this is just provision here for the future.
+
+most likely, dp_panel->connector->state->colorspace will have value of 0 
+which will return colorimetry = 0 (legacy rgb mode) at end of this function.
+
+>
+>> +       drm_dbg_dp(panel->drm_dev, "colorspace=%d\n", colorspace);
+>> +
+>> +       switch (colorspace) {
+>> +       case DRM_MODE_COLORIMETRY_DCI_P3_RGB_D65:
+>> +       case DRM_MODE_COLORIMETRY_DCI_P3_RGB_THEATER:
+>> +               colorimetry = 0x7;
+>> +               break;
+>> +       case DRM_MODE_COLORIMETRY_RGB_WIDE_FIXED:
+>> +               colorimetry = 0x3;
+>> +               break;
+>> +       case DRM_MODE_COLORIMETRY_RGB_WIDE_FLOAT:
+>> +               colorimetry = 0xb;
+>> +               break;
+>> +       case DRM_MODE_COLORIMETRY_OPRGB:
+>> +               colorimetry = 0xc;
+> Please define these magic values.
+>
+>> +               break;
+>> +       default:
+>> +               colorimetry = 0;        /* legacy RGB mode */
+>> +       }
+>> +
+>> +       return colorimetry;
+>> +}
+>> +
+>>   struct dp_panel *dp_panel_get(struct dp_panel_in *in)
+>>   {
+>>          struct dp_panel_private *panel;
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
+>> index a0dfc57..c34a51d 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_panel.h
+>> +++ b/drivers/gpu/drm/msm/dp/dp_panel.h
+>> @@ -1,6 +1,7 @@
+>>   /* SPDX-License-Identifier: GPL-2.0-only */
+>>   /*
+>>    * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
+>> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved
+>>    */
+>>
+>>   #ifndef _DP_PANEL_H_
+>> @@ -65,6 +66,7 @@ int dp_panel_get_modes(struct dp_panel *dp_panel,
+>>                  struct drm_connector *connector);
+>>   void dp_panel_handle_sink_request(struct dp_panel *dp_panel);
+>>   void dp_panel_tpg_config(struct dp_panel *dp_panel, bool enable);
+>> +u8 dp_panel_get_misc_colorimetry_val(struct dp_panel *dp_panel);
+>>
+>>   /**
+>>    * is_link_rate_valid() - validates the link rate
+>> --
+>> 2.7.4
+>>
+>
 
