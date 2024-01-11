@@ -1,194 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-7002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D409A82A76C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 07:08:47 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 020E082A796
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 07:32:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7835D281C51
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 06:08:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8FBD22881D7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 06:32:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70C7C2106;
-	Thu, 11 Jan 2024 06:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C07415D0;
+	Thu, 11 Jan 2024 06:32:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LVobSU4f"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BQG5HhLs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE54E2105;
-	Thu, 11 Jan 2024 06:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31327F9;
+	Thu, 11 Jan 2024 06:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40B5e1kf022118;
-	Thu, 11 Jan 2024 06:08:27 GMT
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40B5SNMd032044;
+	Thu, 11 Jan 2024 06:32:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=/6QUE+JTKVJzsM5DjhsgngB9QhhyX2fGpNdXNdgcBSc=; b=LV
-	obSU4fQxCfixukwig4w/EowuyZfFWyhvGAbfNEOEY0mfcbu2+7Xesp98l4fdCWaq
-	Mcj3HDPadDMISsFnlEZZvd4d5tRsfdA5ciZfwpfa+DtKcDBUYMBWxHHuN5u5M95m
-	zdnpCNV5GvKPDJATdBtyzIBG1MLrKP4IJ7SoCLsO6gU995zpnpm/uJilWdxOzKXa
-	PhfUyMUtFrupTeBZ5WPQx0Zcip51hN3OdBrw6Nd55QDP5VrRZzpQGoUxmY/TUDyZ
-	Zr8C6rV48lF/y5KSO41QVPtVGqEo51hIqEPp/s9camoOlqpqJU9dg39DNI4jCt/l
-	/D6WeLqNmpcSGhizyRsA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vhuak23g8-1
+	from:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding:to:cc; s=qcppdkim1; bh=ccmGKm86GpZ6Fq
+	5Uw5JYt8QY72ZfravmrIVbyepEw/c=; b=BQG5HhLsi4MSh96Pz0uUtMKzCfhTEk
+	SYigs/bEGp1Oleb7p/1i2b1JnGPHAm2GIovosvCXjgcg0D005W5elYgXE2+aW7o0
+	28pLU0KApWb5c0I/qt4zjnQNQbZHDJegbW3Ea819QHswpXzRuohmnou6xW8gPdTq
+	VZ6z6ec5N0ftXJpy3TKESgjT4uRfCw31Oc619oEqiY3KUhxVgGbkzYk5yPex+MJh
+	TZexHaTElUDJgG2XNQRkWOGeEagk6MUMeLUkyp6TpGhSuYuB8z8csuVGz4W9HOCt
+	wQ2BtFRITHN+d1EY/h31fy7YHc7K9Cadg2UkmurlSeLRZy49/P2eE9NA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vhuak254n-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jan 2024 06:08:26 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40B68PaD016302
+	Thu, 11 Jan 2024 06:32:38 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40B6WbYj023430
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jan 2024 06:08:25 GMT
-Received: from [10.239.133.49] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 10 Jan
- 2024 22:08:22 -0800
-Message-ID: <1ae3c5a4-97d9-415e-8dd5-520e00c5e94f@quicinc.com>
-Date: Thu, 11 Jan 2024 14:08:19 +0800
+	Thu, 11 Jan 2024 06:32:37 GMT
+Received: from hu-skakitap-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Wed, 10 Jan 2024 22:32:32 -0800
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Subject: [PATCH v2 0/3] clk: qcom: Add dfs support for QUPv3 RCGs on SM8150
+Date: Thu, 11 Jan 2024 12:02:27 +0530
+Message-ID: <20240111-sm8150-dfs-support-v2-0-6edb44c83d3b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] coresight: Add coresight name support
-Content-Language: en-US
-To: Rob Herring <robh@kernel.org>, Mike Leach <mike.leach@linaro.org>
-CC: James Clark <james.clark@arm.com>,
-        Suzuki K Poulose
-	<suzuki.poulose@arm.com>,
-        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang
-	<quic_taozha@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin
-	<alexander.shishkin@linux.intel.com>
-References: <20231228093321.5522-1-quic_jinlmao@quicinc.com>
- <12ce6e5d-6e4d-fb99-eb82-dece97423bfb@arm.com>
- <CAJ9a7Vgi=ELOhXNF97KrBtV5ef8khwWqzWKevrYW2RtBBtsppw@mail.gmail.com>
- <CAL_JsqKYuqKxokDzs3xVWqYZoFfyMwMrLd17DpfCO_x7CXvRZw@mail.gmail.com>
-From: Jinlong Mao <quic_jinlmao@quicinc.com>
-In-Reply-To: <CAL_JsqKYuqKxokDzs3xVWqYZoFfyMwMrLd17DpfCO_x7CXvRZw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHuLn2UC/32NQQ6CMBBFr0Jm7ZhOgUBceQ/DAsogs4BiBxoN4
+ e5WDuDyveS/v4NyEFa4ZTsEjqLi5wT2koEb2/nJKH1isMYWhkyBOtVUGuwHRd2WxYcVTV05pqr
+ Kqc4hDZfAg7zP6KNJPIquPnzOj0g/+zcXCQ22JXM39I46svfXJk5md3V+guY4ji+vxiFUtgAAA
+ A==
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Taniya Das
+	<quic_tdas@quicinc.com>, Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Ajit Pandey
+	<quic_ajipan@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        "Jagadeesh Kona" <quic_jkona@quicinc.com>,
+        Satya Priya Kakitapalli
+	<quic_skakitap@quicinc.com>
+X-Mailer: b4 0.12.4
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: aDXdIDVa0rJXl0VcJ7YVHUHWWCD7Xl8w
-X-Proofpoint-ORIG-GUID: aDXdIDVa0rJXl0VcJ7YVHUHWWCD7Xl8w
+X-Proofpoint-GUID: YNFYFgaqpkUgHs84X3jCl2A7jsD8bfmW
+X-Proofpoint-ORIG-GUID: YNFYFgaqpkUgHs84X3jCl2A7jsD8bfmW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=676
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=764
  impostorscore=0 malwarescore=0 bulkscore=0 phishscore=0 suspectscore=0
  adultscore=0 priorityscore=1501 mlxscore=0 lowpriorityscore=0 spamscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401110047
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401110051
 
+Add dfs support and missing resets for SM8150 global clock
+controller.
 
+Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+---
+Changes in v2:
+- Use dev_err_probe instead of dev_err.
+- Remove Fixes tags as there are no bug fixes, but just updates.
+- Link to v1: https://lore.kernel.org/r/20240104-sm8150-dfs-support-v1-0-a5eebfdc1b12@quicinc.com
 
-On 1/3/2024 11:32 PM, Rob Herring wrote:
-> On Tue, Jan 2, 2024 at 5:05 AM Mike Leach <mike.leach@linaro.org> wrote:
->>
->> As James mentions this is clearly a V2 of a previous patch - please
->> mark as such in future.
->>
->> Adding to what James has already said:-
->>
->> 1) Mapping between the canonical names used in the drivers and the
->> information as to the precise device is as easy as running 'ls' on
->> /sys/bus/coresight/devices:-
->>
->> root@linaro-developer:/home/linaro/cs-mods# ls -al /sys/bus/coresight/devices/
->> total 0
->> drwxr-xr-x 2 root root 0 Jan  2 11:27 .
->> drwxr-xr-x 4 root root 0 Jan  2 11:27 ..
->> lrwxrwxrwx 1 root root 0 Jan  2 11:27 cti_cpu0 ->
->> ../../../devices/platform/soc@0/858000.cti/cti_cpu0
->> lrwxrwxrwx 1 root root 0 Jan  2 11:27 cti_cpu1 ->
->> ../../../devices/platform/soc@0/859000.cti/cti_cpu1
->> lrwxrwxrwx 1 root root 0 Jan  2 11:27 cti_cpu2 ->
->> ../../../devices/platform/soc@0/85a000.cti/cti_cpu2
->> lrwxrwxrwx 1 root root 0 Jan  2 11:27 cti_cpu3 ->
->> ../../../devices/platform/soc@0/85b000.cti/cti_cpu3
->> lrwxrwxrwx 1 root root 0 Jan  2 11:27 cti_sys0 ->
->> ../../../devices/platform/soc@0/810000.cti/cti_sys0
->> lrwxrwxrwx 1 root root 0 Jan  2 11:27 cti_sys1 ->
->> ../../../devices/platform/soc@0/811000.cti/cti_sys1
->> lrwxrwxrwx 1 root root 0 Jan  2 11:27 etm0 ->
->> ../../../devices/platform/soc@0/85c000.etm/etm0
->> lrwxrwxrwx 1 root root 0 Jan  2 11:27 etm1 ->
->> ../../../devices/platform/soc@0/85d000.etm/etm1
->> lrwxrwxrwx 1 root root 0 Jan  2 11:27 etm2 ->
->> ../../../devices/platform/soc@0/85e000.etm/etm2
->> lrwxrwxrwx 1 root root 0 Jan  2 11:27 etm3 ->
->> ../../../devices/platform/soc@0/85f000.etm/etm3
->> lrwxrwxrwx 1 root root 0 Jan  2 11:42 funnel0 ->
->> ../../../devices/platform/soc@0/821000.funnel/funnel0
->> lrwxrwxrwx 1 root root 0 Jan  2 11:42 funnel1 ->
->> ../../../devices/platform/soc@0/841000.funnel/funnel1
->> lrwxrwxrwx 1 root root 0 Jan  2 11:42 replicator0 ->
->> ../../../devices/platform/soc@0/824000.replicator/replicator0
->> lrwxrwxrwx 1 root root 0 Jan  2 11:42 tmc_etf0 ->
->> ../../../devices/platform/soc@0/825000.etf/tmc_etf0
->> lrwxrwxrwx 1 root root 0 Jan  2 11:42 tmc_etr0 ->
->> ../../../devices/platform/soc@0/826000.etr/tmc_etr0
->>
->>
->> 2) The patch set must contain the usage and specification in the .yaml
->>   file(s) of the property used.
-> 
-> For the record, I don't like "coresight-name". I don't have another
-> suggestion because "easy" is not sufficient reasoning for why this is
-> needed.
+---
+Satya Priya Kakitapalli (3):
+      clk: qcom: gcc-sm8150: Register QUPv3 RCGs for DFS on SM8150
+      dt-bindings: clock: qcom,gcc-sm8150: Add gcc video resets for sm8150
+      clk: qcom: gcc-sm8150: Add gcc video resets for sm8150
 
-For example, if we want to configure the trigger and HW events for 
-modem, we can't know which cti or TPDM is for modem from current names.
+ drivers/clk/qcom/gcc-sm8150.c               | 352 +++++++++++++++++-----------
+ include/dt-bindings/clock/qcom,gcc-sm8150.h |   3 +
+ 2 files changed, 215 insertions(+), 140 deletions(-)
+---
+base-commit: ab0b3e6ef50d305278b1971891cf1d82ab050b35
+change-id: 20240104-sm8150-dfs-support-087ce1773183
 
-lrwxrwxrwx    1 root     0                0 Jan  1 00:01 cti_sys0 -> 
-../../../devices/platform/soc@0/138f0000.cti/cti_sys0
-lrwxrwxrwx    1 root     0                0 Jan  1 00:01 cti_sys1 -> 
-../../../devices/platform/soc@0/13900000.cti/cti_sys1
-lrwxrwxrwx    1 root     0                0 Jan  1 00:01 tpdm0 -> 
-../../../devices/platform/soc@0/10b0d000.tpdm/tpdm0
-lrwxrwxrwx    1 root     0                0 Jan  1 00:01 tpdm1 -> 
-../../../devices/platform/soc@0/10c28000.tpdm/tpdm1
-lrwxrwxrwx    1 root     0                0 Jan  1 00:01 tpdm2 -> 
-../../../devices/platform/soc@0/10c29000.tpdm/tpdm2
+Best regards,
+-- 
+Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 
-Thanks
-Jinlong Mao
-> 
->> However, there was a standard property called 'name' which is
->> deprecated - see
->> https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html
->> section 2.3.11. I do not believe that adding another 'name' property
->> would be accepted by the DT maintainers.
-> 
-> "name" is just the node name for anything in the last 15 years. They
-> used to be separate, but would still mostly be the same. The only case
-> I found with them different was old PowerPC Macs.
-> 
->> 3) the 'device_node' structure has a 'name' field that contains the
->> node name in the DT approved "node-name@unit-address" format.
-> 
-> Actually, it is without the unit-address. full_name is with the unit-address.
-> 
->> This
->> contains whatever node names you used in the dt.  Why not use this if
->> a change has to be made and find some conditional to activate it.
-> 
-> Don't go accessing "name" or "full_name" directly. I intend to get rid
-> of "name" and generate it from full_name. So use the accessors and
-> printk specifiers if you need node names.
-> 
-> Rob
 
