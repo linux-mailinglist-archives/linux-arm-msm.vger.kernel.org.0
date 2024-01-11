@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-7041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A96882B1D6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 16:31:15 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9015E82B21E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 16:51:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C15E9B2137E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 15:31:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ADB64B243B3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 15:50:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DBCC4CB44;
-	Thu, 11 Jan 2024 15:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE6C44CE0A;
+	Thu, 11 Jan 2024 15:50:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Xj5PU+4T"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="C+2m6OJn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2AC4BAB0;
-	Thu, 11 Jan 2024 15:31:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E93F4D5AA;
+	Thu, 11 Jan 2024 15:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40BDeICA013870;
-	Thu, 11 Jan 2024 15:30:57 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40BAdEQl022986;
+	Thu, 11 Jan 2024 15:50:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=tLmJlo9a7XOpcogJ276/ISRo79ph673bZD10y+Fx8EM=; b=Xj
-	5PU+4TrVzZyncEd26+c6NVlxOQ49eA3PLOmanRaojLh2RWPvZAT09SPWWVftjt3A
-	n0TL29mBXoPnAhGzXsJA26PyBYr/3LZSvYMvEvD1qfGPLVyzQErB3ygJaIeqPXXx
-	M76HGIcInoeLs/D4ha3D1U8Tn+KZYgGEWCY/eOfzQvFkP86qfjY/gOUFM+vDF+Og
-	gEoHGDFsot45kk/ggePlsUazxpyleLE9Jb3QzB9RrDsA3H1vvk0VUMOZYYM9mv+I
-	hnzEZH+huEjBh7HVhewOZq+pvuUdHPBUbjcN63lqcIxXg2gLa8+7vAcBOgA7C3Jg
-	FFnsFXvn8/HPv66HQoLQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vjcsk0xhj-1
+	qcppdkim1; bh=DjlS7QjoT/ZajZTXdhBIzm8VFFqh56+0Yj9o9G8tWZQ=; b=C+
+	2m6OJnoD2OfhrWPPMokj1zqpIHngTXN3z0HZm6REE/yvBEImPLDG7WcITPA2ySHJ
+	ZhuofruGHSk+d7cFQKSiFk288U+xVkP7yexssWVRN5vrB5B8J4H+1i7908zwOASf
+	bK6zpjg8yPJf1GeA88ETlQ9DiRAjzTGs2F8w5pVz0ZgJNsf8YSkpqC2CkaC1+ir9
+	Q/0pQm4p5hXax9JTeGcq//Nf/oOlpzVWZJ2MO1PyXc79Zh+sfyTr+4806XuJZfc9
+	xB3Rwxd5I7hslydlMBoNYeQ+7H+TdbxHpeBtBxvYL9qzs+8Z2gaZn7PpZR1MfUPW
+	9G9EQx9+otpBbFE15ucQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vja9y1aq1-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jan 2024 15:30:57 +0000 (GMT)
+	Thu, 11 Jan 2024 15:50:07 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40BFUu1H001016
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40BFo6Rs001359
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jan 2024 15:30:56 GMT
+	Thu, 11 Jan 2024 15:50:06 GMT
 Received: from [10.253.37.156] (10.80.80.8) by nalasex01c.na.qualcomm.com
  (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 11 Jan
- 2024 07:30:52 -0800
-Message-ID: <de0ad768-05fa-4bb1-bcbc-0adb28cb2257@quicinc.com>
-Date: Thu, 11 Jan 2024 23:30:48 +0800
+ 2024 07:49:56 -0800
+Message-ID: <5ec26378-a5ff-4de3-b69e-806e36907db6@quicinc.com>
+Date: Thu, 11 Jan 2024 23:49:53 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,144 +56,89 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] arm64: dts: qcom: ipq9574: Add PPE device tree node
+Subject: Re: [PATCH net-next 00/20] net: ethernet: Add qcom PPE driver
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+To: Jakub Kicinski <kuba@kernel.org>
+CC: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <davem@davemloft.net>, <edumazet@google.com>, <pabeni@redhat.com>,
         <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <quic_kkumarcs@quicinc.com>, <quic_suruchia@quicinc.com>,
-        <quic_soni@quicinc.com>, <quic_pavir@quicinc.com>,
-        <quic_souravp@quicinc.com>, <quic_linchen@quicinc.com>,
-        <quic_leiwei@quicinc.com>
-References: <20240110112059.2498-1-quic_luoj@quicinc.com>
- <20240110112059.2498-2-quic_luoj@quicinc.com>
- <a42718a9-d0f9-47d9-9ee8-fb520ed2a7a8@linaro.org>
+        <conor+dt@kernel.org>, <corbet@lwn.net>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <p.zabel@pengutronix.de>, <linux@armlinux.org.uk>,
+        <shannon.nelson@amd.com>, <anthony.l.nguyen@intel.com>,
+        <jasowang@redhat.com>, <brett.creeley@amd.com>,
+        <rrameshbabu@nvidia.com>, <joshua.a.hay@intel.com>, <arnd@arndb.de>,
+        <geert+renesas@glider.be>, <neil.armstrong@linaro.org>,
+        <dmitry.baryshkov@linaro.org>, <nfraprado@collabora.com>,
+        <m.szyprowski@samsung.com>, <u-kumar1@ti.com>,
+        <jacob.e.keller@intel.com>, <andrew@lunn.ch>, <netdev@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <ryazanov.s.a@gmail.com>,
+        <ansuelsmth@gmail.com>, <quic_kkumarcs@quicinc.com>,
+        <quic_suruchia@quicinc.com>, <quic_soni@quicinc.com>,
+        <quic_pavir@quicinc.com>, <quic_souravp@quicinc.com>,
+        <quic_linchen@quicinc.com>, <quic_leiwei@quicinc.com>
+References: <20240110114033.32575-1-quic_luoj@quicinc.com>
+ <20240110142428.52026d9e@kernel.org>
 From: Jie Luo <quic_luoj@quicinc.com>
-In-Reply-To: <a42718a9-d0f9-47d9-9ee8-fb520ed2a7a8@linaro.org>
+In-Reply-To: <20240110142428.52026d9e@kernel.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: m18IytmkWCOaHnH4b1m_JtGxV9MuEBgm
-X-Proofpoint-GUID: m18IytmkWCOaHnH4b1m_JtGxV9MuEBgm
+X-Proofpoint-ORIG-GUID: YTP3S5b9uvJM-jssQAH_ZJa51okpKawv
+X-Proofpoint-GUID: YTP3S5b9uvJM-jssQAH_ZJa51okpKawv
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- lowpriorityscore=0 malwarescore=0 suspectscore=0 spamscore=0 mlxscore=0
- clxscore=1015 priorityscore=1501 impostorscore=0 phishscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401110121
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
+ priorityscore=1501 clxscore=1015 spamscore=0 mlxlogscore=701 adultscore=0
+ malwarescore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401110123
 
 
 
-On 1/10/2024 7:40 PM, Krzysztof Kozlowski wrote:
-> On 10/01/2024 12:20, Luo Jie wrote:
->> The PPE device tree node includes the PPE initialization configurations
->> and UNIPHY instance configuration.
->>
->> Ther are 3 UNIPHYs(PCS) on the platform ipq9574, which register the
->> clock provider to output the clock for PPE port to work on the different
->> link speed.
->>
->> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 730 +++++++++++++++++++++++++-
->>   1 file changed, 724 insertions(+), 6 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> index 810cda4a850f..5fa241e27c8b 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> @@ -775,16 +775,734 @@ nsscc: nsscc@39b00000 {
->>   				 <&bias_pll_nss_noc_clk>,
->>   				 <&bias_pll_ubi_nc_clk>,
->>   				 <&gcc_gpll0_out_aux>,
->> -				 <0>,
->> -				 <0>,
->> -				 <0>,
->> -				 <0>,
->> -				 <0>,
->> -				 <0>,
->> +				 <&uniphys 0>,
->> +				 <&uniphys 1>,
->> +				 <&uniphys 2>,
->> +				 <&uniphys 3>,
->> +				 <&uniphys 4>,
->> +				 <&uniphys 5>,
->>   				 <&xo_board_clk>;
->>   			#clock-cells = <1>;
->>   			#reset-cells = <1>;
->>   		};
->> +
->> +		qcom_ppe: qcom-ppe@3a000000 {
+On 1/11/2024 6:24 AM, Jakub Kicinski wrote:
+> On Wed, 10 Jan 2024 19:40:12 +0800 Luo Jie wrote:
+>> The PPE(packet process engine) hardware block is available in Qualcomm
+>> IPQ chipsets that support PPE architecture, such as IPQ9574 and IPQ5332.
 > 
-> qcom is definitely not a generic name.
-> 
-> Node names should be generic. See also an explanation and list of
-> examples (not exhaustive) in DT specification:
-> https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+> What's the relationship between this driver and QCA8084?
 
-Ok, will update to use a generic name in the link, Thanks for the
-guidance and the link.
-> 
-> 
->> +			compatible = "qcom,ipq9574-ppe";
-> 
-> I don't see this documented. I don't see reference to posted bindings.
+The PPE (packet processing engine) is the network processing hardware 
+block in QCOM IPQ SoC. It includes the ethernet MAC and UNIPHY(PCS). 
+This driver is the base PPE driver which brings up the PPE and handles 
+MAC/UNIPHY operations. QCA8084 is the external 2.5Gbps 4-port PHY 
+device, which can be connected with PPE integrated MAC by UNIPHY(PCS).
 
-The DT bindings patch was part of the driver series as below. This
-property was documented in the DT bindings patch. Attaching it to DTSI 
-series should make it more clear. If this is fine, I will update the 
-DTSI series with the DT bindings patch.
-https://lore.kernel.org/netdev/20240110142428.52026d9e@kernel.org/
+Here is the relationship.
+PPE integrated MAC --- PPE integrated UNIPHY(PCS) --- (PCS)QCA8084.
 
 > 
-> Please run scripts/checkpatch.pl and fix reported warnings. Some
-> warnings can be ignored, but the code here looks like it needs a fix.
-> Feel free to get in touch if the warning is not clear.
-> 
-> Ignoring this warning is a sign you don't really check your patches
-> before sending.
+> In the last month I see separate changes from you for mdio-ipq4019.c,
+> phy/at803x.c and now this driver (none of which got merged, AFAICT.)
+> Are you actually the author of this code, or are you just trying
+> to upstream bunch of vendor code?
 
-We have run the checkpatch.pl on the whole patch series including this
-device tree patch set together with PPE driver patch set.
-As mentioned above, I will add the DT bindings patch into the DTS
-series. This should help with the checkpatch issue.
+Yes, Jakub, there are two authors in these patch series, Lei Wei and me.
+The patches are already ready for some time, the code has been verified
+on the Qualcomm reference design board. These are not downstream drivers
+but drivers re-written for upstream.
 
 > 
->> +			reg = <0x3a000000 0xb00000>;
->> +			#address-cells = <1>;
->> +			#size-cells = <1>;
->> +			ranges;
+> Now you're dumping another 10kLoC on the list, and even though this is
+> hardly your first posting you're apparently not aware of our most basic
+> posting rules:
+> https://www.kernel.org/doc/html/next/process/maintainer-netdev.html#tl-dr
 > 
-> Put after reg.
-Ok.
+> The reviewers are getting frustrated. Please, help us help you.
+> Stop throwing code at the list and work out a plan with Andrew
+> and others on how to get something merged...
 
-> 
->> +			status = "okay";
-> 
-> Drop
-Ok.
-
-> 
-> All of above comments apply to your entire patchset and all places.
-> 
-> Looking at code further, it does not look like suitable for mainline,
-> but copy of downstream code. That's not what we expect upstream. Please
-> go back to your bindings first. Also, I really insist you reaching out
-> to other folks to help you in this process.
-> 
-> Best regards,
-> Krzysztof
-> 
-We will do internal review of the gaps and update the patches as per
-your comments.
-
-Thanks for the review comments.
+Sorry for trouble caused, will learn about the guidance provided by
+the review comments, and follow up on the guidance and have the full
+internal review of the patch updates before pushing the patch series.
 
