@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-7042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9015E82B21E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 16:51:01 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7052582B24B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 17:00:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ADB64B243B3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 15:50:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 10551B23448
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 16:00:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE6C44CE0A;
-	Thu, 11 Jan 2024 15:50:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C4354F8BB;
+	Thu, 11 Jan 2024 16:00:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="C+2m6OJn"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BlBuTy2e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E93F4D5AA;
-	Thu, 11 Jan 2024 15:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD014F8B8;
+	Thu, 11 Jan 2024 16:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40BAdEQl022986;
-	Thu, 11 Jan 2024 15:50:07 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40BDLenj026594;
+	Thu, 11 Jan 2024 16:00:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=DjlS7QjoT/ZajZTXdhBIzm8VFFqh56+0Yj9o9G8tWZQ=; b=C+
-	2m6OJnoD2OfhrWPPMokj1zqpIHngTXN3z0HZm6REE/yvBEImPLDG7WcITPA2ySHJ
-	ZhuofruGHSk+d7cFQKSiFk288U+xVkP7yexssWVRN5vrB5B8J4H+1i7908zwOASf
-	bK6zpjg8yPJf1GeA88ETlQ9DiRAjzTGs2F8w5pVz0ZgJNsf8YSkpqC2CkaC1+ir9
-	Q/0pQm4p5hXax9JTeGcq//Nf/oOlpzVWZJ2MO1PyXc79Zh+sfyTr+4806XuJZfc9
-	xB3Rwxd5I7hslydlMBoNYeQ+7H+TdbxHpeBtBxvYL9qzs+8Z2gaZn7PpZR1MfUPW
-	9G9EQx9+otpBbFE15ucQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vja9y1aq1-1
+	qcppdkim1; bh=VxOOXNmA3OWQD0kcoMVx3KNZoGxMlXt1SUYjRUxttZQ=; b=Bl
+	BuTy2eMy+obzMsIsAhxFXMUg0N/VjELBLtKuzhl2o06jOnDuD5W1EEaolYRfx1a+
+	AWXxFNMNJ7Dhucd2JEfc9oVj1Cd1eENtmt6onbxRHQ1fgs6l2jSK25rH34F4uamZ
+	9tR3W4HHblkuteABRarSnq9IVPCJ6TSXYjx/APcEM0KWHjczUwr5HkBDnO674R4T
+	n2zRQ7caJAfbp3byFbIU7pFLJqeiRzClSzi9YsdnFpLyyar2oDvjFiL65+hXLDh0
+	W1CFpUx5pK/aWT8HQskBpad9e3ZoDJaVUS70DFLVplKvF9EjNtfIOznrzCdEDkvO
+	InrUH6wyoE/tEQWYv6Qw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vjcvjs03u-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jan 2024 15:50:07 +0000 (GMT)
+	Thu, 11 Jan 2024 16:00:06 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40BFo6Rs001359
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40BG059C027386
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jan 2024 15:50:06 GMT
+	Thu, 11 Jan 2024 16:00:05 GMT
 Received: from [10.253.37.156] (10.80.80.8) by nalasex01c.na.qualcomm.com
  (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 11 Jan
- 2024 07:49:56 -0800
-Message-ID: <5ec26378-a5ff-4de3-b69e-806e36907db6@quicinc.com>
-Date: Thu, 11 Jan 2024 23:49:53 +0800
+ 2024 08:00:01 -0800
+Message-ID: <e893c298-fbfa-4ae4-9b76-72a5030a5530@quicinc.com>
+Date: Thu, 11 Jan 2024 23:59:59 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,89 +56,99 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next 00/20] net: ethernet: Add qcom PPE driver
+Subject: Re: [PATCH 3/6] arm64: dts: qcom: ipq5332: Add MDIO device tree
 Content-Language: en-US
-To: Jakub Kicinski <kuba@kernel.org>
-CC: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <davem@davemloft.net>, <edumazet@google.com>, <pabeni@redhat.com>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <corbet@lwn.net>, <catalin.marinas@arm.com>,
-        <will@kernel.org>, <p.zabel@pengutronix.de>, <linux@armlinux.org.uk>,
-        <shannon.nelson@amd.com>, <anthony.l.nguyen@intel.com>,
-        <jasowang@redhat.com>, <brett.creeley@amd.com>,
-        <rrameshbabu@nvidia.com>, <joshua.a.hay@intel.com>, <arnd@arndb.de>,
-        <geert+renesas@glider.be>, <neil.armstrong@linaro.org>,
-        <dmitry.baryshkov@linaro.org>, <nfraprado@collabora.com>,
-        <m.szyprowski@samsung.com>, <u-kumar1@ti.com>,
-        <jacob.e.keller@intel.com>, <andrew@lunn.ch>, <netdev@vger.kernel.org>,
+To: Andrew Lunn <andrew@lunn.ch>
+CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
         <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <ryazanov.s.a@gmail.com>,
-        <ansuelsmth@gmail.com>, <quic_kkumarcs@quicinc.com>,
-        <quic_suruchia@quicinc.com>, <quic_soni@quicinc.com>,
-        <quic_pavir@quicinc.com>, <quic_souravp@quicinc.com>,
-        <quic_linchen@quicinc.com>, <quic_leiwei@quicinc.com>
-References: <20240110114033.32575-1-quic_luoj@quicinc.com>
- <20240110142428.52026d9e@kernel.org>
+        <linux-kernel@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <quic_kkumarcs@quicinc.com>, <quic_suruchia@quicinc.com>,
+        <quic_soni@quicinc.com>, <quic_pavir@quicinc.com>,
+        <quic_souravp@quicinc.com>, <quic_linchen@quicinc.com>,
+        <quic_leiwei@quicinc.com>
+References: <20240110112059.2498-1-quic_luoj@quicinc.com>
+ <20240110112059.2498-4-quic_luoj@quicinc.com>
+ <4bc0aff5-8a1c-44a6-89d8-460961a61310@lunn.ch>
 From: Jie Luo <quic_luoj@quicinc.com>
-In-Reply-To: <20240110142428.52026d9e@kernel.org>
+In-Reply-To: <4bc0aff5-8a1c-44a6-89d8-460961a61310@lunn.ch>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: YTP3S5b9uvJM-jssQAH_ZJa51okpKawv
-X-Proofpoint-GUID: YTP3S5b9uvJM-jssQAH_ZJa51okpKawv
+X-Proofpoint-GUID: bGftCSlIlTaROutu9qN3mpoKbeCsOweN
+X-Proofpoint-ORIG-GUID: bGftCSlIlTaROutu9qN3mpoKbeCsOweN
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
- priorityscore=1501 clxscore=1015 spamscore=0 mlxlogscore=701 adultscore=0
- malwarescore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401110123
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=667 spamscore=0
+ adultscore=0 mlxscore=0 suspectscore=0 impostorscore=0 lowpriorityscore=0
+ malwarescore=0 phishscore=0 clxscore=1015 bulkscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
+ definitions=main-2401110125
 
 
 
-On 1/11/2024 6:24 AM, Jakub Kicinski wrote:
-> On Wed, 10 Jan 2024 19:40:12 +0800 Luo Jie wrote:
->> The PPE(packet process engine) hardware block is available in Qualcomm
->> IPQ chipsets that support PPE architecture, such as IPQ9574 and IPQ5332.
+On 1/10/2024 9:35 PM, Andrew Lunn wrote:
+> On Wed, Jan 10, 2024 at 07:20:56PM +0800, Luo Jie wrote:
+>> Add the MDIO device tree of ipq5332.
+>>
+>> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/ipq5332.dtsi | 44 +++++++++++++++++++++++++++
+>>   1 file changed, 44 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+>> index bc89480820cb..e6c780e69d6e 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+>> @@ -214,6 +214,38 @@ serial_0_pins: serial0-state {
+>>   				drive-strength = <8>;
+>>   				bias-pull-up;
+>>   			};
+>> +
+>> +			mdio0_pins: mdio0-state {
+>> +				mux_0 {
+>> +					pins = "gpio25";
+>> +					function = "mdc0";
+>> +					drive-strength = <8>;
+>> +					bias-disable;
+>> +				};
+>> +
+>> +				mux_1 {
+>> +					pins = "gpio26";
+>> +					function = "mdio0";
+>> +					drive-strength = <8>;
+>> +					bias-pull-up;
+>> +				};
+>> +			};
+>> +
+>> +			mdio1_pins: mdio1-state {
+>> +				mux_0 {
+>> +					pins = "gpio27";
+>> +					function = "mdc1";
+>> +					drive-strength = <8>;
+>> +					bias-disable;
+>> +				};
+>> +
+>> +				mux_1 {
+>> +					pins = "gpio28";
+>> +					function = "mdio1";
+>> +					drive-strength = <8>;
+>> +					bias-pull-up;
+>> +				};
 > 
-> What's the relationship between this driver and QCA8084?
-
-The PPE (packet processing engine) is the network processing hardware 
-block in QCOM IPQ SoC. It includes the ethernet MAC and UNIPHY(PCS). 
-This driver is the base PPE driver which brings up the PPE and handles 
-MAC/UNIPHY operations. QCA8084 is the external 2.5Gbps 4-port PHY 
-device, which can be connected with PPE integrated MAC by UNIPHY(PCS).
-
-Here is the relationship.
-PPE integrated MAC --- PPE integrated UNIPHY(PCS) --- (PCS)QCA8084.
-
+> I don't know why i'm asking this, because i don't really expect a
+> usable answer. What sort of MUX is this? Should you be using one of
+> the muxes in drivers/net/mdio/mdio-mux-* or something similar?
 > 
-> In the last month I see separate changes from you for mdio-ipq4019.c,
-> phy/at803x.c and now this driver (none of which got merged, AFAICT.)
-> Are you actually the author of this code, or are you just trying
-> to upstream bunch of vendor code?
+>      Andrew
 
-Yes, Jakub, there are two authors in these patch series, Lei Wei and me.
-The patches are already ready for some time, the code has been verified
-on the Qualcomm reference design board. These are not downstream drivers
-but drivers re-written for upstream.
-
-> 
-> Now you're dumping another 10kLoC on the list, and even though this is
-> hardly your first posting you're apparently not aware of our most basic
-> posting rules:
-> https://www.kernel.org/doc/html/next/process/maintainer-netdev.html#tl-dr
-> 
-> The reviewers are getting frustrated. Please, help us help you.
-> Stop throwing code at the list and work out a plan with Andrew
-> and others on how to get something merged...
-
-Sorry for trouble caused, will learn about the guidance provided by
-the review comments, and follow up on the guidance and have the full
-internal review of the patch updates before pushing the patch series.
+Sorry for the confusion, the pin nodes are for the MDIO and MDC, these
+PINs are used by the dedicated hardware MDIO block in the SoC. I will 
+update the node name from mux_0 to MDC, mux_1 to MDIO, to make it clear. 
+The driver for this node is drivers/net/mdio/mdio-ipq4019.c, it is not 
+related to the mdio-mux-* code.
 
