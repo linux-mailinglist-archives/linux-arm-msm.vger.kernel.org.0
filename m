@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-7001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2897582A765
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 07:04:45 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D409A82A76C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 07:08:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B38B1280A22
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 06:04:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7835D281C51
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 06:08:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AA8853A0;
-	Thu, 11 Jan 2024 06:04:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70C7C2106;
+	Thu, 11 Jan 2024 06:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hDXZC+x9"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LVobSU4f"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565E75382;
-	Thu, 11 Jan 2024 06:04:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE54E2105;
+	Thu, 11 Jan 2024 06:08:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40B3p3sp013099;
-	Thu, 11 Jan 2024 06:04:03 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40B5e1kf022118;
+	Thu, 11 Jan 2024 06:08:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=Dz8QqrNJHM/0z8HtKttYfElf7uRMpQSZFFFaAin6pSY=; b=hD
-	XZC+x93m1cSrMN7D2lI6FVBil3QrP4iucsh3qY3jtacwA4EkrsK0sNv9bMudBDsL
-	phkCqo+wqIxsqC0RsbOc/wLtsYLf5mES/99ht1tolwslH5tphxKzWYKX4dSKRo/2
-	mU9vApEXV4myvKf7eNswEHxd4QZc+BF/rtx8AjRSc7Izk/bie02b/MEQwoe9PqeK
-	JyAGpVU07T6ezYs3/ngeQQvKyqXTAFZVbx4KoX2yZJBaUsQDli/qzzw1Y+fKnOpR
-	ScPzM2xvwRrWk619ykkq176URf79AangJOLL3vX4mL5fcHc9ozgK184PWrawz2Qi
-	1az6O6l5PktT/E1m6OEA==
+	qcppdkim1; bh=/6QUE+JTKVJzsM5DjhsgngB9QhhyX2fGpNdXNdgcBSc=; b=LV
+	obSU4fQxCfixukwig4w/EowuyZfFWyhvGAbfNEOEY0mfcbu2+7Xesp98l4fdCWaq
+	Mcj3HDPadDMISsFnlEZZvd4d5tRsfdA5ciZfwpfa+DtKcDBUYMBWxHHuN5u5M95m
+	zdnpCNV5GvKPDJATdBtyzIBG1MLrKP4IJ7SoCLsO6gU995zpnpm/uJilWdxOzKXa
+	PhfUyMUtFrupTeBZ5WPQx0Zcip51hN3OdBrw6Nd55QDP5VrRZzpQGoUxmY/TUDyZ
+	Zr8C6rV48lF/y5KSO41QVPtVGqEo51hIqEPp/s9camoOlqpqJU9dg39DNI4jCt/l
+	/D6WeLqNmpcSGhizyRsA==
 Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vj0sk957t-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vhuak23g8-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jan 2024 06:04:03 +0000 (GMT)
+	Thu, 11 Jan 2024 06:08:26 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40B641OM011171
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40B68PaD016302
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jan 2024 06:04:01 GMT
+	Thu, 11 Jan 2024 06:08:25 GMT
 Received: from [10.239.133.49] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 10 Jan
- 2024 22:03:58 -0800
-Message-ID: <b169a0c0-785a-4740-af01-ae8f2d94d891@quicinc.com>
-Date: Thu, 11 Jan 2024 14:03:56 +0800
+ 2024 22:08:22 -0800
+Message-ID: <1ae3c5a4-97d9-415e-8dd5-520e00c5e94f@quicinc.com>
+Date: Thu, 11 Jan 2024 14:08:19 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,226 +58,137 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] coresight: Add coresight name support
 Content-Language: en-US
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        James Clark
-	<james.clark@arm.com>, Mike Leach <mike.leach@linaro.org>
-CC: <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
+To: Rob Herring <robh@kernel.org>, Mike Leach <mike.leach@linaro.org>
+CC: James Clark <james.clark@arm.com>,
+        Suzuki K Poulose
+	<suzuki.poulose@arm.com>,
+        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
         <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        "Tingwei
- Zhang" <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang
-	<quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>, Leo Yan
-	<leo.yan@linaro.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang
+	<quic_taozha@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
         Alexander Shishkin
-	<alexander.shishkin@linux.intel.com>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>
+	<alexander.shishkin@linux.intel.com>
 References: <20231228093321.5522-1-quic_jinlmao@quicinc.com>
  <12ce6e5d-6e4d-fb99-eb82-dece97423bfb@arm.com>
- <b2b6cccb-ede0-4f19-bfaf-efdc203de7f2@arm.com>
+ <CAJ9a7Vgi=ELOhXNF97KrBtV5ef8khwWqzWKevrYW2RtBBtsppw@mail.gmail.com>
+ <CAL_JsqKYuqKxokDzs3xVWqYZoFfyMwMrLd17DpfCO_x7CXvRZw@mail.gmail.com>
 From: Jinlong Mao <quic_jinlmao@quicinc.com>
-In-Reply-To: <b2b6cccb-ede0-4f19-bfaf-efdc203de7f2@arm.com>
+In-Reply-To: <CAL_JsqKYuqKxokDzs3xVWqYZoFfyMwMrLd17DpfCO_x7CXvRZw@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: oglUc29Fj4N7GYQlzjO-9zhTHpBGaXNW
-X-Proofpoint-ORIG-GUID: oglUc29Fj4N7GYQlzjO-9zhTHpBGaXNW
+X-Proofpoint-GUID: aDXdIDVa0rJXl0VcJ7YVHUHWWCD7Xl8w
+X-Proofpoint-ORIG-GUID: aDXdIDVa0rJXl0VcJ7YVHUHWWCD7Xl8w
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
- adultscore=0 suspectscore=0 impostorscore=0 malwarescore=0 mlxlogscore=999
- bulkscore=0 lowpriorityscore=0 spamscore=0 phishscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
- definitions=main-2401110045
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=676
+ impostorscore=0 malwarescore=0 bulkscore=0 phishscore=0 suspectscore=0
+ adultscore=0 priorityscore=1501 mlxscore=0 lowpriorityscore=0 spamscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401110047
 
 
 
-On 1/3/2024 7:33 PM, Suzuki K Poulose wrote:
-> On 28/12/2023 11:26, James Clark wrote:
+On 1/3/2024 11:32 PM, Rob Herring wrote:
+> On Tue, Jan 2, 2024 at 5:05 AM Mike Leach <mike.leach@linaro.org> wrote:
+>>
+>> As James mentions this is clearly a V2 of a previous patch - please
+>> mark as such in future.
+>>
+>> Adding to what James has already said:-
+>>
+>> 1) Mapping between the canonical names used in the drivers and the
+>> information as to the precise device is as easy as running 'ls' on
+>> /sys/bus/coresight/devices:-
+>>
+>> root@linaro-developer:/home/linaro/cs-mods# ls -al /sys/bus/coresight/devices/
+>> total 0
+>> drwxr-xr-x 2 root root 0 Jan  2 11:27 .
+>> drwxr-xr-x 4 root root 0 Jan  2 11:27 ..
+>> lrwxrwxrwx 1 root root 0 Jan  2 11:27 cti_cpu0 ->
+>> ../../../devices/platform/soc@0/858000.cti/cti_cpu0
+>> lrwxrwxrwx 1 root root 0 Jan  2 11:27 cti_cpu1 ->
+>> ../../../devices/platform/soc@0/859000.cti/cti_cpu1
+>> lrwxrwxrwx 1 root root 0 Jan  2 11:27 cti_cpu2 ->
+>> ../../../devices/platform/soc@0/85a000.cti/cti_cpu2
+>> lrwxrwxrwx 1 root root 0 Jan  2 11:27 cti_cpu3 ->
+>> ../../../devices/platform/soc@0/85b000.cti/cti_cpu3
+>> lrwxrwxrwx 1 root root 0 Jan  2 11:27 cti_sys0 ->
+>> ../../../devices/platform/soc@0/810000.cti/cti_sys0
+>> lrwxrwxrwx 1 root root 0 Jan  2 11:27 cti_sys1 ->
+>> ../../../devices/platform/soc@0/811000.cti/cti_sys1
+>> lrwxrwxrwx 1 root root 0 Jan  2 11:27 etm0 ->
+>> ../../../devices/platform/soc@0/85c000.etm/etm0
+>> lrwxrwxrwx 1 root root 0 Jan  2 11:27 etm1 ->
+>> ../../../devices/platform/soc@0/85d000.etm/etm1
+>> lrwxrwxrwx 1 root root 0 Jan  2 11:27 etm2 ->
+>> ../../../devices/platform/soc@0/85e000.etm/etm2
+>> lrwxrwxrwx 1 root root 0 Jan  2 11:27 etm3 ->
+>> ../../../devices/platform/soc@0/85f000.etm/etm3
+>> lrwxrwxrwx 1 root root 0 Jan  2 11:42 funnel0 ->
+>> ../../../devices/platform/soc@0/821000.funnel/funnel0
+>> lrwxrwxrwx 1 root root 0 Jan  2 11:42 funnel1 ->
+>> ../../../devices/platform/soc@0/841000.funnel/funnel1
+>> lrwxrwxrwx 1 root root 0 Jan  2 11:42 replicator0 ->
+>> ../../../devices/platform/soc@0/824000.replicator/replicator0
+>> lrwxrwxrwx 1 root root 0 Jan  2 11:42 tmc_etf0 ->
+>> ../../../devices/platform/soc@0/825000.etf/tmc_etf0
+>> lrwxrwxrwx 1 root root 0 Jan  2 11:42 tmc_etr0 ->
+>> ../../../devices/platform/soc@0/826000.etr/tmc_etr0
 >>
 >>
->> On 28/12/2023 09:33, Mao Jinlong wrote:
->>> Add coresight name support for custom names which will be
->>> easy to identify the device by the name.
->>>
->>
->> I suppose this is more of a V2 because the subject is the same as the
->> one sent earlier this year. But it looks like the discussion on the
->> previous one wasn't resolved.
->>
->> With the main issues to solve being:
->>
->>   * It would be nice to use the existing root node name instead of adding
->>     a new property. But at the same time DT nodes are supposed to have
->>     generic names.
->>
->>   * This only works for DT and not ACPI
->>
->> To me it seems like adding the new property is just a "cheat" to get
->> around not being allowed to have a specific name for the root node. But
->> if we admit that we need a name I don't see the benefit of not putting
->> the name where the node is already named.
->>
->> Using the root node name at this point would also undo the hard coded
->> per-cpu naming of the CTI and ETM devices, so maybe it would be nice,
->> but it's just too late. That means that a new field is necessary.
+>> 2) The patch set must contain the usage and specification in the .yaml
+>>   file(s) of the property used.
 > 
-> The CTI and ETM can be handled as special cases, like they are
-> already done and fall back to the nodename for the rest ?
-> But, I thought the node names must be generic (e.g, cti) and doesn't
-> really solve the naming requirements for naming CTIs. (e.g,
-> <device>_tpda, etr_cti). Is there something I missed ?
-> 
->> Although that field could be a boolean like "use-root-name-for-display"
->> or something like that. In the end it probably doesn't really make a
->> difference whether it's that or a name string. >
->> And maybe the answer to the ACPI question is just that if anyone needs
->> it, they can add it in the future. It doesn't seem like it would
->> conflict with anything we do here.
->>
->>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->>> ---
->>>   .../hwtracing/coresight/coresight-cti-core.c  | 20 ++++++++------
->>>   drivers/hwtracing/coresight/coresight-dummy.c | 10 ++++---
->>>   .../hwtracing/coresight/coresight-platform.c  | 27 +++++++++++++++++++
->>>   drivers/hwtracing/coresight/coresight-tpdm.c  | 10 ++++---
->>>   include/linux/coresight.h                     |  1 +
->>>   5 files changed, 53 insertions(+), 15 deletions(-)
->>>
->>> diff --git a/drivers/hwtracing/coresight/coresight-cti-core.c 
->>> b/drivers/hwtracing/coresight/coresight-cti-core.c
->>> index 3999d0a2cb60..60a1e76064a9 100644
->>> --- a/drivers/hwtracing/coresight/coresight-cti-core.c
->>> +++ b/drivers/hwtracing/coresight/coresight-cti-core.c
->>> @@ -902,14 +902,18 @@ static int cti_probe(struct amba_device *adev, 
->>> const struct amba_id *id)
->>>       /* default to powered - could change on PM notifications */
->>>       drvdata->config.hw_powered = true;
->>> -    /* set up device name - will depend if cpu bound or otherwise */
->>> -    if (drvdata->ctidev.cpu >= 0)
->>> -        cti_desc.name = devm_kasprintf(dev, GFP_KERNEL, "cti_cpu%d",
->>> -                           drvdata->ctidev.cpu);
->>> -    else
->>> -        cti_desc.name = coresight_alloc_device_name(&cti_sys_devs, 
->>> dev);
->>
->> Can we put the new name stuff inside coresight_alloc_device_name()? Then
->> it happens by default for every device.
-> 
-> +1
-> 
->>
->> I know Suzuki said previously to do it per-device, but the new DT
->> property is just "coresight-name", so it's generic. Rather than being
->> specific like "cti-name". So I don't see the benefit of duplicating the
->> code at this point if we do decide to do it.
-> 
-> My suggestion was to name the device based on the specific device rather
-> than following a generic rule for all device. e.g., A TPDM connected to 
-> modem, could be named as such based on the platform information. It
-> could be any means, for e.g., tpdm nodes are always children nodes of
-> the devices they are connected to ? or could have a phandle to point to 
-> the device they are monitoring etc. And the name could be created from
-> the "monitoring device name" + tpdm. Also, we do this for CPU bound CTI
-> and ETMs already, where we name them based on the CPU.
+> For the record, I don't like "coresight-name". I don't have another
+> suggestion because "easy" is not sufficient reasoning for why this is
+> needed.
 
-TPDM can only connect to the funnel or TPDA. The system TPDM is 
-monitoring may not have the device node in DT.
+For example, if we want to configure the trigger and HW events for 
+modem, we can't know which cti or TPDM is for modem from current names.
 
-> 
-> But then the "nodename" is something we explored and it looks like
-> may not be an option.
-> 
->>
->>> -    if (!cti_desc.name)
->>> -        return -ENOMEM;
->>> +    cti_desc.name = coresight_get_device_name(dev);
->>> +    if (!cti_desc.name) {
->>> +        /* set up device name - will depend if cpu bound or 
->>> otherwise */
->>> +        if (drvdata->ctidev.cpu >= 0)
->>> +            cti_desc.name = devm_kasprintf(dev, GFP_KERNEL, 
->>> "cti_cpu%d",
->>> +                               drvdata->ctidev.cpu);
->>> +        else {
->>> +            cti_desc.name = 
->>> coresight_alloc_device_name(&cti_sys_devs, dev);
->>> +            if (!cti_desc.name)
->>> +                return -ENOMEM;
->>> +        }
->>> +    }
-> 
-> For these special cases, i.e., CPU bound, we should handle them with 
-> priority.
-> 
-> if (drvdata->ctidev.cpu >= 0)
->      name = devm_kasprintf(... "cti_cpu%d", .. cpu);
-> else
->          name = coresight_alloc_device_name(...);
-> 
->>
->>>       /* setup CPU power management handling for CPU bound CTI 
->>> devices. */
->>>       ret = cti_pm_setup(drvdata);
->>> diff --git a/drivers/hwtracing/coresight/coresight-dummy.c 
->>> b/drivers/hwtracing/coresight/coresight-dummy.c
->>> index e4deafae7bc2..b19cd400df79 100644
->>> --- a/drivers/hwtracing/coresight/coresight-dummy.c
->>> +++ b/drivers/hwtracing/coresight/coresight-dummy.c
->>> @@ -76,10 +76,12 @@ static int dummy_probe(struct platform_device *pdev)
->>>       struct coresight_desc desc = { 0 };
->>>       if (of_device_is_compatible(node, "arm,coresight-dummy-source")) {
->>> -
->>> -        desc.name = coresight_alloc_device_name(&source_devs, dev);
->>> -        if (!desc.name)
->>> -            return -ENOMEM;
->>> +        desc.name = coresight_get_device_name(dev);
->>> +        if (!desc.name) {
->>> +            desc.name = coresight_alloc_device_name(&source_devs, dev);
->>> +            if (!desc.name)
->>> +                return -ENOMEM;
->>> +        }
->>>           desc.type = CORESIGHT_DEV_TYPE_SOURCE;
->>>           desc.subtype.source_subtype =
->>> diff --git a/drivers/hwtracing/coresight/coresight-platform.c 
->>> b/drivers/hwtracing/coresight/coresight-platform.c
->>> index 9d550f5697fa..284aa22a06b7 100644
->>> --- a/drivers/hwtracing/coresight/coresight-platform.c
->>> +++ b/drivers/hwtracing/coresight/coresight-platform.c
->>> @@ -183,6 +183,18 @@ static int of_coresight_get_cpu(struct device *dev)
->>>       return cpu;
->>>   }
->>> +static const char *of_coresight_get_device_name(struct device *dev)
->>> +{
->>> +    const char *name = NULL;
->>> +
->>> +    if (!dev->of_node)
->>> +        return NULL;
->>> +
->>> +    of_property_read_string(dev->of_node, "coresight-name", &name);
->>
->> Do you need to update the binding docs with this new property?
->>
->> Also a minor nit: Maybe "display-name" is better? "Coresight" is
->> implied, and the node is already named, although that node name isn't
->> used for display purposes, but this one is.
-> 
-> On that front, the name is used as a "device" name and not simply 
-> display. So, even "device-name" sounds more appropriate.
-> 
-I will use the device-name.
+lrwxrwxrwx    1 root     0                0 Jan  1 00:01 cti_sys0 -> 
+../../../devices/platform/soc@0/138f0000.cti/cti_sys0
+lrwxrwxrwx    1 root     0                0 Jan  1 00:01 cti_sys1 -> 
+../../../devices/platform/soc@0/13900000.cti/cti_sys1
+lrwxrwxrwx    1 root     0                0 Jan  1 00:01 tpdm0 -> 
+../../../devices/platform/soc@0/10b0d000.tpdm/tpdm0
+lrwxrwxrwx    1 root     0                0 Jan  1 00:01 tpdm1 -> 
+../../../devices/platform/soc@0/10c28000.tpdm/tpdm1
+lrwxrwxrwx    1 root     0                0 Jan  1 00:01 tpdm2 -> 
+../../../devices/platform/soc@0/10c29000.tpdm/tpdm2
 
 Thanks
 Jinlong Mao
-> Suzuki
 > 
->>
->> Thanks
->> James
+>> However, there was a standard property called 'name' which is
+>> deprecated - see
+>> https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html
+>> section 2.3.11. I do not believe that adding another 'name' property
+>> would be accepted by the DT maintainers.
 > 
+> "name" is just the node name for anything in the last 15 years. They
+> used to be separate, but would still mostly be the same. The only case
+> I found with them different was old PowerPC Macs.
+> 
+>> 3) the 'device_node' structure has a 'name' field that contains the
+>> node name in the DT approved "node-name@unit-address" format.
+> 
+> Actually, it is without the unit-address. full_name is with the unit-address.
+> 
+>> This
+>> contains whatever node names you used in the dt.  Why not use this if
+>> a change has to be made and find some conditional to activate it.
+> 
+> Don't go accessing "name" or "full_name" directly. I intend to get rid
+> of "name" and generate it from full_name. So use the accessors and
+> printk specifiers if you need node names.
+> 
+> Rob
 
