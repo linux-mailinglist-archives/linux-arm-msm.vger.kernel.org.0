@@ -1,121 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-7068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE4B982B57D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 20:55:52 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D51D82B585
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 20:57:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D47E61C24584
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 19:55:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3DE32B2279A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 19:57:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93E5E56751;
-	Thu, 11 Jan 2024 19:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 022C056761;
+	Thu, 11 Jan 2024 19:57:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PEGyhgxD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="J/IQDl44"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C1814F7A;
-	Thu, 11 Jan 2024 19:55:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40BDcV7s002400;
-	Thu, 11 Jan 2024 19:55:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=+lnLLq7TtR/P4rD+oeQ2l6vvdyl0+p2FDMljpW6W2Wg=; b=PE
-	GyhgxD8J8J1+Hq3ddbVARjE+425WyDmuRrGuVBKzTbvbQn6EVj0WfaK3e/t8w3dq
-	P8BWDzlO0Gk4FFkrtvmF1DbeCPM8Cn7/9c0BMik4eVoKCQeIY01PMD2WyhDWnyZa
-	em/Fd6OXnHw7jlGwa8JBwAm7nZxvDnlS6uqRc5Q1mFJOYlMJF/grKpVbGts7ejmW
-	PwaN1XI8X1aR0DJfYC2YwsB3DfPyfdcX0LNBPB/iKRpSXG8M23S2u9dRIMbI2Zq7
-	zbvxWUmokC/HbcpjxwHdzwXPuVsTfg8Y7mCd6d0vOLKIgjFI3HSUMKLvIVJVS70q
-	owl/zeg+UqsXyoH0Aukg==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vjckh9ngx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jan 2024 19:55:42 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40BJtfiG010113
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jan 2024 19:55:41 GMT
-Received: from [10.110.45.184] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 11 Jan
- 2024 11:55:40 -0800
-Message-ID: <12d6fe9b-4b07-4c67-a18e-92db9d858a9d@quicinc.com>
-Date: Thu, 11 Jan 2024 11:55:39 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466815674D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 19:57:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-40e62979f41so3096505e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 11:57:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1705003023; x=1705607823; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+i0UK44yHq8YceaKYIY5mCgJVLZEaoVhm3Uocx3mJfQ=;
+        b=J/IQDl448F7PGdWVBsfIz8ng50+zyAMLCgJRzLbqXeaCOZABEarrDxmXFYIpWDdBoT
+         Xryo4kDCLWtPfoviGIeNjLAWmN84OvODZi4oQtevSdn37fj77ehjX0b0aTLEhlxH3j3x
+         YtzEvh9TLpmGyzH3Gk3jw0Fhs6Tf1HPXmulRqVLbZX4F1jIshjGbiK1AvlSUaEFSCdRx
+         G03tp81Kqsd3+RlXWQ4FgS9UNl8rc+obNf4NQguDseVQBD7IhzSFDDuxes2/2LxUKv3m
+         WA8Y5gOA2JZprQw20H0cbZEYGqhAEXBGzIydYeRim0tb1P9OuesU8RlEtjqWB3Icho1i
+         SPHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705003023; x=1705607823;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+i0UK44yHq8YceaKYIY5mCgJVLZEaoVhm3Uocx3mJfQ=;
+        b=tvR1QiksFJuHlwfZbekfd1dAmtuzdLImsAHY52VmzxyFBURy3q68LFc3/Q6A2YgnDm
+         syZVIXIX2wk90d+9tyoeQaZyYoU8S0APPe5wKFRDFrP7/f3RP/xY7WS562112o8SEZtv
+         snDILZwCpDcbDbc2GoLFgVyLSHJcHmmCtJ+Hl2eEcH0csiHynFsLeLp1xudX4ROeJUt6
+         g8UwVDUfZhf9NEw50Dkp2KJpd7bvbS9uhC6sZusmCocfS0v/SirBOVfySICha9h6V6Dg
+         p/RblTtRvIAZ+2aRp40FdOx3unWnuaNj28azYlDh/lw/YhUGgLYZE7J5BojJtyx/RlRA
+         /ljg==
+X-Gm-Message-State: AOJu0YwdcfJZdpIEVvqz8RjFP5ZPo8kwP+PjdsvAY0zDrqON66JdtGVf
+	FF8iCXiJsy/HkGJZ89623r8zvhh0HFWrpUeEhwE7rRPcMT9nJw==
+X-Google-Smtp-Source: AGHT+IFSIopE3QuOoLdzTjt0bkELntb0Mh5UkExonm953hmNSzSLxpZxpYk3qTp+vJmkETZ57p+eQw==
+X-Received: by 2002:a05:600c:448a:b0:40e:478c:e864 with SMTP id e10-20020a05600c448a00b0040e478ce864mr206154wmo.74.1705003023479;
+        Thu, 11 Jan 2024 11:57:03 -0800 (PST)
+Received: from [127.0.1.1] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id b7-20020adfe647000000b0033763a9ea2dsm1955382wrn.63.2024.01.11.11.57.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Jan 2024 11:57:03 -0800 (PST)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH 0/5] media: qcom: camss: Add sc8280xp support
+Date: Thu, 11 Jan 2024 19:57:01 +0000
+Message-Id: <20240111-linux-next-24-01-09-sc8280xp-camss-changes-v1-0-b92a650121ba@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] arm64: dts: qcom: sm8650: mark gpio74 as reserved
-Content-Language: en-US
-To: Neil Armstrong <neil.armstrong@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring
-	<robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Georgi Djakov <djakov@kernel.org>
-References: <20240111-topic-sm8650-upstream-qrd-fix-gpio-reserved-v1-0-fad39b4c5def@linaro.org>
-From: Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <20240111-topic-sm8650-upstream-qrd-fix-gpio-reserved-v1-0-fad39b4c5def@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: iuGBkGpTRV0jC_HYW6Pj3vgvQcVsadhB
-X-Proofpoint-GUID: iuGBkGpTRV0jC_HYW6Pj3vgvQcVsadhB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- priorityscore=1501 bulkscore=0 mlxlogscore=682 phishscore=0 mlxscore=0
- adultscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0 clxscore=1011
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401110154
+X-B4-Tracking: v=1; b=H4sIAA1IoGUC/yWN0QrCMAwAf2Xk2UBShnT+ivgw01QDWkfjpDD27
+ xZ9vIe728C1mjqchg2qfsztVTrwYQC5z+WmaKkzBAojMTM+rKwNi7Y3hhGJkSZ0iSFSW1Dmpzv
+ +RccoOVzzlCWlI/TgUjVb+83Ol33/AkKs3gh8AAAA
+To: Hans Verkuil <hverkuil-cisco@xs4all.nl>, 
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>, 
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+X-Mailer: b4 0.13-dev-4e032
 
+A minimal set of patches to switch on sc8280xp support in CAMSS
+upstream. Most of the SoC dependencies are either merged - CAMCC or very
+close to being merged - CAMSS/CCI dtsi.
 
+Alot of prior work means we have far less interventions to make in this
+driver to support this new SoC.
 
-On 1/11/2024 8:58 AM, Neil Armstrong wrote:
-> The TLMM gpio74 is also used to communicate with the secure NFC
-> on-board module, some variants of the SM8650 QRD & MTP boards requires
-> this GPIO to be dedicated to the secure firmware and set reserved
-> in order to successfully initialize the TLMM GPIOs from HLOS (Linux).
-> On the other boards this GPIO is unused so it's still safe to mark
-> the GPIO as reserved.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Most of this series is already reviewed however it is gated on merge of
+the CAMSS compat string here =>
 
-Double checked these and no others currently are also reserved.
+Link: https://lore.kernel.org/linux-arm-msm/20240111-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v4-2-cdd5c57ff1dc@linaro.org/
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-24-01-09-sc8280xp-camss-changes
 
-Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+Bryan O'Donoghue (5):
+      media: qcom: camss: csiphy-3ph: Add Gen2 v1.1 two-phase MIPI CSI-2 DPHY init
+      media: qcom: camss: Add CAMSS_SC8280XP enum
+      media: qcom: camss: Add sc8280xp resources
+      media: qcom: camss: Add sc8280xp support
+      media: qcom: camss: vfe-17x: Rename camss-vfe-170 to camss-vfe-17x
 
-> ---
-> Neil Armstrong (2):
->       arm64: dts: qcom: sm8650-qrd: add gpio74 as reserved gpio
->       arm64: dts: qcom: sm8650-mtp: add gpio74 as reserved gpio
-> 
->  arch/arm64/boot/dts/qcom/sm8650-mtp.dts | 2 +-
->  arch/arm64/boot/dts/qcom/sm8650-qrd.dts | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
-> ---
-> base-commit: bffdfd2e7e63175ae261131a620f809d946cf9a7
-> change-id: 20240111-topic-sm8650-upstream-qrd-fix-gpio-reserved-1c3d56c2d3e8
-> 
-> Best regards,
+ drivers/media/platform/qcom/camss/Makefile         |   2 +-
+ .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 108 +++++++-
+ drivers/media/platform/qcom/camss/camss-csiphy.c   |   1 +
+ .../camss/{camss-vfe-170.c => camss-vfe-17x.c}     |   0
+ drivers/media/platform/qcom/camss/camss-vfe.c      |  25 +-
+ drivers/media/platform/qcom/camss/camss-video.c    |   1 +
+ drivers/media/platform/qcom/camss/camss.c          | 307 +++++++++++++++++++++
+ drivers/media/platform/qcom/camss/camss.h          |   1 +
+ 8 files changed, 436 insertions(+), 9 deletions(-)
+---
+base-commit: cae3c85e8e3896c2a7db983290ca25933713cd0e
+change-id: 20240111-linux-next-24-01-09-sc8280xp-camss-changes-8cf2bf9fcdd6
+
+Best regards,
+-- 
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
 
