@@ -1,199 +1,199 @@
-Return-Path: <linux-arm-msm+bounces-7011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7FD682A9C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 09:55:40 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 687E482AA15
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 10:03:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D599B1C20AAE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 08:55:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E706F1F214EF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 09:02:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E4A7F4E2;
-	Thu, 11 Jan 2024 08:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1351510962;
+	Thu, 11 Jan 2024 08:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="hyWHgQPf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Jt2phPfC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f65.google.com (mail-ed1-f65.google.com [209.85.208.65])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA133FBFC
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 08:55:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f65.google.com with SMTP id 4fb4d7f45d1cf-55817a12ad8so2826617a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 00:55:35 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A78417730
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 08:58:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a28b2e1a13fso532741466b.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 00:58:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1704963334; x=1705568134; darn=vger.kernel.org;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=f+urHVCxXYj39IE1pxye+SFmnhznkKtnAt7Qr2ngkeI=;
-        b=hyWHgQPfOCt59gKs95hRuIAfcQjgJoRv/jS+nrBuh7bVX3BEAGbf31AsYf46ZJG/z0
-         K2pnpVocK8miiZ611d21CB5wzF/pr7zd9fp1s9DG5HQs8E2OygkfopLBvKFHxvqzBelX
-         o6fC7B+tcD2d+Sw+yyz3RHcANPOWuhLYQGe1Zc4CujyTL06U6bNas11k26iez4Se31mt
-         cXa8WwSOnQ/nPb/F0yye6z6mk+eBRDVDvD9LPGy9jlZcONXGPPmPQY1Cb21Fl3kGYqZ8
-         rING12D1uNxf61XQntoxcYlKcHNXqaGfYwGw8ItUJ5edI7mkP/HT/x5qWJ7iRg7Hcpdb
-         1sQg==
+        d=linaro.org; s=google; t=1704963516; x=1705568316; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mEyCOzWKzhN6fJuNZ8x6DfrD1KxuLW5yl178ZcMbpVM=;
+        b=Jt2phPfCjPKwX0A6qbLtRcbt0BvnJSbqP9E+w4/rJru/CDr1RP9u610lMf0UPIGvzt
+         8LIaUQqVzZT+2Gge9nJxnekH+Q6MxN0oPX9eJLU7EktHz4uqa5dpyIvt3YqQfOy62deU
+         vQFuqRl/vhaAksInZ8qqrgOdERaIXw5sTzc7DmlIZgn5mJXxboEG7S/6AMLf/vrxbzdp
+         Sxs+FVhg83sIJ5lUbduG4LKs+Y8PFOM217/tRv5922rQcLKxBbbo2NubJfAlZaZNi0Re
+         4DsB/Z8gLVHbJJUEbeibf/02h/ABeqXnx39/9+J4rRkk4FG2mZC9UYdrmchI2RleDkoZ
+         3d3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704963334; x=1705568134;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=f+urHVCxXYj39IE1pxye+SFmnhznkKtnAt7Qr2ngkeI=;
-        b=stouJkximEMtgyjn7qPor+erraInGwTq2MMJVjGYkV47uZy907hnnzYmJxYu7jlhgR
-         7+Y4z26X+Gl5jLQvpaCtP9eSaItY35HyBHRQu8LgwBud7sDxdqM+PQJbsaGQ8QVHXJds
-         3cQqBz1Fuc3vzOkNqUBGxAhl/4C/7zd8mxjr2hoUgG9Eh+hrsn/hQ6TzKPCZmU4nZt6x
-         T/fzR7FU0PSSGUR0mgrGu7yKcOGm06x11myLNf8a+Srm0yIXTeg2TkALCrXnYJDLixwa
-         ROQKxhNqqdcjnBWytE7ctLkvn/nB+LdwiYHrNREDlHgFSlyr9HiM4lKZDG9bWebO6lDe
-         ZaeA==
-X-Gm-Message-State: AOJu0YwEIKpg1bL4Q/H0r9+7vtNxehp9pwcZwfZbdG0TzGkIkYFjhNy8
-	Np+dlxHV+NU+fCxHFfVxtaAtZDrY7hrmDA==
-X-Google-Smtp-Source: AGHT+IFkOaiX1Qj7iGZDGLUwqNZiH0n8d9X2CJnd6YUgczb+xRKH3UmnXd4YgHnjN2v+RKH3pQQJPg==
-X-Received: by 2002:aa7:c69a:0:b0:558:80c7:5e8f with SMTP id n26-20020aa7c69a000000b0055880c75e8fmr372546edq.9.1704963334132;
-        Thu, 11 Jan 2024 00:55:34 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id c10-20020a0564021f8a00b00557d29be289sm362971edc.11.2024.01.11.00.55.33
+        d=1e100.net; s=20230601; t=1704963516; x=1705568316;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mEyCOzWKzhN6fJuNZ8x6DfrD1KxuLW5yl178ZcMbpVM=;
+        b=ejoyLxgAo4e35AGvv9ut9VB2k8h6C51ec4aND8xFGmCiY2c7UoqaliULGwlFVor/to
+         lZbuEzWpWNzQA1ycIh4FyA/9UFPRQl/JZHoN7U6IuKfm7r0Ve5GpTOf/AHlcVqGR+DHt
+         dzbQlXMiwhMbMib7Jk6tBksT0CrYm1M5ECaTcJK+XEzSAS1WyplvpwEaBYx+6Q1PEykV
+         eoxNnV13fDlqSkfC7gvFi0E0u53AFzpbn6xb7trkcGMka/gN2wnTQ7Nq+qbcO6A4yHzA
+         HctsH93qMKVzhMA5wIlBVwfiNT4EqfIQ6HXXpFHaKpMS71lyncS5Wa7CFHzjkt9yC61T
+         sHcA==
+X-Gm-Message-State: AOJu0YxFVHjmDi+kvxzqVl1KC4V7yEauFfgeUeWD8AA8S6LuEPJ5dcIG
+	EvihdiOG/E9XtFi/Ze/LJtP1KmqvvXC7qw==
+X-Google-Smtp-Source: AGHT+IGGJC7YroF42FIiBLUaEY8Uwq+Z4UdPUsTbm5xkNKjL/CJMPFhImK0PVAA1pnXowysgl9C1OQ==
+X-Received: by 2002:a17:906:e12:b0:a28:e5eb:3f31 with SMTP id l18-20020a1709060e1200b00a28e5eb3f31mr398132eji.80.1704963516564;
+        Thu, 11 Jan 2024 00:58:36 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.223.112])
+        by smtp.gmail.com with ESMTPSA id rv25-20020a17090710d900b00a26c8c70069sm319909ejb.48.2024.01.11.00.58.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Jan 2024 00:55:33 -0800 (PST)
+        Thu, 11 Jan 2024 00:58:35 -0800 (PST)
+Message-ID: <3476ab0f-1589-4023-9951-3c03ab2467c3@linaro.org>
+Date: Thu, 11 Jan 2024 09:58:33 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RESEND v3] arm64: dts: qcom: qcs6490-idp: Add definition
+ for three LEDs.
+Content-Language: en-US
+To: Luca Weiss <luca.weiss@fairphone.com>, quic_huliu@quicinc.com,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240111-lpg-v3-1-811c9e82dae4@quicinc.com>
+ <CYBQW9KRHVJS.3UOHTOMRWDWVK@fairphone.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzTRLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnp5c3p0b2Yua296bG93c2tpQGxpbmFyby5vcmc+wsGUBBMBCgA+FiEE
+ m9B+DgxR+NWWd7dUG5NDfTtBYpsFAmI+BxMCGwMFCRRfreEFCwkIBwIGFQoJCAsCBBYCAwEC
+ HgECF4AACgkQG5NDfTtBYptgbhAAjAGunRoOTduBeC7V6GGOQMYIT5n3OuDSzG1oZyM4kyvO
+ XeodvvYv49/ng473E8ZFhXfrre+c1olbr1A8pnz9vKVQs9JGVa6wwr/6ddH7/yvcaCQnHRPK
+ mnXyP2BViBlyDWQ71UC3N12YCoHE2cVmfrn4JeyK/gHCvcW3hUW4i5rMd5M5WZAeiJj3rvYh
+ v8WMKDJOtZFXxwaYGbvFJNDdvdTHc2x2fGaWwmXMJn2xs1ZyFAeHQvrp49mS6PBQZzcx0XL5
+ cU9ZjhzOZDn6Apv45/C/lUJvPc3lo/pr5cmlOvPq1AsP6/xRXsEFX/SdvdxJ8w9KtGaxdJuf
+ rpzLQ8Ht+H0lY2On1duYhmro8WglOypHy+TusYrDEry2qDNlc/bApQKtd9uqyDZ+rx8bGxyY
+ qBP6bvsQx5YACI4p8R0J43tSqWwJTP/R5oPRQW2O1Ye1DEcdeyzZfifrQz58aoZrVQq+innR
+ aDwu8qDB5UgmMQ7cjDSeAQABdghq7pqrA4P8lkA7qTG+aw8Z21OoAyZdUNm8NWJoQy8m4nUP
+ gmeeQPRc0vjp5JkYPgTqwf08cluqO6vQuYL2YmwVBIbO7cE7LNGkPDA3RYMu+zPY9UUi/ln5
+ dcKuEStFZ5eqVyqVoZ9eu3RTCGIXAHe1NcfcMT9HT0DPp3+ieTxFx6RjY3kYTGLOwU0EVUNc
+ NAEQAM2StBhJERQvgPcbCzjokShn0cRA4q2SvCOvOXD+0KapXMRFE+/PZeDyfv4dEKuCqeh0
+ hihSHlaxTzg3TcqUu54w2xYskG8Fq5tg3gm4kh1Gvh1LijIXX99ABA8eHxOGmLPRIBkXHqJY
+ oHtCvPc6sYKNM9xbp6I4yF56xVLmHGJ61KaWKf5KKWYgA9kfHufbja7qR0c6H79LIsiYqf92
+ H1HNq1WlQpu/fh4/XAAaV1axHFt/dY/2kU05tLMj8GjeQDz1fHas7augL4argt4e+jum3Nwt
+ yupodQBxncKAUbzwKcDrPqUFmfRbJ7ARw8491xQHZDsP82JRj4cOJX32sBg8nO2N5OsFJOcd
+ 5IE9v6qfllkZDAh1Rb1h6DFYq9dcdPAHl4zOj9EHq99/CpyccOh7SrtWDNFFknCmLpowhct9
+ 5ZnlavBrDbOV0W47gO33WkXMFI4il4y1+Bv89979rVYn8aBohEgET41SpyQz7fMkcaZU+ok/
+ +HYjC/qfDxT7tjKXqBQEscVODaFicsUkjheOD4BfWEcVUqa+XdUEciwG/SgNyxBZepj41oVq
+ FPSVE+Ni2tNrW/e16b8mgXNngHSnbsr6pAIXZH3qFW+4TKPMGZ2rZ6zITrMip+12jgw4mGjy
+ 5y06JZvA02rZT2k9aa7i9dUUFggaanI09jNGbRA/ABEBAAHCwXwEGAEKACYCGwwWIQSb0H4O
+ DFH41ZZ3t1Qbk0N9O0FimwUCYDzvagUJFF+UtgAKCRAbk0N9O0Fim9JzD/0auoGtUu4mgnna
+ oEEpQEOjgT7l9TVuO3Qa/SeH+E0m55y5Fjpp6ZToc481za3xAcxK/BtIX5Wn1mQ6+szfrJQ6
+ 59y2io437BeuWIRjQniSxHz1kgtFECiV30yHRgOoQlzUea7FgsnuWdstgfWi6LxstswEzxLZ
+ Sj1EqpXYZE4uLjh6dW292sO+j4LEqPYr53hyV4I2LPmptPE9Rb9yCTAbSUlzgjiyyjuXhcwM
+ qf3lzsm02y7Ooq+ERVKiJzlvLd9tSe4jRx6Z6LMXhB21fa5DGs/tHAcUF35hSJrvMJzPT/+u
+ /oVmYDFZkbLlqs2XpWaVCo2jv8+iHxZZ9FL7F6AHFzqEFdqGnJQqmEApiRqH6b4jRBOgJ+cY
+ qc+rJggwMQcJL9F+oDm3wX47nr6jIsEB5ZftdybIzpMZ5V9v45lUwmdnMrSzZVgC4jRGXzsU
+ EViBQt2CopXtHtYfPAO5nAkIvKSNp3jmGxZw4aTc5xoAZBLo0OV+Ezo71pg3AYvq0a3/oGRG
+ KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
+ fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <CYBQW9KRHVJS.3UOHTOMRWDWVK@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 11 Jan 2024 09:55:33 +0100
-Message-Id: <CYBR26JQ2SD4.33ELRAVYZW1PY@fairphone.com>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm7225-fairphone-fp4: Add PM6150L
- thermals
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Konrad Dybcio" <konrad.dybcio@linaro.org>, "Bjorn Andersson"
- <andersson@kernel.org>, "Rob Herring" <robh+dt@kernel.org>, "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley"
- <conor+dt@kernel.org>
-Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, "AngeloGioacchino Del Regno"
- <angelogioacchino.delregno@collabora.com>
-X-Mailer: aerc 0.15.2
-References: <20240105-fp4-thermals-v1-0-f95875a536b7@fairphone.com>
- <20240105-fp4-thermals-v1-2-f95875a536b7@fairphone.com>
- <18dc5f88-6590-4e2d-948f-fd77f4713f8b@linaro.org>
- <CYA4ZGOQOJXY.2RO98RBCDKK5J@fairphone.com>
- <f78ce9e6-0a25-4e08-b972-db055b7afd71@linaro.org>
-In-Reply-To: <f78ce9e6-0a25-4e08-b972-db055b7afd71@linaro.org>
+Content-Transfer-Encoding: 7bit
 
-On Wed Jan 10, 2024 at 8:16 PM CET, Konrad Dybcio wrote:
->
->
-> On 1/9/24 12:24, Luca Weiss wrote:
-> > On Tue Jan 9, 2024 at 11:09 AM CET, Konrad Dybcio wrote:
-> >>
-> >>
-> >> On 1/5/24 15:54, Luca Weiss wrote:
-> >>> Configure the thermals for the PA_THERM1, MSM_THERM, PA_THERM0,
-> >>> RFC_CAM_THERM, CAM_FLASH_THERM and QUIET_THERM thermistors connected =
-to
-> >>> PM6150L.
-> >>>
-> >>> Due to hardware constraints we can only register 4 zones with
-> >>> pm6150l_adc_tm, the other 2 we can register via generic-adc-thermal.
-> >>
-> >> Ugh.. so the ADC can support more inputs than the ADC_TM that was
-> >> designed to ship alongside it can?
-> >>
-> >> And that's why the "generic-adc-thermal"-provided zones need to
-> >> be polled?
-> >=20
-> > This part of the code from qcom-spmi-adc-tm5.c was trigerring if I
-> > define more than 4 channels, and looking at downstream I can also see
-> > that only 4 zones are registered properly with adc_tm, the rest is
-> > registered with "qcom,adc-tm5-iio" which skips from what I could tell
-> > basically all the HW bits and only registering the thermal zone.
-> >=20
-> >=20
-> > 	ret =3D adc_tm5_read(chip, ADC_TM5_NUM_BTM,
-> > 			   &channels_available, sizeof(channels_available));
-> > 	if (ret) {
-> > 		dev_err(chip->dev, "read failed for BTM channels\n");
-> > 		return ret;
-> > 	}
-> >=20
-> > 	for (i =3D 0; i < chip->nchannels; i++) {
-> > 		if (chip->channels[i].channel >=3D channels_available) {
-> > 			dev_err(chip->dev, "Invalid channel %d\n", chip->channels[i].channel=
-);
-> > 			return -EINVAL;
-> > 		}
-> > 	}
-> >=20
-> >=20
-> >>
-> >>>
-> >>> The trip points can really only be considered as placeholders, more
-> >>> configuration with cooling etc. can be added later.
-> >>>
-> >>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> >>> ---
-> >> [...]
-> >>
-> >> I've read the sentence above, but..
-> >>> +		sdm-skin-thermal {
-> >>> +			polling-delay-passive =3D <1000>;
-> >>> +			polling-delay =3D <5000>;
-> >>> +			thermal-sensors =3D <&msm_therm_sensor>;
-> >>> +
-> >>> +			trips {
-> >>> +				active-config0 {
-> >>> +					temperature =3D <125000>;
-> >>> +					hysteresis =3D <1000>;
-> >>> +					type =3D "passive";
-> >>
-> >> I don't fancy burnt fingers for dinner!
-> >=20
-> > With passive trip point it wouldn't even do anything now, but at what
-> > temp do you think it should do what? I'd definitely need more time to
-> > understand more of how the thermal setup works in downstream Android,
-> > and then replicate a sane configuration for mainline with proper
-> > temperatures, cooling, etc.
-> If "skin therm" means "the temperature of some part of the phone's
-> body that can be felt with a human hand", then definitely some
-> throttling should happen at 40ish with heavy throttling at 50
-> and crit at 55 or so..
->
-> We should probably make this a broader topic and keep a single
-> policy for all supported phones.
+On 11/01/2024 09:47, Luca Weiss wrote:
+> On Thu Jan 11, 2024 at 3:52 AM CET, Hui Liu via B4 Relay wrote:
+>> From: Hui Liu <quic_huliu@quicinc.com>
+>>
+>> Add definition for three LEDs to make sure they can
+>> be enabled base on QCOM LPG LED driver.
+>>
+>> Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
+>> ---
+>> Changes in v3:
+>> - Rephrased commit text and updated the nodes to qcm6490-idp board file.
+>> - Link to v2: https://lore.kernel.org/all/20231110-qcom_leds-v2-1-3cad1fbbc65a@quicinc.com/
+>>
+>> Changes in v2:
+>> - Rephrased commit text and updated the nodes to board file.
+>> - Link to v1: https://lore.kernel.org/r/20231108-qcom_leds-v1-1-c3e1c8572cb0@quicinc.com
+>> ---
+>>  arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 25 +++++++++++++++++++++++++
+>>  1 file changed, 25 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>> index 37c91fdf3ab9..f801144a1556 100644
+>> --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>> @@ -5,6 +5,7 @@
+>>  
+>>  /dts-v1/;
+>>  
+>> +#include <dt-bindings/leds/common.h>
+>>  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>>  #include "sc7280.dtsi"
+>>  #include "pm7325.dtsi"
+>> @@ -414,6 +415,30 @@ vreg_bob_3p296: bob {
+>>  	};
+>>  };
+>>  
+>> +&pm8350c_pwm {
+>> +	#address-cells = <1>;
+>> +	#size-cells = <0>;
+>> +	status = "okay";
+>> +
+>> +	led@1 {
+>> +		reg = <1>;
+> 
+> Hi Hui Liu,
+> 
+>> +		color = <LED_COLOR_ID_RED>;
+>> +		label = "red";
+> 
+> Please remove the deprecated "label" property. Since you already have
+> "color" set you only need to add "function". On phones for the
+> notification LED we usually use "function = LED_FUNCTION_STATUS;"
+> 
+> Also depends on what your hardware looks like, if it's 3 separate LEDs
+> then with label replaced it would be okay.
+> If the 3 LEDs are in one spot (so you can mix the colors with it), then
+> please make it a RGB multi-led like e.g. in sm8550-qrd.dts.
+> 
 
-I agree that this shouldn't be implemented differently per device since
-it's really more a question "what should Linux do" that's quite a
-general question and not device-specific. Of course some device-specific
-tweaks could be here and there, like if the phone has metal back or
-plastic back but it's only minor.
+I already asked for this and it was ignored:
 
-Based on the config here
-https://gerrit-public.fairphone.software/plugins/gitiles/platform/hardware/=
-qcom/thermal/+/refs/heads/odm/dev/target/13/fp5/thermalConfig.cpp#946
-it looks like throtteling starts for internal components at 95degC with
-a shutdown threshold of 115degC.
-The skin sensor here has a throttling threshold of 40degC and shutdown
-threshold of 95degC.
+https://lore.kernel.org/all/6aa67adb-a4d5-40da-a261-c90050ac04b2@linaro.org/
 
-But actually I'm not even sure this config gets active for QCM6490 with
-socid=3D497. So yeah I need more time digging into the thermal code to see
-what it's actually doing.. Not that it would/should be much different
-for socid=3D497 I guess though.
+Let's engage three different community reviewers to repeat the same, one
+feedback. This is just disrespectful to our time.
 
-There's also plenty of thermal code in qcom proprietary.
-
-Regards
-Luca
-
->
-> + CC AGdR, may be interested in where this leads
->
-> Konrad
+Best regards,
+Krzysztof
 
 
