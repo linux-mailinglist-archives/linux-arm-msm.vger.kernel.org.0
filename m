@@ -1,151 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-7039-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9761582B16D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 16:09:33 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C18982B1D2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 16:29:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4681528C1DC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 15:09:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 703A41C22C3C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 15:29:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C8C74B5DD;
-	Thu, 11 Jan 2024 15:07:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D8DD4CB59;
+	Thu, 11 Jan 2024 15:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="R5E1PaX/"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="3UJA2fLt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f65.google.com (mail-ed1-f65.google.com [209.85.208.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B172C51C56;
-	Thu, 11 Jan 2024 15:07:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40BDPqGc003982;
-	Thu, 11 Jan 2024 15:07:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=oWks87PWyPYWEJUAAjYFQQFONgB+Y0XGxRoT0vf9C10=; b=R5
-	E1PaX/bXt9a3werjDefHPYinnlPkuD5PWb5eF7/MGj95Q4gZ8oE1U6m9Up0g8PPw
-	vhK7nyh8No2A2T6fpEjtEEuO79Px1RVrAz9yCMbPOoSBqyOi02T4CCuIfKSX2G3Z
-	7HD77ff3Tax9Ric3MaraC1u38E6kTUXr20MWxB7hvLevNMbnoSw7+XztnGl5LexS
-	iujxSv9/PHGcgTT6pYyTGmFeMM5XndhdQv1A7HxVxuSHSCyzrGKBpzjROOaRKjrU
-	SIEXec20BuqMowmjUbGuknpcSELcjhSxCg3+Df7bTN/JJpP78K+KDUTrgDWdfEuw
-	9Wc9okQQkQ4IgG2JL6xg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vjcvjrv7s-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jan 2024 15:07:12 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40BF7Bgh028635
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jan 2024 15:07:12 GMT
-Received: from [10.216.48.118] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 11 Jan
- 2024 07:07:08 -0800
-Message-ID: <cd223912-ac76-4b5d-93c3-92b1f89b9820@quicinc.com>
-Date: Thu, 11 Jan 2024 20:37:03 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17447482F7
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 15:28:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f65.google.com with SMTP id 4fb4d7f45d1cf-5588ac5d988so1191113a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 07:28:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1704986906; x=1705591706; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=B7mE+52tIHuQGxlPUuwMMzBM9GxGpHPAmvjX828iiAI=;
+        b=3UJA2fLt8ao7qa7PJpFFX89y4/NzY91dQdlWmuu2JcDf2fGp7WD6d/HJ5V3VxagBBg
+         jSlhJFDWGqNp55VCfjzI7ftJJjYgV2zfT/G+SULL18+ycirnZKHaUsZgCSk5XMERIQB5
+         3ctP07jkt2i+IboO8vrkCVlt8Q7xTRQHo4onn6YeFLKxweN6Y5MtS+lbrp15zC67uCkk
+         a4uc5DHKZL2YBgXhcC6lgk4/AbbWmT5T+6oXFr/Pq1p8hOu3pu0DaxVUso6v66kdaoEr
+         MSX5Q5vmiEYjZYpkhdspCA7kyVGaZol2IMtLaQwEJQDmrFnpK1PkL/HxomPc+UCGFrqi
+         4XKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704986906; x=1705591706;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=B7mE+52tIHuQGxlPUuwMMzBM9GxGpHPAmvjX828iiAI=;
+        b=KHbMjNAhfBvBY5SlkTGcEH+m6Zv5LIFbP+UZhPqFYNbdZ8h+m4zU31t+Wu08tsvzqB
+         4bZU/0rX1dzEGoRCE7KAd/Xb9Zi/fK+wcCfqk8NByZYL45ZQFhYMFMSjyRpjpCJOUZpv
+         puKDqJtGde+hTK9NsjDx2QzviCtmqYXPTCx63euTkaDs3Po2v3KggJPUNT7hJyHivTkJ
+         l/KPb3iYU003VVsumEyJtLvQbalwaAkhQxne8qSJYUfMwAouEqbNp4UtumPGPruQf1vI
+         o9Nyq9GbHP1W87kL1tXTI3nHecJN0jxN7yBFG0cN6VFb+ahm4iqLflhwuFZVVOj8lW/e
+         vOIA==
+X-Gm-Message-State: AOJu0YxTGphNPU5KJz1XENn4vNPLg2DyS9z8NeY4g4/7V+rxFDufWhDq
+	cvH5vJXxJyTLKMstgDoBtzhA/YpAmoLzsA==
+X-Google-Smtp-Source: AGHT+IFrvzkgvZxDk2Qj4HTlNXeH9Cg5K5scTvQ7rSicpxuLzRPig/wdkeNZZxH3cj4lmdNGi3b+9Q==
+X-Received: by 2002:aa7:d403:0:b0:558:b988:b8dc with SMTP id z3-20020aa7d403000000b00558b988b8dcmr33261edq.84.1704986906349;
+        Thu, 11 Jan 2024 07:28:26 -0800 (PST)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id m23-20020a50ef17000000b0055751515a84sm717753eds.51.2024.01.11.07.28.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 11 Jan 2024 07:28:26 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] watchdog: qcom: fine tune the max timeout value
- calculation
-To: Guenter Roeck <linux@roeck-us.net>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Wim Van
- Sebroeck <wim@linux-watchdog.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-watchdog@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20240111-wdt-v1-1-28c648b3b1f3@quicinc.com>
- <73eda412-18cf-4c1e-8764-8341c2254659@roeck-us.net>
-Content-Language: en-US
-From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-In-Reply-To: <73eda412-18cf-4c1e-8764-8341c2254659@roeck-us.net>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: SnzYX6LxjJPFeFK8ImCSLJP9Rfmp70Yt
-X-Proofpoint-ORIG-GUID: SnzYX6LxjJPFeFK8ImCSLJP9Rfmp70Yt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 spamscore=0
- adultscore=0 mlxscore=0 suspectscore=0 impostorscore=0 lowpriorityscore=0
- malwarescore=0 phishscore=0 clxscore=1015 bulkscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
- definitions=main-2401110119
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 11 Jan 2024 16:28:24 +0100
+Message-Id: <CYBZEZ4IM6IL.VR04W7933VI@fairphone.com>
+Cc: "Neil Armstrong" <neil.armstrong@linaro.org>, "Jessica Zhang"
+ <quic_jesszhan@quicinc.com>, "Sam Ravnborg" <sam@ravnborg.org>, "David
+ Airlie" <airlied@gmail.com>, "Daniel Vetter" <daniel@ffwll.ch>, "Maarten
+ Lankhorst" <maarten.lankhorst@linux.intel.com>, "Maxime Ripard"
+ <mripard@kernel.org>, "Thomas Zimmermann" <tzimmermann@suse.de>, "Rob
+ Herring" <robh+dt@kernel.org>, "Krzysztof Kozlowski"
+ <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Bjorn Andersson" <andersson@kernel.org>, "Konrad Dybcio"
+ <konrad.dybcio@linaro.org>, "Andy Gross" <agross@kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+ <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>
+Subject: Re: [PATCH v2 2/4] drm/panel: Add driver for DJN HX83112A LCD panel
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Linus Walleij" <linus.walleij@linaro.org>
+X-Mailer: aerc 0.15.2
+References: <20240110-fp4-panel-v2-0-8ad11174f65b@fairphone.com>
+ <20240110-fp4-panel-v2-2-8ad11174f65b@fairphone.com>
+ <CACRpkdaWTfPDCin_L6pefHsokjNyO8Mo6hWPdzPLLi1EUkKUuA@mail.gmail.com>
+In-Reply-To: <CACRpkdaWTfPDCin_L6pefHsokjNyO8Mo6hWPdzPLLi1EUkKUuA@mail.gmail.com>
 
+On Thu Jan 11, 2024 at 3:57 PM CET, Linus Walleij wrote:
+> On Wed, Jan 10, 2024 at 4:14=E2=80=AFPM Luca Weiss <luca.weiss@fairphone.=
+com> wrote:
+>
+> > Add support for the 2340x1080 LCD DJN panel bundled with a HX83112A
+> > driver IC, as found on the Fairphone 4 smartphone.
+> >
+> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>
+> This makes it sound like the Himax HX83112A is the driver IC.
+>
+> This does not seem to be the case:
+> https://github.com/HimaxSoftware/HX83112_Android_Driver
+>
+> The driver IC seems to be a truly 5p65.
 
+Hi Linus,
 
-On 1/11/2024 8:21 PM, Guenter Roeck wrote:
-> On 1/11/24 01:49, Kathiravan Thirumoorthy wrote:
->> To determine the max_timeout value, the below calculation is used.
->>
->>     max_timeout = 0x10000000 / clk_rate
->>
->> cat 
->> /sys/devices/platform/soc@0/b017000.watchdog/watchdog/watchdog0/max_timeout
->> 8388
->>
->> However, this is not valid for all the platforms. IPQ SoCs starting from
->> IPQ40xx and recent Snapdragron SoCs also has the bark and bite time field
->> length of 20bits, which can hold max up to 32 seconds if the clk_rate is
->> 32KHz.
->>
->> If the user tries to configure the timeout more than 32s, then the value
->> will be truncated and the actual value will not be reflected in the HW.
->>
->> To avoid this, lets add a variable called max_tick_count in the device 
->> data,
->> which defines max counter value of the WDT controller. Using this, 
->> max-timeout
->> will be calculated in runtime for various WDT contorllers.
->>
->> With this change, we get the proper max_timeout as below and restricts
->> the user from configuring the timeout higher than this.
->>
->> cat 
->> /sys/devices/platform/soc@0/b017000.watchdog/watchdog/watchdog0/max_timeout
->> 32
->>
->> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-> 
-> [ ... ]
-> 
->> @@ -268,11 +271,11 @@ static int qcom_wdt_probe(struct platform_device 
->> *pdev)
->>           wdt->wdd.bootstatus = WDIOF_CARDRESET;
->>       /*
->> -     * If 'timeout-sec' unspecified in devicetree, assume a 30 second
->> -     * default, unless the max timeout is less than 30 seconds, then use
->> +     * If 'timeout-sec' unspecified in devicetree, assume a 32 second
->> +     * default, unless the max timeout is less than 32 seconds, then use
->>        * the max instead.
->>        */
->> -    wdt->wdd.timeout = min(wdt->wdd.max_timeout, 30U);
->> +    wdt->wdd.timeout = min(wdt->wdd.max_timeout, 32U);
-> 
-> This is an unrelated change which would have to be discussed separately,
-> in a separate patch. But I really don't see the point of it.
+In some internal documentation it says "LCD Driver IC" "HX83112A" and I
+don't see any reference to Truly 5P65 anywhere.
 
+On their website they have this sentence:
 
-Ack, will revert this change in V2.
+  Himax offers display drivers for mobile handset displays that combine
+  source driver, gate driver, timing controller, frame buffer, and DC to
+  DC circuits into a single chip in various display technologies, such
+  as TFT-LCD, LTPS, In-Cell Touch and AMOLED.
 
+https://www.himax.com.tw/products/display-drivers/mobile-handset-applicatio=
+ns/
 
-> 
-> Guenter
-> 
+While I'm not super well versed in panel driver ICs, this sounds like it
+should be the one to take the name from?
+
+Regards
+Luca
+
+>
+> If this is right, could you rename the driver file to truly-5p65.c
+> and all symbols containing hx83112 to truly_5965 or something
+> that indicate the driver IC instead of the panel?
+>
+> My main concern is that the next display using the same IC
+> need to find the right file to patch.
+>
+> Yours,
+> Linus Walleij
+
 
