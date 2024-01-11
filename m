@@ -1,107 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-7027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7028-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73DB682AEDE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 13:40:42 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9517782AEE6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 13:44:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C1654B24A8E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 12:40:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 436202857BC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 12:44:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB0FA15E8B;
-	Thu, 11 Jan 2024 12:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5477815AF9;
+	Thu, 11 Jan 2024 12:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="I7L9pOnj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bOBVrCdl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4122315AE1
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 12:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C54154AE
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 12:44:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-28ca63fd071so2787945a91.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 04:40:25 -0800 (PST)
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1d4414ec9c7so26898025ad.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 04:44:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704976825; x=1705581625; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1704977085; x=1705581885; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=lUjrrZ3Jg1GUMAie5ebnK4hlRzI9jSk+yPsyIMgP7Cg=;
-        b=I7L9pOnj2gmHPXX3UUbnrWYfZH2x5047cV/fypzF3Y4ux3Y0oF/TgcPKblFJhFqyfN
-         uRt+i6HwRmtVLCXSAecx2Ihe27aeeuvT5TpzeIlMY+pOieEKi5vEYiIqh8Yh10B/i7CD
-         RswIwp5eHwjY6N1qjV8nIrBBXxP6J14XSk3vW2Bn7p6zOzOIE/PEiBwUrY0QGlV1B3uq
-         5jloVDT1ujj9h5SuzxJPTboxkF1HAHNqZEefAsPr+DxEp2kTY7JW+n/TN6Iti8VvdcC1
-         B9JbnzOo84Tyhq4z4XFf3s4P+tBtYNJme3NJUYiuB1DgqPvdhTHQvmnigGmTOd/jg4fy
-         8JSg==
+        bh=eHXpAer/Gbig3Qxr3W1gRcOiFSXPy6mJpjllrKqt6cY=;
+        b=bOBVrCdlgt155OEeuM1XWe3aCK4Mdm9DJQSn3MYhokrCQGAo0/OmTWZVfLh5GFf7JC
+         5bWyAnjA9cEfph8yBmO/xB8AwBS63I7MH4+WAlJJMH1GsjcaHQ779fWl01/EwGerV0dE
+         FzAsZBjlR9n6MdfBwhkZ6yXoPhGPi8u9ZVtysQqefrWNn+4+PwTCeElAJBhG/GGXV/v8
+         +lFX7mIWZx162tp3f/JsSDGA/PL4oghgWQemoD4jpDIa89QgzmgyyOQbK1Z+YmtzrOSO
+         Yxl+pk7Mfl7jPVuiWizFCabZPoDGkWMT9ocKbKn5xFZS8eH8Qb+OXMIESMM3KJ8C9waG
+         Zl4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704976825; x=1705581625;
+        d=1e100.net; s=20230601; t=1704977085; x=1705581885;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lUjrrZ3Jg1GUMAie5ebnK4hlRzI9jSk+yPsyIMgP7Cg=;
-        b=MjaHd0xs+wn7sm2viHrVZF+rFyJLirBDtoTs5iikd+st30tC3gojw1S7Rsa9nYtJRT
-         KaM8FLRFl/RfeKSkieawxCxT8of0gergb88p+JDK40sqXPjGJlOrPB3jEWXvGRWuAYlt
-         j5ZGbmh+5A+x+bCBffiPvLmgJPolavdcA2WfDwBCw68vJ/rTZKz4CXTvCFOeGwvwCx29
-         dRLFGIEpxirfIqGk+BPRi0pt3ua4kgbUeKdBYv6IQdNwT8Yd6mbwxIaN99+uWpHWxhSZ
-         2da0w01gVsEEmHSq/6udxoFQzZ/UJc9OdVDb4HW7y/HbWRq3rgkhjEZkaifJrxzWkn5/
-         rxxA==
-X-Gm-Message-State: AOJu0YyLPKdlOUhor5NZ+eOFPrVyTBGHaQPujvS1Af7TZ1aB4+k2Knne
-	TmJUxB2GlDDKGuQV1mWaivXYYSqs+7/I
-X-Google-Smtp-Source: AGHT+IFlzCZDk+7khh2nGY76iLSM3Y0+E3O+l032jjoiVmXYGJDOGVhuEwa5Sr5OwMDDcz8NiN7tAg==
-X-Received: by 2002:a17:90a:4984:b0:28c:f1f3:4dcb with SMTP id d4-20020a17090a498400b0028cf1f34dcbmr914767pjh.69.1704976825101;
-        Thu, 11 Jan 2024 04:40:25 -0800 (PST)
+        bh=eHXpAer/Gbig3Qxr3W1gRcOiFSXPy6mJpjllrKqt6cY=;
+        b=L6Kte1qYMLSbJ3jWo6ufrAuSJ5vjUTM2p3BGYcspa66KVSVfwnnM9JN3tdTUI/PsZP
+         mIr7tCI7rciTH+BQfwyIrR9+I4o/AREo2NYShulB3DPDM3LBAnFY63CQIVmVvQPNUmnl
+         hfq8x15tWzCRrfHo1SnRWiIIYPoHSrHTDOS7/y0jyidczpVfDoUP6BC3moj2L+uaSiFj
+         asnfOddB7TdfqoTLwDPiqw69IRXxnXxfoaxmSwfgIgLLu1eN/jSfN0JZ9nlnY408FTz+
+         rVISYl7FyarDi0xGLdBecRWMfpZewssVZK7MUqcRMUHqD7/ALcZF09jv4P/2uRGYqWOm
+         iX5w==
+X-Gm-Message-State: AOJu0Ywq7z5esLQRk57od4e71LthklIStw91tYIdSEBC27SkycceDfTp
+	rVAYj3uprg+rk/qK0UaFtpw5GIQe6dGM
+X-Google-Smtp-Source: AGHT+IExsnY3r4rVK9uZ6AR+v3mI5VvQPQzDhaELlQG9P7CD6D+Fth/VaxdWKjyVXot9sI6vo5cVmQ==
+X-Received: by 2002:a17:902:e844:b0:1d4:7685:90df with SMTP id t4-20020a170902e84400b001d4768590dfmr1191091plg.31.1704977084814;
+        Thu, 11 Jan 2024 04:44:44 -0800 (PST)
 Received: from thinkpad ([202.131.159.18])
-        by smtp.gmail.com with ESMTPSA id mf15-20020a17090b184f00b0028cef2025ddsm1418530pjb.15.2024.01.11.04.40.13
+        by smtp.gmail.com with ESMTPSA id j11-20020a170902690b00b001d3c27e00f2sm1072950plk.284.2024.01.11.04.44.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Jan 2024 04:40:24 -0800 (PST)
-Date: Thu, 11 Jan 2024 18:10:09 +0530
+        Thu, 11 Jan 2024 04:44:43 -0800 (PST)
+Date: Thu, 11 Jan 2024 18:14:39 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Dan Williams <dan.j.williams@intel.com>
-Cc: Lukas Wunner <lukas@wunner.de>, Bartosz Golaszewski <brgl@bgdev.pl>,
-	Kalle Valo <kvalo@kernel.org>,
-	"David S . Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Rob Herring <robh+dt@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chris Morgan <macromorgan@hotmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	=?iso-8859-1?Q?N=EDcolas_F_=2E_R_=2E_A_=2E?= Prado <nfraprado@collabora.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Peng Fan <peng.fan@nxp.com>, Robert Richter <rrichter@amd.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Terry Bowman <terry.bowman@amd.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>,
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-pci@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [RFC 3/9] PCI/portdrv: create platform devices for child OF nodes
-Message-ID: <20240111124009.GA3003@thinkpad>
-References: <20240104130123.37115-1-brgl@bgdev.pl>
- <20240104130123.37115-4-brgl@bgdev.pl>
- <20240109144327.GA10780@wunner.de>
- <CAMRc=MdXO6c6asvRSn_Z8-oFS48hroT+dazGKB6WWY1_Zu7f1Q@mail.gmail.com>
- <20240110132853.GA6860@wunner.de>
- <659f00ed271b3_5cee2942@dwillia2-xfh.jf.intel.com.notmuch>
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: qrb2210-rb1: disable cluster power
+ domains
+Message-ID: <20240111124439.GB3003@thinkpad>
+References: <20240111-qrb2210-rb1-no-cluster-idle-v1-1-cec14ec15b02@linaro.org>
+ <20240111044508.GA3761@thinkpad>
+ <CAA8EJpp+i58Z_QN4L1NRXoEcoRJNNu3S3JqeYgFP7LY-GBDP0w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -111,84 +81,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <659f00ed271b3_5cee2942@dwillia2-xfh.jf.intel.com.notmuch>
+In-Reply-To: <CAA8EJpp+i58Z_QN4L1NRXoEcoRJNNu3S3JqeYgFP7LY-GBDP0w@mail.gmail.com>
 
-On Wed, Jan 10, 2024 at 12:41:17PM -0800, Dan Williams wrote:
-> [ add Terry ]
+On Thu, Jan 11, 2024 at 08:02:32AM +0200, Dmitry Baryshkov wrote:
+> On Thu, 11 Jan 2024 at 06:45, Manivannan Sadhasivam
+> <manivannan.sadhasivam@linaro.org> wrote:
+> >
+> > On Thu, Jan 11, 2024 at 04:01:14AM +0200, Dmitry Baryshkov wrote:
+> > > If cluster domain idle state is enabled on the RB1, the board becomes
+> > > significantly less responsive. Under certain circumstances (if some of
+> > > the devices are disabled in kernel config) the board can even lock up.
+> > >
+> > > It seems this is caused by the MPM not being pinged during CPU idle (in
+> > > the same way the RPMh is pinged when cluster idle is entered).
+> > >
+> >
+> > What does "ping" mean here? Please be more specific.
 > 
+> See rpmh_rsc_pd_callback(), rpmh_flush() and rpmh_rsc_write_next_wakeup().
 > 
-> Lukas Wunner wrote:
-> > On Wed, Jan 10, 2024 at 01:55:18PM +0100, Bartosz Golaszewski wrote:
-> > > On Tue, Jan 9, 2024 at 3:43???PM Lukas Wunner <lukas@wunner.de> wrote:
-> > > > On Thu, Jan 04, 2024 at 02:01:17PM +0100, Bartosz Golaszewski wrote:
-> > > > > In order to introduce PCIe power-sequencing, we need to create platform
-> > > > > devices for child nodes of the port driver node. They will get matched
-> > > > > against the pwrseq drivers (if one exists) and then the actuak PCIe
-> > > > > device will reuse the node once it's detected on the bus.
-> > > > [...]
-> > > > > --- a/drivers/pci/pcie/portdrv.c
-> > > > > +++ b/drivers/pci/pcie/portdrv.c
-> > > > > @@ -715,7 +716,7 @@ static int pcie_portdrv_probe(struct pci_dev *dev,
-> > > > >               pm_runtime_allow(&dev->dev);
-> > > > >       }
-> > > > >
-> > > > > -     return 0;
-> > > > > +     return devm_of_platform_populate(&dev->dev);
-> > > > >  }
-> > > >
-> > > > I think this belongs in of_pci_make_dev_node(), portdrv seems totally
-> > > > the wrong place.  Note that you're currently calling this for RCECs
-> > > > (Root Complex Event Collectors) as well, which is likely not what
-> > > > you want.
-> > > >
-> > > 
-> > > of_pci_make_dev_node() is only called when the relevant PCI device is
-> > > instantiated which doesn't happen until it's powered-up and scanned -
-> > > precisely the problem I'm trying to address.
-> > 
-> > No, of_pci_make_dev_node() is called *before* device_attach(),
-> > i.e. before portdrv has even probed.  So it seems this should
-> > work perfectly well for your use case.
-> > 
-> > 
-> > > > devm functions can't be used in the PCI core, so symmetrically call
-> > > > of_platform_unpopulate() from of_pci_remove_node().
-> > > 
-> > > I don't doubt what you're saying is true (I've seen worse things) but
-> > > this is the probe() callback of a driver using the driver model. Why
-> > > wouldn't devres work?
-> > 
-> > The long term plan is to move the functionality in portdrv to
-> > the PCI core.  Because devm functions can't be used in the PCI
-> > core, adding new ones to portdrv will *add* a new roadblock to
-> > migrating portdrv to the PCI core.  In other words, it makes
-> > future maintenance more difficult.
-> > 
-> > Generally, only PCIe port services which share the same interrupt
-> > (hotplug, PME, bandwith notification, flit error counter, ...)
-> > need to live in portdrv.  Arbitrary other stuff should not be
-> > shoehorned into portdrv.
-> 
-> I came here to say the same thing. It is already the case that portdrv
-> is not a good model to build new functionality upon [1], and PCI core
-> enlightenment should be considered first.
+> RPMh driver (among other things) on entering the idle writes the next
+> wake up time to the RPMh. The MPM driver in the vendor kernel does the
+> same, see msm_mpm_timer_write() in msm-4.19
 > 
 
-The primary reason for plugging the power sequencing into portdrv is due to
-portdrv binding with all the bridge devices and acting as management driver for
-the bridges. This is where exactly the power sequencing part needs to be plugged
-in IMO. But if the idea of the portdrv is just to expose services based on
-interrupts, then please suggest a better place to plug this power sequencing
-part.
+Okay, thanks for the explanation. It'd be good if you have mentioned this in the
+commit message as it is not obvious for one to understand what "ping" means.
 
 - Mani
 
-> The portdrv model is impeding Terry's CXL Port error handling effort, so
-> I am on the lookout for portdrv growing new entanglements to unwind
-> later.
+> >
+> > - Mani
+> >
+> > > Disable cluster domain idle for the RB1 board until MPM driver is fixed
+> > > to cooperate with the CPU idle states.
+> > >
+> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/qrb2210-rb1.dts | 18 ++++++++++++++++++
+> > >  1 file changed, 18 insertions(+)
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
+> > > index aa53b6af6d9c..9a0308ef8b0f 100644
+> > > --- a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
+> > > +++ b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
+> > > @@ -177,6 +177,24 @@ vph_pwr: regulator-vph-pwr {
+> > >       };
+> > >  };
+> > >
+> > > +&CPU_PD0 {
+> > > +     /delete-property/ power-domains;
+> > > +};
+> > > +
+> > > +&CPU_PD1 {
+> > > +     /delete-property/ power-domains;
+> > > +};
+> > > +
+> > > +&CPU_PD2 {
+> > > +     /delete-property/ power-domains;
+> > > +};
+> > > +
+> > > +&CPU_PD3 {
+> > > +     /delete-property/ power-domains;
+> > > +};
+> > > +
+> > > +/delete-node/ &CLUSTER_PD;
+> > > +
+> > >  &gpi_dma0 {
+> > >       status = "okay";
+> > >  };
+> > >
+> > > ---
+> > > base-commit: 39676dfe52331dba909c617f213fdb21015c8d10
+> > > change-id: 20240111-qrb2210-rb1-no-cluster-idle-7bf43b3a0452
+> > >
+> > > Best regards,
+> > > --
+> > > Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > >
+> > >
+> >
+> > --
+> > மணிவண்ணன் சதாசிவம்
 > 
-> [1]: http://lore.kernel.org/r/20221025232535.GA579167@bhelgaas
 > 
+> 
+> -- 
+> With best wishes
+> Dmitry
 
 -- 
 மணிவண்ணன் சதாசிவம்
