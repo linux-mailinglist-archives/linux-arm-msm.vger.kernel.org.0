@@ -1,144 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-7054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A004482B3BD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 18:14:40 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4410D82B3C2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 18:16:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3C64E1F22DD3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 17:14:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E7B941F243B4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 17:16:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 709B851C46;
-	Thu, 11 Jan 2024 17:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAE6E51C27;
+	Thu, 11 Jan 2024 17:16:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QyhCROXA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VCvXiw81"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2A151C2A;
-	Thu, 11 Jan 2024 17:14:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40BExWNr013063;
-	Thu, 11 Jan 2024 17:14:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version:content-type; s=
-	qcppdkim1; bh=6bMyPUPE14ZybsNMO3LzBjdI9wYqf9xHh7+eqo87zh4=; b=Qy
-	hCROXAiOmFs9zDawFuEWnagFrvfRbOlWk5La93QCW2tuiLNwx32vTXkbvjdhg1RZ
-	xciEFpbtZY6bdhXNfXcLnPxdOQr/mggpn4Gg+D3hhA6V6F2pJGhoO0fwmnPYoFaQ
-	HzOkTkFhHFvlKbyshi9j8NdGY1BzQTqbs+xRg3CQMMStHFSFjm65rc11g9BTbxvF
-	ZRWf/EqIKMIqZBArN+DHcLXbgntrBxM6OV8WIDsm2bO1kWTkuvYOk4KnlIWgIB9T
-	711eIrwHHbxmYItTuuIrP148S7sRp2VeLO/XVWqd2gtOy24kLF9MywKfB6V1P2Iv
-	Fbe0X4v6aLxHI01nwWLA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vjjjj0b90-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jan 2024 17:14:25 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40BHEOIw012875
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jan 2024 17:14:24 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Thu, 11 Jan 2024 09:14:23 -0800
-From: Kuogee Hsieh <quic_khsieh@quicinc.com>
-To: <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <andersson@kernel.org>
-CC: Kuogee Hsieh <quic_khsieh@quicinc.com>, <quic_abhinavk@quicinc.com>,
-        <quic_jesszhan@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <marijn.suijten@somainline.org>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v1] drm/msm/dp: remove mdss_dp_test_bit_depth_to_bpc()
-Date: Thu, 11 Jan 2024 09:14:15 -0800
-Message-ID: <1704993255-12753-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3370B51036
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 17:15:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-40d5336986cso71632175e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 09:15:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1704993357; x=1705598157; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=akghNAx5zO8q20jwNqMX/JqWUlUpy5+0Dw/bZ3TCarc=;
+        b=VCvXiw81E5k5Q6zVtxCyOhWjRLd2efVdhNXF0TlWnaWolVLhi2ztXc87FZ322lTTDB
+         wLd1V1jygOocfNQSnIJmM7yqgunQ4P53pNpedN0aCGzNdkW+evy7LiOxedV/UGMQicTV
+         dk9NoBgN86l5zusOkzCE5GA6QK+BxisYMu344fqm9L7KYjghECHiccfaWV/eTO+MIaCl
+         ttzl3Sm8Sb+ZzPuDueaa8h8KKri5YBMZXHwCxQYK/4BOSue1eqeWnzc8soEE2t4eFe0o
+         3asD8ZSorNTiEJ7fmkHj83oPwC02dl59vFAiGHqda/LuJ10Bt55lU9oLfajiCC4wjAVG
+         FyoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704993357; x=1705598157;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=akghNAx5zO8q20jwNqMX/JqWUlUpy5+0Dw/bZ3TCarc=;
+        b=uL2ik8wDjJZizYT9P0F5H4aHbFwb/At/yWQMHbOt0peuNsBCnepPkiswM7WD0jYTWH
+         AGjCz7SoFcYUrfdEZNvXdbutHIghRnrdjymIiSm+jZe+ceyggJg1W2ewqGzN1Ds1cL7f
+         BoGvedT/EFlX/RC1yj3rIMKHSg17oNcP2NFTbzWyRDIz+4glVJ59m4BxUMunzmP2gFlv
+         siQBbjgRUHcXZzZOztwJ1AHiEo56YbsuIbLiWfewS2K97nGkKLQEfj1mKk6hcNk8yLgF
+         aCsg4UT55LMYdLeIjpej/A2SjtpWZiexd2h66Zpt/X2INa0jTl+PijT3wwLY/3smdlKc
+         B+0Q==
+X-Gm-Message-State: AOJu0YzM772D2YcWFoEz9UR6LQBlApv056Eah3hVnEQkGducYUyDqSEF
+	MsI6wwrbLAkpL11AFZXC9Ny8KgZdU5BL7w==
+X-Google-Smtp-Source: AGHT+IGoND+UJOh23+LKbFszikkhRBg8DYoBHaZaVw5Op56unEB7OV7Z/lToQn5+W3MkYYACti9X9w==
+X-Received: by 2002:a05:600c:4e41:b0:40e:6164:8ca9 with SMTP id e1-20020a05600c4e4100b0040e61648ca9mr81905wmq.44.1704993357454;
+        Thu, 11 Jan 2024 09:15:57 -0800 (PST)
+Received: from [127.0.1.1] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id fc19-20020a05600c525300b0040d839e7bb3sm6610653wmb.19.2024.01.11.09.15.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Jan 2024 09:15:56 -0800 (PST)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v4 0/4] arm64: dts: qcom: sc8280xp: Add CAMSS core dtsi
+ support
+Date: Thu, 11 Jan 2024 17:15:53 +0000
+Message-Id: <20240111-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v4-0-cdd5c57ff1dc@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ZpaN76iMHrE9ikFhkyKykw1A9ybkz516
-X-Proofpoint-GUID: ZpaN76iMHrE9ikFhkyKykw1A9ybkz516
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
- phishscore=0 mlxscore=0 spamscore=0 impostorscore=0 mlxlogscore=999
- lowpriorityscore=0 priorityscore=1501 clxscore=1015 bulkscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401110135
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEkioGUC/5XNQQ6CMBCF4auYrh1TWqDFlfcwLoYyaBOlpEWCM
+ dzdkcRE44rlm6bf/xSJoqck9puniDT65EPHI99uhLtgdybwDW+hpMplJhVcfXefoKNpAJWDzIB
+ vyVll5dSDw1tK4EIkaIbkQRktsWgNtZUVTPaRWj8tueOJ98WnIcTHUh+z9/UT0utCIz8D1ugQS
+ 41VmR34O8awC/Es3qVRfevFSl2xbrAwta2l0ZX90/W3Xq3UNeu1JY0mx5JK/NHneX4B40vF8aU
+ BAAA=
+To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.13-dev-4e032
 
-mdss_dp_test_bit_depth_to_bpc() can be replace by
-mdss_dp_test_bit_depth_to_bpp() / 3. Hence remove it.
+This series adds the yaml, CAMSS and CCI dts definitions for the sc8280xp.
 
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+4 x CCI master busses
+4 x VFE
+4 x VFE Lite
+4 x CSID
+4 x CSIPHY
+
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-24-01-02-sc8280xp-camss-core-dtsi
+
+To: Robert Foss <rfoss@kernel.org>
+To: Todor Tomov <todor.too@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+To: Mauro Carvalho Chehab <mchehab@kernel.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+To: Conor Dooley <conor+dt@kernel.org>
+Cc:  <linux-media@vger.kernel.org>
+Cc:  <linux-arm-msm@vger.kernel.org>
+Cc:  <devicetree@vger.kernel.org>
+Cc:  <linux-kernel@vger.kernel.org>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
+Changes in v2:
+- This series depends on "clk: qcom: camcc-sc8280xp: Add sc8280xp CAMCC"
+  in linux-next. - Rob, Krzysztof, dts Robot
+- Drops cci_src clock - Konrad
+- Adds sc8280xp-cci - Konrad
+
+Link: https://lore.kernel.org/r/20240103-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v1-0-abacaa63a961@linaro.org
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-24-01-02-sc8280xp-camss-core-dtsi-v2
+
+Changes in v3:
+- This series depends on "clk: qcom: camcc-sc8280xp: Add sc8280xp CAMCC"
+  in linux-next. - Rob, Krzysztof, dts Robot
+- Fixes spurious "media: dt-bindings: media" in patch title - bod
+- Reorders pinctrl declarations per dts-coding-style.rts - Konrad
+- Adds Krzysztofs RB where indicated
+Link: https://lore.kernel.org/r/20240105-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v2-0-7a57b8b07398@linaro.org
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-24-01-02-sc8280xp-camss-core-dtsi-v3
+
+Changes in v4:
+- Drops "|" symbol postfixed to description: in patch #2 - Rob
+- Manually adds dependency below "---" in patch #2 - Rob
+- Reverts pinctrl-names as I misinterpreted Konrad's ask - bod
+- Removes newlines between reg/reg-names etc - Konrad
+
+Link: https://lore.kernel.org/r/20240109-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v3-0-b8e3a74a6e6a@linaro.org
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-24-01-02-sc8280xp-camss-core-dtsi-v4
 ---
- drivers/gpu/drm/msm/dp/dp_debug.c |  2 +-
- drivers/gpu/drm/msm/dp/dp_link.h  | 23 -----------------------
- 2 files changed, 1 insertion(+), 24 deletions(-)
+Bryan O'Donoghue (4):
+      dt-bindings: i2c: qcom-cci: Document sc8280xp compatible
+      dt-bindings: media: camss: Add qcom,sc8280xp-camss binding
+      arm64: dts: qcom: sc8280xp: camss: Add CCI definitions
+      arm64: dts: qcom: sc8280xp: camss: Add CAMSS block definition
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_debug.c b/drivers/gpu/drm/msm/dp/dp_debug.c
-index 3bba901..534079e 100644
---- a/drivers/gpu/drm/msm/dp/dp_debug.c
-+++ b/drivers/gpu/drm/msm/dp/dp_debug.c
-@@ -105,7 +105,7 @@ static int dp_test_data_show(struct seq_file *m, void *data)
- 		seq_printf(m, "vdisplay: %d\n",
- 				debug->link->test_video.test_v_height);
- 		seq_printf(m, "bpc: %u\n",
--				dp_link_bit_depth_to_bpc(bpc));
-+				dp_link_bit_depth_to_bpp(bpc) / 3);
- 	} else {
- 		seq_puts(m, "0");
- 	}
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.h b/drivers/gpu/drm/msm/dp/dp_link.h
-index 9dd4dd9..83da170 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.h
-+++ b/drivers/gpu/drm/msm/dp/dp_link.h
-@@ -112,29 +112,6 @@ static inline u32 dp_link_bit_depth_to_bpp(u32 tbd)
- 	}
- }
- 
--/**
-- * dp_test_bit_depth_to_bpc() - convert test bit depth to bpc
-- * @tbd: test bit depth
-- *
-- * Returns the bits per comp (bpc) to be used corresponding to the
-- * bit depth value. This function assumes that bit depth has
-- * already been validated.
-- */
--static inline u32 dp_link_bit_depth_to_bpc(u32 tbd)
--{
--	switch (tbd) {
--	case DP_TEST_BIT_DEPTH_6:
--		return 6;
--	case DP_TEST_BIT_DEPTH_8:
--		return 8;
--	case DP_TEST_BIT_DEPTH_10:
--		return 10;
--	case DP_TEST_BIT_DEPTH_UNKNOWN:
--	default:
--		return 0;
--	}
--}
--
- void dp_link_reset_phy_params_vx_px(struct dp_link *dp_link);
- u32 dp_link_get_test_bits_depth(struct dp_link *dp_link, u32 bpp);
- int dp_link_process_request(struct dp_link *dp_link);
+ .../devicetree/bindings/i2c/qcom,i2c-cci.yaml      |  19 +
+ .../bindings/media/qcom,sc8280xp-camss.yaml        | 512 +++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi             | 542 +++++++++++++++++++++
+ 3 files changed, 1073 insertions(+)
+---
+base-commit: ab0b3e6ef50d305278b1971891cf1d82ab050b35
+change-id: 20240102-linux-next-24-01-02-sc8280xp-camss-core-dtsi-2730a5f7ef98
+
+Best regards,
 -- 
-2.7.4
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
 
