@@ -1,139 +1,199 @@
-Return-Path: <linux-arm-msm+bounces-7040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C18982B1D2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 16:29:29 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A96882B1D6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 16:31:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 703A41C22C3C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 15:29:28 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C15E9B2137E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 15:31:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D8DD4CB59;
-	Thu, 11 Jan 2024 15:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DBCC4CB44;
+	Thu, 11 Jan 2024 15:31:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="3UJA2fLt"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Xj5PU+4T"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f65.google.com (mail-ed1-f65.google.com [209.85.208.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17447482F7
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 15:28:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f65.google.com with SMTP id 4fb4d7f45d1cf-5588ac5d988so1191113a12.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 07:28:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1704986906; x=1705591706; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=B7mE+52tIHuQGxlPUuwMMzBM9GxGpHPAmvjX828iiAI=;
-        b=3UJA2fLt8ao7qa7PJpFFX89y4/NzY91dQdlWmuu2JcDf2fGp7WD6d/HJ5V3VxagBBg
-         jSlhJFDWGqNp55VCfjzI7ftJJjYgV2zfT/G+SULL18+ycirnZKHaUsZgCSk5XMERIQB5
-         3ctP07jkt2i+IboO8vrkCVlt8Q7xTRQHo4onn6YeFLKxweN6Y5MtS+lbrp15zC67uCkk
-         a4uc5DHKZL2YBgXhcC6lgk4/AbbWmT5T+6oXFr/Pq1p8hOu3pu0DaxVUso6v66kdaoEr
-         MSX5Q5vmiEYjZYpkhdspCA7kyVGaZol2IMtLaQwEJQDmrFnpK1PkL/HxomPc+UCGFrqi
-         4XKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704986906; x=1705591706;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=B7mE+52tIHuQGxlPUuwMMzBM9GxGpHPAmvjX828iiAI=;
-        b=KHbMjNAhfBvBY5SlkTGcEH+m6Zv5LIFbP+UZhPqFYNbdZ8h+m4zU31t+Wu08tsvzqB
-         4bZU/0rX1dzEGoRCE7KAd/Xb9Zi/fK+wcCfqk8NByZYL45ZQFhYMFMSjyRpjpCJOUZpv
-         puKDqJtGde+hTK9NsjDx2QzviCtmqYXPTCx63euTkaDs3Po2v3KggJPUNT7hJyHivTkJ
-         l/KPb3iYU003VVsumEyJtLvQbalwaAkhQxne8qSJYUfMwAouEqbNp4UtumPGPruQf1vI
-         o9Nyq9GbHP1W87kL1tXTI3nHecJN0jxN7yBFG0cN6VFb+ahm4iqLflhwuFZVVOj8lW/e
-         vOIA==
-X-Gm-Message-State: AOJu0YxTGphNPU5KJz1XENn4vNPLg2DyS9z8NeY4g4/7V+rxFDufWhDq
-	cvH5vJXxJyTLKMstgDoBtzhA/YpAmoLzsA==
-X-Google-Smtp-Source: AGHT+IFrvzkgvZxDk2Qj4HTlNXeH9Cg5K5scTvQ7rSicpxuLzRPig/wdkeNZZxH3cj4lmdNGi3b+9Q==
-X-Received: by 2002:aa7:d403:0:b0:558:b988:b8dc with SMTP id z3-20020aa7d403000000b00558b988b8dcmr33261edq.84.1704986906349;
-        Thu, 11 Jan 2024 07:28:26 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id m23-20020a50ef17000000b0055751515a84sm717753eds.51.2024.01.11.07.28.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Jan 2024 07:28:26 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2AC4BAB0;
+	Thu, 11 Jan 2024 15:31:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40BDeICA013870;
+	Thu, 11 Jan 2024 15:30:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=tLmJlo9a7XOpcogJ276/ISRo79ph673bZD10y+Fx8EM=; b=Xj
+	5PU+4TrVzZyncEd26+c6NVlxOQ49eA3PLOmanRaojLh2RWPvZAT09SPWWVftjt3A
+	n0TL29mBXoPnAhGzXsJA26PyBYr/3LZSvYMvEvD1qfGPLVyzQErB3ygJaIeqPXXx
+	M76HGIcInoeLs/D4ha3D1U8Tn+KZYgGEWCY/eOfzQvFkP86qfjY/gOUFM+vDF+Og
+	gEoHGDFsot45kk/ggePlsUazxpyleLE9Jb3QzB9RrDsA3H1vvk0VUMOZYYM9mv+I
+	hnzEZH+huEjBh7HVhewOZq+pvuUdHPBUbjcN63lqcIxXg2gLa8+7vAcBOgA7C3Jg
+	FFnsFXvn8/HPv66HQoLQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vjcsk0xhj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 11 Jan 2024 15:30:57 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40BFUu1H001016
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 11 Jan 2024 15:30:56 GMT
+Received: from [10.253.37.156] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 11 Jan
+ 2024 07:30:52 -0800
+Message-ID: <de0ad768-05fa-4bb1-bcbc-0adb28cb2257@quicinc.com>
+Date: Thu, 11 Jan 2024 23:30:48 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 11 Jan 2024 16:28:24 +0100
-Message-Id: <CYBZEZ4IM6IL.VR04W7933VI@fairphone.com>
-Cc: "Neil Armstrong" <neil.armstrong@linaro.org>, "Jessica Zhang"
- <quic_jesszhan@quicinc.com>, "Sam Ravnborg" <sam@ravnborg.org>, "David
- Airlie" <airlied@gmail.com>, "Daniel Vetter" <daniel@ffwll.ch>, "Maarten
- Lankhorst" <maarten.lankhorst@linux.intel.com>, "Maxime Ripard"
- <mripard@kernel.org>, "Thomas Zimmermann" <tzimmermann@suse.de>, "Rob
- Herring" <robh+dt@kernel.org>, "Krzysztof Kozlowski"
- <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Bjorn Andersson" <andersson@kernel.org>, "Konrad Dybcio"
- <konrad.dybcio@linaro.org>, "Andy Gross" <agross@kernel.org>,
- <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
- <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>
-Subject: Re: [PATCH v2 2/4] drm/panel: Add driver for DJN HX83112A LCD panel
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Linus Walleij" <linus.walleij@linaro.org>
-X-Mailer: aerc 0.15.2
-References: <20240110-fp4-panel-v2-0-8ad11174f65b@fairphone.com>
- <20240110-fp4-panel-v2-2-8ad11174f65b@fairphone.com>
- <CACRpkdaWTfPDCin_L6pefHsokjNyO8Mo6hWPdzPLLi1EUkKUuA@mail.gmail.com>
-In-Reply-To: <CACRpkdaWTfPDCin_L6pefHsokjNyO8Mo6hWPdzPLLi1EUkKUuA@mail.gmail.com>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/6] arm64: dts: qcom: ipq9574: Add PPE device tree node
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <quic_kkumarcs@quicinc.com>, <quic_suruchia@quicinc.com>,
+        <quic_soni@quicinc.com>, <quic_pavir@quicinc.com>,
+        <quic_souravp@quicinc.com>, <quic_linchen@quicinc.com>,
+        <quic_leiwei@quicinc.com>
+References: <20240110112059.2498-1-quic_luoj@quicinc.com>
+ <20240110112059.2498-2-quic_luoj@quicinc.com>
+ <a42718a9-d0f9-47d9-9ee8-fb520ed2a7a8@linaro.org>
+From: Jie Luo <quic_luoj@quicinc.com>
+In-Reply-To: <a42718a9-d0f9-47d9-9ee8-fb520ed2a7a8@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: m18IytmkWCOaHnH4b1m_JtGxV9MuEBgm
+X-Proofpoint-GUID: m18IytmkWCOaHnH4b1m_JtGxV9MuEBgm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 spamscore=0 mlxscore=0
+ clxscore=1015 priorityscore=1501 impostorscore=0 phishscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401110121
 
-On Thu Jan 11, 2024 at 3:57 PM CET, Linus Walleij wrote:
-> On Wed, Jan 10, 2024 at 4:14=E2=80=AFPM Luca Weiss <luca.weiss@fairphone.=
-com> wrote:
->
-> > Add support for the 2340x1080 LCD DJN panel bundled with a HX83112A
-> > driver IC, as found on the Fairphone 4 smartphone.
-> >
-> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->
-> This makes it sound like the Himax HX83112A is the driver IC.
->
-> This does not seem to be the case:
-> https://github.com/HimaxSoftware/HX83112_Android_Driver
->
-> The driver IC seems to be a truly 5p65.
 
-Hi Linus,
 
-In some internal documentation it says "LCD Driver IC" "HX83112A" and I
-don't see any reference to Truly 5P65 anywhere.
+On 1/10/2024 7:40 PM, Krzysztof Kozlowski wrote:
+> On 10/01/2024 12:20, Luo Jie wrote:
+>> The PPE device tree node includes the PPE initialization configurations
+>> and UNIPHY instance configuration.
+>>
+>> Ther are 3 UNIPHYs(PCS) on the platform ipq9574, which register the
+>> clock provider to output the clock for PPE port to work on the different
+>> link speed.
+>>
+>> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 730 +++++++++++++++++++++++++-
+>>   1 file changed, 724 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>> index 810cda4a850f..5fa241e27c8b 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>> @@ -775,16 +775,734 @@ nsscc: nsscc@39b00000 {
+>>   				 <&bias_pll_nss_noc_clk>,
+>>   				 <&bias_pll_ubi_nc_clk>,
+>>   				 <&gcc_gpll0_out_aux>,
+>> -				 <0>,
+>> -				 <0>,
+>> -				 <0>,
+>> -				 <0>,
+>> -				 <0>,
+>> -				 <0>,
+>> +				 <&uniphys 0>,
+>> +				 <&uniphys 1>,
+>> +				 <&uniphys 2>,
+>> +				 <&uniphys 3>,
+>> +				 <&uniphys 4>,
+>> +				 <&uniphys 5>,
+>>   				 <&xo_board_clk>;
+>>   			#clock-cells = <1>;
+>>   			#reset-cells = <1>;
+>>   		};
+>> +
+>> +		qcom_ppe: qcom-ppe@3a000000 {
+> 
+> qcom is definitely not a generic name.
+> 
+> Node names should be generic. See also an explanation and list of
+> examples (not exhaustive) in DT specification:
+> https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
 
-On their website they have this sentence:
+Ok, will update to use a generic name in the link, Thanks for the
+guidance and the link.
+> 
+> 
+>> +			compatible = "qcom,ipq9574-ppe";
+> 
+> I don't see this documented. I don't see reference to posted bindings.
 
-  Himax offers display drivers for mobile handset displays that combine
-  source driver, gate driver, timing controller, frame buffer, and DC to
-  DC circuits into a single chip in various display technologies, such
-  as TFT-LCD, LTPS, In-Cell Touch and AMOLED.
+The DT bindings patch was part of the driver series as below. This
+property was documented in the DT bindings patch. Attaching it to DTSI 
+series should make it more clear. If this is fine, I will update the 
+DTSI series with the DT bindings patch.
+https://lore.kernel.org/netdev/20240110142428.52026d9e@kernel.org/
 
-https://www.himax.com.tw/products/display-drivers/mobile-handset-applicatio=
-ns/
+> 
+> Please run scripts/checkpatch.pl and fix reported warnings. Some
+> warnings can be ignored, but the code here looks like it needs a fix.
+> Feel free to get in touch if the warning is not clear.
+> 
+> Ignoring this warning is a sign you don't really check your patches
+> before sending.
 
-While I'm not super well versed in panel driver ICs, this sounds like it
-should be the one to take the name from?
+We have run the checkpatch.pl on the whole patch series including this
+device tree patch set together with PPE driver patch set.
+As mentioned above, I will add the DT bindings patch into the DTS
+series. This should help with the checkpatch issue.
 
-Regards
-Luca
+> 
+>> +			reg = <0x3a000000 0xb00000>;
+>> +			#address-cells = <1>;
+>> +			#size-cells = <1>;
+>> +			ranges;
+> 
+> Put after reg.
+Ok.
 
->
-> If this is right, could you rename the driver file to truly-5p65.c
-> and all symbols containing hx83112 to truly_5965 or something
-> that indicate the driver IC instead of the panel?
->
-> My main concern is that the next display using the same IC
-> need to find the right file to patch.
->
-> Yours,
-> Linus Walleij
+> 
+>> +			status = "okay";
+> 
+> Drop
+Ok.
 
+> 
+> All of above comments apply to your entire patchset and all places.
+> 
+> Looking at code further, it does not look like suitable for mainline,
+> but copy of downstream code. That's not what we expect upstream. Please
+> go back to your bindings first. Also, I really insist you reaching out
+> to other folks to help you in this process.
+> 
+> Best regards,
+> Krzysztof
+> 
+We will do internal review of the gaps and update the patches as per
+your comments.
+
+Thanks for the review comments.
 
