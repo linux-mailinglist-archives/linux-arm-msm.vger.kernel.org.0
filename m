@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-7052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D6BB82B387
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 18:00:53 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4EA4982B38C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 18:01:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E8D6F28D2B7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 17:00:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EFFF71F21511
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 17:01:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE57151C5E;
-	Thu, 11 Jan 2024 17:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 663EB524DB;
+	Thu, 11 Jan 2024 17:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Y91CnuyM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="htMtifhl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC32524A9
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 17:00:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B99AB51C26
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 17:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-50e759ece35so6265337e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 09:00:01 -0800 (PST)
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-50e80d40a41so7101412e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 09:00:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704992400; x=1705597200; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1704992427; x=1705597227; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=l8IcJn882ZENlg2qEEENksJucf6hT6H3VJSc8mUcJzI=;
-        b=Y91CnuyM7pTmak8Bsgv0srfWAxL0t4NSJDrxAVMQyuTkjjkdyTaQ0IZEg8Wzucs0rR
-         DzvAoJD7yqjY5/WAM354mfj986ZKjCoGY/rS2V9RfOX0xRdT1gILAA7mlhYp/6gSxadh
-         xhorNfo0R6rYRjeon4fOhzPN+pEzCLJibwHeg/H3CEhbpoiba1w19m8s5AM0fVUJTT1x
-         mjLzieIMRQm5GnbY2ap5y/PLfTC4XqCXfDLNJo6aPDc+sdPCj2G0QhRvkSHw6ki52AMQ
-         vRcWGlCh5ZG1CR7nzl/wyxy49AvhREC8OOmL2GE4z8iC/kPBygbkuTdRSg3LSo2jan93
-         nyog==
+        bh=A0AgdpPDajiFYZmAlf4PGLhKbMhRtCKLeFUUnGiUzGU=;
+        b=htMtifhlVgNO5ejOFISHindmohVeOsuw1CUy+M/03nyNboFS1oIMuDRDNfiFXzIw8B
+         px9ao4TCSNFPWmEdrcVPQ7Td5J9jpEjRf3ZlTSY11AslxNuVqTjJsrHpng/+QcBQS6rX
+         RVcm4s3fIiCHHseINB933RFtTdUddFKOSq6oue/p7BosG0c2C3X+u5Jg5aYxg6Xxc8VX
+         nfVRMl+s11rvLoPhna18xqIqwy9/I+YBe/VdWATmITS+sk5w0H8ub533eC59CyPXDQOa
+         Y/ZVHdvxD2A6x68wlnRoXvbEGhyIvWLm0UA25CseZnQWcypWftpXkxw8UrGaahjRWctu
+         f3pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704992400; x=1705597200;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1704992427; x=1705597227;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=l8IcJn882ZENlg2qEEENksJucf6hT6H3VJSc8mUcJzI=;
-        b=bSebSPxSA2bmuIzA6Im6b4gt5LjJbPw+nz7zM8/cZrEuGxZ6bA3WM7wV7rYduZXTr3
-         i9JYzVAdIWTVAFlfSflQJUqDwVZeMWKWazyE4zuQNsNEgxHJZoEq/DYAsvIwK9fCFA9d
-         /17JBqi7qRI0M3piSHLxKu+83dCBGaxs6k1DjOG6T7aVyfecoWbiSBUAnNWlI1Jp8EE3
-         oSrh4Am8DG4QHcPm3OJNt9D71SS3qJhdT4zz0Q8qE08x9GWCY+uksM3dJTNCpQ6igAcV
-         DF2PeX/UB2fMMqb9TQpoL/BrTpsIMeGqjEyyXZIKpjmO6vH3h3P4QEuFRsmKTJrncMfw
-         /h3g==
-X-Gm-Message-State: AOJu0YzD/HRzo//4jVmpCsohLrDfNNeQVorXDcuLMo8bmZ1KpSvd+WP8
-	7glYuhfloVYYl4xIxEJIBiEAw94piYqUCQ==
-X-Google-Smtp-Source: AGHT+IEVXqMFZz3mSFHYrFcrvpVDnPktf3QK2oTY1tJI9wlboM5Q4HyQe6EBmHDj4bRkh1S5bZ5C+Q==
-X-Received: by 2002:a05:6512:33c2:b0:50e:c8ec:8c42 with SMTP id d2-20020a05651233c200b0050ec8ec8c42mr862048lfg.130.1704992400254;
-        Thu, 11 Jan 2024 09:00:00 -0800 (PST)
+        bh=A0AgdpPDajiFYZmAlf4PGLhKbMhRtCKLeFUUnGiUzGU=;
+        b=PRy96/5PnEJzQ0+APQKQi+Bl8vgRdMDlJMSCK9SpP/naYACkTZd2e6BP+k28D5Ete3
+         PwlxMHcz/uQEGnCX+MX82c7SW+9yC266HycbjwsHPz+q/F7TYDFijKVLQuu6ktm4MmCb
+         QSInxU3zpZuNO6mkN7pMeRuPN9eQe0HP7oOXksrI7qPU2cMD8hZkowEcsR3Cb09ZWl23
+         5zF1oOOXtmyBK8fpY2mWvXud6eqjqsiyi/SthUnBtDL//7/IaNYdvhybIkjRCz0LnRnj
+         /Sr+5JXfJT7sQeyRmkF933gsAyxYvr9DcrvBSUt0Mbh02N2HLKVjpTp585BxJqtK5RKW
+         RH5w==
+X-Gm-Message-State: AOJu0YwPnudfnGok2rsbz9TjbY7MTjN4S3GQ394lrBUCCF7juc5aBIJ9
+	FNywSCiplkMsplpuNB1CQLFmZEqRQhV8lg==
+X-Google-Smtp-Source: AGHT+IE52ELMsNzae34xjGj8xCfc7ClJfC7NBee9boVX5N5hNd4tYekJXDz8kgS9UHu/ZviZdLmkKg==
+X-Received: by 2002:a05:6512:68a:b0:50e:50a1:8321 with SMTP id t10-20020a056512068a00b0050e50a18321mr932994lfe.79.1704992426787;
+        Thu, 11 Jan 2024 09:00:26 -0800 (PST)
 Received: from [172.30.204.205] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id u12-20020a196a0c000000b0050e64b558fbsm242640lfu.79.2024.01.11.08.59.58
+        by smtp.gmail.com with ESMTPSA id u12-20020a196a0c000000b0050e64b558fbsm242640lfu.79.2024.01.11.09.00.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Jan 2024 08:59:59 -0800 (PST)
-Message-ID: <384635f4-e4e8-4a84-82be-dca71b06a9ff@linaro.org>
-Date: Thu, 11 Jan 2024 17:59:56 +0100
+        Thu, 11 Jan 2024 09:00:26 -0800 (PST)
+Message-ID: <77b36608-4fca-48e4-beb1-c31cf4579b7b@linaro.org>
+Date: Thu, 11 Jan 2024 18:00:24 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,8 +66,9 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8650-qrd: add gpio74 as reserved
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8650-mtp: add gpio74 as reserved
  gpio
+Content-Language: en-US
 To: Neil Armstrong <neil.armstrong@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -75,10 +76,9 @@ To: Neil Armstrong <neil.armstrong@linaro.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, Georgi Djakov <djakov@kernel.org>
 References: <20240111-topic-sm8650-upstream-qrd-fix-gpio-reserved-v1-0-fad39b4c5def@linaro.org>
- <20240111-topic-sm8650-upstream-qrd-fix-gpio-reserved-v1-1-fad39b4c5def@linaro.org>
-Content-Language: en-US
+ <20240111-topic-sm8650-upstream-qrd-fix-gpio-reserved-v1-2-fad39b4c5def@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240111-topic-sm8650-upstream-qrd-fix-gpio-reserved-v1-1-fad39b4c5def@linaro.org>
+In-Reply-To: <20240111-topic-sm8650-upstream-qrd-fix-gpio-reserved-v1-2-fad39b4c5def@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
@@ -86,13 +86,13 @@ Content-Transfer-Encoding: 7bit
 
 On 1/11/24 17:58, Neil Armstrong wrote:
 > The TLMM gpio74 is also used to communicate with the secure NFC
-> on-board module, some variants of the SM8650-QRD board requires
+> on-board module, some variants of the SM8650-MTP board requires
 > this GPIO to be dedicated to the secure firmware and set reserved
 > in order to successfully initialize the TLMM GPIOs from HLOS (Linux).
 > On the other boards this GPIO is unused so it's still safe to mark
 > the GPIO as reserved.
 > 
-> Fixes: a834911d50c1 ("arm64: dts: qcom: sm8650: add initial SM8650 QRD dts")
+> Fixes: 6fbdb3c1fac7 ("arm64: dts: qcom: sm8650: add initial SM8650 MTP dts")
 > Reported-by: Georgi Djakov <djakov@kernel.org>
 > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
