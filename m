@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-7044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F246B82B26E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 17:07:14 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39B7482B28A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 17:13:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 693E9B245CA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 16:07:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5DB701C22F55
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 16:13:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 035A04F894;
-	Thu, 11 Jan 2024 16:06:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3E7A4F8A9;
+	Thu, 11 Jan 2024 16:13:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vLJOl9rW"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zBp6Cmbf"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FEE14F882
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 16:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E74F4F60B
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 16:13:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-5f2d4aaa2fdso57239807b3.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 08:06:55 -0800 (PST)
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-5f3da7ba2bfso56422867b3.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 08:13:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1704989214; x=1705594014; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1704989603; x=1705594403; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=9PuIKXYJ8WO/maoVfroyyO8XVO5WxbNktc0uFfTKoBQ=;
-        b=vLJOl9rW3PJIXLb21bJACxCfF9ZSYKpYJ0rq5WEW3mFgSVhi60fNY58z4V+T8ghwmE
-         5190G+vJns+Hrll/l2AtIFMJXC+Wf1NhUr2kO61bb7zq05kzwKrQ+QBuWwz3ShzKNpIX
-         s/VFnIzzm1Bq/eT5KqV8FJvQMmd1wHq1vQmf+I+x/0TEyEfgwKeeOfkAYBBHeME7glKG
-         VNHV4qqI2Sg3JXb7uDhY0p8R1I3yC5qlFYSWQvjfc6YKvp3Z0EsS/FIZAwUAXfqACuoV
-         uovvFHJLdzcrzPhx8mYuwm/NrrCOdr1RuVL68golYFZYCwxKeTQlKdRDlzvHckzBs4cu
-         QE/A==
+        bh=B+Daz6PrvuXzuQhtp46Wp2CVwOFNa1LWR+N0jiqf7Gs=;
+        b=zBp6Cmbf8MjmKcCprXH6T3VGG8amWI2Kc8/CyzykD+OOi0MzMdIvvv1nBpld5jqAhn
+         CgWGN0npAFVryN5PGq+1lkLC/in8dSj8KELxtkRTJ5VZrfzCF9nWhFJ6mOifKOiVRhHq
+         udpcjkmIoXo+J6iQyIgoQjfNh3b+gwbbvSAhOSaUgu63rcO29i2BbMG6D16T6wVd3xUP
+         wgiHtAkfPBL5u5ngMkSLmj9c9ZaMzDFkIzqPfAQJWUvg/cGKW7M8UqjBarHm2uCOWclv
+         0+z1WNWg0c98dfrpWhA/gq7Eyysm0gacVIcDGSAqB4L/785zEtjysZLXbeajFYTS0ITZ
+         NvFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704989214; x=1705594014;
+        d=1e100.net; s=20230601; t=1704989603; x=1705594403;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=9PuIKXYJ8WO/maoVfroyyO8XVO5WxbNktc0uFfTKoBQ=;
-        b=NJ7UanGSb2xMfxZVYq3sc11Qdt28pnz0hyeScul+t36/ooHWSCHkNV41/hkEqq8e9T
-         x58XHqHiRV7cc58Ql+CkSpMChb1RK6BjmX4AyuDkk/9fph9zIshyKC36zpdGatLWsTqX
-         //8s4NOz8NPqB73viEpznMSL0FwKSYRfsELENCifiykpkdkwB3XWnNdr2MxdlJpMPPLC
-         6TdChcj9ShZMQE33yyFR7ZjZb+dvpR0KPAJZVOJJCufHif0S1mGEA/TcVf/EWZXAtlXO
-         Hc9Pfj6CFkwYRP/un9y/g6/ge29oWtSYcj6sEni6ukIVGJJQMW5xeNVbsCNMqbrzbAlO
-         fA5g==
-X-Gm-Message-State: AOJu0Yy4HoO1OKJkwKSfKOaXEOuQdJil2E8K/ld9oTcWHZUr1SfXlH2o
-	aHV8pTNB9an3Qez4wj7p+mQ1oCWz0jAOHiunzQjJxwZgGl4BvA==
-X-Google-Smtp-Source: AGHT+IFmFfgSVm19pQ+qKl8DnLELtP78DuTwuE4K1YOjX7HQk3ouLFBHRL7t3xjWuzeIzVZ87tlvLy9sB0U8VqrjxsA=
-X-Received: by 2002:a81:be02:0:b0:5e8:2bd:9b96 with SMTP id
- i2-20020a81be02000000b005e802bd9b96mr12283ywn.17.1704989214192; Thu, 11 Jan
- 2024 08:06:54 -0800 (PST)
+        bh=B+Daz6PrvuXzuQhtp46Wp2CVwOFNa1LWR+N0jiqf7Gs=;
+        b=uUkcnmEunoSfFGNve39+hYTah3kMmeyi1ejrHdVUP+4V9u28pFUYv44JTzAMXFX/I2
+         c7xmJfcuhHKHebHlau/gX3U45RCqCesWqDAHOZEwLd8GDRGJXbdIFgZK4YK56cEzhudi
+         k6YLFgmAzicpmK5B3he2mm7VyBBaFchU/TaQ609FOkCpCdU5KKU9HM+QzGF+VJdmTvsS
+         0hevhCdXq+1pJ5y1Qn/zsWe/I8K1sdtW4lEYRShP75PCT/CGPhhiyFQEPO79hlyBMzTQ
+         2p/KrrxfK/PmozjHZUwCE2B87t9hMjOSSimZ64aEIqmqS3kbIa1o7nxjiYwiMr71eaEW
+         9EHg==
+X-Gm-Message-State: AOJu0Yyj03Jto5ioavu41rjxnN36aopQs4BOM6so3TxYQ2RkGMvxVFIQ
+	C7sUViM0glpDfsLy3QJ67Pp05Ghsx3amo26GRmBphdQ0fQdB0A==
+X-Google-Smtp-Source: AGHT+IFkymLkY8xSSCpUL+R1merpxL9ejSGb+RAwdZr892fFss/9KZidkd/S5FUeLMNl7Pznqnr21BDhsMcq4JZ6ka0=
+X-Received: by 2002:a0d:cb94:0:b0:5e8:82f:c708 with SMTP id
+ n142-20020a0dcb94000000b005e8082fc708mr15305ywd.56.1704989601413; Thu, 11 Jan
+ 2024 08:13:21 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240110112059.2498-1-quic_luoj@quicinc.com> <20240110112059.2498-2-quic_luoj@quicinc.com>
- <a42718a9-d0f9-47d9-9ee8-fb520ed2a7a8@linaro.org> <de0ad768-05fa-4bb1-bcbc-0adb28cb2257@quicinc.com>
-In-Reply-To: <de0ad768-05fa-4bb1-bcbc-0adb28cb2257@quicinc.com>
+References: <20240110112059.2498-1-quic_luoj@quicinc.com> <20240110112059.2498-4-quic_luoj@quicinc.com>
+ <4bc0aff5-8a1c-44a6-89d8-460961a61310@lunn.ch> <e893c298-fbfa-4ae4-9b76-72a5030a5530@quicinc.com>
+In-Reply-To: <e893c298-fbfa-4ae4-9b76-72a5030a5530@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 11 Jan 2024 18:06:42 +0200
-Message-ID: <CAA8EJppeQdB4W8u0ux16pxBBwF_fpt1j-5aC0f849n9_iaaYtQ@mail.gmail.com>
-Subject: Re: [PATCH 1/6] arm64: dts: qcom: ipq9574: Add PPE device tree node
+Date: Thu, 11 Jan 2024 18:13:10 +0200
+Message-ID: <CAA8EJppB4cDGv1BEfeacPpi37Ut+PLgWvCDeOSj4DU4Q5uC-1g@mail.gmail.com>
+Subject: Re: [PATCH 3/6] arm64: dts: qcom: ipq5332: Add MDIO device tree
 To: Jie Luo <quic_luoj@quicinc.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, andersson@kernel.org, 
-	konrad.dybcio@linaro.org, robh+dt@kernel.org, 
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+Cc: Andrew Lunn <andrew@lunn.ch>, andersson@kernel.org, konrad.dybcio@linaro.org, 
+	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
 	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
 	quic_kkumarcs@quicinc.com, quic_suruchia@quicinc.com, quic_soni@quicinc.com, 
@@ -77,127 +76,74 @@ Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, andersson@kernel.org,
 	quic_leiwei@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 11 Jan 2024 at 17:31, Jie Luo <quic_luoj@quicinc.com> wrote:
+On Thu, 11 Jan 2024 at 18:00, Jie Luo <quic_luoj@quicinc.com> wrote:
 >
 >
 >
-> On 1/10/2024 7:40 PM, Krzysztof Kozlowski wrote:
-> > On 10/01/2024 12:20, Luo Jie wrote:
-> >> The PPE device tree node includes the PPE initialization configurations
-> >> and UNIPHY instance configuration.
-> >>
-> >> Ther are 3 UNIPHYs(PCS) on the platform ipq9574, which register the
-> >> clock provider to output the clock for PPE port to work on the different
-> >> link speed.
+> On 1/10/2024 9:35 PM, Andrew Lunn wrote:
+> > On Wed, Jan 10, 2024 at 07:20:56PM +0800, Luo Jie wrote:
+> >> Add the MDIO device tree of ipq5332.
 > >>
 > >> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
 > >> ---
-> >>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 730 +++++++++++++++++++++++++-
-> >>   1 file changed, 724 insertions(+), 6 deletions(-)
+> >>   arch/arm64/boot/dts/qcom/ipq5332.dtsi | 44 +++++++++++++++++++++++++++
+> >>   1 file changed, 44 insertions(+)
 > >>
-> >> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> >> index 810cda4a850f..5fa241e27c8b 100644
-> >> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> >> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> >> @@ -775,16 +775,734 @@ nsscc: nsscc@39b00000 {
-> >>                               <&bias_pll_nss_noc_clk>,
-> >>                               <&bias_pll_ubi_nc_clk>,
-> >>                               <&gcc_gpll0_out_aux>,
-> >> -                             <0>,
-> >> -                             <0>,
-> >> -                             <0>,
-> >> -                             <0>,
-> >> -                             <0>,
-> >> -                             <0>,
-> >> +                             <&uniphys 0>,
-> >> +                             <&uniphys 1>,
-> >> +                             <&uniphys 2>,
-> >> +                             <&uniphys 3>,
-> >> +                             <&uniphys 4>,
-> >> +                             <&uniphys 5>,
-> >>                               <&xo_board_clk>;
-> >>                      #clock-cells = <1>;
-> >>                      #reset-cells = <1>;
-> >>              };
+> >> diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> >> index bc89480820cb..e6c780e69d6e 100644
+> >> --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> >> +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+> >> @@ -214,6 +214,38 @@ serial_0_pins: serial0-state {
+> >>                              drive-strength = <8>;
+> >>                              bias-pull-up;
+> >>                      };
 > >> +
-> >> +            qcom_ppe: qcom-ppe@3a000000 {
+> >> +                    mdio0_pins: mdio0-state {
+> >> +                            mux_0 {
+> >> +                                    pins = "gpio25";
+> >> +                                    function = "mdc0";
+> >> +                                    drive-strength = <8>;
+> >> +                                    bias-disable;
+> >> +                            };
+> >> +
+> >> +                            mux_1 {
+> >> +                                    pins = "gpio26";
+> >> +                                    function = "mdio0";
+> >> +                                    drive-strength = <8>;
+> >> +                                    bias-pull-up;
+> >> +                            };
+> >> +                    };
+> >> +
+> >> +                    mdio1_pins: mdio1-state {
+> >> +                            mux_0 {
+> >> +                                    pins = "gpio27";
+> >> +                                    function = "mdc1";
+> >> +                                    drive-strength = <8>;
+> >> +                                    bias-disable;
+> >> +                            };
+> >> +
+> >> +                            mux_1 {
+> >> +                                    pins = "gpio28";
+> >> +                                    function = "mdio1";
+> >> +                                    drive-strength = <8>;
+> >> +                                    bias-pull-up;
+> >> +                            };
 > >
-> > qcom is definitely not a generic name.
+> > I don't know why i'm asking this, because i don't really expect a
+> > usable answer. What sort of MUX is this? Should you be using one of
+> > the muxes in drivers/net/mdio/mdio-mux-* or something similar?
 > >
-> > Node names should be generic. See also an explanation and list of
-> > examples (not exhaustive) in DT specification:
-> > https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+> >      Andrew
 >
-> Ok, will update to use a generic name in the link, Thanks for the
-> guidance and the link.
-> >
-> >
-> >> +                    compatible = "qcom,ipq9574-ppe";
-> >
-> > I don't see this documented. I don't see reference to posted bindings.
->
-> The DT bindings patch was part of the driver series as below. This
-> property was documented in the DT bindings patch. Attaching it to DTSI
-> series should make it more clear. If this is fine, I will update the
-> DTSI series with the DT bindings patch.
-> https://lore.kernel.org/netdev/20240110142428.52026d9e@kernel.org/
->
-> >
-> > Please run scripts/checkpatch.pl and fix reported warnings. Some
-> > warnings can be ignored, but the code here looks like it needs a fix.
-> > Feel free to get in touch if the warning is not clear.
-> >
-> > Ignoring this warning is a sign you don't really check your patches
-> > before sending.
->
-> We have run the checkpatch.pl on the whole patch series including this
-> device tree patch set together with PPE driver patch set.
-> As mentioned above, I will add the DT bindings patch into the DTS
-> series. This should help with the checkpatch issue.
+> Sorry for the confusion, the pin nodes are for the MDIO and MDC, these
+> PINs are used by the dedicated hardware MDIO block in the SoC. I will
+> update the node name from mux_0 to MDC, mux_1 to MDIO, to make it clear.
+> The driver for this node is drivers/net/mdio/mdio-ipq4019.c, it is not
+> related to the mdio-mux-* code.
 
-This will cause even more confusion, as there will be two instances of
-the dt-bindings patch. One in the driver patchset, another one in the
-DT changes. You just have to specify the dependencies in the cover
-letter. Another option is to wait for the bindings + driver to be
-accepted, then send the DTSI changes (and again, specify the
-dependency).
-
->
-> >
-> >> +                    reg = <0x3a000000 0xb00000>;
-> >> +                    #address-cells = <1>;
-> >> +                    #size-cells = <1>;
-> >> +                    ranges;
-> >
-> > Put after reg.
-> Ok.
->
-> >
-> >> +                    status = "okay";
-> >
-> > Drop
-> Ok.
->
-> >
-> > All of above comments apply to your entire patchset and all places.
-> >
-> > Looking at code further, it does not look like suitable for mainline,
-> > but copy of downstream code. That's not what we expect upstream. Please
-> > go back to your bindings first. Also, I really insist you reaching out
-> > to other folks to help you in this process.
-> >
-> > Best regards,
-> > Krzysztof
-> >
-> We will do internal review of the gaps and update the patches as per
-> your comments.
->
-> Thanks for the review comments.
-
-From the first glance, the bindings do not follow upstream principles.
-You have all the settings (tdm, port config, etc) in the DT, while
-they should instead go to the driver. Well, unless you expect that the
-board might need to override them.
+Have you read Documentation/devicetree/bindings/pinctrl/qcom,ipq5332-tlmm.yaml
+? Have you validated your DTSI files against DT schema? How many
+warnings will you observe if you rename the mux_0 node to MDC?
 
 -- 
 With best wishes
