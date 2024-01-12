@@ -1,101 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-7089-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7090-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8407B82BB31
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 07:18:46 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D97E82BB5A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 07:51:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A97081C24E7D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 06:18:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A75E91F24F1B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 06:51:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 987765C8E4;
-	Fri, 12 Jan 2024 06:18:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F0CC5B21C;
+	Fri, 12 Jan 2024 06:51:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GPAgfvQD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.kundenserver.de (mout.kundenserver.de [217.72.192.73])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 412FF5C8E1;
-	Fri, 12 Jan 2024 06:18:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
-Received: from [192.168.0.174] ([62.226.33.204]) by mrelayeu.kundenserver.de
- (mreue109 [212.227.15.183]) with ESMTPSA (Nemesis) id
- 1MBDvU-1rJFz42POA-00Cmkv; Fri, 12 Jan 2024 07:18:24 +0100
-Message-ID: <8ab0800d-e553-408c-88d7-6ae8b7798a87@oldschoolsolutions.biz>
-Date: Fri, 12 Jan 2024 07:18:23 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C4F45015;
+	Fri, 12 Jan 2024 06:51:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40C3uKnN020967;
+	Fri, 12 Jan 2024 06:51:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=2N4/PBv52utP6tUgzFaxxFCAiFD/OYFv5YNh9cACnVg=; b=GP
+	AgfvQD4/BUUVJTwzgLf7DhCmpt5fq2Wr87ldCafn060qAU8ypjUCgGFdRWE45Op/
+	4OU1Fv/MZewVA0ZXDgi0rbvQeiUiomNKI5uB/CHPr4rYMgtIOh0tiR9NFeyiQ4G6
+	cd7lZ2aco36jWv6WD2jB9wjfBQM1Cl27GG+St3e/ij2plW6Nt6Y1BuEG9WeouXl5
+	HJMytfXo9VLLIO9mndQyshZZKWNTkFTohGHQKecRXbepYa/hKpep0pOor/aOcyGG
+	kPe6G2yPfyDugLul35x6lQhMQcOSdqUtEYZSQEcBOE6fH+mp7e6pn1LbSgYk6e+x
+	eiecUoM/qdeYGjWyz87g==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vjjjj1uy2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Jan 2024 06:51:23 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40C6pMtH024587
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Jan 2024 06:51:22 GMT
+Received: from [10.216.55.240] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 11 Jan
+ 2024 22:51:18 -0800
+Message-ID: <f0d33617-3edf-6fa7-5e4b-9dbddcd6e697@quicinc.com>
+Date: Fri, 12 Jan 2024 12:20:56 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] thermal: qcom: tsens: remove dependency to
- NVMEM_QCOM_QFPROM
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-To: Amit Kucheria <amitk@kernel.org>,
- Thara Gopinath <thara.gopinath@gmail.com>
-Cc: linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- konradybcio@kernel.org
-References: <39e0f711-9331-4fd2-9d78-be53afb5c37d@oldschoolsolutions.biz>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2] media: venus: flush all buffers in output plane
+ streamoff
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+CC: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab
+	<mchehab+huawei@kernel.org>,
+        Stanimir Varbanov
+	<stanimir.varbanov@linaro.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        "Stanimir
+ Varbanov" <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia
+	<quic_vgarodia@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Mauro
+ Carvalho Chehab" <mchehab@kernel.org>
+References: <1704867134-5522-1-git-send-email-quic_dikshita@quicinc.com>
 Content-Language: en-US
-In-Reply-To: <39e0f711-9331-4fd2-9d78-be53afb5c37d@oldschoolsolutions.biz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:OqoK9sYBdc9YX1A2eTJrsaugkhswEzl6pctUQyXiyW5/QWlBzUu
- ELflV7nWd67Q/PoUxcdfxy1L4aYUy5pWQ0h1SYjs5zus5k2VnXd8o7LKIyDOtiK60cp6EGS
- ey1lASoIqRWjDvdzS4KQ0LmOQUfdodFzCjFtBSAsnJEXZQSRJ+EOBd0y1j8pMG6R/hvEZ23
- vlU6rJHoMPdf6VWrKt/gg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:qrx4Nvf7nj4=;9ayq4msTfDJq3PuJl3RrX7S4s+0
- q7uQH59NVCDMSJ71z87PoHGxa6ZyJdOrejCK/VwXrM+QdnGAko82hYEo++on0QP9HrgnoG7om
- Lx7AdL7I6TO1EP1iHswDqHrCo82OSm2/+WKRHLUgQRKapxzbNuj41CS7DXomOwq1DvyrfzQ8f
- HepuUacGi3KF/lb8gv5Ru9Xc7W3bTlgougyh2ibBelNHt17Vwkw8wOkhJANMKsxGAZh6hSW8s
- zK1C8+G50ReEv1ri3vvDIuCbC584yRu4QcYkYOmiwxLWFtcbr7jFjAjMi2U9qkHdlJg3smS0Y
- aYPBm/tVMJLogw/X3MNO3tlKi3WuRn3YkLJKCU3mwWy2SEPzkpCGJ8GKbtaLpa/4i1qu/MM3C
- CQo4/M+Jy1vMRhl+DmZywOhbDXwRLSkTcb5DbEcvKXWPXAplASG5S7+Y/+9w4OVHG72LGyJ+C
- NOLcU7eIbn87p+hwFZeCjulH1otSY9dT27M2ASQaO8+fhwCTKgoskZ8jyNbl0TOUlrrPc6uf/
- WK2R2Vuiawv7/uNmOh1EqYLQSFtFTVoAKDhDAG6Ci0/UnveON8e5YqDhAVanZSl1HcM5LVBsw
- cIAp2QjR1GJFinMs5YoFUoowQ8vstJTnQP+Vme+wENMlrdL6NoUcLaHplYOQZCO/aoq1/t6+d
- BjUIjbhyho4UrjVdvFzw+M0G8AmoG9Jz/fSZ4zIQITZBFrL2MYPyRqAIuEBoWsJWsQaA7qOeC
- QPq9wG8wCNHZHHpg/T74FZzg0MDRVIRyp7H9r6ySBEHNtKarec7xBqitrzktxNJVguIKn+Lm8
- Wx5z3IYo0IqiIsObJ+QJvEE+kNuNo+HG9ubqSIfsLx+zI511lSxcANcRLZFtVNffR20gtxHUS
- +TUFZ7d18BrSgQQ==
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <1704867134-5522-1-git-send-email-quic_dikshita@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: QqmEl9B5QrZh9f-84xri1b9dDRg91LbI
+X-Proofpoint-GUID: QqmEl9B5QrZh9f-84xri1b9dDRg91LbI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ phishscore=0 mlxscore=0 spamscore=0 impostorscore=0 mlxlogscore=999
+ lowpriorityscore=0 priorityscore=1501 clxscore=1015 bulkscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401120050
 
-Hi there,
+Hi Bryan,
 
-please don't bother with this patch. Re-checked and works as intended if 
-done in the right order.
+I realized later that I missed to add your reviewed-by tag to this v2
+patch, Sorry for this silly mistake, will be more careful in future.
 
-with best regards
-
-Jens
-
-On 12/20/23 23:05, Jens Glathe wrote:
-> The dependency to NVMEM_QCOM_QFPROM seems to be a problem when using
-> "make menuconfig", it will exclude QCOM_TSENS from the build wWith
-> bad effects on power management, observed on the Windows Dev Kit 2023,
-> and Thinkpad X13s. Removing it doesn't have a negative side effect,
-> as it seems. Observed this since v6.6.
->
-> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+On 1/10/2024 11:42 AM, Dikshita Agarwal wrote:
+> For scenarios, when source change is followed by VIDIOC_STREAMOFF
+> on output plane, driver should discard any queued OUTPUT
+> buffers, which are not decoded or dequeued.
+> Flush with HFI_FLUSH_INPUT does not have any actual impact.
+> So, fix it, by invoking HFI_FLUSH_ALL, which will flush all
+> queued buffers.
+> 
+> Fixes: 85872f861d4c ("media: venus: Mark last capture buffer")
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
->  drivers/thermal/qcom/Kconfig | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/drivers/thermal/qcom/Kconfig b/drivers/thermal/qcom/Kconfig
-> index c4ebb1977b177..09d9b35c57bd2 100644
-> --- a/drivers/thermal/qcom/Kconfig
-> +++ b/drivers/thermal/qcom/Kconfig
-> @@ -1,7 +1,6 @@
->  # SPDX-License-Identifier: GPL-2.0-only
->  config QCOM_TSENS
->      tristate "Qualcomm TSENS Temperature Alarm"
-> -    depends on NVMEM_QCOM_QFPROM
->      depends on ARCH_QCOM || COMPILE_TEST
->      help
->        This enables the thermal sysfs driver for the TSENS device. It 
-> shows
+> Changes since v1:
+> - Added fixes tag (Bryan)
+> 
+>  drivers/media/platform/qcom/venus/vdec.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index 29130a9..0d2ab95 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -1255,7 +1255,7 @@ static int vdec_stop_output(struct venus_inst *inst)
+>  		break;
+>  	case VENUS_DEC_STATE_INIT:
+>  	case VENUS_DEC_STATE_CAPTURE_SETUP:
+> -		ret = hfi_session_flush(inst, HFI_FLUSH_INPUT, true);
+> +		ret = hfi_session_flush(inst, HFI_FLUSH_ALL, true);
+>  		break;
+>  	default:
+>  		break;
 
