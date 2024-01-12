@@ -1,207 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-7158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE67882C764
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 23:45:08 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE7DB82C7CD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jan 2024 00:04:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8884028332E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 22:45:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5C9D21F233E9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 23:04:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7976D18056;
-	Fri, 12 Jan 2024 22:45:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75498171D8;
+	Fri, 12 Jan 2024 23:04:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xNh8lrph"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="efRdDqm8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8E7C182A8
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 22:45:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a2cea0563cbso124507766b.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 14:45:02 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 164BB18C2A
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 23:04:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3bc09844f29so5675222b6e.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 15:04:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705099501; x=1705704301; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5+Yt8N0vLR3BWDealxvKrDyIpQpUSEu3d8Yxm5uh+ww=;
-        b=xNh8lrphPW0XrDkvXtAPJERPaVFQYLkERJf6FZMkQD3LZ6XrF5+mXQOCKSpbZzkGVg
-         +sl3/i8kSqOz15Qfk3TStsvYzaxEuwufcwxPcoJ+cnmilb7dNkrq/SEaWe0KEjvRgD5q
-         OGKouoDt2IV2MFaZnAHeEmdLJyt9mRW06n8fTj/Hg1HsMUfKFyuy4EL+O0s9F24SbRYy
-         g6TCfzeC5k+fJyGkgKQbsUb3ba2D7r75NQXQmvJMtZ6KOQeuoJfY9NjgwMuzePBsAm/j
-         IHOcYYdLhovU7TN3YWdkEVm1kk7PlqmCiWWyROqdE0r0wh6M8OvGYC37xnLpV3xPiDb8
-         76Ww==
+        d=chromium.org; s=google; t=1705100649; x=1705705449; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=D7qtz6QdtoP8S0o7HHWZE03iwDGuSX/EUMpLPmn8nUU=;
+        b=efRdDqm8ITgMXTBV/AA0+gowby9kmqDhSlr1LU5GuNXarsSYI5sy6rCFk/zupLTH0w
+         SiG5xxSgWMcDs4lEnjorhskTc0nkX9omH5gTiACB/I5cSkM2AOG7TGbXXS6BWNP0/XbR
+         D8r54Oz8HAkPANifzlNG8NT3OWy2KHBYI1uvk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705099501; x=1705704301;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5+Yt8N0vLR3BWDealxvKrDyIpQpUSEu3d8Yxm5uh+ww=;
-        b=Wi36/y03g/D9bTtjDlGzdqzyEOC7mKH2Je0Kspv5egaaWpQyMXx/nCTuiA3rraL+i4
-         sW24CMG1gSxp4GA514sBBBonppcpCh4TOvM/va+qwyyiLWrKUE+Vh0QAPwAgK6NrLtOl
-         0TIVzwgd3bxnlTv7BS5YQ/X/ODLl02WBeTmQGzPujdjbesrpkezGWkrI8PUltft2M5r3
-         7/wQOK0EQNO6tgTXs9/Ppd+MYLoyteyyO8euHyQ3Atuu+s10qCw1U9+9v7imhUShc4IY
-         p4Ghu7gcSASA5Km/P1lT5lnGc2dDXfesl6YY5EQO782LuXr08DidqwSzRsBdiAtsGHuE
-         pi5g==
-X-Gm-Message-State: AOJu0Yw2baO+AahR7awYXKHXtgwexKchSRuZkdSzptNvykKhQ3XCdUxn
-	jWp0WzSHel/XtRQvpJahNx5BnrcGAolAsA==
-X-Google-Smtp-Source: AGHT+IHsxytgP5d+Op5yk1COIvhtctxmIA5NVUcm0Qp+yPfyaXqjp1C+H1DLkpMuIW4haoYo2lqawg==
-X-Received: by 2002:a17:907:c70c:b0:a28:a8cb:3185 with SMTP id ty12-20020a170907c70c00b00a28a8cb3185mr1180597ejc.69.1705099500991;
-        Fri, 12 Jan 2024 14:45:00 -0800 (PST)
-Received: from [192.168.174.25] (178235179017.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.17])
-        by smtp.gmail.com with ESMTPSA id u3-20020a1709064ac300b00a269b4692a9sm2223723ejt.84.2024.01.12.14.44.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Jan 2024 14:45:00 -0800 (PST)
-Message-ID: <d7bb676c-f881-4be0-aff2-da50c9fa7eda@linaro.org>
-Date: Fri, 12 Jan 2024 23:44:57 +0100
+        d=1e100.net; s=20230601; t=1705100649; x=1705705449;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=D7qtz6QdtoP8S0o7HHWZE03iwDGuSX/EUMpLPmn8nUU=;
+        b=de2JLbylmw0WUC9/uBpRYtuGtK5IWSp+CH4ozFuDaMZGw1TRMnI2TGEGM0lCR2QDAP
+         glEGBWVSGRaqY7bBzWbgMX+zKgNhiiB+dCemkDkZURqqmoyoaPecVRgea61CCQD2fRY8
+         nFNetgyvCYnudpc/mjiIhQ0x8eaUAWhXV72lwfbf8GEFP1Odzwap2lnEPsw7dXdSgVuj
+         1Sy7i0jvpY2Q+z9PAS3r0HsEvbNcw0E7ztUwSSSD0eLqvHjrL3dAHF/0m4akYhm8QD07
+         vnrom11A81QEeLV5uzKo49FDBQkfzyZ9+TFUvzKTjGzoyZ2+xc3yLwF8XDpQZAjg8v9Z
+         Nh0g==
+X-Gm-Message-State: AOJu0YwOkxJbjCxRy3F2A1yEtrTOnz71ZncK5JwFdciBmZIbAhKcpYKP
+	t21cl48IAQeLBgimAtfEf9VI74xmbVTk
+X-Google-Smtp-Source: AGHT+IEjZrhsp27LYHk0t8+/pkaBORsXAC1es0/wqI168axSz0VmgPaj73/RXKG9OcZI7hRPFyq8Kw==
+X-Received: by 2002:a05:6808:221a:b0:3bc:2a41:953 with SMTP id bd26-20020a056808221a00b003bc2a410953mr2203254oib.83.1705100649177;
+        Fri, 12 Jan 2024 15:04:09 -0800 (PST)
+Received: from dianders.sjc.corp.google.com ([2620:15c:9d:2:3e64:3a29:441b:e07e])
+        by smtp.gmail.com with ESMTPSA id fd41-20020a056a002ea900b006d49ed3eff2sm3678612pfb.75.2024.01.12.15.04.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Jan 2024 15:04:08 -0800 (PST)
+From: Douglas Anderson <dianders@chromium.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: linux-arm-kernel@lists.infradead.org,
+	Stephen Boyd <swboyd@chromium.org>,
+	linux-serial@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] soc: qcom: geni-se: Add M_TX_FIFO_NOT_EMPTY bit definition
+Date: Fri, 12 Jan 2024 15:03:07 -0800
+Message-ID: <20240112150307.1.I7dc0993c1e758a1efedd651e7e1670deb1b430fb@changeid>
+X-Mailer: git-send-email 2.43.0.275.g3460e3d667-goog
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 6/6] PCI: qcom: Add OPP support to scale performance
- state of power domain
-Content-Language: en-US
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
- Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>,
- Rob Herring <robh+dt@kernel.org>, Johan Hovold <johan+linaro@kernel.org>,
- Brian Masney <bmasney@redhat.com>, Georgi Djakov <djakov@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, vireshk@kernel.org,
- quic_vbadigan@quicinc.com, quic_skananth@quicinc.com,
- quic_nitegupt@quicinc.com, linux-pci@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240112-opp_support-v6-0-77bbf7d0cc37@quicinc.com>
- <20240112-opp_support-v6-6-77bbf7d0cc37@quicinc.com>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20240112-opp_support-v6-6-77bbf7d0cc37@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 12.01.2024 15:22, Krishna chaitanya chundru wrote:
-> QCOM Resource Power Manager-hardened (RPMh) is a hardware block which
-> maintains hardware state of a regulator by performing max aggregation of
-> the requests made by all of the processors.
-> 
-> PCIe controller can operate on different RPMh performance state of power
-> domain based up on the speed of the link. And this performance state varies
-> from target to target.
-> 
-> It is manadate to scale the performance state based up on the PCIe speed
-> link operates so that SoC can run under optimum power conditions.
-> 
-> Add Operating Performance Points(OPP) support to vote for RPMh state based
-> upon GEN speed link is operating.
-> 
-> OPP can handle ICC bw voting also, so move icc bw voting through opp
-> framework if opp entries are present.
-> 
-> In PCIe certain gen speeds like GEN1x2 & GEN2X1 or GEN3x2 & GEN4x1 use
-> same icc bw and has frequency, so use frequency based search to reduce
-> number of entries in the opp table.
-> 
-> Don't initialize icc if opp is supported.
-> 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> ---
+According to the docs I have, bit 21 of the status register is
+asserted when the FIFO is _not_ empty. Add the definition.
 
-[...]
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
 
->  
-> -static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
-> +static void qcom_pcie_icc_opp_update(struct qcom_pcie *pcie)
+ include/linux/soc/qcom/geni-se.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-Or simply.. qcom_pcie_opp_update :) Especially with Dmitry's
-suggestions
+diff --git a/include/linux/soc/qcom/geni-se.h b/include/linux/soc/qcom/geni-se.h
+index 29e06905bc1f..0f038a1a0330 100644
+--- a/include/linux/soc/qcom/geni-se.h
++++ b/include/linux/soc/qcom/geni-se.h
+@@ -178,6 +178,7 @@ struct geni_se {
+ #define M_GP_IRQ_3_EN			BIT(12)
+ #define M_GP_IRQ_4_EN			BIT(13)
+ #define M_GP_IRQ_5_EN			BIT(14)
++#define M_TX_FIFO_NOT_EMPTY_EN		BIT(21)
+ #define M_IO_DATA_DEASSERT_EN		BIT(22)
+ #define M_IO_DATA_ASSERT_EN		BIT(23)
+ #define M_RX_FIFO_RD_ERR_EN		BIT(24)
+-- 
+2.43.0.275.g3460e3d667-goog
 
->  {
->  	struct dw_pcie *pci = pcie->pci;
-> -	u32 offset, status;
-> +	u32 offset, status, freq;
-> +	struct dev_pm_opp *opp;
->  	int speed, width;
->  	int ret;
->  
-> -	if (!pcie->icc_mem)
-> -		return;
-> -
->  	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
->  	status = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
->  
-> @@ -1424,11 +1424,42 @@ static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
->  	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
->  	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, status);
->  
-> -	ret = icc_set_bw(pcie->icc_mem, 0, width * QCOM_PCIE_LINK_SPEED_TO_BW(speed));
-> -	if (ret) {
-> -		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
-> -			ret);
-> +	if (pcie->opp_supported) {
-> +		switch (speed) {
-> +		case 1:
-> +			freq = 2500000;
-> +			break;
-> +		case 2:
-> +			freq = 5000000;
-> +			break;
-> +		case 3:
-> +			freq = 8000000;
-> +			break;
-> +		default:
-> +			WARN_ON_ONCE(1);
-> +			fallthrough;
-> +		case 4:
-> +			freq = 16000000;
-> +			break;
-> +		}
-Might as well add gen5 and 6 rates of 3200.. and 6400.. since they're
-hard-in-stone in the spec by now, AFAIK
-
-Konrad
 
