@@ -1,137 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-7090-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7091-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D97E82BB5A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 07:51:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 265A382BBF6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 08:44:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A75E91F24F1B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 06:51:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8A2F71F24C0B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 07:44:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F0CC5B21C;
-	Fri, 12 Jan 2024 06:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBDDF5D73C;
+	Fri, 12 Jan 2024 07:44:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GPAgfvQD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Wpd126oR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C4F45015;
-	Fri, 12 Jan 2024 06:51:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40C3uKnN020967;
-	Fri, 12 Jan 2024 06:51:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=2N4/PBv52utP6tUgzFaxxFCAiFD/OYFv5YNh9cACnVg=; b=GP
-	AgfvQD4/BUUVJTwzgLf7DhCmpt5fq2Wr87ldCafn060qAU8ypjUCgGFdRWE45Op/
-	4OU1Fv/MZewVA0ZXDgi0rbvQeiUiomNKI5uB/CHPr4rYMgtIOh0tiR9NFeyiQ4G6
-	cd7lZ2aco36jWv6WD2jB9wjfBQM1Cl27GG+St3e/ij2plW6Nt6Y1BuEG9WeouXl5
-	HJMytfXo9VLLIO9mndQyshZZKWNTkFTohGHQKecRXbepYa/hKpep0pOor/aOcyGG
-	kPe6G2yPfyDugLul35x6lQhMQcOSdqUtEYZSQEcBOE6fH+mp7e6pn1LbSgYk6e+x
-	eiecUoM/qdeYGjWyz87g==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vjjjj1uy2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 12 Jan 2024 06:51:23 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40C6pMtH024587
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 12 Jan 2024 06:51:22 GMT
-Received: from [10.216.55.240] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 11 Jan
- 2024 22:51:18 -0800
-Message-ID: <f0d33617-3edf-6fa7-5e4b-9dbddcd6e697@quicinc.com>
-Date: Fri, 12 Jan 2024 12:20:56 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5155D727
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 07:44:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-33694bf8835so4725473f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 23:44:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1705045483; x=1705650283; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lJ67vGP58fbUmkExgKg2eABxDfVIbi7Bocp1QhPmbiw=;
+        b=Wpd126oRTbx2gO8svFTAY9U5hi06x6gCRshJNQ2rWqBJZJLNH9mXLdk+NZ56KfHsMu
+         Tpp+v0FFlxWsV5lqanSxEEbnfjuiPtL26dJruRqlNJSPzYzWypctWylcjkkVBRXwi3Zr
+         a3D0ZVLGVqFIak/0/U7tT1d9IOr5grP7hhAc2mxngK0UX8u8XqIl+VcH/VIX6IUqtScI
+         srUglN2/QHe6AWoKW/TR41ElOZ5okrI6vwJbzUavNndY47B5m+0S918u2EA7360qlK8O
+         gqFH2BPFy7/1aLyelplrdlYiSCMsFreE9BL5Czm1TqLDxgkflpfzXqfPjwv9QOE6sBJu
+         9c7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705045483; x=1705650283;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lJ67vGP58fbUmkExgKg2eABxDfVIbi7Bocp1QhPmbiw=;
+        b=dam7xBH0+CnQPcUMcB/FFJNdgEvt/llKrxxowqeTLErdLXHeIQNEaSL4wfMGgBZC1c
+         x9MQefYWzWtOvV28/KnmQzBB1gwQ/KHbRaJd/rYW/CbzHakaWxuKakho9nY21toBZvJe
+         cRwEJ3YuJakTT5Lil3JW6XPlQ3hxXiflNvA0E/Bp6aITSVx8jyugiKtToC/Sof0UZIQu
+         zKKdgIHzh0gsf+giCVFCxbLLadr+U5ILU4pFIQRpq3sNbMy6mPm1iW4a6nm6+tF3T9eL
+         CST2IuiDzRCxG3bA5GRboJYZP1f/9RpjZjWi2hMJN4AbqUzi2adEVUO/U4WWHt4Op0lf
+         bK0g==
+X-Gm-Message-State: AOJu0Yzc/HA6W2hkyJpGtZFyZ3vFy9ZooIFjsJM8PNS2ZbhCtOKhqL/d
+	mS/l6w8kdh6HMRFfPNs924nahBhuZlk6rw==
+X-Google-Smtp-Source: AGHT+IE2+4pXuYbHbipr6aHQbxXfnXAz9g22j7lfWZDvutbbjeiinoiAKLBacgBiA237mhb5GvRaYQ==
+X-Received: by 2002:a7b:ce8a:0:b0:40d:685c:3880 with SMTP id q10-20020a7bce8a000000b0040d685c3880mr507398wmj.176.1705045482974;
+        Thu, 11 Jan 2024 23:44:42 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.223.112])
+        by smtp.gmail.com with ESMTPSA id v30-20020adf8b5e000000b0033690139ea5sm3130742wra.44.2024.01.11.23.44.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 11 Jan 2024 23:44:42 -0800 (PST)
+Message-ID: <1f14bff5-4f3e-426b-b81d-006da061af1e@linaro.org>
+Date: Fri, 12 Jan 2024 08:44:40 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2] media: venus: flush all buffers in output plane
- streamoff
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-CC: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab
-	<mchehab+huawei@kernel.org>,
-        Stanimir Varbanov
-	<stanimir.varbanov@linaro.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        "Stanimir
- Varbanov" <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia
-	<quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Mauro
- Carvalho Chehab" <mchehab@kernel.org>
-References: <1704867134-5522-1-git-send-email-quic_dikshita@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] arm64: dts: qcom: qcs6490-idp: Add definition for
+ three LEDs.
 Content-Language: en-US
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <1704867134-5522-1-git-send-email-quic_dikshita@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+To: quic_huliu@quicinc.com, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240112-lpg-v4-1-c4004026686b@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20240112-lpg-v4-1-c4004026686b@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: QqmEl9B5QrZh9f-84xri1b9dDRg91LbI
-X-Proofpoint-GUID: QqmEl9B5QrZh9f-84xri1b9dDRg91LbI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
- phishscore=0 mlxscore=0 spamscore=0 impostorscore=0 mlxlogscore=999
- lowpriorityscore=0 priorityscore=1501 clxscore=1015 bulkscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401120050
 
-Hi Bryan,
-
-I realized later that I missed to add your reviewed-by tag to this v2
-patch, Sorry for this silly mistake, will be more careful in future.
-
-On 1/10/2024 11:42 AM, Dikshita Agarwal wrote:
-> For scenarios, when source change is followed by VIDIOC_STREAMOFF
-> on output plane, driver should discard any queued OUTPUT
-> buffers, which are not decoded or dequeued.
-> Flush with HFI_FLUSH_INPUT does not have any actual impact.
-> So, fix it, by invoking HFI_FLUSH_ALL, which will flush all
-> queued buffers.
+On 12/01/2024 04:05, Hui Liu via B4 Relay wrote:
+> From: Hui Liu <quic_huliu@quicinc.com>
 > 
-> Fixes: 85872f861d4c ("media: venus: Mark last capture buffer")
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Add definition for three LEDs to make sure they can
+> be enabled base on QCOM LPG LED driver.
+> 
+> Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
 > ---
-> Changes since v1:
-> - Added fixes tag (Bryan)
-> 
->  drivers/media/platform/qcom/venus/vdec.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-> index 29130a9..0d2ab95 100644
-> --- a/drivers/media/platform/qcom/venus/vdec.c
-> +++ b/drivers/media/platform/qcom/venus/vdec.c
-> @@ -1255,7 +1255,7 @@ static int vdec_stop_output(struct venus_inst *inst)
->  		break;
->  	case VENUS_DEC_STATE_INIT:
->  	case VENUS_DEC_STATE_CAPTURE_SETUP:
-> -		ret = hfi_session_flush(inst, HFI_FLUSH_INPUT, true);
-> +		ret = hfi_session_flush(inst, HFI_FLUSH_ALL, true);
->  		break;
->  	default:
->  		break;
+> Changes in v4:
+> - Removed "label" definition and added "function" definition.
+
+You did not test your patch before sending.
+
+Subject is still wrong. Also, it still has unnecessary full stop. Drop it.
+
+Best regards,
+Krzysztof
+
 
