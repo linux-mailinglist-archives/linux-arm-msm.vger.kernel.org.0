@@ -1,163 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-7087-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7088-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3BC282B9FE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 04:36:58 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BF4382BA46
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 05:17:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C4E521C2382A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 03:36:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F301F288F3F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 04:17:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32BDE1A73C;
-	Fri, 12 Jan 2024 03:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 859621B288;
+	Fri, 12 Jan 2024 04:17:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Y4joe22e"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SQQwR1yA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0541A737
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 03:36:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-5f2aab1c0c5so55313867b3.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 19:36:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705030608; x=1705635408; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=GEYe0U4gORZBXN1j3b/LGEmE8U+x0Ew9Qh5xXurgWGw=;
-        b=Y4joe22eo1SrfigjCJx8/zwIDfIOhVhcoK27HnXQBLg9lQRsDiyHoCM7w7j+RwoFdH
-         Z+v8KpEH4EMN6Z2oj62H7JqYldHyjUepOmJU691AZWpP48VKtk6R3l8NWylqoHt0k0vm
-         r02GAewzm0NXksiORO/2tR7iu3Qh5UkF5zLLyJ0BmDTOF8nIPOm2zoAnBjIyKcGPFxwH
-         BMXclz4mefJ7sE7MnwXenleI4NiXVBhOiYP4AiFsJI8GFSGgVH5rMBSol4glEqnnpdEq
-         /gMsQ6FxBYhUWYcx/x1HyRGPDi0Nnmln9ltMlk5T0SGTyUQyX3ziqiZewlDvTo7uQp45
-         L7hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705030608; x=1705635408;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GEYe0U4gORZBXN1j3b/LGEmE8U+x0Ew9Qh5xXurgWGw=;
-        b=DuwJWlfEpgsn3xgPOpRQTftHtwREqsL1VolkGPC9hyfiboh+BUx4wRGC7F2RuP8uEX
-         Ebv6I3pNsaGMlsC+7zwqHxlLuFxCCBtX45ZfHgiC9mD5zR4s8mtuzDuEZjPnat0fLLv0
-         V2ozeac/112Mc1ThMazL/DZtrpjReWDt3O7hDvE99bKJYMo7b1FNNRz//PX2Ph7Bsoju
-         sk47pQfSxTUkAW6Wvcx3Yg6BZAoAJHaX1P3ZAy1Lq7wAfvVF64Nnf7ceV/MbcGHpq0zO
-         z9VG5pwKkyQAy5u3mxzStJpdyUahE0hYAnGM9SQFeUdUuw2fDe6y9hfvdI/rRFIcS2Rw
-         kEUg==
-X-Gm-Message-State: AOJu0YzY2eMmL6HI3crAcbqyE0A4x4lhtcm15sWhxhIys4/F0M2xezMu
-	AahxuHA9UDHSv6TgjaVio+M8H+su/3VxjkEoQkmply6EN9O8wQ==
-X-Google-Smtp-Source: AGHT+IFWS7RDvOXQIhqh60aLsH3T1/KMPFvHobCssgGPky7B5SPWl831YOqQfs6r6SRgYCi9tMwT87VGR+S3cDUc3/Y=
-X-Received: by 2002:a81:b610:0:b0:5e5:3342:c600 with SMTP id
- u16-20020a81b610000000b005e53342c600mr1050213ywh.9.1705030607689; Thu, 11 Jan
- 2024 19:36:47 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0CFFFC0D;
+	Fri, 12 Jan 2024 04:17:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40C2SIND003610;
+	Fri, 12 Jan 2024 04:16:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=vdQ3SBthWJ9UerVtsClpTKpnG/NXR359dvcDFj9NHb0=; b=SQ
+	QwR1yAQ0Om6szc6ZSv7WMUlOL9EpZVfdZg55wDxs4XbG3UJmqEApsxpHGrJcNAU0
+	tpBb1/2p/eHsku/Y8szzLtuYXPfH5Lnxl49A/6P/4GGTpQiSx///xFBXdXLW2bjP
+	eKaF1srAfsgIJu4O47E3xYPBwaErc6gamNVRO8CCjOd9Q65vX0CnQEa/7GA16BV9
+	NiGxkumk3lcJp3rfMpBLDuyWh6Bt5Qox1/r31rk9wmFNLT0yiGxiepDANJqGzbTQ
+	HjkEMj/ajPUzraiMaJ1U2hBYXnhNbtfr6iGy28xt2bk1b0P4mnEZWy1rE8gqS6hP
+	h92Q8WvvloTqEjoJvqgg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vjcvjtdhn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Jan 2024 04:16:53 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40C4GqoD025732
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Jan 2024 04:16:52 GMT
+Received: from [10.216.55.36] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 11 Jan
+ 2024 20:16:47 -0800
+Message-ID: <f4805d04-9514-6a41-b39e-aa8a4577ce90@quicinc.com>
+Date: Fri, 12 Jan 2024 09:46:42 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240112-lpg-v4-1-c4004026686b@quicinc.com>
-In-Reply-To: <20240112-lpg-v4-1-c4004026686b@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 12 Jan 2024 05:36:37 +0200
-Message-ID: <CAA8EJppdjVRpzrdqm4VOZwUO+khjTdRbY6jN2E2VGmCKSd8inA@mail.gmail.com>
-Subject: Re: [PATCH v4] arm64: dts: qcom: qcs6490-idp: Add definition for
- three LEDs.
-To: quic_huliu@quicinc.com
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: Proposal for QCOM PCIe switch power and configuration driver
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        "Veerabhadrarao
+ Badiganti" <quic_vbadigan@quicinc.com>,
+        <quic_skananth@quicinc.com>, <bartosz.golaszewski@linaro.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
+	<devicetree@vger.kernel.org>,
+        "open list:PCIE ENDPOINT DRIVER FOR QUALCOMM"
+	<linux-arm-msm@vger.kernel.org>,
+        <p.zabel@pengutronix.de>, Bjorn Helgaas
+	<bhelgaas@google.com>,
+        "open list:PCIE ENDPOINT DRIVER FOR QUALCOMM"
+	<linux-pci@vger.kernel.org>
+References: <413d612f-0e31-6281-64e3-6484b85afe06@quicinc.com>
+ <036823ce-9815-4884-aa3a-9c3831cea9bb@linaro.org>
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <036823ce-9815-4884-aa3a-9c3831cea9bb@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: HaVysU1oa21CgZEQkn-NMHhH0utbtCPj
+X-Proofpoint-ORIG-GUID: HaVysU1oa21CgZEQkn-NMHhH0utbtCPj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 spamscore=0
+ adultscore=0 mlxscore=0 suspectscore=0 impostorscore=0 lowpriorityscore=0
+ malwarescore=0 phishscore=0 clxscore=1011 bulkscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
+ definitions=main-2401120027
 
-On Fri, 12 Jan 2024 at 05:07, Hui Liu via B4 Relay
-<devnull+quic_huliu.quicinc.com@kernel.org> wrote:
->
-> From: Hui Liu <quic_huliu@quicinc.com>
->
-> Add definition for three LEDs to make sure they can
-> be enabled base on QCOM LPG LED driver.
->
-> Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
-> ---
-> Changes in v4:
-> - Removed "label" definition and added "function" definition.
+++CC   Philipp Zabel ( reset controller maintainer)  & Bjorn & PCI list 
+from PCIe subsytem.
 
-You have removed "label", but you didn't add "function".
+On 1/11/2024 11:20 PM, Krzysztof Kozlowski wrote:
+> On 11/01/2024 18:38, Krishna Chaitanya Chundru wrote:
+>> Hi DT maintainers,
+>>
+>> We are trying to upstream the QCOM PCIe switch which has I2C interface
+>> to configure the switch.
+>>
+>> In generic a PCIe switch is a device that allows expansion of PCI
+>> Express hierarchy, which allows more devices(PCIe endpoints) to be
+>> connected to a single PCIe port.
+>>
+>> We need to configure the QCOM switch like L0s, L1ss entry times, Tx
+>> amplitudes etc.. through I2C interface before PCIe link is established
+>> as these settings can affect link stability if we don't configure them.
+>>
+>> Once PCIe switch is configured, PCIe link between the PCIe switch and
+>> PCIe port connected should be established by the QCOM PCIe controller
+>> driver to enumerate the PCIe endpoints connected to the PCIe switch.
+>>
+>> We had a QCOM switch driver which powers on the switch and do the I2C
+>> configurations.
+>>
+>> This is how the flow goes.
+>> -->Power on the switch
+>>       -->Do Switch configuration (over i2c) with qcom switch driver
+>>           -->PCIe link training and enumeration.
+> 
+> And where is the PCI controller in this? Why isn't this represented like
+> I2C or GPIO expander? You need to describe what exactly the switch is doing.
+>
+The PCIe link training and enumeration is handled by PCIe controller driver.
+Usually a single endpoint will be connected to PCIe port, using a switch
+we can connect multiple endpoints like WLAN, NVME, PCIe to ethernet
+bridge etc. So in single instance of PCIe multiple endpoints are
+connected and enumerated.
+Like I2C or GPIO expander we don't want to configure any endpoints, here
+we are trying to solve the initialization part of the switch power to
+the switch and configuration of the switch before PCIe controller starts
+link training and enumeration.
 
-BTW: the commit subject is still wrong. Compare "qmp6490-idp" vs "qcs6490-idp"
+> Also, how about using existing solutions? Aren't there any? I am not
+> going to look for them for you...
+> 
+As of I know we don't have any solutions exiting now, we are trying to
+explore different ways for it.
+> Anyway, you should ask (means Cc) reset controller maintainers if they
+> are happy for such usage of reset framework for something not being a
+> reset. For similar reasons you should Cc PCI maintainers. If you ask me,
+> then no, PCI switch does not look like reset line so, you should not use
+> reset lines.
+> 
+I added both maintainers now. sorry for the miss.
+We want to use reset line because I2c driver has to power on the device
+and configure the switch only before PCIe controller driver probes.
+This is how reset controller operates(correct me if I was wrong).
 
-> - Link to v3: https://lore.kernel.org/r/20231215-lpg-v3-1-4e2db0c6df5f@quicinc.com
->
-> Changes in v3:
-> - Rephrased commit text and updated the nodes to qcm6490-idp board file.
-> - Link to v2: https://lore.kernel.org/all/20231110-qcom_leds-v2-1-3cad1fbbc65a@quicinc.com/
->
-> Changes in v2:
-> - Rephrased commit text and updated the nodes to board file.
-> - Link to v1: https://lore.kernel.org/r/20231108-qcom_leds-v1-1-c3e1c8572cb0@quicinc.com
-> ---
->  arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 23 +++++++++++++++++++++++
->  1 file changed, 23 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> index 37c91fdf3ab9..8268fad505e7 100644
-> --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> @@ -5,6 +5,7 @@
->
->  /dts-v1/;
->
-> +#include <dt-bindings/leds/common.h>
->  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->  #include "sc7280.dtsi"
->  #include "pm7325.dtsi"
-> @@ -414,6 +415,28 @@ vreg_bob_3p296: bob {
->         };
->  };
->
-> +&pm8350c_pwm {
-> +       function = LED_FUNCTION_STATUS;
-> +       #address-cells = <1>;
-> +       #size-cells = <0>;
-> +       status = "okay";
-> +
-> +       led@1 {
-> +               reg = <1>;
-> +               color = <LED_COLOR_ID_RED>;
-> +       };
-> +
-> +       led@2 {
-> +               reg = <2>;
-> +               color = <LED_COLOR_ID_GREEN>;
-> +       };
-> +
-> +       led@3 {
-> +               reg = <3>;
-> +               color = <LED_COLOR_ID_BLUE>;
-> +       };
-> +};
-> +
->  &qupv3_id_0 {
->         status = "okay";
->  };
->
-> ---
-> base-commit: 17cb8a20bde66a520a2ca7aad1063e1ce7382240
-> change-id: 20231215-lpg-4aadd374811a
->
+
+Thanks & Regards,
+Krishna Chaitanya.
 > Best regards,
-> --
-> Hui Liu <quic_huliu@quicinc.com>
->
->
-
-
--- 
-With best wishes
-Dmitry
+> Krzysztof
+> 
 
