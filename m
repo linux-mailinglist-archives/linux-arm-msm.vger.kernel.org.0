@@ -1,66 +1,31 @@
-Return-Path: <linux-arm-msm+bounces-7095-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7096-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E03C82BCBF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 10:14:43 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 89F6382BD44
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 10:30:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 725411F25134
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 09:14:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3EDC61F2676B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 09:30:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B79775578E;
-	Fri, 12 Jan 2024 09:14:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dyI+dSMe"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19B3356B68;
+	Fri, 12 Jan 2024 09:29:22 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0BE57305
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 09:14:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-336c9acec03so5157506f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 01:14:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705050872; x=1705655672; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=S1vcfihMbPJOkqRcFLfQWKsQhpfYhll+IXXKznuEtxw=;
-        b=dyI+dSMe5xzWOhBFtOk8blSEC04KqBepDxdD7AnSPIyqq1oDr/++ugjwx2BZdicLn0
-         ZWMeK5pdVtUAOhRwydH3S48of9lYvdfBQDKEQUJrMH2Uzqu+5U2q8m7nCP1ew1VGEzi9
-         lPNJmPEyLVFxapm45pRacH46CJaEfyCcRXzaLo61e9Eo3X1LR6SNJlMTt6WTOl4mdwsp
-         DnM0CtzmAAeeaapyUJsn3rk5yndCj8JwLsIT9eF3+6ZaoPQxHhLt5NQXBY97NnwSiWtO
-         Ys/f4y0yS7prSNDZdNUnSstRrDCTqGjyzIhlU7FDk9V85uxvA23T9NJAVrDwkbEeRgyS
-         GuvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705050872; x=1705655672;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=S1vcfihMbPJOkqRcFLfQWKsQhpfYhll+IXXKznuEtxw=;
-        b=AzDb2+hnXGEfm29BcTJ5zPIo5HKszCKwp7s6JXeVj1GXSmtCjoU72jAApeovegc75p
-         alIjqDZvDdmka36PUqOXjcyu71D0CUuPLV125dTzLiNomI5ZC7sbEvmUrhbxXmzF1VRR
-         ALwqmDzYQOoqwSeyfX41OlYrTdNT/3fnR2snlqn/u9AzCE9ZKsKaohIq5j9yIMP2GIZA
-         3S/q2BBitIOlQVDg6xW/B+PjFFJQ0hvMGdVuD9jFrInCL74uWNSFFCuIMO46JxKvNvn0
-         cBzWHXqnLxBSlEDDuYniqnJOC4W/j4tbkIzh76+TGFhp6gqrdwnVorJ+1CCpSXaX7guY
-         Xj4A==
-X-Gm-Message-State: AOJu0YxjtnYPmDsm5dVwGwR0RqYXFuaQBrRba3t3dUYigZJrYXMjdWJR
-	ud5bTgphTV0uPfO7gs/WrGhNS6gHyT/8jw==
-X-Google-Smtp-Source: AGHT+IF2lM8xorKoJqQrop3KBE3nNs+4mQdVKdaLe3zQQlFcjt449y+o2tAd/ER65AYtJU2SG1VAFQ==
-X-Received: by 2002:adf:eacc:0:b0:337:4bbe:97c3 with SMTP id o12-20020adfeacc000000b003374bbe97c3mr542587wrn.87.1705050872301;
-        Fri, 12 Jan 2024 01:14:32 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:59d5:231:f1ee:77f? ([2a01:e0a:982:cbb0:59d5:231:f1ee:77f])
-        by smtp.gmail.com with ESMTPSA id dr18-20020a5d5f92000000b0033677a4e0d6sm3337106wrb.13.2024.01.12.01.14.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Jan 2024 01:14:31 -0800 (PST)
-Message-ID: <cdc18e2a-b7eb-4b54-a513-481148fb3b0d@linaro.org>
-Date: Fri, 12 Jan 2024 10:14:30 +0100
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93B4B5EE68;
+	Fri, 12 Jan 2024 09:29:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EAFE01FB;
+	Fri, 12 Jan 2024 01:30:04 -0800 (PST)
+Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6D9833F64C;
+	Fri, 12 Jan 2024 01:29:16 -0800 (PST)
+Message-ID: <cf167f2c-b87b-4def-8efc-f9ff1cd49597@arm.com>
+Date: Fri, 12 Jan 2024 09:29:15 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,142 +33,305 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 2/4] drm/panel: Add driver for DJN HX83112A LCD panel
-Content-Language: en-US, fr
-To: Luca Weiss <luca.weiss@fairphone.com>,
- Linus Walleij <linus.walleij@linaro.org>
-Cc: Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg
- <sam@ravnborg.org>, David Airlie <airlied@gmail.com>,
- Daniel Vetter <daniel@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+Subject: Re: [PATCH v3 6/8] coresight-tpdm: Add timestamp control register
+ support for the CMB
+Content-Language: en-US
+To: Tao Zhang <quic_taozha@quicinc.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Konrad Dybcio <konradybcio@gmail.com>, Mike Leach <mike.leach@linaro.org>,
  Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross <agross@kernel.org>,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
- ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <20240110-fp4-panel-v2-0-8ad11174f65b@fairphone.com>
- <20240110-fp4-panel-v2-2-8ad11174f65b@fairphone.com>
- <CACRpkdaWTfPDCin_L6pefHsokjNyO8Mo6hWPdzPLLi1EUkKUuA@mail.gmail.com>
- <CYBZEZ4IM6IL.VR04W7933VI@fairphone.com>
- <CACRpkdZQbVXfBa70nhDOqfWPbsh-6DgX-uvZOxr19pzMmF2giQ@mail.gmail.com>
- <CYCLSCKPPBOC.1B1MP3VOOC0Q8@fairphone.com>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <CYCLSCKPPBOC.1B1MP3VOOC0Q8@fairphone.com>
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: Jinlong Mao <quic_jinlmao@quicinc.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, coresight@lists.linaro.org,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Trilok Soni <quic_tsoni@quicinc.com>, Song Chai <quic_songchai@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, andersson@kernel.org
+References: <1700533494-19276-1-git-send-email-quic_taozha@quicinc.com>
+ <1700533494-19276-7-git-send-email-quic_taozha@quicinc.com>
+ <ebd7e310-d1b4-4b2e-a915-6241e04763d4@arm.com>
+ <b61c3d70-7277-4fe7-ab67-8afc1062c737@quicinc.com>
+ <cdad425c-b965-44c7-a612-1c99341e95b9@arm.com>
+ <b7ef4e75-69c6-4251-8f9c-58682699e3f6@quicinc.com>
+ <cc7b83ec-2c97-4a5d-87a9-36f1e13d8fc4@arm.com>
+ <797eadf6-2708-47ad-a61f-88bb0d4fcf28@quicinc.com>
+ <4ae81e28-1791-4128-860f-eb6a83ea3742@arm.com>
+ <616eba43-678c-4bc9-be7e-7b766e8d7c29@quicinc.com>
+ <d449d8ce-d087-4e18-a35a-236daa82ae99@arm.com>
+ <3cb948f9-2c62-4078-a936-3d7531ed5a2b@quicinc.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <3cb948f9-2c62-4078-a936-3d7531ed5a2b@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 12/01/2024 10:00, Luca Weiss wrote:
-> On Thu Jan 11, 2024 at 8:05 PM CET, Linus Walleij wrote:
->> On Thu, Jan 11, 2024 at 4:28 PM Luca Weiss <luca.weiss@fairphone.com> wrote:
->>
->>> In some internal documentation it says "LCD Driver IC" "HX83112A" and I
->>> don't see any reference to Truly 5P65 anywhere.
->>
->> In the Android directory I pointed to I see this file:
->> HX83112_Android_Driver/Truly_5p65_module_fw/UpdateFW.bat
->>
->> (Notice the 5p65 fw dir is *inside* the HX82112 dir)
->>
->> And in that file:
->> adb push TRULY_5P65_1080_2160_HX83112A_D01C01.bin
->> /system/etc/firmware/Himax_firmware.bin
->>
->> Clearly indicating that they are pushing a Truly 5P65 firmware into
->> the Himax display firmware directory.
->>
->> To be fair, that is the driver for the touchscreen part of HX83112A,
->> but ... Truly is a well known manufacturer of display controllers?
->>
->> But... given that you have a @fairphone.com mal address and
->> a working relationship with them, can't you just ask?
->>
->>> On their website they have this sentence:
->>
->> All OEMs want to look like everything is their own product. It is
->> business as usual.
+On 12/01/2024 02:42, Tao Zhang wrote:
 > 
-> I can't tell you anything there that I don't know, sorry.
-> 
->>
->> Further on the same note since I guess you have a datasheet)
->> please bring in #defines for the commands (the first byte in the
->> write sequences, for examples:
->>
->> +       mipi_dsi_dcs_write_seq(dsi, 0xbd, 0x02);
->> +       mipi_dsi_dcs_write_seq(dsi, 0xd8,
->> +                              0xaa, 0xff, 0xff, 0xff, 0xff, 0xff, 0xaa, 0xff,
->> +                              0xff, 0xff, 0xff, 0xff);
->> +       mipi_dsi_dcs_write_seq(dsi, 0xbd, 0x03);
->>
->> Clearly 0xbd is HX83112_CMD_SETREGBANK?
->> (This is easily spotted from the similar structure in the
->> existing panel-himax-hx8394.c.) So please add #defines
->> for all commands you know, especially if you have a datasheet
->> because we reviewers don't have them and "it's just magic
->> bytes" isn't very compelling. It adds a lot to understanding.
-> 
-> Right, the register names seem to match more or less the ones from that
-> driver, plus some new ones and some differently named ones. Will send a
-> v3 with that.
-> 
->>
->> I strongly suspect other Himax displays such as HX8394 to
->> be using a Truly controller as well, hence the similarities.
->>
->> In a datasheet for their TFT800480-84-V1-E display controller
->> Truly kept the init sequence name of void LCD_INIT_HX8290(void)
->> for example.
-> 
-> In that datasheet (assuming I'm looking at the same one?) it says
-> "Driver IC" "HX8290-A[...]" so there the display driver is manufactured
-> by Himax and not Truly to my understanding. Truly is assembling together
-> Driver + all the other parts that go into an LCD.
-> 
-> For the panel used on Fairphone 4 that part is done by the company DJN.
+> On 1/8/2024 6:42 PM, Suzuki K Poulose wrote:
+>> On 05/01/2024 07:49, Tao Zhang wrote:
+>>>
+>>> On 12/30/2023 5:39 PM, Suzuki K Poulose wrote:
+>>>> On 25/12/2023 01:55, Tao Zhang wrote:
+>>>>>
+>>>>> On 12/20/2023 7:07 PM, Suzuki K Poulose wrote:
+>>>>>> On 20/12/2023 09:51, Tao Zhang wrote:
+>>>>>>>
+>>>>>>> On 12/19/2023 9:51 PM, Suzuki K Poulose wrote:
+>>>>>>>> On 19/12/2023 02:43, Tao Zhang wrote:
+>>>>>>>>>
+>>>>>>>>> On 12/18/2023 6:46 PM, Suzuki K Poulose wrote:
+>>>>>>>>>> On 21/11/2023 02:24, Tao Zhang wrote:
 
-Looking at the discussion, this seems to confirm the Display+Touch IC is HX83112A,
-and Truly is the panel manufacturer and all assembled by DJN, so IMHO the initial driver is right.
+...
 
-Perhaps the compatible should be djn,hx83112a-truly-5p65 to reflect that ?
-
-Neil
-
+>>>>>>>>>>>                     char *buf)
+>>>>>>>>>>>   {
+>>>>>>>>>>>       struct tpdm_drvdata *drvdata = 
+>>>>>>>>>>> dev_get_drvdata(dev->parent);
+>>>>>>>>>>> +    ssize_t size = 0;
+>>>>>>>>>>>   -    return sysfs_emit(buf, "%u\n",
+>>>>>>>>>>> -             (unsigned int)drvdata->dsb->patt_ts);
+>>>>>>>>>>> +    if (tpdm_has_dsb_dataset(drvdata))
+>>>>>>>>>>> +        size = sysfs_emit(buf, "%u\n",
+>>>>>>>>>>> +                 (unsigned int)drvdata->dsb->patt_ts);
+>>>>>>>>>>> +
+>>>>>>>>>>> +    if (tpdm_has_cmb_dataset(drvdata))
+>>>>>>>>>>> +        size = sysfs_emit(buf, "%u\n",
+>>>>>>>>>>> +                 (unsigned int)drvdata->cmb->patt_ts);
+>>>>>>>>>>
+>>>>>>>>>> Why does this need to show two values ? This must only show 
+>>>>>>>>>> ONE value.
+>>>>>>>>>> How you deduce that might be based on the availability of the 
+>>>>>>>>>> feature
+>>>>>>>>>> set. Or store the TS value in the drvdata and use that instead 
+>>>>>>>>>> for
+>>>>>>>>>> controlling CMB/DSB.
+>>>>>>>>>
+>>>>>>>>> Since both of CMB/DSB need to have "enable_ts" SysFs file, can 
+>>>>>>>>> I separate them
+>>>>>>>>
+>>>>>>>> The question really is, do we need fine grained control. i.e.,
+>>>>>>>>
+>>>>>>>> enable TS for DSB but not for CMB or vice versa.
+>>>>>>>>
+>>>>>>>> I am not an expert on the usage scenario of the same. So, if 
+>>>>>>>> you/Qcomm
+>>>>>>>> thinks the users need separate, fine grained control for timestamp
+>>>>>>>> for the DSB and CMB, then yes, follow your recommendation below.
+>>>>>>>> i.e., tpdm.../dsb_patt/enable_ts
+>>>>>>>>
+>>>>>>>>> as "enable_dsb_ts" and "enable_cmb_ts"? The path will be like 
+>>>>>>>>> below.
+>>>>>>>>>
+>>>>>>>>> tpdm0/dsb_patt/enable_dsb_ts
+>>>>>>>>
+>>>>>>>> You don't need enable_dsb_ts. It could be "enable_ts"
+>>>>>>>>
+>>>>>>>>>
+>>>>>>>>> tpdm1/cmb_patt/enable_cmb_ts
+>>>>>>>>>
+>>>>>>>>> Is this design appropriate?
+>>>>>>>>
+>>>>>>>>
+>>>>>>>> Otherwise, stick to single enable_ts : which enables the ts for 
+>>>>>>>> both
+>>>>>>>> CMB/DSB. And it only ever show one value : 0 (TS is disabled for 
+>>>>>>>> both
+>>>>>>>> CMB/DSB) 1 : TS enabled for both.
+>>>>>>>
+>>>>>>> We have a very special case, such as the TPDM supporting both CMB 
+>>>>>>> and
+>>>>>>>
+>>>>>>> DSB datasets. Although this case is very rare, it still exists.
+>>>>>>>
+>>>>>>> Can I use the data bit to instruct whether timestamp is enabled 
+>>>>>>> for CMB/DSB or not? For example,
+>>>>>>>
+>>>>>>> size = sysfs_emit(buf, "%u\n",
+>>>>>>>                  (unsigned int)(drvdata->dsb->patt_ts << 1 | 
+>>>>>>> drvdata->cmb->patt_ts));
+>>>>>>>
+>>>>>>> Thus, this value can instruct the following situations.
+>>>>>>>
+>>>>>>> 0 - TS is disabled for both CMB/DSB
+>>>>>>>
+>>>>>>> 1 - TS is enabled for CMB
+>>>>>>>
+>>>>>>> 2 - TS is enabled for DSB
+>>>>>>>
+>>>>>>> 3 - TS is enabled for both
+>>>>>>>
+>>>>>>> Is this approach acceptable?
+>>>>>>>
+>>>>>>
+>>>>>> No, please stick to separate controls for TS. Do not complicate
+>>>>>> the user interface.
+>>>>>>
+>>>>>> i.e.,
+>>>>>> tpdm0/dsb_patt/enable_ts
+>>>>>> tpdm0/cmb_patt/enable_ts
+>>>>>
+>>>>> We need to be able to control/show dsb and cmb timestamp enablement 
+>>>>> independently.
+>>>>>
+>>>>> Can we achieve this requirement if we use a sysfs file with the 
+>>>>> same name?
+>>>>
+>>>> They are independent and in their respective directory (group) for 
+>>>> CMB and DSB. What am I missing ?
+>>>> e.g., if you want to enable TS for DSB, you do :
+>>>>
+>>>> $ echo 1 > dsb_patt/enable_ts
+>>>>
+>>>> And that only works for DSB not for CMB.
+>>>
+>>> We have a special case that the TPDM supports both DSB and CMB 
+>>> dataset. In this special case, when we
+>>>
+>>> issue this command to enable timestamp, it will call enable_ts_store 
+>>> API, right?
+>>>
+>>>      if (tpdm_has_dsb_dataset(drvdata))
+>>>          drvdata->dsb->patt_ts = !!val;
+>>>
+>>>      if (tpdm_has_cmb_dataset(drvdata))
+>>>          drvdata->cmb->patt_ts = !!val;
+>>
+>> I don't understand. If they both are under different subgroups, why
+>> should they be conflicting ? Are you not able to distinguish them, when
+>>  you creat those attributes ? i.e., create two different "attributes" ?
 > 
-> Regards
-> Luca
+> Yes, although some TPDMs can support both CMB dataset and DSB dataset, 
+> we need to configure them separately
+> 
+> in some scenarios. Based on your suggestion, I want to use the following 
+> approach to implement it.
+> 
+> See below.
 > 
 >>
->> Yours,
->> Linus Walleij
+>> See below.
+>>
+>>> Since this special TPDM supports both DSB and CMB dataset, both DSB 
+>>> patt_ts and CMB patt_ts will be set
+>>>
+>>> in this case even if I only configure the file in the DSB directory, 
+>>> right?
+>>>
+>>> This is the problem we have now.
+>>>
+>>
+>>
+>>>>>>>>>>
+>>>>>>>>>>
+>>>>>>>>>>> +
+>>>>>>>>>>> +    return size;
+>>>>>>>>>>>   }
+>>>>>>>>>>>     /*
+>>>>>>>>>>> @@ -715,8 +755,13 @@ static ssize_t enable_ts_store(struct 
+>>>>>>>>>>> device *dev,
+>>>>>>>>>>>           return -EINVAL;
+>>>>>>>>>>>         spin_lock(&drvdata->spinlock);
+>>>>>>>>>>> -    drvdata->dsb->patt_ts = !!val;
+>>>>>>>>>>> +    if (tpdm_has_dsb_dataset(drvdata))
+>>>>>>>>>>> +        drvdata->dsb->patt_ts = !!val;
+>>>>>>>>>>> +
+>>>>>>>>>>> +    if (tpdm_has_cmb_dataset(drvdata))
+>>>>>>>>>>> +        drvdata->cmb->patt_ts = !!val;
+>>>>>>>>>>>       spin_unlock(&drvdata->spinlock);
+>>>>>>>>>>> +
+>>>>>>>>>>>       return size;
+>>>>>>>>>>>   }
+>>>>>>>>>>>   static DEVICE_ATTR_RW(enable_ts);
+>>
+>> Do not overload the same for both DSB and CMB. Create one for each in 
+>> DSB and CMB ? They could share the same show/store routines, but could
+>> be done with additional variable to indicate which attribute they are 
+>> controlling. Like the other attributes, using dev_ext_attribute or such.
 > 
+> New approach below, please help review to see if it is acceptable?
+> 
+> #define tpdm_patt_enable_ts_rw(name, mem)                \
+>      (&((struct tpdm_dataset_attribute[]) {            \
+>         {                                \
+>          __ATTR(name, 0644, enable_ts_show,        \
+>          enable_ts_store),        \
+>          mem,                            \
+>         }                                \
+>      })[0].attr.attr)
+> 
+> 
+> #define DSB_PATT_ENABLE_TS                    \
+>          tpdm_patt_enable_ts_rw(enable_ts,        \
+>          DSB_PATT)
+> 
+> 
+> #define CMB_PATT_ENABLE_TS                    \
+>          tpdm_patt_enable_ts_rw(enable_ts,        \
+>          CMB_PATT)
+> 
+> 
+> static ssize_t enable_ts_show(struct device *dev,
+>                    struct device_attribute *attr,
+>                    char *buf)
+> {
+>      struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>      struct tpdm_dataset_attribute *tpdm_attr =
+>          container_of(attr, struct tpdm_dataset_attribute, attr);
+>      ssize_t size = 0;
+> 
+>      if (tpdm_attr->mem == DSB_PATT) {
+>          size = sysfs_emit(buf, "%u\n",
+>                   (unsigned int)drvdata->dsb->patt_ts);
+>      } else if (tpdm_attr->mem == CMB_PATT) {
+>          size = sysfs_emit(buf, "%u\n",
+>                  (unsigned int)drvdata->cmb->patt_ts);
+>      } else
+>          return -EINVAL;
+> 
+>      return size;
+> }
+> 
+> static ssize_t enable_ts_store(struct device *dev,
+>                     struct device_attribute *attr,
+>                     const char *buf,
+>                     size_t size)
+> {
+>      struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>      struct tpdm_dataset_attribute *tpdm_attr =
+>          container_of(attr, struct tpdm_dataset_attribute, attr);
+>      unsigned long val;
+> 
+>      if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
+>          return -EINVAL;
+> 
+>      spin_lock(&drvdata->spinlock);
+>      if (tpdm_attr->mem == DSB_PATT) {
+>          drvdata->dsb->patt_ts = !!val;
+>      } else if (tpdm_attr->mem == CMB_PATT) {
+>          drvdata->cmb->patt_ts = !!val;
+>      } else
+>          return -EINVAL;
+>      spin_unlock(&drvdata->spinlock);
+> 
+>      return size;
+> }
+> 
+> 
+
+Yes, that is what I had in mind.
+
+Thanks
+Suzuki
+
+> Best,
+> 
+> Tao
+> 
+>>
+>>
+>> Suzuki
+>>
 
 
