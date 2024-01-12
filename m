@@ -1,215 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-7102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EAD1C82BDE6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 10:54:12 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD6C182BE02
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 11:01:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 819E128A895
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 09:54:11 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 42615B247DD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 10:01:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83DFA57302;
-	Fri, 12 Jan 2024 09:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 815AC57309;
+	Fri, 12 Jan 2024 10:01:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="ok5R+uLD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V5GRtRoC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f67.google.com (mail-ed1-f67.google.com [209.85.208.67])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7ABD60EDC
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 09:52:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f67.google.com with SMTP id 4fb4d7f45d1cf-558c781d311so569070a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 01:52:01 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D599C57313
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 10:01:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-50edf4f478eso2432837e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 02:01:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1705053120; x=1705657920; darn=vger.kernel.org;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HlNYofu3r8i2ZCiashKW8Im9PXJC4O/VU7zX1cqDADg=;
-        b=ok5R+uLD6ZTnei0DVPWInfSJ85n49ghZCKD3glCaQMa+f//WmrikyFRrLtuYKf724v
-         x4F8ajGuLYjagd++ZzM2jU808PNxVdVE1yty5NEh/d+JJzE13S7JgptnV7E8Z2SyETg8
-         Y4LnyvFBnsrx9bVwEEYjN385B0e7TSkxuje0S6nd6YtFjGEmNPSrPEoU+/DmCM3fwtns
-         Y0f6jBK8kUxRgn7pCTYWaGdiGszKtB6MCGhhTA8M0dlYRYrcBRM9eExzqPN2+Ru9p2s2
-         nb9Cdo3LKOc/b4KjCYy+9rpcCxE6Xv8vwwyDeMdK5XfCEpaSNmWS4+knq+gun2J4XWYu
-         h7jA==
+        d=linaro.org; s=google; t=1705053683; x=1705658483; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=n6BjmcfWjZQ9/+4cG+gO0wA5RcUkVwPj/srDhWTeVkw=;
+        b=V5GRtRoCbV0UdeRaGPrx1hssWP2IkGtm9X1OiS3/2BfzJMH6EhsC5hhpdx/VDg7zVq
+         enTu9Xzt7ckmL2JByPXWkGtbDufp0k8zlFi6iV6CAJs5q2CTACYMD98AmpwhMOxHrq7Q
+         NMB2SPKznzpwer5TpjobKdso3u5JjHw6CuIyAROv40j4/LVhgBp9f5gwvN6mcep8HIsN
+         tQeWdNwzuK+NpP9baoVTNp5ZkcCRz73ZrARumsZk0vyc0AqNqJFqolxGCfqQ7U9skz5u
+         9C+0eskPZ273MO57LY3VRO3XLJpeq5MO9FopY/rB4OMEDDTrmwiACcgtIuHQnu+6CSoE
+         7kYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705053120; x=1705657920;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=HlNYofu3r8i2ZCiashKW8Im9PXJC4O/VU7zX1cqDADg=;
-        b=ZAKgG/pp2k9OdtMxa+1ziy0nBUVAgazQBu38NqVCBK38GmytXl6D3PzYnf5kc1RKIr
-         v6VVrz72ebD7tokZRfggYx8CMIw9bhaFozirfoxc2K/aDgnrrBKq5344wEtbvwbPh/dP
-         VeJxF2UP9XNjWCUe8W2tAHAE3OFs3Q5nLgpz13EB2JSjR6+f83zvH2DRPo+AbtClBdpk
-         650np4N6B9R2XwawjAkUEKZlYpXbm6dOcZflICVy7Me4EVDN/ZyHbp0ZFibXGwWbolMO
-         CrmUKSUhSnGyTmQpTcmyW1Yoc53OBVxlElFaXfcFAxTTSWrd9JpTfzYtlzg24KcKJD3O
-         6pvg==
-X-Gm-Message-State: AOJu0Ywenldw5lYBHtMhihP3ftf8j+639ezqHShBpxCggjLX1Sj9H3tF
-	9zDfiTsAGTZkRygDaVpMFi9Zhz3+LVBUtQ==
-X-Google-Smtp-Source: AGHT+IH6D9hm2y3kaGCs5RwJQn2m/6/TZIAhrZDDw5invkLKwXZ/IILZ+DDyExfQK5cF5FyfT3lihA==
-X-Received: by 2002:a05:6402:1d1c:b0:557:aa16:1e44 with SMTP id dg28-20020a0564021d1c00b00557aa161e44mr489041edb.79.1705053119939;
-        Fri, 12 Jan 2024 01:51:59 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id eg7-20020a056402288700b0055515b40464sm1616621edb.81.2024.01.12.01.51.59
+        d=1e100.net; s=20230601; t=1705053683; x=1705658483;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=n6BjmcfWjZQ9/+4cG+gO0wA5RcUkVwPj/srDhWTeVkw=;
+        b=MRRvBZKjZPR3K1YAR8kJGxU9YKKF36RRwJTAnVvor68ojUC1foleOF2ObsEDjGoR7k
+         OdyPTONXwwhrbut5PYjyG1mKq1Wcx4NynEcmUviy/gBs1pPRudKtGF1mIO+ctWUSqhq3
+         wle36nuAY6GEKSU5BCpdkGoEJ8gP3QtsHORKp5iMNogDL9MGBwMf3MYp2/n8NPiLV689
+         vO2NJfQx8aHMdMRN3o5w+fPkYu5FOBGAeaxhbXd41FINr7aZ7FNDxo+kBCkkTbtu85MW
+         5AqRYMtq+O1STp3eJQVYZTZvCz3aKJ0WJnQXZN5gv03QUdkMTSbiujRO9T4kCxyAXFPQ
+         81GA==
+X-Gm-Message-State: AOJu0Yyukkp7jztqFzfgoUrKiMObH9sU7ABkbGTiVxHu+gC+fpcGvF5x
+	QeG3aphr6bdX4vgqbYxjRcLMDU/oPp8QXg==
+X-Google-Smtp-Source: AGHT+IFdf6AxtBCMz972hyGa8aRUo2uXDlIRk0LRgwUwwY0TdQHup04VCkl99x6SMm/BPp1uDhJs3g==
+X-Received: by 2002:a2e:8007:0:b0:2cd:63e4:75ff with SMTP id j7-20020a2e8007000000b002cd63e475ffmr517106ljg.35.1705053682887;
+        Fri, 12 Jan 2024 02:01:22 -0800 (PST)
+Received: from [172.30.204.205] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id x7-20020a2e9c87000000b002cd0435c50bsm407024lji.72.2024.01.12.02.01.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Jan 2024 01:51:59 -0800 (PST)
+        Fri, 12 Jan 2024 02:01:22 -0800 (PST)
+Message-ID: <babd9514-6202-486f-a7c5-51ad793aaca6@linaro.org>
+Date: Fri, 12 Jan 2024 11:01:21 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 12 Jan 2024 10:51:59 +0100
-Message-Id: <CYCMVXHYVDCI.HVH1TR8MWEUK@fairphone.com>
-Subject: Re: [PATCH v2 2/4] drm/panel: Add driver for DJN HX83112A LCD panel
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: <neil.armstrong@linaro.org>, "Linus Walleij" <linus.walleij@linaro.org>
-Cc: "Jessica Zhang" <quic_jesszhan@quicinc.com>, "Sam Ravnborg"
- <sam@ravnborg.org>, "David Airlie" <airlied@gmail.com>, "Daniel Vetter"
- <daniel@ffwll.ch>, "Maarten Lankhorst" <maarten.lankhorst@linux.intel.com>,
- "Maxime Ripard" <mripard@kernel.org>, "Thomas Zimmermann"
- <tzimmermann@suse.de>, "Rob Herring" <robh+dt@kernel.org>, "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley"
- <conor+dt@kernel.org>, "Bjorn Andersson" <andersson@kernel.org>, "Konrad
- Dybcio" <konrad.dybcio@linaro.org>, "Andy Gross" <agross@kernel.org>,
- <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
- <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>
-X-Mailer: aerc 0.15.2
-References: <20240110-fp4-panel-v2-0-8ad11174f65b@fairphone.com>
- <20240110-fp4-panel-v2-2-8ad11174f65b@fairphone.com>
- <CACRpkdaWTfPDCin_L6pefHsokjNyO8Mo6hWPdzPLLi1EUkKUuA@mail.gmail.com>
- <CYBZEZ4IM6IL.VR04W7933VI@fairphone.com>
- <CACRpkdZQbVXfBa70nhDOqfWPbsh-6DgX-uvZOxr19pzMmF2giQ@mail.gmail.com>
- <CYCLSCKPPBOC.1B1MP3VOOC0Q8@fairphone.com>
- <cdc18e2a-b7eb-4b54-a513-481148fb3b0d@linaro.org>
-In-Reply-To: <cdc18e2a-b7eb-4b54-a513-481148fb3b0d@linaro.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 3/5] iommu/arm-smmu: introduction of ACTLR for custom
+ prefetcher settings
+To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>,
+ Pavan Kondeti <quic_pkondeti@quicinc.com>
+Cc: will@kernel.org, robin.murphy@arm.com, joro@8bytes.org,
+ dmitry.baryshkov@linaro.org, jsnitsel@redhat.com, quic_bjorande@quicinc.com,
+ mani@kernel.org, quic_eberman@quicinc.com, robdclark@chromium.org,
+ u.kleine-koenig@pengutronix.de, robh@kernel.org, vladimir.oltean@nxp.com,
+ quic_molvera@quicinc.com, linux-arm-msm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+References: <20240109114220.30243-1-quic_bibekkum@quicinc.com>
+ <20240109114220.30243-4-quic_bibekkum@quicinc.com>
+ <2ad70157-27d1-41df-8866-c226af690cf6@quicinc.com>
+ <ec31fafa-b912-454a-8b64-e0593911aaf2@quicinc.com>
+ <4a595815-7fcc-47e2-b22c-dac349af6d79@quicinc.com>
+ <492aeca3-a4df-47a3-9c77-02ea4235d736@linaro.org>
+ <1a1f9b11-5a6d-41f7-8bcd-533a61a27a65@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <1a1f9b11-5a6d-41f7-8bcd-533a61a27a65@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Fri Jan 12, 2024 at 10:14 AM CET, Neil Armstrong wrote:
-> On 12/01/2024 10:00, Luca Weiss wrote:
-> > On Thu Jan 11, 2024 at 8:05 PM CET, Linus Walleij wrote:
-> >> On Thu, Jan 11, 2024 at 4:28=E2=80=AFPM Luca Weiss <luca.weiss@fairpho=
-ne.com> wrote:
-> >>
-> >>> In some internal documentation it says "LCD Driver IC" "HX83112A" and=
- I
-> >>> don't see any reference to Truly 5P65 anywhere.
-> >>
-> >> In the Android directory I pointed to I see this file:
-> >> HX83112_Android_Driver/Truly_5p65_module_fw/UpdateFW.bat
-> >>
-> >> (Notice the 5p65 fw dir is *inside* the HX82112 dir)
-> >>
-> >> And in that file:
-> >> adb push TRULY_5P65_1080_2160_HX83112A_D01C01.bin
-> >> /system/etc/firmware/Himax_firmware.bin
-> >>
-> >> Clearly indicating that they are pushing a Truly 5P65 firmware into
-> >> the Himax display firmware directory.
-> >>
-> >> To be fair, that is the driver for the touchscreen part of HX83112A,
-> >> but ... Truly is a well known manufacturer of display controllers?
-> >>
-> >> But... given that you have a @fairphone.com mal address and
-> >> a working relationship with them, can't you just ask?
-> >>
-> >>> On their website they have this sentence:
-> >>
-> >> All OEMs want to look like everything is their own product. It is
-> >> business as usual.
-> >=20
-> > I can't tell you anything there that I don't know, sorry.
-> >=20
-> >>
-> >> Further on the same note since I guess you have a datasheet)
-> >> please bring in #defines for the commands (the first byte in the
-> >> write sequences, for examples:
-> >>
-> >> +       mipi_dsi_dcs_write_seq(dsi, 0xbd, 0x02);
-> >> +       mipi_dsi_dcs_write_seq(dsi, 0xd8,
-> >> +                              0xaa, 0xff, 0xff, 0xff, 0xff, 0xff, 0xa=
-a, 0xff,
-> >> +                              0xff, 0xff, 0xff, 0xff);
-> >> +       mipi_dsi_dcs_write_seq(dsi, 0xbd, 0x03);
-> >>
-> >> Clearly 0xbd is HX83112_CMD_SETREGBANK?
-> >> (This is easily spotted from the similar structure in the
-> >> existing panel-himax-hx8394.c.) So please add #defines
-> >> for all commands you know, especially if you have a datasheet
-> >> because we reviewers don't have them and "it's just magic
-> >> bytes" isn't very compelling. It adds a lot to understanding.
-> >=20
-> > Right, the register names seem to match more or less the ones from that
-> > driver, plus some new ones and some differently named ones. Will send a
-> > v3 with that.
-> >=20
-> >>
-> >> I strongly suspect other Himax displays such as HX8394 to
-> >> be using a Truly controller as well, hence the similarities.
-> >>
-> >> In a datasheet for their TFT800480-84-V1-E display controller
-> >> Truly kept the init sequence name of void LCD_INIT_HX8290(void)
-> >> for example.
-> >=20
-> > In that datasheet (assuming I'm looking at the same one?) it says
-> > "Driver IC" "HX8290-A[...]" so there the display driver is manufactured
-> > by Himax and not Truly to my understanding. Truly is assembling togethe=
-r
-> > Driver + all the other parts that go into an LCD.
-> >=20
-> > For the panel used on Fairphone 4 that part is done by the company DJN.
->
-> Looking at the discussion, this seems to confirm the Display+Touch IC is =
-HX83112A,
-> and Truly is the panel manufacturer and all assembled by DJN, so IMHO the=
- initial driver is right.
->
-> Perhaps the compatible should be djn,hx83112a-truly-5p65 to reflect that =
-?
 
-Since there's zero indication Truly is involved in this panel in my
-documentation - much less the number 5P65 - I'm not going to add that.
 
-One other number I'm certain of is from DJN's side the model number of
-this panel is 9A-3R063-1102B, which I assume is the specific combination
-of components + frame and everything for Fairphone 4 device.
+On 1/11/24 19:09, Bibek Kumar Patro wrote:
+> 
+> 
+> On 1/10/2024 11:26 PM, Konrad Dybcio wrote:
+>>
+>>
+>> On 1/10/24 13:55, Bibek Kumar Patro wrote:
+>>>
+>>>
+>>> On 1/10/2024 4:46 PM, Bibek Kumar Patro wrote:
+>>>>
+>>>>
+>>>> On 1/10/2024 9:36 AM, Pavan Kondeti wrote:
+>>>
+>>> [...]
+>>>
+>>>>>> @@ -274,6 +321,21 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
+>>>>>>   static int qcom_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+>>>>>>           struct io_pgtable_cfg *pgtbl_cfg, struct device *dev)
+>>>>>>   {
+>>>>>> +    struct arm_smmu_device *smmu = smmu_domain->smmu;
+>>>>>> +    struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
+>>>>>> +    const struct actlr_variant *actlrvar;
+>>>>>> +    int cbndx = smmu_domain->cfg.cbndx;
+>>>>>> +
+>>>>>> +    if (qsmmu->data->actlrvar) {
+>>>>>> +        actlrvar = qsmmu->data->actlrvar;
+>>>>>> +        for (; actlrvar->io_start; actlrvar++) {
+>>>>>> +            if (actlrvar->io_start == smmu->ioaddr) {
+>>>>>> +                qcom_smmu_set_actlr(dev, smmu, cbndx, actlrvar->actlrcfg);
+>>>>>> +                break;
+>>>>>> +            }
+>>>>>> +        }
+>>>>>> +    }
+>>>>>> +
+>>>>>
+>>>>> This block and the one in qcom_adreno_smmu_init_context() are exactly
+>>>>> the same. Possible to do some refactoring?
+>>>>>
+>>>>
+>>>> I will check if this repeated blocks can be accomodated this into qcom_smmu_set_actlr function if that would be fine.
+>>>>
+>>>
+>>> Also adding to this, this might increase the number of indentation inside qcom_smmu_set_actlr as well, to around 5. So wouldn't this
+>>> be an issue?
+>>
+>> By the way, we can refactor this:
+>>
+>> if (qsmmu->data->actlrvar) {
+>>      actlrvar = qsmmu->data->actlrvar;
+>>      for (; actlrvar->io_start; actlrvar++) {
+>>          if (actlrvar->io_start == smmu->ioaddr) {
+>>              qcom_smmu_set_actlr(dev, smmu, cbndx, actlrvar->actlrcfg);
+>>              break;
+>>          }
+>>      }
+>> }
+>>
+>> into
+>>
+>> // add const u8 num_actlrcfgs to struct actrl_variant to
+>> // save on sentinel space:
+>> //   sizeof(u8) < sizeof(ptr) + sizeof(resource_size_t)
+>>
+> 
+> Git it, Would it be better to add this in struct qcom_smmu_match_data ?
 
-That one you can also find in this document (Ctrl-F for DJN)
-https://www.fairphone.com/wp-content/uploads/2022/09/FP4_Information-for-re=
-pairers-and-recyclers.pdf
-.. or on this picture:
-https://guide-images.cdn.ifixit.com/igi/HgTquQPABg1mAMHD.huge
+Yes, right.
 
-So something like djn,9a-3r063-1102b would also be somewhat valid I
-guess?
+> Posted a sample below.
+> 
+>>
+>> [declarations]
+>> const struct actlr_variant *actlrvar = qsmmu->data->actlrvar;
+>> int i;
+>>
+>> [rest of the functions]
+>>
+>> if (!actlrvar)
+>>      return 0;
+>>  > for (i = 0; i < actrlvar->num_actrlcfgs; i++) {
+>>      if (actlrvar[i].io_start == smmu->ioaddr) {
+>>          qcom_smmu_set_actlr(dev, smmu, cbndx, actlrvar->actlrcfg);
+>>          break;
+>>      }
+>> }
+>>  > Saving both on .TEXT size and indentation levels :)
+>>
+> Thanks for this suggestion Konrad, will try to implement this, as it would reduce the indent levels to good extent.
+> Would something like this be okay?
+> 
+> static int qcom_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+>       struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
+>       const struct actlr_variant *actlrvar;
+>       int cbndx = smmu_domain->cfg.cbndx;
+> +    int i;
+> 
+> +    actlrvar = qsmmu->data->actlrvar;
+> +
+> +    if (!actlrvar)
+> +        goto end;
+> +
+> +    for (i = 0; i < qsmmu->data->num_smmu ; i++) {
+> +        if (actlrvar[i].io_start == smmu->ioaddr) {
+> +            qcom_smmu_set_actlr(dev, smmu, cbndx,
+> +                        actlrvar[i].actlrcfg);
+> +            break;
+>           }
+>       }
+> 
+> +end:
+>       smmu_domain->cfg.flush_walk_prefer_tlbiasid = true;
 
-So in short this panel is the model 9A-3R063-1102B from DJN, which uses
-a Himax HX83112A driver IC.
+If you move this assignment before the actlrvar checking (there's no
+dependency between them), you will get rid of the goto.
 
-And there's also AU Optronics listed as =E7=8E=BB=E7=92=83=E5=8E=82=E5=AE=
-=B6 ("glass manufacturer"?)
-fwiw, though the display also uses Corning Gorilla Glass 5 so not sure
-who's supplying what.
+I also noticed that qcom_smmu_match_data.actlrvar could likely be
+const struct actlr_variant * const (const pointer to a const
+resource), similarly for actlr_variant.actlrcfg
 
-Regards
-Luca
-
->
-> Neil
->
-> >=20
-> > Regards
-> > Luca
-> >=20
-> >>
-> >> Yours,
-> >> Linus Walleij
-> >=20
-
+Konrad
 
