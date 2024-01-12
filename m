@@ -1,107 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-7111-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7112-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A6CF82C11B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 14:50:23 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7476B82C12C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 14:54:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EFF90283FD1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 13:50:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 13A661F23730
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 13:54:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A28956D1B1;
-	Fri, 12 Jan 2024 13:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 441C36D1B6;
+	Fri, 12 Jan 2024 13:54:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b3QPwCi8"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AievCUHb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859AC6A038;
-	Fri, 12 Jan 2024 13:50:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06D5AC433F1;
-	Fri, 12 Jan 2024 13:50:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705067418;
-	bh=2GBsmlDMuRrcjc2Hma/6Rsppr8bfpOi1zXgsvajbU7A=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=b3QPwCi8lSUlKn9lVR7v8i0+OSGblLUhqlsqZKv6AReHbWezDzAbl5Ek0HuC1CMbH
-	 hn/K732i14ODy4j2Gz5t8iq1wiVIrk3MHXTxnaaTe4Io23MZhxn1BkFS0xUqAwdZHg
-	 Vz6QIeDaCfTzD9YbJgKaCHyNxhIMTmMuWDE+DJ3FgKiZPEPzEeUOKGALfd1OgO60AN
-	 cFFoMfQYsZFxQAZCdn/15HZoag1q5sVA2/btsTQxSYdhbfTLInbvYY8Xc7ABrVUw9/
-	 zwYQM6+8NRSDNSlwnhPXE+pdEGVIQVKm32r90zeT7MyJ/h93VrME76gBc61jsp553F
-	 LDNABLAzw/HEg==
-Date: Fri, 12 Jan 2024 13:50:09 +0000
-From: Will Deacon <will@kernel.org>
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>
-Cc: Mark Rutland <mark.rutland@arm.com>, Raag Jadav <raag.jadav@intel.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Khuong Dinh <khuong@os.amperecomputing.com>,
-	Kevin Hilman <khilman@baylibre.com>, Andy Gross <agross@kernel.org>,
-	NXP Linux Team <linux-imx@nxp.com>, linux-arm-msm@vger.kernel.org,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Frank Li <Frank.li@nxp.com>, Sascha Hauer <s.hauer@pengutronix.de>,
-	Besar Wicaksono <bwicaksono@nvidia.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	linux-amlogic@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Jiucheng Xu <jiucheng.xu@amlogic.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>
-Subject: Re: [PATCH 00/18] perf: Convert to platform remove callback
- returning void
-Message-ID: <20240112135009.GA16771@willie-the-truck>
-References: <cover.1702648124.git.u.kleine-koenig@pengutronix.de>
- <vlnl6og3bts5hcdjw5h7c4km7zolzuf6h7cwyfymjzan3uqjwy@rsra3lqdhou7>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72B86D1B4;
+	Fri, 12 Jan 2024 13:54:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40CDIW99009300;
+	Fri, 12 Jan 2024 13:53:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=DhVXr6gyIbMg
+	zR2b0surHFdqtEQz2xq2bAyxCY1BWNg=; b=AievCUHbdq/ugHWm/OsV+lLygUYw
+	K4NGsL8+BJKPUcnaL5SLCddxxnLGtTrMlu/YrkUMYAEX3mKJ6rMsXWz8ZVlcvz1+
+	RBDQwQjJHe8is7YTZnhNKGI+S7wOmHMyknU/EpYpZl2mcKI10rrNyU4Hf7WBbhch
+	1wmMuY95zzYuRv9R9lzZzgcpCo3LlP9Cj/oIwKLQQr780eBCGW5MvAsCX4JRWrEA
+	J7LObRPepcjDFQVOLNC57IDNKcy+qdEboAgBom+AEedwPK8shDK9XUCrT+FAobpM
+	obsUYXxRqVwwkVmwKo53WKfamBm698dM9jDzQXwJXgJM4wUIjpdJfpA1MA==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vjrqj1ysn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Jan 2024 13:53:46 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 40CDrhs3005326;
+	Fri, 12 Jan 2024 13:53:43 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3veyxm4mxw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Fri, 12 Jan 2024 13:53:43 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40CDrgeK005319;
+	Fri, 12 Jan 2024 13:53:42 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-vdadhani-hyd.qualcomm.com [10.213.106.28])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 40CDrg91005316;
+	Fri, 12 Jan 2024 13:53:42 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 4047106)
+	id 29C915013A9; Fri, 12 Jan 2024 19:23:41 +0530 (+0530)
+From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+To: andersson@kernel.org, konrad.dybcio@linaro.org, andi.shyti@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org, vkoul@kernel.org
+Cc: quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
+        Viken Dadhaniya <quic_vdadhani@quicinc.com>
+Subject: [PATCH 1/1] i2c: i2c-qcom-geni: Correct I2C TRE sequence
+Date: Fri, 12 Jan 2024 19:23:32 +0530
+Message-Id: <20240112135332.24957-1-quic_vdadhani@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: OoHBo6GdfJgBuPdX_brWoMYa6rkH5ixG
+X-Proofpoint-GUID: OoHBo6GdfJgBuPdX_brWoMYa6rkH5ixG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
+ malwarescore=0 mlxlogscore=720 mlxscore=0 clxscore=1011 adultscore=0
+ phishscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401120109
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <vlnl6og3bts5hcdjw5h7c4km7zolzuf6h7cwyfymjzan3uqjwy@rsra3lqdhou7>
-User-Agent: Mutt/1.10.1 (2018-07-13)
 
-Hi Uwe,
+For i2c read operation, we are getting gsi mode timeout due
+to malformed TRE(Transfer Ring Element). currently for read opreration,
+we are configuring incorrect TRE sequence(config->dma->go).
 
-On Wed, Jan 10, 2024 at 09:56:26AM +0100, Uwe Kleine-König wrote:
-> On Fri, Dec 15, 2023 at 02:59:00PM +0100, Uwe Kleine-König wrote:
-> > this series converts all drivers below drivers/perf to use
-> > .remove_new(). See commit 5c5a7680e67b ("platform: Provide a remove
-> > callback that returns no value") for an extended explanation and the
-> > eventual goal. The TL;DR; is to make it harder for driver authors to
-> > leak resources without noticing.
-> > 
-> > I based the patches on today's next, I had to revert commits 
-> > 3115ee021bfb ("arm64: perf: Include threshold control fields in
-> > PMEVTYPER mask") and 816c26754447 ("arm64: perf: Add support for event
-> > counting threshold") to compile test on ARCH=arm (this is a problem in
-> > next, not in my patch series).
-> > 
-> > This is merge window material. All patches are pairwise independent of
-> > each other so they can be applied individually. Still it would be great
-> > to let them go in all together.
-> 
-> I wonder if this series is still on someone's radar. It didn't appear in
-> next up to now, so I guess it's too late for 6.8-rc1?!
+So correct TRE sequence(config->go->dma) to resolve timeout
+issue for read operation.
 
-This came in during the holiday period so, by the time I saw it, it was
-too late to land for this merge window. I can pick it up for 6.9 in a few
-weeks, though. I usually start queueing stuff at -rc3.
+Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+---
+ drivers/i2c/busses/i2c-qcom-geni.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Will
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index 0d2e7171e3a6..5904fc8bba71 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -613,6 +613,11 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
+ 
+ 		peripheral.addr = msgs[i].addr;
+ 
++		ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
++				    &tx_addr, &tx_buf, I2C_WRITE, gi2c->tx_c);
++		if (ret)
++			goto err;
++
+ 		if (msgs[i].flags & I2C_M_RD) {
+ 			ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
+ 					    &rx_addr, &rx_buf, I2C_READ, gi2c->rx_c);
+@@ -620,11 +625,6 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
+ 				goto err;
+ 		}
+ 
+-		ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
+-				    &tx_addr, &tx_buf, I2C_WRITE, gi2c->tx_c);
+-		if (ret)
+-			goto err;
+-
+ 		if (msgs[i].flags & I2C_M_RD)
+ 			dma_async_issue_pending(gi2c->rx_c);
+ 		dma_async_issue_pending(gi2c->tx_c);
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
+
 
