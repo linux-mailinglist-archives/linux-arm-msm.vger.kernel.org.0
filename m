@@ -1,64 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-7122-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7123-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BD8482C23C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 15:54:57 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D30DB82C241
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 15:55:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9050E1C2462A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 14:54:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4919B1F2602D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 14:55:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9A8F6E2A7;
-	Fri, 12 Jan 2024 14:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7935F6E2AD;
+	Fri, 12 Jan 2024 14:55:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SisCOnh0"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AD0P7pTY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399D16DD18
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 14:54:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3376ead25e1so4418973f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 06:54:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705071288; x=1705676088; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=X6Qa3jrvQodva+4geqsdAx5EZoSC1Kv1GVKpRBOoHNE=;
-        b=SisCOnh0eAXyS8EnBJAvGX+Xb9wxRV45Utw9DeFS8DtraXm520VB2NVPGNDttwyImC
-         ptBgf73YkwVwH/ccm2FfeW0AZ93/LoT1Vj5j9AibhWVmxKdiLpyMaigi3scxI9drkWFO
-         C7kS756OepfduW2io1/g97tP7nBVZCkszP/UlWqDSemfa4kZByUMWJY+klZeP9P0zsjS
-         kKjzTqPL3NpZnjQtAXx0zk7eiaXfmZObcHIgblSTa3eJ6JE40OxpB8qzCFl0OxbE0ck2
-         8WOQOYFfE4b4rEmH7tjkKLFu43oibFPJCfuoFtTJZiATU9R7eVZKeVN1d1u9/Wl33788
-         34jQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705071288; x=1705676088;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=X6Qa3jrvQodva+4geqsdAx5EZoSC1Kv1GVKpRBOoHNE=;
-        b=eWLJQE/LTDeHtPXyOC1rhdzVnQ0jQcleoRDGqTpliwHBizVMtsitwqvJBSxC5GnCVo
-         QirPOHJ39rDdYDF5nUOrjSzcqOsxIexW9gaW1LFgED6F6tAaXsi0wjeVacv2RT+4a/qP
-         6oUqS03ZThNSudNnRMNSSqMJy/C3uAgtbPOnklo4XYCSU+6in6pomb8VoE6B/KsFSY5c
-         nhtjLMDvumG+IqmL0wskhgngCdT/tbyNIoX16TBcn6PWaQZstYeH8wPnVbQekcpNVeQ8
-         5bDI61kq9VZyVX2Um4DQETM6DrCARV4YyGa9jm2wfAUogdciI9vmT+90gNR6F5c/XEWQ
-         mIKw==
-X-Gm-Message-State: AOJu0Yz8RUaJb0XktjmtT6yJygoXncErplftJAbg+nAOaDnmmVrnUAux
-	xN4XZmcAs9icNuKal5nWaXgBPR16FrIcpw==
-X-Google-Smtp-Source: AGHT+IGAkoJisp2kQvc4IzllenA2B1gRogJGT+N3jaFZFuKEI//zFeWjS90ALtZhMvUfaHjB5hRIYw==
-X-Received: by 2002:adf:dd85:0:b0:336:e369:cef with SMTP id x5-20020adfdd85000000b00336e3690cefmr767777wrl.130.1705071288407;
-        Fri, 12 Jan 2024 06:54:48 -0800 (PST)
-Received: from [192.168.100.86] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id d29-20020adfa35d000000b003375009accesm4082058wrb.50.2024.01.12.06.54.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Jan 2024 06:54:48 -0800 (PST)
-Message-ID: <e8a81915-30d0-46e0-b73f-f6522e2269f6@linaro.org>
-Date: Fri, 12 Jan 2024 14:54:47 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159736DD09;
+	Fri, 12 Jan 2024 14:55:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40CBvqpO012097;
+	Fri, 12 Jan 2024 14:55:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=3UGFsNKGRrS4TKXanKYHSZDlh/L0lTRy0EEXiGIzMFQ=; b=AD
+	0P7pTYanvr5fxNK5FqCplMLTaJthJCLkhDnILSDs8LfBxMuS5zrGsMyXEdCXII/o
+	LpkNXNrtmwooc3bStHR/z5BgGYdSls1RTieNOtvj+8xA+7iaOYdzVJEaU8CAMF9s
+	KMJnZP/4XpN0OlkbWUSBHEwd2yQkM57Bn+TZ7LH0XV46GWvpQEx+bDhHqWMVR3Hc
+	VoIx0+TR4+kWbVj0eIuK6scRmJ3P14PjVqe2pKf2KkF1pZi8jMCVO5CebHOcrltY
+	4im5mkCtDBQkZoPtdQV9rk3JATChImSzL0hcS/MWH+UAxRiN0iZjFh4a/6rWZRuv
+	pSGl3mrogFnhMBWLOvjQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vk1x18wf2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Jan 2024 14:55:21 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40CEtK85003254
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Jan 2024 14:55:20 GMT
+Received: from [10.253.78.164] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 12 Jan
+ 2024 06:55:16 -0800
+Message-ID: <9c19bfc3-4ecf-4953-8bee-ef46cd613caa@quicinc.com>
+Date: Fri, 12 Jan 2024 22:55:13 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,120 +56,104 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] i2c: i2c-qcom-geni: Correct I2C TRE sequence
+Subject: Re: [PATCH 0/6] Add PPE device tree node for Qualcomm IPQ SoC
 Content-Language: en-US
-To: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org, andi.shyti@kernel.org,
- linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
- linux-kernel@vger.kernel.org, vkoul@kernel.org
-Cc: quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com
-References: <20240112135332.24957-1-quic_vdadhani@quicinc.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20240112135332.24957-1-quic_vdadhani@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, <andersson@kernel.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <quic_kkumarcs@quicinc.com>, <quic_suruchia@quicinc.com>,
+        <quic_soni@quicinc.com>, <quic_pavir@quicinc.com>,
+        <quic_souravp@quicinc.com>, <quic_linchen@quicinc.com>,
+        <quic_leiwei@quicinc.com>
+References: <20240110112059.2498-1-quic_luoj@quicinc.com>
+ <0ac211de-e3d4-4a41-b0ed-d2bf393e58cb@linaro.org>
+From: Jie Luo <quic_luoj@quicinc.com>
+In-Reply-To: <0ac211de-e3d4-4a41-b0ed-d2bf393e58cb@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: rDGUjiaxMtXY6fN0gK_3GE5L_4_7QUsh
+X-Proofpoint-GUID: rDGUjiaxMtXY6fN0gK_3GE5L_4_7QUsh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ clxscore=1015 mlxscore=0 spamscore=0 phishscore=0 adultscore=0 bulkscore=0
+ impostorscore=0 lowpriorityscore=0 malwarescore=0 suspectscore=0
+ mlxlogscore=773 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401120116
 
-On 12/01/2024 13:53, Viken Dadhaniya wrote:
-> For i2c read operation, we are getting gsi mode timeout due
-> to malformed TRE(Transfer Ring Element). currently for read opreration,
-> we are configuring incorrect TRE sequence(config->dma->go).
+
+
+On 1/10/2024 7:32 PM, Konrad Dybcio wrote:
 > 
-> So correct TRE sequence(config->go->dma) to resolve timeout
-> issue for read operation.
-
-I don't think this commit log really captures what the code does.
-
-- Sets up optional RX DMA
-- Sets up TX DMA
-- Issues optional RX dma_async_issue_pending
-- Issues TX dma_async_issue_pending
-
-What your change does is sets up the TX DMA first
-
-- Sets up TX DMA
-- Sets up optional RX DMA
-- Issues optional RX dma_async_issue_pending
-- Issues TX dma_async_issue_pending
-
-but you've not really root-caused by re-ordering the calls fixes 
-anything for you.
-
-This may be the right fix but I don't really think you've captured here 
-in the commit log _why_ its the right fix if indeed it is correct.
-
-> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-
-You should have a Fixes: tag
-
-> ---
->   drivers/i2c/busses/i2c-qcom-geni.c | 10 +++++-----
->   1 file changed, 5 insertions(+), 5 deletions(-)
 > 
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index 0d2e7171e3a6..5904fc8bba71 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -613,6 +613,11 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
->   
->   		peripheral.addr = msgs[i].addr;
->   
-> +		ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
-> +				    &tx_addr, &tx_buf, I2C_WRITE, gi2c->tx_c);
-> +		if (ret)
-> +			goto err;
-> +
->   		if (msgs[i].flags & I2C_M_RD) {
->   			ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
->   					    &rx_addr, &rx_buf, I2C_READ, gi2c->rx_c);
-> @@ -620,11 +625,6 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
->   				goto err;
->   		}
->   
-> -		ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
-> -				    &tx_addr, &tx_buf, I2C_WRITE, gi2c->tx_c);
-> -		if (ret)
-> -			goto err;
-> -
->   		if (msgs[i].flags & I2C_M_RD)
->   			dma_async_issue_pending(gi2c->rx_c);
+> On 1/10/24 12:20, Luo Jie wrote:
+>> The PPE(packet process engine) hardware block is supported by Qualcomm
+>> IPQ platforms, such as IPQ9574 and IPQ5332. The PPE includes the various
+>> packet processing modules such as the routing and bridging flow engines,
+>> L2 switch capability, VLAN and tunnels. Also included are integrated
+>> ethernet MAC and PCS(uniphy), which is used to connect with the external
+>> PHY devices by PCS.
+>>
+>> This patch series enables support for the following DTSI functionality
+>> for Qualcomm IPQ9574 and IPQ5332 chipsets.
+>>
+>> 1. Add PPE (Packet Processing Engine) HW support
+>>
+>> 2. Add IPQ9574 RDP433 board support, where the PPE is connected
+>>     with qca8075 PHY and AQ PHY.
+>>
+>> 3. Add IPQ5332 RDP441 board support, where the PPE is connected
+>>     with qca8386 and SFP
+>>
+>> PPE DTS depends on the NSSCC clock driver below, which provides the
+>> clocks for the PPE driver.
+>> https://lore.kernel.org/linux-arm-msm/20230825091234.32713-1-quic_devipriy@quicinc.com/
+>> https://lore.kernel.org/linux-arm-msm/20231211-ipq5332-nsscc-v3-0-ad13bef9b137@quicinc.com/
+> 
+> None of these describe (or even use) the compatible in the first
+> patch of this series ("qcom,ipq9574-ppe"). I didn't check the
+> subsequent ones, as I assume it's the same situtation, so this
+> is a NAK.
 
-If TX gets moved up top then the second check for if (msgs[i].flags & 
-I2C_M_RD) is redundant.
+The DT binding file was included in the PPE driver series, which
+documents the compatible string.
 
-You could just have
+https://lore.kernel.org/netdev/20240110142428.52026d9e@kernel.org/
 
-if (msgs[i].flags & I2C_M_RD) {
-         ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
-                             &rx_addr, &rx_buf, I2C_READ, gi2c->rx_c);
-         if (ret)
-                 goto err;
+I will hold off this DTSI patch series for now as per discussion in the
+series. When the series is resumed later, I will mention the link of PPE 
+driver patch series in the cover letter, when updating this DTS patch 
+series. Sorry for this confusion caused.
 
-         dma_async_issue_pending(gi2c->rx_c);
-}
 
-- Please investigate further.
-   Why/how does the new sequence
 
-   TX DMA setup
-   RX DMA setup
-   RX DMA sync
-   TX DMA sync
+> 
+>> Lei Wei (2):
+>>    arm64: dts: qcom: ipq5332: Add RDP441 board device tree
+>>    arm64: dts: qcom: ipq9574: Add RDP433 board device tree
+> 
+> These two look unrelated?
 
-   Improve the situation over the existing and more logical
+These two patches are for adding the PPE port related configuration 
+nodes (such as port speed, interface mode and MDIO address) which are 
+board specific. RDP441 and RDP433 are two different board types. Perhaps
+the title of the patches are not clear enough. I will update the title
+to make it clear when the patch series resumes.
 
-   RX DMA setup
-   TX DMA setup
-   RX DMA sync
-   TX DMA sync
-
-- Add a Fixes tag if you work that out so we know
-   which kernel version to back port to
-
-- Include the SoC version(s) you have tested on in the commit
-   or cover letter
-
-- And drop the redundant check
-
----
-bod
+> 
+>>
+>> Luo Jie (4):
+>>    arm64: dts: qcom: ipq9574: Add PPE device tree node
+>>    arm64: dts: qcom: ipq5332: Add PPE device tree node
+>>    arm64: dts: qcom: ipq5332: Add MDIO device tree
+>>    arm64: dts: qcom: ipq9574: Add MDIO device tree
+> 
+> Konrad
 
