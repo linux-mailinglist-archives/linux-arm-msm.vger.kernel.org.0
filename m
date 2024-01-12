@@ -1,151 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-7106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F6F482BF68
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 12:43:00 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A5A3F82BF84
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 12:57:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A8602B23119
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 11:42:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CB9721C223BA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 11:57:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 305906A026;
-	Fri, 12 Jan 2024 11:42:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="e364iGGr"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 203906A011;
+	Fri, 12 Jan 2024 11:57:39 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B72C6A02D;
-	Fri, 12 Jan 2024 11:42:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1705059729;
-	bh=v0ayvc6VxUrFVwfoqiV5RNkoO3lyHBgUhluMw+6vw+A=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=e364iGGrslydFLzQ5zrs8FMVSFGCTG3IE2djY1gcfg2xwEQB88GCiojRn3nk/inJ3
-	 fxavbYD7jToad6JfgoGcjrRZtUBSU5qNZja8latrfr126RVOqrsdQx8FNuUJgfP79E
-	 AIvnjl3jfM4mROB11VWPZtJLgTwrg/ZONR9zn6tlr3x8+LhqMzlpDbu7+EScCflkmT
-	 4nN49KBw0/tI8pHqDqwujP9QtzFu3VSMIphA7ntHzN/ZE3Vy3LHtq5EMpgovsrj1FU
-	 FOqEhEcWnYxEOIiETLB1BMGaIvtRFsfKywwiyeq5Ae+RwdbpsnLfxI8TXq4BsXn8YR
-	 4Wzu6XNZTm5dw==
-Received: from [100.66.96.193] (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: vignesh)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id CC4423781F80;
-	Fri, 12 Jan 2024 11:42:05 +0000 (UTC)
-Message-ID: <27e64458-7cb1-99a4-f67e-60d911f28f44@collabora.com>
-Date: Fri, 12 Jan 2024 17:12:02 +0530
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DD1A55C00;
+	Fri, 12 Jan 2024 11:57:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 79E8A1FB;
+	Fri, 12 Jan 2024 03:58:22 -0800 (PST)
+Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1B7973F73F;
+	Fri, 12 Jan 2024 03:57:31 -0800 (PST)
+Message-ID: <4657c916-03c1-47eb-ba2d-5e84f3600282@arm.com>
+Date: Fri, 12 Jan 2024 11:57:30 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH] drm/ci: Add msm tests
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/8] Add support to configure TPDM CMB subunit
 Content-Language: en-US
-To: Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc: Rob Clark <robdclark@chromium.org>, Daniel Vetter <daniel@ffwll.ch>,
- linux-arm-msm@vger.kernel.org,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- open list <linux-kernel@vger.kernel.org>, Maxime Ripard
- <mripard@kernel.org>, Helen Koike <helen.koike@collabora.com>,
- Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>,
- freedreno@lists.freedesktop.org, Daniel Stone <daniel@fooishbar.org>
-References: <20240108195016.156583-1-robdclark@gmail.com>
-From: Vignesh Raman <vignesh.raman@collabora.com>
-In-Reply-To: <20240108195016.156583-1-robdclark@gmail.com>
+To: Tao Zhang <quic_taozha@quicinc.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Konrad Dybcio <konradybcio@gmail.com>, Mike Leach <mike.leach@linaro.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: Jinlong Mao <quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, coresight@lists.linaro.org,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Trilok Soni <quic_tsoni@quicinc.com>, Song Chai <quic_songchai@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, andersson@kernel.org
+References: <1700533494-19276-1-git-send-email-quic_taozha@quicinc.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <1700533494-19276-1-git-send-email-quic_taozha@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Rob,
-
-
-On 09/01/24 01:20, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
+On 21/11/2023 02:24, Tao Zhang wrote:
+> Introduction of TPDM CMB(Continuous Multi Bit) subunit
+> CMB subunit is responsible for creating a dataset element, and is also
+> optionally responsible for packing it to fit multiple elements on a
+> single ATB transfer if possible in the configuration. The TPDM Core
+> Datapath requests timestamps be stored by the TPDA and then delivering
+> ATB sized data (depending on ATB width and element size, this could
+> be smaller or larger than a dataset element) to the ATB Mast FSM.
+> The CMB makes trace elements in two modes. In �continuous� mode, every
+> valid data cycle creates an element. In �trace on change� mode, when
+> valid data changes on the bus, a trace element is created. In
+> continuous mode, all cycles where this condition is true create trace
+> elements. In trace on change mode, a data element is only when the
+> previously sampled input is different from the current sampled input.
 > 
-> The msm tests should skip on non-msm hw, so I think it should be safe to
-> enable everywhere.
+> The CMB subunit must be configured prior to enablement. This series
+> adds support for TPDM to configure the configure CMB subunit.
 > 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->   drivers/gpu/drm/ci/testlist.txt | 49 +++++++++++++++++++++++++++++++++
->   1 file changed, 49 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/ci/testlist.txt b/drivers/gpu/drm/ci/testlist.txt
-> index f82cd90372f4..eaeb751bb0ad 100644
-> --- a/drivers/gpu/drm/ci/testlist.txt
-> +++ b/drivers/gpu/drm/ci/testlist.txt
-> @@ -2910,3 +2910,52 @@ kms_writeback@writeback-invalid-parameters
->   kms_writeback@writeback-fb-id
->   kms_writeback@writeback-check-output
->   prime_mmap_kms@buffer-sharing
-> +msm_shrink@copy-gpu-sanitycheck-8
-> +msm_shrink@copy-gpu-sanitycheck-32
-> +msm_shrink@copy-gpu-8
-> +msm_shrink@copy-gpu-32
-> +msm_shrink@copy-gpu-madvise-8
-> +msm_shrink@copy-gpu-madvise-32
-> +msm_shrink@copy-gpu-oom-8
-> +msm_shrink@copy-gpu-oom-32
-> +msm_shrink@copy-mmap-sanitycheck-8
-> +msm_shrink@copy-mmap-sanitycheck-32
-> +msm_shrink@copy-mmap-8
-> +msm_shrink@copy-mmap-32
-> +msm_shrink@copy-mmap-madvise-8
-> +msm_shrink@copy-mmap-madvise-32
-> +msm_shrink@copy-mmap-oom-8
-> +msm_shrink@copy-mmap-oom-32
-> +msm_shrink@copy-mmap-dmabuf-sanitycheck-8
-> +msm_shrink@copy-mmap-dmabuf-sanitycheck-32
-> +msm_shrink@copy-mmap-dmabuf-8
-> +msm_shrink@copy-mmap-dmabuf-32
-> +msm_shrink@copy-mmap-dmabuf-madvise-8
-> +msm_shrink@copy-mmap-dmabuf-madvise-32
-> +msm_shrink@copy-mmap-dmabuf-oom-8
-> +msm_shrink@copy-mmap-dmabuf-oom-32
-> +msm_mapping@ring
-> +msm_mapping@sqefw
-> +msm_mapping@shadow
-> +msm_submitoverhead@submitbench-10-bos
-> +msm_submitoverhead@submitbench-10-bos-no-implicit-sync
-> +msm_submitoverhead@submitbench-100-bos
-> +msm_submitoverhead@submitbench-100-bos-no-implicit-sync
-> +msm_submitoverhead@submitbench-250-bos
-> +msm_submitoverhead@submitbench-250-bos-no-implicit-sync
-> +msm_submitoverhead@submitbench-500-bos
-> +msm_submitoverhead@submitbench-500-bos-no-implicit-sync
-> +msm_submitoverhead@submitbench-1000-bos
-> +msm_submitoverhead@submitbench-1000-bos-no-implicit-sync
-> +msm_recovery@hangcheck
-> +msm_recovery@gpu-fault
-> +msm_recovery@gpu-fault-parallel
-> +msm_recovery@iova-fault
-> +msm_submit@empty-submit
-> +msm_submit@invalid-queue-submit
-> +msm_submit@invalid-flags-submit
-> +msm_submit@invalid-in-fence-submit
-> +msm_submit@invalid-duplicate-bo-submit
-> +msm_submit@invalid-cmd-idx-submit
-> +msm_submit@invalid-cmd-type-submit
-> +msm_submit@valid-submit
 
-I tested this patch with latest drm-misc/drm-misc-next and there was 
-some failures seen for the newly added msm tests. I have updated the
-xfails with below commit,
 
-https://gitlab.freedesktop.org/vigneshraman/linux/-/commit/d012893597a661d6ebbb755bf2607dfb055524a1
+Please base your next version on for-next/queue branch on the
+coresight repository.
 
-I will notify the maintainers about the flaky tests, update the url in 
-the flakes.txt, and submit a separate patch for this change.
-
-Regards,
-Vignesh
+Suzuki
 
