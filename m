@@ -1,121 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-7079-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D88E82B868
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 01:05:19 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D639A82B86E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 01:06:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0C76B285298
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 00:05:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 75C7A1F2123E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 00:06:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E498F14F72;
-	Fri, 12 Jan 2024 00:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C86051108;
+	Fri, 12 Jan 2024 00:06:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V94TzYNx"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="mwiqXLJf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F1814F63
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 00:05:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-337874b8164so930561f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 16:05:12 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C070D1100
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 00:06:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-28bc8540299so3661046a91.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 16:06:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705017911; x=1705622711; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=yUeW4cbpZ4DyBVhP3Gp3OihLg4kH7ejzOns3IWU+5Ug=;
-        b=V94TzYNxrIGl4Ql1KDfj2dIQRwVR9b1dQrxA1cZQEojq6YhzPCVfSVjfN/IiscAxOM
-         8bUuW5xHjn7OlmX3CPNDqDlhhYBnv9R1joYXwOQWJNiCcd5+sRFpPAODZfN9imaGzyWL
-         LaMDDlaBorSvEZglhXzI+54J6UQ4VS0IarLYknJiOulo5LskRn/VkNKd512E2KD2iPED
-         aY1NtlIz9hBilBL2tqM8pyDjIjvyaFpkAit99k7l6MjT2FjBohbk+T6xNRQ3VDdtFVYN
-         P50s3DC7BkCr4P9ZNN0f44CYmQPvp+KuMmDUMELhNFjFFVHfJscIVEVOIYqHzYoyLZdZ
-         ys1A==
+        d=chromium.org; s=google; t=1705017963; x=1705622763; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NCsMdLHga1GxnMyWDbdKtpfMINMaUDqjALsfcY3IzvA=;
+        b=mwiqXLJf3t7Gr0uSHaZSBsMT3fpxqOTnLUwURJH17VPsMnKAprHgmx+6KJyoRsaqbU
+         syZ9MkeDCM1m4gswRk6k3j5GisQnU2gOjRhhof+4wRGj4IFzTSa+F34VaK59oIei5AvT
+         ytWS65RYLFGeOfYBPZpaKv10gOIzuHboq3oXU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705017911; x=1705622711;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yUeW4cbpZ4DyBVhP3Gp3OihLg4kH7ejzOns3IWU+5Ug=;
-        b=CHp65e8q2gP80Bv4AnN2sLueLI62kayzQjGaKnt5WQVGiv6ecM1vD1gI13ttVNr+/C
-         /qK90HTci+ieBm2zaRZNlwx70WQ8xZXcE/tUXMO++uzx3mU4uZQ2gvOJSIj67omqV2VF
-         x9/lzWX1XplMSN09iURVdxoou19gUqCLm/0ShiE0/5GrgrY/AHWwU2olJfBsYndTlJ+T
-         FBdrqQKuqOcFrdxRsaA41srE8qcfWzAgGJO1TLtLas022RrINgj6f2EXFhkbDoA5rF5Y
-         DGsGeU8O70KZqGHs3FyVoG4A5NglJtz5NkJVWC92QZSXLUyPUMjfR/qhlwgTr8HKQvFR
-         J6cg==
-X-Gm-Message-State: AOJu0YyHphtHLwVKf5SXC4KS91UKCQ80h8D9UQBoJyE7ALz8kdtLeyv1
-	b68FmxH0ChTn+J6VR10dIk36XdBJPmbNJQ==
-X-Google-Smtp-Source: AGHT+IHCdDVdU5Stel0+XBc70+8iYoGyZHbMKQqAFOmwuvJLM/lTb1tAB1c6+WSy2s9dD19FKm9UCw==
-X-Received: by 2002:a05:6000:10c8:b0:337:7bde:f03e with SMTP id b8-20020a05600010c800b003377bdef03emr294510wrx.16.1705017911388;
-        Thu, 11 Jan 2024 16:05:11 -0800 (PST)
-Received: from [192.168.100.86] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id l5-20020adfe9c5000000b0033673ddd81csm2314450wrn.112.2024.01.11.16.05.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Jan 2024 16:05:10 -0800 (PST)
-Message-ID: <39b4a009-1883-4e66-b743-6b69f0846418@linaro.org>
-Date: Fri, 12 Jan 2024 00:05:10 +0000
+        d=1e100.net; s=20230601; t=1705017963; x=1705622763;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NCsMdLHga1GxnMyWDbdKtpfMINMaUDqjALsfcY3IzvA=;
+        b=eJIzv0jO+z5KKs+y47c7pR6F2QSft5GcNT53JALvyhC8KMSbq7yVIIeYiYbIKSvqld
+         TCDL36jRO+LHSZzPF/o2dyvFLsuA6ykf4DpHF6H4gnD5ep70Gk55aPd/4+SpOMAKf1cz
+         bXIhKpjvKPz9lW1L/GiWQHB+Fde11qc3wUi/XaWv2MAWsqSK/qg7FfPC6NanhWJlXvJC
+         10EtihkUYzDZbEjF8wWpI15g5xhIgSlW9nar74NaEcngNg7JmEg3KWcOnHfvrVcUA/1Y
+         rnnfHvFGrhJFUROGBj68N4swNCgK/i94YkRSXW3n2ONouKpurj5R4zVDw9WFd2eXYJAP
+         8Qnw==
+X-Gm-Message-State: AOJu0Ywm3ZoCh7W45VTIWlGXMBG+bgMGm3zXg+AWtBIa4uwK3f7QQzsb
+	+RsknvyXVCxFNgDAdn6Zf5fCJD7iCyPjMEKg/rskKLOFZGmZ
+X-Google-Smtp-Source: AGHT+IErAvw1GUiSMvbfubpQ0WiskyDsn9mMns8r5WQUQgZgSWKq5N7P6VNxiNo/j2j+6JbPl4sTQkxfe6kkAVb2Gfc=
+X-Received: by 2002:a17:90a:e544:b0:28d:bd78:7806 with SMTP id
+ ei4-20020a17090ae54400b0028dbd787806mr544103pjb.59.1705017963052; Thu, 11 Jan
+ 2024 16:06:03 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] media: qcom: camss: Add sc8280xp support
-Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Hans Verkuil <hverkuil-cisco@xs4all.nl>,
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240111-linux-next-24-01-09-sc8280xp-camss-changes-v1-0-b92a650121ba@linaro.org>
- <cd3d3034-ce98-4b96-8cdc-fbd5b66ca7a8@linaro.org>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <cd3d3034-ce98-4b96-8cdc-fbd5b66ca7a8@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <1704867134-5522-1-git-send-email-quic_dikshita@quicinc.com>
+In-Reply-To: <1704867134-5522-1-git-send-email-quic_dikshita@quicinc.com>
+From: Nathan Hebert <nhebert@chromium.org>
+Date: Thu, 11 Jan 2024 16:05:52 -0800
+Message-ID: <CANHAJhGpHps26T5ErXVpz3Artf-Zwfidps2tF5GoEBNm2XdevQ@mail.gmail.com>
+Subject: Re: [PATCH v2] media: venus: flush all buffers in output plane streamoff
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
+	Vikash Garodia <quic_vgarodia@quicinc.com>, Andy Gross <agross@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, 
+	Stanimir Varbanov <stanimir.varbanov@linaro.org>, linux-media@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 11/01/2024 20:13, Konrad Dybcio wrote:
-> 
-> 
-> On 1/11/24 20:57, Bryan O'Donoghue wrote:
->> A minimal set of patches to switch on sc8280xp support in CAMSS
->> upstream. Most of the SoC dependencies are either merged - CAMCC or very
->> close to being merged - CAMSS/CCI dtsi.
->>
->> Alot of prior work means we have far less interventions to make in this
->> driver to support this new SoC.
->>
->> Most of this series is already reviewed however it is gated on merge of
->> the CAMSS compat string here =>
->>
->> Link: 
->> https://lore.kernel.org/linux-arm-msm/20240111-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v4-2-cdd5c57ff1dc@linaro.org/
->> Link: 
->> https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-24-01-09-sc8280xp-camss-changes
->>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> ---
-> What happened to the "vN" in the subject and the changelog?
-> 
-> Konrad
+On Tue, Jan 9, 2024 at 10:13=E2=80=AFPM Dikshita Agarwal
+<quic_dikshita@quicinc.com> wrote:
+>
+> For scenarios, when source change is followed by VIDIOC_STREAMOFF
+> on output plane, driver should discard any queued OUTPUT
+> buffers, which are not decoded or dequeued.
+> Flush with HFI_FLUSH_INPUT does not have any actual impact.
+> So, fix it, by invoking HFI_FLUSH_ALL, which will flush all
+> queued buffers.
+>
+> Fixes: 85872f861d4c ("media: venus: Mark last capture buffer")
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Tested on a SC7280 Chromebook with a custom client [0] to perform the
+queueing and VIDIOC_STREAMOFF sequence as described in the commit
+message. Before this patch, a buffer from before the VIDIOC_STREAMOFF
+command would be dequeued and seen by the client. With this patch, it
+is not seen by the client.
 
-Hmm it "felt" like a new series
+[0]: https://crrev.com/c/5191249
 
-Checking though - yep this should be v5
-
-https://lwn.net/Articles/950887/
-
-I'll resend
-
----
-bod
+Tested-by: Nathan Hebert <nhebert@chromium.org>
+>
+> ---
+> Changes since v1:
+> - Added fixes tag (Bryan)
+>
+>  drivers/media/platform/qcom/venus/vdec.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/pla=
+tform/qcom/venus/vdec.c
+> index 29130a9..0d2ab95 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -1255,7 +1255,7 @@ static int vdec_stop_output(struct venus_inst *inst=
+)
+>                 break;
+>         case VENUS_DEC_STATE_INIT:
+>         case VENUS_DEC_STATE_CAPTURE_SETUP:
+> -               ret =3D hfi_session_flush(inst, HFI_FLUSH_INPUT, true);
+> +               ret =3D hfi_session_flush(inst, HFI_FLUSH_ALL, true);
+>                 break;
+>         default:
+>                 break;
+> --
+> 2.7.4
+>
+>
 
