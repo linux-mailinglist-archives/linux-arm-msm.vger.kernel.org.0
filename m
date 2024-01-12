@@ -1,153 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-7152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5FD2F82C517
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 18:57:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D45782C53D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 19:09:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EF1B71F2377D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 17:57:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EB32D1F23A26
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 18:09:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7722017C8D;
-	Fri, 12 Jan 2024 17:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE17E1AAC8;
+	Fri, 12 Jan 2024 18:08:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A/rqv0lp"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DGZk1Ilx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A4117C85;
-	Fri, 12 Jan 2024 17:56:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-33677fb38a3so6125533f8f.0;
-        Fri, 12 Jan 2024 09:56:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705082217; x=1705687017; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=JqFsKecuSBrO3jxaxuNvcAexfgq6FB4LiqKsGB+p+Ao=;
-        b=A/rqv0lpoU2jEZ50hsU0WL4MbmbBlYijMkrBwRKVxfOG4OlAe9YIuImYaYGJETFKtg
-         O8dSn2xyFn6T55crran0I9r1pwo2HaLHWSpmvdPyml8WxVAXx/LXJEWURBxnLmo/nS0t
-         xvoADAERWZQJjoeRxX6i567i6C+8Puvd85zh7z4x1CGaYBp8mg+KT7RL7h+dlA7BXy6P
-         3o/vddzY55CzuJNInvH689pd+S/SMqOQ+7T1QevkmrLZAfjxXHV0qfrXauIn1ODW2Ydh
-         HIPYVvu/yvHbCiBb2aEBdImk8qfLaFt6qoiXO6L9kMA+zdRv0K2xNapHTPtR5ZXbcZmg
-         JiUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705082217; x=1705687017;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JqFsKecuSBrO3jxaxuNvcAexfgq6FB4LiqKsGB+p+Ao=;
-        b=g0jxa2NIfpZDjFqa8SZILOSYAAXVfvY19BmP2udug7mYH9rDK3jPZzkgXDjakzEGLH
-         kocO/j50o0ixfefZgbs5y+V7YdYD9mQgJ9iyD8aRtDK2gKX6/XZe2mN7vRiUS3qaLJfK
-         82a7Jklw1oOtA/uU+H9vtz22sOID2lkWaSOs3vddozzdf7u758EfCo7g07I+aGvHD7jl
-         lnqaeQyxRbQ7hiWId8xixmzesoyP65MaGwC6pVAxleBUwihaVy11N/l5ocMYFDJIxbPl
-         VHvFrHDFO9W0bngPTzXIn1fFtXJgIlU50xhSjaaYHc9IXiNVACr/k4ghEeNmRxNaWjRz
-         RXpg==
-X-Gm-Message-State: AOJu0Yzxw9FgJgmuocOJ/BEmQXaUzDgj1bsFkmTDxXWja+LFNHSf3G5W
-	wB/JwkHI7AI0A3aiznSQSxM=
-X-Google-Smtp-Source: AGHT+IGPZIgGiqiQoRnTNwSkb1n4FM8VBJoZC4UuFdNhrP6t/RZ2bgvGvgxmNKODX86VaJLUmfX0Sw==
-X-Received: by 2002:a5d:614d:0:b0:336:7b51:63e0 with SMTP id y13-20020a5d614d000000b003367b5163e0mr793114wrt.72.1705082216767;
-        Fri, 12 Jan 2024 09:56:56 -0800 (PST)
-Received: from Ansuel-xps. (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
-        by smtp.gmail.com with ESMTPSA id e13-20020a056000178d00b0033743c2d17dsm4528385wrg.28.2024.01.12.09.56.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Jan 2024 09:56:56 -0800 (PST)
-Message-ID: <65a17d68.050a0220.cf6ea.e78b@mx.google.com>
-X-Google-Original-Message-ID: <ZaF9Z2upRACKxDZI@Ansuel-xps.>
-Date: Fri, 12 Jan 2024 18:56:55 +0100
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: Jie Luo <quic_luoj@quicinc.com>
-Cc: Jakub Kicinski <kuba@kernel.org>, agross@kernel.org,
-	andersson@kernel.org, konrad.dybcio@linaro.org, davem@davemloft.net,
-	edumazet@google.com, pabeni@redhat.com, robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-	corbet@lwn.net, catalin.marinas@arm.com, will@kernel.org,
-	p.zabel@pengutronix.de, linux@armlinux.org.uk,
-	shannon.nelson@amd.com, anthony.l.nguyen@intel.com,
-	jasowang@redhat.com, brett.creeley@amd.com, rrameshbabu@nvidia.com,
-	joshua.a.hay@intel.com, arnd@arndb.de, geert+renesas@glider.be,
-	neil.armstrong@linaro.org, dmitry.baryshkov@linaro.org,
-	nfraprado@collabora.com, m.szyprowski@samsung.com, u-kumar1@ti.com,
-	jacob.e.keller@intel.com, andrew@lunn.ch, netdev@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, ryazanov.s.a@gmail.com,
-	quic_kkumarcs@quicinc.com, quic_suruchia@quicinc.com,
-	quic_soni@quicinc.com, quic_pavir@quicinc.com,
-	quic_souravp@quicinc.com, quic_linchen@quicinc.com,
-	quic_leiwei@quicinc.com
-Subject: Re: [PATCH net-next 00/20] net: ethernet: Add qcom PPE driver
-References: <20240110114033.32575-1-quic_luoj@quicinc.com>
- <20240110142428.52026d9e@kernel.org>
- <5ec26378-a5ff-4de3-b69e-806e36907db6@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E21017C91;
+	Fri, 12 Jan 2024 18:08:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40CDeP5q020221;
+	Fri, 12 Jan 2024 18:08:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=z9gFdCo
+	TGwHFwV6EpzHdsjjDp9kUAhPP0c7evcgswu4=; b=DGZk1IlxjuBRqAJ31q+dPRg
+	n8qJ87MjzLHSJ9ETKHAKCLk7YMn9DZohejG+QYWt52lsvkSZ0sZNG2JZBqdtZ0Ef
+	6o7nJPGrVdnRlzbxQFLJk7JZAbZIeIiuqA9Xt8rz8ZRXJvS2Hch9L6UUV7f78fgr
+	oMAR72ZUxYl2djIG2zJGZU6clbp4leOE85u6eKKpGXPSvJC/ywL+ZyANW8Bd4GWb
+	FLjOeqXwDuuD3yhjOGUQyjAYi3gp9EBGKJIxY2G6FIZopY6GkCZmiJ7od6VTqXMo
+	HEeWFDAY0glJKugaz9yTdlKykcNM3+kySXJbGVnX3hagVsT8GmcfnyIYFnJiuTA=
+	=
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vjpuj2sdw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Jan 2024 18:08:14 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40CI8Eap028273
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Jan 2024 18:08:14 GMT
+Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Fri, 12 Jan 2024 10:08:13 -0800
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+To: <mani@kernel.org>
+CC: <quic_pkanojiy@quicinc.com>, <quic_carlv@quicinc.com>,
+        <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        Jeffrey Hugo
+	<quic_jhugo@quicinc.com>
+Subject: [PATCH v2] bus: mhi: host: Add MHI_PM_SYS_ERR_FAIL state
+Date: Fri, 12 Jan 2024 11:08:00 -0700
+Message-ID: <20240112180800.536733-1-quic_jhugo@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5ec26378-a5ff-4de3-b69e-806e36907db6@quicinc.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: E0xrf_n4ZYdZjwLdITKEGTxfTClM6HES
+X-Proofpoint-ORIG-GUID: E0xrf_n4ZYdZjwLdITKEGTxfTClM6HES
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ mlxlogscore=999 lowpriorityscore=0 bulkscore=0 priorityscore=1501
+ malwarescore=0 impostorscore=0 clxscore=1015 phishscore=0 suspectscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401120142
 
-On Thu, Jan 11, 2024 at 11:49:53PM +0800, Jie Luo wrote:
-> 
-> 
-> On 1/11/2024 6:24 AM, Jakub Kicinski wrote:
-> > On Wed, 10 Jan 2024 19:40:12 +0800 Luo Jie wrote:
-> > > The PPE(packet process engine) hardware block is available in Qualcomm
-> > > IPQ chipsets that support PPE architecture, such as IPQ9574 and IPQ5332.
-> > 
-> > What's the relationship between this driver and QCA8084?
-> 
-> The PPE (packet processing engine) is the network processing hardware block
-> in QCOM IPQ SoC. It includes the ethernet MAC and UNIPHY(PCS). This driver
-> is the base PPE driver which brings up the PPE and handles MAC/UNIPHY
-> operations. QCA8084 is the external 2.5Gbps 4-port PHY device, which can be
-> connected with PPE integrated MAC by UNIPHY(PCS).
-> 
-> Here is the relationship.
-> PPE integrated MAC --- PPE integrated UNIPHY(PCS) --- (PCS)QCA8084.
-> 
-> > 
-> > In the last month I see separate changes from you for mdio-ipq4019.c,
-> > phy/at803x.c and now this driver (none of which got merged, AFAICT.)
-> > Are you actually the author of this code, or are you just trying
-> > to upstream bunch of vendor code?
-> 
-> Yes, Jakub, there are two authors in these patch series, Lei Wei and me.
-> The patches are already ready for some time, the code has been verified
-> on the Qualcomm reference design board. These are not downstream drivers
-> but drivers re-written for upstream.
-> 
-> > 
-> > Now you're dumping another 10kLoC on the list, and even though this is
-> > hardly your first posting you're apparently not aware of our most basic
-> > posting rules:
-> > https://www.kernel.org/doc/html/next/process/maintainer-netdev.html#tl-dr
-> > 
-> > The reviewers are getting frustrated. Please, help us help you.
-> > Stop throwing code at the list and work out a plan with Andrew
-> > and others on how to get something merged...
-> 
-> Sorry for trouble caused, will learn about the guidance provided by
-> the review comments, and follow up on the guidance and have the full
-> internal review of the patch updates before pushing the patch series.
+When processing a SYSERR, if the device does not respond to the MHI_RESET
+from the host, the host will be stuck in a difficult to recover state.
+The host will remain in MHI_PM_SYS_ERR_PROCESS and not clean up the host
+channels.  Clients will not be notified of the SYSERR via the destruction
+of their channel devices, which means clients may think that the device is
+still up.  Subsequent SYSERR events such as a device fatal error will not
+be processed as the state machine cannot transition from PROCESS back to
+DETECT.  The only way to recover from this is to unload the mhi module
+(wipe the state machine state) or for the mhi controller to initiate
+SHUTDOWN.
 
-I renew my will of helping in any kind of manner in this, I love the
-intention for EDMAv2 to have an upstream driver instead of SSDK, hoping
-in the future to also have the same treatement for EDMAv1 (it's really a
-pitty to have a support hole with ipq807x not supported)
+This issue was discovered by stress testing soc_reset events on AIC100
+via the sysfs node.
 
-Feel free to send an email or anything, considering this is massive, an
-extra eye before sending might make things better than reaching (I can
-already see this) a massive series with at least 20 revision given the
-complexity of this thing.
+soc_reset is processed entirely in hardware.  When the register write
+hits the endpoint hardware, it causes the soc to reset without firmware
+involvement.  In stress testing, there is a rare race where soc_reset N
+will cause the soc to reset and PBL to signal SYSERR (fatal error).  If
+soc_reset N+1 is triggered before PBL can process the MHI_RESET from the
+host, then the soc will reset again, and re-run PBL from the beginning.
+This will cause PBL to lose all state.  PBL will be waiting for the host
+to respond to the new syserr, but host will be stuck expecting the
+previous MHI_RESET to be processed.
 
+Additionally, the AMSS EE firmware (QSM) was hacked to synthetically
+reproduce the issue by simulating a FW hang after the QSM issued a
+SYSERR.  In this case, soc_reset would not recover the device.
+
+For this failure case, to recover the device, we need a state similar to
+PROCESS, but can transition to DETECT.  There is not a viable existing
+state to use.  POR has the needed transitions, but assumes the device is
+in a good state and could allow the host to attempt to use the device.
+Allowing PROCESS to transition to DETECT invites the possibility of
+parallel SYSERR processing which could get the host and device out of
+sync.
+
+Thus, invent a new state - MHI_PM_SYS_ERR_FAIL
+
+This essentially a holding state.  It allows us to clean up the host
+elements that are based on the old state of the device (channels), but
+does not allow us to directly advance back to an operational state.  It
+does allow the detection and processing of another SYSERR which may
+recover the device, or allows the controller to do a clean shutdown.
+
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
+---
+
+v2:
+-Add additional details about issue discovery to commit text
+
+ drivers/bus/mhi/host/init.c     |  1 +
+ drivers/bus/mhi/host/internal.h |  9 ++++++---
+ drivers/bus/mhi/host/pm.c       | 20 +++++++++++++++++---
+ 3 files changed, 24 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+index 15c1740a2c88..cca2731bc98b 100644
+--- a/drivers/bus/mhi/host/init.c
++++ b/drivers/bus/mhi/host/init.c
+@@ -62,6 +62,7 @@ static const char * const mhi_pm_state_str[] = {
+ 	[MHI_PM_STATE_FW_DL_ERR] = "Firmware Download Error",
+ 	[MHI_PM_STATE_SYS_ERR_DETECT] = "SYS ERROR Detect",
+ 	[MHI_PM_STATE_SYS_ERR_PROCESS] = "SYS ERROR Process",
++	[MHI_PM_STATE_SYS_ERR_FAIL] = "SYS ERROR Failure",
+ 	[MHI_PM_STATE_SHUTDOWN_PROCESS] = "SHUTDOWN Process",
+ 	[MHI_PM_STATE_LD_ERR_FATAL_DETECT] = "Linkdown or Error Fatal Detect",
+ };
+diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
+index 2e139e76de4c..d2858236af52 100644
+--- a/drivers/bus/mhi/host/internal.h
++++ b/drivers/bus/mhi/host/internal.h
+@@ -88,6 +88,7 @@ enum mhi_pm_state {
+ 	MHI_PM_STATE_FW_DL_ERR,
+ 	MHI_PM_STATE_SYS_ERR_DETECT,
+ 	MHI_PM_STATE_SYS_ERR_PROCESS,
++	MHI_PM_STATE_SYS_ERR_FAIL,
+ 	MHI_PM_STATE_SHUTDOWN_PROCESS,
+ 	MHI_PM_STATE_LD_ERR_FATAL_DETECT,
+ 	MHI_PM_STATE_MAX
+@@ -104,14 +105,16 @@ enum mhi_pm_state {
+ #define MHI_PM_FW_DL_ERR				BIT(7)
+ #define MHI_PM_SYS_ERR_DETECT				BIT(8)
+ #define MHI_PM_SYS_ERR_PROCESS				BIT(9)
+-#define MHI_PM_SHUTDOWN_PROCESS				BIT(10)
++#define MHI_PM_SYS_ERR_FAIL				BIT(10)
++#define MHI_PM_SHUTDOWN_PROCESS				BIT(11)
+ /* link not accessible */
+-#define MHI_PM_LD_ERR_FATAL_DETECT			BIT(11)
++#define MHI_PM_LD_ERR_FATAL_DETECT			BIT(12)
+ 
+ #define MHI_REG_ACCESS_VALID(pm_state)			((pm_state & (MHI_PM_POR | MHI_PM_M0 | \
+ 						MHI_PM_M2 | MHI_PM_M3_ENTER | MHI_PM_M3_EXIT | \
+ 						MHI_PM_SYS_ERR_DETECT | MHI_PM_SYS_ERR_PROCESS | \
+-						MHI_PM_SHUTDOWN_PROCESS | MHI_PM_FW_DL_ERR)))
++						MHI_PM_SYS_ERR_FAIL | MHI_PM_SHUTDOWN_PROCESS |  \
++						MHI_PM_FW_DL_ERR)))
+ #define MHI_PM_IN_ERROR_STATE(pm_state)			(pm_state >= MHI_PM_FW_DL_ERR)
+ #define MHI_PM_IN_FATAL_STATE(pm_state)			(pm_state == MHI_PM_LD_ERR_FATAL_DETECT)
+ #define MHI_DB_ACCESS_VALID(mhi_cntrl)			(mhi_cntrl->pm_state & mhi_cntrl->db_access)
+diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+index 8a4362d75fc4..27f8a40f288c 100644
+--- a/drivers/bus/mhi/host/pm.c
++++ b/drivers/bus/mhi/host/pm.c
+@@ -36,7 +36,10 @@
+  *     M0 <--> M0
+  *     M0 -> FW_DL_ERR
+  *     M0 -> M3_ENTER -> M3 -> M3_EXIT --> M0
+- * L1: SYS_ERR_DETECT -> SYS_ERR_PROCESS --> POR
++ * L1: SYS_ERR_DETECT -> SYS_ERR_PROCESS
++ *     SYS_ERR_PROCESS -> SYS_ERR_FAIL
++ *     SYS_ERR_FAIL -> SYS_ERR_DETECT
++ *     SYS_ERR_PROCESS --> POR
+  * L2: SHUTDOWN_PROCESS -> LD_ERR_FATAL_DETECT
+  *     SHUTDOWN_PROCESS -> DISABLE
+  * L3: LD_ERR_FATAL_DETECT <--> LD_ERR_FATAL_DETECT
+@@ -93,7 +96,12 @@ static const struct mhi_pm_transitions dev_state_transitions[] = {
+ 	},
+ 	{
+ 		MHI_PM_SYS_ERR_PROCESS,
+-		MHI_PM_POR | MHI_PM_SHUTDOWN_PROCESS |
++		MHI_PM_POR | MHI_PM_SYS_ERR_FAIL | MHI_PM_SHUTDOWN_PROCESS |
++		MHI_PM_LD_ERR_FATAL_DETECT
++	},
++	{
++		MHI_PM_SYS_ERR_FAIL,
++		MHI_PM_SYS_ERR_DETECT | MHI_PM_SHUTDOWN_PROCESS |
+ 		MHI_PM_LD_ERR_FATAL_DETECT
+ 	},
+ 	/* L2 States */
+@@ -624,7 +632,13 @@ static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
+ 					!in_reset, timeout);
+ 		if (!ret || in_reset) {
+ 			dev_err(dev, "Device failed to exit MHI Reset state\n");
+-			goto exit_sys_error_transition;
++			write_lock_irq(&mhi_cntrl->pm_lock);
++			cur_state = mhi_tryset_pm_state(mhi_cntrl,
++							MHI_PM_SYS_ERR_FAIL);
++			write_unlock_irq(&mhi_cntrl->pm_lock);
++			/* Shutdown may have occurred, otherwise cleanup now */
++			if (cur_state != MHI_PM_SYS_ERR_FAIL)
++				goto exit_sys_error_transition;
+ 		}
+ 
+ 		/*
 -- 
-	Ansuel
+2.34.1
+
 
