@@ -1,214 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-7145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9DAA82C3B7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 17:38:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3144B82C3E4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 17:47:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C34121C214BA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 16:37:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 58D721C21B58
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 16:47:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B2137E799;
-	Fri, 12 Jan 2024 16:36:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1424F77630;
+	Fri, 12 Jan 2024 16:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SJAM6Zhq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KITWq1LX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FFA47691E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 16:36:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-40e5701cbbaso18046985e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 08:36:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705077390; x=1705682190; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+tAwGTFBvrjSR+D7qo0JkBwlnmAMUSdISzHDQJb3VJ8=;
-        b=SJAM6ZhqX5sQrxdeKesiLB2E7w0LvCgHKx799uY5OLzvjo4NxuzDGrBLhPq9BPHVdI
-         Z++P/Rah05n4B9lWwAR2+RA1/j9dKLQ1Yu74L6X+sx6eighuBIgINITPXCwGUqZycIAv
-         b7NUMuNA+hnOTUNoJz+xNwvfechsPnBh3M4vdYxOAF5q8mzeT0VYXxOsy+fjApbmvzy1
-         4TW3mGl7GGzcrqpfQM1hWEKqP8OjOYKPUmhKevd/XPabFaYHDDOnc/GCo9rvvvddM176
-         CKWfvGzBtaAk9txmeG+//CrjiT96qxRt1mZv78RjSMdfNlToQXQLHtt5cBc89f4W/s6a
-         ZFzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705077390; x=1705682190;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+tAwGTFBvrjSR+D7qo0JkBwlnmAMUSdISzHDQJb3VJ8=;
-        b=Q0BSOfpFj6n7teXfbM6Cx5Zou3FT6DVcDIP8X2DLOwRcylRYs2WKYdGNGvwpRg1yPt
-         Suq9/NKlH2/xyQ8ZrXYETHU+77FJGLaQKFv2+5jeuIP491FCZkFFNnaBmmzerKC3LTJG
-         9cU2EC3Je9/1QeKWBdvePGPg7ayFXVu8yjTE6L9woLA9jKtCzHUnCf8SElV8Cxu0fI5+
-         amfzfCya11KtvDMUocbbibZO+LNNRp4PGgyQDOjfj7OqOq6S6WrQqfH5Yni3z+lfs8+V
-         WEGYNp7d/rArfdbheaBGJfVMjXmqUAz6iDlLaL8jIOFmsRszyDCJNVIr+2SV4NMqALiG
-         NBVQ==
-X-Gm-Message-State: AOJu0Yz0EXsgW5/+isfFvci0oYR0P/ZjNPyP8cn+M+TNpUsNEEG6vs0M
-	C7uemlZN1bf10+gi1zXu9hAx5RmThiVXRA==
-X-Google-Smtp-Source: AGHT+IHwVLaqmPFUtKT7wAZTbrdSc8zyHUbK1fQIZbWvd0QlBC1T6c9jlGWVdUy5gdVHgvbYuB/lxQ==
-X-Received: by 2002:a05:600c:1c25:b0:40e:4613:daae with SMTP id j37-20020a05600c1c2500b0040e4613daaemr1033231wms.30.1705077389852;
-        Fri, 12 Jan 2024 08:36:29 -0800 (PST)
-Received: from krzk-bin.. ([178.197.223.112])
-        by smtp.gmail.com with ESMTPSA id bd16-20020a05600c1f1000b0040e5a93ae53sm6573195wmb.22.2024.01.12.08.36.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Jan 2024 08:36:29 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74AF6DD08;
+	Fri, 12 Jan 2024 16:47:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E740C433C7;
+	Fri, 12 Jan 2024 16:47:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1705078034;
+	bh=XLbIi+FzvkY5/phGa7UWlshotiTTgXJvXXEBTRX287o=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=KITWq1LXFy2rWhdf5KnEM7ohv/qcZ55BbfDOZBpd8DML1T75Q9kxR6YdsoyoN7cKw
+	 n/A67rKfrGZmJXi7sdecwb9zAmbeTEckeP/sRFs9/nNL44Y5nBu6c7FHDz0xD/2K7J
+	 v7+jqnXqmL21ttSZcbwROoZ11hoK9+s1lcHXTIeAzzGWNLiXB2e0OPJtwMB7awUFdE
+	 491D6uhQF7JgEDokUBbrPI9BhPl5v59BhzdXMt58jWccx2qdowY7NAlbCxxHeZjb43
+	 CSaVCyHK0vDEzDaPlyojrZ3bjNWvU2bWcdtK4Q+5inRKXt4HnhWR+Am7bNCxYORePR
+	 Dl6g86OSZWdSg==
+Date: Fri, 12 Jan 2024 10:47:12 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Banajit Goswami <bgoswami@quicinc.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Peter Rosin <peda@axentia.se>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	linux-arm-msm@vger.kernel.org,
-	alsa-devel@alsa-project.org,
-	linux-sound@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-i2c@vger.kernel.org
-Cc: Chris Packham <chris.packham@alliedtelesis.co.nz>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Sean Anderson <sean.anderson@seco.com>
-Subject: [PATCH v3 5/5] i2c: muxes: pca954x: Allow sharing reset GPIO
-Date: Fri, 12 Jan 2024 17:36:08 +0100
-Message-Id: <20240112163608.528453-6-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240112163608.528453-1-krzysztof.kozlowski@linaro.org>
-References: <20240112163608.528453-1-krzysztof.kozlowski@linaro.org>
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Brian Masney <bmasney@redhat.com>,
+	Georgi Djakov <djakov@kernel.org>, linux-arm-msm@vger.kernel.org,
+	vireshk@kernel.org, quic_vbadigan@quicinc.com,
+	quic_skananth@quicinc.com, quic_nitegupt@quicinc.com,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH v6 3/6] PCI: qcom: Add missing icc bandwidth vote for cpu
+ to PCIe path
+Message-ID: <20240112164712.GA2271535@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240112-opp_support-v6-3-77bbf7d0cc37@quicinc.com>
 
-From: Chris Packham <chris.packham@alliedtelesis.co.nz>
+Capitalize "ICC" and "CPU" to make the subject easier to read.
+"Missing" might be superfluous in the subject?  It would be nice to
+have the ICC expansion once in the commit log as a hook for newbies
+like me :)
 
-Some hardware designs with multiple PCA954x devices use a reset GPIO
-connected to all the muxes. Support this configuration by making use of
-the reset controller framework which can deal with the shared reset
-GPIOs. Fall back to the old GPIO descriptor method if the reset
-controller framework is not enabled.
+On Fri, Jan 12, 2024 at 07:52:02PM +0530, Krishna chaitanya chundru wrote:
+> CPU-PCIe path consits for registers PCIe BAR space, config space.
+> As there is less access on this path compared to pcie to mem path
+> add minimum vote i.e GEN1x1 bandwidth always.
 
-Signed-off-by: Chris Packham <chris.packham@alliedtelesis.co.nz>
-Acked-by: Peter Rosin <peda@axentia.se>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20240108041913.7078-1-chris.packham@alliedtelesis.co.nz
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+"GEN1x1" is unnecessarily ambiguous, and the spec recommends avoiding
+it (PCIe r6.0, sec 1.2).  Use the actual bandwidth numbers instead.
 
----
+"PCIe" to match above.  Also below in comments and messages.
 
-If previous patches are fine, then this commit is independent and could
-be taken via I2C.
+> In suspend remove the cpu vote after register space access is done.
 
-Cc: Chris Packham <chris.packham@alliedtelesis.co.nz>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Sean Anderson <sean.anderson@seco.com>
----
- drivers/i2c/muxes/i2c-mux-pca954x.c | 46 ++++++++++++++++++++++++-----
- 1 file changed, 38 insertions(+), 8 deletions(-)
+"CPU" to match above.
 
-diff --git a/drivers/i2c/muxes/i2c-mux-pca954x.c b/drivers/i2c/muxes/i2c-mux-pca954x.c
-index 2219062104fb..1702e8d49b91 100644
---- a/drivers/i2c/muxes/i2c-mux-pca954x.c
-+++ b/drivers/i2c/muxes/i2c-mux-pca954x.c
-@@ -49,6 +49,7 @@
- #include <linux/pm.h>
- #include <linux/property.h>
- #include <linux/regulator/consumer.h>
-+#include <linux/reset.h>
- #include <linux/slab.h>
- #include <linux/spinlock.h>
- #include <dt-bindings/mux/mux.h>
-@@ -102,6 +103,9 @@ struct pca954x {
- 	unsigned int irq_mask;
- 	raw_spinlock_t lock;
- 	struct regulator *supply;
-+
-+	struct gpio_desc *reset_gpio;
-+	struct reset_control *reset_cont;
- };
- 
- /* Provide specs for the MAX735x, PCA954x and PCA984x types we know about */
-@@ -477,6 +481,35 @@ static int pca954x_init(struct i2c_client *client, struct pca954x *data)
- 	return ret;
- }
- 
-+static int pca954x_get_reset(struct device *dev, struct pca954x *data)
-+{
-+	data->reset_cont = devm_reset_control_get_optional_shared(dev, NULL);
-+	if (IS_ERR(data->reset_cont))
-+		return dev_err_probe(dev, PTR_ERR(data->reset_cont),
-+				     "Failed to get reset\n");
-+	else if (data->reset_cont)
-+		return 0;
-+
-+	/*
-+	 * fallback to legacy reset-gpios
-+	 */
-+	data->reset_gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
-+	if (IS_ERR(data->reset_gpio)) {
-+		return dev_err_probe(dev, PTR_ERR(data->reset_gpio),
-+				     "Failed to get reset gpio");
-+	}
-+
-+	return 0;
-+}
-+
-+static void pca954x_reset_deassert(struct pca954x *data)
-+{
-+	if (data->reset_cont)
-+		reset_control_deassert(data->reset_cont);
-+	else
-+		gpiod_set_value_cansleep(data->reset_gpio, 0);
-+}
-+
- /*
-  * I2C init/probing/exit functions
-  */
-@@ -485,7 +518,6 @@ static int pca954x_probe(struct i2c_client *client)
- 	const struct i2c_device_id *id = i2c_client_get_device_id(client);
- 	struct i2c_adapter *adap = client->adapter;
- 	struct device *dev = &client->dev;
--	struct gpio_desc *gpio;
- 	struct i2c_mux_core *muxc;
- 	struct pca954x *data;
- 	int num;
-@@ -513,15 +545,13 @@ static int pca954x_probe(struct i2c_client *client)
- 		return dev_err_probe(dev, ret,
- 				     "Failed to enable vdd supply\n");
- 
--	/* Reset the mux if a reset GPIO is specified. */
--	gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
--	if (IS_ERR(gpio)) {
--		ret = PTR_ERR(gpio);
-+	ret = pca954x_get_reset(dev, data);
-+	if (ret)
- 		goto fail_cleanup;
--	}
--	if (gpio) {
-+
-+	if (data->reset_cont || data->reset_gpio) {
- 		udelay(1);
--		gpiod_set_value_cansleep(gpio, 0);
-+		pca954x_reset_deassert(data);
- 		/* Give the chip some time to recover. */
- 		udelay(1);
- 	}
--- 
-2.34.1
+> Fixes: c4860af88d0c ("PCI: qcom: Add basic interconnect support")
+> cc: stable@vger.kernel.org
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 31 +++++++++++++++++++++++++++++--
+>  1 file changed, 29 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 11c80555d975..035953f0b6d8 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -240,6 +240,7 @@ struct qcom_pcie {
+>  	struct phy *phy;
+>  	struct gpio_desc *reset;
+>  	struct icc_path *icc_mem;
+> +	struct icc_path *icc_cpu;
+>  	const struct qcom_pcie_cfg *cfg;
+>  	struct dentry *debugfs;
+>  	bool suspended;
+> @@ -1372,6 +1373,9 @@ static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
+>  	if (IS_ERR(pcie->icc_mem))
+>  		return PTR_ERR(pcie->icc_mem);
+>  
+> +	pcie->icc_cpu = devm_of_icc_get(pci->dev, "cpu-pcie");
+> +	if (IS_ERR(pcie->icc_cpu))
+> +		return PTR_ERR(pcie->icc_cpu);
+>  	/*
+>  	 * Some Qualcomm platforms require interconnect bandwidth constraints
+>  	 * to be set before enabling interconnect clocks.
+> @@ -1381,7 +1385,18 @@ static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
+>  	 */
+>  	ret = icc_set_bw(pcie->icc_mem, 0, QCOM_PCIE_LINK_SPEED_TO_BW(1));
+>  	if (ret) {
+> -		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+> +		dev_err(pci->dev, "failed to set interconnect bandwidth for pcie-mem: %d\n",
+> +			ret);
+> +		return ret;
+> +	}
+> +
+> +	/*
+> +	 * The config space, BAR space and registers goes through cpu-pcie path.
+> +	 * Set peak bandwidth to single-lane Gen1 for this path all the time.
 
+Numbers instead of "Gen1".
+
+> +	 */
+> +	ret = icc_set_bw(pcie->icc_cpu, 0, QCOM_PCIE_LINK_SPEED_TO_BW(1));
+> +	if (ret) {
+> +		dev_err(pci->dev, "failed to set interconnect bandwidth for cpu-pcie: %d\n",
+>  			ret);
+>  		return ret;
+>  	}
+> @@ -1573,7 +1588,7 @@ static int qcom_pcie_suspend_noirq(struct device *dev)
+>  	 */
+>  	ret = icc_set_bw(pcie->icc_mem, 0, kBps_to_icc(1));
+>  	if (ret) {
+> -		dev_err(dev, "Failed to set interconnect bandwidth: %d\n", ret);
+> +		dev_err(dev, "Failed to set interconnect bandwidth for pcie-mem: %d\n", ret);
+>  		return ret;
+>  	}
+>  
+> @@ -1597,6 +1612,12 @@ static int qcom_pcie_suspend_noirq(struct device *dev)
+>  		pcie->suspended = true;
+>  	}
+>  
+> +	/* Remove cpu path vote after all the register access is done */
+> +	ret = icc_set_bw(pcie->icc_cpu, 0, 0);
+> +	if (ret) {
+> +		dev_err(dev, "failed to set interconnect bandwidth for cpu-pcie: %d\n", ret);
+> +		return ret;
+> +	}
+>  	return 0;
+>  }
+>  
+> @@ -1605,6 +1626,12 @@ static int qcom_pcie_resume_noirq(struct device *dev)
+>  	struct qcom_pcie *pcie = dev_get_drvdata(dev);
+>  	int ret;
+>  
+> +	ret = icc_set_bw(pcie->icc_cpu, 0, QCOM_PCIE_LINK_SPEED_TO_BW(1));
+> +	if (ret) {
+> +		dev_err(dev, "failed to set interconnect bandwidth for cpu-pcie: %d\n", ret);
+> +		return ret;
+> +	}
+> +
+>  	if (pcie->suspended) {
+>  		ret = qcom_pcie_host_init(&pcie->pci->pp);
+>  		if (ret)
+> 
+> -- 
+> 2.42.0
+> 
 
