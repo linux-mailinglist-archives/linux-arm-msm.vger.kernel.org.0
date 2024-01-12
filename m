@@ -1,337 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-7096-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7097-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89F6382BD44
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 10:30:51 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D7E782BD6A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 10:43:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3EDC61F2676B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 09:30:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D874FB23526
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 09:43:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19B3356B68;
-	Fri, 12 Jan 2024 09:29:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6B3257300;
+	Fri, 12 Jan 2024 09:43:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="TXwmvMkQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93B4B5EE68;
-	Fri, 12 Jan 2024 09:29:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EAFE01FB;
-	Fri, 12 Jan 2024 01:30:04 -0800 (PST)
-Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6D9833F64C;
-	Fri, 12 Jan 2024 01:29:16 -0800 (PST)
-Message-ID: <cf167f2c-b87b-4def-8efc-f9ff1cd49597@arm.com>
-Date: Fri, 12 Jan 2024 09:29:15 +0000
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC0056B97
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 09:43:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-7cc92a83200so1497553241.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 01:43:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1705052595; x=1705657395; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7SOKaW2woRervs3SEctxvdhsDA2CX0fXEo5IZIZEkjI=;
+        b=TXwmvMkQt1bOumNT9ex0KA1MwvpznXy0lLXDMsJFXN+cnNl2GWlLSfZaFxsjYsWF9q
+         KQuvfv4cjMnyMvqCIC8QnRA4z2lrgXxakAnNvkb7iDmqX1X59vyi9F8ASou8YzD8BknU
+         ZjMlx7pocpxBBPNoGDAN4oCPgtF7Noz0slVoAEAP8mKPbVnnmnqTfrr6OVBLPsTvnCI8
+         qJIrBAILq9vRyzZqZuBhhQYoJOWNGAqiBRiDdJW0f2/D52c9XwRhccAncOdIceHb6YLf
+         1YK/T8iE0U3rl9C3fw0UqyHc4Al6UJVfBS0ZUCswy9SsL4dyz54iGYahruAMR97cI7rG
+         hdJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705052595; x=1705657395;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7SOKaW2woRervs3SEctxvdhsDA2CX0fXEo5IZIZEkjI=;
+        b=LI5AOUg1y6fCpZFrIOQpAO9S2chLJ1JdxVm/wbedh7LfJRXtk7aCYMikMQmGi2Dmes
+         JmgWpmywEc8EG52kkwGFX92XwxRW06NE/pTkf7B8vaXEUFhrakWGC5+QjoLNj87iwrJx
+         q9bA7cuw9lmvH6KZIPZHsEtDpLJef9mga6SHKdRjRST2X7OI6BUV02yBeFLmQmh14U1v
+         VmEIAxIG37LLclIUseZY0Trf5ITMwLSL9mVDwubuvvBPSGWicN8ZDhllvR9Wo8syqEIy
+         RIXS4M6AxVmqUmsu7XYofrU+DPLgzRXgcz7e1NcdTHsgjXJef9WVPIiInMpFCVIRThh9
+         3dMQ==
+X-Gm-Message-State: AOJu0YxWO5yZjmNtEJ4r+55ASXTcJett1q8IqAhGwYhlF3yICr4CpXOr
+	hakf0T+PpPsYQlWzAUZkEuZpp9FsRFVhnuFLY2uYo8Etocgf4g==
+X-Google-Smtp-Source: AGHT+IGaXoThckSM8NX1Ht9fT8RFyHBo65nMhJgSYIF7TWGvCDsemWJEAEquS+QXpokkqOQiXcw1Whlfv4mDa2JkGVI=
+X-Received: by 2002:a05:6122:3b88:b0:4b6:aeb7:3f1d with SMTP id
+ fs8-20020a0561223b8800b004b6aeb73f1dmr839449vkb.9.1705052595200; Fri, 12 Jan
+ 2024 01:43:15 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/8] coresight-tpdm: Add timestamp control register
- support for the CMB
-Content-Language: en-US
-To: Tao Zhang <quic_taozha@quicinc.com>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Konrad Dybcio <konradybcio@gmail.com>, Mike Leach <mike.leach@linaro.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc: Jinlong Mao <quic_jinlmao@quicinc.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, coresight@lists.linaro.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
- Yuanfang Zhang <quic_yuanfang@quicinc.com>,
- Trilok Soni <quic_tsoni@quicinc.com>, Song Chai <quic_songchai@quicinc.com>,
- linux-arm-msm@vger.kernel.org, andersson@kernel.org
-References: <1700533494-19276-1-git-send-email-quic_taozha@quicinc.com>
- <1700533494-19276-7-git-send-email-quic_taozha@quicinc.com>
- <ebd7e310-d1b4-4b2e-a915-6241e04763d4@arm.com>
- <b61c3d70-7277-4fe7-ab67-8afc1062c737@quicinc.com>
- <cdad425c-b965-44c7-a612-1c99341e95b9@arm.com>
- <b7ef4e75-69c6-4251-8f9c-58682699e3f6@quicinc.com>
- <cc7b83ec-2c97-4a5d-87a9-36f1e13d8fc4@arm.com>
- <797eadf6-2708-47ad-a61f-88bb0d4fcf28@quicinc.com>
- <4ae81e28-1791-4128-860f-eb6a83ea3742@arm.com>
- <616eba43-678c-4bc9-be7e-7b766e8d7c29@quicinc.com>
- <d449d8ce-d087-4e18-a35a-236daa82ae99@arm.com>
- <3cb948f9-2c62-4078-a936-3d7531ed5a2b@quicinc.com>
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <3cb948f9-2c62-4078-a936-3d7531ed5a2b@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20240104130123.37115-1-brgl@bgdev.pl> <20240104130123.37115-4-brgl@bgdev.pl>
+ <20240109144327.GA10780@wunner.de> <CAMRc=MdXO6c6asvRSn_Z8-oFS48hroT+dazGKB6WWY1_Zu7f1Q@mail.gmail.com>
+ <20240110132853.GA6860@wunner.de> <CAMRc=MdBSAb_kEO2r7r-vwLuRAEv7pMODOMtZoCCRAd=zsQb_w@mail.gmail.com>
+ <20240110164105.GA13451@wunner.de> <CAMRc=MdQKPN8UbagmswjFx7_JvmJuBeuq8+9=z-+GBNUmdpWEA@mail.gmail.com>
+ <20240111104211.GA32504@wunner.de> <CAMRc=MfT_VLo7++K4M89iYrciqWSrX_JyS1LX5kaGTNDNVQiOg@mail.gmail.com>
+ <20240111150201.GA28409@wunner.de> <CAMRc=Mcngw1vw9q0DXRWLKk4o9FOY+Mzz-niueT-v2THvbS1Dw@mail.gmail.com>
+ <CAMuHMdUnB_eGhzyOYRczXLMgb65dfHgwHgnv7eXSWDvOvTEdjQ@mail.gmail.com>
+In-Reply-To: <CAMuHMdUnB_eGhzyOYRczXLMgb65dfHgwHgnv7eXSWDvOvTEdjQ@mail.gmail.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Fri, 12 Jan 2024 10:43:04 +0100
+Message-ID: <CAMRc=MeGsWV_71MzJ-Srm5MnwMfmwac_DLyC9O-8242eekuhNg@mail.gmail.com>
+Subject: Re: [RFC 3/9] PCI/portdrv: create platform devices for child OF nodes
+To: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Lukas Wunner <lukas@wunner.de>, Kalle Valo <kvalo@kernel.org>, 
+	"David S . Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Heiko Stuebner <heiko@sntech.de>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Chris Morgan <macromorgan@hotmail.com>, 
+	Linus Walleij <linus.walleij@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Arnd Bergmann <arnd@arndb.de>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	=?UTF-8?B?TsOtY29sYXMgRiAuIFIgLiBBIC4gUHJhZG8=?= <nfraprado@collabora.com>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Peng Fan <peng.fan@nxp.com>, 
+	Robert Richter <rrichter@amd.com>, Dan Williams <dan.j.williams@intel.com>, 
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>, Terry Bowman <terry.bowman@amd.com>, 
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>, 
+	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+	Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-wireless@vger.kernel.org, 
+	netdev@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 12/01/2024 02:42, Tao Zhang wrote:
-> 
-> On 1/8/2024 6:42 PM, Suzuki K Poulose wrote:
->> On 05/01/2024 07:49, Tao Zhang wrote:
->>>
->>> On 12/30/2023 5:39 PM, Suzuki K Poulose wrote:
->>>> On 25/12/2023 01:55, Tao Zhang wrote:
->>>>>
->>>>> On 12/20/2023 7:07 PM, Suzuki K Poulose wrote:
->>>>>> On 20/12/2023 09:51, Tao Zhang wrote:
->>>>>>>
->>>>>>> On 12/19/2023 9:51 PM, Suzuki K Poulose wrote:
->>>>>>>> On 19/12/2023 02:43, Tao Zhang wrote:
->>>>>>>>>
->>>>>>>>> On 12/18/2023 6:46 PM, Suzuki K Poulose wrote:
->>>>>>>>>> On 21/11/2023 02:24, Tao Zhang wrote:
+On Thu, Jan 11, 2024 at 10:44=E2=80=AFPM Geert Uytterhoeven
+<geert@linux-m68k.org> wrote:
+>
+> Hi Bartosz,
+>
+> On Thu, Jan 11, 2024 at 5:16=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.p=
+l> wrote:
+> > No, it was actually a no-op due to CONFIG_PCI_DYNAMIC_OF_NODES not
+> > being set. But this is only available if CONFIG_OF_DYNAMIC is enabled
+> > which requires OF_UNITTEST (!).
+>
+> Huh? Config PCI_DYNAMIC_OF_NODES does select OF_DYNAMIC.
+>
 
-...
+Indeed, I got something wrong.
 
->>>>>>>>>>>                     char *buf)
->>>>>>>>>>>   {
->>>>>>>>>>>       struct tpdm_drvdata *drvdata = 
->>>>>>>>>>> dev_get_drvdata(dev->parent);
->>>>>>>>>>> +    ssize_t size = 0;
->>>>>>>>>>>   -    return sysfs_emit(buf, "%u\n",
->>>>>>>>>>> -             (unsigned int)drvdata->dsb->patt_ts);
->>>>>>>>>>> +    if (tpdm_has_dsb_dataset(drvdata))
->>>>>>>>>>> +        size = sysfs_emit(buf, "%u\n",
->>>>>>>>>>> +                 (unsigned int)drvdata->dsb->patt_ts);
->>>>>>>>>>> +
->>>>>>>>>>> +    if (tpdm_has_cmb_dataset(drvdata))
->>>>>>>>>>> +        size = sysfs_emit(buf, "%u\n",
->>>>>>>>>>> +                 (unsigned int)drvdata->cmb->patt_ts);
->>>>>>>>>>
->>>>>>>>>> Why does this need to show two values ? This must only show 
->>>>>>>>>> ONE value.
->>>>>>>>>> How you deduce that might be based on the availability of the 
->>>>>>>>>> feature
->>>>>>>>>> set. Or store the TS value in the drvdata and use that instead 
->>>>>>>>>> for
->>>>>>>>>> controlling CMB/DSB.
->>>>>>>>>
->>>>>>>>> Since both of CMB/DSB need to have "enable_ts" SysFs file, can 
->>>>>>>>> I separate them
->>>>>>>>
->>>>>>>> The question really is, do we need fine grained control. i.e.,
->>>>>>>>
->>>>>>>> enable TS for DSB but not for CMB or vice versa.
->>>>>>>>
->>>>>>>> I am not an expert on the usage scenario of the same. So, if 
->>>>>>>> you/Qcomm
->>>>>>>> thinks the users need separate, fine grained control for timestamp
->>>>>>>> for the DSB and CMB, then yes, follow your recommendation below.
->>>>>>>> i.e., tpdm.../dsb_patt/enable_ts
->>>>>>>>
->>>>>>>>> as "enable_dsb_ts" and "enable_cmb_ts"? The path will be like 
->>>>>>>>> below.
->>>>>>>>>
->>>>>>>>> tpdm0/dsb_patt/enable_dsb_ts
->>>>>>>>
->>>>>>>> You don't need enable_dsb_ts. It could be "enable_ts"
->>>>>>>>
->>>>>>>>>
->>>>>>>>> tpdm1/cmb_patt/enable_cmb_ts
->>>>>>>>>
->>>>>>>>> Is this design appropriate?
->>>>>>>>
->>>>>>>>
->>>>>>>> Otherwise, stick to single enable_ts : which enables the ts for 
->>>>>>>> both
->>>>>>>> CMB/DSB. And it only ever show one value : 0 (TS is disabled for 
->>>>>>>> both
->>>>>>>> CMB/DSB) 1 : TS enabled for both.
->>>>>>>
->>>>>>> We have a very special case, such as the TPDM supporting both CMB 
->>>>>>> and
->>>>>>>
->>>>>>> DSB datasets. Although this case is very rare, it still exists.
->>>>>>>
->>>>>>> Can I use the data bit to instruct whether timestamp is enabled 
->>>>>>> for CMB/DSB or not? For example,
->>>>>>>
->>>>>>> size = sysfs_emit(buf, "%u\n",
->>>>>>>                  (unsigned int)(drvdata->dsb->patt_ts << 1 | 
->>>>>>> drvdata->cmb->patt_ts));
->>>>>>>
->>>>>>> Thus, this value can instruct the following situations.
->>>>>>>
->>>>>>> 0 - TS is disabled for both CMB/DSB
->>>>>>>
->>>>>>> 1 - TS is enabled for CMB
->>>>>>>
->>>>>>> 2 - TS is enabled for DSB
->>>>>>>
->>>>>>> 3 - TS is enabled for both
->>>>>>>
->>>>>>> Is this approach acceptable?
->>>>>>>
->>>>>>
->>>>>> No, please stick to separate controls for TS. Do not complicate
->>>>>> the user interface.
->>>>>>
->>>>>> i.e.,
->>>>>> tpdm0/dsb_patt/enable_ts
->>>>>> tpdm0/cmb_patt/enable_ts
->>>>>
->>>>> We need to be able to control/show dsb and cmb timestamp enablement 
->>>>> independently.
->>>>>
->>>>> Can we achieve this requirement if we use a sysfs file with the 
->>>>> same name?
->>>>
->>>> They are independent and in their respective directory (group) for 
->>>> CMB and DSB. What am I missing ?
->>>> e.g., if you want to enable TS for DSB, you do :
->>>>
->>>> $ echo 1 > dsb_patt/enable_ts
->>>>
->>>> And that only works for DSB not for CMB.
->>>
->>> We have a special case that the TPDM supports both DSB and CMB 
->>> dataset. In this special case, when we
->>>
->>> issue this command to enable timestamp, it will call enable_ts_store 
->>> API, right?
->>>
->>>      if (tpdm_has_dsb_dataset(drvdata))
->>>          drvdata->dsb->patt_ts = !!val;
->>>
->>>      if (tpdm_has_cmb_dataset(drvdata))
->>>          drvdata->cmb->patt_ts = !!val;
->>
->> I don't understand. If they both are under different subgroups, why
->> should they be conflicting ? Are you not able to distinguish them, when
->>  you creat those attributes ? i.e., create two different "attributes" ?
-> 
-> Yes, although some TPDMs can support both CMB dataset and DSB dataset, 
-> we need to configure them separately
-> 
-> in some scenarios. Based on your suggestion, I want to use the following 
-> approach to implement it.
-> 
-> See below.
-> 
->>
->> See below.
->>
->>> Since this special TPDM supports both DSB and CMB dataset, both DSB 
->>> patt_ts and CMB patt_ts will be set
->>>
->>> in this case even if I only configure the file in the DSB directory, 
->>> right?
->>>
->>> This is the problem we have now.
->>>
->>
->>
->>>>>>>>>>
->>>>>>>>>>
->>>>>>>>>>> +
->>>>>>>>>>> +    return size;
->>>>>>>>>>>   }
->>>>>>>>>>>     /*
->>>>>>>>>>> @@ -715,8 +755,13 @@ static ssize_t enable_ts_store(struct 
->>>>>>>>>>> device *dev,
->>>>>>>>>>>           return -EINVAL;
->>>>>>>>>>>         spin_lock(&drvdata->spinlock);
->>>>>>>>>>> -    drvdata->dsb->patt_ts = !!val;
->>>>>>>>>>> +    if (tpdm_has_dsb_dataset(drvdata))
->>>>>>>>>>> +        drvdata->dsb->patt_ts = !!val;
->>>>>>>>>>> +
->>>>>>>>>>> +    if (tpdm_has_cmb_dataset(drvdata))
->>>>>>>>>>> +        drvdata->cmb->patt_ts = !!val;
->>>>>>>>>>>       spin_unlock(&drvdata->spinlock);
->>>>>>>>>>> +
->>>>>>>>>>>       return size;
->>>>>>>>>>>   }
->>>>>>>>>>>   static DEVICE_ATTR_RW(enable_ts);
->>
->> Do not overload the same for both DSB and CMB. Create one for each in 
->> DSB and CMB ? They could share the same show/store routines, but could
->> be done with additional variable to indicate which attribute they are 
->> controlling. Like the other attributes, using dev_ext_attribute or such.
-> 
-> New approach below, please help review to see if it is acceptable?
-> 
-> #define tpdm_patt_enable_ts_rw(name, mem)                \
->      (&((struct tpdm_dataset_attribute[]) {            \
->         {                                \
->          __ATTR(name, 0644, enable_ts_show,        \
->          enable_ts_store),        \
->          mem,                            \
->         }                                \
->      })[0].attr.attr)
-> 
-> 
-> #define DSB_PATT_ENABLE_TS                    \
->          tpdm_patt_enable_ts_rw(enable_ts,        \
->          DSB_PATT)
-> 
-> 
-> #define CMB_PATT_ENABLE_TS                    \
->          tpdm_patt_enable_ts_rw(enable_ts,        \
->          CMB_PATT)
-> 
-> 
-> static ssize_t enable_ts_show(struct device *dev,
->                    struct device_attribute *attr,
->                    char *buf)
-> {
->      struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
->      struct tpdm_dataset_attribute *tpdm_attr =
->          container_of(attr, struct tpdm_dataset_attribute, attr);
->      ssize_t size = 0;
-> 
->      if (tpdm_attr->mem == DSB_PATT) {
->          size = sysfs_emit(buf, "%u\n",
->                   (unsigned int)drvdata->dsb->patt_ts);
->      } else if (tpdm_attr->mem == CMB_PATT) {
->          size = sysfs_emit(buf, "%u\n",
->                  (unsigned int)drvdata->cmb->patt_ts);
->      } else
->          return -EINVAL;
-> 
->      return size;
-> }
-> 
-> static ssize_t enable_ts_store(struct device *dev,
->                     struct device_attribute *attr,
->                     const char *buf,
->                     size_t size)
-> {
->      struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
->      struct tpdm_dataset_attribute *tpdm_attr =
->          container_of(attr, struct tpdm_dataset_attribute, attr);
->      unsigned long val;
-> 
->      if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
->          return -EINVAL;
-> 
->      spin_lock(&drvdata->spinlock);
->      if (tpdm_attr->mem == DSB_PATT) {
->          drvdata->dsb->patt_ts = !!val;
->      } else if (tpdm_attr->mem == CMB_PATT) {
->          drvdata->cmb->patt_ts = !!val;
->      } else
->          return -EINVAL;
->      spin_unlock(&drvdata->spinlock);
-> 
->      return size;
-> }
-> 
-> 
+But in any case: we *don't* need dynamic OF nodes as we don't create
+new ones. We use the ones that already exist. This is logically a
+wrong place to add this.
 
-Yes, that is what I had in mind.
+Lukas, Terry: am I getting this right - is the port driver supposed to
+go away at some point? Because I'm not sure I understand what the
+problem is here. To me it seems that when we create a real device for
+the PCIe port, then it's only normal to populate its child devices
+from the port driver.
 
-Thanks
-Suzuki
+Bartosz
 
-> Best,
-> 
-> Tao
-> 
->>
->>
->> Suzuki
->>
-
+> Gr{oetje,eeting}s,
+>
+>                         Geert
+>
+>
+> --
+> Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m6=
+8k.org
+>
+> In personal conversations with technical people, I call myself a hacker. =
+But
+> when I'm talking to journalists I just say "programmer" or something like=
+ that.
+>                                 -- Linus Torvalds
+>
 
