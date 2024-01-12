@@ -1,196 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-7160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CBAB982C7D0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jan 2024 00:04:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5061782C7EF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jan 2024 00:22:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 51A231F23138
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 23:04:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 053BD1F237D4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 23:22:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C398E18E14;
-	Fri, 12 Jan 2024 23:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65A90199C4;
+	Fri, 12 Jan 2024 23:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="M5D3wji+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FKcOP0gA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F9D18C32
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 23:04:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-2046dee3c14so3861279fac.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 15:04:11 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2FF19451
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 23:21:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-40e636fd3d2so13904525e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 15:21:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1705100650; x=1705705450; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gpqKIDk36VlVzO0rugmoEmqPTQlUdVUabRrmvMVC4u0=;
-        b=M5D3wji+C7rELO4bfxY/KZduTKCvW9DaAJt5REteuEZEpO6gFvMA8zwXFFcD4Vny/+
-         WoEFIC2hSVqzL87TZH3jYWLTTIqafucjqQO0YEZ7emBULcthNKzDIow0u/9Xf2HrxRZN
-         HutcZOOyLRi2HHG9WhUtm1iQfTN2G/whEKj0E=
+        d=linaro.org; s=google; t=1705101712; x=1705706512; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IC8mtm1TlFW9DFESezgL/8iynrL8GjEwcVQmn91Rdks=;
+        b=FKcOP0gAtqtlISM9MgV24bEjZu63LoZt62x39Ig5XJfMZVRhCdhnZNd0sqzKF+jPJa
+         zgC/g8PR64DdMLvwKSWG10QuJjXF/iMJ2hkOEmEeNRzLzgvGiwxoXNb8wOPX1HwkQ157
+         sOSf+lHTgHWrWwWz2+47dzOShFOr4Zb4I1C7dlGXKYm6iM0hWAs+2shxOK/gly0fneCX
+         7osy9ECBj+0NNDqE/IW/Hj8+OOl/nftlK4i1cal8WV2ZPKFLzn+WYYAiU0oMxhlvw1KK
+         Bo1VQCIoD7KohJOxynOJmSW23cFJqsXEnHEiXOhrebzlqyT7eoRygmZtDC90wW7yZ6eC
+         Pr7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705100650; x=1705705450;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gpqKIDk36VlVzO0rugmoEmqPTQlUdVUabRrmvMVC4u0=;
-        b=hohCApEVOHAYCPWUHQlVE/aLSQNG3HTjGe8vpOj2Zmq4bWWvRNjgUVTz1R3LN2f1XC
-         2D6RggTO2cuve/zlcWeTQVnw7vj42aqEjqRUBV6Me6AH9BAJygrVw8o+qcg8E7qiAkpF
-         SypMjh2WKRDwVphHTBH8SvHPfzc9mNSd0m3qN6YXjV3PuTCDl7yEff4YX68xZonSC92f
-         +fAKDQ3SGo08/Njx2WLE6FLJyMmNpQdtj3advyfRnO9GIAa0YI2YugAjZ4S9JNgPaiAE
-         dXmNnSRduQShEyabDG2sXrCvCGF+GdYx+F6hYDy7kmJ9cmzwZgZ0eoJImBtUIdp9C+ZL
-         HvxQ==
-X-Gm-Message-State: AOJu0YxCaEtOZkeHPI8jdJFKa2kCknnAkqBxDJg+DkJUVksR2tIP2bSN
-	i7BgIHjS/OpLKBysKFjBvyGuivml5Xw/ZBSpKmy8esogtQ==
-X-Google-Smtp-Source: AGHT+IEL0tFoLu9ftH9Yrk9OESPN6qWXu9TY9EjnN01P+Hxb8oKx+2lK9GtS7t/Z9Zr8wwOeiRDFpA==
-X-Received: by 2002:a05:6871:b2a:b0:204:4926:1824 with SMTP id fq42-20020a0568710b2a00b0020449261824mr2346994oab.80.1705100650626;
-        Fri, 12 Jan 2024 15:04:10 -0800 (PST)
-Received: from dianders.sjc.corp.google.com ([2620:15c:9d:2:3e64:3a29:441b:e07e])
-        by smtp.gmail.com with ESMTPSA id fd41-20020a056a002ea900b006d49ed3eff2sm3678612pfb.75.2024.01.12.15.04.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Jan 2024 15:04:10 -0800 (PST)
-From: Douglas Anderson <dianders@chromium.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: linux-arm-kernel@lists.infradead.org,
-	Stephen Boyd <swboyd@chromium.org>,
-	linux-serial@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] serial: qcom-geni: Don't cancel/abort if we can't get the port lock
-Date: Fri, 12 Jan 2024 15:03:08 -0800
-Message-ID: <20240112150307.2.Idb1553d1d22123c377f31eacb4486432f6c9ac8d@changeid>
-X-Mailer: git-send-email 2.43.0.275.g3460e3d667-goog
-In-Reply-To: <20240112150307.1.I7dc0993c1e758a1efedd651e7e1670deb1b430fb@changeid>
-References: <20240112150307.1.I7dc0993c1e758a1efedd651e7e1670deb1b430fb@changeid>
+        d=1e100.net; s=20230601; t=1705101712; x=1705706512;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IC8mtm1TlFW9DFESezgL/8iynrL8GjEwcVQmn91Rdks=;
+        b=WGt3Lstss1qWRt6VfwD6rCnxEaCVZuDK1dPgpGLhb0WGj+vwnms6b5PSls5b6D9jMZ
+         uaOaShG8CTwEpmRLWtAeEGI5emkVI3Ou0rBi+BlJMKhR4SlYNerGqMN6huRrguU4UhzX
+         uVNUj/k9JlVfEAkZPb123bPTGj7wkWBehKcWtm/L6HgPiFENBGfgXmqCDNchz3DxNnlF
+         FLX/M19hvgKFDrRB+KlIRtvJzhkb60NRMnJb51IjX4maNWbIPu7mc3qp7hF4hFbZHbza
+         vOcG0TXF2C5gOoXq3PXPK+dQ68DLgc70R124PobK4vMfGXFm+ThyMrrAJF+opJk8J1wy
+         WJ7Q==
+X-Gm-Message-State: AOJu0Yx+x+ImR5fLPSJr01wbZ7Rpgq9PgrXNt19SD8n+Bc+uhHp4GHjy
+	AJxoZlCN/1MSCovSQ2c4rBDkWc+H/XpioA==
+X-Google-Smtp-Source: AGHT+IGIJIeLRHLW9oe50D2fPwgY8ABdpkgxLo1DwyCB8mIAi+38N4kmqLDbIoxRtUwB9ItoQr2SSw==
+X-Received: by 2002:a05:600c:5385:b0:40e:46d9:cb52 with SMTP id hg5-20020a05600c538500b0040e46d9cb52mr1037169wmb.19.1705101712547;
+        Fri, 12 Jan 2024 15:21:52 -0800 (PST)
+Received: from [192.168.174.25] (178235179017.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.17])
+        by smtp.gmail.com with ESMTPSA id p16-20020aa7cc90000000b00558a7d36956sm2063226edt.0.2024.01.12.15.21.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 12 Jan 2024 15:21:52 -0800 (PST)
+Message-ID: <45e9b5aa-13ec-44c0-8cf8-a4d24d470928@linaro.org>
+Date: Sat, 13 Jan 2024 00:21:50 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] soc: qcom: geni-se: Add M_TX_FIFO_NOT_EMPTY bit
+ definition
+Content-Language: en-US
+To: Douglas Anderson <dianders@chromium.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: linux-arm-kernel@lists.infradead.org, Stephen Boyd <swboyd@chromium.org>,
+ linux-serial@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ Jiri Slaby <jirislaby@kernel.org>, linux-kernel@vger.kernel.org
+References: <20240112150307.1.I7dc0993c1e758a1efedd651e7e1670deb1b430fb@changeid>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240112150307.1.I7dc0993c1e758a1efedd651e7e1670deb1b430fb@changeid>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-As of commit d7402513c935 ("arm64: smp: IPI_CPU_STOP and
-IPI_CPU_CRASH_STOP should try for NMI"), if we've got pseudo-NMI
-enabled then we'll use it to stop CPUs at panic time. This is nice,
-but it does mean that there's a pretty good chance that we'll end up
-stopping a CPU while it holds the port lock for the console
-UART. Specifically, I see a CPU get stopped while holding the port
-lock nearly 100% of the time on my sc7180-trogdor based Chromebook by
-enabling the "buddy" hardlockup detector and then doing:
+On 13.01.2024 00:03, Douglas Anderson wrote:
+> According to the docs I have, bit 21 of the status register is
+> asserted when the FIFO is _not_ empty. Add the definition.
+> 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
 
-  sysctl -w kernel.hardlockup_all_cpu_backtrace=1
-  sysctl -w kernel.hardlockup_panic=1
-  echo HARDLOCKUP > /sys/kernel/debug/provoke-crash/DIRECT
+Looks like.
 
-UART drivers are _supposed_ to handle this case OK and this is why
-UART drivers check "oops_in_progress" and only do a "trylock" in that
-case. However, before we enabled pseudo-NMI to stop CPUs it wasn't a
-very well-tested situation.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Now that we're testing the situation a lot, it can be seen that the
-Qualcomm GENI UART driver is pretty broken. Specifically, when I run
-my test case and look at the console output I just see a bunch of
-garbled output like:
-
-  [  201.069084] NMI backtrace[  201.069084] NM[  201.069087] CPU: 6
-  PID: 10296 Comm: dnsproxyd Not tainted 6.7.0-06265-gb13e8c0ede12
-  #1 01112b9f14923cbd0b[  201.069090] Hardware name: Google Lazor
-  ([  201.069092] pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DI[
-  201.069095] pc : smp_call_function_man[  201.069099]
-
-That's obviously not so great. This happens because each call to the
-console driver exits after the data has been written to the FIFO but
-before it's actually been flushed out of the serial port. When we have
-multiple calls into the console one after the other then (if we can't
-get the lock) each call tells the UART to throw away any data in the
-FIFO that hadn't been transferred yet.
-
-I've posted up a patch to change the arm64 core to avoid this
-situation most of the time [1] much like x86 seems to do, but even if
-that patch lands the GENI driver should still be fixed.
-
-From testing, it appears that we can just delete the cancel/abort in
-the case where we weren't able to get the UART lock and the output
-looks good. It makes sense that we'd be able to do this since that
-means we'll just call into __qcom_geni_serial_console_write() and
-__qcom_geni_serial_console_write() looks much like
-qcom_geni_serial_poll_put_char() but with a loop. However, it seems
-safest to poll the FIFO and make sure it's empty before our
-transfer. This should reliably make sure that we're not
-interrupting/clobbering any existing transfers.
-
-As part of this change, we'll also avoid re-setting up a TX at the end
-of the console write function if we weren't able to get the lock,
-since accessing "port->tx_remaining" without the lock is not
-safe. This is only needed to re-start userspace initiated transfers.
-
-[1] https://lore.kernel.org/r/20231207170251.1.Id4817adef610302554b8aa42b090d57270dc119c@changeid
-
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-
- drivers/tty/serial/qcom_geni_serial.c | 27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
-
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 7e78f97e8f43..06ebe62f99bc 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -488,18 +488,16 @@ static void qcom_geni_serial_console_write(struct console *co, const char *s,
- 
- 	geni_status = readl(uport->membase + SE_GENI_STATUS);
- 
--	/* Cancel the current write to log the fault */
- 	if (!locked) {
--		geni_se_cancel_m_cmd(&port->se);
--		if (!qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
--						M_CMD_CANCEL_EN, true)) {
--			geni_se_abort_m_cmd(&port->se);
--			qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
--							M_CMD_ABORT_EN, true);
--			writel(M_CMD_ABORT_EN, uport->membase +
--							SE_GENI_M_IRQ_CLEAR);
--		}
--		writel(M_CMD_CANCEL_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
-+		/*
-+		 * We can only get here if an oops is in progress then we were
-+		 * unable to get the lock. This means we can't safely access
-+		 * our state variables like tx_remaining. About the best we
-+		 * can do is wait for the FIFO to be empty before we start our
-+		 * transfer, so we'll do that.
-+		 */
-+		qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
-+					  M_TX_FIFO_NOT_EMPTY_EN, false);
- 	} else if ((geni_status & M_GENI_CMD_ACTIVE) && !port->tx_remaining) {
- 		/*
- 		 * It seems we can't interrupt existing transfers if all data
-@@ -516,11 +514,12 @@ static void qcom_geni_serial_console_write(struct console *co, const char *s,
- 
- 	__qcom_geni_serial_console_write(uport, s, count);
- 
--	if (port->tx_remaining)
--		qcom_geni_serial_setup_tx(uport, port->tx_remaining);
- 
--	if (locked)
-+	if (locked) {
-+		if (port->tx_remaining)
-+			qcom_geni_serial_setup_tx(uport, port->tx_remaining);
- 		uart_port_unlock_irqrestore(uport, flags);
-+	}
- }
- 
- static void handle_rx_console(struct uart_port *uport, u32 bytes, bool drop)
--- 
-2.43.0.275.g3460e3d667-goog
-
+Konrad
 
