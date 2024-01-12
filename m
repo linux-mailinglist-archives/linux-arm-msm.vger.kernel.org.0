@@ -1,154 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-7105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2425C82BE99
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 11:27:30 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F6F482BF68
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 12:43:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 494BE1C25281
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 10:27:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A8602B23119
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 11:42:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E80915EE81;
-	Fri, 12 Jan 2024 10:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 305906A026;
+	Fri, 12 Jan 2024 11:42:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BBDwWL8f"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="e364iGGr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4441E5EE8C
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 10:26:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3368b1e056eso4948497f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 02:26:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705055206; x=1705660006; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=C0Lc99ilQ42af+xslRM658d3mAj5DW98oVamnjTJWVg=;
-        b=BBDwWL8fwf0FXzb5aWIR41mlLwN2QymHN50Yx6Q0GhNCxqmT531Sy6NRE+N1IeCjpM
-         jRZTn+IcIxTfIV0YUJRqot7mbg1uLXw8jPgDwknrxZ5OzeY2gtTYfoFN2KepN1LaQLEV
-         S56MISWhGUYf2vEz6QyE4zvnfPd5L44lKXlHzxWiXOzifurL1KRof86bF/SxJMCzUbJl
-         tAWjDPTv18qrzHUPTbJp4tI3RqS7tuZNuUihp25xUCgxBi7CUVCcr1l2d428PxJK4V3E
-         R3tklHqFVA6OPrqk6cZQm8MlXp0SVXPsFmA/p8xBktGxMdQc/DYoCvURFUXbkoyHziRD
-         M53w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705055206; x=1705660006;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=C0Lc99ilQ42af+xslRM658d3mAj5DW98oVamnjTJWVg=;
-        b=ml+gUExzDY9SjuDzgJKSFPZcrI1sHcSLxzx9xULfHpheMOeadfC1SugyclalNmNdJm
-         +ZNKGZhUaVAB1Mghi9fElviGg84ZtDZv8KbPQTODkg3m38Knr4HEuOtBPYK36jBrynlc
-         54fHs56TDftlsKpNOaFVC5E/1zmzrx/GRZ2eN9A+EObk4f83yWCKqa0xs0g8ktDm/yMz
-         i+K1fLqDleSAqOr+3NVWQRYwq0xn9rCY/381rv6WMfs+lh/RTTgX+8LZQhKuCFtYokVF
-         +fNPUCCPkzJx8APT4vGcDTLEdyRg/tqqxxVUwB+vf6h8N8ffg4baeGfB7D3MuHYa5CHW
-         Rq4w==
-X-Gm-Message-State: AOJu0Yw1yCfkDcFHH/cufUJpe/QPWwocNvB20CZTn6m5ZwuXdcjTGUvl
-	ai9M1Rm5wLDWfD08ovHhjlDqK9mvCuHAMg==
-X-Google-Smtp-Source: AGHT+IEJ0X+IfLsBVCPTmjzGkvUhKKx4wLj7tOWDMjhPq6GtB3+I1Fs/2fvJMVmiCPfL0g/HihfoHw==
-X-Received: by 2002:a05:6000:184f:b0:336:5e6c:a1f8 with SMTP id c15-20020a056000184f00b003365e6ca1f8mr684134wri.92.1705055206508;
-        Fri, 12 Jan 2024 02:26:46 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:59d5:231:f1ee:77f? ([2a01:e0a:982:cbb0:59d5:231:f1ee:77f])
-        by smtp.gmail.com with ESMTPSA id h18-20020adf9cd2000000b00336a1f6ce7csm3456348wre.19.2024.01.12.02.26.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Jan 2024 02:26:46 -0800 (PST)
-Message-ID: <f99d363c-d4a6-44b3-8057-3925f8dac1d5@linaro.org>
-Date: Fri, 12 Jan 2024 11:26:44 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B72C6A02D;
+	Fri, 12 Jan 2024 11:42:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1705059729;
+	bh=v0ayvc6VxUrFVwfoqiV5RNkoO3lyHBgUhluMw+6vw+A=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=e364iGGrslydFLzQ5zrs8FMVSFGCTG3IE2djY1gcfg2xwEQB88GCiojRn3nk/inJ3
+	 fxavbYD7jToad6JfgoGcjrRZtUBSU5qNZja8latrfr126RVOqrsdQx8FNuUJgfP79E
+	 AIvnjl3jfM4mROB11VWPZtJLgTwrg/ZONR9zn6tlr3x8+LhqMzlpDbu7+EScCflkmT
+	 4nN49KBw0/tI8pHqDqwujP9QtzFu3VSMIphA7ntHzN/ZE3Vy3LHtq5EMpgovsrj1FU
+	 FOqEhEcWnYxEOIiETLB1BMGaIvtRFsfKywwiyeq5Ae+RwdbpsnLfxI8TXq4BsXn8YR
+	 4Wzu6XNZTm5dw==
+Received: from [100.66.96.193] (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: vignesh)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id CC4423781F80;
+	Fri, 12 Jan 2024 11:42:05 +0000 (UTC)
+Message-ID: <27e64458-7cb1-99a4-f67e-60d911f28f44@collabora.com>
+Date: Fri, 12 Jan 2024 17:12:02 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 2/4] drm/panel: Add driver for DJN HX83112A LCD panel
-Content-Language: en-US, fr
-To: Linus Walleij <linus.walleij@linaro.org>,
- Luca Weiss <luca.weiss@fairphone.com>
-Cc: Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg
- <sam@ravnborg.org>, David Airlie <airlied@gmail.com>,
- Daniel Vetter <daniel@ffwll.ch>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH] drm/ci: Add msm tests
+Content-Language: en-US
+To: Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc: Rob Clark <robdclark@chromium.org>, Daniel Vetter <daniel@ffwll.ch>,
+ linux-arm-msm@vger.kernel.org,
  Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross <agross@kernel.org>,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
- ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <20240110-fp4-panel-v2-0-8ad11174f65b@fairphone.com>
- <20240110-fp4-panel-v2-2-8ad11174f65b@fairphone.com>
- <CACRpkdaWTfPDCin_L6pefHsokjNyO8Mo6hWPdzPLLi1EUkKUuA@mail.gmail.com>
- <CYBZEZ4IM6IL.VR04W7933VI@fairphone.com>
- <CACRpkdZQbVXfBa70nhDOqfWPbsh-6DgX-uvZOxr19pzMmF2giQ@mail.gmail.com>
- <CYCLSCKPPBOC.1B1MP3VOOC0Q8@fairphone.com>
- <cdc18e2a-b7eb-4b54-a513-481148fb3b0d@linaro.org>
- <CYCMVXHYVDCI.HVH1TR8MWEUK@fairphone.com>
- <CACRpkdacS9ojXUuogygkz6xxCf3mMq6GG_75sze8ukUu=rxVyw@mail.gmail.com>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <CACRpkdacS9ojXUuogygkz6xxCf3mMq6GG_75sze8ukUu=rxVyw@mail.gmail.com>
+ open list <linux-kernel@vger.kernel.org>, Maxime Ripard
+ <mripard@kernel.org>, Helen Koike <helen.koike@collabora.com>,
+ Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>,
+ freedreno@lists.freedesktop.org, Daniel Stone <daniel@fooishbar.org>
+References: <20240108195016.156583-1-robdclark@gmail.com>
+From: Vignesh Raman <vignesh.raman@collabora.com>
+In-Reply-To: <20240108195016.156583-1-robdclark@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 12/01/2024 11:23, Linus Walleij wrote:
-> On Fri, Jan 12, 2024 at 10:52 AM Luca Weiss <luca.weiss@fairphone.com> wrote:
+Hi Rob,
+
+
+On 09/01/24 01:20, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
->> Since there's zero indication Truly is involved in this panel in my
->> documentation - much less the number 5P65 - I'm not going to add that.
-
-Ack
-
+> The msm tests should skip on non-msm hw, so I think it should be safe to
+> enable everywhere.
 > 
-> OK then, I fold, thanks for looking into it.
-> Keep the Himax hx83112a file name and symbols.
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>   drivers/gpu/drm/ci/testlist.txt | 49 +++++++++++++++++++++++++++++++++
+>   1 file changed, 49 insertions(+)
 > 
->> So in short this panel is the model 9A-3R063-1102B from DJN, which uses
->> a Himax HX83112A driver IC.
-> 
-> So compatible = "djn,9a-3r063-1102b" since the setup sequences for
-> hx83112a are clearly for this one display?
+> diff --git a/drivers/gpu/drm/ci/testlist.txt b/drivers/gpu/drm/ci/testlist.txt
+> index f82cd90372f4..eaeb751bb0ad 100644
+> --- a/drivers/gpu/drm/ci/testlist.txt
+> +++ b/drivers/gpu/drm/ci/testlist.txt
+> @@ -2910,3 +2910,52 @@ kms_writeback@writeback-invalid-parameters
+>   kms_writeback@writeback-fb-id
+>   kms_writeback@writeback-check-output
+>   prime_mmap_kms@buffer-sharing
+> +msm_shrink@copy-gpu-sanitycheck-8
+> +msm_shrink@copy-gpu-sanitycheck-32
+> +msm_shrink@copy-gpu-8
+> +msm_shrink@copy-gpu-32
+> +msm_shrink@copy-gpu-madvise-8
+> +msm_shrink@copy-gpu-madvise-32
+> +msm_shrink@copy-gpu-oom-8
+> +msm_shrink@copy-gpu-oom-32
+> +msm_shrink@copy-mmap-sanitycheck-8
+> +msm_shrink@copy-mmap-sanitycheck-32
+> +msm_shrink@copy-mmap-8
+> +msm_shrink@copy-mmap-32
+> +msm_shrink@copy-mmap-madvise-8
+> +msm_shrink@copy-mmap-madvise-32
+> +msm_shrink@copy-mmap-oom-8
+> +msm_shrink@copy-mmap-oom-32
+> +msm_shrink@copy-mmap-dmabuf-sanitycheck-8
+> +msm_shrink@copy-mmap-dmabuf-sanitycheck-32
+> +msm_shrink@copy-mmap-dmabuf-8
+> +msm_shrink@copy-mmap-dmabuf-32
+> +msm_shrink@copy-mmap-dmabuf-madvise-8
+> +msm_shrink@copy-mmap-dmabuf-madvise-32
+> +msm_shrink@copy-mmap-dmabuf-oom-8
+> +msm_shrink@copy-mmap-dmabuf-oom-32
+> +msm_mapping@ring
+> +msm_mapping@sqefw
+> +msm_mapping@shadow
+> +msm_submitoverhead@submitbench-10-bos
+> +msm_submitoverhead@submitbench-10-bos-no-implicit-sync
+> +msm_submitoverhead@submitbench-100-bos
+> +msm_submitoverhead@submitbench-100-bos-no-implicit-sync
+> +msm_submitoverhead@submitbench-250-bos
+> +msm_submitoverhead@submitbench-250-bos-no-implicit-sync
+> +msm_submitoverhead@submitbench-500-bos
+> +msm_submitoverhead@submitbench-500-bos-no-implicit-sync
+> +msm_submitoverhead@submitbench-1000-bos
+> +msm_submitoverhead@submitbench-1000-bos-no-implicit-sync
+> +msm_recovery@hangcheck
+> +msm_recovery@gpu-fault
+> +msm_recovery@gpu-fault-parallel
+> +msm_recovery@iova-fault
+> +msm_submit@empty-submit
+> +msm_submit@invalid-queue-submit
+> +msm_submit@invalid-flags-submit
+> +msm_submit@invalid-in-fence-submit
+> +msm_submit@invalid-duplicate-bo-submit
+> +msm_submit@invalid-cmd-idx-submit
+> +msm_submit@invalid-cmd-type-submit
+> +msm_submit@valid-submit
 
-Yep let's settle on that!
+I tested this patch with latest drm-misc/drm-misc-next and there was 
+some failures seen for the newly added msm tests. I have updated the
+xfails with below commit,
 
-Thanks,
-Neil
+https://gitlab.freedesktop.org/vigneshraman/linux/-/commit/d012893597a661d6ebbb755bf2607dfb055524a1
 
-> 
-> Yours,
-> Linus Walleij
+I will notify the maintainers about the flaky tests, update the url in 
+the flakes.txt, and submit a separate patch for this change.
 
+Regards,
+Vignesh
 
