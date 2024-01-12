@@ -1,65 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-7155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7156-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD80282C73B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 23:29:02 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E600A82C755
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 23:33:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5CACB1F233B1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 22:28:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 556B41F24019
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 22:33:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DFE21773E;
-	Fri, 12 Jan 2024 22:28:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AB2118048;
+	Fri, 12 Jan 2024 22:33:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="K+jkxS/H"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vT0tdSK7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B7117729
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 22:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50CB1803B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 22:33:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a2cfb0196bcso70944966b.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 14:28:51 -0800 (PST)
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a28fb463a28so745094866b.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 14:33:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705098529; x=1705703329; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=k+g8KAN/GocAbP+Hjj0VU3R5oOrMC5lRs+LQJKDyZbc=;
-        b=K+jkxS/HFNwjqGT47Hes14wV4POIlXFMqJjU2r06BY6/ANnvSE/NxIER3GEbt2Rci1
-         G+ySvp3yP92iSYndcPdgTP6X5prn6o3ewq88l+pzFuU03dwGecfVMjOmfuEpRysp9Yj1
-         8qWmc0Tk1lZOZowmMKuoQFig+tFKJ1SqxL/E2g/E2jlzOmhwnrtaFsPKrgKw9WCtQYeG
-         YMpeul7CqohG4wU/WwjK4J44hX9fdGvKBTkEd7AfkKlNtGJhIJN8jo6zJT2Yp1OCBJ/7
-         HIWvt7IxJcpOpQyV6MVmy/6XytdULTSKDcX2uO08U9GsBAgOJREQ8gmSKZUmQWhUMnhl
-         SKgg==
+        d=linaro.org; s=google; t=1705098798; x=1705703598; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=21VIzpAcVyElKFBAjt6JPdjAMyK14m0eDmuJCWvWTSw=;
+        b=vT0tdSK74rpG/P2blB/NOpXDVI77zeThFNN3fekhb5K3dVqMd2BoAcv3KabnGQKFgV
+         2/YKkFjreVOB0hlaylDgiSpszQUUVrO0p4E34nRqpQslWvHt19X2ooR773PLby4BwpIx
+         vY3muey2wkPiGkr5LXWfzv2uj+dz0QTpvFag6n/Pny5v0DVn1uVv3TTAWHtWf1a+ixDp
+         MGdWGSMaXRnaU/eqbQFT/EqiXKGfk0/Blcs+dwDkNklQUHjuXMPkIjUNvI9P3ew5Im4B
+         tmhaQbzjTKuG8wT3/FfIJJNePbusszoJT8h76C/jqevdMc3ZE1oi2Av/BxlyNyP/Hy7X
+         U+Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705098529; x=1705703329;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=k+g8KAN/GocAbP+Hjj0VU3R5oOrMC5lRs+LQJKDyZbc=;
-        b=mlGyFju+0QsTkws8WASTV85kPfFXi/IEzzDwR7ZX6xm8AiKXHD9V5BF1OV3azu6H6H
-         72cBYgEtWk3rJdrLOEf2xqnpbezH6VT8+ftg7hNEgfWjJL7Zx5lRw7pPWIdQVckEc5mg
-         Bh2YB4/XmTzENWG3nUg2V9NxuZ7u56VveBxwE0ylQu6wTdvZZKRTLdnQZXASzrn61Upa
-         TPLSrXhLAVXTKZkRJaK2KZnA8YNGFJfl8rq5fki/fmOTtqc16v7Qs85a+yswRDAjulBA
-         CaypSrB9gvWKpTXK5RLIyxSHKpWZaEYRFC51uP/kX7Vz5+uQXTCeBM4MBF5YFAvAu9Sk
-         2pUQ==
-X-Gm-Message-State: AOJu0YzKPW0IceBV3evT+NR2flo8MeVSNpP1lfnUS/a3bc2WA/rjlZk1
-	9/kSMqpIuqDSNHMbY7L1+B+/sThUnNZ0tg==
-X-Google-Smtp-Source: AGHT+IE6Y1CQAvSWgVhfPTkwN2W/RAJPjIutDlo+/cj2s9k6qNsUhtuGUhJR5tGNazvTNT3GoTlf0A==
-X-Received: by 2002:a17:906:a202:b0:a2c:4b7d:69db with SMTP id r2-20020a170906a20200b00a2c4b7d69dbmr1054995ejy.18.1705098529417;
-        Fri, 12 Jan 2024 14:28:49 -0800 (PST)
+        d=1e100.net; s=20230601; t=1705098798; x=1705703598;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=21VIzpAcVyElKFBAjt6JPdjAMyK14m0eDmuJCWvWTSw=;
+        b=H0dk3+vgd2TwDyNcmeWAD2sNZ0nYIg2+cSojqG/K02809CVW1OIzZmFnLGjF2KDb+h
+         dtbBjyK1DBe90AHs1MScY1xdsxdauUkU/swJqR0O9ykVSclEOeR4vfHbksccwta5FuQB
+         xOKnIOs9tAxylHIh7O2Cs/mFhecAzd2yRPYxaPsCZqodI4eHYq8xHrZ0RKYDhARbIZPj
+         wyHdVWTrJYXNTSBZJdffMiWv3+dNytz8hO0sy0jJbA9FQyp2bC9JlvvG1slel18aHWx2
+         imA9pPUkY/2DjtmRUOH1qlZ31//w3j0TOcOt9JWzqHDJrtg4hjhJQzOveAFm+A4gucJF
+         kalw==
+X-Gm-Message-State: AOJu0YxtYV4RZFZEZ1Rleu9QVuN+KuWDXMOsiFRaFeYtNHEFz/x8AK+N
+	ZDVkEpTWz5JMV0vPo97XbvNHId1w+8Wgsg==
+X-Google-Smtp-Source: AGHT+IH8pm44dT/z4IAV6k2Car4N58TCRuCujxBhw2VypwrRO3YPmM4mzK6fyJaDxFfcNsbX69ig+w==
+X-Received: by 2002:a17:907:72c9:b0:a2a:99ae:3ff8 with SMTP id du9-20020a17090772c900b00a2a99ae3ff8mr1180861ejc.37.1705098797915;
+        Fri, 12 Jan 2024 14:33:17 -0800 (PST)
 Received: from [192.168.174.25] (178235179017.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.17])
-        by smtp.gmail.com with ESMTPSA id hx25-20020a170906847900b00a26ac57b951sm2215051ejc.23.2024.01.12.14.28.47
+        by smtp.gmail.com with ESMTPSA id k7-20020a17090627c700b00a19b7362dcfsm2193541ejc.139.2024.01.12.14.33.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Jan 2024 14:28:48 -0800 (PST)
-Message-ID: <2a8ad790-6f3b-43d8-af31-0e6dcca72c54@linaro.org>
-Date: Fri, 12 Jan 2024 23:28:46 +0100
+        Fri, 12 Jan 2024 14:33:17 -0800 (PST)
+Message-ID: <f9a177e0-3698-4865-9463-220c65c653fb@linaro.org>
+Date: Fri, 12 Jan 2024 23:33:15 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,21 +66,27 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 1/2] scsi: ufs: qcom : Refactor phy_power_on/off calls
-To: Nitin Rawat <quic_nitirawa@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- "James E.J. Bottomley" <jejb@linux.ibm.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>,
- Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org,
- Can Guo <quic_cang@quicinc.com>,
- Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-References: <20240112153348.2778-1-quic_nitirawa@quicinc.com>
- <20240112153348.2778-2-quic_nitirawa@quicinc.com>
+Subject: Re: [PATCH v6 3/6] PCI: qcom: Add missing icc bandwidth vote for cpu
+ to PCIe path
 Content-Language: en-US
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>, Johan Hovold <johan+linaro@kernel.org>,
+ Brian Masney <bmasney@redhat.com>, Georgi Djakov <djakov@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, vireshk@kernel.org,
+ quic_vbadigan@quicinc.com, quic_skananth@quicinc.com,
+ quic_nitegupt@quicinc.com, linux-pci@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org
+References: <20240112-opp_support-v6-0-77bbf7d0cc37@quicinc.com>
+ <20240112-opp_support-v6-3-77bbf7d0cc37@quicinc.com>
+ <fecfd2d9-7302-4eb6-92d0-c2efbe824bf4@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -118,107 +123,29 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240112153348.2778-2-quic_nitirawa@quicinc.com>
+In-Reply-To: <fecfd2d9-7302-4eb6-92d0-c2efbe824bf4@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 12.01.2024 16:33, Nitin Rawat wrote:
-> Commit 3f6d1767b1a0 ("phy: ufs-qcom: Refactor all init steps into
-> phy_poweron") removes the phy_power_on/off from ufs_qcom_setup_clocks
-> to suspend/resume func.
+On 12.01.2024 16:17, Bryan O'Donoghue wrote:
+> On 12/01/2024 14:22, Krishna chaitanya chundru wrote:
+>> CPU-PCIe path consits for registers PCIe BAR space, config space.
+>> As there is less access on this path compared to pcie to mem path
+>> add minimum vote i.e GEN1x1 bandwidth always.
+>>
+>> In suspend remove the cpu vote after register space access is done.
+>>
+>> Fixes: c4860af88d0c ("PCI: qcom: Add basic interconnect support")
 > 
-> To have a better power saving, remove the phy_power_on/off calls from
-> resume/suspend path and put them back to ufs_qcom_setup_clocks, so that
-> PHY's regulators & clks can be turned on/off along with UFS's clocks.
+> If this patch is a Fixes then don't you need the accompanying dts change as a parallel Fixes too ?
 > 
-> Since phy phy_power_on is separated out from phy calibrate, make
-> separate calls to phy_power_on and phy_calibrate calls from ufs qcom
-> driver.
-> 
-> Also add a mutex lock to protect the usage of is_phy_pwr_on against
-> possible racing.
-> 
-> Co-developed-by: Can Guo <quic_cang@quicinc.com>
-> Signed-off-by: Can Guo <quic_cang@quicinc.com>
-> Co-developed-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-> Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-> ---
->  drivers/ufs/host/ufs-qcom.c | 104 +++++++++++++++++++++++-------------
->  drivers/ufs/host/ufs-qcom.h |   4 ++
->  2 files changed, 72 insertions(+), 36 deletions(-)
-> 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 39eef470f8fa..2721a30f0db8 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -338,6 +338,46 @@ static u32 ufs_qcom_get_hs_gear(struct ufs_hba *hba)
->  	return UFS_HS_G3;
->  }
-> 
-> +static int ufs_qcom_phy_power_on(struct ufs_hba *hba)
-> +{
-> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> +	struct phy *phy = host->generic_phy;
-> +	int ret = 0;
-> +
-> +	mutex_lock(&host->phy_mutex);
+> i.e. without the dts update - you won't have the nodes in the dts to consume => applying this code to the stable kernel absent the dts will result in no functional change and therefore no bugfix.
 
-guard(mutex)(&host->phy_mutex);
+The Fixes tag denotes a bug fix, its use for backport autosel is just
+a nice "coincidence".
 
-and you can drop the _unlock calls
-
-> +	if (!host->is_phy_pwr_on) {
-> +		ret = phy_power_on(phy);
-> +		if (ret) {
-> +			mutex_unlock(&host->phy_mutex);
-> +			return ret;
-
-And with the _unlock now being unnecessary, you can rewrite this
-as:
-
-if (!host->is_phy_pwr_on) {
-	ret = phy_power_on(phy);
-	if (!ret)
-		host->is_phy_pwr_on = true;
-}
-
-return ret
-> +		}
-> +		host->is_phy_pwr_on = true;
-> +	}
-> +	mutex_unlock(&host->phy_mutex);
-> +
-> +	return ret;
-> +}
-
-[...]
-
->  static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
->  {
->  	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> @@ -378,13 +418,18 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
->  		goto out_disable_phy;
-> 
->  	/* power on phy - start serdes and phy's power and clocks */
-> -	ret = phy_power_on(phy);
-> +	ret = ufs_qcom_phy_power_on(hba);
->  	if (ret) {
->  		dev_err(hba->dev, "%s: phy power on failed, ret = %d\n",
->  			__func__, ret);
->  		goto out_disable_phy;
->  	}
-> 
-> +	ret = phy_calibrate(phy);
-> +	if (ret) {
-> +		dev_err(hba->dev, "%s: Failed to calibrate PHY %d\n",
-> +				  __func__, ret);
-> +	}
-
-You can drop the overly verbose __func__, unwrap the line and remove the
-curly braces, similar for dev_err-s below
-
-Actually, shouldn't this error out if calibrate fails??
+Fixing a lack of a required icc path and having to rely on BL leftovers
+/ keepalive bus settings is definitely worth this tag in my eyes.
 
 Konrad
 
