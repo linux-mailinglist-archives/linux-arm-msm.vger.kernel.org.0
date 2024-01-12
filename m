@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-7157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 297AB82C758
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 23:37:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DE67882C764
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 23:45:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4A6DC28817B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 22:37:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8884028332E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 22:45:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13E0A46BC;
-	Fri, 12 Jan 2024 22:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7976D18056;
+	Fri, 12 Jan 2024 22:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dqw1iPxv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xNh8lrph"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D6518036
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 22:37:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8E7C182A8
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 22:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a28b1095064so773361066b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 14:37:08 -0800 (PST)
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a2cea0563cbso124507766b.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 14:45:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705099027; x=1705703827; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1705099501; x=1705704301; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=0leS6hZ0DcZYl4DKzwe7v8pus4rqe1fDKXfntZRCqTg=;
-        b=dqw1iPxvpYN9NH+wq9oJMl1pId9u400cfxeXrZdeHZrt2YDF0QeUC+ZN1VLn/9rQpd
-         uWZmxztyzsawbjd//0VmhpRMFEwBnNmKA0laGPNF/OACeTSdApK8tFkC3OYKVOnSqbox
-         O15mkhVK9NEY7Ylv455Q60v/ig7jRRy87V92Uw6hwFUslOzoF+s2tmriuyR+Ez+N1pxX
-         VmsEGaxR8ZSQjxRMIvkydJPZV85BfCsjQOeRkc1206H7qvtjoRYrNnMiOpPJc9NEbohj
-         KMJMEXLwLQppPzNFIG7zeulMNB65AZCryrI8u13qziwGa9d6oUOpoRBhUwPqFgz/WUgt
-         c+QA==
+        bh=5+Yt8N0vLR3BWDealxvKrDyIpQpUSEu3d8Yxm5uh+ww=;
+        b=xNh8lrphPW0XrDkvXtAPJERPaVFQYLkERJf6FZMkQD3LZ6XrF5+mXQOCKSpbZzkGVg
+         +sl3/i8kSqOz15Qfk3TStsvYzaxEuwufcwxPcoJ+cnmilb7dNkrq/SEaWe0KEjvRgD5q
+         OGKouoDt2IV2MFaZnAHeEmdLJyt9mRW06n8fTj/Hg1HsMUfKFyuy4EL+O0s9F24SbRYy
+         g6TCfzeC5k+fJyGkgKQbsUb3ba2D7r75NQXQmvJMtZ6KOQeuoJfY9NjgwMuzePBsAm/j
+         IHOcYYdLhovU7TN3YWdkEVm1kk7PlqmCiWWyROqdE0r0wh6M8OvGYC37xnLpV3xPiDb8
+         76Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705099027; x=1705703827;
+        d=1e100.net; s=20230601; t=1705099501; x=1705704301;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0leS6hZ0DcZYl4DKzwe7v8pus4rqe1fDKXfntZRCqTg=;
-        b=EojFpTHgZWGAR7zuumiL+Tn6QlnDcsMFnd9EuU3IYv9Zjbo0ze1wDT7xB5KtSHh/n3
-         taK4aSpqUY0GlmFyLI22tTzFKgjIS/juyUvBkcl6kZR2z6EOFPWiypo+9c47HPMD3jhI
-         nQEN804YT1Icm78XZ4zt7kOt1ZKH+CWByGdj3l6X8qWlRCnpUolDw+TOt+TGHQa8Bo12
-         OKeh8Vt5gyvWFaoG3Is0nsGQIFqebncJgTEX02TUcTQSReB3G/1f8STEta3lOxh1fuy4
-         IlIzIPFcx4r51fSVm5njBUJRqRd10YcC1x9B3JtWCjdymSvXNXd68UJclggKDSZeEU/X
-         EYOA==
-X-Gm-Message-State: AOJu0Yz8KK1FXLhGgG89KsE99a+BA13xdpSiO0QoU/65CZdn3Qqe6Td4
-	WhChZU6sI6U+TMsYbjftaVd0e5P8b8FqUA==
-X-Google-Smtp-Source: AGHT+IFYfL+XbWBb98zkfcqsCfe55RxOOq99xlv4gLhqJrYEridFURPMKn+2U5mwNzzeZSOYqQAVfg==
-X-Received: by 2002:a17:906:c094:b0:a2c:4b7e:2c27 with SMTP id f20-20020a170906c09400b00a2c4b7e2c27mr574752ejz.250.1705099026524;
-        Fri, 12 Jan 2024 14:37:06 -0800 (PST)
+        bh=5+Yt8N0vLR3BWDealxvKrDyIpQpUSEu3d8Yxm5uh+ww=;
+        b=Wi36/y03g/D9bTtjDlGzdqzyEOC7mKH2Je0Kspv5egaaWpQyMXx/nCTuiA3rraL+i4
+         sW24CMG1gSxp4GA514sBBBonppcpCh4TOvM/va+qwyyiLWrKUE+Vh0QAPwAgK6NrLtOl
+         0TIVzwgd3bxnlTv7BS5YQ/X/ODLl02WBeTmQGzPujdjbesrpkezGWkrI8PUltft2M5r3
+         7/wQOK0EQNO6tgTXs9/Ppd+MYLoyteyyO8euHyQ3Atuu+s10qCw1U9+9v7imhUShc4IY
+         p4Ghu7gcSASA5Km/P1lT5lnGc2dDXfesl6YY5EQO782LuXr08DidqwSzRsBdiAtsGHuE
+         pi5g==
+X-Gm-Message-State: AOJu0Yw2baO+AahR7awYXKHXtgwexKchSRuZkdSzptNvykKhQ3XCdUxn
+	jWp0WzSHel/XtRQvpJahNx5BnrcGAolAsA==
+X-Google-Smtp-Source: AGHT+IHsxytgP5d+Op5yk1COIvhtctxmIA5NVUcm0Qp+yPfyaXqjp1C+H1DLkpMuIW4haoYo2lqawg==
+X-Received: by 2002:a17:907:c70c:b0:a28:a8cb:3185 with SMTP id ty12-20020a170907c70c00b00a28a8cb3185mr1180597ejc.69.1705099500991;
+        Fri, 12 Jan 2024 14:45:00 -0800 (PST)
 Received: from [192.168.174.25] (178235179017.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.17])
-        by smtp.gmail.com with ESMTPSA id i2-20020a170906090200b00a2a04c9226asm2184486ejd.194.2024.01.12.14.37.04
+        by smtp.gmail.com with ESMTPSA id u3-20020a1709064ac300b00a269b4692a9sm2223723ejt.84.2024.01.12.14.44.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Jan 2024 14:37:05 -0800 (PST)
-Message-ID: <c278d89d-4eba-4ea7-8cf5-6b1de90dedbe@linaro.org>
-Date: Fri, 12 Jan 2024 23:37:03 +0100
+        Fri, 12 Jan 2024 14:45:00 -0800 (PST)
+Message-ID: <d7bb676c-f881-4be0-aff2-da50c9fa7eda@linaro.org>
+Date: Fri, 12 Jan 2024 23:44:57 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,28 +66,24 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 3/6] PCI: qcom: Add missing icc bandwidth vote for cpu
- to PCIe path
+Subject: Re: [PATCH v6 6/6] PCI: qcom: Add OPP support to scale performance
+ state of power domain
 Content-Language: en-US
-To: Johan Hovold <johan@kernel.org>,
- Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Bjorn Helgaas <bhelgaas@google.com>,
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
  Lorenzo Pieralisi <lpieralisi@kernel.org>,
  =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
  Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
  Conor Dooley <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>,
  Rob Herring <robh+dt@kernel.org>, Johan Hovold <johan+linaro@kernel.org>,
- Brian Masney <bmasney@redhat.com>, Georgi Djakov <djakov@kernel.org>,
- linux-arm-msm@vger.kernel.org, vireshk@kernel.org,
+ Brian Masney <bmasney@redhat.com>, Georgi Djakov <djakov@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, vireshk@kernel.org,
  quic_vbadigan@quicinc.com, quic_skananth@quicinc.com,
  quic_nitegupt@quicinc.com, linux-pci@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20240112-opp_support-v6-0-77bbf7d0cc37@quicinc.com>
- <20240112-opp_support-v6-3-77bbf7d0cc37@quicinc.com>
- <ZaFhzOCTpZYlAh60@hovoldconsulting.com>
+ <20240112-opp_support-v6-6-77bbf7d0cc37@quicinc.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -124,56 +120,88 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <ZaFhzOCTpZYlAh60@hovoldconsulting.com>
+In-Reply-To: <20240112-opp_support-v6-6-77bbf7d0cc37@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 12.01.2024 16:59, Johan Hovold wrote:
-> On Fri, Jan 12, 2024 at 07:52:02PM +0530, Krishna chaitanya chundru wrote:
->> CPU-PCIe path consits for registers PCIe BAR space, config space.
+On 12.01.2024 15:22, Krishna chaitanya chundru wrote:
+> QCOM Resource Power Manager-hardened (RPMh) is a hardware block which
+> maintains hardware state of a regulator by performing max aggregation of
+> the requests made by all of the processors.
 > 
-> consits?
+> PCIe controller can operate on different RPMh performance state of power
+> domain based up on the speed of the link. And this performance state varies
+> from target to target.
 > 
->> As there is less access on this path compared to pcie to mem path
->> add minimum vote i.e GEN1x1 bandwidth always.
+> It is manadate to scale the performance state based up on the PCIe speed
+> link operates so that SoC can run under optimum power conditions.
 > 
-> gen1 bandwidth can't be right.
+> Add Operating Performance Points(OPP) support to vote for RPMh state based
+> upon GEN speed link is operating.
 > 
->> In suspend remove the cpu vote after register space access is done.
->>
->> Fixes: c4860af88d0c ("PCI: qcom: Add basic interconnect support")
->> cc: stable@vger.kernel.org
+> OPP can handle ICC bw voting also, so move icc bw voting through opp
+> framework if opp entries are present.
 > 
-> This does not look like a fix so drop the above.
+> In PCIe certain gen speeds like GEN1x2 & GEN2X1 or GEN3x2 & GEN4x1 use
+> same icc bw and has frequency, so use frequency based search to reduce
+> number of entries in the opp table.
 > 
-> The commit you refer to explicitly left this path unconfigured for now
-> and only added support for the configuring the mem path as needed on
-> sc8280xp which otherwise would crash.
+> Don't initialize icc if opp is supported.
+> 
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
 
-I only sorta agree. I'd include a fixes tag but point it to either 8450
-addition or original driver introduction, as this is patching up a real
-hole (see my reply to Bryan).
+[...]
 
-> 
->> @@ -1573,7 +1588,7 @@ static int qcom_pcie_suspend_noirq(struct device *dev)
->>  	 */
->>  	ret = icc_set_bw(pcie->icc_mem, 0, kBps_to_icc(1));
->>  	if (ret) {
->> -		dev_err(dev, "Failed to set interconnect bandwidth: %d\n", ret);
->> +		dev_err(dev, "Failed to set interconnect bandwidth for pcie-mem: %d\n", ret);
->>  		return ret;
->>  	}
->>  
->> @@ -1597,6 +1612,12 @@ static int qcom_pcie_suspend_noirq(struct device *dev)
->>  		pcie->suspended = true;
->>  	}
->>  
->> +	/* Remove cpu path vote after all the register access is done */
->> +	ret = icc_set_bw(pcie->icc_cpu, 0, 0);
-> 
-> I believe you should use icc_disable() here.
+>  
+> -static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
+> +static void qcom_pcie_icc_opp_update(struct qcom_pcie *pcie)
 
-Oh, TIL this exists!
+Or simply.. qcom_pcie_opp_update :) Especially with Dmitry's
+suggestions
+
+>  {
+>  	struct dw_pcie *pci = pcie->pci;
+> -	u32 offset, status;
+> +	u32 offset, status, freq;
+> +	struct dev_pm_opp *opp;
+>  	int speed, width;
+>  	int ret;
+>  
+> -	if (!pcie->icc_mem)
+> -		return;
+> -
+>  	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+>  	status = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
+>  
+> @@ -1424,11 +1424,42 @@ static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
+>  	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
+>  	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, status);
+>  
+> -	ret = icc_set_bw(pcie->icc_mem, 0, width * QCOM_PCIE_LINK_SPEED_TO_BW(speed));
+> -	if (ret) {
+> -		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+> -			ret);
+> +	if (pcie->opp_supported) {
+> +		switch (speed) {
+> +		case 1:
+> +			freq = 2500000;
+> +			break;
+> +		case 2:
+> +			freq = 5000000;
+> +			break;
+> +		case 3:
+> +			freq = 8000000;
+> +			break;
+> +		default:
+> +			WARN_ON_ONCE(1);
+> +			fallthrough;
+> +		case 4:
+> +			freq = 16000000;
+> +			break;
+> +		}
+Might as well add gen5 and 6 rates of 3200.. and 6400.. since they're
+hard-in-stone in the spec by now, AFAIK
 
 Konrad
 
