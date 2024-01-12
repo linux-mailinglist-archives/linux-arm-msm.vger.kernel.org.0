@@ -1,137 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-7137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41F2B82C331
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 16:59:40 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08A5C82C347
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 17:06:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 520451C22487
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 15:59:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8FD6C1F23D1C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 16:06:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46C0D73188;
-	Fri, 12 Jan 2024 15:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A90273164;
+	Fri, 12 Jan 2024 16:06:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HY8m34m0"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZbuHgO/1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1988173166;
-	Fri, 12 Jan 2024 15:59:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FCB3C433F1;
-	Fri, 12 Jan 2024 15:59:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705075141;
-	bh=jBImdO0S4zjiJ9OH3nJj+sPPUzC+dYAUvnkM8s2S6c4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HY8m34m0nNaiz0xrwm+QSOdMVhR7C3tyYKhqnIbQEvg+eg0DXS3yCDnsTeJr3RL6C
-	 xbsAE78nNhaE5Dfxl2M6P5V1QkhHDFR3TkOkQVdAY9N2M3DzhSuKkySriNRLaa/MTm
-	 KzTN09TOUOkrO8IO3eSbpMriKu6jcPPLhUIZtiy/dfylNIev+tpjPzIHY9TLXM41EI
-	 VBlZuNCO0O3Gkmp9nWlDP9D+n4Kdvy0gwv77bRCgUd3oSCdCaZVteOspPIiraQY2Xp
-	 XGQK3syqvEAVJcuT8DJ8lQbfn7x45PqZdlAT0/Asr1LDT8Bebmx3yEZmhb16Q2aOHN
-	 1ZwNc1BZApd2A==
-Received: from johan by xi.lan with local (Exim 4.96.2)
-	(envelope-from <johan@kernel.org>)
-	id 1rOJw4-0001kR-1H;
-	Fri, 12 Jan 2024 16:59:09 +0100
-Date: Fri, 12 Jan 2024 16:59:08 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Brian Masney <bmasney@redhat.com>,
-	Georgi Djakov <djakov@kernel.org>, linux-arm-msm@vger.kernel.org,
-	vireshk@kernel.org, quic_vbadigan@quicinc.com,
-	quic_skananth@quicinc.com, quic_nitegupt@quicinc.com,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH v6 3/6] PCI: qcom: Add missing icc bandwidth vote for cpu
- to PCIe path
-Message-ID: <ZaFhzOCTpZYlAh60@hovoldconsulting.com>
-References: <20240112-opp_support-v6-0-77bbf7d0cc37@quicinc.com>
- <20240112-opp_support-v6-3-77bbf7d0cc37@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DAC6EB7F;
+	Fri, 12 Jan 2024 16:06:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40CEu3Vf000923;
+	Fri, 12 Jan 2024 16:06:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=M1x83cN8XOE+7DNlVKFKPABwCb6JtMLdTeKXKDUhjVc=; b=Zb
+	uHgO/1JODIsqKSelHLRXkp1YW/jiyKLpn56yA9JN68pcIUoZrJuoJMCXIornqc+t
+	LPnHqyKb5ZTGBydw3R1bjf/8Tu/aQQ4srP8pcUK+c33tHw34i6GXohLE1JIJzjOA
+	gqGrxh5xY8LM2rimDWzvNyekWywcecsNXygffnozrOGOVH1pyTFoUsKXwCrWOGWi
+	8Cm/uJ/ehygHR9jkFerNFL2eVdlM5ekYgCkzi45856r8d4Gmw6o1FIqv0UvRej2J
+	qi/xd1qLipJH1f+kEz/5bykkIpjID78YO8U5T8bBZRHVyeCIqHRyu6Y8WGj6i7lT
+	pkbcrMHPMzVt1bRmZgpQ==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vk1x192g4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Jan 2024 16:06:00 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40CG60JP008657
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Jan 2024 16:06:00 GMT
+Received: from [10.253.78.164] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 12 Jan
+ 2024 08:05:56 -0800
+Message-ID: <5c88945b-4a80-4346-a77c-82a68ae02047@quicinc.com>
+Date: Sat, 13 Jan 2024 00:05:53 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240112-opp_support-v6-3-77bbf7d0cc37@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/6] arm64: dts: qcom: ipq5332: Add MDIO device tree
+Content-Language: en-US
+To: Andrew Lunn <andrew@lunn.ch>
+CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <quic_kkumarcs@quicinc.com>, <quic_suruchia@quicinc.com>,
+        <quic_soni@quicinc.com>, <quic_pavir@quicinc.com>,
+        <quic_souravp@quicinc.com>, <quic_linchen@quicinc.com>,
+        <quic_leiwei@quicinc.com>
+References: <20240110112059.2498-1-quic_luoj@quicinc.com>
+ <20240110112059.2498-4-quic_luoj@quicinc.com>
+ <4bc0aff5-8a1c-44a6-89d8-460961a61310@lunn.ch>
+ <e893c298-fbfa-4ae4-9b76-72a5030a5530@quicinc.com>
+ <61973012-3f74-4b58-9575-3bc5199f61d9@lunn.ch>
+From: Jie Luo <quic_luoj@quicinc.com>
+In-Reply-To: <61973012-3f74-4b58-9575-3bc5199f61d9@lunn.ch>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 1TX3T7RW1OYossRy0DccJUdBsQ6fuvg6
+X-Proofpoint-GUID: 1TX3T7RW1OYossRy0DccJUdBsQ6fuvg6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ clxscore=1015 mlxscore=0 spamscore=0 phishscore=0 adultscore=0 bulkscore=0
+ impostorscore=0 lowpriorityscore=0 malwarescore=0 suspectscore=0
+ mlxlogscore=442 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401120125
 
-On Fri, Jan 12, 2024 at 07:52:02PM +0530, Krishna chaitanya chundru wrote:
-> CPU-PCIe path consits for registers PCIe BAR space, config space.
 
-consits?
 
-> As there is less access on this path compared to pcie to mem path
-> add minimum vote i.e GEN1x1 bandwidth always.
-
-gen1 bandwidth can't be right.
-
-> In suspend remove the cpu vote after register space access is done.
+On 1/12/2024 12:30 AM, Andrew Lunn wrote:
+>> Sorry for the confusion, the pin nodes are for the MDIO and MDC, these
+>> PINs are used by the dedicated hardware MDIO block in the SoC. I will update
+>> the node name from mux_0 to MDC, mux_1 to MDIO, to make it clear. The driver
+>> for this node is drivers/net/mdio/mdio-ipq4019.c, it is not related to the
+>> mdio-mux-* code.
 > 
-> Fixes: c4860af88d0c ("PCI: qcom: Add basic interconnect support")
-> cc: stable@vger.kernel.org
+> So these is all about pinmux.
 
-This does not look like a fix so drop the above.
+Yes, it is about pinmux.
 
-The commit you refer to explicitly left this path unconfigured for now
-and only added support for the configuring the mem path as needed on
-sc8280xp which otherwise would crash.
+> 
+> When you say:
+>> PINs are used by the dedicated hardware MDIO block in the SoC
+> 
+> do you actually mean:
+> 
+> PINs are used by the two dedicated hardware MDIO blocks in the SoC.
+> 
+> You have two sets of mdio/mdc configurations here, so i assume there
+> are two MDIO hardware blocks, each being an MDIO bus master.
+> 
+>      Andrew
 
-> @@ -1573,7 +1588,7 @@ static int qcom_pcie_suspend_noirq(struct device *dev)
->  	 */
->  	ret = icc_set_bw(pcie->icc_mem, 0, kBps_to_icc(1));
->  	if (ret) {
-> -		dev_err(dev, "Failed to set interconnect bandwidth: %d\n", ret);
-> +		dev_err(dev, "Failed to set interconnect bandwidth for pcie-mem: %d\n", ret);
->  		return ret;
->  	}
->  
-> @@ -1597,6 +1612,12 @@ static int qcom_pcie_suspend_noirq(struct device *dev)
->  		pcie->suspended = true;
->  	}
->  
-> +	/* Remove cpu path vote after all the register access is done */
-> +	ret = icc_set_bw(pcie->icc_cpu, 0, 0);
+There are two MDIO hardware blocks on IPQ5332 SoC. One is
+for the MDIO bus master(gpio27, 28), which is for accessing the MDIO
+slave devices(like PHY device). The mdio-ipq4019.c driver enables
+this MDIO bus master.
 
-I believe you should use icc_disable() here.
+Another one is the MDIO slave(gpio25, 26), which is dedicated
+for receiving the back pressure signal from the connected Ethernet 
+switch device QCA8386.
 
-> +	if (ret) {
-> +		dev_err(dev, "failed to set interconnect bandwidth for cpu-pcie: %d\n", ret);
-> +		return ret;
+There is a MDIO master block integrated in QCA8386 switch device, this
+integrated MDIO master is dedicated for generating the back
+pressure signal to IPQ5332 SoC.
 
-And you need to unwind before returning on errors.
-
-> +	}
->  	return 0;
->  }
->  
-> @@ -1605,6 +1626,12 @@ static int qcom_pcie_resume_noirq(struct device *dev)
->  	struct qcom_pcie *pcie = dev_get_drvdata(dev);
->  	int ret;
->  
-> +	ret = icc_set_bw(pcie->icc_cpu, 0, QCOM_PCIE_LINK_SPEED_TO_BW(1));
-
-icc_enable()
-
-> +	if (ret) {
-> +		dev_err(dev, "failed to set interconnect bandwidth for cpu-pcie: %d\n", ret);
-> +		return ret;
-> +	}
-
-Johan
+This MDIO slave block of IPQ5322 just needs to configure these PIN
+mux for MDC and MDIO PINs. No additional driver is needed for this MDIO
+slave block of IPQ5332.
 
