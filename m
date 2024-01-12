@@ -1,123 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-7078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7079-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DDFA82B7E2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 00:14:46 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D88E82B868
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 01:05:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 99A5AB21847
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jan 2024 23:14:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0C76B285298
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 00:05:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 448A65810E;
-	Thu, 11 Jan 2024 23:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E498F14F72;
+	Fri, 12 Jan 2024 00:05:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e90pFJOD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V94TzYNx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC679FC08
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 23:14:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-3bbd1e9c5f7so4763784b6e.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 15:14:38 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F1814F63
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 00:05:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-337874b8164so930561f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 16:05:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705014878; x=1705619678; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wrVoNjP495STQIQ3FVMsai806YpFMUIXx4z0Rg6visI=;
-        b=e90pFJODmaP1x1AFdNljmBfXMKU0hkIiLhAZXJ/VqtiwmhUv9JPMUaF31pt66xScf+
-         nN6SOrDTvndAWG7G6bbJwLseXyGM92bj+vMRK6wYZJZ1wwZnp3Ds91iHKBgVMPBWAMr1
-         5wCO7dbxtUfeJ8eyeglt1d4rOR4Tta2jkLP2Cqo1IWa+QHmY95LkaxbMrROFy51f5YY2
-         ruioPda42AiMAvnjQzfFLWRt/ZVOLFm7drBIVIc5RoCRnuFd1kKsC8wyqI8NWxoHEFYf
-         VZBmYBONYtAYc56JaDt4YJvbSSS1QHPJ40reeCR5HGD4Y7k4MfrrRl/QCmMvNcKOxL7p
-         dD1w==
+        d=linaro.org; s=google; t=1705017911; x=1705622711; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yUeW4cbpZ4DyBVhP3Gp3OihLg4kH7ejzOns3IWU+5Ug=;
+        b=V94TzYNxrIGl4Ql1KDfj2dIQRwVR9b1dQrxA1cZQEojq6YhzPCVfSVjfN/IiscAxOM
+         8bUuW5xHjn7OlmX3CPNDqDlhhYBnv9R1joYXwOQWJNiCcd5+sRFpPAODZfN9imaGzyWL
+         LaMDDlaBorSvEZglhXzI+54J6UQ4VS0IarLYknJiOulo5LskRn/VkNKd512E2KD2iPED
+         aY1NtlIz9hBilBL2tqM8pyDjIjvyaFpkAit99k7l6MjT2FjBohbk+T6xNRQ3VDdtFVYN
+         P50s3DC7BkCr4P9ZNN0f44CYmQPvp+KuMmDUMELhNFjFFVHfJscIVEVOIYqHzYoyLZdZ
+         ys1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705014878; x=1705619678;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wrVoNjP495STQIQ3FVMsai806YpFMUIXx4z0Rg6visI=;
-        b=K9xmN86d6L2uAQLXJSR9Pxjc5x8ZUiVZpXGexnLyarhVYbqHTrOE0vK8+hijoQe8/X
-         RUcB/cVBihpSt3Gt1WyxaDvJIlW6RMkuFl5yln8OupiK4mtFRfya2g5Rx1U7gWvu1HF/
-         SoSpLQF71endZHKouy7M3y/L/kwCsaASdCx5HSuNgibzCNG+NwMl7DOQNrCchyymkRbx
-         DBOmlA0SOe+fT1YvsvF4ARHGSbXk9emXK7B082s/aAdJFWDp4FynsMe4t9BthEhaTna5
-         bJws6BSwCnvwNUgn9Q/4IAtgepeTa/bDOM7r/MZPbkQLenYodffrgSJK/LtPsVqDInyF
-         50wg==
-X-Gm-Message-State: AOJu0YxX9VQ2Oe9D4rd4eaHZj/TeCw2VSi8HPKPwD4pw3nyuos+JC/tc
-	mZqaY1x0tl3/Hr13LqpcyV0=
-X-Google-Smtp-Source: AGHT+IGDpKcp2NUQHYqgIYov31tIUZuCdOiqNmsa1HKjxrxNTrNHs1Lbzf8wtArROVtJKBgCf+AvNA==
-X-Received: by 2002:a05:6808:1308:b0:3bd:5791:67f3 with SMTP id y8-20020a056808130800b003bd579167f3mr101557oiv.30.1705014877887;
-        Thu, 11 Jan 2024 15:14:37 -0800 (PST)
-Received: from localhost ([2607:fea8:52a3:d200::a40a])
-        by smtp.gmail.com with ESMTPSA id s4-20020ad45004000000b0067f07683decsm627592qvo.99.2024.01.11.15.14.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Jan 2024 15:14:37 -0800 (PST)
-Date: Thu, 11 Jan 2024 18:14:34 -0500
-From: Richard Acayan <mailingradian@gmail.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	Bjorn Andersson <andersson@kernel.org>,
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH] drm/msm/mdss: specify cfg bandwidth for SDM670
-Message-ID: <ZaB2WjoHBNPnv0CN@radian>
-References: <20231215013222.827975-1-dmitry.baryshkov@linaro.org>
+        d=1e100.net; s=20230601; t=1705017911; x=1705622711;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yUeW4cbpZ4DyBVhP3Gp3OihLg4kH7ejzOns3IWU+5Ug=;
+        b=CHp65e8q2gP80Bv4AnN2sLueLI62kayzQjGaKnt5WQVGiv6ecM1vD1gI13ttVNr+/C
+         /qK90HTci+ieBm2zaRZNlwx70WQ8xZXcE/tUXMO++uzx3mU4uZQ2gvOJSIj67omqV2VF
+         x9/lzWX1XplMSN09iURVdxoou19gUqCLm/0ShiE0/5GrgrY/AHWwU2olJfBsYndTlJ+T
+         FBdrqQKuqOcFrdxRsaA41srE8qcfWzAgGJO1TLtLas022RrINgj6f2EXFhkbDoA5rF5Y
+         DGsGeU8O70KZqGHs3FyVoG4A5NglJtz5NkJVWC92QZSXLUyPUMjfR/qhlwgTr8HKQvFR
+         J6cg==
+X-Gm-Message-State: AOJu0YyHphtHLwVKf5SXC4KS91UKCQ80h8D9UQBoJyE7ALz8kdtLeyv1
+	b68FmxH0ChTn+J6VR10dIk36XdBJPmbNJQ==
+X-Google-Smtp-Source: AGHT+IHCdDVdU5Stel0+XBc70+8iYoGyZHbMKQqAFOmwuvJLM/lTb1tAB1c6+WSy2s9dD19FKm9UCw==
+X-Received: by 2002:a05:6000:10c8:b0:337:7bde:f03e with SMTP id b8-20020a05600010c800b003377bdef03emr294510wrx.16.1705017911388;
+        Thu, 11 Jan 2024 16:05:11 -0800 (PST)
+Received: from [192.168.100.86] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id l5-20020adfe9c5000000b0033673ddd81csm2314450wrn.112.2024.01.11.16.05.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 11 Jan 2024 16:05:10 -0800 (PST)
+Message-ID: <39b4a009-1883-4e66-b743-6b69f0846418@linaro.org>
+Date: Fri, 12 Jan 2024 00:05:10 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231215013222.827975-1-dmitry.baryshkov@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] media: qcom: camss: Add sc8280xp support
+Content-Language: en-US
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240111-linux-next-24-01-09-sc8280xp-camss-changes-v1-0-b92a650121ba@linaro.org>
+ <cd3d3034-ce98-4b96-8cdc-fbd5b66ca7a8@linaro.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <cd3d3034-ce98-4b96-8cdc-fbd5b66ca7a8@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Dec 15, 2023 at 03:32:22AM +0200, Dmitry Baryshkov wrote:
-> Lower the requested CFG bus bandwidth for the SDM670 platform. The
-> default value is 153600 kBps, which is twice as big as required by the
-> platform according to the vendor kernel.
->
-> Fixes: a55c8ff252d3 ("drm/msm/mdss: Handle the reg bus ICC path")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/gpu/drm/msm/msm_mdss.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-> index 455b2e3a0cdd..35423d10aafa 100644
-> --- a/drivers/gpu/drm/msm/msm_mdss.c
-> +++ b/drivers/gpu/drm/msm/msm_mdss.c
-> @@ -562,6 +562,7 @@ static const struct msm_mdss_data sdm670_data = {
->  	.ubwc_enc_version = UBWC_2_0,
->  	.ubwc_dec_version = UBWC_2_0,
->  	.highest_bank_bit = 1,
-> +	.reg_bus_bw = 76800,
+On 11/01/2024 20:13, Konrad Dybcio wrote:
+> 
+> 
+> On 1/11/24 20:57, Bryan O'Donoghue wrote:
+>> A minimal set of patches to switch on sc8280xp support in CAMSS
+>> upstream. Most of the SoC dependencies are either merged - CAMCC or very
+>> close to being merged - CAMSS/CCI dtsi.
+>>
+>> Alot of prior work means we have far less interventions to make in this
+>> driver to support this new SoC.
+>>
+>> Most of this series is already reviewed however it is gated on merge of
+>> the CAMSS compat string here =>
+>>
+>> Link: 
+>> https://lore.kernel.org/linux-arm-msm/20240111-linux-next-24-01-02-sc8280xp-camss-core-dtsi-v4-2-cdd5c57ff1dc@linaro.org/
+>> Link: 
+>> https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-24-01-09-sc8280xp-camss-changes
+>>
+>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>> ---
+> What happened to the "vN" in the subject and the changelog?
+> 
+> Konrad
 
-This seems to be the bandwidth applied to the "cpu-cfg" path, but it is
-not in the device tree yet and is not allowed by schema (for no
-particular reason). In sdm670.dtsi, it would be defined as:
+Hmm it "felt" like a new series
 
-	<&gladiator_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_DISPLAY_CFG 0>
+Checking though - yep this should be v5
 
-Furthermore, I have not yet emailed the patches that I use to test the
-display on SDM670, namely, the panel driver and device tree changes for
-the Pixel 3a. Nevertheless, this does not break anything, even with the
-interconnect path and everything needed to test.
+https://lwn.net/Articles/950887/
 
-Tested-by: Richard Acayan <mailingradian@gmail.com>
+I'll resend
 
->  };
->  
->  static const struct msm_mdss_data sdm845_data = {
-> -- 
-> 2.39.2
->
+---
+bod
 
