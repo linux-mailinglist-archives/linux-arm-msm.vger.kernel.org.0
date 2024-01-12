@@ -1,158 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-7101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F322A82BDB0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 10:51:22 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EAD1C82BDE6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 10:54:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7919B281E31
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 09:51:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 819E128A895
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 09:54:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38DF142057;
-	Fri, 12 Jan 2024 09:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83DFA57302;
+	Fri, 12 Jan 2024 09:52:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QYKIC9a5"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="ok5R+uLD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-ed1-f67.google.com (mail-ed1-f67.google.com [209.85.208.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E10C5D8F2
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 09:48:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-40e62e6e3b0so9855705e9.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 01:48:01 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7ABD60EDC
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 09:52:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f67.google.com with SMTP id 4fb4d7f45d1cf-558c781d311so569070a12.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 01:52:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705052880; x=1705657680; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ovZ/Rsc76gCmScDPQUgFFZxG8LWAV54uOr42sgWehgw=;
-        b=QYKIC9a5X4D3+fIlBeR9MdedZSQQXUli1B6Mt7PNtGNp0IpXqIaDzEECcRt0osR7xj
-         Yik5OtvuOVUvMy0m7g3c6U4Y56mKCWE675evOpQ18NzuWUBLK5LwLxqJvA/LoritN8t/
-         7Uzt5dNrQb7ZmNXp8m1BCAaDK4dfrvgLazWlwR+OU68Z1CBJnkBrJsPMWc62pqkEmBLV
-         U1I8wmwCE5rmNQX5QTGIwgq0doIfWROWiTsaXnMRj+ST1QNpqRlgnyKmR8MQzBt5FpXC
-         QFhF1owHWgp5FaQ5EXGLTi6g/hAAvUKAdGrKBpJJ7aBECwz9FjyuznJO+XolaOfGXNtu
-         dSfw==
+        d=fairphone.com; s=fair; t=1705053120; x=1705657920; darn=vger.kernel.org;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HlNYofu3r8i2ZCiashKW8Im9PXJC4O/VU7zX1cqDADg=;
+        b=ok5R+uLD6ZTnei0DVPWInfSJ85n49ghZCKD3glCaQMa+f//WmrikyFRrLtuYKf724v
+         x4F8ajGuLYjagd++ZzM2jU808PNxVdVE1yty5NEh/d+JJzE13S7JgptnV7E8Z2SyETg8
+         Y4LnyvFBnsrx9bVwEEYjN385B0e7TSkxuje0S6nd6YtFjGEmNPSrPEoU+/DmCM3fwtns
+         Y0f6jBK8kUxRgn7pCTYWaGdiGszKtB6MCGhhTA8M0dlYRYrcBRM9eExzqPN2+Ru9p2s2
+         nb9Cdo3LKOc/b4KjCYy+9rpcCxE6Xv8vwwyDeMdK5XfCEpaSNmWS4+knq+gun2J4XWYu
+         h7jA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705052880; x=1705657680;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ovZ/Rsc76gCmScDPQUgFFZxG8LWAV54uOr42sgWehgw=;
-        b=EzPXW6H9mwh5vkKPEr5UULTkJi3yAqLGhDVuL0a/3K5B3g7Cmx+FaFiui6OWjt3cIK
-         5qbfb1Ikr05ipxpJ3HgYJaLSufF6U4AVQd9DUrBEmAPT7vhBt1hKpTdSVz61WnQYVbHz
-         iryTsiDc9QZgmDvT/ZX4ywEIz77Lys0ch1m1hiUt1BU9cqoZjGxIneojEWkgfvykLenK
-         Ae3djpTDPTH/Wb0xymOqDplcouZnPNkTFIS2lXk54fAZJdAR/uF9XJ86cNW/7ouMFO13
-         MquyJOMLZlFEVUIvPo3eTQp4ncaq1I0bJ4LFPLKbt0qjqiaNPj4+FDSPnD7gFt7BIbea
-         cZag==
-X-Gm-Message-State: AOJu0Yze6CIlpW/CiKltldevCL/QmWEUb06ti+f9pvixpe7tMWHnX/ki
-	dSIfslQOBv4K8zk3gB6OMTbpfomwcEcYAA==
-X-Google-Smtp-Source: AGHT+IFCVQiCGA8CwwGN9Z4mOg5MdzbzmpZUSAPck2ahtMQxmi5wqVGJ970b76RdmjniT6cRu5oLeg==
-X-Received: by 2002:a05:600c:b92:b0:40e:4838:f374 with SMTP id fl18-20020a05600c0b9200b0040e4838f374mr391476wmb.78.1705052879754;
-        Fri, 12 Jan 2024 01:47:59 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:59d5:231:f1ee:77f? ([2a01:e0a:982:cbb0:59d5:231:f1ee:77f])
-        by smtp.gmail.com with ESMTPSA id v23-20020a5d5917000000b00337876596d1sm3373237wrd.111.2024.01.12.01.47.58
+        d=1e100.net; s=20230601; t=1705053120; x=1705657920;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=HlNYofu3r8i2ZCiashKW8Im9PXJC4O/VU7zX1cqDADg=;
+        b=ZAKgG/pp2k9OdtMxa+1ziy0nBUVAgazQBu38NqVCBK38GmytXl6D3PzYnf5kc1RKIr
+         v6VVrz72ebD7tokZRfggYx8CMIw9bhaFozirfoxc2K/aDgnrrBKq5344wEtbvwbPh/dP
+         VeJxF2UP9XNjWCUe8W2tAHAE3OFs3Q5nLgpz13EB2JSjR6+f83zvH2DRPo+AbtClBdpk
+         650np4N6B9R2XwawjAkUEKZlYpXbm6dOcZflICVy7Me4EVDN/ZyHbp0ZFibXGwWbolMO
+         CrmUKSUhSnGyTmQpTcmyW1Yoc53OBVxlElFaXfcFAxTTSWrd9JpTfzYtlzg24KcKJD3O
+         6pvg==
+X-Gm-Message-State: AOJu0Ywenldw5lYBHtMhihP3ftf8j+639ezqHShBpxCggjLX1Sj9H3tF
+	9zDfiTsAGTZkRygDaVpMFi9Zhz3+LVBUtQ==
+X-Google-Smtp-Source: AGHT+IH6D9hm2y3kaGCs5RwJQn2m/6/TZIAhrZDDw5invkLKwXZ/IILZ+DDyExfQK5cF5FyfT3lihA==
+X-Received: by 2002:a05:6402:1d1c:b0:557:aa16:1e44 with SMTP id dg28-20020a0564021d1c00b00557aa161e44mr489041edb.79.1705053119939;
+        Fri, 12 Jan 2024 01:51:59 -0800 (PST)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id eg7-20020a056402288700b0055515b40464sm1616621edb.81.2024.01.12.01.51.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Jan 2024 01:47:59 -0800 (PST)
-Message-ID: <a5c22fd2-8967-47ad-b936-4d1fdc4ab64d@linaro.org>
-Date: Fri, 12 Jan 2024 10:47:58 +0100
+        Fri, 12 Jan 2024 01:51:59 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2] power: supply: qcom_battmgr: Ignore notifications
- before initialization
-Content-Language: en-US, fr
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Sebastian Reichel <sre@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- Sebastian Reichel <sebastian.reichel@collabora.com>,
- linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- linux-kernel@vger.kernel.org, Xilin Wu <wuxilin123@gmail.com>
-References: <20240103-topic-battmgr2-v2-1-c07b9206a2a5@linaro.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <20240103-topic-battmgr2-v2-1-c07b9206a2a5@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 12 Jan 2024 10:51:59 +0100
+Message-Id: <CYCMVXHYVDCI.HVH1TR8MWEUK@fairphone.com>
+Subject: Re: [PATCH v2 2/4] drm/panel: Add driver for DJN HX83112A LCD panel
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: <neil.armstrong@linaro.org>, "Linus Walleij" <linus.walleij@linaro.org>
+Cc: "Jessica Zhang" <quic_jesszhan@quicinc.com>, "Sam Ravnborg"
+ <sam@ravnborg.org>, "David Airlie" <airlied@gmail.com>, "Daniel Vetter"
+ <daniel@ffwll.ch>, "Maarten Lankhorst" <maarten.lankhorst@linux.intel.com>,
+ "Maxime Ripard" <mripard@kernel.org>, "Thomas Zimmermann"
+ <tzimmermann@suse.de>, "Rob Herring" <robh+dt@kernel.org>, "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley"
+ <conor+dt@kernel.org>, "Bjorn Andersson" <andersson@kernel.org>, "Konrad
+ Dybcio" <konrad.dybcio@linaro.org>, "Andy Gross" <agross@kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+ <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>
+X-Mailer: aerc 0.15.2
+References: <20240110-fp4-panel-v2-0-8ad11174f65b@fairphone.com>
+ <20240110-fp4-panel-v2-2-8ad11174f65b@fairphone.com>
+ <CACRpkdaWTfPDCin_L6pefHsokjNyO8Mo6hWPdzPLLi1EUkKUuA@mail.gmail.com>
+ <CYBZEZ4IM6IL.VR04W7933VI@fairphone.com>
+ <CACRpkdZQbVXfBa70nhDOqfWPbsh-6DgX-uvZOxr19pzMmF2giQ@mail.gmail.com>
+ <CYCLSCKPPBOC.1B1MP3VOOC0Q8@fairphone.com>
+ <cdc18e2a-b7eb-4b54-a513-481148fb3b0d@linaro.org>
+In-Reply-To: <cdc18e2a-b7eb-4b54-a513-481148fb3b0d@linaro.org>
 
-On 03/01/2024 13:36, Konrad Dybcio wrote:
-> Commit b43f7ddc2b7a ("power: supply: qcom_battmgr: Register the power
-> supplies after PDR is up") moved the devm_power_supply_register() calls
-> so that the power supply devices are not registered before we go through
-> the entire initialization sequence (power up the ADSP remote processor,
-> wait for it to come online, coordinate with userspace..).
-> 
-> Some firmware versions (e.g. on SM8550) seem to leave battmgr at least
-> partly initialized when exiting the bootloader and loading Linux. Check
-> if the power supply devices are registered before consuming the battmgr
-> notifications.
-> 
-> Fixes: b43f7ddc2b7a ("power: supply: qcom_battmgr: Register the power supplies after PDR is up")
-> Reported-by: Xilin Wu <wuxilin123@gmail.com>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-> Changes in v2:
-> - Fix the commit title
-> - Link to v1: https://lore.kernel.org/linux-arm-msm/d9cf7d9d-60d9-4637-97bf-c9840452899e@linaro.org/T/#t
-> ---
->   drivers/power/supply/qcom_battmgr.c | 4 ++++
->   1 file changed, 4 insertions(+)
-> 
-> diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-> index a12e2a66d516..7d85292eb839 100644
-> --- a/drivers/power/supply/qcom_battmgr.c
-> +++ b/drivers/power/supply/qcom_battmgr.c
-> @@ -1271,6 +1271,10 @@ static void qcom_battmgr_callback(const void *data, size_t len, void *priv)
->   	struct qcom_battmgr *battmgr = priv;
->   	unsigned int opcode = le32_to_cpu(hdr->opcode);
->   
-> +	/* Ignore the pings that come before Linux cleanly initializes the battmgr stack */
-> +	if (!battmgr->bat_psy)
-> +		return;
-> +
->   	if (opcode == BATTMGR_NOTIFICATION)
->   		qcom_battmgr_notification(battmgr, data, len);
->   	else if (battmgr->variant == QCOM_BATTMGR_SC8280XP)
-> 
-> ---
-> base-commit: 0fef202ac2f8e6d9ad21aead648278f1226b9053
-> change-id: 20240103-topic-battmgr2-15c17fac6d35
-> 
-> Best regards,
+On Fri Jan 12, 2024 at 10:14 AM CET, Neil Armstrong wrote:
+> On 12/01/2024 10:00, Luca Weiss wrote:
+> > On Thu Jan 11, 2024 at 8:05 PM CET, Linus Walleij wrote:
+> >> On Thu, Jan 11, 2024 at 4:28=E2=80=AFPM Luca Weiss <luca.weiss@fairpho=
+ne.com> wrote:
+> >>
+> >>> In some internal documentation it says "LCD Driver IC" "HX83112A" and=
+ I
+> >>> don't see any reference to Truly 5P65 anywhere.
+> >>
+> >> In the Android directory I pointed to I see this file:
+> >> HX83112_Android_Driver/Truly_5p65_module_fw/UpdateFW.bat
+> >>
+> >> (Notice the 5p65 fw dir is *inside* the HX82112 dir)
+> >>
+> >> And in that file:
+> >> adb push TRULY_5P65_1080_2160_HX83112A_D01C01.bin
+> >> /system/etc/firmware/Himax_firmware.bin
+> >>
+> >> Clearly indicating that they are pushing a Truly 5P65 firmware into
+> >> the Himax display firmware directory.
+> >>
+> >> To be fair, that is the driver for the touchscreen part of HX83112A,
+> >> but ... Truly is a well known manufacturer of display controllers?
+> >>
+> >> But... given that you have a @fairphone.com mal address and
+> >> a working relationship with them, can't you just ask?
+> >>
+> >>> On their website they have this sentence:
+> >>
+> >> All OEMs want to look like everything is their own product. It is
+> >> business as usual.
+> >=20
+> > I can't tell you anything there that I don't know, sorry.
+> >=20
+> >>
+> >> Further on the same note since I guess you have a datasheet)
+> >> please bring in #defines for the commands (the first byte in the
+> >> write sequences, for examples:
+> >>
+> >> +       mipi_dsi_dcs_write_seq(dsi, 0xbd, 0x02);
+> >> +       mipi_dsi_dcs_write_seq(dsi, 0xd8,
+> >> +                              0xaa, 0xff, 0xff, 0xff, 0xff, 0xff, 0xa=
+a, 0xff,
+> >> +                              0xff, 0xff, 0xff, 0xff);
+> >> +       mipi_dsi_dcs_write_seq(dsi, 0xbd, 0x03);
+> >>
+> >> Clearly 0xbd is HX83112_CMD_SETREGBANK?
+> >> (This is easily spotted from the similar structure in the
+> >> existing panel-himax-hx8394.c.) So please add #defines
+> >> for all commands you know, especially if you have a datasheet
+> >> because we reviewers don't have them and "it's just magic
+> >> bytes" isn't very compelling. It adds a lot to understanding.
+> >=20
+> > Right, the register names seem to match more or less the ones from that
+> > driver, plus some new ones and some differently named ones. Will send a
+> > v3 with that.
+> >=20
+> >>
+> >> I strongly suspect other Himax displays such as HX8394 to
+> >> be using a Truly controller as well, hence the similarities.
+> >>
+> >> In a datasheet for their TFT800480-84-V1-E display controller
+> >> Truly kept the init sequence name of void LCD_INIT_HX8290(void)
+> >> for example.
+> >=20
+> > In that datasheet (assuming I'm looking at the same one?) it says
+> > "Driver IC" "HX8290-A[...]" so there the display driver is manufactured
+> > by Himax and not Truly to my understanding. Truly is assembling togethe=
+r
+> > Driver + all the other parts that go into an LCD.
+> >=20
+> > For the panel used on Fairphone 4 that part is done by the company DJN.
+>
+> Looking at the discussion, this seems to confirm the Display+Touch IC is =
+HX83112A,
+> and Truly is the panel manufacturer and all assembled by DJN, so IMHO the=
+ initial driver is right.
+>
+> Perhaps the compatible should be djn,hx83112a-truly-5p65 to reflect that =
+?
 
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
+Since there's zero indication Truly is involved in this panel in my
+documentation - much less the number 5P65 - I'm not going to add that.
+
+One other number I'm certain of is from DJN's side the model number of
+this panel is 9A-3R063-1102B, which I assume is the specific combination
+of components + frame and everything for Fairphone 4 device.
+
+That one you can also find in this document (Ctrl-F for DJN)
+https://www.fairphone.com/wp-content/uploads/2022/09/FP4_Information-for-re=
+pairers-and-recyclers.pdf
+.. or on this picture:
+https://guide-images.cdn.ifixit.com/igi/HgTquQPABg1mAMHD.huge
+
+So something like djn,9a-3r063-1102b would also be somewhat valid I
+guess?
+
+So in short this panel is the model 9A-3R063-1102B from DJN, which uses
+a Himax HX83112A driver IC.
+
+And there's also AU Optronics listed as =E7=8E=BB=E7=92=83=E5=8E=82=E5=AE=
+=B6 ("glass manufacturer"?)
+fwiw, though the display also uses Corning Gorilla Glass 5 so not sure
+who's supplying what.
+
+Regards
+Luca
+
+>
+> Neil
+>
+> >=20
+> > Regards
+> > Luca
+> >=20
+> >>
+> >> Yours,
+> >> Linus Walleij
+> >=20
+
 
