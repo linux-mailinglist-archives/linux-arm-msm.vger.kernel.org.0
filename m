@@ -1,137 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-7134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3432582C317
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 16:50:46 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 425E182C327
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 16:58:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D82AC2863B3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 15:50:44 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8D55CB22A5F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 15:58:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 326BA73165;
-	Fri, 12 Jan 2024 15:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9838673166;
+	Fri, 12 Jan 2024 15:57:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eHPoiG6N"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iipc3rQa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D2C6EB6E;
-	Fri, 12 Jan 2024 15:50:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40CEhLdd009370;
-	Fri, 12 Jan 2024 15:49:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=godOMp+xB/8b+SwNVvmIz5aXGAQrkx1QMjaDlquO9Jc=; b=eH
-	PoiG6N3Z2r7zwDho/Kv/Xbcmza0okC+lwRUpP/vTKuSS5n1EZNU+vjLsbfJk8Ox5
-	hRcocNO+5nvsRbhaer3Ip0PFBVusfMmjNhIWt5nWvJ/FvKTh/CMGSJLBLUfitB2I
-	TdwAHyQdS705MYTeFF58LxyeN7AcFQo5USMQpcXU14WWFl9LRsAhuUObsn26tiWd
-	sBuwpr8lWzKjbZJ+VbysqjyWNHUE6c10+6x9IZvnD6fCyEAInMLaVfIpJqv86GFQ
-	tWLHgAY7qEiMBtjyen5D4b5nZtA5jwcEpe2jhBDAdv/IcDPnVwfxG1XxpsP+6Cc5
-	y6vdR2ame3JkNQcLWOsw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vk6ee88y6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 12 Jan 2024 15:49:51 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40CFnowV017974
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 12 Jan 2024 15:49:50 GMT
-Received: from [10.253.78.164] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 12 Jan
- 2024 07:49:37 -0800
-Message-ID: <29d744c3-b06b-4959-acc1-288b2804356d@quicinc.com>
-Date: Fri, 12 Jan 2024 23:49:35 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF9456EB45;
+	Fri, 12 Jan 2024 15:57:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-558b5f4cf2dso1487356a12.2;
+        Fri, 12 Jan 2024 07:57:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1705075069; x=1705679869; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=i3LR7JHWsG5WnJs6U2d88UYiHWMdGc0ZzpsAbd+9k2w=;
+        b=iipc3rQa3Sk1LCIO80zGODnnts7uWVKjRwdVFTUo2cOpxRRGIxuZdcxopFdrduBrsd
+         KlpH2dg4sAdYAOIOXRx5IDm9wIL2ayvQGHC6uUjD8vygN9+AZzkOCDCTf9g2bcOn/h5r
+         M81cPHiO3bZ5VbdMPjrkq2Vs6cUsGH5xuJN9gK1VNH5REnKP0trOLSELIPBUn3Ax/lBm
+         DNMEKoJJz6R2Z4Gms7CYkaeyZBuKygj1aK5RBAnGXoz2CK14zbvFMDLv3mOCb6Z7KJqq
+         HXEZRMykHBxMvxx1ZNsjPTQQuDN87AYyX8uy/59uXDvrhXVQMy/L2dgJatM7h0AQOWqU
+         cHmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705075069; x=1705679869;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=i3LR7JHWsG5WnJs6U2d88UYiHWMdGc0ZzpsAbd+9k2w=;
+        b=Qtgn/pxuGt5XMHBtsQS64gqqOfFHf/8d3MrwARnn7p1iXtsz2v49u8g5UosiyPXWuL
+         N33w+68O7I5dLEku6cp163PFAYiZU7F3jW0MSMTLnVhVlEYYw5j6Wcr6MI80MuxH0IiC
+         cSMzS2mIGSrGkulQ+e2eJqk7M8GLT3VRjUOCyMWIdXnKHP42UkaEVoYysnC3TTo3VcYL
+         Mzo00nomXWlbTVZxXPF4p4b0kmLSQE52nn5bQ9DGBWib3HcgyXDCPMRKHynwfGVVLVGV
+         ffpRImLouonuUASAuEyqNU/rn9ujXKcp2cNlB5aGCiu1E7u3ZgOtfo4n8MWVScaIDIDv
+         f4Ow==
+X-Gm-Message-State: AOJu0Yxttzx2r4CIAd/iQzPhWo8JYyVxTIGtv7gFll/B0qQG4iQsRvip
+	2J7tGHtXMOnlNmWoj0y/cPfbvjWtxzYLlwObdaw=
+X-Google-Smtp-Source: AGHT+IFmoeegZBMTNiFZZdCfLc9xHzLnK5XjPQ27p3qgMhoQ0YPlLF9quVd/qIxt91xPL0cwv3QoAAEuGj2nXPJ7Hy8=
+X-Received: by 2002:aa7:c549:0:b0:558:83e5:9937 with SMTP id
+ s9-20020aa7c549000000b0055883e59937mr734942edr.8.1705075068823; Fri, 12 Jan
+ 2024 07:57:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next 00/20] net: ethernet: Add qcom PPE driver
-Content-Language: en-US
-To: Simon Horman <horms@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski@linaro.org>
-CC: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
-        <pabeni@redhat.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <corbet@lwn.net>, <catalin.marinas@arm.com>, <will@kernel.org>,
-        <p.zabel@pengutronix.de>, <linux@armlinux.org.uk>,
-        <shannon.nelson@amd.com>, <anthony.l.nguyen@intel.com>,
-        <jasowang@redhat.com>, <brett.creeley@amd.com>,
-        <rrameshbabu@nvidia.com>, <joshua.a.hay@intel.com>, <arnd@arndb.de>,
-        <geert+renesas@glider.be>, <neil.armstrong@linaro.org>,
-        <dmitry.baryshkov@linaro.org>, <nfraprado@collabora.com>,
-        <m.szyprowski@samsung.com>, <u-kumar1@ti.com>,
-        <jacob.e.keller@intel.com>, <andrew@lunn.ch>, <netdev@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <ryazanov.s.a@gmail.com>,
-        <ansuelsmth@gmail.com>, <quic_kkumarcs@quicinc.com>,
-        <quic_suruchia@quicinc.com>, <quic_soni@quicinc.com>,
-        <quic_pavir@quicinc.com>, <quic_souravp@quicinc.com>,
-        <quic_linchen@quicinc.com>, <quic_leiwei@quicinc.com>
-References: <20240110114033.32575-1-quic_luoj@quicinc.com>
- <a72405c2-c891-4db5-9ac5-42ca1c36cafb@linaro.org>
- <20240110154414.GH9296@kernel.org>
-From: Jie Luo <quic_luoj@quicinc.com>
-In-Reply-To: <20240110154414.GH9296@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ybGN_sbOMlh8_paMCeNBYLvIpmaTQ9IS
-X-Proofpoint-GUID: ybGN_sbOMlh8_paMCeNBYLvIpmaTQ9IS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- lowpriorityscore=0 mlxlogscore=999 clxscore=1015 malwarescore=0
- impostorscore=0 mlxscore=0 adultscore=0 spamscore=0 priorityscore=1501
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401120124
+References: <20240108195016.156583-1-robdclark@gmail.com> <27e64458-7cb1-99a4-f67e-60d911f28f44@collabora.com>
+In-Reply-To: <27e64458-7cb1-99a4-f67e-60d911f28f44@collabora.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Fri, 12 Jan 2024 07:57:36 -0800
+Message-ID: <CAF6AEGvBFdXe9rHjbwWv9eLUMv2YEP7cfMoXcWgZ30Wn4LzOjw@mail.gmail.com>
+Subject: Re: [PATCH] drm/ci: Add msm tests
+To: Vignesh Raman <vignesh.raman@collabora.com>
+Cc: dri-devel@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>, 
+	Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	open list <linux-kernel@vger.kernel.org>, Maxime Ripard <mripard@kernel.org>, 
+	Helen Koike <helen.koike@collabora.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	David Airlie <airlied@gmail.com>, freedreno@lists.freedesktop.org, 
+	Daniel Stone <daniel@fooishbar.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Fri, Jan 12, 2024 at 3:42=E2=80=AFAM Vignesh Raman
+<vignesh.raman@collabora.com> wrote:
+>
+> Hi Rob,
+>
+>
+> On 09/01/24 01:20, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > The msm tests should skip on non-msm hw, so I think it should be safe t=
+o
+> > enable everywhere.
+> >
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >   drivers/gpu/drm/ci/testlist.txt | 49 ++++++++++++++++++++++++++++++++=
++
+> >   1 file changed, 49 insertions(+)
+> >
+> > diff --git a/drivers/gpu/drm/ci/testlist.txt b/drivers/gpu/drm/ci/testl=
+ist.txt
+> > index f82cd90372f4..eaeb751bb0ad 100644
+> > --- a/drivers/gpu/drm/ci/testlist.txt
+> > +++ b/drivers/gpu/drm/ci/testlist.txt
+> > @@ -2910,3 +2910,52 @@ kms_writeback@writeback-invalid-parameters
+> >   kms_writeback@writeback-fb-id
+> >   kms_writeback@writeback-check-output
+> >   prime_mmap_kms@buffer-sharing
+> > +msm_shrink@copy-gpu-sanitycheck-8
+> > +msm_shrink@copy-gpu-sanitycheck-32
+> > +msm_shrink@copy-gpu-8
+> > +msm_shrink@copy-gpu-32
+> > +msm_shrink@copy-gpu-madvise-8
+> > +msm_shrink@copy-gpu-madvise-32
+> > +msm_shrink@copy-gpu-oom-8
+> > +msm_shrink@copy-gpu-oom-32
+> > +msm_shrink@copy-mmap-sanitycheck-8
+> > +msm_shrink@copy-mmap-sanitycheck-32
+> > +msm_shrink@copy-mmap-8
+> > +msm_shrink@copy-mmap-32
+> > +msm_shrink@copy-mmap-madvise-8
+> > +msm_shrink@copy-mmap-madvise-32
+> > +msm_shrink@copy-mmap-oom-8
+> > +msm_shrink@copy-mmap-oom-32
+> > +msm_shrink@copy-mmap-dmabuf-sanitycheck-8
+> > +msm_shrink@copy-mmap-dmabuf-sanitycheck-32
+> > +msm_shrink@copy-mmap-dmabuf-8
+> > +msm_shrink@copy-mmap-dmabuf-32
+> > +msm_shrink@copy-mmap-dmabuf-madvise-8
+> > +msm_shrink@copy-mmap-dmabuf-madvise-32
+> > +msm_shrink@copy-mmap-dmabuf-oom-8
+> > +msm_shrink@copy-mmap-dmabuf-oom-32
+> > +msm_mapping@ring
+> > +msm_mapping@sqefw
+> > +msm_mapping@shadow
+> > +msm_submitoverhead@submitbench-10-bos
+> > +msm_submitoverhead@submitbench-10-bos-no-implicit-sync
+> > +msm_submitoverhead@submitbench-100-bos
+> > +msm_submitoverhead@submitbench-100-bos-no-implicit-sync
+> > +msm_submitoverhead@submitbench-250-bos
+> > +msm_submitoverhead@submitbench-250-bos-no-implicit-sync
+> > +msm_submitoverhead@submitbench-500-bos
+> > +msm_submitoverhead@submitbench-500-bos-no-implicit-sync
+> > +msm_submitoverhead@submitbench-1000-bos
+> > +msm_submitoverhead@submitbench-1000-bos-no-implicit-sync
+> > +msm_recovery@hangcheck
+> > +msm_recovery@gpu-fault
+> > +msm_recovery@gpu-fault-parallel
+> > +msm_recovery@iova-fault
+> > +msm_submit@empty-submit
+> > +msm_submit@invalid-queue-submit
+> > +msm_submit@invalid-flags-submit
+> > +msm_submit@invalid-in-fence-submit
+> > +msm_submit@invalid-duplicate-bo-submit
+> > +msm_submit@invalid-cmd-idx-submit
+> > +msm_submit@invalid-cmd-type-submit
+> > +msm_submit@valid-submit
+>
+> I tested this patch with latest drm-misc/drm-misc-next and there was
+> some failures seen for the newly added msm tests. I have updated the
+> xfails with below commit,
+>
+> https://gitlab.freedesktop.org/vigneshraman/linux/-/commit/d012893597a661=
+d6ebbb755bf2607dfb055524a1
+>
+> I will notify the maintainers about the flaky tests, update the url in
+> the flakes.txt, and submit a separate patch for this change.
 
+Thanks, it looks like you also have a relatively recent igt (there
+were some msm_submit fails until I fixed the test)..
 
-On 1/10/2024 11:44 PM, Simon Horman wrote:
-> On Wed, Jan 10, 2024 at 01:24:06PM +0100, Krzysztof Kozlowski wrote:
->> On 10/01/2024 12:40, Luo Jie wrote:
->>> The PPE(packet process engine) hardware block is available in Qualcomm
->>> IPQ chipsets that support PPE architecture, such as IPQ9574 and IPQ5332.
->>> The PPE includes integrated ethernet MAC and PCS(uniphy), which is used
->>> to connect with external PHY devices by PCS. The PPE also includes
->>> various packet processing offload capabilities such as routing and
->>> briding offload, L2 switch capability, VLAN and tunnel processing
->>> offload.
->>>
->>> This patch series enables support for the PPE driver which intializes
->>> and configures the PPE, and provides various services for higher level
->>> network drivers in the system such as EDMA (Ethernet DMA) driver or a
->>> DSA switch driver for PPE L2 Switch, for Qualcomm IPQ SoCs.
->>
->> net-next is closed.
-> 
-> Also, please try to avoid sending patch-sets with more than 15 patches
-> for net or net-next.
-> 
-> https://www.kernel.org/doc/html/next/process/maintainer-netdev.html#dividing-work-into-patches
+BR,
+-R
 
-Got it, at a later point when this review resumes, we will split the PPE 
-driver patches into two series, one is for PPE switch core feature, 
-another is for MAC/UNIPHY features. Hope this is fine.
-
-Thanks for this comment.
-
+> Regards,
+> Vignesh
 
