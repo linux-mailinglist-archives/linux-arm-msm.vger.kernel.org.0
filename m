@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-7091-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 265A382BBF6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 08:44:59 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C44F82BC5D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 09:29:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8A2F71F24C0B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 07:44:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 54CE91C2121F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 08:29:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBDDF5D73C;
-	Fri, 12 Jan 2024 07:44:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3F325D8EC;
+	Fri, 12 Jan 2024 08:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Wpd126oR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QIzYeLBF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5155D727
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 07:44:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D645D8E9
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 08:29:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-33694bf8835so4725473f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jan 2024 23:44:44 -0800 (PST)
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-40e6296636fso12201075e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 00:29:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705045483; x=1705650283; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1705048167; x=1705652967; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=lJ67vGP58fbUmkExgKg2eABxDfVIbi7Bocp1QhPmbiw=;
-        b=Wpd126oRTbx2gO8svFTAY9U5hi06x6gCRshJNQ2rWqBJZJLNH9mXLdk+NZ56KfHsMu
-         Tpp+v0FFlxWsV5lqanSxEEbnfjuiPtL26dJruRqlNJSPzYzWypctWylcjkkVBRXwi3Zr
-         a3D0ZVLGVqFIak/0/U7tT1d9IOr5grP7hhAc2mxngK0UX8u8XqIl+VcH/VIX6IUqtScI
-         srUglN2/QHe6AWoKW/TR41ElOZ5okrI6vwJbzUavNndY47B5m+0S918u2EA7360qlK8O
-         gqFH2BPFy7/1aLyelplrdlYiSCMsFreE9BL5Czm1TqLDxgkflpfzXqfPjwv9QOE6sBJu
-         9c7g==
+        bh=rzSBMcH9OV38tGE26hwdykcph14F12FzWZt67w15gGA=;
+        b=QIzYeLBFr1Z2YhvUAjOFcfs1vHuJC85UwMAyKvH92LeEjiUSP4vk4QE2+d83wN1p6f
+         NrLfdg2ic/i1iJZqF1Cfn1ef+9ecmTe6oZJFJdfKzV2bXC58ZPzAEQ+7Gpkh+yikxUjW
+         CGlH+CqSBClqGBA4NNfNpSecJlL0rh5VRr6YK7C+vMkhO0QLTCaUCERr8im6UN9Sb74C
+         Ton0svIQyOQ5FCQvaoguP3c6djxE9zlubFoggcHbl/iHp2EGrhJ54UgnzeaTbEOe3Eh+
+         YdhzZf2QAkmT6Rm4EldX1+IewKB40ScazcaGk9uXIzhd05ZVjXhFJqjk7BOHJSiAhR7z
+         O4XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705045483; x=1705650283;
+        d=1e100.net; s=20230601; t=1705048167; x=1705652967;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lJ67vGP58fbUmkExgKg2eABxDfVIbi7Bocp1QhPmbiw=;
-        b=dam7xBH0+CnQPcUMcB/FFJNdgEvt/llKrxxowqeTLErdLXHeIQNEaSL4wfMGgBZC1c
-         x9MQefYWzWtOvV28/KnmQzBB1gwQ/KHbRaJd/rYW/CbzHakaWxuKakho9nY21toBZvJe
-         cRwEJ3YuJakTT5Lil3JW6XPlQ3hxXiflNvA0E/Bp6aITSVx8jyugiKtToC/Sof0UZIQu
-         zKKdgIHzh0gsf+giCVFCxbLLadr+U5ILU4pFIQRpq3sNbMy6mPm1iW4a6nm6+tF3T9eL
-         CST2IuiDzRCxG3bA5GRboJYZP1f/9RpjZjWi2hMJN4AbqUzi2adEVUO/U4WWHt4Op0lf
-         bK0g==
-X-Gm-Message-State: AOJu0Yzc/HA6W2hkyJpGtZFyZ3vFy9ZooIFjsJM8PNS2ZbhCtOKhqL/d
-	mS/l6w8kdh6HMRFfPNs924nahBhuZlk6rw==
-X-Google-Smtp-Source: AGHT+IE2+4pXuYbHbipr6aHQbxXfnXAz9g22j7lfWZDvutbbjeiinoiAKLBacgBiA237mhb5GvRaYQ==
-X-Received: by 2002:a7b:ce8a:0:b0:40d:685c:3880 with SMTP id q10-20020a7bce8a000000b0040d685c3880mr507398wmj.176.1705045482974;
-        Thu, 11 Jan 2024 23:44:42 -0800 (PST)
+        bh=rzSBMcH9OV38tGE26hwdykcph14F12FzWZt67w15gGA=;
+        b=hZiGV9EhFUZzXQ+sK9/AF0xFimYJhuKNR0/uAgruKAw7v+HKziZmjAxWFVNhwyP7qL
+         m8W+pQShQswgHwInzW6YfJaDg8GZaJ05jfhgmtu/DWVDlkZGHliui51LKje7yxCqveKY
+         pSsJNvinEOevMn6a2Ob/dZjdLMHXq81/AhABFedLglZ2e3E4cX0pVTZclE+tO8LuNMEI
+         bWrX2Q+kSI0MvjP58lGzYRPcwfYM0PfRcdmkZi1c8nOw25mQM2ctNg4fztlwsXgDIzTH
+         /k9VDPRvkSht2GkiftJ2JDC3nmIemkAj/Uz9ypwaLPN5CAvdA/ou4waTmLZyBgCC7et8
+         8sJw==
+X-Gm-Message-State: AOJu0YwaB3hOSpZVcI1Aq69u+lPmGXkl+Wwuz+1vsTETPWC1xLj8H5xb
+	BmueZjRiUpw+vZPUQ3vFExn1FEFW7PqdKA==
+X-Google-Smtp-Source: AGHT+IGNVOmMTkXQmLG65ejTgWdYNJLQ6LXgvuBftvdyvWhyCCS9fO8Cuw/eItmzvQaQj5t9Ahi+Vg==
+X-Received: by 2002:a05:600c:1e17:b0:40d:5bbf:71f2 with SMTP id ay23-20020a05600c1e1700b0040d5bbf71f2mr583829wmb.5.1705048167162;
+        Fri, 12 Jan 2024 00:29:27 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.223.112])
-        by smtp.gmail.com with ESMTPSA id v30-20020adf8b5e000000b0033690139ea5sm3130742wra.44.2024.01.11.23.44.41
+        by smtp.gmail.com with ESMTPSA id i8-20020a05600c354800b0040e555f12d8sm8765004wmq.8.2024.01.12.00.29.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Jan 2024 23:44:42 -0800 (PST)
-Message-ID: <1f14bff5-4f3e-426b-b81d-006da061af1e@linaro.org>
-Date: Fri, 12 Jan 2024 08:44:40 +0100
+        Fri, 12 Jan 2024 00:29:26 -0800 (PST)
+Message-ID: <ba10b5dd-d9c0-46e1-b868-8c9f19a470d7@linaro.org>
+Date: Fri, 12 Jan 2024 09:29:24 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,17 +66,25 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] arm64: dts: qcom: qcs6490-idp: Add definition for
- three LEDs.
+Subject: Re: Proposal for QCOM PCIe switch power and configuration driver
 Content-Language: en-US
-To: quic_huliu@quicinc.com, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
+ Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
  Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240112-lpg-v4-1-c4004026686b@quicinc.com>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Veerabhadrarao Badiganti <quic_vbadigan@quicinc.com>,
+ quic_skananth@quicinc.com, bartosz.golaszewski@linaro.org,
+ open list <linux-kernel@vger.kernel.org>,
+ "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
+ <devicetree@vger.kernel.org>,
+ "open list:PCIE ENDPOINT DRIVER FOR QUALCOMM"
+ <linux-arm-msm@vger.kernel.org>, p.zabel@pengutronix.de,
+ Bjorn Helgaas <bhelgaas@google.com>,
+ "open list:PCIE ENDPOINT DRIVER FOR QUALCOMM" <linux-pci@vger.kernel.org>
+References: <413d612f-0e31-6281-64e3-6484b85afe06@quicinc.com>
+ <036823ce-9815-4884-aa3a-9c3831cea9bb@linaro.org>
+ <f4805d04-9514-6a41-b39e-aa8a4577ce90@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -122,24 +130,96 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240112-lpg-v4-1-c4004026686b@quicinc.com>
+In-Reply-To: <f4805d04-9514-6a41-b39e-aa8a4577ce90@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 12/01/2024 04:05, Hui Liu via B4 Relay wrote:
-> From: Hui Liu <quic_huliu@quicinc.com>
+On 12/01/2024 05:16, Krishna Chaitanya Chundru wrote:
+> ++CC   Philipp Zabel ( reset controller maintainer)  & Bjorn & PCI list 
+> from PCIe subsytem.
 > 
-> Add definition for three LEDs to make sure they can
-> be enabled base on QCOM LPG LED driver.
+> On 1/11/2024 11:20 PM, Krzysztof Kozlowski wrote:
+>> On 11/01/2024 18:38, Krishna Chaitanya Chundru wrote:
+>>> Hi DT maintainers,
+>>>
+>>> We are trying to upstream the QCOM PCIe switch which has I2C interface
+>>> to configure the switch.
+>>>
+>>> In generic a PCIe switch is a device that allows expansion of PCI
+>>> Express hierarchy, which allows more devices(PCIe endpoints) to be
+>>> connected to a single PCIe port.
+>>>
+>>> We need to configure the QCOM switch like L0s, L1ss entry times, Tx
+>>> amplitudes etc.. through I2C interface before PCIe link is established
+>>> as these settings can affect link stability if we don't configure them.
+>>>
+>>> Once PCIe switch is configured, PCIe link between the PCIe switch and
+>>> PCIe port connected should be established by the QCOM PCIe controller
+>>> driver to enumerate the PCIe endpoints connected to the PCIe switch.
+>>>
+>>> We had a QCOM switch driver which powers on the switch and do the I2C
+>>> configurations.
+>>>
+>>> This is how the flow goes.
+>>> -->Power on the switch
+>>>       -->Do Switch configuration (over i2c) with qcom switch driver
+>>>           -->PCIe link training and enumeration.
+>>
+>> And where is the PCI controller in this? Why isn't this represented like
+>> I2C or GPIO expander? You need to describe what exactly the switch is doing.
+>>
+> The PCIe link training and enumeration is handled by PCIe controller driver.
+> Usually a single endpoint will be connected to PCIe port, using a switch
+> we can connect multiple endpoints like WLAN, NVME, PCIe to ethernet
+> bridge etc. So in single instance of PCIe multiple endpoints are
+> connected and enumerated.
+> Like I2C or GPIO expander we don't want to configure any endpoints, here
+> we are trying to solve the initialization part of the switch power to
+> the switch and configuration of the switch before PCIe controller starts
+> link training and enumeration.
+
+Post your datasheet or at least send some diagrams describing
+everything, so I won't have to keep guessing.
+
 > 
-> Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
-> ---
-> Changes in v4:
-> - Removed "label" definition and added "function" definition.
+>> Also, how about using existing solutions? Aren't there any? I am not
+>> going to look for them for you...
+>>
+> As of I know we don't have any solutions exiting now, we are trying to
+> explore different ways for it.
 
-You did not test your patch before sending.
+So did you look it up? How much? If I find one, in the drivers, what
+then? Can you look for it first?
 
-Subject is still wrong. Also, it still has unnecessary full stop. Drop it.
+>> Anyway, you should ask (means Cc) reset controller maintainers if they
+>> are happy for such usage of reset framework for something not being a
+>> reset. For similar reasons you should Cc PCI maintainers. If you ask me,
+>> then no, PCI switch does not look like reset line so, you should not use
+>> reset lines.
+>>
+> I added both maintainers now. sorry for the miss.
+> We want to use reset line because I2c driver has to power on the device
+> and configure the switch only before PCIe controller driver probes.
+
+Let's don't repeat the style of discussion we have with Luo Jie, where I
+say this is not reset and you say "but we want" and use some ridiculous
+argument.
+
+> This is how reset controller operates(correct me if I was wrong).
+
+I talk about bindings. Otherwise why would you Cc me? Just because
+something has power it is a reset? No, it is not. You said about
+configuring lines: reset does not do this.
+I am really tired of such discussions after last time. Getting
+half-baked answers from you, incomplete pictures and something just to
+respond to my question without providing anything valuable, because you
+do not want to disclose too much. I got really disappointed last time
+and this will affect further submissions from you. That's how reputation
+works, sorry.
+
+Just because it controls power, among many other things, does not mean
+it is a reset. Maybe it is a phy? Or a mux? How do I know? Do you expect
+me to guess?
 
 Best regards,
 Krzysztof
