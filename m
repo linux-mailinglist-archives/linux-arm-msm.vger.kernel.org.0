@@ -1,138 +1,224 @@
-Return-Path: <linux-arm-msm+bounces-7154-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1816182C5A1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 19:53:51 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD80282C73B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 23:29:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A61D7285370
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 18:53:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5CACB1F233B1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jan 2024 22:28:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EECC156E8;
-	Fri, 12 Jan 2024 18:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DFE21773E;
+	Fri, 12 Jan 2024 22:28:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="K+jkxS/H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB936154BA
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 18:53:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1rOMeP-00032S-MK; Fri, 12 Jan 2024 19:53:05 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1rOMeK-002CyT-QW; Fri, 12 Jan 2024 19:53:00 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.96)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1rOMeK-008NwN-2H;
-	Fri, 12 Jan 2024 19:53:00 +0100
-Date: Fri, 12 Jan 2024 19:53:00 +0100
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Will Deacon <will@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>, Raag Jadav <raag.jadav@intel.com>, 
-	Yicong Yang <yangyicong@hisilicon.com>, Ilkka Koskinen <ilkka@os.amperecomputing.com>, 
-	Fabio Estevam <festevam@gmail.com>, Jerome Brunet <jbrunet@baylibre.com>, 
-	Khuong Dinh <khuong@os.amperecomputing.com>, Kevin Hilman <khilman@baylibre.com>, 
-	Andy Gross <agross@kernel.org>, NXP Linux Team <linux-imx@nxp.com>, 
-	linux-arm-msm@vger.kernel.org, Suzuki K Poulose <suzuki.poulose@arm.com>, 
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, Frank Li <Frank.li@nxp.com>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Besar Wicaksono <bwicaksono@nvidia.com>, 
-	Jonathan Cameron <jonathan.cameron@huawei.com>, linux-amlogic@lists.infradead.org, 
-	linux-arm-kernel@lists.infradead.org, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Jiucheng Xu <jiucheng.xu@amlogic.com>, Shawn Guo <shawnguo@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Shuai Xue <xueshuai@linux.alibaba.com>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, Robin Murphy <robin.murphy@arm.com>
-Subject: Re: [PATCH 00/18] perf: Convert to platform remove callback
- returning void
-Message-ID: <2lviizgknyxxwa5fg45sv3rfg6h43qvv7w6ae4nptlkm774hcp@4rsdsvwpcq6c>
-References: <cover.1702648124.git.u.kleine-koenig@pengutronix.de>
- <vlnl6og3bts5hcdjw5h7c4km7zolzuf6h7cwyfymjzan3uqjwy@rsra3lqdhou7>
- <20240112135009.GA16771@willie-the-truck>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B7117729
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 22:28:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a2cfb0196bcso70944966b.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jan 2024 14:28:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1705098529; x=1705703329; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=k+g8KAN/GocAbP+Hjj0VU3R5oOrMC5lRs+LQJKDyZbc=;
+        b=K+jkxS/HFNwjqGT47Hes14wV4POIlXFMqJjU2r06BY6/ANnvSE/NxIER3GEbt2Rci1
+         G+ySvp3yP92iSYndcPdgTP6X5prn6o3ewq88l+pzFuU03dwGecfVMjOmfuEpRysp9Yj1
+         8qWmc0Tk1lZOZowmMKuoQFig+tFKJ1SqxL/E2g/E2jlzOmhwnrtaFsPKrgKw9WCtQYeG
+         YMpeul7CqohG4wU/WwjK4J44hX9fdGvKBTkEd7AfkKlNtGJhIJN8jo6zJT2Yp1OCBJ/7
+         HIWvt7IxJcpOpQyV6MVmy/6XytdULTSKDcX2uO08U9GsBAgOJREQ8gmSKZUmQWhUMnhl
+         SKgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705098529; x=1705703329;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=k+g8KAN/GocAbP+Hjj0VU3R5oOrMC5lRs+LQJKDyZbc=;
+        b=mlGyFju+0QsTkws8WASTV85kPfFXi/IEzzDwR7ZX6xm8AiKXHD9V5BF1OV3azu6H6H
+         72cBYgEtWk3rJdrLOEf2xqnpbezH6VT8+ftg7hNEgfWjJL7Zx5lRw7pPWIdQVckEc5mg
+         Bh2YB4/XmTzENWG3nUg2V9NxuZ7u56VveBxwE0ylQu6wTdvZZKRTLdnQZXASzrn61Upa
+         TPLSrXhLAVXTKZkRJaK2KZnA8YNGFJfl8rq5fki/fmOTtqc16v7Qs85a+yswRDAjulBA
+         CaypSrB9gvWKpTXK5RLIyxSHKpWZaEYRFC51uP/kX7Vz5+uQXTCeBM4MBF5YFAvAu9Sk
+         2pUQ==
+X-Gm-Message-State: AOJu0YzKPW0IceBV3evT+NR2flo8MeVSNpP1lfnUS/a3bc2WA/rjlZk1
+	9/kSMqpIuqDSNHMbY7L1+B+/sThUnNZ0tg==
+X-Google-Smtp-Source: AGHT+IE6Y1CQAvSWgVhfPTkwN2W/RAJPjIutDlo+/cj2s9k6qNsUhtuGUhJR5tGNazvTNT3GoTlf0A==
+X-Received: by 2002:a17:906:a202:b0:a2c:4b7d:69db with SMTP id r2-20020a170906a20200b00a2c4b7d69dbmr1054995ejy.18.1705098529417;
+        Fri, 12 Jan 2024 14:28:49 -0800 (PST)
+Received: from [192.168.174.25] (178235179017.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.17])
+        by smtp.gmail.com with ESMTPSA id hx25-20020a170906847900b00a26ac57b951sm2215051ejc.23.2024.01.12.14.28.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 12 Jan 2024 14:28:48 -0800 (PST)
+Message-ID: <2a8ad790-6f3b-43d8-af31-0e6dcca72c54@linaro.org>
+Date: Fri, 12 Jan 2024 23:28:46 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="vke34tmtmued5nvt"
-Content-Disposition: inline
-In-Reply-To: <20240112135009.GA16771@willie-the-truck>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V1 1/2] scsi: ufs: qcom : Refactor phy_power_on/off calls
+To: Nitin Rawat <quic_nitirawa@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ "James E.J. Bottomley" <jejb@linux.ibm.com>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org,
+ Can Guo <quic_cang@quicinc.com>,
+ Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+References: <20240112153348.2778-1-quic_nitirawa@quicinc.com>
+ <20240112153348.2778-2-quic_nitirawa@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240112153348.2778-2-quic_nitirawa@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On 12.01.2024 16:33, Nitin Rawat wrote:
+> Commit 3f6d1767b1a0 ("phy: ufs-qcom: Refactor all init steps into
+> phy_poweron") removes the phy_power_on/off from ufs_qcom_setup_clocks
+> to suspend/resume func.
+> 
+> To have a better power saving, remove the phy_power_on/off calls from
+> resume/suspend path and put them back to ufs_qcom_setup_clocks, so that
+> PHY's regulators & clks can be turned on/off along with UFS's clocks.
+> 
+> Since phy phy_power_on is separated out from phy calibrate, make
+> separate calls to phy_power_on and phy_calibrate calls from ufs qcom
+> driver.
+> 
+> Also add a mutex lock to protect the usage of is_phy_pwr_on against
+> possible racing.
+> 
+> Co-developed-by: Can Guo <quic_cang@quicinc.com>
+> Signed-off-by: Can Guo <quic_cang@quicinc.com>
+> Co-developed-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+> Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
+> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> ---
+>  drivers/ufs/host/ufs-qcom.c | 104 +++++++++++++++++++++++-------------
+>  drivers/ufs/host/ufs-qcom.h |   4 ++
+>  2 files changed, 72 insertions(+), 36 deletions(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 39eef470f8fa..2721a30f0db8 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -338,6 +338,46 @@ static u32 ufs_qcom_get_hs_gear(struct ufs_hba *hba)
+>  	return UFS_HS_G3;
+>  }
+> 
+> +static int ufs_qcom_phy_power_on(struct ufs_hba *hba)
+> +{
+> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> +	struct phy *phy = host->generic_phy;
+> +	int ret = 0;
+> +
+> +	mutex_lock(&host->phy_mutex);
 
---vke34tmtmued5nvt
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+guard(mutex)(&host->phy_mutex);
 
-Hey Will,
+and you can drop the _unlock calls
 
-On Fri, Jan 12, 2024 at 01:50:09PM +0000, Will Deacon wrote:
-> On Wed, Jan 10, 2024 at 09:56:26AM +0100, Uwe Kleine-K=F6nig wrote:
-> > On Fri, Dec 15, 2023 at 02:59:00PM +0100, Uwe Kleine-K=F6nig wrote:
-> > > this series converts all drivers below drivers/perf to use
-> > > .remove_new(). See commit 5c5a7680e67b ("platform: Provide a remove
-> > > callback that returns no value") for an extended explanation and the
-> > > eventual goal. The TL;DR; is to make it harder for driver authors to
-> > > leak resources without noticing.
-> > >=20
-> > > I based the patches on today's next, I had to revert commits=20
-> > > 3115ee021bfb ("arm64: perf: Include threshold control fields in
-> > > PMEVTYPER mask") and 816c26754447 ("arm64: perf: Add support for event
-> > > counting threshold") to compile test on ARCH=3Darm (this is a problem=
- in
-> > > next, not in my patch series).
-> > >=20
-> > > This is merge window material. All patches are pairwise independent of
-> > > each other so they can be applied individually. Still it would be gre=
-at
-> > > to let them go in all together.
-> >=20
-> > I wonder if this series is still on someone's radar. It didn't appear in
-> > next up to now, so I guess it's too late for 6.8-rc1?!
->=20
-> This came in during the holiday period so, by the time I saw it, it was
-> too late to land for this merge window. I can pick it up for 6.9 in a few
-> weeks, though. I usually start queueing stuff at -rc3.
+> +	if (!host->is_phy_pwr_on) {
+> +		ret = phy_power_on(phy);
+> +		if (ret) {
+> +			mutex_unlock(&host->phy_mutex);
+> +			return ret;
 
-If it's not lost I'm happy. There are still quite a few more such
-changes necessary for other subsystems, so no time pressure from my
-side; 6.9 is great.
+And with the _unlock now being unnecessary, you can rewrite this
+as:
 
-Cheers
-Uwe
+if (!host->is_phy_pwr_on) {
+	ret = phy_power_on(phy);
+	if (!ret)
+		host->is_phy_pwr_on = true;
+}
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+return ret
+> +		}
+> +		host->is_phy_pwr_on = true;
+> +	}
+> +	mutex_unlock(&host->phy_mutex);
+> +
+> +	return ret;
+> +}
 
---vke34tmtmued5nvt
-Content-Type: application/pgp-signature; name="signature.asc"
+[...]
 
------BEGIN PGP SIGNATURE-----
+>  static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+>  {
+>  	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> @@ -378,13 +418,18 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+>  		goto out_disable_phy;
+> 
+>  	/* power on phy - start serdes and phy's power and clocks */
+> -	ret = phy_power_on(phy);
+> +	ret = ufs_qcom_phy_power_on(hba);
+>  	if (ret) {
+>  		dev_err(hba->dev, "%s: phy power on failed, ret = %d\n",
+>  			__func__, ret);
+>  		goto out_disable_phy;
+>  	}
+> 
+> +	ret = phy_calibrate(phy);
+> +	if (ret) {
+> +		dev_err(hba->dev, "%s: Failed to calibrate PHY %d\n",
+> +				  __func__, ret);
+> +	}
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmWhiosACgkQj4D7WH0S
-/k5aWwf7BuXw3bYNc3VbYfXdW3RoIYntlEgq6QVUK0bRidYY00oQ99K0GXu/LAh1
-ia+WmqQ1A45GuvAh2Q/5502p/5PfExDWIgWEyvEIdiEilKS0y/1yVhRuwWg62kEO
-C6OsBmphtkbuUbGmKnpEURdqgslMkLiGAqCCzXMTDqjrcttSH0twaPpmQh9SemfQ
-xAGukovuoPDXoEE2JbzZgRpkIEt+YkvSVkicU4aq9UhVaacak0SuGXGmcqL/dOJZ
-KwWaAhdxJh5+q2N0mqlmFVjZYLv0s9WYpjic8ZjlA3Ie3V/hKP8q8pVR7TRNOFZZ
-yfmCKfk96RxKLFonuuofeFaY4y/AAA==
-=YLUl
------END PGP SIGNATURE-----
+You can drop the overly verbose __func__, unwrap the line and remove the
+curly braces, similar for dev_err-s below
 
---vke34tmtmued5nvt--
+Actually, shouldn't this error out if calibrate fails??
+
+Konrad
 
