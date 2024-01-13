@@ -1,66 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-7216-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7217-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E63C882CE81
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jan 2024 21:56:22 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B9BB82CE84
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jan 2024 21:56:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 764A3283366
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jan 2024 20:56:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 006AE1F2205C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jan 2024 20:56:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFD3518036;
-	Sat, 13 Jan 2024 20:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 819FD17BDC;
+	Sat, 13 Jan 2024 20:56:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wshf89ZN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lz1+7e39"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F1910797
-	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jan 2024 20:55:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0091642A
+	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jan 2024 20:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2cd2f472665so80621931fa.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jan 2024 12:55:57 -0800 (PST)
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2cd64022164so79329881fa.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jan 2024 12:55:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705179356; x=1705784156; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1705179357; x=1705784157; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=WJc3qa2P7/gJ3egsD0VQ5u3r1xsQIdR/8Y8k0L14qog=;
-        b=wshf89ZNEQmQDDtQ2nCJRdMSM8lQcsKRq7NDyrMOc/2gQkimunLdMSxc9DsAnhOU8U
-         lEsn20yrK1mMLOuQS+cIflYXVY9R3LAxN2iYLZZlbwBQ8A8CzjWX0qq7Uwk4/NPmzFzT
-         jnUHyI5nrrnlRB4xzHxFaS9UWTBiW727RCnxK4sjUGPkfIxVbTC7jncmorNQRNDqECr2
-         6oBq5TZpv/Dp0Cw+g5OZgk1C3KH6cmG6Ck220ZYh8RUmSdFcPGnJ+6n5bsi3ai9o9+fL
-         d/YD13jp8NE4LWqyhjUqI21v6OQRHCrKW36gbxs/KABYQuoDnEfJ8p4LvzHf2Jd13WKT
-         /wcQ==
+        bh=7p6gWY0YoqvRhvH4CsaKCkw0XoA/dxUPDgcmLcO++Co=;
+        b=lz1+7e39YQZlrJzMxIfebWkDPjzES428oQdzT/1ACb1DpbAAU5FBLuW92xqsrcHgPe
+         GbiTupc23lD1KsPW3bZ24XuSpNZSHi6yr0kkWjCYXsBzWGvEau/g4UWPe40BA+4LU+RP
+         a0fagI9gXC/3ZuQdZRpKjV7OJh6A+Mu3f99hiYeIFKbOQazZ5vJMBtApdPCfWyxwHNHP
+         igNpk+fm7BWmZeGMtoMIdLyRIX80z95TFy077ldAyx1IkgEauuxqzuOZ08dlY6z7Ti9E
+         RGOuGN+b8IWkjbmIxvIDc8dltrV7VrjhQEljKKynw/B27RoUcJsBuXWcEyPBJZhq2V+U
+         fkCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705179356; x=1705784156;
+        d=1e100.net; s=20230601; t=1705179357; x=1705784157;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WJc3qa2P7/gJ3egsD0VQ5u3r1xsQIdR/8Y8k0L14qog=;
-        b=EOVqBTzAt71w03KdBsZzWVOM4HWkkZZ6gtBXGowEYYaFK1rp61Vp/vImjAXwEcBZV5
-         h6BMY/mlg4B6LrSVlz9wjqvNdW9532DrjiTccEcTHq/F0eSOtArFN23LtrnFlTJpYmqP
-         Ac69X7PKE8DkNkr7erQtTVDGb8PdcBnh1d/cVsmsgQSP4qzlxUtdDQ0GNElADXMMT0ch
-         RTsIB1KdLMk3w/DGrDILlw13iyAbi80u7fIQLwPNkmXMh7A9X/yARwJT4mO/t6oFyZhf
-         CsyFpncHUYZ0q1JWXJDeb3VBkqIxWz+X0TkqfJ52phE9HCvCb3H7WdyAlLiXFHbmUV78
-         Sqew==
-X-Gm-Message-State: AOJu0Yxul2p1qRC2PDoJ3aSkBqeNIVteIKtL14JN/wIaFxdipXxwDdDY
-	xOuKONaO0aS2vGPy8MGXzfXK8KimUrpa/A==
-X-Google-Smtp-Source: AGHT+IFGOz38rv/jFZy78aEi8m4E1SFPUPvXCxXm9dHWNW/1yST8bvaF7Cql0c5VqqH8tKpjiXSEyQ==
-X-Received: by 2002:a19:915d:0:b0:50e:74f3:9c5a with SMTP id y29-20020a19915d000000b0050e74f39c5amr1307891lfj.38.1705179356079;
-        Sat, 13 Jan 2024 12:55:56 -0800 (PST)
+        bh=7p6gWY0YoqvRhvH4CsaKCkw0XoA/dxUPDgcmLcO++Co=;
+        b=VGKUmrky5iztykDlIMTZnqPCCDU8IDxXU/5gCzDrpWUhpNiyhSKYBDYeMNnYUzA3UN
+         CWuMf0A0xl+AOe7Txq6pgakb7hOyjKSP01gp1LfmLCbCR2Nb6hOKinP22PxkhpBq2QtR
+         JB/2OELQ9crrYSvHlM+4cNOX+SyrsEccfUHTeej67GOLENhf32OEiQOk3XC+e7epMtD9
+         BBbm7j+ftzyvTNDN2fgzXc24n9kaxHZRxBEXvA9nsGpAgK8LkyQEQc26mw/2a+3pMz9U
+         4/yFMuHA4BAUHUcpYXamW3Xg7c4DlSWA8eoxahmHRbcvuxqSFlnvmey1CSUee+MPFNtZ
+         v1fA==
+X-Gm-Message-State: AOJu0YxI4nxH31OhvF6yp4npP0zieBDwpwxAr063SMq9+qrHyfOWhzFd
+	ct0NFm7k/Wu52PRll/lY50ACM3KpQTGFTw==
+X-Google-Smtp-Source: AGHT+IHbb6Hk424wpmBXA/9fo5agMx0JnS4ckc6EKBxpEvGttdRpEC8T4a1XsFQYTmrfLJQJgkphAQ==
+X-Received: by 2002:a05:6512:3a3:b0:50e:ac97:8bb2 with SMTP id v3-20020a05651203a300b0050eac978bb2mr1475688lfp.40.1705179357005;
+        Sat, 13 Jan 2024 12:55:57 -0800 (PST)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id p14-20020a056512328e00b0050e9355d7eesm919802lfe.103.2024.01.13.12.55.55
+        by smtp.gmail.com with ESMTPSA id p14-20020a056512328e00b0050e9355d7eesm919802lfe.103.2024.01.13.12.55.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Jan 2024 12:55:55 -0800 (PST)
+        Sat, 13 Jan 2024 12:55:56 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 13 Jan 2024 22:55:46 +0200
-Subject: [PATCH v2 03/15] dt-bindings: phy: qcom,msm8998-qmp-usb3-phy:
- split from sc8280xp PHY schema
+Date: Sat, 13 Jan 2024 22:55:47 +0200
+Subject: [PATCH v2 04/15] dt-bindings: phy: qcom,msm8998-qmp-usb3-phy:
+ support USB-C data
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,7 +69,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240113-pmi632-typec-v2-3-182d9aa0a5b3@linaro.org>
+Message-Id: <20240113-pmi632-typec-v2-4-182d9aa0a5b3@linaro.org>
 References: <20240113-pmi632-typec-v2-0-182d9aa0a5b3@linaro.org>
 In-Reply-To: <20240113-pmi632-typec-v2-0-182d9aa0a5b3@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -87,220 +87,83 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-usb@vger.kernel.org, linux-phy@lists.infradead.org
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5562;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1888;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=CnztgRTnoisu3CgikOKmKjlZnjUtPFGoAOLDjHVdlrc=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlovjWgSDszgG526QkzvdPnaAay8pbdMhtePPnI
- JsmmL70clGJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZaL41gAKCRCLPIo+Aiko
- 1d3OB/9zvU6LOrEM7HZqtFBq2HMJAhMv70IISGUt0BPYKRQwc8/4qjysO+eQDKHFBZ43WIGgiLO
- o1q01crazGs28C45IMOjCqoHSh/3iGKMYcgCwXbxcQnXLIXaaoj41jxw+ZIsxDUm23GbDxbE+W6
- TBR2JqH48e6HAVk51iPYD00mn4dbPTg0SJKlTagYuekPxGKUoXw904YJ6zahRqbkfy9E6RpgDo+
- buiySKkig+2fEourHLVpTqYZTzP15dR3v2dL7GtwhuOXE9Wt8bb8aGYQN1M6sZB/UZOEFssYNbJ
- +Gn84Xh0hh72lCXxVi0VneTTpbJOdQKV44gp4H92dy4Hrgjk
+ bh=DFAh3NKLCMzL120f+oFd/fyT9CXy+jx6bI/mJAUdqN0=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlovjW4B6beCENV5/96moOaMSzx2h+m+EJaFunL
+ SthbyEEWY2JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZaL41gAKCRCLPIo+Aiko
+ 1aCJB/91Cw/8WKjyEpSIFaaHXcsRjP6p85e6/a/7FdD7cuRjSfW8kepdL17IrwnUK+i2Q0xwLnX
+ xX16b70KjG4G7vkM6zQMZtvR7jTqglUIkIPwxu9pkPnuJBUj7/TImgzzDsaY+z1SVo8hF50iPPw
+ KxsrPhgDEIoLOOls1Jqze+HRaqp66PsRl2Qp+Da9bnC6ij1ech7MWsshoiA8R+29ljeH2wcWeqQ
+ w+Fik+qyIUtQJEGv7H/y4GiFDtJmkqT9GifaK2QPzq5EIYc8h15LRZtZRaTkgo8zK7sU/UhPRAa
+ QCFhZAxajUCLimoZgB4K1iyX3jONmza/VNmI7rgzUooJTPCt
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-In preparation to defining the USB-C handling on MSM8998, QCM2290 and
-SM6115 split existing QMP USB3 PHY schema into pure USB3 and USB-C
-schema definitions.
+Extend the Qualcomm USB-C QMP PHY schema with the USB-C related entry
+points: orientation-switch property and USB-C connection graph.
 
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml    | 132 +++++++++++++++++++++
- .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml        |  22 ----
- 2 files changed, 132 insertions(+), 22 deletions(-)
+ .../bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml    | 39 ++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml
-new file mode 100644
-index 000000000000..868fabd44d72
---- /dev/null
+index 868fabd44d72..da5d4cbca24c 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml
 +++ b/Documentation/devicetree/bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml
-@@ -0,0 +1,132 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/phy/qcom,msm8998-qmp-usb3-phy.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm QMP PHY controller (USB, MSM8998)
-+
-+maintainers:
-+  - Vinod Koul <vkoul@kernel.org>
-+
-+description:
-+  The QMP PHY controller supports physical layer functionality for USB-C on
-+  several Qualcomm chipsets.
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,msm8998-qmp-usb3-phy
-+      - qcom,qcm2290-qmp-usb3-phy
-+      - qcom,sm6115-qmp-usb3-phy
-+
-+  reg:
-+    maxItems: 1
-+
-+  clocks:
-+    maxItems: 4
-+
-+  clock-names:
-+    maxItems: 4
-+
-+  resets:
-+    maxItems: 2
-+
-+  reset-names:
-+    items:
-+      - const: phy
-+      - const: phy_phy
-+
-+  vdda-phy-supply: true
-+
-+  vdda-pll-supply: true
-+
-+  "#clock-cells":
-+    const: 0
-+
-+  clock-output-names:
-+    maxItems: 1
-+
-+  "#phy-cells":
-+    const: 0
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - clock-names
-+  - resets
-+  - reset-names
-+  - vdda-phy-supply
-+  - vdda-pll-supply
-+  - "#clock-cells"
-+  - clock-output-names
-+  - "#phy-cells"
-+
-+allOf:
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,msm8998-qmp-usb3-phy
-+    then:
-+      properties:
-+        clocks:
-+          maxItems: 4
-+        clock-names:
-+          items:
-+            - const: aux
-+            - const: ref
-+            - const: cfg_ahb
-+            - const: pipe
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,qcm2290-qmp-usb3-phy
-+              - qcom,sm6115-qmp-usb3-phy
-+    then:
-+      properties:
-+        clocks:
-+          maxItems: 4
-+        clock-names:
-+          items:
-+            - const: cfg_ahb
-+            - const: ref
-+            - const: com_aux
-+            - const: pipe
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-msm8998.h>
-+    #include <dt-bindings/clock/qcom,rpmh.h>
-+
-+    phy@c010000 {
-+      compatible = "qcom,msm8998-qmp-usb3-phy";
-+      reg = <0x0c010000 0x1000>;
-+
-+      clocks = <&gcc GCC_USB3_PHY_AUX_CLK>,
-+               <&gcc GCC_USB3_CLKREF_CLK>,
-+               <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
-+               <&gcc GCC_USB3_PHY_PIPE_CLK>;
-+      clock-names = "aux",
-+                    "ref",
-+                    "cfg_ahb",
-+                    "pipe";
-+      clock-output-names = "usb3_phy_pipe_clk_src";
-+      #clock-cells = <0>;
-+      #phy-cells = <0>;
-+
-+      resets = <&gcc GCC_USB3_PHY_BCR>,
-+               <&gcc GCC_USB3PHY_PHY_BCR>;
-+      reset-names = "phy",
-+                    "phy_phy";
-+
-+      vdda-phy-supply = <&vreg_l1a_0p875>;
-+      vdda-pll-supply = <&vreg_l2a_1p2>;
-+    };
-diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-index 15d82c67f157..1e2d4ddc5391 100644
---- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-@@ -20,15 +20,12 @@ properties:
-       - qcom,ipq8074-qmp-usb3-phy
-       - qcom,ipq9574-qmp-usb3-phy
-       - qcom,msm8996-qmp-usb3-phy
--      - qcom,msm8998-qmp-usb3-phy
--      - qcom,qcm2290-qmp-usb3-phy
-       - qcom,sa8775p-qmp-usb3-uni-phy
-       - qcom,sc8280xp-qmp-usb3-uni-phy
-       - qcom,sdm845-qmp-usb3-uni-phy
-       - qcom,sdx55-qmp-usb3-uni-phy
-       - qcom,sdx65-qmp-usb3-uni-phy
-       - qcom,sdx75-qmp-usb3-uni-phy
--      - qcom,sm6115-qmp-usb3-phy
-       - qcom,sm8150-qmp-usb3-uni-phy
-       - qcom,sm8250-qmp-usb3-uni-phy
-       - qcom,sm8350-qmp-usb3-uni-phy
-@@ -93,7 +90,6 @@ allOf:
-               - qcom,ipq8074-qmp-usb3-phy
-               - qcom,ipq9574-qmp-usb3-phy
-               - qcom,msm8996-qmp-usb3-phy
--              - qcom,msm8998-qmp-usb3-phy
-               - qcom,sdx55-qmp-usb3-uni-phy
-               - qcom,sdx65-qmp-usb3-uni-phy
-               - qcom,sdx75-qmp-usb3-uni-phy
-@@ -108,24 +104,6 @@ allOf:
-             - const: cfg_ahb
-             - const: pipe
+@@ -50,6 +50,22 @@ properties:
+   "#phy-cells":
+     const: 0
  
--  - if:
--      properties:
--        compatible:
--          contains:
--            enum:
--              - qcom,qcm2290-qmp-usb3-phy
--              - qcom,sm6115-qmp-usb3-phy
--    then:
--      properties:
--        clocks:
--          maxItems: 4
--        clock-names:
--          items:
--            - const: cfg_ahb
--            - const: ref
--            - const: com_aux
--            - const: pipe
--
-   - if:
-       properties:
-         compatible:
++  orientation-switch:
++    description:
++      Flag the PHY as possible handler of USB Type-C orientation switching
++    type: boolean
++
++  ports:
++    $ref: /schemas/graph.yaml#/properties/ports
++    properties:
++      port@0:
++        $ref: /schemas/graph.yaml#/properties/port
++        description: Output endpoint of the PHY
++
++      port@1:
++        $ref: /schemas/graph.yaml#/properties/port
++        description: Incoming endpoint from the USB controller
++
+ required:
+   - compatible
+   - reg
+@@ -129,4 +145,27 @@ examples:
+ 
+       vdda-phy-supply = <&vreg_l1a_0p875>;
+       vdda-pll-supply = <&vreg_l2a_1p2>;
++
++      orientation-switch;
++
++      ports {
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        port@0 {
++          reg = <0>;
++
++          endpoint {
++            remote-endpoint = <&pmic_typec_mux_in>;
++          };
++        };
++
++        port@1 {
++          reg = <1>;
++
++          endpoint {
++            remote-endpoint = <&usb_dwc3_ss>;
++          };
++        };
++      };
+     };
 
 -- 
 2.39.2
