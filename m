@@ -1,66 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-7217-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7218-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B9BB82CE84
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jan 2024 21:56:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A68EC82CE88
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jan 2024 21:56:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 006AE1F2205C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jan 2024 20:56:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8CDBD283ABC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jan 2024 20:56:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 819FD17BDC;
-	Sat, 13 Jan 2024 20:56:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2009C182A7;
+	Sat, 13 Jan 2024 20:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lz1+7e39"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LTOoEGoe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0091642A
-	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jan 2024 20:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80AB3171D8
+	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jan 2024 20:55:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2cd64022164so79329881fa.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jan 2024 12:55:58 -0800 (PST)
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2cd8b661cb8so27320841fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jan 2024 12:55:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1705179357; x=1705784157; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=7p6gWY0YoqvRhvH4CsaKCkw0XoA/dxUPDgcmLcO++Co=;
-        b=lz1+7e39YQZlrJzMxIfebWkDPjzES428oQdzT/1ACb1DpbAAU5FBLuW92xqsrcHgPe
-         GbiTupc23lD1KsPW3bZ24XuSpNZSHi6yr0kkWjCYXsBzWGvEau/g4UWPe40BA+4LU+RP
-         a0fagI9gXC/3ZuQdZRpKjV7OJh6A+Mu3f99hiYeIFKbOQazZ5vJMBtApdPCfWyxwHNHP
-         igNpk+fm7BWmZeGMtoMIdLyRIX80z95TFy077ldAyx1IkgEauuxqzuOZ08dlY6z7Ti9E
-         RGOuGN+b8IWkjbmIxvIDc8dltrV7VrjhQEljKKynw/B27RoUcJsBuXWcEyPBJZhq2V+U
-         fkCg==
+        bh=tOILqGWdvQGyp5yG9dNVVWooYzSrEZenpOm6yeqSMyQ=;
+        b=LTOoEGoeUIP0lX6KoZ3uLXJwFiPj3eWEuRNTAu2Ths6nMMhXC4w8CdqQw5HW7/FMIc
+         4Nc1ixf+NTyb3lGlQYtsYPKgUA4VsnuSJk1+tK/ZAoN2Fh7UznjOZmLDvSskWPnr2prn
+         xVw3Iye1pNZWVD3saTSTRFi5ByHPIk9xB2e8Cr4pYy5gG8RxYRvRC1VUhXCoFWfSEQx4
+         UooM31F8tf+rjPj4YfVQ6ykOybxSOOdP2VLSSndfv8UdxWTyDM2R/75Isqv7wh+rfe3y
+         a2E8ps0QeCPxL+XIIn59qa55Y0Ok/7y6PjVMS7/+ZCHLXfc+LaI0xIzpswGr0SPy4rei
+         QgtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1705179357; x=1705784157;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7p6gWY0YoqvRhvH4CsaKCkw0XoA/dxUPDgcmLcO++Co=;
-        b=VGKUmrky5iztykDlIMTZnqPCCDU8IDxXU/5gCzDrpWUhpNiyhSKYBDYeMNnYUzA3UN
-         CWuMf0A0xl+AOe7Txq6pgakb7hOyjKSP01gp1LfmLCbCR2Nb6hOKinP22PxkhpBq2QtR
-         JB/2OELQ9crrYSvHlM+4cNOX+SyrsEccfUHTeej67GOLENhf32OEiQOk3XC+e7epMtD9
-         BBbm7j+ftzyvTNDN2fgzXc24n9kaxHZRxBEXvA9nsGpAgK8LkyQEQc26mw/2a+3pMz9U
-         4/yFMuHA4BAUHUcpYXamW3Xg7c4DlSWA8eoxahmHRbcvuxqSFlnvmey1CSUee+MPFNtZ
-         v1fA==
-X-Gm-Message-State: AOJu0YxI4nxH31OhvF6yp4npP0zieBDwpwxAr063SMq9+qrHyfOWhzFd
-	ct0NFm7k/Wu52PRll/lY50ACM3KpQTGFTw==
-X-Google-Smtp-Source: AGHT+IHbb6Hk424wpmBXA/9fo5agMx0JnS4ckc6EKBxpEvGttdRpEC8T4a1XsFQYTmrfLJQJgkphAQ==
-X-Received: by 2002:a05:6512:3a3:b0:50e:ac97:8bb2 with SMTP id v3-20020a05651203a300b0050eac978bb2mr1475688lfp.40.1705179357005;
+        bh=tOILqGWdvQGyp5yG9dNVVWooYzSrEZenpOm6yeqSMyQ=;
+        b=oUUt4rNeNCOZ34vqyZRr5AbypM+KiQkrc6Q+yeCwlPSXV2ueKEULc3of1UO3WQKmDw
+         r86oY5UUPWYIBvP+sjX3i9tb/kzD4bNs/ATP8pqNXetOKa4cTE+JmG27lPHnD5NPt1tz
+         J0Wt5x40sPGJMRKkq5jch3RzggxlFAdjrXIWx1UyQ167ehma1aRdpwgYzsBFYjhF8JUY
+         EJvqVDG1uFYlLnctqb+E+PYKkmsnV/crLjm9Pk8zBIBUtT4LInPj/HtAnjmOGmTjr0ws
+         NjucaRXnx+urkHv7+smjlx7Bq4Hd9l2t5jIY45wj3gq3qaPimd+j2zGCy5oFtRDgBxLr
+         YeCw==
+X-Gm-Message-State: AOJu0YxQnvgbJlPOAFvRfwKnacjXU1/BjxQ5tw+gLfZZ268f7GLyGmVj
+	d0WF9FWFMEM28uUhqdAVvYZh8pmXs1JXEA==
+X-Google-Smtp-Source: AGHT+IGbBpFSRp/Rl6zlZ4fJ2bTh5KOLJ9A0MfJxpzIVB/9rSCLgY5y9Hre1H/aLuz0I9VnjnNeXdg==
+X-Received: by 2002:a05:6512:694:b0:50e:ac0e:ad95 with SMTP id t20-20020a056512069400b0050eac0ead95mr1258023lfe.15.1705179357738;
         Sat, 13 Jan 2024 12:55:57 -0800 (PST)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id p14-20020a056512328e00b0050e9355d7eesm919802lfe.103.2024.01.13.12.55.56
+        by smtp.gmail.com with ESMTPSA id p14-20020a056512328e00b0050e9355d7eesm919802lfe.103.2024.01.13.12.55.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Jan 2024 12:55:56 -0800 (PST)
+        Sat, 13 Jan 2024 12:55:57 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 13 Jan 2024 22:55:47 +0200
-Subject: [PATCH v2 04/15] dt-bindings: phy: qcom,msm8998-qmp-usb3-phy:
- support USB-C data
+Date: Sat, 13 Jan 2024 22:55:48 +0200
+Subject: [PATCH v2 05/15] usb: typec: tcpm: fix the PD disabled case
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,7 +68,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240113-pmi632-typec-v2-4-182d9aa0a5b3@linaro.org>
+Message-Id: <20240113-pmi632-typec-v2-5-182d9aa0a5b3@linaro.org>
 References: <20240113-pmi632-typec-v2-0-182d9aa0a5b3@linaro.org>
 In-Reply-To: <20240113-pmi632-typec-v2-0-182d9aa0a5b3@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -87,83 +86,64 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-usb@vger.kernel.org, linux-phy@lists.infradead.org
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1888;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1623;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=DFAh3NKLCMzL120f+oFd/fyT9CXy+jx6bI/mJAUdqN0=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlovjW4B6beCENV5/96moOaMSzx2h+m+EJaFunL
- SthbyEEWY2JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZaL41gAKCRCLPIo+Aiko
- 1aCJB/91Cw/8WKjyEpSIFaaHXcsRjP6p85e6/a/7FdD7cuRjSfW8kepdL17IrwnUK+i2Q0xwLnX
- xX16b70KjG4G7vkM6zQMZtvR7jTqglUIkIPwxu9pkPnuJBUj7/TImgzzDsaY+z1SVo8hF50iPPw
- KxsrPhgDEIoLOOls1Jqze+HRaqp66PsRl2Qp+Da9bnC6ij1ech7MWsshoiA8R+29ljeH2wcWeqQ
- w+Fik+qyIUtQJEGv7H/y4GiFDtJmkqT9GifaK2QPzq5EIYc8h15LRZtZRaTkgo8zK7sU/UhPRAa
- QCFhZAxajUCLimoZgB4K1iyX3jONmza/VNmI7rgzUooJTPCt
+ bh=th0VPhhVwgxzRi9BZeZWRGueot5zBad9lANgJUi6Tq0=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlovjW6dxyBLqmgIkLKgBNIXZP2morYd4M6kKeF
+ 0II/6WztImJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZaL41gAKCRCLPIo+Aiko
+ 1XoOB/4qZ/5yHK3+7TdrBie0roUiq0G242K8R7XP22EtAdGvBmxWVzee55dJ3/+oHlrEWLpYiw2
+ DHiVF7OJ/T04vnoqHN8vU0dEEcLmyBFKnkDWphBp4QAdHmbTg0iT+Mwu+2K9Uk8NaUK9mLk5OEU
+ gImtz0ysLNcFI5mqe1mW4WPgD6QE5lMnn3wkNHC2DRpC7t0C+wv/DnjZGqO830bXqSBuzt9fg3s
+ XHHZ8VZGmKb1ZoZZM6+GEtCj3ZooFds2sPN481vkCGiaIpPvuBzQSNtK9VbNuUb+0GSPopAiGhi
+ C6Rc3vDxLup3pyubKVLVMyfD7EOZ5A7a0r8t2zlaWsVdn5RP
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Extend the Qualcomm USB-C QMP PHY schema with the USB-C related entry
-points: orientation-switch property and USB-C connection graph.
+If the PD is disabled for the port, port->pds will be left as NULL,
+which causes the following crash during caps intilisation. Fix the
+crash.
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+Call trace:
+ tcpm_register_port+0xaec/0xc44
+ qcom_pmic_typec_probe+0x1a4/0x254
+ platform_probe+0x68/0xc0
+ really_probe+0x148/0x2ac
+ __driver_probe_device+0x78/0x12c
+ driver_probe_device+0xd8/0x160
+Bluetooth: hci0: QCA Product ID   :0x0000000a
+ __device_attach_driver+0xb8/0x138
+ bus_for_each_drv+0x80/0xdc
+Bluetooth: hci0: QCA SOC Version  :0x40020150
+ __device_attach+0x9c/0x188
+ device_initial_probe+0x14/0x20
+ bus_probe_device+0xac/0xb0
+ deferred_probe_work_func+0x8c/0xc8
+ process_one_work+0x1ec/0x51c
+ worker_thread+0x1ec/0x3e4
+ kthread+0x120/0x124
+ ret_from_fork+0x10/0x20
+
+Fixes: cd099cde4ed2 ("usb: typec: tcpm: Support multiple capabilities")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml    | 39 ++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ drivers/usb/typec/tcpm/tcpm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml
-index 868fabd44d72..da5d4cbca24c 100644
---- a/Documentation/devicetree/bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml
-@@ -50,6 +50,22 @@ properties:
-   "#phy-cells":
-     const: 0
+diff --git a/drivers/usb/typec/tcpm/tcpm.c b/drivers/usb/typec/tcpm/tcpm.c
+index 5945e3a2b0f7..a0978ed1a257 100644
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -6848,7 +6848,8 @@ struct tcpm_port *tcpm_register_port(struct device *dev, struct tcpc_dev *tcpc)
+ 	if (err)
+ 		goto out_role_sw_put;
  
-+  orientation-switch:
-+    description:
-+      Flag the PHY as possible handler of USB Type-C orientation switching
-+    type: boolean
-+
-+  ports:
-+    $ref: /schemas/graph.yaml#/properties/ports
-+    properties:
-+      port@0:
-+        $ref: /schemas/graph.yaml#/properties/port
-+        description: Output endpoint of the PHY
-+
-+      port@1:
-+        $ref: /schemas/graph.yaml#/properties/port
-+        description: Incoming endpoint from the USB controller
-+
- required:
-   - compatible
-   - reg
-@@ -129,4 +145,27 @@ examples:
+-	port->typec_caps.pd = port->pds[0];
++	if (port->pds)
++		port->typec_caps.pd = port->pds[0];
  
-       vdda-phy-supply = <&vreg_l1a_0p875>;
-       vdda-pll-supply = <&vreg_l2a_1p2>;
-+
-+      orientation-switch;
-+
-+      ports {
-+        #address-cells = <1>;
-+        #size-cells = <0>;
-+
-+        port@0 {
-+          reg = <0>;
-+
-+          endpoint {
-+            remote-endpoint = <&pmic_typec_mux_in>;
-+          };
-+        };
-+
-+        port@1 {
-+          reg = <1>;
-+
-+          endpoint {
-+            remote-endpoint = <&usb_dwc3_ss>;
-+          };
-+        };
-+      };
-     };
+ 	port->typec_port = typec_register_port(port->dev, &port->typec_caps);
+ 	if (IS_ERR(port->typec_port)) {
 
 -- 
 2.39.2
