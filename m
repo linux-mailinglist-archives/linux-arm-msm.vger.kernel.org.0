@@ -1,66 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-7222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 329F182CE90
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3C2682CE91
 	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jan 2024 21:56:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D0D67283359
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jan 2024 20:56:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BCF7F1C210B7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jan 2024 20:56:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90E4F18639;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9093D18638;
 	Sat, 13 Jan 2024 20:56:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fl7oZv/f"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OYbWhB33"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C278D182BE
-	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jan 2024 20:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFFB182DF
+	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jan 2024 20:56:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-50edf4f478eso4380641e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jan 2024 12:56:01 -0800 (PST)
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-50e766937ddso8543961e87.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jan 2024 12:56:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705179360; x=1705784160; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1705179361; x=1705784161; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=IrYbtSQLEwecmvY7mVOmkjv0hdobg9yVp8LjVqDvEtc=;
-        b=fl7oZv/fcOQ3y5P75te6xfqt9bUG7FEasxIltRuTgu8lh13z4vYq5BLBqQ1kBmR73X
-         yWz+uXmSw4JINSQQPTnTLSataPbrRaXfjaskPID7sqUyfZ3gByZklFJx85VU4hWmkgZk
-         zKKtSfi0AuUED+2gHDHow3FpMsojonuvzbpWM+x2YgUEBAkYOpmMX+3J3p8jibSLbOyr
-         FYoT0NslK00+1z722Wppboa2/OvXcVF6QyAu5HXFYmnPqR0LXJt1nQ2KxfYn2zPYdghP
-         SiJxqt9fUsJP0jWr4XXqcjuPKvjcOxB3Q0AGkl4bDRfXomgxOyO2e5oAWB3SXR8yZrbZ
-         2eBw==
+        bh=z1wXM0UCXHFRyRAmNG2D0XvVhB3lyU99SL1XHxjNstg=;
+        b=OYbWhB33JuXWnezPctQL7sjXsQ+9PjPnUvEbTy5DaXcLxbXj63PuWU3OT4VDQtYesM
+         LOOUlY+aQu2FRCWw8L3uHW7ANh+GYFE88ZH3VhNiuoh6rtVu1ipDqwG9E0PIkR+MUHZJ
+         KN1TXKMwjRvYRuW7N4McZmGRFt8yJ5vG8uo2Rt6Tr5Kp51Kg08EpiJMA/MiGo8ey4g5R
+         yBwEghATgeba/6djckza9OnBTvz9YguHU+P2NUOcbCmnPlfXwb2wJcoqUFuLRZFFe0ik
+         c5ASqtnY9c9eXF58X0KuaTHTMt5DtUJIfD/GbaYidyqM0faoMuvSojkuxeciyCVKhZGR
+         gDTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705179360; x=1705784160;
+        d=1e100.net; s=20230601; t=1705179361; x=1705784161;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IrYbtSQLEwecmvY7mVOmkjv0hdobg9yVp8LjVqDvEtc=;
-        b=ZpaC+KUIJ6g8PrD9kZZfvd6Wc2VpbTJSPUxQwMjMDGlIc7ERQ52eZxwz1GY1P19aSD
-         jMaBqw132GW4ico9yWDommpXmH6T/6/rhjsS3AgcMP/Rp7CY40gojGBTvXqTt7D0tUdR
-         DraqxN3+UVr4bth81v5nb2u+uShEdr+q7OGVxBhaDvhNXtHNylUfvRmtoSCOBWLnK6Nq
-         P+4AeWWfV1XaruwBgMo540N/EGW99H7OA2m5WVWTI6NLU7sTIniP5hwMTbSCjVmRfo3P
-         u++fMrwWYOnKEWLHh7KaH9vXVelJ+rqxMu0poM5SwmmMiGVmyeicmynD6E+iQaAMjDlo
-         kPlg==
-X-Gm-Message-State: AOJu0YwDdo2INoLGGPREqac7BSI+A6lHksZiyEyCdF1MPRYpdEUYj6ye
-	s1Qyoofs0qKkwcVn0HhZGLhThAlnx1j0rA==
-X-Google-Smtp-Source: AGHT+IFgvseC4amvEk45BurCDgiV2AShck55v8bBlZ8h6AzSDGUJFN3jnxDK/ZE+tfUF2/FmeUU00A==
-X-Received: by 2002:a19:6719:0:b0:50e:242a:775e with SMTP id b25-20020a196719000000b0050e242a775emr1547228lfc.106.1705179359911;
-        Sat, 13 Jan 2024 12:55:59 -0800 (PST)
+        bh=z1wXM0UCXHFRyRAmNG2D0XvVhB3lyU99SL1XHxjNstg=;
+        b=YpCk3EN/S2sOu/5tLVH0TKCzCT4GQmnHhKE7P3WAISqOuTN9/U36VnYc4ePSiHqQb2
+         PInYEi6R5qkPJMSJH1dQw0nKrpJ7idCnxOYpgxRL9VGXHlKxrtlLInK0GVXIfl/7o4yb
+         s2bLQYuktTRozo+zVBA1paedGI1Q/sdHMMccPcGe2psSnymt+aQOt6e8pjDzWMZlxSUL
+         T+VXZpdzKH0FN/BKI1Zsa7CzmyVrkeNHup35uJk0qTV7TKn9JgpLvLGzaisyCLFLar4A
+         U9eXjuIrHDfvesjNgv19x9kMydXelWuJ87Nryu4gJnqtIRA1pVsCQLKVeVKAt2TM4Ws5
+         AxQw==
+X-Gm-Message-State: AOJu0Yy/IXFENUuLrFciv12b7MR0z2tYu2g70KbJn7MoY8v5B784k7kn
+	s5hJN73/frT20G4Cstfs+HOrvVNr76on2A==
+X-Google-Smtp-Source: AGHT+IEviJCowdCpp+b8nqR3Klg+qX72sCf6sU+PUIZV7fSID3NpFUtI5yhkncUXvD5gk72+JTW0rQ==
+X-Received: by 2002:a05:6512:318b:b0:50e:80ff:2d0f with SMTP id i11-20020a056512318b00b0050e80ff2d0fmr1498508lfe.98.1705179360768;
+        Sat, 13 Jan 2024 12:56:00 -0800 (PST)
 Received: from umbar.lan ([192.130.178.91])
         by smtp.gmail.com with ESMTPSA id p14-20020a056512328e00b0050e9355d7eesm919802lfe.103.2024.01.13.12.55.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Jan 2024 12:55:59 -0800 (PST)
+        Sat, 13 Jan 2024 12:56:00 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 13 Jan 2024 22:55:51 +0200
-Subject: [PATCH v2 08/15] usb: typec: qcom-pmic-typec: allow different
- implementations for the port backend
+Date: Sat, 13 Jan 2024 22:55:52 +0200
+Subject: [PATCH v2 09/15] usb: typec: qcom-pmic-typec: add support for
+ PMI632 PMIC
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,7 +69,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240113-pmi632-typec-v2-8-182d9aa0a5b3@linaro.org>
+Message-Id: <20240113-pmi632-typec-v2-9-182d9aa0a5b3@linaro.org>
 References: <20240113-pmi632-typec-v2-0-182d9aa0a5b3@linaro.org>
 In-Reply-To: <20240113-pmi632-typec-v2-0-182d9aa0a5b3@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -87,834 +87,206 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-usb@vger.kernel.org, linux-phy@lists.infradead.org
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=27314;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6288;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=M70a8nwyM9k8KEGyiEZ97LlW387QdaOfmeDb4AQE5xg=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlovjXf6zAUhb2+UviRjMteGH41TQ8GN6nM/7X0
- vTIXJCFLdGJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZaL41wAKCRCLPIo+Aiko
- 1bxIB/44GGAvYFpBShz4UeLL4BUaaKGTphwG39W4eMeIcbTYWwXn7lJ4oy4yH2vKK8F2ozerW6t
- jgbJn+Wgj04UzuPCrlV51NECMxiH8pZHfj56bs5iD7bPIeTHBT6mbm1OACcDLQArlNvXwIQwvn2
- vtat0dZhKHg5YJjkrNLHDWew2Zj5GhCDA0TZfCgDoPCHpaBd5g+vsWTmh0mQb2UuLIruQRS0il3
- +xV5nk78N8jS/Yuxsx7vXFlwOIPb9figiMnl0Rv2UeDSl9YuhoAVGyPsqRXFpJbItt0ZQOTIpGb
- wrJpqlATc9/isA0VYk49P1SzYeWujgS/vH3WGwwtvr5a1VCe
+ bh=YAFW/4mrIAbAiMjNUbGgByzdIfRhqwoyh7K7k/Tq5n8=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlovjXrRuRRhjKDD7Mp1LMhUW1DuaZiQLjxmErO
+ gSqvmw6q7qJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZaL41wAKCRCLPIo+Aiko
+ 1djlB/9DMtoyIYFdhyxr2oEoqXJI844mQEKqxTm+3VeOIh0Tf5r0hntWC3IURRpmhdqb6Vlvi3g
+ whNMAiW/GWWfbs9P47eJcUerEzT8Ss9Lk3Y9f8KsHqrmCLuZU7yiLu8TWu+Pl5N0uNuMeohu6Zh
+ Nd7QvuUzDaKJqXpi/HJ49MTl14Te+VaYamrdbVY65CcusfQ0Vu8c7BP+QXzUftXKXACj6NIm/XF
+ ibKmpJ5FxMNpUb3SVBbAwsBTB8cyPhmLEoTZ58zRcDcZvz3gtgkCmcoxcbK2A2TO4cfMAa/xARi
+ A5Cn8i4BAswX+aiWR7TRpoWSLlhI7tws2oxoatsn/WI4V3QD
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Follow the PD PHY changes and rework Type-C port implementation to
-become an encapsulated backend. While this is not required for the
-PMI632, it will us later to enable Type-C handling on earlier platforms,
-including, but not limited to SDM845, SDM660 and MSM8998.
+The PMI632 PMIC support Type-C port handling, but lacks USB
+PowerDelivery support. The TCPM requires all callbacks to be provided
+by the implementation. Implement a special, 'stub' Qcom PD PHY
+implementation to enable the PMI632 support.
 
+Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c      | 137 +---------
- drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.h      |   6 +-
- drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c | 290 +++++++++++++++++++--
- drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.h | 168 +-----------
- 4 files changed, 282 insertions(+), 319 deletions(-)
+ drivers/usb/typec/tcpm/qcom/Makefile               |  3 +-
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c      | 30 ++++++--
+ .../usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.h    |  2 +
+ .../typec/tcpm/qcom/qcom_pmic_typec_pdphy_stub.c   | 80 ++++++++++++++++++++++
+ 4 files changed, 107 insertions(+), 8 deletions(-)
 
+diff --git a/drivers/usb/typec/tcpm/qcom/Makefile b/drivers/usb/typec/tcpm/qcom/Makefile
+index dc1e8832e197..cc23042b9487 100644
+--- a/drivers/usb/typec/tcpm/qcom/Makefile
++++ b/drivers/usb/typec/tcpm/qcom/Makefile
+@@ -3,4 +3,5 @@
+ obj-$(CONFIG_TYPEC_QCOM_PMIC)		+= qcom_pmic_tcpm.o
+ qcom_pmic_tcpm-y			+= qcom_pmic_typec.o \
+ 					   qcom_pmic_typec_port.o \
+-					   qcom_pmic_typec_pdphy.o
++					   qcom_pmic_typec_pdphy.o \
++					   qcom_pmic_typec_pdphy_stub.o \
 diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-index 4c7c38c58a02..82e3f59ea471 100644
+index 82e3f59ea471..e48412cdcb0f 100644
 --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
 +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-@@ -26,85 +26,9 @@
+@@ -42,7 +42,7 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
+ 	const struct pmic_typec_resources *res;
+ 	struct regmap *regmap;
+ 	struct device *bridge_dev;
+-	u32 base[2];
++	u32 base;
+ 	int ret;
  
- struct pmic_typec_resources {
- 	const struct pmic_typec_pdphy_resources	*pdphy_res;
--	struct pmic_typec_port_resources	*port_res;
-+	const struct pmic_typec_port_resources	*port_res;
- };
- 
--static int qcom_pmic_typec_get_vbus(struct tcpc_dev *tcpc)
--{
--	struct pmic_typec *tcpm = tcpc_to_tcpm(tcpc);
--	int ret;
--
--	mutex_lock(&tcpm->lock);
--	ret = tcpm->vbus_enabled || qcom_pmic_typec_port_get_vbus(tcpm->pmic_typec_port);
--	mutex_unlock(&tcpm->lock);
--
--	return ret;
--}
--
--static int qcom_pmic_typec_set_vbus(struct tcpc_dev *tcpc, bool on, bool sink)
--{
--	struct pmic_typec *tcpm = tcpc_to_tcpm(tcpc);
--	int ret = 0;
--
--	mutex_lock(&tcpm->lock);
--	if (tcpm->vbus_enabled == on)
--		goto done;
--
--	ret = qcom_pmic_typec_port_set_vbus(tcpm->pmic_typec_port, on);
--	if (ret)
--		goto done;
--
--	tcpm->vbus_enabled = on;
--	tcpm_vbus_change(tcpm->tcpm_port);
--
--done:
--	dev_dbg(tcpm->dev, "set_vbus set: %d result %d\n", on, ret);
--	mutex_unlock(&tcpm->lock);
--
--	return ret;
--}
--
--static int qcom_pmic_typec_set_vconn(struct tcpc_dev *tcpc, bool on)
--{
--	struct pmic_typec *tcpm = tcpc_to_tcpm(tcpc);
--
--	return qcom_pmic_typec_port_set_vconn(tcpm->pmic_typec_port, on);
--}
--
--static int qcom_pmic_typec_get_cc(struct tcpc_dev *tcpc,
--				  enum typec_cc_status *cc1,
--				  enum typec_cc_status *cc2)
--{
--	struct pmic_typec *tcpm = tcpc_to_tcpm(tcpc);
--
--	return qcom_pmic_typec_port_get_cc(tcpm->pmic_typec_port, cc1, cc2);
--}
--
--static int qcom_pmic_typec_set_cc(struct tcpc_dev *tcpc,
--				  enum typec_cc_status cc)
--{
--	struct pmic_typec *tcpm = tcpc_to_tcpm(tcpc);
--
--	return qcom_pmic_typec_port_set_cc(tcpm->pmic_typec_port, cc);
--}
--
--static int qcom_pmic_typec_set_polarity(struct tcpc_dev *tcpc,
--					enum typec_cc_polarity pol)
--{
--	/* Polarity is set separately by phy-qcom-qmp.c */
--	return 0;
--}
--
--static int qcom_pmic_typec_start_toggling(struct tcpc_dev *tcpc,
--					  enum typec_port_type port_type,
--					  enum typec_cc_status cc)
--{
--	struct pmic_typec *tcpm = tcpc_to_tcpm(tcpc);
--
--	return qcom_pmic_typec_port_start_toggling(tcpm->pmic_typec_port,
--						   port_type, cc);
--}
--
- static int qcom_pmic_typec_init(struct tcpc_dev *tcpc)
- {
- 	return 0;
-@@ -131,13 +55,6 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
- 
- 	tcpm->dev = dev;
- 	tcpm->tcpc.init = qcom_pmic_typec_init;
--	tcpm->tcpc.get_vbus = qcom_pmic_typec_get_vbus;
--	tcpm->tcpc.set_vbus = qcom_pmic_typec_set_vbus;
--	tcpm->tcpc.set_cc = qcom_pmic_typec_set_cc;
--	tcpm->tcpc.get_cc = qcom_pmic_typec_get_cc;
--	tcpm->tcpc.set_polarity = qcom_pmic_typec_set_polarity;
--	tcpm->tcpc.set_vconn = qcom_pmic_typec_set_vconn;
--	tcpm->tcpc.start_toggling = qcom_pmic_typec_start_toggling;
- 
- 	regmap = dev_get_regmap(dev->parent, NULL);
- 	if (!regmap) {
-@@ -149,11 +66,7 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
--	tcpm->pmic_typec_port = qcom_pmic_typec_port_alloc(dev);
--	if (IS_ERR(tcpm->pmic_typec_port))
--		return PTR_ERR(tcpm->pmic_typec_port);
--
--	ret = qcom_pmic_typec_port_probe(pdev, tcpm->pmic_typec_port,
-+	ret = qcom_pmic_typec_port_probe(pdev, tcpm,
- 					 res->port_res, regmap, base[0]);
- 	if (ret)
- 		return ret;
-@@ -163,7 +76,6 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
--	mutex_init(&tcpm->lock);
- 	platform_set_drvdata(pdev, tcpm);
- 
- 	tcpm->tcpc.fwnode = device_get_named_child_node(tcpm->dev, "connector");
-@@ -180,8 +92,7 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
- 		goto fwnode_remove;
+ 	res = of_device_get_match_data(dev);
+@@ -62,19 +62,29 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
+ 		return -ENODEV;
  	}
  
--	ret = qcom_pmic_typec_port_start(tcpm->pmic_typec_port,
--					 tcpm->tcpm_port);
-+	ret = tcpm->port_start(tcpm, tcpm->tcpm_port);
+-	ret = of_property_read_u32_array(np, "reg", base, 2);
++	ret = of_property_read_u32_index(np, "reg", 0, &base);
  	if (ret)
- 		goto fwnode_remove;
+ 		return ret;
  
-@@ -202,50 +113,12 @@ static void qcom_pmic_typec_remove(struct platform_device *pdev)
- 	struct pmic_typec *tcpm = platform_get_drvdata(pdev);
+ 	ret = qcom_pmic_typec_port_probe(pdev, tcpm,
+-					 res->port_res, regmap, base[0]);
++					 res->port_res, regmap, base);
+ 	if (ret)
+ 		return ret;
  
- 	tcpm->pdphy_stop(tcpm);
--	qcom_pmic_typec_port_stop(tcpm->pmic_typec_port);
-+	tcpm->port_stop(tcpm);
- 	tcpm_unregister_port(tcpm->tcpm_port);
- 	fwnode_remove_software_node(tcpm->tcpc.fwnode);
- }
+-	ret = qcom_pmic_typec_pdphy_probe(pdev, tcpm,
+-					  res->pdphy_res, regmap, base[1]);
+-	if (ret)
+-		return ret;
++	if (res->pdphy_res) {
++		ret = of_property_read_u32_index(np, "reg", 1, &base);
++		if (ret)
++			return ret;
++
++		ret = qcom_pmic_typec_pdphy_probe(pdev, tcpm,
++						  res->pdphy_res, regmap, base);
++		if (ret)
++			return ret;
++	} else {
++		ret = qcom_pmic_typec_pdphy_stub_probe(pdev, tcpm);
++		if (ret)
++			return ret;
++	}
  
--static struct pmic_typec_port_resources pm8150b_port_res = {
--	.irq_params = {
--		{
--			.irq_name = "vpd-detect",
--			.virq = PMIC_TYPEC_VPD_IRQ,
--		},
--
--		{
--			.irq_name = "cc-state-change",
--			.virq = PMIC_TYPEC_CC_STATE_IRQ,
--		},
--		{
--			.irq_name = "vconn-oc",
--			.virq = PMIC_TYPEC_VCONN_OC_IRQ,
--		},
--
--		{
--			.irq_name = "vbus-change",
--			.virq = PMIC_TYPEC_VBUS_IRQ,
--		},
--
--		{
--			.irq_name = "attach-detach",
--			.virq = PMIC_TYPEC_ATTACH_DETACH_IRQ,
--		},
--		{
--			.irq_name = "legacy-cable-detect",
--			.virq = PMIC_TYPEC_LEGACY_CABLE_IRQ,
--		},
--
--		{
--			.irq_name = "try-snk-src-detect",
--			.virq = PMIC_TYPEC_TRY_SNK_SRC_IRQ,
--		},
--	},
--	.nr_irqs = 7,
--};
--
--static struct pmic_typec_resources pm8150b_typec_res = {
-+static const struct pmic_typec_resources pm8150b_typec_res = {
- 	.pdphy_res = &pm8150b_pdphy_res,
+ 	platform_set_drvdata(pdev, tcpm);
+ 
+@@ -123,8 +133,14 @@ static const struct pmic_typec_resources pm8150b_typec_res = {
  	.port_res = &pm8150b_port_res,
  };
-diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.h b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.h
-index da035916c12a..3c75820c9187 100644
---- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.h
-+++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.h
-@@ -12,12 +12,14 @@ struct pmic_typec {
- 	struct tcpc_dev		tcpc;
- 	struct pmic_typec_pdphy	*pmic_typec_pdphy;
- 	struct pmic_typec_port	*pmic_typec_port;
--	bool			vbus_enabled;
--	struct mutex		lock;		/* VBUS state serialization */
  
- 	int (*pdphy_start)(struct pmic_typec *tcpm,
- 			   struct tcpm_port *tcpm_port);
- 	void (*pdphy_stop)(struct pmic_typec *tcpm);
++static const struct pmic_typec_resources pmi632_typec_res = {
++	/* PD PHY not present */
++	.port_res = &pm8150b_port_res,
++};
 +
-+	int (*port_start)(struct pmic_typec *tcpm,
-+			  struct tcpm_port *tcpm_port);
-+	void (*port_stop)(struct pmic_typec *tcpm);
+ static const struct of_device_id qcom_pmic_typec_table[] = {
+ 	{ .compatible = "qcom,pm8150b-typec", .data = &pm8150b_typec_res },
++	{ .compatible = "qcom,pmi632-typec", .data = &pmi632_typec_res },
+ 	{ }
  };
+ MODULE_DEVICE_TABLE(of, qcom_pmic_typec_table);
+diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.h b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.h
+index 5f428e67ccfe..04dee20293cf 100644
+--- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.h
++++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.h
+@@ -31,5 +31,7 @@ int qcom_pmic_typec_pdphy_probe(struct platform_device *pdev,
+ 				const struct pmic_typec_pdphy_resources *res,
+ 				struct regmap *regmap,
+ 				u32 base);
++int qcom_pmic_typec_pdphy_stub_probe(struct platform_device *pdev,
++				     struct pmic_typec *tcpm);
  
- #define tcpc_to_tcpm(_tcpc_) container_of(_tcpc_, struct pmic_typec, tcpc)
-diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
-index a8f3f4d3a450..a747baa29784 100644
---- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
-+++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
-@@ -16,8 +16,147 @@
- #include <linux/usb/tcpm.h>
- #include <linux/usb/typec_mux.h>
- #include <linux/workqueue.h>
+ #endif /* __QCOM_PMIC_TYPEC_PDPHY_H__ */
+diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy_stub.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy_stub.c
+new file mode 100644
+index 000000000000..df79059cda67
+--- /dev/null
++++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy_stub.c
+@@ -0,0 +1,80 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Copyright (c) 2024, Linaro Ltd. All rights reserved.
++ */
 +
++#include <linux/err.h>
++#include <linux/interrupt.h>
++#include <linux/kernel.h>
++#include <linux/mod_devicetable.h>
++#include <linux/module.h>
++#include <linux/platform_device.h>
++#include <linux/regmap.h>
++#include <linux/regulator/consumer.h>
++#include <linux/slab.h>
++#include <linux/usb/pd.h>
++#include <linux/usb/tcpm.h>
 +#include "qcom_pmic_typec.h"
- #include "qcom_pmic_typec_port.h"
- 
-+#define TYPEC_SNK_STATUS_REG				0x06
-+#define DETECTED_SNK_TYPE_MASK				GENMASK(6, 0)
-+#define SNK_DAM_MASK					GENMASK(6, 4)
-+#define SNK_DAM_500MA					BIT(6)
-+#define SNK_DAM_1500MA					BIT(5)
-+#define SNK_DAM_3000MA					BIT(4)
-+#define SNK_RP_STD					BIT(3)
-+#define SNK_RP_1P5					BIT(2)
-+#define SNK_RP_3P0					BIT(1)
-+#define SNK_RP_SHORT					BIT(0)
++#include "qcom_pmic_typec_pdphy.h"
 +
-+#define TYPEC_SRC_STATUS_REG				0x08
-+#define DETECTED_SRC_TYPE_MASK				GENMASK(4, 0)
-+#define SRC_HIGH_BATT					BIT(5)
-+#define SRC_DEBUG_ACCESS				BIT(4)
-+#define SRC_RD_OPEN					BIT(3)
-+#define SRC_RD_RA_VCONN					BIT(2)
-+#define SRC_RA_OPEN					BIT(1)
-+#define AUDIO_ACCESS_RA_RA				BIT(0)
-+
-+#define TYPEC_STATE_MACHINE_STATUS_REG			0x09
-+#define TYPEC_ATTACH_DETACH_STATE			BIT(5)
-+
-+#define TYPEC_SM_STATUS_REG				0x0A
-+#define TYPEC_SM_VBUS_VSAFE5V				BIT(5)
-+#define TYPEC_SM_VBUS_VSAFE0V				BIT(6)
-+#define TYPEC_SM_USBIN_LT_LV				BIT(7)
-+
-+#define TYPEC_MISC_STATUS_REG				0x0B
-+#define TYPEC_WATER_DETECTION_STATUS			BIT(7)
-+#define SNK_SRC_MODE					BIT(6)
-+#define TYPEC_VBUS_DETECT				BIT(5)
-+#define TYPEC_VBUS_ERROR_STATUS				BIT(4)
-+#define TYPEC_DEBOUNCE_DONE				BIT(3)
-+#define CC_ORIENTATION					BIT(1)
-+#define CC_ATTACHED					BIT(0)
-+
-+#define LEGACY_CABLE_STATUS_REG				0x0D
-+#define TYPEC_LEGACY_CABLE_STATUS			BIT(1)
-+#define TYPEC_NONCOMP_LEGACY_CABLE_STATUS		BIT(0)
-+
-+#define TYPEC_U_USB_STATUS_REG				0x0F
-+#define U_USB_GROUND_NOVBUS				BIT(6)
-+#define U_USB_GROUND					BIT(4)
-+#define U_USB_FMB1					BIT(3)
-+#define U_USB_FLOAT1					BIT(2)
-+#define U_USB_FMB2					BIT(1)
-+#define U_USB_FLOAT2					BIT(0)
-+
-+#define TYPEC_MODE_CFG_REG				0x44
-+#define TYPEC_TRY_MODE_MASK				GENMASK(4, 3)
-+#define EN_TRY_SNK					BIT(4)
-+#define EN_TRY_SRC					BIT(3)
-+#define TYPEC_POWER_ROLE_CMD_MASK			GENMASK(2, 0)
-+#define EN_SRC_ONLY					BIT(2)
-+#define EN_SNK_ONLY					BIT(1)
-+#define TYPEC_DISABLE_CMD				BIT(0)
-+
-+#define TYPEC_VCONN_CONTROL_REG				0x46
-+#define VCONN_EN_ORIENTATION				BIT(2)
-+#define VCONN_EN_VALUE					BIT(1)
-+#define VCONN_EN_SRC					BIT(0)
-+
-+#define TYPEC_CCOUT_CONTROL_REG				0x48
-+#define TYPEC_CCOUT_BUFFER_EN				BIT(2)
-+#define TYPEC_CCOUT_VALUE				BIT(1)
-+#define TYPEC_CCOUT_SRC					BIT(0)
-+
-+#define DEBUG_ACCESS_SRC_CFG_REG			0x4C
-+#define EN_UNORIENTED_DEBUG_ACCESS_SRC			BIT(0)
-+
-+#define TYPE_C_CRUDE_SENSOR_CFG_REG			0x4e
-+#define EN_SRC_CRUDE_SENSOR				BIT(1)
-+#define EN_SNK_CRUDE_SENSOR				BIT(0)
-+
-+#define TYPEC_EXIT_STATE_CFG_REG			0x50
-+#define BYPASS_VSAFE0V_DURING_ROLE_SWAP			BIT(3)
-+#define SEL_SRC_UPPER_REF				BIT(2)
-+#define USE_TPD_FOR_EXITING_ATTACHSRC			BIT(1)
-+#define EXIT_SNK_BASED_ON_CC				BIT(0)
-+
-+#define TYPEC_CURRSRC_CFG_REG				0x52
-+#define TYPEC_SRC_RP_SEL_330UA				BIT(1)
-+#define TYPEC_SRC_RP_SEL_180UA				BIT(0)
-+#define TYPEC_SRC_RP_SEL_80UA				0
-+#define TYPEC_SRC_RP_SEL_MASK				GENMASK(1, 0)
-+
-+#define TYPEC_INTERRUPT_EN_CFG_1_REG			0x5E
-+#define TYPEC_LEGACY_CABLE_INT_EN			BIT(7)
-+#define TYPEC_NONCOMPLIANT_LEGACY_CABLE_INT_EN		BIT(6)
-+#define TYPEC_TRYSOURCE_DETECT_INT_EN			BIT(5)
-+#define TYPEC_TRYSINK_DETECT_INT_EN			BIT(4)
-+#define TYPEC_CCOUT_DETACH_INT_EN			BIT(3)
-+#define TYPEC_CCOUT_ATTACH_INT_EN			BIT(2)
-+#define TYPEC_VBUS_DEASSERT_INT_EN			BIT(1)
-+#define TYPEC_VBUS_ASSERT_INT_EN			BIT(0)
-+
-+#define TYPEC_INTERRUPT_EN_CFG_2_REG			0x60
-+#define TYPEC_SRC_BATT_HPWR_INT_EN			BIT(6)
-+#define MICRO_USB_STATE_CHANGE_INT_EN			BIT(5)
-+#define TYPEC_STATE_MACHINE_CHANGE_INT_EN		BIT(4)
-+#define TYPEC_DEBUG_ACCESS_DETECT_INT_EN		BIT(3)
-+#define TYPEC_WATER_DETECTION_INT_EN			BIT(2)
-+#define TYPEC_VBUS_ERROR_INT_EN				BIT(1)
-+#define TYPEC_DEBOUNCE_DONE_INT_EN			BIT(0)
-+
-+#define TYPEC_DEBOUNCE_OPTION_REG			0x62
-+#define REDUCE_TCCDEBOUNCE_TO_2MS			BIT(2)
-+
-+#define TYPE_C_SBU_CFG_REG				0x6A
-+#define SEL_SBU1_ISRC_VAL				0x04
-+#define SEL_SBU2_ISRC_VAL				0x01
-+
-+#define TYPEC_U_USB_CFG_REG				0x70
-+#define EN_MICRO_USB_FACTORY_MODE			BIT(1)
-+#define EN_MICRO_USB_MODE				BIT(0)
-+
-+#define TYPEC_PMI632_U_USB_WATER_PROTECTION_CFG_REG	0x72
-+
-+#define TYPEC_U_USB_WATER_PROTECTION_CFG_REG		0x73
-+#define EN_MICRO_USB_WATER_PROTECTION			BIT(4)
-+#define MICRO_USB_DETECTION_ON_TIME_CFG_MASK		GENMASK(3, 2)
-+#define MICRO_USB_DETECTION_PERIOD_CFG_MASK		GENMASK(1, 0)
-+
-+#define TYPEC_PMI632_MICRO_USB_MODE_REG			0x73
-+#define MICRO_USB_MODE_ONLY				BIT(0)
-+
-+/* Interrupt numbers */
-+#define PMIC_TYPEC_OR_RID_IRQ				0x0
-+#define PMIC_TYPEC_VPD_IRQ				0x1
-+#define PMIC_TYPEC_CC_STATE_IRQ				0x2
-+#define PMIC_TYPEC_VCONN_OC_IRQ				0x3
-+#define PMIC_TYPEC_VBUS_IRQ				0x4
-+#define PMIC_TYPEC_ATTACH_DETACH_IRQ			0x5
-+#define PMIC_TYPEC_LEGACY_CABLE_IRQ			0x6
-+#define PMIC_TYPEC_TRY_SNK_SRC_IRQ			0x7
-+
- struct pmic_typec_port_irq_data {
- 	int				virq;
- 	int				irq;
-@@ -33,6 +172,8 @@ struct pmic_typec_port {
- 	struct pmic_typec_port_irq_data	*irq_data;
- 
- 	struct regulator		*vdd_vbus;
-+	bool				vbus_enabled;
-+	struct mutex			vbus_lock;		/* VBUS state serialization */
- 
- 	int				cc;
- 	bool				debouncing_cc;
-@@ -131,7 +272,7 @@ static irqreturn_t pmic_typec_port_isr(int irq, void *dev_id)
- 	return IRQ_HANDLED;
- }
- 
--int qcom_pmic_typec_port_get_vbus(struct pmic_typec_port *pmic_typec_port)
-+static int qcom_pmic_typec_port_vbus_detect(struct pmic_typec_port *pmic_typec_port)
- {
- 	struct device *dev = pmic_typec_port->dev;
- 	unsigned int misc;
-@@ -148,7 +289,7 @@ int qcom_pmic_typec_port_get_vbus(struct pmic_typec_port *pmic_typec_port)
- 	return !!(misc & TYPEC_VBUS_DETECT);
- }
- 
--int qcom_pmic_typec_port_set_vbus(struct pmic_typec_port *pmic_typec_port, bool on)
-+static int qcom_pmic_typec_port_vbus_toggle(struct pmic_typec_port *pmic_typec_port, bool on)
- {
- 	u32 sm_stat;
- 	u32 val;
-@@ -179,10 +320,49 @@ int qcom_pmic_typec_port_set_vbus(struct pmic_typec_port *pmic_typec_port, bool
- 	return 0;
- }
- 
--int qcom_pmic_typec_port_get_cc(struct pmic_typec_port *pmic_typec_port,
--				enum typec_cc_status *cc1,
--				enum typec_cc_status *cc2)
-+static int qcom_pmic_typec_port_get_vbus(struct tcpc_dev *tcpc)
++static int qcom_pmic_typec_pdphy_stub_pd_transmit(struct tcpc_dev *tcpc,
++						  enum tcpm_transmit_type type,
++						  const struct pd_message *msg,
++						  unsigned int negotiated_rev)
 +{
 +	struct pmic_typec *tcpm = tcpc_to_tcpm(tcpc);
-+	struct pmic_typec_port *pmic_typec_port = tcpm->pmic_typec_port;
-+	int ret;
++	struct device *dev = tcpm->dev;
 +
-+	mutex_lock(&pmic_typec_port->vbus_lock);
-+	ret = pmic_typec_port->vbus_enabled || qcom_pmic_typec_port_vbus_detect(pmic_typec_port);
-+	mutex_unlock(&pmic_typec_port->vbus_lock);
++	dev_dbg(dev, "pdphy_transmit: type=%d\n", type);
 +
-+	return ret;
-+}
++	tcpm_pd_transmit_complete(tcpm->tcpm_port,
++				  TCPC_TX_SUCCESS);
 +
-+static int qcom_pmic_typec_port_set_vbus(struct tcpc_dev *tcpc, bool on, bool sink)
-+{
-+	struct pmic_typec *tcpm = tcpc_to_tcpm(tcpc);
-+	struct pmic_typec_port *pmic_typec_port = tcpm->pmic_typec_port;
-+	int ret = 0;
-+
-+	mutex_lock(&pmic_typec_port->vbus_lock);
-+	if (pmic_typec_port->vbus_enabled == on)
-+		goto done;
-+
-+	ret = qcom_pmic_typec_port_vbus_toggle(pmic_typec_port, on);
-+	if (ret)
-+		goto done;
-+
-+	pmic_typec_port->vbus_enabled = on;
-+	tcpm_vbus_change(tcpm->tcpm_port);
-+
-+done:
-+	dev_dbg(tcpm->dev, "set_vbus set: %d result %d\n", on, ret);
-+	mutex_unlock(&pmic_typec_port->vbus_lock);
-+
-+	return ret;
-+}
-+
-+static int qcom_pmic_typec_port_get_cc(struct tcpc_dev *tcpc,
-+				       enum typec_cc_status *cc1,
-+				       enum typec_cc_status *cc2)
- {
-+	struct pmic_typec *tcpm = tcpc_to_tcpm(tcpc);
-+	struct pmic_typec_port *pmic_typec_port = tcpm->pmic_typec_port;
- 	struct device *dev = pmic_typec_port->dev;
- 	unsigned int misc, val;
- 	bool attached;
-@@ -275,9 +455,11 @@ static void qcom_pmic_set_cc_debounce(struct pmic_typec_port *pmic_typec_port)
- 			      msecs_to_jiffies(2));
- }
- 
--int qcom_pmic_typec_port_set_cc(struct pmic_typec_port *pmic_typec_port,
--				enum typec_cc_status cc)
-+static int qcom_pmic_typec_port_set_cc(struct tcpc_dev *tcpc,
-+				       enum typec_cc_status cc)
- {
-+	struct pmic_typec *tcpm = tcpc_to_tcpm(tcpc);
-+	struct pmic_typec_port *pmic_typec_port = tcpm->pmic_typec_port;
- 	struct device *dev = pmic_typec_port->dev;
- 	unsigned int mode, currsrc;
- 	unsigned int misc;
-@@ -341,8 +523,17 @@ int qcom_pmic_typec_port_set_cc(struct pmic_typec_port *pmic_typec_port,
- 	return ret;
- }
- 
--int qcom_pmic_typec_port_set_vconn(struct pmic_typec_port *pmic_typec_port, bool on)
-+static int qcom_pmic_typec_port_set_polarity(struct tcpc_dev *tcpc,
-+					     enum typec_cc_polarity pol)
-+{
-+	/* Polarity is set separately by phy-qcom-qmp.c */
 +	return 0;
 +}
 +
-+static int qcom_pmic_typec_port_set_vconn(struct tcpc_dev *tcpc, bool on)
- {
++static int qcom_pmic_typec_pdphy_stub_set_pd_rx(struct tcpc_dev *tcpc, bool on)
++{
 +	struct pmic_typec *tcpm = tcpc_to_tcpm(tcpc);
-+	struct pmic_typec_port *pmic_typec_port = tcpm->pmic_typec_port;
- 	struct device *dev = pmic_typec_port->dev;
- 	unsigned int orientation, misc, mask, value;
- 	unsigned long flags;
-@@ -377,10 +568,12 @@ int qcom_pmic_typec_port_set_vconn(struct pmic_typec_port *pmic_typec_port, bool
- 	return ret;
- }
- 
--int qcom_pmic_typec_port_start_toggling(struct pmic_typec_port *pmic_typec_port,
--					enum typec_port_type port_type,
--					enum typec_cc_status cc)
-+static int qcom_pmic_typec_port_start_toggling(struct tcpc_dev *tcpc,
-+					       enum typec_port_type port_type,
-+					       enum typec_cc_status cc)
- {
++	struct device *dev = tcpm->dev;
++
++	dev_dbg(dev, "set_pd_rx: %s\n", on ? "on" : "off");
++
++	return 0;
++}
++
++static int qcom_pmic_typec_pdphy_stub_set_roles(struct tcpc_dev *tcpc, bool attached,
++						enum typec_role power_role,
++						enum typec_data_role data_role)
++{
 +	struct pmic_typec *tcpm = tcpc_to_tcpm(tcpc);
-+	struct pmic_typec_port *pmic_typec_port = tcpm->pmic_typec_port;
- 	struct device *dev = pmic_typec_port->dev;
- 	unsigned int misc;
- 	u8 mode = 0;
-@@ -441,9 +634,10 @@ int qcom_pmic_typec_port_start_toggling(struct pmic_typec_port *pmic_typec_port,
- 	(TYPEC_STATE_MACHINE_CHANGE_INT_EN | TYPEC_VBUS_ERROR_INT_EN | \
- 	 TYPEC_DEBOUNCE_DONE_INT_EN)
- 
--int qcom_pmic_typec_port_start(struct pmic_typec_port *pmic_typec_port,
--			       struct tcpm_port *tcpm_port)
-+static int qcom_pmic_typec_port_start(struct pmic_typec *tcpm,
-+				      struct tcpm_port *tcpm_port)
- {
-+	struct pmic_typec_port *pmic_typec_port = tcpm->pmic_typec_port;
- 	int i;
- 	int mask;
- 	int ret;
-@@ -491,29 +685,30 @@ int qcom_pmic_typec_port_start(struct pmic_typec_port *pmic_typec_port,
- 	return ret;
- }
- 
--void qcom_pmic_typec_port_stop(struct pmic_typec_port *pmic_typec_port)
-+static void qcom_pmic_typec_port_stop(struct pmic_typec *tcpm)
- {
-+	struct pmic_typec_port *pmic_typec_port = tcpm->pmic_typec_port;
- 	int i;
- 
- 	for (i = 0; i < pmic_typec_port->nr_irqs; i++)
- 		disable_irq(pmic_typec_port->irq_data[i].irq);
- }
- 
--struct pmic_typec_port *qcom_pmic_typec_port_alloc(struct device *dev)
--{
--	return devm_kzalloc(dev, sizeof(struct pmic_typec_port), GFP_KERNEL);
--}
--
- int qcom_pmic_typec_port_probe(struct platform_device *pdev,
--			       struct pmic_typec_port *pmic_typec_port,
--			       struct pmic_typec_port_resources *res,
-+			       struct pmic_typec *tcpm,
-+			       const struct pmic_typec_port_resources *res,
- 			       struct regmap *regmap,
- 			       u32 base)
- {
- 	struct device *dev = &pdev->dev;
- 	struct pmic_typec_port_irq_data *irq_data;
-+	struct pmic_typec_port *pmic_typec_port;
- 	int i, ret, irq;
- 
-+	pmic_typec_port = devm_kzalloc(dev, sizeof(*pmic_typec_port), GFP_KERNEL);
-+	if (!pmic_typec_port)
-+		return -ENOMEM;
++	struct device *dev = tcpm->dev;
 +
- 	if (!res->nr_irqs || res->nr_irqs > PMIC_TYPEC_MAX_IRQS)
- 		return -EINVAL;
- 
-@@ -522,6 +717,8 @@ int qcom_pmic_typec_port_probe(struct platform_device *pdev,
- 	if (!irq_data)
- 		return -ENOMEM;
- 
-+	mutex_init(&pmic_typec_port->vbus_lock);
++	dev_dbg(dev, "pdphy_set_roles: data_role_host=%d power_role_src=%d\n",
++		data_role, power_role);
 +
- 	pmic_typec_port->vdd_vbus = devm_regulator_get(dev, "vdd-vbus");
- 	if (IS_ERR(pmic_typec_port->vdd_vbus))
- 		return PTR_ERR(pmic_typec_port->vdd_vbus);
-@@ -556,5 +753,56 @@ int qcom_pmic_typec_port_probe(struct platform_device *pdev,
- 			return ret;
- 	}
- 
-+	tcpm->pmic_typec_port = pmic_typec_port;
++	return 0;
++}
 +
-+	tcpm->tcpc.get_vbus = qcom_pmic_typec_port_get_vbus;
-+	tcpm->tcpc.set_vbus = qcom_pmic_typec_port_set_vbus;
-+	tcpm->tcpc.set_cc = qcom_pmic_typec_port_set_cc;
-+	tcpm->tcpc.get_cc = qcom_pmic_typec_port_get_cc;
-+	tcpm->tcpc.set_polarity = qcom_pmic_typec_port_set_polarity;
-+	tcpm->tcpc.set_vconn = qcom_pmic_typec_port_set_vconn;
-+	tcpm->tcpc.start_toggling = qcom_pmic_typec_port_start_toggling;
++static int qcom_pmic_typec_pdphy_stub_start(struct pmic_typec *tcpm,
++					    struct tcpm_port *tcpm_port)
++{
++	return 0;
++}
 +
-+	tcpm->port_start = qcom_pmic_typec_port_start;
-+	tcpm->port_stop = qcom_pmic_typec_port_stop;
++static void qcom_pmic_typec_pdphy_stub_stop(struct pmic_typec *tcpm)
++{
++}
 +
- 	return 0;
- }
++int qcom_pmic_typec_pdphy_stub_probe(struct platform_device *pdev,
++				     struct pmic_typec *tcpm)
++{
++	tcpm->tcpc.set_pd_rx = qcom_pmic_typec_pdphy_stub_set_pd_rx;
++	tcpm->tcpc.set_roles = qcom_pmic_typec_pdphy_stub_set_roles;
++	tcpm->tcpc.pd_transmit = qcom_pmic_typec_pdphy_stub_pd_transmit;
 +
-+const struct pmic_typec_port_resources pm8150b_port_res = {
-+	.irq_params = {
-+		{
-+			.irq_name = "vpd-detect",
-+			.virq = PMIC_TYPEC_VPD_IRQ,
-+		},
++	tcpm->pdphy_start = qcom_pmic_typec_pdphy_stub_start;
++	tcpm->pdphy_stop = qcom_pmic_typec_pdphy_stub_stop;
 +
-+		{
-+			.irq_name = "cc-state-change",
-+			.virq = PMIC_TYPEC_CC_STATE_IRQ,
-+		},
-+		{
-+			.irq_name = "vconn-oc",
-+			.virq = PMIC_TYPEC_VCONN_OC_IRQ,
-+		},
-+
-+		{
-+			.irq_name = "vbus-change",
-+			.virq = PMIC_TYPEC_VBUS_IRQ,
-+		},
-+
-+		{
-+			.irq_name = "attach-detach",
-+			.virq = PMIC_TYPEC_ATTACH_DETACH_IRQ,
-+		},
-+		{
-+			.irq_name = "legacy-cable-detect",
-+			.virq = PMIC_TYPEC_LEGACY_CABLE_IRQ,
-+		},
-+
-+		{
-+			.irq_name = "try-snk-src-detect",
-+			.virq = PMIC_TYPEC_TRY_SNK_SRC_IRQ,
-+		},
-+	},
-+	.nr_irqs = 7,
-+};
-diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.h b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.h
-index 4a892048908e..2ca83a46cf3b 100644
---- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.h
-+++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.h
-@@ -9,143 +9,6 @@
- #include <linux/platform_device.h>
- #include <linux/usb/tcpm.h>
- 
--#define TYPEC_SNK_STATUS_REG				0x06
--#define DETECTED_SNK_TYPE_MASK				GENMASK(6, 0)
--#define SNK_DAM_MASK					GENMASK(6, 4)
--#define SNK_DAM_500MA					BIT(6)
--#define SNK_DAM_1500MA					BIT(5)
--#define SNK_DAM_3000MA					BIT(4)
--#define SNK_RP_STD					BIT(3)
--#define SNK_RP_1P5					BIT(2)
--#define SNK_RP_3P0					BIT(1)
--#define SNK_RP_SHORT					BIT(0)
--
--#define TYPEC_SRC_STATUS_REG				0x08
--#define DETECTED_SRC_TYPE_MASK				GENMASK(4, 0)
--#define SRC_HIGH_BATT					BIT(5)
--#define SRC_DEBUG_ACCESS				BIT(4)
--#define SRC_RD_OPEN					BIT(3)
--#define SRC_RD_RA_VCONN					BIT(2)
--#define SRC_RA_OPEN					BIT(1)
--#define AUDIO_ACCESS_RA_RA				BIT(0)
--
--#define TYPEC_STATE_MACHINE_STATUS_REG			0x09
--#define TYPEC_ATTACH_DETACH_STATE			BIT(5)
--
--#define TYPEC_SM_STATUS_REG				0x0A
--#define TYPEC_SM_VBUS_VSAFE5V				BIT(5)
--#define TYPEC_SM_VBUS_VSAFE0V				BIT(6)
--#define TYPEC_SM_USBIN_LT_LV				BIT(7)
--
--#define TYPEC_MISC_STATUS_REG				0x0B
--#define TYPEC_WATER_DETECTION_STATUS			BIT(7)
--#define SNK_SRC_MODE					BIT(6)
--#define TYPEC_VBUS_DETECT				BIT(5)
--#define TYPEC_VBUS_ERROR_STATUS				BIT(4)
--#define TYPEC_DEBOUNCE_DONE				BIT(3)
--#define CC_ORIENTATION					BIT(1)
--#define CC_ATTACHED					BIT(0)
--
--#define LEGACY_CABLE_STATUS_REG				0x0D
--#define TYPEC_LEGACY_CABLE_STATUS			BIT(1)
--#define TYPEC_NONCOMP_LEGACY_CABLE_STATUS		BIT(0)
--
--#define TYPEC_U_USB_STATUS_REG				0x0F
--#define U_USB_GROUND_NOVBUS				BIT(6)
--#define U_USB_GROUND					BIT(4)
--#define U_USB_FMB1					BIT(3)
--#define U_USB_FLOAT1					BIT(2)
--#define U_USB_FMB2					BIT(1)
--#define U_USB_FLOAT2					BIT(0)
--
--#define TYPEC_MODE_CFG_REG				0x44
--#define TYPEC_TRY_MODE_MASK				GENMASK(4, 3)
--#define EN_TRY_SNK					BIT(4)
--#define EN_TRY_SRC					BIT(3)
--#define TYPEC_POWER_ROLE_CMD_MASK			GENMASK(2, 0)
--#define EN_SRC_ONLY					BIT(2)
--#define EN_SNK_ONLY					BIT(1)
--#define TYPEC_DISABLE_CMD				BIT(0)
--
--#define TYPEC_VCONN_CONTROL_REG				0x46
--#define VCONN_EN_ORIENTATION				BIT(2)
--#define VCONN_EN_VALUE					BIT(1)
--#define VCONN_EN_SRC					BIT(0)
--
--#define TYPEC_CCOUT_CONTROL_REG				0x48
--#define TYPEC_CCOUT_BUFFER_EN				BIT(2)
--#define TYPEC_CCOUT_VALUE				BIT(1)
--#define TYPEC_CCOUT_SRC					BIT(0)
--
--#define DEBUG_ACCESS_SRC_CFG_REG			0x4C
--#define EN_UNORIENTED_DEBUG_ACCESS_SRC			BIT(0)
--
--#define TYPE_C_CRUDE_SENSOR_CFG_REG			0x4e
--#define EN_SRC_CRUDE_SENSOR				BIT(1)
--#define EN_SNK_CRUDE_SENSOR				BIT(0)
--
--#define TYPEC_EXIT_STATE_CFG_REG			0x50
--#define BYPASS_VSAFE0V_DURING_ROLE_SWAP			BIT(3)
--#define SEL_SRC_UPPER_REF				BIT(2)
--#define USE_TPD_FOR_EXITING_ATTACHSRC			BIT(1)
--#define EXIT_SNK_BASED_ON_CC				BIT(0)
--
--#define TYPEC_CURRSRC_CFG_REG				0x52
--#define TYPEC_SRC_RP_SEL_330UA				BIT(1)
--#define TYPEC_SRC_RP_SEL_180UA				BIT(0)
--#define TYPEC_SRC_RP_SEL_80UA				0
--#define TYPEC_SRC_RP_SEL_MASK				GENMASK(1, 0)
--
--#define TYPEC_INTERRUPT_EN_CFG_1_REG			0x5E
--#define TYPEC_LEGACY_CABLE_INT_EN			BIT(7)
--#define TYPEC_NONCOMPLIANT_LEGACY_CABLE_INT_EN		BIT(6)
--#define TYPEC_TRYSOURCE_DETECT_INT_EN			BIT(5)
--#define TYPEC_TRYSINK_DETECT_INT_EN			BIT(4)
--#define TYPEC_CCOUT_DETACH_INT_EN			BIT(3)
--#define TYPEC_CCOUT_ATTACH_INT_EN			BIT(2)
--#define TYPEC_VBUS_DEASSERT_INT_EN			BIT(1)
--#define TYPEC_VBUS_ASSERT_INT_EN			BIT(0)
--
--#define TYPEC_INTERRUPT_EN_CFG_2_REG			0x60
--#define TYPEC_SRC_BATT_HPWR_INT_EN			BIT(6)
--#define MICRO_USB_STATE_CHANGE_INT_EN			BIT(5)
--#define TYPEC_STATE_MACHINE_CHANGE_INT_EN		BIT(4)
--#define TYPEC_DEBUG_ACCESS_DETECT_INT_EN		BIT(3)
--#define TYPEC_WATER_DETECTION_INT_EN			BIT(2)
--#define TYPEC_VBUS_ERROR_INT_EN				BIT(1)
--#define TYPEC_DEBOUNCE_DONE_INT_EN			BIT(0)
--
--#define TYPEC_DEBOUNCE_OPTION_REG			0x62
--#define REDUCE_TCCDEBOUNCE_TO_2MS			BIT(2)
--
--#define TYPE_C_SBU_CFG_REG				0x6A
--#define SEL_SBU1_ISRC_VAL				0x04
--#define SEL_SBU2_ISRC_VAL				0x01
--
--#define TYPEC_U_USB_CFG_REG				0x70
--#define EN_MICRO_USB_FACTORY_MODE			BIT(1)
--#define EN_MICRO_USB_MODE				BIT(0)
--
--#define TYPEC_PMI632_U_USB_WATER_PROTECTION_CFG_REG	0x72
--
--#define TYPEC_U_USB_WATER_PROTECTION_CFG_REG		0x73
--#define EN_MICRO_USB_WATER_PROTECTION			BIT(4)
--#define MICRO_USB_DETECTION_ON_TIME_CFG_MASK		GENMASK(3, 2)
--#define MICRO_USB_DETECTION_PERIOD_CFG_MASK		GENMASK(1, 0)
--
--#define TYPEC_PMI632_MICRO_USB_MODE_REG			0x73
--#define MICRO_USB_MODE_ONLY				BIT(0)
--
--/* Interrupt numbers */
--#define PMIC_TYPEC_OR_RID_IRQ				0x0
--#define PMIC_TYPEC_VPD_IRQ				0x1
--#define PMIC_TYPEC_CC_STATE_IRQ				0x2
--#define PMIC_TYPEC_VCONN_OC_IRQ				0x3
--#define PMIC_TYPEC_VBUS_IRQ				0x4
--#define PMIC_TYPEC_ATTACH_DETACH_IRQ			0x5
--#define PMIC_TYPEC_LEGACY_CABLE_IRQ			0x6
--#define PMIC_TYPEC_TRY_SNK_SRC_IRQ			0x7
--
- /* Resources */
- #define PMIC_TYPEC_MAX_IRQS				0x08
- 
-@@ -156,40 +19,17 @@ struct pmic_typec_port_irq_params {
- 
- struct pmic_typec_port_resources {
- 	unsigned int				nr_irqs;
--	struct pmic_typec_port_irq_params	irq_params[PMIC_TYPEC_MAX_IRQS];
-+	const struct pmic_typec_port_irq_params	irq_params[PMIC_TYPEC_MAX_IRQS];
- };
- 
- /* API */
--struct pmic_typec;
- 
--struct pmic_typec_port *qcom_pmic_typec_port_alloc(struct device *dev);
-+extern const struct pmic_typec_port_resources pm8150b_port_res;
- 
- int qcom_pmic_typec_port_probe(struct platform_device *pdev,
--			       struct pmic_typec_port *pmic_typec_port,
--			       struct pmic_typec_port_resources *res,
-+			       struct pmic_typec *tcpm,
-+			       const struct pmic_typec_port_resources *res,
- 			       struct regmap *regmap,
- 			       u32 base);
- 
--int qcom_pmic_typec_port_start(struct pmic_typec_port *pmic_typec_port,
--			       struct tcpm_port *tcpm_port);
--
--void qcom_pmic_typec_port_stop(struct pmic_typec_port *pmic_typec_port);
--
--int qcom_pmic_typec_port_get_cc(struct pmic_typec_port *pmic_typec_port,
--				enum typec_cc_status *cc1,
--				enum typec_cc_status *cc2);
--
--int qcom_pmic_typec_port_set_cc(struct pmic_typec_port *pmic_typec_port,
--				enum typec_cc_status cc);
--
--int qcom_pmic_typec_port_get_vbus(struct pmic_typec_port *pmic_typec_port);
--
--int qcom_pmic_typec_port_set_vconn(struct pmic_typec_port *pmic_typec_port, bool on);
--
--int qcom_pmic_typec_port_start_toggling(struct pmic_typec_port *pmic_typec_port,
--					enum typec_port_type port_type,
--					enum typec_cc_status cc);
--
--int qcom_pmic_typec_port_set_vbus(struct pmic_typec_port *pmic_typec_port, bool on);
--
- #endif /* __QCOM_PMIC_TYPE_C_PORT_H__ */
++	return 0;
++}
 
 -- 
 2.39.2
