@@ -1,65 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-7212-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C4C5582CD49
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jan 2024 15:54:29 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A5CC82CE78
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jan 2024 21:56:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7962C1F228B4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jan 2024 14:54:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9F3881C20C73
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jan 2024 20:56:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D01171FB3;
-	Sat, 13 Jan 2024 14:51:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89E90F4E6;
+	Sat, 13 Jan 2024 20:55:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C805GElg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cB8Ct2dV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BC0182D4
-	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jan 2024 14:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4D4CA7F
+	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jan 2024 20:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-558fc54e28eso425527a12.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jan 2024 06:51:18 -0800 (PST)
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-50e741123acso8998813e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jan 2024 12:55:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705157477; x=1705762277; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RUTCpmfzsSKDHjYlRAYYiQ/aykX/VSlVLVDx9q/aHss=;
-        b=C805GElgMCsq5N3rhzJBZMwTtpcv6KXklRX5HZzb1Gg7jhb9JdQx4DWT+/VsJ3Szmk
-         cGCUjQY3fQw71LlrIPFA9vSTKYAYcq8KmWq7Q4xzKZ1MGgqMwHJaGD6jFQpIiajEsViG
-         biee6/8uvuKWmnsa9viWzrtoDkRjOa52IR4bWlpC/F7nthFpZQzyx/8pLHdswSTNlObn
-         HG4fH0fiiDuo9P/BgX2lWlRK6GHAB8L6W40MTybBTwqj3lqz9QON38Arhpx/3CbmVgE/
-         f4+TICpR6LbDenbiuLS/QqlJLC9TB3gi7si4UqoQ3wAClCD6y9Ii7h7nIx4Z8B1U/Wx4
-         2ugw==
+        d=linaro.org; s=google; t=1705179354; x=1705784154; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8H3lEOLtQff6kh0Ma41nbBlczO7GfMuk2Ro8jq93iTk=;
+        b=cB8Ct2dVAmdNLoRljr/eoBADkOQ7VJvU06oF+yP5Fb5n3G7q9oF5tTPytpS3q3M4WY
+         cUFZ9+ShKNDA2suPwX5DIcNEQ3KcvESOzBgLHvFKlMLdfGLA+/n0XiO5JOA3WtQhcLWr
+         rjMCdMHG6Zdhh34iZw9WZZGjzUhv6Pa+/5yVXhCXNToF6zhT5YScUCsVKENoZyZQJ8bL
+         GUah6qjdYPNoOIXSuqyJexOOyxFrWn4puCA4hIkZDM8ogYURSJuGnRdlN0RDVU8j+1Dm
+         bGWbbid/l3CF9x7PMez8IyFpa1Eo+iKz0v6FYzEKDppEYJz1xGKMNcpvy+FEroAvpOb/
+         qp4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705157477; x=1705762277;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RUTCpmfzsSKDHjYlRAYYiQ/aykX/VSlVLVDx9q/aHss=;
-        b=qWhOaU7Ob8ztIgf6+tnQWwGxMkn5L0SG6MOBbdbhxO8yzO2shXmlPp6dUuHBtkHJPU
-         Cuw0S1USsT8+I+CP03N2GelRi2WjcJc1KWBDCSFs5asy5nAamuU1+i05UfMsZ4pX8gkL
-         tYBU9/w1dXKScqOej7hBXPNy8F8j6lvJ1ExkoovN7JNWpeUzq9BxyHYtI5F6BPw365h7
-         Sabp4VxYLBq2WRQxw2OIEw1IQqXIIGB3B1rgi/4HXAmR28icmADzybVZ4CUMI6328WlJ
-         YgcJiAE9Pn5cR08Glte14fMcOgQO8UnxmNWAcrRNGVtny7SdJ3uvVq17iK3VJf3Oa1gD
-         WF0g==
-X-Gm-Message-State: AOJu0Yxf0g4Z0IyTPGhHX0norezIAvhk6xHCmW+YiaQTROAXBrSVZDR3
-	NTUEdiQH576EtjW7MXFBm3+qGIAj7vn1wQ==
-X-Google-Smtp-Source: AGHT+IETAequHzfAwgHF8QsK/gBIn4BSDyAY0yftCXAhJQJM0qG8OILiUEsNbSoyObZt6WLoT++NLA==
-X-Received: by 2002:aa7:c602:0:b0:558:2cf:b7f3 with SMTP id h2-20020aa7c602000000b0055802cfb7f3mr1362760edq.70.1705157476826;
-        Sat, 13 Jan 2024 06:51:16 -0800 (PST)
-Received: from [10.167.154.1] (178235179017.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.17])
-        by smtp.gmail.com with ESMTPSA id es18-20020a056402381200b00554b1d1a934sm3014593edb.27.2024.01.13.06.51.15
+        d=1e100.net; s=20230601; t=1705179354; x=1705784154;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8H3lEOLtQff6kh0Ma41nbBlczO7GfMuk2Ro8jq93iTk=;
+        b=kLl/NR0+dS9x3rmv1pANsYZhWZVS/ga6vcVOzQofkciz1tIGDS2RFyU4ImfjJOeUcY
+         QqVyRjI/VuN060f43GkellMhQmz48Y9OTrK2S8mi0X9C7i1bbwD0jjBYDGh1jld9HYxM
+         NkpHzLkc449SWt+0PJmHD8CafFzJPkSYaqSOyGR+Bv+KlSN7GBP50vZoGArUMuanxGWh
+         VMj2qAL7yCKuM+017ppnBzj9zWoZ21XA1ApTJWpM338G66k9wY3ZBrGwVwpgacxNxdxM
+         fX9d2IFVw3RYJxioDqAxie7fgt+FWRPE1o1575eFJNL52QCQGg2WINXBWS1/6A68DHWG
+         PqxA==
+X-Gm-Message-State: AOJu0YzApl5a9YBsx3m+WdQ/4sbZZEAUBQz7PaYpBpa+kiw21wO0aLBR
+	M3QdT0ZHonwFy0T3//BUdz0U8w/hcU3WZA==
+X-Google-Smtp-Source: AGHT+IHYTf1qpzeijG/IAVOHBC9Svr8p0OrVPy2HbaZQn38lIRbpcNldfpa+W+dMGhsU/h3uV49Cjg==
+X-Received: by 2002:a05:6512:3b90:b0:50e:935a:ca83 with SMTP id g16-20020a0565123b9000b0050e935aca83mr1825970lfv.91.1705179353618;
+        Sat, 13 Jan 2024 12:55:53 -0800 (PST)
+Received: from umbar.lan ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id p14-20020a056512328e00b0050e9355d7eesm919802lfe.103.2024.01.13.12.55.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Jan 2024 06:51:16 -0800 (PST)
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Sat, 13 Jan 2024 15:51:01 +0100
-Subject: [PATCH v6 12/12] arm64: dts: qcom: sm6115: Add VDD_CX to GPU_CC
+        Sat, 13 Jan 2024 12:55:53 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 00/15] usb: typec: qcom-pmic-typec: enable support for
+ PMI632 PMIC
+Date: Sat, 13 Jan 2024 22:55:43 +0200
+Message-Id: <20240113-pmi632-typec-v2-0-182d9aa0a5b3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,51 +69,109 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230717-topic-branch_aon_cleanup-v6-12-46d136a4e8d0@linaro.org>
-References: <20230717-topic-branch_aon_cleanup-v6-0-46d136a4e8d0@linaro.org>
-In-Reply-To: <20230717-topic-branch_aon_cleanup-v6-0-46d136a4e8d0@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+X-B4-Tracking: v=1; b=H4sIAM/4omUC/1XMQQqDMBCF4avIrJuSZLSpXfUexYUkow60SUhEK
+ uLdmwpddPk/eN8GmRJThlu1QaKFMwdfQp8qsFPvRxLsSoOWupZKaRFffEEt5jWSFbU1DaJsNV4
+ NlEtMNPD74B5d6YnzHNJ66Iv6rj8I/6FFCSkcGTe4ummxwfuTfZ/COaQRun3fP9vsOwapAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ Rob Herring <robh+dt@kernel.org>, 
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1705157455; l=911;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=WDI26IliceRlW0YgN7X8GrPWGyVd7988pOYar0kAAss=;
- b=QkTIudk9bwX/+NypRGqOTPXGV2soTD0F/pgSW+rfGeoOYUJvfu6xMrq9N9B54gSGyfZfAOYfu
- PMG412v8x9ODGvD+GYIFf8ufxxA4ySNYDB/TNcmJ62+5QHMNcTVJIr+
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+ Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Guenter Roeck <linux@roeck-us.net>, 
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
+ Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-usb@vger.kernel.org, linux-phy@lists.infradead.org, 
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3797;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=CS9SbNxFzGdH021lW0ayb4u0wurDARzzELIZIOoEHYs=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlovjVgTNg+7k1nM72B6joVl25KPM1s15T6Nfw/
+ KHDh5ovnJeJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZaL41QAKCRCLPIo+Aiko
+ 1SNWB/4gB8dpPDVvSXPhjV9SucMh7BkyGVx2mhG29317CtS0V62KEIOYwaFP9YIEQYzOoc1gpJm
+ HLoIJAgORJ4eWCciCZlkdmXS4XjtJ6xJPiczt7G3s1QFLqsWgHBwJEY4JQWDPAuXOSroRNg8SRv
+ OpxbPqRuZWByNn7KTKHkQCHO09Tyc5YB4E6S/N5FynMkgobVXWeFRJbdLANoDYTA3FNsk1BnNtG
+ 4r4Ul+Tai6qZ/RECBSi/MI7tn8sySUZrRlO3IkZ465GoW9xrhqS3//nYhLsEr3QfQU8X9G4gOGC
+ Jbacdkfp2lPCCcRAdBCtVlZ2MvrghilYCW8xusv6w6gMt3ZF
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-The GPU_CC block is powered by VDD_CX. Link the power domain and
-provide a reasonable minimum vote (lowest available on the platform)
-to ensure the registers within are accessible.
+The Qualcomm PMI632 PMIC (found on Qualcomm Robotics RB2 platform)
+doesn't support USB Power Delivery. However this PMIC still supports
+handling of the Type-C port (orientation detection, etc). Reuse exiting
+qcom-pmic-typec driver to support Type-C related functionality of this
+PMIC. Use this to enable USB-C connector support on the RB2 platform.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm6115.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+Changes in v2:
+- Split qcom_pmic_typec_pdphy_set_roles() changes to separate patch
+  (Konrad)
+- Simplified devm_kzalloc / sizeof() argument (Konrad)
+- Made start / stop callbacks mandatory (Bryan)
+- Reworked Type-C port handling into a backend similar to PD PHY (Bryan)
+- Made more qcom-pmic-typec data static const (Bryan)
+- Squashed usbc PHY single-lane removal patch (Konrad)
+- Further usbc PHY cleanup (Konrad)
+- Fixed order of DT properties in pmi632.dtsi (Konrad)
+- Instead of specifying bogus PDOs for the port, specify pd-disable and
+  typec-power-opmode properties for the connector
+- Moved orientation-switch / usb-dual-role properties to sm6115.dtsi
+  (Konrad)
+- Linked usb_dwc3_ss and usb_qmpphy_usb_ss_in
+- Link to v1: https://lore.kernel.org/r/20240113-pmi632-typec-v1-0-de7dfd459353@linaro.org
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index 30b140e1cec0..ec9a74acc69c 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -1723,6 +1723,8 @@ gpucc: clock-controller@5990000 {
- 			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
- 				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
- 				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
-+			power-domains = <&rpmpd SM6115_VDDCX>;
-+			required-opps = <&rpmpd_opp_low_svs>;
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
+---
+Dmitry Baryshkov (14):
+      dt-bindings: regulator: qcom,usb-vbus-regulator: add support for PMI632
+      dt-bindings: usb: qcom,pmic-typec: add support for the PMI632 block
+      dt-bindings: phy: qcom,msm8998-qmp-usb3-phy: split from sc8280xp PHY schema
+      dt-bindings: phy: qcom,msm8998-qmp-usb3-phy: support USB-C data
+      usb: typec: tcpm: fix the PD disabled case
+      usb: typec: qcom-pmic-typec: fix arguments of qcom_pmic_typec_pdphy_set_roles
+      usb: typec: qcom-pmic-typec: allow different implementations for the PD PHY
+      usb: typec: qcom-pmic-typec: allow different implementations for the port backend
+      usb: typec: qcom-pmic-typec: add support for PMI632 PMIC
+      phy: qcom: qmp-usb: split USB-C PHY driver
+      phy: qcom: qmp-usb: drop dual-lane handling
+      phy: qcom: qmp-usbc: add support for the Type-C handling
+      arm64: dts: qcom: pmi632: define USB-C related blocks
+      arm64: dts: qcom: qrb4210-rb2: enable USB-C port handling
 
+Vladimir Zapolskiy (1):
+      arm64: dts: qcom: sm6115: drop pipe clock selection
+
+ .../bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml    |  171 +++
+ .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml        |   22 -
+ .../regulator/qcom,usb-vbus-regulator.yaml         |    9 +-
+ .../devicetree/bindings/usb/qcom,pmic-typec.yaml   |   28 +-
+ arch/arm64/boot/dts/qcom/pmi632.dtsi               |   30 +
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts           |   50 +-
+ arch/arm64/boot/dts/qcom/sm6115.dtsi               |   44 +-
+ drivers/phy/qualcomm/Makefile                      |    2 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c            |  323 +-----
+ drivers/phy/qualcomm/phy-qcom-qmp-usbc.c           | 1169 ++++++++++++++++++++
+ drivers/usb/typec/tcpm/qcom/Makefile               |    3 +-
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c      |  254 +----
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.h      |   27 +
+ .../usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c    |  157 ++-
+ .../usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.h    |   94 +-
+ .../typec/tcpm/qcom/qcom_pmic_typec_pdphy_stub.c   |   80 ++
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c |  290 ++++-
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.h |  172 +--
+ drivers/usb/typec/tcpm/tcpm.c                      |    3 +-
+ 19 files changed, 2058 insertions(+), 870 deletions(-)
+---
+base-commit: 9e21984d62c56a0f6d1fc6f76b646212cfd7fe88
+change-id: 20240112-pmi632-typec-4c7533092387
+
+Best regards,
 -- 
-2.43.0
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 
