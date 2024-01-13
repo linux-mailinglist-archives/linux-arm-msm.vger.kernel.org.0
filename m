@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-7179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 286BF82CBE0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jan 2024 11:34:09 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1DAE482CBF0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jan 2024 11:43:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A76BA1F22D08
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jan 2024 10:34:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 879DB1F21891
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jan 2024 10:43:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DA4C20DC3;
-	Sat, 13 Jan 2024 10:34:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1D1620DC6;
+	Sat, 13 Jan 2024 10:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vWmLeKt1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="acad1NjH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B5020B31
-	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jan 2024 10:34:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0178517BC8
+	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jan 2024 10:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-50e72e3d435so7069943e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jan 2024 02:34:01 -0800 (PST)
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-55818b733f7so5755043a12.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jan 2024 02:42:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705142039; x=1705746839; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1705142578; x=1705747378; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=O+x8bBUhmaZ5bctGOTnaKMvIif9jd5WuTDY2PH/sR2U=;
-        b=vWmLeKt1cvIugfeKkEh6WkHDVvvRr87Wh7JgsceTOwxLJS7wugMaPiXniZQ8f4R1ov
-         02ibep8vpZL6jpQL8n9Lcc2Ke0DGrHIITl8IbISf6kWEkOfTWEeN0NlWF6Em3YNAJhja
-         KY5MpBusSe3p3ZQScpTpbb6G1Ej2KNODeq/z1AsPKC3Sp7qEQTgDtSHvz8Ty2XRNpgIj
-         RdePnaAVqDV3xRj+D04RpSjlGagzmKn4U2VHAcBCXOJQ6cjdx6rsMWJZJb8uSWmNipWW
-         SnUzkVgczB9P+7ZaeYJBmsGhR8onBvWD0yhF+yS9Vsb18bBgLbTkhi9Z6wmxL+8uh7XB
-         HsGA==
+        bh=UMsaz3V55EldnOohrJxE/w54JgAQsf7G30bRTdJho7s=;
+        b=acad1NjHXJWLJ3PnF5GuGD9aj5uj5FtVvtMOCRbsXd8e12yH14fJZ0a8nxtAcSYP/O
+         l41Wsxqy1GA88jF/00O3B3d/122Nd1ZMv9d7NGUjC4MWJZdyWVF08dQOZVx0Xlrq6PEF
+         AET/UIXAht1yp9nLnxkyIcDOBSmj+d6nXOhKk8KCTrZLNtaUWbIxOmUgPuYgaaOrrYp7
+         QcMoVTLXccosTADVJO3gAucsEZXJ2TbGvT21QA+Vt+7uIY0Y4ThdHfQMHuqUZgVWsUln
+         r/tVZK7TtLu0TYl8EPomHg+Vp4yVZ8MlowpQz759Py24JpJ8YXPAsWONqSHldI/11aMR
+         LloA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705142039; x=1705746839;
+        d=1e100.net; s=20230601; t=1705142578; x=1705747378;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=O+x8bBUhmaZ5bctGOTnaKMvIif9jd5WuTDY2PH/sR2U=;
-        b=uY8NIYcyY7SO9DDiSXs1vADRQVU/Gg3wR7Ftrlyxsct8kpmAVSq5aHCW6cJY14F8Yo
-         9DjoA3jv2ofRwB1HKY01DhWQhehVQs+thNBPUfouQBv8RwltYSjcK1xrEFW2a4WwKvTX
-         d/jZu7Fs7bfZ/9BrAwangggeWTcplsMDjwfEk+cAfSY25QpuvdkynUdwGWziecnftwt+
-         5N2KgpGSqbA+yTgXWKLzpSiKy64jbRPzcLhGVY+dOOC7NSAdoCJeLK+MK3UWpNVgDYYx
-         9d06DkXUJIJMjBn0ZLg2iFl9fhQrWT76OohUDwbQ5VCpwvWVsdwXLLl8eJoqr4oA7Wam
-         B88Q==
-X-Gm-Message-State: AOJu0YyLzrDPKbe1YHQeSc7yH0vyPTjsuLjpHhkYbbpuMMRQdIua6E/4
-	gAZevkPT8yaAulqiP1kZil4G+rQ6U7WxOsLUhu9gQRI8eLE=
-X-Google-Smtp-Source: AGHT+IENpYfdaChdnutOsF0MpaQwHUt3wT9gMBJC/eiMG9zYCne1iuFI71w8sKjNAIuFwsXGphjhhg==
-X-Received: by 2002:a05:6512:15a3:b0:50e:9a16:fb with SMTP id bp35-20020a05651215a300b0050e9a1600fbmr927066lfb.6.1705142039394;
-        Sat, 13 Jan 2024 02:33:59 -0800 (PST)
+        bh=UMsaz3V55EldnOohrJxE/w54JgAQsf7G30bRTdJho7s=;
+        b=C7jcSJ1/wmDXTxvWfoOpKnwQDUXUJmnuwS7JJJnywsM5vzOgbmVl+miFflDLHtnxt+
+         P+jng7fFBekyAuiwP0x0gp/hzXu3/W1tqdvqU+axTck/+F0ymByB3l7h3P7oWwfoBvYz
+         RaqC6YLrsTju1ilb8OAtPMA4F7Jeiou74obXZBWYl2zh/wJWxSqehLm2agiPxabgAeyH
+         +tH1nShe7MEfATZMWQh+vW+F7ZAdgk/wc62A23Uuaw9Kryh8v4MXF6oCT2Zmps+GIV4S
+         UpaRk7NDYpCnf8gSXQUeG3zjCJrX6vmhYU9dZRCPLZ0i9DWRWwd/F9YNaNHU2lo4eavV
+         2ZdQ==
+X-Gm-Message-State: AOJu0YzEo59QPRgqYIbpDekIOZxYbBA05ruGq6wjceKr2v1SpfgnkFUu
+	viZ489e+FZKoLqT95TIeDJOCJdE1Yi+HmQ==
+X-Google-Smtp-Source: AGHT+IEDhUHuow5cUnfaDZxShK3gwQeACAUbNraZ6Glsem2Hp2gjkSqCqIaszZQpe4nB/zJNZo3qOQ==
+X-Received: by 2002:a17:907:1706:b0:a2d:45c2:5f8d with SMTP id le6-20020a170907170600b00a2d45c25f8dmr159504ejc.121.1705142578253;
+        Sat, 13 Jan 2024 02:42:58 -0800 (PST)
 Received: from [192.168.174.25] (178235179017.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.17])
-        by smtp.gmail.com with ESMTPSA id q8-20020a170906360800b00a2bd52d2a84sm2719827ejb.200.2024.01.13.02.33.56
+        by smtp.gmail.com with ESMTPSA id c17-20020a170906695100b00a26e53be089sm2740787ejs.44.2024.01.13.02.42.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 13 Jan 2024 02:33:59 -0800 (PST)
-Message-ID: <7e36b380-8ab5-4555-8919-1c2c6ff7aa68@linaro.org>
-Date: Sat, 13 Jan 2024 11:33:56 +0100
+        Sat, 13 Jan 2024 02:42:57 -0800 (PST)
+Message-ID: <f6ec016e-7319-42a7-8ca3-06f21a7ab6e5@linaro.org>
+Date: Sat, 13 Jan 2024 11:42:54 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,8 +66,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/13] usb: typec: qcom-pmic-typec: add support for PMI632
- PMIC
+Subject: Re: [PATCH 07/13] phy: qcom: qmp-usb: split USB-C PHY driver
 Content-Language: en-US
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
@@ -84,7 +83,7 @@ To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-usb@vger.kernel.org, linux-phy@lists.infradead.org
 References: <20240113-pmi632-typec-v1-0-de7dfd459353@linaro.org>
- <20240113-pmi632-typec-v1-6-de7dfd459353@linaro.org>
+ <20240113-pmi632-typec-v1-7-de7dfd459353@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -121,31 +120,211 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240113-pmi632-typec-v1-6-de7dfd459353@linaro.org>
+In-Reply-To: <20240113-pmi632-typec-v1-7-de7dfd459353@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 13.01.2024 06:42, Dmitry Baryshkov wrote:
-> The PMI632 PMIC support Type-C port handling, but lacks USB
-> PowerDelivery support. The TCPM requires all callbacks to be provided
-> by the implementation. Implement a special, 'stub' Qcom PD PHY
-> implementation to enable the PMI632 support.
+> In preparation to adding Type-C handling for MSM8998, QCM2290 and SM6115
+> platforms, create new QMP USB-C PHY driver by splitting mentioned
+> platforms to a separate file. In future it will also be extended with
+> support for the DisplayPort handling. It will also be reused later for
+> such platforms as SDM660, SM6125, SM6150.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
 
 [...]
 
->  #endif /* __QCOM_PMIC_TYPEC_PDPHY_H__ */
-> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy_stub.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy_stub.c
-> new file mode 100644
-> index 000000000000..5d3b0e78d4d8
-> --- /dev/null
-> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy_stub.c
 
-Not a fan.
+> +#include "phy-qcom-qmp.h"
+> +#include "phy-qcom-qmp-pcs-misc-v3.h"
+> +
+> +/* QPHY_SW_RESET bit */
+> +#define SW_RESET				BIT(0)
+> +/* QPHY_POWER_DOWN_CONTROL */
+> +#define SW_PWRDN				BIT(0)
 
-Maybe add some TCPM_FLAG_NO_PD and solve it in a generic manner?
+Most / all of these defines could probably live in a header file.
+
+[...]
+
+> +struct qmp_usbc_offsets {
+> +	u16 serdes;
+> +	u16 pcs;
+> +	u16 pcs_misc;
+> +	u16 pcs_usb;
+> +	u16 tx;
+> +	u16 rx;
+> +	/* for PHYs with >= 2 lanes */
+
+So, all PHYs within this driver if I'm following correctly
+
+> +	u16 tx2;
+> +	u16 rx2;
+> +};
+> +
+
+> +static inline void qphy_setbits(void __iomem *base, u32 offset, u32 val)
+> +{
+> +	u32 reg;
+> +
+> +	reg = readl(base + offset);
+> +	reg |= val;
+> +	writel(reg, base + offset);
+> +
+> +	/* ensure that above write is through */
+> +	readl(base + offset);
+> +}
+> +
+> +static inline void qphy_clrbits(void __iomem *base, u32 offset, u32 val)
+> +{
+> +	u32 reg;
+> +
+> +	reg = readl(base + offset);
+> +	reg &= ~val;
+> +	writel(reg, base + offset);
+> +
+> +	/* ensure that above write is through */
+> +	readl(base + offset);
+> +}
+
+Maybe you could use regmap to avoid NIH-ing such accessors
+
+> +
+> +/* list of clocks required by phy */
+> +static const char * const qmp_usbc_phy_clk_l[] = {
+> +	"aux", "cfg_ahb", "ref", "com_aux",
+> +};
+> +
+> +/* list of resets */
+> +static const char * const usb3phy_legacy_reset_l[] = {
+> +	"phy", "common",
+> +};
+> +
+> +static const char * const usb3phy_reset_l[] = {
+> +	"phy_phy", "phy",
+> +};
+> +
+> +/* list of regulators */
+> +static const char * const qmp_phy_vreg_l[] = {
+> +	"vdda-phy", "vdda-pll",
+> +};
+> +
+> +static const struct qmp_usbc_offsets qmp_usbc_offsets_v3_qcm2290 = {
+> +	.serdes		= 0x0,
+> +	.pcs		= 0xc00,
+> +	.pcs_misc	= 0xa00,
+> +	.tx		= 0x200,
+> +	.rx		= 0x400,
+> +	.tx2		= 0x600,
+> +	.rx2		= 0x800,
+> +};
+> +
+> +static const struct qmp_phy_cfg msm8998_usb3phy_cfg = {
+> +	.lanes			= 2,
+> +
+> +	.offsets		= &qmp_usbc_offsets_v3_qcm2290,
+> +
+> +	.serdes_tbl             = msm8998_usb3_serdes_tbl,
+> +	.serdes_tbl_num         = ARRAY_SIZE(msm8998_usb3_serdes_tbl),
+> +	.tx_tbl                 = msm8998_usb3_tx_tbl,
+> +	.tx_tbl_num             = ARRAY_SIZE(msm8998_usb3_tx_tbl),
+> +	.rx_tbl                 = msm8998_usb3_rx_tbl,
+> +	.rx_tbl_num             = ARRAY_SIZE(msm8998_usb3_rx_tbl),
+> +	.pcs_tbl                = msm8998_usb3_pcs_tbl,
+> +	.pcs_tbl_num            = ARRAY_SIZE(msm8998_usb3_pcs_tbl),
+> +	.vreg_list              = qmp_phy_vreg_l,
+> +	.num_vregs              = ARRAY_SIZE(qmp_phy_vreg_l),
+> +	.regs                   = qmp_v3_usb3phy_regs_layout,
+> +};
+> +
+> +static const struct qmp_phy_cfg qcm2290_usb3phy_cfg = {
+> +	.lanes			= 2,
+> +
+> +	.offsets		= &qmp_usbc_offsets_v3_qcm2290,
+> +
+> +	.serdes_tbl		= qcm2290_usb3_serdes_tbl,
+> +	.serdes_tbl_num		= ARRAY_SIZE(qcm2290_usb3_serdes_tbl),
+> +	.tx_tbl			= qcm2290_usb3_tx_tbl,
+> +	.tx_tbl_num		= ARRAY_SIZE(qcm2290_usb3_tx_tbl),
+> +	.rx_tbl			= qcm2290_usb3_rx_tbl,
+> +	.rx_tbl_num		= ARRAY_SIZE(qcm2290_usb3_rx_tbl),
+> +	.pcs_tbl		= qcm2290_usb3_pcs_tbl,
+> +	.pcs_tbl_num		= ARRAY_SIZE(qcm2290_usb3_pcs_tbl),
+> +	.vreg_list		= qmp_phy_vreg_l,
+> +	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+> +	.regs			= qmp_v3_usb3phy_regs_layout_qcm2290,
+> +};
+> +
+> +static void qmp_usbc_configure_lane(void __iomem *base,
+> +					const struct qmp_phy_init_tbl tbl[],
+> +					int num,
+> +					u8 lane_mask)
+> +{
+> +	int i;
+> +	const struct qmp_phy_init_tbl *t = tbl;
+> +
+> +	if (!t)
+> +		return;
+> +
+> +	for (i = 0; i < num; i++, t++) {
+> +		if (!(t->lane_mask & lane_mask))
+> +			continue;
+> +
+> +		writel(t->val, base + t->offset);
+> +	}
+> +}
+> +
+> +static void qmp_usbc_configure(void __iomem *base,
+> +				   const struct qmp_phy_init_tbl tbl[],
+> +				   int num)
+> +{
+> +	qmp_usbc_configure_lane(base, tbl, num, 0xff);
+> +}
+> +
+
+Can this be inlined?
+
+> +static int qmp_usbc_serdes_init(struct qmp_usbc *qmp)
+> +{
+> +	const struct qmp_phy_cfg *cfg = qmp->cfg;
+> +	void __iomem *serdes = qmp->serdes;
+> +	const struct qmp_phy_init_tbl *serdes_tbl = cfg->serdes_tbl;
+> +	int serdes_tbl_num = cfg->serdes_tbl_num;
+> +
+> +	qmp_usbc_configure(serdes, serdes_tbl, serdes_tbl_num);
+> +
+> +	return 0;
+> +}
+
+Can this be inlined?
+
+[...]
+
+> +	/* Tx, Rx, and PCS configurations */
+> +	qmp_usbc_configure_lane(tx, cfg->tx_tbl, cfg->tx_tbl_num, 1);
+> +	qmp_usbc_configure_lane(rx, cfg->rx_tbl, cfg->rx_tbl_num, 1);
+> +
+> +	if (cfg->lanes >= 2) {
+
+Again, if (true) IIUC
+
+
+> +		qmp_usbc_configure_lane(qmp->tx2, cfg->tx_tbl, cfg->tx_tbl_num, 2);
+> +		qmp_usbc_configure_lane(qmp->rx2, cfg->rx_tbl, cfg->rx_tbl_num, 2);
+> +	}
+> +
+> +	qmp_usbc_configure(pcs, cfg->pcs_tbl, cfg->pcs_tbl_num);
+> +
+> +	if (pcs_usb)
+
+if (false)?
+
+[...]
+
+The rest looks to be boilerplate that's already present in at least
+one more driver..
 
 Konrad
 
