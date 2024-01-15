@@ -1,355 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-7251-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 507B882D60E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 10:34:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E578482D64B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 10:47:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 52D911C2152B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 09:34:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F2CF91C215F1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 09:47:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40C9DDDCE;
-	Mon, 15 Jan 2024 09:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F08E0DF41;
+	Mon, 15 Jan 2024 09:47:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="AAwxUCuW"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IKHyU+6u"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f65.google.com (mail-wm1-f65.google.com [209.85.128.65])
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D018F4EF
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jan 2024 09:34:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-wm1-f65.google.com with SMTP id 5b1f17b1804b1-40e6275e9beso17787435e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jan 2024 01:34:43 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC04E54E
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jan 2024 09:47:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-5e811c5c1adso72732027b3.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jan 2024 01:47:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1705311281; x=1705916081; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aVeIETKJbD2YNlbWRi5z9tGnSFWdTelMWGKS6kgbyVM=;
-        b=AAwxUCuWI7j1dDRjDck4d+D2cufrDUVsVsRGtYVLDM+f38ICWp6tbmnafv/jAjd7KV
-         updNzr8sHAhEzefPxgC5NiuwYMWG+KKQrCB65u/5e8OTMwnJg1iGEd0QZnTGXaRvoIx2
-         0GQCsYMEv278WbPoCODt+tqIlNvbFjccjEAGbvHGLGSqBETUb6wImrs0acOsgm33Dvmu
-         YedPr8WGtlYVm7B6LcUZi3CMffTaL/oLq6EiVXLejmG6fXDS7Us7OogdtZIu7tu9hrwn
-         pp3AKRIoguOEV91s1omjYy24m1FjngVmvCGlPby10bLgfURbqDmZM1/5W0M8x/gZNjmH
-         4ASA==
+        d=linaro.org; s=google; t=1705312047; x=1705916847; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=KFasKVeIFS8eA29J5OC5S7BAGeeHVHQITZOFxwu8rvQ=;
+        b=IKHyU+6u+lgjRbyCoCSwwGSrug6+245U2HLPFxjhv8yEBt6FyeKVAYrLG3CNHFzZzf
+         Dk2FCGpsEHJ9T04siwv7YL2h1aIpSxBMVCSwxe3FPWvHPhSuSryMMe+1bXZO25NNMRiG
+         vSBV0i8c/+hl2sfi+a3Q7AOrvZl/aXuFkZYt5lSiVyfCeZDx6Ebq3mCNIBq/Fofzhr1V
+         irsU2QPRNqtsUf1968TcqB9towdQH6O13+vCSV8zmtiZrUaKul4ZFRLGYeG7z4wlAv73
+         XMxN5AWHIcWlf07NY6l2DN4RogFuoJi0YH947NDr+LaVdwbp78RB883umf8rV3ONJIAW
+         x8ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705311281; x=1705916081;
-        h=in-reply-to:references:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=aVeIETKJbD2YNlbWRi5z9tGnSFWdTelMWGKS6kgbyVM=;
-        b=U/+LgQnI1dxDpnKbpfTqOrgGtorLNMZl5bJ7YB+PTgYBPitgVQ67XQjfkNzg2BXX/A
-         Ug7XqOquiFmxaMJtgkIKIZwkT6PQ0d4hTOFNEHLAp2wVs865AjXxBHTg57u/jweeRmgR
-         poImMFhW32vt0K652DCpPGc16s+sEDOmsuGvjp5ijXCAhYnndIIh/zQ/2R8VC4EVX7Do
-         l2Qhr23PhSzexnxADVtG7rxUTy/+flXroRG+oYCeKYc0p97BRhV7KdMODsE26b8FR0HQ
-         zHF5w89lgK7gSsJ1QYsWkE3ipDSS9mmaQA1KlNnEEdfiXsbYIyHrbwrDknIbglBufH++
-         4kAQ==
-X-Gm-Message-State: AOJu0Yy0FummBYmhRZZxEWevhOaVgXj1CXb+4JMFPA3kDXoQHxJnjeYT
-	g/Mb17KQhpIRHZ+lRm59iEmSBK/mhZs95w==
-X-Google-Smtp-Source: AGHT+IE3xTIokkIfoVb+V5SeUWjJWe0Uq4O6jxQzD2huPIzSPsIyRIATGA4vXlforTMS/1YYPi+xLQ==
-X-Received: by 2002:a05:600c:354a:b0:40d:891e:a0f1 with SMTP id i10-20020a05600c354a00b0040d891ea0f1mr3107195wmq.7.1705311281450;
-        Mon, 15 Jan 2024 01:34:41 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id q14-20020ae9e40e000000b007815c45cdc5sm2823107qkc.95.2024.01.15.01.34.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Jan 2024 01:34:41 -0800 (PST)
+        d=1e100.net; s=20230601; t=1705312047; x=1705916847;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KFasKVeIFS8eA29J5OC5S7BAGeeHVHQITZOFxwu8rvQ=;
+        b=EIiwOE9TocF/q3kF/d09Qg5EjMD6pcnnZNyFtOPQBKKsS4/vkzf/Qr3rcwybJfrapP
+         2j9ukyDIh/p9KqCZYZBDHQNP9/koObAyVkukWvfbBzQt95bZh+Svvi1Oz4eZ8ec8hxXf
+         cZ2KSuN+2NwCEP/l/yqSq2CGN4CewHeyqaeyli6ioldrbJXQGRdqDpgdfc5hrotBp/7R
+         TSMioW3zWnIGWZmNc9LHBJF0o/xORhACZ1rbuv86j+x4RJF7COiU6dg42SL4Bh4wialY
+         bHbNgqXNAXzBD3hn7U21RR/vrkFDNq9cx76RE3xbF/Z4ShbKv+3PXd90hU4n+di2gBah
+         EG6w==
+X-Gm-Message-State: AOJu0Yyg31+E5OU0SKwt8JnmEJeWCIBAwNeKmojwD4wiFmwWZNKVQJxY
+	OLSruWnOPmKm5aDSj85QG+KUMwJ3WoiOeXbwg437j6+0lTgJ1A==
+X-Google-Smtp-Source: AGHT+IGDxeO4T8bagcuUSUZ0vMjmvo/iXyCvviU6IkM5zpYZ/eSn970UnrLfZAjyWjqwQ+WhSzN85TavpbmAnoNw87w=
+X-Received: by 2002:a81:d003:0:b0:5ee:1ca0:b7ef with SMTP id
+ v3-20020a81d003000000b005ee1ca0b7efmr3089640ywi.42.1705312047014; Mon, 15 Jan
+ 2024 01:47:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 15 Jan 2024 10:34:36 +0100
-Message-Id: <CYF6E9BR9QHY.3441MOKCRAB15@fairphone.com>
-Subject: Re: [PATCH] dt-bindings: usb: add common Type-C USB Switch schema
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>, "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>, "Rob Herring"
- <robh+dt@kernel.org>, "Krzysztof Kozlowski"
- <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Bjorn Andersson" <andersson@kernel.org>, "Konrad Dybcio"
- <konrad.dybcio@linaro.org>, "Neil Armstrong" <neil.armstrong@linaro.org>,
- <linux-usb@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-X-Mailer: aerc 0.15.2
-References: <20240115092923.105275-1-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20240115092923.105275-1-krzysztof.kozlowski@linaro.org>
+MIME-Version: 1.0
+References: <20240113-pmi632-typec-v2-0-182d9aa0a5b3@linaro.org>
+ <20240113-pmi632-typec-v2-4-182d9aa0a5b3@linaro.org> <2c291056-e4c6-4c8d-a8c1-37cfd5341652@linaro.org>
+In-Reply-To: <2c291056-e4c6-4c8d-a8c1-37cfd5341652@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 15 Jan 2024 11:47:16 +0200
+Message-ID: <CAA8EJpquRv20NhQ2CUZaAju-=E4cFUsXS3i9fKAPHnwkd8Yf_g@mail.gmail.com>
+Subject: Re: [PATCH v2 04/15] dt-bindings: phy: qcom,msm8998-qmp-usb3-phy:
+ support USB-C data
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Wesley Cheng <quic_wcheng@quicinc.com>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Guenter Roeck <linux@roeck-us.net>, 
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-usb@vger.kernel.org, linux-phy@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon Jan 15, 2024 at 10:29 AM CET, Krzysztof Kozlowski wrote:
-> Several bindings implement parts of Type-C USB orientation and mode
-> switching, and retiming.  Keep definition of such properties in one
-> place, new usb-switch schema, to avoid duplicate defines.
+On Mon, 15 Jan 2024 at 11:16, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 >
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../devicetree/bindings/usb/fcs,fsa4480.yaml  | 12 ++--
->  .../devicetree/bindings/usb/gpio-sbu-mux.yaml | 12 ++--
->  .../devicetree/bindings/usb/nxp,ptn36502.yaml | 12 ++--
->  .../bindings/usb/onnn,nb7vpq904m.yaml         | 13 ++--
->  .../bindings/usb/qcom,wcd939x-usbss.yaml      | 12 ++--
->  .../devicetree/bindings/usb/usb-switch.yaml   | 68 +++++++++++++++++++
->  6 files changed, 93 insertions(+), 36 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/usb/usb-switch.yaml
+> On 13/01/2024 21:55, Dmitry Baryshkov wrote:
+> > Extend the Qualcomm USB-C QMP PHY schema with the USB-C related entry
+> > points: orientation-switch property and USB-C connection graph.
+> >
+> > Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 >
-> diff --git a/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml b/Doc=
-umentation/devicetree/bindings/usb/fcs,fsa4480.yaml
-> index f9410eb76a62..8b25b9a01ced 100644
-> --- a/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml
-> +++ b/Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml
-> @@ -27,13 +27,8 @@ properties:
->    vcc-supply:
->      description: power supply (2.7V-5.5V)
-> =20
-> -  mode-switch:
-> -    description: Flag the port as possible handle of altmode switching
-> -    type: boolean
-> -
-> -  orientation-switch:
-> -    description: Flag the port as possible handler of orientation switch=
-ing
-> -    type: boolean
-> +  mode-switch: true
-> +  orientation-switch: true
-> =20
->    port:
->      $ref: /schemas/graph.yaml#/$defs/port-base
-> @@ -79,6 +74,9 @@ required:
->    - reg
->    - port
-> =20
-> +allOf:
-> +  - $ref: usb-switch.yaml#
-> +
->  additionalProperties: false
-> =20
->  examples:
-> diff --git a/Documentation/devicetree/bindings/usb/gpio-sbu-mux.yaml b/Do=
-cumentation/devicetree/bindings/usb/gpio-sbu-mux.yaml
-> index d3b2b666ec2a..88e1607cf053 100644
-> --- a/Documentation/devicetree/bindings/usb/gpio-sbu-mux.yaml
-> +++ b/Documentation/devicetree/bindings/usb/gpio-sbu-mux.yaml
-> @@ -33,13 +33,8 @@ properties:
->    vcc-supply:
->      description: power supply
-> =20
-> -  mode-switch:
-> -    description: Flag the port as possible handle of altmode switching
-> -    type: boolean
-> -
-> -  orientation-switch:
-> -    description: Flag the port as possible handler of orientation switch=
-ing
-> -    type: boolean
-> +  mode-switch: true
-> +  orientation-switch: true
-> =20
->    port:
->      $ref: /schemas/graph.yaml#/properties/port
-> @@ -54,6 +49,9 @@ required:
->    - orientation-switch
->    - port
-> =20
-> +allOf:
-> +  - $ref: usb-switch.yaml#
-> +
->  additionalProperties: false
-> =20
->  examples:
-> diff --git a/Documentation/devicetree/bindings/usb/nxp,ptn36502.yaml b/Do=
-cumentation/devicetree/bindings/usb/nxp,ptn36502.yaml
-> index eee548ac1abe..d805dde80796 100644
-> --- a/Documentation/devicetree/bindings/usb/nxp,ptn36502.yaml
-> +++ b/Documentation/devicetree/bindings/usb/nxp,ptn36502.yaml
-> @@ -20,13 +20,8 @@ properties:
->    vdd18-supply:
->      description: Power supply for VDD18 pin
-> =20
-> -  retimer-switch:
-> -    description: Flag the port as possible handle of SuperSpeed signals =
-retiming
-> -    type: boolean
-> -
-> -  orientation-switch:
-> -    description: Flag the port as possible handler of orientation switch=
-ing
-> -    type: boolean
-> +  orientation-switch: true
-> +  retimer-switch: true
-> =20
->    ports:
->      $ref: /schemas/graph.yaml#/properties/ports
-> @@ -49,6 +44,9 @@ required:
->    - compatible
->    - reg
-> =20
-> +allOf:
-> +  - $ref: usb-switch.yaml#
-> +
->  additionalProperties: false
-> =20
->  examples:
-> diff --git a/Documentation/devicetree/bindings/usb/onnn,nb7vpq904m.yaml b=
-/Documentation/devicetree/bindings/usb/onnn,nb7vpq904m.yaml
-> index c0201da002f6..589914d22bf2 100644
-> --- a/Documentation/devicetree/bindings/usb/onnn,nb7vpq904m.yaml
-> +++ b/Documentation/devicetree/bindings/usb/onnn,nb7vpq904m.yaml
-> @@ -21,14 +21,8 @@ properties:
->      description: power supply (1.8V)
-> =20
->    enable-gpios: true
-> -
-> -  retimer-switch:
-> -    description: Flag the port as possible handle of SuperSpeed signals =
-retiming
-> -    type: boolean
-> -
-> -  orientation-switch:
-> -    description: Flag the port as possible handler of orientation switch=
-ing
-> -    type: boolean
-> +  orientation-switch: true
-> +  retimer-switch: true
-> =20
->    ports:
->      $ref: /schemas/graph.yaml#/properties/ports
-> @@ -95,6 +89,9 @@ required:
->    - compatible
->    - reg
-> =20
-> +allOf:
-> +  - $ref: usb-switch.yaml#
-> +
->  additionalProperties: false
-> =20
->  examples:
-> diff --git a/Documentation/devicetree/bindings/usb/qcom,wcd939x-usbss.yam=
-l b/Documentation/devicetree/bindings/usb/qcom,wcd939x-usbss.yaml
-> index 7ddfd3313a18..96346723f3e9 100644
-> --- a/Documentation/devicetree/bindings/usb/qcom,wcd939x-usbss.yaml
-> +++ b/Documentation/devicetree/bindings/usb/qcom,wcd939x-usbss.yaml
-> @@ -35,13 +35,8 @@ properties:
->    vdd-supply:
->      description: USBSS VDD power supply
-> =20
-> -  mode-switch:
-> -    description: Flag the port as possible handle of altmode switching
-> -    type: boolean
-> -
-> -  orientation-switch:
-> -    description: Flag the port as possible handler of orientation switch=
-ing
-> -    type: boolean
-> +  mode-switch: true
-> +  orientation-switch: true
-> =20
->    ports:
->      $ref: /schemas/graph.yaml#/properties/ports
-> @@ -63,6 +58,9 @@ required:
->    - reg
->    - ports
-> =20
-> +allOf:
-> +  - $ref: usb-switch.yaml#
-> +
->  additionalProperties: false
-> =20
->  examples:
-> diff --git a/Documentation/devicetree/bindings/usb/usb-switch.yaml b/Docu=
-mentation/devicetree/bindings/usb/usb-switch.yaml
-> new file mode 100644
-> index 000000000000..0d0b60234d1f
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/usb/usb-switch.yaml
-> @@ -0,0 +1,68 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/usb/usb-switch.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: USB Orientation and Mode Switches Common Properties
-> +
-> +maintainers:
-> +  - Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> +
-> +description:
-> +  Common properties for devices handling USB mode and orientation switch=
-ing.
-> +
-> +properties:
-> +  mode-switch:
-> +    description: Possible handle of altmode switching
+> Hm, this feels unusual - is really the phy handling it? Not "Qualcomm
+> PMIC based USB Type-C block"?
 
-handle -> handler
+Yes. The PHY handles orientation by switching the SS lanes accordingly
+to the way the cable has been plugged in.
 
-> +    type: boolean
-> +
-> +  orientation-switch:
-> +    description: Possible handler of orientation switching
-> +    type: boolean
-> +
-> +  retimer-switch:
-> +    description: Possible handle of SuperSpeed signals retiming
-
-handle -> handler
-
-> +    type: boolean
-> +
-> +  port:
-> +    $ref: /schemas/graph.yaml#/properties/port
-> +    description:
-> +      A port node to link the device to a TypeC controller for the purpo=
-se of
-> +      handling altmode muxing and orientation switching.
-> +
-> +  ports:
-> +    $ref: /schemas/graph.yaml#/properties/ports
-> +    properties:
-> +      port@0:
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +        description:
-> +          Super Speed (SS) Output endpoint to the Type-C connector
-> +
-> +      port@1:
-> +        $ref: /schemas/graph.yaml#/$defs/port-base
-> +        description:
-> +          Super Speed (SS) Input endpoint from the Super-Speed PHY
-> +        unevaluatedProperties: false
-> +
-> +        properties:
-> +          endpoint:
-> +            $ref: /schemas/graph.yaml#/$defs/endpoint-base
-> +            # additionalProperties: true
-
-Don't think this should still be here?
-
-The rest looks sane to the extent I know dt bindings.
-
-Regards
-Luca
-
-> +            unevaluatedProperties: false
-> +            properties:
-> +              data-lanes:
-> +                $ref: /schemas/types.yaml#/definitions/uint32-array
-> +                minItems: 1
-> +                maxItems: 8
-> +                uniqueItems: true
-> +                items:
-> +                  maximum: 8
-> +
-> +oneOf:
-> +  - required:
-> +      - port
-> +  - required:
-> +      - ports
-> +
-> +additionalProperties: true
-
+-- 
+With best wishes
+Dmitry
 
