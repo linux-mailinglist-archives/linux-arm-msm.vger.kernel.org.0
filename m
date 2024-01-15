@@ -1,102 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-7252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7253-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E578482D64B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 10:47:35 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D5E082D651
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 10:48:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F2CF91C215F1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 09:47:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 36480281D2C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 09:48:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F08E0DF41;
-	Mon, 15 Jan 2024 09:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26701DDCE;
+	Mon, 15 Jan 2024 09:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IKHyU+6u"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CY1l8xIA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC04E54E
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jan 2024 09:47:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-5e811c5c1adso72732027b3.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jan 2024 01:47:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705312047; x=1705916847; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=KFasKVeIFS8eA29J5OC5S7BAGeeHVHQITZOFxwu8rvQ=;
-        b=IKHyU+6u+lgjRbyCoCSwwGSrug6+245U2HLPFxjhv8yEBt6FyeKVAYrLG3CNHFzZzf
-         Dk2FCGpsEHJ9T04siwv7YL2h1aIpSxBMVCSwxe3FPWvHPhSuSryMMe+1bXZO25NNMRiG
-         vSBV0i8c/+hl2sfi+a3Q7AOrvZl/aXuFkZYt5lSiVyfCeZDx6Ebq3mCNIBq/Fofzhr1V
-         irsU2QPRNqtsUf1968TcqB9towdQH6O13+vCSV8zmtiZrUaKul4ZFRLGYeG7z4wlAv73
-         XMxN5AWHIcWlf07NY6l2DN4RogFuoJi0YH947NDr+LaVdwbp78RB883umf8rV3ONJIAW
-         x8ZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705312047; x=1705916847;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KFasKVeIFS8eA29J5OC5S7BAGeeHVHQITZOFxwu8rvQ=;
-        b=EIiwOE9TocF/q3kF/d09Qg5EjMD6pcnnZNyFtOPQBKKsS4/vkzf/Qr3rcwybJfrapP
-         2j9ukyDIh/p9KqCZYZBDHQNP9/koObAyVkukWvfbBzQt95bZh+Svvi1Oz4eZ8ec8hxXf
-         cZ2KSuN+2NwCEP/l/yqSq2CGN4CewHeyqaeyli6ioldrbJXQGRdqDpgdfc5hrotBp/7R
-         TSMioW3zWnIGWZmNc9LHBJF0o/xORhACZ1rbuv86j+x4RJF7COiU6dg42SL4Bh4wialY
-         bHbNgqXNAXzBD3hn7U21RR/vrkFDNq9cx76RE3xbF/Z4ShbKv+3PXd90hU4n+di2gBah
-         EG6w==
-X-Gm-Message-State: AOJu0Yyg31+E5OU0SKwt8JnmEJeWCIBAwNeKmojwD4wiFmwWZNKVQJxY
-	OLSruWnOPmKm5aDSj85QG+KUMwJ3WoiOeXbwg437j6+0lTgJ1A==
-X-Google-Smtp-Source: AGHT+IGDxeO4T8bagcuUSUZ0vMjmvo/iXyCvviU6IkM5zpYZ/eSn970UnrLfZAjyWjqwQ+WhSzN85TavpbmAnoNw87w=
-X-Received: by 2002:a81:d003:0:b0:5ee:1ca0:b7ef with SMTP id
- v3-20020a81d003000000b005ee1ca0b7efmr3089640ywi.42.1705312047014; Mon, 15 Jan
- 2024 01:47:27 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053D9D2F5;
+	Mon, 15 Jan 2024 09:48:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 85D03C433C7;
+	Mon, 15 Jan 2024 09:48:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1705312130;
+	bh=D8eqyGJBMl/zmbPd8uMuLY2qesCRT+s4btQ/GCmYQIw=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=CY1l8xIAPtPo9+Fb87monGh/dYTtJV0bz1NnwXnv1dTNX3G3sZ9onMjIsIVPD9i6Z
+	 OXZpWO7S7dlklPmF7/3paM/CDcWUaVtTqkAbodn9yVUt6oV+XiaCENuRyfkKD1tihD
+	 jVS+TeaGLiuyOWFxn6TFRygg5j0O5pVwhxaMWUKOFMz0DuqEHg3QpzeSdyL+5vmPR8
+	 shz8enDRn+9udYvY4fNRR+ZwkR63vBawu2oBYmMEmdxjbMm8jIqtQCOCeg0hG54gY6
+	 GGFyPXrPXrk5aWSW1FTj5Vn2z0NUbfSiDBJlOv4Z5yQWoBzZlih/RHAvs0bdyYlG2x
+	 nQ8fu4aNSA1Ng==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66438C3DA79;
+	Mon, 15 Jan 2024 09:48:50 +0000 (UTC)
+From: Hui Liu via B4 Relay <devnull+quic_huliu.quicinc.com@kernel.org>
+Date: Mon, 15 Jan 2024 17:48:37 +0800
+Subject: [PATCH v5] arm64: dts: qcom: qcm6490-idp: Add definition for three
+ LEDs
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240113-pmi632-typec-v2-0-182d9aa0a5b3@linaro.org>
- <20240113-pmi632-typec-v2-4-182d9aa0a5b3@linaro.org> <2c291056-e4c6-4c8d-a8c1-37cfd5341652@linaro.org>
-In-Reply-To: <2c291056-e4c6-4c8d-a8c1-37cfd5341652@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 15 Jan 2024 11:47:16 +0200
-Message-ID: <CAA8EJpquRv20NhQ2CUZaAju-=E4cFUsXS3i9fKAPHnwkd8Yf_g@mail.gmail.com>
-Subject: Re: [PATCH v2 04/15] dt-bindings: phy: qcom,msm8998-qmp-usb3-phy:
- support USB-C data
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Wesley Cheng <quic_wcheng@quicinc.com>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Vinod Koul <vkoul@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Guenter Roeck <linux@roeck-us.net>, 
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-usb@vger.kernel.org, linux-phy@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240115-lpg-v5-1-3c56f77f9cec@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAHX/pGUC/1WO3wqCMBxGXyV23WK/bS7pqveIiLk/OlCnm41Cf
+ PemEeHlge8cvhlFE5yJ6HKYUTDJRef7DMXxgFQj+9pgpzMjSigDCgVuhxpzKbVmZ14CSJSXQzD
+ WvbbK7Z7ZBt/hqQlG/l0Agkflu0drdMSJYsBMSQ22qpQo5HV8OuV6dcqTNdm4OPnw3n4ltob3F
+ xLLAW6orogS2hZ2F1hPJP6zOAGgX4tnS3FCOKFClKLaW8uyfAB9zWyOEQEAAA==
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Hui Liu <quic_huliu@quicinc.com>
+X-Mailer: b4 0.13-dev-83828
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1705312129; l=1982;
+ i=quic_huliu@quicinc.com; s=20230823; h=from:subject:message-id;
+ bh=kbl/RWkKCwiC9v8FHJS+qQTVX4k0SVTLaRWOhdD+XYo=;
+ b=MmaOYHX12oex5H21exM2lmlZ4WrwfDdHYzPHMkIFWMZ1AxXDFqLJij+2eCSpU4ch55er29s/g
+ vqBq9BNnFCHCEAUOtlyLRS4z8evAdZzlIb06UWqF1W7sBA1IAbH+sSv
+X-Developer-Key: i=quic_huliu@quicinc.com; a=ed25519;
+ pk=1z+A50UnTuKe/FdQv2c0W3ajDsJOYddwIHo2iivhTTA=
+X-Endpoint-Received:
+ by B4 Relay for quic_huliu@quicinc.com/20230823 with auth_id=80
+X-Original-From: Hui Liu <quic_huliu@quicinc.com>
+Reply-To: <quic_huliu@quicinc.com>
 
-On Mon, 15 Jan 2024 at 11:16, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 13/01/2024 21:55, Dmitry Baryshkov wrote:
-> > Extend the Qualcomm USB-C QMP PHY schema with the USB-C related entry
-> > points: orientation-switch property and USB-C connection graph.
-> >
-> > Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
-> Hm, this feels unusual - is really the phy handling it? Not "Qualcomm
-> PMIC based USB Type-C block"?
+From: Hui Liu <quic_huliu@quicinc.com>
 
-Yes. The PHY handles orientation by switching the SS lanes accordingly
-to the way the cable has been plugged in.
+Add definition for three LEDs to make sure they can
+be enabled base on QCOM LPG LED driver.
 
+Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
+---
+Changes in v5:
+- Rephrased commit text, replaced qcs6490-idp to qcm6490-idp.
+- Removed the unnecessary full.
+- Link to v4: https://lore.kernel.org/r/20240112-lpg-v4-1-c4004026686b@quicinc.com
+
+Changes in v4:
+- Removed "label" definition and added "function" definition.
+- Link to v3: https://lore.kernel.org/r/20231215-lpg-v3-1-4e2db0c6df5f@quicinc.com
+
+Changes in v3:
+- Rephrased commit text and updated the nodes to qcm6490-idp board file.
+- Link to v2: https://lore.kernel.org/all/20231110-qcom_leds-v2-1-3cad1fbbc65a@quicinc.com/
+
+Changes in v2:
+- Rephrased commit text and updated the nodes to board file.
+- Link to v1: https://lore.kernel.org/r/20231108-qcom_leds-v1-1-c3e1c8572cb0@quicinc.com
+---
+ arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+index 37c91fdf3ab9..8268fad505e7 100644
+--- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
++++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+@@ -5,6 +5,7 @@
+ 
+ /dts-v1/;
+ 
++#include <dt-bindings/leds/common.h>
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ #include "sc7280.dtsi"
+ #include "pm7325.dtsi"
+@@ -414,6 +415,28 @@ vreg_bob_3p296: bob {
+ 	};
+ };
+ 
++&pm8350c_pwm {
++	function = LED_FUNCTION_STATUS;
++	#address-cells = <1>;
++	#size-cells = <0>;
++	status = "okay";
++
++	led@1 {
++		reg = <1>;
++		color = <LED_COLOR_ID_RED>;
++	};
++
++	led@2 {
++		reg = <2>;
++		color = <LED_COLOR_ID_GREEN>;
++	};
++
++	led@3 {
++		reg = <3>;
++		color = <LED_COLOR_ID_BLUE>;
++	};
++};
++
+ &qupv3_id_0 {
+ 	status = "okay";
+ };
+
+---
+base-commit: 17cb8a20bde66a520a2ca7aad1063e1ce7382240
+change-id: 20231215-lpg-4aadd374811a
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Hui Liu <quic_huliu@quicinc.com>
+
 
