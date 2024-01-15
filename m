@@ -1,137 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-7274-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9310782DC73
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 16:38:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0173082DC95
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 16:47:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 04F6F1F224FF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 15:38:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A9E5B1F22518
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 15:47:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B03D17744;
-	Mon, 15 Jan 2024 15:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADF9817984;
+	Mon, 15 Jan 2024 15:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="T0hMfeKH"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="GCGpj/vy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E558817981
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jan 2024 15:38:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-557ad92cabbso8685076a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jan 2024 07:38:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705333087; x=1705937887; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WQWpGlGZEznsiJ0/iDf2nP9OPfJ6gAikeNvxvkikyKQ=;
-        b=T0hMfeKHRkKojKzs3ziSdfDlqRnqI2K7IOfDsFCLX87fa/nb7TnELPWW7AJeq6TSkJ
-         aO9o42TUXhDVD9Axi5B3W4gzkoQ/b0qGhYVV1F08dX8cY/gNv9uSLxyiMsu6RmLoRmvc
-         RPUnioqVF9ycOYr4h8mqi9voxfQQkWh8ksIqrAhqZeyaMAoxhre+HT5rzAJV02uxBOxP
-         Gst7hyTAz0WOrE79P/47Jza1HEUeXPBmEwnNXpzYsaDHfDvI2j8Ka8NFqgdB3x1ERbHU
-         Zn5/v2YbPRG8fQZG3fcCSwqqTbKts/8qnq0ZlvtbcI9VfomlzlE0WRnJ6pifBVNhFpfV
-         5phg==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4365217985
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jan 2024 15:47:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1705333648;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=KnzswkQ+DuK9NjL9QK0UKKPu2vm7bCrl7oml7Skr2oY=;
+	b=GCGpj/vy1MLO3RP2wvS/EIYZm5YIn4/2QWs1Dhd90DtAdtMYfJNXXbA3yTGWmxNQDM42kc
+	nAJvFOCY4iy8Z1vtTUSHABqvREKs68TBzfWKxnjokbbmlNKhOf0JgaPrixdZ1D4lTH6gPD
+	tbxL9zg9fTfwTgMB8I289hpB9mAKUv4=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-341-LGoaGbQ_OZqmmFYqjHwHow-1; Mon, 15 Jan 2024 10:47:05 -0500
+X-MC-Unique: LGoaGbQ_OZqmmFYqjHwHow-1
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-429899f12c8so118124631cf.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jan 2024 07:47:05 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705333087; x=1705937887;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WQWpGlGZEznsiJ0/iDf2nP9OPfJ6gAikeNvxvkikyKQ=;
-        b=gByEMZ7VRHc/KJ+2dPqqOP8Wi49twcsjcJC8maaS4eTP342NlJjwblJwvvxkFhS3+u
-         xRyesejoZBkZIWO9WMWk8IAmJXX/6bNRI6k/o7QFVKAkDi8cILgMnL60cnCsRnxPV7aD
-         kuyyYNoUTegj6h+Qn18Yrts9yQ+Pq8MVaVCa7ldSgQD+T4geF0k/WZ6KD/bCfx+B3Phw
-         OT9LRvu+z4Njjqdd0uh/ZSP3opO+Kwh6jnY562RDEr3q+LhekCsQcSDBbQy2UYSScdIi
-         wiGokIzVxhnk2FrUsdmXDUdfABV+tN4IClkHnJzV2NmB99CeG3n/q8LSif9LmQZwSo1Z
-         dopQ==
-X-Gm-Message-State: AOJu0YwTfMeRHMeXsZFwYlY9FUko99IExWZzBYkWb1rSnW3843X31TR4
-	04sLdR+LP5XMnLUb4cPBsfBuvtplrsTjIQ==
-X-Google-Smtp-Source: AGHT+IHULikRXMrmNc71afkh2RUWCHUct+4p49qz+xsWQWuEp9zAYy/RIOB4hNsEXgTxsVOMvvyhUQ==
-X-Received: by 2002:a05:6402:38c:b0:559:391e:51d2 with SMTP id o12-20020a056402038c00b00559391e51d2mr492806edv.128.1705333087243;
-        Mon, 15 Jan 2024 07:38:07 -0800 (PST)
-Received: from [192.168.174.25] (178235179017.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.17])
-        by smtp.gmail.com with ESMTPSA id j19-20020aa7de93000000b0055900cc4640sm3243143edv.23.2024.01.15.07.38.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Jan 2024 07:38:06 -0800 (PST)
-Message-ID: <0d76ebd1-5edc-44c4-80e6-315cf6579079@linaro.org>
-Date: Mon, 15 Jan 2024 16:38:04 +0100
+        d=1e100.net; s=20230601; t=1705333625; x=1705938425;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KnzswkQ+DuK9NjL9QK0UKKPu2vm7bCrl7oml7Skr2oY=;
+        b=AVRTZLLeUo7hjCuE0cD2K9l6a3RNOtyF+/c349IeD3biswbHG90F/HQePquTvQNK9/
+         zQ/T3Bc4Uj5w2G4LpDs3EtKAUVUB78cwk4GR8tACymA7qA2jFFMDFwH7crenc17tan++
+         ZLSoC61tH70tYnjZh9aGW0k8P+QqL4xqpMqBLRqxQlRz+r2K0Qhrj7Shm1AP0PgqNMba
+         hcelLju8QwukQN+0WDkrwJItjlMPp/0WPZoic2/CxdfrVBQTxnA/gT9/hSjsDYXAxmFT
+         WuLDOSjuium7k3UxpqyU/TtX+pFz5DkCt40tMRHlnqOtey2J0dqC4SXR530Y6hUmqPSI
+         zWYA==
+X-Gm-Message-State: AOJu0YxQrLxGw+2oV5FdB6duCV3mzGItDHGEOmEgou1tRX8ertXaG1c3
+	OTQIpxt90t6csYePxpXoOUKB1Be7PkcbCNebeAocRvq3G2jbuRItnUkDWDqMTCpw4JZCar5hmYu
+	2JVcLYxjj+IOLxqcKuy5jrhb+GATdH9cMXA==
+X-Received: by 2002:a05:622a:3c8:b0:429:d043:6a11 with SMTP id k8-20020a05622a03c800b00429d0436a11mr7947982qtx.33.1705333624861;
+        Mon, 15 Jan 2024 07:47:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEFp3tM+8GK9TNJa7xv7RBILG/5a0z3VZf3ahdtAakngZuECE5dAGmy/UIce3ie1YgIY6zPzA==
+X-Received: by 2002:a05:622a:3c8:b0:429:d043:6a11 with SMTP id k8-20020a05622a03c800b00429d0436a11mr7947948qtx.33.1705333623644;
+        Mon, 15 Jan 2024 07:47:03 -0800 (PST)
+Received: from x1 (c-24-2-114-156.hsd1.pa.comcast.net. [24.2.114.156])
+        by smtp.gmail.com with ESMTPSA id f12-20020a05622a114c00b00427f1eeddccsm4004027qty.38.2024.01.15.07.47.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Jan 2024 07:47:03 -0800 (PST)
+Date: Mon, 15 Jan 2024 10:47:02 -0500
+From: Brian Masney <bmasney@redhat.com>
+To: Elliot Berman <quic_eberman@quicinc.com>
+Cc: Shazad Hussain <quic_shazhuss@quicinc.com>,
+	linux-arm-msm@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Eric Chanudet <echanude@redhat.com>,
+	Prasad Sodagudi <psodagud@quicinc.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: sa8755p ufs ice bug: gcc_ufs_phy_ice_core_clk status stuck at
+ 'off'
+Message-ID: <ZaVTdlyhuKFvpz3D@x1>
+References: <ZZYTYsaNUuWQg3tR@x1>
+ <49d85352-d022-4b59-a3f2-d8f7ef3028ac@quicinc.com>
+ <ZZxgCKQmQdUL81pX@x1>
+ <d9335515-157b-4b6a-ba41-c31ca76362ee@quicinc.com>
+ <ZZ2-P1xzsDwk91Yq@x1>
+ <37ff80b1-62fa-45ce-b181-955cc887d47d@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] interconnect: qcom: sm8450: Revert "interconnect: qcom:
- sm8450: Enable sync_state"
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Georgi Djakov <djakov@kernel.org>,
- Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: stable@vger.kernel.org
-References: <20240115153420.1525037-1-krzysztof.kozlowski@linaro.org>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
- BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
- HGWdmtO+RvadOVi6CoUDqALsmfS3MUG5Pj2Ne9+0jRg4hEnB92AyF9rW2G3qisFcwPgvatt7
- TXD5E38mLyOPOUyXNj9XpDbt1hNwKQfiidmPh5e7VNAWRnW1iCMMoKqzM1Anzq7e5Afyeifz
- zRcQPLaqrPjnKqZGL2BKQSZDh6NkI5ZLRhhHQf61fkWcUpTp1oDC6jWVfT7hwRVIQLrrNj9G
- MpPzrlN4YuAqKeIer1FMt8cq64ifgTzxHzXsMcUdclzq2LTk2RXaPl6Jg/IXWqUClJHbamSk
- t1bfif3SnmhA6TiNvEpDKPiT3IDs42THU6ygslrBxyROQPWLI9IL1y8S6RtEh8H+NZQWZNzm
- UQ3imZirlPjxZtvz1BtnnBWS06e7x/UEAguj7VHCuymVgpl2Za17d1jj81YN5Rp5L9GXxkV1
- aUEwONM3eCI3qcYm5JNc5X+JthZOWsbIPSC1Rhxz3JmWIwP1udr5E3oNRe9u2LIEq+wH/toH
- kpPDhTeMkvt4KfE5m5ercid9+ZXAqoaYLUL4HCEw+HW0DXcKDwARAQABzShLb25yYWQgRHli
- Y2lvIDxrb25yYWQuZHliY2lvQGxpbmFyby5vcmc+wsGOBBMBCAA4FiEEU24if9oCL2zdAAQV
- R4cBcg5dfFgFAmQ5bqwCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQR4cBcg5dfFjO
- BQ//YQV6fkbqQCceYebGg6TiisWCy8LG77zV7DB0VMIWJv7Km7Sz0QQrHQVzhEr3trNenZrf
- yy+o2tQOF2biICzbLM8oyQPY8B///KJTWI2khoB8IJSJq3kNG68NjPg2vkP6CMltC/X3ohAo
- xL2UgwN5vj74QnlNneOjc0vGbtA7zURNhTz5P/YuTudCqcAbxJkbqZM4WymjQhe0XgwHLkiH
- 5LHSZ31MRKp/+4Kqs4DTXMctc7vFhtUdmatAExDKw8oEz5NbskKbW+qHjW1XUcUIrxRr667V
- GWH6MkVceT9ZBrtLoSzMLYaQXvi3sSAup0qiJiBYszc/VOu3RbIpNLRcXN3KYuxdQAptacTE
- mA+5+4Y4DfC3rUSun+hWLDeac9z9jjHm5rE998OqZnOU9aztbd6zQG5VL6EKgsVXAZD4D3RP
- x1NaAjdA3MD06eyvbOWiA5NSzIcC8UIQvgx09xm7dThCuQYJR4Yxjd+9JPJHI6apzNZpDGvQ
- BBZzvwxV6L1CojUEpnilmMG1ZOTstktWpNzw3G2Gis0XihDUef0MWVsQYJAl0wfiv/0By+XK
- mm2zRR+l/dnzxnlbgJ5pO0imC2w0TVxLkAp0eo0LHw619finad2u6UPQAkZ4oj++iIGrJkt5
- Lkn2XgB+IW8ESflz6nDY3b5KQRF8Z6XLP0+IEdLOOARkOW7yEgorBgEEAZdVAQUBAQdAwmUx
- xrbSCx2ksDxz7rFFGX1KmTkdRtcgC6F3NfuNYkYDAQgHwsF2BBgBCAAgFiEEU24if9oCL2zd
- AAQVR4cBcg5dfFgFAmQ5bvICGwwACgkQR4cBcg5dfFju1Q//Xta1ShwL0MLSC1KL1lXGXeRM
- 8arzfyiB5wJ9tb9U/nZvhhdfilEDLe0jKJY0RJErbdRHsalwQCrtq/1ewQpMpsRxXzAjgfRN
- jc4tgxRWmI+aVTzSRpywNahzZBT695hMz81cVZJoZzaV0KaMTlSnBkrviPz1nIGHYCHJxF9r
- cIu0GSIyUjZ/7xslxdvjpLth16H27JCWDzDqIQMtg61063gNyEyWgt1qRSaK14JIH/DoYRfn
- jfFQSC8bffFjat7BQGFz4ZpRavkMUFuDirn5Tf28oc5ebe2cIHp4/kajTx/7JOxWZ80U70mA
- cBgEeYSrYYnX+UJsSxpzLc/0sT1eRJDEhI4XIQM4ClIzpsCIN5HnVF76UQXh3a9zpwh3dk8i
- bhN/URmCOTH+LHNJYN/MxY8wuukq877DWB7k86pBs5IDLAXmW8v3gIDWyIcgYqb2v8QO2Mqx
- YMqL7UZxVLul4/JbllsQB8F/fNI8AfttmAQL9cwo6C8yDTXKdho920W4WUR9k8NT/OBqWSyk
- bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
- nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
- izWDgYvmBE8=
-In-Reply-To: <20240115153420.1525037-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <37ff80b1-62fa-45ce-b181-955cc887d47d@quicinc.com>
+User-Agent: Mutt/2.2.10 (2023-03-25)
 
-On 15.01.2024 16:34, Krzysztof Kozlowski wrote:
-> Revert commit 16862f1b2110 ("interconnect: qcom: sm8450: Enable
-> sync_state"), because it causes serial console to corrupt, later freeze
-> and become either entirely corrupted or only print without accepting any
-> input.
+On Tue, Jan 09, 2024 at 01:56:30PM -0800, Elliot Berman wrote:
+> Things have been a bit more reliable for me after adding the power-domains.
 > 
-> Cc: <stable@vger.kernel.org>
-> Fixes: 16862f1b2110 ("interconnect: qcom: sm8450: Enable sync_state")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
+> Are you getting stuck at the same spot or somewhere else?
+> 
+> I've been looking at a similar issue to [1], so I wonder if maybe you're
+> facing that instead.
+> 
+> [1]: https://lore.kernel.org/linux-arm-msm/20240104101735.48694-1-laura.nao@collabora.com/T/#m39f7c80b59c750ee4c0082474c5c15b6055927ef
 
-What's the board you're testing this on? And kernel base revision?
+I had some time Friday to setup some automation to bisect this.
+Unfortunately, I can't reproduce the hang on a sa8775p with the
+upstream ARM64 defconfig on linux-next-20240112. I can reproduce it
+using Fedora's arm64 defconfig with the same version of linux-next.
+We have a lab move going on this week and our sa8775p boards will be
+unavailable. I'll start a bisect with the Fedora config once our boards
+are available again.
 
-The symptoms you mentioned happened for me with this on some recent
--next:
+Brian
 
-https://lore.kernel.org/lkml/f24f32f1213b4b9e9ff2b4a36922f8d6e3abac51.1704278832.git.viresh.kumar@linaro.org/
-
-Konrad
 
