@@ -1,176 +1,235 @@
-Return-Path: <linux-arm-msm+bounces-7255-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4011F82D671
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 10:54:20 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0342882D67B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 10:56:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 64EE21C214CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 09:54:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 52436B20B07
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 09:56:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73FA8E55E;
-	Mon, 15 Jan 2024 09:54:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LIeVukvy"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD8E7E568;
+	Mon, 15 Jan 2024 09:56:02 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BE3E54E
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jan 2024 09:54:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-5f3da7ba2bfso81862737b3.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jan 2024 01:54:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705312449; x=1705917249; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Km0Qtz7q4pHjc67v0RYg5L+Ylsfr/XKzPScLyVzzc6Y=;
-        b=LIeVukvySD5Rmx82CeO8DpbZwXc+rJAvX5rdWtSFqvtUts5FtnqIjEDJ4QAPOGg3Rj
-         8AD5E8jw9cX2hZPAohLby2F5bSNAZLFqoOaSQ9Ndcr06N58Ito+SjT6rpd5aFVCl/spg
-         EG9ydIuZV8h0rnUyrQ9ZTZ/6L6sy1yW3dWgJnCPWNqXowIXZMOZzzWSx83tVODyqoJHD
-         Zd//VSrnFL3i4zba7d7IlYHzjtNIUDqUCpM9ff3herThRWFpnYcfuGgkMa8wT7ZIFgly
-         ItujrBTEzCT1SkXBgSDlIpIaUEpkUVq3mTkeYCyEF1GHBKtGGx84CHRgpbQvmP+Z7X0C
-         aGFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705312449; x=1705917249;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Km0Qtz7q4pHjc67v0RYg5L+Ylsfr/XKzPScLyVzzc6Y=;
-        b=NQWrGJeacsA6j8TSbg1hrnSgIvjyMQXiIn1eDscyOVPDppbQ8IZAEm58D0oj0HktIt
-         jmnmXusx9sOv9nC0qmuUzCTnfJTL0lnyVvSMynwGZlYExIXTK/JQZBaap/IHWYJ2xiw/
-         2PM8JUPh/Kr+hPDBIo8D6MfElC5quNaYugRvFzZC5q5StwkNj8EyrSkV9YE8+fdo1u1A
-         k4IE2OAA/vLlHN7swb9jAb5dxzOwMiDLbX+qEsNe25EHVk4D9bLkKYSTjZewPO3B3E+l
-         eorFhGapvGpV3xUpDNwwzIRaRWgnC4J6pdJk9KzCrmLcEWLbJbQ6dDUAvmNpNN5Qs+sH
-         HVrg==
-X-Gm-Message-State: AOJu0YwEhpLX/db7B7UgtTv5jd3x4mTKm+451glPsz5HaURlcoew5u3b
-	Xu6x7yk0yIrXXqbrLdE2rEs2veUOPXTw0GCg4lR1CWEcnQP4vg==
-X-Google-Smtp-Source: AGHT+IHgPr4mySPIKN0GZxQVkUboa43McGL/GwUZ+1Mj1PlmzOjQHJxG4eujLEV9NPTQruJeaT4oSS/65+x1zvItebg=
-X-Received: by 2002:a0d:d74f:0:b0:5ea:448b:cf12 with SMTP id
- z76-20020a0dd74f000000b005ea448bcf12mr3624493ywd.67.1705312448979; Mon, 15
- Jan 2024 01:54:08 -0800 (PST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2593E54E;
+	Mon, 15 Jan 2024 09:55:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 60D632F4;
+	Mon, 15 Jan 2024 01:56:45 -0800 (PST)
+Received: from [192.168.1.100] (unknown [172.31.20.19])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 86C463F6C4;
+	Mon, 15 Jan 2024 01:55:56 -0800 (PST)
+Message-ID: <de1af807-2298-a0f9-0122-2333741ab934@arm.com>
+Date: Mon, 15 Jan 2024 09:55:55 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240112-lpg-v4-1-c4004026686b@quicinc.com> <CAA8EJppdjVRpzrdqm4VOZwUO+khjTdRbY6jN2E2VGmCKSd8inA@mail.gmail.com>
- <8e51796a-49b6-4217-877b-e393d65ff398@quicinc.com>
-In-Reply-To: <8e51796a-49b6-4217-877b-e393d65ff398@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 15 Jan 2024 11:53:58 +0200
-Message-ID: <CAA8EJpr_W2Uj=yU=xxn=5aUm7B6_6DXZnkNHendXa3zW_VL2=w@mail.gmail.com>
-Subject: Re: [PATCH v4] arm64: dts: qcom: qcs6490-idp: Add definition for
- three LEDs.
-To: hui liu <quic_huliu@quicinc.com>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-
-On Mon, 15 Jan 2024 at 07:53, hui liu <quic_huliu@quicinc.com> wrote:
-> On 1/12/2024 11:36 AM, Dmitry Baryshkov wrote:
-> > On Fri, 12 Jan 2024 at 05:07, Hui Liu via B4 Relay
-> > <devnull+quic_huliu.quicinc.com@kernel.org> wrote:
-> >>
-> >> From: Hui Liu <quic_huliu@quicinc.com>
-> >>
-> >> Add definition for three LEDs to make sure they can
-> >> be enabled base on QCOM LPG LED driver.
-> >>
-> >> Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
-> >> ---
-> >> Changes in v4:
-> >> - Removed "label" definition and added "function" definition.
-> >
-> > You have removed "label", but you didn't add "function".
-> I added function node "function = LED_FUNCTION_STATUS;"
-> Don't you mean this function node? I didn't get your mean.
-
-The "function" is a property of the LED (each of them) rather than
-being a top-level property.
-
-> >
-> > BTW: the commit subject is still wrong. Compare "qmp6490-idp" vs "qcs6490-idp"
-> OK, I will update it to qcm6490-idp.
-> >
-> >> - Link to v3: https://lore.kernel.org/r/20231215-lpg-v3-1-4e2db0c6df5f@quicinc.com
-> >>
-> >> Changes in v3:
-> >> - Rephrased commit text and updated the nodes to qcm6490-idp board file.
-> >> - Link to v2: https://lore.kernel.org/all/20231110-qcom_leds-v2-1-3cad1fbbc65a@quicinc.com/
-> >>
-> >> Changes in v2:
-> >> - Rephrased commit text and updated the nodes to board file.
-> >> - Link to v1: https://lore.kernel.org/r/20231108-qcom_leds-v1-1-c3e1c8572cb0@quicinc.com
-> >> ---
-> >>   arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 23 +++++++++++++++++++++++
-> >>   1 file changed, 23 insertions(+)
-> >>
-> >> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> >> index 37c91fdf3ab9..8268fad505e7 100644
-> >> --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> >> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> >> @@ -5,6 +5,7 @@
-> >>
-> >>   /dts-v1/;
-> >>
-> >> +#include <dt-bindings/leds/common.h>
-> >>   #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> >>   #include "sc7280.dtsi"
-> >>   #include "pm7325.dtsi"
-> >> @@ -414,6 +415,28 @@ vreg_bob_3p296: bob {
-> >>          };
-> >>   };
-> >>
-> >> +&pm8350c_pwm {
-> >> +       function = LED_FUNCTION_STATUS;
-> >> +       #address-cells = <1>;
-> >> +       #size-cells = <0>;
-> >> +       status = "okay";
-> >> +
-> >> +       led@1 {
-> >> +               reg = <1>;
-> >> +               color = <LED_COLOR_ID_RED>;
-> >> +       };
-> >> +
-> >> +       led@2 {
-> >> +               reg = <2>;
-> >> +               color = <LED_COLOR_ID_GREEN>;
-> >> +       };
-> >> +
-> >> +       led@3 {
-> >> +               reg = <3>;
-> >> +               color = <LED_COLOR_ID_BLUE>;
-> >> +       };
-> >> +};
-> >> +
-> >>   &qupv3_id_0 {
-> >>          status = "okay";
-> >>   };
-> >>
-> >> ---
-> >> base-commit: 17cb8a20bde66a520a2ca7aad1063e1ce7382240
-> >> change-id: 20231215-lpg-4aadd374811a
-> >>
-> >> Best regards,
-> >> --
-> >> Hui Liu <quic_huliu@quicinc.com>
-> >>
-> >>
-> >
-> >
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v3 8/8] coresight-tpdm: Add msr register support for CMB
+Content-Language: en-US
+To: Tao Zhang <quic_taozha@quicinc.com>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc: Jinlong Mao <quic_jinlmao@quicinc.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, coresight@lists.linaro.org,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Trilok Soni <quic_tsoni@quicinc.com>, Song Chai <quic_songchai@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Konrad Dybcio <konradybcio@gmail.com>, Mike Leach <mike.leach@linaro.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+References: <1700533494-19276-1-git-send-email-quic_taozha@quicinc.com>
+ <1700533494-19276-9-git-send-email-quic_taozha@quicinc.com>
+ <185b23e7-a42f-4a12-85ba-8a093bc5ea58@arm.com>
+ <4409f3cf-7ca9-407f-92c0-5aa7ba6f7b61@quicinc.com>
+ <d8262a32-cc3c-4889-a5f0-a6b128b7e9d6@arm.com>
+ <3e27b0e2-afb2-4706-9996-f567e33e35ba@quicinc.com>
+ <94f504c4-76dd-4139-a8e0-c2858b7937bb@quicinc.com>
+From: James Clark <james.clark@arm.com>
+In-Reply-To: <94f504c4-76dd-4139-a8e0-c2858b7937bb@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
 
 
--- 
-With best wishes
-Dmitry
+On 12/01/2024 09:12, Tao Zhang wrote:
+> 
+> On 12/20/2023 5:06 PM, Tao Zhang wrote:
+>>
+>> On 12/19/2023 10:09 PM, Suzuki K Poulose wrote:
+>>> On 19/12/2023 06:58, Tao Zhang wrote:
+>>>>
+>>>> On 12/18/2023 7:02 PM, Suzuki K Poulose wrote:
+>>>>> On 21/11/2023 02:24, Tao Zhang wrote:
+>>>>>> Add the nodes for CMB subunit MSR(mux select register) support.
+>>>>>> CMB MSRs(mux select registers) is to separate mux,arbitration,
+>>>>>> ,interleaving,data packing control from stream filtering control.
+>>>>>>
+>>>>>> Reviewed-by: James Clark <james.clark@arm.com>
+>>>>>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>>>>>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+>>>>>> ---
+>>>>>>   .../testing/sysfs-bus-coresight-devices-tpdm  |  8 ++
+>>>>>>   drivers/hwtracing/coresight/coresight-tpdm.c  | 86
+>>>>>> +++++++++++++++++++
+>>>>>>   drivers/hwtracing/coresight/coresight-tpdm.h  | 16 +++-
+>>>>>>   3 files changed, 109 insertions(+), 1 deletion(-)
+>>>>>>
+>>>>>> diff --git
+>>>>>> a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>>>>>> b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>>>>>> index e0b77107be13..914f3fd81525 100644
+>>>>>> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>>>>>> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>>>>>> @@ -249,3 +249,11 @@ Description:
+>>>>>>           Accepts only one of the 2 values -  0 or 1.
+>>>>>>           0 : Disable the timestamp of all trace packets.
+>>>>>>           1 : Enable the timestamp of all trace packets.
+>>>>>> +
+>>>>>> +What: /sys/bus/coresight/devices/<tpdm-name>/cmb_msr/msr[0:31]
+>>>>>> +Date:        September 2023
+>>>>>> +KernelVersion    6.7
+>>>>>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao
+>>>>>> Zhang (QUIC) <quic_taozha@quicinc.com>
+>>>>>> +Description:
+>>>>>> +        (RW) Set/Get the MSR(mux select register) for the CMB
+>>>>>> subunit
+>>>>>> +        TPDM.
+>>>>>> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c
+>>>>>> b/drivers/hwtracing/coresight/coresight-tpdm.c
+>>>>>> index f6cda5616e84..7e331ea436cc 100644
+>>>>>> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+>>>>>> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+>>>>>> @@ -86,6 +86,11 @@ static ssize_t tpdm_simple_dataset_show(struct
+>>>>>> device *dev,
+>>>>>>               return -EINVAL;
+>>>>>>           return sysfs_emit(buf, "0x%x\n",
+>>>>>> drvdata->cmb->patt_mask[tpdm_attr->idx]);
+>>>>>> +    case CMB_MSR:
+>>>>>> +        if (tpdm_attr->idx >= drvdata->cmb_msr_num)
+>>>>>> +            return -EINVAL;
+>>>>>> +        return sysfs_emit(buf, "0x%x\n",
+>>>>>> + drvdata->cmb->msr[tpdm_attr->idx]);
+>>>>>>       }
+>>>>>>       return -EINVAL;
+>>>>>>   }
+>>>>>> @@ -162,6 +167,12 @@ static ssize_t
+>>>>>> tpdm_simple_dataset_store(struct device *dev,
+>>>>>>           else
+>>>>>>               ret = -EINVAL;
+>>>>>>           break;
+>>>>>> +    case CMB_MSR:
+>>>>>> +        if (tpdm_attr->idx < drvdata->cmb_msr_num)
+>>>>>> +            drvdata->cmb->msr[tpdm_attr->idx] = val;
+>>>>>> +        else
+>>>>>> +            ret = -EINVAL;
+>>>>>
+>>>>>
+>>>>> minor nit: Could we not break from here instead of adding return
+>>>>> -EINVAL
+>>>>> for each case ? (I understand it has been done for the existing cases.
+>>>>> But I think we should clean up all of that, including the ones you
+>>>>> added
+>>>>> in Patch 5. Similarly for the dataset_show()
+>>>>
+>>>> Sure, do I also need to change the DSB corresponding code? If so,
+>>>> how about
+>>>>
+>>>> if I add a new patch to the next patch series to change the previous
+>>>> existing cases?
+>>>
+>>> You could fix the existing cases as a preparatory patch of the next
+>>> version of this series. I can pick it up and push it to next as I see
+>>> fit.
+>>
+>> Got it. I will update this to the next patch series.
+> 
+> Hi Suzuki,
+> 
+> 
+> Since the dataset data is configured with spin lock protection, it needs
+> to be unlock before return.
+> 
+> List my modification below. Would you mind help review to see if it is
+> good for you.
+> 
+> static ssize_t tpdm_simple_dataset_store(struct device *dev,
+>                      struct device_attribute *attr,
+>                      const char *buf,
+>                      size_t size)
+> {
+>     unsigned long val;
+> 
+>     struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>     struct tpdm_dataset_attribute *tpdm_attr =
+>         container_of(attr, struct tpdm_dataset_attribute, attr);
+> 
+>     if (kstrtoul(buf, 0, &val))
+>         return -EINVAL;
+> 
+>     spin_lock(&drvdata->spinlock);
+>     switch (tpdm_attr->mem) {
+>     case DSB_TRIG_PATT:
+>         if (tpdm_attr->idx < TPDM_DSB_MAX_PATT)
+>             drvdata->dsb->trig_patt[tpdm_attr->idx] = val;
+>         else {
+>             spin_unlock(&drvdata->spinlock);
+>             return -EINVAL;
+>         }
+>     case DSB_TRIG_PATT_MASK:
+>         if (tpdm_attr->idx < TPDM_DSB_MAX_PATT)
+>             drvdata->dsb->trig_patt_mask[tpdm_attr->idx] = val;
+>         else{
+>             spin_unlock(&drvdata->spinlock);
+>             return -EINVAL;
+>         }
+>     case DSB_PATT:
+>         if (tpdm_attr->idx < TPDM_DSB_MAX_PATT)
+>             drvdata->dsb->patt_val[tpdm_attr->idx] = val;
+>         else{
+>             spin_unlock(&drvdata->spinlock);
+>             return -EINVAL;
+>         }
+>     case DSB_PATT_MASK:
+>         if (tpdm_attr->idx < TPDM_DSB_MAX_PATT)
+>             drvdata->dsb->patt_mask[tpdm_attr->idx] = val;
+>         else{
+>             spin_unlock(&drvdata->spinlock);
+>             return -EINVAL;
+>         }
+>     case DSB_MSR:
+>         if (tpdm_attr->idx < drvdata->dsb_msr_num)
+>             drvdata->dsb->msr[tpdm_attr->idx] = val;
+>         else{
+>             spin_unlock(&drvdata->spinlock);
+>             return -EINVAL;
+>         }
+>     default:
+>         spin_unlock(&drvdata->spinlock);
+>         return -EINVAL;
+>     }
+>     return size;
+> 
+> 
+> Best,
+> 
+> Tao
+> 
+
+This looks like a good fit for the new
+guard(spinlock)(&drvdata->spinlock) thing. Then there is no need to do
+all the manual unlocking.
+
 
