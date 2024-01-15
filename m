@@ -1,229 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-7279-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61F1E82DD7B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 17:21:25 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 49AEF82DDBC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 17:40:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 650E61C21D21
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 16:21:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EC576282CD2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 16:39:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A553D17BB4;
-	Mon, 15 Jan 2024 16:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0DDA17BDF;
+	Mon, 15 Jan 2024 16:39:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GD+7GY2Y"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tpseYO8t"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810B417BB1;
-	Mon, 15 Jan 2024 16:17:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED86EC433B2;
-	Mon, 15 Jan 2024 16:16:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705335420;
-	bh=T+2sSv2X8aSMaN+ypn7mK/Rq48tUKizTpqsxeAp5JXg=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=GD+7GY2Y59G0AWjmxmyDueLlKdjD545OB41J37Fcw1V1AbXHiCPvMtkR8ZLBEk+bB
-	 o6h6jxgbo4NPaxdPliQlTsqCLFu0z1zw395a8xiF9jQis/ezAcPv7aZ7Nv0g9U2UUz
-	 NMFIKVdlIK1EP+dulIVzcKB8z3P233h8iHO5Xh/PiaycNVF17dAJJWbEB2cMaze/uH
-	 4bjXRqIJK+NsTTl2B+WhLfTBqxEwPmpuIYpEMqDGu6rsMV1+lzXx4R5BdkJ6SSTxiu
-	 XljzFVMlL2IWBqw175nqZ+3m12n+BxQUUkgO/tM1uk7XmhIFT5LpYQg+lyIwaZ2NiB
-	 dhQr8W2Z7TSkQ==
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2cd81b09e83so53699531fa.2;
-        Mon, 15 Jan 2024 08:16:59 -0800 (PST)
-X-Gm-Message-State: AOJu0YwOqh8yCg768VnykVmUXKvYDy4vIuBy9JtXyXfs5N2G+x7Nj8X3
-	hFIinAF4m4yRENUFLWNYLD1FmjaAfLxf+OGiQg==
-X-Google-Smtp-Source: AGHT+IF9uStzXLvMKSDmlonhF6vj8iuop2j6X3GFmK9wutfyiriS22etcNW5wavbcSbXH+5+Z1eNgdixUpHXm6YARF4=
-X-Received: by 2002:a2e:9ec4:0:b0:2cd:418:a38 with SMTP id h4-20020a2e9ec4000000b002cd04180a38mr1221350ljk.136.1705335418126;
- Mon, 15 Jan 2024 08:16:58 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D8D17BBE
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jan 2024 16:39:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a28bd9ca247so1068015166b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jan 2024 08:39:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1705336783; x=1705941583; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1s6j+FrysBouv14P98ktCGarV5O8RGCf1PmuuB0Rod4=;
+        b=tpseYO8tZGVb4UQ1nnF0J2snj5NMnKQFBD0P5no56iFgD8zpqDopl0PUtPqVCWwgfG
+         UAgEFQ3UoBaTYeD3tAL2XDMdZvS8++311WGVOE3W1eRt1cjmhlm1YhaZP41pbZQ1rj9O
+         lPQkuEh3TnCrGdXlsN/VBr51CqJRuKE8nXZ2ro2S3atB9u8F1KoA6/pA3Y8P3SBBfOCA
+         2OF2k7Kk8J4yWIETIWPyvZXY9nqOzcL0CFaKoLkIF652sCvTKt/TouBVnx5fjomFXliG
+         uIfIwvWx/o2TwdbUI5Q2ljuru/h0aJVJQU5KFBcFtk8MSjZI34ZeHXuTJW6w6jDn/gt3
+         wlAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705336783; x=1705941583;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1s6j+FrysBouv14P98ktCGarV5O8RGCf1PmuuB0Rod4=;
+        b=WMxyY+cf0gQWe/+m9UnXePsHlqlRpsfSrI2/SPvnjGarbsJGNQdBiychuMX5HqbUeJ
+         c4EXgz/IoTvOSCbswbNr1D1SCH6afw38lstT2RJ1eYT8yrU4+uTt9FbqpXobWb2ukDd+
+         fCfPP5EmRJ4SOA0eOoq/8m0uh0cS+lQw8LBC+u+jJ4D6th5++hqDvqhF7FKpreesWkwX
+         h0owUuIYDfjPgdgw/dQELyiweTJhQBQ9uSGDHDAvthoQkrGb47+/0blf70eAetsnG9ch
+         7RuBFBH1E1/34EKO1kcWkdMyaHoNyUYL0S0rlNeKIMdEl9bZYoS/dD9qHMFRiP0GEh2D
+         /upA==
+X-Gm-Message-State: AOJu0YzoVWpjXWT4xjYGOqm0VEiJluIShC0gh/AwiNdd3tp1h3r/tGMx
+	79GqkcG4bBdhZAeDtQUQdrLKjowkK6VbTA==
+X-Google-Smtp-Source: AGHT+IG23mOFs8vkRBURMu/H8p+Yj+m45958ginxHcSkzR3eWp3MCA1dHVGuF4KPAbil5U/K3om3YA==
+X-Received: by 2002:a17:907:10d9:b0:a2c:ab45:13cd with SMTP id rv25-20020a17090710d900b00a2cab4513cdmr2760064ejb.26.1705336782885;
+        Mon, 15 Jan 2024 08:39:42 -0800 (PST)
+Received: from [192.168.174.25] (178235179017.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.17])
+        by smtp.gmail.com with ESMTPSA id v10-20020a1709063bca00b00a2ae69cca5asm5555174ejf.144.2024.01.15.08.39.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Jan 2024 08:39:42 -0800 (PST)
+Message-ID: <c4029b89-dbc6-4035-a122-078d51f4013e@linaro.org>
+Date: Mon, 15 Jan 2024 17:39:39 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20230827115033.935089-1-dmitry.baryshkov@linaro.org>
- <20230827115033.935089-9-dmitry.baryshkov@linaro.org> <20231011154935.GA785564-robh@kernel.org>
- <CAA8EJpqf4Q7wh657==C45Ka8YmmyopkCQnyEFcXkaoRwnCRZLQ@mail.gmail.com>
- <CAL_JsqKwWyoPdt3C0FdsgN087xK0jGyp3PVgiCaETZK9FX2JdQ@mail.gmail.com> <CAA8EJpqNRrpcK50FRLcrSdyHFadU1=6yRqBOCFv=fnTBYJs9=g@mail.gmail.com>
-In-Reply-To: <CAA8EJpqNRrpcK50FRLcrSdyHFadU1=6yRqBOCFv=fnTBYJs9=g@mail.gmail.com>
-From: Rob Herring <robh@kernel.org>
-Date: Mon, 15 Jan 2024 10:16:45 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqJo_5qAocpU9UqkZqGMxCLQ+BT6SgSJh3uTJ+Rrcfo-ZA@mail.gmail.com>
-Message-ID: <CAL_JsqJo_5qAocpU9UqkZqGMxCLQ+BT6SgSJh3uTJ+Rrcfo-ZA@mail.gmail.com>
-Subject: Re: [PATCH v4 08/23] soc: qcom: Add driver for Qualcomm Krait L2
- cache scaling
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Viresh Kumar <viresh.kumar@linaro.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Ilia Lin <ilia.lin@kernel.org>, 
-	Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Georgi Djakov <djakov@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-pm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	Christian Marangi <ansuelsmth@gmail.com>, Stephan Gerhold <stephan@gerhold.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] interconnect: qcom: sm8450: Revert "interconnect: qcom:
+ sm8450: Enable sync_state"
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Georgi Djakov <djakov@kernel.org>,
+ Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: stable@vger.kernel.org
+References: <20240115153420.1525037-1-krzysztof.kozlowski@linaro.org>
+ <0d76ebd1-5edc-44c4-80e6-315cf6579079@linaro.org>
+ <858d6109-bb6a-41bb-a7fe-e0dd0a16208a@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
+ BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
+ HGWdmtO+RvadOVi6CoUDqALsmfS3MUG5Pj2Ne9+0jRg4hEnB92AyF9rW2G3qisFcwPgvatt7
+ TXD5E38mLyOPOUyXNj9XpDbt1hNwKQfiidmPh5e7VNAWRnW1iCMMoKqzM1Anzq7e5Afyeifz
+ zRcQPLaqrPjnKqZGL2BKQSZDh6NkI5ZLRhhHQf61fkWcUpTp1oDC6jWVfT7hwRVIQLrrNj9G
+ MpPzrlN4YuAqKeIer1FMt8cq64ifgTzxHzXsMcUdclzq2LTk2RXaPl6Jg/IXWqUClJHbamSk
+ t1bfif3SnmhA6TiNvEpDKPiT3IDs42THU6ygslrBxyROQPWLI9IL1y8S6RtEh8H+NZQWZNzm
+ UQ3imZirlPjxZtvz1BtnnBWS06e7x/UEAguj7VHCuymVgpl2Za17d1jj81YN5Rp5L9GXxkV1
+ aUEwONM3eCI3qcYm5JNc5X+JthZOWsbIPSC1Rhxz3JmWIwP1udr5E3oNRe9u2LIEq+wH/toH
+ kpPDhTeMkvt4KfE5m5ercid9+ZXAqoaYLUL4HCEw+HW0DXcKDwARAQABzShLb25yYWQgRHli
+ Y2lvIDxrb25yYWQuZHliY2lvQGxpbmFyby5vcmc+wsGOBBMBCAA4FiEEU24if9oCL2zdAAQV
+ R4cBcg5dfFgFAmQ5bqwCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQR4cBcg5dfFjO
+ BQ//YQV6fkbqQCceYebGg6TiisWCy8LG77zV7DB0VMIWJv7Km7Sz0QQrHQVzhEr3trNenZrf
+ yy+o2tQOF2biICzbLM8oyQPY8B///KJTWI2khoB8IJSJq3kNG68NjPg2vkP6CMltC/X3ohAo
+ xL2UgwN5vj74QnlNneOjc0vGbtA7zURNhTz5P/YuTudCqcAbxJkbqZM4WymjQhe0XgwHLkiH
+ 5LHSZ31MRKp/+4Kqs4DTXMctc7vFhtUdmatAExDKw8oEz5NbskKbW+qHjW1XUcUIrxRr667V
+ GWH6MkVceT9ZBrtLoSzMLYaQXvi3sSAup0qiJiBYszc/VOu3RbIpNLRcXN3KYuxdQAptacTE
+ mA+5+4Y4DfC3rUSun+hWLDeac9z9jjHm5rE998OqZnOU9aztbd6zQG5VL6EKgsVXAZD4D3RP
+ x1NaAjdA3MD06eyvbOWiA5NSzIcC8UIQvgx09xm7dThCuQYJR4Yxjd+9JPJHI6apzNZpDGvQ
+ BBZzvwxV6L1CojUEpnilmMG1ZOTstktWpNzw3G2Gis0XihDUef0MWVsQYJAl0wfiv/0By+XK
+ mm2zRR+l/dnzxnlbgJ5pO0imC2w0TVxLkAp0eo0LHw619finad2u6UPQAkZ4oj++iIGrJkt5
+ Lkn2XgB+IW8ESflz6nDY3b5KQRF8Z6XLP0+IEdLOOARkOW7yEgorBgEEAZdVAQUBAQdAwmUx
+ xrbSCx2ksDxz7rFFGX1KmTkdRtcgC6F3NfuNYkYDAQgHwsF2BBgBCAAgFiEEU24if9oCL2zd
+ AAQVR4cBcg5dfFgFAmQ5bvICGwwACgkQR4cBcg5dfFju1Q//Xta1ShwL0MLSC1KL1lXGXeRM
+ 8arzfyiB5wJ9tb9U/nZvhhdfilEDLe0jKJY0RJErbdRHsalwQCrtq/1ewQpMpsRxXzAjgfRN
+ jc4tgxRWmI+aVTzSRpywNahzZBT695hMz81cVZJoZzaV0KaMTlSnBkrviPz1nIGHYCHJxF9r
+ cIu0GSIyUjZ/7xslxdvjpLth16H27JCWDzDqIQMtg61063gNyEyWgt1qRSaK14JIH/DoYRfn
+ jfFQSC8bffFjat7BQGFz4ZpRavkMUFuDirn5Tf28oc5ebe2cIHp4/kajTx/7JOxWZ80U70mA
+ cBgEeYSrYYnX+UJsSxpzLc/0sT1eRJDEhI4XIQM4ClIzpsCIN5HnVF76UQXh3a9zpwh3dk8i
+ bhN/URmCOTH+LHNJYN/MxY8wuukq877DWB7k86pBs5IDLAXmW8v3gIDWyIcgYqb2v8QO2Mqx
+ YMqL7UZxVLul4/JbllsQB8F/fNI8AfttmAQL9cwo6C8yDTXKdho920W4WUR9k8NT/OBqWSyk
+ bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
+ nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
+ izWDgYvmBE8=
+In-Reply-To: <858d6109-bb6a-41bb-a7fe-e0dd0a16208a@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jan 3, 2024 at 8:02=E2=80=AFPM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> HI Rob,
->
-> Resurrecting old thread, but I think it's better as it has context.
->
-> Added driver core maintainers, see discussion points below.
->
-> On Wed, 11 Oct 2023 at 21:44, Rob Herring <robh@kernel.org> wrote:
-> >
-> > On Wed, Oct 11, 2023 at 1:20=E2=80=AFPM Dmitry Baryshkov
-> > <dmitry.baryshkov@linaro.org> wrote:
-> > >
-> > > On Wed, 11 Oct 2023 at 18:49, Rob Herring <robh@kernel.org> wrote:
-> > > >
-> > > > On Sun, Aug 27, 2023 at 02:50:18PM +0300, Dmitry Baryshkov wrote:
-> > > > > Add a simple driver that handles scaling of L2 frequency and volt=
-ages.
-> > > > >
-> > > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > > ---
-> > > >
-> > > > [...]
-> > > >
-> > > > > +static const struct of_device_id krait_l2_match_table[] =3D {
-> > > > > +     { .compatible =3D "qcom,krait-l2-cache" },
-> > > > > +     {}
-> > > > > +};
-> > > > > +MODULE_DEVICE_TABLE(of, krait_l2_match_table);
-> > > > > +
-> > > > > +static struct platform_driver krait_l2_driver =3D {
-> > > > > +     .probe =3D krait_l2_probe,
-> > > > > +     .remove =3D krait_l2_remove,
-> > > > > +     .driver =3D {
-> > > > > +             .name =3D "qcom-krait-l2",
-> > > > > +             .of_match_table =3D krait_l2_match_table,
-> > > > > +             .sync_state =3D icc_sync_state,
-> > > > > +     },
-> > > > > +};
-> > > >
-> > > > As I mentioned in the other thread, cache devices already have a st=
-ruct
-> > > > device. Specifically, they have a struct device (no subclass) on th=
-e
-> > > > cpu_subsys bus type. So there should be no need for a platform devi=
-ce
-> > > > and second struct device.
-> > > >
-> > > > See drivers/acpi/processor_driver.c for an example. Or grep any use=
- of
-> > > > "cpu_subsys".
-> > >
-> > > Most likely you mean drivers/base/cacheinfo.c. I saw this code, I
-> > > don't think it makes a good fit here. The cacheinfo devices provide
-> > > information only, they are not tied to DT nodes in any way.
-> >
-> > They are completely tied to DT nodes beyond L1.
-> >
-> > >  cpu_subsys
-> > > doesn't provide a way to match drivers with subsys devices in the
-> > > non-ACPI case, etc.
-> >
-> > That's a 2 line addition to add DT support.
-> >
-> > > Moreover, the whole cacheinfo subsys is
-> > > non-existing on arm32, there is no cacheinfo implementation there,
-> > > thanks to the overall variety of architectures.
-> >
-> > Humm, well I don't think it would be too hard to add, but I won't ask
-> > you to do that. All the info comes from DT or can come from DT, so it
-> > should be just a matter of arm32 calling the cacheinfo init.
-> >
-> > > Thus said, I don't think cacheinfo makes a good fit for the case of
-> > > scaling L2 cache.
-> >
-> > I still disagree. It's not really cacheinfo. That is what creates the
-> > devices, but it's the cpu_subsys bus type. Why do you care that it is
-> > platform bus vs. cpu_subsys?
->
-> I finally found a timeslot to look at cacheinfo. I added support for
-> arm32 cacheinfo (which is fine) and tried using cacheinfo devices for
-> L2 driver mapping (the RFC has been posted at [1]).
-> But after I actually tried using it for the L2 cache driver.  I
-> stumbled upon several issues, which I'd like to discuss before rushing
-> to code.
->
-> First, you supposed that cacheinfo devices land onto the cpu_subsys
-> bus. However only actual CPU devices end up on cpu_subsys. CPU cache
-> devices are created using cpu_device_create(), but despite its name
-> they don't go to cpu_subsys.
->
-> Second and more important, these devices are created without any
-> attempt to share them. So on a 4-core system I have 4 distinct devices
-> for L2 cache even though it is shared between all cores.
+On 15.01.2024 16:55, Krzysztof Kozlowski wrote:
+> On 15/01/2024 16:38, Konrad Dybcio wrote:
+>> On 15.01.2024 16:34, Krzysztof Kozlowski wrote:
+>>> Revert commit 16862f1b2110 ("interconnect: qcom: sm8450: Enable
+>>> sync_state"), because it causes serial console to corrupt, later freeze
+>>> and become either entirely corrupted or only print without accepting any
+>>> input.
+>>>
+>>> Cc: <stable@vger.kernel.org>
+>>> Fixes: 16862f1b2110 ("interconnect: qcom: sm8450: Enable sync_state")
+>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>> ---
+>>
+>> What's the board you're testing this on? And kernel base revision?
+> 
+> HDK8450
+> 
+>>
+>> The symptoms you mentioned happened for me with this on some recent
+>> -next:
+> 
+> This was bisected, so all mainline kernels with this patch. Reverting
+> this patch helps (on top of that commit or on next).
 
-I wonder if that's because things are created in CPU hotplug callbacks
-and there might be ordering problems if cache devices are created in
-another code path.
+I don't quite get your answer. Was reverting \/ the solution for you?
 
-Also, I think on some PowerPC systems, CPUs can move to different L2
-(or L3?) caches when hot unplugged and then plugged. So hotplug
-rescans everything. I don't think that would be a problem with this
-and PowerPC does its own scanning anyways. Just wanted you to be aware
-of the issue.
+Konrad
+> 
+>>
+>> https://lore.kernel.org/lkml/f24f32f1213b4b9e9ff2b4a36922f8d6e3abac51.1704278832.git.viresh.kumar@linaro.org/
 
-> root@qcom-armv7a:~# stat -c "%N %i" /sys/bus/cpu/devices/cpu*/cache/index=
-2/level
-> /sys/bus/cpu/devices/cpu0/cache/index2/level 15537
-> /sys/bus/cpu/devices/cpu1/cache/index2/level 15560
-> /sys/bus/cpu/devices/cpu2/cache/index2/level 15583
-> /sys/bus/cpu/devices/cpu3/cache/index2/level 15606
->
-> I think it makes sense to rework cacheinfo to create actual CPU cache
-> devices (maybe having a separate cache bus).
-> In my case it should become something like:
->
-> cpu0-2-unified (shared between all 4 cores)
-> cpu0-1-icache
-> cpu0-1-dcache
-> cpu1-1-icache
-> cpu1-1-dcache
-> ...
->
-> I'm not sure if it's worth supporting more than one instance of the
-> same kind per level (e.g. I think current cacheinfo has nothing
-> against having two I-cache or two D-cache devices)
-
-Probably a safe assumption. Though I think old XScale CPUs had a 1K
-mini I-cache and the main L1 I-cache. I guess that's really an L0
-cache though.
-
-> The cpuN/cache/indexM should become symlinks to those cache devices.
->
-> What do you think?
-
-Seems like a good improvement to me if changing the current way
-doesn't cause an ABI issue.
-
-
-> [1] https://lore.kernel.org/linux-arm-msm/CAA8EJppCRzknaujKFyLa_i7x4UnX31=
-YFSyjtux+zJ0harixrbA@mail.gmail.com
->
-> > On a separate issue, I'd propose you move this to drivers/cache/
-> > instead of the dumping ground that is drivers/soc/. It's nothing more
-> > than a location to collect cache related drivers ATM because we seem
-> > to be accumulating more of them.
->
-> I thought about reusing drivers/devfreq, it already has the Mediatek CCI =
-driver.
-
-Anywhere except drivers/misc/ would be an improvement over
-drivers/soc/. devfreq is more tied to interconnects than caches
-though.
-
-Rob
 
