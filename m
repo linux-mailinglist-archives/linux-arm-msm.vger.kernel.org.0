@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-7290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3FC7582DE9E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 18:52:39 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3FCC482DEBE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 18:59:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AA11D1F22B8E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 17:52:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 538161C21F40
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 17:59:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 015DE1804E;
-	Mon, 15 Jan 2024 17:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A77F1804E;
+	Mon, 15 Jan 2024 17:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Pp1/lH+X"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sCD+wizW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69CE018046
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jan 2024 17:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF5218627
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jan 2024 17:59:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a2e0be86878so140360666b.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jan 2024 09:52:32 -0800 (PST)
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a28b2e1a13fso946144966b.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jan 2024 09:59:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705341150; x=1705945950; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1705341545; x=1705946345; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ul1TSxHcfFr/jRQ44kvxqSc8Zva6t6F6pyfRSNsNmUo=;
-        b=Pp1/lH+XdxoKSpF4p7VGaerw8UNlEpI1pRveSK3aoG9KZPMU9HtCJ+XQWF4HeR6AZc
-         z3Y4d7pDVR3Iwo+OqE8j/8Sw4YI6UX10hGwUaj58pj6OS0lzH622+u5Zx2ofMtf7d7Bk
-         tsF0O8abW4B5C7Cyr2vzeQBvu/su4zhtMpmd0iqZdJmuDobrauW34I0L21iIY3LAITp9
-         AAqJ73goOxhTngJAZLXdz+fN/+PW3UKYdAWIQVvJjrwBgVwtGCquNzjWPmddqdJiIIt9
-         S2nwEvXuXjQQsrvdfCWziEWctGWPr11LaGmkPdEXDl+B6FjMYARzDAdJLNYtu1ceDmat
-         CVmw==
+        bh=gNTcUvI+e7x+QSMSoU1H+XR2/SWz56YvoL0encJllnY=;
+        b=sCD+wizWSiTdF/4NTzCFAnMUV+Sfn+kqgmzso/xc+z8ldMp67n6EF02yIl7xRvkx+c
+         5XE9JjAm8bb4uxjYhlBfMtrGnrsztX6XpmSw0mCN+qscV6EdRKjWCD1n76JPDD4uO6gs
+         gAI45YFlQBD50lDQ8iiIREWMoz3EDanVOJTN7rjnhoraG5wBszzvH6Vt25y9wOW3Sn6i
+         yxEGKYThjoLoSCw/iWnziL5NPwDDVddM8HC9LDxbyR07DQfX+cQcUINB/PvNhUnmMqVL
+         Bmzck3J5c09x/z0AGhl2Oiqo1nJqXxsGUUagq/2vuiKqAZXkMb9CE/n/uYH8xHnAa5cs
+         EoEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705341150; x=1705945950;
+        d=1e100.net; s=20230601; t=1705341545; x=1705946345;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ul1TSxHcfFr/jRQ44kvxqSc8Zva6t6F6pyfRSNsNmUo=;
-        b=IOeOXW3Bz9cUJ/JyPv4nhGNQ7RijhX7OOHfaJeGD+Q1WSWYW55jOx6znVt9A1uiC/N
-         obFQN7N5fdIXU0HyfxCAgFYeaJZFqPBephxCE2iXyqcP+GakQ4A+IfbvqMV0thbgODxt
-         uuQ7f7Pn/MSy4MepylrqWNnuR9EdK1EX5VSwOoZO5nngt4hIhZmPdpHpyneW8APug+oe
-         XVrx+8fmYcQjypRJoSt0SJL3pnsFdQzrYdekzHRjVDLFMhPHF8PlHPKZHrYEWVjMAm2A
-         1wV06m/bAnaTi/eGhoHw61oqxhYmcE2BBhswH8Z/CW/5OkMcXUs4s6yVg3YmGswzapzW
-         C+Pg==
-X-Gm-Message-State: AOJu0Yzd2xqR9W2I9fiVRC5fTXe8RcUn0s3jxeJwkxwk5dTTZDTfa5NE
-	G511+J3WOtPGQ+j38thQfnJGGiiMslmL1Q==
-X-Google-Smtp-Source: AGHT+IHY4wGQEiFbyAxG2sUOoijmubktp6kTdxlGloE4Vf14hBlJ7piuTWmQMv8f7zjuLSsdYqD2dw==
-X-Received: by 2002:a17:906:504e:b0:a2b:2bdb:5a2a with SMTP id e14-20020a170906504e00b00a2b2bdb5a2amr5674456ejk.49.1705341150675;
-        Mon, 15 Jan 2024 09:52:30 -0800 (PST)
+        bh=gNTcUvI+e7x+QSMSoU1H+XR2/SWz56YvoL0encJllnY=;
+        b=sqLgbqerywM1ExJkqSYZzkeYvD/Xb4sOenepw+oIOF6kOlwXVABKFsJZo8k8doysDV
+         /4/fOL7lkF3EHlVFP5NCMahiOdrnkhYyzR03dDPxUeilon/m0O9EKwWwgmQ2h6fvugPo
+         PovkPAJu6qQ6x3rg7eP/8zbZJFQBe7NI84lC53MKQSv+A12i4ZIkcCO7wZfSjiCmpKho
+         ezOJm53v/TMpFvg8wau5kvjaq0nZGCkuzLMh8TxpBcotmZ235aXVHS3xrI6CO0hHheFf
+         /fsmEo50iR16ZrO/JtWU+lE/PU1uh0dXX6J9TxOHfj216il+2TJlJRvnKDclTLW8LUY6
+         P9Mg==
+X-Gm-Message-State: AOJu0Yx66NQiydfrHgFrc48SvNhaDGCoqGh3IonU0nIqc8AMhgN8Mvoe
+	QJA+52/I1r5h1nlJ4wA5qmYuPGMQD6xMzzD6dMWYCMvU2CM=
+X-Google-Smtp-Source: AGHT+IEAUypA2S5oAjj6p1iCfYBirwB5RLojjF4Ss+1PhjRDkyxe4yNAz/OGtX+n80N61BMF9YPqSQ==
+X-Received: by 2002:a17:906:380e:b0:a28:e7b8:c57e with SMTP id v14-20020a170906380e00b00a28e7b8c57emr2550440ejc.130.1705341545383;
+        Mon, 15 Jan 2024 09:59:05 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.215.66])
-        by smtp.gmail.com with ESMTPSA id k6-20020a170906128600b00a2b0b0fc80esm5475118ejb.193.2024.01.15.09.52.29
+        by smtp.gmail.com with ESMTPSA id h20-20020a170906261400b00a28d438a1b0sm5494840ejc.83.2024.01.15.09.59.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Jan 2024 09:52:30 -0800 (PST)
-Message-ID: <fec973b4-61ee-42e0-bb62-5001f9258ade@linaro.org>
-Date: Mon, 15 Jan 2024 18:52:27 +0100
+        Mon, 15 Jan 2024 09:59:05 -0800 (PST)
+Message-ID: <96928df4-75ca-4a55-829b-b8ab0583e3b5@linaro.org>
+Date: Mon, 15 Jan 2024 18:59:01 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,15 +69,13 @@ User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] interconnect: qcom: sm8450: Revert "interconnect: qcom:
  sm8450: Enable sync_state"
 Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Georgi Djakov <djakov@kernel.org>,
+To: Georgi Djakov <djakov@kernel.org>, Bjorn Andersson
+ <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
  Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
  linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc: stable@vger.kernel.org
 References: <20240115153420.1525037-1-krzysztof.kozlowski@linaro.org>
- <0d76ebd1-5edc-44c4-80e6-315cf6579079@linaro.org>
- <858d6109-bb6a-41bb-a7fe-e0dd0a16208a@linaro.org>
- <c4029b89-dbc6-4035-a122-078d51f4013e@linaro.org>
+ <201733c1-dc24-4d77-9967-f52c8e81d35b@kernel.org>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -123,38 +121,24 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <c4029b89-dbc6-4035-a122-078d51f4013e@linaro.org>
+In-Reply-To: <201733c1-dc24-4d77-9967-f52c8e81d35b@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 15/01/2024 17:39, Konrad Dybcio wrote:
-> On 15.01.2024 16:55, Krzysztof Kozlowski wrote:
->> On 15/01/2024 16:38, Konrad Dybcio wrote:
->>> On 15.01.2024 16:34, Krzysztof Kozlowski wrote:
->>>> Revert commit 16862f1b2110 ("interconnect: qcom: sm8450: Enable
->>>> sync_state"), because it causes serial console to corrupt, later freeze
->>>> and become either entirely corrupted or only print without accepting any
->>>> input.
->>>>
->>>> Cc: <stable@vger.kernel.org>
->>>> Fixes: 16862f1b2110 ("interconnect: qcom: sm8450: Enable sync_state")
->>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>> ---
->>>
->>> What's the board you're testing this on? And kernel base revision?
->>
->> HDK8450
->>
->>>
->>> The symptoms you mentioned happened for me with this on some recent
->>> -next:
->>
->> This was bisected, so all mainline kernels with this patch. Reverting
->> this patch helps (on top of that commit or on next).
+On 15/01/2024 17:44, Georgi Djakov wrote:
+> On 15.01.24 17:34, Krzysztof Kozlowski wrote:
+>> Revert commit 16862f1b2110 ("interconnect: qcom: sm8450: Enable
+>> sync_state"), because it causes serial console to corrupt, later freeze
+>> and become either entirely corrupted or only print without accepting any
+>> input.
 > 
-> I don't quite get your answer. Was reverting \/ the solution for you?
+> Sounds like some driver is not requesting bandwidth and is relying on
+> bandwidth requests made by other drivers. Maybe we are missing some
+> "interconnects" property in DT?
 
-Yes...
+Yes, the debug UART (console) misses the interconnects. They could be
+added but it does not change the fact that console is broken since v6.6
+and this was probably never tested on actual hardware :/
 
 Best regards,
 Krzysztof
