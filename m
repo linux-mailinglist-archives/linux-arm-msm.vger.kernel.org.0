@@ -1,39 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-7284-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7285-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3ECF382DDCC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 17:45:00 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1EE4882DDE8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 17:51:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E7DD31F228E4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 16:44:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AA83B281524
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jan 2024 16:51:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 149ED17BC6;
-	Mon, 15 Jan 2024 16:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A11818027;
+	Mon, 15 Jan 2024 16:50:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="suf4V63z"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="MJsYa+LC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0DC17BC2;
-	Mon, 15 Jan 2024 16:44:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D5EC433F1;
-	Mon, 15 Jan 2024 16:44:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705337094;
-	bh=C955p/TjvNoTugL316DL2X2XF95oKi/HO/h6KILl/eQ=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D08F18021;
+	Mon, 15 Jan 2024 16:50:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1705337450;
+	bh=BkFW2G0ilqYl7fEHWFVQAT92CotbM1jOziNavrwL/7A=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=suf4V63zKRMAm5pBkyGXyJwsSq944YrcVcj2TLFi+3iiuym1+HJjAT8/a4ODrhgep
-	 cCho0atZI4ZP01YEJejORFOkl0UhFWz/gVw3l1BvqSS3INrVe6jesOzJoo3Dr0Oc+T
-	 oSn7F9iQf7QKKxNZ/4vBL0YzpH4Cm6KJ3dJAw3EFqvLnjdXOa19LBqiK7IaBHzKn6c
-	 Nnbvb6lvJvLPp8Kv3JzUZG0O5PJKPprBaSd4wqxjPBGuwUoX7a0IWI4nIns8y4jeHm
-	 pow0PERkpG4Cb3cMwiFBUcQr/9k64v8DVAmWdy9BTE55Qo1MOL0yivnKCxH+ZbEJpf
-	 DbRSimKKvTRXQ==
-Message-ID: <201733c1-dc24-4d77-9967-f52c8e81d35b@kernel.org>
-Date: Mon, 15 Jan 2024 18:44:48 +0200
+	b=MJsYa+LCPEFEIO4wH5DviLeVKIJqK0Hf5VblJJaU8OaP744v1cbbTj9iVLu+VlD9J
+	 JgUeKuVHrSEMeglmK4zceHdnSElAlyIIUywJ1o1IMmjHx00K7quAbOL41Zwu0Eo4hm
+	 VLEMjGYMrRXX+IcaFrDGSH1ZlYutnbDvoMKmdvXxDs/QbNa8sNfG+3aeQ5QSQhJ88x
+	 KKLsq+/GwSWX8ONd9k7TTVFXQ0ka0Xlm2RkVykNnK/CBqFeQ6oNg5D89OdS7uSKf0e
+	 FuaM4dyDSLDA5HYGWEL9go6BDs0IAMN6tz5iLGh5bltLq6NELE5CtwFzXsLJOzTUSO
+	 yLzrXDsG4acZw==
+Received: from [100.95.196.25] (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: koike)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id EC84237813E4;
+	Mon, 15 Jan 2024 16:50:46 +0000 (UTC)
+Message-ID: <06ce130f-f1ae-48b9-91ab-18a87368c6a4@collabora.com>
+Date: Mon, 15 Jan 2024 13:50:44 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -41,52 +48,95 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] interconnect: qcom: sm8450: Revert "interconnect: qcom:
- sm8450: Enable sync_state"
+Subject: Re: [PATCH] drm/ci: Add msm tests
+To: Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ Rob Clark <robdclark@chromium.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ open list <linux-kernel@vger.kernel.org>
+References: <20240108195016.156583-1-robdclark@gmail.com>
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
- linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Cc: stable@vger.kernel.org
-References: <20240115153420.1525037-1-krzysztof.kozlowski@linaro.org>
-From: Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <20240115153420.1525037-1-krzysztof.kozlowski@linaro.org>
+From: Helen Koike <helen.koike@collabora.com>
+In-Reply-To: <20240108195016.156583-1-robdclark@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 15.01.24 17:34, Krzysztof Kozlowski wrote:
-> Revert commit 16862f1b2110 ("interconnect: qcom: sm8450: Enable
-> sync_state"), because it causes serial console to corrupt, later freeze
-> and become either entirely corrupted or only print without accepting any
-> input.
 
-Sounds like some driver is not requesting bandwidth and is relying on
-bandwidth requests made by other drivers. Maybe we are missing some
-"interconnects" property in DT?
 
-Thanks,
-Georgi
-
-> Cc: <stable@vger.kernel.org>
-> Fixes: 16862f1b2110 ("interconnect: qcom: sm8450: Enable sync_state")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->   drivers/interconnect/qcom/sm8450.c | 1 -
->   1 file changed, 1 deletion(-)
+On 08/01/2024 16:50, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> diff --git a/drivers/interconnect/qcom/sm8450.c b/drivers/interconnect/qcom/sm8450.c
-> index b3cd0087377c..952017940b02 100644
-> --- a/drivers/interconnect/qcom/sm8450.c
-> +++ b/drivers/interconnect/qcom/sm8450.c
-> @@ -1888,7 +1888,6 @@ static struct platform_driver qnoc_driver = {
->   	.driver = {
->   		.name = "qnoc-sm8450",
->   		.of_match_table = qnoc_of_match,
-> -		.sync_state = icc_sync_state,
->   	},
->   };
->   
+> The msm tests should skip on non-msm hw, so I think it should be safe to
+> enable everywhere.
+> 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 
+Applied to drm-misc-next.
+
+Thanks
+Helen
+
+> ---
+>   drivers/gpu/drm/ci/testlist.txt | 49 +++++++++++++++++++++++++++++++++
+>   1 file changed, 49 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/ci/testlist.txt b/drivers/gpu/drm/ci/testlist.txt
+> index f82cd90372f4..eaeb751bb0ad 100644
+> --- a/drivers/gpu/drm/ci/testlist.txt
+> +++ b/drivers/gpu/drm/ci/testlist.txt
+> @@ -2910,3 +2910,52 @@ kms_writeback@writeback-invalid-parameters
+>   kms_writeback@writeback-fb-id
+>   kms_writeback@writeback-check-output
+>   prime_mmap_kms@buffer-sharing
+> +msm_shrink@copy-gpu-sanitycheck-8
+> +msm_shrink@copy-gpu-sanitycheck-32
+> +msm_shrink@copy-gpu-8
+> +msm_shrink@copy-gpu-32
+> +msm_shrink@copy-gpu-madvise-8
+> +msm_shrink@copy-gpu-madvise-32
+> +msm_shrink@copy-gpu-oom-8
+> +msm_shrink@copy-gpu-oom-32
+> +msm_shrink@copy-mmap-sanitycheck-8
+> +msm_shrink@copy-mmap-sanitycheck-32
+> +msm_shrink@copy-mmap-8
+> +msm_shrink@copy-mmap-32
+> +msm_shrink@copy-mmap-madvise-8
+> +msm_shrink@copy-mmap-madvise-32
+> +msm_shrink@copy-mmap-oom-8
+> +msm_shrink@copy-mmap-oom-32
+> +msm_shrink@copy-mmap-dmabuf-sanitycheck-8
+> +msm_shrink@copy-mmap-dmabuf-sanitycheck-32
+> +msm_shrink@copy-mmap-dmabuf-8
+> +msm_shrink@copy-mmap-dmabuf-32
+> +msm_shrink@copy-mmap-dmabuf-madvise-8
+> +msm_shrink@copy-mmap-dmabuf-madvise-32
+> +msm_shrink@copy-mmap-dmabuf-oom-8
+> +msm_shrink@copy-mmap-dmabuf-oom-32
+> +msm_mapping@ring
+> +msm_mapping@sqefw
+> +msm_mapping@shadow
+> +msm_submitoverhead@submitbench-10-bos
+> +msm_submitoverhead@submitbench-10-bos-no-implicit-sync
+> +msm_submitoverhead@submitbench-100-bos
+> +msm_submitoverhead@submitbench-100-bos-no-implicit-sync
+> +msm_submitoverhead@submitbench-250-bos
+> +msm_submitoverhead@submitbench-250-bos-no-implicit-sync
+> +msm_submitoverhead@submitbench-500-bos
+> +msm_submitoverhead@submitbench-500-bos-no-implicit-sync
+> +msm_submitoverhead@submitbench-1000-bos
+> +msm_submitoverhead@submitbench-1000-bos-no-implicit-sync
+> +msm_recovery@hangcheck
+> +msm_recovery@gpu-fault
+> +msm_recovery@gpu-fault-parallel
+> +msm_recovery@iova-fault
+> +msm_submit@empty-submit
+> +msm_submit@invalid-queue-submit
+> +msm_submit@invalid-flags-submit
+> +msm_submit@invalid-in-fence-submit
+> +msm_submit@invalid-duplicate-bo-submit
+> +msm_submit@invalid-cmd-idx-submit
+> +msm_submit@invalid-cmd-type-submit
+> +msm_submit@valid-submit
 
