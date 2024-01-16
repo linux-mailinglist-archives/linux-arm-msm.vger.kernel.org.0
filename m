@@ -1,94 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-7327-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BF1882EB93
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 10:33:46 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA94682EC2D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 10:51:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C2ECEB22C3C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 09:33:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 892EC1F2332E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 09:51:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 976F412B7D;
-	Tue, 16 Jan 2024 09:33:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 336B9134C4;
+	Tue, 16 Jan 2024 09:50:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dw6Hht2u"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85754134A0;
-	Tue, 16 Jan 2024 09:33:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4303A2F4;
-	Tue, 16 Jan 2024 01:34:20 -0800 (PST)
-Received: from [10.57.46.197] (unknown [10.57.46.197])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 636543F6C4;
-	Tue, 16 Jan 2024 01:33:29 -0800 (PST)
-Message-ID: <f616989b-2d84-483d-80c4-d3c6eb97b137@arm.com>
-Date: Tue, 16 Jan 2024 09:33:27 +0000
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDCF017599;
+	Tue, 16 Jan 2024 09:50:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40G7wGle005409;
+	Tue, 16 Jan 2024 09:49:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=Rq4fNMe7g9Bt
+	EEZjkFMy3VQE+20Z3tr4nJBVwjyKBpw=; b=dw6Hht2ubOPdi4wJ8RDSO6GXX0P2
+	eQvn0YYp0esJN2TOny2Ss8w+V/zzD4pLP4ZilDnJ9GZVlJxJvE/SNg9gFE0bBL4o
+	1QemqgeM+wv+FP+eIyeA1RAkkdoKomwBchdjYQInozqGCQWwts/RqruaVmylv5TN
+	MX9+V2mRAO18rXoM9O2JyaPKYo2bL58ZvDSvkd8YhBIlgevw16/DTRDSyeG2qQJ8
+	rRTwLcphYaxlo2VCIdWaOLk5mjqT85N+08Lwiy0ST0hnLGCeCCO7FbnHVnBEr/9T
+	fI2kMsNppCWyjVtwK1443vCcqU4j6a6V7ifcE2mUF2EQIZqMsUUio/sd4w==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vnnvbg6wd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Jan 2024 09:49:45 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 40G9nfsQ006268;
+	Tue, 16 Jan 2024 09:49:41 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3vkkkkmget-1;
+	Tue, 16 Jan 2024 09:49:41 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40G9nf67006248;
+	Tue, 16 Jan 2024 09:49:41 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-riteshk-hyd.qualcomm.com [10.147.241.247])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 40G9neZN006245;
+	Tue, 16 Jan 2024 09:49:41 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2314801)
+	id A07605001D5; Tue, 16 Jan 2024 15:19:39 +0530 (+0530)
+From: Ritesh Kumar <quic_riteshk@quicinc.com>
+To: andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        catalin.marinas@arm.com, will@kernel.org, quic_bjorande@quicinc.com,
+        geert+renesas@glider.be, arnd@arndb.de, neil.armstrong@linaro.org,
+        dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
+        m.szyprowski@samsung.com
+Cc: Ritesh Kumar <quic_riteshk@quicinc.com>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, quic_abhinavk@quicinc.com,
+        quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com
+Subject: [PATCH 0/2] add display and panel on qcm6490 idp
+Date: Tue, 16 Jan 2024 15:19:33 +0530
+Message-Id: <20240116094935.9988-1-quic_riteshk@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: HRrq2nv_P1V7tI2I_KG7GbIdw3N1wUt0
+X-Proofpoint-ORIG-GUID: HRrq2nv_P1V7tI2I_KG7GbIdw3N1wUt0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
+ priorityscore=1501 mlxlogscore=350 lowpriorityscore=0 mlxscore=0
+ adultscore=0 impostorscore=0 suspectscore=0 clxscore=1011 spamscore=0
+ malwarescore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401160077
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: arm: coresight: Remove pattern match
- of ETE node name
-Content-Language: en-GB
-To: Mao Jinlong <quic_jinlmao@quicinc.com>, Mike Leach
- <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
- Leo Yan <leo.yan@linaro.org>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
- Yuanfang Zhang <quic_yuanfang@quicinc.com>,
- Tao Zhang <quic_taozha@quicinc.com>
-References: <20240116064505.487-1-quic_jinlmao@quicinc.com>
- <20240116064505.487-2-quic_jinlmao@quicinc.com>
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <20240116064505.487-2-quic_jinlmao@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 
-On 16/01/2024 06:45, Mao Jinlong wrote:
-> Remove pattern match of ETE node name. Use ete with the number as the
-> name for ete nodes.
-> 
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> ---
->   .../bindings/arm/arm,embedded-trace-extension.yaml          | 6 ++----
->   1 file changed, 2 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml b/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml
-> index f725e6940993..ed78cc7ae94a 100644
-> --- a/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml
-> +++ b/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml
-> @@ -22,8 +22,6 @@ description: |
->     with any optional connection graph as per the coresight bindings.
->   
->   properties:
-> -  $nodename:
-> -    pattern: "^ete([0-9a-f]+)$"
->     compatible:
->       items:
->         - const: arm,embedded-trace-extension
-> @@ -55,13 +53,13 @@ examples:
->   
->   # An ETE node without legacy CoreSight connections
->     - |
-> -    ete0 {
-> +    ete-0 {
+Build the Novatek NT36672E DSI Panel driver as module and enable
+display subsystem on Qualcomm qcm6490 idp board.
 
-Why do we need the number ? why not simply "ete" as Krzysztof suggested ?
+---
 
-Suzuki
+This series depends on following series:
+1. https://lore.kernel.org/all/20231222073135.2512313-1-quic_uchheda@quicinc.com/
+   (arm64: dts: qcom: qcm6490-idp: Add support for PM7250B PMIC)
+2. https://lore.kernel.org/all/20240108095902.22725-1-quic_riteshk@quicinc.com/
+   (Add support for Novatek NT36672E LCD DSI panel)
+3. https://lore.kernel.org/all/20240116071803.5264-1-quic_riteshk@quicinc.com/t/#u
+   (drm/panel: novatek-nt36672e: Include <linux/of.h>)
+---
 
+Ritesh Kumar (2):
+  arm64: defconfig: enable Novatek NT36672E DSI Panel driver
+  arm64: dts: qcom: qcm6490-idp: add display and panel
+
+ arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 100 +++++++++++++++++++++++
+ arch/arm64/configs/defconfig             |   1 +
+ 2 files changed, 101 insertions(+)
+
+-- 
+2.17.1
 
 
