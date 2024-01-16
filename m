@@ -1,183 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-7352-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 914FE82EED3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 13:19:23 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 948B182EEE5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 13:26:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8093E1C23205
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 12:19:22 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 35275B2311F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 12:26:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADD4A1BC2D;
-	Tue, 16 Jan 2024 12:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A01C91B97D;
+	Tue, 16 Jan 2024 12:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="p7ANgLiq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CBFBrxHX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A471BC2A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jan 2024 12:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D921BC22
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jan 2024 12:25:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-7d250629e25so349796241.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jan 2024 04:19:10 -0800 (PST)
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2cd0f4f306fso113975531fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jan 2024 04:25:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705407550; x=1706012350; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=f7xwB7+3NO8r1ve0OVLvJGeYywpZTiqzVu1EKcXkfmY=;
-        b=p7ANgLiql7PV35tggmUJGqDXyFcsQY64qS4kfCq2cln/+5JTOXCnnbFL8x76hmUfgG
-         cSJbEAPqV/CvnpOo8g27B+FrlhsG1U4B4Zkd1iSlwyjnUhoHoLVIsdYE8bFsk5/Ancum
-         a9L1Wg5fvtr22wykGfN+KmXDNK/UPxxsQbKnm3UVahxwk6DP9LeMJmkNzobUpEhzb2EH
-         xqIeTybfcf7zYSl7N8HYiDKjBPUsnRamjY0vXOzWSJsx2/vOUqQ5v1iUYbllBZz3qLzr
-         yTAKolQ3NY5WRwJaWLNKncp1XnyQbTzmiqarZeKCqEAdpw1NzhH88GCfrunfVPyAhhaM
-         +vpg==
+        d=linaro.org; s=google; t=1705407954; x=1706012754; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vtHNMB9CrJB9bLsohLq1/gI1OiUCcjB2QrnHc5Lenps=;
+        b=CBFBrxHXUihNCqKvzDvnTuttg91hMExCzcJPhvuDnSheRCdDkzjkJJ4UFl3mTwhnQw
+         SG7omy/ZfhgnluFzKd9MS8f3m6ULRakCeI2nbhmmEl/lo4upvM1sEWg3622MlmYHLkeB
+         m7jQu+Du+Mum//VcrSRnSSNuSLPhlP9vFR3oDvFbhxcXoIFNEjDjZYZgWQitH2gMx5yU
+         hksO3FU8P46NAbKeMBH6Eq7GJeF9XzbHteGAxiZty5K4tbdNrLftoG6f4j+q4S09ozzt
+         XA4DJIzCpg5ATqvXI9oHSqThoIEBRq/rREivRPJB2FyH8sSJy/CPSDd5mBJwjTQalhkA
+         cnxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705407550; x=1706012350;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=f7xwB7+3NO8r1ve0OVLvJGeYywpZTiqzVu1EKcXkfmY=;
-        b=tI3+msukhAIdaQUCEttWXA0Pqk088BLRjah/lvIiw0HWXh/JIul/+lSZlsuYz9fTa7
-         OtOte+hGzh9PBWCH8LrMlZuMOCNL1KIZqEFqc+o/YTxM1Edy+JU/EWxxI5tKF6vJR35A
-         ZQcvWQMISqEtc9WZne44f6ga7bvhx2qMjH5v7PasLJJoRhT2y/UTmWyckVHX4JOXSOCM
-         lvtlugMKO6Xqrtp4W5Xg1VvFVgObVUQ6/UbSQRxQ+qV7hqSZrZyvUeEnZ0onOA0smq+c
-         f2iDjZnTcZXcSmE9DetsEgEuHPhzcq9OwAKq6IiNMgjzdGqG7i767G6oVkev2cXlBxGA
-         BwPw==
-X-Gm-Message-State: AOJu0Yz3X9Oad7RI+CDysrsFSvBfBdPI0vZBNk9o04M/LZ2D1WtrYKS/
-	ZmjqJzPQHzVCQj1pk/Tqgeh7UGpGc8zk2ol2V7qvGuoY4UfE4A==
-X-Google-Smtp-Source: AGHT+IECdJxtD41MxOBJdVSlG1QTQQtK9JTZe0HTEHNVuUXYi1ZlurvdxkmbxagQDhN+Q3J0bLfNjB/5IDbOU7jLgWA=
-X-Received: by 2002:a67:edc3:0:b0:467:bf69:eac9 with SMTP id
- e3-20020a67edc3000000b00467bf69eac9mr4819406vsp.19.1705407549921; Tue, 16 Jan
- 2024 04:19:09 -0800 (PST)
+        d=1e100.net; s=20230601; t=1705407954; x=1706012754;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vtHNMB9CrJB9bLsohLq1/gI1OiUCcjB2QrnHc5Lenps=;
+        b=lwZuabTR7vPiMCWgiIAAUcEcAmFvfs2XEn+IcSlbr820J4EFVYJuHY0NLKQYvDtLIw
+         P8107MxfzvyNhujB9lnZiq9Y7a3bHGdhFqbRuBd7pEEABvsQP9B9ehGGMOX3a/oRCtC6
+         o/ADj+g5EcYhv8wzSHtw+2U0OU+0+6AiHo+9m4x6i0gDfsZiCWjQIfdpe85W42oKYlE6
+         +aTFiZUc0qLhVYM3OgtF/aU4Nvsr+avz1HvodvMEfCxCV9uCgkUnXUFwXO5A23Kl6KCE
+         ZTSzhkq2B2SBZa2VRUWkDjSP9e4llMF+QbFCiNMTkcDgf1XmqQlLlvIQy2kzHHrDr/6I
+         I85g==
+X-Gm-Message-State: AOJu0Yw+UWtyM9b4F8ECfHPOSvFdcLIFlgHmmApQKmLnaKAF468uh/vC
+	36m5rb4jbi9XxZQ4Fgavf1JuZRr871TKxw==
+X-Google-Smtp-Source: AGHT+IE3zSGZxWGKAuv++pQL3YMFa8015zzLrTo3vqBrdw/G5bhv8yVBJQsG9bZ472i0nGrKFDJ6ag==
+X-Received: by 2002:a05:651c:93:b0:2cc:def9:793c with SMTP id 19-20020a05651c009300b002ccdef9793cmr3094622ljq.31.1705407954000;
+        Tue, 16 Jan 2024 04:25:54 -0800 (PST)
+Received: from [127.0.1.1] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id r14-20020a2e994e000000b002ccb512da04sm1653936ljj.34.2024.01.16.04.25.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Jan 2024 04:25:53 -0800 (PST)
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Date: Tue, 16 Jan 2024 13:25:44 +0100
+Subject: [PATCH] arm64: dts: qcom: sm8450: Add missing interconnects to
+ serial
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240116115921.804185-1-daniel.lezcano@linaro.org>
-In-Reply-To: <20240116115921.804185-1-daniel.lezcano@linaro.org>
-From: Amit Pundir <amit.pundir@linaro.org>
-Date: Tue, 16 Jan 2024 17:48:33 +0530
-Message-ID: <CAMi1Hd1Y88gGy+vVhYmfB+hN9vuNWy6UnGh-vQSGLVo8953gJA@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845: Fix wild reboot during Antutu test
-To: Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc: andersson@kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	"open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>, 
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240116-topic-8450serial-v1-1-b685e6a5ad78@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAMh1pmUC/x3MQQqAIBBA0avIrBMc0YiuEi3MxhoIC40IpLtnL
+ f/i/QKZElOGXhRIdHHmPdbARoBfXVxI8lwbtNJGIbby3A/2sjNWfdJt0igd/GRJI05Q2ZEo8P0
+ vh/F5XlIJlItiAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@somainline.org>, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Georgi Djakov <djakov@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.13-dev-0438c
 
-On Tue, 16 Jan 2024 at 17:29, Daniel Lezcano <daniel.lezcano@linaro.org> wr=
-ote:
->
-> Running an Antutu benchmark makes the board to do a hard reboot.
->
-> Cause: it appears the gpu-bottom and gpu-top temperature sensors are show=
-ing
-> too high temperatures, above 115=C2=B0C.
->
-> Out of tree configuratons show the gpu thermal zone is configured to
-> be mitigated at 85=C2=B0C with devfreq.
->
-> Add the DT snippet to enable the thermal mitigation on the sdm845
-> based board.
+The serial ports did not have their interconnect paths specified when
+they were first introduced. Fix that.
 
-Smoke tested on Dragonboard 845c running AOSP with a custom/generic thermal=
- HAL.
+Fixes: 5188049c9b36 ("arm64: dts: qcom: Add base SM8450 DTSI")
+Fixes: f5837418479a ("arm64: dts: qcom: sm8450: add uart20 node")
+Reported-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Suggested-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-Tested-by: Amit Pundir <amit.pundir@linaro.org>
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index 01e4dfc4babd..06f183ef8c78 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -1028,6 +1028,12 @@ uart20: serial@894000 {
+ 				pinctrl-names = "default";
+ 				pinctrl-0 = <&qup_uart20_default>;
+ 				interrupts = <GIC_SPI 587 IRQ_TYPE_LEVEL_HIGH>;
++				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
++						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
++						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>;
++				interconnect-names = "qup-core",
++						     "qup-config";
+ 				status = "disabled";
+ 			};
+ 
+@@ -1420,6 +1426,12 @@ uart7: serial@99c000 {
+ 				pinctrl-names = "default";
+ 				pinctrl-0 = <&qup_uart7_tx>, <&qup_uart7_rx>;
+ 				interrupts = <GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>;
++				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
++						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
++						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>;
++				interconnect-names = "qup-core",
++						     "qup-config";
+ 				status = "disabled";
+ 			};
+ 		};
 
-PS: Probably good to mention the OS (AOSP) and board (DB845c), on
-which the Antutu crash was reported, in the commit message as well .
+---
+base-commit: 8d04a7e2ee3fd6aabb8096b00c64db0d735bc874
+change-id: 20240116-topic-8450serial-402fcb5e211b
 
->
-> Fixes: c79800103eb18 ("arm64: dts: sdm845: Add gpu and gmu device nodes")
-> Cc: Amit Pundir <amit.pundir@linaro.org>
-> Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sdm845.dtsi | 32 ++++++++++++++++++++++++++--
->  1 file changed, 30 insertions(+), 2 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/q=
-com/sdm845.dtsi
-> index c2244824355a..20fefd6af0f8 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -4764,6 +4764,8 @@ gpu: gpu@5000000 {
->                         interconnects =3D <&mem_noc MASTER_GFX3D 0 &mem_n=
-oc SLAVE_EBI1 0>;
->                         interconnect-names =3D "gfx-mem";
->
-> +                       #cooling-cells =3D <2>;
-> +
->                         status =3D "disabled";
->
->                         gpu_opp_table: opp-table {
-> @@ -5603,12 +5605,25 @@ gpu-top-thermal {
->                         thermal-sensors =3D <&tsens0 11>;
->
->                         trips {
-> -                               gpu1_alert0: trip-point0 {
-> +                                gpu1_alert0: trip-point0 {
-> +                                        temperature =3D <85000>;
-> +                                        hysteresis =3D <2000>;
-> +                                        type =3D "passive";
-> +                                };
-> +
-> +                               gpu1_alert1: trip-point1 {
->                                         temperature =3D <90000>;
->                                         hysteresis =3D <2000>;
->                                         type =3D "hot";
->                                 };
->                         };
-> +
-> +                       cooling-maps {
-> +                               map0 {
-> +                                       trip =3D <&gpu1_alert0>;
-> +                                       cooling-device =3D <&gpu THERMAL_=
-NO_LIMIT THERMAL_NO_LIMIT>;
-> +                               };
-> +                       };
->                 };
->
->                 gpu-bottom-thermal {
-> @@ -5618,12 +5633,25 @@ gpu-bottom-thermal {
->                         thermal-sensors =3D <&tsens0 12>;
->
->                         trips {
-> -                               gpu2_alert0: trip-point0 {
-> +                                gpu2_alert0: trip-point0 {
-> +                                        temperature =3D <85000>;
-> +                                        hysteresis =3D <2000>;
-> +                                        type =3D "passive";
-> +                                };
-> +
-> +                               gpu2_alert1: trip-point1 {
->                                         temperature =3D <90000>;
->                                         hysteresis =3D <2000>;
->                                         type =3D "hot";
->                                 };
->                         };
-> +
-> +                       cooling-maps {
-> +                               map0 {
-> +                                       trip =3D <&gpu2_alert0>;
-> +                                       cooling-device =3D <&gpu THERMAL_=
-NO_LIMIT THERMAL_NO_LIMIT>;
-> +                                };
-> +                        };
->                 };
->
->                 aoss1-thermal {
-> --
-> 2.34.1
->
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
 
