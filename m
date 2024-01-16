@@ -1,228 +1,333 @@
-Return-Path: <linux-arm-msm+bounces-7329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0EB582EC26
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 10:50:42 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AA78882EC47
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 10:55:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 47679B23834
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 09:50:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ADF911C21441
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 09:55:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F73B134D6;
-	Tue, 16 Jan 2024 09:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B14D134C1;
+	Tue, 16 Jan 2024 09:55:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IzVl8V+8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LLpDaHQP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04170125BC;
-	Tue, 16 Jan 2024 09:50:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40G7xBZW006658;
-	Tue, 16 Jan 2024 09:49:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references; s=
-	qcppdkim1; bh=wQAX+VhAFdlMCGP8X0aXUlSO5dSynGBqLOMB5EIi+c0=; b=Iz
-	Vl8V+8rellap5+ZCBBWVu4RT5fxmQ5cybHN0TztDyoyQi7Q6yk+U/IOhSOQc4Uf3
-	5BEDzGGkfJRWz9AN3XTa5Li7JbyVYD+eEJlMY3H/02uW9vi08yDKY3WUUQJTV5N6
-	rI/HPqwDgl07dpr/bwlbrM2yOfZ8VGy8FM7l8Ks/FA0I4ICkpXAoJjlJplxSgIiW
-	s4CGLVn0u7cUUHXXuvlDbiq2evMa5xPOinbSEAb7RpY4lHtEjmyAcamKLTTZmDg0
-	5QpXoIRY6sQCekkOfZt3SRp1db0UJlRotHuZn1muDLWdsKXBbGBtSsoW2EJjg1+a
-	A6q7vqea6N35wuZG/BGg==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vnnvbg6wc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 16 Jan 2024 09:49:45 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 40G9nfs0006270;
-	Tue, 16 Jan 2024 09:49:41 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3vkkkkmgev-1;
-	Tue, 16 Jan 2024 09:49:41 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40G9nfIj006250;
-	Tue, 16 Jan 2024 09:49:41 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-riteshk-hyd.qualcomm.com [10.147.241.247])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 40G9neYq006247;
-	Tue, 16 Jan 2024 09:49:41 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2314801)
-	id A6ADB601957; Tue, 16 Jan 2024 15:19:39 +0530 (+0530)
-From: Ritesh Kumar <quic_riteshk@quicinc.com>
-To: andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        catalin.marinas@arm.com, will@kernel.org, quic_bjorande@quicinc.com,
-        geert+renesas@glider.be, arnd@arndb.de, neil.armstrong@linaro.org,
-        dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
-        m.szyprowski@samsung.com
-Cc: Ritesh Kumar <quic_riteshk@quicinc.com>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, quic_abhinavk@quicinc.com,
-        quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com
-Subject: [PATCH 2/2] arm64: dts: qcom: qcm6490-idp: add display and panel
-Date: Tue, 16 Jan 2024 15:19:35 +0530
-Message-Id: <20240116094935.9988-3-quic_riteshk@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20240116094935.9988-1-quic_riteshk@quicinc.com>
-References: <20240116094935.9988-1-quic_riteshk@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: SEevayCsF1JDhR8GJCr30yUJJZMM-uWv
-X-Proofpoint-ORIG-GUID: SEevayCsF1JDhR8GJCr30yUJJZMM-uWv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
- priorityscore=1501 mlxlogscore=999 lowpriorityscore=0 mlxscore=0
- adultscore=0 impostorscore=0 suspectscore=0 clxscore=1015 spamscore=0
- malwarescore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401160077
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100CC134A4
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jan 2024 09:55:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-dc2281ee81fso315028276.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jan 2024 01:55:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1705398929; x=1706003729; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=HHceE+8ZgnCKJFtFOX9khVW52ZhVdYcLB1ywYIuNgN4=;
+        b=LLpDaHQPkUpVm1BCMe17XST2VisW6pmwYSNyLNyhMzx2cRLEQIRamkkaN94KF1IT/5
+         F2jIqJ2CLk7VPL7167n7SnN95Et5xpw+kQLr1CpUr5ijUS2ZcuwerlwhVrqEXfOHpVYP
+         ddoS8UrVOV2/rcz3xpgV7IYvy+tOdn6/jB+vOhUcVuwiHSISupMQ8gwUPPcJjyzXtABV
+         ksv5o99KGOt/mxdiVF7nUlKt6EfWa8L5ncmOTV2+qaA+mu/eVf4NBhTlrv6/6PnbIIRp
+         eH2V1ERGvu+LtxC3u5XR6NaudEkJBRO4Vr1HISpVAiWKLv7pZgku51V3Wk1bkY+lzkNQ
+         wyiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705398929; x=1706003729;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HHceE+8ZgnCKJFtFOX9khVW52ZhVdYcLB1ywYIuNgN4=;
+        b=r+h9+C0LELBjwGVU2D2HMYgR/9tkz6srqiAjzpDFSZODBb00o2X8/y/q33YhK6yHjF
+         DwtuFVhXuk4hsWhYEyeWsPoMOnlaGU54xIYvjJ9itte4/0iiP5CTk6Dh9LVUO6h6xsx7
+         JNtoQmICsk9OlSHVuwAP75kFzgf5fj159CyVvno/bAO0nAYFO3livagYLIOMNzLWRBOg
+         uPb5QzvKN8INdyVOwqSw9tPUEfn23r3CoUTNHfWxam5UKIYFMfqP2fK+98lJ2urwhgxs
+         nVxuhltMdYGnW9TSrJvCzWXZL+7Xk3uZv/ymYHUWpGvozKddLWycDG7WitFkINZRPUSP
+         oxuw==
+X-Gm-Message-State: AOJu0Yy4ljU/f9hno9eBMoFY+4EWRbzL1QVRzyjSo42w2rAELD4f914Y
+	HnTNkXkYbRCDZ2aTqaOz+BNrg8uw9md/w57olQ2XlQB/REKdvg==
+X-Google-Smtp-Source: AGHT+IFtCf/hMaCskLdNHnMO1jUJkrx/GDEVrX+l3/JGOfSdT388wHkJ38igSfBgECB27FyVDQSBSTQOTz5l6xRZP5g=
+X-Received: by 2002:a25:c548:0:b0:dbd:f9c5:5d6b with SMTP id
+ v69-20020a25c548000000b00dbdf9c55d6bmr4380192ybe.79.1705398928959; Tue, 16
+ Jan 2024 01:55:28 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+References: <20240112-opp_support-v6-0-77bbf7d0cc37@quicinc.com>
+ <20240112-opp_support-v6-6-77bbf7d0cc37@quicinc.com> <CAA8EJpqwOfeS-QpLVvYGf0jmTVxiT02POwK+9tkN03Cr4DgL+g@mail.gmail.com>
+ <da1945ce-7e34-6ad5-7b9b-478fcbd4a2c6@quicinc.com>
+In-Reply-To: <da1945ce-7e34-6ad5-7b9b-478fcbd4a2c6@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 16 Jan 2024 11:55:17 +0200
+Message-ID: <CAA8EJpoZakDcBXYE57bRPMFvGEXh1o82r7Znv8mwCK6mRf5xog@mail.gmail.com>
+Subject: Re: [PATCH v6 6/6] PCI: qcom: Add OPP support to scale performance
+ state of power domain
+To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	=?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+	Johan Hovold <johan+linaro@kernel.org>, Brian Masney <bmasney@redhat.com>, 
+	Georgi Djakov <djakov@kernel.org>, linux-arm-msm@vger.kernel.org, vireshk@kernel.org, 
+	quic_vbadigan@quicinc.com, quic_skananth@quicinc.com, 
+	quic_nitegupt@quicinc.com, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Enable Display Subsystem with Novatek NT36672E Panel
-on qcm6490 idp platform.
+On Tue, 16 Jan 2024 at 07:17, Krishna Chaitanya Chundru
+<quic_krichai@quicinc.com> wrote:
+>
+>
+>
+> On 1/12/2024 9:03 PM, Dmitry Baryshkov wrote:
+> > On Fri, 12 Jan 2024 at 16:25, Krishna chaitanya chundru
+> > <quic_krichai@quicinc.com> wrote:
+> >>
+> >> QCOM Resource Power Manager-hardened (RPMh) is a hardware block which
+> >> maintains hardware state of a regulator by performing max aggregation of
+> >> the requests made by all of the processors.
+> >>
+> >> PCIe controller can operate on different RPMh performance state of power
+> >> domain based up on the speed of the link. And this performance state varies
+> >> from target to target.
+> >>
+> >> It is manadate to scale the performance state based up on the PCIe speed
+> >> link operates so that SoC can run under optimum power conditions.
+> >>
+> >> Add Operating Performance Points(OPP) support to vote for RPMh state based
+> >> upon GEN speed link is operating.
+> >>
+> >> OPP can handle ICC bw voting also, so move icc bw voting through opp
+> >> framework if opp entries are present.
+> >>
+> >> In PCIe certain gen speeds like GEN1x2 & GEN2X1 or GEN3x2 & GEN4x1 use
+> >> same icc bw and has frequency, so use frequency based search to reduce
+> >> number of entries in the opp table.
+> >>
+> >> Don't initialize icc if opp is supported.
+> >>
+> >> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> >> ---
+> >>   drivers/pci/controller/dwc/pcie-qcom.c | 83 ++++++++++++++++++++++++++++------
+> >>   1 file changed, 70 insertions(+), 13 deletions(-)
+> >>
+> >> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> >> index 035953f0b6d8..31512dc9d6ff 100644
+> >> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> >> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> >> @@ -22,6 +22,7 @@
+> >>   #include <linux/of.h>
+> >>   #include <linux/of_gpio.h>
+> >>   #include <linux/pci.h>
+> >> +#include <linux/pm_opp.h>
+> >>   #include <linux/pm_runtime.h>
+> >>   #include <linux/platform_device.h>
+> >>   #include <linux/phy/pcie.h>
+> >> @@ -244,6 +245,7 @@ struct qcom_pcie {
+> >>          const struct qcom_pcie_cfg *cfg;
+> >>          struct dentry *debugfs;
+> >>          bool suspended;
+> >> +       bool opp_supported;
+> >>   };
+> >>
+> >>   #define to_qcom_pcie(x)                dev_get_drvdata((x)->dev)
+> >> @@ -1404,16 +1406,14 @@ static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
+> >>          return 0;
+> >>   }
+> >>
+> >> -static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
+> >> +static void qcom_pcie_icc_opp_update(struct qcom_pcie *pcie)
+> >>   {
+> >>          struct dw_pcie *pci = pcie->pci;
+> >> -       u32 offset, status;
+> >> +       u32 offset, status, freq;
+> >> +       struct dev_pm_opp *opp;
+> >>          int speed, width;
+> >>          int ret;
+> >>
+> >> -       if (!pcie->icc_mem)
+> >> -               return;
+> >> -
+> >>          offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> >>          status = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
+> >>
+> >> @@ -1424,11 +1424,42 @@ static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
+> >>          speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
+> >>          width = FIELD_GET(PCI_EXP_LNKSTA_NLW, status);
+> >>
+> >> -       ret = icc_set_bw(pcie->icc_mem, 0, width * QCOM_PCIE_LINK_SPEED_TO_BW(speed));
+> >> -       if (ret) {
+> >> -               dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+> >> -                       ret);
+> >> +       if (pcie->opp_supported) {
+> >> +               switch (speed) {
+> >> +               case 1:
+> >> +                       freq = 2500000;
+> >> +                       break;
+> >> +               case 2:
+> >> +                       freq = 5000000;
+> >> +                       break;
+> >> +               case 3:
+> >> +                       freq = 8000000;
+> >> +                       break;
+> >> +               default:
+> >> +                       WARN_ON_ONCE(1);
+> >> +                       fallthrough;
+> >> +               case 4:
+> >> +                       freq = 16000000;
+> >
+> > I expected that this kind of detail goes to the OPP table itself. Can
+> > we index the table using the generation instead of frequency?
+> >
+> In the previous patch also we tried to use index only, but problem using
+> index is we can define only GEN speed. As we are voting for the ICC BW
+> voting also we need to consider for lane width while configuring this
+> path. It is difficult to use index now as we need to consider both gen
+> speed and lane width.
+> For that reason we moved to frequencies to reduce number of entries in
+> OPP table.
+> for example if my controller supports GEN1 & GEN2 and MAX lane width is
+> 2.
+>
+> for GEN1x1
+> opp-2500000 {
+> };
+>
+> for GEN2x1 & GEN1x2 as both use same frequiences and bandwidth.
+> opp-5000000 {
+> };
+>
+> for GEN2x2
+> opp-10000000 {
+>
+> };
 
-Signed-off-by: Ritesh Kumar <quic_riteshk@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 100 +++++++++++++++++++++++
- 1 file changed, 100 insertions(+)
+Ack. It would be nice to add this as a comment. Something as simple as
+'gen1x2 and gen2x1 share the bandwidth value and thus the opp entry'
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-index 2a6e4907c5ee..efa5252130a1 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-@@ -9,6 +9,7 @@
- #define PM7250B_SID 8
- #define PM7250B_SID1 9
- 
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include "sc7280.dtsi"
- #include "pm7250b.dtsi"
-@@ -38,6 +39,25 @@
- 		stdout-path = "serial0:115200n8";
- 	};
- 
-+	lcd_disp_bias: lcd-disp-bias-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "lcd_disp_bias";
-+		regulator-min-microvolt = <5500000>;
-+		regulator-max-microvolt = <5500000>;
-+		gpio = <&pm7250b_gpios 2 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&lcd_disp_bias_en>;
-+	};
-+
-+	pm8350c_pwm_backlight: backlight {
-+		compatible = "pwm-backlight";
-+		pwms = <&pm8350c_pwm 3 65535>;
-+		enable-gpios = <&pm8350c_gpios 7 GPIO_ACTIVE_HIGH>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&pmic_lcd_bl_en>;
-+	};
-+
- 	reserved-memory {
- 		xbl_mem: xbl@80700000 {
- 			reg = <0x0 0x80700000 0x0 0x100000>;
-@@ -420,6 +440,86 @@
- 	};
- };
- 
-+&gpu {
-+	status = "disabled";
-+};
-+
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mdss_dsi {
-+	vdda-supply = <&vreg_l6b_1p2>;
-+	status = "okay";
-+
-+	panel@0 {
-+		compatible = "novatek,nt36672e";
-+		reg = <0>;
-+
-+		reset-gpios = <&tlmm 44 GPIO_ACTIVE_HIGH>;
-+
-+		vddi-supply = <&vreg_l8c_1p62>;
-+		avdd-supply = <&lcd_disp_bias>;
-+		avee-supply = <&lcd_disp_bias>;
-+
-+		backlight = <&pm8350c_pwm_backlight>;
-+
-+		port {
-+			panel0_in: endpoint {
-+				remote-endpoint = <&mdss_dsi0_out>;
-+			};
-+		};
-+	};
-+};
-+
-+&mdss_dsi0_out {
-+	remote-endpoint = <&panel0_in>;
-+	data-lanes = <0 1 2 3>;
-+};
-+
-+&mdss_dsi_phy {
-+	vdds-supply = <&vreg_l10c_0p88>;
-+	status = "okay";
-+};
-+
-+&pm7250b_gpios {
-+	lcd_disp_bias_en: lcd-disp-bias-en-state {
-+		pins = "gpio2";
-+		function = "func1";
-+		bias-disable;
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
-+		input-disable;
-+		output-enable;
-+		power-source = <0>;
-+	};
-+};
-+
-+&pm8350c_gpios {
-+	pmic_lcd_bl_en: pmic-lcd-bl-en-state {
-+		pins = "gpio7";
-+		function = "normal";
-+		bias-disable;
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
-+		output-low;
-+		power-source = <0>;
-+	};
-+
-+	pmic_lcd_bl_pwm: pmic-lcd-bl-pwm-state {
-+		pins = "gpio8";
-+		function = "func1";
-+		bias-disable;
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
-+		output-low;
-+		power-source = <0>;
-+	};
-+};
-+
-+&pm8350c_pwm {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pmic_lcd_bl_pwm>;
-+	status = "okay";
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
+>
+> - Krishna chaitanya.
+> >> +                       break;
+> >> +               }
+> >> +
+> >> +               opp = dev_pm_opp_find_freq_exact(pci->dev, freq * width, true);
+> >> +               if (!IS_ERR(opp)) {
+> >> +                       ret = dev_pm_opp_set_opp(pci->dev, opp);
+> >> +                       if (ret)
+> >> +                               dev_err(pci->dev, "Failed to set opp: freq %ld ret %d\n",
+> >> +                                       dev_pm_opp_get_freq(opp), ret);
+> >> +                       dev_pm_opp_put(opp);
+> >> +               }
+> >> +       } else {
+> >> +               ret = icc_set_bw(pcie->icc_mem, 0, width * QCOM_PCIE_LINK_SPEED_TO_BW(speed));
+> >> +               if (ret) {
+> >> +                       dev_err(pci->dev, "failed to set interconnect bandwidth for pcie-mem: %d\n",
+> >> +                               ret);
+> >> +               }
+> >>          }
+> >> +
+> >> +       return;
+> >>   }
+> >>
+> >>   static int qcom_pcie_link_transition_count(struct seq_file *s, void *data)
+> >> @@ -1471,8 +1502,10 @@ static void qcom_pcie_init_debugfs(struct qcom_pcie *pcie)
+> >>   static int qcom_pcie_probe(struct platform_device *pdev)
+> >>   {
+> >>          const struct qcom_pcie_cfg *pcie_cfg;
+> >> +       unsigned long max_freq = INT_MAX;
+> >>          struct device *dev = &pdev->dev;
+> >>          struct qcom_pcie *pcie;
+> >> +       struct dev_pm_opp *opp;
+> >>          struct dw_pcie_rp *pp;
+> >>          struct resource *res;
+> >>          struct dw_pcie *pci;
+> >> @@ -1539,9 +1572,33 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+> >>                  goto err_pm_runtime_put;
+> >>          }
+> >>
+> >> -       ret = qcom_pcie_icc_init(pcie);
+> >> -       if (ret)
+> >> +        /* OPP table is optional */
+> >> +       ret = devm_pm_opp_of_add_table(dev);
+> >> +       if (ret && ret != -ENODEV) {
+> >> +               dev_err_probe(dev, ret, "Failed to add OPP table\n");
+> >>                  goto err_pm_runtime_put;
+> >> +       }
+> >
+> > Can we initialise the table from the driver if it is not found? This
+> > will help us by having the common code later on.
+> >
+> we already icc voting if there is no opp table present in the dts.
+
+Yes. So later we have two different code paths: one for the OPP table
+being present and another one for the absent OPP table. My suggestion
+is to initialise minimal OPP table by hand and then have a common code
+path in qcom_pcie_icc_update().
+
+> So I think this might not be needed.
+> Please let me know if you want to use for some other use case.
+>
+> - Krishna Chaitanya.
+> >> +
+> >> +       /* vote for max freq in the opp table if opp table is present */
+> >> +       if (ret != -ENODEV) {
+> >> +               opp = dev_pm_opp_find_freq_floor(dev, &max_freq);
+> >> +               if (!IS_ERR(opp)) {
+> >> +                       ret = dev_pm_opp_set_opp(dev, opp);
+> >> +                       if (ret)
+> >> +                               dev_err_probe(pci->dev, ret,
+> >> +                                             "Failed to set opp: freq %ld\n",
+> >> +                                             dev_pm_opp_get_freq(opp));
+> >> +                       dev_pm_opp_put(opp);
+> >> +               }
+> >> +               pcie->opp_supported = true;
+> >> +       }
+> >> +
+> >> +       /* Skip icc init if opp is supported as icc bw vote is handled by opp framework */
+> >> +       if (!pcie->opp_supported) {
+> >> +               ret = qcom_pcie_icc_init(pcie);
+> >> +               if (ret)
+> >> +                       goto err_pm_runtime_put;
+> >> +       }
+> >>
+> >>          ret = pcie->cfg->ops->get_resources(pcie);
+> >>          if (ret)
+> >> @@ -1561,7 +1618,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+> >>                  goto err_phy_exit;
+> >>          }
+> >>
+> >> -       qcom_pcie_icc_update(pcie);
+> >> +       qcom_pcie_icc_opp_update(pcie);
+> >>
+> >>          if (pcie->mhi)
+> >>                  qcom_pcie_init_debugfs(pcie);
+> >> @@ -1640,7 +1697,7 @@ static int qcom_pcie_resume_noirq(struct device *dev)
+> >>                  pcie->suspended = false;
+> >>          }
+> >>
+> >> -       qcom_pcie_icc_update(pcie);
+> >> +       qcom_pcie_icc_opp_update(pcie);
+> >>
+> >>          return 0;
+> >>   }
+> >>
+> >> --
+> >> 2.42.0
+> >>
+> >>
+> >
+> >
+
+
+
 -- 
-2.17.1
-
+With best wishes
+Dmitry
 
