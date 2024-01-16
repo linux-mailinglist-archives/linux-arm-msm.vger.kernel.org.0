@@ -1,65 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-7324-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65F7F82EAB0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 09:11:27 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF35682EAB6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 09:13:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EEC65280C38
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 08:11:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E62FA1C20323
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 08:13:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E8C1125AF;
-	Tue, 16 Jan 2024 08:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE02111712;
+	Tue, 16 Jan 2024 08:13:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aIOjyRL5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b+QqvOkP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BE4125AE
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jan 2024 08:11:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB5111702
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jan 2024 08:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a2c67be31edso553416066b.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jan 2024 00:11:22 -0800 (PST)
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a28cc85e6b5so1132257166b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jan 2024 00:13:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705392681; x=1705997481; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=5YaUh3Vx+pFy543is0p0CYjgqEQTyHZhtRn/mxfdYqQ=;
-        b=aIOjyRL5qSRHhI54gtfoEnp5OWuz7xjl+5GauCSYDdD0BusPYrXWQbTfqcEg50UydQ
-         qnXXCLaqwbVAhF8qroxtINN3SdC1ae8jydzVzk8ghvlObTz0NiR2JOGUY7LliyN5ULrf
-         gJU26zxCAzfW7gTaJYgE/EH+IkMw3EyOwtiKnMUQZwX6GhxdsJeEPy4h8BlIjq5AmeFD
-         ege743mq8TE2xJcZeapTwodrkjeZXmfEsDi0L08fekORaPuN/9oRws2EtrRxRsq3PMK3
-         7vL+2aROM+ybtRPzzQuEgqyyShu6H+M8boWQqPK+vO4JqE7vVtUbwsUBkkpGI0TrTeQw
-         Y96g==
+        d=linaro.org; s=google; t=1705392796; x=1705997596; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DGmLCNMS3pHlFzCDgFBDqQ+dSA236e0z1kX8/MIOJCw=;
+        b=b+QqvOkPVFlEoklx/r1oPoiHsdejonWyuFMWyxuw7XHYGv8J1gbKx9JKjRW0xqrOdr
+         I9lFpbic1OcMVO9BoUp2/tFmxdMJAf4qPrcWreyw+PpEYLzKwB+PN6U6w/0QE9cDynYq
+         oJbjyY+5b0fIiccvJjPWFxGwC359XpWPP0Js+OJg7Pug5/wJ3ou4t8QwPfIiLN7Bb+Qq
+         SBwhXOHh1CimNV/4Cd8mZSFg2m7AO3c9A/T+YfyZvHYAeDpb2qvqX5/07v/8du3fFyaj
+         54BG7+GcFd5gowKzyUuNC6saSCHY+7uGxXrykDeqBbRvxug0AKi1PUmDdLpWVzuwZhIJ
+         ohIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705392681; x=1705997481;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5YaUh3Vx+pFy543is0p0CYjgqEQTyHZhtRn/mxfdYqQ=;
-        b=pApHdEXWNbiA7VW8kFomdVmmMApspwmGyUsRWvNQ0vrG9ah3VYcGAdiMwJEipIT/6W
-         KL6L04inOUb9lhWPrhqZik8sMF+k8ChxDCUEN6kKnZtCDKFcH4gFUbHa7T3G2bZy5NBa
-         YrdWyPYO9jqlwui8sZxsijIk6x7ETqKj3cpH3ocUi0vLqLwJN8L80xqVToF0zEvUxkNI
-         5SRvuCTfJuQJLxRfOkSS9cWE8cgSNAXjBK0vXsPR+JXB9csoMnRKf0ftNfGFJQNcPZNI
-         XNO0g3A1KWommWwm3/qvjZI1J/6bh1hUoV7lx1Gx6gKxptaGlVhO+hy6oTcIKSOol1yq
-         Pc0A==
-X-Gm-Message-State: AOJu0YzpfZigcfA4/TYjRi1l72+yFld/WalfUmRtv+a3xmdpJy2kQFRS
-	y6KIyTYiB+nunqGeONnrm2fzvTAQrKB7MQ==
-X-Google-Smtp-Source: AGHT+IEC0bXvXiqH4tAZ/ih5Yxi6tMLXXn5LyEX4Dgsr5guSnwS1yoyiUkH2iOmG9/e95MLmijfjSA==
-X-Received: by 2002:a17:906:6d52:b0:a2c:34c9:469e with SMTP id a18-20020a1709066d5200b00a2c34c9469emr1908098ejt.57.1705392680668;
-        Tue, 16 Jan 2024 00:11:20 -0800 (PST)
+        d=1e100.net; s=20230601; t=1705392796; x=1705997596;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DGmLCNMS3pHlFzCDgFBDqQ+dSA236e0z1kX8/MIOJCw=;
+        b=Jn3zbMn/VomYBREkXTxO4jE5zXBngfhgJ2XIMxrwDi4tJ9QD7z/lR9z630Dhtk1ED0
+         ZDhO+4Z4tpzziWFoKdENar8GEkbiuu7THElJHK2aRqYZ9E3oomoyEnS3Tc9dN0gFDkg8
+         InqEGmdc6LWpOoR8MXw9v7AZQ2J3FonHPkbF/d8l3oSWJeP9IOC/l66bJnU+6cyZCvt6
+         8hzCFn/ifcQZXmEnQBrRkd8P/9NTfyvIrCmr6nI70+b7K8AUFhP6KjVg0q5MdtlNKZwl
+         +L4UxxtIVYHDQvM+MX6hyT4e5ykblXgCsn0aL4sUJgWABV6B5jpiTSODa7KqEGaZRQ1w
+         pxfA==
+X-Gm-Message-State: AOJu0YxxD47/pxwokPlXhmnPz8UfKLoV861oN+aO0riM1dWu5LNbx7CT
+	GNsubG26cp531Vetx25BN16LVbADvpwZqQ==
+X-Google-Smtp-Source: AGHT+IH4YJHupOgrKKQRBvhQjTOZMjGW4OVyr66WaXFVFgFPWy8oQ4kU8+5kQNSqjKgs2AsMcA6OmQ==
+X-Received: by 2002:a17:906:1407:b0:a2b:d12c:ee41 with SMTP id p7-20020a170906140700b00a2bd12cee41mr2156236ejc.165.1705392796472;
+        Tue, 16 Jan 2024 00:13:16 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.215.66])
-        by smtp.gmail.com with ESMTPSA id o26-20020a170906289a00b00a2bd8953af2sm6156036ejd.55.2024.01.16.00.11.19
+        by smtp.gmail.com with ESMTPSA id vw15-20020a170907a70f00b00a2d0595cd0dsm4367621ejc.86.2024.01.16.00.13.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Jan 2024 00:11:20 -0800 (PST)
-Message-ID: <d52b82d5-c0fa-440a-ac48-da3633e82d04@linaro.org>
-Date: Tue, 16 Jan 2024 09:11:18 +0100
+        Tue, 16 Jan 2024 00:13:15 -0800 (PST)
+Message-ID: <d7cafb45-234a-4cee-b29d-110e6ffb836c@linaro.org>
+Date: Tue, 16 Jan 2024 09:13:13 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,8 +66,9 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] dt-bindings: mfd: qcom,tcsr: Add compatibles for
- QCM2290 and SM6115
+Subject: Re: [PATCH 2/6] dt-bindings: phy: qcom,msm8998-qmp-usb3-phy: add TCSR
+ registers
+Content-Language: en-US
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konrad.dybcio@linaro.org>, Lee Jones <lee@kernel.org>,
@@ -80,8 +80,7 @@ To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-phy@lists.infradead.org
 References: <20240116-usbc-phy-vls-clamp-v1-0-73b2da7691c5@linaro.org>
- <20240116-usbc-phy-vls-clamp-v1-1-73b2da7691c5@linaro.org>
-Content-Language: en-US
+ <20240116-usbc-phy-vls-clamp-v1-2-73b2da7691c5@linaro.org>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -127,18 +126,18 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240116-usbc-phy-vls-clamp-v1-1-73b2da7691c5@linaro.org>
+In-Reply-To: <20240116-usbc-phy-vls-clamp-v1-2-73b2da7691c5@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 16/01/2024 02:08, Dmitry Baryshkov wrote:
-> Add qcom,qcm2290-tcsr and qcom,sm6115-tcsr, compatibles for TCSR blocks
-> on the corresponding platforms.
+> The QMP USB PHYs on msm8998, qcm2290 and some other platforms don't have
+> the PCS_MISC_CLAMP_ENABLE register. Instead they need to toggle the
+> register in the TCSR space. Declare the registers accessible through the
+> TCSR space.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml | 2 ++
->  1 file changed, 2 insertions(+)
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
