@@ -1,162 +1,285 @@
-Return-Path: <linux-arm-msm+bounces-7366-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7367-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C57382F0AD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 15:41:14 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EFF3682F0C0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 15:44:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DE163B22A88
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 14:41:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 978B6285D53
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 14:44:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C9BA1B941;
-	Tue, 16 Jan 2024 14:41:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71BDB1BF22;
+	Tue, 16 Jan 2024 14:44:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eoW8PYM2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZFUYMXcf"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433D01BF2A;
-	Tue, 16 Jan 2024 14:41:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82385C433F1;
-	Tue, 16 Jan 2024 14:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B646EADF;
+	Tue, 16 Jan 2024 14:44:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AEA1C433C7;
+	Tue, 16 Jan 2024 14:44:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705416062;
-	bh=pi9f5n7aCz4k4GcDtHhDD5lv5OgeZ4ucYdJWw/uz8rU=;
+	s=k20201202; t=1705416261;
+	bh=+IrwKlp6UAiY/ETGopdBM6vfi4zQT9+TOVEU95jc+QM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eoW8PYM2MfAuIBhKaoTZlWZwOEH64nrarWgh8smz385NHA2AvWbxhu44TZid6guIO
-	 ztdPcokve4KGk/P0r48xP9LXjdlp+nfRggeFVeFp1EKUfQh1HSmalAz393OHzBH8yx
-	 HITZr7gQr/eVgLSaMXJ0zK/Hypf/9tgOSbSJiXzjxDaUW1d3OgO9S7G4+/H4mw666+
-	 L5PksNx2fvrD/Q9/Cn2uOjt9fv52HRvN58krYPnsggJ/tW1Mam7cV3tInWEBTcjzIV
-	 QhTlg/jUO4g8ofnL8rKCTYV2n5vBGWNCAEmw7Luoyo7bgDS5dKI4oEy8rewQcDvB/c
-	 CCz+OFltnyGUA==
-Date: Tue, 16 Jan 2024 14:40:39 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>
-Cc: Geert Uytterhoeven <geert+renesas@glider.be>, linux-spi@vger.kernel.org,
-	kernel@pengutronix.de, Moritz Fischer <mdf@kernel.org>,
-	Wu Hao <hao.wu@intel.com>, Xu Yilun <yilun.xu@intel.com>,
-	Tom Rix <trix@redhat.com>, linux-fpga@vger.kernel.org,
-	Alexander Aring <alex.aring@gmail.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	linux-wpan@vger.kernel.org, netdev@vger.kernel.org,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Michael Hennerich <Michael.Hennerich@analog.com>,
-	Jonathan Cameron <jic23@kernel.org>, linux-iio@vger.kernel.org,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	linux-input@vger.kernel.org, Ulf Hansson <ulf.hansson@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Rayyan Ansari <rayyan@ansari.sh>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Martin Tuma <martin.tuma@digiteqautomotive.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	linux-media@vger.kernel.org, Sergey Kozlov <serjk@netup.ru>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	linux-mmc@vger.kernel.org, Richard Weinberger <richard@nod.at>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Amit Kumar Mahapatra via Alsa-devel <alsa-devel@alsa-project.org>,
-	Rob Herring <robh@kernel.org>, linux-mtd@lists.infradead.org,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Pali =?iso-8859-1?Q?Roh=E1r?= <pali@kernel.org>,
-	Ronald Wahl <ronald.wahl@raritan.com>,
-	Benson Leung <bleung@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Guenter Roeck <groeck@chromium.org>,
-	chrome-platform@lists.linux.dev,
-	Michal Simek <michal.simek@amd.com>,
-	Max Filippov <jcmvbkbc@gmail.com>,
-	linux-arm-kernel@lists.infradead.org,
-	Bjorn Andersson <andersson@kernel.org>,
+	b=ZFUYMXcfrcBlgMFmeOBG6QK4FPWpIj83Hl7iJD0gWIrgeXnRuvx/EFQ5Bir99Xz2O
+	 NlURbUxSzquu2iuaKBp4bgh0i5O4MRaSh2nUrLJlzqqM7EMHqZZTwcZ0KqEmSITu1G
+	 TJEH8sexIdawv5r1pF6yuifT/uLlkXjuszqmEPVyFiJasMWpFnmn06zgGyXprZJAQ7
+	 C6U2nIBTB+RWBh70+rKtDKE1rCaHduyAjpluD78FIJWCq7Xh80FJvVcVSBqm0vX6tO
+	 PiWlcaU3zYVKaNOya3HugBr7Es7jjmKT/IpncFTxda0NAQqQFMNBPxEpiTTbyOb3kh
+	 RysVJs8CatXXQ==
+Date: Tue, 16 Jan 2024 08:44:19 -0600
+From: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	linux-mediatek@lists.infradead.org,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>,
-	dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org,
-	linux-staging@lists.linux.dev, Rui Miguel Silva <rmfrfs@gmail.com>,
-	Viresh Kumar <vireshk@kernel.org>, Johan Hovold <johan@kernel.org>,
-	Alex Elder <elder@kernel.org>, greybus-dev@lists.linaro.org,
-	Peter Huewe <peterhuewe@gmx.de>,
-	Jarkko Sakkinen <jarkko@kernel.org>, Jason Gunthorpe <jgg@ziepe.ca>,
-	linux-integrity@vger.kernel.org,
-	Herve Codina <herve.codina@bootlin.com>,
-	Aaro Koskinen <aaro.koskinen@iki.fi>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	linux-usb@vger.kernel.org, Helge Deller <deller@gmx.de>,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Kalle Valo <kvalo@kernel.org>, Dmitry Antipov <dmantipov@yandex.ru>,
-	libertas-dev@lists.infradead.org, linux-wireless@vger.kernel.org,
-	Jonathan Corbet <corbet@lwn.net>, James Clark <james.clark@arm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>, linux-doc@vger.kernel.org
-Subject: Re: [PATCH 00/33] spi: get rid of some legacy macros
-Message-ID: <3404c9af-6c11-45d7-9ba4-a120e21e407e@sirena.org.uk>
-References: <cover.1705348269.git.u.kleine-koenig@pengutronix.de>
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/6] dt-bindings: PCI: qcom,pcie-sm8550: move SM8550 to
+ dedicated schema
+Message-ID: <20240116144419.GA3856889-robh@kernel.org>
+References: <20240108-dt-bindings-pci-qcom-split-v1-0-d541f05f4de0@linaro.org>
+ <20240108-dt-bindings-pci-qcom-split-v1-1-d541f05f4de0@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="c8yli56mmI+gJGEV"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1705348269.git.u.kleine-koenig@pengutronix.de>
-X-Cookie: Programmers do it bit by bit.
+In-Reply-To: <20240108-dt-bindings-pci-qcom-split-v1-1-d541f05f4de0@linaro.org>
 
+On Mon, Jan 08, 2024 at 03:19:14PM +0100, Krzysztof Kozlowski wrote:
+> The qcom,pcie.yaml binding file containing all possible Qualcomm SoC
+> PCIe root complexes gets quite complicated with numerous if:then:
+> conditions customizing clocks, interrupts, regs and resets.  Adding and
+> reviewing new devices is difficult, so simplify it by having shared
+> common binding and file with only one group of compatible devices:
+> 
+> 1. Copy all common qcom,pcie.yaml properties (so everything except
+>    supplies) to a new shared qcom,pcie-common.yaml schema.
+> 2. Move SM8550 PCIe compatible devices to dedicated binding file.
+> 
+> This creates equivalent SM8550 schema file, except missing required
+> compatible which is actually redundant.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  .../devicetree/bindings/pci/qcom,pcie-common.yaml  |  98 ++++++++++++
+>  .../devicetree/bindings/pci/qcom,pcie-sm8550.yaml  | 171 +++++++++++++++++++++
+>  .../devicetree/bindings/pci/qcom,pcie.yaml         |  38 -----
+>  3 files changed, 269 insertions(+), 38 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-common.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-common.yaml
+> new file mode 100644
+> index 000000000000..125136176f93
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-common.yaml
+> @@ -0,0 +1,98 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pci/qcom,pcie-common.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm PCI Express Root Complex Common Properties
+> +
+> +maintainers:
+> +  - Bjorn Andersson <andersson@kernel.org>
+> +  - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> +
+> +properties:
+> +  reg:
+> +    minItems: 4
+> +    maxItems: 6
+> +
+> +  reg-names:
+> +    minItems: 4
+> +    maxItems: 6
+> +
+> +  interrupts:
+> +    minItems: 1
+> +    maxItems: 8
+> +
+> +  interrupt-names:
+> +    minItems: 1
+> +    maxItems: 8
+> +
+> +  iommu-map:
+> +    minItems: 1
+> +    maxItems: 16
+> +
+> +  clocks:
+> +    minItems: 3
+> +    maxItems: 13
+> +
+> +  clock-names:
+> +    minItems: 3
+> +    maxItems: 13
+> +
+> +  dma-coherent: true
+> +
+> +  interconnects:
+> +    maxItems: 2
+> +
+> +  interconnect-names:
+> +    items:
+> +      - const: pcie-mem
+> +      - const: cpu-pcie
+> +
+> +  phys:
+> +    maxItems: 1
+> +
+> +  phy-names:
+> +    items:
+> +      - const: pciephy
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +  resets:
+> +    minItems: 1
+> +    maxItems: 12
+> +
+> +  reset-names:
+> +    minItems: 1
+> +    maxItems: 12
+> +
+> +  perst-gpios:
+> +    description: GPIO controlled connection to PERST# signal
+> +    maxItems: 1
+> +
+> +  wake-gpios:
+> +    description: GPIO controlled connection to WAKE# signal
+> +    maxItems: 1
+> +
+> +required:
+> +  - reg
+> +  - reg-names
+> +  - interrupt-map-mask
+> +  - interrupt-map
+> +  - clocks
+> +  - clock-names
+> +
+> +anyOf:
+> +  - required:
+> +      - interrupts
+> +      - interrupt-names
+> +      - "#interrupt-cells"
+> +  - required:
+> +      - msi-map
+> +      - msi-map-mask
+> +
+> +allOf:
+> +  - $ref: /schemas/pci/pci-bus.yaml#
+> +
+> +additionalProperties: true
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-sm8550.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-sm8550.yaml
+> new file mode 100644
+> index 000000000000..b6d025f153bc
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sm8550.yaml
+> @@ -0,0 +1,171 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pci/qcom,pcie-sm8550.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm SM8550 PCI Express Root Complex
+> +
+> +maintainers:
+> +  - Bjorn Andersson <andersson@kernel.org>
+> +  - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> +
+> +description:
+> +  Qualcomm SM8550 SoC (and compatible) PCIe root complex controller is based on
+> +  the Synopsys DesignWare PCIe IP.
+> +
+> +properties:
+> +  compatible:
+> +    oneOf:
+> +      - const: qcom,pcie-sm8550
+> +      - items:
+> +          - enum:
+> +              - qcom,pcie-sm8650
+> +          - const: qcom,pcie-sm8550
+> +
+> +  reg:
+> +    minItems: 5
+> +    maxItems: 6
+> +
+> +  reg-names:
+> +    minItems: 5
+> +    items:
+> +      - const: parf # Qualcomm specific registers
+> +      - const: dbi # DesignWare PCIe registers
+> +      - const: elbi # External local bus interface registers
+> +      - const: atu # ATU address space
+> +      - const: config # PCIe configuration space
+> +      - const: mhi # MHI registers
+> +
+> +  clocks:
+> +    minItems: 7
+> +    maxItems: 8
+> +
+> +  clock-names:
+> +    minItems: 7
+> +    items:
+> +      - const: aux # Auxiliary clock
+> +      - const: cfg # Configuration clock
+> +      - const: bus_master # Master AXI clock
+> +      - const: bus_slave # Slave AXI clock
+> +      - const: slave_q2a # Slave Q2A clock
+> +      - const: ddrss_sf_tbu # PCIe SF TBU clock
+> +      - const: noc_aggr # Aggre NoC PCIe AXI clock
+> +      - const: cnoc_sf_axi # Config NoC PCIe1 AXI clock
+> +
+> +  resets:
+> +    minItems: 1
+> +    maxItems: 2
+> +
+> +  reset-names:
+> +    minItems: 1
+> +    items:
+> +      - const: pci # PCIe core reset
+> +      - const: link_down # PCIe link down reset
+> +
+> +oneOf:
+> +  - properties:
+> +      interrupts:
+> +        maxItems: 1
+> +      interrupt-names:
+> +        items:
+> +          - const: msi
+> +
+> +  - properties:
+> +      interrupts:
+> +        minItems: 8
+> +      interrupt-names:
+> +        items:
+> +          - const: msi0
+> +          - const: msi1
+> +          - const: msi2
+> +          - const: msi3
+> +          - const: msi4
+> +          - const: msi5
+> +          - const: msi6
+> +          - const: msi7
 
---c8yli56mmI+gJGEV
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+How does a given SoC have 1 or 8 interrupts? I guess it is possible. A 
+comment here would be helpful.
 
-On Mon, Jan 15, 2024 at 09:12:46PM +0100, Uwe Kleine-K=F6nig wrote:
-
-> In commit 8caab75fd2c2 ("spi: Generalize SPI "master" to "controller"")
-> some functions were renamed. Further some compat defines were introduced
-> to map the old names to the new ones.
-
-> Patch #18 and #19 touch the same driver, otherwise the patches #1 - #31
-> are pairwise independent and could be applied by their respective
-> maintainers. The alternative is to let all patches go via the spi tree.
-> Mark, what's your preference here?
-
-I don't have a strong preference here, I'm happy to take all the patches
-if the maintainers for the other subsystem are OK with that - ideally
-I'd apply things at -rc1 but the timeline is a bit tight there.  I think
-my plan here unless anyone objects (or I notice something myself) will
-be to queue things at -rc3, please shout if that doesn't seem
-reasonable.
-
---c8yli56mmI+gJGEV
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmWmlVwACgkQJNaLcl1U
-h9AImgf/YhrOsj57KBdfXCGkJi2n+rTwU/YN3Vvfy2fP+4gmJoFGfjk1o+luXQwi
-q3+RNetq9JicN07DE0eggUdY7EqvLtghmHnQWYraw+gEPT7PwkiFuKZgDEy79tmH
-pNpJuEKTeDipvLkXCVMzD0T+NrW2BXshkACyxLpBrh+ewGJpmmgJEH8LEo52dxrk
-uLfK3YjSYco5zXw8Dzak8Ea9Hb57dnySjT6aQf8GRXZMjNYAPqMC27Pzd5pWHnD1
-am4raQY/1ji5yjiVs38+2RB0EnWlFJyj0VvC9vL5PEhkz0XiW3OTTedLKcxKKoYv
-H+d+5ZwIRVx3bl+qcRRzH8EMyJW7pA==
-=Umm1
------END PGP SIGNATURE-----
-
---c8yli56mmI+gJGEV--
+Reviewed-by: Rob Herring <robh@kernel.org>
 
