@@ -1,62 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-7397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7398-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27B5082F652
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 20:57:02 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B06482F6CA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 21:08:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 386421C240A9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 19:57:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C494F1F21FB4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 20:08:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 555ED2E3FE;
-	Tue, 16 Jan 2024 19:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A7FB5B5B6;
+	Tue, 16 Jan 2024 19:46:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eeiduyn4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ilWEfaWJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5B02E3F5;
-	Tue, 16 Jan 2024 19:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6BD5B5AF;
+	Tue, 16 Jan 2024 19:46:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705434274; cv=none; b=KFEX9aCzAlULFwEFu2B/i+8cTFyMDYbXmgBZggGER2v5ARAHYfF92opiW29KOUe7ey+aY5c8+Sk5kV3pWIFWDHqr8LSCE22VtyweMwRfKjMsGkV6MsomnByhtupRBNeBQW7V/oeOrS8leJ6GVCb6+UimWHk6yLMVCSduSI87XqY=
+	t=1705434377; cv=none; b=cxqIcP4weVD2rlw1w5L+BiemdvT8cDGvxEFa7GB7DVZXWOA4ZR0wbqORmFq+telMcsoTAw3YccPS5vSw1P9OVf04y6qMBmHYk8Fcb0qPCfq75JCmy82mfexxFziFDdVhpnEJG+RP1Tn8zWJ7ITUHxMQAIkG5MfGHW/pQkcEVrgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705434274; c=relaxed/simple;
-	bh=HInhuxAfFhc5lXJaCJf0TusmapJy+bd2OP1bhgf/c4s=;
+	s=arc-20240116; t=1705434377; c=relaxed/simple;
+	bh=35xUwcl6BR8yXDCYGEp27FsPAE+Q7Et5tRRLA9oNt4c=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:MIME-Version:X-stable:
-	 X-Patchwork-Hint:X-stable-base:Content-Transfer-Encoding; b=elWM0H3AzAL1kpFj7VvJoYXbwQIg7GWi6HI45+Txf8PZ60jNyefllShWTk8AwvI8FF0YomyM8G9/dMOHjLsVumF2bPKNrLuPokck0ojzaTXgOWtBr7+MUdnqzxBc3GTzBn7D/pw0hyxJuT3KtaRJATClcVwmsMqAWbo/hITaZ8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eeiduyn4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7DFDC433B1;
-	Tue, 16 Jan 2024 19:44:32 +0000 (UTC)
+	 X-Patchwork-Hint:X-stable-base:Content-Transfer-Encoding; b=th+382i2HNoVMm074ymJvpi5QGhNo+U/Ws8C6/Nd+1LmXsVQA8ENNs9Gj1ErwGglwL6txZ7nmU2HrDtP5ps85HGb7j+TdjmtBnkQbFEllMJ7LSe5yFqnz/vz2+oUNQh7OFOU1AKvb5WcyrI0rLpDQA6QmpZsjayGyTcWAjhaSDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ilWEfaWJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87831C433F1;
+	Tue, 16 Jan 2024 19:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705434274;
-	bh=HInhuxAfFhc5lXJaCJf0TusmapJy+bd2OP1bhgf/c4s=;
+	s=k20201202; t=1705434376;
+	bh=35xUwcl6BR8yXDCYGEp27FsPAE+Q7Et5tRRLA9oNt4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eeiduyn45+/AqB/6YXazaNKv6Om0aaIDNjoJ1W/FQDMHt4jbZ6rtOeG5DvWPGkkby
-	 FXzcC8rWPMcRkqtOXEUWDobgH03MGqHUZ85XFdAvcBzdjIFWutXoykfz6rBAADuTnF
-	 TZUvC+QTCv40t4q9fgIiOwtVu8LcfzRFK9s3NSy/C+pBv/dgG8Tv1mjQ1QpjlV5FBw
-	 +b55zf0wAIOTQMS6ysgp53dkI7NzILClHHySYBCJ72sQ1jd+ZIW2qxmzpVc+12YAui
-	 a6vmePXoof37aHUUPKbX11V9wSjkL6v3wr/L3d8HURPOFqr88QM4x2vnMqUWlbHaWB
-	 wMSzDw0hlhkjQ==
+	b=ilWEfaWJCSs97KB2/k/dNTyQWLQ+2m9R/lSk+LnM/c26eLbd1xvk/bg7TYuQqgGRL
+	 48/o7CAX+X2/mjZ7uO3aKkUIJ7I23ntEM20tZ45OyUWk/+W2TLD8emBYlalVInJiI9
+	 X10VRugncUUOlIp9txvN3fUUo87kF+/0pMbcKXxblniwPHMPy85399wqGCACObmgTG
+	 TCIfROUqjbqkiocECcVVxiJzJcugJcZkGayW7NWKshdi5ZXAgJR+wULk92Iqq7Wn8z
+	 SvGSBe+cfU/nDpzPHnw3rczToxM2wetdWQQ8OsxhotvV1/dvDt51NEpneKz1Iv/CXL
+	 xn7HFVJEX9EoQ==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Cc: Nia Espera <nespera@igalia.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+Cc: Mao Jinlong <quic_jinlmao@quicinc.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
+	konrad.dybcio@linaro.org,
 	robh+dt@kernel.org,
 	krzysztof.kozlowski+dt@linaro.org,
 	conor+dt@kernel.org,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.7 047/108] arm64: dts: qcom: sm8350: Fix remoteproc interrupt type
-Date: Tue, 16 Jan 2024 14:39:13 -0500
-Message-ID: <20240116194225.250921-47-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.7 084/108] arm64: dts: qcom: msm8996: Fix 'in-ports' is a required property
+Date: Tue, 16 Jan 2024 14:39:50 -0500
+Message-ID: <20240116194225.250921-84-sashal@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240116194225.250921-1-sashal@kernel.org>
 References: <20240116194225.250921-1-sashal@kernel.org>
@@ -71,64 +72,61 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.7
 Content-Transfer-Encoding: 8bit
 
-From: Nia Espera <nespera@igalia.com>
+From: Mao Jinlong <quic_jinlmao@quicinc.com>
 
-[ Upstream commit 54ee322f845c7f25fbf6e43e11147b6cae8eff56 ]
+[ Upstream commit 9a6fc510a6a3ec150cb7450aec1e5f257e6fc77b ]
 
-In a similar vein to
-https://lore.kernel.org/lkml/20220530080842.37024-3-manivannan.sadhasivam@linaro.org/,
-the remote processors on sm8350 fail to initialize with the 'correct'
-(i.e., specified in downstream) IRQ type. Change this to EDGE_RISING.
+Add the inport of funnel@3023000 to fix 'in-ports' is a required property
+warning.
 
-Signed-off-by: Nia Espera <nespera@igalia.com>
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20231111-nia-sm8350-for-upstream-v4-4-3a638b02eea5@igalia.com
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+Link: https://lore.kernel.org/r/20231210072633.4243-3-quic_jinlmao@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index b46236235b7f..23ee2fb5abcc 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -2021,7 +2021,7 @@ mpss: remoteproc@4080000 {
- 			compatible = "qcom,sm8350-mpss-pas";
- 			reg = <0x0 0x04080000 0x0 0x4040>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 6ba9da9e6a8b..fa8ec92ce490 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -444,6 +444,19 @@ memory@80000000 {
+ 		reg = <0x0 0x80000000 0x0 0x0>;
+ 	};
  
--			interrupts-extended = <&intc GIC_SPI 264 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts-extended = <&intc GIC_SPI 264 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_modem_in 0 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_modem_in 1 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_modem_in 2 IRQ_TYPE_EDGE_RISING>,
-@@ -2063,7 +2063,7 @@ slpi: remoteproc@5c00000 {
- 			compatible = "qcom,sm8350-slpi-pas";
- 			reg = <0 0x05c00000 0 0x4000>;
++	etm {
++		compatible = "qcom,coresight-remote-etm";
++
++		out-ports {
++			port {
++				modem_etm_out_funnel_in2: endpoint {
++					remote-endpoint =
++					  <&funnel_in2_in_modem_etm>;
++				};
++			};
++		};
++	};
++
+ 	psci {
+ 		compatible = "arm,psci-1.0";
+ 		method = "smc";
+@@ -2644,6 +2657,14 @@ funnel@3023000 {
+ 			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
+ 			clock-names = "apb_pclk", "atclk";
  
--			interrupts-extended = <&pdc 9 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts-extended = <&pdc 9 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_slpi_in 0 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_slpi_in 1 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_slpi_in 2 IRQ_TYPE_EDGE_RISING>,
-@@ -3207,7 +3207,7 @@ adsp: remoteproc@17300000 {
- 			compatible = "qcom,sm8350-adsp-pas";
- 			reg = <0 0x17300000 0 0x100>;
++			in-ports {
++				port {
++					funnel_in2_in_modem_etm: endpoint {
++						remote-endpoint =
++						  <&modem_etm_out_funnel_in2>;
++					};
++				};
++			};
  
--			interrupts-extended = <&pdc 6 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts-extended = <&pdc 6 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
-@@ -3512,7 +3512,7 @@ cdsp: remoteproc@98900000 {
- 			compatible = "qcom,sm8350-cdsp-pas";
- 			reg = <0 0x98900000 0 0x1400000>;
- 
--			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_cdsp_in 0 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_cdsp_in 1 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_cdsp_in 2 IRQ_TYPE_EDGE_RISING>,
+ 			out-ports {
+ 				port {
 -- 
 2.43.0
 
