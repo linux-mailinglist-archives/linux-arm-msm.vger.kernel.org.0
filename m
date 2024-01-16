@@ -1,155 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-7375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 864E982F105
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 16:06:46 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2E7282F142
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 16:19:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 18FDAB2372E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 15:06:44 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 568C5B2139A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 15:19:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B13541CA87;
-	Tue, 16 Jan 2024 15:05:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HYL2NKlT"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 277D31BF43;
+	Tue, 16 Jan 2024 15:19:02 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1771CA88;
-	Tue, 16 Jan 2024 15:05:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40GE094g027663;
-	Tue, 16 Jan 2024 15:05:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-type; s=qcppdkim1; bh=Zgkx62l4rcyEtBTq+CoX
-	3k8529VHNxyha1vXQuEWPjg=; b=HYL2NKlTOCoKy8WpNo6UOtkfyLjUErKazk8u
-	Gy4e9vfgX2S6Qtcme5GI8P0j1mVVkRI8fYBE7NoeRWEScIqztl1C6C8qcdpfCHrx
-	hfoGAUaZFck0QJHmfFboKp2T49TVYDjYrUc+wSsgKDLCGCC+PhiXquL9UNC98ix7
-	KTVeQmAse/iXUq1LqS5071uvOpIR8B3Jc1daQ/aTv8si0tnZTd7ucXie2re//QRc
-	yq8k/gCdkfzzNlzkOOOc5OjDxme0k+TFOO+i+JmQ8bkwPHNwIksW54JMBr79zqN5
-	PwXfnHlap1KC5yuGSB/qgwXSuRqEb5opumEHiGl6BTnG43ACTA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vnrnd8jjv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 16 Jan 2024 15:05:05 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40GF54FE015128
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 16 Jan 2024 15:05:04 GMT
-Received: from hu-bibekkum-hyd.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 16 Jan 2024 07:04:58 -0800
-From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-To: <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
-        <dmitry.baryshkov@linaro.org>, <konrad.dybcio@linaro.org>,
-        <jsnitsel@redhat.com>, <quic_bjorande@quicinc.com>, <mani@kernel.org>,
-        <quic_eberman@quicinc.com>, <robdclark@chromium.org>,
-        <u.kleine-koenig@pengutronix.de>, <robh@kernel.org>,
-        <vladimir.oltean@nxp.com>, <quic_pkondeti@quicinc.com>,
-        <quic_molvera@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <iommu@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-        Bibek Kumar Patro
-	<quic_bibekkum@quicinc.com>
-Subject: [PATCH v8 5/5] iommu/arm-smmu: add ACTLR data and support for SC7280
-Date: Tue, 16 Jan 2024 20:34:11 +0530
-Message-ID: <20240116150411.23876-6-quic_bibekkum@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20240116150411.23876-1-quic_bibekkum@quicinc.com>
-References: <20240116150411.23876-1-quic_bibekkum@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3561BF3E
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jan 2024 15:18:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1rPlD3-0000to-Uy; Tue, 16 Jan 2024 16:18:37 +0100
+Received: from [2a0a:edc0:0:900:1d::4e] (helo=lupine)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1rPlD0-000Gxq-M0; Tue, 16 Jan 2024 16:18:34 +0100
+Received: from pza by lupine with local (Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1rPlD0-000D8R-1w;
+	Tue, 16 Jan 2024 16:18:34 +0100
+Message-ID: <800d202864c1730622a19998728c5a8b576d1931.camel@pengutronix.de>
+Subject: Re: [PATCH v3 5/5] i2c: muxes: pca954x: Allow sharing reset GPIO
+From: Philipp Zabel <p.zabel@pengutronix.de>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Bjorn Andersson
+ <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Srinivas
+ Kandagatla <srinivas.kandagatla@linaro.org>, Banajit Goswami
+ <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown
+ <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley <conor+dt@kernel.org>,
+ Peter Rosin <peda@axentia.se>, Jaroslav Kysela <perex@perex.cz>,  Takashi
+ Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
+ alsa-devel@alsa-project.org,  linux-sound@vger.kernel.org,
+ devicetree@vger.kernel.org,  linux-kernel@vger.kernel.org,
+ linux-i2c@vger.kernel.org
+Cc: Chris Packham <chris.packham@alliedtelesis.co.nz>, Bartosz Golaszewski
+	 <brgl@bgdev.pl>, Sean Anderson <sean.anderson@seco.com>
+Date: Tue, 16 Jan 2024 16:18:34 +0100
+In-Reply-To: <20240112163608.528453-6-krzysztof.kozlowski@linaro.org>
+References: <20240112163608.528453-1-krzysztof.kozlowski@linaro.org>
+	 <20240112163608.528453-6-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: e5NiOR4LKf5dTI5jVxNGOc6hni5EtNfZ
-X-Proofpoint-ORIG-GUID: e5NiOR4LKf5dTI5jVxNGOc6hni5EtNfZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- lowpriorityscore=0 mlxscore=0 suspectscore=0 mlxlogscore=999 clxscore=1015
- adultscore=0 impostorscore=0 malwarescore=0 bulkscore=0 phishscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401160118
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 
-Add ACTLR data table for SC7280 along with support for
-same including SC7280 specific implementation operations.
+On Fr, 2024-01-12 at 17:36 +0100, Krzysztof Kozlowski wrote:
+> From: Chris Packham <chris.packham@alliedtelesis.co.nz>
+>=20
+> Some hardware designs with multiple PCA954x devices use a reset GPIO
+> connected to all the muxes. Support this configuration by making use of
+> the reset controller framework which can deal with the shared reset
+> GPIOs. Fall back to the old GPIO descriptor method if the reset
+> controller framework is not enabled.
+>=20
+> Signed-off-by: Chris Packham <chris.packham@alliedtelesis.co.nz>
+> Acked-by: Peter Rosin <peda@axentia.se>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Link: https://lore.kernel.org/r/20240108041913.7078-1-chris.packham@allie=
+dtelesis.co.nz
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>=20
+> ---
+>=20
+> If previous patches are fine, then this commit is independent and could
+> be taken via I2C.
+>=20
+> Cc: Chris Packham <chris.packham@alliedtelesis.co.nz>
+> Cc: Bartosz Golaszewski <brgl@bgdev.pl>
+> Cc: Sean Anderson <sean.anderson@seco.com>
+> ---
+>  drivers/i2c/muxes/i2c-mux-pca954x.c | 46 ++++++++++++++++++++++++-----
+>  1 file changed, 38 insertions(+), 8 deletions(-)
+>=20
+> diff --git a/drivers/i2c/muxes/i2c-mux-pca954x.c b/drivers/i2c/muxes/i2c-=
+mux-pca954x.c
+> index 2219062104fb..1702e8d49b91 100644
+> --- a/drivers/i2c/muxes/i2c-mux-pca954x.c
+> +++ b/drivers/i2c/muxes/i2c-mux-pca954x.c
+> @@ -49,6 +49,7 @@
+>  #include <linux/pm.h>
+>  #include <linux/property.h>
+>  #include <linux/regulator/consumer.h>
+> +#include <linux/reset.h>
+>  #include <linux/slab.h>
+>  #include <linux/spinlock.h>
+>  #include <dt-bindings/mux/mux.h>
+> @@ -102,6 +103,9 @@ struct pca954x {
+>  	unsigned int irq_mask;
+>  	raw_spinlock_t lock;
+>  	struct regulator *supply;
+> +
+> +	struct gpio_desc *reset_gpio;
+> +	struct reset_control *reset_cont;
+>  };
+> =20
+>  /* Provide specs for the MAX735x, PCA954x and PCA984x types we know abou=
+t */
+> @@ -477,6 +481,35 @@ static int pca954x_init(struct i2c_client *client, s=
+truct pca954x *data)
+>  	return ret;
+>  }
+> =20
+> +static int pca954x_get_reset(struct device *dev, struct pca954x *data)
+> +{
+> +	data->reset_cont =3D devm_reset_control_get_optional_shared(dev, NULL);
+> +	if (IS_ERR(data->reset_cont))
+> +		return dev_err_probe(dev, PTR_ERR(data->reset_cont),
+> +				     "Failed to get reset\n");
+> +	else if (data->reset_cont)
+> +		return 0;
+> +
+> +	/*
+> +	 * fallback to legacy reset-gpios
+> +	 */
 
-Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
----
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 30 +++++++++++++++++++++-
- 1 file changed, 29 insertions(+), 1 deletion(-)
+devm_reset_control_get_optional_shared() won't return NULL if the
+"reset-gpios" property is found in the device tree, so the GPIO
+fallback is dead code.
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 26acfbdafd0f..8e52176b4108 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -36,6 +36,27 @@ struct actlr_config {
- 	u32 actlr;
- };
+> +	data->reset_gpio =3D devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HI=
+GH);
+> +	if (IS_ERR(data->reset_gpio)) {
+> +		return dev_err_probe(dev, PTR_ERR(data->reset_gpio),
+> +				     "Failed to get reset gpio");
+> +	}
+> +
+> +	return 0;
+> +}
+> +
 
-+static const struct actlr_config sc7280_apps_actlr_cfg[] = {
-+	{ 0x0800, 0x24e1, PREFETCH_DEFAULT | CMTLB },
-+	{ 0x2000, 0x0163, PREFETCH_DEFAULT | CMTLB },
-+	{ 0x2080, 0x0461, PREFETCH_DEFAULT | CMTLB },
-+	{ 0x2100, 0x0161, PREFETCH_DEFAULT | CMTLB },
-+	{ 0x0900, 0x0407, PREFETCH_SHALLOW | CPRE | CMTLB },
-+	{ 0x2180, 0x0027, PREFETCH_SHALLOW | CPRE | CMTLB },
-+	{ 0x1000, 0x07ff, PREFETCH_DEEP | CPRE | CMTLB },
-+};
-+
-+static const struct actlr_config sc7280_gfx_actlr_cfg[] = {
-+	{ 0x0000, 0x07ff, PREFETCH_SWITCH_GFX | PREFETCH_DEEP | CPRE | CMTLB },
-+};
-+
-+static const struct actlr_variant sc7280_actlr[] = {
-+	{ .io_start = 0x15000000, .actlrcfg = sc7280_apps_actlr_cfg,
-+			.num_actlrcfg = ARRAY_SIZE(sc7280_apps_actlr_cfg) },
-+	{ .io_start = 0x03da0000, .actlrcfg = sc7280_gfx_actlr_cfg,
-+			.num_actlrcfg = ARRAY_SIZE(sc7280_gfx_actlr_cfg) },
-+};
-+
- static const struct actlr_config sm8550_apps_actlr_cfg[] = {
- 	{ 0x18a0, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
- 	{ 0x18e0, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
-@@ -676,6 +697,13 @@ static const struct qcom_smmu_match_data sdm845_smmu_500_data = {
- 	/* Also no debug configuration. */
- };
-
-+static const struct qcom_smmu_match_data sc7280_smmu_500_impl0_data = {
-+	.impl = &qcom_smmu_500_impl,
-+	.adreno_impl = &qcom_adreno_smmu_500_impl,
-+	.cfg = &qcom_smmu_impl0_cfg,
-+	.actlrvar = sc7280_actlr,
-+	.num_smmu = ARRAY_SIZE(sc7280_actlr),
-+};
-
- static const struct qcom_smmu_match_data sm8550_smmu_500_impl0_data = {
- 	.impl = &qcom_smmu_500_impl,
-@@ -702,7 +730,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
- 	{ .compatible = "qcom,qdu1000-smmu-500", .data = &qcom_smmu_500_impl0_data  },
- 	{ .compatible = "qcom,sc7180-smmu-500", .data = &qcom_smmu_500_impl0_data },
- 	{ .compatible = "qcom,sc7180-smmu-v2", .data = &qcom_smmu_v2_data },
--	{ .compatible = "qcom,sc7280-smmu-500", .data = &qcom_smmu_500_impl0_data },
-+	{ .compatible = "qcom,sc7280-smmu-500", .data = &sc7280_smmu_500_impl0_data },
- 	{ .compatible = "qcom,sc8180x-smmu-500", .data = &qcom_smmu_500_impl0_data },
- 	{ .compatible = "qcom,sc8280xp-smmu-500", .data = &qcom_smmu_500_impl0_data },
- 	{ .compatible = "qcom,sdm630-smmu-v2", .data = &qcom_smmu_v2_data },
---
-2.17.1
-
+regards
+Philipp
 
