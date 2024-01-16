@@ -1,166 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-7337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E2EF582ECD9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 11:42:17 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D63E82ECE3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 11:44:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 941A41F23E25
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 10:42:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DDE511F2402A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 10:44:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1189113AE1;
-	Tue, 16 Jan 2024 10:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E407B17568;
+	Tue, 16 Jan 2024 10:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Vaz0DSAQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="D0JNJz9t"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4306C13AC4;
-	Tue, 16 Jan 2024 10:42:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1705401727; x=1736937727;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=2Ww94hOka7bc310crAy9GxymCCMXbFrTe/1MjrnzhhE=;
-  b=Vaz0DSAQrzkmY9Dx2MQejJVCIiHHSuQcJCzlTWLsXFYCUax4Oq7sPVum
-   0wksH1A7RTPAWCcLt2cRTSBn83DRz5c/U8aK0usVgCLCUfz6kDjAj7nZE
-   35cHcyt/aMijq8UHxgTXy06wmYyhqkg2yqYMt7GOgT/vXXBazk+k6Ig5m
-   kxzY6rNrYfUpJhMvzHwQDxrfsMt88pP8W9VK3G+b+KGSKoHra32gz7GiU
-   B2RsI4S7p42Gn6spogGoSjQDJLMKKwxxCV4dacHEn89UE1FtkTGDEXU8n
-   CrDKfVTdaRFe9JjD8MsdT3Wh2BN0nAu41PQhT4W+GxWS0/w/+fVosaAi3
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10954"; a="396980935"
-X-IronPort-AV: E=Sophos;i="6.04,198,1695711600"; 
-   d="scan'208";a="396980935"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jan 2024 02:42:06 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.04,198,1695711600"; 
-   d="scan'208";a="32413533"
-Received: from lkp-server01.sh.intel.com (HELO 961aaaa5b03c) ([10.239.97.150])
-  by orviesa001.jf.intel.com with ESMTP; 16 Jan 2024 02:42:02 -0800
-Received: from kbuild by 961aaaa5b03c with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1rPgtK-0000ZY-2i;
-	Tue, 16 Jan 2024 10:41:58 +0000
-Date: Tue, 16 Jan 2024 18:41:56 +0800
-From: kernel test robot <lkp@intel.com>
-To: Mao Jinlong <quic_jinlmao@quicinc.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Mike Leach <mike.leach@linaro.org>,
-	James Clark <james.clark@arm.com>, Leo Yan <leo.yan@linaro.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc: oe-kbuild-all@lists.linux.dev, Mao Jinlong <quic_jinlmao@quicinc.com>,
-	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] coresight: core: Add device name support
-Message-ID: <202401161834.N4E6YW3K-lkp@intel.com>
-References: <20240115164252.26510-2-quic_jinlmao@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75DBD13FF1
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jan 2024 10:44:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-5f3da7ba2bfso91825627b3.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jan 2024 02:44:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1705401872; x=1706006672; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=xfr8ekJ3/kF67ykOkBtf3gUlwOGhZeagdlr6ytlyxGQ=;
+        b=D0JNJz9tdBfYflFvVMZbxy7m3PsTtAvotZqMmh+CQekZcUhU5uqYJ2G0mIcX0Yt/Qv
+         fKz5AeloQlgv8b9wI9C6HHXPN13rO67iE6BFqBi5gEKpN9yQ9SCvUEKgW0sFjJbtJNb0
+         Aqlt3l7mLunknMKe3Bkrwzr7uT4GIrIIwVz6Lb+oY3fRg42Gu5es+1pKk4gDL3qd7yEk
+         W30bSb7OFpySSH7emgq/X1gSJZY9eLzWJa3681NdupU5WMvWHSluPxRUbm2PMzxpk+Ge
+         SJTachma4TMKMwHOgPccdpwlT19Ihe/0Tf4QrTXanc4ODKSoTArGeeJ4Nl0Ham1EloSw
+         5N7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705401872; x=1706006672;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xfr8ekJ3/kF67ykOkBtf3gUlwOGhZeagdlr6ytlyxGQ=;
+        b=A7gI3V9xjS24p1NzxDtEGUxdWdz5D4AT6HhMGp6HDS1iX9HNIuB/QUuzXgY80T9aIN
+         8jb2VdjfwLnIVN+0wM15NFQEMSU/OBPZPFuX9Qr8mk113d3PkXg3iknIL6F2852FrVqr
+         3SUm3J5/aduuvVF+TXJaAH4J1Xxx4LfIC6s8GzbCIF+9PVIIBvPrtxd6qvn+Udb4U+xm
+         a8wgged1scBOWary9JdS8JLTUSH0bgCuifse3yeuwcwOlSvcgP0xXMAqH2u32qDBQp+N
+         s12PGkWWOBJf7j6dUhQCTyKqzWb2bMtvzK1HsSK6vD5bT70jbmXQu8NKGLZKgOGKfeqz
+         b3fQ==
+X-Gm-Message-State: AOJu0YyXED2cXckAYe51Bvo7b5Z0NKFb8CQ8qUkPtBKm1EKiTx2tXS/Z
+	hO5V6zKkfDK28NEBPdCXU6qf+wjYAfZKBoZceFpTo4JDe0lCBQ==
+X-Google-Smtp-Source: AGHT+IG+pjXF8PAggTuUX8KKrF6NwOBF5GFi3hYjC/JuFDOGwfzK7X5hEG8iavIiEV1pP/58gypnnpC/LjrAO+dgnws=
+X-Received: by 2002:a81:de4d:0:b0:5d7:1940:f3e0 with SMTP id
+ o13-20020a81de4d000000b005d71940f3e0mr5302858ywl.72.1705401871966; Tue, 16
+ Jan 2024 02:44:31 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240115164252.26510-2-quic_jinlmao@quicinc.com>
+References: <20240116094935.9988-1-quic_riteshk@quicinc.com>
+ <20240116094935.9988-2-quic_riteshk@quicinc.com> <CAA8EJpo3YS4EzfsLtovYKbLSGYX=RwUn9dpmCW=j257LnvPrgw@mail.gmail.com>
+ <1d68485fd1574ff88047cef0d2d5e6f1@quicinc.com>
+In-Reply-To: <1d68485fd1574ff88047cef0d2d5e6f1@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 16 Jan 2024 12:44:21 +0200
+Message-ID: <CAA8EJpqV_jTm1gNy5RsgRWZBC3j0nTPsUPRkv6KivvRbw8TucA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] arm64: defconfig: enable Novatek NT36672E DSI Panel driver
+To: "Ritesh Kumar (QUIC)" <quic_riteshk@quicinc.com>
+Cc: "andersson@kernel.org" <andersson@kernel.org>, 
+	"konrad.dybcio@linaro.org" <konrad.dybcio@linaro.org>, "robh+dt@kernel.org" <robh+dt@kernel.org>, 
+	"krzysztof.kozlowski+dt@linaro.org" <krzysztof.kozlowski+dt@linaro.org>, 
+	"conor+dt@kernel.org" <conor+dt@kernel.org>, "catalin.marinas@arm.com" <catalin.marinas@arm.com>, 
+	"will@kernel.org" <will@kernel.org>, "Bjorn Andersson (QUIC)" <quic_bjorande@quicinc.com>, 
+	"geert+renesas@glider.be" <geert+renesas@glider.be>, "arnd@arndb.de" <arnd@arndb.de>, 
+	"neil.armstrong@linaro.org" <neil.armstrong@linaro.org>, 
+	"nfraprado@collabora.com" <nfraprado@collabora.com>, 
+	"m.szyprowski@samsung.com" <m.szyprowski@samsung.com>, 
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, 
+	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, 
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, 
+	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, 
+	"Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>, 
+	"Rajeev Nandan (QUIC)" <quic_rajeevny@quicinc.com>, 
+	"Vishnuvardhan Prodduturi (QUIC)" <quic_vproddut@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Mao,
+On Tue, 16 Jan 2024 at 12:25, Ritesh Kumar (QUIC)
+<quic_riteshk@quicinc.com> wrote:
+>
+>
+> >-----Original Message-----
+> >From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >Sent: Tuesday, January 16, 2024 3:30 PM
+> >To: Ritesh Kumar (QUIC) <quic_riteshk@quicinc.com>
+> >Cc: andersson@kernel.org; konrad.dybcio@linaro.org; robh+dt@kernel.org;
+> >krzysztof.kozlowski+dt@linaro.org; conor+dt@kernel.org;
+> >catalin.marinas@arm.com; will@kernel.org; Bjorn Andersson (QUIC)
+> ><quic_bjorande@quicinc.com>; geert+renesas@glider.be; arnd@arndb.de;
+> >neil.armstrong@linaro.org; nfraprado@collabora.com;
+> >m.szyprowski@samsung.com; linux-arm-msm@vger.kernel.org;
+> >devicetree@vger.kernel.org; linux-kernel@vger.kernel.org; linux-arm-
+> >kernel@lists.infradead.org; Abhinav Kumar (QUIC)
+> ><quic_abhinavk@quicinc.com>; Rajeev Nandan (QUIC)
+> ><quic_rajeevny@quicinc.com>; Vishnuvardhan Prodduturi (QUIC)
+> ><quic_vproddut@quicinc.com>
+> >Subject: Re: [PATCH 1/2] arm64: defconfig: enable Novatek NT36672E DSI
+> >Panel driver
 
-kernel test robot noticed the following build warnings:
+This is ugly. Please fix your email setup.
 
-[auto build test WARNING on robh/for-next]
-[also build test WARNING on linus/master v6.7 next-20240112]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> >
+> >On Tue, 16 Jan 2024 at 11:49, Ritesh Kumar <quic_riteshk@quicinc.com>
+> >wrote:
+> >>
+> >> Build the Novatek NT36672E DSI Panel driver as module.
+> >
+> >... because it is used on ....
+> >
+>
+> Thanks, will update in next version.
+>
+> >>
+> >> Signed-off-by: Ritesh Kumar <quic_riteshk@quicinc.com>
+> >> ---
+> >>  arch/arm64/configs/defconfig | 1 +
+> >>  1 file changed, 1 insertion(+)
+> >>
+> >> diff --git a/arch/arm64/configs/defconfig
+> >> b/arch/arm64/configs/defconfig index 361c31b5d064..028d80be95f6
+> >100644
+> >> --- a/arch/arm64/configs/defconfig
+> >> +++ b/arch/arm64/configs/defconfig
+> >> @@ -859,6 +859,7 @@ CONFIG_DRM_PANEL_LVDS=m
+> >CONFIG_DRM_PANEL_SIMPLE=m
+> >> CONFIG_DRM_PANEL_EDP=m  CONFIG_DRM_PANEL_ILITEK_ILI9882T=m
+> >> +CONFIG_DRM_PANEL_NOVATEK_NT36672E=m
+> >>  CONFIG_DRM_PANEL_MANTIX_MLAF057WE51=m
+> >>  CONFIG_DRM_PANEL_RAYDIUM_RM67191=m
+> >>  CONFIG_DRM_PANEL_SITRONIX_ST7703=m
+> >> --
+> >> 2.17.1
+> >>
+>
+> Thanks,
+> Ritesh
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Mao-Jinlong/coresight-core-Add-device-name-support/20240116-004557
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20240115164252.26510-2-quic_jinlmao%40quicinc.com
-patch subject: [PATCH v2 1/2] coresight: core: Add device name support
-config: arm64-defconfig (https://download.01.org/0day-ci/archive/20240116/202401161834.N4E6YW3K-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240116/202401161834.N4E6YW3K-lkp@intel.com/reproduce)
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202401161834.N4E6YW3K-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   drivers/hwtracing/coresight/coresight-core.c: In function 'coresight_alloc_device_name':
->> drivers/hwtracing/coresight/coresight-core.c:1775:14: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
-    1775 |         name = coresight_get_device_name(dev);
-         |              ^
-
-
-vim +/const +1775 drivers/hwtracing/coresight/coresight-core.c
-
-  1758	
-  1759	/*
-  1760	 * coresight_alloc_device_name - Get an index for a given device in the
-  1761	 * device index list specific to a driver. An index is allocated for a
-  1762	 * device and is tracked with the fwnode_handle to prevent allocating
-  1763	 * duplicate indices for the same device (e.g, if we defer probing of
-  1764	 * a device due to dependencies), in case the index is requested again.
-  1765	 */
-  1766	char *coresight_alloc_device_name(struct coresight_dev_list *dict,
-  1767					  struct device *dev)
-  1768	{
-  1769		int idx;
-  1770		char *name = NULL;
-  1771		struct fwnode_handle **list;
-  1772	
-  1773		mutex_lock(&coresight_mutex);
-  1774	
-> 1775		name = coresight_get_device_name(dev);
-  1776		if (!name) {
-  1777			idx = coresight_search_device_idx(dict, dev_fwnode(dev));
-  1778			if (idx < 0) {
-  1779				/* Make space for the new entry */
-  1780				idx = dict->nr_idx;
-  1781				list = krealloc_array(dict->fwnode_list,
-  1782						      idx + 1, sizeof(*dict->fwnode_list),
-  1783						      GFP_KERNEL);
-  1784				if (ZERO_OR_NULL_PTR(list)) {
-  1785					idx = -ENOMEM;
-  1786					goto done;
-  1787				}
-  1788	
-  1789				list[idx] = dev_fwnode(dev);
-  1790				dict->fwnode_list = list;
-  1791				dict->nr_idx = idx + 1;
-  1792			}
-  1793	
-  1794			name = devm_kasprintf(dev, GFP_KERNEL, "%s%d", dict->pfx, idx);
-  1795		}
-  1796	done:
-  1797		mutex_unlock(&coresight_mutex);
-  1798		return name;
-  1799	}
-  1800	EXPORT_SYMBOL_GPL(coresight_alloc_device_name);
-  1801	
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+With best wishes
+Dmitry
 
