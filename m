@@ -1,110 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-7363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37A1382EFE7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 14:44:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 259A482F031
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 15:03:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5C8BC1C22CA2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 13:44:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7C3A52831B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 14:03:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 228361BDC2;
-	Tue, 16 Jan 2024 13:44:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39FF21BF27;
+	Tue, 16 Jan 2024 14:03:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="QRsSnLfA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D46351BC53;
-	Tue, 16 Jan 2024 13:44:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B87462F4;
-	Tue, 16 Jan 2024 05:44:48 -0800 (PST)
-Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 94CCD3F6C4;
-	Tue, 16 Jan 2024 05:43:55 -0800 (PST)
-Message-ID: <cef041b7-70ac-47c9-888c-696a0cec04d1@arm.com>
-Date: Tue, 16 Jan 2024 13:43:49 +0000
+Received: from mail-ej1-f67.google.com (mail-ej1-f67.google.com [209.85.218.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF571BF24
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jan 2024 14:03:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f67.google.com with SMTP id a640c23a62f3a-a2dd05e02ffso218297866b.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jan 2024 06:03:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1705413810; x=1706018610; darn=vger.kernel.org;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=s9h/dGqfHWg+QB7S7VecCh/3Jo3Pb/vuBb+hs8ql8+Y=;
+        b=QRsSnLfAihAwcIxzviXTEjRwcMz56JlMPqqE2pUFmrfJxAK0FDVdlykfouzLI2rwfO
+         VuYDBtriz//NCV//ga9Mmzq8JNNPDnrv+3U0c3koGUQ14zJAszVu85oFBM4jX/lEVj10
+         sLySTqc++dhih4uEKTGFLMFRDDlc44sIwvhzauvXY0mbbXejIMi1R3cFAgs7jYtjz4H7
+         XQBbi7wGVeONwkIf8dST1DbIKE0lm1eeRZsYqehJQ+k/6GPvZ5DY5NdzL/eBV2VEmbsX
+         erJv7hL8JztrueK7Yap12yWdZIGIIWz2SLxqGK0cT3R9E693GwEVrBuIdw/VJL1JaQxk
+         AhNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705413810; x=1706018610;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=s9h/dGqfHWg+QB7S7VecCh/3Jo3Pb/vuBb+hs8ql8+Y=;
+        b=j8gQCX16fxVQ6fs3uSLVBbOHvqm7uDPcmOALKmrDDkLJFWJ8Ef18JCoDYEt55TGxHR
+         +wCTX8dT8bjA6Vn3kElrwas9jhlWEsIZ4ADQnvWvzUZ7C/YSdilUSVcobqsNoz3KQOg8
+         EbMd9RN4Bs54orgyRxLDajhjg1+zIMdD1oleQFCgpZlSRmz4fld658cMdfgb7A9ehzZZ
+         texSfiymKf4X7VLD36++dapUDjX94d0QdvyquU+RTdOY2WVeoM212VhPBOAIIWLUo50B
+         Op693R2uVRb4sqxeY9ZNLmlLdrsjlZjE0w7Tst3WJkButpP6/0pJraCuNyVe8df7AxOg
+         BDWw==
+X-Gm-Message-State: AOJu0YzvBl/QJiv17u8ajbnKpv1niwkeD62r94UNplm7vzu1FL4MmZDt
+	siGWauOmO3FXn4RS5CiUqgDA2UAk1ZafXw==
+X-Google-Smtp-Source: AGHT+IFEDa0MaDz6ZHdzGscGw0QC7obdM3/JIwdpJYmwytZODaQdfo18v9kwdKCmuUlYcDZDhoG8Pg==
+X-Received: by 2002:a17:907:a782:b0:a2c:e2a4:17b3 with SMTP id vx2-20020a170907a78200b00a2ce2a417b3mr2612345ejc.120.1705413810545;
+        Tue, 16 Jan 2024 06:03:30 -0800 (PST)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id vb8-20020a170907d04800b00a2d5d42ac39sm3791779ejc.136.2024.01.16.06.03.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Jan 2024 06:03:30 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] coresight: core: Add device name support
-Content-Language: en-US
-To: Mao Jinlong <quic_jinlmao@quicinc.com>, Mike Leach
- <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
- Leo Yan <leo.yan@linaro.org>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com, linux-arm-msm@vger.kernel.org
-References: <20240115164252.26510-1-quic_jinlmao@quicinc.com>
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <20240115164252.26510-1-quic_jinlmao@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 16 Jan 2024 15:03:29 +0100
+Message-Id: <CYG6QOFYOX79.2ROURJ8FK446C@fairphone.com>
+To: "Daniel Lezcano" <daniel.lezcano@linaro.org>, <andersson@kernel.org>
+Cc: "Amit Pundir" <amit.pundir@linaro.org>, "Konrad Dybcio"
+ <konrad.dybcio@linaro.org>, "Rob Herring" <robh+dt@kernel.org>, "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley"
+ <conor+dt@kernel.org>, "open list:ARM/QUALCOMM SUPPORT"
+ <linux-arm-msm@vger.kernel.org>, "open list:OPEN FIRMWARE AND FLATTENED
+ DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, "open list"
+ <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: sdm845: Fix wild reboot during Antutu
+ test
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+X-Mailer: aerc 0.15.2
+References: <20240116115921.804185-1-daniel.lezcano@linaro.org>
+ <CYG4WTCOBTG2.11PA7Q4A3H93H@fairphone.com>
+ <5db88d48-4868-49f0-b702-6eea14400e5b@linaro.org>
+In-Reply-To: <5db88d48-4868-49f0-b702-6eea14400e5b@linaro.org>
 
-On 15/01/2024 16:42, Mao Jinlong wrote:
-> With current design, the name of the non-cpu bounded coresight
-> component is the device type with the number. And with 'ls' command
-> we can get the register address of the component. But from these
-> information, we can't know what the HW or system the component belongs
-> to. Add device-name in DT to support it.
-> 
-> cti_sys0 -> ../../../devices/platform/soc@0/138f0000.cti/cti_sys0
-> cti_sys1 -> ../../../devices/platform/soc@0/13900000.cti/cti_sys1
-> tpdm0 -> ../../../devices/platform/soc@0/10b0d000.tpdm/tpdm0
-> tpdm1 -> ../../../devices/platform/soc@0/10c28000.tpdm/tpdm1
-> tpdm2 -> ../../../devices/platform/soc@0/10c29000.tpdm/tpdm2
+On Tue Jan 16, 2024 at 1:51 PM CET, Daniel Lezcano wrote:
+> On 16/01/2024 13:37, Luca Weiss wrote:
+> > On Tue Jan 16, 2024 at 12:59 PM CET, Daniel Lezcano wrote:
+> >> Running an Antutu benchmark makes the board to do a hard reboot.
+> >>
+> >> Cause: it appears the gpu-bottom and gpu-top temperature sensors are s=
+howing
+> >> too high temperatures, above 115=C2=B0C.
+> >>
+> >> Out of tree configuratons show the gpu thermal zone is configured to
+> >> be mitigated at 85=C2=B0C with devfreq.
+> >>
+> >> Add the DT snippet to enable the thermal mitigation on the sdm845
+> >> based board.
+> >>
+> >> Fixes: c79800103eb18 ("arm64: dts: sdm845: Add gpu and gmu device node=
+s")
+> >> Cc: Amit Pundir <amit.pundir@linaro.org>
+> >> Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+> >=20
+> > A part of this is already included with this patch:
+> > https://lore.kernel.org/linux-arm-msm/20240102-topic-gpu_cooling-v1-4-f=
+da30c57e353@linaro.org/
+> >=20
+> > Maybe rebase on top of that one and add the 85degC trip point or
+> > something?
+>
+> Actually, I think the patch is wrong.
 
-Please could you rebase this on for-next/queue (which has all bells and 
-whistles enabled to report Warnings), fixing the reported issue by 
-kernel test robot ?
+I recommend telling Konrad in that patch then, not me :)
 
-Suzuki
+>
+> The cooling effect does not operate on 'hot' trip point type as it is=20
+> considered as a critical trip point. The governor is not invoked, so no=
+=20
+> mitigation happen. The 'hot' trip point type results in sending a=20
+> notification to userspace to give the last chance to do something before=
+=20
+> 'critical' is reached where the system is shut down.
+>
+> I suggest to revert it and pick the one I proposed.
 
+It hasn't been applied yet so it can be fixed in v2 there.
 
-> 
-> Change since V1:
-> 1. Change coresight-name to device name.
-> 2. Add the device-name in coresight dt bindings.
-> 
-> Mao Jinlong (2):
->    coresight: core: Add device name support
->    dt-bindings: arm: Add device-name in the coresight components
-> 
->   .../bindings/arm/arm,coresight-catu.yaml      |  5 +++
->   .../bindings/arm/arm,coresight-cpu-debug.yaml |  5 +++
->   .../bindings/arm/arm,coresight-cti.yaml       |  5 +++
->   .../arm/arm,coresight-dummy-sink.yaml         |  5 +++
->   .../arm/arm,coresight-dummy-source.yaml       |  5 +++
->   .../arm/arm,coresight-dynamic-funnel.yaml     |  5 +++
->   .../arm/arm,coresight-dynamic-replicator.yaml |  5 +++
->   .../bindings/arm/arm,coresight-etb10.yaml     |  5 +++
->   .../bindings/arm/arm,coresight-etm.yaml       |  5 +++
->   .../arm/arm,coresight-static-funnel.yaml      |  5 +++
->   .../arm/arm,coresight-static-replicator.yaml  |  5 +++
->   .../bindings/arm/arm,coresight-stm.yaml       |  5 +++
->   .../bindings/arm/arm,coresight-tmc.yaml       |  5 +++
->   .../bindings/arm/arm,coresight-tpiu.yaml      |  5 +++
->   .../bindings/arm/qcom,coresight-tpda.yaml     |  5 +++
->   .../bindings/arm/qcom,coresight-tpdm.yaml     |  5 +++
->   drivers/hwtracing/coresight/coresight-core.c  | 33 ++++++++++---------
->   .../hwtracing/coresight/coresight-platform.c  | 31 +++++++++++++++++
->   include/linux/coresight.h                     |  1 +
->   19 files changed, 130 insertions(+), 15 deletions(-)
-> 
-
+Regards
+Luca
 
