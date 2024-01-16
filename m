@@ -1,158 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-7420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CDFC082FB93
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 22:58:29 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 716CC82FC18
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 23:12:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6E8A828CDBA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 21:58:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1C6DD28DCA0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 22:12:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6968C1682A5;
-	Tue, 16 Jan 2024 20:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 257CF22326;
+	Tue, 16 Jan 2024 20:24:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B2YT5HD4"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jcFDUvS8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ABD3167446;
-	Tue, 16 Jan 2024 20:04:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68FFE1D55E;
+	Tue, 16 Jan 2024 20:24:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705435443; cv=none; b=XPFEhfNgCyml7ejyAY95FJygnIkixXaAFYQUQAM4Ijr9AIm6W9t01a2Pyj1Vm/viVICkyB25L5PayIg7jEoE9OQtCag/eRihFs784/JuIUxiy+8n2AOMTZFaT7rmmKBfxjvfjZlUKTqIu7I2Zw/xX61/306NbqmyVZUBUT41otM=
+	t=1705436679; cv=none; b=hhW4zp1zjO/wC8FZc7vooO7T/qtPgf9gsReZSyADqS6lalOtk2nGyj2CwE7iSnB6HMVgTl3jCknu1gzKRlECoTFwP5hOMI/S44FMuHjs7mhRfAGUuQTwgenxJeHsOhR8ieThLQSYtnOQ/X0KXuI9qSx/t0lgdLYRi6AKRqNqUKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705435443; c=relaxed/simple;
-	bh=zUHPB2KLHmNL0IYdzBiWWnYP/eX2cJhptKcUgzk1MzI=;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:In-Reply-To:References:MIME-Version:X-stable:
-	 X-Patchwork-Hint:X-stable-base:Content-Transfer-Encoding; b=Gf9SLrWbyGtak/JxqmoUag106azgZvaDHGfXsSlGOGLzQ+VBtEamXoTHVGHYmpBZt1nKCkwfgOpQJQyLNstSDxvshx+eGMMdnSYgEjBiiSC3SrTEW0Ob9nuhhc1ASI4xLiTwaFX2NoSb/0q4ghFpJjD9/wM/7zVhKGPVWUPOj8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B2YT5HD4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E88FC43399;
-	Tue, 16 Jan 2024 20:04:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705435442;
-	bh=zUHPB2KLHmNL0IYdzBiWWnYP/eX2cJhptKcUgzk1MzI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B2YT5HD4aZZ3GGvvX6Ffy0yiXaBWYFUAtqXjEj48IfFkhKrP+m/UqJ1UI927cOUe1
-	 ruoqHitDFxaN15YwarpHKO84IjdgmiMbOhL6Typ8lRS63V7wuJlaYBySGJjiJ5oz/S
-	 ID2AtXdrLU0PwTd/FVJKyLulzh7EWM1F/i1CP9FHWrxf1OkBUgHd5qZeeLJ3WGu1Sz
-	 3fjgy2zmLsTjKvhvjlEdEHsjEC5F8LDyY5kadWn/QPoUtx2OOxXfCQC0x7c4uqUDHQ
-	 mWJWPzme2mN6Y4O7CoBOz9pGiVQDKFMn0KSPJGpaoBP6gfL29nMhp6DDqnXHLxMaNm
-	 m/Ya8Ideh/YAQ==
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Cc: Mao Jinlong <quic_jinlmao@quicinc.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	konrad.dybcio@linaro.org,
-	robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 26/31] arm64: dts: qcom: msm8998: Fix 'out-ports' is a required property
-Date: Tue, 16 Jan 2024 15:02:35 -0500
-Message-ID: <20240116200310.259340-26-sashal@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240116200310.259340-1-sashal@kernel.org>
-References: <20240116200310.259340-1-sashal@kernel.org>
+	s=arc-20240116; t=1705436679; c=relaxed/simple;
+	bh=/iZ/XhGDPKyEC2qDhr4v1BM7WX19k4XGo31kibxi7/c=;
+	h=Received:DKIM-Signature:Received:Received:Received:Message-ID:
+	 Date:MIME-Version:User-Agent:Subject:Content-Language:To:CC:
+	 References:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 X-Originating-IP:X-ClientProxiedBy:X-QCInternal:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-GUID:
+	 X-Proofpoint-ORIG-GUID:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details; b=srtTX3OIZ0SdF7yx2uyV4AXVAufOX6kTEUHflcYsSMgr6MJDEhFP2U66wHt6N0YtrT8RxZ6szWy7SS6/T4yyhQlJSgYI5eAW65HfPO5hyjkJpxwwm2FXFVTPoijpQeoQsLEPRzOtaQw4/V+UPYBHMzourhujQbVBgnpgRDIbVzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jcFDUvS8; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40GHIZnb009500;
+	Tue, 16 Jan 2024 20:24:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=GofOW4URAae/4uEZ/e91nCMdR8b1OaSRGCZlIwPE/Lo=; b=jc
+	FDUvS8xUL/XwSmOBNAzwFoHw9phsJ2rxpweAyt/aNdWyNeTOQBXnG/4EaUSvjdn4
+	e4VeKfj2iebK3z3zyQw/hU5naw+rVsiLQlBEJHN0p5y/vXyIS6YaRUIFQNEVo3iQ
+	D5r/wmSkg3BTlCNDJpXVP3FEhpYymSc7ct/VpJ6Xc2jYFfZ/X2JoyJy5heswIjH8
+	14hQY2tMXqU/iAeaebQHjoL0RAxLRz4eaOt90do2NB/8QgZHv3mffMr0L4qRQLXm
+	mT13uZpErelnjts2708WHxQgYTgwntwzgNVAx2sit3207PO+OlIFuHnNbTCzctlo
+	9f7mPiN1sHyF3nAPgaZA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vns4m9b1c-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Jan 2024 20:24:14 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40GKODnx024586
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Jan 2024 20:24:13 GMT
+Received: from [10.71.112.49] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 16 Jan
+ 2024 12:24:12 -0800
+Message-ID: <ae64ce69-dc1b-1534-7950-0a35c4a56f58@quicinc.com>
+Date: Tue, 16 Jan 2024 12:24:08 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 5.4.267
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v12 04/41] usb: host: xhci-mem: Cleanup pending secondary
+ event ring events
+Content-Language: en-US
+To: Mathias Nyman <mathias.nyman@linux.intel.com>,
+        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
+        <gregkh@linuxfoundation.org>, <lgirdwood@gmail.com>,
+        <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <konrad.dybcio@linaro.org>, <Thinh.Nguyen@synopsys.com>,
+        <broonie@kernel.org>, <bgoswami@quicinc.com>, <tiwai@suse.com>,
+        <robh+dt@kernel.org>, <agross@kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>
+References: <20240102214549.22498-1-quic_wcheng@quicinc.com>
+ <20240102214549.22498-5-quic_wcheng@quicinc.com>
+ <734591a1-50b4-6dc7-0b93-077355ec12e4@linux.intel.com>
+ <7b2ec96b-b72f-c848-7c35-36e61a4072ac@quicinc.com>
+ <b254f73b-a1bc-3dd4-f485-a3acf556835d@quicinc.com>
+ <2178e799-2068-7443-59b2-310dfdd1ddee@linux.intel.com>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <2178e799-2068-7443-59b2-310dfdd1ddee@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: gbHT4oiS8cADCWPxnU5049TNAUcUkFXq
+X-Proofpoint-ORIG-GUID: gbHT4oiS8cADCWPxnU5049TNAUcUkFXq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 suspectscore=0
+ bulkscore=0 phishscore=0 malwarescore=0 priorityscore=1501 mlxlogscore=720
+ spamscore=0 mlxscore=0 lowpriorityscore=0 impostorscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
+ definitions=main-2401160161
 
-From: Mao Jinlong <quic_jinlmao@quicinc.com>
+Hi Mathias,
 
-[ Upstream commit ae5ee3562a2519214b12228545e88a203dd68bbd ]
+On 1/15/2024 6:01 AM, Mathias Nyman wrote:
+> On 10.1.2024 1.42, Wesley Cheng wrote:
+>> Hi Mathias,
+>>
+>> On 1/8/2024 12:51 PM, Wesley Cheng wrote:
+>>> Hi Mathias,
+>>>
+>>> On 1/4/2024 6:48 AM, Mathias Nyman wrote:
+>>>> On 2.1.2024 23.45, Wesley Cheng wrote:
+>>>>> As part of xHCI bus suspend, the XHCI is halted.  However, if there 
+>>>>> are
+>>>>> pending events in the secondary event ring, it is observed that the 
+>>>>> xHCI
+>>>>> controller stops responding to further commands upon host or device
+>>>>> initiated bus resume.  Iterate through all pending events and 
+>>>>> update the
+>>>>> dequeue pointer to the beginning of the event ring.
+>>>>>
+>>>>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+>>>> ...
+>>>>> +/*
+>>>>> + * Move the event ring dequeue pointer to skip events kept in the 
+>>>>> secondary
+>>>>> + * event ring.  This is used to ensure that pending events in the 
+>>>>> ring are
+>>>>> + * acknowledged, so the XHCI HCD can properly enter 
+>>>>> suspend/resume. The
+>>>>> + * secondary ring is typically maintained by an external component.
+>>>>> + */
+>>>>> +void xhci_skip_sec_intr_events(struct xhci_hcd *xhci,
+>>>>> +    struct xhci_ring *ring,    struct xhci_interrupter *ir)
+>>>>> +{
+>>>>> +    union xhci_trb *erdp_trb, *current_trb;
+>>>>> +    u64 erdp_reg;
+>>>>> +    u32 iman_reg;
+>>>>> +    dma_addr_t deq;
+>>>>> +
+>>>>> +    /* disable irq, ack pending interrupt and ack all pending 
+>>>>> events */
+>>>>> +    xhci_disable_interrupter(ir);
+>>>>> +    iman_reg = readl_relaxed(&ir->ir_set->irq_pending);
+>>>>> +    if (iman_reg & IMAN_IP)
+>>>>> +        writel_relaxed(iman_reg, &ir->ir_set->irq_pending);
+>>>>> +
+>>>>> +    /* last acked event trb is in erdp reg  */
+>>>>> +    erdp_reg = xhci_read_64(xhci, &ir->ir_set->erst_dequeue);
+>>>>> +    deq = (dma_addr_t)(erdp_reg & ERST_PTR_MASK);
+>>>>> +    if (!deq) {
+>>>>> +        xhci_err(xhci, "event ring handling not required\n");
+>>>>> +        return;
+>>>>> +    }
+>>>>> +
+>>>>> +    erdp_trb = current_trb = ir->event_ring->dequeue;
+>>>>> +    /* read cycle state of the last acked trb to find out CCS */
+>>>>> +    ring->cycle_state = le32_to_cpu(current_trb->event_cmd.flags) 
+>>>>> & TRB_CYCLE;
+>>>>> +
+>>>>> +    while (1) {
+>>>>> +        inc_deq(xhci, ir->event_ring);
+>>>>> +        erdp_trb = ir->event_ring->dequeue;
+>>>>> +        /* cycle state transition */
+>>>>> +        if ((le32_to_cpu(erdp_trb->event_cmd.flags) & TRB_CYCLE) !=
+>>>>> +            ring->cycle_state)
+>>>>> +            break;
+>>>>> +    }
+>>>>> +
+>>>>> +    xhci_update_erst_dequeue(xhci, ir, current_trb, true);
+>>>>> +}
+>>>>
+>>>> Code above is very similar to the existing event ring processing 
+>>>> parts of xhci_irq()
+>>>> and xhci_handle_event()
+>>>>
+>>>> I'll see if I can refactor the existing event ring processing, 
+>>>> decouple it from
+>>>> event handling so that it could be used by primary and secondary 
+>>>> interrupters with
+>>>> handlers, and this case where we just want to clear the event ring.
+>>>>
+>>>
+>>> Thanks, that makes sense.  Will take a look as well.
+>>>
+>>
+>> How about something like the below?  Tested this on my set up and 
+>> everything looks to be working fine.  Had to add another param to 
+>> struct xhci_interrupters to tell the XHCI interrupt handler to say if 
+>> that particular interrupter wants to skip_events (handling).  This 
+>> way, its something that the class driver utilizing the interrupter 
+>> will have to tell XHCI sideband.  It would allow the user to determine 
+>> if they want to use the interrupter to actually handle events or not 
+>> on the proc running Linux.
+>>
+> 
+> Yes, I have something similar.
+> I'll share it soon, just need to
+> clean it up a bit fist.
+> 
 
-out-ports is a required property for coresight ETM. Add out-ports for
-ETM nodes to fix the warning.
+Sure, no worries.  Will test it when its available.  Thanks!
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-Link: https://lore.kernel.org/r/20231210072633.4243-4-quic_jinlmao@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 32 +++++++++++++++++----------
- 1 file changed, 20 insertions(+), 12 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index dcb79003ca0e..9cb7163c5714 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -1396,9 +1396,11 @@ etm5: etm@7c40000 {
- 
- 			cpu = <&CPU4>;
- 
--			port{
--				etm4_out: endpoint {
--					remote-endpoint = <&apss_funnel_in4>;
-+			out-ports {
-+				port{
-+					etm4_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in4>;
-+					};
- 				};
- 			};
- 		};
-@@ -1413,9 +1415,11 @@ etm6: etm@7d40000 {
- 
- 			cpu = <&CPU5>;
- 
--			port{
--				etm5_out: endpoint {
--					remote-endpoint = <&apss_funnel_in5>;
-+			out-ports {
-+				port{
-+					etm5_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in5>;
-+					};
- 				};
- 			};
- 		};
-@@ -1430,9 +1434,11 @@ etm7: etm@7e40000 {
- 
- 			cpu = <&CPU6>;
- 
--			port{
--				etm6_out: endpoint {
--					remote-endpoint = <&apss_funnel_in6>;
-+			out-ports {
-+				port{
-+					etm6_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in6>;
-+					};
- 				};
- 			};
- 		};
-@@ -1447,9 +1453,11 @@ etm8: etm@7f40000 {
- 
- 			cpu = <&CPU7>;
- 
--			port{
--				etm7_out: endpoint {
--					remote-endpoint = <&apss_funnel_in7>;
-+			out-ports {
-+				port{
-+					etm7_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in7>;
-+					};
- 				};
- 			};
- 		};
--- 
-2.43.0
-
+Thanks
+Wesley Cheng
 
