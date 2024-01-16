@@ -1,63 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-7407-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7408-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF0D282F842
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 21:41:50 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7182D82F847
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 21:42:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BC8D31C24DA1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 20:41:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F03B6B24C1A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 20:42:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C982112EE42;
-	Tue, 16 Jan 2024 19:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A662712FF85;
+	Tue, 16 Jan 2024 19:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ttetgnPT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J2Bl55ul"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DFD824B3A;
-	Tue, 16 Jan 2024 19:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B91F12FF81;
+	Tue, 16 Jan 2024 19:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705434674; cv=none; b=OEyrrMzKu5IOmcpG2TN5Fayxs/9U5AblzIjZI4lrdCNzwHsAGuQQqb3LgzTfjdeNrpSPbHQoO5e/DoHY0aGvDw3/gzh7ZiDBtpUsJmUwjRUKAy3beRFsiXdq04q7x4TnbUUzv2ypfrzrUEzlsJCZ59+7UKMY0jIErcM3jdHfuY0=
+	t=1705434676; cv=none; b=Cd0vxoFFs2bWhIh7LSjYhJE6aGf0pjj0WlGu2LpZOxpSCrDKeHmft0wpAkh//Gj1ngowfuiv8MurooRoQRBs9bZMhxFwS90D6pjQnLeO8SvIx/Hx2bCWzQY7yZ2pypjfS8aM6babcBV88Z6OvkLqFmOvBG8ShcjiRuXu2GhQOVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705434674; c=relaxed/simple;
-	bh=DJqFzKM/R5qbhMH3cy3CmNVVhKcvkd7lZ//PRyOG2k4=;
+	s=arc-20240116; t=1705434676; c=relaxed/simple;
+	bh=c1e6Gx0IkscjhAQfjpFplv9Xu/ONIEerrHwivTGEn9I=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:MIME-Version:X-stable:
-	 X-Patchwork-Hint:X-stable-base:Content-Transfer-Encoding; b=QSwMPefqIK7jvwxevMNEWvz0FfIKx5bs4/wkabaxKeoXI3azX6d9qJXYuIkkYCDVMIUiz/b/3fw6ZTPEaUrPKtCN5XAooLju5HfZAlcECd9KFZmJ4nNLQngbDtwMHBfG755kWiPJewgCSQu/J8m8FPZhyrJMnxlyWSO2tVfy498=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ttetgnPT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3BC6C433C7;
-	Tue, 16 Jan 2024 19:51:12 +0000 (UTC)
+	 X-Patchwork-Hint:X-stable-base:Content-Transfer-Encoding; b=l1a/zl893FjOpdbuVpWUtOvr4O0MduNwF0dZ3v1QI0xcmlV7tTAzw2e+/Y4kDW9wS3WwHO9a6OlUjHEobffqetTkcpLx2HsNsqQHKj2vkhZl9tbYT18NKcfRSfQw7+jyyct4cqwPtRC+XUn3eSIOmsU+IhNo6sOIPKf8QY6B7ZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J2Bl55ul; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA937C43394;
+	Tue, 16 Jan 2024 19:51:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705434674;
-	bh=DJqFzKM/R5qbhMH3cy3CmNVVhKcvkd7lZ//PRyOG2k4=;
+	s=k20201202; t=1705434676;
+	bh=c1e6Gx0IkscjhAQfjpFplv9Xu/ONIEerrHwivTGEn9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ttetgnPT0H64wwdvPfbUMSQS5iF4bF0RCA75Erct8TXfKUDfYh7m/0Qcj7PjGB4i4
-	 Wk/1ey+pBgdTXfXrKG80D9bVAGXJV21XMNztd9mVtIq2yuIXDbKLGk+nGetOtyyXa2
-	 tNUyPDBdUUQIe3afE0SAFDEo334CAoZcREbrh9V0tH9AHdJ5QqxGmOFl0uhUEY19vi
-	 Aw+gLSAhZvPbciXPvUExCiCCk+m31ewG6v+79BCkIIS71RFnal/TecCBAsAcZkvIoJ
-	 BGLbCnoG/shurW0n+yPC8ly5lglcc8KFqEzJroKl1zcZWKQHRO+9hoP/iYwCoD6TR6
-	 UBqNELBy4DVhQ==
+	b=J2Bl55ulGHbA7sRfP3IYncqOFRXoIwYaSqoXK9MDeXenFcZVAy4EZ7qmbXjhlW7V5
+	 92WsdNsLsY7t7kgyx1V9ix1ml9mXPlBNzf60E1z8pc9CznvqcduZ7YVIl4e6dWu59b
+	 Qq1nn4RDjjOWnWaOLLd6NMaad3CzFYzITpLY8cnMDGNqZc6p4+3fNBZUHP8wzn2PKT
+	 Osgc5+Eeogisk+yzH/xDq0vY3o/SBH3BmnQNXjJf9/2Uj+SWqBNfLWd6ynyDDGA4Bf
+	 hr0ylW9kGytt41msttSTrMPLu3n4/XjmYPx7xXDLSMe+Ots/A0if0FOyI4ltFu0O7U
+	 /tFcAI7jjr02Q==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Cc: Neil Armstrong <neil.armstrong@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+Cc: Nia Espera <nespera@igalia.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	konrad.dybcio@linaro.org,
 	robh+dt@kernel.org,
 	krzysztof.kozlowski+dt@linaro.org,
 	conor+dt@kernel.org,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 045/104] arm64: dts: qcom: sm8450: fix soundwire controllers node name
-Date: Tue, 16 Jan 2024 14:46:11 -0500
-Message-ID: <20240116194908.253437-45-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 046/104] arm64: dts: qcom: sm8350: Fix remoteproc interrupt type
+Date: Tue, 16 Jan 2024 14:46:12 -0500
+Message-ID: <20240116194908.253437-46-sashal@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240116194908.253437-1-sashal@kernel.org>
 References: <20240116194908.253437-1-sashal@kernel.org>
@@ -72,63 +71,64 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.12
 Content-Transfer-Encoding: 8bit
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Nia Espera <nespera@igalia.com>
 
-[ Upstream commit 11fcb81373de52eeb1d3ff135a8d24a4b18978d3 ]
+[ Upstream commit 54ee322f845c7f25fbf6e43e11147b6cae8eff56 ]
 
-Fix the following dt bindings check:
-arch/arm64/boot/dts/qcom/sm8450-hdk.dtb: soundwire-controller@31f0000: $nodename:0: 'soundwire-controller@31f0000' does not match '^soundwire(@.*)?$'
-        from schema $id: http://devicetree.org/schemas/soundwire/qcom,soundwire.yaml#
+In a similar vein to
+https://lore.kernel.org/lkml/20220530080842.37024-3-manivannan.sadhasivam@linaro.org/,
+the remote processors on sm8350 fail to initialize with the 'correct'
+(i.e., specified in downstream) IRQ type. Change this to EDGE_RISING.
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20231106-topic-sm8450-upstream-soundwire-bindings-fix-v1-1-41d4844a5a7d@linaro.org
+Signed-off-by: Nia Espera <nespera@igalia.com>
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20231111-nia-sm8350-for-upstream-v4-4-3a638b02eea5@igalia.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 8 ++++----
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 2a60cf8bd891..cb4b38cfe21a 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -2176,7 +2176,7 @@ wsa2macro: codec@31e0000 {
- 			#sound-dai-cells = <1>;
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index a94e069da83d..3b70c485b4fd 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -2020,7 +2020,7 @@ mpss: remoteproc@4080000 {
+ 			compatible = "qcom,sm8350-mpss-pas";
+ 			reg = <0x0 0x04080000 0x0 0x4040>;
  
--		swr4: soundwire-controller@31f0000 {
-+		swr4: soundwire@31f0000 {
- 			compatible = "qcom,soundwire-v1.7.0";
- 			reg = <0 0x031f0000 0 0x2000>;
- 			interrupts = <GIC_SPI 171 IRQ_TYPE_LEVEL_HIGH>;
-@@ -2224,7 +2224,7 @@ rxmacro: codec@3200000 {
- 			#sound-dai-cells = <1>;
- 		};
+-			interrupts-extended = <&intc GIC_SPI 264 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts-extended = <&intc GIC_SPI 264 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_modem_in 0 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_modem_in 1 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_modem_in 2 IRQ_TYPE_EDGE_RISING>,
+@@ -2062,7 +2062,7 @@ slpi: remoteproc@5c00000 {
+ 			compatible = "qcom,sm8350-slpi-pas";
+ 			reg = <0 0x05c00000 0 0x4000>;
  
--		swr1: soundwire-controller@3210000 {
-+		swr1: soundwire@3210000 {
- 			compatible = "qcom,soundwire-v1.7.0";
- 			reg = <0 0x03210000 0 0x2000>;
- 			interrupts = <GIC_SPI 155 IRQ_TYPE_LEVEL_HIGH>;
-@@ -2291,7 +2291,7 @@ wsamacro: codec@3240000 {
- 			#sound-dai-cells = <1>;
- 		};
+-			interrupts-extended = <&pdc 9 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts-extended = <&pdc 9 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_slpi_in 0 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_slpi_in 1 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_slpi_in 2 IRQ_TYPE_EDGE_RISING>,
+@@ -3206,7 +3206,7 @@ adsp: remoteproc@17300000 {
+ 			compatible = "qcom,sm8350-adsp-pas";
+ 			reg = <0 0x17300000 0 0x100>;
  
--		swr0: soundwire-controller@3250000 {
-+		swr0: soundwire@3250000 {
- 			compatible = "qcom,soundwire-v1.7.0";
- 			reg = <0 0x03250000 0 0x2000>;
- 			interrupts = <GIC_SPI 170 IRQ_TYPE_LEVEL_HIGH>;
-@@ -2318,7 +2318,7 @@ swr0: soundwire-controller@3250000 {
- 			status = "disabled";
- 		};
+-			interrupts-extended = <&pdc 6 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts-extended = <&pdc 6 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
+@@ -3511,7 +3511,7 @@ cdsp: remoteproc@98900000 {
+ 			compatible = "qcom,sm8350-cdsp-pas";
+ 			reg = <0 0x98900000 0 0x1400000>;
  
--		swr2: soundwire-controller@33b0000 {
-+		swr2: soundwire@33b0000 {
- 			compatible = "qcom,soundwire-v1.7.0";
- 			reg = <0 0x033b0000 0 0x2000>;
- 			interrupts = <GIC_SPI 496 IRQ_TYPE_LEVEL_HIGH>,
+-			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_cdsp_in 0 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_cdsp_in 1 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_cdsp_in 2 IRQ_TYPE_EDGE_RISING>,
 -- 
 2.43.0
 
