@@ -1,158 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-7376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7377-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2E7282F142
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 16:19:07 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E7E7C82F152
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 16:21:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 568C5B2139A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 15:19:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 577441F246DC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 15:21:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 277D31BF43;
-	Tue, 16 Jan 2024 15:19:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1EDA1BF43;
+	Tue, 16 Jan 2024 15:21:19 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3561BF3E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jan 2024 15:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7789E1BF57
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jan 2024 15:21:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
 	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
 	(Exim 4.92)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1rPlD3-0000to-Uy; Tue, 16 Jan 2024 16:18:37 +0100
-Received: from [2a0a:edc0:0:900:1d::4e] (helo=lupine)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1rPlD8-0000tu-OV; Tue, 16 Jan 2024 16:18:42 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
 	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.94.2)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1rPlD0-000Gxq-M0; Tue, 16 Jan 2024 16:18:34 +0100
-Received: from pza by lupine with local (Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1rPlD0-000D8R-1w;
+	(envelope-from <ukl@pengutronix.de>)
+	id 1rPlD0-000Gxt-VX; Tue, 16 Jan 2024 16:18:34 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.96)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1rPlD0-0011AW-2X;
 	Tue, 16 Jan 2024 16:18:34 +0100
-Message-ID: <800d202864c1730622a19998728c5a8b576d1931.camel@pengutronix.de>
-Subject: Re: [PATCH v3 5/5] i2c: muxes: pca954x: Allow sharing reset GPIO
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Bjorn Andersson
- <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Srinivas
- Kandagatla <srinivas.kandagatla@linaro.org>, Banajit Goswami
- <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown
- <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley <conor+dt@kernel.org>,
- Peter Rosin <peda@axentia.se>, Jaroslav Kysela <perex@perex.cz>,  Takashi
- Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
- alsa-devel@alsa-project.org,  linux-sound@vger.kernel.org,
- devicetree@vger.kernel.org,  linux-kernel@vger.kernel.org,
- linux-i2c@vger.kernel.org
-Cc: Chris Packham <chris.packham@alliedtelesis.co.nz>, Bartosz Golaszewski
-	 <brgl@bgdev.pl>, Sean Anderson <sean.anderson@seco.com>
 Date: Tue, 16 Jan 2024 16:18:34 +0100
-In-Reply-To: <20240112163608.528453-6-krzysztof.kozlowski@linaro.org>
-References: <20240112163608.528453-1-krzysztof.kozlowski@linaro.org>
-	 <20240112163608.528453-6-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To: Mark Brown <broonie@kernel.org>
+Cc: Heiko Stuebner <heiko@sntech.de>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Linus Walleij <linus.walleij@linaro.org>, 
+	dri-devel@lists.freedesktop.org, Miquel Raynal <miquel.raynal@bootlin.com>, 
+	Ronald Wahl <ronald.wahl@raritan.com>, Stefan Schmidt <stefan@datenfreihafen.org>, 
+	libertas-dev@lists.infradead.org, Javier Martinez Canillas <javierm@redhat.com>, 
+	Alex Elder <elder@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	linux-usb@vger.kernel.org, linux-wireless@vger.kernel.org, linux-spi@vger.kernel.org, 
+	kernel@pengutronix.de, linux-media@vger.kernel.org, linux-wpan@vger.kernel.org, 
+	Amit Kumar Mahapatra via Alsa-devel <alsa-devel@alsa-project.org>, linux-doc@vger.kernel.org, Dmitry Antipov <dmantipov@yandex.ru>, 
+	Max Filippov <jcmvbkbc@gmail.com>, Eric Dumazet <edumazet@google.com>, 
+	James Clark <james.clark@arm.com>, Guenter Roeck <groeck@chromium.org>, 
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>, chrome-platform@lists.linux.dev, 
+	Lars-Peter Clausen <lars@metafoo.de>, Michael Hennerich <Michael.Hennerich@analog.com>, 
+	Viresh Kumar <vireshk@kernel.org>, Helge Deller <deller@gmx.de>, Wu Hao <hao.wu@intel.com>, 
+	Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>, Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+	linux-arm-msm@vger.kernel.org, greybus-dev@lists.linaro.org, 
+	Bjorn Helgaas <bhelgaas@google.com>, Michal Simek <michal.simek@amd.com>, 
+	linux-arm-kernel@lists.infradead.org, Aaro Koskinen <aaro.koskinen@iki.fi>, 
+	"David S. Miller" <davem@davemloft.net>, Jarkko Sakkinen <jarkko@kernel.org>, 
+	linux-integrity@vger.kernel.org, Pali =?utf-8?B?Um9ow6Fy?= <pali@kernel.org>, 
+	Jonathan Cameron <jic23@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, 
+	Herve Codina <herve.codina@bootlin.com>, linux-iio@vger.kernel.org, Tom Rix <trix@redhat.com>, 
+	linux-fpga@vger.kernel.org, linux-fbdev@vger.kernel.org, linux-mtd@lists.infradead.org, 
+	Sam Ravnborg <sam@ravnborg.org>, Rob Herring <robh@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
+	linux-staging@lists.linux.dev, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	linux-input@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>, Arnd Bergmann <arnd@arndb.de>, 
+	Yang Yingliang <yangyingliang@huawei.com>, Moritz Fischer <mdf@kernel.org>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Benson Leung <bleung@chromium.org>, 
+	Rayyan Ansari <rayyan@ansari.sh>, Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+	linux-mmc@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Martin Tuma <martin.tuma@digiteqautomotive.com>, Xu Yilun <yilun.xu@intel.com>, 
+	Alexander Aring <alex.aring@gmail.com>, Vignesh Raghavendra <vigneshr@ti.com>, 
+	Peter Huewe <peterhuewe@gmx.de>, Sergey Kozlov <serjk@netup.ru>, 
+	Richard Weinberger <richard@nod.at>, Jason Gunthorpe <jgg@ziepe.ca>, Jakub Kicinski <kuba@kernel.org>, 
+	Kalle Valo <kvalo@kernel.org>, Johan Hovold <johan@kernel.org>, 
+	Rui Miguel Silva <rmfrfs@gmail.com>, linux-mediatek@lists.infradead.org, 
+	Tzung-Bi Shih <tzungbi@kernel.org>, Jonathan Cameron <Jonathan.Cameron@huawei.com>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, netdev@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
+	Nicolas Ferre <nicolas.ferre@microchip.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: Re: [PATCH 00/33] spi: get rid of some legacy macros
+Message-ID: <l4azekfj7hduzi4wcyphispst46fi3m5ams65nzer2ai6upoxw@3p2uki626ytt>
+References: <cover.1705348269.git.u.kleine-koenig@pengutronix.de>
+ <3404c9af-6c11-45d7-9ba4-a120e21e407e@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ojpgqs276usvjple"
+Content-Disposition: inline
+In-Reply-To: <3404c9af-6c11-45d7-9ba4-a120e21e407e@sirena.org.uk>
 X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Mail-From: ukl@pengutronix.de
 X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
 X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 
-On Fr, 2024-01-12 at 17:36 +0100, Krzysztof Kozlowski wrote:
-> From: Chris Packham <chris.packham@alliedtelesis.co.nz>
->=20
-> Some hardware designs with multiple PCA954x devices use a reset GPIO
-> connected to all the muxes. Support this configuration by making use of
-> the reset controller framework which can deal with the shared reset
-> GPIOs. Fall back to the old GPIO descriptor method if the reset
-> controller framework is not enabled.
->=20
-> Signed-off-by: Chris Packham <chris.packham@alliedtelesis.co.nz>
-> Acked-by: Peter Rosin <peda@axentia.se>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Link: https://lore.kernel.org/r/20240108041913.7078-1-chris.packham@allie=
-dtelesis.co.nz
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->=20
-> ---
->=20
-> If previous patches are fine, then this commit is independent and could
-> be taken via I2C.
->=20
-> Cc: Chris Packham <chris.packham@alliedtelesis.co.nz>
-> Cc: Bartosz Golaszewski <brgl@bgdev.pl>
-> Cc: Sean Anderson <sean.anderson@seco.com>
-> ---
->  drivers/i2c/muxes/i2c-mux-pca954x.c | 46 ++++++++++++++++++++++++-----
->  1 file changed, 38 insertions(+), 8 deletions(-)
->=20
-> diff --git a/drivers/i2c/muxes/i2c-mux-pca954x.c b/drivers/i2c/muxes/i2c-=
-mux-pca954x.c
-> index 2219062104fb..1702e8d49b91 100644
-> --- a/drivers/i2c/muxes/i2c-mux-pca954x.c
-> +++ b/drivers/i2c/muxes/i2c-mux-pca954x.c
-> @@ -49,6 +49,7 @@
->  #include <linux/pm.h>
->  #include <linux/property.h>
->  #include <linux/regulator/consumer.h>
-> +#include <linux/reset.h>
->  #include <linux/slab.h>
->  #include <linux/spinlock.h>
->  #include <dt-bindings/mux/mux.h>
-> @@ -102,6 +103,9 @@ struct pca954x {
->  	unsigned int irq_mask;
->  	raw_spinlock_t lock;
->  	struct regulator *supply;
-> +
-> +	struct gpio_desc *reset_gpio;
-> +	struct reset_control *reset_cont;
->  };
-> =20
->  /* Provide specs for the MAX735x, PCA954x and PCA984x types we know abou=
-t */
-> @@ -477,6 +481,35 @@ static int pca954x_init(struct i2c_client *client, s=
-truct pca954x *data)
->  	return ret;
->  }
-> =20
-> +static int pca954x_get_reset(struct device *dev, struct pca954x *data)
-> +{
-> +	data->reset_cont =3D devm_reset_control_get_optional_shared(dev, NULL);
-> +	if (IS_ERR(data->reset_cont))
-> +		return dev_err_probe(dev, PTR_ERR(data->reset_cont),
-> +				     "Failed to get reset\n");
-> +	else if (data->reset_cont)
-> +		return 0;
-> +
-> +	/*
-> +	 * fallback to legacy reset-gpios
-> +	 */
 
-devm_reset_control_get_optional_shared() won't return NULL if the
-"reset-gpios" property is found in the device tree, so the GPIO
-fallback is dead code.
+--ojpgqs276usvjple
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> +	data->reset_gpio =3D devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HI=
-GH);
-> +	if (IS_ERR(data->reset_gpio)) {
-> +		return dev_err_probe(dev, PTR_ERR(data->reset_gpio),
-> +				     "Failed to get reset gpio");
-> +	}
-> +
-> +	return 0;
-> +}
-> +
+Hello Mark,
 
-regards
-Philipp
+On Tue, Jan 16, 2024 at 02:40:39PM +0000, Mark Brown wrote:
+> On Mon, Jan 15, 2024 at 09:12:46PM +0100, Uwe Kleine-K=F6nig wrote:
+>=20
+> > In commit 8caab75fd2c2 ("spi: Generalize SPI "master" to "controller"")
+> > some functions were renamed. Further some compat defines were introduced
+> > to map the old names to the new ones.
+>=20
+> > Patch #18 and #19 touch the same driver, otherwise the patches #1 - #31
+> > are pairwise independent and could be applied by their respective
+> > maintainers. The alternative is to let all patches go via the spi tree.
+> > Mark, what's your preference here?
+>=20
+> I don't have a strong preference here, I'm happy to take all the patches
+> if the maintainers for the other subsystem are OK with that - ideally
+> I'd apply things at -rc1 but the timeline is a bit tight there.  I think
+> my plan here unless anyone objects (or I notice something myself) will
+> be to queue things at -rc3, please shout if that doesn't seem
+> reasonable.
+
+=46rom my side there is no rush, we lived with these defines since
+4.13-rc1. Applying them during the next merge window is fine for me.
+
+Anyhow, I intend to resend the series for the feedback I received after
+-rc1. Up to you when you want to apply it. Watching out for offending
+patches using lore shouldn't be a big thing and I can do that.
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--ojpgqs276usvjple
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmWmnkkACgkQj4D7WH0S
+/k7Jlgf/bxg8PBfYKKX7PvDPgT3ZVpLLtWReyLQDBjEkSddRCSKzwPE5dQsE6TGF
+pkpgz7Za7CnFfHKtW25alERgnrqA9inDitGvBoBIVgSHPf6GJsGOPVLhziEMU9t1
+tBlCUkInYGMvS/Gn5tOoSjNLmapgV8tiNzeos6MHWZzdKpWIzj6SBNH72Bof8kUq
+R287GggNJ2PLZa24vL2Pct4BZIfpbD+n1o6O62edEmpGe17xuDkSNfjirG7MojjX
+vAtAlEpsLidT0eabHr4XkgyBSQZLwlh1OdReMiXhtK5GM3Oh9R4Y2XVhUq83hKSl
+5zzsBEXwEe1w3pKgGJnCD1jxAAcJ9A==
+=Sz6E
+-----END PGP SIGNATURE-----
+
+--ojpgqs276usvjple--
 
