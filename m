@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-7413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7415-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51A4D82F9D0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 22:17:32 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D47B482FA7C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 22:34:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 63F0A1C25BF8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 21:17:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 85F621F27681
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 21:34:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A25914AD11;
-	Tue, 16 Jan 2024 19:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DE04156978;
+	Tue, 16 Jan 2024 19:59:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bwCo5eje"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cx/uATMH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32AD14AD0B;
-	Tue, 16 Jan 2024 19:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E07E156971;
+	Tue, 16 Jan 2024 19:59:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705435037; cv=none; b=LYvvTkuBNhT1/fFl8WhRfJhY37XJO80BCnayJy55v4qqJ9gsugTeWJfb5/xixMNW63qRV9f1Cq29+MsFQOuBM8BTeGl+RhvSgsSGsqU7wMFXkYS+c3rneKp0eQFOhEVro63K1TCIyM6fXL8n4i4J8doLbyJCjxY4DNktmRM1X14=
+	t=1705435190; cv=none; b=V6ChfOY1ljr2swlZ5xju48lxsxDaHt7ilTgJT/fQi+qD2nJMhW7mMvuLe31g8pT6UFMZP7gVjElaFKcsMGFkq/aTcBwqgkujHg+Ab4mYK7rhvYSMlLEz39qfN0h16mvh/0qvacLiHjy1MwMxl+rwfNXums3yDeoFI2P3inEnP7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705435037; c=relaxed/simple;
-	bh=TQmfilBwqcBPOZ19e0B8VE75OmEHjrr9+g0oAjI14H0=;
+	s=arc-20240116; t=1705435190; c=relaxed/simple;
+	bh=8Mu08XlxOMz5cmdJXOmnM9uzX3GDPwM8lI/R9syugXQ=;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:MIME-Version:X-stable:
-	 X-Patchwork-Hint:X-stable-base:Content-Transfer-Encoding; b=auv4bEVdWuiBNz+mcP1doiOAbxssMIQZwhH5V7BvJeNFCj/PtGhQ8HVUX/ZDkl/h+mU4t7FG5BK1P4u2qpFW0rioSUgIvQzPbBWCNevpEGNGrHp6IxTOWIxT8y0mamaauJ1/ftQW75PR0KNdnvFttwXqC4wYwQ9HZs2GrGaV6B4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bwCo5eje; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39AC7C43394;
-	Tue, 16 Jan 2024 19:57:15 +0000 (UTC)
+	 X-Patchwork-Hint:X-stable-base:Content-Transfer-Encoding; b=l24WoRpqkjTclf/fmnw7KsVUZazOGvFOtdWtQeM0P98OR5dLS8XD1qB5t8MoBFMNP3qJGC5TegHvO5Og4484qCMHYtOSXkOAORiIaOVLSU+qebg/DXZarnxUfFaiyyOLMkjTo1CFUaNE6qIS0ReVB/bnWvuSLGnQecZojq7bMIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cx/uATMH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 675D2C43330;
+	Tue, 16 Jan 2024 19:59:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705435036;
-	bh=TQmfilBwqcBPOZ19e0B8VE75OmEHjrr9+g0oAjI14H0=;
+	s=k20201202; t=1705435190;
+	bh=8Mu08XlxOMz5cmdJXOmnM9uzX3GDPwM8lI/R9syugXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bwCo5ejen6l8Du7tyfdLptMJ6zLDHq+RC7wy7qeBHXKa39J/S62OXVVu2+y7dsloB
-	 dGFOuSSYsd4ykjd+mTD9ReNOSdpCI4Q9G+OmODY2IvNpqhYGnrqFoOPmusISe42+vu
-	 VfgHyrNMsK4JXkAt0YgMxfF7WaLqLbBxpqVWtYL2NucmMmdMaPR3SOF8U5pJo3eOxM
-	 MgDH2jlH2vwltiGI0VqsGZe6xa7Nx9hXfdKTRppxVxtcestTMZNnklfkESfPSQMd/P
-	 GVuzKxvwqCWPg5xu2wk3mRIltTBoisEzFim4oIdobJB7anonyZ3iJAhfDdhhOg8p1d
-	 H7tyV1mTw0Kaw==
+	b=cx/uATMHGihxoCqFp8m0vgELzZhqGZtc6/1wY11g/TKDVajkzJnsQs+cjbJs3woSi
+	 cr/35tjnPMaoVbYmwU9fOYFsxme+Zq3rZPVdWgTJYd6VCqIdB4K2aKMZwTHnewpzEg
+	 /Fxjyipd99OhlKbvvFLOc0CXEHyKObSQ5xeX/BP4pY8VzqVcGPmVq++WVsXi0OXuOW
+	 bzgyVGhKhtq4wwKA/zvHHVP4CkCpLr+YkIZvDU6vJ/H3FdmnBFmBND+sM/Kjn83Tir
+	 D34fwUfjccvRmycmQq0gKHWlMOLKpRIuS4X3jBZm1Y6yvlpAR4tfNIsJS/F5aU1XV5
+	 g90DjFHKTHoIg==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -55,12 +55,12 @@ Cc: Mao Jinlong <quic_jinlmao@quicinc.com>,
 	conor+dt@kernel.org,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.1 53/68] arm64: dts: qcom: msm8998: Fix 'out-ports' is a required property
-Date: Tue, 16 Jan 2024 14:53:52 -0500
-Message-ID: <20240116195511.255854-53-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.15 36/47] arm64: dts: qcom: msm8996: Fix 'in-ports' is a required property
+Date: Tue, 16 Jan 2024 14:57:39 -0500
+Message-ID: <20240116195834.257313-36-sashal@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240116195511.255854-1-sashal@kernel.org>
-References: <20240116195511.255854-1-sashal@kernel.org>
+In-Reply-To: <20240116195834.257313-1-sashal@kernel.org>
+References: <20240116195834.257313-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,89 +69,64 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.1.73
+X-stable-base: Linux 5.15.147
 Content-Transfer-Encoding: 8bit
 
 From: Mao Jinlong <quic_jinlmao@quicinc.com>
 
-[ Upstream commit ae5ee3562a2519214b12228545e88a203dd68bbd ]
+[ Upstream commit 9a6fc510a6a3ec150cb7450aec1e5f257e6fc77b ]
 
-out-ports is a required property for coresight ETM. Add out-ports for
-ETM nodes to fix the warning.
+Add the inport of funnel@3023000 to fix 'in-ports' is a required property
+warning.
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-Link: https://lore.kernel.org/r/20231210072633.4243-4-quic_jinlmao@quicinc.com
+Link: https://lore.kernel.org/r/20231210072633.4243-3-quic_jinlmao@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 32 +++++++++++++++++----------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index b00b8164c4aa..7a41250539ff 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -1903,9 +1903,11 @@ etm5: etm@7c40000 {
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 8a7c65178507..fd9ffe8448b0 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -394,6 +394,19 @@ memory@80000000 {
+ 		reg = <0x0 0x80000000 0x0 0x0>;
+ 	};
  
- 			cpu = <&CPU4>;
++	etm {
++		compatible = "qcom,coresight-remote-etm";
++
++		out-ports {
++			port {
++				modem_etm_out_funnel_in2: endpoint {
++					remote-endpoint =
++					  <&funnel_in2_in_modem_etm>;
++				};
++			};
++		};
++	};
++
+ 	psci {
+ 		compatible = "arm,psci-1.0";
+ 		method = "smc";
+@@ -2203,6 +2216,14 @@ funnel@3023000 {
+ 			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
+ 			clock-names = "apb_pclk", "atclk";
  
--			port{
--				etm4_out: endpoint {
--					remote-endpoint = <&apss_funnel_in4>;
-+			out-ports {
-+				port{
-+					etm4_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in4>;
++			in-ports {
++				port {
++					funnel_in2_in_modem_etm: endpoint {
++						remote-endpoint =
++						  <&modem_etm_out_funnel_in2>;
 +					};
- 				};
- 			};
- 		};
-@@ -1920,9 +1922,11 @@ etm6: etm@7d40000 {
++				};
++			};
  
- 			cpu = <&CPU5>;
- 
--			port{
--				etm5_out: endpoint {
--					remote-endpoint = <&apss_funnel_in5>;
-+			out-ports {
-+				port{
-+					etm5_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in5>;
-+					};
- 				};
- 			};
- 		};
-@@ -1937,9 +1941,11 @@ etm7: etm@7e40000 {
- 
- 			cpu = <&CPU6>;
- 
--			port{
--				etm6_out: endpoint {
--					remote-endpoint = <&apss_funnel_in6>;
-+			out-ports {
-+				port{
-+					etm6_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in6>;
-+					};
- 				};
- 			};
- 		};
-@@ -1954,9 +1960,11 @@ etm8: etm@7f40000 {
- 
- 			cpu = <&CPU7>;
- 
--			port{
--				etm7_out: endpoint {
--					remote-endpoint = <&apss_funnel_in7>;
-+			out-ports {
-+				port{
-+					etm7_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in7>;
-+					};
- 				};
- 			};
- 		};
+ 			out-ports {
+ 				port {
 -- 
 2.43.0
 
