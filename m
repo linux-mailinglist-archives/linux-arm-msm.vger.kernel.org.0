@@ -1,104 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-7311-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7312-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FAFD82E83B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 04:28:02 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C4B4782E8EA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 06:04:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3EA561F239D3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 03:28:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 429481F2314D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jan 2024 05:04:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32CD879C6;
-	Tue, 16 Jan 2024 03:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CA4D10A3C;
+	Tue, 16 Jan 2024 04:53:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="S5Ilz3IE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6946F79C0;
-	Tue, 16 Jan 2024 03:27:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: f7f6384198e4480d8bf0d0f360722248-20240116
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.1.35,REQID:e6f0e8f5-f947-4a3c-9cf4-09384cf2a17d,IP:20,
-	URL:0,TC:0,Content:0,EDM:25,RT:0,SF:-15,FILE:0,BULK:0,RULE:Release_Ham,ACT
-	ION:release,TS:30
-X-CID-INFO: VERSION:1.1.35,REQID:e6f0e8f5-f947-4a3c-9cf4-09384cf2a17d,IP:20,UR
-	L:0,TC:0,Content:0,EDM:25,RT:0,SF:-15,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
-	N:release,TS:30
-X-CID-META: VersionHash:5d391d7,CLOUDID:297ae382-8d4f-477b-89d2-1e3bdbef96d1,B
-	ulkID:240116112738XVUOT1J5,BulkQuantity:0,Recheck:0,SF:17|19|44|66|38|24|1
-	02,TC:nil,Content:0,EDM:5,IP:-2,URL:0,File:nil,Bulk:nil,QS:nil,BEC:nil,COL
-	:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0
-X-CID-BVR: 0
-X-CID-BAS: 0,_,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD,TF_CID_SPAM_FSI
-X-UUID: f7f6384198e4480d8bf0d0f360722248-20240116
-Received: from mail.kylinos.cn [(39.156.73.10)] by mailgw
-	(envelope-from <chentao@kylinos.cn>)
-	(Generic MTA)
-	with ESMTP id 1459130115; Tue, 16 Jan 2024 11:27:37 +0800
-Received: from mail.kylinos.cn (localhost [127.0.0.1])
-	by mail.kylinos.cn (NSMail) with SMTP id 41A55E000EB9;
-	Tue, 16 Jan 2024 11:27:37 +0800 (CST)
-X-ns-mid: postfix-65A5F7A9-60232416
-Received: from kernel.. (unknown [172.20.15.234])
-	by mail.kylinos.cn (NSMail) with ESMTPA id A1E9CE000EB9;
-	Tue, 16 Jan 2024 11:27:33 +0800 (CST)
-From: Kunwu Chan <chentao@kylinos.cn>
-To: robdclark@gmail.com,
-	quic_abhinavk@quicinc.com,
-	dmitry.baryshkov@linaro.org,
-	sean@poorly.run,
-	marijn.suijten@somainline.org,
-	airlied@gmail.com,
-	daniel@ffwll.ch
-Cc: linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	Kunwu Chan <chentao@kylinos.cn>
-Subject: [PATCH] drm/msm/adreno: Add a null pointer check to the zap_shader_load_mdt
-Date: Tue, 16 Jan 2024 11:27:32 +0800
-Message-Id: <20240116032732.65262-1-chentao@kylinos.cn>
-X-Mailer: git-send-email 2.39.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C412B1EB41;
+	Tue, 16 Jan 2024 04:53:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40G4d7wR003050;
+	Tue, 16 Jan 2024 04:52:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=ekRfnElQ5SP2PMw3QDmn8+FB0j9H41Ob685N6KWrRjI=; b=S5
+	Ilz3IEGgOeeid3oYBUvEnQ5MJ3SHi957PWGh1InDL6PiVxN9vf4YdmxA4EXtZyt+
+	/0edyjoYix+XRVV1mYz6rB8MVj38JJxhFIc/LOs8n/7C3OykG/B0RF6EUElc3dbt
+	w3Z16J39XwyWsTzqCnOwvR+tNTPvjScXm6cw9NwoN1pn00tn7SDIunt4tvcFVqcV
+	gYd0UggaaVsHud5N2DLHyoBgwNGiPFEUhn40xkFKZvlV144nZlieAtN6CAaEIPbl
+	+sogt/XkJjPo7HNpSDjOJwC+SPlUJ/bpa5dzrhLU2EWM+TN+zeBHT2CCDXpqHeLZ
+	BMTyy+dyXLjjJxZKQ/xQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vnb300sxm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Jan 2024 04:52:55 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40G4qs1h006123
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Jan 2024 04:52:54 GMT
+Received: from [10.216.3.129] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 15 Jan
+ 2024 20:52:47 -0800
+Message-ID: <1b7912c5-983c-b642-ca56-ae1e2def9633@quicinc.com>
+Date: Tue, 16 Jan 2024 10:22:44 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH v6 3/6] PCI: qcom: Add missing icc bandwidth vote for cpu
+ to PCIe path
+Content-Language: en-US
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Bjorn
+ Helgaas" <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Brian Masney <bmasney@redhat.com>, Georgi Djakov <djakov@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <vireshk@kernel.org>,
+        <quic_vbadigan@quicinc.com>, <quic_skananth@quicinc.com>,
+        <quic_nitegupt@quicinc.com>, <linux-pci@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <stable@vger.kernel.org>
+References: <20240112-opp_support-v6-0-77bbf7d0cc37@quicinc.com>
+ <20240112-opp_support-v6-3-77bbf7d0cc37@quicinc.com>
+ <fecfd2d9-7302-4eb6-92d0-c2efbe824bf4@linaro.org>
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <fecfd2d9-7302-4eb6-92d0-c2efbe824bf4@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: pghQY40iUmtKbJFkO2Y2Zr7yPjkseDrw
+X-Proofpoint-GUID: pghQY40iUmtKbJFkO2Y2Zr7yPjkseDrw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ phishscore=0 impostorscore=0 adultscore=0 priorityscore=1501 spamscore=0
+ clxscore=1011 malwarescore=0 lowpriorityscore=0 mlxscore=0 mlxlogscore=706
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
+ definitions=main-2401160035
 
-kasprintf() returns a pointer to dynamically allocated memory
-which can be NULL upon failure. Ensure the allocation was successful
-by checking the pointer validity.
 
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
----
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 4 ++++
- 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/ms=
-m/adreno/adreno_gpu.c
-index 074fb498706f..7e79ead4fe00 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -144,6 +144,10 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, =
-const char *fwname,
- 		char *newname;
-=20
- 		newname =3D kasprintf(GFP_KERNEL, "qcom/%s", fwname);
-+		if (!newname) {
-+			ret =3D -ENOMEM;
-+			goto out;
-+		}
-=20
- 		ret =3D qcom_mdt_load(dev, fw, newname, pasid,
- 				mem_region, mem_phys, mem_size, NULL);
---=20
-2.39.2
+On 1/12/2024 8:47 PM, Bryan O'Donoghue wrote:
+> On 12/01/2024 14:22, Krishna chaitanya chundru wrote:
+>> CPU-PCIe path consits for registers PCIe BAR space, config space.
+>> As there is less access on this path compared to pcie to mem path
+>> add minimum vote i.e GEN1x1 bandwidth always.
+>>
+>> In suspend remove the cpu vote after register space access is done.
+>>
+>> Fixes: c4860af88d0c ("PCI: qcom: Add basic interconnect support")
+> 
+> If this patch is a Fixes then don't you need the accompanying dts change 
+> as a parallel Fixes too ?
+> 
+> i.e. without the dts update - you won't have the nodes in the dts to 
+> consume => applying this code to the stable kernel absent the dts will 
+> result in no functional change and therefore no bugfix.
+> 
+> I'm not sure if you are asked to put a Fixes here but it seems to be it 
+> should either be dropped or require a parallel Fixes: tag for the dts 
+> and yaml changes.
+> 
+> What is the bug this change fixes in the backport ?
+> 
+There is no change required in the dts because the cpu-pcie path is
+already present in the dts.
+So till now driver is ignoring that path, that's why we tagged with
+fixed.
 
+-Krishna Chaitanya
+>> cc: stable@vger.kernel.org
+>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> 
+> ---
+> bod
 
