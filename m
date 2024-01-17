@@ -1,152 +1,311 @@
-Return-Path: <linux-arm-msm+bounces-7432-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7433-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD8A982FF5E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 04:41:31 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A6610830027
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 07:31:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AE7D81C23832
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 03:41:30 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0450EB24D1D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 06:30:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EF4E63A1;
-	Wed, 17 Jan 2024 03:41:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEEA41C11;
+	Wed, 17 Jan 2024 06:30:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bv6p26MZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cOfLQ74h"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80DD85660
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 03:41:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF279465;
+	Wed, 17 Jan 2024 06:30:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705462880; cv=none; b=rFq9yEIe6OLrHe0dmFDsUIXAQoKcF/gHcWCtiaboeng5Qb/1OZbSxYil+aDmnZ2CBmFVaMWnaNqExBhHWVaoSqwGnk8UZoUJcCvww8ftgi2Ii/C+UNKUY+MbWu3rxb2NtIzezdEmOZfq2AOHYDkivKDgi/wjFVVTtc+vu0PXvno=
+	t=1705473052; cv=none; b=GknHx55k08FhrsIR5uYHORmKSZ6r2TNAXFlFxovg3NGcnqV46z/TmgJqOLoa0IJ4NnFaQTdxh3QB+PAbr+P64g7y1fw4THqV+IiqrThgSNBOXtW0DxZUgGluSYKJ4FG+lI+e27cpEtNrg7F9wcj1Y7cA4GvAA4Wrh9M2BnelTtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705462880; c=relaxed/simple;
-	bh=EEId0MKcmgt9JlwyzpnkONCbMwG4GyRqNccGKHgGcYM=;
-	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:MIME-Version:
-	 References:In-Reply-To:From:Date:Message-ID:Subject:To:Cc:
-	 Content-Type; b=UA2cMdd8qFeNUlbqH5KEvWnfyerXLSgZEuOCVVXQEPyZ47G3qSb1o6hQeRZlE1Gg5a+LZLHWeStkc34/D24weNxAyNWUFN36bmWuSYkeHuAi9wCQlUDbNxsB/XfZuiEQ1Mfkd/i3eoLQLNXBlaXsAPshyns9cOccarL6oBBD2GQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bv6p26MZ; arc=none smtp.client-ip=209.85.128.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-5ff5be20308so8633137b3.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jan 2024 19:41:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705462877; x=1706067677; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=phBopZIe8FQ8TfC3rGLxMMXiYtQqVnQSRAWiIxrbEjM=;
-        b=bv6p26MZqLAl/5R/0Y29Rbkgsh48keAAVS4W1Jl0aKWGdzVjyz32pArIO8m16HnQSH
-         wHR7QoJABLDXClabDfiLlhlLHmF9DWUFvENXRWCDI9F1ps9Yw3JBzfJUf0NkRWCctva9
-         AnfS9IZeO9YNrPa7+W5BmeOgCnhqp4jVGCg+pEAqJyuD00gsgqCaDpIJBcDfiS7GZ3E0
-         trN941vl9v8tovIeBHdp3SpIB78Mitp8fYtXVUuxQfJPCUll6InBNXaBPZPz3Uzyn4ye
-         JrTh353fHBVyDR7Z7xszUmkBjLLfp4YkODdQ8bca9Hgomkg6QGshh9gh7Zw37bK8yDNX
-         uMnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705462877; x=1706067677;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=phBopZIe8FQ8TfC3rGLxMMXiYtQqVnQSRAWiIxrbEjM=;
-        b=bKmpF19cduDDH12IACOnQVjevhezYMKQkejRZlSZUNpMJASkMIhXgTiRSqK+5M1GLh
-         e5846pR2iRmwWgqtKS4OeTxQXjpDbtlxuCM6ddzLlAoYh/jBc6PQBUo/dOm5WzKCYI6E
-         GCR9HxX/KGyWILX6GzyZEuWH+yYNNT+I+z4zzIhH73EVOdvw2JWH4g4VyR0bw1Q8I+cV
-         epOOUdZbyi7aEUtqngsQqLQH7nKEYpH/5ait41yOcX3z8wMJDaposDsNOSKpUoMxcEOU
-         PJHbYj4cWSQgzlGXExFtvqwWrtXpCSyfkNEMk/b/RJN5KTCozAJKT9d8+v5BD52/Z26A
-         DMYg==
-X-Gm-Message-State: AOJu0YwbcTfcloFTdhO7Te9o8vgbzq7De5ynPMSrV3I6NGV73zkhAbKK
-	7s3ykI9MKUA1gFT0WInZ4ewBVJmUkjkc2RqlDo4B4pYjAysB6LqCXeTdQ96Rpxk=
-X-Google-Smtp-Source: AGHT+IGUsoweo6ywE9NuRgmV77Nud0CaiDRCB1/0Ro9u4X0ineqNsXB/m24vmlTNJu02pfPVblJGx7rtTuervD4DCco=
-X-Received: by 2002:a81:af66:0:b0:5fc:17ab:2f0a with SMTP id
- x38-20020a81af66000000b005fc17ab2f0amr91991ywj.13.1705462877532; Tue, 16 Jan
- 2024 19:41:17 -0800 (PST)
+	s=arc-20240116; t=1705473052; c=relaxed/simple;
+	bh=4FqIAA4hFzTfbpQcQsbRrq5DJ0JunmKGhHh0MHds120=;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To; b=TWoZR+MH4UI1W4/xvL2u61zJdebAjzRj1Pt7etGXVPIswT7VAzdVxuULN0Q6QKJG/0L+Mpq5+bDF8eGcxFVpnUwefuv/Pofg3WXnb7XI507nbVFFha0XaKZidD/qWW9dCsUeLu3AO9bqXWQEHhU858vce5uE/ACuHdCktAZx3nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cOfLQ74h; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F104C433C7;
+	Wed, 17 Jan 2024 06:30:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1705473052;
+	bh=4FqIAA4hFzTfbpQcQsbRrq5DJ0JunmKGhHh0MHds120=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=cOfLQ74hMct7mz00H2GwjckM/jb7KjGta5N8xBtaTWUXiZIasBMPe1gJEUVT9fgxE
+	 s9jirP4Nnj0dk/7o2CpzogAD48uTIpuXMcAVKNQD/unHlEy+0CQPnKH1EJa8tPtjrK
+	 odxSZN9s5MEPjo7RUT2KDbvaXoz7tPPQ3O2OzwcFc7dIXUPV+vEZtzK0HFLJk2tY09
+	 Cpz4dKnGEY0V6Qe9KZzAzj6BNO/tkHFHr8svBvg7EjG5jSClvNhHuq/2Ft0odSZQ8w
+	 qv4ZMQQFDmPu1Tkf0U1fGT0jOg7xHxJlRRJJKksJyM4Cn9iDDk3FAhXgrmsIxSWMno
+	 DQmPvs/G/UrQw==
+Date: Wed, 17 Jan 2024 12:00:39 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Rob Herring <robh@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/6] dt-bindings: PCI: qcom,pcie-sm8550: move SM8550 to
+ dedicated schema
+Message-ID: <20240117063039.GA8708@thinkpad>
+References: <20240108-dt-bindings-pci-qcom-split-v1-0-d541f05f4de0@linaro.org>
+ <20240108-dt-bindings-pci-qcom-split-v1-1-d541f05f4de0@linaro.org>
+ <20240116144419.GA3856889-robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240115-lpg-v5-1-3c56f77f9cec@quicinc.com> <CAA8EJpoemnXTmshWrArVOCm0GRSkWZ5tH557nbAjRL1Tgg-Dig@mail.gmail.com>
- <e16f5ff1-9b12-4f90-89d5-f95cbfb859e7@quicinc.com> <6c29ce72-e303-406a-bb75-5b36b0cd8ee4@linaro.org>
- <44ab50c4-c63b-436c-af46-9b4543181446@quicinc.com>
-In-Reply-To: <44ab50c4-c63b-436c-af46-9b4543181446@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 17 Jan 2024 05:41:06 +0200
-Message-ID: <CAA8EJpq8exe6n3OQnreLCsV+BnZKcu24d==rEKup=+n28nnDHw@mail.gmail.com>
-Subject: Re: [PATCH v5] arm64: dts: qcom: qcm6490-idp: Add definition for
- three LEDs
-To: hui liu <quic_huliu@quicinc.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Andy Gross <agross@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, quic_fenglinw@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240116144419.GA3856889-robh@kernel.org>
 
-On Wed, 17 Jan 2024 at 05:02, hui liu <quic_huliu@quicinc.com> wrote:
->
->
->
-> On 1/15/2024 6:26 PM, Krzysztof Kozlowski wrote:
-> > On 15/01/2024 11:18, hui liu wrote:
-> >>
-> >>
-> >> On 1/15/2024 5:56 PM, Dmitry Baryshkov wrote:
-> >>> On Mon, 15 Jan 2024 at 11:48, Hui Liu via B4 Relay
-> >>> <devnull+quic_huliu.quicinc.com@kernel.org> wrote:
-> >>>>
-> >>>> From: Hui Liu <quic_huliu@quicinc.com>
-> >>>>
-> >>>> Add definition for three LEDs to make sure they can
-> >>>> be enabled base on QCOM LPG LED driver.
-> >>>
-> >>> The "function" property is still placed incorrectly. Posting the next
-> >>> iteration before concluding the discussion on the previous one is not
-> >>> the best idea.
-> >> Do you mean I should update it as below? Seems there is no consumer to
-> >> use the function config, do we need to add now?
-> >
-> > Paste the output of dtbs_check for your board (or CHECK_DTBS=y for your
-> > Makefile target).
-> I checked the dt-binding file of LPG LED, I will update the dts as
-> below, if you think it's correct, I will push v6.
+On Tue, Jan 16, 2024 at 08:44:19AM -0600, Rob Herring wrote:
+> On Mon, Jan 08, 2024 at 03:19:14PM +0100, Krzysztof Kozlowski wrote:
+> > The qcom,pcie.yaml binding file containing all possible Qualcomm SoC
+> > PCIe root complexes gets quite complicated with numerous if:then:
+> > conditions customizing clocks, interrupts, regs and resets.  Adding and
+> > reviewing new devices is difficult, so simplify it by having shared
+> > common binding and file with only one group of compatible devices:
+> > 
+> > 1. Copy all common qcom,pcie.yaml properties (so everything except
+> >    supplies) to a new shared qcom,pcie-common.yaml schema.
+> > 2. Move SM8550 PCIe compatible devices to dedicated binding file.
+> > 
+> > This creates equivalent SM8550 schema file, except missing required
+> > compatible which is actually redundant.
+> > 
+> > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > ---
+> >  .../devicetree/bindings/pci/qcom,pcie-common.yaml  |  98 ++++++++++++
+> >  .../devicetree/bindings/pci/qcom,pcie-sm8550.yaml  | 171 +++++++++++++++++++++
+> >  .../devicetree/bindings/pci/qcom,pcie.yaml         |  38 -----
+> >  3 files changed, 269 insertions(+), 38 deletions(-)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-common.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-common.yaml
+> > new file mode 100644
+> > index 000000000000..125136176f93
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-common.yaml
+> > @@ -0,0 +1,98 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/pci/qcom,pcie-common.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Qualcomm PCI Express Root Complex Common Properties
+> > +
+> > +maintainers:
+> > +  - Bjorn Andersson <andersson@kernel.org>
+> > +  - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > +
+> > +properties:
+> > +  reg:
+> > +    minItems: 4
+> > +    maxItems: 6
+> > +
+> > +  reg-names:
+> > +    minItems: 4
+> > +    maxItems: 6
+> > +
+> > +  interrupts:
+> > +    minItems: 1
+> > +    maxItems: 8
+> > +
+> > +  interrupt-names:
+> > +    minItems: 1
+> > +    maxItems: 8
+> > +
+> > +  iommu-map:
+> > +    minItems: 1
+> > +    maxItems: 16
+> > +
+> > +  clocks:
+> > +    minItems: 3
+> > +    maxItems: 13
+> > +
+> > +  clock-names:
+> > +    minItems: 3
+> > +    maxItems: 13
+> > +
+> > +  dma-coherent: true
+> > +
+> > +  interconnects:
+> > +    maxItems: 2
+> > +
+> > +  interconnect-names:
+> > +    items:
+> > +      - const: pcie-mem
+> > +      - const: cpu-pcie
+> > +
+> > +  phys:
+> > +    maxItems: 1
+> > +
+> > +  phy-names:
+> > +    items:
+> > +      - const: pciephy
+> > +
+> > +  power-domains:
+> > +    maxItems: 1
+> > +
+> > +  resets:
+> > +    minItems: 1
+> > +    maxItems: 12
+> > +
+> > +  reset-names:
+> > +    minItems: 1
+> > +    maxItems: 12
+> > +
+> > +  perst-gpios:
+> > +    description: GPIO controlled connection to PERST# signal
+> > +    maxItems: 1
+> > +
+> > +  wake-gpios:
+> > +    description: GPIO controlled connection to WAKE# signal
+> > +    maxItems: 1
+> > +
+> > +required:
+> > +  - reg
+> > +  - reg-names
+> > +  - interrupt-map-mask
+> > +  - interrupt-map
+> > +  - clocks
+> > +  - clock-names
+> > +
+> > +anyOf:
+> > +  - required:
+> > +      - interrupts
+> > +      - interrupt-names
+> > +      - "#interrupt-cells"
+> > +  - required:
+> > +      - msi-map
+> > +      - msi-map-mask
+> > +
+> > +allOf:
+> > +  - $ref: /schemas/pci/pci-bus.yaml#
+> > +
+> > +additionalProperties: true
+> > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-sm8550.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-sm8550.yaml
+> > new file mode 100644
+> > index 000000000000..b6d025f153bc
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sm8550.yaml
+> > @@ -0,0 +1,171 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/pci/qcom,pcie-sm8550.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Qualcomm SM8550 PCI Express Root Complex
+> > +
+> > +maintainers:
+> > +  - Bjorn Andersson <andersson@kernel.org>
+> > +  - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > +
+> > +description:
+> > +  Qualcomm SM8550 SoC (and compatible) PCIe root complex controller is based on
+> > +  the Synopsys DesignWare PCIe IP.
+> > +
+> > +properties:
+> > +  compatible:
+> > +    oneOf:
+> > +      - const: qcom,pcie-sm8550
+> > +      - items:
+> > +          - enum:
+> > +              - qcom,pcie-sm8650
+> > +          - const: qcom,pcie-sm8550
+> > +
+> > +  reg:
+> > +    minItems: 5
+> > +    maxItems: 6
+> > +
+> > +  reg-names:
+> > +    minItems: 5
+> > +    items:
+> > +      - const: parf # Qualcomm specific registers
+> > +      - const: dbi # DesignWare PCIe registers
+> > +      - const: elbi # External local bus interface registers
+> > +      - const: atu # ATU address space
+> > +      - const: config # PCIe configuration space
+> > +      - const: mhi # MHI registers
+> > +
+> > +  clocks:
+> > +    minItems: 7
+> > +    maxItems: 8
+> > +
+> > +  clock-names:
+> > +    minItems: 7
+> > +    items:
+> > +      - const: aux # Auxiliary clock
+> > +      - const: cfg # Configuration clock
+> > +      - const: bus_master # Master AXI clock
+> > +      - const: bus_slave # Slave AXI clock
+> > +      - const: slave_q2a # Slave Q2A clock
+> > +      - const: ddrss_sf_tbu # PCIe SF TBU clock
+> > +      - const: noc_aggr # Aggre NoC PCIe AXI clock
+> > +      - const: cnoc_sf_axi # Config NoC PCIe1 AXI clock
+> > +
+> > +  resets:
+> > +    minItems: 1
+> > +    maxItems: 2
+> > +
+> > +  reset-names:
+> > +    minItems: 1
+> > +    items:
+> > +      - const: pci # PCIe core reset
+> > +      - const: link_down # PCIe link down reset
+> > +
+> > +oneOf:
+> > +  - properties:
+> > +      interrupts:
+> > +        maxItems: 1
+> > +      interrupt-names:
+> > +        items:
+> > +          - const: msi
+> > +
+> > +  - properties:
+> > +      interrupts:
+> > +        minItems: 8
+> > +      interrupt-names:
+> > +        items:
+> > +          - const: msi0
+> > +          - const: msi1
+> > +          - const: msi2
+> > +          - const: msi3
+> > +          - const: msi4
+> > +          - const: msi5
+> > +          - const: msi6
+> > +          - const: msi7
+> 
+> How does a given SoC have 1 or 8 interrupts? I guess it is possible. A 
+> comment here would be helpful.
+> 
 
-Is there any reason why you are defining three different LEDs instead
-of multi-led with three components?
+No, this is due to kernel developers not able to find out the max MSI numbers
+for each platforms out of the Qcom internal documentation.
 
->
-> +&pm8350c_pwm {
-> +       #address-cells = <1>;
-> +       #size-cells = <0>;
-> +       status = "okay";
-> +
-> +       led@1 {
-> +               reg = <1>;
-> +               color = <LED_COLOR_ID_RED>;
-> +               function = LED_FUNCTION_STATUS;
-> +       };
-> +
-> +       led@2 {
-> +               reg = <2>;
-> +               color = <LED_COLOR_ID_GREEN>;
-> +               function = LED_FUNCTION_STATUS;
-> +       };
-> +
-> +       led@3 {
-> +               reg = <3>;
-> +               color = <LED_COLOR_ID_BLUE>;
-> +               function = LED_FUNCTION_STATUS;
-> +       };
-> +};
+Let it be for now, I will try to fetch these numbers to make it accurate later.
 
+- Mani
 
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> 
 
 -- 
-With best wishes
-Dmitry
+மணிவண்ணன் சதாசிவம்
 
