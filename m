@@ -1,376 +1,339 @@
-Return-Path: <linux-arm-msm+bounces-7504-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7505-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4AF26830D26
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 20:10:12 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC32B830D5A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 20:39:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 389311C23E70
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 19:10:11 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 15194B246AA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 19:39:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DFC2249E0;
-	Wed, 17 Jan 2024 19:10:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C21C249F2;
+	Wed, 17 Jan 2024 19:39:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C6aNlgK2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A5RrOCHq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98B624204
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 19:09:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4999024200;
+	Wed, 17 Jan 2024 19:39:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705518603; cv=none; b=MYaXQpKrnteXIV/XePOiyLrRN8nKCcHl/0SjenAphbYF170jbGoZwh7X6hy+y1uMmml62uoJmLcPf0UOB5YlmcMFo3P28oLztZ3yWg+KJ6GOSPKSUkcCTnIiuV6lEi4zshZhot+F5qe/Tf3JCJCVYvM+MOL+SczMkr+xlF814wI=
+	t=1705520373; cv=none; b=aBaaqjt7X2H/t9AzkP2bTzVnzwiJ/d87OhRt45Nc7MoFyeeUhZ0FpXgkKZnepAyk1qWMj32TFkqcnfXje9eP2+IRabnvSxJsRgUGukLbsmok3U/LbX8SENrR5FqCMIrHuMvUlO2fvcIwkJ4xZUSSCMazJlSeXya07ezp7UiRUBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705518603; c=relaxed/simple;
-	bh=pOBH5kk4rTVzyMww58JwBtZRXinWstPMBFhlHEVIRHE=;
+	s=arc-20240116; t=1705520373; c=relaxed/simple;
+	bh=xUW41l+F6yt3WPTcJFmF0WlaMMfrGbYszW2gpGLTF7c=;
 	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:MIME-Version:
-	 References:In-Reply-To:From:Date:Message-ID:Subject:To:Cc:
-	 Content-Type; b=FIGRr8x0sN9yjhngsWgSG0rVhQClQXHW0rQrHD476bxA610EsTc62WE5kpZg/FvteQvYJahF+2eBu5R7Ol1cJ+Xrc9MLwAxfia+84Cyoc0Ao2JE1C9p8BWU0ZyR9A42zCDSBGJCXBEx6uMs8QrVlcLoQ1rHyUMe/XUcQYi05uTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=C6aNlgK2; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-50e6ee8e911so13697641e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 11:09:59 -0800 (PST)
+	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:Content-Language:
+	 To:Cc:References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding; b=MNLEzl73a6xofdvX88jOZW0OPQomJ+vwAoi/OnQw0YIwJHr2Rx3Sr1YEkZY7ItshZxRzqNCfw4rFHVAfCkiqYY2ZWFQkbw7WONwRfHIa9Jbe7ZdL2FCwhjgjAHgaYByWMKab4FThRbe0B8xC59gDG0e4SukC6NM54I50HgwP2gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A5RrOCHq; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-40e86a9fc4bso20710575e9.2;
+        Wed, 17 Jan 2024 11:39:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705518598; x=1706123398; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=NAzAJO3N1I1OhZ284fvmMR+G059lfg2vntURweb1Fq0=;
-        b=C6aNlgK2KCFeKX2M6Xtewg67xtun5EJRmPCerSQINq3ssRC9dfHbeBJ+FcmBvW33Pv
-         kGVIkSHXcKsaWGN6ERTg6ThV/99bXMeGi5FME2hz7+AxBMInxt3NrjJNeYN1iCN9S5hP
-         eC6BwnlV4Ry2n80A+9+rp1NugHYgg6Opdnrg2GM89V/PvkCZAHjBKPgkrBa3MTC1AF87
-         jkmlYVd9E1/3mBpyRXmmQssWi/Rv8fpDZGDFv47P3UvrMPphnHlInJMxDbYuz8sZ3BYV
-         kW/4Mz7siPZb0NBJUI8w9LeRkyiUsqHjxasuWy9XyewhGfpKSbweH6UJRVvUTN517qQa
-         w6xA==
+        d=gmail.com; s=20230601; t=1705520369; x=1706125169; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QeuTafQX40/bhE79jlyyxN484RLluokaSda2KNrJ6KI=;
+        b=A5RrOCHqwbhK1AVWjGXTAZruAEXNsic6HA4NbDW9qbxr2arqlruaTzbYaf/HJFI5PW
+         iazMMoxeUwYldJauBXtXSnapYe+Ha2G/8jxjyII9/EF4IoT/HOJXZI6/Lew5uIWqyLBK
+         lI0njmR4Iv7RlfwH7NQi2UtWnAuR5WlrTTu5NLRw7GSUMut5xhtEk+z5RgbnSFtmEsDo
+         gy1ri7SyF+Zb5HUV66KBmpEzU9BC91nZogtC/zpvsfRW97or0bI4nSlkkOH9LerrQPEW
+         OM8eGw2+WvxEXeCEG8IBi7wbPOjB9k+FprT6kB03aUx5t+9oCLRTuhE4QSELxP8UaN9W
+         qudw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705518598; x=1706123398;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NAzAJO3N1I1OhZ284fvmMR+G059lfg2vntURweb1Fq0=;
-        b=pG84Argu9NN05UbqNr0gr/s2PHg6EQfhgrDCWr/G6i63bSSeQDH8CE2QLwDwbZTdIt
-         BLzK4cC947rbCf5ZUH1+1o3UH7yg3sMXefR2FAtP1/ll3FvR4eeaSOrksHnEB5bLvtTc
-         NNq8OZrCcSp7KHV+vHIhqS7AQnUxj5B8Kvc01dO4MUQwbeR1Tr0QUu3QjYUIVk53xMvC
-         TKvSuneXN38Jntj/9/DL41G0sU53duiXcEKEGkLs0pofSgIdSuZdLw6IB7nQQ9dlo1Es
-         wSvpvIyCEI1RwxXXq6N73iNq4I2jrd4/rt6T7GgDcZcFBtH1P5gkGcOuBDIYFXAF/C9j
-         Zd/g==
-X-Gm-Message-State: AOJu0YyxBNu5omJkrPzlcyxRxkkAoGcX1P6k6zeeH/ql0pmnUhAgJKIZ
-	ikEQyjBRUTuSZ2uH+u3uzaX4uP3sSKOlLQC9grwPR+SgoCtJXw==
-X-Google-Smtp-Source: AGHT+IGlDOdd3qY094t3cuOIq0BxFxAUEV6oA7vLrb7WTMrXhkU9b2CulrxydgXjlkSNoz4gun1ky/i7gRaQohSADr4=
-X-Received: by 2002:a19:770f:0:b0:50e:ac2a:6b6d with SMTP id
- s15-20020a19770f000000b0050eac2a6b6dmr4104291lfc.119.1705518597942; Wed, 17
- Jan 2024 11:09:57 -0800 (PST)
+        d=1e100.net; s=20230601; t=1705520369; x=1706125169;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QeuTafQX40/bhE79jlyyxN484RLluokaSda2KNrJ6KI=;
+        b=q6Kkt8vXWqpXSuBhRSzbxsfKCSGUPUg7NEnmxDzQpw4Jy549ljoeWOYqXlXveOvebM
+         f9oMZ2Ts0v2f7fNI6MALVa+aQBA44UUGs/qh8e+G9AOYR0Dncm7sLeBwQCVvL5bkphXz
+         SrFOnzncwfGMTlW9nxjbuk0G1qORxmA95YvwBT3s0YGq46GoiozFokwS8uwGuodniI3S
+         x+Pb9Woybsx6OxJYE3tlYxpQI1A5IysHgaHySC0bG/ubJZSj45SLKVZ0TXwmfKOsrh+j
+         zTWcqOly4+9PAV+G0i63++Zyv8q1Qby+//uhBBZOay/by4IBoc7NwTuyihMM7fwLoTWS
+         e11g==
+X-Gm-Message-State: AOJu0YxmHi9K2HdAaYVylU85TAKoL4TEURo1GRLsYtNy0q1nLI0CBWmy
+	OgUpuP/yhqVJRYQSva24MHc=
+X-Google-Smtp-Source: AGHT+IGQ/vgsgMyVvJJZEFczZQRj1bkOBQgeDCIkSAsQdn9ihyhpR1zcD1iO3JBmHov+nZGsYZZC1Q==
+X-Received: by 2002:a05:600c:1392:b0:40e:479d:ce47 with SMTP id u18-20020a05600c139200b0040e479dce47mr4893168wmf.181.1705520369096;
+        Wed, 17 Jan 2024 11:39:29 -0800 (PST)
+Received: from [192.168.0.3] ([69.6.8.124])
+        by smtp.gmail.com with ESMTPSA id y8-20020a5d4ac8000000b00337af95c1d2sm2325448wrs.14.2024.01.17.11.39.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Jan 2024 11:39:28 -0800 (PST)
+Message-ID: <c81af808-d836-4054-b596-4a53b05f4c78@gmail.com>
+Date: Wed, 17 Jan 2024 21:39:25 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240117173458.2312669-1-quic_sibis@quicinc.com> <20240117173458.2312669-4-quic_sibis@quicinc.com>
-In-Reply-To: <20240117173458.2312669-4-quic_sibis@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 17 Jan 2024 21:09:46 +0200
-Message-ID: <CAA8EJpqUgqHfMOZip58yGpt6S3XSBz+9BeXZSL_JmWar_JbO4g@mail.gmail.com>
-Subject: Re: [RFC 3/7] firmware: arm_scmi: Add QCOM vendor protocol
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, andersson@kernel.org, 
-	konrad.dybcio@linaro.org, jassisinghbrar@gmail.com, robh+dt@kernel.org, 
-	krzysztof.kozlowski+dt@linaro.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com, conor+dt@kernel.org, 
-	Amir Vajid <avajid@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [net-next PATCH RFC v3 1/8] dt-bindings: net: document ethernet
+ PHY package nodes
+Content-Language: en-US
+To: Christian Marangi <ansuelsmth@gmail.com>
+Cc: Robert Marko <robert.marko@sartura.hr>, Andrew Lunn <andrew@lunn.ch>,
+ Vladimir Oltean <olteanv@gmail.com>, Rob Herring <robh+dt@kernel.org>,
+ Luo Jie <quic_luoj@quicinc.com>, "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Heiner Kallweit <hkallweit1@gmail.com>, Russell King
+ <linux@armlinux.org.uk>, Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ netdev@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org
+References: <20231126015346.25208-1-ansuelsmth@gmail.com>
+ <20231126015346.25208-2-ansuelsmth@gmail.com>
+ <0926ea46-1ce4-4118-a04c-b6badc0b9e15@gmail.com>
+ <659aedb1.df0a0220.35691.1853@mx.google.com>
+ <0f4ec2ff-4ef7-4667-adef-d065cfbc0a91@gmail.com>
+ <65a7210f.df0a0220.d10b2.1162@mx.google.com>
+From: Sergey Ryazanov <ryazanov.s.a@gmail.com>
+In-Reply-To: <65a7210f.df0a0220.d10b2.1162@mx.google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, 17 Jan 2024 at 19:36, Sibi Sankar <quic_sibis@quicinc.com> wrote:
->
-> From: Shivnandan Kumar <quic_kshivnan@quicinc.com>
->
-> SCMI QCOM vendor protocol provides interface to communicate with SCMI
-> controller and enable vendor specific features like bus scaling capable
-> of running on it.
->
-> Signed-off-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
-> Co-developed-by: Ramakrishna Gottimukkula <quic_rgottimu@quicinc.com>
-> Signed-off-by: Ramakrishna Gottimukkula <quic_rgottimu@quicinc.com>
-> Co-developed-by: Amir Vajid <avajid@quicinc.com>
-> Signed-off-by: Amir Vajid <avajid@quicinc.com>
-> Co-developed-by: Sibi Sankar <quic_sibis@quicinc.com>
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> ---
->  drivers/firmware/arm_scmi/Kconfig            |  11 ++
->  drivers/firmware/arm_scmi/Makefile           |   1 +
->  drivers/firmware/arm_scmi/qcom_scmi_vendor.c | 160 +++++++++++++++++++
->  include/linux/qcom_scmi_vendor.h             |  36 +++++
->  4 files changed, 208 insertions(+)
->  create mode 100644 drivers/firmware/arm_scmi/qcom_scmi_vendor.c
->  create mode 100644 include/linux/qcom_scmi_vendor.h
->
-> diff --git a/drivers/firmware/arm_scmi/Kconfig b/drivers/firmware/arm_scmi/Kconfig
-> index aa5842be19b2..86b5d6c18ec4 100644
-> --- a/drivers/firmware/arm_scmi/Kconfig
-> +++ b/drivers/firmware/arm_scmi/Kconfig
-> @@ -180,4 +180,15 @@ config ARM_SCMI_POWER_CONTROL
->           called scmi_power_control. Note this may needed early in boot to catch
->           early shutdown/reboot SCMI requests.
->
-> +config QCOM_SCMI_VENDOR_PROTOCOL
-> +       tristate "Qualcomm Technologies, Inc. Qcom SCMI vendor Protocol"
-> +       depends on ARM || ARM64 || COMPILE_TEST
-> +       depends on ARM_SCMI_PROTOCOL
-> +       help
-> +         The SCMI QCOM vendor protocol provides interface to communicate with SCMI
-> +         controller and enable vendor specific features like bus scaling.
-> +
-> +         This driver defines the commands or message ID's used for this
-> +         communication and also exposes the ops used by the clients.
-> +
->  endmenu
-> diff --git a/drivers/firmware/arm_scmi/Makefile b/drivers/firmware/arm_scmi/Makefile
-> index a7bc4796519c..eaeb788b93c6 100644
-> --- a/drivers/firmware/arm_scmi/Makefile
-> +++ b/drivers/firmware/arm_scmi/Makefile
-> @@ -17,6 +17,7 @@ obj-$(CONFIG_ARM_SCMI_PROTOCOL) += scmi-core.o
->  obj-$(CONFIG_ARM_SCMI_PROTOCOL) += scmi-module.o
->
->  obj-$(CONFIG_ARM_SCMI_POWER_CONTROL) += scmi_power_control.o
-> +obj-$(CONFIG_QCOM_SCMI_VENDOR_PROTOCOL) += qcom_scmi_vendor.o
->
->  ifeq ($(CONFIG_THUMB2_KERNEL)$(CONFIG_CC_IS_CLANG),yy)
->  # The use of R7 in the SMCCC conflicts with the compiler's use of R7 as a frame
-> diff --git a/drivers/firmware/arm_scmi/qcom_scmi_vendor.c b/drivers/firmware/arm_scmi/qcom_scmi_vendor.c
-> new file mode 100644
-> index 000000000000..878b99f0d1ef
-> --- /dev/null
-> +++ b/drivers/firmware/arm_scmi/qcom_scmi_vendor.c
-> @@ -0,0 +1,160 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2024, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#include <linux/qcom_scmi_vendor.h>
-> +
-> +#include "common.h"
-> +
-> +#define        EXTENDED_MSG_ID                 0
-> +#define        SCMI_MAX_TX_RX_SIZE             128
-> +#define        PROTOCOL_PAYLOAD_SIZE           16
-> +#define        SET_PARAM                       0x10
-> +#define        GET_PARAM                       0x11
-> +#define        START_ACTIVITY                  0x12
-> +#define        STOP_ACTIVITY                   0x13
-> +
-> +static int qcom_scmi_set_param(const struct scmi_protocol_handle *ph, void *buf, u64 algo_str,
-> +                              u32 param_id, size_t size)
-> +{
-> +       int ret = -EINVAL;
-> +       struct scmi_xfer *t;
-> +       u32 *msg;
-> +
-> +       if (!ph || !ph->xops)
-> +               return ret;
+Hi Christian,
 
-Drop init of ret, return -EINVAL directly here.
+On 17.01.2024 02:36, Christian Marangi wrote:
+> On Sun, Jan 07, 2024 at 11:49:12PM +0200, Sergey Ryazanov wrote:
+>> Hi Christian,
+>>
+>> On 07.01.2024 20:30, Christian Marangi wrote:
+>>> On Sun, Jan 07, 2024 at 08:00:33PM +0200, Sergey Ryazanov wrote:
+>>>> On 26.11.2023 03:53, Christian Marangi wrote:
+>>>>> Document ethernet PHY package nodes used to describe PHY shipped in
+>>>>> bundle of 4-5 PHY. The special node describe a container of PHY that
+>>>>> share common properties. This is a generic schema and PHY package
+>>>>> should create specialized version with the required additional shared
+>>>>> properties.
+>>>>>
+>>>>> Example are PHY package that have some regs only in one PHY of the
+>>>>> package and will affect every other PHY in the package, for example
+>>>>> related to PHY interface mode calibration or global PHY mode selection.
+>>>>>
+>>>>> The PHY package node MUST declare the base address used by the PHY driver
+>>>>> for global configuration by calculating the offsets of the global PHY
+>>>>> based on the base address of the PHY package and declare the
+>>>>> "ethrnet-phy-package" compatible.
+>>>>>
+>>>>> Each reg of the PHY defined in the PHY package node is absolute and will
+>>>>> reference the real address of the PHY on the bus.
+>>>>>
+>>>>> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+>>>>> ---
+>>>>>     .../bindings/net/ethernet-phy-package.yaml    | 75 +++++++++++++++++++
+>>>>>     1 file changed, 75 insertions(+)
+>>>>>     create mode 100644 Documentation/devicetree/bindings/net/ethernet-phy-package.yaml
+>>>>>
+>>>>> diff --git a/Documentation/devicetree/bindings/net/ethernet-phy-package.yaml b/Documentation/devicetree/bindings/net/ethernet-phy-package.yaml
+>>>>> new file mode 100644
+>>>>> index 000000000000..244d4bc29164
+>>>>> --- /dev/null
+>>>>> +++ b/Documentation/devicetree/bindings/net/ethernet-phy-package.yaml
+>>>>> @@ -0,0 +1,75 @@
+>>>>> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+>>>>> +%YAML 1.2
+>>>>> +---
+>>>>> +$id: http://devicetree.org/schemas/net/ethernet-phy-package.yaml#
+>>>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>>>> +
+>>>>> +title: Ethernet PHY Package Common Properties
+>>>>> +
+>>>>> +maintainers:
+>>>>> +  - Christian Marangi <ansuelsmth@gmail.com>
+>>>>> +
+>>>>> +description:
+>>>>> +  This schema describe PHY package as simple container for
+>>>>> +  a bundle of PHYs that share the same properties and
+>>>>> +  contains the PHYs of the package themself.
+>>>>> +
+>>>>> +  Each reg of the PHYs defined in the PHY package node is
+>>>>> +  absolute and describe the real address of the PHY on the bus.
+>>>>> +
+>>>>> +properties:
+>>>>> +  $nodename:
+>>>>> +    pattern: "^ethernet-phy-package(@[a-f0-9]+)?$"
+>>>>> +
+>>>>> +  compatible:
+>>>>> +    const: ethernet-phy-package
+>>>>> +
+>>>>> +  reg:
+>>>>> +    minimum: 0
+>>>>> +    maximum: 31
+>>>>> +    description:
+>>>>> +      The base ID number for the PHY package.
+>>>>> +      Commonly the ID of the first PHY in the PHY package.
+>>>>> +
+>>>>> +      Some PHY in the PHY package might be not defined but
+>>>>> +      still exist on the device (just not attached to anything).
+>>>>> +      The reg defined in the PHY package node might differ and
+>>>>> +      the related PHY might be not defined.
+>>>>> +
+>>>>> +  '#address-cells':
+>>>>> +    const: 1
+>>>>> +
+>>>>> +  '#size-cells':
+>>>>> +    const: 0
+>>>>> +
+>>>>> +patternProperties:
+>>>>> +  ^ethernet-phy(@[a-f0-9]+)?$:
+>>>>> +    $ref: ethernet-phy.yaml#
+>>>>> +
+>>>>> +required:
+>>>>> +  - compatible
+>>>>> +  - reg
+>>>>> +
+>>>>> +additionalProperties: true
+>>>>> +
+>>>>> +examples:
+>>>>> +  - |
+>>>>> +    mdio {
+>>>>> +        #address-cells = <1>;
+>>>>> +        #size-cells = <0>;
+>>>>> +
+>>>>> +        ethernet-phy-package@16 {
+>>>>> +            #address-cells = <1>;
+>>>>> +            #size-cells = <0>;
+>>>>> +            compatible = "ethernet-phy-package";
+>>>>> +            reg = <0x16>;
+>>>>> +
+>>>>> +            ethernet-phy@16 {
+>>>>> +              reg = <0x16>;
+>>>>> +            };
+>>>>> +
+>>>>> +            phy4: ethernet-phy@1a {
+>>>>> +              reg = <0x1a>;
+>>>>> +            };
+>>>>> +        };
+>>>>> +    };
+>>>>
+>>>> So, we ended up on a design where we use the predefined compatible string
+>>>> 'ethernet-phy-package' to recognize a phy package inside the
+>>>> of_mdiobus_register() function. During the V1 discussion, Vladimir came up
+>>>> with the idea of 'ranges' property usage [1]. Can we use 'ranges' to
+>>>> recognize a phy package in of_mdiobus_register()? IMHO this will give us a
+>>>> clear DT solution. I mean 'ranges' clearly indicates that child nodes are in
+>>>> the same address range as the parent node. Also we can list all child
+>>>> addresses in 'reg' to mark them occupied.
+>>>>
+>>>>     mdio {
+>>>>       ...
+>>>>
+>>>>       ethernet-phy-package@16 {
+>>>>         compatible = "qcom,qca8075";
+>>>>         reg = <0x16>, <0x17>, <0x18>, <0x19>, <0x1a>;
+>>>>         ranges;
+>>>>         ...
+>>>>
+>>>>         ethernet-phy@16 {
+>>>>           reg = <0x16>;
+>>>>         };
+>>>>
+>>>>         ethernet-phy@1a {
+>>>>           reg = <0x1a>;
+>>>>         };
+>>>>       };
+>>>>     };
+>>>>
+>>>> Did you find some issues with the 'ranges' conception?
+>>>
+>>> Nope it's ok but it might pose some confusion with the idea that the
+>>> very first element MUST be THE STARTING ADDR of the PHY package. (people
+>>> might think that it's just the list of the PHYs in the package and
+>>> remove the hardware unconnected ones... but that would be fault of who
+>>> write the DT anyway.)
+>>
+>> Make sense. I do not insist on addresses listing. Mainly I'm thinking of a
+>> proper way to show that child nodes are accessible directly on the parent
+>> bus, and introducing the special compatibility string, while we already have
+>> the 'ranges' property.
+>>
+>> But it's good to know Rob's opinion on whether it is conceptually right to
+>> use 'ranges' here.
+>>
+> 
+> I wonder if something like this might make sense... Thing is that with
+> the ranges property we would have the define the address in the PHY
+> Package node as offsets...
+> 
+> An example would be
+> 
+>      mdio {
+>          #address-cells = <1>;
+>          #size-cells = <0>;
+> 
+>          ethernet-phy-package@10 {
+>              #address-cells = <1>;
+>              #size-cells = <0>;
+>              compatible = "qcom,qca807x-package";
+>              reg = <0x10>;
+>              ranges = <0x0 0x10 0x5>;
+> 
+>              qcom,package-mode = "qsgmii";
+> 
+>              ethernet-phy@0 {
+>                  reg = <0>;
+> 
+>                  leds {
+> 
+> 		...
+> 
+> With a PHY Package at 0x10, that span 5 address and the child starts at
+> 0x0 offset.
+> 
+> This way we would be very precise on describing the amount of address
+> used by the PHY Package without having to define the PHY not actually
+> connected.
+> 
+> PHY needs to be at an offset to make sense of the ranges first element
+> property (0x0). With a non offset way we would have to have something
+> like
+> 
+> ranges = <0x10 0x10 0x5>;
+> 
+> With the child and tha parent always matching.
+> 
+> (this is easy to handle in the parsing and probe as we will just
+> calculate the real address based on the base address of the PHY package
+> + offset)
 
-> +
-> +       ret = ph->xops->xfer_get_init(ph, SET_PARAM, size + PROTOCOL_PAYLOAD_SIZE,
-> +                                     SCMI_MAX_TX_RX_SIZE, &t);
-> +       if (ret)
-> +               return ret;
-> +
-> +       msg = t->tx.buf;
-> +       *msg++ = cpu_to_le32(EXTENDED_MSG_ID);
-> +       *msg++ = cpu_to_le32(algo_str & GENMASK(31, 0));
-> +       *msg++ = cpu_to_le32((algo_str & GENMASK(63, 32)) >> 32);
-> +       *msg++ = cpu_to_le32(param_id);
+On one hand it makes sense and looks useful for software development. On 
+another, it looks like a violation of the main DT designing rule, when 
+DT should be used to describe that hardware properties, which can not be 
+learnt from other sources.
 
-First, this header ops looks like a generic code which can be extracted.
+As far as I understand this specific chip, each of embedded PHYs has its 
+own MDIO bus address and not an offset from a main common address. 
+Correct me please, if I am got it wrong.
 
-Second, using GENMASK here in the ops doesn't make any sense. The
-values will be limited to u32 anyway.
+> I hope Rob can give more feedback about this, is this what you were
+> thinking with the usage of ranges property?
+> 
+> (this has also the bonus point of introducing some validation in the PHY
+> core code to make sure the right amount of PHY are defined in the
+> package by checking if the number of PHY doesn't exceed the value set in
+> ranges.)
 
-> +       memcpy(msg, buf, size);
-> +       ret = ph->xops->do_xfer(ph, t);
-> +       ph->xops->xfer_put(ph, t);
-> +
-> +       return ret;
-> +}
-> +
-> +static int qcom_scmi_get_param(const struct scmi_protocol_handle *ph, void *buf, u64 algo_str,
-> +                              u32 param_id, size_t tx_size, size_t rx_size)
-> +{
-> +       int ret = -EINVAL;
-> +       struct scmi_xfer *t;
-> +       u32 *msg;
-> +
-> +       if (!ph || !ph->xops || !buf)
-> +               return ret;
+Yep, I am also would like to hear some clarification from Rob regarding 
+acceptable 'range' property usage and may be some advice on how to 
+specify the size of occupied addresses. Rob?
 
-Drop init of ret, return -EINVAL directly here.
-
-> +
-> +       ret = ph->xops->xfer_get_init(ph, GET_PARAM, tx_size + PROTOCOL_PAYLOAD_SIZE,
-> +                                     SCMI_MAX_TX_RX_SIZE, &t);
-> +       if (ret)
-> +               return ret;
-> +
-> +       msg = t->tx.buf;
-> +       *msg++ = cpu_to_le32(EXTENDED_MSG_ID);
-> +       *msg++ = cpu_to_le32(algo_str & GENMASK(31, 0));
-> +       *msg++ = cpu_to_le32((algo_str & GENMASK(63, 32)) >> 32);
-> +       *msg++ = cpu_to_le32(param_id);
-> +       memcpy(msg, buf, tx_size);
-> +       ret = ph->xops->do_xfer(ph, t);
-> +       if (t->rx.len > rx_size) {
-> +               pr_err("SCMI received buffer size %zu is more than expected size %zu\n",
-> +                      t->rx.len, rx_size);
-> +               return -EMSGSIZE;
-> +       }
-> +       memcpy(buf, t->rx.buf, t->rx.len);
-> +       ph->xops->xfer_put(ph, t);
-> +
-> +       return ret;
-> +}
-> +
-> +static int qcom_scmi_start_activity(const struct scmi_protocol_handle *ph,
-> +                                   void *buf, u64 algo_str, u32 param_id, size_t size)
-> +{
-> +       int ret = -EINVAL;
-> +       struct scmi_xfer *t;
-> +       u32 *msg;
-> +
-> +       if (!ph || !ph->xops)
-> +               return ret;
-
-You can guess the comment here.
-
-> +
-> +       ret = ph->xops->xfer_get_init(ph, START_ACTIVITY, size + PROTOCOL_PAYLOAD_SIZE,
-> +                                     SCMI_MAX_TX_RX_SIZE, &t);
-> +       if (ret)
-> +               return ret;
-> +
-> +       msg = t->tx.buf;
-> +       *msg++ = cpu_to_le32(EXTENDED_MSG_ID);
-> +       *msg++ = cpu_to_le32(algo_str & GENMASK(31, 0));
-> +       *msg++ = cpu_to_le32((algo_str & GENMASK(63, 32)) >> 32);
-> +       *msg++ = cpu_to_le32(param_id);
-> +       memcpy(msg, buf, size);
-> +       ret = ph->xops->do_xfer(ph, t);
-> +       ph->xops->xfer_put(ph, t);
-> +
-> +       return ret;
-> +}
-> +
-> +static int qcom_scmi_stop_activity(const struct scmi_protocol_handle *ph, void *buf, u64 algo_str,
-> +                                  u32 param_id, size_t size)
-> +{
-> +       int ret = -EINVAL;
-> +       struct scmi_xfer *t;
-> +       u32 *msg;
-> +
-> +       if (!ph || !ph->xops)
-> +               return ret;
-> +
-> +       ret = ph->xops->xfer_get_init(ph, STOP_ACTIVITY, size + PROTOCOL_PAYLOAD_SIZE,
-> +                                     SCMI_MAX_TX_RX_SIZE, &t);
-> +       if (ret)
-> +               return ret;
-> +
-> +       msg = t->tx.buf;
-> +       *msg++ = cpu_to_le32(EXTENDED_MSG_ID);
-> +       *msg++ = cpu_to_le32(algo_str & GENMASK(31, 0));
-> +       *msg++ = cpu_to_le32((algo_str & GENMASK(63, 32)) >> 32);
-> +       *msg++ = cpu_to_le32(param_id);
-> +       memcpy(msg, buf, size);
-> +       ret = ph->xops->do_xfer(ph, t);
-> +       ph->xops->xfer_put(ph, t);
-> +
-> +       return ret;
-> +}
-> +
-> +static struct qcom_scmi_vendor_ops qcom_proto_ops = {
-> +       .set_param = qcom_scmi_set_param,
-> +       .get_param = qcom_scmi_get_param,
-> +       .start_activity = qcom_scmi_start_activity,
-> +       .stop_activity = qcom_scmi_stop_activity,
-> +};
-> +
-> +static int qcom_scmi_vendor_protocol_init(const struct scmi_protocol_handle *ph)
-> +{
-> +       u32 version;
-> +
-> +       ph->xops->version_get(ph, &version);
-> +
-> +       dev_info(ph->dev, "qcom scmi version %d.%d\n",
-> +                PROTOCOL_REV_MAJOR(version), PROTOCOL_REV_MINOR(version));
-> +
-> +       return 0;
-> +}
-> +
-> +static const struct scmi_protocol qcom_scmi_vendor = {
-> +       .id = QCOM_SCMI_VENDOR_PROTOCOL,
-> +       .owner = THIS_MODULE,
-> +       .instance_init = &qcom_scmi_vendor_protocol_init,
-> +       .ops = &qcom_proto_ops,
-> +};
-> +module_scmi_protocol(qcom_scmi_vendor);
-> +
-> +MODULE_DESCRIPTION("QTI SCMI vendor protocol");
-> +MODULE_LICENSE("GPL");
-> diff --git a/include/linux/qcom_scmi_vendor.h b/include/linux/qcom_scmi_vendor.h
-> new file mode 100644
-> index 000000000000..bde57bb18367
-> --- /dev/null
-> +++ b/include/linux/qcom_scmi_vendor.h
-> @@ -0,0 +1,36 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * QTI SCMI vendor protocol's header
-> + *
-> + * Copyright (c) 2024, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#ifndef _QCOM_SCMI_VENDOR_H
-> +#define _QCOM_SCMI_VENDOR_H
-> +
-> +#include <linux/bitfield.h>
-> +#include <linux/device.h>
-> +#include <linux/types.h>
-> +
-> +#define QCOM_SCMI_VENDOR_PROTOCOL    0x80
-> +
-> +struct scmi_protocol_handle;
-> +extern struct scmi_device *get_qcom_scmi_device(void);
-> +
-> +/**
-> + * struct qcom_scmi_vendor_ops - represents the various operations provided
-> + *                              by qcom scmi vendor protocol
-> + */
-> +struct qcom_scmi_vendor_ops {
-> +       int (*set_param)(const struct scmi_protocol_handle *ph, void *buf, u64 algo_str,
-> +                        u32 param_id, size_t size);
-> +       int (*get_param)(const struct scmi_protocol_handle *ph, void *buf, u64 algo_str,
-> +                        u32 param_id, size_t tx_size, size_t rx_size);
-> +       int (*start_activity)(const struct scmi_protocol_handle *ph, void *buf, u64 algo_str,
-> +                             u32 param_id, size_t size);
-> +       int (*stop_activity)(const struct scmi_protocol_handle *ph, void *buf, u64 algo_str,
-> +                            u32 param_id, size_t size);
-> +};
-> +
-> +#endif /* _QCOM_SCMI_VENDOR_H */
-> +
-> --
-> 2.34.1
->
->
-
-
--- 
-With best wishes
-Dmitry
+--
+Sergey
 
