@@ -1,188 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-7514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99A53830DF6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 21:28:27 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD68E830E04
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 21:32:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0F8741F21C13
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 20:28:27 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5CE2EB25B6B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 20:32:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C39324B34;
-	Wed, 17 Jan 2024 20:28:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="c4r6N18W"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15A6325545;
+	Wed, 17 Jan 2024 20:31:52 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B8124B2A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 20:28:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56AA725638;
+	Wed, 17 Jan 2024 20:31:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705523304; cv=none; b=Z5kvPCBozkidwIbMB0+u47qeaV/5WaFb2Mi/rjnFlz/GozNIYn6R1tIOTcw0WxAXfpFVlfdXeyDLeEs7vssRZMaDko9rP1igwkhmcgTd9j+Gnbr1jH/zlnfXB2mLs2kJc2bDfUOgBMRvmlAuGGZAfijJn6wM3JtUhGKokhM/JlM=
+	t=1705523512; cv=none; b=cOzzuLiUp2zuUQsmA39NeDqNtkk6pop6WL9R6Ueos3pAWuxKCwmeTOvOZp3JAyMU/NgNds6+gy9ftM0KBdvWT5ed9JBEVvxoZrgpD4LAuUWowfefG5Dt9yQPEE6NNqKu5GuP49kx9df51jbUn3VrW4x6HEFj+DYlItA06oDZsUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705523304; c=relaxed/simple;
-	bh=j6IwuGvjDuivPFpBvTy+hI+5ARRmCDLSvV9hRj9W8Kk=;
-	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:Content-Language:
-	 To:Cc:References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding; b=NUpaIj2f5LgLxbE1L30Yu561cqbIaKYl6tAk55/cVTjnFVwFJiUsQVQy8Pah7eNr2UZRvVfNBhZtphQYwcPY/bk0UOqQQUtA/EheFTWSryWsEP5UxMFTNpW3a1XBSXUsqFu1hjyfGQq3q0bNyHfrOxqJEfRwS1X87N80GL770KM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=c4r6N18W; arc=none smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-50e7d6565b5so13811694e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 12:28:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705523300; x=1706128100; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4XXEeOxFhTAf2CSHz0sawVtjrADZ1Ztr/8L/2FW/dDU=;
-        b=c4r6N18WoZKVBmcCK64h0+mTG2kQElQvzD6810RmVUuhWEf8eGfQ8vyuJ4uAmztRx6
-         eN+W0lQpl4zVf0his03dkKy1deEf7P97cIKM79to8CXVa8M7kEVFSNLBFjVB43gQRZQ8
-         7AkxLAlGulnznO/raYwMkB5v1mIiyKOjbabM1kLcYNuUvrf3opsCw/7sUtVrmGiAwzBO
-         Kpix8ygdkBpOYO/ok9x/lRHo8T/85Zw9EsrNDt0QSqcTiFuXrXo7emelpJDWE4Wg5WZ/
-         RetgzgUmTBs+L52JDgt239Yya3f+xkWI+rMuMVSvdG4SL5mB4TGNCfIX+Z6evLRMVKKU
-         PVYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705523300; x=1706128100;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4XXEeOxFhTAf2CSHz0sawVtjrADZ1Ztr/8L/2FW/dDU=;
-        b=SyBbTksU2hlvkiC8hjhdK8emPM4chmlK437qW//m1YRxQ8NrvFWzSDL8QlVfNdIC9w
-         /sFbHX6klwMMapjruiVSYatK8ZZ5gzmxjFMiLPiDT5eQ64WeWQTDfaoNBGF62F1p5lv3
-         ehbsb55hWGmVBGOhPS7ZM26v8QbgWW4s7zJRYsgKAaEEPpDhWK7vR3AleKmEN8veleJ5
-         2hOnHINRh/vaVWl1n91jAYB4unCh+XpdpaDMyvAtrAbFJLFMgECTDzxcI/8YNGm77aL8
-         9tsHVwKSqZm7dbKcUerUIXVc7tAiQn05GKXb59Si5bEpMxNFZfmecTjG21mE73nhWW3F
-         q4dA==
-X-Gm-Message-State: AOJu0YxtF1Td98uKwigsKlXib4v8ws2vAjeJqZHJWxdBTx4WnkFH89DT
-	hK633vVBwuJ3iyaSOoLc8+w1rw23RKb7pg==
-X-Google-Smtp-Source: AGHT+IHInIpaQnmgeBjl7HU4+FsynSE8diK278pVPRTOCVbb7/4SjYUpQbyx5Y5RUbbYiGbj34LEYg==
-X-Received: by 2002:a05:6512:3b92:b0:50e:5448:3316 with SMTP id g18-20020a0565123b9200b0050e54483316mr5113500lfv.137.1705523300436;
-        Wed, 17 Jan 2024 12:28:20 -0800 (PST)
-Received: from [172.30.204.151] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id p3-20020a056512312300b0050e7fe17591sm366610lfd.137.2024.01.17.12.28.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Jan 2024 12:28:20 -0800 (PST)
-Message-ID: <7e48e51e-e16a-41b9-800d-960c627b8da6@linaro.org>
-Date: Wed, 17 Jan 2024 21:28:18 +0100
+	s=arc-20240116; t=1705523512; c=relaxed/simple;
+	bh=q25+NSI1+z71AjKViJgDRfzGgWgKq/JnN467gAc5EMc=;
+	h=Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To; b=cLei64FnW7RrcqFN2N5yILrLpfOBDwdjwSPs7SpfCQhXiFr241oH3d8rnOWDZsqnFY/f96KVB4tYXaPwm7djMn2+x80gVTpgCkBhWQ+s77md7gEdl0/okAAHoBOPlk9VFZ5Y+Nl2DN7O9tDr3R9/erKjmylrnRwEdKouO1DpVyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6F84711FB;
+	Wed, 17 Jan 2024 12:32:34 -0800 (PST)
+Received: from pluto (unknown [172.31.20.19])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4B7E63F766;
+	Wed, 17 Jan 2024 12:31:46 -0800 (PST)
+Date: Wed, 17 Jan 2024 20:31:43 +0000
+From: Cristian Marussi <cristian.marussi@arm.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Sibi Sankar <quic_sibis@quicinc.com>, sudeep.holla@arm.com,
+	andersson@kernel.org, jassisinghbrar@gmail.com, robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com,
+	conor+dt@kernel.org, Amir Vajid <avajid@quicinc.com>
+Subject: Re: [RFC 3/7] firmware: arm_scmi: Add QCOM vendor protocol
+Message-ID: <Zag5L9j8-oCebKFm@pluto>
+References: <20240117173458.2312669-1-quic_sibis@quicinc.com>
+ <20240117173458.2312669-4-quic_sibis@quicinc.com>
+ <3325c6ea-ca30-40ee-83ba-c489dc9964b1@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 4/7] soc: qcom: Utilize qcom scmi vendor protocol for bus
- dvfs
-Content-Language: en-US
-To: Sibi Sankar <quic_sibis@quicinc.com>, sudeep.holla@arm.com,
- cristian.marussi@arm.com, andersson@kernel.org, jassisinghbrar@gmail.com,
- robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, quic_rgottimu@quicinc.com,
- quic_kshivnan@quicinc.com, conor+dt@kernel.org,
- Amir Vajid <avajid@quicinc.com>
-References: <20240117173458.2312669-1-quic_sibis@quicinc.com>
- <20240117173458.2312669-5-quic_sibis@quicinc.com>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240117173458.2312669-5-quic_sibis@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3325c6ea-ca30-40ee-83ba-c489dc9964b1@linaro.org>
 
-
-
-On 1/17/24 18:34, Sibi Sankar wrote:
-> From: Shivnandan Kumar <quic_kshivnan@quicinc.com>
+On Wed, Jan 17, 2024 at 09:15:40PM +0100, Konrad Dybcio wrote:
 > 
-> This patch introduces a client driver that interacts with the SCMI QCOM
-> vendor protocol and passes on the required tuneables to start various
-> features running on the SCMI controller.
 > 
-> Signed-off-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
-> Co-developed-by: Ramakrishna Gottimukkula <quic_rgottimu@quicinc.com>
-> Signed-off-by: Ramakrishna Gottimukkula <quic_rgottimu@quicinc.com>
-> Co-developed-by: Amir Vajid <avajid@quicinc.com>
-> Signed-off-by: Amir Vajid <avajid@quicinc.com>
-> Co-developed-by: Sibi Sankar <quic_sibis@quicinc.com>
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> ---
+> On 1/17/24 18:34, Sibi Sankar wrote:
+> > From: Shivnandan Kumar <quic_kshivnan@quicinc.com>
+> > 
 
-[...]
+Hi,
 
+a few early remarks, I am gonna look at this better next week.
 
-> +
-> +struct cpufreq_memfreq_map {
-> +	unsigned int			cpufreq_mhz;
-> +	unsigned int			memfreq_khz;
-> +};
+> > SCMI QCOM vendor protocol provides interface to communicate with SCMI
+> > controller and enable vendor specific features like bus scaling capable
+> > of running on it.
+> 
+> "QCOM protocol" sounds overly generic, especially given how many
+> different vendor protocols have historically been present in
+> QC firmware..
+>
 
-Weird use of tabs
+I was going to raise the same point :D, usually the name identifies the
+aim of the protocol (and the vendor also in this case)
 
-[...]
+> > 
+> > Signed-off-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
+> > Co-developed-by: Ramakrishna Gottimukkula <quic_rgottimu@quicinc.com>
+> > Signed-off-by: Ramakrishna Gottimukkula <quic_rgottimu@quicinc.com>
+> > Co-developed-by: Amir Vajid <avajid@quicinc.com>
+> > Signed-off-by: Amir Vajid <avajid@quicinc.com>
+> > Co-developed-by: Sibi Sankar <quic_sibis@quicinc.com>
+> > Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> > ---
+> 
+> So, this is another 0x80 protocol, different to the one that has
+> been shipping on devices that got released with msm-5.4, msm-5.10
+> and msm-5.15 [1][2]. They're totally incompatible (judging by the
+> msg format), use the same protocol ID and they are (at a glance)
+> providing access to the same HW/FW/tunables.
+> 
+> I'm not sure if this can be trusted not to change again.. Unless
+> we get a strong commitment that all platforms (compute, mobile,
+> auto, iot, whatever) stick to this one..
+> 
+> That said, the spec (DEN0056C) says that protocol IDs 0x80-0xff
+> are: "Reserved for vendor or platform-specific extensions to
+> this interface.". So if perhaps there's a will to maintain
+> multiple versions of this, with a way to discern between them..
+> 
 
-> +static int get_mask(struct device_node *np, u32 *mask)
-> +{
-> +	struct device_node *dev_phandle;
-> +	struct device *cpu_dev;
-> +	int cpu, i = 0;
-> +	int ret = -ENODEV;
+Just recently we had a discussion with some other vendor about this
+possible clashing of vendor protocols numbers between different
+vendors/platforms, especially if aiming to just push all in defconfig.
 
-Don't initialize ret here, return 0 instead of breaking and return
-enodev otherwise.
+The basic idea to solve this, which I am going to post shortly in
+the next weeks, was to add a way to define and register your protocol
+number associated with a vendor identifier(s) of some kind, since
+vendor/subvendor/firmware versions are advertised by the Platform
+and are retrieved via Base protocol at probe time upfront;
+this way it 'should' be feasible to compile in any existent vendor
+protocol but allow at run-time only the registration with the SCMI core
+of the protocols whose vendor identity matches that of the identity
+advertised by the running firmware....
 
-> +
-> +	dev_phandle = of_parse_phandle(np, "qcom,cpulist", i++);
-> +	while (dev_phandle) {
-> +		for_each_possible_cpu(cpu) {
-> +			cpu_dev = get_cpu_device(cpu);
-> +			if (cpu_dev && cpu_dev->of_node == dev_phandle) {
-> +				*mask |= BIT(cpu);
-> +				ret = 0;
-> +				break;
-> +			}
-> +		}
+...still not sure which of the IDs to use vendor/subvendor and still
+not have really experimented with this...so any feedback welcome.
 
-of_cpu_node_to_id()
+This would rule out, anyway, the capability of solving number clashes
+within the same vendor.
 
-> +		dev_phandle = of_parse_phandle(np, "qcom,cpulist", i++);
-> +	}
-> +
-> +	return ret;
-> +}
-
-
-> +
-> +static struct cpufreq_memfreq_map *init_cpufreq_memfreq_map(struct device *dev,
-> +							    struct device_node *of_node,
-> +							    u32 *cnt)
-
-I really feel like this is trying to reinvent OPP..
-
-if you structure your entries like so:
-
-opp-0 {
-	opp-hz = /bits/ 64 <12341234 43214321>;
-};
-
-you'll be able to use all the fantastic APIs that have been
-created over the years!
-
-[...]
-
-> +			monitor->mon_type = (of_property_read_bool(monitor_np, "qcom,compute-mon")) ? 1 : 0;
-> +			monitor->ipm_ceil = (of_property_read_bool(monitor_np, "qcom,compute-mon")) ? 0 : 20000000;
-
-What does it even mean for a monitor to be a compute mon?
-
-There seem to be no dt-bindings for properties referenced in this
-driver, neither in the series nor in the dependencies. This is
-strictly required.
-
-Konrad
+Thanks,
+Cristian
 
