@@ -1,68 +1,41 @@
-Return-Path: <linux-arm-msm+bounces-7439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 008818300D4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 08:55:33 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3A198300EB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 09:01:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 63A6128440D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 07:55:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A51761F2519B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 08:01:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 998B4BE76;
-	Wed, 17 Jan 2024 07:55:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BSBvzt7I"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FF57C133;
+	Wed, 17 Jan 2024 08:01:45 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37169C121;
-	Wed, 17 Jan 2024 07:55:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8DBCD29B;
+	Wed, 17 Jan 2024 08:01:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705478128; cv=none; b=uLvquC2p3BcjfK6Qz8V4tz5FUMHwAonTd5lIzeRpZm8ns7hGtV4BceH5Ep/9ZYh8gT65e2vejNpAV0mjFySm8XLabfTDgyqYEPNmGOxZB9sAZT4G5Iii1Xczs04MAluLX0WfNjFxUs/T4pRk37ATXttKCI/Iiyvd3gQT5f6gMmg=
+	t=1705478505; cv=none; b=RmSqbhECVGETf9E2XEEViky9Y3cKcK3QDSR0UMu7cRazhRc/J+rUhamyHB1mWU1xJX/kaV10R3jWmREDj+bVN3+UPBw9E6Pc86x5D7Y1s84UhyBQdV0uwPG4cqprBOuuCAsbXMja0sN0UAFvqryPBYpuZkDFP1cv3kuefT1mmLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705478128; c=relaxed/simple;
-	bh=szjRXdH1jflRRWy780XcAW9WPV5amXqQ6ahOmzsm0GE=;
-	h=Received:DKIM-Signature:Received:Received:Received:Message-ID:
-	 Date:MIME-Version:User-Agent:Subject:Content-Language:To:CC:
-	 References:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 X-Originating-IP:X-ClientProxiedBy:X-QCInternal:
-	 X-Proofpoint-Virus-Version:X-Proofpoint-GUID:
-	 X-Proofpoint-ORIG-GUID:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details; b=DdU8OckoSoqgoQovh3PDabLOBJP+qhmWeYbUCNs+ee2vY2e4GAp/aLxKp76jQdsU4xGIwTDauTHt8BtkMsmrMCFG43K418/GNTGydpkJsk8JfriAAwAjMUjtWPm1SXitDbF95mnXiEN+RqypOrY/jj+rQVKtItlcR3dAT7dow08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BSBvzt7I; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40GNrtWr012376;
-	Wed, 17 Jan 2024 07:55:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=WdlAPSH87H+AJDxhsOz4c0Q3Kc9tVqhZ+0vH6ibMhQg=; b=BS
-	Bvzt7IvoeyxdNOGIoUPi1wggKgrm4ygGOsGqi0jWf90WAGojnLBB6RufO3V74vby
-	CBVVmHnp9lfwXGEEO65mvx3dAvoXTHYQuw56r26U30nj1ZHt8LxG5fIw0EQjVEZB
-	FMY4FuIf5LCftTv6Ku9udGrXFmiOwDJLI8y0fLWQV7y8CtOMynDpW6grjwrceq8I
-	f9f0X3t3tgA5VGD+LmWbOMBqdrHP8zOMN9qVgnT5klRbOIs47Yp6NkzqwO/IHetv
-	M+REZhD04I/lm04R5P0SxgxRrwPnVpoyEKFsOAH3PjLYGc5fAgW88TFytccA+Oau
-	5mWuKFTxewiqZ4fSeEZw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vnrndaphg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 17 Jan 2024 07:55:15 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40H7tElW009406
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 17 Jan 2024 07:55:14 GMT
-Received: from [10.239.133.49] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 16 Jan
- 2024 23:55:09 -0800
-Message-ID: <34c6fb24-cc97-4cbf-bd22-74d1e27a6595@quicinc.com>
-Date: Wed, 17 Jan 2024 15:55:07 +0800
+	s=arc-20240116; t=1705478505; c=relaxed/simple;
+	bh=yb5BrpRTiH6NGEkCU9W7D4r0H6Act+ZlT/+5wPBw81U=;
+	h=Received:Received:Message-ID:Date:MIME-Version:User-Agent:Subject:
+	 To:Cc:References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding; b=swGP9d8H2yAO3Yu48Q7n3HGkzODCs9IaYYggcyt7KcRFxNW4LwVoFc59Lsk7IRuzNgAJrx6eBQmFqvkQAGQsU1UfzoiEfqqa0CaS+mGzQ03M+Q89vuXQfx0LwcQ7N+2Dhts9+mYYiPUlj7dnpd5V1dpvkV1vwGk1EBQWTRhdDSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DD94FDA7;
+	Wed, 17 Jan 2024 00:02:27 -0800 (PST)
+Received: from [10.57.90.139] (unknown [10.57.90.139])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C01CD3F5A1;
+	Wed, 17 Jan 2024 00:01:39 -0800 (PST)
+Message-ID: <f427fb5b-f451-4d17-98e5-5f079a017735@arm.com>
+Date: Wed, 17 Jan 2024 08:03:04 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,101 +43,126 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: arm: coresight: Remove pattern match
- of ETE node name
+Subject: Re: [PATCH 3/3] cpufreq: scmi: Register for limit change
+ notifications
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: linux-arm-kernel@lists.infradead.org, viresh.kumar@linaro.org,
+ rafael@kernel.org, cristian.marussi@arm.com, sudeep.holla@arm.com,
+ linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ quic_mdtipton@quicinc.com, linux-arm-msm@vger.kernel.org,
+ Morten Rasmussen <morten.rasmussen@arm.com>,
+ Dietmar Eggemann <dietmar.eggemann@arm.com>
+References: <20240108140118.1596-1-quic_sibis@quicinc.com>
+ <20240108140118.1596-4-quic_sibis@quicinc.com>
+ <94aad654-4f20-4b82-b978-77f1f9376dab@arm.com>
+ <dca6e28e-8bde-be3e-bc3c-e97e349b3f04@quicinc.com>
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Suzuki K Poulose
-	<suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>, James Clark
-	<james.clark@arm.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin
-	<alexander.shishkin@linux.intel.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-CC: <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang
-	<quic_taozha@quicinc.com>
-References: <20240116064505.487-1-quic_jinlmao@quicinc.com>
- <20240116064505.487-2-quic_jinlmao@quicinc.com>
- <f616989b-2d84-483d-80c4-d3c6eb97b137@arm.com>
- <69875d89-651e-41ff-a1be-385dcbb15108@quicinc.com>
- <ff85db67-bd18-48fb-9050-81d731e5f402@linaro.org>
- <f74650fd-195f-4b93-a7e0-23b316dd74ad@quicinc.com>
- <5648e6e3-e2b1-4fa3-a0cd-74a0f0c0aa30@linaro.org>
-From: Jinlong Mao <quic_jinlmao@quicinc.com>
-In-Reply-To: <5648e6e3-e2b1-4fa3-a0cd-74a0f0c0aa30@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Lukasz Luba <lukasz.luba@arm.com>
+In-Reply-To: <dca6e28e-8bde-be3e-bc3c-e97e349b3f04@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 329r9XVur4LHJt4sGlE5Jf-_klLmcR1q
-X-Proofpoint-ORIG-GUID: 329r9XVur4LHJt4sGlE5Jf-_klLmcR1q
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-17_04,2024-01-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- lowpriorityscore=0 mlxscore=0 suspectscore=0 mlxlogscore=863 clxscore=1015
- adultscore=0 impostorscore=0 malwarescore=0 bulkscore=0 phishscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401170053
 
 
 
-On 1/17/2024 3:53 PM, Krzysztof Kozlowski wrote:
-> On 17/01/2024 08:49, Jinlong Mao wrote:
+On 1/17/24 02:58, Sibi Sankar wrote:
+> 
+> 
+> On 1/10/24 13:56, Lukasz Luba wrote:
+>> Hi Sibi,
 >>
+> 
+> Hey Lukasz,
+> Thanks for taking time to review the series!
+> 
+>> + Morten and Dietmar on CC
 >>
->> On 1/17/2024 3:40 PM, Krzysztof Kozlowski wrote:
->>> On 17/01/2024 03:14, Jinlong Mao wrote:
->>>>>>           - const: arm,embedded-trace-extension
->>>>>> @@ -55,13 +53,13 @@ examples:
->>>>>>     # An ETE node without legacy CoreSight connections
->>>>>>       - |
->>>>>> -    ete0 {
->>>>>> +    ete-0 {
->>>>>
->>>>> Why do we need the number ? why not simply "ete" as Krzysztof suggested ?
->>>>>
->>>>
->>>> Hi Suzuki & Krzysztof ,
->>>>
->>>> If name all the ete nodes' name as 'ete', there will be error below when
->>>> build images.
->>>>
->>>> arch/arm64/boot/dts/qcom/sm8450.dtsi:301.6-312.4: ERROR
+>> On 1/8/24 14:01, Sibi Sankar wrote:
+>>> Register for limit change notifications if supported with the help of
+>>> perf_notify_support interface and determine the throttled frequency
+>>> using the perf_opp_xlate to apply HW pressure.
 >>>
->>> Why are you pasting DTSI for binding? How is it related? Do we talk
->>> about DTSI here? No, this is a binding patch.
+>>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+>>> ---
+>>>   drivers/cpufreq/scmi-cpufreq.c | 42 +++++++++++++++++++++++++++++++++-
+>>>   1 file changed, 41 insertions(+), 1 deletion(-)
 >>>
+>>> diff --git a/drivers/cpufreq/scmi-cpufreq.c 
+>>> b/drivers/cpufreq/scmi-cpufreq.c
+>>> index 4ee23f4ebf4a..53bc8868455d 100644
+>>> --- a/drivers/cpufreq/scmi-cpufreq.c
+>>> +++ b/drivers/cpufreq/scmi-cpufreq.c
+>>> @@ -25,9 +25,13 @@ struct scmi_data {
+>>>       int domain_id;
+>>>       int nr_opp;
+>>>       struct device *cpu_dev;
+>>> +    struct cpufreq_policy *policy;
+>>>       cpumask_var_t opp_shared_cpus;
+>>> +    struct notifier_block limit_notify_nb;
+>>>   };
+>>> +const struct scmi_handle *handle;
+>>> +static struct scmi_device *scmi_dev;
+>>>   static struct scmi_protocol_handle *ph;
+>>>   static const struct scmi_perf_proto_ops *perf_ops;
+>>> @@ -144,6 +148,22 @@ scmi_get_cpu_power(struct device *cpu_dev, 
+>>> unsigned long *power,
+>>>       return 0;
+>>>   }
+>>> +static int scmi_limit_notify_cb(struct notifier_block *nb, unsigned 
+>>> long event, void *data)
+>>> +{
+>>> +    unsigned long freq_hz;
+>>> +    struct scmi_perf_limits_report *limit_notify = data;
+>>> +    struct scmi_data *priv = container_of(nb, struct scmi_data, 
+>>> limit_notify_nb);
+>>> +    struct cpufreq_policy *policy = priv->policy;
+>>> +
+>>> +    if (perf_ops->perf_opp_xlate(ph, priv->domain_id, 
+>>> limit_notify->range_max, &freq_hz))
+>>> +        return NOTIFY_OK;
+>>> +
+>>> +    /* Update HW pressure (the boost frequencies are accepted) */
+>>> +    arch_update_hw_pressure(policy->related_cpus, (freq_hz / 
+>>> HZ_PER_KHZ));
 >>
->> Hi Krzysztof,
+>> This is wrong. The whole idea of the new HW pressure was that I wanted
+>> to get rid of the 'signal smoothing' mechanism in order to get
+>> instantaneous value from FW to task scheduler. Vincent created
+>> 2 interfaces in that new HW pressure:
+>> 1. cpufreq_update_pressure(policy) - raw variable
+>> 2. arch_update_hw_pressure(policy->related_cpus, (freq_hz / HZ_PER_KHZ))
+>>     - smoothing PELT mechanism, good for raw IRQ in drivers
 >>
->> Do you mean the name in DTSI can be different from the name in binding ?
+>> In our SCMI cpufreq driver we need the 1st one:
+>> cpufreq_update_pressure(policy)
+>>
+>> The FW will do the 'signal smoothing or filtering' and won't
+>> flood the kernel with hundreds of notifications.
 > 
-> Yes, we do not talk about DTSI here, so I did not suggest anything about
-> DTSI.
-
-Ok. I will use 'ete' as the name here.
-
-Thanks
-Jinlong Mao
-
+> Ack, even though I see no mention of filtering being mandated in the 
+> SCMI specification, the scmi notification by itself will serve as a
+> rate limiter I guess.
 > 
-> Best regards,
-> Krzysztof
+>>
+>> So, please change that bit and add me, Morten and Dietmar on CC.
+>> I would like to review it.
 > 
+
+True, the SCMI protocol doesn't describe the rate or limits of
+often these performance limit notifications can be sent.
+It's too HW specific and some balance has to made to not
+flood the kernel with hundreds or thousands of notifications
+per second. That could overload the SCMI channel.
+
+The FW implementation has to combine the perf. limit
+restrictions from different areas: thermal, power
+conditions, MPMM, etc. Some smarter approach in FW
+to the processing and filtering of perf limit notification
+would be needed. The kernel is not able to do the job at the same
+quality as FW in those areas.
+
+Therefore, in the kernel HW pressure signal we don't need
+another 'filtering or smoothing' on already processed
+SCMI notification information. That could even harm us
+if we don't get that FW information in kernel at right time
+due to convergence delays of the HW pressure w/ PELT smoothing.
 
