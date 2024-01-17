@@ -1,78 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-7461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7462-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2AA8183077E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 15:04:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 694B7830780
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 15:04:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 322511C2198A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 14:04:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 564D81C21586
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 14:04:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60027208A9;
-	Wed, 17 Jan 2024 14:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E30F20312;
+	Wed, 17 Jan 2024 14:04:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AWDUBRXj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TuRMmDSQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCADA20310
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 14:04:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8DC20319
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 14:04:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705500269; cv=none; b=ZGe0HQJ8VTk2Hr58Pwne9hseAeCGsk0Q7acIAMzGOcFM6XgQP6yDJZ0o50X92/7J89MwLyLw0sKh0ug26bBSTFNSR0Y26I2Pzzl+LKxooxJWSRVo2n3JYmF5A/z5+iRH7ZJ5e9CcTcWkPGbbL064M/1EfBHzCwtl53jsBgMMcv4=
+	t=1705500270; cv=none; b=XJzGF0IERhLryjkT8ayKlUZcSIPYQtNZHpSNbsaefN2H1dlCamLXhJ7FcDqhMzlInQjnZPQABbdrT7vsI+kFf9Gxn4X3+krPVcl8kYQq5i5jL6MIrWLYCjIxxSE4oxxMSnqX6ZDvzDc2Cq7+Nh+jWykAKZdqpSrKaxyQOP0bkd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705500269; c=relaxed/simple;
-	bh=IIYXjLUeMbWnutvTtYPCUZAo+vNBHeW5XfLCEiQbpb4=;
+	s=arc-20240116; t=1705500270; c=relaxed/simple;
+	bh=XQ5Pv7+enL8CAcnblULFpJMoVjMYx0Ov7jzzVvGDtFw=;
 	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Received:From:
 	 Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key; b=B/dvVnXCpZayJ3G44rE32NdvOLmKa3wnu4UskJAD5roe1/r64cOFiO8J/dC3C2cdLT3kyyFkPffpOwp1v9/N2QrxT3yUeK/n1zS/EH1izK9F0W1t00YPRMoN44qBC+OFKx3hdM0AsVKLoShSaXBdsH0/3FFPSX1Ggk21TwcEu4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AWDUBRXj; arc=none smtp.client-ip=209.85.167.41
+	 X-Developer-Signature:X-Developer-Key; b=n+gRS3d/K/sxAo/EKxO0TFIlqMcVDoK03egj/yAKxph7/JSVt0rxfGZfV1T3NWXtH+9DY+em3Ir8efUcTM9EEZseJFis58TuVnQbPvulYRkYHuaXAeFGHAsrKKFFj1yB7lGS0MKiMrkg1mvvkb6LlL6mhAfrfmEyBR7scWNgE9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TuRMmDSQ; arc=none smtp.client-ip=209.85.167.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-50ea98440a7so11796571e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 06:04:27 -0800 (PST)
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-50e4e3323a6so11532997e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 06:04:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1705500266; x=1706105066; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=772vTg8hfgBaDB+Qe7kc5uSF/E3F4uLPYVgiAcwBFyw=;
-        b=AWDUBRXjemCKjHXYqCXMjvtkAfocQtPK8Ovj5eH9ri452qlYvQ4+q2UoKR1Q8unfdL
-         ctWEJHKYfQkSpCztaMJSRfyeHbt2llnbYwIg33yuveV6p3dGbh8j4TmsvTUdi+GxIhFl
-         wqTxJKf7tcL4Dk3pSeQDKSXDHXO0DqjtjC62wYn+jKQgkieANVd6qai4tmilFIbv09dz
-         1njF/iuFP3EIBtwIot79GcdS06At2qyWciufVE8qdbpHDJjaE0mFY/Ecii47Xlfcut5c
-         r1h4EqzB2Pw/qy6AE6xDkyv1LFtZZKZfdoABF42a+UtUDxhDwPBo3dY8F/SUL4VsxYPO
-         kucQ==
+        bh=72k1xLJVwiMJbLRb7ZUUcy6cJZtX/coZxcCHHlFdCmQ=;
+        b=TuRMmDSQvhd4Z3baN0Qh1X8y0hoZgwO6Uwz33r/wZuloIqGPZO/zCQ5b0DEOwI3zvO
+         sFGbXD+BoXwfaCBIDQaf0yIFt53a998029YSyMUO2PeFzgArml92eDeoPvio9SGukC7C
+         7sbY0sSWCU7WLnl5Z9ixeZgoL9k5lhvCI4OX4blq5yD8UzWv6LR/OHA0DbxJkYOsKIb+
+         19ic5FBQMzz6/Db0lnBD3OVx3GmkUJwzmlMqZznR6QQWlcrrxxcz+ErjJ7zJo9lUu2uP
+         gcQvS88aVa6EqIvJzDymiL3l8MqERrQ2vuuttNAlUhmxzO1VuUegSVXFNstHFO+mDDc2
+         T2DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1705500266; x=1706105066;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=772vTg8hfgBaDB+Qe7kc5uSF/E3F4uLPYVgiAcwBFyw=;
-        b=wsPQJ43UGNR2BHK8xFhtLgu531GaKvTtip5lSDzwYh639SCRURBd1IMXHsMQyf+Bjk
-         Omt0148wh0w2zVKZ6akkXtOeJXatZRA0yIblDveSxoWw/sFUotaP7VdvBHLzSqSXUT+L
-         HvVlqXyMjeljE593cnR93jJjYUHyX5tsQ+jwaR/N8kK8yEiwKXlZYrp9iyLma8pLMAXr
-         yzq/yBBWUjtLggND4GF1mLKMlvzyYdlkROL9HSTdE6apMMqvjZS6JSVWYHJew2K4ME7a
-         MdR0eoFPf0xCLE6aDyZVJB17HOxgovP+ZqCB/WC+D7gI3l+e8UtAuFyixV1+PvHAE/nb
-         MPnA==
-X-Gm-Message-State: AOJu0YwERzqqZ+GyERDIuo096eRwEYTIo86yMM/bBsLOrfhXB9OkoKQ6
-	LhYzKqyTgfe7kolJmSQz6THisgVRzN1Rew==
-X-Google-Smtp-Source: AGHT+IFkPW0tH2jtfBfz4Aip9qhxOYVsIvceiz48wRBf771jjy/Lori/rlGUHmxrapPVDLJh3wJXcA==
-X-Received: by 2002:a19:2d0c:0:b0:50e:82e7:912b with SMTP id k12-20020a192d0c000000b0050e82e7912bmr2731161lfj.138.1705500265979;
-        Wed, 17 Jan 2024 06:04:25 -0800 (PST)
+        bh=72k1xLJVwiMJbLRb7ZUUcy6cJZtX/coZxcCHHlFdCmQ=;
+        b=uVHMRERbBSvON4fP2G4PgV9RFP41DvpnXvygohGtSyTB/4O/vwLzjBntF0nBLhrrrz
+         ewCzpFSqH/0ej23pdxvjdDg2SbpGHXI8r8vRW/Ug3LJD/+xhJoD6ZtPSL1K/HbuIdOGX
+         Q6iUiHp6BuBdm/kmGPA3PYN6jcSUlu2WW0q0wqiOAsNuvY0VXfSq90bipu1qfa5t8FKo
+         Gznpey5lWXYL4MhaCJ2mWgduoacuMWBFiZcxnPkTbCQUV5NPpQJ69hVFqY4rKn/7bHfF
+         gtIeGwOOSZ+OpXMbovvhBrcmyXJYl18eviaFDj6GNkqFK4WITTjpAMO7rm1bZTREJ1FE
+         dMXg==
+X-Gm-Message-State: AOJu0YyimCSSsPx9wiRz94qK0FWnAORVebAwmPbdWJaUVwuPBAahaIp4
+	niKSrxAWOwdiFdgQ+adGlp2h/st6FO+3gkqAvmsBOhd/qjoZpzZp8PExKp/pSCo=
+X-Google-Smtp-Source: AGHT+IF4LwyCoukcpgt8rgqEw0LpkrX/Ucil34MzXMX67x66tM4HWKETBO/i4geX6cAeJ32JTkl5UQ==
+X-Received: by 2002:a19:2d4d:0:b0:50e:7e45:4e43 with SMTP id t13-20020a192d4d000000b0050e7e454e43mr586156lft.15.1705500266641;
+        Wed, 17 Jan 2024 06:04:26 -0800 (PST)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id y29-20020a19915d000000b0050ec7a26420sm269711lfj.204.2024.01.17.06.04.25
+        by smtp.gmail.com with ESMTPSA id y29-20020a19915d000000b0050ec7a26420sm269711lfj.204.2024.01.17.06.04.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jan 2024 06:04:25 -0800 (PST)
+        Wed, 17 Jan 2024 06:04:26 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 17 Jan 2024 16:04:23 +0200
-Subject: [PATCH v2 2/6] dt-bindings: phy: qcom,msm8998-qmp-usb3-phy: add
- TCSR registers
+Date: Wed, 17 Jan 2024 16:04:24 +0200
+Subject: [PATCH v2 3/6] phy: qcom: qmp-usbc: handle CLAMP register in a
+ correct way
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,7 +81,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240117-usbc-phy-vls-clamp-v2-2-a950c223f10f@linaro.org>
+Message-Id: <20240117-usbc-phy-vls-clamp-v2-3-a950c223f10f@linaro.org>
 References: <20240117-usbc-phy-vls-clamp-v2-0-a950c223f10f@linaro.org>
 In-Reply-To: <20240117-usbc-phy-vls-clamp-v2-0-a950c223f10f@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -92,69 +92,162 @@ To: Bjorn Andersson <andersson@kernel.org>,
  Kishon Vijay Abraham I <kishon@kernel.org>, 
  Jeffrey Hugo <quic_jhugo@quicinc.com>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-phy@lists.infradead.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+ linux-phy@lists.infradead.org
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1670;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5055;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=IIYXjLUeMbWnutvTtYPCUZAo+vNBHeW5XfLCEiQbpb4=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlp95nRXFznK8SZhS163IK0W66kvR4acev8hG7T
- X5LLlH1ILiJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZafeZwAKCRCLPIo+Aiko
- 1U+7B/9zuQGfbIQc1PlKK3gMFlCrFkYzIUTVKQvONlpjQVXipXYInTZdFNHQpweJi+j+0Fqm9ge
- zQbW7MriaaywehjRX5Uo0zmLwPKxcD16v0l73DHPFhz2Uf4a/sVyhnjg47DmGYWa3TETWak422v
- wCtNL8bv0RogEl92ek/U9Y3oWWMcH1V7L625tkIuhp5UX9vgkqeW7Nd1xVSaCX1R/zvTcO8Jvab
- PWS94mlciV207HIhhADnY2n26YF3tZOfKgTNTlm7sfHYQzYaKhSq33CEDWfej4qCxdCBMV6IZVe
- rwaBV0PZ8gIHo8nOYfEl4oApNo1vBQ6Ixwingqwk7L/PI0tg
+ bh=XQ5Pv7+enL8CAcnblULFpJMoVjMYx0Ov7jzzVvGDtFw=;
+ b=owGbwMvMwMXYbdNlx6SpcZXxtFoSQ+rye+kxLw8d6ZKJDiu35KtJPjCHr2pR9MUNjQn3P1za+
+ mJanl1kJ6MxCwMjF4OsmCKLT0HL1JhNyWEfdkythxnEygQyhYGLUwAmsr2Mg6E5VXfJ8sz3dfNU
+ nvRGTpaVy3L+4mfk81ekrLCEcyLj71+/1zz0qPm/Q0ZGpI3t8534bROcrLvtUk4lpXPc3Tb3rPT
+ +Q+Jsp8oDPqxq/vJirkd/ty87ryKT2ZqavlllzzhWrZa01xd5vexq6kMLjRTPkgS/sOqufFuLXi
+ lhzYsZlgd/m4TP9Fmo+qNrUmR/63O149oyC+5Lsjdvf6iVNS0kd+ZGaefjS2Q+rL2ZdTh5svDF6
+ vUT1sqdfMgr/2+PTK2zTXNsivli5qnzX7TpW0z7pG2nZz+7mXeGxoF0HS3FrvY1U1oPM9lJ8jvo
+ u57jfnur5MynOdGHOwWzFDwOGSTfqQytuDhH8EKabGs9AA==
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
 The QMP USB PHYs on msm8998, qcm2290 and some other platforms don't have
 the PCS_MISC_CLAMP_ENABLE register. Instead they need to toggle the
-register in the TCSR space. Declare the registers accessible through the
-TCSR space.
+register in the TCSR space. Make the new phy-qcom-qmp-usbc driver
+correctly handle the clamp register.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: a51969fafc82 ("phy: qcom-qmp: Add QMP V3 USB3 PHY support for msm8998")
+Fixes: 8abe5e778b2c ("phy: qcom-qmp: Add QCM2290 USB3 PHY support")
+Cc: Jeffrey Hugo <quic_jhugo@quicinc.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../devicetree/bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml    | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/phy/qualcomm/phy-qcom-qmp-usbc.c | 48 ++++++++++++++++++++++++--------
+ 1 file changed, 37 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml
-index da5d4cbca24c..140843347d1e 100644
---- a/Documentation/devicetree/bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml
-@@ -55,6 +55,14 @@ properties:
-       Flag the PHY as possible handler of USB Type-C orientation switching
-     type: boolean
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
+index 214cf4203de4..3a4b4849db0f 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
+@@ -10,11 +10,13 @@
+ #include <linux/io.h>
+ #include <linux/iopoll.h>
+ #include <linux/kernel.h>
++#include <linux/mfd/syscon.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/of_address.h>
+ #include <linux/phy/phy.h>
+ #include <linux/platform_device.h>
++#include <linux/regmap.h>
+ #include <linux/regulator/consumer.h>
+ #include <linux/reset.h>
+ #include <linux/slab.h>
+@@ -56,9 +58,6 @@
+ /* QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR register bits */
+ #define IRQ_CLEAR				BIT(0)
  
-+  qcom,tcsr-reg:
-+    $ref: /schemas/types.yaml#/definitions/phandle-array
-+    items:
-+      - items:
-+          - description: phandle to TCSR hardware block
-+          - description: offset of the VLS CLAMP register
-+    description: Clamp register present in the TCSR
+-/* QPHY_V3_PCS_MISC_CLAMP_ENABLE register bits */
+-#define CLAMP_EN				BIT(0) /* enables i/o clamp_n */
+-
+ #define PHY_INIT_COMPLETE_TIMEOUT		10000
+ 
+ struct qmp_phy_init_tbl {
+@@ -94,7 +93,6 @@ enum qphy_reg_layout {
+ 	QPHY_PCS_AUTONOMOUS_MODE_CTRL,
+ 	QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR,
+ 	QPHY_PCS_POWER_DOWN_CONTROL,
+-	QPHY_PCS_MISC_CLAMP_ENABLE,
+ 	/* Keep last to ensure regs_layout arrays are properly initialized */
+ 	QPHY_LAYOUT_SIZE
+ };
+@@ -106,7 +104,6 @@ static const unsigned int qmp_v3_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V3_PCS_AUTONOMOUS_MODE_CTRL,
+ 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V3_PCS_LFPS_RXTERM_IRQ_CLEAR,
+ 	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V3_PCS_POWER_DOWN_CONTROL,
+-	[QPHY_PCS_MISC_CLAMP_ENABLE]	= QPHY_V3_PCS_MISC_CLAMP_ENABLE,
+ };
+ 
+ static const unsigned int qmp_v3_usb3phy_regs_layout_qcm2290[QPHY_LAYOUT_SIZE] = {
+@@ -369,6 +366,9 @@ struct qmp_usbc {
+ 	void __iomem *tx2;
+ 	void __iomem *rx2;
+ 
++	struct regmap *tcsr_map;
++	u32 vls_clamp_reg;
 +
-   ports:
-     $ref: /schemas/graph.yaml#/properties/ports
-     properties:
-@@ -78,6 +86,7 @@ required:
-   - "#clock-cells"
-   - clock-output-names
-   - "#phy-cells"
-+  - qcom,tcsr-reg
+ 	struct clk *pipe_clk;
+ 	struct clk_bulk_data *clks;
+ 	int num_clks;
+@@ -691,7 +691,6 @@ static void qmp_usbc_enable_autonomous_mode(struct qmp_usbc *qmp)
+ {
+ 	const struct qmp_phy_cfg *cfg = qmp->cfg;
+ 	void __iomem *pcs = qmp->pcs;
+-	void __iomem *pcs_misc = qmp->pcs_misc;
+ 	u32 intr_mask;
  
- allOf:
-   - if:
-@@ -148,6 +157,8 @@ examples:
+ 	if (qmp->mode == PHY_MODE_USB_HOST_SS ||
+@@ -712,19 +711,18 @@ static void qmp_usbc_enable_autonomous_mode(struct qmp_usbc *qmp)
+ 	qphy_setbits(pcs, cfg->regs[QPHY_PCS_AUTONOMOUS_MODE_CTRL], intr_mask);
  
-       orientation-switch;
+ 	/* Enable i/o clamp_n for autonomous mode */
+-	if (pcs_misc && cfg->regs[QPHY_PCS_MISC_CLAMP_ENABLE])
+-		qphy_clrbits(pcs_misc, cfg->regs[QPHY_PCS_MISC_CLAMP_ENABLE], CLAMP_EN);
++	if (qmp->tcsr_map && qmp->vls_clamp_reg)
++		regmap_write(qmp->tcsr_map, qmp->vls_clamp_reg, 1);
+ }
  
-+      qcom,tcsr-reg = <&tcsr_regs_1 0x6b244>;
+ static void qmp_usbc_disable_autonomous_mode(struct qmp_usbc *qmp)
+ {
+ 	const struct qmp_phy_cfg *cfg = qmp->cfg;
+ 	void __iomem *pcs = qmp->pcs;
+-	void __iomem *pcs_misc = qmp->pcs_misc;
+ 
+ 	/* Disable i/o clamp_n on resume for normal mode */
+-	if (pcs_misc && cfg->regs[QPHY_PCS_MISC_CLAMP_ENABLE])
+-		qphy_setbits(pcs_misc, cfg->regs[QPHY_PCS_MISC_CLAMP_ENABLE], CLAMP_EN);
++	if (qmp->tcsr_map && qmp->vls_clamp_reg)
++		regmap_write(qmp->tcsr_map, qmp->vls_clamp_reg, 0);
+ 
+ 	qphy_clrbits(pcs, cfg->regs[QPHY_PCS_AUTONOMOUS_MODE_CTRL],
+ 		     ARCVR_DTCT_EN | ARCVR_DTCT_EVENT_SEL | ALFPS_DTCT_EN);
+@@ -1063,6 +1061,30 @@ static int qmp_usbc_parse_dt(struct qmp_usbc *qmp)
+ 	return 0;
+ }
+ 
++static int qmp_usbc_parse_vls_clamp(struct qmp_usbc *qmp)
++{
++	struct of_phandle_args tcsr_args;
++	struct device *dev = qmp->dev;
++	int ret;
 +
-       ports {
-         #address-cells = <1>;
-         #size-cells = <0>;
++	/*  for backwards compatibility ignore if there is no property */
++	ret = of_parse_phandle_with_fixed_args(dev->of_node, "qcom,tcsr-reg", 1, 0,
++					       &tcsr_args);
++	if (ret == -ENOENT)
++		return 0;
++	else if (ret < 0)
++		return dev_err_probe(dev, ret, "Failed to parse qcom,tcsr-reg\n");
++
++	qmp->tcsr_map = syscon_node_to_regmap(tcsr_args.np);
++	of_node_put(tcsr_args.np);
++	if (IS_ERR(qmp->tcsr_map))
++		return PTR_ERR(qmp->tcsr_map);
++
++	qmp->vls_clamp_reg = tcsr_args.args[0];
++
++	return 0;
++}
++
+ static int qmp_usbc_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -1093,6 +1115,10 @@ static int qmp_usbc_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
++	ret = qmp_usbc_parse_vls_clamp(qmp);
++	if (ret)
++		return ret;
++
+ 	/* Check for legacy binding with child node. */
+ 	np = of_get_child_by_name(dev->of_node, "phy");
+ 	if (np) {
 
 -- 
 2.39.2
