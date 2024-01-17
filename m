@@ -1,139 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-7456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7457-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 906928304BF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 12:49:53 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 140178304E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 13:07:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A022F1C23FC5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 11:49:52 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 89F1FB226C0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 12:07:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 301CB1DFC9;
-	Wed, 17 Jan 2024 11:49:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98F771DDEC;
+	Wed, 17 Jan 2024 12:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PZ8ySSrW"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NLe2U6KU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C181DDF5
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 11:49:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1394C1DFC7;
+	Wed, 17 Jan 2024 12:07:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705492190; cv=none; b=vDsHJEbXvaahD1KLQXt7wZ6C0xODhKBLJAvdLDtu8WKGFMiL+Z6Q+BtIlOBIusVqWH2vJHUlHOAEzM8tFhzucLB9nQOC1wX8upTJFRwH1KzVbmTYlEaBvsA8KUN82Hbo6Z5oqp6OPonehwVl+FihS780bGLnha6rU8oLNOt2aY0=
+	t=1705493250; cv=none; b=cHEcNl6CTzFsZpVTmfBmExOxTY4xvH12+xxyrGZtD8Wh9MduPaD0J/VZn2uPXR++F8BdN+E9YBSH5odbSluQcxVv7Q1/9vh8nzaJGeQh5Imu7uyRRfqGBi+SoyECCMDvvK5egV/rxfdaovTpHroJKV2R/LnEpUg3o71NqYLzHCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705492190; c=relaxed/simple;
-	bh=kY5z25saFdI9aw7FeyrSL42gfsRrieLO5WzEyKAr6WE=;
-	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding; b=BSy8liT4KetmJApNMggEr4F8/+VnKlO9oqbD6SirSBZ7/V89mD5zLMnfERKrTlEfIappMePUYP4TNhPGiM+SunGIsBPuLe6s5InYOUVvXPecfdaYIBBvGnwP1CARhRzS3vgK76d8meiTG3GGfqsMsZYBNuGmN/AkLEydyiQnQnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PZ8ySSrW; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-50eaabc36bcso13561416e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 03:49:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705492186; x=1706096986; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nxPSXuNJ8AUL8NOznZbrLecSi/2kLhBhAre/dygA9TY=;
-        b=PZ8ySSrWwGapa/1KMJlQT7mPhCQVdA1y/JSiwQiAdRM+qZ6dUoKYWUygKbyNzzjGk6
-         0qpVNL6ITvm3MzFEOB8df27RYtH4a6Jce4jMdqnXUQyHwt+625/vp4YMdr3JwgaPXybq
-         xPIe0A4CUMzouJvQKBqSy4D2GbSvV+6ifdZvesuRaxyyN60BKy3jyJHPcLJlzT7Nv+My
-         52CBt+GxfwIffBC1aQQuey3f8dLSIxrcpBwrSqk6dAcXOnZy1LVXCZ4ztAM0XUm0pNki
-         zCdXOitFYLvnJDsxf3Njh6OXMfStdh7aASe4AY7aPRFoG33monsH4hfs391bjTKAEQE2
-         plMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705492186; x=1706096986;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nxPSXuNJ8AUL8NOznZbrLecSi/2kLhBhAre/dygA9TY=;
-        b=cTFvgFAmZrkSOkkxwUcglniPy0zB7NBl1qNyWk1W8TdXBAUsA8NBnbPMUEYDDsaUCX
-         C80LNlnq9Oc3KKgE0+un1pyeBGugxiVlUyiJzLQCvDsdBi9Cq7HxdjpBOKRtr+bbkAJB
-         4FFUQRN17IVYv6KW0JkCm8xqJKSCTG6Jk+gIJQLx9ST8jnyXfG5Xl0NEotRJgYILfu/F
-         AmVLxy8cdDWQIJ271nrHA/uf6Z+Y3DMVELj0gZbc63DaKSzowSjamAdOXHXI3jQB4HuX
-         MLWoZKJ5WcUH4deB8s+4DmaqUh7JQv5n0itxoLim1FeQeqQMWY+ulkvd7zSWWQhETzqe
-         ysbg==
-X-Gm-Message-State: AOJu0YzaIJ0LpHIL+xs16wa7MD19izeLIrgphhUG6D3LBNbYLsK1Hy4u
-	FqyY7rWQa2rdGdgyo3+qVGYVYIwl0XWkYg==
-X-Google-Smtp-Source: AGHT+IHy6JI/EVohyYH/EoKmNFo6jqE894SOm3wbOmN+sb1Pd71wkWp/cNEanbOIXigvY3x3FzvuNw==
-X-Received: by 2002:a05:6512:3907:b0:50e:e888:2c3d with SMTP id a7-20020a056512390700b0050ee8882c3dmr3821308lfu.25.1705492186453;
-        Wed, 17 Jan 2024 03:49:46 -0800 (PST)
-Received: from [172.30.204.250] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id e8-20020a196748000000b0050ee78fd23esm228767lfj.262.2024.01.17.03.49.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Jan 2024 03:49:46 -0800 (PST)
-Message-ID: <9b177f7b-8dbf-4193-9a70-94f7b80f0a87@linaro.org>
-Date: Wed, 17 Jan 2024 12:49:44 +0100
+	s=arc-20240116; t=1705493250; c=relaxed/simple;
+	bh=IArXwFvZDoiTHZFdxHm8UwzDHOeQK97yKh7sOEA9mMo=;
+	h=Received:DKIM-Signature:Received:Received:Received:Message-ID:
+	 Date:MIME-Version:User-Agent:Subject:Content-Language:To:CC:
+	 References:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 X-Originating-IP:X-ClientProxiedBy:X-QCInternal:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-GUID:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details; b=AH5bj4ZqT/KY2OBuf9PXiff3TdYrJDe+lNwiNrBwY6Y/ys6r9KfHoy8R+OvNTs3nHw4PYQqZsXfDlYXkt+Y1W56yEE8utmBrThKWHh8W0AHXY94cNQNkrogsmLNLRoTGSAqc9Dmeh1/w/HgtES5s3Xav69E47iIbuG4pL2ELJM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NLe2U6KU; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40HB1CjG019753;
+	Wed, 17 Jan 2024 12:07:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=BzJA2P8XRyRHOryogsZXMMaTvL8nGkxACVkL27cO4B4=; b=NL
+	e2U6KUeSVsrvu42sDH7vyHZ36S9W10/QKzU8hX7jK7drz2dlnsKy4R4AC/9CXGdV
+	9y8zQdLsyzXzT7MliT7lczK+CVsVbvYWHM/b6y5Zi7aXlRQ4j2T0vo+/jJgdNpLG
+	Os5WSXCUjUucC7p3xKfWkmd/aAsR+rPcOtapU0dwGCWKhpRUDTDlhV858L86/qJT
+	jOFT8zzg0gmOfyA1Gkj5arIDx3sW2JMVhkJnRSJPVgd/LMx9cbNlNkMkF5XlDe2z
+	d3Z+mFCrs2YVdbtpVKXRuTGNH/yIQnYoPsl/ZpPqQ6TwCQrrfa/32fHYKOaFjk5P
+	rqjhsolAZ8eqmRzceicg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vp4ak18h4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Jan 2024 12:07:15 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40HC6wIh002523
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Jan 2024 12:06:58 GMT
+Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 17 Jan
+ 2024 04:06:55 -0800
+Message-ID: <674d8057-94b1-2e8a-a3ce-d8719e978298@quicinc.com>
+Date: Wed, 17 Jan 2024 17:36:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] soc: qcom: rpmh-rsc: Enhance check for VREG in-flight
- request
-To: Maulik Shah <quic_mkshah@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- quic_eberman@quicinc.com, quic_collinsd@quicinc.com, quic_lsrao@quicinc.com
-References: <20240117-rpmh-rsc-fixes-v1-1-71ee4f8f72a4@quicinc.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 0/3] firmware: arm_scmi: Register and handle limits change
+ notification
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240117-rpmh-rsc-fixes-v1-1-71ee4f8f72a4@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Cristian Marussi <cristian.marussi@arm.com>
+CC: <sudeep.holla@arm.com>, <rafael@kernel.org>, <viresh.kumar@linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_mdtipton@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20240108140118.1596-1-quic_sibis@quicinc.com>
+ <Zaeg1H9G5jOeOXh2@pluto>
+From: Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <Zaeg1H9G5jOeOXh2@pluto>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: bxvcGTIC7OcA3Hn2rsZKKOjFdCxbmhMp
+X-Proofpoint-GUID: bxvcGTIC7OcA3Hn2rsZKKOjFdCxbmhMp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-17_06,2024-01-17_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ mlxlogscore=704 mlxscore=0 impostorscore=0 phishscore=0 adultscore=0
+ malwarescore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401170087
 
 
 
-On 1/17/24 09:54, Maulik Shah wrote:
-> Each RPMh VREG accelerator resource has 3 or 4 contiguous 4-byte aligned
-> addresses associated with it. These control voltage, enable state, mode,
-> and in legacy targets, voltage headroom. The current in-flight request
-> checking logic looks for exact address matches. Requests for different
-> addresses of the same RPMh resource as thus not detected as in-flight.
+On 1/17/24 15:11, Cristian Marussi wrote:
+> On Mon, Jan 08, 2024 at 07:31:15PM +0530, Sibi Sankar wrote:
+>> This series registers for scmi limits change notifications and adds
+>> perf_notify_support/perf_opp_xlate interfaces which are used by the
+>> scmi cpufreq driver to determine the throttled frequency and apply HW
+>> pressure.
+>>
 > 
-> Enhance the in-flight request check for VREG requests by ignoring the
-> address offset. This ensures that only one request is allowed to be
-> in-flight for a given VREG resource. This is needed to avoid scenarios
-> where request commands are carried out by RPMh hardware out-of-order
-> leading to LDO regulator over-current protection triggering.
+> Hi,
 > 
-> Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> ---
->   drivers/soc/qcom/rpmh-rsc.c | 20 +++++++++++++++++++-
->   1 file changed, 19 insertions(+), 1 deletion(-)
+> a few initial remarks from the mere SCMI standpoint.
 > 
-> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-> index a021dc71807b..5371d7e3090a 100644
-> --- a/drivers/soc/qcom/rpmh-rsc.c
-> +++ b/drivers/soc/qcom/rpmh-rsc.c
-> @@ -1,6 +1,7 @@
->   // SPDX-License-Identifier: GPL-2.0
->   /*
->    * Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
->    */
->   
->   #define pr_fmt(fmt) "%s " fmt, KBUILD_MODNAME
-> @@ -91,6 +92,15 @@ enum {
->   #define CMD_STATUS_ISSUED		BIT(8)
->   #define CMD_STATUS_COMPL		BIT(16)
->   
-> +#define ACCL_TYPE(addr)			((addr >> 16) & 0xF)
-> +#define VREG_ADDR(addr)			(addr & ~0xF)
+> Unlinke most SCMI protocols that expose domains info bits via an
+> *info_get protocol operation, PERF does no do this since (till now) there
+> wasn't a compelling reason (i.e. users)
+> 
+> Ulf recently in his GenPD/SCMI series recently started exposing something
+> and now you need to expose even more, adding also a new xlate ops.
+> 
+> For the sake of simplicity, I think that we could now expose straight
+> away the whole perf_domain_info and embedded structs via the usual *info_get.
+> 
+> After having done that, you can just drop your patch 1 and 2 since you
+> can access the needed info from the cpufreq_driver right away.
+> 
+> Having said, I have already such patch ready (for my internal testing), I
+> wll post it by the end of week after a minor cleanup, if you can bear with me.
+> 
+> Thoughts ?
 
-It would be nice to add some #define FNAME GENMASK(x, y) accessed
-with FIELD_GET(FNAME, foobar), so that the code is a bit more
-self-explanatory
+Ack, just from the naming I initially thought info_get would include
+everything but it just exposed minimal info. We certainly don't want to
+keep adding very similar ops just to expose more such info. I'll re-send
+the remainder of the series after you are done with your patches.
+Thanks.
 
-Konrad
+-Sibi
+
+> 
+> Thanks,
+> Cristian
 
