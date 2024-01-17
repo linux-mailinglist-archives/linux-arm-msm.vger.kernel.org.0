@@ -1,149 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-7464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8BAA830785
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 15:04:50 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB9AE83093A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 16:10:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 48223286854
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 14:04:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4F0B41F25C2F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 15:10:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F33282032F;
-	Wed, 17 Jan 2024 14:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D80621352;
+	Wed, 17 Jan 2024 15:10:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gP+WOm4A"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dDVFeukT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1A720310
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 14:04:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E3320DE5;
+	Wed, 17 Jan 2024 15:10:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705500271; cv=none; b=RHhdLo24EM3qWqUFMtIaA9hNa1vawBnu3t0wJXhkfPdPC9ZQE9w53/rfz6tBpz1FEjBkxb11BOG05jJApTG7jlxIAJljJWyKDGuNSvAeLbXpGAyF1WBilLk2H3Y3MwHl9BJbHFgRuIFigy3vv1FTME6KJpA8OPtIqI/7qJ45Dro=
+	t=1705504229; cv=none; b=NSMwWbUn2/QYvPlFK2XEzp8Io3yxPclnxf8QXUYSs3i1X/MDf+nUI3QVEvpgkqybNViDjtmEAzvOawIUpCaqXfomu5bk+gcq/7TjW9S4M1IJdhpznwcwUUbWVxpoiUkIpkdqDHyuX/0zKBbJ8EV62Gy3MSkj1QfwVdXr0S8/jlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705500271; c=relaxed/simple;
-	bh=NBmVgz6T2xRikadcDCIPLqU0vzAxugCzfckrrP5Hw/U=;
-	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Received:From:
-	 Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key; b=SKhVSS1hcOf1hdfYDn+oP6VorwMThFFiAEzyEhSEePdOmeOvAgAOVxGfiVmcL2fc/JzzB9RqOmqFZrsKpgrB0T8nVfahDtV2gb6OQsVnlwh3assJSlvDcyBqpCGrhkScEz5wa6fhikVCtdos9ZM5H8sdm4oGTDbfisxOWRnNq1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gP+WOm4A; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-50e7f58c5fbso15025799e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 06:04:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705500268; x=1706105068; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7dcqXSk1rgw9DCHRa1hWGcJ3G/KhQaZBYpq+KKrzSJo=;
-        b=gP+WOm4ADZ0DGvPNIRB4qjahsLrnTtUrGqILiwZu6cHjRwYJX/IdG9jYc/bznids3C
-         IQxzruluMIWMB0Jfyz9YiHQdeVswf7mFsU3Ii0WHoe2Saw5KXtCcUASN/PINlAOu15x6
-         xiOmyX7Iim8Ag7/FGzLdJmm9GXi8bLzjrZF9k9NfFDynf3IfkhUUs0M9T83SGkr7M5qx
-         ZjhLOEwFHr+z+xQ339oIaxkKjmfIJ5zufovX2wQy574qcbo6ywo3Pr29KfSYR/Tvpc1z
-         ds41SLt4WmfIHfydii8qvIElIyB6lXyRl19VlB11XN04HBhA69HYFT7P9BB6PmDlycbv
-         OLEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705500268; x=1706105068;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7dcqXSk1rgw9DCHRa1hWGcJ3G/KhQaZBYpq+KKrzSJo=;
-        b=ossdWVYms4uSRWZwlp0+QJ0QUGINNRiNDHkMqvR/jDmtPZpgTEiRyJw+k09OD8gWdo
-         vo+Gv3O1zmVSxDbDmaxOHNf4DohfyRoVIuN13GNlIfk3CVOtKYQ2XV6FM1CYfsRj0+5K
-         SX2DFT0k3u90oYCMWIDThTKPx8X71p2S+7GFpU8h3vd/MEHaTZlyDnSoxMi+qTxWBb9e
-         FLyCEQV466qvpidmZTBL3LrV26udYsWUBfbeBYPanTfKzsCVqdzOc9q42P8T4qALD7s+
-         1+lP96IyF5YOesJi+sSf+JyF2MSHgW0TkVfTyMzNNkzOQOXxnau9SnnWCOTdZqf5Eo8u
-         Ccgg==
-X-Gm-Message-State: AOJu0YzKz5Y0HUodO0R1EXSn6kOTExrY39AQR9u29uAjMYyG6MOCfqP+
-	wA5m7AQS8yJe6B9taDdBQB/5t6pq3MmE+Q==
-X-Google-Smtp-Source: AGHT+IEuBH7Be/ByM7oNW69Rh3Ic7MZMVCjGkmr1PVTFS8RbyK0x36/q7neSLjxPiiYI2J++HAsmkg==
-X-Received: by 2002:a05:6512:3c3:b0:50e:50ee:f378 with SMTP id w3-20020a05651203c300b0050e50eef378mr4154155lfp.65.1705500268534;
-        Wed, 17 Jan 2024 06:04:28 -0800 (PST)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id y29-20020a19915d000000b0050ec7a26420sm269711lfj.204.2024.01.17.06.04.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jan 2024 06:04:28 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 17 Jan 2024 16:04:27 +0200
-Subject: [PATCH v2 6/6] arm64: dts: qcom: sm6115: declare VLS CLAMP
- register for USB3 PHY
+	s=arc-20240116; t=1705504229; c=relaxed/simple;
+	bh=zGRFJrEbFry3zxAMuxyIrn8e15iLX/mAR0sIiHyeias=;
+	h=Received:DKIM-Signature:Received:Received:Received:Message-ID:
+	 Date:MIME-Version:User-Agent:Subject:To:CC:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy:
+	 X-QCInternal:X-Proofpoint-Virus-Version:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-GUID:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details; b=ChXI+ZzRJzIVCZU6HAzGQMBeAVZ5fcvZGQxc5NyASnUTwfB1ADw458jOfHreZLlH4diKeVy33yWf0LeYEfPcXB7Ob1TVPe6y52EOF8YZeIyr8Oun/CJ3G2ox4xOJP928tc8pV+ri4ZU57g/wJZzad/kGwSU2jVpnvolmnAEzcUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dDVFeukT; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40HEWJdn013589;
+	Wed, 17 Jan 2024 15:10:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=XmbM1Ia5snyMUN+x/M4UwlFkuM1aPLiJeDDKEFNsN8Y=; b=dD
+	VFeukTh5sLMNefzDKoVB2IWkEENH8lV2lI1VfSMylyAhsydILtqYxWB4kwTzp+IS
+	9b30OzRX6CEdq4o+sGcGVLaqh+6cQgOB2duUc48tXOyUzPoDM9FKsbssAwAIZpke
+	TEiq0hrOb2XgdHJw4rSabQ/vIOtYQ2ZDXUfJAejwGe3+KS2OAm3tQ6h+rb5pbIMt
+	h//jHblBsLDzclT0sZvLk1RxZnwrBPawr59HsldZ3UbzZOwduGk9iMvaM/zsr/sO
+	VOfUXibe05WBYudRO4veMELnMyfQdDiJfEBIHUdv52GYl4I/rFUZ7GmQIvee46UO
+	fsPzHGUrIAj6MXGakJfQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vp4ak1mxw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Jan 2024 15:10:15 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40HFAEbp017623
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Jan 2024 15:10:14 GMT
+Received: from [10.253.79.191] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 17 Jan
+ 2024 07:10:10 -0800
+Message-ID: <efe398ff-825b-4959-bcfc-ff0870d1932b@quicinc.com>
+Date: Wed, 17 Jan 2024 23:10:07 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/6] arm64: dts: qcom: ipq5332: Add MDIO device tree
+To: Andrew Lunn <andrew@lunn.ch>
+CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <quic_kkumarcs@quicinc.com>, <quic_suruchia@quicinc.com>,
+        <quic_soni@quicinc.com>, <quic_pavir@quicinc.com>,
+        <quic_souravp@quicinc.com>, <quic_linchen@quicinc.com>,
+        <quic_leiwei@quicinc.com>
+References: <20240110112059.2498-1-quic_luoj@quicinc.com>
+ <20240110112059.2498-4-quic_luoj@quicinc.com>
+ <4bc0aff5-8a1c-44a6-89d8-460961a61310@lunn.ch>
+ <e893c298-fbfa-4ae4-9b76-72a5030a5530@quicinc.com>
+ <61973012-3f74-4b58-9575-3bc5199f61d9@lunn.ch>
+ <5c88945b-4a80-4346-a77c-82a68ae02047@quicinc.com>
+ <6975e79a-67eb-46d7-8445-92610b8b5198@lunn.ch>
+Content-Language: en-US
+From: Jie Luo <quic_luoj@quicinc.com>
+In-Reply-To: <6975e79a-67eb-46d7-8445-92610b8b5198@lunn.ch>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240117-usbc-phy-vls-clamp-v2-6-a950c223f10f@linaro.org>
-References: <20240117-usbc-phy-vls-clamp-v2-0-a950c223f10f@linaro.org>
-In-Reply-To: <20240117-usbc-phy-vls-clamp-v2-0-a950c223f10f@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Lee Jones <lee@kernel.org>, 
- Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, 
- Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-phy@lists.infradead.org
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1146;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=NBmVgz6T2xRikadcDCIPLqU0vzAxugCzfckrrP5Hw/U=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlp95nYEfTL0rbQyBlpAOWkMsd4n59kYFKHJuLn
- GfzbGxz+ZeJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZafeZwAKCRCLPIo+Aiko
- 1cWwB/4gFZwZL1igYrmLmmj209CRZXEYzmyz+UjKzbyhB+uXefm6F/zqzK8OPoNMAFMiKo8LOud
- A8LhAnp9c2a2I3DQrUBylUeOy4Mjj6XJtiSdhl2MAjPjd2V44T56wWcz+OiF8Q0S8ElaMG/5PZx
- 0AsRBdkplWPyAlljw0hTFJEpVftrjqOjcEVBczNx4nOJV4Ar9GAU+zCFamJ95w6RE9igY4S3RHm
- D/4CgMw9og9Im4zDnQ4os0zkIO19v43pZxrXRvc760GvUwl41qE/TaXaXurqgAE0kesoK/0iZh5
- xIEhQNm3Q/ADRsUDWYHgoA35SAxp3tyPdlt7C2n/SrjHRgfz
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: EthOji6xAPZbL2nJE2QuW4h2Y10JP8N0
+X-Proofpoint-GUID: EthOji6xAPZbL2nJE2QuW4h2Y10JP8N0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-17_08,2024-01-17_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ mlxlogscore=369 mlxscore=0 impostorscore=0 phishscore=0 adultscore=0
+ malwarescore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401170110
 
-The USB3 PHY on the SM6115 platform doesn't have built-in
-PCS_MISC_CLAMP_ENABLE register. Instead clamping is handled separately
-via the register in the TCSR space. Declare corresponding register.
 
-Fixes: 9dd5f6dba729 ("arm64: dts: qcom: sm6115: Add USB SS qmp phy node")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm6115.dtsi | 7 +++++++
- 1 file changed, 7 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index 160e098f1075..0c48ea444759 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -614,6 +614,11 @@ tcsr_mutex: hwlock@340000 {
- 			#hwlock-cells = <1>;
- 		};
- 
-+		tcsr_regs: syscon@3c0000 {
-+			compatible = "qcom,sm6115-tcsr", "syscon";
-+			reg = <0x0 0x003c0000 0x0 0x40000>;
-+		};
-+
- 		tlmm: pinctrl@500000 {
- 			compatible = "qcom,sm6115-tlmm";
- 			reg = <0x0 0x00500000 0x0 0x400000>,
-@@ -879,6 +884,8 @@ usb_qmpphy: phy@1615000 {
- 
- 			#phy-cells = <0>;
- 
-+			qcom,tcsr-reg = <&tcsr_regs 0xb244>;
-+
- 			status = "disabled";
- 		};
- 
+On 1/17/2024 6:56 AM, Andrew Lunn wrote:
+>> Another one is the MDIO slave(gpio25, 26), which is dedicated
+>> for receiving the back pressure signal from the connected Ethernet switch
+>> device QCA8386.
+>>
+>> There is a MDIO master block integrated in QCA8386 switch device, this
+>> integrated MDIO master is dedicated for generating the back
+>> pressure signal to IPQ5332 SoC.
+>>
+>> This MDIO slave block of IPQ5322 just needs to configure these PIN
+>> mux for MDC and MDIO PINs. No additional driver is needed for this MDIO
+>> slave block of IPQ5332.
+> 
+> So there is a proprietary protocol running over the MDIO bus? And its
+> completely implemented in hardware in the slave block? Is this even
+> MDIO? Does it use c22 or c45 bus transactions? How is the slave
+> address configured, or is that also hard coded?
+> 
+> 	Andrew
+> 
 
--- 
-2.39.2
+Hi Andrew,
+Yes, this is a custom HW mechanism using the MDIO C22 frame, to enable 
+back pressure from the QCA8386 switch to the IPQ5332 SoC. The slave 
+block in the IPQ5332 SoC implements the back pressure function. There is 
+no configuration for the MDIO slave address of IPQ5332 required, since 
+the connection is one to one between slave and master.
 
+However upon further review, we believe this node definition belongs to
+the board DTS file, since the switch configuration is a board property.
+We will move out this MDIO slave config from the patch series to
+avoid the confusion. We will also rename the node from 'mdio0-state' to 
+'backpressure-state' to make this clear.
+
+Thanks.
 
