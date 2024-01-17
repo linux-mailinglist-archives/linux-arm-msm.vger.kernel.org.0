@@ -1,168 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-7440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3A198300EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 09:01:51 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60103830191
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 09:54:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A51761F2519B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 08:01:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BCD14B217D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 08:54:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FF57C133;
-	Wed, 17 Jan 2024 08:01:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD69312B69;
+	Wed, 17 Jan 2024 08:54:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dC5FEY8h"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8DBCD29B;
-	Wed, 17 Jan 2024 08:01:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118E011709;
+	Wed, 17 Jan 2024 08:54:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705478505; cv=none; b=RmSqbhECVGETf9E2XEEViky9Y3cKcK3QDSR0UMu7cRazhRc/J+rUhamyHB1mWU1xJX/kaV10R3jWmREDj+bVN3+UPBw9E6Pc86x5D7Y1s84UhyBQdV0uwPG4cqprBOuuCAsbXMja0sN0UAFvqryPBYpuZkDFP1cv3kuefT1mmLM=
+	t=1705481682; cv=none; b=rk487NuZ4h2yk3odtZqR7s5I6lhZ+b+4+ON0iTbYRGw3kct51vIgzoOQc9yswVFCH5QzYbWJ7nBAOdJwMOjROeBuFhzq/B97li/W+kRtU6+CyFcxRmt4fHPNJiwiRhxpLc8INEWTSNi4GcfZeGW9MvpnBxQEjdSYRPQ9JIM0IDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705478505; c=relaxed/simple;
-	bh=yb5BrpRTiH6NGEkCU9W7D4r0H6Act+ZlT/+5wPBw81U=;
-	h=Received:Received:Message-ID:Date:MIME-Version:User-Agent:Subject:
-	 To:Cc:References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding; b=swGP9d8H2yAO3Yu48Q7n3HGkzODCs9IaYYggcyt7KcRFxNW4LwVoFc59Lsk7IRuzNgAJrx6eBQmFqvkQAGQsU1UfzoiEfqqa0CaS+mGzQ03M+Q89vuXQfx0LwcQ7N+2Dhts9+mYYiPUlj7dnpd5V1dpvkV1vwGk1EBQWTRhdDSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DD94FDA7;
-	Wed, 17 Jan 2024 00:02:27 -0800 (PST)
-Received: from [10.57.90.139] (unknown [10.57.90.139])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C01CD3F5A1;
-	Wed, 17 Jan 2024 00:01:39 -0800 (PST)
-Message-ID: <f427fb5b-f451-4d17-98e5-5f079a017735@arm.com>
-Date: Wed, 17 Jan 2024 08:03:04 +0000
+	s=arc-20240116; t=1705481682; c=relaxed/simple;
+	bh=f4QbGDSJYtuZVmf60ctHTGnbA2n06axYXnhEzMdSF5M=;
+	h=Received:DKIM-Signature:Received:Received:Received:From:Date:
+	 Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 Message-ID:X-B4-Tracking:To:CC:X-Mailer:X-Developer-Signature:
+	 X-Developer-Key:X-Originating-IP:X-ClientProxiedBy:X-QCInternal:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-GUID:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details; b=u9AXld5i534ygQuAbrWPHgKhH2fF85QQMBNLZoxFX8wTSjMt1W6C1kiu9ad3o1nCR4qZCHvxV8aUBsbN2+HDDCwI9clWWkk0FJTjsYxi/cVk6pjkt2T2eg66hDQL1tZgqoHQm/g4/+Z3v+oN2UKEzP+PghlKZnBsw5h7+kROBZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dC5FEY8h; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40H8RnEx028955;
+	Wed, 17 Jan 2024 08:54:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:date:subject:mime-version:content-type
+	:content-transfer-encoding:message-id:to:cc; s=qcppdkim1; bh=GO+
+	73JdFR0409ZwSoh6uI/N0zvTcfdh92fXZFDgQ4BM=; b=dC5FEY8hogpxHkvjTaw
+	d02CEN3NHn6cjuYSHHXY56aA98Cm/Fi1usEHBN+hkw/WitTOeVX2CfWC3Nwk69O+
+	aEnBmrc93AqtWxXSF0FB6o0AK8QQOUnE24oqHm6A+y8+DFfrXRqIeiW4j5i8bDq9
+	A96vyvc2gpAqezjEvatlP5+3+UJhKpR8W8c94CZSYrDgDPpDy8ZWpB4TyC8NHRRT
+	KgKuqM2Ah7AMHL75BuTCLSupI8sE2lMgMcKGB8FZj9MH6hhwTOMC/qgN48rWv/0W
+	dcQPCp8rFbiTV9OAcAZ5C+AopLmB9xy6CxaYiVXfOEpmouGBdGUMFjMYYlSVnUdN
+	oMw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vnymj1jj1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Jan 2024 08:54:36 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40H8sZvG025178
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Jan 2024 08:54:35 GMT
+Received: from hu-mkshah-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Wed, 17 Jan 2024 00:54:33 -0800
+From: Maulik Shah <quic_mkshah@quicinc.com>
+Date: Wed, 17 Jan 2024 14:24:10 +0530
+Subject: [PATCH] soc: qcom: rpmh-rsc: Enhance check for VREG in-flight
+ request
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] cpufreq: scmi: Register for limit change
- notifications
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: linux-arm-kernel@lists.infradead.org, viresh.kumar@linaro.org,
- rafael@kernel.org, cristian.marussi@arm.com, sudeep.holla@arm.com,
- linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
- quic_mdtipton@quicinc.com, linux-arm-msm@vger.kernel.org,
- Morten Rasmussen <morten.rasmussen@arm.com>,
- Dietmar Eggemann <dietmar.eggemann@arm.com>
-References: <20240108140118.1596-1-quic_sibis@quicinc.com>
- <20240108140118.1596-4-quic_sibis@quicinc.com>
- <94aad654-4f20-4b82-b978-77f1f9376dab@arm.com>
- <dca6e28e-8bde-be3e-bc3c-e97e349b3f04@quicinc.com>
-Content-Language: en-US
-From: Lukasz Luba <lukasz.luba@arm.com>
-In-Reply-To: <dca6e28e-8bde-be3e-bc3c-e97e349b3f04@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20240117-rpmh-rsc-fixes-v1-1-71ee4f8f72a4@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIALGVp2UC/x3LMQqAMAxA0atIZgNtrVq8ijhIjZpBLQmIIL27x
+ fHx+S8oCZPCUL0gdLPydRbYuoK4z+dGyEsxOOO8sbZHSceOohFXfkixi76JvWltcAHKlIT+UJ5
+ xyvkDuEg4YWAAAAA=
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_eberman@quicinc.com>, <quic_collinsd@quicinc.com>,
+        <quic_lsrao@quicinc.com>, Maulik Shah <quic_mkshah@quicinc.com>
+X-Mailer: b4 0.12.5-dev-2aabd
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1705481672; l=2651;
+ i=quic_mkshah@quicinc.com; s=20240109; h=from:subject:message-id;
+ bh=f4QbGDSJYtuZVmf60ctHTGnbA2n06axYXnhEzMdSF5M=;
+ b=JYjLs6VzoY8/b5HkHEbGgRvYsC+dns8hpv6nILFHEAwmheir4wkPqvHb6FGPjDbu3ppgzjf1V
+ XzaTRBl4sBtAJpe0U1Wc8gkP5vd2NEX4b6mAnZkWwlk2Bk/nzx836JI
+X-Developer-Key: i=quic_mkshah@quicinc.com; a=ed25519;
+ pk=bd9h5FIIliUddIk8p3BlQWBlzKEQ/YW5V+fe759hTWQ=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: atof4BzC85dow443VpXvLReZllkH1U0w
+X-Proofpoint-GUID: atof4BzC85dow443VpXvLReZllkH1U0w
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-17_04,2024-01-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
+ priorityscore=1501 spamscore=0 malwarescore=0 phishscore=0 suspectscore=0
+ clxscore=1015 impostorscore=0 lowpriorityscore=0 mlxscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
+ definitions=main-2401170060
 
+Each RPMh VREG accelerator resource has 3 or 4 contiguous 4-byte aligned
+addresses associated with it. These control voltage, enable state, mode,
+and in legacy targets, voltage headroom. The current in-flight request
+checking logic looks for exact address matches. Requests for different
+addresses of the same RPMh resource as thus not detected as in-flight.
 
+Enhance the in-flight request check for VREG requests by ignoring the
+address offset. This ensures that only one request is allowed to be
+in-flight for a given VREG resource. This is needed to avoid scenarios
+where request commands are carried out by RPMh hardware out-of-order
+leading to LDO regulator over-current protection triggering.
 
-On 1/17/24 02:58, Sibi Sankar wrote:
-> 
-> 
-> On 1/10/24 13:56, Lukasz Luba wrote:
->> Hi Sibi,
->>
-> 
-> Hey Lukasz,
-> Thanks for taking time to review the series!
-> 
->> + Morten and Dietmar on CC
->>
->> On 1/8/24 14:01, Sibi Sankar wrote:
->>> Register for limit change notifications if supported with the help of
->>> perf_notify_support interface and determine the throttled frequency
->>> using the perf_opp_xlate to apply HW pressure.
->>>
->>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->>> ---
->>>   drivers/cpufreq/scmi-cpufreq.c | 42 +++++++++++++++++++++++++++++++++-
->>>   1 file changed, 41 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/cpufreq/scmi-cpufreq.c 
->>> b/drivers/cpufreq/scmi-cpufreq.c
->>> index 4ee23f4ebf4a..53bc8868455d 100644
->>> --- a/drivers/cpufreq/scmi-cpufreq.c
->>> +++ b/drivers/cpufreq/scmi-cpufreq.c
->>> @@ -25,9 +25,13 @@ struct scmi_data {
->>>       int domain_id;
->>>       int nr_opp;
->>>       struct device *cpu_dev;
->>> +    struct cpufreq_policy *policy;
->>>       cpumask_var_t opp_shared_cpus;
->>> +    struct notifier_block limit_notify_nb;
->>>   };
->>> +const struct scmi_handle *handle;
->>> +static struct scmi_device *scmi_dev;
->>>   static struct scmi_protocol_handle *ph;
->>>   static const struct scmi_perf_proto_ops *perf_ops;
->>> @@ -144,6 +148,22 @@ scmi_get_cpu_power(struct device *cpu_dev, 
->>> unsigned long *power,
->>>       return 0;
->>>   }
->>> +static int scmi_limit_notify_cb(struct notifier_block *nb, unsigned 
->>> long event, void *data)
->>> +{
->>> +    unsigned long freq_hz;
->>> +    struct scmi_perf_limits_report *limit_notify = data;
->>> +    struct scmi_data *priv = container_of(nb, struct scmi_data, 
->>> limit_notify_nb);
->>> +    struct cpufreq_policy *policy = priv->policy;
->>> +
->>> +    if (perf_ops->perf_opp_xlate(ph, priv->domain_id, 
->>> limit_notify->range_max, &freq_hz))
->>> +        return NOTIFY_OK;
->>> +
->>> +    /* Update HW pressure (the boost frequencies are accepted) */
->>> +    arch_update_hw_pressure(policy->related_cpus, (freq_hz / 
->>> HZ_PER_KHZ));
->>
->> This is wrong. The whole idea of the new HW pressure was that I wanted
->> to get rid of the 'signal smoothing' mechanism in order to get
->> instantaneous value from FW to task scheduler. Vincent created
->> 2 interfaces in that new HW pressure:
->> 1. cpufreq_update_pressure(policy) - raw variable
->> 2. arch_update_hw_pressure(policy->related_cpus, (freq_hz / HZ_PER_KHZ))
->>     - smoothing PELT mechanism, good for raw IRQ in drivers
->>
->> In our SCMI cpufreq driver we need the 1st one:
->> cpufreq_update_pressure(policy)
->>
->> The FW will do the 'signal smoothing or filtering' and won't
->> flood the kernel with hundreds of notifications.
-> 
-> Ack, even though I see no mention of filtering being mandated in the 
-> SCMI specification, the scmi notification by itself will serve as a
-> rate limiter I guess.
-> 
->>
->> So, please change that bit and add me, Morten and Dietmar on CC.
->> I would like to review it.
-> 
+Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
+Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+---
+ drivers/soc/qcom/rpmh-rsc.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
-True, the SCMI protocol doesn't describe the rate or limits of
-often these performance limit notifications can be sent.
-It's too HW specific and some balance has to made to not
-flood the kernel with hundreds or thousands of notifications
-per second. That could overload the SCMI channel.
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index a021dc71807b..5371d7e3090a 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /*
+  * Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ 
+ #define pr_fmt(fmt) "%s " fmt, KBUILD_MODNAME
+@@ -91,6 +92,15 @@ enum {
+ #define CMD_STATUS_ISSUED		BIT(8)
+ #define CMD_STATUS_COMPL		BIT(16)
+ 
++#define ACCL_TYPE(addr)			((addr >> 16) & 0xF)
++#define VREG_ADDR(addr)			(addr & ~0xF)
++
++enum {
++	HW_ACCL_CLK = 0x3,
++	HW_ACCL_VREG,
++	HW_ACCL_BUS,
++};
++
+ /*
+  * Here's a high level overview of how all the registers in RPMH work
+  * together:
+@@ -557,7 +567,15 @@ static int check_for_req_inflight(struct rsc_drv *drv, struct tcs_group *tcs,
+ 		for_each_set_bit(j, &curr_enabled, MAX_CMDS_PER_TCS) {
+ 			addr = read_tcs_cmd(drv, drv->regs[RSC_DRV_CMD_ADDR], i, j);
+ 			for (k = 0; k < msg->num_cmds; k++) {
+-				if (addr == msg->cmds[k].addr)
++				/*
++				 * Each RPMh VREG accelerator resource has 3 or 4 contiguous 4-byte
++				 * aligned addresses associated with it. Ignore the offset to check
++				 * for in-flight VREG requests.
++				 */
++				if (HW_ACCL_VREG == ACCL_TYPE(msg->cmds[k].addr) &&
++				    VREG_ADDR(addr) == VREG_ADDR(msg->cmds[k].addr))
++					return -EBUSY;
++				else if (addr == msg->cmds[k].addr)
+ 					return -EBUSY;
+ 			}
+ 		}
 
-The FW implementation has to combine the perf. limit
-restrictions from different areas: thermal, power
-conditions, MPMM, etc. Some smarter approach in FW
-to the processing and filtering of perf limit notification
-would be needed. The kernel is not able to do the job at the same
-quality as FW in those areas.
+---
+base-commit: 943b9f0ab2cfbaea148dd6ac279957eb08b96904
+change-id: 20240117-rpmh-rsc-fixes-6c43c7051828
 
-Therefore, in the kernel HW pressure signal we don't need
-another 'filtering or smoothing' on already processed
-SCMI notification information. That could even harm us
-if we don't get that FW information in kernel at right time
-due to convergence delays of the HW pressure w/ PELT smoothing.
+Best regards,
+-- 
+Maulik Shah <quic_mkshah@quicinc.com>
+
 
