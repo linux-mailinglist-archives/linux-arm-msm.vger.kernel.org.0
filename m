@@ -1,139 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-7455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3419C830480
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 12:27:18 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 906928304BF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 12:49:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BB085B216A0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 11:27:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A022F1C23FC5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 11:49:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 805A81DDEA;
-	Wed, 17 Jan 2024 11:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 301CB1DFC9;
+	Wed, 17 Jan 2024 11:49:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PZ8ySSrW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF561DFC4
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 11:27:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C181DDF5
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 11:49:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705490831; cv=none; b=Hz/kWuVDkQUT9Iyb2rfAZJU517oA/Gi85oyu8q/pVCJqTeWGMslyfycce7ty93dSQfjY2isl3JfWb6yL0+fe8Zz33FMk0Kq+HvmrNf7TVYXCgD3iA8ao6TZYsnsXpJdIZ/3wpLmeHpRGZRkyEU+7VrQ4It+Wg1arjxF5P6RsoY0=
+	t=1705492190; cv=none; b=vDsHJEbXvaahD1KLQXt7wZ6C0xODhKBLJAvdLDtu8WKGFMiL+Z6Q+BtIlOBIusVqWH2vJHUlHOAEzM8tFhzucLB9nQOC1wX8upTJFRwH1KzVbmTYlEaBvsA8KUN82Hbo6Z5oqp6OPonehwVl+FihS780bGLnha6rU8oLNOt2aY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705490831; c=relaxed/simple;
-	bh=jBx3eKRjN7Z9dDzc9bnlFlDn2eT7AJ7HfCKi7xPOw+c=;
-	h=Received:Received:Received:Message-ID:Subject:From:To:Cc:Date:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:
-	 User-Agent:MIME-Version:X-SA-Exim-Connect-IP:X-SA-Exim-Mail-From:
-	 X-SA-Exim-Scanned:X-PTX-Original-Recipient; b=K5ztUoOkLAngrYgdiYQj/hmD9RT7BHDuXhaVeiabfs2ekDLaS73fX3EkYRFjyJ9zVeAbMO55nCApE/jXdWJMMacjn8t3p6TsTON4mD0qHiV1lNv0EXaYr+RDSU/XxLpVEQybcSe9eKSxym4GbKzGHVH5ElG4SLmgUqhV9OUtjBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1rQ44L-00031s-OS; Wed, 17 Jan 2024 12:26:53 +0100
-Received: from [2a0a:edc0:0:900:1d::4e] (helo=lupine)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1rQ44I-000S37-Tf; Wed, 17 Jan 2024 12:26:50 +0100
-Received: from pza by lupine with local (Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1rQ44I-00054q-2g;
-	Wed, 17 Jan 2024 12:26:50 +0100
-Message-ID: <5ad7badb85bdece735901a0f6317183b1d628a68.camel@pengutronix.de>
-Subject: Re: [PATCH v3 2/5] reset: Instantiate reset GPIO controller for
- shared reset-gpios
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Bjorn Andersson
- <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Srinivas
- Kandagatla <srinivas.kandagatla@linaro.org>, Banajit Goswami
- <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown
- <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley <conor+dt@kernel.org>,
- Peter Rosin <peda@axentia.se>, Jaroslav Kysela <perex@perex.cz>,  Takashi
- Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
- alsa-devel@alsa-project.org,  linux-sound@vger.kernel.org,
- devicetree@vger.kernel.org,  linux-kernel@vger.kernel.org,
- linux-i2c@vger.kernel.org
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Chris Packham
- <chris.packham@alliedtelesis.co.nz>, Sean Anderson <sean.anderson@seco.com>
-Date: Wed, 17 Jan 2024 12:26:50 +0100
-In-Reply-To: <20240112163608.528453-3-krzysztof.kozlowski@linaro.org>
-References: <20240112163608.528453-1-krzysztof.kozlowski@linaro.org>
-	 <20240112163608.528453-3-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+	s=arc-20240116; t=1705492190; c=relaxed/simple;
+	bh=kY5z25saFdI9aw7FeyrSL42gfsRrieLO5WzEyKAr6WE=;
+	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding; b=BSy8liT4KetmJApNMggEr4F8/+VnKlO9oqbD6SirSBZ7/V89mD5zLMnfERKrTlEfIappMePUYP4TNhPGiM+SunGIsBPuLe6s5InYOUVvXPecfdaYIBBvGnwP1CARhRzS3vgK76d8meiTG3GGfqsMsZYBNuGmN/AkLEydyiQnQnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PZ8ySSrW; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-50eaabc36bcso13561416e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 03:49:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1705492186; x=1706096986; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nxPSXuNJ8AUL8NOznZbrLecSi/2kLhBhAre/dygA9TY=;
+        b=PZ8ySSrWwGapa/1KMJlQT7mPhCQVdA1y/JSiwQiAdRM+qZ6dUoKYWUygKbyNzzjGk6
+         0qpVNL6ITvm3MzFEOB8df27RYtH4a6Jce4jMdqnXUQyHwt+625/vp4YMdr3JwgaPXybq
+         xPIe0A4CUMzouJvQKBqSy4D2GbSvV+6ifdZvesuRaxyyN60BKy3jyJHPcLJlzT7Nv+My
+         52CBt+GxfwIffBC1aQQuey3f8dLSIxrcpBwrSqk6dAcXOnZy1LVXCZ4ztAM0XUm0pNki
+         zCdXOitFYLvnJDsxf3Njh6OXMfStdh7aASe4AY7aPRFoG33monsH4hfs391bjTKAEQE2
+         plMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705492186; x=1706096986;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nxPSXuNJ8AUL8NOznZbrLecSi/2kLhBhAre/dygA9TY=;
+        b=cTFvgFAmZrkSOkkxwUcglniPy0zB7NBl1qNyWk1W8TdXBAUsA8NBnbPMUEYDDsaUCX
+         C80LNlnq9Oc3KKgE0+un1pyeBGugxiVlUyiJzLQCvDsdBi9Cq7HxdjpBOKRtr+bbkAJB
+         4FFUQRN17IVYv6KW0JkCm8xqJKSCTG6Jk+gIJQLx9ST8jnyXfG5Xl0NEotRJgYILfu/F
+         AmVLxy8cdDWQIJ271nrHA/uf6Z+Y3DMVELj0gZbc63DaKSzowSjamAdOXHXI3jQB4HuX
+         MLWoZKJ5WcUH4deB8s+4DmaqUh7JQv5n0itxoLim1FeQeqQMWY+ulkvd7zSWWQhETzqe
+         ysbg==
+X-Gm-Message-State: AOJu0YzaIJ0LpHIL+xs16wa7MD19izeLIrgphhUG6D3LBNbYLsK1Hy4u
+	FqyY7rWQa2rdGdgyo3+qVGYVYIwl0XWkYg==
+X-Google-Smtp-Source: AGHT+IHy6JI/EVohyYH/EoKmNFo6jqE894SOm3wbOmN+sb1Pd71wkWp/cNEanbOIXigvY3x3FzvuNw==
+X-Received: by 2002:a05:6512:3907:b0:50e:e888:2c3d with SMTP id a7-20020a056512390700b0050ee8882c3dmr3821308lfu.25.1705492186453;
+        Wed, 17 Jan 2024 03:49:46 -0800 (PST)
+Received: from [172.30.204.250] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id e8-20020a196748000000b0050ee78fd23esm228767lfj.262.2024.01.17.03.49.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Jan 2024 03:49:46 -0800 (PST)
+Message-ID: <9b177f7b-8dbf-4193-9a70-94f7b80f0a87@linaro.org>
+Date: Wed, 17 Jan 2024 12:49:44 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] soc: qcom: rpmh-rsc: Enhance check for VREG in-flight
+ request
+To: Maulik Shah <quic_mkshah@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ quic_eberman@quicinc.com, quic_collinsd@quicinc.com, quic_lsrao@quicinc.com
+References: <20240117-rpmh-rsc-fixes-v1-1-71ee4f8f72a4@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20240117-rpmh-rsc-fixes-v1-1-71ee4f8f72a4@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fr, 2024-01-12 at 17:36 +0100, Krzysztof Kozlowski wrote:
-[...]
->  struct reset_control *
->  __of_reset_control_get(struct device_node *node, const char *id, int ind=
-ex,
->  		       bool shared, bool optional, bool acquired)
->  {
-> +	struct of_phandle_args args =3D {0};
-> +	bool gpio_fallback =3D false;
->  	struct reset_control *rstc;
-> -	struct reset_controller_dev *r, *rcdev;
-> -	struct of_phandle_args args;
-> +	struct reset_controller_dev *rcdev;
->  	int rstc_id;
->  	int ret;
-> =20
-> @@ -839,39 +1028,49 @@ __of_reset_control_get(struct device_node *node, c=
-onst char *id, int index,
->  					 index, &args);
->  	if (ret =3D=3D -EINVAL)
->  		return ERR_PTR(ret);
-> -	if (ret)
-> -		return optional ? NULL : ERR_PTR(ret);
-> +	if (ret) {
 
-I think this should continue to return optional ? NULL : ERR_PTR(ret)
-if !IS_ENABLED(CONFIG_RESET_GPIO), for example by just skipping the
-of_parse_phandle_with_args(). That should allow the GPIO fallback in
-patch 5 to work as expected.
 
-> +		/*
-> +		 * There can be only one reset-gpio for regular devices, so
-> +		 * don't bother with GPIO index.
-> +		 */
-> +		ret =3D of_parse_phandle_with_args(node, "reset-gpios", "#gpio-cells",
-> +						 0, &args);
-> +		if (ret)
-> +			return optional ? NULL : ERR_PTR(ret);
-> =20
-> -	mutex_lock(&reset_list_mutex);
-> -	rcdev =3D NULL;
-> -	list_for_each_entry(r, &reset_controller_list, list) {
-> -		if (args.np =3D=3D r->of_node) {
-> -			rcdev =3D r;
-> -			break;
-> +		gpio_fallback =3D true;
-> +
-> +		ret =3D __reset_add_reset_gpio_device(&args);
-> +		if (ret) {
-> +			rstc =3D ERR_PTR(ret);
-> +			goto out_put;
->  		}
->  	}
+On 1/17/24 09:54, Maulik Shah wrote:
+> Each RPMh VREG accelerator resource has 3 or 4 contiguous 4-byte aligned
+> addresses associated with it. These control voltage, enable state, mode,
+> and in legacy targets, voltage headroom. The current in-flight request
+> checking logic looks for exact address matches. Requests for different
+> addresses of the same RPMh resource as thus not detected as in-flight.
+> 
+> Enhance the in-flight request check for VREG requests by ignoring the
+> address offset. This ensures that only one request is allowed to be
+> in-flight for a given VREG resource. This is needed to avoid scenarios
+> where request commands are carried out by RPMh hardware out-of-order
+> leading to LDO regulator over-current protection triggering.
+> 
+> Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> ---
+>   drivers/soc/qcom/rpmh-rsc.c | 20 +++++++++++++++++++-
+>   1 file changed, 19 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+> index a021dc71807b..5371d7e3090a 100644
+> --- a/drivers/soc/qcom/rpmh-rsc.c
+> +++ b/drivers/soc/qcom/rpmh-rsc.c
+> @@ -1,6 +1,7 @@
+>   // SPDX-License-Identifier: GPL-2.0
+>   /*
+>    * Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
+>    */
+>   
+>   #define pr_fmt(fmt) "%s " fmt, KBUILD_MODNAME
+> @@ -91,6 +92,15 @@ enum {
+>   #define CMD_STATUS_ISSUED		BIT(8)
+>   #define CMD_STATUS_COMPL		BIT(16)
+>   
+> +#define ACCL_TYPE(addr)			((addr >> 16) & 0xF)
+> +#define VREG_ADDR(addr)			(addr & ~0xF)
 
-regards
-Philipp
+It would be nice to add some #define FNAME GENMASK(x, y) accessed
+with FIELD_GET(FNAME, foobar), so that the code is a bit more
+self-explanatory
+
+Konrad
 
