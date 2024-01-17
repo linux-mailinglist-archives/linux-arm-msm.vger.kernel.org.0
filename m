@@ -1,170 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-7430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD13C82FF0E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 04:00:34 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3047C82FF13
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 04:03:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 585A428C813
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 03:00:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C425BB222D9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 03:02:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 976F717E9;
-	Wed, 17 Jan 2024 03:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BA5D17E9;
+	Wed, 17 Jan 2024 03:02:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CD9EvpYk"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fV8Tbotb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8EE9613C;
-	Wed, 17 Jan 2024 03:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4C11C05;
+	Wed, 17 Jan 2024 03:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705460426; cv=none; b=lqnnO2Ys8V6dDAFmxRrT56xPp4yHh1PSVLRUMC6IJCh7xrUZVm4/Sdjo1HmiTRndJWVDNc33RZwDTTREh2zgzPKrIhcL2hstBWOpLA7fVgeAqR/nXwTLbqsNMxdhisjwottB/sON1lj+UcNHu+GgxDsA04VEhPkSeoS1Ewqw0xA=
+	t=1705460574; cv=none; b=jgFvcaSI0H4AXZI4gv3GadyDUHgbipxxtYPEuBvp1tZxxk1X2P4GbcEuiH82t6erpOUMGBm5KF11UXE/fuVIy4lxLEwDKkF4yHQlV6jYlsFtkjFsxyYpadRV5Bt0YX6VZ2Wr55Ib/M7zmbzavNzk0fIwUXc+iKwVz5y/HxtHJ7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705460426; c=relaxed/simple;
-	bh=huhDjS/FysDhMk2XBBGDNLNvYNAqjTIDA6KOPUS9giY=;
+	s=arc-20240116; t=1705460574; c=relaxed/simple;
+	bh=DQvtSdEir8QJQGzNyD6XFq8fOIpXUl/qDoxIW+OuhHc=;
 	h=Received:DKIM-Signature:Received:Received:Received:Message-ID:
-	 Date:MIME-Version:User-Agent:Subject:Content-Language:To:CC:
-	 References:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 Date:MIME-Version:User-Agent:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding:
 	 X-Originating-IP:X-ClientProxiedBy:X-QCInternal:
-	 X-Proofpoint-Virus-Version:X-Proofpoint-GUID:
-	 X-Proofpoint-ORIG-GUID:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details; b=RI9J/Qe0nN5mNbSljPV/OMGodFkmvrkdzAs+kY89baWbVw10ZgKqF1Mq36ovwWx2s21CshFdWkR+LyARO4Pcqj5a4QVZjOz0GDFo80q3Tax+na1VIjys8pa/eAw/b1y9+MaUlHigBJz5K0NHixc510ciKtxs/4Y81KlK+k5lWGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CD9EvpYk; arc=none smtp.client-ip=205.220.180.131
+	 X-Proofpoint-Virus-Version:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-GUID:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details; b=G89dUszDTzU/wmHdk7U+fvjVbH5/yd4wLwfnYe7nWNRQxwsXNIeQiu31bOK0VmNdi/cFf+mIdweQqpKdLaXbdcO1yuBPzuyY4IzIHu93jdfIVSnReQfRFzi7QAFs/vKi6EkGuBtx2KjQ3CoG2anZ0GSDMIr7DGdtibaMiuH/riE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fV8Tbotb; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40H16Lwf020111;
-	Wed, 17 Jan 2024 03:00:03 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40H2elEB003827;
+	Wed, 17 Jan 2024 03:02:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=HLw4+Z1ecP3dMooOn4xJFlhUXZmcw9BpiM+2fDOjgXw=; b=CD
-	9EvpYkQZszXiaHT/txq10HKd9oypVyBH/Fn5j4H6tv41qzZkQ8Pab5y2beJTbvAo
-	/xjwg0+AGEMfifOHzrUM+TZdCpK/y8twJLkdKBODkDtF4EhusAUFt9DTr/nwd6H9
-	yk4HftfaYFjOKogwJWgkn/Iy9Qd78bryHECbYrLp6YD3KPG93Dgs0jslLMOThONX
-	brJj81pFKlve2GY/RrLL3C1d6X9hK4ogtTFhyDnBEUw/pzMmST7y3fKQ9JBwLVrY
-	ppGQm5ZyDBUX9ShXD20ngw1oqMabTqlB+H24LFJxGzTf6a2H3mhraRkz3L/AiXep
-	jaitvUxdBLJdEIiLs5Jw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vnmq0jman-1
+	qcppdkim1; bh=tlH1cHFj6QYJ353pHoD7rD+rxyAp2OnGNl2luTyRGfQ=; b=fV
+	8TbotbI/Hv0lIXFCw/M2RdK7V7EkyhsQtDlPTS2UWU3EDrezfjR5ffN3Uqwjus5H
+	/Jg7RtP+gUZdvZf2JbvzTX5DKV7WJpndL/02xEnj8oF1jVi193xpAjrFU8c03VlE
+	tvj/s/iVRenxo8OCK9p1HM4gsuVeShX7wRy0pgIhWigJX/+z1NmH1RaXqtkx2Gmy
+	8IkuCmzOWl9y6vLcAZ7xzHeI7PXFLG6aOt667M0i9Md+8YjtrmPONihDP8DhhXkq
+	TAYW6y9uwOUw04808oD6tvvP7WBvB5AomCYAfKwXGLdWjE9TPiSXvTHuCSzvdrsC
+	GY9kp6d5I+QZ8EK7Opzw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vnymj0y40-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 17 Jan 2024 03:00:02 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40H301QL011018
+	Wed, 17 Jan 2024 03:02:49 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40H32lUu026314
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 17 Jan 2024 03:00:01 GMT
-Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+	Wed, 17 Jan 2024 03:02:48 GMT
+Received: from [10.238.139.231] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 16 Jan
- 2024 18:59:58 -0800
-Message-ID: <0800860a-e090-153f-bbbd-1f7666b14fed@quicinc.com>
-Date: Wed, 17 Jan 2024 08:29:55 +0530
+ 2024 19:02:44 -0800
+Message-ID: <44ab50c4-c63b-436c-af46-9b4543181446@quicinc.com>
+Date: Wed, 17 Jan 2024 11:02:34 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 2/3] firmware: arm_scmi: Add perf_opp_xlate interface
-Content-Language: en-US
-To: Viresh Kumar <viresh.kumar@linaro.org>
-CC: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>, <rafael@kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_mdtipton@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20240108140118.1596-1-quic_sibis@quicinc.com>
- <20240108140118.1596-3-quic_sibis@quicinc.com>
- <20240110072906.7vnqykkcw3rkhoxa@vireshk-i7>
-From: Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <20240110072906.7vnqykkcw3rkhoxa@vireshk-i7>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5] arm64: dts: qcom: qcm6490-idp: Add definition for
+ three LEDs
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
+CC: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_fenglinw@quicinc.com>
+References: <20240115-lpg-v5-1-3c56f77f9cec@quicinc.com>
+ <CAA8EJpoemnXTmshWrArVOCm0GRSkWZ5tH557nbAjRL1Tgg-Dig@mail.gmail.com>
+ <e16f5ff1-9b12-4f90-89d5-f95cbfb859e7@quicinc.com>
+ <6c29ce72-e303-406a-bb75-5b36b0cd8ee4@linaro.org>
+From: hui liu <quic_huliu@quicinc.com>
+In-Reply-To: <6c29ce72-e303-406a-bb75-5b36b0cd8ee4@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: cbyLFxNUivVLSbp6ELhXfzojiYWrbd1B
-X-Proofpoint-ORIG-GUID: cbyLFxNUivVLSbp6ELhXfzojiYWrbd1B
+X-Proofpoint-ORIG-GUID: Hg--S2Fqs2Usbx3cDu_QUZlr5um41jIg
+X-Proofpoint-GUID: Hg--S2Fqs2Usbx3cDu_QUZlr5um41jIg
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-01-16_14,2024-01-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
- bulkscore=0 adultscore=0 suspectscore=0 impostorscore=0 lowpriorityscore=0
- malwarescore=0 clxscore=1015 mlxlogscore=999 spamscore=0 phishscore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=838
+ priorityscore=1501 spamscore=0 malwarescore=0 phishscore=0 suspectscore=0
+ clxscore=1015 impostorscore=0 lowpriorityscore=0 mlxscore=0 adultscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
  definitions=main-2401170019
 
 
 
-On 1/10/24 12:59, Viresh Kumar wrote:
-> On 08-01-24, 19:31, Sibi Sankar wrote:
->> Add a new perf_opp_xlate interface to the existing perf_ops to translate
->> a given perf index to frequency.
+On 1/15/2024 6:26 PM, Krzysztof Kozlowski wrote:
+> On 15/01/2024 11:18, hui liu wrote:
 >>
-
-Hey Viresh,
-Thanks for taking time to review the series!
-
->> This can be used by the cpufreq driver and framework to determine the
->> throttled frequency from a given perf index and apply HW pressure
->> accordingly.
 >>
->> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->> ---
->>   drivers/firmware/arm_scmi/perf.c | 21 +++++++++++++++++++++
->>   include/linux/scmi_protocol.h    |  3 +++
->>   2 files changed, 24 insertions(+)
->>
->> diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
->> index c167bb5e3607..f26390924e1c 100644
->> --- a/drivers/firmware/arm_scmi/perf.c
->> +++ b/drivers/firmware/arm_scmi/perf.c
->> @@ -964,6 +964,26 @@ static int scmi_notify_support(const struct scmi_protocol_handle *ph, u32 domain
->>   	return 0;
->>   }
->>   
->> +static int scmi_perf_opp_xlate(const struct scmi_protocol_handle *ph, u32 domain,
->> +			       int idx, unsigned long *freq)
->> +{
->> +	struct perf_dom_info *dom;
->> +
->> +	dom = scmi_perf_domain_lookup(ph, domain);
->> +	if (IS_ERR(dom))
->> +		return PTR_ERR(dom);
->> +
->> +	if (idx >= dom->opp_count)
->> +		return -ERANGE;
->> +
->> +	if (!dom->level_indexing_mode)
->> +		*freq = dom->opp[idx].perf * dom->mult_factor;
->> +	else
->> +		*freq = dom->opp[idx].indicative_freq * dom->mult_factor;
->> +
->> +	return 0;
->> +}
->> +
->>   static const struct scmi_perf_proto_ops perf_proto_ops = {
->>   	.num_domains_get = scmi_perf_num_domains_get,
->>   	.info_get = scmi_perf_info_get,
->> @@ -979,6 +999,7 @@ static const struct scmi_perf_proto_ops perf_proto_ops = {
->>   	.fast_switch_possible = scmi_fast_switch_possible,
->>   	.power_scale_get = scmi_power_scale_get,
->>   	.perf_notify_support = scmi_notify_support,
->> +	.perf_opp_xlate = scmi_perf_opp_xlate,
+>> On 1/15/2024 5:56 PM, Dmitry Baryshkov wrote:
+>>> On Mon, 15 Jan 2024 at 11:48, Hui Liu via B4 Relay
+>>> <devnull+quic_huliu.quicinc.com@kernel.org> wrote:
+>>>>
+>>>> From: Hui Liu <quic_huliu@quicinc.com>
+>>>>
+>>>> Add definition for three LEDs to make sure they can
+>>>> be enabled base on QCOM LPG LED driver.
+>>>
+>>> The "function" property is still placed incorrectly. Posting the next
+>>> iteration before concluding the discussion on the previous one is not
+>>> the best idea.
+>> Do you mean I should update it as below? Seems there is no consumer to
+>> use the function config, do we need to add now?
 > 
-> The use of "opp" here is a bit confusing as this doesn't have anything to do
-> with the OPP framework and you are only getting the frequency out of it after
-> all.
+> Paste the output of dtbs_check for your board (or CHECK_DTBS=y for your
+> Makefile target).
+I checked the dt-binding file of LPG LED, I will update the dts as 
+below, if you think it's correct, I will push v6.
 
-Sure will re-name it.
++&pm8350c_pwm {
++       #address-cells = <1>;
++       #size-cells = <0>;
++       status = "okay";
++
++       led@1 {
++               reg = <1>;
++               color = <LED_COLOR_ID_RED>;
++		function = LED_FUNCTION_STATUS;
++       };
++
++       led@2 {
++               reg = <2>;
++               color = <LED_COLOR_ID_GREEN>;
++		function = LED_FUNCTION_STATUS;
++       };
++
++       led@3 {
++               reg = <3>;
++               color = <LED_COLOR_ID_BLUE>;
++		function = LED_FUNCTION_STATUS;
++       };
++};
++
 
--Sibi
-
+Thanks,
+Hui
+> 
+> Best regards,
+> Krzysztof
 > 
 
