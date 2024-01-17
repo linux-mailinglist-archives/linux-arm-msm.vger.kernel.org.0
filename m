@@ -1,175 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-7521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CBFC0830E68
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 22:14:10 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 697E2830ECD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 22:52:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 83B37283119
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 21:14:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 991B41C21FB8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 21:52:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 958BD25560;
-	Wed, 17 Jan 2024 21:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65A5825635;
+	Wed, 17 Jan 2024 21:52:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eiqWlZTS"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="3sIgyPcK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072862555B;
-	Wed, 17 Jan 2024 21:14:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB46C25630
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 21:52:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705526045; cv=none; b=AhcZTk2EzTEtajS45n5HQX4v4VuSti2OQno8ZP4gEntDEi5W12RD20iow3dJLbSZqkdSZKsFXvWNQmGoftnDSIzb+SP30bCgYJQL/+AdNit5bRBfvB3x00lbHs7arU62AGrRLuhaioQP7r7nSicYAZaoeVc8wJt6fQtMJ4LEBNc=
+	t=1705528346; cv=none; b=bBLjdz0vDX3JeoOETZY6b11DxmiSNLJYPHaYT372Ajy6aV/Ocf+eicCRVDzh/5NCiGLHweSMZcdRKn5buArCn0o+fASuhINrpsd8XcQ/CW9bsP4jJaDuAiJltGa63IWVoHb5uWQWy9XPIegkWyplElA9czIluROum2VQi2xY8Ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705526045; c=relaxed/simple;
-	bh=lq7fwNY+8BklN0z0pETnNfRZRTZ+/oGKQ0bwnLkh5PE=;
-	h=Received:DKIM-Signature:Received:Received:Received:From:To:CC:
-	 Subject:Date:Message-ID:X-Mailer:MIME-Version:Content-Type:
-	 X-Originating-IP:X-ClientProxiedBy:X-QCInternal:
-	 X-Proofpoint-Virus-Version:X-Proofpoint-GUID:
-	 X-Proofpoint-ORIG-GUID:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details; b=CCBIJEoBkTi6C6YZIpDDzvwOQ0EUPy9zWMJpQ74wmxs6Uca+l6kgLtaLAs7ZVtedl46f8ATm5QrLQmNPiEsCDre/yhGgrmq5C50kcMzetJsIRGyiPV7Cm0cZghCsVlYYrWH5vZPHAq8z5qlZYJsPjTlTXa0+hGoVGGZUfFjpqT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eiqWlZTS; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40HLA63A011740;
-	Wed, 17 Jan 2024 21:13:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version:content-type; s=
-	qcppdkim1; bh=bQDgy9xDLgmnYLFuYDo7Y/1XGAsi2c5U1sJTHjU5QmM=; b=ei
-	qWlZTSbn+wlI+Mn4d+EvM2Qy2vRwM350b+H67blizbMmX7Ffl0ElVZrnBIx/ZamN
-	qxRmLm899oQiGjepwzLD0pLlumia0xsukYvgRi19rgKpLj3ZyRi1MNKh4aZps+RN
-	Zd1tEZDpA5hUnw8+TtSlEr+pKFaj1bslAitbFQk3nZXfDCuCrKb0L9fyilrtnYOh
-	h9FKteRp4he18id60rHXanrsSQm0vmX5LPzY27X0wW6AHNvv+xMBwILE1vBZ82M4
-	q7lz0/BX/10F31RSThk1Ehts7CrZsWXWdOGif9HnDCV+A9oZ9aA4svgdQYF7kYL7
-	DMXRcFsV88dEvBTTCSKA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vp6p3t703-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 17 Jan 2024 21:13:38 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40HLDckP023566
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 17 Jan 2024 21:13:38 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Wed, 17 Jan 2024 13:13:37 -0800
-From: Kuogee Hsieh <quic_khsieh@quicinc.com>
-To: <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <andersson@kernel.org>
-CC: Kuogee Hsieh <quic_khsieh@quicinc.com>, <quic_abhinavk@quicinc.com>,
-        <quic_jesszhan@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <marijn.suijten@somainline.org>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v3] drm/msm/dp: return correct Colorimetry for DP_TEST_DYNAMIC_RANGE_CEA case
-Date: Wed, 17 Jan 2024 13:13:30 -0800
-Message-ID: <1705526010-597-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+	s=arc-20240116; t=1705528346; c=relaxed/simple;
+	bh=IvStd2xTfDq5Oo+gHa6tUQKtis3gXAShwVPWtd0rtEA=;
+	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:MIME-Version:
+	 References:In-Reply-To:From:Date:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding; b=ELooZWxjcQ/T85N/1A4tcLFk6pinvyvnFQVxRhdWhOxVkL7x+jgnT7GU+/YE+Yu23tZOdfX2ZUi01qsrnnJqoi8TX1p/cITG/nfxh29R56JWCFxV3B8k6svbNEc5itaL89hdF149YT0rd/BN6SF1VP32KIoECYEXPcOcDg6FILQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=3sIgyPcK; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-40e4afe9ea7so65985e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 13:52:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1705528343; x=1706133143; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fgsNp3I1GyR8LKSkgpTGCtUknvU84IXVbgB3bgHNMiQ=;
+        b=3sIgyPcKFiATnmCr4gLRw1tq9VSn2IP+qZK919eCenod9UkRtlC5P56zGLkxpaCV+a
+         GyNUCuklAVdomTHdJ8fueFCo37kmFcgyDZqVZO3dm8e+pvp6/aUSG1GQMIlttfzzARrA
+         Zgonf58FuhDNAhZvSjarE/i2wJEFF+8BSaoLnSxa0HK9aX6wkhD/UVLOYYAkvFHImCRq
+         7qkjjNHLB4U4ruo4AFbfzvnF8hDU4cEFbRREvWav+eb/jPfQzgP9JN765yd2l/IlP5LU
+         FfFMBdV46pE12wViyfc8np1rRHiOCWv4qnmvigpt2L4P0smNF0AkL6KF8vwqBbnJUYg9
+         EgOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705528343; x=1706133143;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fgsNp3I1GyR8LKSkgpTGCtUknvU84IXVbgB3bgHNMiQ=;
+        b=EFgyiT9Bpu8EqFfAmJhtd3FymiOF1/7ON1S7bihtvnWGREzN7tkGnpOwp1qBOvt0vP
+         80xxBV9ScqRuhaa2O4IPd9CAyteTeYsl8rBBqoOd9gzOEhZMelFQL4kzbnGAuX7PN6oM
+         +OKS6TSPxC094sXWyE+hptuioh9n3XZuwzNZGJD4c35SnYDJg3KopXwSIDzeN2voq3FX
+         WaXOUqTYQt57rLy3CVL4MOz7hCYhOeszPjqIvCG8Tr3L+XHp4lMszcr93ERwd7iKuDZj
+         2ZsrpwxMNhs6d01fQANEZ7mfWHyaWdgiJyWAPmJhHaVcKsAeX8QM8jOF3dYUuRmtmFEg
+         RTww==
+X-Gm-Message-State: AOJu0YzxPH8+T9b6RioDZhqfUWtInmoZ5QBhlr/LyuuEkeHWHO1s3qwA
+	GI5AqKiLaBrULeAet75uMbIliQ1cTnYVVRkAqmh3LdL6PslC38/T83ElHzPY1fq4D7ZcCX3jdWv
+	HR5P1uI7Qd940iHZs1ixCyfZWs8VjGzqsW3Bo
+X-Google-Smtp-Source: AGHT+IEjpv76xho9RIPvXy4nuNt63b8j9OdHAk+UiuVJdba+peVWPGHxPnwtg0NTkMnxiWXXWBec0vFbBgxMqviuurQ=
+X-Received: by 2002:a05:600c:310b:b0:40e:61cf:af91 with SMTP id
+ g11-20020a05600c310b00b0040e61cfaf91mr197767wmo.7.1705528342730; Wed, 17 Jan
+ 2024 13:52:22 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Fzn28BTqKuncmYkGgN8Wug8X72hDAS6b
-X-Proofpoint-ORIG-GUID: Fzn28BTqKuncmYkGgN8Wug8X72hDAS6b
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-17_12,2024-01-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
- phishscore=0 clxscore=1015 priorityscore=1501 bulkscore=0 impostorscore=0
- adultscore=0 mlxlogscore=999 lowpriorityscore=0 suspectscore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
- definitions=main-2401170150
+References: <20231227180306.6319-1-johan+linaro@kernel.org>
+ <ZZ15c1HUQIH2cY5o@google.com> <ZZ1-ehpU-g6i9Qem@hovoldconsulting.com>
+ <ZZ2IOQEekFffJoHQ@google.com> <ZZ5RVpL88XNbgKIy@hovoldconsulting.com>
+In-Reply-To: <ZZ5RVpL88XNbgKIy@hovoldconsulting.com>
+From: Doug Anderson <dianders@google.com>
+Date: Wed, 17 Jan 2024 13:52:08 -0800
+Message-ID: <CAD=FV=W61ZHYJADiR1CYgS-aNisDR4KoEA3RW2_8kW3KUd1g5g@mail.gmail.com>
+Subject: Re: [PATCH] Bluetooth: qca: fix device-address endianness
+To: Johan Hovold <johan@kernel.org>
+Cc: Matthias Kaehlcke <mka@chromium.org>, Johan Hovold <johan+linaro@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Johan Hedberg <johan.hedberg@gmail.com>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Bjorn Andersson <quic_bjorande@quicinc.com>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-bluetooth@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	stable@vger.kernel.org, Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, 
+	Stephen Boyd <swboyd@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-MSA MISC0 bit 1 to 7 contains Colorimetry Indicator Field.
-dp_link_get_colorimetry_config() returns wrong colorimetry value
-in the DP_TEST_DYNAMIC_RANGE_CEA case in the current implementation.
-Hence fix this problem by having dp_link_get_colorimetry_config()
-return defined CEA RGB colorimetry value in the case of
-DP_TEST_DYNAMIC_RANGE_CEA.
+Hi,
 
-Changes in V2:
--- drop retrieving colorimetry from colorspace
--- drop dr = link->dp_link.test_video.test_dyn_range assignment
+On Wed, Jan 10, 2024 at 12:12=E2=80=AFAM Johan Hovold <johan@kernel.org> wr=
+ote:
+>
+> > > So the first question is whether there actually is any boot firmware =
+out
+> > > there which passes the BD_ADDR in reverse order?
+> >
+> > Yes, (at least) the boot firmware for sc7180-trogdor devices.
+> >
+> > hexdump -C /proc/device-tree/soc\@0/geniqup\@8c0000/serial\@88c000/blue=
+tooth/local-bd-address
+> > 00000000  8c fd f0 40 15 dc
+>
+> Indeed, this should have been LE order.
 
-Changes in V3:
--- move defined MISCr0a Colorimetry vale to dp_reg.h
--- rewording commit title
--- rewording commit text to more precise describe this patch
+In case it adds any extra data points, we also do similar with the
+WiFi MAC address and it also seems to be big endian.
 
-Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/gpu/drm/msm/dp/dp_link.c | 12 +++++++-----
- drivers/gpu/drm/msm/dp/dp_reg.h  |  3 +++
- 2 files changed, 10 insertions(+), 5 deletions(-)
+lazor-rev9 /proc/device-tree/soc@0/wifi@18800000 # hexdump -C local-mac-add=
+ress
+00000000  8c fd f0 3e 3e 86                                 |...>>.|
+00000006
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-index 98427d4..5284e48 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.c
-+++ b/drivers/gpu/drm/msm/dp/dp_link.c
-@@ -7,6 +7,7 @@
- 
- #include <drm/drm_print.h>
- 
-+#include "dp_reg.h"
- #include "dp_link.h"
- #include "dp_panel.h"
- 
-@@ -1082,7 +1083,7 @@ int dp_link_process_request(struct dp_link *dp_link)
- 
- int dp_link_get_colorimetry_config(struct dp_link *dp_link)
- {
--	u32 cc;
-+	u32 cc = DP_MISC0_COLORIMERY_CFG_LEGACY_RGB;
- 	struct dp_link_private *link;
- 
- 	if (!dp_link) {
-@@ -1096,10 +1097,11 @@ int dp_link_get_colorimetry_config(struct dp_link *dp_link)
- 	 * Unless a video pattern CTS test is ongoing, use RGB_VESA
- 	 * Only RGB_VESA and RGB_CEA supported for now
- 	 */
--	if (dp_link_is_video_pattern_requested(link))
--		cc = link->dp_link.test_video.test_dyn_range;
--	else
--		cc = DP_TEST_DYNAMIC_RANGE_VESA;
-+	if (dp_link_is_video_pattern_requested(link)) {
-+		if (link->dp_link.test_video.test_dyn_range &
-+					DP_TEST_DYNAMIC_RANGE_CEA)
-+			cc = DP_MISC0_COLORIMERY_CFG_CEA_RGB;
-+	}
- 
- 	return cc;
- }
-diff --git a/drivers/gpu/drm/msm/dp/dp_reg.h b/drivers/gpu/drm/msm/dp/dp_reg.h
-index ea85a69..78785ed 100644
---- a/drivers/gpu/drm/msm/dp/dp_reg.h
-+++ b/drivers/gpu/drm/msm/dp/dp_reg.h
-@@ -143,6 +143,9 @@
- #define DP_MISC0_COLORIMETRY_CFG_SHIFT		(0x00000001)
- #define DP_MISC0_TEST_BITS_DEPTH_SHIFT		(0x00000005)
- 
-+#define DP_MISC0_COLORIMERY_CFG_LEGACY_RGB	(0)
-+#define DP_MISC0_COLORIMERY_CFG_CEA_RGB		(0x04)
-+
- #define REG_DP_VALID_BOUNDARY			(0x00000030)
- #define REG_DP_VALID_BOUNDARY_2			(0x00000034)
- 
--- 
-2.7.4
+lazor-rev9 /proc/device-tree/soc@0/wifi@18800000 # ifconfig wlan0 | grep et=
+her
+        ether 8c:fd:f0:3e:3e:86  txqueuelen 1000  (Ethernet)
 
+
+> > hciconfig
+> > hci0:   Type: Primary  Bus: UART
+> >         BD Address: 8C:FD:F0:40:15:DC  ACL MTU: 1024:8  SCO MTU: 240:8
+> >         UP RUNNING
+> >         RX bytes:1700 acl:0 sco:0 events:95 errors:0
+> >         TX bytes:128949 acl:0 sco:0 commands:578 errors:0
+>
+> And any user space tool overriding the address would currently need to
+> provide the address in reverse order on Qualcomm platforms like this
+> one (e.g. if generating the address for privacy reasons).
+>
+> > > > I suggest adding a quirk like 'local-bd-address-msb-quirk' or
+> > > > 'qcom,local-bd-address-msb-quirk' to make sure existing devices kee=
+p
+> > > > working properly.
+> > >
+> > > I don't think that would work. If this is something that we really ne=
+ed
+> > > to handle, then there's probably no way around introducing new
+> > > compatible strings for boot firmware that isn't broken while maintain=
+ing
+> > > the current broken behaviour with respect to 'local-bd-address' for s=
+ome
+> > > of the current ones.
+> >
+> > I think it should work for sc7180-trogdor. For these devices the device=
+ tree
+> > is bundled with the kernel image and can be updated. That might not be =
+true
+> > for other devices though.
+>
+> Thanks for confirming.
+>
+> I'm still hoping we can get away with not having to add quirks to
+> Bluetooth core for broken Qualcomm boot firmware. Let's see if anyone
+> knows of a use case that makes that impossible to avoid.
+>
+> Johan
 
