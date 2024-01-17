@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-7476-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7477-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 767BE830A8A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 17:10:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B988830A94
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 17:11:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 088FBB255F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 16:10:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CA3EA28A421
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 16:11:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4440C224C9;
-	Wed, 17 Jan 2024 16:08:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC0D824B3E;
+	Wed, 17 Jan 2024 16:08:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="FJJlgoNK"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="NQI68Rmp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA952376D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 16:08:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9BC2420F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 16:08:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705507718; cv=none; b=EXWKylrt683XwEPa5gurAGuUem6uF59T7SDBMru9XxSYdR+Tmroz7dGOEQ+zdeQGR7+PlhW4N0Fc/vlADehK63slmvBmqUQeJ08mXwQwIij5YYqxgzD68CY5zZpz8pAwHytk05NGdOb0NDI+Q774YjfAfunpdCCtvqevcxgZxPI=
+	t=1705507720; cv=none; b=SEQ4OyBR40qk1vxNbVvkc9AJIs+aoeoQYEKftH+OeMMKHBIYrUG4wTmhmhPP6rpUKCXqtXLxYMgXIqnNIm+vRbeqFaxyNj930JR0ZPUOC6pv5PvN0O2Ut8lSXUZh9QxcuR+qtO7d/hIibyrqWvbX+uSDLICfi82KhWuJcZMVnWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705507718; c=relaxed/simple;
-	bh=N8nSlGpY+h0yDVzKyyy2ahDrdLPIziiOuPJg6GZ4M/s=;
+	s=arc-20240116; t=1705507720; c=relaxed/simple;
+	bh=9hVgr52oxfJN+f3DPqCGtdW3fcs9H31q8sHIag5dqM8=;
 	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Received:From:
 	 To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding; b=KJoyTAiuryai7321zERh/gZJDaJI9fJVlPYwmgTQrpiumGDQdG35l+WP1elW0MoVObwEJ8WLtu1LXQ4Vzu3ssME6UEpjECEuZVRsu8u3uDEo1/rVqisdOkMSe0jl7BTiOkxeMfpsNPoZwbq8PX7sorWofLgtFX1diBl+4r5YVr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=FJJlgoNK; arc=none smtp.client-ip=209.85.208.178
+	 MIME-Version:Content-Transfer-Encoding; b=n1h21m4ONTZHbwtXzIreJ4Rk61p5AM/r6cyinH0/2igLBZTRMDCSjf7sj8xY22BglhD/RVbIvirpjxn1oEfu4X93stY3g0gvkzJt7RHOZYQaqpcmBABLBOYAXDDRkp9FB8o/NeupCmyRbRShY24nyLild5J2a98w5QgOVeeWguA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=NQI68Rmp; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2cd46e7ae8fso124683151fa.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 08:08:36 -0800 (PST)
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-40e800461baso25242995e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 08:08:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1705507714; x=1706112514; darn=vger.kernel.org;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1705507716; x=1706112516; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ko9AldsNAGIySQ6r8IsXSCtLQ9r/1ys0AWCrWCqKA/w=;
-        b=FJJlgoNKT3LU5UfqYlpOOGWKqIwmVOmtHxSdvM7fNQORfOrfcy0CzrMnZN+fWa+gYE
-         j/g3yKzMzFhspGGE6cOAHSSnQbHj8WPd1quM/iAJdz3tpz+WkeO9P+LGeBkmWL7nrQX9
-         5YpqPjxe6fexhKRdVKo+D7DRO5QGuDSUSNycI1eLOq0XpvUCrKD17q6x8oCkuebSgo4p
-         gd+bUYf09oWtK7l7KKdAY9GsaYcrlrijgWZZDzC+LwWF9Fz2WlfizAXwdz1Y7Zv3shR8
-         +wlgv4d8ahhed+H0qai6s5lNlm+yryZk2972V8AI4xNTvsP6St8RD2pI+Kl/xtAs6+Z5
-         mW9w==
+        bh=hmDMXWqDYRqbLZRDqVGsRFlI5kpmWEXG2UggM6BWIdg=;
+        b=NQI68RmpObOV7v4qXphEqbzrqq71ej5IP6s3cSP2RqmUAX2ez5T5bDVAMcm/wmSDdA
+         N00s3oYgoh0kBrcDqeaZk7iPXChzHTb/Ti9THgjllPRh9Gr2kdBddZoP6xd1jOzBwwlC
+         +YaViHQ7NRc4kswd74xTFcClogeNcPmD0ukHn9wDtVz166unMzTonxvYG6DFuLH/AvhA
+         Ezf1SUoq+ffBRsRNNdiEU0H2rMfXC1/qelP1nCncJSXfuYvtbJc4c/rfd3sqEa4C/YHg
+         5Ep91FMjlo++5R6K6UZvtByd15Anp8c0wc3SYWWwJ6lWVenjJrKGYFy2473L+AtJgeAD
+         oPpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705507714; x=1706112514;
+        d=1e100.net; s=20230601; t=1705507716; x=1706112516;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ko9AldsNAGIySQ6r8IsXSCtLQ9r/1ys0AWCrWCqKA/w=;
-        b=ItGuJ+2HpfZzPbRR0RxCnHcnK1seF4zmN03er+wQ0oXtZ6TbSUduH8jFAvVKl/COUI
-         yQZWOFKu88WzlZuwu6ans6pILOtlsXQ2l01f4Ew0yt6NIyBGseKZHR5pp9FPIvAVR1Gu
-         n0xQirBzqLg/e4qtebupXghqblqArJCUe5poR+IgeeTEduOl2AnAh9DgWrUaioIjxB5d
-         LS2xxgtmRnMZmpylQbdaECOg5usNm6f2DbKKck7L1jcYF96z4+DA4SMMqq0nbkKeTJ+9
-         gD1Ci6h4XWjKkBYCM2qBYf7kT8x9rKTkqHb8MLx0s1YucWNEPsuP1weFpDCsUGkfth8y
-         gEUw==
-X-Gm-Message-State: AOJu0YxnLmCNQHfGV6cnp1uTP5maisOHFH7Bd7GtL4bguqo1pwIKd2Qa
-	7uGlb0ij1Ytan6pbdjmq9h2+RyuCjnluaw==
-X-Google-Smtp-Source: AGHT+IH00GMnU28EnlPeGajWNZo/yfmgLAtVEq5+nkiN5uNxUQ5AichUQRHPt2D0pz/XGhDNycFPnw==
-X-Received: by 2002:a2e:a40d:0:b0:2cc:8a2b:4594 with SMTP id p13-20020a2ea40d000000b002cc8a2b4594mr2168546ljn.23.1705507714754;
-        Wed, 17 Jan 2024 08:08:34 -0800 (PST)
+        bh=hmDMXWqDYRqbLZRDqVGsRFlI5kpmWEXG2UggM6BWIdg=;
+        b=hdKU4du0Ue1LKqB2DvXBvr9zpA//auogMMNNV7HWB1t9siTN1wtpgyA2Al7P4FB7Q1
+         nsSAbPgJasgPFu7fhQhJtIbZvncL+WEaMTxBErbequME7MY3AO494asCoSFfLwhHgNEY
+         nMShtXllQf4e7dzQz1+vzxo+clAuMFwkz35UFlZjOnzE2XCh+EjiX8oKnhg3nw+PGIWc
+         bmtas0AeH2NGKRF5NGJ0/6SWRdh2qHU2vCp2pYxJxnVgQosZ2kAVUU7an8hCcInVCNe9
+         u8HpOaoe6DatoqFCstMm8Tjdb1iFZp/pQ79vi3cp3BplEcKc/ewIgsg6o5J/qDARZhpI
+         3sgw==
+X-Gm-Message-State: AOJu0Yxt227Wfqp7cCUPS7bTtrrrWnrqjbD9t6sKo6q9pB4+Jjij2aCt
+	aweMCd71jvQFzWseDsp5pxEHGcnhjXWBng==
+X-Google-Smtp-Source: AGHT+IFjYcQdh7FZrRxxGNsX7G0G4hhDvyEqEiUFIygsmYmwACq1eG6JZb5KYfiYxR9GWoVqka6UfQ==
+X-Received: by 2002:a05:600c:4452:b0:40d:8954:a735 with SMTP id v18-20020a05600c445200b0040d8954a735mr2818810wmn.156.1705507716318;
+        Wed, 17 Jan 2024 08:08:36 -0800 (PST)
 Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:d0b5:43ec:48:baad])
-        by smtp.gmail.com with ESMTPSA id t10-20020a5d6a4a000000b00337b0374a3dsm1972092wrw.57.2024.01.17.08.08.33
+        by smtp.gmail.com with ESMTPSA id t10-20020a5d6a4a000000b00337b0374a3dsm1972092wrw.57.2024.01.17.08.08.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jan 2024 08:08:34 -0800 (PST)
+        Wed, 17 Jan 2024 08:08:35 -0800 (PST)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
 To: Kalle Valo <kvalo@kernel.org>,
 	"David S . Miller" <davem@davemloft.net>,
@@ -110,9 +110,9 @@ Cc: linux-wireless@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	linux-pci@vger.kernel.org,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 5/9] PCI: hold the rescan mutex when scanning for the first time
-Date: Wed, 17 Jan 2024 17:07:44 +0100
-Message-Id: <20240117160748.37682-6-brgl@bgdev.pl>
+Subject: [PATCH 6/9] PCI/pwrseq: add pwrseq core code
+Date: Wed, 17 Jan 2024 17:07:45 +0100
+Message-Id: <20240117160748.37682-7-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20240117160748.37682-1-brgl@bgdev.pl>
 References: <20240117160748.37682-1-brgl@bgdev.pl>
@@ -126,29 +126,198 @@ Content-Transfer-Encoding: 8bit
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-With the introduction of the power sequencing drivers that will be able
-to trigger the port rescan, we need to hold the rescan mutex during the
-initial pci_host_probe() too or the two could get in each other's way.
+Some PCI devices must be powered-on before they can be detected on the
+bus. Introduce a simple framework reusing the existing PCI OF
+infrastructure.
+
+The way this works is: a DT node representing a PCI device connected to
+the port can be matched against its power sequencing platform driver. If
+the match succeeds, the driver is responsible for powering-up the device
+and calling pcie_pwrseq_device_enable() which will trigger a PCI bus
+rescan as well as subscribe to PCI bus notifications.
+
+When the device is detected and created, we'll make it consume the same
+DT node that the platform device did. When the device is bound, we'll
+create a device link between it and the parent power sequencing device.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- drivers/pci/probe.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/Kconfig         |  1 +
+ drivers/pci/Makefile        |  1 +
+ drivers/pci/pwrseq/Kconfig  |  8 ++++
+ drivers/pci/pwrseq/Makefile |  3 ++
+ drivers/pci/pwrseq/pwrseq.c | 82 +++++++++++++++++++++++++++++++++++++
+ include/linux/pci-pwrseq.h  | 24 +++++++++++
+ 6 files changed, 119 insertions(+)
+ create mode 100644 drivers/pci/pwrseq/Kconfig
+ create mode 100644 drivers/pci/pwrseq/Makefile
+ create mode 100644 drivers/pci/pwrseq/pwrseq.c
+ create mode 100644 include/linux/pci-pwrseq.h
 
-diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
-index b7335be56008..957f7afee7ba 100644
---- a/drivers/pci/probe.c
-+++ b/drivers/pci/probe.c
-@@ -3122,7 +3122,9 @@ int pci_host_probe(struct pci_host_bridge *bridge)
- 	struct pci_bus *bus, *child;
- 	int ret;
+diff --git a/drivers/pci/Kconfig b/drivers/pci/Kconfig
+index 74147262625b..e0fd5caa1ffc 100644
+--- a/drivers/pci/Kconfig
++++ b/drivers/pci/Kconfig
+@@ -291,5 +291,6 @@ source "drivers/pci/hotplug/Kconfig"
+ source "drivers/pci/controller/Kconfig"
+ source "drivers/pci/endpoint/Kconfig"
+ source "drivers/pci/switch/Kconfig"
++source "drivers/pci/pwrseq/Kconfig"
  
+ endif
+diff --git a/drivers/pci/Makefile b/drivers/pci/Makefile
+index cc8b4e01e29d..0a1673ef2c9e 100644
+--- a/drivers/pci/Makefile
++++ b/drivers/pci/Makefile
+@@ -9,6 +9,7 @@ obj-$(CONFIG_PCI)		+= access.o bus.o probe.o host-bridge.o \
+ 
+ obj-$(CONFIG_PCI)		+= msi/
+ obj-$(CONFIG_PCI)		+= pcie/
++obj-$(CONFIG_PCI)		+= pwrseq/
+ 
+ ifdef CONFIG_PCI
+ obj-$(CONFIG_PROC_FS)		+= proc.o
+diff --git a/drivers/pci/pwrseq/Kconfig b/drivers/pci/pwrseq/Kconfig
+new file mode 100644
+index 000000000000..a721a8a955c3
+--- /dev/null
++++ b/drivers/pci/pwrseq/Kconfig
+@@ -0,0 +1,8 @@
++# SPDX-License-Identifier: GPL-2.0
++
++menu "PCI Power sequencing drivers"
++
++config PCI_PWRSEQ
++	bool
++
++endmenu
+diff --git a/drivers/pci/pwrseq/Makefile b/drivers/pci/pwrseq/Makefile
+new file mode 100644
+index 000000000000..4052b6bb5aa5
+--- /dev/null
++++ b/drivers/pci/pwrseq/Makefile
+@@ -0,0 +1,3 @@
++# SPDX-License-Identifier: GPL-2.0
++
++obj-$(CONFIG_PCI_PWRSEQ)		+= pwrseq.o
+diff --git a/drivers/pci/pwrseq/pwrseq.c b/drivers/pci/pwrseq/pwrseq.c
+new file mode 100644
+index 000000000000..a750c7bc6830
+--- /dev/null
++++ b/drivers/pci/pwrseq/pwrseq.c
+@@ -0,0 +1,82 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * Copyright (C) 2024 Linaro Ltd.
++ */
++
++#include <linux/device.h>
++#include <linux/export.h>
++#include <linux/kernel.h>
++#include <linux/pci.h>
++#include <linux/pci-pwrseq.h>
++#include <linux/property.h>
++#include <linux/slab.h>
++
++static int pci_pwrseq_notify(struct notifier_block *nb, unsigned long action,
++			     void *data)
++{
++	struct pci_pwrseq *pwrseq = container_of(nb, struct pci_pwrseq, nb);
++	struct device *dev = data;
++
++	if (dev_fwnode(dev) != dev_fwnode(pwrseq->dev))
++		return NOTIFY_DONE;
++
++	switch (action) {
++	case BUS_NOTIFY_ADD_DEVICE:
++		device_set_of_node_from_dev(dev, pwrseq->dev);
++		break;
++	case BUS_NOTIFY_BOUND_DRIVER:
++		pwrseq->link = device_link_add(dev, pwrseq->dev,
++					       DL_FLAG_AUTOREMOVE_CONSUMER);
++		if (!pwrseq->link)
++			dev_err(pwrseq->dev, "Failed to add device link\n");
++		break;
++	case BUS_NOTIFY_UNBOUND_DRIVER:
++		device_link_del(pwrseq->link);
++		break;
++	}
++
++	return NOTIFY_DONE;
++}
++
++int pci_pwrseq_device_enable(struct pci_pwrseq *pwrseq)
++{
++	if (!pwrseq->dev)
++		return -ENODEV;
++
++	pwrseq->nb.notifier_call = pci_pwrseq_notify;
++	bus_register_notifier(&pci_bus_type, &pwrseq->nb);
++
 +	pci_lock_rescan_remove();
- 	ret = pci_scan_root_bus_bridge(bridge);
++	pci_rescan_bus(to_pci_dev(pwrseq->dev->parent)->bus);
 +	pci_unlock_rescan_remove();
- 	if (ret < 0) {
- 		dev_err(bridge->dev.parent, "Scanning root bridge failed");
- 		return ret;
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(pci_pwrseq_device_enable);
++
++void pci_pwrseq_device_disable(struct pci_pwrseq *pwrseq)
++{
++	bus_unregister_notifier(&pci_bus_type, &pwrseq->nb);
++}
++EXPORT_SYMBOL_GPL(pci_pwrseq_device_disable);
++
++static void devm_pci_pwrseq_device_disable(void *data)
++{
++	struct pci_pwrseq *pwrseq = data;
++
++	pci_pwrseq_device_disable(pwrseq);
++}
++
++int devm_pci_pwrseq_device_enable(struct device *dev,
++				  struct pci_pwrseq *pwrseq)
++{
++	int ret;
++
++	ret = pci_pwrseq_device_enable(pwrseq);
++	if (ret)
++		return ret;
++
++	return devm_add_action_or_reset(dev, devm_pci_pwrseq_device_disable,
++					pwrseq);
++}
++EXPORT_SYMBOL_GPL(devm_pci_pwrseq_device_enable);
+diff --git a/include/linux/pci-pwrseq.h b/include/linux/pci-pwrseq.h
+new file mode 100644
+index 000000000000..137b82b99d1c
+--- /dev/null
++++ b/include/linux/pci-pwrseq.h
+@@ -0,0 +1,24 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * Copyright (C) 2024 Linaro Ltd.
++ */
++
++#ifndef __PCI_PWRSEQ_H__
++#define __PCI_PWRSEQ_H__
++
++#include <linux/notifier.h>
++
++struct device;
++
++struct pci_pwrseq {
++	struct notifier_block nb;
++	struct device *dev;
++	struct device_link *link;
++};
++
++int pci_pwrseq_device_enable(struct pci_pwrseq *pwrseq);
++void pci_pwrseq_device_disable(struct pci_pwrseq *pwrseq);
++int devm_pci_pwrseq_device_enable(struct device *dev,
++				  struct pci_pwrseq *pwrseq);
++
++#endif /* __PCI_PWRSEQ_H__ */
 -- 
 2.40.1
 
