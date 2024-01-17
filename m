@@ -1,187 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-7470-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF9428309B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 16:26:45 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7F02830A6D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 17:08:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5EA481F21CA2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 15:26:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 89BBBB217AE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jan 2024 16:08:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4473219F3;
-	Wed, 17 Jan 2024 15:26:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1495A224E0;
+	Wed, 17 Jan 2024 16:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aXHsUFqu"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="TpDV2iT9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C68219F1;
-	Wed, 17 Jan 2024 15:26:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B4C2230D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 16:08:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705505199; cv=none; b=dcGezV75UKZVOndlE/gdUJ/zu0Eg1RNEyue+j/0yK0rOQ/wQvRWHDnBaDW3ho4ndn7rx1gVlZb5HSkyGSsIdH81lrPhfEuwioiKyMi96VSfSfk/fbOUl6CttXciDODMOg5tXeBhgBijQa74LvZDWQkQJ/yPeUb59l/82LCv20wg=
+	t=1705507711; cv=none; b=D1zmYaZMS596eV6bL1P9N3jw5RxnqLUZTKwmoKSHpYPNMLJFqa5AoAfOI/8QpxoIr5Ujjh2zxtGFnyFnDINOVokAtNwxcLXWJsSstPpOtq3S979hAqrcQiLSiDPXVgIw5gvTOEwjV7KMgd5uohFr4De7YwgL8D9beOPNndE06VU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705505199; c=relaxed/simple;
-	bh=xAKMrhuiOukQEKS5pJ7/xw71Z9SHcT0YAv7W09qM11Q=;
-	h=Received:DKIM-Signature:Received:Received:Received:Message-ID:
-	 Date:MIME-Version:User-Agent:From:Subject:To:CC:References:
-	 Content-Language:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy:
-	 X-QCInternal:X-Proofpoint-Virus-Version:X-Proofpoint-GUID:
-	 X-Proofpoint-ORIG-GUID:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details; b=AQO4cTMKOBalrqL6jWvR5MGTlT51kmciqevtUEbgdZEH4gPZ8h+hrL3mTkjlyHbdAWH28JyEqLE/iKlq0bvmcaSMiA+OT6/ocTZA3eBEyFFCqRGBwUlSvEASxvdjajAkCYPB/RvYq/Cu5nlT81sXx3Yqtos2ZyAVD9qB7raKp9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aXHsUFqu; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40H8m6Yw010290;
-	Wed, 17 Jan 2024 15:25:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:from:subject:to:cc:references
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=lqcZoRCRAGlCFSFZQ18HYf55C6lUN1QWW7BD4CzZ8SA=; b=aX
-	HsUFquQ7zWim5EAjjnief79OxjVFjrnAbErXMVPMst4Vspq7dZVjFvi3ny7HvNRL
-	YS1dIviKZqwzNGI7bUM+QkR3QVGDBSz673dJMP4ojMhXyudDy6hzMexflckWA7Ab
-	laOnAzB1WFbOg26vG29g13O5cRmAh4Lta4tuxcMouACqQJ1bLbKaVxCgrFV5cHqh
-	je6NDNBfVDwaeb01k5XhGzsfWwEoLfVMuZUlBAxo+MAJPTcMl3F9jfK1IZQOb3XA
-	aG4nZiQ6l2RJ8wWk+Bm2FA9iiY02ymvMBJF29of78DsHM/eyF7r8Izv58PK1xk2N
-	vGgr5MawQGDkGAKO4K4A==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vp6qxhdeg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 17 Jan 2024 15:25:53 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40HFPqss004679
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 17 Jan 2024 15:25:52 GMT
-Received: from [10.253.79.191] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 17 Jan
- 2024 07:25:41 -0800
-Message-ID: <a7356a9b-fc55-4efc-9266-0cef21730d97@quicinc.com>
-Date: Wed, 17 Jan 2024 23:25:38 +0800
+	s=arc-20240116; t=1705507711; c=relaxed/simple;
+	bh=wTIEtPEGvHDDF+fKBFt7TJe6k9xnGtd2Jq24lFbXPO8=;
+	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Received:From:
+	 To:Cc:Subject:Date:Message-Id:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding; b=fN60NuzzJagn4YK6CCbYe4nXLuAWmnW5/NkQjRE99jw0ikGR6T61DI7oZfClO+A3mWtdHhDS2ht9lMmYLUKQz25EEQu41yd//ZRBVVvvfhhnqTv+tMjW2rLJBEVqHTQqqndBuIX6WzwCGm/vW0qL6+61lDXO6WeGS7dGUqls2bY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=TpDV2iT9; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-40e8cf57d03so4919215e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jan 2024 08:08:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1705507707; x=1706112507; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=MyUo/UL6AejHs5hrhdv6/x2YU8XtvFhHsaGgxgVP4HA=;
+        b=TpDV2iT90lWEt2PDlbBvIqdtaE8ty6Dx3WgPaYBm1o0EmGAUzNVEPbDh18GgDsbMFR
+         OZo7NO2iJLmX3MtgdcRUafr0R+LB/bbgH9Sy18xMH3rJ65M2vA103wNjGCk4t3+Ytgxt
+         15QJRPfyZYnQFDXtwZQpklWrYQUMlLPJc7IZ56QtYFPWyBqu56RaFIyRKPYJiMGutpPd
+         mdVlIaSYqHNY/eU6HVRqzFzm75fL49RD3UMRkmGsJTa6twUy6JWm21lwx+iLjUdT0sW4
+         leTdPs4H/AlTeQ6g15vh7AU7xl+cGEajnq//DLPAQ7if/YFLip6uH9rapj9NOhfZys8t
+         xf+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705507707; x=1706112507;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MyUo/UL6AejHs5hrhdv6/x2YU8XtvFhHsaGgxgVP4HA=;
+        b=bAmkuazjXPZb7hsJt8KUK6B0JtqeWY7S6Sxhx909a03xqzzuDUpXiKWvkQWRnlDiyj
+         dc7H8z8h4e63RFfrglkUOnyNmf0yzFEEnK/YruPDlMXXr4j3Tl0VVcstH3lZso7iGSz9
+         K6FT59H9ITGTWPwnsTrdaQCJkio5t0iAn7twbwnJSNzcDa40uZyW6iWZfchopw+wSU39
+         4veFpUE/Fix3/D79blZ/hdghIE9e53lu8vfmyLKB/p+N4NXH5/+DnkXUogchjutlu7in
+         wIwSopy5Ho5QVOvBbisVjpu3M5kDkW43v+J9yTyK0rweMUbcSiE9Lu1s1McnQ3aZMAAi
+         4zKQ==
+X-Gm-Message-State: AOJu0YydGdefAX6+zlFH7gmSK3gFgGjQLI0llZ5glrKINcbyakTUI56D
+	QFPVL5yBnD67fhbxXJhkel+0fi5s3LOXAg==
+X-Google-Smtp-Source: AGHT+IHlxHbmKVJpdUR6FTOE1NTTevtRRWD6ZNjn5U6+9dnAYa4RC2TRfYigQaqhNQbHmnO2nJkODQ==
+X-Received: by 2002:a05:600c:3506:b0:40c:3e6e:5466 with SMTP id h6-20020a05600c350600b0040c3e6e5466mr4763135wmq.182.1705507706783;
+        Wed, 17 Jan 2024 08:08:26 -0800 (PST)
+Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:d0b5:43ec:48:baad])
+        by smtp.gmail.com with ESMTPSA id t10-20020a5d6a4a000000b00337b0374a3dsm1972092wrw.57.2024.01.17.08.08.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Jan 2024 08:08:26 -0800 (PST)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+To: Kalle Valo <kvalo@kernel.org>,
+	"David S . Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Chris Morgan <macromorgan@hotmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	=?UTF-8?q?N=C3=ADcolas=20F=20=2E=20R=20=2E=20A=20=2E=20Prado?= <nfraprado@collabora.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Robert Richter <rrichter@amd.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Terry Bowman <terry.bowman@amd.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	Alex Elder <elder@linaro.org>,
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Abel Vesa <abel.vesa@linaro.org>
+Cc: linux-wireless@vger.kernel.org,
+	netdev@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-pci@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 0/9] PCI: introduce the concept of power sequencing of PCIe devices
+Date: Wed, 17 Jan 2024 17:07:39 +0100
+Message-Id: <20240117160748.37682-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.40.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Jie Luo <quic_luoj@quicinc.com>
-Subject: Re: [PATCH net-next 00/20] net: ethernet: Add qcom PPE driver
-To: Christian Marangi <ansuelsmth@gmail.com>
-CC: Jakub Kicinski <kuba@kernel.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <davem@davemloft.net>, <edumazet@google.com>, <pabeni@redhat.com>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <corbet@lwn.net>, <catalin.marinas@arm.com>,
-        <will@kernel.org>, <p.zabel@pengutronix.de>, <linux@armlinux.org.uk>,
-        <shannon.nelson@amd.com>, <anthony.l.nguyen@intel.com>,
-        <jasowang@redhat.com>, <brett.creeley@amd.com>,
-        <rrameshbabu@nvidia.com>, <joshua.a.hay@intel.com>, <arnd@arndb.de>,
-        <geert+renesas@glider.be>, <neil.armstrong@linaro.org>,
-        <dmitry.baryshkov@linaro.org>, <nfraprado@collabora.com>,
-        <m.szyprowski@samsung.com>, <u-kumar1@ti.com>,
-        <jacob.e.keller@intel.com>, <andrew@lunn.ch>, <netdev@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <ryazanov.s.a@gmail.com>,
-        <quic_kkumarcs@quicinc.com>, <quic_suruchia@quicinc.com>,
-        <quic_soni@quicinc.com>, <quic_pavir@quicinc.com>,
-        <quic_souravp@quicinc.com>, <quic_linchen@quicinc.com>,
-        <quic_leiwei@quicinc.com>
-References: <20240110114033.32575-1-quic_luoj@quicinc.com>
- <20240110142428.52026d9e@kernel.org>
- <5ec26378-a5ff-4de3-b69e-806e36907db6@quicinc.com>
- <65a17d68.050a0220.cf6ea.e78b@mx.google.com>
-Content-Language: en-US
-In-Reply-To: <65a17d68.050a0220.cf6ea.e78b@mx.google.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 2qgt36U1wFrD4gIUJ3HcrKsz2ZtWJbOK
-X-Proofpoint-ORIG-GUID: 2qgt36U1wFrD4gIUJ3HcrKsz2ZtWJbOK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-17_09,2024-01-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
- malwarescore=0 lowpriorityscore=0 priorityscore=1501 mlxlogscore=715
- adultscore=0 impostorscore=0 suspectscore=0 phishscore=0 bulkscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401170111
+Content-Transfer-Encoding: 8bit
 
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
+The responses to the RFC were rather positive so here's a proper series.
 
-On 1/13/2024 1:56 AM, Christian Marangi wrote:
-> On Thu, Jan 11, 2024 at 11:49:53PM +0800, Jie Luo wrote:
->>
->>
->> On 1/11/2024 6:24 AM, Jakub Kicinski wrote:
->>> On Wed, 10 Jan 2024 19:40:12 +0800 Luo Jie wrote:
->>>> The PPE(packet process engine) hardware block is available in Qualcomm
->>>> IPQ chipsets that support PPE architecture, such as IPQ9574 and IPQ5332.
->>>
->>> What's the relationship between this driver and QCA8084?
->>
->> The PPE (packet processing engine) is the network processing hardware block
->> in QCOM IPQ SoC. It includes the ethernet MAC and UNIPHY(PCS). This driver
->> is the base PPE driver which brings up the PPE and handles MAC/UNIPHY
->> operations. QCA8084 is the external 2.5Gbps 4-port PHY device, which can be
->> connected with PPE integrated MAC by UNIPHY(PCS).
->>
->> Here is the relationship.
->> PPE integrated MAC --- PPE integrated UNIPHY(PCS) --- (PCS)QCA8084.
->>
->>>
->>> In the last month I see separate changes from you for mdio-ipq4019.c,
->>> phy/at803x.c and now this driver (none of which got merged, AFAICT.)
->>> Are you actually the author of this code, or are you just trying
->>> to upstream bunch of vendor code?
->>
->> Yes, Jakub, there are two authors in these patch series, Lei Wei and me.
->> The patches are already ready for some time, the code has been verified
->> on the Qualcomm reference design board. These are not downstream drivers
->> but drivers re-written for upstream.
->>
->>>
->>> Now you're dumping another 10kLoC on the list, and even though this is
->>> hardly your first posting you're apparently not aware of our most basic
->>> posting rules:
->>> https://www.kernel.org/doc/html/next/process/maintainer-netdev.html#tl-dr
->>>
->>> The reviewers are getting frustrated. Please, help us help you.
->>> Stop throwing code at the list and work out a plan with Andrew
->>> and others on how to get something merged...
->>
->> Sorry for trouble caused, will learn about the guidance provided by
->> the review comments, and follow up on the guidance and have the full
->> internal review of the patch updates before pushing the patch series.
-> 
-> I renew my will of helping in any kind of manner in this, I love the
-> intention for EDMAv2 to have an upstream driver instead of SSDK, hoping
-> in the future to also have the same treatement for EDMAv1 (it's really a
-> pitty to have a support hole with ipq807x not supported)
-> 
-> Feel free to send an email or anything, considering this is massive, an
-> extra eye before sending might make things better than reaching (I can
-> already see this) a massive series with at least 20 revision given the
-> complexity of this thing.
-> 
+During last year's Linux Plumbers we had several discussions centered
+around the need to power-on PCI devices before they can be detected on
+the bus.
 
-Thanks Christian for the help. Yes, the EDMAV2 driver will be posted 
-some time after net-next is reopen and after this PPE driver patch 
-series resumes. The EDMAv2 driver will be posted as separate driver 
-series, which depends on this PPE driver. Currently we plan to post the 
-EDMAv2 driver support for IPQ5332 and IPQ9574 firstly. For IPQ807x, it 
-is a driver for an older architecture as you can see, but we will 
-consider this for the future.
+The consensus during the conference was that we need to introduce a
+class of "PCI slot drivers" that would handle the power-sequencing.
 
-We will certainly review it internally before publishing it later for 
-upstream review.
+After some additional brain-storming with Manivannan and the realization
+that DT maintainers won't like adding any "fake" nodes not representing
+actual devices, we decided to reuse existing PCI infrastructure.
+
+The general idea is to instantiate platform devices for child nodes of
+the PCIe port DT node. For those nodes for which a power-sequencing
+driver exists, we bind it and let it probe. The driver then triggers a
+rescan of the PCI bus with the aim of detecting the now powered-on
+device. The device will consume the same DT node as the platform,
+power-sequencing device. We use device links to make the latter become
+the parent of the former.
+
+The main advantage of this approach is not modifying the existing DT in
+any way and especially not adding any "fake" platform devices.
+
+Changes since RFC:
+- move the pwrseq functionality out of the port driver and into PCI core
+- add support for WCN7850 to the first pwrseq driver (and update bindings)
+- describe the WLAN modules in sm8550-qrd and sm8650-qrd
+- rework Kconfig options, drop the defconfig changes from the series as
+  they are no longer needed
+- drop the dt-binding changes for PCI vendor codes
+- extend the DT bindings for ath11k_pci with strict property checking
+- various minor tweaks and fixes
+
+Bartosz Golaszewski (7):
+  arm64: dts: qcom: qrb5165-rb5: describe the WLAN module of QCA6390
+  PCI: create platform devices for child OF nodes of the port node
+  PCI: hold the rescan mutex when scanning for the first time
+  PCI/pwrseq: add pwrseq core code
+  dt-bindings: wireless: ath11k: describe QCA6390
+  dt-bindings: wireless: ath11k: describe WCN7850
+  PCI/pwrseq: add a pwrseq driver for QCA6390
+
+Neil Armstrong (2):
+  arm64: dts: qcom: sm8550-qrd: add Wifi nodes
+  arm64: dts: qcom: sm8650-qrd: add Wifi nodes
+
+ .../net/wireless/qcom,ath11k-pci.yaml         |  89 ++++++
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts      |  29 ++
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  10 +
+ arch/arm64/boot/dts/qcom/sm8550-qrd.dts       |  37 +++
+ arch/arm64/boot/dts/qcom/sm8550.dtsi          |  10 +
+ arch/arm64/boot/dts/qcom/sm8650-qrd.dts       |  29 ++
+ arch/arm64/boot/dts/qcom/sm8650.dtsi          |  10 +
+ drivers/pci/Kconfig                           |   1 +
+ drivers/pci/Makefile                          |   1 +
+ drivers/pci/bus.c                             |   9 +-
+ drivers/pci/probe.c                           |   2 +
+ drivers/pci/pwrseq/Kconfig                    |  16 ++
+ drivers/pci/pwrseq/Makefile                   |   4 +
+ drivers/pci/pwrseq/pci-pwrseq-qca6390.c       | 267 ++++++++++++++++++
+ drivers/pci/pwrseq/pwrseq.c                   |  82 ++++++
+ drivers/pci/remove.c                          |   3 +-
+ include/linux/pci-pwrseq.h                    |  24 ++
+ 17 files changed, 621 insertions(+), 2 deletions(-)
+ create mode 100644 drivers/pci/pwrseq/Kconfig
+ create mode 100644 drivers/pci/pwrseq/Makefile
+ create mode 100644 drivers/pci/pwrseq/pci-pwrseq-qca6390.c
+ create mode 100644 drivers/pci/pwrseq/pwrseq.c
+ create mode 100644 include/linux/pci-pwrseq.h
+
+-- 
+2.40.1
+
 
