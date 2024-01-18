@@ -1,70 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-7529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 129DF83116C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 03:32:10 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55F998311EC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 04:53:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 76681B21844
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 02:32:07 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B7DC7B2194A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 03:53:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5104053A8;
-	Thu, 18 Jan 2024 02:32:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 975FE9447;
+	Thu, 18 Jan 2024 03:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pE1yfG+i"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SA+1KVm9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60D15390;
-	Thu, 18 Jan 2024 02:32:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB38C9442;
+	Thu, 18 Jan 2024 03:53:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705545123; cv=none; b=LcjLQRie7AxfU2ngUJUPPmyRFDK3rpayYZ7s6qYzznOAQcD0wteHjo/lRMGP7NtMHEOHTRxxTisfIAjN851SwKt52dmPdNZUipIQwvVa+43C/i8kCEANDF8pJbSLVGw7xZ096fRAbveU8qhUKFpx3T4I3g3wB4G12XYLBTMlQRM=
+	t=1705549995; cv=none; b=iFc5cpCuQInj0uVcEmSrJ/Ssm0NyW3gZrVPS6KqDx8gXOeqUA+/rIXya28gRAjsTGkp7LYFuaktl06DjtniUQZiqOR1LNe9vtBdhNBoCXl4fUTLR7dokaYGfJMPDnyu10vdXjGBSBfm6aXs+3QYukHlOuOU5miMb3K2GSC5dhok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705545123; c=relaxed/simple;
-	bh=2AFiLHPjv11J5wgd2yLlbYm0jjajl8MOIi/30DgAQas=;
+	s=arc-20240116; t=1705549995; c=relaxed/simple;
+	bh=uKYbhZDXVvMeXe/BI115uaGmj5x/sAaoCFBNqhAx4FQ=;
 	h=Received:DKIM-Signature:Received:Received:Received:From:Date:
 	 Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	 Message-ID:X-B4-Tracking:To:CC:X-Mailer:X-Developer-Signature:
 	 X-Developer-Key:X-Originating-IP:X-ClientProxiedBy:X-QCInternal:
 	 X-Proofpoint-Virus-Version:X-Proofpoint-ORIG-GUID:
 	 X-Proofpoint-GUID:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details; b=b7aPWnOW7mjl221n616CvUbCwi2s+2xhaAFQPgjrSBNASt3I0RmgdB4VUcLZb05Khjl/cR4JbCXKMQbtbykIoXDZbvqgxQrENqfCIDRAooPTxJE+tL3f94crvPRMqhbpxa7eMBSmuKmjXq/pD9zfbow2WHjAIHSKQDWnH/p1mpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pE1yfG+i; arc=none smtp.client-ip=205.220.180.131
+	 X-Proofpoint-Spam-Details; b=q0kYLpEYgPklaCEfkVoWKpY4aMjf4tBM9wTT2eTe+ULbk34uMC+Snk6jKhJiBt8C2B5aRDt2Em8+A0xjzXNVQds7XoB7hB8TrGcXvGcWn2/ALAlfyspIIIzEalB+FVQTPq5iMC+UX7e1BS6MP6OBpgTsN/oN1ICsfEzMsbdKp0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SA+1KVm9; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40I1agoa020450;
-	Thu, 18 Jan 2024 02:31:54 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40I3cZcd026378;
+	Thu, 18 Jan 2024 03:53:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	from:date:subject:mime-version:content-type
-	:content-transfer-encoding:message-id:to:cc; s=qcppdkim1; bh=Zjs
-	RlO7mwwosIWBApz90emwsBH9/yq4Qw4oMJBEg/FY=; b=pE1yfG+iit1gpzRNT9b
-	N/koBbgJlJQ5FxBmPBVHKuYVa2Nx4IKeAae51nAnFxWbsyYGQ/5MmUXPaMnEwcra
-	hSkBfPb3v6IUZhzVWEHvODxuFa4+dpdpD5+jYjhneLFWYjuuq8L01lyFbM9XAWiD
-	+B3coNZS1Ye5bB9PThHt/k9PSDjSrMU1R4vBmGQUWtRy9qENvO11ZF7Rd0AbANaR
-	AP5px97zG4RPzcoOWNgLjKwPhv2WXHYqlcMO9HLlKLUjnSY5Jgk2l22roXKtk+s5
-	jKk+QH8rNrXd9SQ9YSOHvzp0HRyhQVySwuyWbZCuX99QeZag5z6ajoQPyoTPmzCh
-	ObA==
+	:content-transfer-encoding:message-id:to:cc; s=qcppdkim1; bh=/FF
+	S3uofgLqX7Hi094cPwBpyKwpIgFMIcpb4zu6EQVg=; b=SA+1KVm9MeAe5IUG1bm
+	Y8GI1Fc7C8xGg5h4/pUPRJVCg61PfrF3bDexGc1S/Qs5+ZGB+aCSr9JZ1xzxtC7+
+	78xmkWRHqRdCgvzkjjZRG/1XLQ0O5P2xi5RSSwCoBkiOfCqYPcTE9oZWlv4UvL8r
+	AIJfi91mToBcfhh50EzRFvkgHTbNnQX9gXL6hwcd9jvJG/lgv2KMEz45LnRLmDGS
+	iQegA6nJeG38tSb9azkt9fIF2j4JW2Lt+k8k6pA8D6F/pioBXomPYum2ZlJcWfAk
+	jPTO4iz8eOqoTZ4YEBaebNzfJCIMSeemJ6RwdxclxVxQkO6lulnW8wdlDaWRV2v1
+	l7A==
 Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vpkjrgytq-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vpm1fryvr-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Jan 2024 02:31:54 +0000 (GMT)
+	Thu, 18 Jan 2024 03:53:09 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40I2Vrsb022862
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40I3r8xm000642
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Jan 2024 02:31:53 GMT
+	Thu, 18 Jan 2024 03:53:08 GMT
 Received: from [169.254.0.1] (10.49.16.6) by nalasex01c.na.qualcomm.com
  (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 17 Jan
- 2024 18:31:52 -0800
+ 2024 19:53:08 -0800
 From: Bjorn Andersson <quic_bjorande@quicinc.com>
-Date: Wed, 17 Jan 2024 18:31:52 -0800
-Subject: [PATCH v3] soc: qcom: aoss: Add debugfs interface for sending
- messages
+Date: Wed, 17 Jan 2024 19:52:56 -0800
+Subject: [PATCH] soc: qcom: aoss: Add tracepoints in qmp_send()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,209 +72,150 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20240117-qcom-aoss-debugfs-v2-v3-1-1aa779124822@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAJeNqGUC/zXNyw6CMBCF4Vchs3ZIL5CCK9/DGFPKAGNiC60QE
- 8K7W01cfov/nB0SRaYE52KHSBsnDj5Dnwpwk/UjIffZoISqhJQGFxeeaENK2FO3jkPCTWFNqu5
- kqyuSLeR0jjTw+zd7vWUPMUevKZL9j2nRSKlE3ei2NMpoo1HjsrK7d48Qre/p8hV7V+ZDOI4P/
- zYpXKoAAAA=
+Message-ID: <20240117-qcom-aoss-tracepoints-v1-1-4f935920cf4b@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAJegqGUC/x2NQQrCQAwAv1JyNlBTROtXxEM2Rhuo2bqpUij9e
+ xePMzDMCqHFNODarFD0Z2HZKxwPDcjA/lK0R2Wglrq2pzN+JL+RcwTOhUWnbD4HyunSkTBpoh5
+ qmzgUU2GXodb+Hccqp6JPW/6z233bdiFk/cJ8AAAA
 To: Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio
 	<konrad.dybcio@linaro.org>
 CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "Andrew
- Lunn" <andrew@lunn.ch>,
-        Stephen Hemminger <stephen@networkplumber.org>,
-        "Bjorn Andersson" <quic_bjorande@quicinc.com>
+        <quic_clew@quicinc.com>, Bjorn Andersson <quic_bjorande@quicinc.com>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1705545112; l=4990;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1705549988; l=3208;
  i=quic_bjorande@quicinc.com; s=20230915; h=from:subject:message-id;
- bh=2AFiLHPjv11J5wgd2yLlbYm0jjajl8MOIi/30DgAQas=;
- b=m07jczbIJNa+DgqN8D2Jq8F/8p/Hrf5M8BRGa/9F9IMqKgYEBdP09laSEDIRna4rp7IlhO2Bq
- OwKvsSZhU8mDuyX7/Kjg3Yai05oeECVqIweMLzkHCJoYmWqziWN8JeK
+ bh=uKYbhZDXVvMeXe/BI115uaGmj5x/sAaoCFBNqhAx4FQ=;
+ b=v1Pt0gFw703gRW4WAVGjoJZQXLexyeFDcc78IjpHFygfKPmBivQxzhewC0byT7DhL46FuO0f7
+ jg6JeJnNQWrCDen0UBLavYTBmczzgIJIKBw6UQIsx52JcCeB08vGRsJ
 X-Developer-Key: i=quic_bjorande@quicinc.com; a=ed25519;
  pk=VkhObtljigy9k0ZUIE1Mvr0Y+E1dgBEH9WoLQnUtbIM=
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: BlxtklgZSl4ljmdi-wkohFquv5gfiuyx
-X-Proofpoint-GUID: BlxtklgZSl4ljmdi-wkohFquv5gfiuyx
+X-Proofpoint-ORIG-GUID: _DXbOpG5chHE19HvBflBfqGol2Ikenx7
+X-Proofpoint-GUID: _DXbOpG5chHE19HvBflBfqGol2Ikenx7
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-01-17_14,2024-01-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
- lowpriorityscore=0 suspectscore=0 adultscore=0 impostorscore=0
- mlxlogscore=999 clxscore=1011 malwarescore=0 priorityscore=1501
- spamscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401180015
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxlogscore=999
+ suspectscore=0 lowpriorityscore=0 adultscore=0 bulkscore=0 mlxscore=0
+ phishscore=0 spamscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
+ definitions=main-2401180025
 
-In addition to the normal runtime commands, the Always On Processor
-(AOP) provides a number of debug commands which can be used during
-system debugging for things such as preventing power collapse or placing
-floor votes for certain resources. Some of these are documented in the
-Robotics RB5 "Debug AOP ADB" linked below.
+Add tracepoint for tracing the messages being sent and the success
+thereof. This is useful as the system has a variety of clients sending
+requests to the always-on subsystem.
 
-Provide a debugfs interface for the developer/tester to send some of
-these commands to the AOP, which allow the user to override the DDR
-frequency, preventing power collapse of cx and ddr, and prevent AOSS
-from going to sleep.
-
-Link: https://docs.qualcomm.com/bundle/publicresource/topics/80-88500-3/85_Debugging_AOP_ADB.html
 Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 ---
-Changes in v3:
-- Stop passing command string straight from userspace to the firmware
-- Format the commands in the driver instead
-- Provide a few useful commands
-- Link to v2: https://lore.kernel.org/linux-arm-msm/20230811205839.727373-3-quic_bjorande@quicinc.com/
----
- drivers/soc/qcom/qcom_aoss.c | 94 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 94 insertions(+)
+ drivers/soc/qcom/Makefile     |  1 +
+ drivers/soc/qcom/qcom_aoss.c  |  7 +++++++
+ drivers/soc/qcom/trace-aoss.h | 48 +++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 56 insertions(+)
 
+diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+index 05b3d54e8dc9..9268e15e1719 100644
+--- a/drivers/soc/qcom/Makefile
++++ b/drivers/soc/qcom/Makefile
+@@ -1,5 +1,6 @@
+ # SPDX-License-Identifier: GPL-2.0
+ CFLAGS_rpmh-rsc.o := -I$(src)
++CFLAGS_qcom_aoss.o := -I$(src)
+ obj-$(CONFIG_QCOM_AOSS_QMP) +=	qcom_aoss.o
+ obj-$(CONFIG_QCOM_GENI_SE) +=	qcom-geni-se.o
+ obj-$(CONFIG_QCOM_COMMAND_DB) += cmd-db.o
 diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
-index aff0cfb71482..30c7d59d3424 100644
+index aff0cfb71482..db94b2d17e7d 100644
 --- a/drivers/soc/qcom/qcom_aoss.c
 +++ b/drivers/soc/qcom/qcom_aoss.c
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2019, Linaro Ltd
-  */
- #include <linux/clk-provider.h>
-+#include <linux/debugfs.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
- #include <linux/mailbox_client.h>
-@@ -44,6 +45,8 @@
+@@ -13,6 +13,9 @@
+ #include <linux/slab.h>
+ #include <linux/soc/qcom/qcom_aoss.h>
  
- #define QMP_NUM_COOLING_RESOURCES	2
++#define CREATE_TRACE_POINTS
++#include "trace-aoss.h"
++
+ #define QMP_DESC_MAGIC			0x0
+ #define QMP_DESC_VERSION		0x4
+ #define QMP_DESC_FEATURES		0x8
+@@ -235,6 +238,8 @@ int qmp_send(struct qmp *qmp, const char *fmt, ...)
  
-+#define QMP_DEBUGFS_FILES		4
-+
- static bool qmp_cdev_max_state = 1;
+ 	mutex_lock(&qmp->tx_lock);
  
- struct qmp_cooling_device {
-@@ -82,6 +85,8 @@ struct qmp {
++	trace_aoss_send(buf);
++
+ 	/* The message RAM only implements 32-bit accesses */
+ 	__iowrite32_copy(qmp->msgram + qmp->offset + sizeof(u32),
+ 			 buf, sizeof(buf) / sizeof(u32));
+@@ -256,6 +261,8 @@ int qmp_send(struct qmp *qmp, const char *fmt, ...)
+ 		ret = 0;
+ 	}
  
- 	struct clk_hw qdss_clk;
- 	struct qmp_cooling_device *cooling_devs;
-+	struct dentry *debugfs_root;
-+	struct dentry *debugfs_files[QMP_DEBUGFS_FILES];
- };
++	trace_aoss_send_done(buf, ret);
++
+ 	mutex_unlock(&qmp->tx_lock);
  
- static void qmp_kick(struct qmp *qmp)
-@@ -475,6 +480,91 @@ void qmp_put(struct qmp *qmp)
- }
- EXPORT_SYMBOL_GPL(qmp_put);
- 
-+struct qmp_debugfs_entry {
-+	const char *name;
-+	const char *fmt;
-+	bool is_bool;
-+	const char *true_val;
-+	const char *false_val;
-+};
+ 	return ret;
+diff --git a/drivers/soc/qcom/trace-aoss.h b/drivers/soc/qcom/trace-aoss.h
+new file mode 100644
+index 000000000000..48cd3f0f4cb8
+--- /dev/null
++++ b/drivers/soc/qcom/trace-aoss.h
+@@ -0,0 +1,48 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ */
 +
-+static const struct qmp_debugfs_entry qmp_debugfs_entries[QMP_DEBUGFS_FILES] = {
-+	{ "ddr_frequency_mhz", "{class: ddr, res: fixed, val: %u}", false },
-+	{ "prevent_aoss_sleep", "{class: aoss_slp, res: sleep: %s}", true, "enable", "disable" },
-+	{ "prevent_cx_collapse", "{class: cx_mol, res: cx, val: %s}", true, "mol", "off" },
-+	{ "prevent_ddr_collapse", "{class: ddr_mol, res: ddr, val: %s}", true, "mol", "off" },
-+};
++#undef TRACE_SYSTEM
++#define TRACE_SYSTEM qcom_aoss
 +
-+static ssize_t qmp_debugfs_write(struct file *file, const char __user *user_buf,
-+				 size_t count, loff_t *pos)
-+{
-+	const struct qmp_debugfs_entry *entry = NULL;
-+	struct qmp *qmp = file->private_data;
-+	char buf[QMP_MSG_LEN];
-+	unsigned int uint_val;
-+	const char *str_val;
-+	bool bool_val;
-+	int ret;
-+	int i;
++#if !defined(_TRACE_RPMH_H) || defined(TRACE_HEADER_MULTI_READ)
++#define _TRACE_RPMH_H
 +
-+	for (i = 0; i < ARRAY_SIZE(qmp->debugfs_files); i++) {
-+		if (qmp->debugfs_files[i] == file->f_path.dentry) {
-+			entry = &qmp_debugfs_entries[i];
-+			break;
-+		}
-+	}
-+	if (WARN_ON(!entry))
-+		return -EFAULT;
++#include <linux/tracepoint.h>
 +
-+	if (entry->is_bool) {
-+		ret = kstrtobool_from_user(user_buf, count, &bool_val);
-+		if (ret)
-+			return ret;
++TRACE_EVENT(aoss_send,
++	TP_PROTO(const char *msg),
++	TP_ARGS(msg),
++	TP_STRUCT__entry(
++		__string(msg, msg)
++	),
++	TP_fast_assign(
++		__assign_str(msg, msg);
++	),
++	TP_printk("%s", __get_str(msg))
++);
 +
-+		str_val = bool_val ? entry->true_val : entry->false_val;
++TRACE_EVENT(aoss_send_done,
++	TP_PROTO(const char *msg, int ret),
++	TP_ARGS(msg, ret),
++	TP_STRUCT__entry(
++		__string(msg, msg)
++		__field(int, ret)
++	),
++	TP_fast_assign(
++		__assign_str(msg, msg);
++		__entry->ret = ret;
++	),
++	TP_printk("%s: %d", __get_str(msg), __entry->ret)
++);
 +
-+		ret = snprintf(buf, sizeof(buf), entry->fmt, str_val);
-+		if (ret >= sizeof(buf))
-+			return -EINVAL;
-+	} else {
-+		ret = kstrtou32_from_user(user_buf, count, 0, &uint_val);
-+		if (ret)
-+			return ret;
++#endif /* _TRACE_RPMH_H */
 +
-+		ret = snprintf(buf, sizeof(buf), entry->fmt, uint_val);
-+		if (ret >= sizeof(buf))
-+			return -EINVAL;
-+	}
++#undef TRACE_INCLUDE_PATH
++#define TRACE_INCLUDE_PATH .
 +
-+	ret = qmp_send(qmp, buf);
-+	if (ret < 0)
-+		return ret;
++#undef TRACE_INCLUDE_FILE
++#define TRACE_INCLUDE_FILE trace-aoss
 +
-+	return count;
-+}
-+
-+static const struct file_operations qmp_debugfs_fops = {
-+	.open = simple_open,
-+	.write = qmp_debugfs_write,
-+};
-+
-+static void qmp_debugfs_create(struct qmp *qmp)
-+{
-+	const struct qmp_debugfs_entry *entry;
-+	int i;
-+
-+	qmp->debugfs_root = debugfs_create_dir("qcom_aoss", NULL);
-+
-+	for (i = 0; i < ARRAY_SIZE(qmp->debugfs_files); i++) {
-+		entry = &qmp_debugfs_entries[i];
-+
-+		qmp->debugfs_files[i] = debugfs_create_file(entry->name, 0220,
-+							    qmp->debugfs_root,
-+							    qmp,
-+							    &qmp_debugfs_fops);
-+	}
-+}
-+
- static int qmp_probe(struct platform_device *pdev)
- {
- 	struct qmp *qmp;
-@@ -523,6 +613,8 @@ static int qmp_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, qmp);
- 
-+	qmp_debugfs_create(qmp);
-+
- 	return 0;
- 
- err_close_qmp:
-@@ -537,6 +629,8 @@ static void qmp_remove(struct platform_device *pdev)
- {
- 	struct qmp *qmp = platform_get_drvdata(pdev);
- 
-+	debugfs_remove_recursive(qmp->debugfs_root);
-+
- 	qmp_qdss_clk_remove(qmp);
- 	qmp_cooling_devices_remove(qmp);
- 
++#include <trace/define_trace.h>
 
 ---
 base-commit: 943b9f0ab2cfbaea148dd6ac279957eb08b96904
-change-id: 20240117-qcom-aoss-debugfs-v2-5e25b1934e19
+change-id: 20230927-qcom-aoss-tracepoints-c5832ca2eb29
 
 Best regards,
 -- 
