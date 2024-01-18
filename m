@@ -1,113 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-7555-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C9D4831AAE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 14:36:32 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A4609831AA9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 14:34:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DEADE1F229DD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 13:36:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 330531F2118D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 13:34:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 724B625541;
-	Thu, 18 Jan 2024 13:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 291C825551;
+	Thu, 18 Jan 2024 13:34:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="B+Ix+HCw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m49197.qiye.163.com (mail-m49197.qiye.163.com [45.254.49.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115451E531;
-	Thu, 18 Jan 2024 13:36:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BA9424B42
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 13:34:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705584985; cv=none; b=ep9T7bD1FMPQcT7qvAFCuuo17n8NZZlWwgbg75D81PoxZN1XNauvU66xAlVi70gcM5F4oq/3hZKXWAySvcqqGlwWsuBOK92rrhHNRaeMYxyaxToSBhwbvgbsuehLqCAe2rXeO1iq4HigAadjtPzRCVdsaWquiyfX8oR446TuC4E=
+	t=1705584862; cv=none; b=mfaJ2jmxBh9VQ5sJogPCNbWsbZ+t++MAMNstqrFY4MTZAEAtO9DpBlasgV3Oq2icL1WOwfJ1JPvo8KXQYD6lVZ3TGLYH0Toz8OklRCvq22jGJKjnxHz6IStIRUnHZWm8rUYaE/swEQMCIGzWIDrC6EaR3xcjZZuIbWjAxAWDLvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705584985; c=relaxed/simple;
-	bh=6HbT2TMGthwgtVSIaK7teCrAT9dq/hLGM7wI/HBy21U=;
-	h=Received:From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:
-	 References:MIME-Version:Content-Transfer-Encoding:X-HM-Spam-Status:
-	 X-HM-Tid:X-HM-MType:X-HM-Sender-Digest; b=TQImjODjPahMDJTXzZmsIgtLVE7QvX/uKhitYA8oBYoum1JW8API9Ub0SQJAjPFIzM1IFlJduuLOTLvAHbQk3rgps378jMk/Z0mOyMj9XpRrJopfVd2peq6sWt59kUt2WgyC1b9NMfVuEJF/bVhnRF5PUMOH5YQZz7iCzKO+1y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
-Received: from amadeus-Vostro-3710.lan (unknown [113.118.189.0])
-	by mail-m121144.qiye.163.com (Hmail) with ESMTPA id 2B904AC0104;
-	Thu, 18 Jan 2024 21:30:29 +0800 (CST)
-From: Chukun Pan <amadeus@jmu.edu.cn>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Chukun Pan <amadeus@jmu.edu.cn>
-Subject: [PATCH v3 2/2] arm64: dts: qcom: ipq6018: enable sdhci node
-Date: Thu, 18 Jan 2024 21:30:22 +0800
-Message-Id: <20240118133022.553339-3-amadeus@jmu.edu.cn>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240118133022.553339-1-amadeus@jmu.edu.cn>
-References: <20240118133022.553339-1-amadeus@jmu.edu.cn>
+	s=arc-20240116; t=1705584862; c=relaxed/simple;
+	bh=cvBbavxq/YxOjTZc3o8gTyrEuL5y+Usgr/yLRKRZpFI=;
+	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:Content-Language:
+	 To:Cc:References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding; b=gDhPOrFwOqG7ssDl4Zv/MJik37DzkEwS2RyjodC47JNkKxPpBThhcRsLMO+M4pDifRKx9rOFK71XqUEgPH6wNfljLnQVRxsSv9rrY+ucyaISv5aeuqQAkijydcRRsvBlD0YQdmagpM3sOUU0juyYW/DT9otdbh7RhAzvMkYw1Ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=B+Ix+HCw; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-40e775695c6so35799045e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 05:34:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1705584859; x=1706189659; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4YHeLV0TQs3MeVFgQiX7V8lAzpJlQDaK5HPvbw2WeUM=;
+        b=B+Ix+HCwDjC2JTCpcF/fKiYxYP8ABgwEwt6PPwomv8UGsiJjAGexglVJ5isGo9PAVN
+         uuvqWjDfZ+3B9TcxERoMQttD4DxhiTHu2vGrJR+gR+qCFfgIvEb8hxIie+VJPDfFn/Lq
+         bPXtS0nw2TvpIk2DOTwrExVq7i4Fdt/jCbcbBDAQ2xhVyej53uTode9SRuCyifgCveNq
+         G8uI5CeEXAUueAjyNw2PpO2wXmqTXbQ9Ylr+17KAjD6DU3bi6vNBniDyIB+sGLSZ68ou
+         P7PVN9Thte8BE6rkWL9hgoy5RcaJqAsfloH5++U5DxYgNOEdH/qjfqwAdxI7bnp57JGD
+         +dZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705584859; x=1706189659;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4YHeLV0TQs3MeVFgQiX7V8lAzpJlQDaK5HPvbw2WeUM=;
+        b=fdizAXra9/QAPXNh5QQjT6vP+vZOuGTAlmPZPoEncUChxGyQidmpx39rrx/Q2NGqo3
+         RvLf4OqtcPpM1wlubrXFQZsXQLzA+/wbe/6v7p0jVy5MMKrKRNw/b2Wg219Se0pwh5gy
+         Fc0R6pbwNTjIpWbjbMkfKrIM+dq26fWcZ/YAMuU/j7DpNyZ8MtIkHmTvKGKdfBmfMYOg
+         o9maqsJvpbmhlcMH6k0vDxrks5jToPqBpSoHaa2CBMnOPg4uvRzF+S8uaO5IkZVDkdey
+         +zyl4KxFNxvRkv2NpO4y1/ZHuR+oMx0XgF6C8AjV4P1Mmhzu9IfFIZlrCdJKQiuh31QU
+         sRvA==
+X-Gm-Message-State: AOJu0YyLQ3Kk/G5S8g3qAnqYVlT2TAMx0mHN0tk9mtsXQYvDGlLyssip
+	sWfaBqBFIFaKx2+mhn+/4plhy3N+lPv3bw9EkStjWQuUnnPpesy1mcIG31afSko=
+X-Google-Smtp-Source: AGHT+IFjO+J+fPdCGYBGEmiIzZ273KdF1+pqEd1e1bkQkfXM4BvS/2gJPylNcqOCshGB4EJoZn84vA==
+X-Received: by 2002:a1c:7510:0:b0:40e:89da:7b71 with SMTP id o16-20020a1c7510000000b0040e89da7b71mr538405wmc.100.1705584858904;
+        Thu, 18 Jan 2024 05:34:18 -0800 (PST)
+Received: from [192.168.100.86] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id j7-20020a05600c190700b0040e52cac976sm29348312wmq.29.2024.01.18.05.34.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Jan 2024 05:34:18 -0800 (PST)
+Message-ID: <da27f648-fca4-42a5-8099-e6e19fa76220@linaro.org>
+Date: Thu, 18 Jan 2024 13:34:17 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZSB5IVhhOHRgZTBlCSkhNSlUTARMWGhIXJBQOD1
-	lXWRgSC1lBWUpKSFVKSkNVSkNCVUtZV1kWGg8SFR0UWUFZT0tIVUpIQ0xISlVKS0tVS1kG
-X-HM-Tid: 0a8d1cc416abb039kuuu2b904ac0104
-X-HM-MType: 10
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6Ojo6Ohw6MzwjOhcjMhYhNQoR
-	F0sKFExVSlVKTEtOTkNPTUlCQk5NVTMWGhIXVRoWGh8eDgg7ERYOVR4fDlUYFUVZV1kSC1lBWUpK
-	SFVKSkNVSkNCVUtZV1kIAVlBSU1MSjcG
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] media: venus: add new rate control type MBR for
+ encoder
+Content-Language: en-US
+To: Sachin Kumar Garg <quic_sachinku@quicinc.com>, hverkuil-cisco@xs4all.nl,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20240118105934.137919-1-quic_sachinku@quicinc.com>
+ <20240118105934.137919-3-quic_sachinku@quicinc.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20240118105934.137919-3-quic_sachinku@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Enable mmc device found on ipq6018 devices.
-This node supports both eMMC and SD cards.
+On 18/01/2024 10:59, Sachin Kumar Garg wrote:
+>   
+> -		switch (*in) {
+> -		case HFI_RATE_CONTROL_OFF:
+> -		case HFI_RATE_CONTROL_CBR_CFR:
+> -		case HFI_RATE_CONTROL_CBR_VFR:
+> -		case HFI_RATE_CONTROL_VBR_CFR:
+> -		case HFI_RATE_CONTROL_VBR_VFR:
+> -		case HFI_RATE_CONTROL_CQ:
+> -			break;
+> -		default:
+> -			ret = -EINVAL;
+> -			break;
+> +		if (hfi_ver == HFI_VERSION_4XX) {
+> +			switch (*in) {
+> +			case HFI_RATE_CONTROL_OFF:
+> +			case HFI_RATE_CONTROL_CBR_CFR:
+> +			case HFI_RATE_CONTROL_CBR_VFR:
+> +			case HFI_RATE_CONTROL_VBR_CFR:
+> +			case HFI_RATE_CONTROL_VBR_VFR:
+> +			case HFI_RATE_CONTROL_CQ:
+> +			case HFI_RATE_CONTROL_MBR_CFR:
+> +				break;
+> +			default:
+> +				ret = -EINVAL;
+> +				break;
+> +			}
+> +		} else {
+> +			switch (*in) {
+> +			case HFI_RATE_CONTROL_OFF:
+> +			case HFI_RATE_CONTROL_CBR_CFR:
+> +			case HFI_RATE_CONTROL_CBR_VFR:
+> +			case HFI_RATE_CONTROL_VBR_CFR:
+> +			case HFI_RATE_CONTROL_VBR_VFR:
+> +			case HFI_RATE_CONTROL_CQ:
+> +				break;
+> +			default:
+> +				ret = -EINVAL;
+> +				break;
+> +			}
 
-Tested with:
-  eMMC (HS200)
-  SD Card (SDR50/SDR104)
+The if/else you have here seems like a needless replication
 
-Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+Just have =>
+
+case HFI_RATE_CONTROL_MBR_CFR:
+    if (hfi_ver == HFI_VERSION_4XX)
+
 ---
- arch/arm64/boot/dts/qcom/ipq6018.dtsi | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index 322eced0b876..420c192bccd9 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -441,6 +441,25 @@ dwc_1: usb@7000000 {
- 			};
- 		};
- 
-+		sdhc: mmc@7804000 {
-+			compatible = "qcom,ipq6018-sdhci", "qcom,sdhci-msm-v5";
-+			reg = <0x0 0x7804000 0x0 0x1000>,
-+			      <0x0 0x7805000 0x0 0x1000>;
-+			reg-names = "hc", "cqhci";
-+
-+			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hc_irq", "pwr_irq";
-+
-+			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-+				 <&gcc GCC_SDCC1_APPS_CLK>,
-+				 <&xo>;
-+			clock-names = "iface", "core", "xo";
-+			resets = <&gcc GCC_SDCC1_BCR>;
-+			max-frequency = <192000000>;
-+			status = "disabled";
-+		};
-+
- 		blsp_dma: dma-controller@7884000 {
- 			compatible = "qcom,bam-v1.7.0";
- 			reg = <0x0 0x07884000 0x0 0x2b000>;
--- 
-2.25.1
-
+bod
 
