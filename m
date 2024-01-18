@@ -1,123 +1,284 @@
-Return-Path: <linux-arm-msm+bounces-7528-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A111831151
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 03:17:15 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 129DF83116C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 03:32:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BF2B31F2366C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 02:17:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 76681B21844
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 02:32:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D5F24699;
-	Thu, 18 Jan 2024 02:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5104053A8;
+	Thu, 18 Jan 2024 02:32:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pE1yfG+i"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFCC14688;
-	Thu, 18 Jan 2024 02:17:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60D15390;
+	Thu, 18 Jan 2024 02:32:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705544230; cv=none; b=RJNZbros9eI4DWn+QznziL3ZW+xUPLYwx0ney71VSG8hn2Hon4ZzIvdch6laCDDxtMfWe9YhDGm7PoP/c3R/GLaoXM0eTAAgK1+Wku4uLbJV49U1v+HUO9puVc0r1jGUSG3D4urgMiTtInK+Fc+7XooSSSw6gJPJRoFRNpQ9zyc=
+	t=1705545123; cv=none; b=LcjLQRie7AxfU2ngUJUPPmyRFDK3rpayYZ7s6qYzznOAQcD0wteHjo/lRMGP7NtMHEOHTRxxTisfIAjN851SwKt52dmPdNZUipIQwvVa+43C/i8kCEANDF8pJbSLVGw7xZ096fRAbveU8qhUKFpx3T4I3g3wB4G12XYLBTMlQRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705544230; c=relaxed/simple;
-	bh=6momQ9QB/Y9Ip/Db3KbIXMpQk/LKk7SNvyM7o6RGisk=;
-	h=X-UUID:X-CID-P-RULE:X-CID-O-INFO:X-CID-INFO:X-CID-META:X-CID-BVR:
-	 X-CID-BAS:X-CID-FACTOR:X-UUID:Received:Received:X-ns-mid:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:Content-Language:
-	 To:Cc:References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding; b=rgu7TsCqdaabG4yBgPdns6tQAbMOuTsVju0H4YZ68MRVCJM+IXiUWYNOJ0kWD6tv2OTnXN+9Vco+wc4Eu/BzDnOWl6JuQ/FV5wlnKn/tkVfy/qRwaiiVDnE9tSosKNrwC98KnD1H8zfKboz6EYnyxPNWxGkoue5wRzFv6kA8XYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 43d0795174294d89904cf0b7504238dd-20240118
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.1.35,REQID:1c0bfad0-7b29-415b-9fa2-010a6f2d21e5,IP:10,
-	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:-9,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
-	N:release,TS:1
-X-CID-INFO: VERSION:1.1.35,REQID:1c0bfad0-7b29-415b-9fa2-010a6f2d21e5,IP:10,UR
-	L:0,TC:0,Content:0,EDM:0,RT:0,SF:-9,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
-	release,TS:1
-X-CID-META: VersionHash:5d391d7,CLOUDID:7c56f882-8d4f-477b-89d2-1e3bdbef96d1,B
-	ulkID:240118101702QKGYL0XV,BulkQuantity:0,Recheck:0,SF:38|24|17|19|42|74|6
-	4|66|102,TC:nil,Content:0,EDM:-3,IP:-2,URL:0,File:nil,Bulk:nil,QS:nil,BEC:
-	nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0
-X-CID-BVR: 0,NGT
-X-CID-BAS: 0,NGT,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD,TF_CID_SPAM_FSI
-X-UUID: 43d0795174294d89904cf0b7504238dd-20240118
-Received: from mail.kylinos.cn [(39.156.73.10)] by mailgw
-	(envelope-from <chentao@kylinos.cn>)
-	(Generic MTA)
-	with ESMTP id 1202952070; Thu, 18 Jan 2024 10:17:02 +0800
-Received: from mail.kylinos.cn (localhost [127.0.0.1])
-	by mail.kylinos.cn (NSMail) with SMTP id B3C66E000EB9;
-	Thu, 18 Jan 2024 10:17:01 +0800 (CST)
-X-ns-mid: postfix-65A88A1D-552403442
-Received: from [172.20.15.234] (unknown [172.20.15.234])
-	by mail.kylinos.cn (NSMail) with ESMTPA id 36366E000EB9;
-	Thu, 18 Jan 2024 10:16:58 +0800 (CST)
-Message-ID: <4d4f4ae4-e5e9-4d9e-ac25-d262e7ea23fc@kylinos.cn>
-Date: Thu, 18 Jan 2024 10:16:57 +0800
+	s=arc-20240116; t=1705545123; c=relaxed/simple;
+	bh=2AFiLHPjv11J5wgd2yLlbYm0jjajl8MOIi/30DgAQas=;
+	h=Received:DKIM-Signature:Received:Received:Received:From:Date:
+	 Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 Message-ID:X-B4-Tracking:To:CC:X-Mailer:X-Developer-Signature:
+	 X-Developer-Key:X-Originating-IP:X-ClientProxiedBy:X-QCInternal:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-GUID:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details; b=b7aPWnOW7mjl221n616CvUbCwi2s+2xhaAFQPgjrSBNASt3I0RmgdB4VUcLZb05Khjl/cR4JbCXKMQbtbykIoXDZbvqgxQrENqfCIDRAooPTxJE+tL3f94crvPRMqhbpxa7eMBSmuKmjXq/pD9zfbow2WHjAIHSKQDWnH/p1mpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pE1yfG+i; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40I1agoa020450;
+	Thu, 18 Jan 2024 02:31:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:date:subject:mime-version:content-type
+	:content-transfer-encoding:message-id:to:cc; s=qcppdkim1; bh=Zjs
+	RlO7mwwosIWBApz90emwsBH9/yq4Qw4oMJBEg/FY=; b=pE1yfG+iit1gpzRNT9b
+	N/koBbgJlJQ5FxBmPBVHKuYVa2Nx4IKeAae51nAnFxWbsyYGQ/5MmUXPaMnEwcra
+	hSkBfPb3v6IUZhzVWEHvODxuFa4+dpdpD5+jYjhneLFWYjuuq8L01lyFbM9XAWiD
+	+B3coNZS1Ye5bB9PThHt/k9PSDjSrMU1R4vBmGQUWtRy9qENvO11ZF7Rd0AbANaR
+	AP5px97zG4RPzcoOWNgLjKwPhv2WXHYqlcMO9HLlKLUjnSY5Jgk2l22roXKtk+s5
+	jKk+QH8rNrXd9SQ9YSOHvzp0HRyhQVySwuyWbZCuX99QeZag5z6ajoQPyoTPmzCh
+	ObA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vpkjrgytq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 18 Jan 2024 02:31:54 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40I2Vrsb022862
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 18 Jan 2024 02:31:53 GMT
+Received: from [169.254.0.1] (10.49.16.6) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 17 Jan
+ 2024 18:31:52 -0800
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+Date: Wed, 17 Jan 2024 18:31:52 -0800
+Subject: [PATCH v3] soc: qcom: aoss: Add debugfs interface for sending
+ messages
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/msm/adreno: Add a null pointer check in
- zap_shader_load_mdt()
-Content-Language: en-US
-To: Markus Elfring <Markus.Elfring@web.de>, freedreno@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- kernel-janitors@vger.kernel.org, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc: LKML <linux-kernel@vger.kernel.org>
-References: <20240116032732.65262-1-chentao@kylinos.cn>
- <9e390783-05c5-47fc-a0c6-b95e249fe691@web.de>
-From: Kunwu Chan <chentao@kylinos.cn>
-In-Reply-To: <9e390783-05c5-47fc-a0c6-b95e249fe691@web.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20240117-qcom-aoss-debugfs-v2-v3-1-1aa779124822@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAJeNqGUC/zXNyw6CMBCF4Vchs3ZIL5CCK9/DGFPKAGNiC60QE
+ 8K7W01cfov/nB0SRaYE52KHSBsnDj5Dnwpwk/UjIffZoISqhJQGFxeeaENK2FO3jkPCTWFNqu5
+ kqyuSLeR0jjTw+zd7vWUPMUevKZL9j2nRSKlE3ei2NMpoo1HjsrK7d48Qre/p8hV7V+ZDOI4P/
+ zYpXKoAAAA=
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "Andrew
+ Lunn" <andrew@lunn.ch>,
+        Stephen Hemminger <stephen@networkplumber.org>,
+        "Bjorn Andersson" <quic_bjorande@quicinc.com>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1705545112; l=4990;
+ i=quic_bjorande@quicinc.com; s=20230915; h=from:subject:message-id;
+ bh=2AFiLHPjv11J5wgd2yLlbYm0jjajl8MOIi/30DgAQas=;
+ b=m07jczbIJNa+DgqN8D2Jq8F/8p/Hrf5M8BRGa/9F9IMqKgYEBdP09laSEDIRna4rp7IlhO2Bq
+ OwKvsSZhU8mDuyX7/Kjg3Yai05oeECVqIweMLzkHCJoYmWqziWN8JeK
+X-Developer-Key: i=quic_bjorande@quicinc.com; a=ed25519;
+ pk=VkhObtljigy9k0ZUIE1Mvr0Y+E1dgBEH9WoLQnUtbIM=
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: BlxtklgZSl4ljmdi-wkohFquv5gfiuyx
+X-Proofpoint-GUID: BlxtklgZSl4ljmdi-wkohFquv5gfiuyx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-17_14,2024-01-17_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ lowpriorityscore=0 suspectscore=0 adultscore=0 impostorscore=0
+ mlxlogscore=999 clxscore=1011 malwarescore=0 priorityscore=1501
+ spamscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401180015
 
-On 2024/1/18 02:50, Markus Elfring wrote:
->> kasprintf() returns a pointer to dynamically allocated memory
->> which can be NULL upon failure. Ensure the allocation was successful
->> by checking the pointer validity.
-> =E2=80=A6
->> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->> @@ -144,6 +144,10 @@ static int zap_shader_load_mdt(struct msm_gpu *gp=
-u, const char *fwname,
->>   		char *newname;
->>
->>   		newname =3D kasprintf(GFP_KERNEL, "qcom/%s", fwname);
->> +		if (!newname) {
->> +			ret =3D -ENOMEM;
->> +			goto out;
->> +		}
-> =E2=80=A6
->=20
-> How do you think about to avoid the repetition of the pointer check
-> for the variable =E2=80=9Cmem_region=E2=80=9D?
-"mem_region"? Is this a clerical error, do you mean 'newname'?
+In addition to the normal runtime commands, the Always On Processor
+(AOP) provides a number of debug commands which can be used during
+system debugging for things such as preventing power collapse or placing
+floor votes for certain resources. Some of these are documented in the
+Robotics RB5 "Debug AOP ADB" linked below.
 
-No check found in __qcom_mdt_load for 'newname'.
-'newname' is used for printing in '__qcom_mdt_load' in some cases, which=20
-is a bit dangerous.
-So it's necessary check it before using it.
+Provide a debugfs interface for the developer/tester to send some of
+these commands to the AOP, which allow the user to override the DDR
+frequency, preventing power collapse of cx and ddr, and prevent AOSS
+from going to sleep.
 
-> Can the usage of other labels become more appropriate?
->=20
-> Regards,
-> Markus
---=20
-Thanks,
-   Kunwu
+Link: https://docs.qualcomm.com/bundle/publicresource/topics/80-88500-3/85_Debugging_AOP_ADB.html
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+---
+Changes in v3:
+- Stop passing command string straight from userspace to the firmware
+- Format the commands in the driver instead
+- Provide a few useful commands
+- Link to v2: https://lore.kernel.org/linux-arm-msm/20230811205839.727373-3-quic_bjorande@quicinc.com/
+---
+ drivers/soc/qcom/qcom_aoss.c | 94 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 94 insertions(+)
+
+diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
+index aff0cfb71482..30c7d59d3424 100644
+--- a/drivers/soc/qcom/qcom_aoss.c
++++ b/drivers/soc/qcom/qcom_aoss.c
+@@ -3,6 +3,7 @@
+  * Copyright (c) 2019, Linaro Ltd
+  */
+ #include <linux/clk-provider.h>
++#include <linux/debugfs.h>
+ #include <linux/interrupt.h>
+ #include <linux/io.h>
+ #include <linux/mailbox_client.h>
+@@ -44,6 +45,8 @@
+ 
+ #define QMP_NUM_COOLING_RESOURCES	2
+ 
++#define QMP_DEBUGFS_FILES		4
++
+ static bool qmp_cdev_max_state = 1;
+ 
+ struct qmp_cooling_device {
+@@ -82,6 +85,8 @@ struct qmp {
+ 
+ 	struct clk_hw qdss_clk;
+ 	struct qmp_cooling_device *cooling_devs;
++	struct dentry *debugfs_root;
++	struct dentry *debugfs_files[QMP_DEBUGFS_FILES];
+ };
+ 
+ static void qmp_kick(struct qmp *qmp)
+@@ -475,6 +480,91 @@ void qmp_put(struct qmp *qmp)
+ }
+ EXPORT_SYMBOL_GPL(qmp_put);
+ 
++struct qmp_debugfs_entry {
++	const char *name;
++	const char *fmt;
++	bool is_bool;
++	const char *true_val;
++	const char *false_val;
++};
++
++static const struct qmp_debugfs_entry qmp_debugfs_entries[QMP_DEBUGFS_FILES] = {
++	{ "ddr_frequency_mhz", "{class: ddr, res: fixed, val: %u}", false },
++	{ "prevent_aoss_sleep", "{class: aoss_slp, res: sleep: %s}", true, "enable", "disable" },
++	{ "prevent_cx_collapse", "{class: cx_mol, res: cx, val: %s}", true, "mol", "off" },
++	{ "prevent_ddr_collapse", "{class: ddr_mol, res: ddr, val: %s}", true, "mol", "off" },
++};
++
++static ssize_t qmp_debugfs_write(struct file *file, const char __user *user_buf,
++				 size_t count, loff_t *pos)
++{
++	const struct qmp_debugfs_entry *entry = NULL;
++	struct qmp *qmp = file->private_data;
++	char buf[QMP_MSG_LEN];
++	unsigned int uint_val;
++	const char *str_val;
++	bool bool_val;
++	int ret;
++	int i;
++
++	for (i = 0; i < ARRAY_SIZE(qmp->debugfs_files); i++) {
++		if (qmp->debugfs_files[i] == file->f_path.dentry) {
++			entry = &qmp_debugfs_entries[i];
++			break;
++		}
++	}
++	if (WARN_ON(!entry))
++		return -EFAULT;
++
++	if (entry->is_bool) {
++		ret = kstrtobool_from_user(user_buf, count, &bool_val);
++		if (ret)
++			return ret;
++
++		str_val = bool_val ? entry->true_val : entry->false_val;
++
++		ret = snprintf(buf, sizeof(buf), entry->fmt, str_val);
++		if (ret >= sizeof(buf))
++			return -EINVAL;
++	} else {
++		ret = kstrtou32_from_user(user_buf, count, 0, &uint_val);
++		if (ret)
++			return ret;
++
++		ret = snprintf(buf, sizeof(buf), entry->fmt, uint_val);
++		if (ret >= sizeof(buf))
++			return -EINVAL;
++	}
++
++	ret = qmp_send(qmp, buf);
++	if (ret < 0)
++		return ret;
++
++	return count;
++}
++
++static const struct file_operations qmp_debugfs_fops = {
++	.open = simple_open,
++	.write = qmp_debugfs_write,
++};
++
++static void qmp_debugfs_create(struct qmp *qmp)
++{
++	const struct qmp_debugfs_entry *entry;
++	int i;
++
++	qmp->debugfs_root = debugfs_create_dir("qcom_aoss", NULL);
++
++	for (i = 0; i < ARRAY_SIZE(qmp->debugfs_files); i++) {
++		entry = &qmp_debugfs_entries[i];
++
++		qmp->debugfs_files[i] = debugfs_create_file(entry->name, 0220,
++							    qmp->debugfs_root,
++							    qmp,
++							    &qmp_debugfs_fops);
++	}
++}
++
+ static int qmp_probe(struct platform_device *pdev)
+ {
+ 	struct qmp *qmp;
+@@ -523,6 +613,8 @@ static int qmp_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, qmp);
+ 
++	qmp_debugfs_create(qmp);
++
+ 	return 0;
+ 
+ err_close_qmp:
+@@ -537,6 +629,8 @@ static void qmp_remove(struct platform_device *pdev)
+ {
+ 	struct qmp *qmp = platform_get_drvdata(pdev);
+ 
++	debugfs_remove_recursive(qmp->debugfs_root);
++
+ 	qmp_qdss_clk_remove(qmp);
+ 	qmp_cooling_devices_remove(qmp);
+ 
+
+---
+base-commit: 943b9f0ab2cfbaea148dd6ac279957eb08b96904
+change-id: 20240117-qcom-aoss-debugfs-v2-5e25b1934e19
+
+Best regards,
+-- 
+Bjorn Andersson <quic_bjorande@quicinc.com>
 
 
