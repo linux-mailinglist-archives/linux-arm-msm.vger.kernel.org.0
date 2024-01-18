@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-7568-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7569-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8DCF831E9E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 18:45:06 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B6B5831EBA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 18:48:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9CBC91F21F33
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 17:45:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0729F286639
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 17:48:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2AF82D605;
-	Thu, 18 Jan 2024 17:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8544E2D609;
+	Thu, 18 Jan 2024 17:48:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kNx2ZLxA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LYQH+sMI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5A22D600
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 17:45:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE73C2D052
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 17:48:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705599903; cv=none; b=IJjYr6tvgN63y65isANN08rCveK/T5UAXM+2eLIbXVA2upB+j2pyiDXXqBdzY1HVOegUXPFi8TlKTDk5fGO7Gz/j8ln+q022O/F+kMv2L4hdtetgJUj8K1WHmqBegIUOxgk3aXoamQaPhpjfAHnmcTdH0AaMfExozWWTwohw7lw=
+	t=1705600121; cv=none; b=eaGVDm4/4gdshPUnTkh67K1LNAJatSzZqmey/Ijp9RSkzQIWjtRvJD19Xro0msB1d0FZgOVd+qxNA5L+woxq3dkhS6xiPjYQSAQx6ql+1lW2yHRcmNHfLdAlEgI1JVNsMS+TBIyK97Gv8kHDrXZG9kqTRHgfx5cuYKL+VeaMp5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705599903; c=relaxed/simple;
-	bh=9FmE4PJJMHUJcOAmiwnAx4z1xIV4aO2a5RhnwfLZmL8=;
+	s=arc-20240116; t=1705600121; c=relaxed/simple;
+	bh=keLTQk+AvKOmkA5Q5qxRwla5u79ltM2//juuofixUWI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PlFmpW6IWvBmlbwxjqvc+0NI0bTeGNN7UCLt/F2aFQXQWCfqsqAcRWXzGT0i3DkgvNYzslIjYgqcD13oQS7v1MwnzfgYUSdiESuhqOzuRKlXBKlzCS9D5/zL/R6iNci/2GqU7kA4I0kc4uzn0JRqvr5fJPJs1UGA8Idt4jDerEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kNx2ZLxA; arc=none smtp.client-ip=209.85.167.45
+	 In-Reply-To:Content-Type; b=Cjnd2FpNPYwMXVv7tOlVH+I9jQqlfQF33IaleQcCY7fSmCyg94WR7kS2rmQJ04XeF4bJd9FMVplGX7O/sVP+J6gZj7bp/6BQcmEaX5bm9XHyoLbZRdOIsIFcOMM5KtGPlXFrijaQvWVDWkYEMA1wIfyEv6hURkfYp7srxXARcYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LYQH+sMI; arc=none smtp.client-ip=209.85.208.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-50e4e3323a6so1096015e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 09:45:01 -0800 (PST)
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2cd04078ebeso10336781fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 09:48:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705599900; x=1706204700; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1705600117; x=1706204917; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=NSfW+YUfmRkyvf/SzyhIkwxnaiEK9UQEjvnNWE6tnVg=;
-        b=kNx2ZLxAub2oFRza92YPo+U9X68g16/g9XEDK9mbUgQY+9iiZLP5NL1q+qKFHkKmn6
-         QWeiSNzKagj0dFKV1kOfTVD45uZDcjykB8GVlI29nheM8deoxAt296A9QAVzBixWuA4X
-         ZVxBqXnOSrtNr0A551Mn0IL0E5ukn4nxJVFQiC8eb/fotwXrgc1VIPkMi6W8uyYtzDFt
-         N2XM20v+/mcJ/+3P75DOEQTJTmfNo1Evw/jGthT9yTOKD9y5RsxaVOShj9BM2ui5eCUN
-         U2nKoR2nB2Xw9EFZyyHIK25hTkDbfThOwc5v44RfNj2hbeRReXJ1rjW/9iKplMc4MSg+
-         kNTw==
+        bh=+LkCXUxxtx6J5Nl/krXuwZsTy4uKTB0BO66v6ghWpv8=;
+        b=LYQH+sMIsYAyKEHIloqnBCDHoy5IMsfNe7xonzgOZw5Tr1QgFCY6P02ziruZVwr7ik
+         vSTBMuQtoBaM80z0qs292No7z5BxG9LZNLGbESd6EHaxNGHNk5sj563VxttAAk9IX21B
+         52OTuo1W2veN3nNv4g0ZiYoISv6LiuBNXRhlLiJ7/t5txipHToTHn8CRY1vvu0pySr5k
+         tgQ0q0yMTPBu2UgWNEtFQuKL5ZGxvvX0y0NUmc1ZjfiaeCz4XLkciTlMPjoqMHxmfeTg
+         qIgXDoHLGcyWrc7vd2n+0o/EhQJ0wzt5MjAz0oX5XM3OwWoz23OJq9mi59JzEyXX2bO9
+         bbNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705599900; x=1706204700;
+        d=1e100.net; s=20230601; t=1705600117; x=1706204917;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NSfW+YUfmRkyvf/SzyhIkwxnaiEK9UQEjvnNWE6tnVg=;
-        b=MgfS7zE84+itt5L9F/VudSuqv+Ebop4bzmkeT8SJzLg4fNnlu3BEfQD+YVvIM0dB/S
-         Wak2onqTnkpq++YKojajQIzW2hdDsof+3vkrxF6HIrfslAGnVqmpU3VwcBYOq/qbVGh8
-         cZDZp87GfeKLHVqQDED6fckrMg7weXe0aa0BwdqM98i7o7Z/dbbAaUMx7eScH12DiB2N
-         e5paDhHPdOoDosw07DjaIVSatLZJGQ0keOnYy3uHuyrUYIdmV0Rt8rVlpG1wjb7nEFpH
-         5WFBVWn758OPk30fYOOYnvc5XgbCj/kQ1Y4ROQBNRxI71+2xl0euDqg4ecvLQep8r2qS
-         mLkQ==
-X-Gm-Message-State: AOJu0YxG9EFonmU4jHfpxLqeEqlyxyR1KkUns9xXLKAfs5fu2dC19sIM
-	kEbbKxPIGG1HuUNCwRdXYBk1T5PXAI3SgSZRhD5FlKHdRJ3vUP7oOwrdgadsxDQ=
-X-Google-Smtp-Source: AGHT+IFMZMNJ9hclYGahC7K3qfbzmRSnW3OqnqmNUQR6BgamVW7SW02oVYX9Erny3j7GZr3boHA+kQ==
-X-Received: by 2002:a19:644a:0:b0:50e:e1c3:f97b with SMTP id b10-20020a19644a000000b0050ee1c3f97bmr1859018lfj.3.1705599900074;
-        Thu, 18 Jan 2024 09:45:00 -0800 (PST)
+        bh=+LkCXUxxtx6J5Nl/krXuwZsTy4uKTB0BO66v6ghWpv8=;
+        b=T0eX8tQgEBjSMnFborBPoPERrLLvOe+lkngBKb3Oo/Si3uphenknCF9Rakwpnx0rzD
+         mLlfWkYZ1fN26lXXnOrBXrhUmaILvcS9i5BPwstGEQ3+psaea+HP30k+qYJZoj5v3Pj5
+         29mxphR1kj3jtKMbeA75fbfF1HbjWF1ouMdfwU56CY6SEC/8GlB4+7HnF5qHCjT55Nwr
+         BnnzBVVMQT/knGYtOSpQhYCJfUxCrlBJI6fv12ywPp/PcEY0EgVum2pq8wtntdZASG8P
+         AiPbrkG9mRjgouKNf+gxW3jIYM1BoIRRiiUUq8CpTM0PVLc4MfAm88Sc9hEve1jOm2JL
+         b6WA==
+X-Gm-Message-State: AOJu0YyAJWQ+R1n7CDW3Bfp4IwMjCllSMrrZQ3ADtWuYgdOzqFggxFcZ
+	uqAzDmY3+XLXou7rJfKA/F0qWxs3U0J8MpbAjPxt2sx3k9nkw6Dp4tRWLpurFmk=
+X-Google-Smtp-Source: AGHT+IG1n4qraOcDtB+OxaJOSlZ4etRCW/HR1z6Lghjg+8zt4pAxHJfyfgyq04DeO6jqaft4oJwxlg==
+X-Received: by 2002:a19:6408:0:b0:50e:7bed:af45 with SMTP id y8-20020a196408000000b0050e7bedaf45mr1928736lfb.33.1705600117035;
+        Thu, 18 Jan 2024 09:48:37 -0800 (PST)
 Received: from [172.30.205.26] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id k17-20020a192d11000000b0050e9323408csm716228lfj.57.2024.01.18.09.44.58
+        by smtp.gmail.com with ESMTPSA id y18-20020a196412000000b0050eed79975dsm722417lfb.24.2024.01.18.09.48.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Jan 2024 09:44:59 -0800 (PST)
-Message-ID: <04a364e8-534c-40a4-a031-b9f9d2304c39@linaro.org>
-Date: Thu, 18 Jan 2024 18:44:56 +0100
+        Thu, 18 Jan 2024 09:48:36 -0800 (PST)
+Message-ID: <9b78a7c3-dea9-4d9c-bfd9-13d819d68890@linaro.org>
+Date: Thu, 18 Jan 2024 18:48:34 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,79 +75,57 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] media: venus: add new rate control type MBR for
- encoder
+Subject: Re: [PATCH] clk: qcom: gcc-ipq6018: add qdss_at clock needed for wifi
+ operation
 Content-Language: en-US
-To: Sachin Kumar Garg <quic_sachinku@quicinc.com>, hverkuil-cisco@xs4all.nl,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20240118105934.137919-1-quic_sachinku@quicinc.com>
- <20240118105934.137919-3-quic_sachinku@quicinc.com>
+To: Mantas Pucka <mantas@8devices.com>, Bjorn Andersson
+ <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
+ Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <1705486629-25592-1-git-send-email-mantas@8devices.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240118105934.137919-3-quic_sachinku@quicinc.com>
+In-Reply-To: <1705486629-25592-1-git-send-email-mantas@8devices.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
-On 1/18/24 11:59, Sachin Kumar Garg wrote:
-> There is no limit on the maximum level of the bit rate with
-> the existing VBR rate control.
-> V4L2_MPEG_VIDEO_BITRATE_MODE_MBR rate control will limit the
-> frame maximum bit rate range to the +/- 10% of the configured
-> bit-rate value. Encoder will choose appropriate quantization
-> parameter and do the smart bit allocation to set the frame
-> maximum bitrate level.
+On 1/17/24 11:17, Mantas Pucka wrote:
+> Without it system hangs upon wifi firmware load. Bindings already exist
+> for it, so add it based on vendor code.
 > 
-> Signed-off-by: Sachin Kumar Garg <quic_sachinku@quicinc.com>
+> Signed-off-by: Mantas Pucka <mantas@8devices.com>
 > ---
->   drivers/media/platform/qcom/venus/hfi_cmds.c  | 38 +++++++++++++------
->   .../media/platform/qcom/venus/hfi_helper.h    |  1 +
->   drivers/media/platform/qcom/venus/venc.c      |  2 +
->   .../media/platform/qcom/venus/venc_ctrls.c    |  5 ++-
->   4 files changed, 33 insertions(+), 13 deletions(-)
+>   drivers/clk/qcom/gcc-ipq6018.c | 17 +++++++++++++++++
+>   1 file changed, 17 insertions(+)
 > 
-> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
-> index 3418d2dd9371..95fc27e0dc7d 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
-> @@ -645,17 +645,33 @@ static int pkt_session_set_property_1x(struct hfi_session_set_property_pkt *pkt,
->   	case HFI_PROPERTY_PARAM_VENC_RATE_CONTROL: {
->   		u32 *in = pdata;
+> diff --git a/drivers/clk/qcom/gcc-ipq6018.c b/drivers/clk/qcom/gcc-ipq6018.c
+> index b366912cd648..7cdaf7751566 100644
+> --- a/drivers/clk/qcom/gcc-ipq6018.c
+> +++ b/drivers/clk/qcom/gcc-ipq6018.c
+> @@ -3522,6 +3522,22 @@ static struct clk_branch gcc_prng_ahb_clk = {
+>   	},
+>   };
 >   
-> -		switch (*in) {
-> -		case HFI_RATE_CONTROL_OFF:
-> -		case HFI_RATE_CONTROL_CBR_CFR:
-> -		case HFI_RATE_CONTROL_CBR_VFR:
-> -		case HFI_RATE_CONTROL_VBR_CFR:
-> -		case HFI_RATE_CONTROL_VBR_VFR:
-> -		case HFI_RATE_CONTROL_CQ:
-> -			break;
-> -		default:
-> -			ret = -EINVAL;
-> -			break;
-> +		if (hfi_ver == HFI_VERSION_4XX) {
+> +static struct clk_branch gcc_qdss_at_clk = {
 
-So, only sdm845/sc7180 and friends support it, but the newer
-SoCs (like 8250 don't)?
+Hm, QDSS stands for something something Qualcomm Debug SubSystem
+if I recall correctly, so coresight and friends.. Are you sure
+it's necessary?
 
-[...]
+> +	.halt_reg = 0x29024,
+> +	.clkr = {
+> +		.enable_reg = 0x29024,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data){
+> +			.name = "gcc_qdss_at_clk",
+> +			.parent_hws = (const struct clk_hw *[]){
+> +				&qdss_at_clk_src.clkr.hw },
+> +			.num_parents = 1,
+> +			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
 
-> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-> @@ -387,10 +387,11 @@ int venc_ctrl_init(struct venus_inst *inst)
->   
->   	v4l2_ctrl_new_std_menu(&inst->ctrl_handler, &venc_ctrl_ops,
->   		V4L2_CID_MPEG_VIDEO_BITRATE_MODE,
-> -		V4L2_MPEG_VIDEO_BITRATE_MODE_CBR,
-> +		V4L2_MPEG_VIDEO_BITRATE_MODE_MBR,
-
-Is this okay, since you're claiming only v4 supports it?
+Does it need to be enabled 24/7, or can it be attached to the wifi device?
 
 Konrad
 
