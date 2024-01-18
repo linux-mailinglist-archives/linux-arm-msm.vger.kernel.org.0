@@ -1,216 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-7542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7543-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 285D58317C3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 12:01:01 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39FEE831842
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 12:15:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 482781C2313F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 11:01:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E5D2B1F21156
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 11:15:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DE0724B4D;
-	Thu, 18 Jan 2024 11:00:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D236423762;
+	Thu, 18 Jan 2024 11:15:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XQaDf76p"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RDlOUNNR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD94724B3F;
-	Thu, 18 Jan 2024 11:00:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C3123760;
+	Thu, 18 Jan 2024 11:15:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705575612; cv=none; b=pb51eDLQO2g9rSU9Z3XVUgKA0YhAmcmtfJSAlOXdnXkV9vbfIq0PinZ9zoZnKZJvBFOSvldKIQJN0fcYwQxIavhMrQfbdQCpQfXOAvpwdsl44Tn0eaEzO+DcN0XYwcKzIAZBerkZgB+ti3khODucKJhL+atpJlpFJKQO/nmbzfs=
+	t=1705576530; cv=none; b=nB3fJEDyLjZzzsZS6iRyHD+rLkbR0nJLCAwtNdcw/aarR1PqvUBcADcJeNcL76q8ctnkwec7Bt65BVtV0PiCJz7umebKJ5Z7+iq6Krk0IdVpdQv+wvfHfCVIPNdIyTtT9Vw70thfq5VLh4iIY9ZPITEtMEClHWBB7mPsWhZI4Io=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705575612; c=relaxed/simple;
-	bh=njl+4s9ucBPJS+rYjNkxAFc6ufgNQfyh4wCkCXVtlhI=;
-	h=Received:DKIM-Signature:Received:Received:Received:From:To:CC:
-	 Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding:Content-Type:
-	 X-Originating-IP:X-ClientProxiedBy:X-QCInternal:
-	 X-Proofpoint-Virus-Version:X-Proofpoint-ORIG-GUID:
-	 X-Proofpoint-GUID:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details; b=fR0UbJI/xGirVgJS/AmaTVjLl6d4sEfQ0tvFXsXSED8L+0geBtF1onLvcZuLIajC9yXOnA5k9IsdL17N1N1zfXDF/BsVLDV+ruRRXwDWhLv/8ExndEt0QU8xA6N27A3KdvqvhXCvhpW8P7CPD8oefr6Emgs9uadCemd2BOKSFw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XQaDf76p; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40IApeHZ002321;
-	Thu, 18 Jan 2024 11:00:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=k7e488f8T/22mILip1JNpJeR+7w+Dp6g5cKW05xibVg=; b=XQ
-	aDf76pMKM/CMqT6eFxYUG+Yh/BL+ocwKLLiARxY6GEKmU0OviwjdKHKD+q3jnGq1
-	72YXnfIPfXeTezNO8/48S2RIHesNkLt1Vf4jHmoYcrv2d0EHnPd3cw6oyzg37EQy
-	PwMGOSeZR5BxYJlFhKBfOPr/pwwzcRV7t/1jklgp441Y+PLZb4BhGf5PjMXnjXWp
-	GIYx+ho4W5cga82cgUNMjYbMtXAs+HESiv26RuGtO1b5dsk/4b9baiUTO2GOzOPE
-	/+K5VX248dvRr9gTtrDUVVbIzDQFnRStPU9NS243KLmgX+Am0Ot1Et77RHaf1jgV
-	MQZwWmhV+568LJOesZww==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vpejp2sc1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Jan 2024 11:00:05 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40IB04s2013741
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Jan 2024 11:00:04 GMT
-Received: from hu-sachinku-hyd.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Thu, 18 Jan 2024 03:00:00 -0800
-From: Sachin Kumar Garg <quic_sachinku@quicinc.com>
-To: <hverkuil-cisco@xs4all.nl>, Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia
-	<quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        <linux-media@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-Subject: [PATCH 2/2] media: venus: add new rate control type MBR for encoder
-Date: Thu, 18 Jan 2024 16:29:34 +0530
-Message-ID: <20240118105934.137919-3-quic_sachinku@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240118105934.137919-1-quic_sachinku@quicinc.com>
-References: <20240118105934.137919-1-quic_sachinku@quicinc.com>
+	s=arc-20240116; t=1705576530; c=relaxed/simple;
+	bh=w0FBrm4sVu/DLk+0aSDbplyxxPuYJ1uOLaE9EFkd7dc=;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To; b=ou3syrqEV/+QTF+prdRg8op3aF4sQxlCpDwkGLaJmIVA3NBj5BiRoY+mlwhgvbuHqfy611o7vLb+KHw7kmpKTpNczxJplDflwzp/B/hAhC9OJNrGls/C/2LW1fO/d+dM9NNd+d1Nug6KDKUYay+XMrC93dBW7Ud5wrNuRLmcR/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RDlOUNNR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67825C433F1;
+	Thu, 18 Jan 2024 11:15:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1705576529;
+	bh=w0FBrm4sVu/DLk+0aSDbplyxxPuYJ1uOLaE9EFkd7dc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=RDlOUNNRGsPbYHC1L726WS5dkr3VOCBjd+MqAQ3JUuhv4MGJkXgYEYB+5YyQ6MDp6
+	 NB6nu7QYWRq3V7fuP2fZxIS74bHee+zZbKSxRibWClXO4RxoPVbNRHIvtWjRA0ba7D
+	 gXUqRp/5zTN7aJpa6bWv04Guwid8cuyD5nfl4a9Y=
+Date: Thu, 18 Jan 2024 12:15:27 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Kalle Valo <kvalo@kernel.org>, "David S . Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Chris Morgan <macromorgan@hotmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	=?iso-8859-1?Q?N=EDcolas_F_=2E_R_=2E_A_=2E?= Prado <nfraprado@collabora.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Peng Fan <peng.fan@nxp.com>, Robert Richter <rrichter@amd.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Terry Bowman <terry.bowman@amd.com>, Lukas Wunner <lukas@wunner.de>,
+	Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>,
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>, linux-wireless@vger.kernel.org,
+	netdev@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH 4/9] PCI: create platform devices for child OF nodes of
+ the port node
+Message-ID: <2024011836-wok-treadmill-c517@gregkh>
+References: <20240117160748.37682-1-brgl@bgdev.pl>
+ <20240117160748.37682-5-brgl@bgdev.pl>
+ <2024011707-alibi-pregnancy-a64b@gregkh>
+ <CAMRc=Mef7wxRccnfQ=EDLckpb1YN4DNLoC=AYL8v1LLJ=uFH2Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: UUg9-N3-eji76B3whJpbNFchK4J_bpDi
-X-Proofpoint-GUID: UUg9-N3-eji76B3whJpbNFchK4J_bpDi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-18_06,2024-01-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- suspectscore=0 clxscore=1015 lowpriorityscore=0 spamscore=0
- impostorscore=0 adultscore=0 priorityscore=1501 bulkscore=0
- mlxlogscore=890 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2311290000 definitions=main-2401180079
+In-Reply-To: <CAMRc=Mef7wxRccnfQ=EDLckpb1YN4DNLoC=AYL8v1LLJ=uFH2Q@mail.gmail.com>
 
-There is no limit on the maximum level of the bit rate with
-the existing VBR rate control.
-V4L2_MPEG_VIDEO_BITRATE_MODE_MBR rate control will limit the
-frame maximum bit rate range to the +/- 10% of the configured
-bit-rate value. Encoder will choose appropriate quantization
-parameter and do the smart bit allocation to set the frame
-maximum bitrate level.
+On Thu, Jan 18, 2024 at 11:58:50AM +0100, Bartosz Golaszewski wrote:
+> On Wed, Jan 17, 2024 at 5:45 PM Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > On Wed, Jan 17, 2024 at 05:07:43PM +0100, Bartosz Golaszewski wrote:
+> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > >
+> > > In order to introduce PCI power-sequencing, we need to create platform
+> > > devices for child nodes of the port node.
+> >
+> > Ick, why a platform device?  What is the parent of this device, a PCI
+> > device?  If so, then this can't be a platform device, as that's not what
+> > it is, it's something else so make it a device of that type,.
+> >
+> 
+> Greg,
+> 
+> This is literally what we agreed on at LPC. In fact: during one of the
+> hall track discussions I said that you typically NAK any attempts at
+> using the platform bus for "fake" devices but you responded that this
+> is what the USB on-board HUB does and while it's not pretty, this is
+> what we need to do.
 
-Signed-off-by: Sachin Kumar Garg <quic_sachinku@quicinc.com>
----
- drivers/media/platform/qcom/venus/hfi_cmds.c  | 38 +++++++++++++------
- .../media/platform/qcom/venus/hfi_helper.h    |  1 +
- drivers/media/platform/qcom/venus/venc.c      |  2 +
- .../media/platform/qcom/venus/venc_ctrls.c    |  5 ++-
- 4 files changed, 33 insertions(+), 13 deletions(-)
+Ah, you need to remind me of these things, this changelog was pretty
+sparse :)
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
-index 3418d2dd9371..95fc27e0dc7d 100644
---- a/drivers/media/platform/qcom/venus/hfi_cmds.c
-+++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
-@@ -645,17 +645,33 @@ static int pkt_session_set_property_1x(struct hfi_session_set_property_pkt *pkt,
- 	case HFI_PROPERTY_PARAM_VENC_RATE_CONTROL: {
- 		u32 *in = pdata;
- 
--		switch (*in) {
--		case HFI_RATE_CONTROL_OFF:
--		case HFI_RATE_CONTROL_CBR_CFR:
--		case HFI_RATE_CONTROL_CBR_VFR:
--		case HFI_RATE_CONTROL_VBR_CFR:
--		case HFI_RATE_CONTROL_VBR_VFR:
--		case HFI_RATE_CONTROL_CQ:
--			break;
--		default:
--			ret = -EINVAL;
--			break;
-+		if (hfi_ver == HFI_VERSION_4XX) {
-+			switch (*in) {
-+			case HFI_RATE_CONTROL_OFF:
-+			case HFI_RATE_CONTROL_CBR_CFR:
-+			case HFI_RATE_CONTROL_CBR_VFR:
-+			case HFI_RATE_CONTROL_VBR_CFR:
-+			case HFI_RATE_CONTROL_VBR_VFR:
-+			case HFI_RATE_CONTROL_CQ:
-+			case HFI_RATE_CONTROL_MBR_CFR:
-+				break;
-+			default:
-+				ret = -EINVAL;
-+				break;
-+			}
-+		} else {
-+			switch (*in) {
-+			case HFI_RATE_CONTROL_OFF:
-+			case HFI_RATE_CONTROL_CBR_CFR:
-+			case HFI_RATE_CONTROL_CBR_VFR:
-+			case HFI_RATE_CONTROL_VBR_CFR:
-+			case HFI_RATE_CONTROL_VBR_VFR:
-+			case HFI_RATE_CONTROL_CQ:
-+				break;
-+			default:
-+				ret = -EINVAL;
-+				break;
-+			}
- 		}
- 
- 		pkt->data[1] = *in;
-diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-index e4c05d62cfc7..a0fd857f5c4b 100644
---- a/drivers/media/platform/qcom/venus/hfi_helper.h
-+++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-@@ -232,6 +232,7 @@
- #define HFI_RATE_CONTROL_VBR_CFR		0x1000003
- #define HFI_RATE_CONTROL_CBR_VFR		0x1000004
- #define HFI_RATE_CONTROL_CBR_CFR		0x1000005
-+#define HFI_RATE_CONTROL_MBR_CFR		0x1000006
- #define HFI_RATE_CONTROL_CQ			0x1000008
- 
- #define HFI_VIDEO_CODEC_H264			0x00000002
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 3ec2fb8d9fab..8acbb05f6ce8 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -807,6 +807,8 @@ static int venc_set_properties(struct venus_inst *inst)
- 						      HFI_RATE_CONTROL_CBR_CFR;
- 	else if (ctr->bitrate_mode == V4L2_MPEG_VIDEO_BITRATE_MODE_CQ)
- 		rate_control = HFI_RATE_CONTROL_CQ;
-+	else if (ctr->bitrate_mode == V4L2_MPEG_VIDEO_BITRATE_MODE_MBR)
-+		rate_control = HFI_RATE_CONTROL_MBR_CFR;
- 
- 	ptype = HFI_PROPERTY_PARAM_VENC_RATE_CONTROL;
- 	ret = hfi_session_set_property(inst, ptype, &rate_control);
-diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-index d9d2a293f3ef..c9c3b1b45525 100644
---- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-+++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-@@ -387,10 +387,11 @@ int venc_ctrl_init(struct venus_inst *inst)
- 
- 	v4l2_ctrl_new_std_menu(&inst->ctrl_handler, &venc_ctrl_ops,
- 		V4L2_CID_MPEG_VIDEO_BITRATE_MODE,
--		V4L2_MPEG_VIDEO_BITRATE_MODE_CBR,
-+		V4L2_MPEG_VIDEO_BITRATE_MODE_MBR,
- 		~((1 << V4L2_MPEG_VIDEO_BITRATE_MODE_VBR) |
- 		  (1 << V4L2_MPEG_VIDEO_BITRATE_MODE_CBR) |
--		  (1 << V4L2_MPEG_VIDEO_BITRATE_MODE_CQ)),
-+		  (1 << V4L2_MPEG_VIDEO_BITRATE_MODE_CQ)  |
-+		  (1 << V4L2_MPEG_VIDEO_BITRATE_MODE_MBR)),
- 		V4L2_MPEG_VIDEO_BITRATE_MODE_VBR);
- 
- 	v4l2_ctrl_new_std_menu(&inst->ctrl_handler, &venc_ctrl_ops,
--- 
-2.34.1
+> Now as for the implementation, the way I see it we have two solutions:
+> either we introduce a fake, top-level PCI slot platform device device
+> that will reference the PCI host controller by phandle or we will live
+> with a secondary, "virtual" platform device for power sequencing that
+> is tied to the actual PCI device. The former requires us to add DT
+> bindings, add a totally fake DT node representing the "slot" which
+> doesn't really exist (and Krzysztof already expressed his negative
+> opinion of that) and then have code that will be more complex than it
+> needs to be. The latter allows us to not change DT at all (other than
+> adding regulators, clocks and GPIOs to already existing WLAN nodes),
+> reuse the existing parent-child relationship between the port node and
+> the instantiated platform device as well as result in simpler code.
+> 
+> Given that DT needs to be stable while the underlying C code can
+> freely change if we find a better solution, I think that the second
+> option is a no-brainer here.
 
+Ok, I remove my objections, sorry about that, my confusion.
+
+greg k-h
 
