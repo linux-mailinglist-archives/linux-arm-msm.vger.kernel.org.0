@@ -1,72 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-7567-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7568-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 815B1831E88
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 18:38:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8DCF831E9E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 18:45:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 04B7EB222E6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 17:38:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9CBC91F21F33
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 17:45:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45D682D04B;
-	Thu, 18 Jan 2024 17:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2AF82D605;
+	Thu, 18 Jan 2024 17:45:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QhTB3x0n"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kNx2ZLxA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9498F2D60D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 17:38:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5A22D600
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 17:45:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705599491; cv=none; b=mDXQA9xm9GjEXB2DQPGPX1awSquiLnwnA3Srhqm5V8NJ8E+M8qPibw8Uj3JwIDXojhTXM+Tza1CT21rofmdazcNA1z0sAZFf+9UULpW6dluhty1c8fvZi7dFzBX46mPC6X42/4WCartp8T5EDYz24yt82bNbajt6IDxQwm08bs4=
+	t=1705599903; cv=none; b=IJjYr6tvgN63y65isANN08rCveK/T5UAXM+2eLIbXVA2upB+j2pyiDXXqBdzY1HVOegUXPFi8TlKTDk5fGO7Gz/j8ln+q022O/F+kMv2L4hdtetgJUj8K1WHmqBegIUOxgk3aXoamQaPhpjfAHnmcTdH0AaMfExozWWTwohw7lw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705599491; c=relaxed/simple;
-	bh=USbiBAFx2QR9T8zJlpG0DggR1335IIYgSLno/FFoYpA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:Content-Type; b=XGgHFT5ZnG2eD2jAzQQBU/EV8eBUP/kGQ78yTmOM1Uq3jMhyb2LHI4Smax39UjugglDVJwb35jLEH0gPs4LsUSFbqYTlYwjoUxo7SATortwCGb0IX2lE0Gf6+cLepbHdLFblhKzT06LZLpqbhHdXXaIKv/HqblMBw5d+455yias=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QhTB3x0n; arc=none smtp.client-ip=209.85.167.41
+	s=arc-20240116; t=1705599903; c=relaxed/simple;
+	bh=9FmE4PJJMHUJcOAmiwnAx4z1xIV4aO2a5RhnwfLZmL8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PlFmpW6IWvBmlbwxjqvc+0NI0bTeGNN7UCLt/F2aFQXQWCfqsqAcRWXzGT0i3DkgvNYzslIjYgqcD13oQS7v1MwnzfgYUSdiESuhqOzuRKlXBKlzCS9D5/zL/R6iNci/2GqU7kA4I0kc4uzn0JRqvr5fJPJs1UGA8Idt4jDerEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kNx2ZLxA; arc=none smtp.client-ip=209.85.167.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-50ed808db11so10415857e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 09:38:09 -0800 (PST)
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-50e4e3323a6so1096015e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 09:45:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705599487; x=1706204287; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1705599900; x=1706204700; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=USbiBAFx2QR9T8zJlpG0DggR1335IIYgSLno/FFoYpA=;
-        b=QhTB3x0nhZqzZRkOIjxblrHk7kY35E/TKGlgEUql7vWjiCF1oCXPmBAf5kVCzMDwRg
-         hs9nyiR4HItEjLZu8S6GbWhtOmrSispR7IfD1ALBVwuisJVeHv12xZOc/VNmK72G9ogH
-         5V/qGAaoud8WN+SIuZuN2xlnZpdpQoDyYv5h/FWsbfLIyxg1KBiBrofnlGaLbA71IOfS
-         d/HzFrxDJCytchKKe/B1Tc7XeL5CVejX2zi1gRQU1t5FaFu3fW1nohYhU5di9U/cJo6c
-         xS7lvd3U4YeiLYsydDF25y74jwdGx3cj1O9l2+Sl6axtUADac+bsBu3daI3Tm0bchwOu
-         NsGg==
+        bh=NSfW+YUfmRkyvf/SzyhIkwxnaiEK9UQEjvnNWE6tnVg=;
+        b=kNx2ZLxAub2oFRza92YPo+U9X68g16/g9XEDK9mbUgQY+9iiZLP5NL1q+qKFHkKmn6
+         QWeiSNzKagj0dFKV1kOfTVD45uZDcjykB8GVlI29nheM8deoxAt296A9QAVzBixWuA4X
+         ZVxBqXnOSrtNr0A551Mn0IL0E5ukn4nxJVFQiC8eb/fotwXrgc1VIPkMi6W8uyYtzDFt
+         N2XM20v+/mcJ/+3P75DOEQTJTmfNo1Evw/jGthT9yTOKD9y5RsxaVOShj9BM2ui5eCUN
+         U2nKoR2nB2Xw9EFZyyHIK25hTkDbfThOwc5v44RfNj2hbeRReXJ1rjW/9iKplMc4MSg+
+         kNTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705599487; x=1706204287;
+        d=1e100.net; s=20230601; t=1705599900; x=1706204700;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=USbiBAFx2QR9T8zJlpG0DggR1335IIYgSLno/FFoYpA=;
-        b=ok2Vix1jqFEBr+akLu6V29odC5vPpWJpcdS91PgJTC+II+vehxYuMVYh96EgyVE/Lo
-         Pg4ronkvl9yD4w1rmAx0Ge8FSvDhwwrP2cRUbY5rH8bSzyGe77UZhdrAAxPKH/mY99VM
-         7XPZ0lDzqn1wDL6IiqMKxShfzXuWiDwNGEVKI82iw3v9f0kC/0tWg1Ns2VmG+XlP9Up5
-         HMN/YyEP2eXU8ojKIC+HlYzukhnGdeA1Aj4IfsEKalUpRhVmj14Zb2HIv74EMqscU+8V
-         /2SJ2P+IX/1upVIHT4KamQWE2lgEX+rVl7dG9J1M4nMfEZZQMZ1UHkpx1i9YOJ+eaHT3
-         dAqw==
-X-Gm-Message-State: AOJu0YwuInsxV6sx2Ks3BI7twAs1gbAjkjKUM53HffflDMMYcTgew9N/
-	J5fJP/SXWDgklRVOg+r625pYFO9ziI0ys1n1iwE2HjzoCy8YHmh1Uxm2MAfR7FE=
-X-Google-Smtp-Source: AGHT+IGX5HQ/2vpX/u40ngVjY5ht/YNwLWkLzeyiosoUeR1bTug4Y6o+o1VPqNfBhBW02qcXxpAkPg==
-X-Received: by 2002:a19:8c49:0:b0:50e:7224:ad4f with SMTP id i9-20020a198c49000000b0050e7224ad4fmr686910lfj.59.1705599487646;
-        Thu, 18 Jan 2024 09:38:07 -0800 (PST)
+        bh=NSfW+YUfmRkyvf/SzyhIkwxnaiEK9UQEjvnNWE6tnVg=;
+        b=MgfS7zE84+itt5L9F/VudSuqv+Ebop4bzmkeT8SJzLg4fNnlu3BEfQD+YVvIM0dB/S
+         Wak2onqTnkpq++YKojajQIzW2hdDsof+3vkrxF6HIrfslAGnVqmpU3VwcBYOq/qbVGh8
+         cZDZp87GfeKLHVqQDED6fckrMg7weXe0aa0BwdqM98i7o7Z/dbbAaUMx7eScH12DiB2N
+         e5paDhHPdOoDosw07DjaIVSatLZJGQ0keOnYy3uHuyrUYIdmV0Rt8rVlpG1wjb7nEFpH
+         5WFBVWn758OPk30fYOOYnvc5XgbCj/kQ1Y4ROQBNRxI71+2xl0euDqg4ecvLQep8r2qS
+         mLkQ==
+X-Gm-Message-State: AOJu0YxG9EFonmU4jHfpxLqeEqlyxyR1KkUns9xXLKAfs5fu2dC19sIM
+	kEbbKxPIGG1HuUNCwRdXYBk1T5PXAI3SgSZRhD5FlKHdRJ3vUP7oOwrdgadsxDQ=
+X-Google-Smtp-Source: AGHT+IFMZMNJ9hclYGahC7K3qfbzmRSnW3OqnqmNUQR6BgamVW7SW02oVYX9Erny3j7GZr3boHA+kQ==
+X-Received: by 2002:a19:644a:0:b0:50e:e1c3:f97b with SMTP id b10-20020a19644a000000b0050ee1c3f97bmr1859018lfj.3.1705599900074;
+        Thu, 18 Jan 2024 09:45:00 -0800 (PST)
 Received: from [172.30.205.26] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id z6-20020a19f706000000b0050e8d5504e1sm711831lfe.294.2024.01.18.09.38.06
+        by smtp.gmail.com with ESMTPSA id k17-20020a192d11000000b0050e9323408csm716228lfj.57.2024.01.18.09.44.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Jan 2024 09:38:07 -0800 (PST)
-Message-ID: <0e41134b-aeb3-488d-aa06-72be155cf992@linaro.org>
-Date: Thu, 18 Jan 2024 18:38:06 +0100
+        Thu, 18 Jan 2024 09:44:59 -0800 (PST)
+Message-ID: <04a364e8-534c-40a4-a031-b9f9d2304c39@linaro.org>
+Date: Thu, 18 Jan 2024 18:44:56 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,31 +75,79 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: rename PM2250 to PM4125
+Subject: Re: [PATCH 2/2] media: venus: add new rate control type MBR for
+ encoder
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20240114-pm2250-pm4125-rename-v1-0-71a0a103c3d5@linaro.org>
- <20240114-pm2250-pm4125-rename-v1-2-71a0a103c3d5@linaro.org>
+To: Sachin Kumar Garg <quic_sachinku@quicinc.com>, hverkuil-cisco@xs4all.nl,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20240118105934.137919-1-quic_sachinku@quicinc.com>
+ <20240118105934.137919-3-quic_sachinku@quicinc.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240114-pm2250-pm4125-rename-v1-2-71a0a103c3d5@linaro.org>
+In-Reply-To: <20240118105934.137919-3-quic_sachinku@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
-On 1/14/24 18:42, Dmitry Baryshkov wrote:
-> According to all the documentation there is no such thing as PM2250, it
-> has been replaced with PM4125. Use correct name for the PMIC.
+On 1/18/24 11:59, Sachin Kumar Garg wrote:
+> There is no limit on the maximum level of the bit rate with
+> the existing VBR rate control.
+> V4L2_MPEG_VIDEO_BITRATE_MODE_MBR rate control will limit the
+> frame maximum bit rate range to the +/- 10% of the configured
+> bit-rate value. Encoder will choose appropriate quantization
+> parameter and do the smart bit allocation to set the frame
+> maximum bitrate level.
+> 
+> Signed-off-by: Sachin Kumar Garg <quic_sachinku@quicinc.com>
+> ---
+>   drivers/media/platform/qcom/venus/hfi_cmds.c  | 38 +++++++++++++------
+>   .../media/platform/qcom/venus/hfi_helper.h    |  1 +
+>   drivers/media/platform/qcom/venus/venc.c      |  2 +
+>   .../media/platform/qcom/venus/venc_ctrls.c    |  5 ++-
+>   4 files changed, 33 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
+> index 3418d2dd9371..95fc27e0dc7d 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
+> @@ -645,17 +645,33 @@ static int pkt_session_set_property_1x(struct hfi_session_set_property_pkt *pkt,
+>   	case HFI_PROPERTY_PARAM_VENC_RATE_CONTROL: {
+>   		u32 *in = pdata;
+>   
+> -		switch (*in) {
+> -		case HFI_RATE_CONTROL_OFF:
+> -		case HFI_RATE_CONTROL_CBR_CFR:
+> -		case HFI_RATE_CONTROL_CBR_VFR:
+> -		case HFI_RATE_CONTROL_VBR_CFR:
+> -		case HFI_RATE_CONTROL_VBR_VFR:
+> -		case HFI_RATE_CONTROL_CQ:
+> -			break;
+> -		default:
+> -			ret = -EINVAL;
+> -			break;
+> +		if (hfi_ver == HFI_VERSION_4XX) {
 
-<repeat my reply from the last patch>
+So, only sdm845/sc7180 and friends support it, but the newer
+SoCs (like 8250 don't)?
 
-I would appreciate if you could resend with that explanation.
+[...]
 
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
+> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
+> @@ -387,10 +387,11 @@ int venc_ctrl_init(struct venus_inst *inst)
+>   
+>   	v4l2_ctrl_new_std_menu(&inst->ctrl_handler, &venc_ctrl_ops,
+>   		V4L2_CID_MPEG_VIDEO_BITRATE_MODE,
+> -		V4L2_MPEG_VIDEO_BITRATE_MODE_CBR,
+> +		V4L2_MPEG_VIDEO_BITRATE_MODE_MBR,
+
+Is this okay, since you're claiming only v4 supports it?
 
 Konrad
 
