@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-7544-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D08083184F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 12:17:24 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 15575831853
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 12:19:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 31F3F1C222EB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 11:17:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CCF2C281686
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 11:19:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B36FF241E8;
-	Thu, 18 Jan 2024 11:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7694423776;
+	Thu, 18 Jan 2024 11:19:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CNV7ofWx"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RsNSXV6B"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB5D23760
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 11:17:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEAE62376E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 11:19:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705576636; cv=none; b=TP97j8ONLWp40eNlJyeGbShVseMUfRU6Fgfoa9L68C6z5wKC37k0bhTExohaYp8Z7aTYJ7dfhyPxXZlS4VZPt1w9PRIFV50MPstOi+DFKHwXNDYPygLSrkCVnqRfcnjSpLEAtem49bCkCUGSL3ujt+IBSd6mBBQZCkkfZ8eHZ2Q=
+	t=1705576746; cv=none; b=ZdYqJzWXTpZdcxtScmXV5F4aNQknTmmh39oqonRoEQGvVd9Qv/bP+Byf7twgpxzcqORtVWEkELAlPjiD3vag0yxOUPetby34wuigU7dssViCRWEPE5EVUuMxvMBPkG/Rr4Ogpxn4NX8y0bX0OI+OBMwKNc86C6nqljkRO4HyQqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705576636; c=relaxed/simple;
-	bh=HGyZZTY2+T2Jl48jVHvo9QD1buSy5boaGqX0+XFUl4A=;
+	s=arc-20240116; t=1705576746; c=relaxed/simple;
+	bh=im3zEfwggW0pRsIdyfxoeIUGy9kClHNiijPnCJvVGP4=;
 	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding; b=PIoqdWGbm9Rkchv3GvWjJihArUvuQ2CH9DKeFm9AjZfdaxqaJ2d+ev6aeTcSYxYKcYTUPasww8IyL2EZ50lk4gM1fV0xcfs5lJGj1EuII1/MogFXf+ULd6oOQIIRg9YNN5QW/IXNkR9F24H4UXl43F4mOUnfrCJzJMgsgfxfvek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CNV7ofWx; arc=none smtp.client-ip=209.85.167.50
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:Content-Language:
+	 To:Cc:References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding; b=b1QyLKSuR9ds4nAbyFPvp7yshBerHcPSSGNo88NjBEdRBntq+i9wd1lZ2xxUt0yY7ceyFdNgLw4vqKj5UrMWDzmV+OCVGBS6HQ0W1HjxzGcpzn7M+9m3MZalt3nTy4RqnLbJVVLCxCNE7ighhgiNrPNeHUQGpMkOZTPFGoisQmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RsNSXV6B; arc=none smtp.client-ip=209.85.167.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-50eaa8b447bso13849038e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 03:17:14 -0800 (PST)
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-50e7b273352so13585334e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 03:19:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705576633; x=1706181433; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1705576743; x=1706181543; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=xUL3sesdhKnyLaiqDC4I4Y1yB3YN5zh6ABKurybZAU4=;
-        b=CNV7ofWxwccR5s8yhua+JscO4P2B4Htx6k1g6ABenRhWuP13VwUtLYeFEkGjaYjawl
-         C47M1nUm7rgW4nlpctdZ3RYDr1ezsiBC1lMNMYRMvoaBfiKX5VZPjJfDaMzRWPKPft8+
-         vk1/YROw5utRXzt0bZusiFZtkAWu7V5oOoCtFHtwhu+e5B7YUpeYuJzB492w+o2PEwSP
-         lQbxV8CwLYsTsbPk2KgvpqfqND3rNY68acv74WSdI/wJu69w8d0kTNtLAGhjRskkDFB1
-         hKHs6Q4vWt8B9YsBx0u93HFSOOFbCjHBbND6cjFmtMJIvBOdMghOMl3a3jYKJRI8o56v
-         fXdw==
+        bh=MDFd66KcIbKFIIX/WcgTl2/WLahORWiu0MGU1O5cSMo=;
+        b=RsNSXV6BOwge1dBMebdlVmIsgYNpZDol4G0nxAzqZ8gH2aujSCq+f08yGW/v74CtL+
+         wsrCjHSwkKBaW63MoCL0231vRLGudcQv6rYzCLCSA+XjKFEkYBclsXObnUd6NeBLAdas
+         DlBUUqwG2TSwaAG7DU5tnNlJV3jFMvhieoG7oWW4NuBjzvboCqXG2YyoHdLXCBblofkY
+         R9ya/ueVog094sTWe56hr8WrfU7mlfbJLHQuCWfbn17N/D81zEQ+b5Ryi2w9ulhNPzHn
+         +0YvIDgxHCpCOZwdyzr0GpA0yoEac3djguQDk/yuUi2zNrqRMwYxSAR/DABDqBtUENO6
+         slmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705576633; x=1706181433;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1705576743; x=1706181543;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xUL3sesdhKnyLaiqDC4I4Y1yB3YN5zh6ABKurybZAU4=;
-        b=uyjkyr0Ze+F915k5nQAyf0nWlfNXfcGwwOsZT5UDBWnnuPqaIwsasq6i2pIqGw9cy6
-         Fn8tKta5NVkl9n6YjabXcDOhBJMXj5d/nEC75eNbkQtjX0B0QR/ZpQJPjOrIAJWp5xeM
-         LBt0JSQ19Pwm/z0MIzznwlPPdirQ6Aonjf4zm/mnuI7olRNvFv4++yFGsotNj86TvVk4
-         klAsC2yVI6404Cm6n6Mhe5Dm/UTT4IaAXk2efzEz/blnwbxRwSzeR2DbjiFSWceaCaJI
-         6YcW3envvtCzsR2t5DB3BHFDI1ylsfs/tV/zN0vaftCBaWGoQESVRNBY6cTcbTq4dAy0
-         uLdQ==
-X-Gm-Message-State: AOJu0YyQuTxtKARkqOmtzdlib9bCJI37CN+iwwoqHmhiNkvW2MxIDLis
-	TeX1erlv/VXOkJ/19YULTHRN0e7qhF0Nk4yMBTr6vUROBb3SAznQK1JUhlH4FHE=
-X-Google-Smtp-Source: AGHT+IHyjyHsdaxcownnkWnzu46PpTlmkcbrxP0tzLEpsy/pqHnDn8XLUf47GEZUEuK2qUNpp9DjQg==
-X-Received: by 2002:ac2:4e95:0:b0:50e:285f:3a8 with SMTP id o21-20020ac24e95000000b0050e285f03a8mr188522lfr.108.1705576632600;
-        Thu, 18 Jan 2024 03:17:12 -0800 (PST)
+        bh=MDFd66KcIbKFIIX/WcgTl2/WLahORWiu0MGU1O5cSMo=;
+        b=SwyYNHL8MvL19A02Bc40Eexbew5yKEVSTUzeXdp1hXFTnk2q2zjaEb9UHKKqsKR1ZR
+         9NZL5nN1VDVFaSsgi2nUF065opzyAqLLnitgloqGlX7fBcYN2GLh+blfSl3qFH90cBxK
+         A2slgkP06Nr9f44Z4IHSdHp9jFBGMtAiQwDPlIGypjelM6BuYRi2T3Ai5kdCoWfcgmsZ
+         /zsdWeLBIr/z/7vwpRY7rqYnH40yeVs85iZFkZDtJswOEhZsKMo0KUrm7wyaN5n8szcy
+         uw4bAXM0gRSfQWQm++83sVjIi/WjGd0A9UtV+zxSJnPYKZvTybUJwYNy6xMouwzezrgN
+         201w==
+X-Gm-Message-State: AOJu0YxPhseP3GNtPqghygK/KZoEjLYaoEH//v28j4QugyTZCmz6+L6E
+	Wy0eERSli4JFsINqSls9URTqcSwbfMfyKYi4W19t2a53esie+iCc7iZKDBoEImQ=
+X-Google-Smtp-Source: AGHT+IHqoe2TVTZTVhMTb7zPOZYWEj/lioFMe60pwfbBpenxG7wEQKyuG3YE/bPiO2Lu8eFVuFv6CQ==
+X-Received: by 2002:a05:6512:4897:b0:50e:d5ad:9414 with SMTP id eq23-20020a056512489700b0050ed5ad9414mr386800lfb.50.1705576742745;
+        Thu, 18 Jan 2024 03:19:02 -0800 (PST)
 Received: from [172.30.204.173] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id u24-20020a196a18000000b0050ec4839e23sm594538lfu.195.2024.01.18.03.17.09
+        by smtp.gmail.com with ESMTPSA id n22-20020a0565120ad600b0050ef97332cbsm601903lfu.32.2024.01.18.03.19.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Jan 2024 03:17:12 -0800 (PST)
-Message-ID: <9a24a065-b649-4431-b8fb-78c733c07671@linaro.org>
-Date: Thu, 18 Jan 2024 12:17:08 +0100
+        Thu, 18 Jan 2024 03:19:02 -0800 (PST)
+Message-ID: <4c4d7469-c28b-412d-aa30-7123d3c98d1e@linaro.org>
+Date: Thu, 18 Jan 2024 12:19:00 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,90 +78,43 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 13/15] arm64: dts: qcom: pmi632: define USB-C related
- blocks
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
- Guenter Roeck <linux@roeck-us.net>,
- Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Philipp Zabel <p.zabel@pengutronix.de>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-usb@vger.kernel.org,
- linux-phy@lists.infradead.org
-References: <20240113-pmi632-typec-v2-0-182d9aa0a5b3@linaro.org>
- <20240113-pmi632-typec-v2-13-182d9aa0a5b3@linaro.org>
- <1d0d325d-d15e-4e86-b8e3-9f91b99e78bf@linaro.org>
- <20240117220153.GA649327@hu-bjorande-lv.qualcomm.com>
+Subject: Re: [PATCH] drm/msm/adreno: Update generated headers
 Content-Language: en-US
+To: Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ Rob Clark <robdclark@chromium.org>, Connor Abbott <cwabbott0@gmail.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Akhil P Oommen <quic_akhilpo@quicinc.com>,
+ Douglas Anderson <dianders@chromium.org>,
+ open list <linux-kernel@vger.kernel.org>
+References: <20240117203744.394260-1-robdclark@gmail.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240117220153.GA649327@hu-bjorande-lv.qualcomm.com>
+In-Reply-To: <20240117203744.394260-1-robdclark@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
-On 1/17/24 23:01, Bjorn Andersson wrote:
-> On Mon, Jan 15, 2024 at 11:00:53AM +0100, Konrad Dybcio wrote:
->> On 13.01.2024 21:55, Dmitry Baryshkov wrote:
->>> Define VBUS regulator and the Type-C handling block as present on the
->>> Quacomm PMI632 PMIC.
->>>
->>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>   arch/arm64/boot/dts/qcom/pmi632.dtsi | 30 ++++++++++++++++++++++++++++++
->>>   1 file changed, 30 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/pmi632.dtsi b/arch/arm64/boot/dts/qcom/pmi632.dtsi
->>> index 4eb79e0ce40a..d6832f0b7b80 100644
->>> --- a/arch/arm64/boot/dts/qcom/pmi632.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/pmi632.dtsi
->>> @@ -45,6 +45,36 @@ pmic@2 {
->>>   		#address-cells = <1>;
->>>   		#size-cells = <0>;
->>>   
->>> +		pmi632_vbus: usb-vbus-regulator@1100 {
->>> +			compatible = "qcom,pmi632-vbus-reg", "qcom,pm8150b-vbus-reg";
->>> +			reg = <0x1100>;
->>> +			status = "disabled";
->>> +		};
->>> +
->>> +		pmi632_typec: typec@1500 {
->>> +			compatible = "qcom,pmi632-typec";
->>> +			reg = <0x1500>;
->>> +			interrupts = <0x2 0x15 0x00 IRQ_TYPE_EDGE_RISING>,
->>> +				     <0x2 0x15 0x01 IRQ_TYPE_EDGE_BOTH>,
->>> +				     <0x2 0x15 0x02 IRQ_TYPE_EDGE_RISING>,
->>> +				     <0x2 0x15 0x03 IRQ_TYPE_EDGE_BOTH>,
->>> +				     <0x2 0x15 0x04 IRQ_TYPE_EDGE_RISING>,
->>> +				     <0x2 0x15 0x05 IRQ_TYPE_EDGE_RISING>,
->>> +				     <0x2 0x15 0x06 IRQ_TYPE_EDGE_BOTH>,
->>> +				     <0x2 0x15 0x07 IRQ_TYPE_EDGE_RISING>;
->> This differs from the downstream irq types:
->>
->> <0x2 0x15 0x0 IRQ_TYPE_EDGE_BOTH>,
->> <0x2 0x15 0x1 IRQ_TYPE_EDGE_BOTH>,
->> <0x2 0x15 0x2 IRQ_TYPE_EDGE_RISING>,
->> <0x2 0x15 0x3 IRQ_TYPE_EDGE_RISING>,
->> <0x2 0x15 0x4 IRQ_TYPE_EDGE_BOTH>,
->> <0x2 0x15 0x5 IRQ_TYPE_EDGE_RISING>,
->> <0x2 0x15 0x6 IRQ_TYPE_EDGE_RISING>,
->> <0x2 0x15 0x7 IRQ_TYPE_EDGE_RISING>;
->>
+On 1/17/24 21:37, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> Interrupt 1, 3, and 6 are level interrupts for which it's reasonable to
-> act on both edges. Interrupt 0, 2, 4, 5, and 7 are "pulse interrupts",
-> for which it seems reasonable to act on only one of the edges.
+> This updates the GPU headers to latest from mesa, using gen_header.py
+> (which is used to generate headers at bulid time for mesa), rather than
+> headergen2 (which doesn't have proper support for A6XX vs A7XX register
+> variants).
 > 
-> To me, Dmitry's proposed version makes more sense than downstream.
+> Mostly just uninteresting churn, but there are a couple spots in a7xx
+> paths which update REG_A6XX_foo to REG_A7XX_foo for registers which are
+> a7xx specific.
+> 
+> Cc: Connor Abbott <cwabbott0@gmail.com>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
 
-Thanks a lot for crosschecking!
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
