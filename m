@@ -1,140 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-7536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6575883155D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 10:03:04 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE4B4831627
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 10:47:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1F9E41F237C9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 09:03:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6F62D1F21A14
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 09:47:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F40A1F612;
-	Thu, 18 Jan 2024 09:02:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tjKqr4Wp"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7277B1F922;
+	Thu, 18 Jan 2024 09:47:25 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2E21F60B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 09:02:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8891173D;
+	Thu, 18 Jan 2024 09:47:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705568572; cv=none; b=s7ziBfo2yLv/a28oSoatF8bioDXbS4Qc3JiFXB5vlHTFmR3+CVUciDHguij+UfNoWgMCLorp4btob/R9U+oxG9eYJVWOe2cisA5oqIGOrCMSpPalZZqWlKC0r2L0R10gldBiYwQXAw+YOkfVCyZ3Fm8N2KcOFFiL6v/7sPpF3XI=
+	t=1705571245; cv=none; b=UF1egfU06kpQb2j1ZmQTqwzgiTT+0J+3ct6M3pCHUE41lR7fbqUQUr6UtWRhYwRfmD/IPa8GClC9sUjAFlILDv+MF4GoxGyQGZ1vaeav3NNi8oJoBur3VbfykKA83TDwf3EwkkJlZUflheTkMszBk1rVjFB3nG4I7I8vPLvUZKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705568572; c=relaxed/simple;
-	bh=SCN0DITGtEyCZhxC49TDM4ZSpawE8A7q3RwTS/XCbr8=;
-	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:MIME-Version:
-	 References:In-Reply-To:From:Date:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding; b=W6IneJBGkyo999lfn1lYJ/5K3vkJi+RH4I4WrBhMn7XbwXGar7UEocYxdQa/+hKFGo9eQnioQPQfsNiITBZxyOD36V1t42KwJDO1V/dz9j9tagCRMeuTciSUZZi0Hs7ADGHMJqgZH65t/DOjJ9b3Cakt+IKRhk9uVs08fUa3cuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tjKqr4Wp; arc=none smtp.client-ip=209.85.128.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-5e89ba9810aso99961037b3.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 01:02:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705568570; x=1706173370; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SCN0DITGtEyCZhxC49TDM4ZSpawE8A7q3RwTS/XCbr8=;
-        b=tjKqr4Wp3MTKqMI8HpTbDsdCOEqchltQaxJIHP3vQ8GkgvV7XarMFuuDjDma5xoJEn
-         N+yFA/Ql8LpYoMORnuVavo9VBXWpy0W8dhYIhVhyLiA9dsvMmA5XHGJIWhXJ8lUa5WQa
-         ghq0a25523UkDCPU2xCs+XrRh4dDC0BZz4BXL948yPp0+ASRnVMNHsI3BVNsvRGwVJGu
-         UHscNNQix0L0JN2JdJP+F05fb0isQj2s5F13PKFUZCAFckvCIHKNHsesjZAS6oWuFVdc
-         MEuQgi5jIJi+VlpXcsSoRYqopf/wEsrw7C7kHhYXPVYJAPbHuc+/lyvjaHno6WVeDmZd
-         dKUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705568570; x=1706173370;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SCN0DITGtEyCZhxC49TDM4ZSpawE8A7q3RwTS/XCbr8=;
-        b=klnfgCcRs9/XCjVCnMXzGG3QoDB9nPrxPMy5oceyqAaqwTM1/QhlyFwUl/rZxIc6Vn
-         IrJl2kau89sVmJQvHmPNiyT/c++xe3NVGFPAz0aSU06d6hjxO1rRZiSTsl72YHeSEQkn
-         hoVV0TF2SdBb0BU6SRqb7+2Qr6j1An+BdlAOPqydkZP/MqAaU4/OIJ7rghnn2MfPxb43
-         Oedl7OB13yfIX9CiAcKyv9FGwsI5MtQWYlt6JV846uidNOBezF/NbKEwr3B1uP7fsUOT
-         hUglKajUDmZ7LhG9livAUMvhUvveGQpLQBfhlgiEaqDN3cCz4Me3BdpePNBupr2UvGLQ
-         rl/Q==
-X-Gm-Message-State: AOJu0YxxxcqVRnqBVbZLRurRwW5f1SsUZxBB2dDj5feweGuNO7SJ6UcI
-	xmjrVgICJ3V4FKRwb/lfpU6vrdiupACymGAgy27JUKjAxku4WM/zF6xS2JoC9JBfYc1/dGPDYEB
-	hjDPTOJOW6tv2i3IU6HTBV6AxJ8UFYCKI8L311g==
-X-Google-Smtp-Source: AGHT+IFn0oNGpUtohUkixMpPda/cInzk0oTl2IZ0jSG7AXNDnpGJ5BZW+dJrWH4qJl2XVKHeIoh+tuR35SB/+3L7MMY=
-X-Received: by 2002:a25:4842:0:b0:dc2:1e21:eeec with SMTP id
- v63-20020a254842000000b00dc21e21eeecmr322545yba.106.1705568569626; Thu, 18
- Jan 2024 01:02:49 -0800 (PST)
+	s=arc-20240116; t=1705571245; c=relaxed/simple;
+	bh=xUKe/6pES/NscQ+RcGPUqZZ6ve+SBnXl+mH5PIJD128=;
+	h=X-UUID:X-CID-P-RULE:X-CID-O-INFO:X-CID-INFO:X-CID-META:X-CID-BVR:
+	 X-CID-BAS:X-CID-FACTOR:X-UUID:Received:Received:X-ns-mid:Received:
+	 From:To:Cc:Subject:Date:Message-Id:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding; b=GuU32bhO2fIC4J1g5xbc2zSRnFr5N2kcIze86q5WcvmFs+JGhFHO+uejShYddPHpmAdP9zolZeC+CVeEKWeNpME5JXNCU1rHsQdXTIvsWmnU/S0PB+fHW23N6j3MeKX3+z+MB7Yt0TdSWhCKZCP3PqEj4Sadaa6+fEcT2nfEn4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 3d0cabb88c414149bc8eca0681ee3386-20240118
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.1.35,REQID:02285d8d-6596-4773-956c-95702a0cee6f,IP:20,
+	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:-15,FILE:0,BULK:0,RULE:Release_Ham,ACTI
+	ON:release,TS:5
+X-CID-INFO: VERSION:1.1.35,REQID:02285d8d-6596-4773-956c-95702a0cee6f,IP:20,UR
+	L:0,TC:0,Content:0,EDM:0,RT:0,SF:-15,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:5
+X-CID-META: VersionHash:5d391d7,CLOUDID:c4567d7f-4f93-4875-95e7-8c66ea833d57,B
+	ulkID:240118174709GVOR3L11,BulkQuantity:0,Recheck:0,SF:17|19|44|66|38|24|1
+	02,TC:nil,Content:0,EDM:-3,IP:-2,URL:0,File:nil,Bulk:nil,QS:nil,BEC:nil,CO
+	L:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0
+X-CID-BVR: 0
+X-CID-BAS: 0,_,0,_
+X-CID-FACTOR: TF_CID_SPAM_FSI,TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD
+X-UUID: 3d0cabb88c414149bc8eca0681ee3386-20240118
+Received: from mail.kylinos.cn [(39.156.73.10)] by mailgw
+	(envelope-from <chentao@kylinos.cn>)
+	(Generic MTA)
+	with ESMTP id 1667805969; Thu, 18 Jan 2024 17:47:08 +0800
+Received: from mail.kylinos.cn (localhost [127.0.0.1])
+	by mail.kylinos.cn (NSMail) with SMTP id 71955E000EB9;
+	Thu, 18 Jan 2024 17:47:08 +0800 (CST)
+X-ns-mid: postfix-65A8F39C-245485265
+Received: from kernel.. (unknown [172.20.15.234])
+	by mail.kylinos.cn (NSMail) with ESMTPA id E42E8E000EB9;
+	Thu, 18 Jan 2024 17:47:05 +0800 (CST)
+From: Kunwu Chan <chentao@kylinos.cn>
+To: andersson@kernel.org,
+	konrad.dybcio@linaro.org,
+	lee@kernel.org,
+	daniel.thompson@linaro.org,
+	jingoohan1@gmail.com,
+	deller@gmx.de
+Cc: linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	linux-fbdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Kunwu Chan <chentao@kylinos.cn>
+Subject: [PATCH] hwmon: (peci/cputemp) Add a null pointer check to the wled_configure
+Date: Thu, 18 Jan 2024 17:47:04 +0800
+Message-Id: <20240118094704.212641-1-chentao@kylinos.cn>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20221021181016.14740-1-ansuelsmth@gmail.com> <CACRpkdbfvr1pkVb3XhBZLnmn7vy3XyzavwVjW_VmFKTdh3LABQ@mail.gmail.com>
- <63531543.050a0220.b6bf5.284d@mx.google.com> <CACRpkdbOQq9hUT=d1QBDMmgLaJ1wZ=hd44ciMnjFVgpLCnK8Wg@mail.gmail.com>
- <6357240c.170a0220.999b2.23d6@mx.google.com> <CACRpkdb4iqazgVerHCPU0VqZKYoB5kJeDSaL+ek67L=2Txem-A@mail.gmail.com>
- <65a7d352.050a0220.ee5cf.f69f@mx.google.com> <65a85cf3.df0a0220.9615c.a798@mx.google.com>
-In-Reply-To: <65a85cf3.df0a0220.9615c.a798@mx.google.com>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Thu, 18 Jan 2024 10:02:37 +0100
-Message-ID: <CACRpkdYNhUxFMOGPx-yrgUji03w0K5fRmVFFWW0MfDH1ZeBnxQ@mail.gmail.com>
-Subject: Re: [PATCH] ARM: mach-qcom: fix support for ipq806x
-To: Christian Marangi <ansuelsmth@gmail.com>
-Cc: Geert Uytterhoeven <geert+renesas@glider.be>, Russell King <linux@armlinux.org.uk>, 
-	Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@somainline.org>, Arnd Bergmann <arnd@arndb.de>, 
-	Ard Biesheuvel <ardb@kernel.org>, "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>, 
-	Nick Hawkins <nick.hawkins@hpe.com>, John Crispin <john@phrozen.org>, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jan 18, 2024 at 12:04=E2=80=AFAM Christian Marangi <ansuelsmth@gmai=
-l.com> wrote:
+devm_kasprintf() returns a pointer to dynamically allocated memory
+which can be NULL upon failure. Ensure the allocation was successful
+by checking the pointer validity.
 
-> Some followup on this... I manage to enable DEBUG_LL and can have debug
-> output from the decompressor...
+Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
+---
+ drivers/video/backlight/qcom-wled.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-Yeah that is helpful!
+diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backligh=
+t/qcom-wled.c
+index 10129095a4c1..a0b06839d778 100644
+--- a/drivers/video/backlight/qcom-wled.c
++++ b/drivers/video/backlight/qcom-wled.c
+@@ -1406,8 +1406,11 @@ static int wled_configure(struct wled *wled)
+ 	wled->ctrl_addr =3D be32_to_cpu(*prop_addr);
+=20
+ 	rc =3D of_property_read_string(dev->of_node, "label", &wled->name);
+-	if (rc)
++	if (rc) {
+ 		wled->name =3D devm_kasprintf(dev, GFP_KERNEL, "%pOFn", dev->of_node);
++		if (!wled->name)
++			return -ENOMEM;
++	}
+=20
+ 	switch (wled->version) {
+ 	case 3:
+--=20
+2.39.2
 
-> From what I can see fdt_check_mem_start is not called at all...
->
-> What I'm using with kernel config are:
-> CONFIG_ARM_APPENDED_DTB=3Dy
-> CONFIG_ARM_ATAG_DTB_COMPAT=3Dy
-> And a downstream patch that mangle all the atags and takes only the
-> cmdline one.
->
-> The load and entry point is:
-> 0x42208000
->
-> With the current setup I have this (I also added some debug log that
-> print what is actually passed to do decompress
->
-> DTB:0x42AED270 (0x00008BA7)
-> Uncompressing Linux...
-> 40208000
-> 4220F10C done, booting the kernel.
->
-> Where 40208000 is the value of output_start and 4220F10C is input_data.
->
-> And I think this confirm that it's getting loaded in the wrong position
-> actually in reserved memory... But how this is possible??? Hope can
-> someone help me in this since I wasted the entire day with this and
-> didn't manage to make any progress... aside from having fun with the
-> head.S assembly code.
-
-I have no idea how this happens, but when I boot images I do
-it using fastboot like this:
-
-fastboot --base 40200000 --cmdline "console=3DttyMSM0,115200,n8" boot zImag=
-e
-
-So I definitely hammer it to boot from 0x40200000 (+0x8000).
-
-Yours,
-Linus Walleij
 
