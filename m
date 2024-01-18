@@ -1,137 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-7558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A14EA831B57
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 15:29:42 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EC25831BBB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 15:49:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 42D601F27221
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 14:29:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7201F1C227A3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 14:49:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02AFE286B2;
-	Thu, 18 Jan 2024 14:29:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A48EE1DA36;
+	Thu, 18 Jan 2024 14:49:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VsdvZXqg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZAvBPWzi"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFFA52C9D;
-	Thu, 18 Jan 2024 14:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72ADE250E7;
+	Thu, 18 Jan 2024 14:49:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705588175; cv=none; b=u70VFdKdP4AofmIcGxfRPgoo4XFQzWjIAeKl4xbuQlONN9HYNZBnJ5SytTMa2PazJtvlFsqTUlPfgx4ZW2Zb7qKi2Z/Sg8UpwRVHvBVHgvQNx9LLTP8I6Np6qqtwoW6/TDYiQl5iXjh1QqFBvmaw3wH5jtPLwHmUEV6hIHDeWSk=
+	t=1705589359; cv=none; b=XAXeldyqQIhktJXImQlfgKRDHsqDqVmNuHCaNuU+e0IcnpTQ7hWE0QCIECN9xg7dY/UqVu1iYLkpgEYuMnsrKnMoCd7+4NvnGmsCtH8uU/Pw0M6cLhuL7DVVgZeorLbLYIPh8xZ4YzExIzvpN8LYK3rInstFcIHlQ7bkwpXaICw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705588175; c=relaxed/simple;
-	bh=iPGPVXXwyd5DFSfC8msMPU1CSz0Q7jm4kMOswDCGfn4=;
-	h=Received:DKIM-Signature:Received:X-Gm-Message-State:
-	 X-Google-Smtp-Source:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gmail-Original-Message-ID:Message-ID:
-	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding; b=ip9Lb9o5+v/xopGfYyqJRx92WpEtbAG+CrCRt1RuFghv+Dgep6PKtKedvtyfUJyKifPt/25VlEbnfDlnlNiZuH/mP8/OP1NSc3wB9gdGVYW7EFeYtcs+ihvgPN8TtvTtactFfPYCk8w3+B3f/v9/yNK0BPGY76IEF9nW20RmQjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VsdvZXqg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F12C433F1;
-	Thu, 18 Jan 2024 14:29:35 +0000 (UTC)
+	s=arc-20240116; t=1705589359; c=relaxed/simple;
+	bh=oaXZOHDx2BP58wrfTY7FOWKwJKm/7v9GcGOdWbyjMH0=;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To; b=gpe9SBzCcqb+jGyYO2yheYz/8z6+xcQYr2u3ZNAxEc5XY8mqMvKGQOIO7BTrszXtbeHfKLtkeM3zuAvEoieYu91sqX+mtYp9/Sj/xki/ZnIwaOsh5Hr7x54yDVQyQaFPbYykVg3du4CUR5S3hfeeoRqziYPzGpWl0NLlhcoEiOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZAvBPWzi; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37E88C433A6;
+	Thu, 18 Jan 2024 14:49:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705588175;
-	bh=iPGPVXXwyd5DFSfC8msMPU1CSz0Q7jm4kMOswDCGfn4=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=VsdvZXqg71HEfgsj0TMAnjwKaNJMB8YfV6RHoZIdngwczm2R9BalAiS5dSBxF/NrL
-	 erLZWbXItZ4BJ6n81aA/hPD0PYCZm6fEu12ayLT9FZfGysL7vb2J3y09rJV1X4911/
-	 MBEXc9UdwGEo5F/NM5qneMKqNPWFdbpUWfna3Q/ATOmcFlFSvJ2ZCnK33394PoGWWK
-	 0amzGNrDh/+luAUELiD7dijo+uyMJYTqc79GJ+76E/xh/UgqUBpv1lRLL3oqgVICPv
-	 asLg/+x7hG0hL+vbHXy42so1VIPsEp6KBRMfkbqOXFA/Jh9AV/Vi2eFCKuWmkZUqoH
-	 m8Kn5sBfqvM/Q==
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a28f66dc7ffso150582166b.0;
-        Thu, 18 Jan 2024 06:29:35 -0800 (PST)
-X-Gm-Message-State: AOJu0Yx7lQmVM/2uB32FZsOLjE6ponPfM/bNQEmtmqIkOCd2+SmISR63
-	6RSy8Zea6NCZMIW1YPi39cIitzfw1Q4F9wadORGJWte8rkb9J4aX2EVxDFYWrC8/a957ZoHOYAY
-	pJZJImWuYEM5jALqfFzTTmpBxIQ==
-X-Google-Smtp-Source: AGHT+IFh30Wa29ABtnduwX0kE65ZA9bKjWTFtwY7A2f10u3apUDt/6uU2eD5vEaD6OSynYOp5n7MROLZi+0BQu7ZbM0=
-X-Received: by 2002:a19:644a:0:b0:50e:e1c3:f97b with SMTP id
- b10-20020a19644a000000b0050ee1c3f97bmr1677678lfj.3.1705588153618; Thu, 18 Jan
- 2024 06:29:13 -0800 (PST)
+	s=k20201202; t=1705589358;
+	bh=oaXZOHDx2BP58wrfTY7FOWKwJKm/7v9GcGOdWbyjMH0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ZAvBPWzieJskFoW183PEr8ko56ub1ezMkwW/ohvj1sw9/kCHfTebfeHgole8+UtBy
+	 oSEHXiF8clPeYat+HYQzqzDgBvzL8othGgtOItqYWNCMUFFaYudSb+JxreiZlrI5HN
+	 6K8SlxPuZl98eVjzlA6Dkru8H5dyhUzqhwIub2Q7fvMAMJPs1bcq3eTEKrhu9rLxB5
+	 m/eJnCNM0bjMP02XpFYF/zpQG+ICKsvCJOiWnEB3XnglwsvConsP6vhgdwaycTopGV
+	 koI+u1gFMxFJ7hjQuhj2S1C0/eKZm1EoiN7CTnCJvnvAFwbip7l+BpdJvLAy0hGeF2
+	 Cm3402uD0STMA==
+Date: Thu, 18 Jan 2024 14:49:12 +0000
+From: Lee Jones <lee@kernel.org>
+To: Anjelique Melendez <quic_amelende@quicinc.com>
+Cc: pavel@ucw.cz, thierry.reding@gmail.com, robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+	agross@kernel.org, andersson@kernel.org, luca.weiss@fairphone.com,
+	konrad.dybcio@linaro.org, u.kleine-koenig@pengutronix.de,
+	quic_subbaram@quicinc.com, quic_gurus@quicinc.com,
+	linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-pwm@vger.kernel.org
+Subject: Re: (subset) [PATCH v8 0/7] Add support for LUT PPG
+Message-ID: <20240118144912.GC3305748@google.com>
+References: <20231221185838.28440-1-quic_amelende@quicinc.com>
+ <170496750168.1654525.11132648331912183091.b4-ty@kernel.org>
+ <20240111100747.GM7948@google.com>
+ <dc8a58ab-00df-bfd4-39f7-ec196e578260@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240117160748.37682-1-brgl@bgdev.pl>
-In-Reply-To: <20240117160748.37682-1-brgl@bgdev.pl>
-From: Rob Herring <robh+dt@kernel.org>
-Date: Thu, 18 Jan 2024 08:29:01 -0600
-X-Gmail-Original-Message-ID: <CAL_Jsq+0xb-otvjkbLqB8gNKadVqnigwGB_k+VGrj740Y6wxjg@mail.gmail.com>
-Message-ID: <CAL_Jsq+0xb-otvjkbLqB8gNKadVqnigwGB_k+VGrj740Y6wxjg@mail.gmail.com>
-Subject: Re: [PATCH 0/9] PCI: introduce the concept of power sequencing of
- PCIe devices
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Kalle Valo <kvalo@kernel.org>, "David S . Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Heiko Stuebner <heiko@sntech.de>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Chris Morgan <macromorgan@hotmail.com>, 
-	Linus Walleij <linus.walleij@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Arnd Bergmann <arnd@arndb.de>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	=?UTF-8?B?TsOtY29sYXMgRiAuIFIgLiBBIC4gUHJhZG8=?= <nfraprado@collabora.com>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Peng Fan <peng.fan@nxp.com>, 
-	Robert Richter <rrichter@amd.com>, Dan Williams <dan.j.williams@intel.com>, 
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>, Terry Bowman <terry.bowman@amd.com>, 
-	Lukas Wunner <lukas@wunner.de>, Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>, 
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Abel Vesa <abel.vesa@linaro.org>, 
-	linux-wireless@vger.kernel.org, netdev@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-pci@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <dc8a58ab-00df-bfd4-39f7-ec196e578260@quicinc.com>
 
-On Wed, Jan 17, 2024 at 10:08=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl=
-> wrote:
->
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->
-> The responses to the RFC were rather positive so here's a proper series.
+On Tue, 16 Jan 2024, Anjelique Melendez wrote:
 
-Thanks for tackling this.
+> 
+> 
+> On 1/11/2024 2:07 AM, Lee Jones wrote:
+> > On Thu, 11 Jan 2024, Lee Jones wrote:
+> > 
+> >> On Thu, 21 Dec 2023 10:58:30 -0800, Anjelique Melendez wrote:
+> >>> In certain PMICs, LUT pattern and LPG configuration is stored in SDAM
+> >>> modules instead of LUT peripheral. This feature is called PPG.
+> >>>
+> >>> This change series adds support for PPG. Thanks!
+> >>> Changes since v7:
+> >>>   - Patch 4/7
+> >>>     - Initialize hi/lo_pause variables in lpg_pattern_set()
+> >>> Changes since v6:
+> >>>   - Patch 2/7
+> >>>     - Removed required by constraint on PPG dt properties
+> >>> Changes since v5:
+> >>>   - Patch 4/7
+> >>>     - Update logic so that multicolor led device triggers pattern
+> >>>       on all LEDs at the same time
+> >>>     - Update nitpicks from Lee
+> >>>   - Patch 5/7
+> >>>     - Update nitpicks from Lee
+> >>> Changes since v4:
+> >>>   - Patch 3/7
+> >>>     - Get rid of r/w helpers
+> >>>     - Use regmap_read_poll_timeout() in qcom_pbs_wait_for_ack()
+> >>>     - Update error path in qcom_pbs_trigger_event()
+> >>>     - Fix reverse christmas tree
+> >>>   - Patch 4/7
+> >>>     - Get rid of r/w helpers
+> >>>     - Update variables to use "sdam" instead of "nvmem"
+> >>>     - Fix comments
+> >>>     - Fix reverse christmas tree
+> >>>     - Update lpg_pattern_set() logic
+> >>>   - Patch 5/7
+> >>>     - Removed sdam_lut_base from lpg_data
+> >>> Changes since v3:
+> >>>   - Patch 4/7
+> >>>     - Fix function returns
+> >>>     - Move register definition to top of file
+> >>>     - Revert max_brightness and probe accidental changes
+> >>>     - Combine init_sdam() and parse_sdam()
+> >>>     - Change error prints in probe to use dev_err_probe
+> >>>     - Remove ppg_en variable
+> >>>     - Update when pbs triggers are set/cleared
+> >>>   - Patch 6/7
+> >>>     - Remove use of nvmem_count
+> >>>     - Move register definition to top of file
+> >>>     - Remove lpg_get_sdam_lut_idx()
+> >>> Changes since v2:
+> >>>   - Patch 1/7
+> >>>     - Fix dt_binding_check error
+> >>>     - Rename binding file to match compatible
+> >>>     - Iclude SoC specific comptaibles
+> >>>   - Patch 2/7
+> >>>     - Update nvmem-names list
+> >>>   - Patch 3/7
+> >>>     - Update EXPORT_SYMBOL to EXPORT_SYMBOL_GPL
+> >>>     - Fix return/break logic in qcom_pbs_wait_for_ack()
+> >>>     - Update iterators to be int
+> >>>     - Add constants
+> >>>     - Fix function calls in qcom_pbs_trigger_event()
+> >>>     - Remove unnessary comments
+> >>>     - Return -EPROBE_DEFER from get_pbs_client_device()
+> >>> Changes since v1:
+> >>>   - Patch 1/7
+> >>>     - Fix dt_binding_check errors
+> >>>     - Update binding description
+> >>>   - Path 2/7
+> >>>     - Fix dt_binding_check errors
+> >>>     - Update per variant constraints
+> >>>     - Update nvmem description
+> >>>   - Patch 3/7
+> >>>     - Update get_pbs_client_device()
+> >>>     - Drop use of printk
+> >>>     - Remove unused function
+> >>>
+> >>> [...]
+> >>
+> >> Applied, thanks!
+> >>
+> >> [2/7] dt-bindings: leds: leds-qcom-lpg: Add support for LPG PPG
+> >>       commit: 2fdd08fec742e0c94a2a06a0c9ee0912b6f7ac39
+> >> [4/7] leds: rgb: leds-qcom-lpg: Add support for PPG through single SDAM
+> >>       commit: 07a1afc8fbb77cc893e2285112482902ac88a295
+> >> [5/7] leds: rgb: leds-qcom-lpg: Update PMI632 lpg_data to support PPG
+> >>       commit: f4f5f6a6f8d7bcc8efd0eee6751def22c9a38fd0
+> >> [6/7] leds: rgb: leds-qcom-lpg: Include support for PPG with dedicated LUT SDAM
+> >>       commit: 7399a927272de1fc42f4da8af1d8d60b65a15b84
+> >> [7/7] leds: rgb: Update PM8350C lpg_data to support two-nvmem PPG Scheme
+> >>       commit: 7b4066868689b1f341e61957611d252b6fa8cafc
+> > 
+> > This set had a bunch of checkpatch.pl errors.
+> > 
+> > Please fix them up subsequently.
+> > 
+> Hi Lee,
+> 
+> Just wanted to get some quick clarification. Would you like checkpatch.pl issues fixed in a new version
+> of this series or would you like a new patch to fix all the issues? Looks like these patches are in your
+> for-leds-next-next branch so I am guessing you would like a new follow up patch
+> but I just wanted to double check.
 
-> During last year's Linux Plumbers we had several discussions centered
-> around the need to power-on PCI devices before they can be detected on
-> the bus.
->
-> The consensus during the conference was that we need to introduce a
-> class of "PCI slot drivers" that would handle the power-sequencing.
->
-> After some additional brain-storming with Manivannan and the realization
-> that DT maintainers won't like adding any "fake" nodes not representing
-> actual devices, we decided to reuse existing PCI infrastructure.
+A follow-up please.
 
-Thank you. :)
-
-> The general idea is to instantiate platform devices for child nodes of
-> the PCIe port DT node. For those nodes for which a power-sequencing
-> driver exists, we bind it and let it probe. The driver then triggers a
-> rescan of the PCI bus with the aim of detecting the now powered-on
-> device. The device will consume the same DT node as the platform,
-> power-sequencing device. We use device links to make the latter become
-> the parent of the former.
->
-> The main advantage of this approach is not modifying the existing DT in
-> any way and especially not adding any "fake" platform devices.
-
-Suspend/resume has been brought up already, but I disagree we can
-worry about that later unless there is and always will be no power
-sequencing during suspend/resume for all devices ever. Given the
-supplies aren't standard, it wouldn't surprise me if standard PCI
-power management isn't either. The primary issue I see with this
-design is we will end up with 2 drivers doing the same power
-sequencing: the platform driver for initial power on and the device's
-PCI driver for suspend/resume.
-
-Rob
+-- 
+Lee Jones [李琼斯]
 
