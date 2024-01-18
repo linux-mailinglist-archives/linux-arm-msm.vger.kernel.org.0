@@ -1,133 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-7557-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F33D6831AE3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 14:55:05 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A14EA831B57
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 15:29:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 940B2B25261
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 13:55:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 42D601F27221
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 14:29:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04C6325613;
-	Thu, 18 Jan 2024 13:54:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02AFE286B2;
+	Thu, 18 Jan 2024 14:29:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eMO8vjFW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VsdvZXqg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B0F25605
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 13:54:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFFA52C9D;
+	Thu, 18 Jan 2024 14:29:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705586098; cv=none; b=Y1nZxyjIwqKQubgWEiiu5VHQFsetcCL9WDhJNGwNFvt2JIYXA4srV2z0FHabKcgRKIeLwcBut8jG92/549rqo6iMoMkKvRt+UGR7r2bjlHGWZHRZ8f2zhPaThAdU/08AO+f/rtPN5JhlWtePn6cfCeGco92kHholRj/p+IAvan0=
+	t=1705588175; cv=none; b=u70VFdKdP4AofmIcGxfRPgoo4XFQzWjIAeKl4xbuQlONN9HYNZBnJ5SytTMa2PazJtvlFsqTUlPfgx4ZW2Zb7qKi2Z/Sg8UpwRVHvBVHgvQNx9LLTP8I6Np6qqtwoW6/TDYiQl5iXjh1QqFBvmaw3wH5jtPLwHmUEV6hIHDeWSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705586098; c=relaxed/simple;
-	bh=ps1E8PJMTt8mzlLH9eECx/CQbcZhGFU/1wZdq7L4X7U=;
-	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding; b=XXNCddmkeQmXe0KgMAp2+kbdIE6NUMtF9Mh4OBT9bUCGz2frSfVwZraPpvHs9/L1TWBEvMHKS3//XLp6lk+EzN+YvOpBXhPjYKRMgVeUww1/OiXiXHlBKDslGbEqpffkknO1nXGisc3uFfd2qs48BMtZGbo/kNly/Hh5gZpLRf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eMO8vjFW; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-50ea9e189ebso14228071e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 05:54:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705586095; x=1706190895; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ps1E8PJMTt8mzlLH9eECx/CQbcZhGFU/1wZdq7L4X7U=;
-        b=eMO8vjFWQ3mLQEcF9OVRKUcV8xq494PRj7nXY1uEX18N2uT+1U++WnIF31AH5f9QYV
-         M5+vJvnPlhu3Vt6Y/cc35q6yCz5RWvXlB/MPB5GRu9RflYkXahandtDYfT3ED7cUroRb
-         B0bIjyNmqjdE+4Iu9UkuSh1SCwmbyaV7pdzxBUfPB7wef/qmYDHHn+qPPDhH/HcoFxVo
-         NbZgi7KzWgwMO0qTknkSaSKV4TnQKqlw+a8BcpsQIxjLQIb2tIAqm1ljFpB0wsM8sjSW
-         5qZRjvQWX14VRxqgTR/zNV2x7V8UgOQ20NVKnAMFumItnNwSnd75igwmURnSDFbYT50I
-         rbzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705586095; x=1706190895;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ps1E8PJMTt8mzlLH9eECx/CQbcZhGFU/1wZdq7L4X7U=;
-        b=uYYu+0xqEEAnGVmD+rP4bhaa3UKn2R1mWPYFaPbnUvC7SzY6ll8+t8jOFvs6eB5/a8
-         m2/dT3Qz4Jb6X6/fTHUpN8GaDduYMqeUZfQ4usV+8GEInLClNBaIsO5cVkwUZvn3KUyW
-         5kpnLR8RWu7dAaVgMR/YBreE9heWO+ODFn386qobxhvrfBezEb036jpfatKfg6yGGPhf
-         +LdIN3aL1rgz8i8s+3EcOlZ6qTlQb8P022cwMDd/h2WLFqZ5UPm6n2pflE1dSusTZcOK
-         CB/626B/39I6mOgmByYw+vVNvs6mQubKNd4ERwB3he34ILrrJNYzaNJMHJsxTEktcBkv
-         1sCQ==
-X-Gm-Message-State: AOJu0YzhwolqjOXlhd+TY4Ae6Cc0+E+/6S05lZurv7GkL/VIfx5yAAeA
-	hV1sBBVYGFY2qO+hb+9ICbilxSjfSRDrbqDpAYpbwfpKGYu4pfeXapHYoAmmt2E=
-X-Google-Smtp-Source: AGHT+IG81baX14qnfLZc7lP1lCoEd/MVMqnvyBVS2danUVivMYbgvenMBVknrh3McJP0uFBgXyCTSg==
-X-Received: by 2002:a05:6512:3c92:b0:50e:78f3:dbed with SMTP id h18-20020a0565123c9200b0050e78f3dbedmr612042lfv.91.1705586095296;
-        Thu, 18 Jan 2024 05:54:55 -0800 (PST)
-Received: from [172.30.204.173] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id x7-20020ac24887000000b0050eab7d397bsm637771lfc.256.2024.01.18.05.54.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Jan 2024 05:54:54 -0800 (PST)
-Message-ID: <e28dc651-a573-4c73-b030-19dd69c48493@linaro.org>
-Date: Thu, 18 Jan 2024 14:54:50 +0100
+	s=arc-20240116; t=1705588175; c=relaxed/simple;
+	bh=iPGPVXXwyd5DFSfC8msMPU1CSz0Q7jm4kMOswDCGfn4=;
+	h=Received:DKIM-Signature:Received:X-Gm-Message-State:
+	 X-Google-Smtp-Source:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gmail-Original-Message-ID:Message-ID:
+	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding; b=ip9Lb9o5+v/xopGfYyqJRx92WpEtbAG+CrCRt1RuFghv+Dgep6PKtKedvtyfUJyKifPt/25VlEbnfDlnlNiZuH/mP8/OP1NSc3wB9gdGVYW7EFeYtcs+ihvgPN8TtvTtactFfPYCk8w3+B3f/v9/yNK0BPGY76IEF9nW20RmQjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VsdvZXqg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F12C433F1;
+	Thu, 18 Jan 2024 14:29:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1705588175;
+	bh=iPGPVXXwyd5DFSfC8msMPU1CSz0Q7jm4kMOswDCGfn4=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=VsdvZXqg71HEfgsj0TMAnjwKaNJMB8YfV6RHoZIdngwczm2R9BalAiS5dSBxF/NrL
+	 erLZWbXItZ4BJ6n81aA/hPD0PYCZm6fEu12ayLT9FZfGysL7vb2J3y09rJV1X4911/
+	 MBEXc9UdwGEo5F/NM5qneMKqNPWFdbpUWfna3Q/ATOmcFlFSvJ2ZCnK33394PoGWWK
+	 0amzGNrDh/+luAUELiD7dijo+uyMJYTqc79GJ+76E/xh/UgqUBpv1lRLL3oqgVICPv
+	 asLg/+x7hG0hL+vbHXy42so1VIPsEp6KBRMfkbqOXFA/Jh9AV/Vi2eFCKuWmkZUqoH
+	 m8Kn5sBfqvM/Q==
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a28f66dc7ffso150582166b.0;
+        Thu, 18 Jan 2024 06:29:35 -0800 (PST)
+X-Gm-Message-State: AOJu0Yx7lQmVM/2uB32FZsOLjE6ponPfM/bNQEmtmqIkOCd2+SmISR63
+	6RSy8Zea6NCZMIW1YPi39cIitzfw1Q4F9wadORGJWte8rkb9J4aX2EVxDFYWrC8/a957ZoHOYAY
+	pJZJImWuYEM5jALqfFzTTmpBxIQ==
+X-Google-Smtp-Source: AGHT+IFh30Wa29ABtnduwX0kE65ZA9bKjWTFtwY7A2f10u3apUDt/6uU2eD5vEaD6OSynYOp5n7MROLZi+0BQu7ZbM0=
+X-Received: by 2002:a19:644a:0:b0:50e:e1c3:f97b with SMTP id
+ b10-20020a19644a000000b0050ee1c3f97bmr1677678lfj.3.1705588153618; Thu, 18 Jan
+ 2024 06:29:13 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 13/15] arm64: dts: qcom: pmi632: define USB-C related
- blocks
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <quic_bjorande@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
- Guenter Roeck <linux@roeck-us.net>,
- Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Philipp Zabel <p.zabel@pengutronix.de>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-usb@vger.kernel.org,
- linux-phy@lists.infradead.org
-References: <20240113-pmi632-typec-v2-0-182d9aa0a5b3@linaro.org>
- <20240113-pmi632-typec-v2-13-182d9aa0a5b3@linaro.org>
- <1d0d325d-d15e-4e86-b8e3-9f91b99e78bf@linaro.org>
- <20240117220153.GA649327@hu-bjorande-lv.qualcomm.com>
- <9a24a065-b649-4431-b8fb-78c733c07671@linaro.org>
- <CAA8EJppEFSy2=GKgkqC3uS15cO51KfxDrHtxHhAnA10kScYKhQ@mail.gmail.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAA8EJppEFSy2=GKgkqC3uS15cO51KfxDrHtxHhAnA10kScYKhQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20240117160748.37682-1-brgl@bgdev.pl>
+In-Reply-To: <20240117160748.37682-1-brgl@bgdev.pl>
+From: Rob Herring <robh+dt@kernel.org>
+Date: Thu, 18 Jan 2024 08:29:01 -0600
+X-Gmail-Original-Message-ID: <CAL_Jsq+0xb-otvjkbLqB8gNKadVqnigwGB_k+VGrj740Y6wxjg@mail.gmail.com>
+Message-ID: <CAL_Jsq+0xb-otvjkbLqB8gNKadVqnigwGB_k+VGrj740Y6wxjg@mail.gmail.com>
+Subject: Re: [PATCH 0/9] PCI: introduce the concept of power sequencing of
+ PCIe devices
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Kalle Valo <kvalo@kernel.org>, "David S . Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Heiko Stuebner <heiko@sntech.de>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Chris Morgan <macromorgan@hotmail.com>, 
+	Linus Walleij <linus.walleij@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Arnd Bergmann <arnd@arndb.de>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	=?UTF-8?B?TsOtY29sYXMgRiAuIFIgLiBBIC4gUHJhZG8=?= <nfraprado@collabora.com>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Peng Fan <peng.fan@nxp.com>, 
+	Robert Richter <rrichter@amd.com>, Dan Williams <dan.j.williams@intel.com>, 
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>, Terry Bowman <terry.bowman@amd.com>, 
+	Lukas Wunner <lukas@wunner.de>, Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Abel Vesa <abel.vesa@linaro.org>, 
+	linux-wireless@vger.kernel.org, netdev@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-pci@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Wed, Jan 17, 2024 at 10:08=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl=
+> wrote:
+>
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
+> The responses to the RFC were rather positive so here's a proper series.
 
+Thanks for tackling this.
 
-On 1/18/24 14:38, Dmitry Baryshkov wrote:
-> On Thu, 18 Jan 2024 at 13:17, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->>
->>
->> On 1/17/24 23:01, Bjorn Andersson wrote:
->>> On Mon, Jan 15, 2024 at 11:00:53AM +0100, Konrad Dybcio wrote:
->>>> On 13.01.2024 21:55, Dmitry Baryshkov wrote:
->>>>> Define VBUS regulator and the Type-C handling block as present on the
->>>>> Quacomm PMI632 PMIC.
->>>>>
->>>>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>>> ---
+> During last year's Linux Plumbers we had several discussions centered
+> around the need to power-on PCI devices before they can be detected on
+> the bus.
+>
+> The consensus during the conference was that we need to introduce a
+> class of "PCI slot drivers" that would handle the power-sequencing.
+>
+> After some additional brain-storming with Manivannan and the realization
+> that DT maintainers won't like adding any "fake" nodes not representing
+> actual devices, we decided to reuse existing PCI infrastructure.
 
-[...]
+Thank you. :)
 
-> Is there an ack?
+> The general idea is to instantiate platform devices for child nodes of
+> the PCIe port DT node. For those nodes for which a power-sequencing
+> driver exists, we bind it and let it probe. The driver then triggers a
+> rescan of the PCI bus with the aim of detecting the now powered-on
+> device. The device will consume the same DT node as the platform,
+> power-sequencing device. We use device links to make the latter become
+> the parent of the former.
+>
+> The main advantage of this approach is not modifying the existing DT in
+> any way and especially not adding any "fake" platform devices.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Suspend/resume has been brought up already, but I disagree we can
+worry about that later unless there is and always will be no power
+sequencing during suspend/resume for all devices ever. Given the
+supplies aren't standard, it wouldn't surprise me if standard PCI
+power management isn't either. The primary issue I see with this
+design is we will end up with 2 drivers doing the same power
+sequencing: the platform driver for initial power on and the device's
+PCI driver for suspend/resume.
 
-Konrad
+Rob
 
