@@ -1,68 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-7527-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7528-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 448A2831141
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 03:07:13 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A111831151
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 03:17:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1B45F1C21851
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 02:07:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BF2B31F2366C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 02:17:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 165DE2907;
-	Thu, 18 Jan 2024 02:07:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fy96bxi5"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D5F24699;
+	Thu, 18 Jan 2024 02:17:10 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F21323D9;
-	Thu, 18 Jan 2024 02:07:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFCC14688;
+	Thu, 18 Jan 2024 02:17:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705543627; cv=none; b=osMuQhtrk7ydj6tukVgKqYE9oQFYnslTivHD+mq6oMqhavrENpRJQ3jnsXq4252O0nVYJw88uwMHA/Zmpz4TvOxiTVldzH5eWhNBtKApqo+5tShV5DxxY7BnLDyDp41GBSb0jDcvnaxmAqUlxnK5gbJzpKXDZKGX7lhBHRBJBUw=
+	t=1705544230; cv=none; b=RJNZbros9eI4DWn+QznziL3ZW+xUPLYwx0ney71VSG8hn2Hon4ZzIvdch6laCDDxtMfWe9YhDGm7PoP/c3R/GLaoXM0eTAAgK1+Wku4uLbJV49U1v+HUO9puVc0r1jGUSG3D4urgMiTtInK+Fc+7XooSSSw6gJPJRoFRNpQ9zyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705543627; c=relaxed/simple;
-	bh=eNa6RnBmD6nBUUK+JlWTYmea+WAEaaTuBXMWGIdloyw=;
-	h=Received:DKIM-Signature:Received:Received:Received:Message-ID:
-	 Date:MIME-Version:User-Agent:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 X-Originating-IP:X-ClientProxiedBy:X-QCInternal:
-	 X-Proofpoint-Virus-Version:X-Proofpoint-ORIG-GUID:
-	 X-Proofpoint-GUID:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details; b=TJA0xWMYSWufZ8XXxnETSNjSY3F/Sc+jT40JohwFcdpuwrkT8xS197Wees8NG8Vjm7ijq1WfOnzVSCroLMNmLFG9XBy9mHaIAdf6iW6Ved2hCE0lIoAlaXr0DHu9veYFTPVRFyDvphTxVbqmGKCKfYhPvJj+y09Vb/agEMSxG9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fy96bxi5; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40I1CTKw032163;
-	Thu, 18 Jan 2024 02:07:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=eJ775hQQr50RGfFRrsXBtSjR/Rhx1p4HhwQ06OFvHNM=; b=fy
-	96bxi5SlQXZ4d0gGhzvAjYTLZIFbUvUCcvo7tRwlCYjeLckToxG3XvHlUXlAvamu
-	AxJ+KUVBjpsiZpBeIuLaChYUyDzH4avYWzcjnTcRYx4esT9rAuYqkCm3P05Ztq8/
-	d2tr1cFUR1LrUGKMHW6+cwpYL2al2ncm7Kf+veyOoXezLrlbohMdQ9bN/j7losH+
-	umSG5YluBlxfmSJQdcWz6DjuwJaZ39BY5Nlf18c0SOavUnunQ69Tb2WbdJMU1MLn
-	34S7R+PFcQ0xP9caoZ7/C4zOX29/YuSEzvLTi5m9T0tYY2J4pKnsxcvN4AIYLAIN
-	XqsCHopfDJQVoNgLc80A==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vpejp1rg7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Jan 2024 02:06:59 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40I26wOc004919
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Jan 2024 02:06:58 GMT
-Received: from [10.238.139.231] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 17 Jan
- 2024 18:06:54 -0800
-Message-ID: <4c82f1f0-1c5a-498f-9845-b5b26cd76468@quicinc.com>
-Date: Thu, 18 Jan 2024 10:06:46 +0800
+	s=arc-20240116; t=1705544230; c=relaxed/simple;
+	bh=6momQ9QB/Y9Ip/Db3KbIXMpQk/LKk7SNvyM7o6RGisk=;
+	h=X-UUID:X-CID-P-RULE:X-CID-O-INFO:X-CID-INFO:X-CID-META:X-CID-BVR:
+	 X-CID-BAS:X-CID-FACTOR:X-UUID:Received:Received:X-ns-mid:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:Content-Language:
+	 To:Cc:References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding; b=rgu7TsCqdaabG4yBgPdns6tQAbMOuTsVju0H4YZ68MRVCJM+IXiUWYNOJ0kWD6tv2OTnXN+9Vco+wc4Eu/BzDnOWl6JuQ/FV5wlnKn/tkVfy/qRwaiiVDnE9tSosKNrwC98KnD1H8zfKboz6EYnyxPNWxGkoue5wRzFv6kA8XYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 43d0795174294d89904cf0b7504238dd-20240118
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.1.35,REQID:1c0bfad0-7b29-415b-9fa2-010a6f2d21e5,IP:10,
+	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:-9,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
+	N:release,TS:1
+X-CID-INFO: VERSION:1.1.35,REQID:1c0bfad0-7b29-415b-9fa2-010a6f2d21e5,IP:10,UR
+	L:0,TC:0,Content:0,EDM:0,RT:0,SF:-9,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+	release,TS:1
+X-CID-META: VersionHash:5d391d7,CLOUDID:7c56f882-8d4f-477b-89d2-1e3bdbef96d1,B
+	ulkID:240118101702QKGYL0XV,BulkQuantity:0,Recheck:0,SF:38|24|17|19|42|74|6
+	4|66|102,TC:nil,Content:0,EDM:-3,IP:-2,URL:0,File:nil,Bulk:nil,QS:nil,BEC:
+	nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0
+X-CID-BVR: 0,NGT
+X-CID-BAS: 0,NGT,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD,TF_CID_SPAM_FSI
+X-UUID: 43d0795174294d89904cf0b7504238dd-20240118
+Received: from mail.kylinos.cn [(39.156.73.10)] by mailgw
+	(envelope-from <chentao@kylinos.cn>)
+	(Generic MTA)
+	with ESMTP id 1202952070; Thu, 18 Jan 2024 10:17:02 +0800
+Received: from mail.kylinos.cn (localhost [127.0.0.1])
+	by mail.kylinos.cn (NSMail) with SMTP id B3C66E000EB9;
+	Thu, 18 Jan 2024 10:17:01 +0800 (CST)
+X-ns-mid: postfix-65A88A1D-552403442
+Received: from [172.20.15.234] (unknown [172.20.15.234])
+	by mail.kylinos.cn (NSMail) with ESMTPA id 36366E000EB9;
+	Thu, 18 Jan 2024 10:16:58 +0800 (CST)
+Message-ID: <4d4f4ae4-e5e9-4d9e-ac25-d262e7ea23fc@kylinos.cn>
+Date: Thu, 18 Jan 2024 10:16:57 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,112 +68,56 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5] arm64: dts: qcom: qcm6490-idp: Add definition for
- three LEDs
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross
-	<agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_fenglinw@quicinc.com>
-References: <20240115-lpg-v5-1-3c56f77f9cec@quicinc.com>
- <CAA8EJpoemnXTmshWrArVOCm0GRSkWZ5tH557nbAjRL1Tgg-Dig@mail.gmail.com>
- <e16f5ff1-9b12-4f90-89d5-f95cbfb859e7@quicinc.com>
- <6c29ce72-e303-406a-bb75-5b36b0cd8ee4@linaro.org>
- <44ab50c4-c63b-436c-af46-9b4543181446@quicinc.com>
- <CAA8EJpq8exe6n3OQnreLCsV+BnZKcu24d==rEKup=+n28nnDHw@mail.gmail.com>
-From: hui liu <quic_huliu@quicinc.com>
-In-Reply-To: <CAA8EJpq8exe6n3OQnreLCsV+BnZKcu24d==rEKup=+n28nnDHw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: MX9vm9BR0clH7AOyHGumzPF0KEVobwiq
-X-Proofpoint-GUID: MX9vm9BR0clH7AOyHGumzPF0KEVobwiq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-17_14,2024-01-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- suspectscore=0 clxscore=1015 lowpriorityscore=0 spamscore=0
- impostorscore=0 adultscore=0 priorityscore=1501 bulkscore=0
- mlxlogscore=944 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2311290000 definitions=main-2401180012
+Subject: Re: [PATCH] drm/msm/adreno: Add a null pointer check in
+ zap_shader_load_mdt()
+Content-Language: en-US
+To: Markus Elfring <Markus.Elfring@web.de>, freedreno@lists.freedesktop.org,
+ dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ kernel-janitors@vger.kernel.org, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc: LKML <linux-kernel@vger.kernel.org>
+References: <20240116032732.65262-1-chentao@kylinos.cn>
+ <9e390783-05c5-47fc-a0c6-b95e249fe691@web.de>
+From: Kunwu Chan <chentao@kylinos.cn>
+In-Reply-To: <9e390783-05c5-47fc-a0c6-b95e249fe691@web.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-
-
-On 1/17/2024 11:41 AM, Dmitry Baryshkov wrote:
-> On Wed, 17 Jan 2024 at 05:02, hui liu <quic_huliu@quicinc.com> wrote:
+On 2024/1/18 02:50, Markus Elfring wrote:
+>> kasprintf() returns a pointer to dynamically allocated memory
+>> which can be NULL upon failure. Ensure the allocation was successful
+>> by checking the pointer validity.
+> =E2=80=A6
+>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>> @@ -144,6 +144,10 @@ static int zap_shader_load_mdt(struct msm_gpu *gp=
+u, const char *fwname,
+>>   		char *newname;
 >>
->>
->>
->> On 1/15/2024 6:26 PM, Krzysztof Kozlowski wrote:
->>> On 15/01/2024 11:18, hui liu wrote:
->>>>
->>>>
->>>> On 1/15/2024 5:56 PM, Dmitry Baryshkov wrote:
->>>>> On Mon, 15 Jan 2024 at 11:48, Hui Liu via B4 Relay
->>>>> <devnull+quic_huliu.quicinc.com@kernel.org> wrote:
->>>>>>
->>>>>> From: Hui Liu <quic_huliu@quicinc.com>
->>>>>>
->>>>>> Add definition for three LEDs to make sure they can
->>>>>> be enabled base on QCOM LPG LED driver.
->>>>>
->>>>> The "function" property is still placed incorrectly. Posting the next
->>>>> iteration before concluding the discussion on the previous one is not
->>>>> the best idea.
->>>> Do you mean I should update it as below? Seems there is no consumer to
->>>> use the function config, do we need to add now?
->>>
->>> Paste the output of dtbs_check for your board (or CHECK_DTBS=y for your
->>> Makefile target).
->> I checked the dt-binding file of LPG LED, I will update the dts as
->> below, if you think it's correct, I will push v6.
-> 
-> Is there any reason why you are defining three different LEDs instead
-> of multi-led with three components?
+>>   		newname =3D kasprintf(GFP_KERNEL, "qcom/%s", fwname);
+>> +		if (!newname) {
+>> +			ret =3D -ENOMEM;
+>> +			goto out;
+>> +		}
+> =E2=80=A6
+>=20
+> How do you think about to avoid the repetition of the pointer check
+> for the variable =E2=80=9Cmem_region=E2=80=9D?
+"mem_region"? Is this a clerical error, do you mean 'newname'?
 
-In the HW design, they are three seprete LEDs, there are three LEDs on 
-device. why do we need to add for multi-led?
+No check found in __qcom_mdt_load for 'newname'.
+'newname' is used for printing in '__qcom_mdt_load' in some cases, which=20
+is a bit dangerous.
+So it's necessary check it before using it.
 
+> Can the usage of other labels become more appropriate?
+>=20
+> Regards,
+> Markus
+--=20
 Thanks,
-Hui
-> 
->>
->> +&pm8350c_pwm {
->> +       #address-cells = <1>;
->> +       #size-cells = <0>;
->> +       status = "okay";
->> +
->> +       led@1 {
->> +               reg = <1>;
->> +               color = <LED_COLOR_ID_RED>;
->> +               function = LED_FUNCTION_STATUS;
->> +       };
->> +
->> +       led@2 {
->> +               reg = <2>;
->> +               color = <LED_COLOR_ID_GREEN>;
->> +               function = LED_FUNCTION_STATUS;
->> +       };
->> +
->> +       led@3 {
->> +               reg = <3>;
->> +               color = <LED_COLOR_ID_BLUE>;
->> +               function = LED_FUNCTION_STATUS;
->> +       };
->> +};
-> 
-> 
-> 
+   Kunwu
+
 
