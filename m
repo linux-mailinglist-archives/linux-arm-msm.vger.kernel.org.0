@@ -1,148 +1,199 @@
-Return-Path: <linux-arm-msm+bounces-7538-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7539-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C64EE831635
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 10:53:26 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 522798317A1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 11:59:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EB5021C229E2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 09:53:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 93C15B24477
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 10:59:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 158641F939;
-	Thu, 18 Jan 2024 09:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B32AF23775;
+	Thu, 18 Jan 2024 10:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="R1JQKLPW"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="aQ7O6UoN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com [209.85.217.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF51BE7F;
-	Thu, 18 Jan 2024 09:53:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0A01774B
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 10:59:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705571602; cv=none; b=XoZgscFhh6Q9RI5BL17/t7/WKlnZ0vdEOvplUQ1/WjMIk/a7DgeQpwF05XnOAjzfoC7CYkPYyL4T+qcsakTjvFnDV3Yf+2KFHEVsbW15IGfH8CZ4QcOZMTbSTLx5fvgxTgsdb2d3Wj49XgRbvKmIyIT9geXIlPOgMNwhvtG50wQ=
+	t=1705575545; cv=none; b=BHUxUGXn5eN+B251jKEyWr/x/5RAto47IJCxaelYzuPkPEAhmOLqp/UoXza8Y3CWAhjnyRj0mELBjNpWRhzTvMAJFGrp6QoRavq3U61lm4yOrxNrvZTUseVT4SCt6I//IIg1LYHs2d9/dllM0IGVjxvgIk68mfE8w2qD3eyC/Fo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705571602; c=relaxed/simple;
-	bh=Di3t59ryK/5BiCjERre5tCN0GkzA6F6OzPHGumtvxP4=;
-	h=DKIM-Signature:X-IronPort-AV:X-IronPort-AV:Received:X-ExtLoop1:
-	 X-IronPort-AV:X-IronPort-AV:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=UYCej5qhPd0nXCR/Zjrf6FUHn3wgs5yl6Gl2UvAsSpmUbNHE5zLI6QOB/aWE5VwHsznR3cf5+WkhPz2023ByCHg5VxEdFmlfwboiOd/CnMGnr2/KGzaJDJTUg0WQD2p4OQqeZ/VkkcbtfriZLWXy0sUT3aOglO6lbmJK1BtAaWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=R1JQKLPW; arc=none smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1705571597; x=1737107597;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Di3t59ryK/5BiCjERre5tCN0GkzA6F6OzPHGumtvxP4=;
-  b=R1JQKLPWAOTZHkhL7HAv7Cvk5qX94TL23bwOsiyYIYtTqQYVz25d+fhA
-   aRcm0e0l2W3X3/zSIBBLBX9u9WOJYPWg0xLLL45H8n9VAm3q+PLl+hB2g
-   KQH+fOvrY0Kq02WbIX3JHNoSKnOuwszJ3Gfa9QLiaKC11z/odkVgHLx1/
-   gDUUikAwqP1IT3JanrV55nFOaL3HJma0rY+TmI75UgY3oeBapXM3LMv1e
-   rUAdo7doi/sfXlSE+gLpOduW5CfMEUUOf9sSrkX6ReWPPFek8rbbMCB1Z
-   Owo0kw7GMVc7lCo4Pu+oQTTxYW1A/oG3eVGbWwqnP5YAMO07kDmUQp1nQ
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10956"; a="7099210"
-X-IronPort-AV: E=Sophos;i="6.05,201,1701158400"; 
-   d="scan'208";a="7099210"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jan 2024 01:53:16 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10956"; a="957771490"
-X-IronPort-AV: E=Sophos;i="6.05,201,1701158400"; 
-   d="scan'208";a="957771490"
-Received: from kuha.fi.intel.com ([10.237.72.185])
-  by orsmga005.jf.intel.com with SMTP; 18 Jan 2024 01:53:09 -0800
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Thu, 18 Jan 2024 11:53:08 +0200
-Date: Thu, 18 Jan 2024 11:53:08 +0200
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-usb@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: Re: [PATCH v2 05/15] usb: typec: tcpm: fix the PD disabled case
-Message-ID: <Zaj1BAHGY8IyW68f@kuha.fi.intel.com>
-References: <20240113-pmi632-typec-v2-0-182d9aa0a5b3@linaro.org>
- <20240113-pmi632-typec-v2-5-182d9aa0a5b3@linaro.org>
+	s=arc-20240116; t=1705575545; c=relaxed/simple;
+	bh=XAezkMl8AMyv2duDx8KtemVoTiY3JEudvQLd/3+rctQ=;
+	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:MIME-Version:
+	 References:In-Reply-To:From:Date:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding; b=ErHLPVxq1YHM5b2zu4w3ydGg3fxsbOJEBsyhHG4HUskKI0qc2j6OygdqIR6tEJ87MrsMwecYooJWeeY002+rFfg0SYj2NsZTfW0P0PAwA54Z1Yusf6pTqVlw5+0nte8CtPVaZTIHtIfPhmHoAyL46TOQn9UckKCKPHGJq0uDtHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=aQ7O6UoN; arc=none smtp.client-ip=209.85.217.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-vs1-f43.google.com with SMTP id ada2fe7eead31-466fb179334so2669031137.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 02:59:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1705575541; x=1706180341; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5kKGm3Yb15Ds8SRKMOgK2sjBctiic0JJzDM70AH8Db0=;
+        b=aQ7O6UoNqmzc2cKpHkK2ZRyyOJkrA8Je2CWKJiihaMI4+R48ADOGrw4wYaVKpHFFxJ
+         IUKHCUdSv1JNigRvl+evdCz6dl/8BVFHsqBb3xtycSRK3YTlJ2PcIaxBFfdTW650Foa+
+         +KhO4G+I0EYvH2IOoEAf41CJAPcM384cpEsYY2o3qS9Y3GlMA0VSvbsv1gVIVPkPPNLg
+         rLZq91PkAnJ2zT8GQy0V6IXgVingNu/QsB7UAnRd34xOFGuHUTO+jk6Z6lCWts0UCkSh
+         6UGDSOkh6lOcgQOF7HDnZK78rHap2aHIOAD3WufjqaZOTeS/scQwL9+Bh6Ur0FevruQQ
+         EXgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705575541; x=1706180341;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5kKGm3Yb15Ds8SRKMOgK2sjBctiic0JJzDM70AH8Db0=;
+        b=HV1/JYQTI8b/lNAOsO4rapzDzQEXFg4tJY5OdPPIsMIcScEchar3mMJR/TmUIcCcZ0
+         j0tQmJP26878j5YCv6gKH0qtUcXGn+6b8JfOpG7Yprfd3oodKiY/U0hbLxd62ovLJktT
+         0kBtyBt3HYppTRBoCxBuNjOxdtg1rtzZYtFNh6C6t0wbIvIHmLwwBtsgjKeLUh1h3Rhy
+         w4ClgNjpXwgq0HjsneelOfl8Z9hw8pp2ySmLGalxeb8VafQVVfI3TSLh+Xei3JuNDOm3
+         jH+uug253THYjQaymtZMj4dvcGIgFefQ5yixkLmSaA/Kc83Fo7zvfcGz0clXQgwZu+g7
+         9HoQ==
+X-Gm-Message-State: AOJu0YwQ+lLrjwNUH5gRU5xFh2dx+ELplfSJyVUUc20XIkAPedeJvWZT
+	oZS5s8vm1xndnY5mBOlrhe8yR8JhXtsWveZPXZMRzvnxfUCz7myHx0CfElF4qC2GEkI18fYfmBR
+	A7pcwSXjVXxCHlDgGHlXDKVgF5/BFcfbe+BrGQg==
+X-Google-Smtp-Source: AGHT+IErNYi3bFXEg7C3n/Klc9CkVbXd1qVuTyh7DRA66+TJldDEJ7m4oEy9GWfbxO/EHLmuHiKQcKdlVYw+jqqEvk0=
+X-Received: by 2002:a67:fbcf:0:b0:468:633:aabb with SMTP id
+ o15-20020a67fbcf000000b004680633aabbmr669252vsr.1.1705575541672; Thu, 18 Jan
+ 2024 02:59:01 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240113-pmi632-typec-v2-5-182d9aa0a5b3@linaro.org>
+References: <20240117160748.37682-1-brgl@bgdev.pl> <20240117160748.37682-5-brgl@bgdev.pl>
+ <2024011707-alibi-pregnancy-a64b@gregkh>
+In-Reply-To: <2024011707-alibi-pregnancy-a64b@gregkh>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Thu, 18 Jan 2024 11:58:50 +0100
+Message-ID: <CAMRc=Mef7wxRccnfQ=EDLckpb1YN4DNLoC=AYL8v1LLJ=uFH2Q@mail.gmail.com>
+Subject: Re: [PATCH 4/9] PCI: create platform devices for child OF nodes of
+ the port node
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Kalle Valo <kvalo@kernel.org>, "David S . Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Heiko Stuebner <heiko@sntech.de>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Chris Morgan <macromorgan@hotmail.com>, 
+	Linus Walleij <linus.walleij@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Arnd Bergmann <arnd@arndb.de>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	=?UTF-8?B?TsOtY29sYXMgRiAuIFIgLiBBIC4gUHJhZG8=?= <nfraprado@collabora.com>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Peng Fan <peng.fan@nxp.com>, 
+	Robert Richter <rrichter@amd.com>, Dan Williams <dan.j.williams@intel.com>, 
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>, Terry Bowman <terry.bowman@amd.com>, 
+	Lukas Wunner <lukas@wunner.de>, Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>, Abel Vesa <abel.vesa@linaro.org>, 
+	linux-wireless@vger.kernel.org, netdev@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-pci@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Jan 13, 2024 at 10:55:48PM +0200, Dmitry Baryshkov wrote:
-> If the PD is disabled for the port, port->pds will be left as NULL,
-> which causes the following crash during caps intilisation. Fix the
-> crash.
-> 
-> Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-> Call trace:
->  tcpm_register_port+0xaec/0xc44
->  qcom_pmic_typec_probe+0x1a4/0x254
->  platform_probe+0x68/0xc0
->  really_probe+0x148/0x2ac
->  __driver_probe_device+0x78/0x12c
->  driver_probe_device+0xd8/0x160
-> Bluetooth: hci0: QCA Product ID   :0x0000000a
->  __device_attach_driver+0xb8/0x138
->  bus_for_each_drv+0x80/0xdc
-> Bluetooth: hci0: QCA SOC Version  :0x40020150
->  __device_attach+0x9c/0x188
->  device_initial_probe+0x14/0x20
->  bus_probe_device+0xac/0xb0
->  deferred_probe_work_func+0x8c/0xc8
->  process_one_work+0x1ec/0x51c
->  worker_thread+0x1ec/0x3e4
->  kthread+0x120/0x124
->  ret_from_fork+0x10/0x20
-> 
-> Fixes: cd099cde4ed2 ("usb: typec: tcpm: Support multiple capabilities")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Wed, Jan 17, 2024 at 5:45=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> On Wed, Jan 17, 2024 at 05:07:43PM +0100, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > In order to introduce PCI power-sequencing, we need to create platform
+> > devices for child nodes of the port node.
+>
+> Ick, why a platform device?  What is the parent of this device, a PCI
+> device?  If so, then this can't be a platform device, as that's not what
+> it is, it's something else so make it a device of that type,.
+>
 
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Greg,
 
-> ---
->  drivers/usb/typec/tcpm/tcpm.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/usb/typec/tcpm/tcpm.c b/drivers/usb/typec/tcpm/tcpm.c
-> index 5945e3a2b0f7..a0978ed1a257 100644
-> --- a/drivers/usb/typec/tcpm/tcpm.c
-> +++ b/drivers/usb/typec/tcpm/tcpm.c
-> @@ -6848,7 +6848,8 @@ struct tcpm_port *tcpm_register_port(struct device *dev, struct tcpc_dev *tcpc)
->  	if (err)
->  		goto out_role_sw_put;
->  
-> -	port->typec_caps.pd = port->pds[0];
-> +	if (port->pds)
-> +		port->typec_caps.pd = port->pds[0];
->  
->  	port->typec_port = typec_register_port(port->dev, &port->typec_caps);
->  	if (IS_ERR(port->typec_port)) {
-> 
-> -- 
-> 2.39.2
+This is literally what we agreed on at LPC. In fact: during one of the
+hall track discussions I said that you typically NAK any attempts at
+using the platform bus for "fake" devices but you responded that this
+is what the USB on-board HUB does and while it's not pretty, this is
+what we need to do.
 
--- 
-heikki
+Now as for the implementation, the way I see it we have two solutions:
+either we introduce a fake, top-level PCI slot platform device device
+that will reference the PCI host controller by phandle or we will live
+with a secondary, "virtual" platform device for power sequencing that
+is tied to the actual PCI device. The former requires us to add DT
+bindings, add a totally fake DT node representing the "slot" which
+doesn't really exist (and Krzysztof already expressed his negative
+opinion of that) and then have code that will be more complex than it
+needs to be. The latter allows us to not change DT at all (other than
+adding regulators, clocks and GPIOs to already existing WLAN nodes),
+reuse the existing parent-child relationship between the port node and
+the instantiated platform device as well as result in simpler code.
+
+Given that DT needs to be stable while the underlying C code can
+freely change if we find a better solution, I think that the second
+option is a no-brainer here.
+
+> > They will get matched against
+> > the pwrseq drivers (if one exists) and then the actual PCI device will
+> > reuse the node once it's detected on the bus.
+>
+> Reuse it how?
+>
+
+By consuming the same DT node using device_set_of_node_from_dev() when
+the PCI device is registered. This ensures we don't try to bind
+pinctrl twice etc.
+
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > ---
+> >  drivers/pci/bus.c    | 9 ++++++++-
+> >  drivers/pci/remove.c | 3 ++-
+> >  2 files changed, 10 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/pci/bus.c b/drivers/pci/bus.c
+> > index 9c2137dae429..8ab07f711834 100644
+> > --- a/drivers/pci/bus.c
+> > +++ b/drivers/pci/bus.c
+> > @@ -12,6 +12,7 @@
+> >  #include <linux/errno.h>
+> >  #include <linux/ioport.h>
+> >  #include <linux/of.h>
+> > +#include <linux/of_platform.h>
+> >  #include <linux/proc_fs.h>
+> >  #include <linux/slab.h>
+> >
+> > @@ -342,8 +343,14 @@ void pci_bus_add_device(struct pci_dev *dev)
+> >        */
+> >       pcibios_bus_add_device(dev);
+> >       pci_fixup_device(pci_fixup_final, dev);
+> > -     if (pci_is_bridge(dev))
+> > +     if (pci_is_bridge(dev)) {
+> >               of_pci_make_dev_node(dev);
+> > +             retval =3D of_platform_populate(dev->dev.of_node, NULL, N=
+ULL,
+> > +                                           &dev->dev);
+>
+> So this is a pci bridge device, not a platform device, please don't do
+> this, make it a real device of a new type.
+>
+
+Not sure what you mean. Are you suggesting adding a new bus? Or do we
+already have a concept of PCI bridge devices in the kernel?
+
+Bartosz
+
+> thanks,
+>
+> greg k-h
 
