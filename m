@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-7570-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7571-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36AB4831EC1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 18:51:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C6EC831ECC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 18:55:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6F2641C23148
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 17:51:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2E3111C2224E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 17:55:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 201922D620;
-	Thu, 18 Jan 2024 17:50:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 540BE2D609;
+	Thu, 18 Jan 2024 17:55:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LbJgbhEn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RsJEV6aE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7EFB2D608
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 17:50:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11EE2D05F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 17:55:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705600250; cv=none; b=feCeseBXee3dhkKw/oJ3kBCXe1avYMg0vkPl8cuer0Dq0+wXzcn4tJfp3zgeLcH4PFC7OT6O+2WZDcWlVl7GEzMAdo9+R6Gz7rJbSohmxsKYYsPAJnbEbIqLQBHTXAuSQAZlpUhcc7yaWM+2DC1uRuS4zUl0j1/ICjVS27S3HKY=
+	t=1705600537; cv=none; b=rSVK0SpVXo28rQ3ngpfgHr1Snr2Vs9sC8R/9WUympspX9TIJS/mZxz3Pts++mZ6msI/dTOoTwlllsR09ZGKjYpw/2t9tBiTiNlPht9+PVL0Tv0OhiSXrCTD5Q/C7BNpn/xIjjAPB/MSpuPyafotu658lZQSmy2aVhHHVK7uv5mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705600250; c=relaxed/simple;
-	bh=R83s/PyF4fXUdK67JiE75Dz9JrojGyAfOWEwxObSVV8=;
+	s=arc-20240116; t=1705600537; c=relaxed/simple;
+	bh=aisBVFiczj/jDzFOQ/gAkAjn85FMrdiPrHE0pnY7fXI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MPeNGteVZ5Exq0Y/rYwNRkNcRAxy6K8qjVAMEVXAGH+1Shy/iKm31FPa84aoqudA//i2SzSgJAD19TTmHiXlzQXoszZv/9+n5ivfeEDeffRFODr3W/x5ZGeHx39TQCe+p5DY8B+uO/ZIpfWM6Y62iDDfBuAo8J/3TSz5tLt4fpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LbJgbhEn; arc=none smtp.client-ip=209.85.167.44
+	 In-Reply-To:Content-Type; b=MX7y84x1HKuD2hrL7iAVll+QtJg2hs/E97jcvWfaWsE9zArETg8t78JddI/JzmqRgNt/7DdjMNgCUOuKdh18t/bmdwnWuF/JhV3ouSkI2W1K5DtEfqPZIMpk+UypM8ULj6lHp9AjL97EPMQPzNR89n9VWMChCRhGLpkDvgYAChM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RsJEV6aE; arc=none smtp.client-ip=209.85.167.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-50e7af5f618so14269830e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 09:50:47 -0800 (PST)
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-50e7ddd999bso14132479e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 09:55:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705600246; x=1706205046; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1705600534; x=1706205334; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=BeOfVhu/YQjuPaBL7HLOFJxylUSZb5ghXwEj0tH+VbM=;
-        b=LbJgbhEneDdeNqOEmRiGt3riWuUBUuVlABZyUdAdZ8O0LkDxG+pAu7QNo5YAWMjpL3
-         eY6u86tWGvrLmk19X0D60CGMwpgspuFzxDdL+RbFND0sd11IavHXilYeBR1n/BWmS7QA
-         0obftDJl+9tRy7H2hcPydoykwQqlWTulXDus5CGoG3164YX20SfYCCS8VGrVFKeRega8
-         t4pXISDeLwMhi63Etq20aBuLQx+muYiJLWGJtutwJKIjANPa6R/YcMBqZ8PSCKs2nK8s
-         hc/mnuhYw9ADWkRf9LojrWc9shl2HeeJfJ+HaJY5D7AEri+CrT1SdGVGusGEMv+o/LY6
-         oxKg==
+        bh=ij3Aid6rc3/+qPxyjn4VOAO9ySy7PRtD3+5FtjfYAss=;
+        b=RsJEV6aEBQbd5GLCWqs+Wn2NSyUjgdXNPMCD+Ql6TR+aparlOvaTgUYt7EYliunfrl
+         W81DxqMiXaatFxpE2Qyl0qnPdtJIBduy4x9xB2UFHyg/EXU25CrqNyIAtGyt8TgJdy0/
+         146Rzqb6ff+z3Ejse3AJJxtPTbW5TbThSdinSqHx8cjmhSMRdQz664n1YZo5lMz+a+Ev
+         WJdSR8wUCr5G5SCs3iz8gu1EY9SsE8wDvKRkxepQcm5gkI8FD4zl3RWkSmt5o+zOKiRb
+         De/0Qb/TYz9EOy/rRicf1WchvbXvHF3RY+P38NOJVeOeJtGJvOa0q+TA8tWTdn2AAgE6
+         ivbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705600246; x=1706205046;
+        d=1e100.net; s=20230601; t=1705600534; x=1706205334;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BeOfVhu/YQjuPaBL7HLOFJxylUSZb5ghXwEj0tH+VbM=;
-        b=fa1lFNPCv7KxSTNdPMqSOevb6NT5Vf876yggWw+yaZGM/MEtCESpvSoPlTpJfK/VEB
-         FKq956F+QuQC0JwFN7rhEOkVz5gdnaLf4/ocgMzGlPeWsAx7Aa1VKz4yAA8V9vKyMcbd
-         X+JOiefuQbeeqVdmXbkYmX0WAS4etUOaCtfElrZDE8e9eg/PdEf98vEzOVgJIotTY1k1
-         FdPRmfATGYjUSPWFvjud6xv0PMvcukSu7Xj5OcjUFKsYXPM/bN0uV1zFrcYZBmNehVw1
-         JHhfm9e9gVWXXRLKuLF9nm+iJxld7dL0oG4fSv7Y9JSJiwmpe4aEcRs/7v2uxEDAgOv9
-         tvfA==
-X-Gm-Message-State: AOJu0Yy/O+qaXdsc53zGodeMJ8Uq5H3RqAFrr6/A+N8QeaqDeaira6fc
-	bLFMsbRtdyTHgB+dnmh5yOXjCCE5AtFtRRalthb/xp6t3HKbAFc9HVxNpVxjZo4=
-X-Google-Smtp-Source: AGHT+IHqhtxBqUtdwqkS5/LYHeL/ekXGtb2Jn3Eqr4OlemBLU7YUpfw9MOxkxxvtVnMVoEQW1MZhFA==
-X-Received: by 2002:a05:6512:31ca:b0:50e:6c1d:5dee with SMTP id j10-20020a05651231ca00b0050e6c1d5deemr7487lfe.33.1705600245837;
-        Thu, 18 Jan 2024 09:50:45 -0800 (PST)
+        bh=ij3Aid6rc3/+qPxyjn4VOAO9ySy7PRtD3+5FtjfYAss=;
+        b=wp5Iijq/vJ6/yW/4BYwHDMmndss3j2QmsgJ+I/+4T+iHI1brDdatxxWIxH0ThMmCXJ
+         lz2GTK+LYyXn9OwoaflpO+Yj3fYPfKOV7IyZq1dDlOilDL1/v3kFYBpablbdXCmzuXII
+         7HNZptGSeARUnYX9PB/FceFIVn4HQQ8GIPHkDMQ4LEkERsnHjJNwgaG8EA2CzrmSVwZS
+         1rx5hcitcqe6mEFcExxIFxPgle/j3eNNqpV8xDRC266JuYGhgsd9k6uFNILcIBKmCKuz
+         6ppN4r5K1m1CEeNtwKfKFVO4ZCQx1hkGOXCu7PUSV7DiO9QTLRzlu29cGasL1LV1RVPl
+         xC9Q==
+X-Gm-Message-State: AOJu0YyNO5kmlnLpeDLDI+opzM7jz08lIL6P4xCs+DpNn2H79sARoqOS
+	0nA/wUFw3b1L0U7CHtCO57vuxwqscVAjCZveWSCqzVI4MmUxCQYvAv/DmjX5zg0=
+X-Google-Smtp-Source: AGHT+IGG228V8tanAnesngcf1mfWcLrYcU8aze9RSKB7jrVY3whXoAFZhO5z1Rmk8AJAf+oAZfApwQ==
+X-Received: by 2002:ac2:4c48:0:b0:50e:2f46:1111 with SMTP id o8-20020ac24c48000000b0050e2f461111mr6414lfk.97.1705600533660;
+        Thu, 18 Jan 2024 09:55:33 -0800 (PST)
 Received: from [172.30.205.26] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id h23-20020a19ca57000000b0050ee3e540e4sm718900lfj.65.2024.01.18.09.50.40
+        by smtp.gmail.com with ESMTPSA id v4-20020ac25604000000b0050f0dc3a08esm644932lfd.151.2024.01.18.09.55.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Jan 2024 09:50:45 -0800 (PST)
-Message-ID: <ed2dddc6-6461-4a2b-8491-13955cbd80fd@linaro.org>
-Date: Thu, 18 Jan 2024 18:50:37 +0100
+        Thu, 18 Jan 2024 09:55:33 -0800 (PST)
+Message-ID: <f25b7a0d-28b7-428f-a88f-2ceecc208f85@linaro.org>
+Date: Thu, 18 Jan 2024 18:55:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,65 +75,67 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 9/9] PCI/pwrseq: add a pwrseq driver for QCA6390
+Subject: Re: [PATCH v8 3/5] iommu/arm-smmu: introduction of ACTLR for custom
+ prefetcher settings
 Content-Language: en-US
-To: Bartosz Golaszewski <brgl@bgdev.pl>, Kalle Valo <kvalo@kernel.org>,
- "David S . Miller" <davem@davemloft.net>, Eric Dumazet
- <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- Bjorn Helgaas <bhelgaas@google.com>, Heiko Stuebner <heiko@sntech.de>,
- Jernej Skrabec <jernej.skrabec@gmail.com>,
- Chris Morgan <macromorgan@hotmail.com>,
- Linus Walleij <linus.walleij@linaro.org>,
- Geert Uytterhoeven <geert+renesas@glider.be>, Arnd Bergmann <arnd@arndb.de>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- =?UTF-8?Q?N=C3=ADcolas_F_=2E_R_=2E_A_=2E_Prado?= <nfraprado@collabora.com>,
- Marek Szyprowski <m.szyprowski@samsung.com>, Peng Fan <peng.fan@nxp.com>,
- Robert Richter <rrichter@amd.com>, Dan Williams <dan.j.williams@intel.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Terry Bowman <terry.bowman@amd.com>, Lukas Wunner <lukas@wunner.de>,
- Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>,
- Srini Kandagatla <srinivas.kandagatla@linaro.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Abel Vesa <abel.vesa@linaro.org>
-Cc: linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-pci@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20240117160748.37682-1-brgl@bgdev.pl>
- <20240117160748.37682-10-brgl@bgdev.pl>
+To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>, will@kernel.org,
+ robin.murphy@arm.com, joro@8bytes.org, dmitry.baryshkov@linaro.org,
+ jsnitsel@redhat.com, quic_bjorande@quicinc.com, mani@kernel.org,
+ quic_eberman@quicinc.com, robdclark@chromium.org,
+ u.kleine-koenig@pengutronix.de, robh@kernel.org, vladimir.oltean@nxp.com,
+ quic_pkondeti@quicinc.com, quic_molvera@quicinc.com
+Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ iommu@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <20240116150411.23876-1-quic_bibekkum@quicinc.com>
+ <20240116150411.23876-4-quic_bibekkum@quicinc.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240117160748.37682-10-brgl@bgdev.pl>
+In-Reply-To: <20240116150411.23876-4-quic_bibekkum@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
-On 1/17/24 17:07, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 1/16/24 16:04, Bibek Kumar Patro wrote:
+> Currently in Qualcomm  SoCs the default prefetch is set to 1 which allows
+> the TLB to fetch just the next page table. MMU-500 features ACTLR
+> register which is implementation defined and is used for Qualcomm SoCs
+> to have a custom prefetch setting enabling TLB to prefetch the next set
+> of page tables accordingly allowing for faster translations.
 > 
-> Add a PCI power sequencing driver that's capable of correctly powering
-> up the ath11k module on QCA6390 and WCN7850 using the PCI pwrseq
-> functionality.
+> ACTLR value is unique for each SMR (Stream matching register) and stored
+> in a pre-populated table. This value is set to the register during
+> context bank initialisation.
 > 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> [Neil: add support for WCN7850]
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
+> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[...]
+Since it's your idea with Dmitry's review suggestions, I don't think
+this tag makes sense.
 
-> +static struct pci_pwrseq_qca6390_vreg pci_pwrseq_wcn7850_vregs[] = {
-> +	{
-> +		.name = "vdd",
-> +	},
+It's normally used for situations like:
 
-Weird there's no .load here.. On Qualcomm they're used for asking
-the regluators to enter the high power mode, so it'd be useful.
+Colleague X: "Hey Bibek, I noticed x broke on y, can you fix it?"
+"Sure!" <proceeds to make a commit with suggested-by Colleague X>
+
+Just a nit below:
+
+> +struct actlr_config {
+> +	u16 sid;
+> +	u16 mask;
+> +	u32 actlr;
+> +};
+
+This, can go here, in the header:
+
+> +struct actlr_config;
+> +
+> +struct actlr_variant {
+> +	const resource_size_t io_start;
+> +	const struct actlr_config * const actlrcfg;
+> +	const size_t num_actlrcfg;
+> +};
+> +
+
+Otherwise, this looks good!
 
 Konrad
 
