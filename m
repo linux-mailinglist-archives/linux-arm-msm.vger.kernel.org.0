@@ -1,112 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-7575-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7576-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E5FD83207E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 21:28:19 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 041D983220C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 00:01:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1928E1F28956
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 20:28:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AFB23283B5F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jan 2024 23:01:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA8612E655;
-	Thu, 18 Jan 2024 20:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CAD991DA46;
+	Thu, 18 Jan 2024 23:00:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="EY0atT07"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VHZvUFbw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5FF2E823
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 20:28:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6411D688;
+	Thu, 18 Jan 2024 23:00:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705609694; cv=none; b=UntjgOe2uCztTz+I7zHahEBQCaep/LA2h7bCjh0eE/+l66jTmDmUi/+yd9o766GRHwSUocoMivtCDROatZ7hk3Kdeid2yEVS4yP5Q8N4g6KV0hXpLrFZ92zfBqDEbscfQwAiE6Fj6DE3RZADJJKJk/WFdogS42AY5cxAqtrYNmI=
+	t=1705618857; cv=none; b=a2+59ze0TJgXrhdikgRS6CmCM2r6jhKq0exL4VHURTt2LKjuR6bbsr/M5+c0EpzmuM251Q2aWssbBInFQilPBew9Wvv9nJekPeCE/5zICqIGxSl6PHdrVqJ70eGxBy/OxoHGha1FdkSS2Gidf4jPkOeIbaY76lcXg32JL5VJjj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705609694; c=relaxed/simple;
-	bh=+ihZ3ptOctQ5m1rlil5tsOHnfk0f8/Q4JkX+8RY4A5U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cDx/68S1YZeXeUng/8ogH4pAHphzjDHd0A8Org+J6sQ38PPGRr3tIMcvCjmnCSWU+OjIKLDzXpCrvuIMsoY9QzBFAI0/HoSV+Rg7q2UcwJa76EJypZxqkQ7QFgxODfO0uQa2curHnHTW4l8va5tkVw7eOFjJ2vhbG8zo2SItuXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=EY0atT07; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1705609691;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+slQrL96GqENiDjqUtTjudE87lRXCqszoznm1iN3Xcs=;
-	b=EY0atT07La4PPelWcAMiR9My2C/xswtXbTY1XXsYBmyVcJ/1RUYGGhYYeRo0y38cPhss9N
-	xfIgR1TjsSynCOhtlqrU0LwgaR5H8y8oExm/UPTIr/QqVuOTRA/PdU0/nA9OpFxDBnva0N
-	R+gLHY3rPbWQwIHyKi1GK5P8O98glvI=
-Received: from mail-oo1-f69.google.com (mail-oo1-f69.google.com
- [209.85.161.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-35-6kRlalopPRaOdwiZAkBM0Q-1; Thu, 18 Jan 2024 15:28:09 -0500
-X-MC-Unique: 6kRlalopPRaOdwiZAkBM0Q-1
-Received: by mail-oo1-f69.google.com with SMTP id 006d021491bc7-598e30e7e8cso39912eaf.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jan 2024 12:28:09 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705609689; x=1706214489;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+slQrL96GqENiDjqUtTjudE87lRXCqszoznm1iN3Xcs=;
-        b=Y7ui5mZRsoxwSzyvYztLs3Bsb7HwjCvaJxuVRVuhFiMx8cuRmsttNRiutWEJ9VE1JB
-         qY9nVe7y7UAnyp3Em88HWLWPA3HzTSDUuDgSapaFxRfPiWRONrHoKIdZWU5TX1j9t1eY
-         2cI9E3SCvagGvkHJ2ZvewQ57gjjBdmpOqxVbo+0DP02KbTHypK8/N9R1BjzHenIDd4XS
-         PuY6KwCEowT+mri1e4w6rIFTD1H03uUtOBdBDkXpCq8Zld7CPpDcB5PhddwpoNZ0Vkv4
-         ve+NcgbrUMV8C6kIzWHsaqV6wD60h8xtkDZXA2GDc5tYwyKNzdLRMX+GOQdRxYIgbsQN
-         8X6w==
-X-Gm-Message-State: AOJu0Ywp9/g7ydul6eiXGUJG8TSQACS81jON5MOwTf9HVT8LXcPu2SvZ
-	mwDvmwvPkUWy08URGPwxKYS64hdaI+442d1jFuPQI8dP9akzmIeO1DoX/wSGEUek0W2WBAgxcME
-	BPV1sOSXn+M6zRchsK52zX0j56oRaFVj4blHnt5qOASr9zs7GxTXeVkRQicZS5qc=
-X-Received: by 2002:a05:6870:af4a:b0:210:a6c2:b106 with SMTP id uy10-20020a056870af4a00b00210a6c2b106mr1340507oab.76.1705609689107;
-        Thu, 18 Jan 2024 12:28:09 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFBYj3pP0HSSRWzxrDFz46mWY4ulenAUBplrdo+1T9oQL22wODQrmD82jcrKdLqfAwriXtmKg==
-X-Received: by 2002:a05:6870:af4a:b0:210:a6c2:b106 with SMTP id uy10-20020a056870af4a00b00210a6c2b106mr1340489oab.76.1705609688903;
-        Thu, 18 Jan 2024 12:28:08 -0800 (PST)
-Received: from x1 (c-24-2-114-156.hsd1.pa.comcast.net. [24.2.114.156])
-        by smtp.gmail.com with ESMTPSA id du30-20020a05620a47de00b007825f50eac6sm5530364qkb.122.2024.01.18.12.28.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Jan 2024 12:28:08 -0800 (PST)
-Date: Thu, 18 Jan 2024 15:28:07 -0500
-From: Brian Masney <bmasney@redhat.com>
-To: Ninad Naik <quic_ninanaik@quicinc.com>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	quic_psodagud@quicinc.com, quic_kprasan@quicinc.com,
-	quic_ymg@quicinc.com, kernel@quicinc.com
-Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: Add new memory map updates to
- SA8775P
-Message-ID: <ZamJ1wSXzJSyzqck@x1>
-References: <20240118155711.7601-1-quic_ninanaik@quicinc.com>
+	s=arc-20240116; t=1705618857; c=relaxed/simple;
+	bh=/xgDlirmg//lpL37mmgAf9h0tQ9Ilkkc6guk2v2yVNo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=aNIFzfGGJWua8RobqvZky5ejXkAq3oJrMJiXassH5ZkWSh2j+Qo69lYfLBfGCAtZjhCfnI/tbdmmaJHcKHEmoRulTUYzFdebHYH/gxT7Os/TfL/0QnurzOlZ31wfH/x/HYAaRH+H8yDnbfB1UqDB8UCXpqElFVhUFmzabGt6Pr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VHZvUFbw; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40IMr0U0005990;
+	Thu, 18 Jan 2024 23:00:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:date:subject:mime-version:content-type
+	:content-transfer-encoding:message-id:to:cc; s=qcppdkim1; bh=OQk
+	BZR1Pnd2c8BBgKIOiMkfkdGGDimI57H9zZTAVK2k=; b=VHZvUFbw5w4e1JAPatk
+	IqivVWKP7iFzhHlCoHFLb+ICMVCTHdZ7wAtIJOCoRmj4RHpsTaJ4P6Y4D31mn51j
+	C90wJLgrNtqaBmmCf4x8RVMr1o+bvdNT/1IM+ToHqWgN/VoLewEkTVRB2tIMgxEV
+	fVH7FREBgzt3zc5HmczQB5wCjikLp3JPppKUhpiU0k/qeGGLGGKauDtcCwcA5+a9
+	xZtlvSfHee1k7ImHsR8dLEFMh/GvQiGSSDadV9GKK2BFms8tR62pTu08/ski9dhA
+	6fWKv/ehvufeJUVI7pp0X6AEopX3y8XgEJZZUaqzdKlTWRd5PYpUkSFBziYJEV68
+	d4A==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vq1s79tkb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 18 Jan 2024 23:00:40 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40IN0dKd015585
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 18 Jan 2024 23:00:39 GMT
+Received: from [169.254.0.1] (10.49.16.6) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 18 Jan
+ 2024 15:00:39 -0800
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+Date: Thu, 18 Jan 2024 15:00:23 -0800
+Subject: [PATCH] arm64: dts: qcom: sc8280xp: Introduce additional tsens
+ instances
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240118155711.7601-1-quic_ninanaik@quicinc.com>
-User-Agent: Mutt/2.2.10 (2023-03-25)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20240118-sc8280xp-tsens2_3-v1-1-e86bce14f6bf@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAIatqWUC/x3MQQqAIBBA0avErBPUMqyrRITkWLOxcCKE8O5Jy
+ 7f4/wXGRMgwNS8kfIjpjBWqbWA7XNxRkK8GLXUvlbKCN6utzJe4GSPrtRPOBD+63vrBGKjdlTB
+ Q/p/zUsoH7zomhGMAAAA=
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1705618839; l=2193;
+ i=quic_bjorande@quicinc.com; s=20230915; h=from:subject:message-id;
+ bh=/xgDlirmg//lpL37mmgAf9h0tQ9Ilkkc6guk2v2yVNo=;
+ b=oGSxLsDFyDQYKE23MHJbR+I4s86iQTna1bXZ/fp7hG8CNfL2uicmNJTNK6SAuki2mPB6ZSISI
+ nXd0kZ5ADdBB/sf1mxUdZ1yBUAJudjg+CEHn+nIxvHjZDz7pDwu1Y2G
+X-Developer-Key: i=quic_bjorande@quicinc.com; a=ed25519;
+ pk=VkhObtljigy9k0ZUIE1Mvr0Y+E1dgBEH9WoLQnUtbIM=
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: NqR7U-If9g26ntJFdimDY5oP2_dwse_g
+X-Proofpoint-GUID: NqR7U-If9g26ntJFdimDY5oP2_dwse_g
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-18_10,2024-01-17_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=587 mlxscore=0
+ adultscore=0 malwarescore=0 bulkscore=0 priorityscore=1501 spamscore=0
+ suspectscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401180155
 
-On Thu, Jan 18, 2024 at 09:27:11PM +0530, Ninad Naik wrote:
-> New memory map layout changes (by Qualcomm firmware) have brought
-> in updates to base addresses and/or size for different memory regions
-> like cpcucp_fw, tz-stat, and also introduces new memory regions for
-> resource manager firmware. This change brings in these corresponding
-> memory map updates to the SA8775P SoC device tree.
-> 
-> Signed-off-by: Ninad Naik <quic_ninanaik@quicinc.com>
+The SC8280XP contains two additional tsens instances, providing among
+other things thermal measurements for the GPU.
 
-Reviewed-by: Brian Masney <bmasney@redhat.com>
+Add these and a GPU thermal-zone.
 
-Krzysztof: It'd be nice if you could submit this patch for inclusion
-to the stable trees since the system can crash without the updated
-memory regions.
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 37 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index febf28356ff8..68b5ac0339a0 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -4033,6 +4033,28 @@ tsens1: thermal-sensor@c265000 {
+ 			#thermal-sensor-cells = <1>;
+ 		};
+ 
++		tsens2: thermal-sensor@c251000 {
++			compatible = "qcom,sc8280xp-tsens", "qcom,tsens-v2";
++			reg = <0 0x0c251000 0 0x1ff>, /* TM */
++			      <0 0x0c224000 0 0x8>; /* SROT */
++			#qcom,sensors = <11>;
++			interrupts-extended = <&pdc 122 IRQ_TYPE_LEVEL_HIGH>,
++					      <&pdc 124 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "uplow", "critical";
++			#thermal-sensor-cells = <1>;
++		};
++
++		tsens3: thermal-sensor@c252000 {
++			compatible = "qcom,sc8280xp-tsens", "qcom,tsens-v2";
++			reg = <0 0x0c252000 0 0x1ff>, /* TM */
++			      <0 0x0c225000 0 0x8>; /* SROT */
++			#qcom,sensors = <5>;
++			interrupts-extended = <&pdc 123 IRQ_TYPE_LEVEL_HIGH>,
++					      <&pdc 125 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "uplow", "critical";
++			#thermal-sensor-cells = <1>;
++		};
++
+ 		aoss_qmp: power-management@c300000 {
+ 			compatible = "qcom,sc8280xp-aoss-qmp", "qcom,aoss-qmp";
+ 			reg = <0 0x0c300000 0 0x400>;
+@@ -5212,6 +5234,21 @@ cpu-crit {
+ 			};
+ 		};
+ 
++		gpu-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens2 2>;
++
++			trips {
++				cpu-crit {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
+ 		mem-thermal {
+ 			polling-delay-passive = <250>;
+ 			polling-delay = <1000>;
+
+---
+base-commit: 943b9f0ab2cfbaea148dd6ac279957eb08b96904
+change-id: 20240118-sc8280xp-tsens2_3-a5fd9a48d655
+
+Best regards,
+-- 
+Bjorn Andersson <quic_bjorande@quicinc.com>
 
 
