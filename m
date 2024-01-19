@@ -1,194 +1,244 @@
-Return-Path: <linux-arm-msm+bounces-7644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19A7B832FD9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 21:36:01 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22463833020
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 22:14:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 825D01F212EE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 20:36:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C4F4A284BE5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 21:14:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03AD156454;
-	Fri, 19 Jan 2024 20:35:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E513E7EF;
+	Fri, 19 Jan 2024 21:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="n7jT12MR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JAST1eFu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D493374E0
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jan 2024 20:35:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E08D38E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jan 2024 21:14:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705696556; cv=none; b=jo55wDFlZBaIy+PuEZk/6WkIxLVrDh8XAq7eunEILfCr5zsaF8dR2BXAAcHlufRq4zPl+D+b57JyzqjkGL03sdFr35kwrwHo1huNxWx07MqyeJz2yCsVHpwj0F0f7Rde7V3IH/4PkwTEqJ0IIDLbVHF8oDQg8CUqDKQ326XD2UM=
+	t=1705698877; cv=none; b=tRH0wgGIACbtn+utHprDmzmka5fA6UNkhvOAifOSYKORrbgBEpl9F3BFn4FhhkzbCkLwReFQTZJDur7+zBgqr+oYFww+h0ad/4sfgABsKCLxr9wvNa0FU1mihvwrvfdGtzLTM8UXrZtzKcpmvERopVSWXfJwTknner+Ow1Lt/LM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705696556; c=relaxed/simple;
-	bh=Da350K6foabEPR3XP9PM6t2zVSKNbvcdZb6h5pOnBBs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CgBgivR2tgcmtdBt9LF2ZlKW3VXeRSVzONHEVndFXOkape9JScUeuLEG8xtSrxh8Z8tErniiFdsYsEUHkXlUjHgi9J17IGsLnvYbZDdl0D+Zu+fKw/Ddd/YAhhfUqVHPiD4shFnar/PvMAYgeaSnY03QDtjJ8v9bYHejkg6WA20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=n7jT12MR; arc=none smtp.client-ip=209.85.219.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-dc236729a2bso1142980276.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jan 2024 12:35:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705696554; x=1706301354; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Yq6a9Wcfb/K9SZpzYXbOmT6slrxaKFYZPaGPVB9JuHM=;
-        b=n7jT12MRk3fQmY7MxYU97LT2Pv1d1dQAohLf0H9jFM45PeHPIhrzpJVG9nZdHvvBGp
-         9lEueBxCel2KY9Mg45uLLbBrnZs26e6nsH3Hn911wGrq2P82YAO+q8njGkTLlEqjw+2p
-         vmnAawlWyoQGIyqM5hVhKE62AsRFAE5ccNSGuRoqo9RwcuTV7dbQi7zM21YMlp9UqQQ/
-         NY3qvcSMVT6n4Q7+CAfNy/l+o/eU9ei5989RLLQRJ6f7NSRwoUWMfm0ThkkBThgOuI3+
-         1Mt+UGUw3AuiGDn9baHkAxF5fGIFa6NlkNGBQGcelyCTJhRPti7PDFmx9AHvtd2huzlv
-         6ktQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705696554; x=1706301354;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Yq6a9Wcfb/K9SZpzYXbOmT6slrxaKFYZPaGPVB9JuHM=;
-        b=c0pvZjKeLI6gZKjTy2X4vkdWR2/bdtXMpV+H58/W7EYXkUafw1v/QyMsyJjICaiOOI
-         Q0BpnB8b3y6Lnz7hOy8YV/qsaXTnJlFk6u3VxSYqocDS1xEVJIZJzH+BNsntDHa5b0D9
-         TcXaX6mnkYoiMopakC4SbrjkZRHYyX85xAxVB70OjgkzBiHjysZOmAGqVeFTT75PBtGh
-         3Lo0Mm3QkVZMy92FsOwOotDW2XAi8HO9Sw6Bcecedg6fba/yyoJ1yJbL940evt7cZ8Fv
-         wvqniKJ9+24xnoa94mgAclLvrw2JByGC9IrtPgAa/eTlEiTY+Td4Brn0mZPE1HI9fyIF
-         dJ6A==
-X-Gm-Message-State: AOJu0Yxd5CppuXAw+GMZeMLGbGnWM0tODjR5pUWw7WcCrVxBRUl1q57/
-	+Hx/fkf3TUAU89fJoOGIu2FJ0hW+hYJGZAJTR18DORjIukidytdJg5r+U3TItTkYaGbD/hyDNYB
-	lAM6XcsxPPFTubEfYFvNFvzlbpDkwDazAhOFMDA==
-X-Google-Smtp-Source: AGHT+IFpl97msSR+YJehEn5UzAbLewmm99ALCb9KjvcHZAfQ8hZT0KmzSnhQw5CEYuMghLfLzqVEDKDbl5HBgXy/yZE=
-X-Received: by 2002:a25:6947:0:b0:dc2:645d:163c with SMTP id
- e68-20020a256947000000b00dc2645d163cmr447161ybc.6.1705696554265; Fri, 19 Jan
- 2024 12:35:54 -0800 (PST)
+	s=arc-20240116; t=1705698877; c=relaxed/simple;
+	bh=oryEaprVNIagnQyNh3o4fvuarAggpLtM+YyKnnEke4w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=KnIYscArgg4rDLQ56Kf96BxGvQv8+JosQmIgNUIOBZ95s2mfumsOs6BtW4iC9/xCNvIqUvrG+iSYWtt8B2J8szeoSbvAdgB4WuVYnuTz+c7Br716cHCQMrafWNz7TJ7A3+X9UWn4gq9FwhOgvm2i6dl/AzuqSSnpPI7vdzkJh2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JAST1eFu; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40JKWD0f015662;
+	Fri, 19 Jan 2024 21:14:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=fvgTxVkd+Z5XZe4ztJT64BSinsdPYrbSQr8zLxqqp/U=; b=JA
+	ST1eFucviZwPVZp/O6NUhPw83871G1zfjenBaqOE9MThgNeadIih3yiwyFgn+hxK
+	bBONCtVoDJdStLxc3RdGgAl3sT6n1YrdgYUmZQOoz9fJQf73FIRkIJY8rnudGD4I
+	F7/RbzoZ5rjfCh0i3/1O173Fwa8BaFK94XRQ/7y8Yb6CVNH/BzcPm9dsRcFdMsg+
+	1y0kT6BZe7YiudFgHhNKiqfKe5Am3AUvd6PUeRt5DafwvwA5oSgVZK202W8bpqoa
+	e5UMmEz9imP5wWPQbkLKbBLzT1fDDPvBpH3vgxOa3AKmGJSpRMYsJCnte//jL6mE
+	ttLf59SiEk4t7iQKK8VQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vqh2k9yk8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 19 Jan 2024 21:14:21 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40JLEKlF002914
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 19 Jan 2024 21:14:20 GMT
+Received: from [10.110.79.9] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 19 Jan
+ 2024 13:14:19 -0800
+Message-ID: <b5f571c6-dcf6-c416-ca86-fdbd0514676b@quicinc.com>
+Date: Fri, 19 Jan 2024 13:14:18 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240118155711.7601-1-quic_ninanaik@quicinc.com>
- <rq2dnfh6ctn5gbf3o3op5ywxx7zhx6r5sh5ykautye56o3p4dg@rjttk3rr65ld> <20240119191144.GR3013251@hu-bjorande-lv.qualcomm.com>
-In-Reply-To: <20240119191144.GR3013251@hu-bjorande-lv.qualcomm.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 19 Jan 2024 22:35:43 +0200
-Message-ID: <CAA8EJppLNFReZn1HK_radSkKkf5L584fx3FCuqG0FoUt4+H=nw@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: Add new memory map updates to SA8775P
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: Eric Chanudet <echanude@redhat.com>, Ninad Naik <quic_ninanaik@quicinc.com>, andersson@kernel.org, 
-	konrad.dybcio@linaro.org, robh+dt@kernel.org, 
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	quic_psodagud@quicinc.com, quic_kprasan@quicinc.com, quic_ymg@quicinc.com, 
-	kernel@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 13/14] drm/msm/dp: move next_bridge handling to dp_display
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>, David Airlie
+	<airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>
+References: <20231229225650.912751-1-dmitry.baryshkov@linaro.org>
+ <20231229225650.912751-14-dmitry.baryshkov@linaro.org>
+From: Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <20231229225650.912751-14-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ebDywD6xpQtIxcUFQjz-zBZhVgy458IN
+X-Proofpoint-ORIG-GUID: ebDywD6xpQtIxcUFQjz-zBZhVgy458IN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-19_12,2024-01-19_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
+ clxscore=1011 impostorscore=0 phishscore=0 mlxlogscore=999 mlxscore=0
+ suspectscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401190128
 
-On Fri, 19 Jan 2024 at 21:12, Bjorn Andersson <quic_bjorande@quicinc.com> w=
-rote:
->
-> On Thu, Jan 18, 2024 at 06:58:19PM -0500, Eric Chanudet wrote:
-> > On Thu, Jan 18, 2024 at 09:27:11PM +0530, Ninad Naik wrote:
-> > > New memory map layout changes (by Qualcomm firmware) have brought
-> > > in updates to base addresses and/or size for different memory regions
-> > > like cpcucp_fw, tz-stat, and also introduces new memory regions for
-> > > resource manager firmware. This change brings in these corresponding
-> > > memory map updates to the SA8775P SoC device tree.
-> > >
-> > > Signed-off-by: Ninad Naik <quic_ninanaik@quicinc.com>
-> >
-> > With next-20240118, without this patch, running "./memtester 32G"[1]
-> > crashed the board quickly during the mlock:
-> >
-> > [   42.144892] Internal error: synchronous external abort: 000000009600=
-0010 [#1] PREEMPT SMP
->
-> Sounds like just passing "memtest=3D1" on the kernel command line (with
-> CONFIG_MEMTEST=3Dy) would trip this...
->
-> > [   42.153316] Modules linked in: r8153_ecm cdc_ether usbnet marvell dw=
-mac_qcom_ethqos stmmac_platform r8152 rfkill stmmac crct10dif_ce qcom_spmi_=
-temp_alarm pcs_xpcs nvmem_qcom_spmi_sdam qcom_stats i2c_qcom_geni qcom_pon =
-spi_geni_qcom qcom_wdt socinfo phy_qcom_sgmii_eth nvmem_reboot_mode phy_qco=
-m_qmp_usb gpucc_sa8775p phy_qcom_snps_femto_v2 phy_qcom_qmp_pcie qcom_rng d=
-rm fuse backlight ipv6
-> > [   42.188566] CPU: 3 PID: 472 Comm: memtester Not tainted 6.7.0-next-2=
-0240118-00001-g10a3c9d045cf #169
-> > [   42.197944] Hardware name: Qualcomm SA8775P Ride (DT)
-> > [   42.203138] pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BT=
-YPE=3D--)
-> > [   42.210292] pc : clear_page+0x18/0x58
-> > [   42.214063] lr : clear_huge_page+0x84/0x1a0
-> > [   42.218370] sp : ffff800081ef3a30
-> > [   42.221776] x29: ffff800081ef3a30 x28: 0000000000000000 x27: 0000000=
-000210009
-> > [   42.229108] x26: 0000000000000000 x25: fffffc6abc053380 x24: ffff000=
-000000000
-> > [   42.236439] x23: 0000000000000000 x22: 0000000000000000 x21: 0000006=
-a89b87f80
-> > [   42.243770] x20: 00000000000001fe x19: fffffc6a89b80000 x18: ffff800=
-081ef3d18
-> > [   42.251101] x17: 0000000000000068 x16: 0000000000000001 x15: 0000000=
-0000001c2
-> > [   42.258431] x14: 0000000000000002 x13: fffffc6a89b90008 x12: 0000000=
-000000001
-> > [   42.265761] x11: 0000000000440dc0 x10: 0000000000000100 x9 : ffffc57=
-0ba60c604
-> > [   42.273090] x8 : 0000000000000030 x7 : ffff554053756000 x6 : ffff800=
-081ef39f0
-> > [   42.280420] x5 : 0000000000000130 x4 : ffffc570bd029ae0 x3 : ffff554=
-053756000
-> > [   42.287752] x2 : 0000000000000004 x1 : 0000000000000040 x0 : ffff1aa=
-26e1ff000
-> > [   42.295083] Call trace:
-> > [   42.297607]  clear_page+0x18/0x58
-> > [   42.301015]  do_huge_pmd_anonymous_page+0x254/0x8f8
-> > [   42.306036]  __handle_mm_fault+0x728/0x1548
-> > [   42.310338]  handle_mm_fault+0x70/0x290
-> > [   42.314281]  __get_user_pages+0x144/0x3c0
-> > [   42.318404]  populate_vma_page_range+0x7c/0xc8
-> > [   42.322972]  __mm_populate+0xc8/0x1d8
-> > [   42.326736]  do_mlock+0x194/0x2d0
-> > [   42.330144]  __arm64_sys_mlock+0x20/0x38
-> > [   42.334178]  invoke_syscall+0x50/0x120
-> > [   42.338034]  el0_svc_common.constprop.0+0xc8/0xf0
-> > [   42.342874]  do_el0_svc+0x24/0x38
-> > [   42.346284]  el0_svc+0x34/0xb8
-> > [   42.349425]  el0t_64_sync_handler+0x120/0x130
-> > [   42.353906]  el0t_64_sync+0x190/0x198
-> > [   42.357674] Code: 37200121 12000c21 d2800082 9ac12041 (d50b7420)
-> > [   42.363932] ---[ end trace 0000000000000000 ]---
-> >
-> > With next-20240118 and this patch, memtester continues through the
-> > test-suite.
-> >
->
-> But the commit message says that this is a new memory map, not that it
-> fixes critical shortcomings in the existing definition.
->
-> If that's the case the commit message needs to be updated so that we can
-> get this into v6.8-rc and the stable kernel (and do we really need all
-> those changes for that?).
+Dmitry,
 
-This kind of change sets a very bad precedent. This way old kernels
-become incompatible with the updated firmware. For me it looks like
-Linux kernel suddenly being unable to boot after the BIOS upgrade.
-Generally memory map updates should be disallowed after the board hits
-the production and the DT is published and merged. There can be other
-users of DT. BSD systems, U-Boot. We spend sensible efforts in making
-sure that DT is an ABI: newer kernel remain compatible with older DT
-files. We expect the same kind of efforts from device manufacturers.
+I am testing this patch serial with msm-next branch.
 
-I think unless there is a good reason, the memory map update should be
-reverted on the Qualcomm side as a breaking change.
-If this kind of update is absolutely necessary, it might be better to
-define a new set of board files utilising the new memory map, marking
-existing DT files as legacy.
+This patch cause system crash during booting up for me.
 
---=20
-With best wishes
-Dmitry
+Is this patch work for you?
+
+On 12/29/2023 2:56 PM, Dmitry Baryshkov wrote:
+> Remove two levels of indirection and fetch next bridge directly in
+> dp_display_probe_tail().
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/dp/dp_display.c | 42 +++++++++--------------------
+>   drivers/gpu/drm/msm/dp/dp_parser.c  | 14 ----------
+>   drivers/gpu/drm/msm/dp/dp_parser.h  | 14 ----------
+>   3 files changed, 13 insertions(+), 57 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 4de0857c31ce..923df47efcc9 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -1195,16 +1195,24 @@ static const struct msm_dp_desc *dp_display_get_desc(struct platform_device *pde
+>   	return NULL;
+>   }
+>   
+> -static int dp_display_get_next_bridge(struct msm_dp *dp);
+> -
+>   static int dp_display_probe_tail(struct device *dev)
+>   {
+>   	struct msm_dp *dp = dev_get_drvdata(dev);
+>   	int ret;
+>   
+> -	ret = dp_display_get_next_bridge(dp);
+> -	if (ret)
+> -		return ret;
+> +	/*
+> +	 * External bridges are mandatory for eDP interfaces: one has to
+> +	 * provide at least an eDP panel (which gets wrapped into panel-bridge).
+> +	 *
+> +	 * For DisplayPort interfaces external bridges are optional, so
+> +	 * silently ignore an error if one is not present (-ENODEV).
+> +	 */
+> +	dp->next_bridge = devm_drm_of_get_bridge(&dp->pdev->dev, dp->pdev->dev.of_node, 1, 0);
+> +	if (IS_ERR(dp->next_bridge)) {
+> +		ret = PTR_ERR(dp->next_bridge);
+> +		if (dp->is_edp || ret != -ENODEV)
+> +			return ret;
+> +	}
+>   
+>   	ret = component_add(dev, &dp_display_comp_ops);
+>   	if (ret)
+> @@ -1397,30 +1405,6 @@ void dp_display_debugfs_init(struct msm_dp *dp_display, struct dentry *root, boo
+>   	}
+>   }
+>   
+> -static int dp_display_get_next_bridge(struct msm_dp *dp)
+> -{
+> -	int rc;
+> -	struct dp_display_private *dp_priv;
+> -
+> -	dp_priv = container_of(dp, struct dp_display_private, dp_display);
+> -
+> -	/*
+> -	 * External bridges are mandatory for eDP interfaces: one has to
+> -	 * provide at least an eDP panel (which gets wrapped into panel-bridge).
+> -	 *
+> -	 * For DisplayPort interfaces external bridges are optional, so
+> -	 * silently ignore an error if one is not present (-ENODEV).
+> -	 */
+> -	rc = devm_dp_parser_find_next_bridge(&dp->pdev->dev, dp_priv->parser);
+> -	if (!dp->is_edp && rc == -ENODEV)
+> -		return 0;
+> -
+> -	if (!rc)
+> -		dp->next_bridge = dp_priv->parser->next_bridge;
+> -
+> -	return rc;
+> -}
+> -
+>   int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+>   			struct drm_encoder *encoder)
+>   {
+> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
+> index aa135d5cedbd..f95ab3c5c72c 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_parser.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
+> @@ -24,20 +24,6 @@ static int dp_parser_ctrl_res(struct dp_parser *parser)
+>   	return 0;
+>   }
+>   
+> -int devm_dp_parser_find_next_bridge(struct device *dev, struct dp_parser *parser)
+> -{
+> -	struct platform_device *pdev = parser->pdev;
+> -	struct drm_bridge *bridge;
+> -
+> -	bridge = devm_drm_of_get_bridge(dev, pdev->dev.of_node, 1, 0);
+> -	if (IS_ERR(bridge))
+> -		return PTR_ERR(bridge);
+> -
+> -	parser->next_bridge = bridge;
+> -
+> -	return 0;
+> -}
+> -
+>   static int dp_parser_parse(struct dp_parser *parser)
+>   {
+>   	int rc = 0;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
+> index bc56e0e8c446..2b39b1c394ae 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_parser.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_parser.h
+> @@ -22,7 +22,6 @@
+>   struct dp_parser {
+>   	struct platform_device *pdev;
+>   	struct phy *phy;
+> -	struct drm_bridge *next_bridge;
+>   };
+>   
+>   /**
+> @@ -38,17 +37,4 @@ struct dp_parser {
+>    */
+>   struct dp_parser *dp_parser_get(struct platform_device *pdev);
+>   
+> -/**
+> - * devm_dp_parser_find_next_bridge() - find an additional bridge to DP
+> - *
+> - * @dev: device to tie bridge lifetime to
+> - * @parser: dp_parser data from client
+> - *
+> - * This function is used to find any additional bridge attached to
+> - * the DP controller. The eDP interface requires a panel bridge.
+> - *
+> - * Return: 0 if able to get the bridge, otherwise negative errno for failure.
+> - */
+> -int devm_dp_parser_find_next_bridge(struct device *dev, struct dp_parser *parser);
+> -
+>   #endif
 
