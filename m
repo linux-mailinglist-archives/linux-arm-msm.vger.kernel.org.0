@@ -1,119 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-7614-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7616-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D056F83299E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 13:42:03 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B28CA8329E2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 14:01:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 580B6B22543
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 12:42:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3DBED28472F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 13:01:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8000851020;
-	Fri, 19 Jan 2024 12:41:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04D67524CF;
+	Fri, 19 Jan 2024 13:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="t+9ePfNv"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AklFT0or"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0774A4EB5B
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jan 2024 12:41:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A8B524A2;
+	Fri, 19 Jan 2024 13:00:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705668116; cv=none; b=CNnUVXy0WVpAaYffuub0dgESzjkss3YDdoo1X2QEliu+9UUR2pgpfDCcg7PzJH8ENDhDAOlZkT9xMyODQicVpDVD4m4NqXZrnMVFO/nNWEmoeDY/I+guiqHhSkLnxB1eGk7uVrBnfYrj3tXLR+Hm88khTp25kMSr8BKVj6q0oxI=
+	t=1705669257; cv=none; b=rZ+eUiWAUwGrzDQ57HKxAZdOFXrLa80ymo5s54BHEKumrEet0P6bm/hmaqi9XpMTjKH+zjf1FdVc8d5vI+1lWaZA54LNqRp+pfruF232ComAV38iaUdFsec1VurZsJIhSDvLVlbxE7TcHjK92YKF2AYapFnPPAXydvY1Rmw8sIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705668116; c=relaxed/simple;
-	bh=2cb5Al6biJuuZyVOrVmyIzVVgdjZLf1RVBZLRdAK/Kc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rr0LGniz5gNoqR4aQD8f68M9+asgRqKSYtQPZ6wtH5+43u7TWCq48bI7IfQLeermnX3c0ZaBfgNihN/UN/E2y/kWdJUPNwXNkJsE2h5ElnwJx9hPGb+zUY15IfCxCiof5RNe9oIG63nKloPcm3vG8HtRhQsENMsW5v2BWUVbFfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=t+9ePfNv; arc=none smtp.client-ip=209.85.128.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-5ff821b9acfso7087447b3.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jan 2024 04:41:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705668114; x=1706272914; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=23vuA1+7BgcGfSlqZ4nH0qFr70mqNSgh0bqFZoyYKpg=;
-        b=t+9ePfNvhYNx+/khQCkZFXtSyaj07YyMRs3M82d2NLreYcHORg+GSVl1gglcBWI3Qg
-         hBrtPfqOf+Uq7pnx6Gp6gTDBMdlynUfC91pqFwVXhNJ/nKtVMJzbLh8WOJk9dILc2vp9
-         Y5V8LRSpFMBYuCZP3otygBUq+LyE/iTHJBADqPOkTrdH0UaCO3DQAyvg2MKs3LFvbARj
-         foxbv6Ym+jBpABfIHCk6ydxv678vg8wsR8lUWkYgZuGarMZtXFUcDsOJ2qAp9fXfrOE4
-         vnpnQOGHLSbsgMu1mhy7vcYjfaoBpULeedxFhWZT7cGvLG9ustKBHp2Hq9bomkkDE4cI
-         /4pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705668114; x=1706272914;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=23vuA1+7BgcGfSlqZ4nH0qFr70mqNSgh0bqFZoyYKpg=;
-        b=iLHmIv/BKjk7338iDQ/jsYVEGnPRqYTkCzxNTcFTbz2U7gO7pjwto53b1v2B/Cmftp
-         C5/T4CP3nnZRAm50Ylx8qFtU2GCim8FrvOLOVj1kjrORTFrc7fYN8X8uH+bHDav8/uxS
-         SbcjrYM8z41Dicv7IyR9eqHMq2dvtafqWymPjur7axdOI7kpY0sGO92WXulOxuUanq9j
-         iDwZdtieMd2xhbL9fZg3CvDkmGf+r1jL74/0Qo8ptKgrGupHJkl56XkekcL74lFOKQZU
-         LxASN0G0l79bOjG5CjNvD3THQb8nubV+ks0D92f3swM1ad05ASilwnmB+z3gDYT9hXvh
-         Ufrw==
-X-Gm-Message-State: AOJu0Yxmlz6JPjyC0X5QWnZ9GhswanMZ2i5WaaNjRscxlefh4QexXC9z
-	fsxXttyCG/qD3POVUYVfPmkHFGaDe9c+gtnxhMKj+8HTyinkQeKCQw9jHmUpJZ+YUMqIxBjtKoN
-	CJT94W1PauWSU/eX0pD3yzeUsR6adN9IqXAd/kKE5yvTghxmnOPX2YQ==
-X-Google-Smtp-Source: AGHT+IGXaB/Qo5C8K/AVwVpt0k+i3/3nYM44JB7FzXsWZairbE64gJOEa8s/VJ7iEick4vjqREgSJWa6nU4h2xbXln0=
-X-Received: by 2002:a0d:df17:0:b0:5ff:7cca:a434 with SMTP id
- i23-20020a0ddf17000000b005ff7ccaa434mr2084545ywe.51.1705668113943; Fri, 19
- Jan 2024 04:41:53 -0800 (PST)
+	s=arc-20240116; t=1705669257; c=relaxed/simple;
+	bh=rjihEl0PPCpJTaosRQlidZuXrEBnlcGLGWWWHhGU7Z0=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=KroC3GOlBkIUh+f5UVVVfbgn4539X2FLW0zatfcveTRenOHoQ5GCmW8IKIqdnMkp6RMg3sEiPw3eUBILuOPA4Q/Gv3v6Z3ZBAehHR1Le0+7g/zwa08WyvCEtEtWDSonoo0g+yB8R+PP63VZ8lgvfYhTdBbiIMK0KPaaKyHqoiPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AklFT0or; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40JCU8R2022916;
+	Fri, 19 Jan 2024 13:00:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=TmGjiCctrlSu
+	utJGDhSLxkxmIhS8B4TTbbnE2BeZiu4=; b=AklFT0orPGE7KNb3OgiqVtecA+l8
+	edCv3BQL+o5F4Nleqba4GYg+2zsuGSuSANxQ3mDi1EW7YNc1kFCLLA9tVnHW8VLq
+	I9pJwCeEopTz2BKs/d8d7Y+l4KR828pFugHSt/FRWpJW9rI2uZ9WyTcRocwLTs6N
+	CBQSwYhPdFyqoJ38KNPfS8YtgkByuUq3uEojun4dIbz8uty2yu+QqmWsRGKTakyo
+	D5WR1NcrYKQAcbCHiSE/mQUh+i8NCuC0Ro6mz6LHhxz0x7CFWIdF3mIuo4xs3kJN
+	8hKSLmeilpCEzfaR1JW42Le2GxG1EDh0IEz5FnelyMjveDPlTwOHj2Pg3Q==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vqn89ghm8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 19 Jan 2024 13:00:36 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 40JD0Wfg023730;
+	Fri, 19 Jan 2024 13:00:32 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3vkkkmtgqt-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Fri, 19 Jan 2024 13:00:32 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40JD0WkR023724;
+	Fri, 19 Jan 2024 13:00:32 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-msarkar-hyd.qualcomm.com [10.213.111.194])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 40JD0V8t023713;
+	Fri, 19 Jan 2024 13:00:32 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3891782)
+	id 0D608273A; Fri, 19 Jan 2024 18:30:31 +0530 (+0530)
+From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+To: vkoul@kernel.org, jingoohan1@gmail.com, conor+dt@kernel.org,
+        konrad.dybcio@linaro.org, manivannan.sadhasivam@linaro.org,
+        robh+dt@kernel.org
+Cc: quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+        dmitry.baryshkov@linaro.org, quic_krichai@quicinc.com,
+        quic_vbadigan@quicinc.com, quic_parass@quicinc.com,
+        quic_schintav@quicinc.com, quic_shijjose@quicinc.com,
+        Mrinmay Sarkar <quic_msarkar@quicinc.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Serge Semin <fancer.lancer@gmail.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+        Kishon Vijay Abraham I <kishon@kernel.org>, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev
+Subject: [PATCH v1 0/6] Add Change to integrate HDMA with dwc ep driver
+Date: Fri, 19 Jan 2024 18:30:16 +0530
+Message-Id: <1705669223-5655-1-git-send-email-quic_msarkar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: epo6p-1FcXSHNkhTjx5fREvGlbo5I4XY
+X-Proofpoint-ORIG-GUID: epo6p-1FcXSHNkhTjx5fREvGlbo5I4XY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-19_07,2024-01-19_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=581 clxscore=1011
+ suspectscore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0
+ mlxscore=0 malwarescore=0 impostorscore=0 adultscore=0 bulkscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401190065
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <1705526010-597-1-git-send-email-quic_khsieh@quicinc.com>
-In-Reply-To: <1705526010-597-1-git-send-email-quic_khsieh@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 19 Jan 2024 14:41:43 +0200
-Message-ID: <CAA8EJpqm5KW_UOkvV1JhX+LEh_e8bo549NNQ1AgAXMZ=ZPVCOA@mail.gmail.com>
-Subject: Re: [PATCH v3] drm/msm/dp: return correct Colorimetry for
- DP_TEST_DYNAMIC_RANGE_CEA case
-To: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc: dri-devel@lists.freedesktop.org, robdclark@gmail.com, sean@poorly.run, 
-	swboyd@chromium.org, dianders@chromium.org, vkoul@kernel.org, daniel@ffwll.ch, 
-	airlied@gmail.com, agross@kernel.org, andersson@kernel.org, 
-	quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com, 
-	quic_sbillaka@quicinc.com, marijn.suijten@somainline.org, 
-	freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 17 Jan 2024 at 23:13, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
->
-> MSA MISC0 bit 1 to 7 contains Colorimetry Indicator Field.
-> dp_link_get_colorimetry_config() returns wrong colorimetry value
-> in the DP_TEST_DYNAMIC_RANGE_CEA case in the current implementation.
-> Hence fix this problem by having dp_link_get_colorimetry_config()
-> return defined CEA RGB colorimetry value in the case of
-> DP_TEST_DYNAMIC_RANGE_CEA.
->
-> Changes in V2:
-> -- drop retrieving colorimetry from colorspace
-> -- drop dr = link->dp_link.test_video.test_dyn_range assignment
->
-> Changes in V3:
-> -- move defined MISCr0a Colorimetry vale to dp_reg.h
-> -- rewording commit title
-> -- rewording commit text to more precise describe this patch
->
-> Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_link.c | 12 +++++++-----
->  drivers/gpu/drm/msm/dp/dp_reg.h  |  3 +++
->  2 files changed, 10 insertions(+), 5 deletions(-)
+Hyper DMA (HDMA) is already supported by the dw-edma dmaengine driver.
+Unlike it's predecessor Embedded DMA (eDMA), HDMA supports only the
+unrolled mapping format. This patch series is to integrate HDMA with
+dwc ep driver.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Add change to provide a valid base address of the CSRs from the
+platform driver and also provides read/write channels count from
+platform driver since there is no standard way to auto detect the
+number of available read/write channels in a platform and set the
+mapping format in platform driver for HDMA.
+
+This series passes 'struct dw_edma_chip' to irq_vector() as it needs
+to access that particular structure and fix to get the eDMA/HDMA
+max channel count. Also move the HDMA max channel definition to edma.h
+to maintain uniformity with eDMA.
+
+Dependency
+----------
+Depends on:
+https://lore.kernel.org/dmaengine/20231117-b4-feature_hdma_mainline-v6-0-ebf7aa0e40d7@bootlin.com/
+https://lore.kernel.org/all/1701432377-16899-1-git-send-email-quic_msarkar@quicinc.com/
+
+Manivannan Sadhasivam (4):
+  dmaengine: dw-edma: Pass 'struct dw_edma_chip' to irq_vector()
+  dmaengine: dw-edma: Introduce helpers for getting the eDMA/HDMA max
+    channel count
+  PCI: dwc: Add HDMA support
+  dmaengine: dw-edma: Move HDMA_V0_MAX_NR_CH definition to edma.h
+
+Mrinmay Sarkar (2):
+  PCI: qcom-ep: Provide number of read/write channel for HDMA
+  PCI: epf-mhi: Add flag to enable HDMA for SA8775P
+
+ drivers/dma/dw-edma/dw-edma-core.c           | 29 ++++++++++---
+ drivers/dma/dw-edma/dw-edma-pcie.c           |  4 +-
+ drivers/dma/dw-edma/dw-hdma-v0-core.c        |  4 +-
+ drivers/dma/dw-edma/dw-hdma-v0-regs.h        |  3 +-
+ drivers/pci/controller/dwc/pcie-designware.c | 63 ++++++++++++++++++++++------
+ drivers/pci/controller/dwc/pcie-qcom-ep.c    | 19 ++++++++-
+ drivers/pci/endpoint/functions/pci-epf-mhi.c |  1 +
+ include/linux/dma/edma.h                     | 18 +++++++-
+ 8 files changed, 115 insertions(+), 26 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.7.4
+
 
