@@ -1,73 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-7607-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7608-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1EA078328C5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 12:30:11 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 07A448328E6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 12:36:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 51C5B1C210BC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 11:30:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 86D5E281637
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 11:36:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2CC24C61E;
-	Fri, 19 Jan 2024 11:30:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="c36eHIUj"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FDEB4EB30;
+	Fri, 19 Jan 2024 11:36:01 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753824C3BC
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jan 2024 11:30:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B0574F89D;
+	Fri, 19 Jan 2024 11:35:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705663807; cv=none; b=AZ2DLumqiemf9OeusWFYtm8KAVpfosNmpcIxdLv3DOljk2A5RGOWa4qsGdxOH3FH0rUWnEVN+4dOq/lqvJVb2hQ3Xa6aRYrvC6bI6qOuwywzcALL/uhiEkxK7iSG7zG9aLEWLhERAI7eG9x+xUfBu7DDPw3BsknL5rn0tK/9Uro=
+	t=1705664161; cv=none; b=OE/RjDiziK/HgXDONaUoC/1AZ5z9EMpdy/83QXap5ZrGiRBoTBrlBvrqJIHha9WUgkJ4PH/736WwuuJwSStEfeDBJJfaESNQ2gv9VpM7nLtN2zS18z9veQL2qN6TcKKFpeacf6oWCN1Ap0mKp+l/KoXjAt/vvee8qMp6sGJOA/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705663807; c=relaxed/simple;
-	bh=ycObeh3kTOplxvPsJQvoz4NRPDs3AIyv+TTx70yn/rc=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Z8dBz5yTEk9nDvnG1/DRGKq3Qg7uq6+FIgrt6//8jq1SHL6uAceZFLr8XIM08Y2wodPEvEnMxrDPIqyRc/nQ7X/w1sFWoFSO0Ih8NxV5xzSvEzpjeqrSMki9iLB+9iCGY7r/Xpc+BFcSQxiRf3IdqtTulnk0bq0PvDYRDa1nAdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=c36eHIUj; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-40e9ffab5f2so2481395e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jan 2024 03:30:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705663805; x=1706268605; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ySPxDNryS5ASfYRJDMll4nnGiSTqlh9txjSwMehzbzg=;
-        b=c36eHIUj2dXiDJ7yTcn6lw38nvaC1dvB5/t1AoJxO5OiMO89Ju5YNUHdvSph+01wpz
-         +VnMfqvHo+mZT6tuRfVym0qMUZQ8tz88ovABeNMjIe3UZlZO41Ss45h33i+/yzE8IqtG
-         q4QxkybAnmRYAAiDbgImwYb1oxJWEKMm31QvFCpxrGwqrW+KqfydK+IVg0rZrYdr2C0G
-         9OxqaQIixVhEqPRWEMo6kWacGIENPIrkfS+UKWjs/i4Qj02RGU3OhKsnlbqLYrKWRL52
-         WMjQc5Q+twhmPFhy62WB4dyFU4TN+9B5yZm1jBa9+NdtHmh4FbvP4jyENbjuA2V2QCgz
-         Tuzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705663805; x=1706268605;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ySPxDNryS5ASfYRJDMll4nnGiSTqlh9txjSwMehzbzg=;
-        b=akQ5vQ5DQ9xo3jtPOG4W095ts3RhHrER4otPZKery1JCnMxQRgEzdBI96gQby3/AoL
-         YJ60S5swWOLEBekbOi+cH9UsVz1fouufdBAdoX70pONgIo6oBjy3gtDnbKPLKzCbHBqk
-         EbLpDGm6GlRxsVwd3fOljdbUy2eHRLexUR/cDZ5qFZkg60k8Hy7JdUAxuiiOt0GPm/tV
-         4XQszQqz+oFdbrS/5uTw2ypdEHj453je5NavV0UnyXIKBjX5sD290YeSNSFCGyT0u+VH
-         WRPSlkGZxcL6NCH5EoHZgnyC2rDmL0muAY/0wYaKbrt0c4JuHgDXXYEQ3oSXl7bB3ZMd
-         Fh7A==
-X-Gm-Message-State: AOJu0YzNzuwtvDy5lHSzgsGxBbDMmprlIIic7L6m0jZq4wBFL9vgNbnZ
-	MVMnwitV2LPl10dVsiRdXbfWo05OIVIMK/SVCic1Wf0jZie66bR8+n701B9xNwY=
-X-Google-Smtp-Source: AGHT+IHytkIjK1uUjP5dyPRB2d2VaTknqCDXrx30bTQY2P3ra4sBTGsqAdJNMcOBYcs6uDsMbh+jZA==
-X-Received: by 2002:a05:600c:6d7:b0:40e:4a58:3c1c with SMTP id b23-20020a05600c06d700b0040e4a583c1cmr1650492wmn.154.1705663804748;
-        Fri, 19 Jan 2024 03:30:04 -0800 (PST)
-Received: from [192.168.100.48] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id s4-20020a05600c45c400b0040e6ff60057sm20073664wmo.48.2024.01.19.03.30.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 Jan 2024 03:30:04 -0800 (PST)
-Message-ID: <415de540-5462-4ccb-9785-f56920b663f1@linaro.org>
-Date: Fri, 19 Jan 2024 11:30:45 +0000
+	s=arc-20240116; t=1705664161; c=relaxed/simple;
+	bh=AD/Bv/GbiHi4oggZkUxGXy6r3y/xcMRYEqX9cQzZ0NM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=slARWX8hVTSY7DcqmsXcB+CiBBkB7yROAUUHfqsSTzDuSXGOk95VmnOAa2BdjTCdGbPwtdhEIdhwyneg2iAe1EvMA/ADVW7zdAQ5mgfiLs5SirJ5rZLDzL0nNBauEZXPM7uSBgwOwvHwQYMKgEk7PFb7yZJUPO8lMRE6VnXoRFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9AA871042;
+	Fri, 19 Jan 2024 03:36:41 -0800 (PST)
+Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 901AA3F5A1;
+	Fri, 19 Jan 2024 03:35:50 -0800 (PST)
+Message-ID: <3cd64a92-594d-483e-b134-a45f57d318f6@arm.com>
+Date: Fri, 19 Jan 2024 11:35:48 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,31 +42,193 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] soc: qcom: rpmh-rsc: Enhance check for VREG in-flight
- request
+Subject: Re: [PATCH v4 02/10] coresight-tpdm: Optimize the useage of
+ tpdm_has_dsb_dataset
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To: Maulik Shah <quic_mkshah@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- quic_eberman@quicinc.com, quic_collinsd@quicinc.com, quic_lsrao@quicinc.com
-References: <20240119-rpmh-rsc-fixes-v2-1-e42c0a9e36f0@quicinc.com>
- <82e4796a-8983-4045-8ca2-71aa9af7a120@linaro.org>
-In-Reply-To: <82e4796a-8983-4045-8ca2-71aa9af7a120@linaro.org>
+To: Tao Zhang <quic_taozha@quicinc.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Konrad Dybcio <konradybcio@gmail.com>, Mike Leach <mike.leach@linaro.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: Jinlong Mao <quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, coresight@lists.linaro.org,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Trilok Soni <quic_tsoni@quicinc.com>, Song Chai <quic_songchai@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, andersson@kernel.org
+References: <1705634583-17631-1-git-send-email-quic_taozha@quicinc.com>
+ <1705634583-17631-3-git-send-email-quic_taozha@quicinc.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <1705634583-17631-3-git-send-email-quic_taozha@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 19/01/2024 10:34, Bryan O'Donoghue wrote:
-> Consider removing the /* comment */ if it helps to apply the change 
-> earlier than 658628e7ef78e8.
+On 19/01/2024 03:22, Tao Zhang wrote:
+> Since the function tpdm_has_dsb_dataset will be called by TPDA
+> driver in subsequent patches, it is moved to the header file.
+> And move this judgement form the function __tpdm_{enable/disable}
+> to the beginning of the function tpdm_{enable/disable}_dsb.
 > 
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
 > ---
-> bod
+>   drivers/hwtracing/coresight/coresight-tpdm.c | 82 ++++++++++----------
+>   drivers/hwtracing/coresight/coresight-tpdm.h |  4 +
+>   2 files changed, 43 insertions(+), 43 deletions(-)
 > 
+> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
+> index 0427c0fc0bf3..6549f71ba150 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+> @@ -125,11 +125,6 @@ static ssize_t tpdm_simple_dataset_store(struct device *dev,
+>   	return ret;
+>   }
+>   
+> -static bool tpdm_has_dsb_dataset(struct tpdm_drvdata *drvdata)
+> -{
+> -	return (drvdata->datasets & TPDM_PIDR0_DS_DSB);
+> -}
+> -
+>   static umode_t tpdm_dsb_is_visible(struct kobject *kobj,
+>   				   struct attribute *attr, int n)
+>   {
+> @@ -232,38 +227,39 @@ static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
+>   {
+>   	u32 val, i;
+>   
+> -	for (i = 0; i < TPDM_DSB_MAX_EDCR; i++)
+> -		writel_relaxed(drvdata->dsb->edge_ctrl[i],
+> -			   drvdata->base + TPDM_DSB_EDCR(i));
+> -	for (i = 0; i < TPDM_DSB_MAX_EDCMR; i++)
+> -		writel_relaxed(drvdata->dsb->edge_ctrl_mask[i],
+> -			   drvdata->base + TPDM_DSB_EDCMR(i));
+> -	for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
+> -		writel_relaxed(drvdata->dsb->patt_val[i],
+> -			   drvdata->base + TPDM_DSB_TPR(i));
+> -		writel_relaxed(drvdata->dsb->patt_mask[i],
+> -			   drvdata->base + TPDM_DSB_TPMR(i));
+> -		writel_relaxed(drvdata->dsb->trig_patt[i],
+> -			   drvdata->base + TPDM_DSB_XPR(i));
+> -		writel_relaxed(drvdata->dsb->trig_patt_mask[i],
+> -			   drvdata->base + TPDM_DSB_XPMR(i));
+> -	}
+> -
+> -	set_dsb_tier(drvdata);
+> +	if (tpdm_has_dsb_dataset(drvdata)) {
 
-Earlier than 40482e4f73640d !
+Minor nit: If you do :
 
----
-bod
+	if (!tpdm_has_dsb_dataset(drvdata))
+		return;
+
+You don't need any of these additional churns of moving them.
+
+> +		for (i = 0; i < TPDM_DSB_MAX_EDCR; i++)
+> +			writel_relaxed(drvdata->dsb->edge_ctrl[i],
+> +				       drvdata->base + TPDM_DSB_EDCR(i));
+> +		for (i = 0; i < TPDM_DSB_MAX_EDCMR; i++)
+> +			writel_relaxed(drvdata->dsb->edge_ctrl_mask[i],
+> +				       drvdata->base + TPDM_DSB_EDCMR(i));
+> +		for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
+> +			writel_relaxed(drvdata->dsb->patt_val[i],
+> +				       drvdata->base + TPDM_DSB_TPR(i));
+> +			writel_relaxed(drvdata->dsb->patt_mask[i],
+> +				       drvdata->base + TPDM_DSB_TPMR(i));
+> +			writel_relaxed(drvdata->dsb->trig_patt[i],
+> +				       drvdata->base + TPDM_DSB_XPR(i));
+> +			writel_relaxed(drvdata->dsb->trig_patt_mask[i],
+> +				       drvdata->base + TPDM_DSB_XPMR(i));
+> +		}
+>   
+> -	set_dsb_msr(drvdata);
+> +		set_dsb_tier(drvdata);
+> +		set_dsb_msr(drvdata);
+>   
+> -	val = readl_relaxed(drvdata->base + TPDM_DSB_CR);
+> -	/* Set the mode of DSB dataset */
+> -	set_dsb_mode(drvdata, &val);
+> -	/* Set trigger type */
+> -	if (drvdata->dsb->trig_type)
+> -		val |= TPDM_DSB_CR_TRIG_TYPE;
+> -	else
+> -		val &= ~TPDM_DSB_CR_TRIG_TYPE;
+> -	/* Set the enable bit of DSB control register to 1 */
+> -	val |= TPDM_DSB_CR_ENA;
+> -	writel_relaxed(val, drvdata->base + TPDM_DSB_CR);
+> +		val = readl_relaxed(drvdata->base + TPDM_DSB_CR);
+> +		/* Set the mode of DSB dataset */
+> +		set_dsb_mode(drvdata, &val);
+> +		/* Set trigger type */
+> +		if (drvdata->dsb->trig_type)
+> +			val |= TPDM_DSB_CR_TRIG_TYPE;
+> +		else
+> +			val &= ~TPDM_DSB_CR_TRIG_TYPE;
+> +		/* Set the enable bit of DSB control register to 1 */
+> +		val |= TPDM_DSB_CR_ENA;
+> +		writel_relaxed(val, drvdata->base + TPDM_DSB_CR);
+> +	}
+>   }
+>   
+>   /*
+> @@ -278,8 +274,7 @@ static void __tpdm_enable(struct tpdm_drvdata *drvdata)
+>   {
+>   	CS_UNLOCK(drvdata->base);
+>   
+> -	if (tpdm_has_dsb_dataset(drvdata))
+> -		tpdm_enable_dsb(drvdata);
+> +	tpdm_enable_dsb(drvdata);
+>   
+>   	CS_LOCK(drvdata->base);
+>   }
+> @@ -307,10 +302,12 @@ static void tpdm_disable_dsb(struct tpdm_drvdata *drvdata)
+>   {
+>   	u32 val;
+>   
+> -	/* Set the enable bit of DSB control register to 0 */
+> -	val = readl_relaxed(drvdata->base + TPDM_DSB_CR);
+> -	val &= ~TPDM_DSB_CR_ENA;
+> -	writel_relaxed(val, drvdata->base + TPDM_DSB_CR);
+> +	if (tpdm_has_dsb_dataset(drvdata)) {
+> +		/* Set the enable bit of DSB control register to 0 */
+> +		val = readl_relaxed(drvdata->base + TPDM_DSB_CR);
+> +		val &= ~TPDM_DSB_CR_ENA;
+> +		writel_relaxed(val, drvdata->base + TPDM_DSB_CR);
+> +	}
+
+Same suggestion as above:
+
+	if (!tpdm_has...)
+		return;
+
+
+>   }
+>   
+>   /* TPDM disable operations */
+> @@ -318,8 +315,7 @@ static void __tpdm_disable(struct tpdm_drvdata *drvdata)
+>   {
+>   	CS_UNLOCK(drvdata->base);
+>   
+> -	if (tpdm_has_dsb_dataset(drvdata))
+> -		tpdm_disable_dsb(drvdata);
+> +	tpdm_disable_dsb(drvdata);
+>   
+>   	CS_LOCK(drvdata->base);
+>   }
+> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
+> index 4115b2a17b8d..ddaf333fa1c2 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpdm.h
+> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
+> @@ -220,4 +220,8 @@ struct tpdm_dataset_attribute {
+>   	u32 idx;
+>   };
+>   
+> +static bool tpdm_has_dsb_dataset(struct tpdm_drvdata *drvdata)
+> +{
+> +	return (drvdata->datasets & TPDM_PIDR0_DS_DSB);
+> +}
+>   #endif  /* _CORESIGHT_CORESIGHT_TPDM_H */
+
+
+Suzuki
 
