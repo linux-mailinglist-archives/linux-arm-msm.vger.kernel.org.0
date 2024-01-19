@@ -1,131 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-7591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4104283242E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 06:20:12 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB502832563
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 09:05:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7D2441C21BEA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 05:20:11 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 531FAB224A3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 08:05:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC68046AD;
-	Fri, 19 Jan 2024 05:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1E1BD53E;
+	Fri, 19 Jan 2024 08:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eo3UVTdv"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VFRlGgYl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CAB64691;
-	Fri, 19 Jan 2024 05:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05AD6D52F;
+	Fri, 19 Jan 2024 08:05:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705641607; cv=none; b=L9B2X18NsA1SBO/s0CpDIvRaHBxBlZiVsstnIHXNTeBHbqhOKLBt2boG6ToA/5yxoHENr2RZcHlBM2Pllde1GprkyU41z6eWh1gfI5LDNgIodPKsymy/w4/1dDhjYgIItZjXJBZ/4LilSoNYxCCyeBGc21dze1OH2zdA0M0Y8tM=
+	t=1705651519; cv=none; b=ss+VKeRz3NbDGxv9AnMVQjUeuZvwAiQtZ+ir/PrVI5MkErm9NdPez3Y+s4LxmFzcAmW4oGV+5W7GExHMBNz0F9XegYB3nVsnwYitR0WqZ5ATG4BK75n7MWceBsA2Y2ZtYVTz40LQdjpPxfwJnoq12sOZ0/T7AOx7WoF1/n83WYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705641607; c=relaxed/simple;
-	bh=LTCKdtnUk4+lLsKQhuLrP0dxI8tJhkUKERYLhzyYJe0=;
+	s=arc-20240116; t=1705651519; c=relaxed/simple;
+	bh=tsu8ZrA+mhQxtPhDjQhrjJVhT9lSU2UUtueABH1K/fI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=adPTekeLxyMtYT12PTZZ7uiMTHRVP+aPYQ6EQ/uXO5YT8KQWDJWmyBz/4t3H3RhHQok/6g4Ufm3MY0aRAAqAMCmO3n1IQFZb6Cb2UiEhwqF6iI8NKukzu4JV60z7OPC09HRtLUsk9xZCxYyCFg4s/gLVNEEPTaaUH7mhYxT66rI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eo3UVTdv; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=jf6V6HTYl4IHRUKovi8KyQ5F7L/hfUK4fTpOANGmKmQgaevRwQidCEMOpaV9JzQ3L2K+jfUHfFNI9zMjfo7sa7/g7EdBphhLjh1BBJ6GLz7fZ+Os5aeEoafbo07ykGQkbJq+PVpZf7UkTWKpOGS5Qs1ZQBHmLc/BHjrXMeItqMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VFRlGgYl; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40J4pOvN010390;
-	Fri, 19 Jan 2024 05:20:00 GMT
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40J843As010337;
+	Fri, 19 Jan 2024 08:05:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=C7riFBU11nnzW4T8MmC9s11SawHSKgNA/p3lIimK/XM=; b=eo
-	3UVTdvbCdK3WKOlc4cFwn9fzCMMKwE4ISGTK4hERSwAZitPfeakrewelFDRM54By
-	HDol4hYutP2xJ+EBe8GcAXsJAVpD9bFndOm5dqPxnOvPdEyijVR/tiB5HG3RjVWi
-	HXakt4q+AIQyLdCacVcIhgs3R/oX75xm41xO1zhmTS5Tg5pf+rbofzreabaRDF3a
-	UxbGHPkkbtRlLtieSL+havg9fmhEyLOx4YA4dmV+KW4JSTjESrDhjJ9TR90Y7sfP
-	wyeeGJKhc8xqjin8XH38Mk/WpuM7Sr/lywYpaSE+yW/tIevb11/WS2VNMiKwcptM
-	2t8mrgGGx5lG1I0QMYYw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vq2d0jck3-1
+	qcppdkim1; bh=riE/9mEuwi4RfnjimU2vml+iAvwigG7FNmaZVyLUWHM=; b=VF
+	RlGgYlCNjK/PXNGByQ3B3CMYJyDKf1pnRarBFnz+wKEQPCmnZpBtdEXcH+1YdFRP
+	qSlnodDJg8PsxGOMGtq2ydBoF8W91AqiStT5/kNwGOAdy+nJ+4sBR+/WJ0x7KB4Z
+	YrnO9CW61zUjcLsMUfkLUzPCQ1lNikBUttrE2EuMSu4JNXx2FBGYLoDLqIyM2BSF
+	NljG61+DmrNknzl6QIVLPtELCJT3uTwX9jtP3KS366EIQ0oNcCKF2k+Ki9oByJVu
+	mmS/Uh1aSbp8KH3wEAwwWDOehWSjELuOIK1wzA/oefx03ddyVwFiBAs8/lSxDnnk
+	L4t2z6F1phMnx98VZiFA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vqn89g03m-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 19 Jan 2024 05:19:59 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40J5Jwec011031
+	Fri, 19 Jan 2024 08:05:13 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40J85CD5027634
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 19 Jan 2024 05:19:58 GMT
-Received: from [10.217.198.224] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 18 Jan
- 2024 21:19:56 -0800
-Message-ID: <7649dd92-4e73-470a-921a-2420bf521537@quicinc.com>
-Date: Fri, 19 Jan 2024 10:49:53 +0530
+	Fri, 19 Jan 2024 08:05:12 GMT
+Received: from [10.216.37.25] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 19 Jan
+ 2024 00:05:08 -0800
+Message-ID: <b3b01a1c-4946-531f-3dbe-9ba5cebbd93f@quicinc.com>
+Date: Fri, 19 Jan 2024 13:35:04 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] soc: qcom: rpmh-rsc: Enhance check for VREG in-flight
- request
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_eberman@quicinc.com>, <quic_collinsd@quicinc.com>,
-        <quic_lsrao@quicinc.com>
-References: <20240117-rpmh-rsc-fixes-v1-1-71ee4f8f72a4@quicinc.com>
- <9b177f7b-8dbf-4193-9a70-94f7b80f0a87@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 2/2] media: venus: add new rate control type MBR for
+ encoder
 Content-Language: en-US
-From: "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com>
-In-Reply-To: <9b177f7b-8dbf-4193-9a70-94f7b80f0a87@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Sachin Kumar Garg
+	<quic_sachinku@quicinc.com>,
+        <hverkuil-cisco@xs4all.nl>,
+        "Mauro Carvalho
+ Chehab" <mchehab@kernel.org>,
+        Stanimir Varbanov
+	<stanimir.k.varbanov@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>
+CC: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        <linux-media@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20240118105934.137919-1-quic_sachinku@quicinc.com>
+ <20240118105934.137919-3-quic_sachinku@quicinc.com>
+ <04a364e8-534c-40a4-a031-b9f9d2304c39@linaro.org>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <04a364e8-534c-40a4-a031-b9f9d2304c39@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: iUAOo7-oncuFgMQKA_iJY4Sau_xUpq5c
-X-Proofpoint-GUID: iUAOo7-oncuFgMQKA_iJY4Sau_xUpq5c
+X-Proofpoint-GUID: K2X_OXuQuBajW5Kw7vThrZo76iE2Uztc
+X-Proofpoint-ORIG-GUID: K2X_OXuQuBajW5Kw7vThrZo76iE2Uztc
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-19_02,2024-01-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 malwarescore=0
- lowpriorityscore=0 impostorscore=0 priorityscore=1501 mlxscore=0
- adultscore=0 bulkscore=0 spamscore=0 mlxlogscore=628 clxscore=1015
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401190012
+ definitions=2024-01-19_04,2024-01-17_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 clxscore=1011
+ suspectscore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0
+ mlxscore=0 malwarescore=0 impostorscore=0 adultscore=0 bulkscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401190028
 
-Hi,
-
-On 1/17/2024 5:19 PM, Konrad Dybcio wrote:
-
->> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
->> index a021dc71807b..5371d7e3090a 100644
->> --- a/drivers/soc/qcom/rpmh-rsc.c
->> +++ b/drivers/soc/qcom/rpmh-rsc.c
->> @@ -1,6 +1,7 @@
->>   // SPDX-License-Identifier: GPL-2.0
->>   /*
->>    * Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.
->> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All 
->> rights reserved.
->>    */
->>   #define pr_fmt(fmt) "%s " fmt, KBUILD_MODNAME
->> @@ -91,6 +92,15 @@ enum {
->>   #define CMD_STATUS_ISSUED        BIT(8)
->>   #define CMD_STATUS_COMPL        BIT(16)
->> +#define ACCL_TYPE(addr)            ((addr >> 16) & 0xF)
->> +#define VREG_ADDR(addr)            (addr & ~0xF)
+On 1/18/2024 11:14 PM, Konrad Dybcio wrote:
 > 
-> It would be nice to add some #define FNAME GENMASK(x, y) accessed
-> with FIELD_GET(FNAME, foobar), so that the code is a bit more
-> self-explanatory
 > 
-> Konrad
+> On 1/18/24 11:59, Sachin Kumar Garg wrote:
+>> There is no limit on the maximum level of the bit rate with
+>> the existing VBR rate control.
+>> V4L2_MPEG_VIDEO_BITRATE_MODE_MBR rate control will limit the
+>> frame maximum bit rate range to the +/- 10% of the configured
+>> bit-rate value. Encoder will choose appropriate quantization
+>> parameter and do the smart bit allocation to set the frame
+>> maximum bitrate level.
+>>
+>> Signed-off-by: Sachin Kumar Garg <quic_sachinku@quicinc.com>
+>> ---
+>>   drivers/media/platform/qcom/venus/hfi_cmds.c  | 38 +++++++++++++------
+>>   .../media/platform/qcom/venus/hfi_helper.h    |  1 +
+>>   drivers/media/platform/qcom/venus/venc.c      |  2 +
+>>   .../media/platform/qcom/venus/venc_ctrls.c    |  5 ++-
+>>   4 files changed, 33 insertions(+), 13 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c
+>> b/drivers/media/platform/qcom/venus/hfi_cmds.c
+>> index 3418d2dd9371..95fc27e0dc7d 100644
+>> --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
+>> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
+>> @@ -645,17 +645,33 @@ static int pkt_session_set_property_1x(struct
+>> hfi_session_set_property_pkt *pkt,
+>>       case HFI_PROPERTY_PARAM_VENC_RATE_CONTROL: {
+>>           u32 *in = pdata;
+>>   -        switch (*in) {
+>> -        case HFI_RATE_CONTROL_OFF:
+>> -        case HFI_RATE_CONTROL_CBR_CFR:
+>> -        case HFI_RATE_CONTROL_CBR_VFR:
+>> -        case HFI_RATE_CONTROL_VBR_CFR:
+>> -        case HFI_RATE_CONTROL_VBR_VFR:
+>> -        case HFI_RATE_CONTROL_CQ:
+>> -            break;
+>> -        default:
+>> -            ret = -EINVAL;
+>> -            break;
+>> +        if (hfi_ver == HFI_VERSION_4XX) {
+> 
+> So, only sdm845/sc7180 and friends support it, but the newer
+> SoCs (like 8250 don't)?
+Thats correct. Supported only in AR50 generations. Not available in 8250.
 
-Thanks for the review.
-Updates in v2 to use GENMASK() and FIELD_GET().
+> 
+> [...]
+> 
+>> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
+>> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
+>> @@ -387,10 +387,11 @@ int venc_ctrl_init(struct venus_inst *inst)
+>>         v4l2_ctrl_new_std_menu(&inst->ctrl_handler, &venc_ctrl_ops,
+>>           V4L2_CID_MPEG_VIDEO_BITRATE_MODE,
+>> -        V4L2_MPEG_VIDEO_BITRATE_MODE_CBR,
+>> +        V4L2_MPEG_VIDEO_BITRATE_MODE_MBR,
+> 
+> Is this okay, since you're claiming only v4 supports it?
+This looks okay to extend the support for new RC mode. I see an issue in
+handling this new RC for non supported SOCs. This needs to be fixed in
+hfi_cmds.c while preparing the packet. MBR for unsupported SOC should be treated
+as -ENOTSUPP instead of -EINVAL which would terminate the session.
 
-Thanks,
-Maulik
+This need to be fixed.
+
+Regards,
+Vikash
 
