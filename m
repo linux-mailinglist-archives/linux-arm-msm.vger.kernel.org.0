@@ -1,154 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-7632-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7633-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BAE58832C95
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 16:59:50 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25D6C832D3D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 17:34:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6989128230B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 15:59:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 84B3AB24207
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 16:34:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 557D154BE7;
-	Fri, 19 Jan 2024 15:59:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W7EY+w5r"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76CC65576A;
+	Fri, 19 Jan 2024 16:34:17 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bmailout1.hostsharing.net (bmailout1.hostsharing.net [83.223.95.100])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2623954BE0;
-	Fri, 19 Jan 2024 15:59:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0886E1F60B;
+	Fri, 19 Jan 2024 16:34:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.223.95.100
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705679985; cv=none; b=BuPkBh8T1HXRbf7xQSYN3byr9tS89s+HtfLIG7Q4pEH9PECXT782tN5YysgwpGGgvgUb1Ln/ddFIRVIczOiieCOzG/vPM/fiXS5fXBfXL9iEnOCk7Ps8PALDcxqJSUDPtQM/ZWcEx0pEtXFfOIPDHes0WJNfK/WRHoWxDE7LmQE=
+	t=1705682057; cv=none; b=M7+aqLle61XINW/PZGZX4mYE0JckDjyoV7CNpFYIsxDF6FCG2bJEZ1RvnnFn088p7xfZ2ZhbwAgB+YTHgwh7SbcdBo66Vik2WQnOsoaJN587ha22UNu9ImSkepWzmvyAXbOk3Z0Rc8MEBlMuAs/nGibJa4UQTdN7zfHU+ind/c4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705679985; c=relaxed/simple;
-	bh=gfrLkbtYzKFT46/9XEwPAniAWGb9wlDVWjw8A1etnwQ=;
+	s=arc-20240116; t=1705682057; c=relaxed/simple;
+	bh=D2LgJwRjxJYglnLH2h53TIEgwBrE9PHOgnordbiozD8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jUqdfxp4rfjaruaVoWKDxsALEpHDR02SoF5oUiKbY8YZruAG8zWgCfOQatkJYv450JPgoM7hgQlOlKwwNGzQSDpuhg/erP2mAT0JL8AKJl/nJgTBo1al0bprnNNPSLcedipHdDRuqqBzpXNmv3uPDnVJloYG2+s3C+5QKyIIDwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W7EY+w5r; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE86EC433C7;
-	Fri, 19 Jan 2024 15:59:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705679984;
-	bh=gfrLkbtYzKFT46/9XEwPAniAWGb9wlDVWjw8A1etnwQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=W7EY+w5rLd3kuXBKR/USovrJ/5x/r2dnnDn3X97Oojo4GsESiMMNcGj29ChZbiWc/
-	 d89FHJFHOTxIZDMVw8ryaYK20WbLvQShYga0FW0zA5qwJ7SMxbIBrIJN0xnkKAqDcv
-	 eTsBxukaHO1r8kQ/Ce1/veZeqEuVrDaV7V6k56UXCXNtZ7JUwHcDrlPP4UGFQaoIez
-	 0r+K/4Aw7S0rPUMxny3bIxFJ4JuczSpUO/yb25D3gCUxfZKXOm/xABB7TOVHOjOtpH
-	 5U8x3Ier/jUQD7wrNs4V53nB2qAJOCDlb5FdnYiwl5LYKHAgPNek36xUmuVrQVCMf3
-	 /6SUKh1MCItqw==
-Received: from johan by xi.lan with local (Exim 4.96.2)
-	(envelope-from <johan@kernel.org>)
-	id 1rQrHd-0004jx-28;
-	Fri, 19 Jan 2024 16:59:54 +0100
-Date: Fri, 19 Jan 2024 16:59:53 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: Matthias Kaehlcke <mka@chromium.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Johan Hedberg <johan.hedberg@gmail.com>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	 Content-Type:Content-Disposition:In-Reply-To; b=nkDUpOo0f8dj+RbGMsa8WS2tGpE639ruip02XLo4cyx+rZx37U7ANOtFuX9crAslmdOf3ADFjOLDgbg/gBWgrdnhbGgdF3s+5OMctd3030L6qjpNdJtctGfMm8kk3OBobUWo7PoIcElmiMoRJkTuR83zMauMntlBRK1+aYmmEjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de; spf=none smtp.mailfrom=h08.hostsharing.net; arc=none smtp.client-ip=83.223.95.100
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=h08.hostsharing.net
+Received: from h08.hostsharing.net (h08.hostsharing.net [IPv6:2a01:37:1000::53df:5f1c:0])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
+	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
+	(Client CN "*.hostsharing.net", Issuer "RapidSSL TLS RSA CA G1" (verified OK))
+	by bmailout1.hostsharing.net (Postfix) with ESMTPS id 6E25130006284;
+	Fri, 19 Jan 2024 17:34:05 +0100 (CET)
+Received: by h08.hostsharing.net (Postfix, from userid 100393)
+	id 50F591D3C6; Fri, 19 Jan 2024 17:34:05 +0100 (CET)
+Date: Fri, 19 Jan 2024 17:34:05 +0100
+From: Lukas Wunner <lukas@wunner.de>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Kalle Valo <kvalo@kernel.org>,
+	"David S . Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
-	Doug Anderson <dianders@google.com>,
-	Stephen Boyd <swboyd@google.com>
-Subject: Re: [PATCH] Bluetooth: qca: fix device-address endianness
-Message-ID: <ZaqcefHE2LAnRRRz@hovoldconsulting.com>
-References: <20231227180306.6319-1-johan+linaro@kernel.org>
- <ZZ15c1HUQIH2cY5o@google.com>
- <ZZ1-ehpU-g6i9Qem@hovoldconsulting.com>
- <ZZ2IOQEekFffJoHQ@google.com>
- <ZZ5RVpL88XNbgKIy@hovoldconsulting.com>
- <CABBYNZJ_EAuGEdeW+vZzXu20nVqLkLwiQbYQ9XzoABxQ5rAzdQ@mail.gmail.com>
- <ZajkA6oxtMcxKY4X@hovoldconsulting.com>
- <CABBYNZLV9o9hsYGVTGA7dPby-j1P_a35yNrDy4d9PMJq=TaRsQ@mail.gmail.com>
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Chris Morgan <macromorgan@hotmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	=?iso-8859-1?Q?N=EDcolas_F_=2E_R_=2E_A_=2E?= Prado <nfraprado@collabora.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Peng Fan <peng.fan@nxp.com>, Robert Richter <rrichter@amd.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Terry Bowman <terry.bowman@amd.com>,
+	Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>,
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Abel Vesa <abel.vesa@linaro.org>, linux-wireless@vger.kernel.org,
+	netdev@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH 0/9] PCI: introduce the concept of power sequencing of
+ PCIe devices
+Message-ID: <20240119163405.GA32506@wunner.de>
+References: <20240117160748.37682-1-brgl@bgdev.pl>
+ <CAA8EJpoQfPqoMVyTmUjPs4c1Uc-p4n7zNcG+USNjXX0Svp362w@mail.gmail.com>
+ <CAA8EJpqyK=pkjEofWV595tp29vjkCeWKYr-KOJh_hBiBbkVBew@mail.gmail.com>
+ <CAMRc=McUZh0jhjMW7H6aVKbw29WMCQ3wdkVAz=yOZVK5wc45OA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABBYNZLV9o9hsYGVTGA7dPby-j1P_a35yNrDy4d9PMJq=TaRsQ@mail.gmail.com>
+In-Reply-To: <CAMRc=McUZh0jhjMW7H6aVKbw29WMCQ3wdkVAz=yOZVK5wc45OA@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Thu, Jan 18, 2024 at 10:30:50AM -0500, Luiz Augusto von Dentz wrote:
-> On Thu, Jan 18, 2024 at 3:40 AM Johan Hovold <johan@kernel.org> wrote:
-> > On Wed, Jan 17, 2024 at 05:49:07PM -0500, Luiz Augusto von Dentz wrote:
-> > > On Wed, Jan 10, 2024 at 3:12 AM Johan Hovold <johan@kernel.org> wrote:
-> > > > On Tue, Jan 09, 2024 at 05:54:01PM +0000, Matthias Kaehlcke wrote:
+On Fri, Jan 19, 2024 at 12:52:00PM +0100, Bartosz Golaszewski wrote:
+> We have two separate issues: one is powering-up a PCI device so that
+> it can be detected
 
-> > > > And any user space tool overriding the address would currently need to
-> > > > provide the address in reverse order on Qualcomm platforms like this
-> > > > one (e.g. if generating the address for privacy reasons).
-> > >
-> > > Perhaps we could attempt to resolve the address byteorder, in
-> > > userspace we use hwdb_get_company to resolve the company but since
-> > > this shall only really care about Qualcomm range(s) perhaps we can
-> > > hardcode them check in which order the address is, that said if the
-> > > device is configured with a Static Random Address then that would not
-> > > work, but that is only really possible for BLE only devices.
-> >
-> > It's not just Qualcomm ranges; The Lenovo ThinkPad X13s that I noticed
-> > this on has been assigned a Wistron OUI, for example.
-> 
-> Well we could still attempt to check if it has a valid OUI and then it
-> fail swap and check again.
+Just wondering, I note in really_probe() we configure the pin controller,
+active the pm_domain etc before probing a driver.
 
-So in the kernel you would parse any address coming from firmware or
-user space to try to determine if it's given in reverse order? I don't
-see how this would work as presumably some of the least significant
-bytes would occasionally match a valid OUI even if you were somehow able
-to determine that.
+Would it make sense for the issue you mention above to similarly
+amend pci_scan_device() to enable whatever clocks or regulators
+are described in the devicetree as providers for the given PCI device?
 
-> > We're still hoping to learn how to retrieve this address (from the
-> > secure world firmware) so that we can set it directly from the driver,
-> > but for now it needs to be set using btmgmt (or the local-bd-address
-> > devicetree property).
-> >
-> > As was discussed here:
-> >
-> >         https://github.com/bluez/bluez/issues/107
-> >
-> > it would be useful to teach bluetoothd to (generate and) set an address
-> > for devices that lack (accessible) persistent storage. And any such
-> > generic tool would need to work using the standard interfaces and the
-> > address endianness that those interfaces expect.
-> 
-> Yep, patches are welcome in this regard, note that we do something like this:
-> 
-> https://github.com/bluez/bluez/blob/master/src/adapter.c#L9847
-> 
-> But the first thing it checks is if the controller supports BR/EDR, so
-> if you want to extend that we need at least the OUI portion to be able
-> to allocate a valid public address, we could perhaps attempt to fetch
-> the manufacturer somehow or use the controller manufacturer
-> (adapter->manufacturer) in case there is nothing else to use.
+Thanks,
 
-Thanks for the pointer. I'm trying nudge some of the distro folks to
-look into this.
-
-> > And from skimming the Bluetooth spec, I was under the impression that
-> > random addresses applied also to non-BLE devices (e.g. requiring the two
-> > most-significants bits to be 1).
-> 
-> Not really, BR/EDR/classic addresses are always considered public
-> addresses, the HCI interface doesn't even have an address type to be
-> able to handle something like a random address or privacy for the same
-> reason.
-
-Ah, ok. Then generating an address is perhaps not an option, but reading
-one out from a file and setting it would still be useful for cases like
-the X13s which do have an address assigned (e.g. accessible through
-windows or written on the box the machine came in).
-
-Johan
+Lukas
 
