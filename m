@@ -1,86 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-7630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7631-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29276832C73
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 16:44:24 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2C01832C7A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 16:47:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1DCCC284C6B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 15:44:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 398F11F2404B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 15:47:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A70954BD2;
-	Fri, 19 Jan 2024 15:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C247D54BCA;
+	Fri, 19 Jan 2024 15:47:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="QRdpXRoe"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Qoc7594d"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F4354780
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jan 2024 15:44:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3AB4F1E3
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jan 2024 15:47:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705679057; cv=none; b=DwNK6AZNVlx4aYxV72bEzJf5dfXFdS0kiimhRHYq6f5qyPgmoXNivQFdRgdQCbTkmCdlvISWpNg9A6vHnO/qR0MiM5bEPpj/OltD6IbcmertfM+mrHhhtiWlvPRIZnsBerSem2VLIuFaoPoglMhLiFAjzpxVYP5gCFcN+skbqPM=
+	t=1705679260; cv=none; b=CeY2c+YdGkV5OjiHtvoE9EZE496hLLb5u4P3PqR2ThLrJDxURHjd2gZQ7Cl85Sx24gva1dj28r3ztuW21HPjCaV5VvMz/Gfz4Dw30zu7lT4LGCOyHztdisi9MX4b34z5I5Hs1qS0D7D/WIu99S/sxW2BvrVikZXtuQ3r2ABnrAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705679057; c=relaxed/simple;
-	bh=q5UJVGX3yfRfi60/H2zTOA89guV2jb+xgf5zKB4s9SE=;
+	s=arc-20240116; t=1705679260; c=relaxed/simple;
+	bh=S2XAmRsrrq8efJFL/NcSJ6cQOOwRfX47JnPU7KEKwpM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q0rZ08lwQTePP2myHpi9TVqNkOneU2j6UCmm88t9840lh1eREj2k0QJQgbus4QxDXWlErVxLjhtisTthaySBNCU7lVaaWI2zhY9yNhyD5jyrsFZJD8t01FDJTD+cmd9uBMPapKr8q7U9KX9uaaEdFzaQnVJbLByhDgnSIx/H56Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=QRdpXRoe; arc=none smtp.client-ip=170.10.129.124
+	 Content-Type:Content-Disposition:In-Reply-To; b=PpuySO6oUr4pKOjm2wib10DRbxWlVfgZkNfGbSMaKZd6HFBj9fXO4WwOTI/oFVjDVzeyfKC29PVBx1YCMSbQ0n6Xb+jph+dRqOTMKNIzCBTEeAwHBNPnm9yHRO1SxXHPz0zEOni9WKGjdCse6PbNrHQll2VI1otS6MHHO9Ntm6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Qoc7594d; arc=none smtp.client-ip=170.10.133.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1705679054;
+	s=mimecast20190719; t=1705679258;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=QjYsUi6PYjDB4zhjAZoeXh7tMhPQit/CHnee+lSIhAM=;
-	b=QRdpXRoeptX9Co8jmQ3x5csLC7qbVPqzj5z2lG1G25YCU1VMZpz3eVmA9fX7V0zHUMZq09
-	sTpPGrNsUpYNus2qdKf/i5tL3qxvhzWnkDayCKloFMbqanNMNzAi516IF2QlcR7+xhvG/s
-	OfsG8kDqQgYfjzMAhSnVJxzsphmxqAY=
-Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
- [209.85.217.69]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=/Dw5ssVFwdpbX8sXNOoJVVe+yyA2bqWMgIrhhclua6I=;
+	b=Qoc7594d7fjEducKbaOoS22RmMKeg8OT7i934K+FOmlX5V7dYi9SICaAkRY+B38rYGXbkT
+	pya0Tk1jkO3peQfkXvOPSjSzTDGbr5MqYXY7YwoWj637GdlIGCf9/JSTvrPjahl1yeBkCs
+	y7t+N8W5uDQYH6SqL+yrWU5sbrUDrbg=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-517-d5j1fvHON7aWVHBzPCu9Tg-1; Fri, 19 Jan 2024 10:44:12 -0500
-X-MC-Unique: d5j1fvHON7aWVHBzPCu9Tg-1
-Received: by mail-vs1-f69.google.com with SMTP id ada2fe7eead31-466e4de8230so379153137.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jan 2024 07:44:12 -0800 (PST)
+ us-mta-350-ul8OIR8rN1SVnMCPo26VjQ-1; Fri, 19 Jan 2024 10:47:36 -0500
+X-MC-Unique: ul8OIR8rN1SVnMCPo26VjQ-1
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7836f9a4b5fso116884185a.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jan 2024 07:47:36 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705679052; x=1706283852;
+        d=1e100.net; s=20230601; t=1705679256; x=1706284056;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QjYsUi6PYjDB4zhjAZoeXh7tMhPQit/CHnee+lSIhAM=;
-        b=mIPzGW3uz7cSQiwFseVPVUcwDJODXGAe3YgCX7Lyf4FYKiXBtSC3tmfFtD1+moA9dp
-         7cRliP/Oo2jllL1njFYZn50MjPTB6B8cXRv85+V0c/pvnlXQRNKndL+j3Ij+pJoS1Q1R
-         6HtwXSklfxgDLcWxTTVZPsTaHF6CEgyt+J38+eWKXa2TDF6cDEHZ4aBrxT78gaWjnhsV
-         y9UyFO7SNxNM1vtA+/UJ/9aVD4hT9pDzhwlSrrBx0/shOv0ul4nWKheRCQDh13J1bU+s
-         hhcat1ciqf/uGHBlE/fZpXar5H1LyOL9rYSee7cEv2FUFZXz0SjnKaNaSvXlVKrdDYMC
-         A3Wg==
-X-Gm-Message-State: AOJu0YwEpznpoP4HTTBBSmk4NVP69QnsMF+tx+eXs5dRZQIrer/2ZjaW
-	mI356Vh/7cnnDFH3gCAOaKdFhVKwFJlAnqj9DRulFrdEOSISYyI2zF3pZ6zGK5Xxw7g/OGDtk5c
-	faeKsoy4+stA5WtjHUVZ3xVjwdW4NOrV+h4pz6ufkAnr9VJUXXPUAmV45tb3YDts=
-X-Received: by 2002:a05:6102:162c:b0:469:a26c:cd40 with SMTP id cu44-20020a056102162c00b00469a26ccd40mr343266vsb.71.1705679051972;
-        Fri, 19 Jan 2024 07:44:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEQAFTPc2F/rZAHEH0XAopgBDhs3oui2/5EzTmX8AuLUGPhO0TyKvAjcXSh+rDUgPiYp2JKLg==
-X-Received: by 2002:a05:6102:162c:b0:469:a26c:cd40 with SMTP id cu44-20020a056102162c00b00469a26ccd40mr343255vsb.71.1705679051642;
-        Fri, 19 Jan 2024 07:44:11 -0800 (PST)
+        bh=/Dw5ssVFwdpbX8sXNOoJVVe+yyA2bqWMgIrhhclua6I=;
+        b=Ph1+9KkzGK8aRu+NT/zqmlEWItOzHvt8PcapPcTAYzZmrlBWvujGR62yMu30GtH48+
+         jcuY4zLw/9QUYbVZ/VeVROCjtZIZIsFmm46y2R0y5nArzNZKR14nM4SUY2f3ffT+BuMl
+         lFSn2HPEHcs1qzqPfEUc2Zd2hqAvyTD1XyB6aTRt9923lFNhPnWlnxHEOOmfLHG7v903
+         m9I5WyCFnhM7cs4Nla2mZ9NaWnufmBfWdwn5eXtedhIWr/iKBgHl1DUQ6lJegKlE0B/0
+         yp5oCln3Ca+Jd3MrQG0tJoaZGMtzoabtDBqFaKFo+To5uqZj8SZSeOZeGLGstiHMsYen
+         rLkQ==
+X-Gm-Message-State: AOJu0YxR0J9pUHq4Y/9PA/Aw32muoMmsu1l/btVYO99xXM1ZTLCKVi6B
+	ENc9y5RfcbimjFkxvBCwq59cu7C0ujdEFnsUVijAanBs3SPlho8ZBjIAz0a3tsZvyLfEoQ9FE8c
+	rqUcVuWBk7obFM2t8/hu0/bVMtk9mocaCeDLa5JLtn4c1HtMc7+DEhg0acJesUI4=
+X-Received: by 2002:ae9:c015:0:b0:783:6786:4732 with SMTP id u21-20020ae9c015000000b0078367864732mr70107qkk.90.1705679256412;
+        Fri, 19 Jan 2024 07:47:36 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGQ0e+Usk6t6+dAU9pemLOBjDi5mw1NNpJ/tybCgJexw7y4qiPKPFGLVnJyBNHgnZNWSLnjAA==
+X-Received: by 2002:ae9:c015:0:b0:783:6786:4732 with SMTP id u21-20020ae9c015000000b0078367864732mr70098qkk.90.1705679256135;
+        Fri, 19 Jan 2024 07:47:36 -0800 (PST)
 Received: from fedora ([2600:1700:1ff0:d0e0::37])
-        by smtp.gmail.com with ESMTPSA id ow18-20020a0562143f9200b006849db7c44esm247053qvb.60.2024.01.19.07.44.10
+        by smtp.gmail.com with ESMTPSA id f10-20020a05620a20ca00b007832961ff29sm6134539qka.4.2024.01.19.07.47.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Jan 2024 07:44:11 -0800 (PST)
-Date: Fri, 19 Jan 2024 09:44:09 -0600
+        Fri, 19 Jan 2024 07:47:35 -0800 (PST)
+Date: Fri, 19 Jan 2024 09:47:33 -0600
 From: Andrew Halaney <ahalaney@redhat.com>
 To: Maulik Shah <quic_mkshah@quicinc.com>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
 	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	quic_eberman@quicinc.com, quic_collinsd@quicinc.com, quic_lsrao@quicinc.com
-Subject: Re: [PATCH] soc: qcom: rpmh-rsc: Enhance check for VREG in-flight
+Subject: Re: [PATCH v2] soc: qcom: rpmh-rsc: Enhance check for VREG in-flight
  request
-Message-ID: <6tnescmrw4j2wzhc2p2lih6624xgt7spoxj2ahus6wzfcmmear@cqdkohjquzr7>
-References: <20240117-rpmh-rsc-fixes-v1-1-71ee4f8f72a4@quicinc.com>
+Message-ID: <dahguk6hyo35ydugwno5t5lbteporwkiddhvxp6uni5ggbtxcm@3bu6ptvg7mdg>
+References: <20240119-rpmh-rsc-fixes-v2-1-e42c0a9e36f0@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,9 +89,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240117-rpmh-rsc-fixes-v1-1-71ee4f8f72a4@quicinc.com>
+In-Reply-To: <20240119-rpmh-rsc-fixes-v2-1-e42c0a9e36f0@quicinc.com>
 
-On Wed, Jan 17, 2024 at 02:24:10PM +0530, Maulik Shah wrote:
+On Fri, Jan 19, 2024 at 01:56:54PM +0530, Maulik Shah wrote:
 > Each RPMh VREG accelerator resource has 3 or 4 contiguous 4-byte aligned
 > addresses associated with it. These control voltage, enable state, mode,
 > and in legacy targets, voltage headroom. The current in-flight request
@@ -107,6 +107,9 @@ On Wed, Jan 17, 2024 at 02:24:10PM +0530, Maulik Shah wrote:
 > Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
 > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 
+Just noticed I commented on v1 when v2 was already out, sorry. Copy
+pasting this just to keep it on the latest thread:
+
 Two minor things:
 
     1. Does this deserve a Fixes: tag?
@@ -118,14 +121,18 @@ Two minor things:
 [0] https://www.kernel.org/doc/html/latest/process/submitting-patches.html#developer-s-certificate-of-origin-1-1
 
 > ---
->  drivers/soc/qcom/rpmh-rsc.c | 20 +++++++++++++++++++-
->  1 file changed, 19 insertions(+), 1 deletion(-)
+> Changes in v2:
+> - Use GENMASK() and FIELD_GET()
+> - Link to v1: https://lore.kernel.org/r/20240117-rpmh-rsc-fixes-v1-1-71ee4f8f72a4@quicinc.com
+> ---
+>  drivers/soc/qcom/rpmh-rsc.c | 21 ++++++++++++++++++++-
+>  1 file changed, 20 insertions(+), 1 deletion(-)
 > 
 > diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-> index a021dc71807b..5371d7e3090a 100644
+> index a021dc71807b..e480cde783fe 100644
 > --- a/drivers/soc/qcom/rpmh-rsc.c
 > +++ b/drivers/soc/qcom/rpmh-rsc.c
-> @@ -1,6 +1,7 @@
+> @@ -1,11 +1,13 @@
 >  // SPDX-License-Identifier: GPL-2.0
 >  /*
 >   * Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.
@@ -133,12 +140,18 @@ Two minor things:
 >   */
 >  
 >  #define pr_fmt(fmt) "%s " fmt, KBUILD_MODNAME
-> @@ -91,6 +92,15 @@ enum {
+>  
+>  #include <linux/atomic.h>
+> +#include <linux/bitfield.h>
+>  #include <linux/cpu_pm.h>
+>  #include <linux/delay.h>
+>  #include <linux/interrupt.h>
+> @@ -91,6 +93,15 @@ enum {
 >  #define CMD_STATUS_ISSUED		BIT(8)
 >  #define CMD_STATUS_COMPL		BIT(16)
 >  
-> +#define ACCL_TYPE(addr)			((addr >> 16) & 0xF)
-> +#define VREG_ADDR(addr)			(addr & ~0xF)
+> +#define ACCL_TYPE(addr)			FIELD_GET(GENMASK(19, 16), addr)
+> +#define VREG_ADDR(addr)			FIELD_GET(GENMASK(19, 4), addr)
 > +
 > +enum {
 > +	HW_ACCL_CLK = 0x3,
@@ -149,7 +162,7 @@ Two minor things:
 >  /*
 >   * Here's a high level overview of how all the registers in RPMH work
 >   * together:
-> @@ -557,7 +567,15 @@ static int check_for_req_inflight(struct rsc_drv *drv, struct tcs_group *tcs,
+> @@ -557,7 +568,15 @@ static int check_for_req_inflight(struct rsc_drv *drv, struct tcs_group *tcs,
 >  		for_each_set_bit(j, &curr_enabled, MAX_CMDS_PER_TCS) {
 >  			addr = read_tcs_cmd(drv, drv->regs[RSC_DRV_CMD_ADDR], i, j);
 >  			for (k = 0; k < msg->num_cmds; k++) {
@@ -159,8 +172,8 @@ Two minor things:
 > +				 * aligned addresses associated with it. Ignore the offset to check
 > +				 * for in-flight VREG requests.
 > +				 */
-> +				if (HW_ACCL_VREG == ACCL_TYPE(msg->cmds[k].addr) &&
-> +				    VREG_ADDR(addr) == VREG_ADDR(msg->cmds[k].addr))
+> +				if (ACCL_TYPE(msg->cmds[k].addr) == HW_ACCL_VREG &&
+> +				    VREG_ADDR(msg->cmds[k].addr) == VREG_ADDR(addr))
 > +					return -EBUSY;
 > +				else if (addr == msg->cmds[k].addr)
 >  					return -EBUSY;
