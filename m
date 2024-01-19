@@ -1,360 +1,238 @@
-Return-Path: <linux-arm-msm+bounces-7612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D32C83294C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 12:58:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6AA0A832989
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 13:32:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 50C691C21277
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 11:58:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 900901C209CF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 12:32:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 732E04F1E3;
-	Fri, 19 Jan 2024 11:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9E095103F;
+	Fri, 19 Jan 2024 12:32:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V1/LYnTw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37BE524B5E;
-	Fri, 19 Jan 2024 11:58:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF0751018
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jan 2024 12:32:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705665508; cv=none; b=thqRwpgIJposqS6p81sGoAaxE4+9vW46wLoC/ipdlCezjBLDKvbgIDRKNFjsf7Qx4/IWiaT1R01bIsCijCR4zlX/BlybYejaLNWVHEiit7hmBvEFG8hYwsOCPMmFri1hNyR+GsfJKteDNENWemBbG9fViAe3+j3FiHJ7MQOx+bU=
+	t=1705667527; cv=none; b=DQ3/qmdPRQcfqLOF/1r3qTgGhbjAyzxaRZBBDiSaFG48pt4grpBcSFHSnYipA6yiG8fON0ic/qzDaV9CEixlZtqKRHUuvMMqvj7Kjq8UE9Hm2j1xmUoutozq67QhgOl+u9WK7Bn+sW0OIE+KbVZzrpxegp4QMOMK8lwCfahOVIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705665508; c=relaxed/simple;
-	bh=yXwiRAsMr8h7baj7xy5yFVaOTTD+HkQfavgGqVB2GXw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=b4bpdEhYxP3DeHrC4EGGvGDaUDB1hTyq30kF3pTacPaODBEmiNp6twBiqlbkTxWUrq5QB/PLNJ4JFjpJs2uyCJ9eGn+ttlPyXcoy0ttgVryfuH+prXKFDL3n4yB7ZELtZb+EnNjoCRY4q2TunibtDHR6Qhpw+zveI1/6Bcw0qQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CC70E1042;
-	Fri, 19 Jan 2024 03:59:09 -0800 (PST)
-Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 15A8E3F73F;
-	Fri, 19 Jan 2024 03:58:19 -0800 (PST)
-Message-ID: <7831e83e-9c26-412a-b78a-ed58ee02c5b1@arm.com>
-Date: Fri, 19 Jan 2024 11:58:16 +0000
+	s=arc-20240116; t=1705667527; c=relaxed/simple;
+	bh=I0UZfjlfi2E6U7pmjX/HhVBMtbSsDUbWol5BCeCBZhs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=V2fFBzwHpEIri1joP76j2yCzMgm1h3MBXzrh5XjElHpwQwAEJm0fmEINLBM0jQ55xWeF6wsKuQ6co7g7y5KGAbZcOl0d5VRgIM7nwLybEdYapWPclu9OQ6DMlm/f7l2tjhEYf/SXMvth1BVjhvVFORir5k5Tj8aS89Fnu3/M0jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V1/LYnTw; arc=none smtp.client-ip=209.85.128.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-5ff821b9acfso7001367b3.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jan 2024 04:32:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1705667525; x=1706272325; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ffjuk5UUhf2ajhXazA1TZbNijQJTawfOkhzxR9sRdg0=;
+        b=V1/LYnTw529sx6xKDy+lxEaAzYcL+//TVJyrgv7aPGLAWtHTUx6SJzRmdjZJtH9DMG
+         K3tvZ7h5ggUhiWgn+V9ZsPkSmkAr1letpe0WpJbQM0fCeQ8Prs4Pn1KW2qLaipIIofLo
+         HZhpP5olkRUApDUpCQhig6SKYI45CLJJrR9lwbcRcV8Us7sisZBM+bTRomNJeL/fSSqK
+         3ATJtzS/wVsj32xzxEjaWEDn37cIUSKLUorLEX8vl2GjB1gd/wKVwrt0ns5tsWYQfi2a
+         NuQXgw+unAPNG7UrUS8MnL7Jtnmmzn/+EVBaJX/mtI9hhXSzhLHpwNKkAfXLE9ASjYVM
+         rzKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705667525; x=1706272325;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Ffjuk5UUhf2ajhXazA1TZbNijQJTawfOkhzxR9sRdg0=;
+        b=rRHi/wIrbkERXuenyf04F98e0M8LkXboVZIEZtH9yLW5uSVfpQkpWSEcntPIYzGnJL
+         /oVhIhGTyvRbaz6Z5zfWsci/ovD9nPcfznpjfGy5SAFLXkPNVEOgP/tfcRumkQOBX7Sb
+         C7274kNNNXdQgVTTCaJD3lGyn+BNWDaYn2+Tf5fxItXmb+jEDQv1PT07rHnXAYveIffd
+         pr6Fc9dyHva+tsQAqJJv3sadAY2r+gLzV8qtlNYyDcc/ZKMCPGhJ2JqiCAdtgNiE4ltg
+         g2EJMtbJLELKaLxAgYm2Ck4l6RvHza2t2awhlj05edu95d6rIKI3xRFyPB3XPJ2X7Edk
+         dcrA==
+X-Gm-Message-State: AOJu0YxXH2spXST1nblSssFEtPDH8of8awSRiyX6Cj/CSJ0kXAtDIU92
+	F+JsiacDIgqaQwdtbSf4Iapj8CrCtdTq5kuhSSzCxSDqYbvrumKsBF4twPiFY1f3YyM8poH+SQG
+	fuo2ePqZ3rrX2J5YsafdpQ/T2zqu+K4T48xiP3w==
+X-Google-Smtp-Source: AGHT+IHzWY0Jg7Cbw032GIQItsk8GMJ1egjxjW1I4qO2drEBWMBFSWUWUH+O4Oj0Le9R6bky8UA9z26DkZt+clJZEBE=
+X-Received: by 2002:a81:4a83:0:b0:5fc:b5d4:f1cf with SMTP id
+ x125-20020a814a83000000b005fcb5d4f1cfmr2465344ywa.35.1705667525159; Fri, 19
+ Jan 2024 04:32:05 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 07/10] coresight-tpdm: Add pattern registers support
- for CMB
-Content-Language: en-US
-To: Tao Zhang <quic_taozha@quicinc.com>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Konrad Dybcio <konradybcio@gmail.com>, Mike Leach <mike.leach@linaro.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc: Jinlong Mao <quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, coresight@lists.linaro.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
- Yuanfang Zhang <quic_yuanfang@quicinc.com>,
- Trilok Soni <quic_tsoni@quicinc.com>, Song Chai <quic_songchai@quicinc.com>,
- linux-arm-msm@vger.kernel.org, andersson@kernel.org
-References: <1705634583-17631-1-git-send-email-quic_taozha@quicinc.com>
- <1705634583-17631-8-git-send-email-quic_taozha@quicinc.com>
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <1705634583-17631-8-git-send-email-quic_taozha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20240117160748.37682-1-brgl@bgdev.pl> <CAA8EJpoQfPqoMVyTmUjPs4c1Uc-p4n7zNcG+USNjXX0Svp362w@mail.gmail.com>
+ <CAA8EJpqyK=pkjEofWV595tp29vjkCeWKYr-KOJh_hBiBbkVBew@mail.gmail.com> <CAMRc=McUZh0jhjMW7H6aVKbw29WMCQ3wdkVAz=yOZVK5wc45OA@mail.gmail.com>
+In-Reply-To: <CAMRc=McUZh0jhjMW7H6aVKbw29WMCQ3wdkVAz=yOZVK5wc45OA@mail.gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 19 Jan 2024 14:31:53 +0200
+Message-ID: <CAA8EJprFV6SS_dGF8tOHcBG+y8j74vO0B40Y=e7Kj1-ZThNqPA@mail.gmail.com>
+Subject: Re: [PATCH 0/9] PCI: introduce the concept of power sequencing of
+ PCIe devices
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Kalle Valo <kvalo@kernel.org>, "David S . Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Heiko Stuebner <heiko@sntech.de>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Chris Morgan <macromorgan@hotmail.com>, 
+	Linus Walleij <linus.walleij@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Arnd Bergmann <arnd@arndb.de>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	=?UTF-8?B?TsOtY29sYXMgRiAuIFIgLiBBIC4gUHJhZG8=?= <nfraprado@collabora.com>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Peng Fan <peng.fan@nxp.com>, 
+	Robert Richter <rrichter@amd.com>, Dan Williams <dan.j.williams@intel.com>, 
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>, Terry Bowman <terry.bowman@amd.com>, 
+	Lukas Wunner <lukas@wunner.de>, Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Abel Vesa <abel.vesa@linaro.org>, 
+	linux-wireless@vger.kernel.org, netdev@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-pci@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 19/01/2024 03:23, Tao Zhang wrote:
-> Timestamps are requested if the monitor’s CMB data set unit input
-> data matches the value in the Monitor CMB timestamp pattern and mask
-> registers (M_CMB_TPR and M_CMB_TPMR) when CMB timestamp enabled
-> via the timestamp insertion enable register bit(CMB_TIER.PATT_TSENAB).
-> The pattern match trigger output is achieved via setting values into
-> the CMB trigger pattern and mask registers (CMB_XPR and CMB_XPMR).
-> After configuring a pattern through these registers, the TPDM subunit
-> will assert an output trigger every time it receives new input data
-> that matches the configured pattern value. Values in a given bit
-> number of the mask register correspond to the same bit number in
-> the corresponding pattern register.
-> 
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> ---
->   .../testing/sysfs-bus-coresight-devices-tpdm  | 30 ++++++
->   drivers/hwtracing/coresight/coresight-tpdm.c  | 98 ++++++++++++++++++-
->   drivers/hwtracing/coresight/coresight-tpdm.h  | 39 ++++++++
->   3 files changed, 166 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> index 3ae21ccf3f29..898aee81e20d 100644
-> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> @@ -184,3 +184,33 @@ Description:	(Write) Set the data collection mode of CMB tpdm. Continuous
->   		Accepts only one of the 2 values -  0 or 1.
->   		0 : Continuous CMB collection mode.
->   		1 : Trace-on-change CMB collection mode.
-> +
-> +What:		/sys/bus/coresight/devices/<tpdm-name>/cmb_trig_patt/xpr[0:1]
-> +Date:		March 2023
-> +KernelVersion	6.7
+On Fri, 19 Jan 2024 at 13:52, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+>
+> On Thu, Jan 18, 2024 at 7:53=E2=80=AFPM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+>
+> [snip]
+>
+> > >
+> > > I'd still like to see how this can be extended to handle BT power up,
+> > > having a single entity driving both of the BT and WiFI.
+> > >
+> > > The device tree changes behave in exactly the opposite way: they
+> > > define regulators for the WiFi device, while the WiFi is not being
+> > > powered by these regulators. Both WiFi and BT are powered by the PMU,
+> > > which in turn consumes all specified regulators.
+> >
+> > Some additional justification, why I think that this should be
+> > modelled as a single instance instead of two different items.
+> >
+> > This is from msm-5.10 kernel:
+> >
+> >
+> > =3D=3D=3D=3D=3D CUT HERE =3D=3D=3D=3D=3D
+> > /**
+> >  * cnss_select_pinctrl_enable - select WLAN_GPIO for Active pinctrl sta=
+tus
+> >  * @plat_priv: Platform private data structure pointer
+> >  *
+> >  * For QCA6490, PMU requires minimum 100ms delay between BT_EN_GPIO off=
+ and
+> >  * WLAN_EN_GPIO on. This is done to avoid power up issues.
+> >  *
+> >  * Return: Status of pinctrl select operation. 0 - Success.
+> >  */
+> > static int cnss_select_pinctrl_enable(struct cnss_plat_data *plat_priv)
+> > =3D=3D=3D=3D=3D CUT HERE =3D=3D=3D=3D=3D
+> >
+> >
+> > Also see the bt_configure_gpios() function in the same kernel.
+> >
+>
+> You are talking about a different problem. Unfortunately we're using
+> similar naming here but I don't have a better alternative in mind.
+>
+> We have two separate issues: one is powering-up a PCI device so that
+> it can be detected and the second is dealing with a device that has
+> multiple modules in it which share a power sequence. The two are
+> independent and this series isn't trying to solve the latter.
 
-This must be fixed to 6.9 now and also move the year to 2024. Rest looks 
-fine.
+I see it from a different angle: a power up of the WiFi+BT chips. This
+includes devices like wcn3990 (which have platform + serial parts) and
+qca6390 / qca6490 / wcn6750 / etc. (which have PCI and serial parts).
 
-Suzuki
+From my point of view, the PCIe-only part was nice for an RFC, but for
+v1 I have expected to see a final solution that we can reuse for
+wcn3990.
 
-> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-> +Description:
-> +		(RW) Set/Get the value of the trigger pattern for the CMB
-> +		subunit TPDM.
-> +
-> +What:		/sys/bus/coresight/devices/<tpdm-name>/cmb_trig_patt/xpmr[0:1]
-> +Date:		March 2023
-> +KernelVersion	6.7
-> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-> +Description:
-> +		(RW) Set/Get the mask of the trigger pattern for the CMB
-> +		subunit TPDM.
-> +
-> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_patt/tpr[0:1]
-> +Date:		March 2023
-> +KernelVersion	6.7
-> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-> +Description:
-> +		(RW) Set/Get the value of the pattern for the CMB subunit TPDM.
-> +
-> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_patt/tpmr[0:1]
-> +Date:		March 2023
-> +KernelVersion	6.7
-> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-> +Description:
-> +		(RW) Set/Get the mask of the pattern for the CMB subunit TPDM.
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-> index b55aee65a856..079c875ad667 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-> @@ -66,6 +66,26 @@ static ssize_t tpdm_simple_dataset_show(struct device *dev,
->   			return -EINVAL;
->   		return sysfs_emit(buf, "0x%x\n",
->   				drvdata->dsb->msr[tpdm_attr->idx]);
-> +	case CMB_TRIG_PATT:
-> +		if (tpdm_attr->idx >= TPDM_CMB_MAX_PATT)
-> +			return -EINVAL;
-> +		return sysfs_emit(buf, "0x%x\n",
-> +			drvdata->cmb->trig_patt[tpdm_attr->idx]);
-> +	case CMB_TRIG_PATT_MASK:
-> +		if (tpdm_attr->idx >= TPDM_CMB_MAX_PATT)
-> +			return -EINVAL;
-> +		return sysfs_emit(buf, "0x%x\n",
-> +			drvdata->cmb->trig_patt_mask[tpdm_attr->idx]);
-> +	case CMB_PATT:
-> +		if (tpdm_attr->idx >= TPDM_CMB_MAX_PATT)
-> +			return -EINVAL;
-> +		return sysfs_emit(buf, "0x%x\n",
-> +			drvdata->cmb->patt_val[tpdm_attr->idx]);
-> +	case CMB_PATT_MASK:
-> +		if (tpdm_attr->idx >= TPDM_CMB_MAX_PATT)
-> +			return -EINVAL;
-> +		return sysfs_emit(buf, "0x%x\n",
-> +			drvdata->cmb->patt_mask[tpdm_attr->idx]);
->   	}
->   	return -EINVAL;
->   }
-> @@ -118,6 +138,30 @@ static ssize_t tpdm_simple_dataset_store(struct device *dev,
->   			ret = size;
->   		}
->   		break;
-> +	case CMB_TRIG_PATT:
-> +		if (tpdm_attr->idx < TPDM_CMB_MAX_PATT) {
-> +			drvdata->cmb->trig_patt[tpdm_attr->idx] = val;
-> +			ret = size;
-> +		}
-> +		break;
-> +	case CMB_TRIG_PATT_MASK:
-> +		if (tpdm_attr->idx < TPDM_CMB_MAX_PATT) {
-> +			drvdata->cmb->trig_patt_mask[tpdm_attr->idx] = val;
-> +			ret = size;
-> +		}
-> +		break;
-> +	case CMB_PATT:
-> +		if (tpdm_attr->idx < TPDM_CMB_MAX_PATT) {
-> +			drvdata->cmb->patt_val[tpdm_attr->idx] = val;
-> +			ret = size;
-> +		}
-> +		break;
-> +	case CMB_PATT_MASK:
-> +		if (tpdm_attr->idx < TPDM_CMB_MAX_PATT) {
-> +			drvdata->cmb->patt_mask[tpdm_attr->idx] = val;
-> +			ret = size;
-> +		}
-> +		break;
->   	default:
->   		break;
->   	}
-> @@ -279,10 +323,32 @@ static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
->   
->   static void tpdm_enable_cmb(struct tpdm_drvdata *drvdata)
->   {
-> -	u32 val;
-> +	u32 val, i;
->   
->   	if (tpdm_has_cmb_dataset(drvdata)) {
-> +		/* Configure pattern registers */
-> +		for (i = 0; i < TPDM_CMB_MAX_PATT; i++) {
-> +			writel_relaxed(drvdata->cmb->patt_val[i],
-> +				drvdata->base + TPDM_CMB_TPR(i));
-> +			writel_relaxed(drvdata->cmb->patt_mask[i],
-> +				drvdata->base + TPDM_CMB_TPMR(i));
-> +			writel_relaxed(drvdata->cmb->trig_patt[i],
-> +				drvdata->base + TPDM_CMB_XPR(i));
-> +			writel_relaxed(drvdata->cmb->trig_patt_mask[i],
-> +				drvdata->base + TPDM_CMB_XPMR(i));
-> +		}
-> +
->   		val = readl_relaxed(drvdata->base + TPDM_CMB_CR);
-> +		/*
-> +		 * Set to 0 for continuous CMB collection mode,
-> +		 * 1 for trace-on-change CMB collection mode.
-> +		 */
-> +		if (drvdata->cmb->trace_mode)
-> +			val |= TPDM_CMB_CR_MODE;
-> +		else
-> +			val &= ~TPDM_CMB_CR_MODE;
-> +
-> +		/* Set the enable bit of CMB control register to 1 */
->   		val |= TPDM_CMB_CR_ENA;
->   
->   		/* Set the enable bit of CMB control register to 1 */
-> @@ -886,6 +952,22 @@ static struct attribute *tpdm_dsb_msr_attrs[] = {
->   	NULL,
->   };
->   
-> +static struct attribute *tpdm_cmb_trig_patt_attrs[] = {
-> +	CMB_TRIG_PATT_ATTR(0),
-> +	CMB_TRIG_PATT_ATTR(1),
-> +	CMB_TRIG_PATT_MASK_ATTR(0),
-> +	CMB_TRIG_PATT_MASK_ATTR(1),
-> +	NULL,
-> +};
-> +
-> +static struct attribute *tpdm_cmb_patt_attrs[] = {
-> +	CMB_PATT_ATTR(0),
-> +	CMB_PATT_ATTR(1),
-> +	CMB_PATT_MASK_ATTR(0),
-> +	CMB_PATT_MASK_ATTR(1),
-> +	NULL,
-> +};
-> +
->   static struct attribute *tpdm_dsb_attrs[] = {
->   	&dev_attr_dsb_mode.attr,
->   	&dev_attr_dsb_trig_ts.attr,
-> @@ -932,6 +1014,18 @@ static struct attribute_group tpdm_cmb_attr_grp = {
->   	.is_visible = tpdm_cmb_is_visible,
->   };
->   
-> +static struct attribute_group tpdm_cmb_trig_patt_grp = {
-> +	.attrs = tpdm_cmb_trig_patt_attrs,
-> +	.is_visible = tpdm_cmb_is_visible,
-> +	.name = "cmb_trig_patt",
-> +};
-> +
-> +static struct attribute_group tpdm_cmb_patt_grp = {
-> +	.attrs = tpdm_cmb_patt_attrs,
-> +	.is_visible = tpdm_cmb_is_visible,
-> +	.name = "cmb_patt",
-> +};
-> +
->   static const struct attribute_group *tpdm_attr_grps[] = {
->   	&tpdm_attr_grp,
->   	&tpdm_dsb_attr_grp,
-> @@ -940,6 +1034,8 @@ static const struct attribute_group *tpdm_attr_grps[] = {
->   	&tpdm_dsb_patt_grp,
->   	&tpdm_dsb_msr_grp,
->   	&tpdm_cmb_attr_grp,
-> +	&tpdm_cmb_trig_patt_grp,
-> +	&tpdm_cmb_patt_grp,
->   	NULL,
->   };
->   
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
-> index 2af92c270ed1..8cb8a9b35384 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.h
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
-> @@ -11,12 +11,23 @@
->   
->   /* CMB Subunit Registers */
->   #define TPDM_CMB_CR		(0xA00)
-> +/*CMB subunit timestamp pattern registers*/
-> +#define TPDM_CMB_TPR(n)		(0xA08 + (n * 4))
-> +/*CMB subunit timestamp pattern mask registers*/
-> +#define TPDM_CMB_TPMR(n)	(0xA10 + (n * 4))
-> +/*CMB subunit trigger pattern registers*/
-> +#define TPDM_CMB_XPR(n)		(0xA18 + (n * 4))
-> +/*CMB subunit trigger pattern mask registers*/
-> +#define TPDM_CMB_XPMR(n)	(0xA20 + (n * 4))
->   
->   /* Enable bit for CMB subunit */
->   #define TPDM_CMB_CR_ENA		BIT(0)
->   /* Trace collection mode for CMB subunit */
->   #define TPDM_CMB_CR_MODE	BIT(1)
->   
-> +/*Patten register number*/
-> +#define TPDM_CMB_MAX_PATT		2
-> +
->   /* DSB Subunit Registers */
->   #define TPDM_DSB_CR		(0x780)
->   #define TPDM_DSB_TIER		(0x784)
-> @@ -151,6 +162,22 @@
->   		tpdm_simple_dataset_rw(msr##nr,			\
->   		DSB_MSR, nr)
->   
-> +#define CMB_TRIG_PATT_ATTR(nr)					\
-> +		tpdm_simple_dataset_rw(xpr##nr,			\
-> +		CMB_TRIG_PATT, nr)
-> +
-> +#define CMB_TRIG_PATT_MASK_ATTR(nr)				\
-> +		tpdm_simple_dataset_rw(xpmr##nr,		\
-> +		CMB_TRIG_PATT_MASK, nr)
-> +
-> +#define CMB_PATT_ATTR(nr)					\
-> +		tpdm_simple_dataset_rw(tpr##nr,			\
-> +		CMB_PATT, nr)
-> +
-> +#define CMB_PATT_MASK_ATTR(nr)					\
-> +		tpdm_simple_dataset_rw(tpmr##nr,		\
-> +		CMB_PATT_MASK, nr)
-> +
->   /**
->    * struct dsb_dataset - specifics associated to dsb dataset
->    * @mode:             DSB programming mode
-> @@ -186,9 +213,17 @@ struct dsb_dataset {
->   /**
->    * struct cmb_dataset
->    * @trace_mode:       Dataset collection mode
-> + * @patt_val:         Save value for pattern
-> + * @patt_mask:        Save value for pattern mask
-> + * @trig_patt:        Save value for trigger pattern
-> + * @trig_patt_mask:   Save value for trigger pattern mask
->    */
->   struct cmb_dataset {
->   	u32			trace_mode;
-> +	u32			patt_val[TPDM_CMB_MAX_PATT];
-> +	u32			patt_mask[TPDM_CMB_MAX_PATT];
-> +	u32			trig_patt[TPDM_CMB_MAX_PATT];
-> +	u32			trig_patt_mask[TPDM_CMB_MAX_PATT];
->   };
->   
->   /**
-> @@ -225,6 +260,10 @@ enum dataset_mem {
->   	DSB_PATT,
->   	DSB_PATT_MASK,
->   	DSB_MSR,
-> +	CMB_TRIG_PATT,
-> +	CMB_TRIG_PATT_MASK,
-> +	CMB_PATT,
-> +	CMB_PATT_MASK
->   };
->   
->   /**
+>
+> But I am aware of this and so I actually have an idea for a
+> generalized power sequencing framework. Let's call it pwrseq as
+> opposed to pci_pwrseq.
+>
+> Krzysztof is telling me that there cannot be any power sequencing
+> information contained in DT. Also: modelling the PMU in DT would just
+> over complicate stuff for now reason. We'd end up having the PMU node
+> consuming the regulators but it too would need to expose regulators
+> for WLAN and BT or be otherwise referenced by their nodes.
 
+Yes. And it is a correct representation of the device. The WiFi and BT
+parts are powered up by the outputs from PMU. We happen to have three
+different pieces (WiFi, BT and PMU) squashed on a single physical
+device.
+
+>
+> So I'm thinking that the DT representation should remain as it is:
+> with separate WLAN and BT nodes consuming resources relevant to their
+> functionality (BT does not need to enable PCIe regulators).
+
+Is it so? The QCA6390 docs clearly say that all regulators should be
+enabled before asserting BT_EN / WLAN_EN. See the powerup timing
+diagram and the t2 note to that diagram.
+
+> Now how to
+> handle the QCA6490 model you brought up? How about pwrseq drivers that
+> would handle the sequence based on compatibles?
+
+The QCA6490 is also known as WCN6855. So this problem applies to
+Qualcomm sm8350 / sm8450 platforms.
+
+And strictly speaking I don't see any significant difference between
+QCA6390 and WCN6855. The regulators might be different, but the
+implementation should be the same.
+
+>
+> We'd add a new subsystem at drivers/pwrseq/. Inside there would be:
+> drivers/pwrseq/pwrseq-qca6490.c. The pwrseq framework would expose an
+> API to "sub-drivers" (in this case: BT serdev driver and the qca6490
+> power sequencing driver). Now the latter goes:
+>
+> struct pwrseq_desc *pwrseq =3D pwrseq_get(dev);
+>
+> And the pwrseq subsystem matches the device's compatible against the
+> correct, *shared* sequence. The BT driver can do the same at any time.
+> The pwrseq driver then gets regulators, GPIOs, clocks etc. and will be
+> responsible for dealing with them.
+>
+> In sub-drivers we now do:
+>
+> ret =3D pwrseq_power_on(pwrseq);
+>
+> or
+>
+> ret =3D pwrseq_power_off(pwrseq);
+>
+> in the sub-device drivers and no longer interact with each regulator
+> on our own. The pwrseq subsystem is now in charge of adding delays
+> etc.
+>
+> That's only an idea and I haven't done any real work yet but I'm
+> throwing it out there for discussion.
+
+I've been there and I had implemented it in the same way, but rather
+having the pwrseq as a primary device in DT and parsing end-devices
+only as a fallback / compatibility case.
+
+
+
+--=20
+With best wishes
+Dmitry
 
