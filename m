@@ -1,139 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-7640-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7641-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF4F3832F3F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 20:05:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 60DF5832F50
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 20:12:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0F0D01C24099
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 19:05:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 936051C23B62
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 19:12:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC0795644C;
-	Fri, 19 Jan 2024 19:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8812755E66;
+	Fri, 19 Jan 2024 19:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ejtkZp7L"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dF7ihbSj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7463653E13
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jan 2024 19:05:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030204CE08;
+	Fri, 19 Jan 2024 19:11:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705691122; cv=none; b=KA+1IVPMJ67buft9RcQCi5M2Ffp9TcuwG62cYzPOMImgeavgDIdqtA6jbqvtAWW3FqVljAsmA1kaSNQQSpWn4nNMGSaiINIIWOCRew6Y2303JxNgH7TS+spw45DTfNrEE3yk8pG5/2SZgdHn35/P+RaX/SOtc0Utzuo34N2Yz2k=
+	t=1705691516; cv=none; b=CpthzFQkPTpFvjTBJbLENEn1vuYS90/kQJqnAFeLTr0I0wphMZ7xN3dKdkHXGsf9sGxIsVjJEqIanIrlqadxL7YVNIRY0Ygc6lWAtFSpJn5tlelgoj3VLLB0qx0SVR+1BK2iBXjHElI3AdBRVWCCMbDSE1pTZ/okgN3b+CzF9fk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705691122; c=relaxed/simple;
-	bh=i3mHQi3y8X+GXccdvNGpfS2jPcXaEZnke1U5uVd1P+U=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-type; b=JDzCkvP/0XdSXkKjD7POToZ+ozGsTTZb70mMV7SxjNbYiwLXt96w3KIZDMKmiQncqAodlmbNewGV9fYZ6bqaTR7RaYdGAJfes7wbAL5q+I6Rl7YaZUvPtEGHDbfPJrDiU37EK0++oCO7BWrCIEW2FAgNFcOsnJasWyleezmAkUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ejtkZp7L; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1705691119;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=h7dgBmNFNgtTu8p/Tt/5S3Mre4JNaLCa+imUc7DnV5Q=;
-	b=ejtkZp7LSRCp4+bA3Hn/7M04SEIsY6kfef0mnYhXJ9dnMKyswNvRlyI6gVycoWOBYq/hnd
-	w/nbC+ZL9scxAP70HKwgVMxAQowK9k3BFxcgFaYAjyJG1GcwFJcoi68tx4Ic27ntDkwx2b
-	nWhIuw0GgQZTxmUB3FndvqkEl//OcNk=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-64-VdYu96PVNr-0JbAORhC5Bw-1; Fri, 19 Jan 2024 14:05:17 -0500
-X-MC-Unique: VdYu96PVNr-0JbAORhC5Bw-1
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-783900615d7so22637885a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jan 2024 11:05:17 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705691117; x=1706295917;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=h7dgBmNFNgtTu8p/Tt/5S3Mre4JNaLCa+imUc7DnV5Q=;
-        b=JLQqQ1x2vtFYxtrBtXH6NlMX7t1xrTTaTbc7hw95YPF/SAZtQ5BCFFpmevyW7O5pwL
-         cLvtenNDDIP+l7CoTx0MCbYSqhxdPrf8QQKE1T1m6vwGj7OoPBLDyM/FN2FJeBKisw+i
-         PuUuu0WoeANiQUAV/x6Jdg1M9VS9bCmy/rO+VWAAW/52tQ+ADJF5MKT/mwiYwDKgQ9dh
-         /4ubqQZ4gYcBuhl94RJ+SMzSo0VR+4iNwFLpiiHPMGRGVZK3w/PoDFm7ENxFq/FU6fZu
-         61am8JLia4btHM0pWUm5oyNIFprSZTqRieQfgh1D2/vrEXjY3h1MwS+KcRWrsFkYqnG/
-         2cxQ==
-X-Gm-Message-State: AOJu0YwZpeVFESC6eCTBP0dH+LmzLN0HqfTRLP8BD5EJbo2/Heyt6anN
-	+dZbuD7jmJ5TXOWi9tDz5/x+wTWFbwNibi0J6pWCXRNfbq72z3t490f3C9uf0kh/vOUvvo897dz
-	DhkyIhXuHLlm6YGibl+RpRWiLkHWfccZ21QY2Da5Te2mLCYYTu5sr48QokzbmAVk=
-X-Received: by 2002:a05:620a:1452:b0:781:b188:c7ec with SMTP id i18-20020a05620a145200b00781b188c7ecmr2179296qkl.74.1705691117380;
-        Fri, 19 Jan 2024 11:05:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGnitkklOlkAea0wuDu3imNg0amnLcKHcfVls7EZFUAy04xphx1lt2NiVY92r0IToCk2uRflw==
-X-Received: by 2002:a05:620a:1452:b0:781:b188:c7ec with SMTP id i18-20020a05620a145200b00781b188c7ecmr2179278qkl.74.1705691117114;
-        Fri, 19 Jan 2024 11:05:17 -0800 (PST)
-Received: from localhost (pool-71-184-142-128.bstnma.fios.verizon.net. [71.184.142.128])
-        by smtp.gmail.com with ESMTPSA id hj11-20020a05622a620b00b00428346b88bfsm7912081qtb.65.2024.01.19.11.05.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Jan 2024 11:05:16 -0800 (PST)
-From: Eric Chanudet <echanude@redhat.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-scsi@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Eric Chanudet <echanude@redhat.com>
-Subject: [PATCH] scsi: ufs: qcom: avoid re-init quirk when gears match
-Date: Fri, 19 Jan 2024 13:55:47 -0500
-Message-ID: <20240119185537.3091366-11-echanude@redhat.com>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1705691516; c=relaxed/simple;
+	bh=Mjqwbp2pegsIkFmoyyG9p0QPJv/okbVvZ82TUoLMWms=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ew/yZG3w7H3ooNIKMA5ftWP/nZ8MDXsXRwUFgcac+G2KmNFMNUQGwRuLVPZ8vyTkJhSSyLrtJWp2harTAHaS4EYwr8rujcwWJsPSvbcFFEd2hL8+rfLvRX3ZaBC64jnsXerD7IPXJPVqHOcz9xtJSWKmQNboEdxrhzoMOASUtd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dF7ihbSj; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40JIxTLY000889;
+	Fri, 19 Jan 2024 19:11:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=LrakZsaAJchAPzWVUjPWg
+	ITYgXgh88HhH3V9/YulKqw=; b=dF7ihbSj0i2qQZsFVfNgRz8SXWlP3wBPLyNQU
+	Euk63Opg1FDKqTPYUd/LyCGkdh14QEO55L/m2fxq9CM2YadMbTigU705d26aSgWC
+	Dza1mFEUnRF9Nl8PB8TBTXtvv5z5ajES4CG7sBV8hfyBlQYvserbW98fNgX8zxaX
+	1K7qiE3iz+8DdLFHW/ghrIZ52U6pVjBOdFXHvU2X+Xvc/AzKor/vXDdlAtzfz9Af
+	GJBlsfjsWbc0y/i5IXvD8Kxmbtk+Khnr3ei8VGxhfKixCpFXhCZyWq4oxCuecZD1
+	EShwP3+m/hGBfJLn3YmRqoWN9nZdoLkCGZ6sljzHSo7gz4k1w==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vqn89har2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 19 Jan 2024 19:11:49 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40JJBmDP030707
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 19 Jan 2024 19:11:48 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Fri, 19 Jan 2024 11:11:45 -0800
+Date: Fri, 19 Jan 2024 11:11:44 -0800
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+To: Eric Chanudet <echanude@redhat.com>
+CC: Ninad Naik <quic_ninanaik@quicinc.com>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_psodagud@quicinc.com>, <quic_kprasan@quicinc.com>,
+        <quic_ymg@quicinc.com>, <kernel@quicinc.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: Add new memory map updates to
+ SA8775P
+Message-ID: <20240119191144.GR3013251@hu-bjorande-lv.qualcomm.com>
+References: <20240118155711.7601-1-quic_ninanaik@quicinc.com>
+ <rq2dnfh6ctn5gbf3o3op5ywxx7zhx6r5sh5ykautye56o3p4dg@rjttk3rr65ld>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <rq2dnfh6ctn5gbf3o3op5ywxx7zhx6r5sh5ykautye56o3p4dg@rjttk3rr65ld>
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: RSKDQoez4qVCUzt1G45Mvnvrtf2YvONp
+X-Proofpoint-ORIG-GUID: RSKDQoez4qVCUzt1G45Mvnvrtf2YvONp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-19_12,2024-01-19_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=360 clxscore=1011
+ suspectscore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0
+ mlxscore=0 malwarescore=0 impostorscore=0 adultscore=0 bulkscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401190113
 
-On sa8775p-ride, probing the hba will go through the
-UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH path although the power info
-are same during the second init.
+On Thu, Jan 18, 2024 at 06:58:19PM -0500, Eric Chanudet wrote:
+> On Thu, Jan 18, 2024 at 09:27:11PM +0530, Ninad Naik wrote:
+> > New memory map layout changes (by Qualcomm firmware) have brought
+> > in updates to base addresses and/or size for different memory regions
+> > like cpcucp_fw, tz-stat, and also introduces new memory regions for
+> > resource manager firmware. This change brings in these corresponding
+> > memory map updates to the SA8775P SoC device tree.
+> > 
+> > Signed-off-by: Ninad Naik <quic_ninanaik@quicinc.com>
+> 
+> With next-20240118, without this patch, running "./memtester 32G"[1]
+> crashed the board quickly during the mlock:
+> 
+> [   42.144892] Internal error: synchronous external abort: 0000000096000010 [#1] PREEMPT SMP
 
-If the host is at least v4, ufs_qcom_get_hs_gear() picked the highest
-supported gear when setting the host_params. After the negotiation, if
-the host and device are on the same gear, it is the highest gear
-supported between the two. Skip the re-init to save some time.
+Sounds like just passing "memtest=1" on the kernel command line (with
+CONFIG_MEMTEST=y) would trip this...
 
-Signed-off-by: Eric Chanudet <echanude@redhat.com>
----
+> [   42.153316] Modules linked in: r8153_ecm cdc_ether usbnet marvell dwmac_qcom_ethqos stmmac_platform r8152 rfkill stmmac crct10dif_ce qcom_spmi_temp_alarm pcs_xpcs nvmem_qcom_spmi_sdam qcom_stats i2c_qcom_geni qcom_pon spi_geni_qcom qcom_wdt socinfo phy_qcom_sgmii_eth nvmem_reboot_mode phy_qcom_qmp_usb gpucc_sa8775p phy_qcom_snps_femto_v2 phy_qcom_qmp_pcie qcom_rng drm fuse backlight ipv6
+> [   42.188566] CPU: 3 PID: 472 Comm: memtester Not tainted 6.7.0-next-20240118-00001-g10a3c9d045cf #169
+> [   42.197944] Hardware name: Qualcomm SA8775P Ride (DT)
+> [   42.203138] pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+> [   42.210292] pc : clear_page+0x18/0x58
+> [   42.214063] lr : clear_huge_page+0x84/0x1a0
+> [   42.218370] sp : ffff800081ef3a30
+> [   42.221776] x29: ffff800081ef3a30 x28: 0000000000000000 x27: 0000000000210009
+> [   42.229108] x26: 0000000000000000 x25: fffffc6abc053380 x24: ffff000000000000
+> [   42.236439] x23: 0000000000000000 x22: 0000000000000000 x21: 0000006a89b87f80
+> [   42.243770] x20: 00000000000001fe x19: fffffc6a89b80000 x18: ffff800081ef3d18
+> [   42.251101] x17: 0000000000000068 x16: 0000000000000001 x15: 00000000000001c2
+> [   42.258431] x14: 0000000000000002 x13: fffffc6a89b90008 x12: 0000000000000001
+> [   42.265761] x11: 0000000000440dc0 x10: 0000000000000100 x9 : ffffc570ba60c604
+> [   42.273090] x8 : 0000000000000030 x7 : ffff554053756000 x6 : ffff800081ef39f0
+> [   42.280420] x5 : 0000000000000130 x4 : ffffc570bd029ae0 x3 : ffff554053756000
+> [   42.287752] x2 : 0000000000000004 x1 : 0000000000000040 x0 : ffff1aa26e1ff000
+> [   42.295083] Call trace:
+> [   42.297607]  clear_page+0x18/0x58
+> [   42.301015]  do_huge_pmd_anonymous_page+0x254/0x8f8
+> [   42.306036]  __handle_mm_fault+0x728/0x1548
+> [   42.310338]  handle_mm_fault+0x70/0x290
+> [   42.314281]  __get_user_pages+0x144/0x3c0
+> [   42.318404]  populate_vma_page_range+0x7c/0xc8
+> [   42.322972]  __mm_populate+0xc8/0x1d8
+> [   42.326736]  do_mlock+0x194/0x2d0
+> [   42.330144]  __arm64_sys_mlock+0x20/0x38
+> [   42.334178]  invoke_syscall+0x50/0x120
+> [   42.338034]  el0_svc_common.constprop.0+0xc8/0xf0
+> [   42.342874]  do_el0_svc+0x24/0x38
+> [   42.346284]  el0_svc+0x34/0xb8
+> [   42.349425]  el0t_64_sync_handler+0x120/0x130
+> [   42.353906]  el0t_64_sync+0x190/0x198
+> [   42.357674] Code: 37200121 12000c21 d2800082 9ac12041 (d50b7420) 
+> [   42.363932] ---[ end trace 0000000000000000 ]---
+> 
+> With next-20240118 and this patch, memtester continues through the
+> test-suite.
+> 
 
-"trace_event=ufs:ufshcd_init" reports the time spent where the re-init
-quirk is performed. On sa8775p-ride:
-Baseline:
-  0.355879: ufshcd_init: 1d84000.ufs: took 103377 usecs, dev_state: UFS_ACTIVE_PWR_MODE, link_state: UIC_LINK_ACTIVE_STATE, err 0
-With this patch:
-  0.297676: ufshcd_init: 1d84000.ufs: took 43553 usecs, dev_state: UFS_ACTIVE_PWR_MODE, link_state: UIC_LINK_ACTIVE_STATE, err 0
+But the commit message says that this is a new memory map, not that it
+fixes critical shortcomings in the existing definition.
 
- drivers/ufs/host/ufs-qcom.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+If that's the case the commit message needs to be updated so that we can
+get this into v6.8-rc and the stable kernel (and do we really need all
+those changes for that?).
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 39eef470f8fa..f9f161340e78 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -738,8 +738,12 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
- 		 * the second init can program the optimal PHY settings. This allows one to start
- 		 * the first init with either the minimum or the maximum support gear.
- 		 */
--		if (hba->ufshcd_state == UFSHCD_STATE_RESET)
-+		if (hba->ufshcd_state == UFSHCD_STATE_RESET) {
-+			if (host->hw_ver.major >= 0x4 &&
-+			    host_params->hs_tx_gear == dev_req_params->gear_tx)
-+				hba->quirks &= ~UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
- 			host->phy_gear = dev_req_params->gear_tx;
-+		}
- 
- 		/* enable the device ref clock before changing to HS mode */
- 		if (!ufshcd_is_hs_mode(&hba->pwr_info) &&
--- 
-2.43.0
-
+Regards,
+Bjorn
 
