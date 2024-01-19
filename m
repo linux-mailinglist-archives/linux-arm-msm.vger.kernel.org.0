@@ -1,89 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-7646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7647-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1B83833055
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 22:33:35 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F2938330C6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 23:34:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 818ADB23A4F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 21:33:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A21711F22C07
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 22:34:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBEF058235;
-	Fri, 19 Jan 2024 21:33:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7744A54BFC;
+	Fri, 19 Jan 2024 22:34:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="CzK0OPwa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TJLMTo9q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55FE058208
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jan 2024 21:33:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498C41DDD7;
+	Fri, 19 Jan 2024 22:34:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705699998; cv=none; b=JGzax5579lGvSo6St7ij1zfo868eUr8RA7Kkwtaw+M3bSyVl8JiP5RaFQLY6M/cwe9r4X7enS5GcjDGG3QM1v399wGs6rVtGQ7fLIpU3jgZwcf9Hv6EVcKy9y2PnZcwvTtDWyHXwwZxpFw0mSnnO8ynJOdjaMIse7Mih1wZtXkQ=
+	t=1705703680; cv=none; b=rIshqCdZCDxdciorJHODwvcSL/KJTs5z7UOrx5n2RT/zMox+WGvXGmAJa3TI/9gZpeDHK4W3x6Fr4C0HTZOH4gj0J1yt4C9QVoEdCMge5c2xHndcy+fi+F5vt5q2TzOUTMGeiRXe+HLW4IUHElFfD8Kq+eko962u0Q605lTHbic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705699998; c=relaxed/simple;
-	bh=EkTj7yDGwdkzAs8tBNlRMDUvXzIDCIPdlE7L2nKM844=;
+	s=arc-20240116; t=1705703680; c=relaxed/simple;
+	bh=Tb/IF/3dnB+KD/SYWtRz1VcIoMLT0oJr5xplyBvSeDA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=deQX283KoUB/OhS2SgXY6l44JDbKMjI4KD91Y2ylbNY+x0WqwY7wnmPF4GYW5oTVgKTu3YvQKLc37KNAqDJSxoEKJIKK74P/2wNy1RhFzaYbq1ffju2BXW3edsSDLnwN7l9DHFuVteb+XDDhySDrn5QgsRQqmwOiGp/10X6n1Is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=CzK0OPwa; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1705699996;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=lzrWPZR5+3QYuqMx3/O+fwKFrZi0Xwysmh/7OAXDcYM=;
-	b=CzK0OPwaD1zwyArYxJYoWafAiGMK6QiehCO+K3KtW33ggaQEStvwyD05i5rbY8UXMn9GEo
-	bmcylyCNrqQ61jwbKRUn7AoaBYhWJR4Mvx0nelrlWlDRgKnAcdnH6IRtFmCazsqhQYS8/q
-	y3sS1YYu7sxRnEFBh5yZGu2nfgcbHQ0=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-333-GnAh5q0rNeuFouUDh3Pgcw-1; Fri, 19 Jan 2024 16:33:12 -0500
-X-MC-Unique: GnAh5q0rNeuFouUDh3Pgcw-1
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-67ef8bbfe89so22390006d6.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jan 2024 13:33:12 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705699992; x=1706304792;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lzrWPZR5+3QYuqMx3/O+fwKFrZi0Xwysmh/7OAXDcYM=;
-        b=sX1Fj5lnabr4LJiY3dOcfUuRpNrupCN6zUKcXthnbPFHg+EY/fp/HGDqf++7CHVwAV
-         X6AYTolvCGKi05XKnm4OYAJWOVOa4d0Looot80eKNeaWIIrqQNtOfC74rm0fz/tqe+qU
-         NOkzhabpxesqWfZUAKvu5jW4SOis2T2bz6qP+BOQ1dZEPSOs/RO24S/G2wRXXGRdcV95
-         2okZdQSd4VlZWii/5NSXyTfWcrsy7X84xzD2qh991aeU3hV43Ao9eogNmAZ9CJRg/8z5
-         D70wy1RKSq2Z7Bln3sYR5WwEypgD33XfOTh1MCwRJ5DJWJzxgaGhOtbPne6nUGv5pGww
-         fzEA==
-X-Gm-Message-State: AOJu0YzHDNrWizpNPBG2fnUEyh1xM9sPZUQyuOCNnALddSdd4QdTd7pc
-	9G0+mpofnSOi9edv9eWat+gSEFuRMOgLy1Iz0B9j5MS4BrTlJCVAITlaVVJQ3WWKjXZX/r8ezUd
-	7+v1cDx9qmeXcjQovCmoypHYPbbI2cpk2HTmq2pnnn8yX3L1OfpO5WBvtuUZbN/Y=
-X-Received: by 2002:a05:6214:2686:b0:680:c880:6646 with SMTP id gm6-20020a056214268600b00680c8806646mr668650qvb.22.1705699992321;
-        Fri, 19 Jan 2024 13:33:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGzzipQRf/AqpwwysE2kv7ZI6fkFW9M4nW61XT5BD6zZ/s+tUut70peKPfzGaEivdj8NjgXpQ==
-X-Received: by 2002:a05:6214:2686:b0:680:c880:6646 with SMTP id gm6-20020a056214268600b00680c8806646mr668638qvb.22.1705699992064;
-        Fri, 19 Jan 2024 13:33:12 -0800 (PST)
-Received: from localhost (pool-71-184-142-128.bstnma.fios.verizon.net. [71.184.142.128])
-        by smtp.gmail.com with ESMTPSA id di8-20020ad458e8000000b006818a1e269csm39021qvb.102.2024.01.19.13.33.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Jan 2024 13:33:11 -0800 (PST)
-Date: Fri, 19 Jan 2024 16:33:10 -0500
-From: Eric Chanudet <echanude@redhat.com>
-To: Andrew Halaney <ahalaney@redhat.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
-	"James E.J. Bottomley" <jejb@linux.ibm.com>, "Martin K. Petersen" <martin.petersen@oracle.com>, 
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: Re: Re: [PATCH] scsi: ufs: qcom: avoid re-init quirk when gears
- match
-Message-ID: <graeyylgohsukni35djpbxibnz5ya7laqvsydharkzcktv2iwz@knbu5uq5fa4x>
-References: <20240119185537.3091366-11-echanude@redhat.com>
- <3xnedre2d32rkad6n2ln4rrah7sgg6epxnzsdm54uab3zrutnz@fww7wb5mvykj>
- <otgj6524k6wiy27depeo7ckopmrr2v3xdnaoph4c5djjohnpmg@f7hyetygcyyr>
+	 Content-Type:Content-Disposition:In-Reply-To; b=b4NBpCd8aI/96m7ZNLxeIGr0IqO9oJzxuetNdrrL9G3pKlWdFTWQ5duAAS4qtIQ6yMbk6tDq7Sj1+FQ9gBc2Tro5Pib2MBe+fldEzBHcfndoio8gP/5qzS5kDFCKvoXtl37Wr7J/To5XBZs0o5fmDtQjKX+3po85jAs2hLF3gyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TJLMTo9q; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E509EC433F1;
+	Fri, 19 Jan 2024 22:34:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1705703680;
+	bh=Tb/IF/3dnB+KD/SYWtRz1VcIoMLT0oJr5xplyBvSeDA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=TJLMTo9q1wdgV+lwBQQZfmMaHmb+B3Dwm40qcJizh2E0tvM8XDVz6lGc+iQRDLv2c
+	 XNIH1IxPk9itUI7VrfrFyqR/r8Iis7FR6mPqEv1INxM9ZU3a0RHppz8/JOhx5Bslrn
+	 x83geQtdq2nOc8pKLTyCi08aqDW5++JVubQJ+GRFB0zr/I+8WZ1ok1oa7yGT33frcI
+	 ueg0LgzeQ+CRz8CWx9q9RsyJn2GGs8DrBUTt2pUbXhuWmNeHJzofE1fDcPjPcdxPL7
+	 jLxZ3HEnIn7MYi9whncFoWK80jhz8Z1Tf48Q8xAsiwEMhkswW5EVpCWrAS6bjzIi6U
+	 67fudl0y9QIsQ==
+Date: Fri, 19 Jan 2024 16:34:37 -0600
+From: Rob Herring <robh@kernel.org>
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc: Georgi Djakov <djakov@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+	quic_skananth@quicinc.com, Bjorn Helgaas <bhelgaas@google.com>,
+	devicetree@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>, vireshk@kernel.org,
+	Brian Masney <bmasney@redhat.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-pci@vger.kernel.org,
+	quic_nitegupt@quicinc.com, Bjorn Andersson <andersson@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Johan Hovold <johan+linaro@kernel.org>, quic_vbadigan@quicinc.com,
+	Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v6 1/6] dt-bindings: PCI: qcom: Add interconnects path as
+ required property
+Message-ID: <170570367676.1246878.13604821231091886465.robh@kernel.org>
+References: <20240112-opp_support-v6-0-77bbf7d0cc37@quicinc.com>
+ <20240112-opp_support-v6-1-77bbf7d0cc37@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,106 +70,18 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <otgj6524k6wiy27depeo7ckopmrr2v3xdnaoph4c5djjohnpmg@f7hyetygcyyr>
+In-Reply-To: <20240112-opp_support-v6-1-77bbf7d0cc37@quicinc.com>
 
-On Fri, Jan 19, 2024 at 02:33:32PM -0600, Andrew Halaney wrote:
-> On Fri, Jan 19, 2024 at 02:07:15PM -0600, Andrew Halaney wrote:
-> > On Fri, Jan 19, 2024 at 01:55:47PM -0500, Eric Chanudet wrote:
-> > > On sa8775p-ride, probing the hba will go through the
-> > > UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH path although the power info
-> > > are same during the second init.
-> > > 
-> > > If the host is at least v4, ufs_qcom_get_hs_gear() picked the highest
-> > > supported gear when setting the host_params. After the negotiation, if
-> > > the host and device are on the same gear, it is the highest gear
-> > > supported between the two. Skip the re-init to save some time.
-> > > 
-> > > Signed-off-by: Eric Chanudet <echanude@redhat.com>
-> > > ---
-> > > 
-> > > "trace_event=ufs:ufshcd_init" reports the time spent where the re-init
-> > > quirk is performed. On sa8775p-ride:
-> > > Baseline:
-> > >   0.355879: ufshcd_init: 1d84000.ufs: took 103377 usecs, dev_state: UFS_ACTIVE_PWR_MODE, link_state: UIC_LINK_ACTIVE_STATE, err 0
-> > > With this patch:
-> > >   0.297676: ufshcd_init: 1d84000.ufs: took 43553 usecs, dev_state: UFS_ACTIVE_PWR_MODE, link_state: UIC_LINK_ACTIVE_STATE, err 0
-> > > 
-> > >  drivers/ufs/host/ufs-qcom.c | 6 +++++-
-> > >  1 file changed, 5 insertions(+), 1 deletion(-)
-> > > 
-> > > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> > > index 39eef470f8fa..f9f161340e78 100644
-> > > --- a/drivers/ufs/host/ufs-qcom.c
-> > > +++ b/drivers/ufs/host/ufs-qcom.c
-> > > @@ -738,8 +738,12 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
-> > >  		 * the second init can program the optimal PHY settings. This allows one to start
-> > >  		 * the first init with either the minimum or the maximum support gear.
-> > >  		 */
-> > > -		if (hba->ufshcd_state == UFSHCD_STATE_RESET)
-> > > +		if (hba->ufshcd_state == UFSHCD_STATE_RESET) {
-> > > +			if (host->hw_ver.major >= 0x4 &&
-> > 
-> > Is this check really necessary?
 
-I *think* so.
-
-For example, if hw_ver < 4, ufs_qcom_set_phy_gear() has a comment saying
-"power up the PHY using minimum supported gear (UFS_HS_G2). Switching to
-max gear will be performed during reinit if supported."
-
-> > 
-> > The initial phy_gear state is something like this (my phrasing of
-> > ufs_qcom_set_phy_gear()):
-> > 
-> >     if hw_ver < 4:
-> >         # Comments about powering up with minimum gear (with no
-> >         # reasoning in the comment afaict), and mentions switching
-> >         # to higher gear in reinit quirk. This is opposite of the later
-> >         # versions which start at the max and scale down
-> >         phy_gear = UFS_HS_G2
-
-IIUC, the device would not be able to negotiate a gear higher than the
-minimum set for the phy_gear on initialization.
-
-ufshcd_init_host_params() and ufs_qcom_get_hs_gear() both set the
-controller <v4 host_params to G3. So if the device is HS capable, the
-re-init would set G3, instead of the G2 selected by
-ufs_qcom_set_phy_gear().
-
-Assuming I'm not loosing track somewhere, the sequence of calls would go
-something like this:
-
-ufshcd_init
- ufshcd_hba_init
-  ufshcd_variant_hba_init
-   ufshcd_vops_init
-    ufs_qcom_init
-     ufs_qcom_set_host_params /* if hw_ver < 4: phy_gear = G2 */
- ufshcd_hba_enable
-  ufshcd_hba_execute_hce
-   ufshcd_vops_hce_enable_notify(PRE_CHANGE)
-    ufs_qcom_hce_enable_notify /* vops.hce_enable_notify */
-     ufs_qcom_power_up_sequence
-      phy_set_mode_ext(phy, mode, host->phy_gear);
- async_schedule(ufshcd_async_scan, hba)
- ...
- ufshcd_async_scan
-  ufshcd_device_init
-  ufshcd_probe_hba /* where the re-init quirk happens */
-   ufshcd_device_init
-    ufshcd_vops_pwr_change_notify(PRE_CHANGE)
-  
-So that would limit the device to G2? In this circumstances, the re-init
-would instead re-initialize to G3.
-
-> I guess what I'm saying is shouldn't the check be something like:
+On Fri, 12 Jan 2024 19:52:00 +0530, Krishna chaitanya chundru wrote:
+> Add the interconnects path as required property for sm8450 platform.
 > 
->     if (dev_req_params->gear_tx == host->phy_gear) {
->         // Skip reinit since we started up in the agreed upon gear
->         hba->quirks &= ~UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
->     }
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
 
--- 
-Eric Chanudet
+Acked-by: Rob Herring <robh@kernel.org>
 
 
