@@ -1,147 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-7622-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7623-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CEFA832A0D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 14:05:51 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FDA1832A48
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 14:24:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B19C31F20FAD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 13:05:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CDC6E2859CA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jan 2024 13:24:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3460E51C35;
-	Fri, 19 Jan 2024 13:05:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5846D52F97;
+	Fri, 19 Jan 2024 13:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=8devices.com header.i=@8devices.com header.b="AsKf3Qf+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Yzvr7X+g"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574BE4F1F5
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jan 2024 13:05:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0C2E52F68
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jan 2024 13:23:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705669548; cv=none; b=lUNB9VLkQPku/wqi9pFtuL9fHhWi8nNs8cX9RmztX3u/bbnLfmoCW7P2YcTgEQ80e7HGAmDTQOy+hLUyPPuxGJD1jSwVYd4YCUf9oLZY+ob+cZsE+xnIwUXin1/ok6rq1pVBXMx2LvnSSGvGOM2QQsStMSA25XqxerMGEjMoAcc=
+	t=1705670631; cv=none; b=OD1uKmjPPdmGXejmxC1i2mMytHwDeU2U2ksyHGxocShgclkAvOjwl1Fhq8GsTSuwh+TQ4b9wMeDMFwDQvRLb2YPhS7kLen5HKG931O3Z0oV9YWDmvaendswBn8o5tUhXS6dZSd52TX0N6A9LP4cdAUS5lP5wcb/hQ8IftAJvVJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705669548; c=relaxed/simple;
-	bh=T3lgeBprbO2ncEnbB/0Iwitj/QDiDU/VqFEnkGf35mA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=raBVyRqMJVxOQNLN3ZbyqnPlj8bTe5H++o7lw2Oxw48RHwkdK083GGvSKmDOncnwxIMP55mcsAqkZ9yFbTQT5HcLkY48nzVc1omqD5OjLgdriA97V4z/y93PHbldYKsfQ1iddXD81HofthEGGoo+NOraJ2SdlaLOrRmKdMJZnOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=8devices.com; spf=pass smtp.mailfrom=8devices.com; dkim=pass (2048-bit key) header.d=8devices.com header.i=@8devices.com header.b=AsKf3Qf+; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=8devices.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=8devices.com
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-55a02948940so871789a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jan 2024 05:05:46 -0800 (PST)
+	s=arc-20240116; t=1705670631; c=relaxed/simple;
+	bh=jT1o+1fCLAVLwXFrrOA+eYd/Esf8c1zGpOV8XzCPnlQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=refPH6Ihw1NQYTa2WR6q0djcXap11cZK67vpaekAfc4bG0q9EDr0Kn8SI4Wa/S9Dslb44w7Lk3UtXlbjM6jr5vhKH19lAHenDgo/rOlbexRXS1NTt4G4o5f7MIX9XqSKjSbyiyVSuuUVudQfwqZeakTC9pY9YQeGG8+n7VcvLy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Yzvr7X+g; arc=none smtp.client-ip=209.85.128.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-5ff7a8b5e61so6757167b3.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jan 2024 05:23:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=8devices.com; s=8devices; t=1705669544; x=1706274344; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hFT1caunJL2bjnoz3k5PNtNB8wm9Pwof23zyHAFtsu4=;
-        b=AsKf3Qf+inNV8NbN2puLEss3HIput0h3qsxTClUX77onxpuIZBwkcLURR7M40hTUHT
-         lzvFlqBK9gxylNCnNFnfhq0KyPy2SmprR2CI9um0nyP5KGp2vX+Nw4DcucjoHgtcQPKI
-         1kyPJOBkY13ApRCFcjAiWtZUhQgkkoq/Ck4GAulvLBYJaui/dtahrjFfUoLjE+usjaUD
-         QlJYU+585VCd22xwiKEELaEEqL5cULplBd7Q/Xo9gORkXclQg/ZNaDOHAllAFA2l8CIe
-         UjoK1fnw6CwBG6yc1EqMGlReKvCyVOKJuqjpOGR5ZlILm7yzo4d+WJmZ970BbOvkjn8m
-         Kl9Q==
+        d=linaro.org; s=google; t=1705670628; x=1706275428; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=wYjGRonmxWAwRkUotTTDya9Rp8c+PP7p+UBBXWqIeDY=;
+        b=Yzvr7X+gzsaQt9WOshGLunenjwLi1VQ2s/1CkR2RBXeVqZXp6H5sdL+3uDxLWRfj2i
+         pUt/pbuUd2DuYnb77zQgPK/SVSgSXvmIXVa94dUthGBSvbfn8jRpPTWc9AdTjtuE7nU5
+         14UaDJ72vhi3DtbNIz+nEoP6UmUGWxkU/xZjf9scqSvm5BYLOcNDsfn5hRR42/DXjuYs
+         aWTxSD9LLMijZeguOQS/uxdI0sBcrblgvTjKMRyTSSJnnz1SB7k/6xPxWgArXe6RCxIw
+         lIrStHwNH9aISdRT88bVnt87zYD605qrPwkNAg+ruKExWvp1u7nFAPWYE+en/FZRk6NL
+         jf4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705669544; x=1706274344;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hFT1caunJL2bjnoz3k5PNtNB8wm9Pwof23zyHAFtsu4=;
-        b=rycrUcrDJz4cECfVknAc48Sl8qXK8kj46WOwxplBJjlU4t/Rc/AyWrsm0Qcq8I6V+h
-         WKZ6aWti6G6lCLY8/e7rF5VeQhflxf6ByNuepZZ/jrzIzOh7aAR+NSIjFTHrwWZqEq5w
-         sB0bOabChTUDxbnc1Lc/nyV0YB8Z95wzeY6TtSrCjqydm++0Rlf8An+4iOd8IxHsE8fv
-         OCMAp5ye/lCUpBX/sO824RmdSPFIYB5cwPF4fHjF/j83iOhmMbs9R3aK7VcZHa+OVpJo
-         fI5hlkXtVGgEC8iHBmypHK4aped7wtog1J6Y/s2/t/tDcBzdqDH7/qWnDhFa77XoqKG0
-         m8ng==
-X-Gm-Message-State: AOJu0Yx04n5hbDxUwmDT0B/suxfEdJZnE4PBgKISVRidn7GoG28SV0hE
-	a/tFCQkeZlG3Gd30b5+DftcojcPFPH4G152wM/raaLnnkCqYCz3SrR5XpJ7msUc=
-X-Google-Smtp-Source: AGHT+IHxS1+RAbPFLI5ItZKd1sI2ZXvV5S3L/s1ArZxM+sVNnpPAujJTaOL9mZNBaYROs53580hgFQ==
-X-Received: by 2002:aa7:c0ce:0:b0:553:5577:dd52 with SMTP id j14-20020aa7c0ce000000b005535577dd52mr1349931edp.81.1705669544444;
-        Fri, 19 Jan 2024 05:05:44 -0800 (PST)
-Received: from [192.168.2.155] (78-62-132-154.static.zebra.lt. [78.62.132.154])
-        by smtp.gmail.com with ESMTPSA id u11-20020a056402110b00b00558aa40f914sm10459377edv.40.2024.01.19.05.05.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 Jan 2024 05:05:44 -0800 (PST)
-Message-ID: <d6db40e8-c2af-44fa-b8af-b143899b262a@8devices.com>
-Date: Fri, 19 Jan 2024 15:05:43 +0200
+        d=1e100.net; s=20230601; t=1705670628; x=1706275428;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wYjGRonmxWAwRkUotTTDya9Rp8c+PP7p+UBBXWqIeDY=;
+        b=vE078Pawra7JqtZDBK9AMR7Zc/u9NJ8Q9+E/GlZwu17nlplBj+PlRP8PlP5IrmigBY
+         De1L9BqoOcDNehmhEjOpVdORqlLEZt65uDvFNevL5//KAGgRjXQhhmZOyiTVc3DTabvp
+         m6R70IjwjLBfVR+kfLYCyyXXiZe7li79WSiQ+Al5gSfG6R4xPf3qOlXr0xTqfB2WH2nu
+         7gc35o1gbcTLg49LA9jTQhrtVzy8SdpdL0ABYVugxMmZlaF9FReUo6AXVTIShlPy2vIo
+         8F+2YdujKZv0/k3WmtzMGGdpVhBQOuL/5Pn051Vho9qD8xA4PvA4hs1uoqJXqjMg5mqm
+         iDug==
+X-Gm-Message-State: AOJu0YztkDQrJHi/RfZIkw75+4Txw5fZJW1Fsmgs86e/UBX4txZVabKu
+	aOoOy5T2bPWyq73uE7huYfbPhueEWimCnY8N2gWvJBgK2x0/gZrOoPGICakdpe+b3EpMyRIz+qF
+	qhQqvV3SHdexuPAjLiNGx6cqeYL/r24dyqLxABQ==
+X-Google-Smtp-Source: AGHT+IE24O4oHX+Znek8EKmxAo69mROS6r2o4oW+offeuwEJNv5nK9E27XqRcTnwBG8RF9BP82f09XLq4Sz7Hw8ZCgs=
+X-Received: by 2002:a81:6d10:0:b0:5ee:66b0:5960 with SMTP id
+ i16-20020a816d10000000b005ee66b05960mr2136607ywc.10.1705670627269; Fri, 19
+ Jan 2024 05:23:47 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: gcc-ipq6018: add qdss_at clock needed for wifi
- operation
-Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <1705486629-25592-1-git-send-email-mantas@8devices.com>
- <9b78a7c3-dea9-4d9c-bfd9-13d819d68890@linaro.org>
-From: Mantas Pucka <mantas@8devices.com>
-In-Reply-To: <9b78a7c3-dea9-4d9c-bfd9-13d819d68890@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <1705669223-5655-1-git-send-email-quic_msarkar@quicinc.com> <1705669223-5655-2-git-send-email-quic_msarkar@quicinc.com>
+In-Reply-To: <1705669223-5655-2-git-send-email-quic_msarkar@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 19 Jan 2024 15:23:36 +0200
+Message-ID: <CAA8EJprFo+ujC2VqEtxbrEn_Dn23qfQAcc6WtMm4JWquth=Xgw@mail.gmail.com>
+Subject: Re: [PATCH v1 1/6] dmaengine: dw-edma: Pass 'struct dw_edma_chip' to irq_vector()
+To: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+Cc: vkoul@kernel.org, jingoohan1@gmail.com, conor+dt@kernel.org, 
+	konrad.dybcio@linaro.org, manivannan.sadhasivam@linaro.org, 
+	robh+dt@kernel.org, quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com, 
+	quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com, quic_krichai@quicinc.com, 
+	quic_vbadigan@quicinc.com, quic_parass@quicinc.com, quic_schintav@quicinc.com, 
+	quic_shijjose@quicinc.com, Gustavo Pimentel <gustavo.pimentel@synopsys.com>, 
+	Serge Semin <fancer.lancer@gmail.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	=?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-On 2024-01-18 19:48, Konrad Dybcio wrote:
-> On 1/17/24 11:17, Mantas Pucka wrote:
->> Without it system hangs upon wifi firmware load. Bindings already exist
->> for it, so add it based on vendor code.
->>
->> Signed-off-by: Mantas Pucka <mantas@8devices.com>
->> ---
->>   drivers/clk/qcom/gcc-ipq6018.c | 17 +++++++++++++++++
->>   1 file changed, 17 insertions(+)
->>
->> diff --git a/drivers/clk/qcom/gcc-ipq6018.c 
->> b/drivers/clk/qcom/gcc-ipq6018.c
->> index b366912cd648..7cdaf7751566 100644
->> --- a/drivers/clk/qcom/gcc-ipq6018.c
->> +++ b/drivers/clk/qcom/gcc-ipq6018.c
->> @@ -3522,6 +3522,22 @@ static struct clk_branch gcc_prng_ahb_clk = {
->>       },
->>   };
->>   +static struct clk_branch gcc_qdss_at_clk = {
+On Fri, 19 Jan 2024 at 15:00, Mrinmay Sarkar <quic_msarkar@quicinc.com> wrote:
 >
-> Hm, QDSS stands for something something Qualcomm Debug SubSystem
-> if I recall correctly, so coresight and friends.. Are you sure
-> it's necessary?
+> From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 >
-That's rather strange dependency, I agree. Yet, even manually disabling 
-this
-clock before wifi driver load would cause failure. On the other hand, 
-disabling
-it while wifi is already operational seems to cause no trouble. So it 
-follows
-that clock is only required during wifi startup. Since wifi FW loading 
-is done
-through SCM call, maybe this could be a Qcom TZ firmware requirement.
->> +    .halt_reg = 0x29024,
->> +    .clkr = {
->> +        .enable_reg = 0x29024,
->> +        .enable_mask = BIT(0),
->> +        .hw.init = &(struct clk_init_data){
->> +            .name = "gcc_qdss_at_clk",
->> +            .parent_hws = (const struct clk_hw *[]){
->> +                &qdss_at_clk_src.clkr.hw },
->> +            .num_parents = 1,
->> +            .flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
->
-> Does it need to be enabled 24/7, or can it be attached to the wifi 
-> device?
->
-In fact, attaching to wifi remoteproc seem to work fine. I'll send v2 
-without
-CLK_IS_CRITICAL if all else is OK.
+> eDMA client drivers defining the irq_vector() callback need to access the
+> members of dw_edma_chip structure. So let's pass that pointer instead.
 
+Nit: 'will need'. They do not need to do that at this point, but will
+need it at the next commit. I'd rephrase it to something like 'In
+preparation to ...'
 
-Mantas
+Other than that:
 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+> ---
+>  drivers/dma/dw-edma/dw-edma-core.c           | 11 +++++------
+>  drivers/dma/dw-edma/dw-edma-pcie.c           |  4 ++--
+>  drivers/pci/controller/dwc/pcie-designware.c |  4 ++--
+>  include/linux/dma/edma.h                     |  3 ++-
+>  4 files changed, 11 insertions(+), 11 deletions(-)
+
+-- 
+With best wishes
+Dmitry
 
