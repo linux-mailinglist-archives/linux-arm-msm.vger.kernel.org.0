@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-7662-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7663-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3330A8334CE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jan 2024 14:32:32 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5EDC08334D2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jan 2024 14:34:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 55CFD1C219C7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jan 2024 13:32:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0278283844
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jan 2024 13:34:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C96AF515;
-	Sat, 20 Jan 2024 13:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8C2CF4EE;
+	Sat, 20 Jan 2024 13:34:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="J7DHFNYf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HvmeDe2r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA8DEEB1
-	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Jan 2024 13:32:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F63EEDE
+	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Jan 2024 13:34:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705757545; cv=none; b=CM6bCMZh9QqV4L70fZpuaKfNF8etP6El9bhbrldi3vpy147iU4eRGYhyegila0VSzn86qFO4QOL0rQ+9LpFAUdFYG2eJtK6blyhfvrNnh0Y8is+L7wRo6aIeDc7tJKW061M2AEhbAnFNDayYX+t0G2YZUvIGUuQXEBH7BeX9xsQ=
+	t=1705757673; cv=none; b=XZ7yXECPg4ZWC6M/dwWiKd9bxLtD4gPrNm4aPu08B5HesbEpy7siRODmNvQXAJLlQ873KDPsfNwFY1AdeGLfdKzE7rU/NJRW2Tdcj2p9hnWWNxUW3M9Nfk62kzLBbCI6gMZwlsopfsPPVaC1str9CbAYs2s4ZpRwpt12qYquriY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705757545; c=relaxed/simple;
-	bh=lElNdA4O1Vhu7Wz3Hp5Ehc9WjZMxUA+6LbhPKIrLjKk=;
+	s=arc-20240116; t=1705757673; c=relaxed/simple;
+	bh=/51rCxbz4hfQlo+gW3a9ksrMwWzL5zOFSXEqn0flkb4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=k4o6OHKrYT2L0s8U0W2gQqOlOGItIGxzGi4K6eR7qFuY33ZNzO2E+XWzmjfZrg95Kg4cnObbpebbQC6Lrt0VW0C9KCXO6t+u8MZ/DTdSOjIda9d/+a/uetwQisSjYOe9+ms4FVFc9/tN2ozFUWEIlOGlXNAi6WboKgdXInW8g3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=J7DHFNYf; arc=none smtp.client-ip=209.85.208.42
+	 In-Reply-To:Content-Type; b=Su8G1k5+xJcN0y9jgkdHWjoT9nm2bJq6hPIBkYid2v5kpEeRLXRAYKX3wfb01JnuMwwxIFg7gVjrPtKPpJzWNiqytM3ZnL64/iIGZY/tX66nweyE/2hqeVzOEAGsR0tzO73ZuaqzgrP6sQ/69nmRUPjEIsuVjq/ggOswgoUrT98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HvmeDe2r; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-55a90a0a1a1so488148a12.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Jan 2024 05:32:22 -0800 (PST)
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5578485fc0eso1669171a12.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Jan 2024 05:34:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705757541; x=1706362341; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1705757670; x=1706362470; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=gdl+eaC94A18YCEzspCuqusdm9Y8Cc++l96S1kvmWe0=;
-        b=J7DHFNYfUPaHzTlg0jHziyFGSgoYUho9k/D7dxh9138wWr0OA27LdoIR8M4lHTJt/E
-         eiGtiQY52YS+/xscB+Ny/i0kreb2OO93r12ohSPHrgaEWO6kTsM5Lz4AQED23/scDcHb
-         qRCdERv9isolWIqn8kuA4PiFSj/6mXRKQtFjv5yPYQC3ZEyA7nWPr8GpMHeomCWOxAr9
-         bRmAJIf6jY/lJ3Ynn0GRMIDZavxw54Vp1G1oTgFtZbx9DFerv/Lcb53a9rWfmuzjlIG6
-         TT2irQ19+DjkcRB3B1A9aoiT3kFmPuDQzpiz3Z5oW3alZ9a452qcK1YCX83hYDRC3Tw2
-         boHQ==
+        bh=Wu6dpe6+3cVT9RSClVfzBxKDp3jj/1XAUoktye5Nmic=;
+        b=HvmeDe2rsao/j4fctvohf6DfXMEIsoFa4pyodwwGl5ihFGzbU/jFw6wSJUPwmh7ZdU
+         6ZB1HeoES/WmOsL/LliXa0zZ/pp9bek/v3XurnZR9YAp/fYNLGkmb7x163vJ6bMXiHld
+         HukZRqOJNMD132pwuLBaDETAPKtf5ZucVFlMfNPrehfN7UHuQt0LgslcVKjh6+l2FEnn
+         NAoPqGq5TeDVCrCLlvqpSnEIl6puyAtuaax8ur/DyE2lCsF0SuZNm++3caIks1z+IyNk
+         2fZZYBo/NDfDuv4bTU6425pI2NzH2NX9Hd8+V2fi3BytDUnCvYSqr9uYsKg6nZsjj4fo
+         EYEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705757541; x=1706362341;
+        d=1e100.net; s=20230601; t=1705757670; x=1706362470;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gdl+eaC94A18YCEzspCuqusdm9Y8Cc++l96S1kvmWe0=;
-        b=PaZOXniCFBND3qPkevT2BpHgGW29kduDm1EjTN15W0zG+xr9k1Tdh/e9K/w7AgDAPD
-         nshVfWLtm9ep/BUBQNXmZBgIRCqc23tpbMtJiFozgwbuhSrpupA6pXYlllPhCvQJWKhp
-         3ivvYqmw12wBgoM7g9SAITIV63yCdSTNxB9M4MXxjqQrQcm/qK2Cge4RKQ2lArwWPBb7
-         abAbmgdC6QzDup6hyiCnpsO5NOLOUI41CWRdRERLELjVxKsSeEOeFXk7Ftcnpk9sHeFL
-         GkMLbnoC9i6zVWbS3+U3TRVPBq/Vq2bEZK+14ISDWbaHiwryaJ2m+vHpkRpnAIJVSSRf
-         BLAA==
-X-Gm-Message-State: AOJu0Yxo+fY5p4kh5TMW1aON0zY+sCESF1qAlhFKxf8c0HwYn1/PE1nY
-	H7neJHMc0jkLNo9xF6ofmC/XuXNwurHrnvu1Wq5TEqzjluPnUAW9iJV/WWG7fck=
-X-Google-Smtp-Source: AGHT+IFDNfw6KMYR4rsAEpsXh7xNpZE52txeShlcME7Xi5L4CmB0j8AbPv5AjaCYVPvvt+sTd/ZXDw==
-X-Received: by 2002:a17:906:fad6:b0:a28:c638:40a0 with SMTP id lu22-20020a170906fad600b00a28c63840a0mr440740ejb.77.1705757540754;
-        Sat, 20 Jan 2024 05:32:20 -0800 (PST)
+        bh=Wu6dpe6+3cVT9RSClVfzBxKDp3jj/1XAUoktye5Nmic=;
+        b=JgnpgfSsJ/QbWvqHQSsdoqksCNETshi1eddAnECKjIxeQdMUZsJgUSj7DD9wJ68Vca
+         m+DNAZKsqNp8YkcJB5NsoKwxAC8A5BldDAlbdlUsSfVMz8goUuFqDsbc84CezeQDXkS3
+         IMqe9tBLhOHl9FU/eIELCxdhsGLSz5DKPVkPM8GMYdRJevFAosmF344tFrwJzJ6KGiwq
+         oykg+B79Hig33GefUp9V5q4jGF6oXHW+ocqXTj2F/Fv4Ih0pPR4VW3Erbeyj5RPJbxsH
+         dznwfrla0QJCt569qIFJSZOUAFfn9liWQ0MxEsrNoGVVSsRf0kI0TcxhU4dKPqeeR9/h
+         Cc2g==
+X-Gm-Message-State: AOJu0Yx0MUxLNwRjnqvGTksmiWP1ELY/WG5q9rw/9m+lB7G7gPiFnSLQ
+	diqPKUy1gt/vxt+jxLKsF4vCT9PYPJCMOP0wVYZQGWK5XiMVrTOlVx2N/1FZpTw=
+X-Google-Smtp-Source: AGHT+IGhe66/+NRLVvjDgSeqDMDVfeXFfGZUTFsWFNF/yIHwycWmc1mCzaLUwlElPtGesWd293jQ9Q==
+X-Received: by 2002:a05:6402:d55:b0:55a:383e:504f with SMTP id ec21-20020a0564020d5500b0055a383e504fmr720579edb.6.1705757670278;
+        Sat, 20 Jan 2024 05:34:30 -0800 (PST)
 Received: from [192.168.231.132] (178235179218.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.218])
-        by smtp.gmail.com with ESMTPSA id f13-20020a170906048d00b00a2a43568cd8sm11316055eja.186.2024.01.20.05.32.18
+        by smtp.gmail.com with ESMTPSA id h9-20020a0564020e0900b00559736b84ffsm6826087edh.89.2024.01.20.05.34.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 20 Jan 2024 05:32:20 -0800 (PST)
-Message-ID: <54426665-90c5-4355-a174-f512004e11e5@linaro.org>
-Date: Sat, 20 Jan 2024 14:32:17 +0100
+        Sat, 20 Jan 2024 05:34:29 -0800 (PST)
+Message-ID: <46d20df5-4613-4c7f-aeb4-9d2fe38083a0@linaro.org>
+Date: Sat, 20 Jan 2024 14:34:28 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,16 +75,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] dt-bindings: hwinfo: Add Qualcomm's board-id types
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: Introduce additional tsens
+ instances
 Content-Language: en-US
-To: Amrit Anand <quic_amrianan@quicinc.com>, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, agross@kernel.org,
- andersson@kernel.org
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, kernel@quicinc.com,
- Elliot Berman <quic_eberman@quicinc.com>
-References: <1705749649-4708-1-git-send-email-quic_amrianan@quicinc.com>
- <1705749649-4708-3-git-send-email-quic_amrianan@quicinc.com>
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240118-sc8280xp-tsens2_3-v1-1-e86bce14f6bf@quicinc.com>
+ <ce77861a-b362-4ecc-8e92-7fb846c7e508@linaro.org>
+ <20240119190027.GQ3013251@hu-bjorande-lv.qualcomm.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -121,117 +122,76 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <1705749649-4708-3-git-send-email-quic_amrianan@quicinc.com>
+In-Reply-To: <20240119190027.GQ3013251@hu-bjorande-lv.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 20.01.2024 12:20, Amrit Anand wrote:
-> Qualcomm based DT uses two or three different identifiers. The SoC
-> based idenfier which signifies chipset and the revision for those
-> chipsets. The board based identifier is used to distinguish different
-> boards (e.g. IDP, MTP) along with the different types of same boards.
-> The PMIC attached to the board can also be used as a identifier for
-> device tree.
+On 19.01.2024 20:00, Bjorn Andersson wrote:
+> On Fri, Jan 19, 2024 at 12:31:06AM +0100, Konrad Dybcio wrote:
+>>
+>>
+>> On 1/19/24 00:00, Bjorn Andersson wrote:
+>>> The SC8280XP contains two additional tsens instances, providing among
+>>> other things thermal measurements for the GPU.
+>>>
+>>> Add these and a GPU thermal-zone.
+>>>
+>>> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 37 ++++++++++++++++++++++++++++++++++
+>>>   1 file changed, 37 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>>> index febf28356ff8..68b5ac0339a0 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>>> @@ -4033,6 +4033,28 @@ tsens1: thermal-sensor@c265000 {
+>>>   			#thermal-sensor-cells = <1>;
+>>>   		};
+>>> +		tsens2: thermal-sensor@c251000 {
+>>> +			compatible = "qcom,sc8280xp-tsens", "qcom,tsens-v2";
+>>> +			reg = <0 0x0c251000 0 0x1ff>, /* TM */
+>>> +			      <0 0x0c224000 0 0x8>; /* SROT */
+>>
+>> I've previously called for removing these comments that we've been
+>> copypasting around for years and years, and I'm gonna stand by that :P
+>>
 > 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> Signed-off-by: Amrit Anand <quic_amrianan@quicinc.com>
-> ---
->  .../devicetree/bindings/hwinfo/qcom,board-id.yaml  | 86 ++++++++++++++++++++++
->  include/dt-bindings/arm/qcom,ids.h                 | 68 +++++++++++++++--
->  2 files changed, 146 insertions(+), 8 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/hwinfo/qcom,board-id.yaml
+> I'm not against that idea, but are you requesting that I update the
+> patch, removing the comments as well. Or that I send another patch
+> removing all of them?
+
+Sending a patch that you immediately fix up is a little besides
+the point. But the latter would also be nice, if you could.
+
 > 
-> diff --git a/Documentation/devicetree/bindings/hwinfo/qcom,board-id.yaml b/Documentation/devicetree/bindings/hwinfo/qcom,board-id.yaml
-> new file mode 100644
-> index 0000000..807f134
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/hwinfo/qcom,board-id.yaml
-> @@ -0,0 +1,86 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/hwinfo/qcom,board-id.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: QCOM Board Identifier for Devicetree Selection
-> +
-> +maintainers:
-> +  - Amrit Anand <quic_amrianan@quicinc.com>
-> +  - Elliot Berman <quic_eberman@quicinc.com>
-> +
-> +description: |
+>> [...]
+>>
+>>> +		gpu-thermal {
+>>> +			polling-delay-passive = <250>;
+>>> +			polling-delay = <1000>;
+>>
+>> Hm, did tsens only gain support of non-polled reporting with 8450?
+>>
+>> If not, we should definitely update all the relevant SoCs.
+>>
+> 
+> Are you referring to the fact that 8450 seems to set most*
+> polling-delays to 0, which are "valid" delays but would cause
+> thermal_zone_device_set_polling() to just cancel the timeout every time?
+> 
+> We should be able to do that on all platforms with working interrupts,
+> no?
 
-The '|'s are unnecessary in both commits, IIRC they're used for
-preserving formatting which we don't really need for non-styled
-plaintext
+That's why I'm asking!
 
-> +  Qualcomm uses two and sometimes three hardware identifiers to describe
-> +  its boards
-> +      - a SoC identifier is used to match chipsets (e.g. sm8550 vs sm8450)
-> +      - a board identifier is used to match board form factor (e.g. MTP, QRD,
-> +        ADP, CRD)
-> +      - a PMIC identifier is occasionally used when different PMICs are used
-> +        for a given board/SoC combination.
-> +  Each field and helper macros are defined at::
-> +      - include/dt-bindings/arm/qcom,ids.h
-> +
-> +  For example,
-> +    / {
-> +        #board-id-cells = <2>;
-> +        board-id = <456 0>, <457 0>, <10 0>;
-> +        board-id-types = "qcom,soc-id", "qcom,soc-id", "qcom,board-id";
-> +     }
-> +
-> +allOf:
-> +  - $ref: board-id.yaml#
-> +
-> +properties:
-> +  board-id:
-> +    minItems: 2
+> 
+> [*] Some of the zones has a passive timeout of 10?
+> 
+> 
+> That said, as above. Would you like me to fix that now?
 
-I believe some older platforms match exclusively based on socid, so
-perhaps 1 would be okay as well.
-
-[...]
-
-> +examples:
-> +   - |
-> +     #include <dt-bindings/arm/qcom,ids.h>
-> +     / {
-> +         model = "Qualcomm Technologies, Inc. sc7280 IDP SKU1 platform";
-> +         compatible = "qcom,sc7280-idp", "google,senor", "qcom,sc7280";
-> +
-> +         #board-id-cells = <2>;
-> +         board-id = <QCOM_SOC_ID(SC7280) QCOM_SOC_REVISION(1)>,
-> +                    <QCOM_SOC_ID(SC7280) QCOM_SOC_REVISION(2)>,
-> +                    <QCOM_BOARD_ID(IDP, 1, 0) QCOM_BOARD_SUBTYPE(UFS, ANY, 1)>;
-> +         board-id-types = "qcom,soc-id",
-> +                          "qcom,soc-id",
-> +                          "qcom,board-id";
-
-So, would the matching here would be:
-
-loop over disctinct board-id-types
-	check if there's at least 1 match for all of them
-		use this dtb if that's the case
-
-stop booting / "best guess match"
-
-?
-
-[...]
-
-> +#define QCOM_BOARD_ID_MTP		0x8
-> +#define QCOM_BOARD_ID_DRAGONBOARD	0x10
-> +#define QCOM_BOARD_ID_QRD		0x11
-> +#define QCOM_BOARD_ID_HDK		0x1F
-> +#define QCOM_BOARD_ID_ATP		0x21
-> +#define QCOM_BOARD_ID_IDP		0x22
-> +#define QCOM_BOARD_ID_SBC		0x24
-> +#define QCOM_BOARD_ID_QXR		0x26
-> +#define QCOM_BOARD_ID_CRD		0x28
-
-Missing ADP/QCP/Ride (if they're separate)
+Yes, please!
 
 Konrad
 
