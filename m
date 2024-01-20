@@ -1,122 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-7664-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EAB9383352F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jan 2024 16:17:04 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E7E2F83353D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jan 2024 16:25:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A438B282817
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jan 2024 15:17:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 26FB41C20D3B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jan 2024 15:25:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73B90FC1D;
-	Sat, 20 Jan 2024 15:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FE5DFC10;
+	Sat, 20 Jan 2024 15:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y+F1rVpi"
+	dkim=pass (2048-bit key) header.d=gmx.com header.i=erick.archer@gmx.com header.b="a+J0bbi+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EBA9FC0A;
-	Sat, 20 Jan 2024 15:16:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E608F12E47;
+	Sat, 20 Jan 2024 15:25:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705763818; cv=none; b=s0vPhf9l8lcXVAZwiuwANtEF76wTSEkJ6Yxs+vDqdHQh3Nfqwe36oVi+VWMIkLX5IcE1Dm3SGH6//Gocxv945lyRQXSCOLl6mZLVMh1rclGBoRy9tjQ2skfTBSFzeVGTZJt66taaGuU/UtV8a+UWaThDoTg05EVB74Kx5DnV/yQ=
+	t=1705764347; cv=none; b=DHuE42FqXB5QLoCGSughtsixekL0ATyOjZVOU5iEbJm54lUIleIfeg5H4m/V6QceyFgwmicxjv5FpC3YjF+j1w7dJg/Ky30fC6nXzAxlpToBk2a0VQDE+5tcS+d2LwSF3rAWyqRL1m0sG/IkycHDTIzqPsH+7D5QLkKab5UmK7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705763818; c=relaxed/simple;
-	bh=9SEr9/XdzmIJc8yNG3vWCLsaNfMf/4ZUEDrax18u5Lw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=K2S+Oxy3x1uNi9g953lpoxK2UFkVKtMPGxip78WofL0jnW/VK0w1oSGvqK4JYI7lf53Y5aZxXRKJA9cnmRon16ba6UIoTjSJ6/R2DChxsnbrXGdQOEtG2Cea4tZ9iNjx9jSugrE0i0oOWITm+tAt6+fB9pjm2kOtw9nMvkXzFgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y+F1rVpi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0D5BC433F1;
-	Sat, 20 Jan 2024 15:16:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705763817;
-	bh=9SEr9/XdzmIJc8yNG3vWCLsaNfMf/4ZUEDrax18u5Lw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Y+F1rVpim1lh58P9Zy9Zh6bCb4LhbBHG1z86l9c38GqIK+VkSDyUYxHPMaOvXSDir
-	 6NJxz3OfvOXSLItgldd5mKhTSj6rbzCYyNkGXTFqY8m3gsrLd3SmbFIC0z2B/w0zou
-	 F9IkN0rRyy5lTKyeHISV0P7TF+yurnUiy8/eF7Ce7I5xqzKZdxE8inZ4H1VOdAyWd4
-	 PsaZpcFt9UaGip2cLCpjtgCvNWOVj2zW9cjPG3vk432FRtNSFmZgpAFOG9RLOwgDSj
-	 NSQkR/UpNnHu9YFBf2fMbuAOLA4rn3n/6RZdkaHHrDbJQiCd6Snfu0dnRtRiesIWH/
-	 Qyrp1fafZIEgA==
-Date: Sat, 20 Jan 2024 20:46:48 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/6] dt-bindings: PCI: qcom: move to dedicated schema
- (part one)
-Message-ID: <20240120151648.GB6371@thinkpad>
-References: <20240108-dt-bindings-pci-qcom-split-v1-0-d541f05f4de0@linaro.org>
+	s=arc-20240116; t=1705764347; c=relaxed/simple;
+	bh=0JcJgRwF76wGIs5To2XuhDLeUD7IzHJSy+e2cc+KXys=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=XZWOdEssB/ovMeQgzQMcQcVEBrpEGooJZcz0q6AZi3Df4jRNcsgzjQ5hzX6Y9AH1kqV3giJbCE2rHo93oo/j22VWbKtjrS1YOf6uqvlJeCRm9nlpAtDq+rTmE4xctJXH4/hnmguaGjhYs4aGfWrJqr97Ms9aRVZkuJJlWVrEU5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com; spf=pass smtp.mailfrom=gmx.com; dkim=pass (2048-bit key) header.d=gmx.com header.i=erick.archer@gmx.com header.b=a+J0bbi+; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.com;
+	s=s31663417; t=1705764333; x=1706369133; i=erick.archer@gmx.com;
+	bh=0JcJgRwF76wGIs5To2XuhDLeUD7IzHJSy+e2cc+KXys=;
+	h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+	b=a+J0bbi+NsDjv0b0ocCwCIWY/37ZnhbzPAf5hYXMlAvFmjEPWUcDi18t0N6wUsC8
+	 QN454ULVBTCAYoj7L6G/yEWDEvuoOnNjONtkeEjqcAjbUS2h6ANeoehuqVgDLZIxU
+	 TELT/VVcdZFjhQM00WLHZtaKnq8sPvWoX9OrfcrqS/o6r4Ezqqo6R+aJmCriTlxIr
+	 XhEPiJv3Jlj3uh66h36tlKC7fdPTMxmk4zkOz3a0amhakJnKCTR8GBq2vrpLaOShA
+	 ZdD77Nf4A0XrRvB6vTb+2VHxUZR+qbhmdHg6dsXkb40AD3i/L8eF/hn0pvTqPpP1X
+	 4CZHGhyuallkx3iHcA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from localhost.localdomain ([79.157.194.183]) by mail.gmx.net
+ (mrgmx004 [212.227.17.184]) with ESMTPSA (Nemesis) id
+ 1MOzOw-1rm3zl0sIe-00PLJ3; Sat, 20 Jan 2024 16:25:33 +0100
+From: Erick Archer <erick.archer@gmx.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Erick Archer <erick.archer@gmx.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	mhi@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-hardening@vger.kernel.org
+Subject: [PATCH] bus: mhi: ep: Use kcalloc() instead of kzalloc()
+Date: Sat, 20 Jan 2024 16:25:18 +0100
+Message-Id: <20240120152518.13006-1-erick.archer@gmx.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240108-dt-bindings-pci-qcom-split-v1-0-d541f05f4de0@linaro.org>
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:krwpxKzuxrjKJNYG65YRp+r0EkkR1wBIMU1g/OgIxutkIvqq0Oy
+ mZ64rNHG3mxwru5Qg74zFseIO0kbYKg68tGcipBH3oOCo0v0eP8OfOwt60nODjBS1n4Ajj6
+ h9tE/I57lr+PfQuoKDdjBiw69dpYvjtOSU1cY/JKLvuDhZucSb+0HKijrDEwdzTQI4XVfm8
+ WU1YTuzwqOA1qtPUBq+Ew==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:zOxPMh2inqg=;dVBjcptvjRaTcfEepMXErcxwZ5J
+ GXQ+fZoR/t5YkQ8aBHovvX/vu751QvIbidTUF018n6kJF5vcNkTZXxpV2kFGCwxCGrncHqi/H
+ fUWnQPwFAWrFJq1ruZt6du8tjk5MmKvmhYZAZclNID/KtJuxA9TOr8iAJxIs2Lr8FoJCdsyYH
+ BcnONdX2PValbcfleEofllWvCrfPfM8v31J5bwpeci1wGXBR0FHyOdpJLhPsfoKfpr9i5Lz4O
+ VxkD53Uzco2bicd80nGcRDAR93T0VAJkG4k3Yl4FUEzr0F/oYNn/Vclrw2EvQVdEMyfUBq4My
+ ZCqFlbBbt7Zq6CAJxH0e7kb+YcyZEPhZQG4hYbgZQ38TET0iJds6yITyZvMkt2UvVU1PTGryu
+ 1rrArB4aKTN2y8I8LbMULpehbgZDl7YkAFX1JB/0xy5GuSOYTlQCgFo//2Rh+QotMBuCgMSzC
+ 2TQmWi3Zj6UT/Z4YSaRVQf6WRNZzVNBkLV5zBgTjFq50Zf2ncJWeIWB1tBhnb+1znaUhNDw4/
+ KLZlfslgsg8TXFNvMUuud+vlvfNK/eZ8AqmSucDgy4qpboQf+Aj1p7lTTYNwRyESgYQtoMzLF
+ zljPYDW1v7X0Hjaco58FUx7WaMHJ4vI0KnTh42Moba3c+npDIbfLBmquV+FKclXx4Nv41+er+
+ n+DxTDIQDFGrmMCNGmYRRf2n2JaSq1ET+l7uyWjpyZWh12GceurwmAaIYvvKM811oVI54QtGp
+ YVA54V0Q0GBkrBeDctPYK/eVsYW3qaYmm9iguwC4lsVGTDCaGxF9P6uibznR2NroiqYa7RNy4
+ tlE3eEVOdCCauwH2dh6ahnlpbRkQPkuZBEZqnlbzWLTlG5fwCnTuZYEVrisLYgGVZv3t40sd8
+ FN/aUoBj8VktX+Pghmief4gH0FS0O1xnbInUUnjeIKniaC4NzSvfD0VDbydFwtYk7gnNek9SO
+ 5tWhdeP5E5RqvhfAdX82TNnbm54=
 
-On Mon, Jan 08, 2024 at 03:19:13PM +0100, Krzysztof Kozlowski wrote:
-> Hi,
-> 
-> The qcom,pcie.yaml containing all devices results in huge allOf: section
-> with a lot of if:then: clauses making review and changes quite
-> difficult.
-> 
-> Split common parts into common schema and then move few devices to
-> dedicated files, so that each file will be easier to review.
-> 
-> I did not split/move all devices yet, so if this gets accepted I plan to
-> send more patches.
-> 
+As noted in the "Deprecated Interfaces, Language Features, Attributes,
+and Conventions" documentation [1], size calculations (especially
+multiplication) should not be performed in memory allocator (or similar)
+function arguments due to the risk of them overflowing. This could lead
+to values wrapping around and a smaller allocation being made than the
+caller was expecting. Using those allocations could lead to linear
+overflows of heap memory and other misbehaviors.
 
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+So, use the purpose specific kcalloc() function instead of the argument
+count * size in the kzalloc() function.
 
-- Mani
+Link: https://www.kernel.org/doc/html/next/process/deprecated.html#open-co=
+ded-arithmetic-in-allocator-arguments [1]
+Link: https://github.com/KSPP/linux/issues/162
+Signed-off-by: Erick Archer <erick.archer@gmx.com>
+=2D--
+ drivers/bus/mhi/ep/main.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-> Best regards,
-> Krzysztof
-> 
-> ---
-> Krzysztof Kozlowski (6):
->       dt-bindings: PCI: qcom,pcie-sm8550: move SM8550 to dedicated schema
->       dt-bindings: PCI: qcom,pcie-sm8450: move SM8450 to dedicated schema
->       dt-bindings: PCI: qcom,pcie-sm8250: move SM8250 to dedicated schema
->       dt-bindings: PCI: qcom,pcie-sm8150: move SM8150 to dedicated schema
->       dt-bindings: PCI: qcom,pcie-sm8350: move SM8350 to dedicated schema
->       dt-bindings: PCI: qcom,pcie-sc8280xp: move SC8280XP to dedicated schema
-> 
->  .../devicetree/bindings/pci/qcom,pcie-common.yaml  |  98 ++++++++
->  .../bindings/pci/qcom,pcie-sc8280xp.yaml           | 180 ++++++++++++++
->  .../devicetree/bindings/pci/qcom,pcie-sm8150.yaml  | 157 ++++++++++++
->  .../devicetree/bindings/pci/qcom,pcie-sm8250.yaml  | 180 ++++++++++++++
->  .../devicetree/bindings/pci/qcom,pcie-sm8350.yaml  | 169 +++++++++++++
->  .../devicetree/bindings/pci/qcom,pcie-sm8450.yaml  | 215 +++++++++++++++++
->  .../devicetree/bindings/pci/qcom,pcie-sm8550.yaml  | 171 +++++++++++++
->  .../devicetree/bindings/pci/qcom,pcie.yaml         | 268 ---------------------
->  8 files changed, 1170 insertions(+), 268 deletions(-)
-> ---
-> base-commit: a0bf076e449e022944b440174491f5c583753d84
-> change-id: 20240108-dt-bindings-pci-qcom-split-624737f7ba67
-> 
-> Best regards,
-> -- 
-> Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
+diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+index 65fc1d738bec..8d7a4102bdb7 100644
+=2D-- a/drivers/bus/mhi/ep/main.c
++++ b/drivers/bus/mhi/ep/main.c
+@@ -1149,8 +1149,9 @@ int mhi_ep_power_up(struct mhi_ep_cntrl *mhi_cntrl)
+ 	mhi_ep_mmio_mask_interrupts(mhi_cntrl);
+ 	mhi_ep_mmio_init(mhi_cntrl);
 
--- 
-மணிவண்ணன் சதாசிவம்
+-	mhi_cntrl->mhi_event =3D kzalloc(mhi_cntrl->event_rings * (sizeof(*mhi_c=
+ntrl->mhi_event)),
+-					GFP_KERNEL);
++	mhi_cntrl->mhi_event =3D kcalloc(mhi_cntrl->event_rings,
++				       sizeof(*mhi_cntrl->mhi_event),
++				       GFP_KERNEL);
+ 	if (!mhi_cntrl->mhi_event)
+ 		return -ENOMEM;
+
+=2D-
+2.25.1
+
 
