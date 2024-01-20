@@ -1,167 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-7651-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7652-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C57E1833347
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jan 2024 09:45:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38C62833374
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jan 2024 10:58:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 781A71F2279D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jan 2024 08:45:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E53C6281247
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jan 2024 09:57:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF2A5210B;
-	Sat, 20 Jan 2024 08:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E015C2ED;
+	Sat, 20 Jan 2024 09:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jwTJDo9U"
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="pYyRL7cI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-40138.protonmail.ch (mail-40138.protonmail.ch [185.70.40.138])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7133D7F;
-	Sat, 20 Jan 2024 08:45:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC85EBA41
+	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Jan 2024 09:57:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.138
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705740325; cv=none; b=nSmUePOuCXIzJyG8UXKmn3ROKuaJnPr+P5DmSz86M3n8FZxKsuWN+JPk2GIlt15KIrsmqR3eiHKwErH2KaHv3MzyNflzUnBtn22kzK6mccKCiXd5fHRa1xzKEsr8744YQ3Oud408euhdRIhLdvKO4vZqXGuSMwBFmiQJ5WqBNU0=
+	t=1705744676; cv=none; b=Xm//55jP0GXXCfgCo3CFg4tm+7JLROUx79+cN8SLkfwdwxGu89+q4KTHsFHJVvKKiZCjRTOrmwv5nJ1t81IiuxjCtnpbNsxqiUKbDgc5pFhHSQ8988YYRVNeRTyNm/37PanerJvpQ7HOiWajrbWFQkPkhS4NsHdse9mwuQe5dOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705740325; c=relaxed/simple;
-	bh=a1DPUX1cmvhpZrjctxn5ECPNE3NiEQ76qsFCiU+2mGg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Z9aFn6zShcd4NfTcK+XtChSmxBa+Ojqfu7DYtWIMT9itj8qXa8qHj/mzKGsYXUz8IF+ouDyAIQZNdngLdvVY/2bbRRxP9HPwM02z3c9pK1pZT42s0a1PM+IG6DnBq/VacCANKyYrpZ5if+/IXLCRCK2y+7UW3yFnAW3E0+1P9P8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jwTJDo9U; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id F051EC433C7;
-	Sat, 20 Jan 2024 08:45:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705740325;
-	bh=a1DPUX1cmvhpZrjctxn5ECPNE3NiEQ76qsFCiU+2mGg=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=jwTJDo9UY2tJCPoVoo/tdIHgO65sMPVzuwMHYERjh575UroXUF7WUqOuueuQDGjsF
-	 8ohGWzKRWej9TyQ8v0sR+O2JoYNMBs4D4L7KxCfdjdAEHYlgdy1pveZhf0vT49QK0V
-	 JCstGOqY+VSKRSPTRv8kddGiMiNm8zNOs1B+lRWwMQxoWNDpNi1jI/3ckmRq6KTXWB
-	 NzSJ8H+sJJ/qaGlyAnoeQRu4hHXxx2u4S8d1s3O5s0gvUConMKWMYbO2a506pyZTII
-	 qAYoLQjddkfbT1nbueDp97lOPL2S3q20CFEhYckm0p6rylrbPd8yfo+EjoXfN6Zdf/
-	 O96NLVdmLgkng==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D419EC47258;
-	Sat, 20 Jan 2024 08:45:24 +0000 (UTC)
-From: Rudraksha Gupta via B4 Relay <devnull+guptarud.gmail.com@kernel.org>
-Date: Sat, 20 Jan 2024 00:45:23 -0800
-Subject: [PATCH] ARM: dts: qcom: msm8960: expressatt: Add gpio-keys
+	s=arc-20240116; t=1705744676; c=relaxed/simple;
+	bh=RZoW7TH2kbsBZHb7CsAaI3qYNBh3amIrMgeeFmFKJuY=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=OIqV3pvbiC5EAWFCswLhKDohWewNLwBQv6Zq20C42X6PoeBDv+rozXCFOhiPqtNKhcMmDETJwHuDs7BBaGk4KCwA/vhCNA3lNR8aCVq3DWlQYnKVRLX16b/MMn2ogAjzZcqnzGqG44oh++RPsYKUhK4UTapJTqEmPzpkhGrailo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=pYyRL7cI; arc=none smtp.client-ip=185.70.40.138
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1705744666; x=1706003866;
+	bh=ctT1Dh+pp05yAwHSySMlMDCmpTuJiBDyOZm4bGAOnd0=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=pYyRL7cIdRdBAA6YqRZO3iNLrQLBMxIntsgJB68GiR8K2XoO4+TGrtTyUvkLDl4+3
+	 X0ta9GEppgeEymZsYOArrHN/SEnCBmaGksealrXOGyUfpkU0pvraegwThHGK6mb+Qb
+	 Sir7LIb1nyg4FlJz/UALDwstMSPBmkBcWP15WFJjg+NKSvFTgaZ08K+5sQ453HAYRw
+	 NKZhLYjtSWbwwMcx/8puwsvuyjhtlKJbLC5l9KKUzSTsLKE8WJtaQMXqmRDXaO47iL
+	 Vjgjuoh7D7btZjm6PKC5KfkTKTjsqdsa77623LRqfvWB6UywURTguKcd1olBxPrrfK
+	 JWrHqJa7FNJWg==
+Date: Sat, 20 Jan 2024 09:57:27 +0000
+To: linux-kernel@vger.kernel.org
+From: Raymond Hackley <raymondhackley@protonmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>, Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: [PATCH v3 0/3] arm64: dts: qcom: msm8916-samsung-fortuna: Add initial device trees
+Message-ID: <20240120095715.13689-1-raymondhackley@protonmail.com>
+Feedback-ID: 49437091:user:proton
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240120-expressatt-gpio-keys-v1-1-4da7e37440b1@gmail.com>
-X-B4-Tracking: v=1; b=H4sIACKIq2UC/x2MWwqAIBAAryL73YLak64SfYRttQQWrkQR3j3pc
- 2BmXhAKTAK9eiHQxcKHz2AKBW6b/ErIc2aw2lbaWI10n4FEphhxPfnAnR5B17i608vcmpIgp1l
- Z+P63w5jSBwpOfn9mAAAA
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Rudraksha Gupta <guptarud@gmail.com>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1705740324; l=2136;
- i=guptarud@gmail.com; s=20240120; h=from:subject:message-id;
- bh=T+B5s38HvE5wvfTx+enY1qi1SBEpEVBTYASUCLQBqwU=;
- b=5UsFmbupML19LrX80fkEWOLZlRS9ScDP+D8wWQsRQdb5oi45aWI0aU0X8kJPWiAA2zsSUDwt8
- JJWsV1VM4FBCOU6k8dRT6Emu/ieTQkcfTXdNy7HOfdTvgUn6zzY5diW
-X-Developer-Key: i=guptarud@gmail.com; a=ed25519;
- pk=RGmug3GRHS4XYTXDcT2VrlTGXlEF2gY4L9/swGIU1ko=
-X-Endpoint-Received:
- by B4 Relay for guptarud@gmail.com/20240120 with auth_id=114
-X-Original-From: Rudraksha Gupta <guptarud@gmail.com>
-Reply-To: <guptarud@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-From: Rudraksha Gupta <guptarud@gmail.com>
+Samsung Galaxy Core Prime and Grand Prime are phones based on MSM8916.
+They are similar to the other Samsung devices based on MSM8916 with only a
+few minor differences.
 
-Adds volume up, volume down, and home keys to expressatt
+This initial commit adds support for:
+ - fortuna3g (SM-G530H)
+ - gprimeltecan (SM-G530W)
+ - grandprimelte (SM-G530FZ)
+ - rossa (SM-G360G)
 
-Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
----
-Adds volume up, volume down, and home keys to expressatt.
+The device trees contain initial support with:
+ - GPIO keys
+ - Regulator haptic
+ - SDHCI (internal and external storage)
+ - USB Device Mode
+ - UART (on USB connector via the SM5502/SM5504 MUIC)
+ - WCNSS (WiFi/BT)
+ - Regulators
+ - QDSP6 audio
+ - Speaker/earpiece/headphones/microphones via digital/analog codec in
+   MSM8916/PM8916
+ - WWAN Internet via BAM-DMUX
 
-Applies on top of 5c903b859aaced384c0cd01d515f3e43a115fd9e
----
- .../dts/qcom/qcom-msm8960-samsung-expressatt.dts   | 40 ++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+There are different variants of Core Prime and Grand Prime, with some
+differences in accelerometer, NFC and panel.
+Core Prime and Grand Prime are similar, with some differences in MUIC,
+panel and touchscreen.
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
-index 1a5116336ff0..47e0e26ad9f0 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
-@@ -4,6 +4,9 @@
- 
- #include "qcom-msm8960.dtsi"
- #include "pm8921.dtsi"
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+#include <dt-bindings/input/gpio-keys.h>
- 
- / {
- 	model = "Samsung Galaxy Express SGH-I437";
-@@ -19,6 +22,36 @@ aliases {
- 	chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&gpio_keys_pin_a>;
-+
-+		key-home {
-+			label = "Home";
-+			gpios = <&msmgpio 40 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <5>;
-+			linux,code = <KEY_HOMEPAGE>;
-+			wakeup-event-action = <EV_ACT_ASSERTED>;
-+			wakeup-source;
-+		};
-+
-+		key-volume-up {
-+			label = "Volume Up";
-+			gpios = <&msmgpio 50 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <5>;
-+			linux,code = <KEY_VOLUMEUP>;
-+		};
-+
-+		key-volume-down {
-+			label = "Volume Down";
-+			gpios = <&msmgpio 81 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <5>;
-+			linux,code = <KEY_VOLUMEDOWN>;
-+		};
-+	};
- };
- 
- &gsbi5 {
-@@ -83,6 +116,13 @@ clk-pins {
- 			bias-disable;
- 		};
- 	};
-+
-+	gpio_keys_pin_a: gpio-keys-active-state {
-+		pins = "gpio40", "gpio50", "gpio81";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-disable;
-+	};
- };
- 
- &pm8921 {
+The common parts are shared in
+msm8916-samsung-fortuna-common.dtsi and msm8916-samsung-rossa-common.dtsi
+to reduce duplication.
 
 ---
-base-commit: 9d64bf433c53cab2f48a3fff7a1f2a696bc5229a
-change-id: 20240120-expressatt-gpio-keys-c6c580fd713e
-
-Best regards,
--- 
-Rudraksha Gupta <guptarud@gmail.com>
+v3: Drop fortunaltezt and heatqlte. Add sound and modem.
+    /delete-node/ &muic; in rossa-common.dtsi
+v2: Use interrupt-extended. Drop fuelgauge, sensors and NFC for now.
 
 
