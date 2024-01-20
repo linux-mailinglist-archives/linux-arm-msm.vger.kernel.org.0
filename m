@@ -1,116 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-7650-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7651-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 801F383326E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jan 2024 03:32:02 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C57E1833347
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jan 2024 09:45:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0E6511F22005
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jan 2024 02:32:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 781A71F2279D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jan 2024 08:45:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9272310E8;
-	Sat, 20 Jan 2024 02:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF2A5210B;
+	Sat, 20 Jan 2024 08:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="n8mFTpUu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jwTJDo9U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C4410E1
-	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Jan 2024 02:31:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7133D7F;
+	Sat, 20 Jan 2024 08:45:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705717918; cv=none; b=eMJ4cFrfPVUMpCvEppYs1Apnu6C2pxrAGRV2I2IevdkUc/2UBkkUACVuyb+c67wX67xoICyLMhdyBcQMyfNzszkZjog1gCNh0+KJF9t3Xodh5kgYQtCdswoFLAksMwRCGm+20BEOKykYw4p5CVmtBgxAI/iILVwL0pqmL1hbUXA=
+	t=1705740325; cv=none; b=nSmUePOuCXIzJyG8UXKmn3ROKuaJnPr+P5DmSz86M3n8FZxKsuWN+JPk2GIlt15KIrsmqR3eiHKwErH2KaHv3MzyNflzUnBtn22kzK6mccKCiXd5fHRa1xzKEsr8744YQ3Oud408euhdRIhLdvKO4vZqXGuSMwBFmiQJ5WqBNU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705717918; c=relaxed/simple;
-	bh=y7i8+e2UFcVTVb4JKzkr42WjXtrlw8WHyR82aAGSFKs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GM6d/9QsXOcsfFhSQN/68YgLGFhKgGPnRGvo5hUTC3q7E0zgSpc27jtm+3ogtLg7hxGGJOytonRBfm5OVOaSMOxBmGQQMm351hmqndF16xC6yIV7vbdXMI6oipHNx61/noQELeTgsw1FVgvNrkWa5TIwl0kB7CBQUet4PI/pSL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=n8mFTpUu; arc=none smtp.client-ip=209.85.167.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-3bbbc6bcc78so1182012b6e.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jan 2024 18:31:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705717916; x=1706322716; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=nyeMNz1BdLz2Zw+KyXoni/RwA4cvZUvIGymiJ063oGg=;
-        b=n8mFTpUug4eriK/XbX7K8/PpmbR4d4SzKrJC9GZXrdqieyJMqeS2quTDV8efKBpaz5
-         h0FlQiVWABP1t5vqeSexQAn6SCySm8ilkMqJz/ezO9gWKvfKfuOmk8CIlmILrXIZu+eu
-         2do1tiaRoA2Sc8wM2CgHdTXcYx4g0AbasLldZGzPjPCR7pZcyHjNl3wKeHKeGl+RHwIv
-         t/GwkyL9JZxgs8h0WFT6qLBUyukoWlhd4IUBU/5MDdQ6x+sag54ht5c5DhiwyLyuuStX
-         eDVBGSFybw9+UOvEVgxB1CWxtcrGh3jDBPlkMboWOTSnxZyfldqZFhpjYt5yoZQ5F/xX
-         KL7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705717916; x=1706322716;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nyeMNz1BdLz2Zw+KyXoni/RwA4cvZUvIGymiJ063oGg=;
-        b=pRF78/gb7gwoUvb5KSQuoySqYaFzMutceh5KlM4FefpnBqMFDoCxnho0ohJ6tCP5nH
-         iN4iZQLTTMHLIRxZOZ2Se5t4enl3tRD4Y51in4g+SIOQ+SUy1B/RO25UxoR7R3UmZWGw
-         kOu1y6BaVNo5aB2XyEy4GTIOE+dNvp9ETO3l/TIyPV+jOJCgrh7WfHmGrEuXgK1ImUsP
-         hHAfR7fujAIsx6LWulfJ6jFwQhjJ15eT9RdK+8DAqD0boeYXfmsbk7lgHG/bzX4La8XU
-         7iKm+l7avthjDWpFJtvQx7gX62MlCBQRxtBsF8ktAW+ea+K93itqFSz4zeLn1gmMcXI1
-         WGfw==
-X-Gm-Message-State: AOJu0YwLPrlc4npxMSq704QLbWkFtS8gMHkDQs9mTlkU8L3PbtV4GSnX
-	DHJkeBESCwKyYQhB0Lx8bX/VLPZkmAYINvOtCnEcJ1Gu9J181rVEu/pYt2AxyqjD4OwKl1M/g/0
-	0+S3WLvW1I1LjY0hDwJjs+QGPNgeQN513RR1+aQ==
-X-Google-Smtp-Source: AGHT+IFOygdynqBpB7ozJkCg4VxzW6Dv2HATIwmVGSa+o7iXXznDuFaSsdJ1/FwKhms3ctO2S0y/hmwnqSi00tKbTuI=
-X-Received: by 2002:a05:6808:1595:b0:3bc:15eb:b9bc with SMTP id
- t21-20020a056808159500b003bc15ebb9bcmr900500oiw.73.1705717916033; Fri, 19 Jan
- 2024 18:31:56 -0800 (PST)
+	s=arc-20240116; t=1705740325; c=relaxed/simple;
+	bh=a1DPUX1cmvhpZrjctxn5ECPNE3NiEQ76qsFCiU+2mGg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Z9aFn6zShcd4NfTcK+XtChSmxBa+Ojqfu7DYtWIMT9itj8qXa8qHj/mzKGsYXUz8IF+ouDyAIQZNdngLdvVY/2bbRRxP9HPwM02z3c9pK1pZT42s0a1PM+IG6DnBq/VacCANKyYrpZ5if+/IXLCRCK2y+7UW3yFnAW3E0+1P9P8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jwTJDo9U; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id F051EC433C7;
+	Sat, 20 Jan 2024 08:45:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1705740325;
+	bh=a1DPUX1cmvhpZrjctxn5ECPNE3NiEQ76qsFCiU+2mGg=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=jwTJDo9UY2tJCPoVoo/tdIHgO65sMPVzuwMHYERjh575UroXUF7WUqOuueuQDGjsF
+	 8ohGWzKRWej9TyQ8v0sR+O2JoYNMBs4D4L7KxCfdjdAEHYlgdy1pveZhf0vT49QK0V
+	 JCstGOqY+VSKRSPTRv8kddGiMiNm8zNOs1B+lRWwMQxoWNDpNi1jI/3ckmRq6KTXWB
+	 NzSJ8H+sJJ/qaGlyAnoeQRu4hHXxx2u4S8d1s3O5s0gvUConMKWMYbO2a506pyZTII
+	 qAYoLQjddkfbT1nbueDp97lOPL2S3q20CFEhYckm0p6rylrbPd8yfo+EjoXfN6Zdf/
+	 O96NLVdmLgkng==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D419EC47258;
+	Sat, 20 Jan 2024 08:45:24 +0000 (UTC)
+From: Rudraksha Gupta via B4 Relay <devnull+guptarud.gmail.com@kernel.org>
+Date: Sat, 20 Jan 2024 00:45:23 -0800
+Subject: [PATCH] ARM: dts: qcom: msm8960: expressatt: Add gpio-keys
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231229225650.912751-1-dmitry.baryshkov@linaro.org>
- <20231229225650.912751-14-dmitry.baryshkov@linaro.org> <b5f571c6-dcf6-c416-ca86-fdbd0514676b@quicinc.com>
-In-Reply-To: <b5f571c6-dcf6-c416-ca86-fdbd0514676b@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 20 Jan 2024 04:31:45 +0200
-Message-ID: <CAA8EJpqvyOsPErUE08mcCAcG41zRJS+Q6qQi83-ZNCBcwv3kCw@mail.gmail.com>
-Subject: Re: [PATCH 13/14] drm/msm/dp: move next_bridge handling to dp_display
-To: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sankeerth Billakanti <quic_sbillaka@quicinc.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Stephen Boyd <swboyd@chromium.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240120-expressatt-gpio-keys-v1-1-4da7e37440b1@gmail.com>
+X-B4-Tracking: v=1; b=H4sIACKIq2UC/x2MWwqAIBAAryL73YLak64SfYRttQQWrkQR3j3pc
+ 2BmXhAKTAK9eiHQxcKHz2AKBW6b/ErIc2aw2lbaWI10n4FEphhxPfnAnR5B17i608vcmpIgp1l
+ Z+P63w5jSBwpOfn9mAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Rudraksha Gupta <guptarud@gmail.com>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1705740324; l=2136;
+ i=guptarud@gmail.com; s=20240120; h=from:subject:message-id;
+ bh=T+B5s38HvE5wvfTx+enY1qi1SBEpEVBTYASUCLQBqwU=;
+ b=5UsFmbupML19LrX80fkEWOLZlRS9ScDP+D8wWQsRQdb5oi45aWI0aU0X8kJPWiAA2zsSUDwt8
+ JJWsV1VM4FBCOU6k8dRT6Emu/ieTQkcfTXdNy7HOfdTvgUn6zzY5diW
+X-Developer-Key: i=guptarud@gmail.com; a=ed25519;
+ pk=RGmug3GRHS4XYTXDcT2VrlTGXlEF2gY4L9/swGIU1ko=
+X-Endpoint-Received:
+ by B4 Relay for guptarud@gmail.com/20240120 with auth_id=114
+X-Original-From: Rudraksha Gupta <guptarud@gmail.com>
+Reply-To: <guptarud@gmail.com>
 
-On Fri, 19 Jan 2024 at 23:14, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
->
-> Dmitry,
->
-> I am testing this patch serial with msm-next branch.
->
-> This patch cause system crash during booting up for me.
->
-> Is this patch work for you?
+From: Rudraksha Gupta <guptarud@gmail.com>
 
-Yes, tested on top of linux-next. However I only tested it with
-DP-over-USBC. What is your testcase? Could you please share the crash
-log?
+Adds volume up, volume down, and home keys to expressatt
 
-> On 12/29/2023 2:56 PM, Dmitry Baryshkov wrote:
-> > Remove two levels of indirection and fetch next bridge directly in
-> > dp_display_probe_tail().
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >   drivers/gpu/drm/msm/dp/dp_display.c | 42 +++++++++--------------------
-> >   drivers/gpu/drm/msm/dp/dp_parser.c  | 14 ----------
-> >   drivers/gpu/drm/msm/dp/dp_parser.h  | 14 ----------
-> >   3 files changed, 13 insertions(+), 57 deletions(-)
+Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
+---
+Adds volume up, volume down, and home keys to expressatt.
 
+Applies on top of 5c903b859aaced384c0cd01d515f3e43a115fd9e
+---
+ .../dts/qcom/qcom-msm8960-samsung-expressatt.dts   | 40 ++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
+index 1a5116336ff0..47e0e26ad9f0 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
+@@ -4,6 +4,9 @@
+ 
+ #include "qcom-msm8960.dtsi"
+ #include "pm8921.dtsi"
++#include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
++#include <dt-bindings/input/gpio-keys.h>
+ 
+ / {
+ 	model = "Samsung Galaxy Express SGH-I437";
+@@ -19,6 +22,36 @@ aliases {
+ 	chosen {
+ 		stdout-path = "serial0:115200n8";
+ 	};
++
++	gpio-keys {
++		compatible = "gpio-keys";
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&gpio_keys_pin_a>;
++
++		key-home {
++			label = "Home";
++			gpios = <&msmgpio 40 GPIO_ACTIVE_LOW>;
++			debounce-interval = <5>;
++			linux,code = <KEY_HOMEPAGE>;
++			wakeup-event-action = <EV_ACT_ASSERTED>;
++			wakeup-source;
++		};
++
++		key-volume-up {
++			label = "Volume Up";
++			gpios = <&msmgpio 50 GPIO_ACTIVE_LOW>;
++			debounce-interval = <5>;
++			linux,code = <KEY_VOLUMEUP>;
++		};
++
++		key-volume-down {
++			label = "Volume Down";
++			gpios = <&msmgpio 81 GPIO_ACTIVE_LOW>;
++			debounce-interval = <5>;
++			linux,code = <KEY_VOLUMEDOWN>;
++		};
++	};
+ };
+ 
+ &gsbi5 {
+@@ -83,6 +116,13 @@ clk-pins {
+ 			bias-disable;
+ 		};
+ 	};
++
++	gpio_keys_pin_a: gpio-keys-active-state {
++		pins = "gpio40", "gpio50", "gpio81";
++		function = "gpio";
++		drive-strength = <8>;
++		bias-disable;
++	};
+ };
+ 
+ &pm8921 {
+
+---
+base-commit: 9d64bf433c53cab2f48a3fff7a1f2a696bc5229a
+change-id: 20240120-expressatt-gpio-keys-c6c580fd713e
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Rudraksha Gupta <guptarud@gmail.com>
+
 
