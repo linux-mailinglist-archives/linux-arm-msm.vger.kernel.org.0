@@ -1,120 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-7672-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9AA3F835428
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jan 2024 03:07:13 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9DD8883551D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jan 2024 11:17:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0B46AB2136C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jan 2024 02:07:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4532E1F22081
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jan 2024 10:17:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 831FF3611E;
-	Sun, 21 Jan 2024 02:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03FE0364BB;
+	Sun, 21 Jan 2024 10:17:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QauSL30y"
+	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="pEEvcWQ0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702153610A;
-	Sun, 21 Jan 2024 02:07:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6DD364B6;
+	Sun, 21 Jan 2024 10:17:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705802825; cv=none; b=W4pvHIJ1KSSJqphLi6mD7L/5Sb4Iy+DpciKxckJbVIntX6+bSIAnbjAwyv3Gk8VCQRoQrDu/aJjBZU0HsbpX4bGAMJyjXP1fkTre4i5XDV4jZYy+tXsIhATeiCpmyVrWWRgSuVLNygarLWsijKqMfYnlIK7dQ+AEfbI9X+s6dRg=
+	t=1705832244; cv=none; b=bhLAiVDj06XLqEEesfYZh+nXYwWOE5aCj2gjvdIFuwwr5kymYRiaX48kof8YixcYW9VkeBaLuxuFqQZg7sOf/xNojMKBMXj08DqSsGutiHVXNUTg4qYfLIj0H8yEm6jL0W6dODGNPK4ko6/2Tb0pXviDP276h7dwARkz0l5dAW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705802825; c=relaxed/simple;
-	bh=SYFDB18YSASADrg7kQUk2ZYfq0PEGYsVZP7Xd6Nm+3s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=am3dEsel1rtRy8a6+UNlY8dfpXNX1ORlF34ZPdlESEiGEor+C+cwbXIWHjN7JYT/nzdZIRFLYg7WGZFThlr0eGe28ZHHG4FmvTKFifIaKbaJicMcPJPd0eIoOERAhjWDiWTDwRY7nGJY3M8lPbbCMOdSk+1+92YBlo3yvqPgyEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QauSL30y; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1705802824; x=1737338824;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=SYFDB18YSASADrg7kQUk2ZYfq0PEGYsVZP7Xd6Nm+3s=;
-  b=QauSL30yLYcKxEAMUR7n5YsiVGxmCsd7mdHHCr779ThhMYo7CX9Guq2L
-   ihkgIKa2uLy+MB7rs5rSUdSqoe51cB4T9dxJkO1jQamfBGjMGnHctvOSA
-   DhtwUSDaakiYBDuNMWCjK/qX9jezgdygHKRUAr0xfme1Pj9unTbFW/MJ6
-   mz0QSg2Y7hXfE01hKQtJKVAL3YhW9FlD37JUl+hJRAMgAeuF7F4gFd4Oq
-   g9HalXhkXlVsn/nFjFX8Ih1xMCc4PBLlfK1ARjEwRmisj9L2lTlfg8MdU
-   wK+UzEehzuaLz0/tQFl50++S0ppM+pYQf+gVKPRz+vMyR5QaPBXXlNZDt
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10959"; a="863136"
-X-IronPort-AV: E=Sophos;i="6.05,209,1701158400"; 
-   d="scan'208";a="863136"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jan 2024 18:07:03 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10959"; a="958419171"
-X-IronPort-AV: E=Sophos;i="6.05,209,1701158400"; 
-   d="scan'208";a="958419171"
-Received: from lkp-server01.sh.intel.com (HELO 961aaaa5b03c) ([10.239.97.150])
-  by orsmga005.jf.intel.com with ESMTP; 20 Jan 2024 18:06:58 -0800
-Received: from kbuild by 961aaaa5b03c with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1rRNEe-0005bG-1u;
-	Sun, 21 Jan 2024 02:06:56 +0000
-Date: Sun, 21 Jan 2024 10:05:56 +0800
-From: kernel test robot <lkp@intel.com>
-To: Amrit Anand <quic_amrianan@quicinc.com>, robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-	agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org
-Cc: oe-kbuild-all@lists.linux.dev, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	kernel@quicinc.com, Amrit Anand <quic_amrianan@quicinc.com>,
-	Elliot Berman <quic_eberman@quicinc.com>
-Subject: Re: [PATCH 2/2] dt-bindings: hwinfo: Add Qualcomm's board-id types
-Message-ID: <202401210920.aPy2DJwj-lkp@intel.com>
-References: <1705749649-4708-3-git-send-email-quic_amrianan@quicinc.com>
+	s=arc-20240116; t=1705832244; c=relaxed/simple;
+	bh=YHbqyJQreQjpIdCv/xdB+UMZpHf7pPSdmQaD4vNzeBA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=cWM/2b038OhMdRMnsf67zuIyydcAbllOCbyWUTcD/IkeBuqjhuBgI7Hs35mJOITuF30mM9ciQenALcdacE1vyk5tt6RaPS1YkZUb+iVUn5vd7xPcX5z9fPkeOTB9n9Y9sFckProNofcCqz2wDiFoWy3ZvAo2HFfNMSSpPJoxykg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz; spf=pass smtp.mailfrom=z3ntu.xyz; dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b=pEEvcWQ0; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=z3ntu.xyz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
+	t=1705831806; bh=YHbqyJQreQjpIdCv/xdB+UMZpHf7pPSdmQaD4vNzeBA=;
+	h=From:Date:Subject:To:Cc;
+	b=pEEvcWQ0E/38SrPQxa2kg/YMC8CPJLNEy8137/gY5/B8ftmvxf+p+30kYj7UMF06z
+	 Wnl5tU1NFnj5JYxAV8UQhBrqkwK72TRMExvuEQOlJP4yaMGtSV8KW6iyCQwVxAcXJG
+	 Z65Owww+ohDe8AXK8qBL+u62OdQfKmO6qvbSupwA=
+From: Luca Weiss <luca@z3ntu.xyz>
+Date: Sun, 21 Jan 2024 11:09:57 +0100
+Subject: [PATCH] ARM: dts: qcom: apq8026-lg-lenok: Add vibrator support
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1705749649-4708-3-git-send-email-quic_amrianan@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240121-lenok-vibrator-v1-1-d4703ff92021@z3ntu.xyz>
+X-B4-Tracking: v=1; b=H4sIAHTtrGUC/x3MQQqAIBBA0avIrBPUiqCrRAutqYZCYwwJxLsnL
+ d/i/wwRmTDCKDIwJooUfIVuBCyH9TtKWqvBKNMpbbS80IdTJnJsn8Bywd7poe3QOAc1uhk3ev/
+ hNJfyAUe/To5gAAAA
+To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1987; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=YHbqyJQreQjpIdCv/xdB+UMZpHf7pPSdmQaD4vNzeBA=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBlrO18EiJJig9UpXbiC3yfijE5aygqcYrIK8vaD
+ xMsS4m6bzKJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZaztfAAKCRBy2EO4nU3X
+ VuHjEADNf2NzYoxBnK25D6x/G2Z7NaVDjP9tGA1LOgRSI5mo1PG9N1DBiQOM6Ik5O8ccRYCTHjd
+ B6sTzY3CFQAM62MuA7K5LhiyhKj22o9FiT1Gf0x3onrgkZr8rw1HzQjlh8kdSjUMyCFHwAne4/H
+ nh/mO2zyeVhMCp1QcbdEErEWZmYcVNsXuNG2Y2aHlxjxzM7TxYx1K9qk5XxVNxYsHKwufpYcxGe
+ HKjuf0QSAd96t6zztZvXKlb+SqRnqDn6eyYIwTsdvCRasD7WBhU9gqUdzRD/VYJFHjJyKANCVaX
+ biAYzmUmAdzUAUZxcOvxznN76Oz5xjHbAQncq8UOic2/Z/ctiIVSApu7gcCWJiIFQ7osM50IY65
+ V9BvhdfqwwRjigE0B5Xs/lJ17ersRAkL/RhLd73D268buSdflswNu+kInFKy15d580AKDdzOFZo
+ FyTSS6Z+rx8x3Ej/q0RU3njP+Lsi2qgQN187My3q47VbMYUtvfhd73FUhjHSagEEUUZl/Ek0E6v
+ 2wwrOuLlongpMRQ4ZXynvWn15rLlpoXDxbVg2QMsORoc6zHTOpjqu+TFMpkHrysHFOlj4Di1vx0
+ OH5KvKzS/ydFhb1VjljYkL7s2mZdlB+6H8ye+fRHTwjtltZavJXAqtq0eoQxgW4izrTBJpUssJE
+ FWTnEHeDxjnILqA==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 
-Hi Amrit,
+This device has a vibrator attached to the CAMSS_GP0_CLK, use clk-pwm
+and pwm-vibrator to make the vibrator work.
 
-kernel test robot noticed the following build warnings:
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+ arch/arm/boot/dts/qcom/qcom-apq8026-lg-lenok.dts | 38 ++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
-[auto build test WARNING on robh/for-next]
-[also build test WARNING on linus/master v6.7 next-20240119]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+diff --git a/arch/arm/boot/dts/qcom/qcom-apq8026-lg-lenok.dts b/arch/arm/boot/dts/qcom/qcom-apq8026-lg-lenok.dts
+index 0a1fd5eb3c6d..a70de21bf139 100644
+--- a/arch/arm/boot/dts/qcom/qcom-apq8026-lg-lenok.dts
++++ b/arch/arm/boot/dts/qcom/qcom-apq8026-lg-lenok.dts
+@@ -7,6 +7,7 @@
+ 
+ #include "qcom-msm8226.dtsi"
+ #include "pm8226.dtsi"
++#include <dt-bindings/clock/qcom,mmcc-msm8974.h>
+ 
+ /delete-node/ &adsp_region;
+ 
+@@ -56,6 +57,29 @@ vreg_wlan: wlan-regulator {
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&wlan_regulator_default_state>;
+ 	};
++
++	pwm_vibrator: pwm {
++		compatible = "clk-pwm";
++		clocks = <&mmcc CAMSS_GP0_CLK>;
++
++		pinctrl-0 = <&vibrator_clk_default_state>;
++		pinctrl-names = "default";
++
++		#pwm-cells = <2>;
++	};
++
++	vibrator {
++		compatible = "pwm-vibrator";
++
++		pwms = <&pwm_vibrator 0 10000>;
++		pwm-names = "enable";
++
++		vcc-supply = <&pm8226_l28>;
++		enable-gpios = <&tlmm 62 GPIO_ACTIVE_HIGH>;
++
++		pinctrl-0 = <&vibrator_en_default_state>;
++		pinctrl-names = "default";
++	};
+ };
+ 
+ &adsp {
+@@ -330,6 +354,20 @@ reset-pins {
+ 		};
+ 	};
+ 
++	vibrator_clk_default_state: vibrator-clk-default-state {
++		pins = "gpio33";
++		function = "gp0_clk";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	vibrator_en_default_state: vibrator-en-default-state {
++		pins = "gpio62";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
+ 	wlan_hostwake_default_state: wlan-hostwake-default-state {
+ 		pins = "gpio37";
+ 		function = "gpio";
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Amrit-Anand/dt-bindings-hwinfo-Introduce-board-id/20240120-192358
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/1705749649-4708-3-git-send-email-quic_amrianan%40quicinc.com
-patch subject: [PATCH 2/2] dt-bindings: hwinfo: Add Qualcomm's board-id types
-compiler: loongarch64-linux-gcc (GCC) 13.2.0
-reproduce: (https://download.01.org/0day-ci/archive/20240121/202401210920.aPy2DJwj-lkp@intel.com/reproduce)
+---
+base-commit: ad5c60d66016e544c51ed98635a74073f761f45d
+change-id: 20240121-lenok-vibrator-ce5b1734e2bb
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202401210920.aPy2DJwj-lkp@intel.com/
-
-dtcheck warnings: (new ones prefixed by >>)
->> Documentation/devicetree/bindings/hwinfo/board-id.yaml:23:11: [error] string value is redundantly quoted with any quotes (quoted-strings)
-   Documentation/devicetree/bindings/hwinfo/board-id.yaml:25:11: [error] string value is redundantly quoted with any quotes (quoted-strings)
->> Documentation/devicetree/bindings/hwinfo/qcom,board-id.yaml:70:4: [warning] wrong indentation: expected 2 but found 3 (indentation)
-
-vim +70 Documentation/devicetree/bindings/hwinfo/qcom,board-id.yaml
-
-    68	
-    69	examples:
-  > 70	   - |
-
+Best regards,
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Luca Weiss <luca@z3ntu.xyz>
+
 
