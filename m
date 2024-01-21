@@ -1,152 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-7678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8AB828355D2
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jan 2024 13:54:01 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E3A04835669
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jan 2024 16:41:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 14BC3B20F8D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jan 2024 12:53:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 95ED21F22DD3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jan 2024 15:41:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F3303714C;
-	Sun, 21 Jan 2024 12:53:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1051A376E7;
+	Sun, 21 Jan 2024 15:40:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="YwjX9TtZ"
+	dkim=pass (1024-bit key) header.d=rong.moe header.i=i@rong.moe header.b="1yQxYeHB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from APC01-TYZ-obe.outbound.protection.outlook.com (mail-tyzapc01olkn2103.outbound.protection.outlook.com [40.92.107.103])
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1F8364DE;
-	Sun, 21 Jan 2024 12:53:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.107.103
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE9C2AF08;
+	Sun, 21 Jan 2024 15:40:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705841630; cv=fail; b=OOdJ5qkX2TsnfeP8NkAe5CU1Zs8KIYp6ebzVw9wmsHvqg0UhUsdvlUHfR+sQbg6XWChpMJJ43x/1Maf11CH5HgQakPmsQSGbErmeHiBvJ4tfEnJjYMGo1/WE2Oe6HXI0mzqosyL5l6KJYdN8wUEuuwDVOon6fBdcmYabZ/Honxo=
+	t=1705851657; cv=pass; b=N7FfEBSElyBJPm0pEEaZyKEcUW8f8EZWCzeCDH3vZ08lxj7fI3EW4+8flKl8qGQCv+4JDIW37ryIpoE7Yvx0hFs6XrRrugtadk/PctKeJUTJXngifL1R8BklpI2tH9v3isue+yF/XgbuLEM/yrXlRKd6b7wxSo07ic9/cmgzjAU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705841630; c=relaxed/simple;
-	bh=VxZmDOoR3xLARAU3Ux+V/1/evUili5ak2uEsv32+E1w=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=AfuPgvf1BEWU3CIeowjYBJGRyO8/cBUbHQ9C4TZkir2cQ1EC8diwkOvNwZoges1krAlmB3cDkLgZnNOOS2taeWC2cpJsa8CAVpqDEa990PdiVgPljqU5BJ+HlELzb+wwjxpKkIxeJ0AHexKKYeCq9y7BDGxt4zWBSWttkoZvJK4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=YwjX9TtZ; arc=fail smtp.client-ip=40.92.107.103
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=dY7VbF9T8f0B0JU7+MFGSdYQwMOq4dMvpBQip4aUFTM9wQDBeJhRfogaQrTd6DPf7w0TQlg2we//Zq5KiH6+AHZVE+zfEjYjg2G9wRF4H86rC/EasUZIyNxZ+skBmmh3DDUfha0munQFshd6qdCkrmLxqjRViXZAk2hw0FuUneDtWphgTrNGuhea0VxHsg7UNQ9PS01sAc0FAaGgmx/6EBRj0ZkQ2YeGgM0pv9T5mP3597CUr7FZF25ejxfMcGpiKoqDWdwd9EfrWRoSY7RNltU8Ay6hO88SDgfC4RbiKYx0zoXv34c+D35A11mEl2OQ3hwU13+oCtlyAWU14+pRhw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZlNulvPlUtsfCmjWal2T/iKOa6dTgiIQqxi0OOuGoss=;
- b=IJ8IB4IBfpTMj7UEAQ3iVYFkYRFiaNMwUL421vV1T9RU17U+Yo+g7KBqqp7zZ+e8E7P4wS7aUvDVWXYo2MIhTuoLm76mGJIUzVNABOFqiJJZaNXtu3xMDzPQZFwhWg2bYSQG2xSqADACDfjLVB2OXP1j81O7UOtgxOqIxMZ/Oj6aiNQhSe49N4tBxoze1pfeam/e65C2lFU9m73M8urQvkGKMsN40TyGIly6i1PBVvCvEnbjO9ctjSLqsQwE6Y4QkrSN+fC4NXspFMM42mdTChQd/IPLYzNc2K47rnrL18mdfOOkZNbfrgmt7gmiIWfZkEmHtKxwWMz78rwWLTTImw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZlNulvPlUtsfCmjWal2T/iKOa6dTgiIQqxi0OOuGoss=;
- b=YwjX9TtZSohjAdCdKk8uR7GvRE1KV59MZu0xlrAJTIFWL+pyvG8qcJEQjpRfvVg5kmR/NJ30hyieyE9S6bdJkyQ+1yo2O0qocyMDtlsRuVSysbK3FY5TpoxHgas03bBZobaht0G3dPCdyVGDkP/nHob35TfYALoodg1bmGsI+EAETBOqQUOJd6PCCJVRZM4KwQ4N3hUDyaIGxLeikAXgNS0gVwGdjyF2gqzwwyeFcvTEHrDHeBF3XeMPPBHYOAj0WyZm6ZKzMkw9an6dn9NR3LJG1PlJfrT4diiT82YU3g6+wz9cQZt/BeC8TO/3XHaABEr0U86ryZFrX9vFNmXNUg==
-Received: from TYZPR01MB5556.apcprd01.prod.exchangelabs.com
- (2603:1096:400:363::9) by OSQPR01MB6693.apcprd01.prod.exchangelabs.com
- (2603:1096:604:273::14) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7202.31; Sun, 21 Jan
- 2024 12:53:44 +0000
-Received: from TYZPR01MB5556.apcprd01.prod.exchangelabs.com
- ([fe80::bcb7:50f4:7a16:4ec0]) by TYZPR01MB5556.apcprd01.prod.exchangelabs.com
- ([fe80::bcb7:50f4:7a16:4ec0%7]) with mapi id 15.20.7181.019; Sun, 21 Jan 2024
- 12:53:44 +0000
-From: Ziyang Huang <hzyitc@outlook.com>
-To: agross@kernel.org
-Cc: andersson@kernel.org,
-	konrad.dybcio@linaro.org,
-	robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org,
+	s=arc-20240116; t=1705851657; c=relaxed/simple;
+	bh=mcendhX41sLs3hGLvmwWKBRU/OfkcRs07IVpU5ByxiA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ozee5k0bHuGFRoJQO1CMoAjWPP54Oi2TrId6POWATt1goeYO+tKyLOo7lkgRzWZTLl994IkhOz/h4HRgT7SweaDvj9LbYScmpG7hszoqXP3EWoKRoANXRTtO8Hb6RzaWU6KYT09ukpkGpV4tVSqIgjMtNMAzgIghZfaiyZLUvNA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rong.moe; spf=pass smtp.mailfrom=rong.moe; dkim=pass (1024-bit key) header.d=rong.moe header.i=i@rong.moe header.b=1yQxYeHB; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rong.moe
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rong.moe
+Delivered-To: i@rong.moe
+ARC-Seal: i=1; a=rsa-sha256; t=1705851651; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=mICfz4Sy6jTWD8NaaOpMpzZhluNbfajlV68oCHh+mRsYfrbHvXHTPM6ckzXmh5ZNRQjA1I0cnYuFzut4mS3q+CCq0vB6QrFxpg4Q70d9MeNJHuSjmO1V4iC1rD3LuSVJyzs1s4NbNLh/Zi09qu8C20/pffPh9X/qlJT5XD+tG9M=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1705851651; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=FaXSxE+DeKQ1uc12aiGNQ3/0/j+vJ58Dysn2cELGty0=; 
+	b=auAtIJBzvcGlNt1ry9eybAOhWczJB+8Yccqjr60z+MEHLi8mohPRUORBZHgl4DUahKrjGOpeS4Wa6aThHcdcMFCZDSPr4yQP7iJlu0Dk9C4axW7KbcCCL5HGPGM2QtdL0SSKBk3NyDIrCsw+yCxMA0m9kpibrhdYlItQVy5KVp8=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=rong.moe;
+	spf=pass  smtp.mailfrom=i@rong.moe;
+	dmarc=pass header.from=<i@rong.moe>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1705851651;
+	s=zmail; d=rong.moe; i=i@rong.moe;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=FaXSxE+DeKQ1uc12aiGNQ3/0/j+vJ58Dysn2cELGty0=;
+	b=1yQxYeHBvS4YwF4I9Jkz1pfbqJFXMqXcttGDzr5CkBtQlZizdSgezfy8Ma06bPhd
+	kAm/qpYJeoSDVZf8jAp1YPvJ3wn4ssweCenGNkNZvwwnI1R53kBOlCpDhoCA1Sl+T6v
+	/txWSJsjwc7O9Nj98EQ0PcFa+wDQ7uwszN7fjAWs=
+Received: from tb.lan (182.118.232.129 [182.118.232.129]) by mx.zohomail.com
+	with SMTPS id 1705851648585954.8646897778475; Sun, 21 Jan 2024 07:40:48 -0800 (PST)
+From: Rong Zhang <i@rong.moe>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: Rong Zhang <i@rong.moe>,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Ziyang Huang <hzyitc@outlook.com>
-Subject: [PATCH] arm64: dts: qcom: ipq5018-rdp432-c2: correct board name
-Date: Sun, 21 Jan 2024 20:52:52 +0800
-Message-ID:
- <TYZPR01MB55564BE24CE8718DBD4644A2C9762@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
-X-Mailer: git-send-email 2.40.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-TMN: [1S07Ob5cJz+mYpdRcf1JOdizd+Xmm7WPT2/FF1OdynRGRzSdHqu0rw==]
-X-ClientProxiedBy: PH7PR17CA0038.namprd17.prod.outlook.com
- (2603:10b6:510:323::17) To TYZPR01MB5556.apcprd01.prod.exchangelabs.com
- (2603:1096:400:363::9)
-X-Microsoft-Original-Message-ID: <20240121125252.3330857-1-hzyitc@outlook.com>
+	Icenowy Zheng <uwu@icenowy.me>
+Subject: [PATCH 0/4] ARM: dts: qcom: msm8974: Add Samsung Galaxy S5 China support
+Date: Sun, 21 Jan 2024 23:39:55 +0800
+Message-ID: <20240121154010.168440-1-i@rong.moe>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYZPR01MB5556:EE_|OSQPR01MB6693:EE_
-X-MS-Office365-Filtering-Correlation-Id: 44f9446f-7f3c-450e-4d1f-08dc1a80000a
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	FOfwi88R3aWH/tK+v1XOaDs16cxHogPy7/c4y8ipzaTwGGdr+eUlLbdl4nyBi44SSmE8Om35GrguAgEUCmJNbSf4SeRoKrBh4w/hIuDF2vv8YlY3Jjhm3T2KOnuC8dhg6K3Rnd56BEscxr/9yKFmAR/izQjQr2tYVQqiEJoPt7PzPZj8/ZJFL2mp+2EYyqKeiARKNEV6xBzUJi3OOneokg4F+JV9P3/+kiaotMP+XgBi6rgscH45x2qywtClNcQ46nTl9Gfq9Bb//RSrYDGLw9jjRM2Rtc9Rev6GMJ55oifNh6CmYmzEHE7bEkPoStokPuXZ5f1G62UG/dp4geosErC7tPXD1oNmT5uBJAUAesPjP51EM6TNlwKNer8fEpg6P1GjQmzm95YWn4VqkFgBuUS7U/qcZ2903qiTOfsvNrDMklDFpCHQ40PyLTytxuyf5wy/luqdxktMrncuUyw60piMHD6LvjxnwcaaIbnO/y6kd8J5tTdDapcUijBWVammXOmBecvNfK1tj1Vw46UxmoypfjF1VS6IOphFflf9cvVyAmyC8IUL83/682y19J77YauYg+dj2/CbBD6c2oZRIuhOlAWhzGBVI62CG+SPojE=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?2ut+HlQ4HGzmmomp4JT6QTsGPsLGuTjIDafebAgf861tpUxgMgKQ+cj0ZlH5?=
- =?us-ascii?Q?MRCphJSrQCbTnliB72YzNY7k2zAwxy16RYOdGPKSTHS1va++GUyiwRqwEV0H?=
- =?us-ascii?Q?zm4kLgdtA86WmBQQhcCwx0mvlCidVJCdPS9axEGVFarNiEEtzX2SLY1UptM4?=
- =?us-ascii?Q?mlX30WREjdFzMOF22k18UeE+iF/Jgkk6HeLlm3Nygb7iBRCR/ALpdjOgdqoq?=
- =?us-ascii?Q?rT8F7JZuW9dsBHP+1Y2Jn4lOBFANRx/iDOarO9amWUw9ZaaIHrwkpYHXJffG?=
- =?us-ascii?Q?BJt8HRAsNY/drUdF+b+xApyr2OpBVMOIq5OtCqG5TvUkS4F8bcEQPdSy6ak9?=
- =?us-ascii?Q?ldmLGX2ntiGvi+QeogF81DY16x0goUcOQSfjA4Nuib8hBtYH7GIEGhIAHgpe?=
- =?us-ascii?Q?4tjyGQhUC3V9TXrtiRYIoPDBSeZMfJTBCUiAyd5TlK1zM/X5Yd9JQQoj2WJs?=
- =?us-ascii?Q?CIpLd/uLY+9eWymVrQJvEq03WKcIJ33VtI895IpSCzYofiCed1CH2ccElxPH?=
- =?us-ascii?Q?J7Cgrr+lWzGFxd9XZaZaAmbo3Y7RF1EzxzTYLcMUewoniPXTcgiYPus+2jnV?=
- =?us-ascii?Q?TcJ7K/0brpNc4n27Scdv/e+g65q3XHeRdzKgM2WkjbMsDgF4vYGs3Ug4miqi?=
- =?us-ascii?Q?5Ll3V7XsTkAiDGWNb3/HIEwmNGiHQKKNWN1K+Li4qb1Q3GntpyeTfwTVJloe?=
- =?us-ascii?Q?0MQdtbZ1UvaktE1qG6bWAJgA/2f8r9PBkWmK5kQ56UNyTt3xNAhDbup25Z9g?=
- =?us-ascii?Q?8HUM6HkGFe4+Jbz0GmlJGouoBhyRMvMr0rqZGfq9wlEDeP/2kJKrIDQwHFGd?=
- =?us-ascii?Q?wDZXuz3TEc4efmP7B3OhZwbTPZhImIjbGzqQAyoTF0FhW73h9Ib6vFztInX9?=
- =?us-ascii?Q?/A/SoQp2iW43KLHgyjoCzXRbBZZ+9PIsJJ/jw/ntS43qS4u+gk1miqW3Oh5b?=
- =?us-ascii?Q?yzB0tgW0k5V4jniuehhLZ4Bc2S01/iiQnANnPTnNaoGTCWtiGBY0KpJvsAXl?=
- =?us-ascii?Q?zXS+my6lrfI69vhcSTpZoLbAPBMTSHWbrHc/eJ/lcIijlayJU9lZqm0oNKH2?=
- =?us-ascii?Q?zX13pszVOs7G1ZfrhHuv9Th8SswgjmUzcGq9TMOJOAHZpwUCWZt48OJFCpoa?=
- =?us-ascii?Q?NvYS6Cwyx6Zslif85K5tMoG2s5y/tlAL/P3jxObjEKrzuZcjFTd/Yrwmc/Hv?=
- =?us-ascii?Q?vGCdLKFURVz8fJfeuSVTWjiUsBxvQaOtiGYRAlZgv2csmoyH2w/ujY7m5oCg?=
- =?us-ascii?Q?36sEYVQuwrJBvzByrbS7?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 44f9446f-7f3c-450e-4d1f-08dc1a80000a
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR01MB5556.apcprd01.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jan 2024 12:53:44.2870
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSQPR01MB6693
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-According to Qualcomm document:
-  MP03.1 is RDP404
-  RDP432 is MP03.5
+Samsung Galaxy S5 has some variants, currently, the only supported one
+is klte. Samsung Galaxy S5 China (kltechn) is the China edition of
+klte, and it has minor difference compared to klte. It can mostly work
+with klte device tree, with only LEDs and WiFi not working.
 
-Signed-off-by: Ziyang Huang <hzyitc@outlook.com>
----
- arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This patchset adds support for kltechn by fixing up the GPIO pins for
+the /i2c-gpio-led node (a corresponding label, "i2c_led_gpio", is also
+added), and adding the brcm,board-type property in the wifi@1 node of
+the klte device tree to allow loading the same firmware on all klte*
+variants.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
-index 074b78d7939c..f7e8b5af6b44 100644
---- a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0+ OR BSD-3-Clause
- /*
-- * IPQ5018 MP03.1-C2 board device tree source
-+ * IPQ5018 MP03.5-C2 board device tree source
-  *
-  * Copyright (c) 2023 The Linux Foundation. All rights reserved.
-  */
+Rong Zhang (4):
+  ARM: dts: qcom: msm8974-samsung-klte: Add label on /i2c-gpio-led
+  ARM: dts: qcom: msm8974-samsung-klte: Pin brcm,board-type in wifi
+  dt-bindings: arm: qcom: add Samsung Galaxy S5 China (kltechn)
+  ARM: dts: qcom: msm8974: Add device tree for Samsung Galaxy S5 China
+
+ Documentation/devicetree/bindings/arm/qcom.yaml  |  1 +
+ arch/arm/boot/dts/qcom/Makefile                  |  1 +
+ .../dts/qcom/qcom-msm8974pro-samsung-klte.dts    |  8 +++++++-
+ .../dts/qcom/qcom-msm8974pro-samsung-kltechn.dts | 16 ++++++++++++++++
+ 4 files changed, 25 insertions(+), 1 deletion(-)
+ create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8974pro-samsung-kltechn.dts
+
+
+base-commit: 7a396820222d6d4c02057f41658b162bdcdadd0e
 -- 
-2.40.1
+2.43.0
 
 
