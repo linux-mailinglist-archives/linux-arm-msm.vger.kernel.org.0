@@ -1,194 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-7677-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2FC1835549
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jan 2024 11:41:10 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8AB828355D2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jan 2024 13:54:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 61BC82815B5
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jan 2024 10:41:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 14BC3B20F8D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jan 2024 12:53:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0970236AF9;
-	Sun, 21 Jan 2024 10:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F3303714C;
+	Sun, 21 Jan 2024 12:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="lciop4r4"
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="YwjX9TtZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from APC01-TYZ-obe.outbound.protection.outlook.com (mail-tyzapc01olkn2103.outbound.protection.outlook.com [40.92.107.103])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7374512E61;
-	Sun, 21 Jan 2024 10:40:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705833650; cv=none; b=j0Bljdp66ecAfpx/G4bDeDjOuJ5OnzK6SStoa+eawaN3NL76Z/HbDzxRplUIyNbzfg+1KblwMK2t/RDwZQpq5HfCTc+d6bVFSETqvHJiWtALRoLlKg37YOXXQG52h6wbBEoqIuZ/V2xVRH9yinI58jXWoRXwWfhErKFfx/ULexU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705833650; c=relaxed/simple;
-	bh=nBjQLwAVrLOtDklPZXhl6mSYmrwebasaPOxc4Nq5ooI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kZrWej7gvRUJFX0PTH2fwqR+x08axqY9R5kwalkXZWF/YNqfKd/d13T0ZZ6ZxUryM0IPC5aLmCWfhd/7RCvVeFzzbObLguzhvYfdRLlJCMry3Jrqti4RqJxq5iVFueRz6N3ymYYitvic+dCJQIDwh74J6iKigSUV4F2rxel44B4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz; spf=pass smtp.mailfrom=z3ntu.xyz; dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b=lciop4r4; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=z3ntu.xyz
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
-	t=1705833647; bh=nBjQLwAVrLOtDklPZXhl6mSYmrwebasaPOxc4Nq5ooI=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=lciop4r4CZbZekaT96/hHLsEzLdGobUf1m+PECD0gZ7By06vI7E1q2hC7vau/zay4
-	 kbHDk5tEGcd7poho8A1O817ifJypF4lQ07vBfANrLXZdJaz3hKjX09ZmuIyPY+R2Xx
-	 CxR0sp/5lth1Zn+Om2LC9LZOwaK2fpXhgzxnGTP8=
-From: Luca Weiss <luca@z3ntu.xyz>
-Date: Sun, 21 Jan 2024 11:40:39 +0100
-Subject: [PATCH v2 2/2] drm/msm/adreno: Add A305B support
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1F8364DE;
+	Sun, 21 Jan 2024 12:53:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.107.103
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1705841630; cv=fail; b=OOdJ5qkX2TsnfeP8NkAe5CU1Zs8KIYp6ebzVw9wmsHvqg0UhUsdvlUHfR+sQbg6XWChpMJJ43x/1Maf11CH5HgQakPmsQSGbErmeHiBvJ4tfEnJjYMGo1/WE2Oe6HXI0mzqosyL5l6KJYdN8wUEuuwDVOon6fBdcmYabZ/Honxo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1705841630; c=relaxed/simple;
+	bh=VxZmDOoR3xLARAU3Ux+V/1/evUili5ak2uEsv32+E1w=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=AfuPgvf1BEWU3CIeowjYBJGRyO8/cBUbHQ9C4TZkir2cQ1EC8diwkOvNwZoges1krAlmB3cDkLgZnNOOS2taeWC2cpJsa8CAVpqDEa990PdiVgPljqU5BJ+HlELzb+wwjxpKkIxeJ0AHexKKYeCq9y7BDGxt4zWBSWttkoZvJK4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=YwjX9TtZ; arc=fail smtp.client-ip=40.92.107.103
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=dY7VbF9T8f0B0JU7+MFGSdYQwMOq4dMvpBQip4aUFTM9wQDBeJhRfogaQrTd6DPf7w0TQlg2we//Zq5KiH6+AHZVE+zfEjYjg2G9wRF4H86rC/EasUZIyNxZ+skBmmh3DDUfha0munQFshd6qdCkrmLxqjRViXZAk2hw0FuUneDtWphgTrNGuhea0VxHsg7UNQ9PS01sAc0FAaGgmx/6EBRj0ZkQ2YeGgM0pv9T5mP3597CUr7FZF25ejxfMcGpiKoqDWdwd9EfrWRoSY7RNltU8Ay6hO88SDgfC4RbiKYx0zoXv34c+D35A11mEl2OQ3hwU13+oCtlyAWU14+pRhw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ZlNulvPlUtsfCmjWal2T/iKOa6dTgiIQqxi0OOuGoss=;
+ b=IJ8IB4IBfpTMj7UEAQ3iVYFkYRFiaNMwUL421vV1T9RU17U+Yo+g7KBqqp7zZ+e8E7P4wS7aUvDVWXYo2MIhTuoLm76mGJIUzVNABOFqiJJZaNXtu3xMDzPQZFwhWg2bYSQG2xSqADACDfjLVB2OXP1j81O7UOtgxOqIxMZ/Oj6aiNQhSe49N4tBxoze1pfeam/e65C2lFU9m73M8urQvkGKMsN40TyGIly6i1PBVvCvEnbjO9ctjSLqsQwE6Y4QkrSN+fC4NXspFMM42mdTChQd/IPLYzNc2K47rnrL18mdfOOkZNbfrgmt7gmiIWfZkEmHtKxwWMz78rwWLTTImw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ZlNulvPlUtsfCmjWal2T/iKOa6dTgiIQqxi0OOuGoss=;
+ b=YwjX9TtZSohjAdCdKk8uR7GvRE1KV59MZu0xlrAJTIFWL+pyvG8qcJEQjpRfvVg5kmR/NJ30hyieyE9S6bdJkyQ+1yo2O0qocyMDtlsRuVSysbK3FY5TpoxHgas03bBZobaht0G3dPCdyVGDkP/nHob35TfYALoodg1bmGsI+EAETBOqQUOJd6PCCJVRZM4KwQ4N3hUDyaIGxLeikAXgNS0gVwGdjyF2gqzwwyeFcvTEHrDHeBF3XeMPPBHYOAj0WyZm6ZKzMkw9an6dn9NR3LJG1PlJfrT4diiT82YU3g6+wz9cQZt/BeC8TO/3XHaABEr0U86ryZFrX9vFNmXNUg==
+Received: from TYZPR01MB5556.apcprd01.prod.exchangelabs.com
+ (2603:1096:400:363::9) by OSQPR01MB6693.apcprd01.prod.exchangelabs.com
+ (2603:1096:604:273::14) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7202.31; Sun, 21 Jan
+ 2024 12:53:44 +0000
+Received: from TYZPR01MB5556.apcprd01.prod.exchangelabs.com
+ ([fe80::bcb7:50f4:7a16:4ec0]) by TYZPR01MB5556.apcprd01.prod.exchangelabs.com
+ ([fe80::bcb7:50f4:7a16:4ec0%7]) with mapi id 15.20.7181.019; Sun, 21 Jan 2024
+ 12:53:44 +0000
+From: Ziyang Huang <hzyitc@outlook.com>
+To: agross@kernel.org
+Cc: andersson@kernel.org,
+	konrad.dybcio@linaro.org,
+	robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Ziyang Huang <hzyitc@outlook.com>
+Subject: [PATCH] arm64: dts: qcom: ipq5018-rdp432-c2: correct board name
+Date: Sun, 21 Jan 2024 20:52:52 +0800
+Message-ID:
+ <TYZPR01MB55564BE24CE8718DBD4644A2C9762@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
+X-Mailer: git-send-email 2.40.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-TMN: [1S07Ob5cJz+mYpdRcf1JOdizd+Xmm7WPT2/FF1OdynRGRzSdHqu0rw==]
+X-ClientProxiedBy: PH7PR17CA0038.namprd17.prod.outlook.com
+ (2603:10b6:510:323::17) To TYZPR01MB5556.apcprd01.prod.exchangelabs.com
+ (2603:1096:400:363::9)
+X-Microsoft-Original-Message-ID: <20240121125252.3330857-1-hzyitc@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240121-msm8226-gpu-v2-2-77f4a6fbbca4@z3ntu.xyz>
-References: <20240121-msm8226-gpu-v2-0-77f4a6fbbca4@z3ntu.xyz>
-In-Reply-To: <20240121-msm8226-gpu-v2-0-77f4a6fbbca4@z3ntu.xyz>
-To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4454; i=luca@z3ntu.xyz;
- h=from:subject:message-id; bh=nBjQLwAVrLOtDklPZXhl6mSYmrwebasaPOxc4Nq5ooI=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBlrPSsW0f4/GUoP2msPZIz43/pVMSFAW/J8jCFF
- 8uFM08X8siJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZaz0rAAKCRBy2EO4nU3X
- Vjf1D/wJoKFlkmrss4tM5q/zh3php1RI54HNSU1btmt0TeA2mU+c2CrozvlbX5FONA9ychoGRa3
- 3Kpeid8w7gf+di16DsSUWjLSzdu9S55TNhINpBqAtxq31YVwlSrSWNlLI4YWxLUPHMtAztaMCEg
- tGvwHONkfBAkvao9N5q6/wvRVDuN/OYoRJuok3h1sGoJRHkZor8hEpthWGEk8ur6Qh82VBrKlja
- n1Eu35l1LizMbMZeNyx6YvwilEllnR/MJHmFCHiA0xdeGDMcd6FVwKzYVfoUpMcT1D0rA+rT338
- xhUNVjRv5wP10q6qEpRSmtrz4Chj47arr/YmrtKhEWX6p1xD8G16Q5oTsRoyvw7nUVjYNYehonG
- t4oMArs1NrruWMQz0Ayz61IrU4qc9+CLEUXD45Kkp44Z748h2p/8RjJi9WhKhQav0sykjvM5VGt
- ZDHd2p6VYFbjr2wYqnWMpjDNn81XSvhOw0GiWOlVA2EDzEKHqoTAZLrvmkGibWUvX5oVTqQjG+H
- HHihucKptvlQIc4Bmk6X3nGn8nS/RU9J+RrsE7uFwEzo0i87KvB5vN5cn1SmbWJ28jjrAJTmV2c
- ht+UwQE9zrZpBvjgC8f7IqSMzvMt5E3Jv60gdl/ZiORDwAbv/wiSIdQzDGJMrdVcMyGiV67vV8L
- juwKzKIIE4qxnAA==
-X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
- fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYZPR01MB5556:EE_|OSQPR01MB6693:EE_
+X-MS-Office365-Filtering-Correlation-Id: 44f9446f-7f3c-450e-4d1f-08dc1a80000a
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	FOfwi88R3aWH/tK+v1XOaDs16cxHogPy7/c4y8ipzaTwGGdr+eUlLbdl4nyBi44SSmE8Om35GrguAgEUCmJNbSf4SeRoKrBh4w/hIuDF2vv8YlY3Jjhm3T2KOnuC8dhg6K3Rnd56BEscxr/9yKFmAR/izQjQr2tYVQqiEJoPt7PzPZj8/ZJFL2mp+2EYyqKeiARKNEV6xBzUJi3OOneokg4F+JV9P3/+kiaotMP+XgBi6rgscH45x2qywtClNcQ46nTl9Gfq9Bb//RSrYDGLw9jjRM2Rtc9Rev6GMJ55oifNh6CmYmzEHE7bEkPoStokPuXZ5f1G62UG/dp4geosErC7tPXD1oNmT5uBJAUAesPjP51EM6TNlwKNer8fEpg6P1GjQmzm95YWn4VqkFgBuUS7U/qcZ2903qiTOfsvNrDMklDFpCHQ40PyLTytxuyf5wy/luqdxktMrncuUyw60piMHD6LvjxnwcaaIbnO/y6kd8J5tTdDapcUijBWVammXOmBecvNfK1tj1Vw46UxmoypfjF1VS6IOphFflf9cvVyAmyC8IUL83/682y19J77YauYg+dj2/CbBD6c2oZRIuhOlAWhzGBVI62CG+SPojE=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?2ut+HlQ4HGzmmomp4JT6QTsGPsLGuTjIDafebAgf861tpUxgMgKQ+cj0ZlH5?=
+ =?us-ascii?Q?MRCphJSrQCbTnliB72YzNY7k2zAwxy16RYOdGPKSTHS1va++GUyiwRqwEV0H?=
+ =?us-ascii?Q?zm4kLgdtA86WmBQQhcCwx0mvlCidVJCdPS9axEGVFarNiEEtzX2SLY1UptM4?=
+ =?us-ascii?Q?mlX30WREjdFzMOF22k18UeE+iF/Jgkk6HeLlm3Nygb7iBRCR/ALpdjOgdqoq?=
+ =?us-ascii?Q?rT8F7JZuW9dsBHP+1Y2Jn4lOBFANRx/iDOarO9amWUw9ZaaIHrwkpYHXJffG?=
+ =?us-ascii?Q?BJt8HRAsNY/drUdF+b+xApyr2OpBVMOIq5OtCqG5TvUkS4F8bcEQPdSy6ak9?=
+ =?us-ascii?Q?ldmLGX2ntiGvi+QeogF81DY16x0goUcOQSfjA4Nuib8hBtYH7GIEGhIAHgpe?=
+ =?us-ascii?Q?4tjyGQhUC3V9TXrtiRYIoPDBSeZMfJTBCUiAyd5TlK1zM/X5Yd9JQQoj2WJs?=
+ =?us-ascii?Q?CIpLd/uLY+9eWymVrQJvEq03WKcIJ33VtI895IpSCzYofiCed1CH2ccElxPH?=
+ =?us-ascii?Q?J7Cgrr+lWzGFxd9XZaZaAmbo3Y7RF1EzxzTYLcMUewoniPXTcgiYPus+2jnV?=
+ =?us-ascii?Q?TcJ7K/0brpNc4n27Scdv/e+g65q3XHeRdzKgM2WkjbMsDgF4vYGs3Ug4miqi?=
+ =?us-ascii?Q?5Ll3V7XsTkAiDGWNb3/HIEwmNGiHQKKNWN1K+Li4qb1Q3GntpyeTfwTVJloe?=
+ =?us-ascii?Q?0MQdtbZ1UvaktE1qG6bWAJgA/2f8r9PBkWmK5kQ56UNyTt3xNAhDbup25Z9g?=
+ =?us-ascii?Q?8HUM6HkGFe4+Jbz0GmlJGouoBhyRMvMr0rqZGfq9wlEDeP/2kJKrIDQwHFGd?=
+ =?us-ascii?Q?wDZXuz3TEc4efmP7B3OhZwbTPZhImIjbGzqQAyoTF0FhW73h9Ib6vFztInX9?=
+ =?us-ascii?Q?/A/SoQp2iW43KLHgyjoCzXRbBZZ+9PIsJJ/jw/ntS43qS4u+gk1miqW3Oh5b?=
+ =?us-ascii?Q?yzB0tgW0k5V4jniuehhLZ4Bc2S01/iiQnANnPTnNaoGTCWtiGBY0KpJvsAXl?=
+ =?us-ascii?Q?zXS+my6lrfI69vhcSTpZoLbAPBMTSHWbrHc/eJ/lcIijlayJU9lZqm0oNKH2?=
+ =?us-ascii?Q?zX13pszVOs7G1ZfrhHuv9Th8SswgjmUzcGq9TMOJOAHZpwUCWZt48OJFCpoa?=
+ =?us-ascii?Q?NvYS6Cwyx6Zslif85K5tMoG2s5y/tlAL/P3jxObjEKrzuZcjFTd/Yrwmc/Hv?=
+ =?us-ascii?Q?vGCdLKFURVz8fJfeuSVTWjiUsBxvQaOtiGYRAlZgv2csmoyH2w/ujY7m5oCg?=
+ =?us-ascii?Q?36sEYVQuwrJBvzByrbS7?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 44f9446f-7f3c-450e-4d1f-08dc1a80000a
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR01MB5556.apcprd01.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jan 2024 12:53:44.2870
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSQPR01MB6693
 
-Add support for the Adreno 305B GPU that is found in MSM8226(v2) SoC.
-Previously this was mistakenly claimed to be supported but using wrong
-a configuration.
+According to Qualcomm document:
+  MP03.1 is RDP404
+  RDP432 is MP03.5
 
-In MSM8226v1 there's also a A305B but with chipid 0x03000510 which
-should work with the same configuration but due to lack of hardware for
-testing this is not added.
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+Signed-off-by: Ziyang Huang <hzyitc@outlook.com>
 ---
- drivers/gpu/drm/msm/adreno/a3xx_gpu.c      | 13 ++++++++++---
- drivers/gpu/drm/msm/adreno/adreno_device.c | 15 +++++++++++----
- drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  5 +++++
- 3 files changed, 26 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
-index c86b377f6f0d..5273dc849838 100644
---- a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
-@@ -134,6 +134,13 @@ static int a3xx_hw_init(struct msm_gpu *gpu)
- 		/* Set up AOOO: */
- 		gpu_write(gpu, REG_A3XX_VBIF_OUT_AXI_AOOO_EN, 0x0000003c);
- 		gpu_write(gpu, REG_A3XX_VBIF_OUT_AXI_AOOO, 0x003c003c);
-+	} else if (adreno_is_a305b(adreno_gpu)) {
-+		gpu_write(gpu, REG_A3XX_VBIF_IN_RD_LIM_CONF0, 0x00181818);
-+		gpu_write(gpu, REG_A3XX_VBIF_IN_WR_LIM_CONF0, 0x00181818);
-+		gpu_write(gpu, REG_A3XX_VBIF_OUT_RD_LIM_CONF0, 0x00000018);
-+		gpu_write(gpu, REG_A3XX_VBIF_OUT_WR_LIM_CONF0, 0x00000018);
-+		gpu_write(gpu, REG_A3XX_VBIF_DDR_OUT_MAX_BURST, 0x00000303);
-+		gpu_write(gpu, REG_A3XX_VBIF_ROUND_ROBIN_QOS_ARB, 0x0003);
- 	} else if (adreno_is_a306(adreno_gpu)) {
- 		gpu_write(gpu, REG_A3XX_VBIF_ROUND_ROBIN_QOS_ARB, 0x0003);
- 		gpu_write(gpu, REG_A3XX_VBIF_OUT_RD_LIM_CONF0, 0x0000000a);
-@@ -230,7 +237,7 @@ static int a3xx_hw_init(struct msm_gpu *gpu)
- 	gpu_write(gpu, REG_A3XX_UCHE_CACHE_MODE_CONTROL_REG, 0x00000001);
- 
- 	/* Enable Clock gating: */
--	if (adreno_is_a306(adreno_gpu))
-+	if (adreno_is_a305b(adreno_gpu) || adreno_is_a306(adreno_gpu))
- 		gpu_write(gpu, REG_A3XX_RBBM_CLOCK_CTL, 0xaaaaaaaa);
- 	else if (adreno_is_a320(adreno_gpu))
- 		gpu_write(gpu, REG_A3XX_RBBM_CLOCK_CTL, 0xbfffffff);
-@@ -333,7 +340,7 @@ static int a3xx_hw_init(struct msm_gpu *gpu)
- 				AXXX_CP_QUEUE_THRESHOLDS_CSQ_IB1_START(2) |
- 				AXXX_CP_QUEUE_THRESHOLDS_CSQ_IB2_START(6) |
- 				AXXX_CP_QUEUE_THRESHOLDS_CSQ_ST_START(14));
--	} else if (adreno_is_a330(adreno_gpu)) {
-+	} else if (adreno_is_a330(adreno_gpu) || adreno_is_a305b(adreno_gpu)) {
- 		/* NOTE: this (value take from downstream android driver)
- 		 * includes some bits outside of the known bitfields.  But
- 		 * A330 has this "MERCIU queue" thing too, which might
-@@ -559,7 +566,7 @@ struct msm_gpu *a3xx_gpu_init(struct drm_device *dev)
- 		goto fail;
- 
- 	/* if needed, allocate gmem: */
--	if (adreno_is_a330(adreno_gpu)) {
-+	if (adreno_is_a330(adreno_gpu) || adreno_is_a305b(adreno_gpu)) {
- 		ret = adreno_gpu_ocmem_init(&adreno_gpu->base.pdev->dev,
- 					    adreno_gpu, &a3xx_gpu->ocmem);
- 		if (ret)
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index 2ce7d7b1690d..f2768e52ed12 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -55,10 +55,17 @@ static const struct adreno_info gpulist[] = {
- 		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
- 		.init  = a2xx_gpu_init,
- 	}, {
--		.chip_ids = ADRENO_CHIP_IDS(
--			0x03000512,
--			0x03000520
--		),
-+		.chip_ids = ADRENO_CHIP_IDS(0x03000512),
-+		.family = ADRENO_3XX,
-+		.fw = {
-+			[ADRENO_FW_PM4] = "a330_pm4.fw",
-+			[ADRENO_FW_PFP] = "a330_pfp.fw",
-+		},
-+		.gmem  = SZ_128K,
-+		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
-+		.init  = a3xx_gpu_init,
-+	}, {
-+		.chip_ids = ADRENO_CHIP_IDS(0x03000520),
- 		.family = ADRENO_3XX,
- 		.revn  = 305,
- 		.fw = {
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index bc14df96feb0..d3c41af706df 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -256,6 +256,11 @@ static inline bool adreno_is_a305(const struct adreno_gpu *gpu)
- 	return adreno_is_revn(gpu, 305);
- }
- 
-+static inline bool adreno_is_a305b(const struct adreno_gpu *gpu)
-+{
-+	return gpu->info->chip_ids[0] == 0x03000512;
-+}
-+
- static inline bool adreno_is_a306(const struct adreno_gpu *gpu)
- {
- 	/* yes, 307, because a305c is 306 */
-
+diff --git a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
+index 074b78d7939c..f7e8b5af6b44 100644
+--- a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
++++ b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0+ OR BSD-3-Clause
+ /*
+- * IPQ5018 MP03.1-C2 board device tree source
++ * IPQ5018 MP03.5-C2 board device tree source
+  *
+  * Copyright (c) 2023 The Linux Foundation. All rights reserved.
+  */
 -- 
-2.43.0
+2.40.1
 
 
