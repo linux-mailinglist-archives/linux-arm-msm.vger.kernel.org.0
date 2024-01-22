@@ -1,169 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-7725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7726-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E46A835B2F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 07:44:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B4DA835B77
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 08:15:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 183C5287424
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 06:44:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CD92328862F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 07:15:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 183496FC6;
-	Mon, 22 Jan 2024 06:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 065FBE554;
+	Mon, 22 Jan 2024 07:15:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gy3CLvRw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="T1a8kOao"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB19F500;
-	Mon, 22 Jan 2024 06:44:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED8517C75
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 07:15:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705905867; cv=none; b=Zm8uQ0faxIjUeRp9P+TVPoR0+odT8vhYCi4QyhFrdVz5z/8HWdtzgbKwt8TTxQ8l3zOVOIX5BgDtZcR/3Ek+RvhwXYH7TVP1q51ADrO73hBQRd1ut3JVeH3YLw1oRMgAOhnN38q6DXUCZJNB7/jHyheqTlnkWTKO3n2NNGNqzzI=
+	t=1705907726; cv=none; b=O5cVG7Xc5OZtCWKUXnjP6VtSSmz1BvJY826XSkRVtl5NCzUwGrhsoUxoQiWrsw2DaNcpEWBI6u5FaZUac5E/Nk1E3l9pZ8qX0EZ0ffv2b4+jMhQeG2iA1QXw6+vfv4+L5N44wWxdBQ+JLbB7iZBIBsKovf/RcB0o55/ciGZVEeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705905867; c=relaxed/simple;
-	bh=ldrUB48xZDazzp/AyajgHeXxDyEX8P50st74ShQc4Ks=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=AS8kc08U0aaqjXL9oCVwpJI9X7vCUVx4tP4TLb4xY473t7X8+TJXatE2YUs6AwuExH++N2uXYYphZ033e+4FQA/wvqk4pGXvgPUVYolvYpdwwCqNnwz6wnXxajCwHATLCB0L0hr4Oa9wq5EUQCjly8gtXqyFRcURWndIJCVhw9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gy3CLvRw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 55E1EC433F1;
-	Mon, 22 Jan 2024 06:44:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705905866;
-	bh=ldrUB48xZDazzp/AyajgHeXxDyEX8P50st74ShQc4Ks=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=Gy3CLvRwcu6Dbp557Flou6m4aXwteg8Q0YtxqvxEJ84338lRhwyi+hYRtS91Unz8n
-	 pluK8+0UJbPidwN818gA8ty4DYszd3HzspIcWTe4Z8OCsgbWvzvTIiCNlnz/nZ3mIE
-	 5FMo3lINSWUM2/K/eZmOuEV4fLGn7FdfiY1HnOFyBYd8vYPfaam/86iFcItCJ9L4kl
-	 cll8ALoLzoOBFXD3sFgr3aUQ1oMmGyqcV6d5rtsmMrIQ+yAbEh3Dx/360kGRrhz/8O
-	 3JRBHvEiZ2gS9VzRFL94S7cjhM90WtEP9r2yivYgq07ARtiteU/CpqPs4HR3DMhGFg
-	 28GR3+dzK6H7w==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3139BC47DAF;
-	Mon, 22 Jan 2024 06:44:26 +0000 (UTC)
-From: Hui Liu via B4 Relay <devnull+quic_huliu.quicinc.com@kernel.org>
-Date: Mon, 22 Jan 2024 14:43:24 +0800
-Subject: [PATCH v6] arm64: dts: qcom: qcm6490-idp: Add definition for three
- LEDs
+	s=arc-20240116; t=1705907726; c=relaxed/simple;
+	bh=YCFZKMxT5pftMLplwAg4YBXUQE31/i4Ak24i9qQ3Vi0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oxoYXtyvsXivrhWjaC2Bd5+qV3PeERIwHnf8HXB0iqychzGkSNG2liRNr4kVrRhrcPhaGz2NeIYsfE8TP7TYcMWGkyV8M69linYznJqAXh3lFte4NTNbLN/mS+0eqthvbzwXMTCWYhvcB6jLs9yuGepzHVeFP4pWpoQ6hoo/aX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=T1a8kOao; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-40eaf3528dfso2835405e9.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jan 2024 23:15:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1705907723; x=1706512523; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=lHP43ExYfIoYQZnh2Pw1TOnG0wcXeFiwfIKZwpRcOpg=;
+        b=T1a8kOaoYhGotn1q0+RJ62WdYZnxImOo4g7Ox+9L1AKwZIij2twARSPijBh5BakNea
+         pgZa4g8sRzZFii0eN0QnxIoEeztHGL/+npjarAiBJm5+Ac2NNDHl4bVgWRnkwdW77iAa
+         n+yYYkDxCm9QDAgriaadCGdlQa7GgmpqAyVN08a/kX71DEXSNSOZcuIoW9FMovJ5yjNF
+         NAWM5UZZDcwd9G7nf88JDaqefG/DiUkxFlmdFXYo9bY+W5DaTSrf6QkvXcHI/PReWN8l
+         gDJRD8q591AKuHtVY7rF4B1AszyYMybgIY/dXFH7b3jzNmOa19PNYvoBWFEqlN76+SWu
+         vdyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705907723; x=1706512523;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lHP43ExYfIoYQZnh2Pw1TOnG0wcXeFiwfIKZwpRcOpg=;
+        b=ATBM/aJWHB/rKxT8m+ym924P3K9vhtC92wHqAFk/Om6b2u0ciD82zlt5vmuIMVNnc3
+         PKTYtQqY1rSi+JUmzWqe6ZGH+li/GKSwr5pHO6BuOZq2b+Eo1czuSYxSkQn5EnfVSgPv
+         JadXUZUo6AM5+9ZDSnpW/72AYsQmUG5TNKacgR/kO3t2CIYD11AjTbwEe5HJtvmu2VUP
+         VbZMQ0gfjuGdtWDazEueJzlHY1RAxv/HUm0EeHn1Mfj6+6e82z2qMtaKko+SVdRJqd1/
+         7M82TUZJoVxKEKEXXCaKysmhZfwZyfQAlgsegl/s4+xga92R8xwjpK9XHVnccDlUOJwv
+         DNyg==
+X-Gm-Message-State: AOJu0YyXVkY4jK/lUXpX+BiutsUGSbRK4sE9q0jzryzHb6VEX7u3SmLP
+	eR7YYaRMSkv77FIV/Z+79xUukpDp2zGl0JIKtqyOWkDEvpsrpVF0q/K0w8KrHdo=
+X-Google-Smtp-Source: AGHT+IG5Alz3MHBgjGmE6oE6CLb/yvjcodQR+lNTfG+1BAcFnW7rpEcukUwXKZxigVRf06Emw/Yw6A==
+X-Received: by 2002:a05:600c:498a:b0:40e:5a80:6177 with SMTP id h10-20020a05600c498a00b0040e5a806177mr1997539wmp.69.1705907723421;
+        Sun, 21 Jan 2024 23:15:23 -0800 (PST)
+Received: from localhost ([102.140.209.237])
+        by smtp.gmail.com with ESMTPSA id w4-20020a05600c474400b0040d5ae2906esm42185282wmo.30.2024.01.21.23.15.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 21 Jan 2024 23:15:23 -0800 (PST)
+Date: Mon, 22 Jan 2024 10:15:20 +0300
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: Erick Archer <erick.archer@gmx.com>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: ep: Use kcalloc() instead of kzalloc()
+Message-ID: <43614a09-d520-4111-873a-b352bd93ea07@moroto.mountain>
+References: <20240120152518.13006-1-erick.archer@gmx.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240122-lpg-v6-1-219737cf5beb@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAIwOrmUC/2WOzU7DMBAGX6XyuUZe/6XlxHsghJz1OrHUJq1dL
- FCUd8cJVCXi+Ek7szOxTClSZs+7iSUqMcdxqMPudwx7N3TEo6+bSSEVSDD8dOm4ds571egDgGP
- 18pIoxM/V8vpWd0jjmd/6RO7BAgh+xfH8fiKfeZEcuELnIbQtWuNerh8R44BP9WRR9jHfxvS1d
- hW1iLcJRVWBJulbgdYHEzaCJaLoO6UFgPyhdKVQC6GFtPZg2/+U+Uv9/jJrrLGhacIRCbfUPM/
- f4giaEkcBAAA=
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Hui Liu <quic_huliu@quicinc.com>
-X-Mailer: b4 0.13-dev-83828
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1705905864; l=2220;
- i=quic_huliu@quicinc.com; s=20230823; h=from:subject:message-id;
- bh=n8xSHABdt74JEuBzHLY4lYbQGqDaAeo36uTk0NjptXM=;
- b=wTFFnqsHbmf742D/Tk8UBK4kYpSU/L6zoS1MROwEWFyqlYR6qVPBWNWUW7G4QbS2h5T1ra/Tg
- HsC3P6C/DzoCzhq/xfwBkNuCxRRPU2QMgMe+zELya+sidiZeDOvxW3S
-X-Developer-Key: i=quic_huliu@quicinc.com; a=ed25519;
- pk=1z+A50UnTuKe/FdQv2c0W3ajDsJOYddwIHo2iivhTTA=
-X-Endpoint-Received:
- by B4 Relay for quic_huliu@quicinc.com/20230823 with auth_id=80
-X-Original-From: Hui Liu <quic_huliu@quicinc.com>
-Reply-To: <quic_huliu@quicinc.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240120152518.13006-1-erick.archer@gmx.com>
 
-From: Hui Liu <quic_huliu@quicinc.com>
+This code does not have an integer overflow, but it might have a
+different memory corruption bug.
 
-Add definition for three LEDs to make sure they can
-be enabled base on QCOM LPG LED driver.
+On Sat, Jan 20, 2024 at 04:25:18PM +0100, Erick Archer wrote:
+> As noted in the "Deprecated Interfaces, Language Features, Attributes,
+> and Conventions" documentation [1], size calculations (especially
+> multiplication) should not be performed in memory allocator (or similar)
+> function arguments due to the risk of them overflowing. This could lead
+> to values wrapping around and a smaller allocation being made than the
+> caller was expecting. Using those allocations could lead to linear
+> overflows of heap memory and other misbehaviors.
+> 
+> So, use the purpose specific kcalloc() function instead of the argument
+> count * size in the kzalloc() function.
+> 
 
-Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
----
-Changes in v6:
-- Updated the seperate LEDs nodes to multi-led setting.
-- Link to v5: https://lore.kernel.org/r/20240115-lpg-v5-1-3c56f77f9cec@quicinc.com
+This one is more complicated to analyze.  I have built a Smatch cross
+function database so it's easy for me and I will help you.
 
-Changes in v5:
-- Rephrased commit text, replaced qcs6490-idp to qcm6490-idp.
-- Removed the unnecessary full.
-- Link to v4: https://lore.kernel.org/r/20240112-lpg-v4-1-c4004026686b@quicinc.com
+$ smbd.py where mhi_ep_cntrl event_rings
+drivers/pci/endpoint/functions/pci-epf-mhi.c | pci_epf_mhi_probe              | (struct mhi_ep_cntrl)->event_rings | 0
+drivers/bus/mhi/ep/main.c      | mhi_ep_irq                     | (struct mhi_ep_cntrl)->event_rings | min-max
+drivers/bus/mhi/ep/mmio.c      | mhi_ep_mmio_init               | (struct mhi_ep_cntrl)->event_rings | 0-255
+drivers/bus/mhi/ep/mmio.c      | mhi_ep_mmio_update_ner         | (struct mhi_ep_cntrl)->event_rings | 0-255
 
-Changes in v4:
-- Removed "label" definition and added "function" definition.
-- Link to v3: https://lore.kernel.org/r/20231215-lpg-v3-1-4e2db0c6df5f@quicinc.com
+The other way to figure this stuff out would be to do:
 
-Changes in v3:
-- Rephrased commit text and updated the nodes to qcm6490-idp board file.
-- Link to v2: https://lore.kernel.org/all/20231110-qcom_leds-v2-1-3cad1fbbc65a@quicinc.com/
+$ grep -Rn "event_rings = " drivers/bus/mhi/ep/
+drivers/bus/mhi/ep/mmio.c:260:  mhi_cntrl->event_rings = FIELD_GET(MHICFG_NER_MASK, regval);
+drivers/bus/mhi/ep/mmio.c:261:  mhi_cntrl->hw_event_rings = FIELD_GET(MHICFG_NHWER_MASK, regval);
+drivers/bus/mhi/ep/mmio.c:271:  mhi_cntrl->event_rings = FIELD_GET(MHICFG_NER_MASK, regval);
+drivers/bus/mhi/ep/mmio.c:272:  mhi_cntrl->hw_event_rings = FIELD_GET(MHICFG_NHWER_MASK, regval);
 
-Changes in v2:
-- Rephrased commit text and updated the nodes to board file.
-- Link to v1: https://lore.kernel.org/r/20231108-qcom_leds-v1-1-c3e1c8572cb0@quicinc.com
----
- arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+That means that this multiplication can never overflow so the patch
+has no effect on runtime.  The patch is still useful because we don't
+want every single person to have to do this analysis.  The kcalloc()
+function is just safer and more obviously correct.
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-index 37c91fdf3ab9..c9e7ddcbd259 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-@@ -5,6 +5,7 @@
- 
- /dts-v1/;
- 
-+#include <dt-bindings/leds/common.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include "sc7280.dtsi"
- #include "pm7325.dtsi"
-@@ -414,6 +415,33 @@ vreg_bob_3p296: bob {
- 	};
- };
- 
-+&pm8350c_pwm {
-+	status = "okay";
-+
-+	multi-led {
-+		color = <LED_COLOR_ID_RGB>;
-+		function = LED_FUNCTION_STATUS;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		led@1 {
-+			reg = <1>;
-+			color = <LED_COLOR_ID_RED>;
-+		};
-+
-+		led@2 {
-+			reg = <2>;
-+			color = <LED_COLOR_ID_GREEN>;
-+		};
-+
-+		led@3 {
-+			reg = <3>;
-+			color = <LED_COLOR_ID_BLUE>;
-+		};
-+	};
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
+It's a bit concerning that ->event_rings is set multiple times, but only
+allocated one time.  It's either unnecessary or there is a potential
+memory corruption bug.  If it's really necessary then there should be a
+check that the new size is <= the size of the original buffer that we
+allocated.
 
----
-base-commit: 17cb8a20bde66a520a2ca7aad1063e1ce7382240
-change-id: 20231215-lpg-4aadd374811a
+I work in static analysis and I understand the struggle of trying to
+understand code to see if static checker warnings are a real bug or not.
+I'm not going to insist that you figure everything out, but I am asking
+that you at least try.  If after spending ten minutes reading the code
+you can't figure it out, then it's fine to write something like, "I
+don't know whether this multiply can really overflow or not, but let's
+make it safer by using kcalloc()."  You can put that sort of "I don't
+know information" under the --- cut off line inf you want.
 
-Best regards,
--- 
-Hui Liu <quic_huliu@quicinc.com>
-
+regards,
+dan carpenter
 
