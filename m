@@ -1,137 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-7814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7812-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C484B836A9C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 17:31:25 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 20B2A836A46
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 17:23:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 031EF1C22AAA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 16:31:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CB5611F2520D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 16:23:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E362955E62;
-	Mon, 22 Jan 2024 15:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD074137C42;
+	Mon, 22 Jan 2024 15:14:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tvCGX06i"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="yTwaCPiy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB231420C8;
-	Mon, 22 Jan 2024 15:16:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C25137C33
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 15:14:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705936580; cv=none; b=YMoKaR6pIt+gjS0UyhS0RSz5LyeXg/wtpYaIxt1E06bc/JrAvsSpJSHEaE0G8bQoS0cRjNxcUrLbgjT2mPujQf4UZcmHjD02g4rQb6C3EqQ9J++tzgiUL/HStqn2VQFc0Q9hUg972LD7zOv4ohCPUYCKAWvdoMj2uYPIzpXOILU=
+	t=1705936484; cv=none; b=CdiUZ3IJ2LKSLA5oGdE6MyIb9jlpeCBxf1429qjsszZYzBWzRrJSzA/gmx2rMxr6+e8y7BEBF9s3EPaGCETXqoH7OpdSdzf2qFpkZ2u+uY2/1gwNgK0VEC0qt9MadMeqQ2dNU8sQqNNwrtYYvOfRfTRB8nIIAHLVFhxyzQoX610=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705936580; c=relaxed/simple;
-	bh=us1nMoTi2Vr7q++bqFNXvK9S163UyXtqOFKer8c3dWA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k7UIdIo30T/QUVLSYIiSuWMxplakUqXu3vJdWBF8i+qaUtS/vTXNAzNn0BOMLizxt2VUtIuLUS4vineKPTWBpb0o1OIfbIV1fFG4YWqON0KarL0JLN7S5TovrvHFfhOAlNtb0APBbvzU+2fr81y0mHdPoWj+OGzrewIu/WV7RS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tvCGX06i; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E91C433F1;
-	Mon, 22 Jan 2024 15:16:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705936580;
-	bh=us1nMoTi2Vr7q++bqFNXvK9S163UyXtqOFKer8c3dWA=;
+	s=arc-20240116; t=1705936484; c=relaxed/simple;
+	bh=8xFLD5XlzNw6zyK2a6hzmBpPytKq9ZtpEWZxExST8nI=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=EUTbW6J8xvyMbkW3Eqqo39Gr7htTePArrjJ5QYvucHpzKjPiIbinI6zVrRBvP90IFdSuLMTAbqLOD1kYwv0W9ChNlXItKT2CroqqKamY6zWTp7nXwlfYdKQtXUKNvr9pyJLHEcILbUUtIZB6Q/yyRI1wPE0unKDV3MyNF3QyTlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=yTwaCPiy; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1705936481;
+	bh=8xFLD5XlzNw6zyK2a6hzmBpPytKq9ZtpEWZxExST8nI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tvCGX06ioayJ+ZFW2PAQSTzUQJGY2qQoyLMdi3+rkKCqDpUf0jVyaeonds0vNR4Qq
-	 ffdOUuyAHw10UkH1yLRre1/d3Sx94Yes7SZu/DosjrgNMIFtIWp/b9LbNAVWAnmeL6
-	 j4/Gl4ym9jX5NYeJy2JbS8GBo9zCxJ3LJfplP4gCjjUw6DFCTjJHdBbHXOS+KNIpUT
-	 iUR3ChuQQvAJVJeYOwz8SIgMUdEithcTv2UvCx4jgncj5Gu+eO89oUzOOKyzSWIgvR
-	 AB77CsN9TbeTTEyvFeJQs5FJ1XY70uMu7gV/ZzBNzSSIcFmblzmJACMyDFMCwwh85n
-	 983kTlm2Ow0lg==
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Cc: Rob Clark <robdclark@chromium.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sasha Levin <sashal@kernel.org>,
-	robdclark@gmail.com,
-	airlied@gmail.com,
-	daniel@ffwll.ch,
-	quic_jesszhan@quicinc.com,
-	quic_khsieh@quicinc.com,
-	quic_vpolimer@quicinc.com,
-	quic_kalyant@quicinc.com,
-	dan.carpenter@linaro.org,
+	b=yTwaCPiyDDgjHUsbAwmaFw46xIGkcj9NiHY0P56HMzyFP/JSd67nT/a9anLJkIK3b
+	 7Vif8/gv+n3QEgJxX0VBCSxAluGBVUFtNqrAa169czXfdxu57h0L5oxp0odgCUtC2q
+	 lxL4Mocfj8nvUy5ezO9LHmSFObimZjrlISPkIcc2ZJFPUU62CNOoDUfhoZ9+B0xh2m
+	 2wY/DjTaoMxaohhbqs/WZWdGMFHqd796UlO71mm56o7U+S28hWHnng1hTD+Q0Vepc3
+	 SzkwGri9V6io6bOYKRK68UGYF3XeEo9ObMhkZxvZtaxLxcS5uM86f8FlGs81Aatuk/
+	 nvgOSR9lT8vkA==
+Received: from localhost.localdomain (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: laura.nao)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id CB4DB3781477;
+	Mon, 22 Jan 2024 15:14:40 +0000 (UTC)
+From: Laura Nao <laura.nao@collabora.com>
+To: laura.nao@collabora.com
+Cc: cros-qcom-dts-watchers@chromium.org,
+	dianders@chromium.org,
+	dmitry.baryshkov@linaro.org,
+	kernel@collabora.com,
+	konrad.dybcio@linaro.org,
 	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 5.10 22/28] drm/msm/dpu: Ratelimit framedone timeout msgs
-Date: Mon, 22 Jan 2024 10:14:48 -0500
-Message-ID: <20240122151521.996443-22-sashal@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122151521.996443-1-sashal@kernel.org>
-References: <20240122151521.996443-1-sashal@kernel.org>
+	swboyd@chromium.org,
+	angelogioacchino.delregno@collabora.com
+Subject: Re: sc7180 kernel hang with linux-next
+Date: Mon, 22 Jan 2024 16:14:50 +0100
+Message-Id: <20240122151450.60234-1-laura.nao@collabora.com>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20240104101735.48694-1-laura.nao@collabora.com>
+References: <20240104101735.48694-1-laura.nao@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 5.10.208
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robdclark@chromium.org>
+On 1/4/24 11:17, Laura Nao wrote:
+> 
+> Yes, I'll try to bisect this through KernelCI and report back.
+> 
 
-[ Upstream commit 2b72e50c62de60ad2d6bcd86aa38d4ccbdd633f2 ]
+KernelCI has not bisected this regression yet. However, upon further
+investigation I noticed the kernel was getting consistently stuck while
+disabling the display clocks (namely disp_cc_mdss_pclk0_clk ) and booted
+consistently without issues after adding clk_ignore_unused to the 
+cmdline.
 
-When we start getting these, we get a *lot*.  So ratelimit it to not
-flood dmesg.
+The kernel configuration used by KernelCI had CONFIG_SC_DISPCC_7180=y ;
+setting CONFIG_SC_DISPCC_7180=m fixed the issue as the display clock
+controller is being initialized a bit later in the boot. 
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Patchwork: https://patchwork.freedesktop.org/patch/571584/
-Link: https://lore.kernel.org/r/20231211182000.218088-1-robdclark@gmail.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 5 ++++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     | 1 +
- 2 files changed, 5 insertions(+), 1 deletion(-)
+We're going to set CONFIG_SC_DISPCC_7180=m in the configuration used by
+KernelCI and monitor the results for a while, I'll report back to
+confirm whether the issue is still present or not.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 408fc6c8a6df..44033a639419 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -45,6 +45,9 @@
- 		(p) ? ((p)->hw_pp ? (p)->hw_pp->idx - PINGPONG_0 : -1) : -1, \
- 		##__VA_ARGS__)
- 
-+#define DPU_ERROR_ENC_RATELIMITED(e, fmt, ...) DPU_ERROR_RATELIMITED("enc%d " fmt,\
-+		(e) ? (e)->base.base.id : -1, ##__VA_ARGS__)
-+
- /*
-  * Two to anticipate panels that can do cmd/vid dynamic switching
-  * plan is to create all possible physical encoder types, and switch between
-@@ -2135,7 +2138,7 @@ static void dpu_encoder_frame_done_timeout(struct timer_list *t)
- 		return;
- 	}
- 
--	DPU_ERROR_ENC(dpu_enc, "frame done timeout\n");
-+	DPU_ERROR_ENC_RATELIMITED(dpu_enc, "frame done timeout\n");
- 
- 	event = DPU_ENCODER_FRAME_EVENT_ERROR;
- 	trace_dpu_enc_frame_done_timeout(DRMID(drm_enc), event);
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-index 1c0e4c0c9ffb..bb7c7e437242 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-@@ -52,6 +52,7 @@
- 	} while (0)
- 
- #define DPU_ERROR(fmt, ...) pr_err("[dpu error]" fmt, ##__VA_ARGS__)
-+#define DPU_ERROR_RATELIMITED(fmt, ...) pr_err_ratelimited("[dpu error]" fmt, ##__VA_ARGS__)
- 
- /**
-  * ktime_compare_safe - compare two ktime structures
--- 
-2.43.0
+Best,
 
+Laura 
 
