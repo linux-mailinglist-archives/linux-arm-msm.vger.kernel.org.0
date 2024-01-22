@@ -1,133 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-7852-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7853-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B67C4836F7C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 19:16:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1CA75836F87
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 19:17:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D9030294DA7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 18:16:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BCA6F1F2FE6D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 18:17:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 528443C693;
-	Mon, 22 Jan 2024 17:43:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE4433D570;
+	Mon, 22 Jan 2024 17:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Rv6Rcd4n"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Tg9sbVRd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E474176A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 17:43:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEDA4482D4;
+	Mon, 22 Jan 2024 17:46:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705945420; cv=none; b=KEZhDp8rqF3ZjBrhL6015VpGKH14W76Lcq0GPqZHtxGVh0X1e6kaomrf70H8FLco5yOkxGIPf+unBYZbZezUKVzLaXep59K5hguEqfgMWui7RvUGbpAmB3h+a3O/PtTbX6kRrf2ffOJlNCozM30y3VhHgYpy2aCNmomheR+2Ld0=
+	t=1705945590; cv=none; b=H/WKnVintPTVpZqlq+UcC7sERXXl0IQyFdyWWXdcIuYqOBwbQ/y/rVUMpjrUTgcUhb+tkdmtDw0yDu+FsfQCGYtGO8okaFjG6DCLp+bpwJA7Fy+CfLCR+4v6uz0ykLNecAhOzQGkD5GPX/6Q/bHAiMmpxO/OljmDwtE3trOfpak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705945420; c=relaxed/simple;
-	bh=aIOnQm+u0Sgg7h5AHZWFGHaNeKPCejsto0qSNsoN0Dc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RWrEAfwE/YUaJEfZA84ayioSgQEoEnFYmWPfoN23TmUoGWdaMiOWWbGX12Tr/+216E+T30wj5p6XWfqXbBhYfFeceQBtezFIqgC6x6iVBUn8aQMsEgV5XEweBjglkZT8QpEEBr7Koe3l0Q6H9fsVTVAdLSARV2WWAudmJBJ+A5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Rv6Rcd4n; arc=none smtp.client-ip=209.85.128.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-5f0629e67f4so34063737b3.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 09:43:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705945418; x=1706550218; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=GoxIjIov4FxsoO6Px6OXODCKwLlnQWhE5WKTvldbDWs=;
-        b=Rv6Rcd4nIy0c/9OX2IOoVH4B+A50xWs2b657/qd1sZ1XHGLTwhAFUnrwsRFNYXAp6T
-         5/L+umTtumo7HzFJReNJnlANeGHYtfGj4KuzPkVHw2vOJJh6MH6/Zs1Yral85uqWLJP0
-         fHKlEMGZLt22GDoRtiVguw5blqSH0diQ2Q+jXFUsV5jXsXLqER0Ln/MBe9Hw6OTz94EL
-         jtxWmBJl6xpuZByqswYh6QXfwBMiyRBxGwD8PShz3gmSpb+trFm1PxuYaAE93WBjBfFw
-         0ZGSgq4UfDzxcaHnI4TCG7vm9qFYngx8oG0K5Eu1yNSxbwfd8MIzpVpcKUXalMf75Yla
-         TWXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705945418; x=1706550218;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GoxIjIov4FxsoO6Px6OXODCKwLlnQWhE5WKTvldbDWs=;
-        b=aQTTY0YSpNpHoia6Ey7u1Ubb6EtOhmeTLUANKULkbYcaiKI5u199jfeAESk3cMovI3
-         WvIUgPN+BF+LUXn5I2Tcn5vBl1gVUJ0Za08lqiJavzQVfoGaKj9F3AGoR4U6ERa5RBgE
-         HkEna9rojwdy9O09XWCuBMOAWPPFtteZtzRiEwGiHynBhTJ/v0ChdFax6ul2z7iw1yum
-         NP8GJU8QRSAeQ888vAiPCpg6fB2jElx6z2btqkO/d4UvyM0J5KfS/UlMClwfI/3lbqE7
-         c4FYIQdd+cbless/bvgudhBsFPBC2ZZcaMvocJ03tqzuuhKB9lIKwBuwMbGoTIzaEGPQ
-         AUnA==
-X-Gm-Message-State: AOJu0YwXU7/2GCGm6XpiUb05lBd4lOX+WvcRb5BFUOXDFclZMRL5SEDG
-	WvcbpMtE4nG2Am92vL7Zv1FGYo+uOiOC3JD6sabN3rV09swh5+Pqe7m2J0/andYEGHjImHSqqJH
-	bKrlCk3pGsHv/SMj81JO4E20RXEWYCE+PD6KeKQ==
-X-Google-Smtp-Source: AGHT+IHjNAmDzfWOjE4heRBByoeLZwDFG8zH4wGjVigmAwqPbq44ESDrHHDaV6brgae6L6vZqDzpEclP668GPt0jJlk=
-X-Received: by 2002:a0d:e24d:0:b0:5ff:8466:20f0 with SMTP id
- l74-20020a0de24d000000b005ff846620f0mr3934593ywe.63.1705945417856; Mon, 22
- Jan 2024 09:43:37 -0800 (PST)
+	s=arc-20240116; t=1705945590; c=relaxed/simple;
+	bh=H4fd0I1xdlUdn8BCMsHZCDCvU+DZCKlUX3cBjWWeYPM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=SkWzV5DLMKkGr7K76wRyd/+W3tDtdoMNxG1dRyak8gLLewiHjH1rjSa3d55oEHqpUATb7PeeV+kvFfHcJkUSywLibK5ktNDU3J0stnDEbpCMPkJUOSNORI6BEtVR5KiJR9dtyoj8OQpiQkBMakVV2fXlOsjiDX5W1h6fBiBs6AM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Tg9sbVRd; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40MEkNNO004080;
+	Mon, 22 Jan 2024 17:46:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=Iv4kxuMYXz1LyQFxr93MbbXsbilUdrXgi24zSCxnXQQ=; b=Tg
+	9sbVRdDTs1CPPlXAu0pFEnJCUr59ZovHKv8A6gSkHEcwQT0czwSQubMtOX9XiomB
+	+qq8LBDUwieQSbSwr9IgFK2AeABl2MrJ9qJCwJz6rX2DoFAIPfOzsIA74Y/TwOrU
+	ZAbonQcDNvVxqUzEJHoPo4Y4ux+iizEJnIJjiF24OD3z2EFO1OSlj9q4mmCHryOf
+	d9P5FNp7BYr8k5DNNtzogQh9OqkzOhoCjCaWdgr/6uGFxeARqXBrz4MoolmZSr1K
+	HiCjCRZMbEPzXi6V8SoPgRZoF0Z9+x6NFgesbHov8gsOY+ef47HmFTIbYWQ4DipA
+	nLki8JJf7OuZ2LBuM2Og==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vstd98e08-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 22 Jan 2024 17:46:24 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40MHkNCp015656
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 22 Jan 2024 17:46:23 GMT
+Received: from [10.110.32.149] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 22 Jan
+ 2024 09:46:22 -0800
+Message-ID: <41854d97-2ddf-6c0b-8ad4-c028ce15d653@quicinc.com>
+Date: Mon, 22 Jan 2024 09:46:10 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240122143030.11904-1-quic_okukatla@quicinc.com> <20240122143030.11904-5-quic_okukatla@quicinc.com>
-In-Reply-To: <20240122143030.11904-5-quic_okukatla@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 22 Jan 2024 19:43:26 +0200
-Message-ID: <CAA8EJpoU=jOSERW70NBXkr5JARH+2TAL1KSb130DTcSu4EmX4w@mail.gmail.com>
-Subject: Re: [4/4] arm64: dts: qcom: sc7280: Add clocks for QOS configuration
-To: Odelu Kukatla <quic_okukatla@quicinc.com>
-Cc: georgi.djakov@linaro.org, cros-qcom-dts-watchers@chromium.org, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 0/2] arm64: qcom: sm8550: add support for the SM8550-HDK
+ board
+Content-Language: en-US
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20240122-topic-sm8550-upstream-hdk8550-v1-0-bff7eb3a17eb@linaro.org>
+From: Trilok Soni <quic_tsoni@quicinc.com>
+In-Reply-To: <20240122-topic-sm8550-upstream-hdk8550-v1-0-bff7eb3a17eb@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: y1ys2rR7_8Zd6CWnQJeXx9KhpV3jDsJ0
+X-Proofpoint-ORIG-GUID: y1ys2rR7_8Zd6CWnQJeXx9KhpV3jDsJ0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-22_07,2024-01-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 bulkscore=0 impostorscore=0 mlxlogscore=842 mlxscore=0
+ spamscore=0 priorityscore=1501 phishscore=0 malwarescore=0 adultscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401220124
 
-On Mon, 22 Jan 2024 at 16:39, Odelu Kukatla <quic_okukatla@quicinc.com> wrote:
->
-> Add clock handles for required clocks to be enabled for
-> configuring QoS on sc7280.
->
-> Change-Id: I58991300ff1d8d2865763d4e79ee81c03586249e
-> Signed-off-by: Odelu Kukatla <quic_okukatla@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sc7280.dtsi | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 83b5b76ba179..73acf1bd0f97 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -2099,6 +2099,8 @@
->                         reg = <0 0x016e0000 0 0x1c080>;
->                         #interconnect-cells = <2>;
->                         qcom,bcm-voters = <&apps_bcm_voter>;
-> +                       clocks = <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
-> +                               <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>;
->                 };
->
->                 aggre2_noc: interconnect@1700000 {
-> @@ -2106,6 +2108,7 @@
->                         compatible = "qcom,sc7280-aggre2-noc";
->                         #interconnect-cells = <2>;
->                         qcom,bcm-voters = <&apps_bcm_voter>;
-> +                       clocks = <&rpmhcc RPMH_IPA_CLK>;
+On 1/22/2024 2:19 AM, Neil Armstrong wrote:
+> The SM8550-HDK is an embedded development platforms for the
+> Snapdragon 8 Gen 2 SoC aka SM8550, with the followwing features:
+> - Qualcomm SM8550 SoC
+> - 16GiB On-board LPDDR5
+> - On-board WiFi 7 + Bluetooth 5.3/BLE
+> - On-board UFS4.0
+> - M.2 Key B+M Gen3x2 PCIe Slot
+> - HDMI Output
+> - USB-C Connector with DP Almode & Audio Accessory mode
+> - Micro-SDCard Slot
+> - Audio Jack with Playback and Microphone
+> - 2 On-board Analog microphones
+> - 2 On-board Speakers
+> - 96Boards Compatible Low-Speed and High-Speed connectors [1]
+> - For Camera, Sensors and external Display cards
+> - Compatible with the Linaro Debug board [2]
+> - SIM Slot for Modem
+> - Debug connectors
+> - 6x On-Board LEDs
+> 
+> On-Board PMICs:
+> - PMK8550 2.1
+> - PM8550 2.0
+> - PM8550VS 2.0 x4
+> - PM8550VE 2.0
+> - PM8550B 2.0
+> - PMR735D 2.0
+> - PM8010 1.1 x2
+> 
+> Product Page: [3]
+> 
+> Dependencies: None
+> 
+> [1] https://www.96boards.org/specifications/
+> [2] https://git.codelinaro.org/linaro/qcomlt/debugboard
+> [3] https://www.lantronix.com/products/snapdragon-8-gen-2-mobile-hardware-development-kit/
 
-Is there any reason to write QoS for the IPA before the IPA starts
-poking around? The same question applies to aggre1 NoC.
 
->                 };
->
->                 mmss_noc: interconnect@1740000 {
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
->
->
-
+Excellent. Thank you for adding the support here and it looks straightforward due to the 
+the MTP support we had added earlier along w/ the 8550 SOC. 
 
 -- 
-With best wishes
-Dmitry
+---Trilok Soni
+
 
