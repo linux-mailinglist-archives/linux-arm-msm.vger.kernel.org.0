@@ -1,138 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-7848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD5D8836EF5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 19:07:00 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE7A3836F4E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 19:13:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0CAFB1C29597
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 18:07:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F351928EBBB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 18:12:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92DAE657AD;
-	Mon, 22 Jan 2024 17:28:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6A085A0F0;
+	Mon, 22 Jan 2024 17:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="enU4AQnK"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="GxcCDIxd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC6355C1C
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 17:28:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A66B66B50;
+	Mon, 22 Jan 2024 17:37:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705944514; cv=none; b=rPfBUxZddCTIGsh/WjODk34qj3qWNmzHILacOthm3cZqXo/yYvSXU1SICEEUWQME6YZX5FiNnbi5O5AdJBzlCOI7+Blz8lICD5t1Mk7aqoOVYwbDpA8OwbzGX6BH/zKgYswyjMP2RatWQdDuxPZR6EVywQejTbziP7dbNHznisE=
+	t=1705945056; cv=none; b=InSuGj+sut7AB6e3+oqh7dHsAVJtIco/4MeUg/7HmLS2IPgyFYRBtcTrlZLrfp3LVSqhcS6Oxn+xAIUVQWBWIE+m7pjU0jRe/HBRAsAJHwiuy1GE1QPMzGf+qEo1XRI0RCIjyQyO8xJLoooNNObEwayx0/amNCxk6Lr/jkNjd40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705944514; c=relaxed/simple;
-	bh=MEFJkTMAGJvEFxvbANNBW8kONt7HUFZb7t9Wmx1gyOI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=lR8VT7NHlUz8D1WIcIkAhlceL8+wPr5pxvoHoDwRsSDx+D+QJUQoNqDJ28XcjNB4Zd0j6Xz5lLjO9HV7rF4b4slikW3asXbp6nJj/fJE3oEGBiK0VgD/Gpm2c5b2O4zwl8FXB/D1DpG0pVytxdAX6K2T8qeT78r9/9byzVK446U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=enU4AQnK; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40MEFh1f024730;
-	Mon, 22 Jan 2024 17:28:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=O33X+3RHv3cg4CvDsAraqDD6UaFlmMnUPDF5/eXUySg=; b=en
-	U4AQnKQkty0R6Uj+26rU4Sv8ue4kdUdZboNvAyzimrY3w5lUJK5ZPBdxdSpbrtoO
-	1ZPp54XdzpAt4irn6ibOeDNdwbHbteFVT/cfK2J5ZL4QKyoOAnbQOvspnRL5Oz6k
-	nKHBm4hqSghFYZfOus5NBdvcZPuxEnqGe0gHCOX34BaLddnVTPwkrD3ETNTN8iU0
-	z5cN61cXqyfHqF6lV/B5tqwg/Ui1SI1qshf9RWducOHi/y32zuglgwP4L4SVUXgS
-	d17VecQqODIh34yoHfIwfv4On0N1eJc6Uu9NjLtR0MmN28sGydFrnoYvRuFzfalU
-	sol+fYtAhksmPBtZql0w==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vsn0wsbha-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jan 2024 17:28:18 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40MHSHis025192
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jan 2024 17:28:17 GMT
-Received: from [10.110.92.156] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 22 Jan
- 2024 09:28:16 -0800
-Message-ID: <18b7e28c-c969-c5f4-28a9-74ff79c94aca@quicinc.com>
-Date: Mon, 22 Jan 2024 09:28:07 -0800
+	s=arc-20240116; t=1705945056; c=relaxed/simple;
+	bh=8WYz4IV5sJnk5aen6jbAq+q3NiEqFAzxRle76P/6Bcg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bHEUgjEpNrcwO2M4nSU0PXdsHvawUl8PF2rt599eW0kBLAmpmp/EB6JbKdoUzf+vdGyCBNXFc+MeLNgssLZCy89vN88LncP5E0AvxVRFtOfC8ZcJw+xgTOxyO9nm5E7I2XEJ3qXwcXWXsdJeNDJ3hV8CAASyi7YsGmbUvY7D7rQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=GxcCDIxd; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=Tpq99Xn3oyUQ1UeFUe2J523sJUHds2quY0PBRgIFX08=; b=GxcCDIxdcwixCbMs9SgULyWG0E
+	wCMQM9VlMDAwLQxTgpHTEnRfE7msH3WejKCDAHDyw87vHsUC+aNXNRD5jNUUHo0qapTZA38hZrvJZ
+	53K0QFJlwd5MNlRh0P8e6SnP37AmP2XpUWXxNWqzhwcI/X3UQ95Ykmav1x5+PGmO4et3HnLPPxJ0m
+	Ovo2XLa+Jaq5M5MgSObj3Z+PHWiB4+DorhpvG0pA59gH/tQGUs3xQUfmp57dswHCfYH54aZiBnGwQ
+	aGo7q/CvW8kcAt7Ga7nDj7uHEPQQsZl1YGmuv0vUAqKgOCyJXWhLwIOjPfq76ejYFSQo4GqGevKVU
+	rqsU1+RQ==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:56168)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1rRyEA-0001Ho-0p;
+	Mon, 22 Jan 2024 17:36:54 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1rRyE0-0001CD-Mi; Mon, 22 Jan 2024 17:36:44 +0000
+Date: Mon, 22 Jan 2024 17:36:44 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Lei Wei <quic_leiwei@quicinc.com>
+Cc: Luo Jie <quic_luoj@quicinc.com>, agross@kernel.org,
+	andersson@kernel.org, konrad.dybcio@linaro.org, davem@davemloft.net,
+	edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org, corbet@lwn.net, catalin.marinas@arm.com,
+	will@kernel.org, p.zabel@pengutronix.de, shannon.nelson@amd.com,
+	anthony.l.nguyen@intel.com, jasowang@redhat.com,
+	brett.creeley@amd.com, rrameshbabu@nvidia.com,
+	joshua.a.hay@intel.com, arnd@arndb.de, geert+renesas@glider.be,
+	neil.armstrong@linaro.org, dmitry.baryshkov@linaro.org,
+	nfraprado@collabora.com, m.szyprowski@samsung.com, u-kumar1@ti.com,
+	jacob.e.keller@intel.com, andrew@lunn.ch, netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, ryazanov.s.a@gmail.com,
+	ansuelsmth@gmail.com, quic_kkumarcs@quicinc.com,
+	quic_suruchia@quicinc.com, quic_soni@quicinc.com,
+	quic_pavir@quicinc.com, quic_souravp@quicinc.com,
+	quic_linchen@quicinc.com
+Subject: Re: [PATCH net-next 18/20] net: ethernet: qualcomm: Add PPE MAC
+ support for phylink
+Message-ID: <Za6nrICG8gjwTsJ9@shell.armlinux.org.uk>
+References: <20240110114033.32575-1-quic_luoj@quicinc.com>
+ <20240110114033.32575-19-quic_luoj@quicinc.com>
+ <ZZ6LGiSde4hHM+6j@shell.armlinux.org.uk>
+ <fc9c3e08-a83c-4748-89e4-8b7b0c62da7f@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 13/14] drm/msm/dp: move next_bridge handling to dp_display
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        "Abhinav
- Kumar" <quic_abhinavk@quicinc.com>,
-        Sankeerth Billakanti
-	<quic_sbillaka@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad
- Dybcio" <konrad.dybcio@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>, "David Airlie" <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>
-References: <20231229225650.912751-1-dmitry.baryshkov@linaro.org>
- <20231229225650.912751-14-dmitry.baryshkov@linaro.org>
- <b5f571c6-dcf6-c416-ca86-fdbd0514676b@quicinc.com>
- <CAA8EJpqvyOsPErUE08mcCAcG41zRJS+Q6qQi83-ZNCBcwv3kCw@mail.gmail.com>
-Content-Language: en-US
-From: Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <CAA8EJpqvyOsPErUE08mcCAcG41zRJS+Q6qQi83-ZNCBcwv3kCw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: hkwozvBkpFQlAaylOJ62W--pRcmSraiX
-X-Proofpoint-GUID: hkwozvBkpFQlAaylOJ62W--pRcmSraiX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-22_07,2024-01-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 phishscore=0 mlxscore=0 lowpriorityscore=0 spamscore=0
- mlxlogscore=999 bulkscore=0 clxscore=1015 suspectscore=0 malwarescore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401220121
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fc9c3e08-a83c-4748-89e4-8b7b0c62da7f@quicinc.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
+On Mon, Jan 22, 2024 at 11:01:26PM +0800, Lei Wei wrote:
+> 
+> 
+> On 1/10/2024 8:18 PM, Russell King (Oracle) wrote:
+> > On Wed, Jan 10, 2024 at 07:40:30PM +0800, Luo Jie wrote:
+> > > @@ -352,6 +1230,12 @@ static int ppe_port_maxframe_set(struct ppe_device *ppe_dev,
+> > >   }
+> > >   static struct ppe_device_ops qcom_ppe_ops = {
+> > > +	.phylink_setup = ppe_phylink_setup,
+> > > +	.phylink_destroy = ppe_phylink_destroy,
+> > > +	.phylink_mac_config = ppe_phylink_mac_config,
+> > > +	.phylink_mac_link_up = ppe_phylink_mac_link_up,
+> > > +	.phylink_mac_link_down = ppe_phylink_mac_link_down,
+> > > +	.phylink_mac_select_pcs = ppe_phylink_mac_select_pcs,
+> > >   	.set_maxframe = ppe_port_maxframe_set,
+> > >   };
+> > 
+> > Why this extra layer of abstraction? If you need separate phylink
+> > operations, why not implement separate phylink_mac_ops structures?
+> > 
+> 
+> This PPE driver will serve as the base driver for higher level drivers
+> such as the ethernet DMA (EDMA) driver and the DSA switch driver.
 
-On 1/19/2024 6:31 PM, Dmitry Baryshkov wrote:
-> On Fri, 19 Jan 2024 at 23:14, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
->> Dmitry,
->>
->> I am testing this patch serial with msm-next branch.
->>
->> This patch cause system crash during booting up for me.
->>
->> Is this patch work for you?
-> Yes, tested on top of linux-next. However I only tested it with
-> DP-over-USBC. What is your testcase? Could you please share the crash
-> log?
+Why not have the higher level drivers provide a pointer to the
+appropriate phylink_mac_ops structure? Having extra levels of
+indirection makes my future maintenance of phylink harder (I'm already
+bugged by DSA doing this, and it's a right pain.)
 
-I tested it on chrome device (sc7280) which has eDP as primary and 
-without external USBC DP connected.
+For example, if one of your higher level drivers needs the mac_prepare
+or mac_finish functionality, you have to add a shim, extra function
+pointers and so on.
 
-It crashes during boot.
+If I need to add an extra parameter to a method, then I have to fix
+up your shim layer _as well_ as all the called methods - in other
+words, it adds extra maintenance burden.
 
-I will debug it more and collect logs for you.
+It also makes detecting whether an implementation provides something
+or not harder - see the problems when mac_select_pcs() was introduced
+and rather than testing to see whether the method is populated, we
+have to call the method with a dummy value to discover whether the
+sub-driver implements it or not. Honestly, I would really like to get
+rid of DSA's phylink_mac_ops shim layer.
 
-
->> On 12/29/2023 2:56 PM, Dmitry Baryshkov wrote:
->>> Remove two levels of indirection and fetch next bridge directly in
->>> dp_display_probe_tail().
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>    drivers/gpu/drm/msm/dp/dp_display.c | 42 +++++++++--------------------
->>>    drivers/gpu/drm/msm/dp/dp_parser.c  | 14 ----------
->>>    drivers/gpu/drm/msm/dp/dp_parser.h  | 14 ----------
->>>    3 files changed, 13 insertions(+), 57 deletions(-)
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
