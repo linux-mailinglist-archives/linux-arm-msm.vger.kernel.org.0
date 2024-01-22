@@ -1,112 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-7821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B593C836BE4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 17:54:00 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A56DC836BE6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 17:54:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 65914287FE8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 16:53:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CA1E71C25888
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 16:54:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BCCE5C900;
-	Mon, 22 Jan 2024 15:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D10946442;
+	Mon, 22 Jan 2024 15:28:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=rong.moe header.i=i@rong.moe header.b="LtEqjSxW"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GIiOoEA3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A504446427;
-	Mon, 22 Jan 2024 15:27:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705937271; cv=pass; b=QNf17aYwZm9GJlohX4KSAD2jPax9ARHcP++mpjF0k+cGa5wIXN/SjMgoY8MC81V44T7oe6CcLE+deB7/6x2dWpGZ/X3yZ57NSeehOcXVCdHtKUkbhvD9ChwiK8MObD1qvPNCw8QoZTjmw+NQ/KlI790uR5bjb1qcKrWzftBI0rw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705937271; c=relaxed/simple;
-	bh=LArNfFU9YRUKCkH7jrZj0/mO2+RglQS0Gl+D9m9pX+U=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=sqMoi7Yhsi0RBrVODjUHpACdnnpQjtQqfyDp+YmCOHW3xiww/mlEygFwjjg/TBNIsY8fzmzoI1yGfI+sxiGCUq87/fFq5NlEcIOWGRXn/dXzLwD6OCS6KTFVY80e75RNuQNNSuw6aJ7ev6fNvL+20fKPWrySXJPUBg60GYGaUY8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rong.moe; spf=pass smtp.mailfrom=rong.moe; dkim=pass (1024-bit key) header.d=rong.moe header.i=i@rong.moe header.b=LtEqjSxW; arc=pass smtp.client-ip=136.143.188.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rong.moe
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rong.moe
-Delivered-To: uwu@icenowy.me
-ARC-Seal: i=1; a=rsa-sha256; t=1705937262; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=QCVpFMqNjGjVV5EYuqft1OMPhcfFWj1kJTavp9G6VYI5X3wT7cOt0cpn46XuR/Bf3M3GYzCD3GB9Xr/mIt9FI8MRMXewtDLeO1+9Wl8z2ErJuGpbQ1vDkLUEuWiaSrWtKXmKztyNshhYWpHE9MhWReR//NBCp+B1qiNjZbui2/8=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1705937262; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=LArNfFU9YRUKCkH7jrZj0/mO2+RglQS0Gl+D9m9pX+U=; 
-	b=jKj7ruVKE+un6FS5k/HX4pt1UY7I7EmwyQ+/UT5cbtVBf9nltWka8Mh3hyOHkmxe3Z7/V/R3fLDamXkfdwSo69bYlPvyK268e5QaY+wn058MnXJxj2MTLYa7Z1BpAybGuKtD7bgbEHIhziOAVH/Vvx6EKcNG8hQF9/i59tlwdq8=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=rong.moe;
-	spf=pass  smtp.mailfrom=i@rong.moe;
-	dmarc=pass header.from=<i@rong.moe>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1705937262;
-	s=zmail; d=rong.moe; i=i@rong.moe;
-	h=Message-ID:Subject:Subject:From:From:To:To:Cc:Cc:Date:Date:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:MIME-Version:Message-Id:Reply-To;
-	bh=LArNfFU9YRUKCkH7jrZj0/mO2+RglQS0Gl+D9m9pX+U=;
-	b=LtEqjSxW3AzRRJjj9ZdopFj7fyJIi2bQ6+nYf5n+QBs32YUpTLzI4GrlNfn2KvE+
-	fwjsan2t/XjO0u8VNxArGQ5V2rp37cvVOQ7zbFmeYngaAAxinAt6/DWeW1ghy1OXf0F
-	i+4xY3WdHYItkw/SEj792RD9bdGQfiVC90NI/wfw=
-Received: from tb.lan (182.118.232.146 [182.118.232.146]) by mx.zohomail.com
-	with SMTPS id 1705937260833107.56326002159994; Mon, 22 Jan 2024 07:27:40 -0800 (PST)
-Message-ID: <e0a9f2eb23813f4b6666d7b5082afcb98ffeb509.camel@rong.moe>
-Subject: Re: [PATCH 4/4] ARM: dts: qcom: msm8974: Add device tree for
- Samsung Galaxy S5 China
-From: Rong Zhang <i@rong.moe>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Bjorn Andersson
- <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Rob
- Herring <robh+dt@kernel.org>, Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Icenowy Zheng <uwu@icenowy.me>
-Date: Mon, 22 Jan 2024 23:27:27 +0800
-In-Reply-To: <47fb5916-a4b1-4917-ba0d-41bb7240edba@linaro.org>
-References: <20240121154010.168440-1-i@rong.moe>
-	 <20240121154010.168440-5-i@rong.moe>
-	 <12e04abf-7720-4c2c-9f1f-0cfee7ba004e@linaro.org>
-	 <9b1c28415b5e3a5d94d167612fc0b7e0f9d0a767.camel@rong.moe>
-	 <47fb5916-a4b1-4917-ba0d-41bb7240edba@linaro.org>
-Autocrypt: addr=i@rong.moe; prefer-encrypt=mutual;
- keydata=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
-	cMTsfqztU+orM
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.50.3-1 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16BC4643D
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 15:28:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1705937301; cv=none; b=p3QXEzpwFdfve5iwA5ptKdR5G9lIAiazjF3kJMAxJMnJuklHpNzy30IoINka9nSufSJa2LdN9HQ34ytVHmIFSyDhcgX3Zn2LXYJlcOQUtj+XjsbuT6W2HngxSq9AitmFqY18Xmc3WkEZHVMPdp0ZFp6EOmZIJPPycpwYMqKlAy4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1705937301; c=relaxed/simple;
+	bh=gJy6V6En8oglansz0+6dCHlstxS4CBQ5FEsC6dHHVuA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=YVHATWeJnLM00VS8PKxMdCtJ0Gu4+/Hiwo7xXcB0/BdkZ/NiKKck/5+FNoxOq3wwF0+6WMmPESQf4vso/o6f/gRnfUKEuKUqplUhWPVP7hP0ttO47exaH4Q9YfXCNIs6PGL9epdWjngWib4rSpZoSlh+CPztvlMOBinnkBXFb1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GIiOoEA3; arc=none smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-559f92bf7b6so5817974a12.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 07:28:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1705937298; x=1706542098; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ivoj0IdiB6s2UMY3NlBWWJcKrLIKVYX5ec1XAbyGp20=;
+        b=GIiOoEA3ZCj7/E1zfiMZqxry/s2q5+oFkfJ1xChenKyFyjhQXU0oeysgxmUe9Ss4Dw
+         7pNciGtfNchvzOPGpOP0W8e8mxgwk7cD3Ld1+DzX2YXQcmOlG2QWYKWaFFrB/q8sWOFd
+         vR7caWMloP5qh0jJTMqD14PgT7wyo/4mEUpenQc0YZ0N9fOWsAil5mmqTiKdeGfvFyZq
+         4v5nCgA1LsVBjvWVuoeRns3WOb9+9mdLbv8fBjWLpPmTbNWRwo80boXpGoXJE0C0ugak
+         +Ble7txpkFfqYZCCHllDv8qfuYR5gd7IUDNLMvx+NDXGx2R50qNGfZNCXaLjVmRAwDvz
+         dttg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705937298; x=1706542098;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ivoj0IdiB6s2UMY3NlBWWJcKrLIKVYX5ec1XAbyGp20=;
+        b=Fsa1g0pV6Eh1arrjP29ucxiPlg3kHn/hbZQvR22uZafsCiAqF+vdTvs/VFit3EesE1
+         87WqgHBu4DcgUCMm6QaxZ9lcsAs2m7tnAK9H/1WhZ3XQ1acAjr+D7SPGiD6OOoSqr87D
+         wcubOI/aPE2crMsTWAu62o56pqVG3hSkSEHC83NPwdQVMBi4Prrs4UwlziXGouNQuWTp
+         Z3de8m/kBkyr47U3vvB6YAkdijr6J7iQ+tiVZN+1qesQKYKJnnpml9ArtZy207sxJjka
+         6Ioc2y627BgHKo6oGww/t4MmhPmKMuXpqv/r7PAhUjV7qF7PZKOWrTjv+wYrkscmJSTO
+         nrmA==
+X-Gm-Message-State: AOJu0YzfFJSj65zaYQEhG8eaXX1uJEPOI8lWyZEJ5rHL616HUnvPnwWU
+	iwpRdVh65r+e+XWzF+QqFUevDsamLNTfHgdqmjFUtFPproJSWOqbAd/U63yJOcSvafhH9vTOA3S
+	D
+X-Google-Smtp-Source: AGHT+IG05z7/zQiSaBaTxMhSPIN7Oz0gWhKCEPa2yIsUouLEDwJED54o+9fiThp56KqzXZOvMwGJTA==
+X-Received: by 2002:a50:fc18:0:b0:55a:1e6a:496f with SMTP id i24-20020a50fc18000000b0055a1e6a496fmr84736edr.33.1705937297885;
+        Mon, 22 Jan 2024 07:28:17 -0800 (PST)
+Received: from [192.168.231.132] (178235179218.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.218])
+        by smtp.gmail.com with ESMTPSA id j9-20020a508a89000000b00554930be765sm14754031edj.97.2024.01.22.07.28.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Jan 2024 07:28:17 -0800 (PST)
+Message-ID: <ebed24aa-e190-4735-b618-7d74fadd900c@linaro.org>
+Date: Mon, 22 Jan 2024 16:28:15 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ZohoMailClient: External
+User-Agent: Mozilla Thunderbird
+Subject: Re: [2/4] interconnect: qcom: sc7280: enable qos programming
+Content-Language: en-US
+To: Odelu Kukatla <quic_okukatla@quicinc.com>, georgi.djakov@linaro.org,
+ Bjorn Andersson <andersson@kernel.org>, Georgi Djakov <djakov@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240122143030.11904-1-quic_okukatla@quicinc.com>
+ <20240122143030.11904-3-quic_okukatla@quicinc.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
+ BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
+ HGWdmtO+RvadOVi6CoUDqALsmfS3MUG5Pj2Ne9+0jRg4hEnB92AyF9rW2G3qisFcwPgvatt7
+ TXD5E38mLyOPOUyXNj9XpDbt1hNwKQfiidmPh5e7VNAWRnW1iCMMoKqzM1Anzq7e5Afyeifz
+ zRcQPLaqrPjnKqZGL2BKQSZDh6NkI5ZLRhhHQf61fkWcUpTp1oDC6jWVfT7hwRVIQLrrNj9G
+ MpPzrlN4YuAqKeIer1FMt8cq64ifgTzxHzXsMcUdclzq2LTk2RXaPl6Jg/IXWqUClJHbamSk
+ t1bfif3SnmhA6TiNvEpDKPiT3IDs42THU6ygslrBxyROQPWLI9IL1y8S6RtEh8H+NZQWZNzm
+ UQ3imZirlPjxZtvz1BtnnBWS06e7x/UEAguj7VHCuymVgpl2Za17d1jj81YN5Rp5L9GXxkV1
+ aUEwONM3eCI3qcYm5JNc5X+JthZOWsbIPSC1Rhxz3JmWIwP1udr5E3oNRe9u2LIEq+wH/toH
+ kpPDhTeMkvt4KfE5m5ercid9+ZXAqoaYLUL4HCEw+HW0DXcKDwARAQABzShLb25yYWQgRHli
+ Y2lvIDxrb25yYWQuZHliY2lvQGxpbmFyby5vcmc+wsGOBBMBCAA4FiEEU24if9oCL2zdAAQV
+ R4cBcg5dfFgFAmQ5bqwCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQR4cBcg5dfFjO
+ BQ//YQV6fkbqQCceYebGg6TiisWCy8LG77zV7DB0VMIWJv7Km7Sz0QQrHQVzhEr3trNenZrf
+ yy+o2tQOF2biICzbLM8oyQPY8B///KJTWI2khoB8IJSJq3kNG68NjPg2vkP6CMltC/X3ohAo
+ xL2UgwN5vj74QnlNneOjc0vGbtA7zURNhTz5P/YuTudCqcAbxJkbqZM4WymjQhe0XgwHLkiH
+ 5LHSZ31MRKp/+4Kqs4DTXMctc7vFhtUdmatAExDKw8oEz5NbskKbW+qHjW1XUcUIrxRr667V
+ GWH6MkVceT9ZBrtLoSzMLYaQXvi3sSAup0qiJiBYszc/VOu3RbIpNLRcXN3KYuxdQAptacTE
+ mA+5+4Y4DfC3rUSun+hWLDeac9z9jjHm5rE998OqZnOU9aztbd6zQG5VL6EKgsVXAZD4D3RP
+ x1NaAjdA3MD06eyvbOWiA5NSzIcC8UIQvgx09xm7dThCuQYJR4Yxjd+9JPJHI6apzNZpDGvQ
+ BBZzvwxV6L1CojUEpnilmMG1ZOTstktWpNzw3G2Gis0XihDUef0MWVsQYJAl0wfiv/0By+XK
+ mm2zRR+l/dnzxnlbgJ5pO0imC2w0TVxLkAp0eo0LHw619finad2u6UPQAkZ4oj++iIGrJkt5
+ Lkn2XgB+IW8ESflz6nDY3b5KQRF8Z6XLP0+IEdLOOARkOW7yEgorBgEEAZdVAQUBAQdAwmUx
+ xrbSCx2ksDxz7rFFGX1KmTkdRtcgC6F3NfuNYkYDAQgHwsF2BBgBCAAgFiEEU24if9oCL2zd
+ AAQVR4cBcg5dfFgFAmQ5bvICGwwACgkQR4cBcg5dfFju1Q//Xta1ShwL0MLSC1KL1lXGXeRM
+ 8arzfyiB5wJ9tb9U/nZvhhdfilEDLe0jKJY0RJErbdRHsalwQCrtq/1ewQpMpsRxXzAjgfRN
+ jc4tgxRWmI+aVTzSRpywNahzZBT695hMz81cVZJoZzaV0KaMTlSnBkrviPz1nIGHYCHJxF9r
+ cIu0GSIyUjZ/7xslxdvjpLth16H27JCWDzDqIQMtg61063gNyEyWgt1qRSaK14JIH/DoYRfn
+ jfFQSC8bffFjat7BQGFz4ZpRavkMUFuDirn5Tf28oc5ebe2cIHp4/kajTx/7JOxWZ80U70mA
+ cBgEeYSrYYnX+UJsSxpzLc/0sT1eRJDEhI4XIQM4ClIzpsCIN5HnVF76UQXh3a9zpwh3dk8i
+ bhN/URmCOTH+LHNJYN/MxY8wuukq877DWB7k86pBs5IDLAXmW8v3gIDWyIcgYqb2v8QO2Mqx
+ YMqL7UZxVLul4/JbllsQB8F/fNI8AfttmAQL9cwo6C8yDTXKdho920W4WUR9k8NT/OBqWSyk
+ bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
+ nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
+ izWDgYvmBE8=
+In-Reply-To: <20240122143030.11904-3-quic_okukatla@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, 2024-01-22 at 16:17 +0100, Krzysztof Kozlowski wrote:
-> On 22/01/2024 15:51, Rong Zhang wrote:
-> > I've glanced similar dts. To solve this, I think we could either:
-> > 1. keep the dt-binding in [PATCH 3/4], and delete "samsung,klte" here
-> > 2. rewrite dt-binding like crystalfontz,cfa100{36,37,49,55,56,57,58}:
-[...]
-> > My preference is (2.) since other variants of klte may be added in the
-> > future. I would like to hear your preferences.
->=20
-> It depends whether the devices are compatible. IOW, entire klte DTB
-> should work fine on kltechn, just without few new devices.
+On 22.01.2024 15:30, Odelu Kukatla wrote:
+> Enable QoS for the master ports with predefined values
+> for priority and urgency.
+> 
+> Change-Id: I1c4515402bcd6df8eed814be096aa5e1fc16cef6
+> Signed-off-by: Odelu Kukatla <quic_okukatla@quicinc.com>
+> ---
+>  drivers/interconnect/qcom/sc7280.c | 250 +++++++++++++++++++++++++++++
+>  1 file changed, 250 insertions(+)
+> 
+> diff --git a/drivers/interconnect/qcom/sc7280.c b/drivers/interconnect/qcom/sc7280.c
+> index 7d33694368e8..719844c34894 100644
+> --- a/drivers/interconnect/qcom/sc7280.c
+> +++ b/drivers/interconnect/qcom/sc7280.c
+> @@ -1,6 +1,7 @@
+>  // SPDX-License-Identifier: GPL-2.0
+>  /*
+>   * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+>   *
+>   */
+>  
+> @@ -16,29 +17,59 @@
+>  #include "icc-rpmh.h"
+>  #include "sc7280.h"
+>  
+> +static const struct regmap_config icc_regmap_config = {
+> +	.reg_bits = 32,
+> +	.reg_stride = 4,
+> +	.val_bits = 32,
 
-Yes, they are compatible. I'd used the klte DTB on kltechn for a long
-time before I made this patchset. It worked totally fine expect for
-LEDs and WiFi, as I've said in the cover letter.
+If you don't bother having .max_register, perhaps it could be defined
+in a common file?
 
-Thanks,
-Rong
+Also, do you really need locking between each access? If not, add
+.fast_io = true
 
-
-> Best regards,
-> Krzysztof
->=20
-
+Konrad
 
