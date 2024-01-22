@@ -1,183 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-7777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id EAC77836428
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 14:14:40 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B600836486
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 14:37:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7ACA21F24ADE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 13:14:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7FA3B1C22910
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 13:37:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FD843CF60;
-	Mon, 22 Jan 2024 13:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 658CF3CF7D;
+	Mon, 22 Jan 2024 13:37:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GcJwKeAd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pruDGg1N"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09AE3CF42
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 13:14:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E176C3CF74
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 13:37:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705929272; cv=none; b=HvHOS2GL1Oqum//QNbBDtoU+dG5S6b0rawgAWvsV/Ec5xit4M53QHVXHX52qceverZPe6zXDD3OY9tz0yx8Z2xmLoo7OYlnOM5hK51fuNdOcPuOdaxiTCdk6g2jkt6onVPKr65T716mgAP1cIbUCo6YHjg46qHDvYE7hBWB/02E=
+	t=1705930636; cv=none; b=EH4HfXuHEpjrq0dLr6pXB7p1hEXPKwSk5JB8PaZxbCigDOEsnYSdyymb27VpM/fOXWxEkizsG9M1Z/kA7ZZq3K1qapTD94SoCjVD+xis9joEYg9Wfz+oozTGK2kRAinanAT6uXiI9SRBm+3t3vSxlA6X8lLWBdPEv7yE5uyrMjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705929272; c=relaxed/simple;
-	bh=K30LieWFbuwgszGRYmUn5+kXRPSalW7eeHMf+IDE62g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iKeFMcyrBnXKKgui4/1G/i23kxTEwVuQKFfDtsSa8YyO5kyilZbTxUXoxcL6Xu0aq7EfqxGrYEeNl+jITdDxSWrx90IZXgkrtnraHP8JFeHtqeHPUh0CCzE8M/sALNe1pD4pBxdEOxu7/1QmeCDpITcQ3UZBeSd4xuO9VjmBDaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GcJwKeAd; arc=none smtp.client-ip=209.85.128.54
+	s=arc-20240116; t=1705930636; c=relaxed/simple;
+	bh=wVWuq0gawOGl8KiWuRy3jGbacbix2tLimet/jRZRsJw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Cn0RgOX4LpV/nx3GQD7n+R1OIpskJHoJy3SF0ufS+pfJhMuFAPhU/2oq1LlPlTnIsT+++e4heEGD7bgaSzUhco/MyS4O2NIaGl88yrrGywKegWX3pXbJAyUngRsT+e9/q9kRehwKT1OeGhX+EEisbd+d2tBslkc82c2uAkJzCSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pruDGg1N; arc=none smtp.client-ip=209.85.128.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-40e76626170so36108415e9.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 05:14:29 -0800 (PST)
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6000bbdbeceso5271947b3.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 05:37:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705929268; x=1706534068; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wFt+s6kaAmxwMWrnZJi1q/AOQW4iNIVpOYVaOF/Qrwc=;
-        b=GcJwKeAdUEOFTE/j1rH+2Lcp24e4WKQ3YcWrO6xvEApdX6kLJl/epjk0T18heFJ8kd
-         01u5wSxmV73Y9eFimgJRQkeRu2xDRY3WAcY7hnSlUlqE7xDGlKv7I6fAP46eZMMYgBMX
-         gWDtQnY2aaAUQGY7Ecro0/mWmTpd9/oMI1v7W+vPMsyd1Hb/ZAj7utMyFWxgn+sjwkcZ
-         TmdJsRiI/l1yTHSsCjx4HLSBKH+kwg3IWCfjBoZzGLkph3puG2Bf6k3kjvQypIKGZV6/
-         0AppotIrdC7BRpMvy7y7HbuPoS7LfkBFEV5mN5nPFKLHqM2CFgIjWxEDPPWLIQQVk35y
-         600g==
+        d=linaro.org; s=google; t=1705930634; x=1706535434; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z7oGSHsIqEAvLZa5ynsGHrZxRD+OARNhlTzhS0egCCQ=;
+        b=pruDGg1NZA+GFWey9SqXYWP+OwxwrARafzmHGL9RSFXQ0esvnS+fxmUzqPD43oNF9N
+         Be27qwzPGJh6q3lIzUGvlul2D2fz08VVpl8Vy5l3sa5GFv/uRUAihwSYrlwK4K2wizNd
+         9SDSvsTMuZ9kMf1P4yEe1cecSo28iuf7EOu9RrVuYrcDLHyg1Rq1ANHWIdhQgWoqJiuL
+         LG8bF5+QuTgyotRB+mwl1LsJTYfFaDT5PEh09oQz4aJ76xqKIKfvwDf7B299U5Q802vF
+         PuGwUlXGPNyZvpELT6u/IgdrWMKLkD2/hvEDZbx/z0ppXovCAvNqhe3x8qMD61w6J2eF
+         vvRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705929268; x=1706534068;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wFt+s6kaAmxwMWrnZJi1q/AOQW4iNIVpOYVaOF/Qrwc=;
-        b=UXzbqdUJW+qlVpOrRqwwRbD8HBfdBO6NCqG5VajqG1UKF/9Su3ej8eulZ4vMzA0yT9
-         VqxgeN2OR7snhZT1wFhFHztFBPrtoADcBABs5Crzn8oeBd2EVBf6OMDH0DlSVVav27JE
-         Ub+2S+j1fYcCILCtvJA1iRZ77FPR4MI+PBnfOHi5mGegScwFEw8w/S8rrnmUGC/KOHUd
-         JscMEooMJ70A7weM9W0tg5LcMq4lXs9uC9aB48ek1fZXX+S/tnCNP3JnsA36ji1mNMG9
-         xKcMvcr3T1TtXtx77hQjKPBcJkWsucGD+9zg06FOR1btRe8msnDItmHXsEpcj8edU+CU
-         +hrA==
-X-Gm-Message-State: AOJu0YwkHqSpJVBKWV5Uo1QEnM2fNLXtLemQd2v0u4SZzR2OvF4j3tZv
-	JSxQdZ3wnef2LSf0UQf6ID+WSuWrzX+7QB9Ge/IVbxkru7ElXWVarr+Hk1BWcjs=
-X-Google-Smtp-Source: AGHT+IFTsl8JkpDUNkti9RfnoRhGJyQBzy/Bb4U5+tC7t6ZkjxEXjF4CFKjcQdvCBTXnp3uhyZHpWA==
-X-Received: by 2002:a05:600c:228e:b0:40d:5c7e:6f69 with SMTP id 14-20020a05600c228e00b0040d5c7e6f69mr2714157wmf.147.1705929267644;
-        Mon, 22 Jan 2024 05:14:27 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.215.66])
-        by smtp.gmail.com with ESMTPSA id n18-20020a05600c3b9200b0040e4ca7fcb4sm39267210wms.37.2024.01.22.05.14.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Jan 2024 05:14:27 -0800 (PST)
-Message-ID: <0b6a7895-bd87-4edb-b392-5000124ad133@linaro.org>
-Date: Mon, 22 Jan 2024 14:14:25 +0100
+        d=1e100.net; s=20230601; t=1705930634; x=1706535434;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Z7oGSHsIqEAvLZa5ynsGHrZxRD+OARNhlTzhS0egCCQ=;
+        b=boMRwp4TmTIKF8hfkuQVTtaQKpg3JI3fqmWmq40wFUriS6GjB3hG2x+W+QejOuxDPS
+         T0s+raer0KRTvyRL3ao4qyb2j8QJyzhOfWi2Zse9iRyxexnXCEj5qJybK2HFDemsyvv+
+         vyOPXpsWTYyuCZ04UWBf4cubpHmH6KUA2p5Te8umojyFZtBXWY5zfvCD5h3X1Iz4unGL
+         AoGzW18kQ45ubqmsQ1X8Bjsc/qhzW4WXEoqWxtWIQyyWt+Edp9QOT2QVx9MFkW9HNu5A
+         4E/XFVIoMzbSG8+t+o3ce+qliLkYbTAQDwTt/qZRpRrUIKHk4xcFKyzLUgYL3wXeG8v4
+         9wCw==
+X-Gm-Message-State: AOJu0Yx2t0IeQBtzqBMQoFnInTJFhvNcbIALS6wMMzv8/5xZcd/Fh98g
+	7aGj1RgMbj/FYj5vZnKyUo777AdjJ8CpZSlhW14KXdmuCivH3iNqc57tOTU6c1dcvtiLO+Bo1S9
+	0xJO97QZb8j1Du1vsENY1SOBQcSseOHkBHJLK4/Jalse9PA08slc=
+X-Google-Smtp-Source: AGHT+IH5lciyRV60bliZfX5ohnB5VyzCzFgCc/JpZlAFrB61lN47m7UhohsA4v2BdT1+81l1WVs6Okc4CaE5fJIrDJs=
+X-Received: by 2002:a81:5344:0:b0:5f5:9898:ca3a with SMTP id
+ h65-20020a815344000000b005f59898ca3amr3418967ywb.87.1705930633919; Mon, 22
+ Jan 2024 05:37:13 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/5] reset: Instantiate reset GPIO controller for
- shared reset-gpios
-Content-Language: en-US
-To: Philipp Zabel <p.zabel@pengutronix.de>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Peter Rosin <peda@axentia.se>,
- Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
- linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
- linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
- Chris Packham <chris.packham@alliedtelesis.co.nz>,
- Sean Anderson <sean.anderson@seco.com>
-References: <20240112163608.528453-1-krzysztof.kozlowski@linaro.org>
- <20240112163608.528453-3-krzysztof.kozlowski@linaro.org>
- <5ad7badb85bdece735901a0f6317183b1d628a68.camel@pengutronix.de>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <5ad7badb85bdece735901a0f6317183b1d628a68.camel@pengutronix.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240115-lpg-v5-1-3c56f77f9cec@quicinc.com> <CAA8EJpoemnXTmshWrArVOCm0GRSkWZ5tH557nbAjRL1Tgg-Dig@mail.gmail.com>
+ <e16f5ff1-9b12-4f90-89d5-f95cbfb859e7@quicinc.com> <6c29ce72-e303-406a-bb75-5b36b0cd8ee4@linaro.org>
+ <44ab50c4-c63b-436c-af46-9b4543181446@quicinc.com> <CAA8EJpq8exe6n3OQnreLCsV+BnZKcu24d==rEKup=+n28nnDHw@mail.gmail.com>
+ <4c82f1f0-1c5a-498f-9845-b5b26cd76468@quicinc.com> <5f6c2be1-faf9-4e64-ab3a-88046d75e2cf@quicinc.com>
+ <1d948daf-1495-4208-a85f-6bd798091d82@quicinc.com>
+In-Reply-To: <1d948daf-1495-4208-a85f-6bd798091d82@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 22 Jan 2024 15:37:02 +0200
+Message-ID: <CAA8EJppqL=79rDzEvrhEA8N6wa=YFxN+595eK+JD=JOuCRm1gA@mail.gmail.com>
+Subject: Re: [PATCH v5] arm64: dts: qcom: qcm6490-idp: Add definition for
+ three LEDs
+To: hui liu <quic_huliu@quicinc.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Andy Gross <agross@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, quic_fenglinw@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 17/01/2024 12:26, Philipp Zabel wrote:
-> On Fr, 2024-01-12 at 17:36 +0100, Krzysztof Kozlowski wrote:
-> [...]
->>  struct reset_control *
->>  __of_reset_control_get(struct device_node *node, const char *id, int index,
->>  		       bool shared, bool optional, bool acquired)
->>  {
->> +	struct of_phandle_args args = {0};
->> +	bool gpio_fallback = false;
->>  	struct reset_control *rstc;
->> -	struct reset_controller_dev *r, *rcdev;
->> -	struct of_phandle_args args;
->> +	struct reset_controller_dev *rcdev;
->>  	int rstc_id;
->>  	int ret;
->>  
->> @@ -839,39 +1028,49 @@ __of_reset_control_get(struct device_node *node, const char *id, int index,
->>  					 index, &args);
->>  	if (ret == -EINVAL)
->>  		return ERR_PTR(ret);
->> -	if (ret)
->> -		return optional ? NULL : ERR_PTR(ret);
->> +	if (ret) {
-> 
-> I think this should continue to return optional ? NULL : ERR_PTR(ret)
-> if !IS_ENABLED(CONFIG_RESET_GPIO), for example by just skipping the
-> of_parse_phandle_with_args(). That should allow the GPIO fallback in
-> patch 5 to work as expected.
-> 
+On Mon, 22 Jan 2024 at 08:26, hui liu <quic_huliu@quicinc.com> wrote:
+>
+>
+>
+> On 1/22/2024 1:42 PM, hui liu wrote:
+> >
+> >
+> > On 1/18/2024 10:06 AM, hui liu wrote:
+> >>
+> >>
+> >> On 1/17/2024 11:41 AM, Dmitry Baryshkov wrote:
+> >>> On Wed, 17 Jan 2024 at 05:02, hui liu <quic_huliu@quicinc.com> wrote:
+> >>>>
+> >>>>
+> >>>>
+> >>>> On 1/15/2024 6:26 PM, Krzysztof Kozlowski wrote:
+> >>>>> On 15/01/2024 11:18, hui liu wrote:
+> >>>>>>
+> >>>>>>
+> >>>>>> On 1/15/2024 5:56 PM, Dmitry Baryshkov wrote:
+> >>>>>>> On Mon, 15 Jan 2024 at 11:48, Hui Liu via B4 Relay
+> >>>>>>> <devnull+quic_huliu.quicinc.com@kernel.org> wrote:
+> >>>>>>>>
+> >>>>>>>> From: Hui Liu <quic_huliu@quicinc.com>
+> >>>>>>>>
+> >>>>>>>> Add definition for three LEDs to make sure they can
+> >>>>>>>> be enabled base on QCOM LPG LED driver.
+> >>>>>>>
+> >>>>>>> The "function" property is still placed incorrectly. Posting the
+> >>>>>>> next
+> >>>>>>> iteration before concluding the discussion on the previous one is
+> >>>>>>> not
+> >>>>>>> the best idea.
+> >>>>>> Do you mean I should update it as below? Seems there is no
+> >>>>>> consumer to
+> >>>>>> use the function config, do we need to add now?
+> >>>>>
+> >>>>> Paste the output of dtbs_check for your board (or CHECK_DTBS=y for
+> >>>>> your
+> >>>>> Makefile target).
+> >>>> I checked the dt-binding file of LPG LED, I will update the dts as
+> >>>> below, if you think it's correct, I will push v6.
+> >>>
+> >>> Is there any reason why you are defining three different LEDs instead
+> >>> of multi-led with three components?
+> >
+> >> In the HW design, they are three seprete LEDs, there are three LEDs on
+> >> device. why do we need to add for multi-led?
+> >>
+> >> Thanks,
+> >> Hui
+>
+> I double confirmed the HW design, for IDP devcie, we should set it to
+> multi led, for another similar device(RB3-GEN2, I will push LED change
+> for this device later), it should be set to seperate LED.
+> They are different, so I will push V6 to set it for multi-led for
+> QCM6490-IDP device. Thanks for your review.
 
-ack
+Ack, thank you.
 
-Best regards,
-Krzysztof
+>
+> >>>
+> >>>>
+> >>>> +&pm8350c_pwm {
+> >>>> +       #address-cells = <1>;
+> >>>> +       #size-cells = <0>;
+> >>>> +       status = "okay";
+> >>>> +
+> >>>> +       led@1 {
+> >>>> +               reg = <1>;
+> >>>> +               color = <LED_COLOR_ID_RED>;
+> >>>> +               function = LED_FUNCTION_STATUS;
+> >>>> +       };
+> >>>> +
+> >>>> +       led@2 {
+> >>>> +               reg = <2>;
+> >>>> +               color = <LED_COLOR_ID_GREEN>;
+> >>>> +               function = LED_FUNCTION_STATUS;
+> >>>> +       };
+> >>>> +
+> >>>> +       led@3 {
+> >>>> +               reg = <3>;
+> >>>> +               color = <LED_COLOR_ID_BLUE>;
+> >>>> +               function = LED_FUNCTION_STATUS;
+> >>>> +       };
+> >>>> +};
+> >>>
+> >>>
+> >>>
 
+
+
+-- 
+With best wishes
+Dmitry
 
