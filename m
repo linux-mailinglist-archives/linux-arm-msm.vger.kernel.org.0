@@ -1,304 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-7861-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7862-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C75283709D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 19:48:27 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64F838370EC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 19:52:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5746A290B50
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 18:47:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 189581F2E2D8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 18:52:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BB87405C0;
-	Mon, 22 Jan 2024 18:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E894E3EA65;
+	Mon, 22 Jan 2024 18:18:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Bj6i+u0G"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c8fifh16"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA8E3FE20;
-	Mon, 22 Jan 2024 18:12:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935E73DBAB;
+	Mon, 22 Jan 2024 18:18:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705947140; cv=none; b=RTQkQNxONK68/pR956hwjIuhSneMCwj+vUiG0T3r7P+j+98jpDQf705i+zU6sOcbIFBfVGhOdNt46IAfm+CXri60S1ZAaswsiCKUItGiuoCo3g6i5LN6lBkKlYbBS4/ciJPbXmpDZRfyrp8o6R0PhTLhQUV6+btouTrcPR9lLOU=
+	t=1705947523; cv=none; b=qEZOgSEFJXjaKNxE87CRy/SkohIrSozxB91koJUj/XpLifCa9QMcALm56DkXKhwv380yANeyGj7lOSRK4sZmKP9xO0/fzJ9TiYdDt2Q+Phr+HN0Pdg4X1ivbQh5/TUvYo4MatvjREfibdBghksCD1Fh7GSsg+kxRrnRNdL5Z38A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705947140; c=relaxed/simple;
-	bh=LgG1tppyA5POWiHSD5qT9I4ylGVHGTXWC3dKBfVz9Fk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=JkXxGYRif7iUAp+ZDyrPALtk7gfNLhYK88fKhh6OHFQAsHqZnYYuUXINXwi52Ayfar2aErWSsoVBV+Xwx1co3b6jo7Alp2I6p88xW51ln6BL6gbb53l9htrVmxr+tcBlFCE59/E0/JFBAH9UNmWcqV8m58EhkUBgdTmIAQcJMGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Bj6i+u0G; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40MDuO7B010532;
-	Mon, 22 Jan 2024 18:12:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=zFRYWzTLrkU+fTF1GxslDEYA0w8JOChq8KHUrjp/w64=; b=Bj
-	6i+u0G7KIkE6s6hpjIFfUoGnQ2/r2n9hdL/kQIwQsx/yaxrskFRaGp8HaBH8QqZn
-	buELRGwGP57jK+B3yS4/GSN/jtQmB2je/0XL+JsPKCn8aNSTzQpPA5EXkNhRp6AW
-	+J8FrF7WEfGEcmS2Q3SVZcSDih7SECPx4/Zuld93w04UFF/zx2VJmrGG7zMJPIYI
-	ndYLHYOtILw28YPx/CbJw3l0p3XaP2dP9xccnKWA6vuX8l6d8atPR0BNhsUambRM
-	oP6ht/av6oOcFRLdBY/MVVSAVODEadAUL0tFDGnLecks0ghAGdWO1wYCfMKsPcNT
-	7MOL+1fiqHnRefbtUpWQ==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vsmuahesk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jan 2024 18:12:14 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40MICD9u004590
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jan 2024 18:12:13 GMT
-Received: from [10.110.104.139] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 22 Jan
- 2024 10:12:09 -0800
-Message-ID: <86ae1e20-42a4-4dd8-ab61-3395a9d0c1dc@quicinc.com>
-Date: Mon, 22 Jan 2024 10:12:08 -0800
+	s=arc-20240116; t=1705947523; c=relaxed/simple;
+	bh=McOauSyMQNxtPZ0g7TEpEiNFuLd+iPYfNexDMsX/FI0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lvbDUZPsH/VZPN2Ia6l7KpBEVdMu4clKpDNnOLPhtVK7ErD96AHrvD0zeM0V2YbtEKNYJ+nL4byKWBd2RKU/zjTKs2c7aljVoIHBFGo6hWSGSkRA32YrysgZJ/Vrt5g3lidz61ffXph01lv+ExR3uRTpHf0bm+Q918mGcPRxn88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c8fifh16; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84691C433F1;
+	Mon, 22 Jan 2024 18:18:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1705947523;
+	bh=McOauSyMQNxtPZ0g7TEpEiNFuLd+iPYfNexDMsX/FI0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=c8fifh16cqrlBPFhmdK0/1YCmVp+FCQJRM3mcc61e8B54POXfNtNHCezXLI06U+BW
+	 2HyC31K2GKN8pqxyPoe5eH43Wr1IvzJ4qYvgVKrZ28cOHRapgl4U0tO7nRd1Hg96Gu
+	 /I85mPr8fKbNlof8bDAKADfRcHtOpPxmy3YbesJ0DqFFZ2OTYAI+xKJ3khkG5PRPqb
+	 IkZ7Lha5tDCBsHZjVT1Pc0QMwPbNJ0JMPGxW7jUMjEknv7bvXLCARAShkNA8Yp5eXw
+	 Jxu0Ft8Uip4jzu6W9VwfTzuvxciZJpio1DrdN7XFmAH69ub0PysqfBMv84es2fWtex
+	 o4y4YVecDwVTQ==
+Date: Mon, 22 Jan 2024 18:18:22 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>
+Cc: kernel@pengutronix.de, Moritz Fischer <mdf@kernel.org>,
+	Wu Hao <hao.wu@intel.com>, Xu Yilun <yilun.xu@intel.com>,
+	Tom Rix <trix@redhat.com>, linux-fpga@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Alexander Aring <alex.aring@gmail.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	linux-wpan@vger.kernel.org, netdev@vger.kernel.org,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Michael Hennerich <Michael.Hennerich@analog.com>,
+	Jonathan Cameron <jic23@kernel.org>, linux-iio@vger.kernel.org,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	linux-input@vger.kernel.org, Ulf Hansson <ulf.hansson@linaro.org>,
+	Rayyan Ansari <rayyan@ansari.sh>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Martin Tuma <martin.tuma@digiteqautomotive.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	linux-media@vger.kernel.org, Sergey Kozlov <serjk@netup.ru>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	linux-mmc@vger.kernel.org, Richard Weinberger <richard@nod.at>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Rob Herring <robh@kernel.org>, Heiko Stuebner <heiko@sntech.de>,
+	Michal Simek <michal.simek@amd.com>,
+	Amit Kumar Mahapatra via Alsa-devel <alsa-devel@alsa-project.org>,
+	linux-mtd@lists.infradead.org,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Pali =?iso-8859-1?Q?Roh=E1r?= <pali@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Ronald Wahl <ronald.wahl@raritan.com>,
+	Benson Leung <bleung@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Guenter Roeck <groeck@chromium.org>,
+	chrome-platform@lists.linux.dev, Max Filippov <jcmvbkbc@gmail.com>,
+	linux-spi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	linux-mediatek@lists.infradead.org,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>,
+	dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org,
+	linux-staging@lists.linux.dev, Viresh Kumar <vireshk@kernel.org>,
+	Rui Miguel Silva <rmfrfs@gmail.com>,
+	Johan Hovold <johan@kernel.org>, Alex Elder <elder@kernel.org>,
+	greybus-dev@lists.linaro.org, Peter Huewe <peterhuewe@gmx.de>,
+	Jarkko Sakkinen <jarkko@kernel.org>, Jason Gunthorpe <jgg@ziepe.ca>,
+	linux-integrity@vger.kernel.org,
+	Herve Codina <herve.codina@bootlin.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Aaro Koskinen <aaro.koskinen@iki.fi>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	linux-usb@vger.kernel.org, Helge Deller <deller@gmx.de>,
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	Kalle Valo <kvalo@kernel.org>, Dmitry Antipov <dmantipov@yandex.ru>,
+	libertas-dev@lists.infradead.org, linux-wireless@vger.kernel.org,
+	Jonathan Corbet <corbet@lwn.net>, James Clark <james.clark@arm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>, linux-doc@vger.kernel.org
+Subject: Re: [PATCH v2 00/33] spi: get rid of some legacy macros
+Message-ID: <e62cdf7f-ce58-4f46-a0a0-25ce9fb271b1@sirena.org.uk>
+References: <cover.1705944943.git.u.kleine-koenig@pengutronix.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] dt-bindings: hwinfo: Add Qualcomm's board-id types
-Content-Language: en-US
-To: Amrit Anand <quic_amrianan@quicinc.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>
-CC: <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>
-References: <1705749649-4708-1-git-send-email-quic_amrianan@quicinc.com>
- <1705749649-4708-3-git-send-email-quic_amrianan@quicinc.com>
-From: Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <1705749649-4708-3-git-send-email-quic_amrianan@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: GbdMjHHenITBffuKF8rx3wdskWw6QBqe
-X-Proofpoint-ORIG-GUID: GbdMjHHenITBffuKF8rx3wdskWw6QBqe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-22_07,2024-01-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 mlxscore=0
- clxscore=1015 impostorscore=0 suspectscore=0 spamscore=0
- lowpriorityscore=0 priorityscore=1501 adultscore=0 bulkscore=0
- phishscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2311290000 definitions=main-2401220127
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="T+I3YsJdHvT4lja9"
+Content-Disposition: inline
+In-Reply-To: <cover.1705944943.git.u.kleine-koenig@pengutronix.de>
+X-Cookie: Nice guys don't finish nice.
 
 
+--T+I3YsJdHvT4lja9
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 1/20/2024 3:20 AM, Amrit Anand wrote:
-> Qualcomm based DT uses two or three different identifiers. The SoC
-> based idenfier which signifies chipset and the revision for those
-> chipsets. The board based identifier is used to distinguish different
-> boards (e.g. IDP, MTP) along with the different types of same boards.
-> The PMIC attached to the board can also be used as a identifier for
-> device tree.
-> 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> Signed-off-by: Amrit Anand <quic_amrianan@quicinc.com>
-> ---
->  .../devicetree/bindings/hwinfo/qcom,board-id.yaml  | 86 ++++++++++++++++++++++
->  include/dt-bindings/arm/qcom,ids.h                 | 68 +++++++++++++++--
->  2 files changed, 146 insertions(+), 8 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/hwinfo/qcom,board-id.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/hwinfo/qcom,board-id.yaml b/Documentation/devicetree/bindings/hwinfo/qcom,board-id.yaml
-> new file mode 100644
-> index 0000000..807f134
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/hwinfo/qcom,board-id.yaml
-> @@ -0,0 +1,86 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/hwinfo/qcom,board-id.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: QCOM Board Identifier for Devicetree Selection
-> +
-> +maintainers:
-> +  - Amrit Anand <quic_amrianan@quicinc.com>
-> +  - Elliot Berman <quic_eberman@quicinc.com>
-> +
-> +description: |
-> +  Qualcomm uses two and sometimes three hardware identifiers to describe
-> +  its boards
-> +      - a SoC identifier is used to match chipsets (e.g. sm8550 vs sm8450)
-> +      - a board identifier is used to match board form factor (e.g. MTP, QRD,
-> +        ADP, CRD)
-> +      - a PMIC identifier is occasionally used when different PMICs are used
-> +        for a given board/SoC combination.
-> +  Each field and helper macros are defined at::
-> +      - include/dt-bindings/arm/qcom,ids.h
-> +
-> +  For example,
-> +    / {
-> +        #board-id-cells = <2>;
-> +        board-id = <456 0>, <457 0>, <10 0>;
-> +        board-id-types = "qcom,soc-id", "qcom,soc-id", "qcom,board-id";
-> +     }
-> +
-> +allOf:
-> +  - $ref: board-id.yaml#
-> +
+On Mon, Jan 22, 2024 at 07:06:55PM +0100, Uwe Kleine-K=F6nig wrote:
 
-There's nothing to cause this binding to be selected.
+> Note that Jonathan Cameron has already applied patch 3 to his tree, it
+> didn't appear in a public tree though yet. I still included it here to
+> make the kernel build bots happy.
 
-Please add a select clause. I guess we can make it based off
-whether the board's compatible contains "qcom,".
+It's also going to be needed for buildability of the end of the series.
 
-> +properties:
-> +  board-id:
-> +    minItems: 2
-> +
-> +  board-id-types:
-> +    minItems: 2
-> +    items:
-> +      oneOf:
-> +        - const: qcom,soc-id
-> +          description: |
-> +            Matches Qualcomm Technologies, Inc. boards with the specified SoC.
-> +            2 integers are needed to describe a soc-id. The first integer is the
-> +            SoC ID and the second integer is the SoC revision.
-> +            qcom,soc-id = <soc-id  soc-revision>
-> +        - const: qcom,board-id
-> +          description: |
-> +            Matches Qualcomm Technologies, Inc. boards with the specified board.
-> +            2 integers are needed to describe a board-id. The first integer is the
-> +            board ID. The second integer is the board-subtype.
-> +            qcom,board-id = <board-id  board-subtype>
-> +        - const: qcom,pmic-id
-> +          description: |
-> +            QUALCOMM boards can be atached to mutliple PMICs where slave-id (SID)
-> +            indicates the address of the bus on which the PMIC is attached. It can be
-> +            any number. The model for a PMIC indicates the PMIC name attached to bus
-> +            described by SID along with  major and minor version. 2 integers are needed
-> +            to describe qcom,pmic-id. The first integer is the slave-id and the second integer
-> +            is the pmic model.
-> +            qcom,pmic-id = <pmic-sid pmic-model>
-> +
-> +  '#board-id-cells':
-> +    minimum: 2
-> +
-> +additionalProperties: true
-> +
-> +examples:
-> +   - |
-> +     #include <dt-bindings/arm/qcom,ids.h>
-> +     / {
-> +         model = "Qualcomm Technologies, Inc. sc7280 IDP SKU1 platform";
-> +         compatible = "qcom,sc7280-idp", "google,senor", "qcom,sc7280";
-> +
-> +         #board-id-cells = <2>;
-> +         board-id = <QCOM_SOC_ID(SC7280) QCOM_SOC_REVISION(1)>,
-> +                    <QCOM_SOC_ID(SC7280) QCOM_SOC_REVISION(2)>,
-> +                    <QCOM_BOARD_ID(IDP, 1, 0) QCOM_BOARD_SUBTYPE(UFS, ANY, 1)>;
-> +         board-id-types = "qcom,soc-id",
-> +                          "qcom,soc-id",
-> +                          "qcom,board-id";
-> +
-> +         #address-cells = <2>;
-> +         #size-cells = <2>;
-> +      };
-> diff --git a/include/dt-bindings/arm/qcom,ids.h b/include/dt-bindings/arm/qcom,ids.h
-> index f724834..c4cd440 100644
-> --- a/include/dt-bindings/arm/qcom,ids.h
-> +++ b/include/dt-bindings/arm/qcom,ids.h
-> @@ -8,9 +8,12 @@
->  #define _DT_BINDINGS_ARM_QCOM_IDS_H
->  
->  /*
-> - * The MSM chipset and hardware revision used by Qualcomm bootloaders, DTS for
-> - * older chipsets (qcom,msm-id) and in socinfo driver:
-> + * The MSM chipset ID used by Qualcomm bootloaders, DTS for
-> + * older chipsets (soc-id) and in socinfo driver:
->   */
-> +
-> +#define QCOM_SOC_ID(a)  ((QCOM_ID_##a) && 0xffff)
-> +
->  #define QCOM_ID_MSM8260			70
->  #define QCOM_ID_MSM8660			71
->  #define QCOM_ID_APQ8060			86
-> @@ -266,16 +269,65 @@
->  #define QCOM_ID_IPQ5302			595
->  #define QCOM_ID_IPQ5300			624
->  
-> + /* The SOC revision used by Qualcomm bootloaders (soc-revision) */
-> +
-> +#define QCOM_SOC_REVISION(a)		(a & 0xff)
-> +
->  /*
->   * The board type and revision information, used by Qualcomm bootloaders and
-> - * DTS for older chipsets (qcom,board-id):
-> + * DTS for older chipsets (board-id)
->   */
-> +
->  #define QCOM_BOARD_ID(a, major, minor) \
-> -	(((major & 0xff) << 16) | ((minor & 0xff) << 8) | QCOM_BOARD_ID_##a)
-> +	(((major & 0xff) << 16) | ((minor & 0xff) << 8) | ((QCOM_BOARD_ID_##a) & 0xff))
-> +
-> +#define QCOM_BOARD_ID_MTP		0x8
-> +#define QCOM_BOARD_ID_DRAGONBOARD	0x10
-> +#define QCOM_BOARD_ID_QRD		0x11
-> +#define QCOM_BOARD_ID_HDK		0x1F
-> +#define QCOM_BOARD_ID_ATP		0x21
-> +#define QCOM_BOARD_ID_IDP		0x22
-> +#define QCOM_BOARD_ID_SBC		0x24
-> +#define QCOM_BOARD_ID_QXR		0x26
-> +#define QCOM_BOARD_ID_CRD		0x28
-> +
-> +/*
-> + * The platform subtype is used by Qualcomm bootloaders and
-> + * DTS (board-subtype)
-> + */
-> +#define QCOM_BOARD_SUBTYPE(a, b, SUBTYPE) \
-> +	(((QCOM_BOARD_BOOT_##a & 0xf) << 16) | ((QCOM_BOARD_DDRTYPE_##b & 0x7) << 8) | \
-> +	(SUBTYPE & 0xff))
-> +
-> +/* Board DDR Type where each value indicates higher limit */
-> +#define QCOM_BOARD_DDRTYPE_ANY		0x0
-> +#define QCOM_BOARD_DDRTYPE_128M		0x1
-> +#define QCOM_BOARD_DDRTYPE_256M		0x2
-> +#define QCOM_BOARD_DDRTYPE_512M		0x3
-> +#define QCOM_BOARD_DDRTYPE_1024M	0x4
-> +#define QCOM_BOARD_DDRTYPE_2048M	0x5
-> +#define QCOM_BOARD_DDRTYPE_3072M	0x6
-> +#define QCOM_BOARD_DDRTYPE_4096M	0x7
-> +
-> +/* Board Boot Device Type */
-> +#define QCOM_BOARD_BOOT_EMMC		0x0
-> +#define QCOM_BOARD_BOOT_UFS		0x1
-> +#define QCOM_BOARD_BOOT_NAND		0x2
-> +#define QCOM_BOARD_BOOT_OTHER		0x3
-> +
-> +/*
-> + * The PMIC slave id is used by Qualcomm bootloaders to
-> + * indicates which PMIC is attached (pmic-sid)
-> + */
-> +
-> +#define QCOM_PMIC_SID(a)		(a & 0xff)
-> +
-> +/*
-> + * The PMIC ID is used by Qualcomm bootloaders to describe the ID
-> + * of PMIC attached to bus described by SID (pmic-model)
-> + */
->  
-> -#define QCOM_BOARD_ID_MTP			8
-> -#define QCOM_BOARD_ID_DRAGONBOARD		10
-> -#define QCOM_BOARD_ID_QRD			11
-> -#define QCOM_BOARD_ID_SBC			24
-> +#define QCOM_PMIC_MODEL(ID, major, minor) \
-> +	(((major & 0xff) << 16) | ((minor & 0xff) << 8) | (ID & 0xff))
->  
->  #endif /* _DT_BINDINGS_ARM_QCOM_IDS_H */
+--T+I3YsJdHvT4lja9
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmWusW0ACgkQJNaLcl1U
+h9AR1Af8DbPI9TFuBXKEh4BM61G07z/XXFesQgMYJFn7hnO/3qPq0DB2udfdH+HR
+WrEFwWfImJcLCzV8lyZSjyQS8FeUMRbP7r99FeoYIb8amMJfpQIN7gD1IJ+OzZGL
+9PhsdsnLY3FgKjHbQCA6B6TnEDwI/0zpTfNjtElcXbWRB+V9uqBR/i8Uk02ngrKd
+MFM4BWy/tlEQvi0AQcylB9znY58FISMxd4ww1jeW0euV6Do4c1U3/9N+ivg6WNfs
+rKxD/BMTdGNcwlR3dWzHBLLYk3YAMLSi8p37kFSHwDGoHFtHCuUNPhA4RsVlbb9P
+SyEM0rudlzp/uFBuKSBT2nWslCLfjA==
+=Dr9Y
+-----END PGP SIGNATURE-----
+
+--T+I3YsJdHvT4lja9--
 
