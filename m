@@ -1,135 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-7770-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FB7683628B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 12:50:39 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 29F758362AF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 12:57:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 27B4F1F2890F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 11:50:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 55C411C2114D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 11:57:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FF4C3D0D0;
-	Mon, 22 Jan 2024 11:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6171F3AC16;
+	Mon, 22 Jan 2024 11:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="rQdEXeE6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PSjPafiN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A9B3D3B6;
-	Mon, 22 Jan 2024 11:48:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31BA83A8F5
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 11:57:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705924112; cv=none; b=AIdCycMQrlsM8hjBlleivNd1wLdFx3y2YSu5CTrJInGNnlHmMEnY0Gu5++IBKcoKre9oVsfKSzmLjIB7JES5hD7cjOhUSTTq4smu7m/9fy6t4IaeYeAbkxkTwUtFhIFzU3+SJCJx1aIX3anzi0pRiC1HkmPCJhi6IdXTq7jLS8M=
+	t=1705924643; cv=none; b=Y0Kw6swGYHrc/Hy6jm3SYhIhI9yJnlKUAcraiU1wwJ5Zsio6T23AHo/ne+yznaB9kClw6iMJM5hNKxTUNkLq96IyyZe+o57YcXju9cGbLPkh8ahPhaXKDi2rqFNb+ZGaMpAOkC51ZB5uh0JqQ/1VOPw++HqM0m4QaYvDSAVPFTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705924112; c=relaxed/simple;
-	bh=nRr2BPtGcBu5pcM6iVkEYQLLgGdpvWXGhuM0c/DPEgs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pLgHqzzGtq59nJ8/jnnyMGOBieciwP8Dpb/TXZTaCmeXu24EndTGOlQJ7SIRUkG4JizcsGi/8gZ9RxW43sh20Wdt0TYYayF1fp/ULFlzEGw2+MoHAURA+tg5YZUjCCw1KxLQQ41qOD21WIqbiritB07UImk34B4lwtIQW/gI42A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=rQdEXeE6; arc=none smtp.client-ip=46.235.227.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1705924108;
-	bh=nRr2BPtGcBu5pcM6iVkEYQLLgGdpvWXGhuM0c/DPEgs=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rQdEXeE6APfjlEqIznt/dRrwf0AmmPXSLMDIE+pr6elKrQhWHhX4/Rr7hFXN623zu
-	 zumK2YP9SI3rRcXJbA/mrzV/H7qUzjLoz4oonwVokvoo/Z9G6P131J+KK2rih7oRWL
-	 o2ZRqtjLTILNqW4JBlUdDBumWGtT6zL9uHpoOwqfY9kXhwW5iXkp1i/kUIrt/WjM7B
-	 qfXuHcpgQ+kUbtxwzJxmZYoTHobyIb68o5tCx9Q9k8O6N6RNqi0HdgfYmNaFJoBupl
-	 ys0IlGRgOUODL8YcCrUr8wxihHLLpIrs5b6x4eQLnmhqz3cQXd1n4D8XhbRdVRaov6
-	 ktRhQctjjVs1Q==
-Received: from [100.113.186.2] (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id EA8F237810CD;
-	Mon, 22 Jan 2024 11:48:27 +0000 (UTC)
-Message-ID: <9d3623f8-697b-44ab-a9eb-9d2d305b0e5c@collabora.com>
-Date: Mon, 22 Jan 2024 12:48:27 +0100
+	s=arc-20240116; t=1705924643; c=relaxed/simple;
+	bh=tsbrmP1+O18HOPGSjrHTKuZbGshwEn40LJCinS7VhYI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=TUoEmXZo8v6y6J5fqTqoTyh0uPeKet38UVqFIaEBtRH0PaTmuIzTEBPZGlA2SCQX7cU1Hf6HCqS/Vae33j1EZ7pXAMHOAhzNvPKwCztlDjfGFI9p5+shjyMFNLsROqijQqn42Cjx8MdQcSwaHMNujYYsdbIlaBK59maZ/gyke1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PSjPafiN; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a26ed1e05c7so331168666b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 03:57:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1705924639; x=1706529439; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CmH8rXJqUXY/i/aOBMn68OVWCaEf5ZmAXSQpd6FELw8=;
+        b=PSjPafiN7jWLdXnrlyds98QXnpIZ8K8oxpSmDpYnS4tq31yKX72M61QplFMsk6TyS9
+         idUK2Y5mqAMqDU+//BfIQQxdodKa0bm4EfHFqhVPMzEYtQ2pajST4qHf5xESeJ4OfRWn
+         eGmn2uMwj60r53z/vys+H3uraB7+V6m6JQZM+cVD1b60/UF7Ef8tY92JV3yFY4o0+SIY
+         rDjMg4NBCBtkD0jpymrxfmRDulrgYlEtZ/6qYbNNkBGH1YTtyXHNaoe9Ub1L1DOTfeES
+         B9ORElYxZ8LPvx5hRfSatoEOYA7c2iLnig39kYwUBKz3B2KYvv8hQTjDe6utSsyjbLl3
+         eGdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705924639; x=1706529439;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CmH8rXJqUXY/i/aOBMn68OVWCaEf5ZmAXSQpd6FELw8=;
+        b=HyR2kaPdIgmXhgxdrQdDo0lkTEtLFLluqz1q/Lu/y28nEKXDDNya4m2skBCaTiF8tm
+         eOnkTf6IhigmdjDQ94LjbjEybq9sGcYe1+sXm+zskkCGpOPPrV1Ej6jOUdfRN+xGf03O
+         ko9TOjIGIWVMiCLYtK3mt6IgDh8fhrJijNbtx1hQRMxUB1i9forRKH3X8Jg0jN0C7sUK
+         Fxzz7i7CC4/QBm4JECCA7lbAE0rCmto4m/rAnkYpBiaMdbrmaQGVlqT0vQclh5ZmImjI
+         9BDnIKDTARncqNHn/mTbtpQZJnPnrnUtQdc/j/MIdwSbdQWx4nJXyjdqb6SaFIGnMxg7
+         Zqyg==
+X-Gm-Message-State: AOJu0Yzzxgbn8QL4Y1mz5/u+U/7UGahlxkpiDBumGaQcnR9fRebt1Ril
+	WR16o0UFzZVUFYcZusBIy74O4Juwu19qP/QG692hkdkyureYxruAk8VgKkMgvjw=
+X-Google-Smtp-Source: AGHT+IHKZPYkFC9314WpcTSOIuVlAzqptNC+bZeUMyszvkcPbzvVLtDAdNhgyFoHYu3/qtjtR7hIyw==
+X-Received: by 2002:a17:906:c448:b0:a2a:a4c4:5229 with SMTP id ck8-20020a170906c44800b00a2aa4c45229mr1231745ejb.90.1705924639386;
+        Mon, 22 Jan 2024 03:57:19 -0800 (PST)
+Received: from [10.167.154.1] (178235179218.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.218])
+        by smtp.gmail.com with ESMTPSA id k3-20020a170906a38300b00a298d735a1bsm13481349ejz.149.2024.01.22.03.57.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Jan 2024 03:57:19 -0800 (PST)
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/2] Remove QDF2xxx pinctrl drivers
+Date: Mon, 22 Jan 2024 12:57:11 +0100
+Message-Id: <20240122-topic-qdf_cleanup_pinctrl-v1-0-0c619ea25091@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/6] arm64: dts: qcom: msm8956-loire: Add SD Card
- Detect to SDC2 pin states
-Content-Language: en-US
-To: Marijn Suijten <marijn.suijten@somainline.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, Luca Weiss <luca@z3ntu.xyz>,
- Adam Skladowski <a39.skl@gmail.com>, Konrad Dybcio
- <konrad.dybcio@linaro.org>, Martin Botka <martin.botka@somainline.org>,
- Jami Kettunen <jami.kettunen@somainline.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240121-msm8976-dt-v2-0-7b186a02dc72@somainline.org>
- <20240121-msm8976-dt-v2-6-7b186a02dc72@somainline.org>
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-In-Reply-To: <20240121-msm8976-dt-v2-6-7b186a02dc72@somainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABdYrmUC/x2NUQqDMBAFryL73YBJW2x7lSKSbNa6ENY00VIQ7
+ +7i5zyYNxtUKkwVXs0GhX5ceRYFe2kAJy8fMhyVwbXu1lrnzDJnRvON44CJvKx5yCy4lGSeD7I
+ dxnDt7gHUD76SCcULTvoga0o65kIj/8/gu9/3A1a2VICAAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Linus Walleij <linus.walleij@linaro.org>, 
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1705924637; l=720;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=tsbrmP1+O18HOPGSjrHTKuZbGshwEn40LJCinS7VhYI=;
+ b=k4G0Vxq2PK79h8IRxX6rBTWSZfrg962X7w9xIpHP0Cp3uP/+FXkolaSwdiPnr/h9nVCcfTeMc
+ MSIUtuT9/MXCFFCBNqOyzFMHYR5NP5Eo61FxohYZInShnvKl/2VV2+N
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-Il 21/01/24 23:33, Marijn Suijten ha scritto:
-> In addition to the SDC2 pins, set the SD Card Detect pin in a sane state
-> to be used as an interrupt when an SD Card is slotted in or removed.
-> 
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> ---
->   arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi | 17 +++++++++++++++++
->   1 file changed, 17 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi b/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
-> index b0b83edd3627..75412e37334c 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
-> @@ -264,10 +264,27 @@ &sdhc_1 {
->   	status = "okay";
->   };
->   
-> +&sdc2_off_state {
-> +	sd-cd-pins {
-> +		pins = "gpio100";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-disable;
-> +	};
+The SoC line was never productized, remove the maintenance burden.
 
-Are you sure that you really don't want card detect during system suspend?
+Compile-tested only.
 
-You could simply add a sdc2-cd-pins out of sdc2_{on,off}_state and add use it for
-both default and sleep.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (2):
+      pinctrl: qcom: Remove QDF2xxx support
+      arm64: defconfig: Remove QDF24XX pinctrl
 
-pinctrl-0 = <&sdc2_on_state>, <&sdc2_card_det_n>;
-pinctrl-1 = <&sdc2_off_state>;
+ arch/arm64/configs/defconfig           |   1 -
+ drivers/pinctrl/qcom/Kconfig.msm       |   7 --
+ drivers/pinctrl/qcom/Makefile          |   1 -
+ drivers/pinctrl/qcom/pinctrl-qdf2xxx.c | 164 ---------------------------------
+ 4 files changed, 173 deletions(-)
+---
+base-commit: 319fbd8fc6d339e0a1c7b067eed870c518a13a02
+change-id: 20240122-topic-qdf_cleanup_pinctrl-98e17cdb375b
 
-Cheers,
-Angelo
-
-> +};
-> +
->   &sdc2_on_state {
->   	clk-pins {
->   		drive-strength = <10>;
->   	};
-> +
-> +	sd-cd-pins {
-> +		pins = "gpio100";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		input-enable;
-> +		bias-pull-up;
-> +	};
->   };
->   
->   &sdhc_2 {
-> 
-
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
 
