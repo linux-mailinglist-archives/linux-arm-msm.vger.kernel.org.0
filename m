@@ -1,132 +1,290 @@
-Return-Path: <linux-arm-msm+bounces-7780-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7781-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DC648364BD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 14:49:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 62CD58364CB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 14:55:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0F7391F2471A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 13:49:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CF58A1F2495A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 13:55:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A3593D0CE;
-	Mon, 22 Jan 2024 13:49:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F22B33D0A9;
+	Mon, 22 Jan 2024 13:55:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vXDk7cOA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [5.144.164.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14553D0A9;
-	Mon, 22 Jan 2024 13:49:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A23223D0BA
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 13:55:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705931350; cv=none; b=BlqHqEpB9JpaZbj0N8Mclsbd+1U8cZ92KKLbYoGw4A7GsocduEJcLMuJDNRRPEr38+RJH6p8/jqq5n1ye2RwH0H5xqg5agzo71IbmISnsvXnGoe5ZN71VX4H+t+KHSif7qtl7SLLMnxhzcdQB01sppVJz6da168og5edJENsmTg=
+	t=1705931705; cv=none; b=uolKid5aA6alV/PDvEqB9Rp/eJIINJFB0r3oMEARQ2r8iHAlgCOwxctdCKkup8tdDypgTZHiyVp0jK2ppPyiSObAbB9Y4VuJqB83ZZQUaqkL6qcVQEDRf5CG2YSR/W+00OxHn73YqYX380ryv+GApMQ15PEZeMizqunNgW/22c4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705931350; c=relaxed/simple;
-	bh=HzGar3lPrx516B+Rz9JdR66wQRHDFkVanbk8QWDlmoU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WWO8Iylm5UPZbKMOv/bVzcPOCmScVyObn9pL9bf9Lhx7RJBNfoGaVIxWlb/QYdCbA+qJpe6hc13Iu556DJyvPqKV4QxjjVkt4xFS6WQihrwYueuqg7OK1hCkd6w3LEfL1N3sqhuN9kPoXjnwokfPh0+ZIP2hk51mczajpqzjPZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
-Received: from SoMainline.org (82-72-63-87.cable.dynamic.v4.ziggo.nl [82.72.63.87])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id B91341FA5B;
-	Mon, 22 Jan 2024 14:49:03 +0100 (CET)
-Date: Mon, 22 Jan 2024 14:49:01 +0100
-From: Marijn Suijten <marijn.suijten@somainline.org>
-To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, ~postmarketos/upstreaming@lists.sr.ht, 
-	Luca Weiss <luca@z3ntu.xyz>, Adam Skladowski <a39.skl@gmail.com>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Martin Botka <martin.botka@somainline.org>, 
-	Jami Kettunen <jami.kettunen@somainline.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: Re: [PATCH v2 6/6] arm64: dts: qcom: msm8956-loire: Add SD Card
- Detect to SDC2 pin states
-Message-ID: <iatieesr52v5au4kkovw3gc34tn3snt454grq7le66oar6x7t4@4jfwxgxov36v>
-References: <20240121-msm8976-dt-v2-0-7b186a02dc72@somainline.org>
- <20240121-msm8976-dt-v2-6-7b186a02dc72@somainline.org>
- <9d3623f8-697b-44ab-a9eb-9d2d305b0e5c@collabora.com>
+	s=arc-20240116; t=1705931705; c=relaxed/simple;
+	bh=1RY42wUJ5DilToY52o14SzpTE782BXJr7ZzfgzVy/8E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tPL4afduXxeLZjBcI8bJQQ+4a7X+geix4iy4GTKdmZ6ggxEq/F5qyWBX/mUmltqcsRlPzlOB5SVW5/ehxnFuql4986KEB4saTkkihVaKSLdD5LUkjGTTcgj/VOg96DuuAC05C3JsGPlAWeaxnN77YtEXYboRLfCQKgEMItsGsIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vXDk7cOA; arc=none smtp.client-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-5ff790d41bdso20092447b3.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 05:55:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1705931702; x=1706536502; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=iGOilTuqjcw1mr5eXBiSM5JbzofFFnc7w3m0lwVL+c8=;
+        b=vXDk7cOAK/oxr4A9XouWKVqxeNKSpaCmhbZgukg13AlfEJqfH8v787o0CNX8oC8l2l
+         m1aukb7QFC0/qvi30n33MhoXxeUDnihW/wD1s02ZSyY6byl7xJJGjMBkH+AZ1ywp9FTL
+         b14a3VyiW2zJJvZDtYzXuTp5OdqHDAPJDgTSuEX2Erubgq54n4oYNzmvASFLJYEQBTVI
+         EF5GY9B47jYNvuOe0X1h+Zt5oJY4POSajcgQhFvBO7jSRrGZyQdLejvLItcA+voJh6tn
+         NRL1aICinzohoqMtqI0e45/rSx4R4HYwI8TejilxId+maLUJ2dn/CIK8B1o8fcGDkWm+
+         k7wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705931702; x=1706536502;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iGOilTuqjcw1mr5eXBiSM5JbzofFFnc7w3m0lwVL+c8=;
+        b=K5BR7Wg8eJ2cFk0CJxIfDCqgHv0JloEU0TXwbfT+iSXsQeezUe2LNzgTCe2WVazUSg
+         yKf6l7Kl+VAk+wkjiFCMYdycLQP4UFk/F2ldM6gGOSH3jWsGE5UUO0p1REP9SQUguDcZ
+         VMzzyAlnfDpq3bhAZq371NJnMZfKgCl1NxdBhes6V3DW9hZYexL5AgAz2BuRXeJAUK8d
+         33ZA0WgR6RZTgDG/zDGo2L849Kh95PO9/lhniGqxpB51twsFE7ZicizjZJWBsre9AUN5
+         UwGAyAAg3wv41DBliAB78ENjGgt5ZZiIM6nY54Ynmu/ZPedE+9uB7n+JR7tH46SYirUB
+         9LZw==
+X-Gm-Message-State: AOJu0YwbQGyTXWjb201qGloCT2GfLiUgdEXBftRX6jpJZPCKtQFx/6Hw
+	OenqvXwlrdWzpwSchd20h0XZ078nwy7KVJNsMuvOcP6rjYrW2vNUdHBtjdgzBUp0OOM/XgAmMYy
+	0GG/wzBKetNJvfijQJjDx4FByjOvFatX1Ez4D2p1iQqtic7JLzTw=
+X-Google-Smtp-Source: AGHT+IFa+LfGhrioiCJkuC7X+UFYDQskRS/0P+B4O30wfVtk2DnNiP57dGmVt7wK2/Cm1SiBp4WEPLxpF0n+246UYv0=
+X-Received: by 2002:a81:5344:0:b0:5f5:9898:ca3a with SMTP id
+ h65-20020a815344000000b005f59898ca3amr3442278ywb.87.1705931702590; Mon, 22
+ Jan 2024 05:55:02 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9d3623f8-697b-44ab-a9eb-9d2d305b0e5c@collabora.com>
+References: <20240122100726.16993-1-quic_priyjain@quicinc.com>
+In-Reply-To: <20240122100726.16993-1-quic_priyjain@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 22 Jan 2024 15:54:51 +0200
+Message-ID: <CAA8EJprUmw-Q1aXUrP-T1dtJE-UUmqgb3RY7_+J4fetJKk11+Q@mail.gmail.com>
+Subject: Re: [PATCH] thermal/drivers/tsens: Add suspend to RAM support for tsens
+To: Priyansh Jain <quic_priyjain@quicinc.com>
+Cc: Amit Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	"Rafael J . Wysocki" <rafael@kernel.org>, Daniel Lezcano <daniel.lezcano@linaro.org>, 
+	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>, linux-pm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	quic_manafm@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 2024-01-22 12:48:27, AngeloGioacchino Del Regno wrote:
-> Il 21/01/24 23:33, Marijn Suijten ha scritto:
-> > In addition to the SDC2 pins, set the SD Card Detect pin in a sane state
-> > to be used as an interrupt when an SD Card is slotted in or removed.
-> > 
-> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> > ---
-> >   arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi | 17 +++++++++++++++++
-> >   1 file changed, 17 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi b/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
-> > index b0b83edd3627..75412e37334c 100644
-> > --- a/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
-> > @@ -264,10 +264,27 @@ &sdhc_1 {
-> >   	status = "okay";
-> >   };
-> >   
-> > +&sdc2_off_state {
-> > +	sd-cd-pins {
-> > +		pins = "gpio100";
-> > +		function = "gpio";
-> > +		drive-strength = <2>;
-> > +		bias-disable;
-> > +	};
-> 
-> Are you sure that you really don't want card detect during system suspend?
+On Mon, 22 Jan 2024 at 12:11, Priyansh Jain <quic_priyjain@quicinc.com> wrote:
+>
+> Add suspend callback support for tsens which disables tsens interrupts
+> in suspend to RAM callback.
+> Add resume callback support for tsens which reinitializes tsens hardware
+> and enables back tsens interrupts in resume callback.
 
-Does it make a difference if the rest of pinctrl and the SDHCI controller are
-also turned off?
+This describes what the patch does. This is more or less obvious from
+the patch itself. Instead it should describe why this is necessary.
 
-> You could simply add a sdc2-cd-pins out of sdc2_{on,off}_state and add use it for
-> both default and sleep.
+>
+> Signed-off-by: Priyansh Jain <quic_priyjain@quicinc.com>
+> ---
+>  drivers/thermal/qcom/tsens-v2.c |  2 +
+>  drivers/thermal/qcom/tsens.c    | 93 +++++++++++++++++++++++++++++++--
+>  drivers/thermal/qcom/tsens.h    |  7 +++
+>  3 files changed, 98 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/thermal/qcom/tsens-v2.c b/drivers/thermal/qcom/tsens-v2.c
+> index 29a61d2d6ca3..1b74db6299c4 100644
+> --- a/drivers/thermal/qcom/tsens-v2.c
+> +++ b/drivers/thermal/qcom/tsens-v2.c
+> @@ -107,6 +107,8 @@ static const struct reg_field tsens_v2_regfields[MAX_REGFIELDS] = {
+>  static const struct tsens_ops ops_generic_v2 = {
+>         .init           = init_common,
+>         .get_temp       = get_temp_tsens_valid,
+> +       .suspend        = tsens_suspend_common,
+> +       .resume         = tsens_resume_common,
+>  };
+>
+>  struct tsens_plat_data data_tsens_v2 = {
+> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> index 6d7c16ccb44d..603ccb91009d 100644
+> --- a/drivers/thermal/qcom/tsens.c
+> +++ b/drivers/thermal/qcom/tsens.c
+> @@ -17,6 +17,7 @@
+>  #include <linux/pm.h>
+>  #include <linux/regmap.h>
+>  #include <linux/slab.h>
+> +#include <linux/suspend.h>
+>  #include <linux/thermal.h>
+>  #include "../thermal_hwmon.h"
+>  #include "tsens.h"
+> @@ -1153,7 +1154,7 @@ static const struct thermal_zone_device_ops tsens_of_ops = {
+>  };
+>
+>  static int tsens_register_irq(struct tsens_priv *priv, char *irqname,
+> -                             irq_handler_t thread_fn)
+> +                             irq_handler_t thread_fn, int *irq_num)
+>  {
+>         struct platform_device *pdev;
+>         int ret, irq;
+> @@ -1169,6 +1170,7 @@ static int tsens_register_irq(struct tsens_priv *priv, char *irqname,
+>                 if (irq == -ENXIO)
+>                         ret = 0;
+>         } else {
+> +               *irq_num = irq;
+>                 /* VER_0 interrupt is TRIGGER_RISING, VER_0_1 and up is ONESHOT */
+>                 if (tsens_version(priv) == VER_0)
+>                         ret = devm_request_threaded_irq(&pdev->dev, irq,
+> @@ -1193,6 +1195,85 @@ static int tsens_register_irq(struct tsens_priv *priv, char *irqname,
+>         return ret;
+>  }
+>
+> +static int tsens_reinit(struct tsens_priv *priv)
+> +{
+> +       unsigned long flags;
+> +
+> +       spin_lock_irqsave(&priv->ul_lock, flags);
+> +
+> +       /* in VER_0 TSENS need to be explicitly enabled */
+> +       if (tsens_version(priv) == VER_0)
+> +               regmap_field_write(priv->rf[TSENS_EN], 1);
+> +
+> +       /*
+> +        * Re-enable the watchdog, unmask the bark.
+> +        * Disable cycle completion monitoring
+> +        */
+> +       if (priv->feat->has_watchdog) {
+> +               regmap_field_write(priv->rf[WDOG_BARK_MASK], 0);
+> +               regmap_field_write(priv->rf[CC_MON_MASK], 1);
+> +       }
+> +
+> +       /* Re-enable interrupts */
+> +       if (tsens_version(priv) >= VER_0_1)
+> +               tsens_enable_irq(priv);
+> +
+> +       spin_unlock_irqrestore(&priv->ul_lock, flags);
+> +
+> +       return 0;
+> +}
+> +
+> +int tsens_suspend_common(struct tsens_priv *priv)
+> +{
+> +       switch (pm_suspend_target_state) {
+> +       case PM_SUSPEND_MEM:
+> +               if (priv->combo_irq > 0) {
+> +                       disable_irq_nosync(priv->combo_irq);
+> +                       disable_irq_wake(priv->combo_irq);
+> +               }
+> +
+> +               if (priv->uplow_irq > 0) {
+> +                       disable_irq_nosync(priv->uplow_irq);
+> +                       disable_irq_wake(priv->uplow_irq);
+> +               }
+> +
+> +               if (priv->crit_irq > 0) {
+> +                       disable_irq_nosync(priv->crit_irq);
+> +                       disable_irq_wake(priv->crit_irq);
+> +               }
+> +               break;
+> +       default:
+> +               break;
+> +       }
+> +       return 0;
+> +}
+> +
+> +int tsens_resume_common(struct tsens_priv *priv)
+> +{
+> +       switch (pm_suspend_target_state) {
+> +       case PM_SUSPEND_MEM:
+> +               tsens_reinit(priv);
+> +               if (priv->combo_irq > 0) {
+> +                       enable_irq(priv->combo_irq);
+> +                       enable_irq_wake(priv->combo_irq);
+> +               }
+> +
+> +               if (priv->uplow_irq > 0) {
+> +                       enable_irq(priv->uplow_irq);
+> +                       enable_irq_wake(priv->uplow_irq);
+> +               }
+> +
+> +               if (priv->crit_irq > 0) {
+> +                       enable_irq(priv->crit_irq);
+> +                       enable_irq_wake(priv->crit_irq);
+> +               }
+> +               break;
+> +       default:
+> +               break;
+> +       }
+> +       return 0;
+> +}
+> +
+>  static int tsens_register(struct tsens_priv *priv)
+>  {
+>         int i, ret;
+> @@ -1227,15 +1308,19 @@ static int tsens_register(struct tsens_priv *priv)
+>
+>         if (priv->feat->combo_int) {
+>                 ret = tsens_register_irq(priv, "combined",
+> -                                        tsens_combined_irq_thread);
+> +                                        tsens_combined_irq_thread,
+> +                                        &priv->combo_irq);
+>         } else {
+> -               ret = tsens_register_irq(priv, "uplow", tsens_irq_thread);
+> +               ret = tsens_register_irq(priv, "uplow",
+> +                                        tsens_irq_thread,
+> +                                        &priv->uplow_irq);
+>                 if (ret < 0)
+>                         return ret;
+>
+>                 if (priv->feat->crit_int)
+>                         ret = tsens_register_irq(priv, "critical",
+> -                                                tsens_critical_irq_thread);
+> +                                                tsens_critical_irq_thread,
+> +                                                &priv->crit_irq);
+>         }
+>
+>         return ret;
+> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+> index cb637fa289ca..268bf56105be 100644
+> --- a/drivers/thermal/qcom/tsens.h
+> +++ b/drivers/thermal/qcom/tsens.h
+> @@ -582,6 +582,11 @@ struct tsens_priv {
+>         const struct reg_field          *fields;
+>         const struct tsens_ops          *ops;
+>
+> +       /* For saving irq number to re-use later */
+> +       int                             uplow_irq;
+> +       int                             crit_irq;
+> +       int                             combo_irq;
+> +
+>         struct dentry                   *debug_root;
+>         struct dentry                   *debug;
+>
+> @@ -634,6 +639,8 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *pt1, u32 *pt2, u32 mo
+>  int init_common(struct tsens_priv *priv);
+>  int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp);
+>  int get_temp_common(const struct tsens_sensor *s, int *temp);
+> +int tsens_suspend_common(struct tsens_priv *priv);
+> +int tsens_resume_common(struct tsens_priv *priv);
+>
+>  /* TSENS target */
+>  extern struct tsens_plat_data data_8960;
+> --
+> 2.17.1
+>
+>
 
-This sounds close to what Konrad suggested by using a new block wit its own
-label rather than extending the existing state.
 
-> pinctrl-0 = <&sdc2_on_state>, <&sdc2_card_det_n>;
-> pinctrl-1 = <&sdc2_off_state>;
-
-You said both, but it's not in pinctrl-1 here?  (And might unselect bias-pull-up
-implicitly instead of explicitly selecting bias-disable via an off node?)
-
-- Marijn
-
-> Cheers,
-> Angelo
-> 
-> > +};
-> > +
-> >   &sdc2_on_state {
-> >   	clk-pins {
-> >   		drive-strength = <10>;
-> >   	};
-> > +
-> > +	sd-cd-pins {
-> > +		pins = "gpio100";
-> > +		function = "gpio";
-> > +		drive-strength = <2>;
-> > +		input-enable;
-> > +		bias-pull-up;
-> > +	};
-> >   };
-> >   
-> >   &sdhc_2 {
-> > 
-> 
-> 
+-- 
+With best wishes
+Dmitry
 
