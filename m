@@ -1,57 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-7830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A57C836EE9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 19:05:54 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 61DF1836DC6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 18:38:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5A3C9B29F75
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 17:37:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 94D771C23419
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 17:38:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD0185915E;
-	Mon, 22 Jan 2024 16:50:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 551954122A;
+	Mon, 22 Jan 2024 16:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GQxRzm8N"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SnC1gQp9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2BA759B60;
-	Mon, 22 Jan 2024 16:50:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 292693FB39;
+	Mon, 22 Jan 2024 16:52:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705942207; cv=none; b=XnZeiIFZFC56vfZMl7jRP06wOB7xNujYNuvRHowlMk8fVx1HJP8qAXvF0jJQ+8LLtFNvSuEwri3JH+0FTvdlgZqzFdIjwjpkGvBttJWejJ3h6cQyxptT2XomzIMGMxaajOnnO1+XrR/Gpl+zmdHIYWyslUKR0P6Ma+oOK+9cMmI=
+	t=1705942361; cv=none; b=lllAnf3w9cgz80YlhY1mJpI8uWqLdf/KOgZfvnrivbCOAXDqLNYBRnNb+c1MZ6uGc7z8S9BdRRpbO/ddByxeTbwHt8yUvtAhFF3LqoUDMZHbPFGT+pZgT4VyjmodMzFnDG09g9mO4KoEKklLJ7AVS2rTlcj+PtO+5LmMNsFe5g4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705942207; c=relaxed/simple;
-	bh=q1lhDD+cIgPCZh2Kn/rq0KEGanKmuSZDdamv/rhM/cU=;
+	s=arc-20240116; t=1705942361; c=relaxed/simple;
+	bh=tNDolk7G27RDHAAmFkC/lBY6IbNU5P8tZGZLlNtwrXA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rUtJWmlLZprKyu1jiD3JgbcJdJkf/erms5c4080QosflcKt4iRE2rk2C6MFcni5Y6DmNoGp+z/ubA/waePodL6UNw4gy7G6A3AQjA1yIKAW+g+sYzWLW53gfXghylzQ8j33no433EuSvuYrPB+grp4yFQ1oP1av4IQOOZz1DO/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GQxRzm8N; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801EDC433C7;
-	Mon, 22 Jan 2024 16:50:06 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=fLw0megkZ5aBcSUlXZAFyn8QgFfS6xkRf6q+ebO/56qreKD6bXHJBShpCAkVAtFtfjdIXm/H//dgXv5ATVQIF5FfWKAIdoUrkSPT0ax2ZP/81D//DGkfOti2XpQRDtLt26tx+mnHSFMdeIapnDSVuhgyGbGc8JqC9grGiFzt/gU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SnC1gQp9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0563C433C7;
+	Mon, 22 Jan 2024 16:52:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705942207;
-	bh=q1lhDD+cIgPCZh2Kn/rq0KEGanKmuSZDdamv/rhM/cU=;
+	s=k20201202; t=1705942360;
+	bh=tNDolk7G27RDHAAmFkC/lBY6IbNU5P8tZGZLlNtwrXA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GQxRzm8NCjnQFzcqC0sfTzGAA2tmgoa99QOPvMV/ZpBCpbWL2DjhnJcClVT6Rum6m
-	 YVqoEu52/vSDf4RnIQlO+vsJm7xMwA1xaI4DsCZh2GPAeSCmqJ+qWVYxl8RW8Wf6d1
-	 fJrojsCZB8QGjAQpmjzjU+AjBlxHG4JYjmP+cbStSyo65sU71OBm0XD8Ir+LJAhmpQ
-	 ShCI+TmaQyZxPJ2iDj6yO2rV8e04bd7VL6RqYhi4mKQepc3qWNh40hP8a3QZXnFszJ
-	 JkcbYHo+yVMssJxFdQu5iPt5wPwOTCZnM+3aNeSoGaCLBomw2pyVJRJTqjmk2irD1Q
-	 IIkbLqbhYGj0g==
-Date: Mon, 22 Jan 2024 10:50:04 -0600
+	b=SnC1gQp9+xzRof4stDpgs56vbV+MtAF6qr3ybCYv0zGujMzJqC++Ei6AzH0bl1Wn5
+	 lcHEjeIK7uqDzSZtQQUGbVyfDZVKwGZJhKYL9Tc3zc6aLgFormWz63Jdw6SwVKPE40
+	 QsCmCAe2McfImzw4KzGiapKUo7B9TPhnD4iEl1Dv7/iE7yx1CcBOmOhd2KhZPZ2yOe
+	 SFk8G2X1VhwTgyfEXRwWurx3Twd0pDQktOHNwBsF/jVFEaP7IjPulrFSD/SBJTcBMB
+	 8yW4xodlIQu09kUUn8c+GKq88Nv4aMXO6/cQfy2y/toLvL5SbMo3fMhJsxJ+q57i1F
+	 ZWGWiNwhXae6A==
+Date: Mon, 22 Jan 2024 10:52:37 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Linus Walleij <linus.walleij@linaro.org>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 1/2] pinctrl: qcom: Remove QDF2xxx support
-Message-ID: <oqggi3rbu6etf3i55hmn446xkpcbj34weppcxort367ziam2uf@oah4xwewna73>
-References: <20240122-topic-qdf_cleanup_pinctrl-v1-0-0c619ea25091@linaro.org>
- <20240122-topic-qdf_cleanup_pinctrl-v1-1-0c619ea25091@linaro.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Document the HDK8550 board
+Message-ID: <xlg7ddxr6d4fcbpcaacrkvcxucuhm7af4till4t7xxfaw5fpx2@pmbs22brqvqe>
+References: <20240122-topic-sm8550-upstream-hdk8550-v1-0-bff7eb3a17eb@linaro.org>
+ <20240122-topic-sm8550-upstream-hdk8550-v1-1-bff7eb3a17eb@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,20 +60,39 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240122-topic-qdf_cleanup_pinctrl-v1-1-0c619ea25091@linaro.org>
+In-Reply-To: <20240122-topic-sm8550-upstream-hdk8550-v1-1-bff7eb3a17eb@linaro.org>
 
-On Mon, Jan 22, 2024 at 12:57:12PM +0100, Konrad Dybcio wrote:
-> This SoC family was destined for server use, featuring Qualcomm's very
-> interesting Kryo cores (before "Kryo" became a marketing term for Arm
-> cores with small modifications). It did however not leave the labs of
-> Qualcomm and presumably some partners, nor was it ever productized.
+On Mon, Jan 22, 2024 at 11:19:19AM +0100, Neil Armstrong wrote:
+> Document the Qualcomm SM8550 based HDK (Hardware Development Kit)
+> embedded development platform designed by Qualcomm and sold by Lantronix.
 > 
-> Remove this driver, as it seems to be long obsolete.
+> [1] https://www.lantronix.com/products/snapdragon-8-gen-2-mobile-hardware-development-kit/
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index 1a5fb889a444..5a4b267e332f 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -1037,6 +1037,7 @@ properties:
+>            - enum:
+>                - qcom,sm8550-mtp
+>                - qcom,sm8550-qrd
+> +              - qcom,sm8550-hdk
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Alphabetical please
 
 Regards,
 Bjorn
+
+>            - const: qcom,sm8550
+>  
+>        - items:
+> 
+> -- 
+> 2.34.1
+> 
 
