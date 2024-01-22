@@ -1,124 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-7813-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1C57836A70
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 17:28:01 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BE14836AFE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 17:37:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 80A601F2136B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 16:28:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 13F81281B92
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 16:37:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A31BD13D51A;
-	Mon, 22 Jan 2024 15:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FC3C5731E;
+	Mon, 22 Jan 2024 15:17:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ccBy5wq9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [5.144.164.162])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B5355C07;
-	Mon, 22 Jan 2024 15:15:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.162
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C2B14AD16;
+	Mon, 22 Jan 2024 15:17:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705936554; cv=none; b=bUj4WMzti1vGXNVX9AdOJcDclxZK/g9Xfo6/X6oiy12iO/KtjEKhHRX1iZh+Hpp7Fc1YFvltCgetmu/KhiO3xyR5350Y6GHiLkinh7fVUAKZBrQuqBNT/Lp68Q3kOaC65zVn3kqpYk4gjmMCdoi3c+aICvJ0kfhyW5OMZ1ShRso=
+	t=1705936666; cv=none; b=I3OCvBescaL+EfS1kMOptMO2Uc1L/RarEBWiMpMY0t8/i6llj8KyEJjKFDu35Z5oDyHQRXSfAxI8wxf8lGQsFHSik4N2ytAHW3fbymknlST0FI5BIt/NCZmLvw6jYQ3gcbEPNn3S0Yi/R478ZiuqpW+w2YvXnNQN+NDHyCuV2bA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705936554; c=relaxed/simple;
-	bh=JLs25aczWYuLmQs1zTJgP5QEDQhbdQ+gViZDEdCvxFQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E+PpnbScrrIavXqRvbTx8s/9o7LsT7o9HmwCgcpqmfFXLgT9pwtoixH6DrmYfX6tmOsqBWdaxUXSjZuMbXZ1nM+8cJoZNqDAjjIrl6v/aF/2nvpO8oGnRTBIngHOlBPRwjE23RSs8SMZj93/JcNWcj+pESOG0xRH89McCy3+6qE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.162
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
-Received: from SoMainline.org (82-72-63-87.cable.dynamic.v4.ziggo.nl [82.72.63.87])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id C1AFE20046;
-	Mon, 22 Jan 2024 16:15:48 +0100 (CET)
-Date: Mon, 22 Jan 2024 16:15:47 +0100
-From: Marijn Suijten <marijn.suijten@somainline.org>
-To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, ~postmarketos/upstreaming@lists.sr.ht, 
-	Luca Weiss <luca@z3ntu.xyz>, Adam Skladowski <a39.skl@gmail.com>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Martin Botka <martin.botka@somainline.org>, 
-	Jami Kettunen <jami.kettunen@somainline.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: Re: [PATCH v2 6/6] arm64: dts: qcom: msm8956-loire: Add SD Card
- Detect to SDC2 pin states
-Message-ID: <quqkqv4eer7tmubvsqkbuwammqaa5qqxojedsh42ryax3laah7@v7khc2cq4eti>
-References: <20240121-msm8976-dt-v2-0-7b186a02dc72@somainline.org>
- <20240121-msm8976-dt-v2-6-7b186a02dc72@somainline.org>
- <9d3623f8-697b-44ab-a9eb-9d2d305b0e5c@collabora.com>
- <iatieesr52v5au4kkovw3gc34tn3snt454grq7le66oar6x7t4@4jfwxgxov36v>
- <48946c81-dad0-4e2d-9569-5fbac1675bb6@collabora.com>
+	s=arc-20240116; t=1705936666; c=relaxed/simple;
+	bh=LLazMkk5CzRwb3HJqcr3thbAlhl92pWuQx++QwfcknE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=MzGc/OLW4WY0Yt944F2OmxOibTQ1NH+zQ8cXxZz/Weo8EmxXX+CDCjtaucKJul51xnEeUoc96wuo3UleClYI2hWFdRIy8Ns1g9Dakm6o++75XGzrZcpd2UbGodPDg9YrG+8+Dl+p2aRaYGqRVyn3PQSPH14McCGbMmFolZPRhUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ccBy5wq9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3085C433C7;
+	Mon, 22 Jan 2024 15:17:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1705936666;
+	bh=LLazMkk5CzRwb3HJqcr3thbAlhl92pWuQx++QwfcknE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ccBy5wq9x9me6q1+w/96NTK9OiawepZ/Rzo0l4TAhLpoLNjEuoRFvFkJDQgBHnLBd
+	 5Vt47EKoNQ/QgGy8Xj2yZQOJwi2NqS34FQzEYDsWTy8aSdGZxtLQwRglrpHl/+B+RD
+	 uWuL3mbrQsmba4DmUYBPQrzOwUQ12FE1AdLVqwnyw12ZoHyX/N040QxOvSE87dUdJz
+	 hjYZYAPYh/WNVnVNpqCltJvXREwDitWDR31iPnAcUDPZnrGSm4WCu/7Vg/p14q4dAh
+	 FN4VUTOADfEeFLKSbI12NmB8sNgRbvftMM9qqBhIA4CcGEqfijjrnDh+Z1koIYYIDb
+	 9Bx9znwuorqZQ==
+From: Sasha Levin <sashal@kernel.org>
+To: linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Cc: Rob Clark <robdclark@chromium.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sasha Levin <sashal@kernel.org>,
+	robdclark@gmail.com,
+	airlied@gmail.com,
+	daniel@ffwll.ch,
+	quic_jesszhan@quicinc.com,
+	quic_khsieh@quicinc.com,
+	quic_vpolimer@quicinc.com,
+	quic_parellan@quicinc.com,
+	quic_kalyant@quicinc.com,
+	dan.carpenter@linaro.org,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 5.4 18/24] drm/msm/dpu: Ratelimit framedone timeout msgs
+Date: Mon, 22 Jan 2024 10:16:32 -0500
+Message-ID: <20240122151659.997085-18-sashal@kernel.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240122151659.997085-1-sashal@kernel.org>
+References: <20240122151659.997085-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <48946c81-dad0-4e2d-9569-5fbac1675bb6@collabora.com>
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 5.4.267
+Content-Transfer-Encoding: 8bit
 
-On 2024-01-22 15:59:37, AngeloGioacchino Del Regno wrote:
-> Il 22/01/24 14:49, Marijn Suijten ha scritto:
-> > On 2024-01-22 12:48:27, AngeloGioacchino Del Regno wrote:
-> >> Il 21/01/24 23:33, Marijn Suijten ha scritto:
-> >>> In addition to the SDC2 pins, set the SD Card Detect pin in a sane state
-> >>> to be used as an interrupt when an SD Card is slotted in or removed.
-> >>>
-> >>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> >>> ---
-> >>>    arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi | 17 +++++++++++++++++
-> >>>    1 file changed, 17 insertions(+)
-> >>>
-> >>> diff --git a/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi b/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
-> >>> index b0b83edd3627..75412e37334c 100644
-> >>> --- a/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
-> >>> +++ b/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
-> >>> @@ -264,10 +264,27 @@ &sdhc_1 {
-> >>>    	status = "okay";
-> >>>    };
-> >>>    
-> >>> +&sdc2_off_state {
-> >>> +	sd-cd-pins {
-> >>> +		pins = "gpio100";
-> >>> +		function = "gpio";
-> >>> +		drive-strength = <2>;
-> >>> +		bias-disable;
-> >>> +	};
-> >>
-> >> Are you sure that you really don't want card detect during system suspend?
-> > 
-> > Does it make a difference if the rest of pinctrl and the SDHCI controller are
-> > also turned off?
-> > 
-> >> You could simply add a sdc2-cd-pins out of sdc2_{on,off}_state and add use it for
-> >> both default and sleep.
-> > 
-> > This sounds close to what Konrad suggested by using a new block wit its own
-> > label rather than extending the existing state.
-> > 
-> >> pinctrl-0 = <&sdc2_on_state>, <&sdc2_card_det_n>;
-> >> pinctrl-1 = <&sdc2_off_state>;
-> > 
-> > You said both, but it's not in pinctrl-1 here?  (And might unselect bias-pull-up
-> > implicitly instead of explicitly selecting bias-disable via an off node?)
-> > 
-> 
-> I meant to add it to both, sorry.
-> 
-> In any case, take the typo'ed example as a simplification of your first version :-)
+From: Rob Clark <robdclark@chromium.org>
 
-Okay, I'll resend a version that creates a new pinctrl node and applies it to both cases.
+[ Upstream commit 2b72e50c62de60ad2d6bcd86aa38d4ccbdd633f2 ]
 
-Unfortunately I can no longer test and confirm that it makes a difference
-to have the card-detect IRQ always biased, even while the SDHCI controller
-is "asleep" or off, so I'll trust your word for it.  If I remember correctly
-downstream turns it off as well?
+When we start getting these, we get a *lot*.  So ratelimit it to not
+flood dmesg.
 
-- Marijn
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Patchwork: https://patchwork.freedesktop.org/patch/571584/
+Link: https://lore.kernel.org/r/20231211182000.218088-1-robdclark@gmail.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 5 ++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     | 1 +
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 99d449ce4a07..03d671d23bf7 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -44,6 +44,9 @@
+ 		(p) ? ((p)->hw_pp ? (p)->hw_pp->idx - PINGPONG_0 : -1) : -1, \
+ 		##__VA_ARGS__)
+ 
++#define DPU_ERROR_ENC_RATELIMITED(e, fmt, ...) DPU_ERROR_RATELIMITED("enc%d " fmt,\
++		(e) ? (e)->base.base.id : -1, ##__VA_ARGS__)
++
+ /*
+  * Two to anticipate panels that can do cmd/vid dynamic switching
+  * plan is to create all possible physical encoder types, and switch between
+@@ -2151,7 +2154,7 @@ static void dpu_encoder_frame_done_timeout(struct timer_list *t)
+ 		return;
+ 	}
+ 
+-	DPU_ERROR_ENC(dpu_enc, "frame done timeout\n");
++	DPU_ERROR_ENC_RATELIMITED(dpu_enc, "frame done timeout\n");
+ 
+ 	event = DPU_ENCODER_FRAME_EVENT_ERROR;
+ 	trace_dpu_enc_frame_done_timeout(DRMID(drm_enc), event);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+index 4c889aabdaf9..6a4813505c33 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+@@ -50,6 +50,7 @@
+ 	} while (0)
+ 
+ #define DPU_ERROR(fmt, ...) pr_err("[dpu error]" fmt, ##__VA_ARGS__)
++#define DPU_ERROR_RATELIMITED(fmt, ...) pr_err_ratelimited("[dpu error]" fmt, ##__VA_ARGS__)
+ 
+ /**
+  * ktime_compare_safe - compare two ktime structures
+-- 
+2.43.0
+
 
