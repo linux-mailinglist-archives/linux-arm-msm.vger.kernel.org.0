@@ -1,177 +1,435 @@
-Return-Path: <linux-arm-msm+bounces-7818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7819-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F498836B9C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 17:49:03 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05148836BC0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 17:51:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 903671F23E50
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 16:49:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 29FEA1C262F6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 16:51:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AFE340BE0;
-	Mon, 22 Jan 2024 15:22:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A771F3D96B;
+	Mon, 22 Jan 2024 15:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="s9JU4E9n"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="erNTQGfo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31AB59B7A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 15:22:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC373D969
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 15:25:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705936934; cv=none; b=Gl10pj9fcQksNRbsZSaCFQpbB8Ub48Gi9e/xZo2wfaHpj59N9nw/NIvpMnYaf5WsyrrG9nZyLI2uU4+AtgX/OjondCU+MrJp3slkbjQ6rzJfElZWqC56S4gWBW2Mf8//RZvRAWxBVOxIW+g+eWQJaJnL1f2e8FwaKwbRXeKhrPY=
+	t=1705937123; cv=none; b=Wdbs20GwnQ7PJf5zne5XS4isphn0TT7l5Xjp3s3S1JxRYHZMFLrWkKaQb8CJJmfal8QWnTfHzlAjRfVUWOrnvrLe4ZfmYj5I6vr1Le+8UQX98ZKtGaeloSAAECg/HvFZWr5SsQfIEdahlDnenFSZFBaLUNOnUrYiJVgAQGVFrkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705936934; c=relaxed/simple;
-	bh=yUIpNFAl5lX2MSMJsIr4Rt+gHjzzG5IQtNjQFh708So=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PX5v3qHohjCUIOlii4xALx9SaV4Yr3qTxHpfhaeCpFFumUiVxdnv8P3YEojmqC0BXoJDfbnCsdyye7NCyNfFE3LdNvjdQrjllHcAiYJUOapOfg59RKEiyD5jxaS2hm+Ac9Qs/FbqGnq9AJl5fd9OKMHw6t7YVlepe/IFccgkarY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=s9JU4E9n; arc=none smtp.client-ip=209.85.128.171
+	s=arc-20240116; t=1705937123; c=relaxed/simple;
+	bh=BvwWPeLzqApj6/aakWVtDh425ZxMeXm2qLCP8IuXz+I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=HkI2Ah9ukJYDuUfbrseTRnt0FXFfaOHV6tDNo52xUf+B1M8cb7PFWsfATukBUlNqzg6j441oMQW01n1B10EsRmKLjuCWGC723ut7iQ5LRfbNDbr7THmmplU3k+Y2uTOP/82atDtOhytkTiJeThD/rknt6mDIUUGyU84JXC/AUk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=erNTQGfo; arc=none smtp.client-ip=209.85.167.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-6001449a2beso4712257b3.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 07:22:12 -0800 (PST)
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-50e7c6f0487so3510153e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 07:25:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705936932; x=1706541732; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=+b+QYLywqR5igbk2Cu7AUp4ujqL3bIq40/9jub26OfE=;
-        b=s9JU4E9nuEHNYjsJk3ScWiK3Hj7Ke7QhV/4I48Lvm7DVM8NzxVHPoE/0SBYr/65FtZ
-         LrV/Z8Ddihe1Lu5uwGfB8FA2CaIUU35fvaKqNv6smFkQ8IY6NDwb/wuDqE+QMpSbk1Vv
-         M1O/vJofz7zXYoK9S1ECfKc4S+bUo+LcMCyFwVl6IGsOAjxlC0YhuqzoHUNLM5pXyBLh
-         1GIzFqKvQ5MPLrLNrjw+5OeXjww0p67tHb+7wWsKBDavxvwkxiwgC7B0ZfzcJoeknZbr
-         6ZS5ZBBL+qbDN5Aiq+Tj5Gz1BMF6Qmo7db5lUTyKsy9dIBMFRoFlj2luq8Z7iIaPvPbP
-         twCg==
+        d=linaro.org; s=google; t=1705937120; x=1706541920; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3AQjau4ZDJPt3vD1a6+z6eC19xr+A2RrxxaysJwwBPg=;
+        b=erNTQGfoO8zI//lBNdiUpxlNKISlNcJtu0B3gYifbdoUKObef4lygrl+UIgMgbqPob
+         yMR3aiynGPcrD0We0uGINK4GC3xUXcJ1MK3qpTNuqUiePMOCqwitaDlPD2GXx8YAbQX4
+         AQODUY1/y4Q1A2BCXhHP6wrfbY5mfNT1fvHwSk5IPBbpyJZprKbv+xSYXk+5zfBY7ZSw
+         QSx8QajAbTbGJWyfThBjgGV0TrAYH/NQe2en8ygDA1xZRL3JxkSbfY9tsAY7NKg3ZhGM
+         4ayom+o+1aUVSqJwHhVVMINtvR5ebMss5UfGAyi4nZLjH8iuK2FvtTLrXohhBoikv4/u
+         wVMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705936932; x=1706541732;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+b+QYLywqR5igbk2Cu7AUp4ujqL3bIq40/9jub26OfE=;
-        b=JMjeep0kQQNmqUPdk/GL1PjMNlLghrV2lw1ccjb16ihWWeBSGgyyMwFzNs/OIHM65i
-         BsSg+ilbTOxZXwrNoqv03kS5dHvG1z6y4qJQVC5CagfgGTZBqFQlenG0L+G9Ggtove1Y
-         P9iMwwRaBk9WWKBugr97G159/vEWYJPh8YRw5AZtLGbhluXWL3+3qBrwS2jfRyV8XlaU
-         PR8qHaiX5h9x2Chn7bHbqa6QWKII7UBm8+rJFnLkijWFbnt44hcnODv26WYyYmE01z6j
-         vA47zVrs5YiLv9R6IhoDJM/jwCLexSoij/KKNeAFYyZtY/QVkk2kWm1mORlGb/rQdUs2
-         OfAw==
-X-Gm-Message-State: AOJu0YwpSv2UF5QwnHbvBMjN6UhK7DbxoW2kkm90Gpx2GBbS9QstAwyv
-	Zc+m58lXTHc8fg6YofH+v6/6+UkRyqEBJwPPmcFQ551c3Nb87ElmBv6ZDJ1yi4BMtLef2Jsxor/
-	3BtXc4c/kSD4wUrWHWktW5AXoGU5ccnzL4bfTNA==
-X-Google-Smtp-Source: AGHT+IGNMCtOBsrliO9IJvaCQ6wIStKn5JD0Sq28btLAoWmRi2uv8fOhNsIWgC6FelvmFneU7EPoXWCxrHsxLD9PCiw=
-X-Received: by 2002:a0d:db55:0:b0:5e9:fa4a:fd56 with SMTP id
- d82-20020a0ddb55000000b005e9fa4afd56mr3217496ywe.13.1705936931753; Mon, 22
- Jan 2024 07:22:11 -0800 (PST)
+        d=1e100.net; s=20230601; t=1705937120; x=1706541920;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3AQjau4ZDJPt3vD1a6+z6eC19xr+A2RrxxaysJwwBPg=;
+        b=Qejfeq5Ry4irPq0Sn0cKRWifQCUH36T9yCjOwfCvpW4ulYbpB2aqB0rqeLCamRQiT5
+         0QNwyx6QqXjxguhBCTq/Pn/MrpNoPyP8D9Zf0fEU4b9Px2lYpHATvxaEQdIOMIIMBlNe
+         3HczzHlI5+Hx04lLfh1UZmqD+StM2bsE0OCv+udf3khyHUzolrQ++raXCSi29SwF1Lgx
+         undUbJKdbfGh9mFK2Uu1J0uhYHNNP+qFOrF/pHazPzTjmHd4bz9r1/th5+7zUWFWx8U9
+         odUH/gPIbnR6+tn4GaOSyOgaZGmhI9QSscasJKAEUVQ1R5fFPEgjtTsnqmNCWl/iHYHV
+         VeeA==
+X-Gm-Message-State: AOJu0YyB9UcBAjvt4VavQNSY5HfcRa7v6fKQIQBvIOR7ecPZRd5dBQmd
+	qE+JYZVuvB6Q9veMdY3XOF2Gb/9I+oDLCgM2lfN5NQWVeCktW2TNwAYhWgQ8FBQ=
+X-Google-Smtp-Source: AGHT+IEj32NBin8MAmagamSf9rR5DVDPMCHsnryZC36mY/oQt/TkjUqOBOwpAZwYLasCljbiBBqHUg==
+X-Received: by 2002:a05:6512:3b20:b0:50e:9355:a24b with SMTP id f32-20020a0565123b2000b0050e9355a24bmr1409426lfv.22.1705937119802;
+        Mon, 22 Jan 2024 07:25:19 -0800 (PST)
+Received: from [192.168.231.132] (178235179218.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.218])
+        by smtp.gmail.com with ESMTPSA id hu14-20020a170907a08e00b00a2f15b8cb76sm5302537ejc.184.2024.01.22.07.25.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Jan 2024 07:25:19 -0800 (PST)
+Message-ID: <9224341f-e0d8-427b-9064-4a51bf5c547e@linaro.org>
+Date: Mon, 22 Jan 2024 16:25:17 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231227-topic-rpmpd_cleanup-v1-1-860ab141b076@linaro.org>
-In-Reply-To: <20231227-topic-rpmpd_cleanup-v1-1-860ab141b076@linaro.org>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Mon, 22 Jan 2024 16:21:35 +0100
-Message-ID: <CAPDyKFoMdhNeq22Ji9UZdZ5Ut536q6PGn6EBBVquV-nTW2FqoA@mail.gmail.com>
-Subject: Re: [PATCH] pmdomain: qcom: rpmpd: Keep one RPM handle for all RPMPDs
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [1/4] interconnect: qcom: icc-rpmh: Add QoS config support
+Content-Language: en-US
+To: Odelu Kukatla <quic_okukatla@quicinc.com>, georgi.djakov@linaro.org,
+ Bjorn Andersson <andersson@kernel.org>, Georgi Djakov <djakov@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240122143030.11904-1-quic_okukatla@quicinc.com>
+ <20240122143030.11904-2-quic_okukatla@quicinc.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240122143030.11904-2-quic_okukatla@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, 27 Dec 2023 at 02:20, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
-> For no apparent reason (as there's just one RPM per SoC), all RPMPDs
-> currently store a copy of a pointer to smd_rpm. Introduce a single,
-> global one to save up on space in each definition.
->
-> bloat-o-meter reports:
->
-> Total: Before=92010, After=91062, chg -1.03%
->
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+On 22.01.2024 15:30, Odelu Kukatla wrote:
+> Introduce support to initialize QoS settings for QNOC platforms.
 
-Applied for next, thanks!
+You should describe why this is useful.
 
-Kind regards
-Uffe
+For reference, disabling QoS programming on sm8350 on an android
+kernel & userspace yields an inconsistent 1-2% difference in
+benchmarks like geekbench or antutu, but perhaps it's useful for
+not clogging up the NoCs when there's a lot of multimedia-dram
+traffic etc.?
 
+> 
+> Change-Id: I068d49cbcfec5d34c01e5adc930eec72d306ed89
 
+This tag has no place upstream
+
+> Signed-off-by: Odelu Kukatla <quic_okukatla@quicinc.com>
 > ---
->  drivers/pmdomain/qcom/rpmpd.c | 13 ++++++-------
->  1 file changed, 6 insertions(+), 7 deletions(-)
->
-> diff --git a/drivers/pmdomain/qcom/rpmpd.c b/drivers/pmdomain/qcom/rpmpd.c
-> index 7796d65f96e8..90b62767f9d0 100644
-> --- a/drivers/pmdomain/qcom/rpmpd.c
-> +++ b/drivers/pmdomain/qcom/rpmpd.c
-> @@ -16,6 +16,8 @@
->
->  #define domain_to_rpmpd(domain) container_of(domain, struct rpmpd, pd)
->
-> +static struct qcom_smd_rpm *rpmpd_smd_rpm;
+>  drivers/interconnect/qcom/icc-rpmh.c | 158 +++++++++++++++++++++++++++
+>  drivers/interconnect/qcom/icc-rpmh.h |  33 ++++++
+>  2 files changed, 191 insertions(+)
+> 
+> diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+> index c1aa265c1f4e..49334065ccfa 100644
+> --- a/drivers/interconnect/qcom/icc-rpmh.c
+> +++ b/drivers/interconnect/qcom/icc-rpmh.c
+> @@ -1,8 +1,10 @@
+>  // SPDX-License-Identifier: GPL-2.0
+>  /*
+>   * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+>   */
+>  
+> +#include <linux/clk.h>
+>  #include <linux/interconnect.h>
+>  #include <linux/interconnect-provider.h>
+>  #include <linux/module.h>
+> @@ -14,6 +16,37 @@
+>  #include "icc-common.h"
+>  #include "icc-rpmh.h"
+>  
+> +/* QNOC QoS */
+> +#define QOSGEN_MAINCTL_LO(p, qp)	(0x8 + (p->offsets[qp]))
+> +#define QOS_SLV_URG_MSG_EN_SHFT		3
+> +#define QOS_DFLT_PRIO_MASK		0x7
+> +#define QOS_DFLT_PRIO_SHFT		4
+> +#define QOS_DISABLE_SHIFT		24
+
+mask + shift -> GENMASK(), then use FIELD_PREP/GET in the callers
+
+These are already defined in icc-rpm.c.. Perhaps they can be factored out
+to icc-qnoc.h or something?
+
+[...]
+
 > +
->  /* Resource types:
->   * RPMPD_X is X encoded as a little-endian, lower-case, ASCII string */
->  #define RPMPD_SMPA 0x61706d73
-> @@ -54,7 +56,6 @@ struct rpmpd {
->         bool enabled;
->         const int res_type;
->         const int res_id;
-> -       struct qcom_smd_rpm *rpm;
->         unsigned int max_state;
->         __le32 key;
->         bool state_synced;
-> @@ -879,7 +880,7 @@ static int rpmpd_send_enable(struct rpmpd *pd, bool enable)
->                 .value = cpu_to_le32(enable),
->         };
->
-> -       return qcom_rpm_smd_write(pd->rpm, QCOM_SMD_RPM_ACTIVE_STATE,
-> +       return qcom_rpm_smd_write(rpmpd_smd_rpm, QCOM_SMD_RPM_ACTIVE_STATE,
->                                   pd->res_type, pd->res_id, &req, sizeof(req));
->  }
->
-> @@ -891,7 +892,7 @@ static int rpmpd_send_corner(struct rpmpd *pd, int state, unsigned int corner)
->                 .value = cpu_to_le32(corner),
->         };
->
-> -       return qcom_rpm_smd_write(pd->rpm, state, pd->res_type, pd->res_id,
-> +       return qcom_rpm_smd_write(rpmpd_smd_rpm, state, pd->res_type, pd->res_id,
->                                   &req, sizeof(req));
+> +static int enable_qos_deps(struct qcom_icc_provider *qp)
+
+Can we perhaps integrate this into .sync_state?
+
+Currently, !synced_state holds all paths (and by extension, all BCMs)
+at their max values, so they're definitely enabled, and it conviniently
+is also supposed to only fire once.
+
+> +{
+> +	struct qcom_icc_bcm *bcm;
+> +	bool keepalive;
+> +	int ret, i;
+> +
+> +	for (i = 0; i < qp->num_bcms; i++) {
+> +		bcm = qp->bcms[i];
+> +		if (bcm_needs_qos_proxy(bcm)) {
+> +			keepalive = bcm->keepalive;
+> +			bcm->keepalive = true;
+> +
+> +			qcom_icc_bcm_voter_add(qp->voter, bcm);
+> +			ret = qcom_icc_bcm_voter_commit(qp->voter);
+> +
+> +			bcm->keepalive = keepalive;
+> +
+> +			if (ret) {
+> +				dev_err(qp->dev, "failed to vote BW to %s for QoS\n",
+> +					bcm->name);
+> +				return ret;
+> +			}
+> +		}
+> +	}
+> +
+> +	ret = clk_bulk_prepare_enable(qp->num_clks, qp->clks);
+> +	if (ret) {
+> +		dev_err(qp->dev, "failed to enable clocks for QoS\n");
+> +		return ret;
+> +	}
+
+if (ret)
+	dev_err(qp->dev...
+
+return ret;
+
+> +
+> +	return 0;
+> +}
+> +
+> +static void disable_qos_deps(struct qcom_icc_provider *qp)
+> +{
+> +	struct qcom_icc_bcm *bcm;
+> +	int i;
+> +
+> +	clk_bulk_disable_unprepare(qp->num_clks, qp->clks);
+> +
+> +	for (i = 0; i < qp->num_bcms; i++) {
+> +		bcm = qp->bcms[i];
+> +		if (bcm_needs_qos_proxy(bcm)) {
+> +			qcom_icc_bcm_voter_add(qp->voter, bcm);
+> +			qcom_icc_bcm_voter_commit(qp->voter);
+> +		}
+> +	}
+> +}
+> +
+> +int qcom_icc_rpmh_configure_qos(struct qcom_icc_provider *qp)
+> +{
+> +	struct qcom_icc_node *qnode;
+> +	size_t i;
+> +	int ret;
+> +
+> +	ret = enable_qos_deps(qp);
+> +	if (ret)
+> +		return ret;
+> +
+> +	for (i = 0; i < qp->num_nodes; i++) {
+> +		qnode = qp->nodes[i];
+> +		if (!qnode)
+> +			continue;
+> +
+> +		if (qnode->qosbox)
+> +			qcom_icc_set_qos(qnode);
+> +	}
+> +
+> +	disable_qos_deps(qp);
+> +
+> +	return ret;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_icc_rpmh_configure_qos);
+
+This is simply copypasted from downstream [1].. not necessary at all,
+in this patch this func is exclusively called from within this file.
+
+> +
+> +static struct regmap *qcom_icc_rpmh_map(struct platform_device *pdev,
+> +					const struct qcom_icc_desc *desc)
+> +{
+> +	void __iomem *base;
+> +	struct resource *res;
+> +	struct device *dev = &pdev->dev;
+
+Reverse-Christmas-tree throughout the code, please
+
+> +
+> +	if (!desc->config)
+> +		return NULL;
+> +
+> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +	if (!res)
+> +		return NULL;
+> +
+> +	base = devm_ioremap(dev, res->start, resource_size(res));
+> +	if (IS_ERR(base))
+> +		return ERR_CAST(base);
+> +
+> +	return devm_regmap_init_mmio(dev, base, desc->config);
+> +}
+
+
+This is devm_platform_get_and_ioremap_resource + devm_regmap_init_mmio
+
+please inline this in the probe func
+
+[...]
+
+>  
+> @@ -213,6 +363,8 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
+>  		if (!qn)
+>  			continue;
+>  
+> +		qn->regmap = dev_get_regmap(qp->dev, NULL);
+
+Why would all nodes need a regmap reference? there's to_qcom_provider()
+
+> +
+>  		node = icc_node_create(qn->id);
+>  		if (IS_ERR(node)) {
+>  			ret = PTR_ERR(node);
+> @@ -229,6 +381,10 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
+>  		data->nodes[i] = node;
+>  	}
+>  
+> +	ret = qcom_icc_rpmh_configure_qos(qp);
+> +	if (ret)
+> +		goto err_remove_nodes;
+> +
+>  	ret = icc_provider_register(provider);
+>  	if (ret)
+>  		goto err_remove_nodes;
+> @@ -247,6 +403,7 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
+>  err_deregister_provider:
+>  	icc_provider_deregister(provider);
+>  err_remove_nodes:
+> +	clk_bulk_put_all(qp->num_clks, qp->clks);
+
+Use devm_clk_bulk_get_all instead
+
+[...]
+
+> + * @nodes: list of interconnect nodes that maps to the provider
+> + * @num_nodes: number of @nodes
+> + * @regmap: used for QOS registers access
+
+QoS, 'register'
+
+> + * @clks : clks required for register access
+> + * @num_clks: number of @clks
+>   */
+>  struct qcom_icc_provider {
+>  	struct icc_provider provider;
+> @@ -25,6 +31,11 @@ struct qcom_icc_provider {
+>  	struct qcom_icc_bcm * const *bcms;
+>  	size_t num_bcms;
+>  	struct bcm_voter *voter;
+> +	struct qcom_icc_node * const *nodes;
+> +	size_t num_nodes;
+> +	struct regmap *regmap;
+> +	struct clk_bulk_data *clks;
+> +	int num_clks;
 >  };
->
-> @@ -1004,12 +1005,11 @@ static int rpmpd_probe(struct platform_device *pdev)
->         int i;
->         size_t num;
->         struct genpd_onecell_data *data;
-> -       struct qcom_smd_rpm *rpm;
->         struct rpmpd **rpmpds;
->         const struct rpmpd_desc *desc;
->
-> -       rpm = dev_get_drvdata(pdev->dev.parent);
-> -       if (!rpm) {
-> +       rpmpd_smd_rpm = dev_get_drvdata(pdev->dev.parent);
-> +       if (!rpmpd_smd_rpm) {
->                 dev_err(&pdev->dev, "Unable to retrieve handle to RPM\n");
->                 return -ENODEV;
->         }
-> @@ -1039,7 +1039,6 @@ static int rpmpd_probe(struct platform_device *pdev)
->                         continue;
->                 }
->
-> -               rpmpds[i]->rpm = rpm;
->                 rpmpds[i]->max_state = desc->max_state;
->                 rpmpds[i]->pd.power_off = rpmpd_power_off;
->                 rpmpds[i]->pd.power_on = rpmpd_power_on;
->
-> ---
-> base-commit: 39676dfe52331dba909c617f213fdb21015c8d10
-> change-id: 20231227-topic-rpmpd_cleanup-2e043dac9f47
->
-> Best regards,
-> --
-> Konrad Dybcio <konrad.dybcio@linaro.org>
->
+>  
+>  /**
+> @@ -41,6 +52,23 @@ struct bcm_db {
+>  	u8 reserved;
+>  };
+>  
+> +/**
+> + * struct qcom_icc_qosbox - Qualcomm Technologies, Inc specific QoS config
+
+qosbox -> qos
+
+plus I'm not sure if the full company name adds value to a driver in
+drivers/interconnect/qcom..
+
+> + * @prio: priority value assigned to requests on the node
+> + * @urg_fwd: if set, master priority is used for requests.
+
+"master priority" meaning "this req goes before anyone else", or "use the
+icc provider [master]'s priority value"?
+
+> + * @prio_fwd_disable: if set, master priority is ignored and NOCs default priority is used.
+
+NoC's
+
+This sounds like !(prio || urg_fwd)? Surely it must do something more useful?
+
+
+> + * @num_ports: number of @ports
+> + * @offsets: qos register offsets
+> + */
+> +
+> +struct qcom_icc_qosbox {
+> +	u32 prio;
+> +	u32 urg_fwd;
+> +	bool prio_fwd_disable;
+> +	u32 num_ports;
+> +	u32 offsets[];
+
+u32 offsets __counted_by(num_ports)
+
+Also, it would probably be more clear if you renamed it to "port_offsets"
+
+> +};
+> +
+>  #define MAX_LINKS		128
+>  #define MAX_BCMS		64
+>  #define MAX_BCM_PER_NODE	3
+> @@ -58,6 +86,8 @@ struct bcm_db {
+>   * @max_peak: current max aggregate value of all peak bw requests
+>   * @bcms: list of bcms associated with this logical node
+>   * @num_bcms: num of @bcms
+> + * @regmap: used for QOS registers access
+> + * @qosbox: qos config data associated with node
+>   */
+>  struct qcom_icc_node {
+>  	const char *name;
+> @@ -70,6 +100,8 @@ struct qcom_icc_node {
+>  	u64 max_peak[QCOM_ICC_NUM_BUCKETS];
+>  	struct qcom_icc_bcm *bcms[MAX_BCM_PER_NODE];
+>  	size_t num_bcms;
+> +	struct regmap *regmap;
+
+Remove
+
+> +	struct qcom_icc_qosbox *qosbox;
+
+Why would this be a pointer and not a const member of the struct?
+
+It seems totally counter-intuitive to reuse QoS settings for more than
+one node, given their offsets are unique.
+
+Konrad
+
+[1] https://git.codelinaro.org/clo/la/kernel/msm-5.15/-/blob/kernel.lnx.5.15.r26-rel/drivers/interconnect/qcom/icc-rpmh.c?ref_type=heads#L329-354
+
 
