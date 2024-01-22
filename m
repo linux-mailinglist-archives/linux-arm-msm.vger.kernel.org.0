@@ -1,142 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-7825-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7826-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D604B836C41
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 18:00:19 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 74BE3836C46
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 18:00:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AC7D21C2676C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 17:00:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DFBA81F26853
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 17:00:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1614124A1C;
-	Mon, 22 Jan 2024 15:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1135E5FDAD;
+	Mon, 22 Jan 2024 15:38:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e3FV9Bp9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HdS7dzKc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D8947F5A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 15:37:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF5D482C4
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 15:38:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705937832; cv=none; b=RBXeoMC8CmvT4vTNQrVa0i4HaTddfBTyzt6VwMuC9qi9c6S1s0xJxLWRfseDapWZyRvdIM351otNVbNOSuICFgPtC4V1hrDKtw1oJ9eiYlRW6qaV+H4hpJB6PrOXeE1If6erwxo5a0xQFKjeN6+zse/YXViI9hKG5myc756r0Lc=
+	t=1705937905; cv=none; b=fPhLpBytqFUAhloeZP3flEJwP+j64BT3LAtt38COspNQDXjZfvlIQuWeyCGYxt5T8ZDrMyzMfNbD78DIPV7j3Z2tEZtsFaWyZuIBVQsBfLS/H3oRTc12xkggTng8SIF6RfviJwbzWCSEF+q2UYwzVdcdQvgpE8u0BVmCWUUD+9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705937832; c=relaxed/simple;
-	bh=M1IexsZpjIC9NupxqqOEPzt1ds4YpinCNH1anLwZUqw=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=fbSnD8YYd+XKtoxyGkfoElWZD2GKDMfGMY8kiPcPhxDu6o2P891Qkjk7szQ7Edzq4sKMMTyCmWTt7MHrkuwkBZfVt01hyUWtf/v9j9v/GHW6/CJ13gz2sBQTv0TVhZ4CFUHUos60/N8scp+WNMbFjkIjR1vfwteVgwpgXDBKEFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e3FV9Bp9; arc=none smtp.client-ip=209.85.221.42
+	s=arc-20240116; t=1705937905; c=relaxed/simple;
+	bh=JrTlR1yh1kUdkwX7KafITLJvsRjLZG25nzdjxKTbheM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=TyVEY7crss5bZTLNM8QueyqFcV9oPZDqSKln4Op2QwyVtHxxsWhSqGZlJy0d49Aac34MFOXi9iHws6I7CAaENv4UG7yJWoXIjSSK7I0J6VljgOSxlnmOfLJgM1BbqwSsuWnGLHzcRuhkUDst9thYFHdZZq5gaVRMkBVzkShF22w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HdS7dzKc; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-336c8ab0b20so3311641f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 07:37:10 -0800 (PST)
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-40e7065b692so36479655e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 07:38:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705937829; x=1706542629; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=E7/rVREoWbpjFsjzxitxG0salXyfYR/fC5ds6J+XLfA=;
-        b=e3FV9Bp9i/p9EoM2Y6atekGOYqqIQxl8bW2xGp6+19ZPxPmgd4Rz3AxIQYLTUU7hSr
-         eyBtLcLtUprSfafmfNFNN4yxL+3iqcIQRxRXfMoTVhg+Kkwhw3gSKrnH73bTShlZ7Sd/
-         V9JAUGkRpUbcbrwstoKWY6YVNmn5ruF43dcR2JhRwHPxt/fuMVJSYDZKNUzVbWJNnW34
-         II3v4v18bNILMl/MEI7yPj0gVyc4lSYhMufekd0IZY4oDqlRZM/VpPasejv3TQaMWGn3
-         Cxn7bdzDMOJ5/GdMAJfrNPrXFW3qJUqn19Bm1AYY3ejANeeCxR1m0df73URzMWPGh2Iq
-         1WmQ==
+        d=linaro.org; s=google; t=1705937901; x=1706542701; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wjrEpWeMJdq09/Vth3t/64U8dNgnTEbo+R/yOccaErE=;
+        b=HdS7dzKcRiF18BSJIuqaayov2/RNaqOKRLp+sMT0eYiq45sT+r/AxHBXRcm/KaWbL+
+         SGDpcuGIOWKA42pfhTZty785ww9UsLRop2TadwxpcUEQA4XXEgXqbuf4KiQ2NBebfDb+
+         aedeJOEoL6w9tCI2ktWUoaBt4JB/U3HcSySceib8X9mBU9v7FkSn4AgvWyrEEJxnZnPr
+         gS4gahNqWuuu/m+v5tnM9Hh7Q5xjUMhnzTNrKFzBxoO+Yu8406VZl3gMdohjljrfO6+5
+         V/FfcZY6JSOVnyur7MkH4dJjtlF4omuYYSz8DS6S/xFhVwEOsmMZQjYbEkCM1swn1uTN
+         sxgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705937829; x=1706542629;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=E7/rVREoWbpjFsjzxitxG0salXyfYR/fC5ds6J+XLfA=;
-        b=lP7+W2l8M297ZnzJEhD430N+zyckmj/FZA1jj1+QVZ41rZ4IcsRA6itNBsykogpAyf
-         KIKi3M6V+/RpAMtZgVHJFAuRwYQSBjIAXPzZ8Vy6PrbXdilDyyrveKyz0tT/6WRpZhqp
-         8J/U8NhLCAy4w2/sHBD4O0AL8InV+qk3s2EjoOvJ6hH8vNMU5b/4/XScYOLVwaVEp6ZX
-         S4rFM0oCw1VmrGQyiVhlwLYAUbUiJNzDFuEy9ZHZicYdVzPCIQpF0Q/u0poUG2rKhNzb
-         lPr5Q6+rr2k8r/nUrT6dk2qOgOEkDSIUVKEoLgOQeYtQfOQVSCV0hOygFjnI74vZ7JQs
-         rxow==
-X-Gm-Message-State: AOJu0YxZcEhkQIMICLtKw/HNdR28KH2qvBD9KIkcME5mXj3gQ0JUHQGg
-	Czx4GU+R+Vz95WW4i3PLiraWdp86Q+Ute6Luwp8et5vSf8DzkN70GzrS7SST5HY=
-X-Google-Smtp-Source: AGHT+IGogGxunI3h0nfni+qTIywi+Ay2Sm785g29lG7w5Xw5Ouok8yKjNQSi0dcKXtFi/XKBXaLQ9g==
-X-Received: by 2002:a05:6000:1888:b0:339:372e:7711 with SMTP id a8-20020a056000188800b00339372e7711mr1351027wri.55.1705937828664;
-        Mon, 22 Jan 2024 07:37:08 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:bc76:9408:4feb:c26b? ([2a01:e0a:982:cbb0:bc76:9408:4feb:c26b])
-        by smtp.gmail.com with ESMTPSA id q4-20020adfab04000000b00337d603fd01sm11049536wrc.66.2024.01.22.07.37.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Jan 2024 07:37:08 -0800 (PST)
-Message-ID: <b7b0eb97-b37f-4a72-b418-88b37a0320aa@linaro.org>
-Date: Mon, 22 Jan 2024 16:37:07 +0100
+        d=1e100.net; s=20230601; t=1705937901; x=1706542701;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wjrEpWeMJdq09/Vth3t/64U8dNgnTEbo+R/yOccaErE=;
+        b=PV+QDTU3oHTqxSgjxKf9paoOOHusucbj2UKXajgmipoROHktU1BCC6k6p+W6AxeBVl
+         ky59VVrYgUi3qs0ugPFm5SKDf2CGpEJ2vFCwuSNKgNH6d6ZfmglGdN3xzbzzstnykUOd
+         ID1P1Z/vFqWm56pBXRLOm5+lu5QAadIJcAaf85Ixkcleeymy2JvIN1Qzg2PC61yA6uCC
+         QfpbkYRfLLpAB0SMrpRe8d1oPloqd5WNpF3cU00y8Vxa6dAHwOb9RoEDCjOOcaA9MRFR
+         fxbQZ9ELF+/OHTBwtZx/iqkCTF+qFwzEvfzBr9Xg9aD/1A4zR0uiWgttXjn0g2I22unt
+         yP5Q==
+X-Gm-Message-State: AOJu0YzLhMqmvOfvQKuZztAkUIG4OOnqtPKR98WJ/ndWvx3TVo9RJz9s
+	Fw9NxmdmIXn7VZJW6AFC6y0unlsJmtsXM8BLkNVJXgHR9xdXE9frsHfgK13pXyk=
+X-Google-Smtp-Source: AGHT+IHtTraeTNo/j0x8myQ20pblTIX4ITUkbtxQP7MBf8dxu4qn14b7VISoC/ZpBbAhfDC9W4fc2w==
+X-Received: by 2002:a05:600c:3d0e:b0:40e:6272:b5ac with SMTP id bh14-20020a05600c3d0e00b0040e6272b5acmr2456111wmb.99.1705937901536;
+        Mon, 22 Jan 2024 07:38:21 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id h5-20020a05600c314500b0040e5e21cd7bsm38969066wmo.11.2024.01.22.07.38.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Jan 2024 07:38:21 -0800 (PST)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Date: Mon, 22 Jan 2024 16:38:17 +0100
+Subject: [PATCH v2] arm64: dts: qcom: sm8550: Use GIC-ITS for PCIe0 and
+ PCIe1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8550: Use GIC-ITS for PCIe0 and PCIe1
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240122-topic-sm8550-upstream-pcie-its-v1-1-aff5d0d7d6dd@linaro.org>
- <fcb3c92e-df59-4135-83c7-2850f537e57c@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <fcb3c92e-df59-4135-83c7-2850f537e57c@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20240122-topic-sm8550-upstream-pcie-its-v2-1-b3398d86d1f1@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAOiLrmUC/42NTQ6CMBBGr0Jm7Zi2AfxZeQ/DojItTCK0mVaiI
+ dzdyglcvi9f3lshOWGX4FqtIG7hxGEuYA4V9KOdB4dMhcEoUyttDOYQucc0nZtG4SumLM5OGHs
+ uz5xQtb5+tJq8uxAUSRTn+b0H7l3hkVMO8tl7i/6tf6sXjRqt9w0pOlFLdHvybCUcgwzQbdv2B
+ T+q/zjNAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5170;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=JrTlR1yh1kUdkwX7KafITLJvsRjLZG25nzdjxKTbheM=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlrovsPRxor1Hb6gKIHm7/1VE8wAxfG+GPN7tPdRLq
+ gi5kiLKJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZa6L7AAKCRB33NvayMhJ0eNKD/
+ 0QNbjFpU19ERNfyesK5PgMCelH/N0ULCkVyAa7cNkmn3jifkrCzPpzeEKfw4GAATXqXtI4yUIrOK2f
+ bR1dfmFS7t4Ic/7UOxexZvXc3PxDnsNKYMfHy1boBX7L50KMbGltkFBcjmxVl9fzFuqvGCCXs9s45D
+ BAeP+LMARQoRwO6ZH9yF1hSuzn1lfKeNp1sewRCOKwqdyaTZewaPLbdta/a5y6A6N7DrBcBK9+Kiv7
+ uSLrObdLqqHr1nr8qQv51yIiow8McbTLBei3Dh5zlbPpjlIyz6ke1D5d7fT/b7iz0LsCmp7uchh4Wg
+ 4/0ouBntvNsRSqcADXrk6iDiM6FRzcU8Cwi9vVOKpVTpgSlK7e5pG+9VrrfkXXN92AJRRQuQdJEjeL
+ BwnjApD01zGK8/wmMrPE6GGp77P9BLct3rkWgPCLmMT/q6CxvCkmgp5izblVd7MRYZDC2m9wmOe9Vv
+ 2dKjrIj97/rExnM3SVuDSQI7fNFx0sa9qlcttEyREDIREulBlo53QbEq7i7QqLjTG8u6MRctarVc2b
+ LS9tswl3cGtOVPUwb0BwCZLGGcC76hLeO4mdNbR4wByvDw3nLcm6ixaPWCqKxljyK88IUbrH66dTRM
+ /GFJB+0UAI9B5hAOg6x/pGlu8j6av2nxStOpNJ7g8aR3Lji3QrrWvJnrKGZQ==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-On 22/01/2024 16:34, Konrad Dybcio wrote:
-> On 22.01.2024 16:28, Neil Armstrong wrote:
->> Both PCIe0 and PCIe1 controllers are capable of signalling the MSIs
->> received from endpoint devices to the CPU using GIC-ITS MSI controller.
->> Add support for it.
->>
->> Currently, BDF (0:0.0) and BDF (1:0.0) are enabled and with the
->> msi-map-mask of 0xff00, all the 32 devices under these two busses can
->> share the same Device ID.
-> 
-> Copypasta! you didn't actually add these :P
+Both PCIe0 and PCIe1 controllers are capable of signalling the MSIs
+received from endpoint devices to the CPU using GIC-ITS MSI controller.
+Add support for it.
 
-Oops thx for spotting, sending a v2!
+The GIC-ITS MSI implementation provides an advantage over internal MSI
+implementation using Locality-specific Peripheral Interrupts (LPI) that
+would allow MSIs to be targeted for each CPU core.
 
-Neil
+Like SM8450, the IDs are swapped, but works fine on PCIe0 and PCIe1.
 
-> 
-> Konrad
-> 
-> 
+WiFi PCIe Device on SM8550-QRD using GIC-ITS:
+218:          0          4          0          0          0          0          0          0   ITS-MSI 524288 Edge      bhi
+219:          0          0          5          0          0          0          0          0   ITS-MSI 524289 Edge      mhi
+220:          0          0          0         33          0          0          0          0   ITS-MSI 524290 Edge      mhi
+221:          0          0          0          0          3          0          0          0   ITS-MSI 524291 Edge      ce0
+222:          0          0          0          0          0          1          0          0   ITS-MSI 524292 Edge      ce1
+223:          0          0          0          0          0          0         38          0   ITS-MSI 524293 Edge      ce2
+224:          0          0          0          0          0          0          0         31   ITS-MSI 524294 Edge      ce3
+225:          0          0          0          0          0          0          0          0   ITS-MSI 524295 Edge      ce5
+226:          0          0          0          0          0          0          0          0   ITS-MSI 524296 Edge      DP_EXT_IRQ
+227:          0          0          0          0          0          0          0          0   ITS-MSI 524297 Edge      DP_EXT_IRQ
+228:          0          0          0          0          0          0          0          0   ITS-MSI 524298 Edge      DP_EXT_IRQ
+229:          0          0          0          0          0          0          0          0   ITS-MSI 524299 Edge      DP_EXT_IRQ
+230:          0          0          0          0          0          0          0          0   ITS-MSI 524300 Edge      DP_EXT_IRQ
+231:          0          0          0          0          0          0          0          0   ITS-MSI 524301 Edge      DP_EXT_IRQ
+232:          0          0          0          0          0          0          0          0   ITS-MSI 524302 Edge      DP_EXT_IRQ
+
+NVMe in SM8550-HDK M.2 Slot using GIC-ITS:
+212:          0          0         22          0          0          0          0          0   ITS-MSI 134742016 Edge      nvme0q0
+213:     133098          0          0          0          0          0          0          0   ITS-MSI 134742017 Edge      nvme0q1
+214:          0     139450          0          0          0          0          0          0   ITS-MSI 134742018 Edge      nvme0q2
+215:          0          0     139476          0          0          0          0          0   ITS-MSI 134742019 Edge      nvme0q3
+216:          0          0          0      69767          0          0          0          0   ITS-MSI 134742020 Edge      nvme0q4
+217:          0          0          0          0      80368          0          0          0   ITS-MSI 134742021 Edge      nvme0q5
+218:          0          0          0          0          0      77315          0          0   ITS-MSI 134742022 Edge      nvme0q6
+219:          0          0          0          0          0          0      73022          0   ITS-MSI 134742023 Edge      nvme0q7
+220:          0          0          0          0          0          0          0     329993   ITS-MSI 134742024 Edge      nvme0q8
+
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v2:
+- fixed commit msg
+- Link to v1: https://lore.kernel.org/r/20240122-topic-sm8550-upstream-pcie-its-v1-1-aff5d0d7d6dd@linaro.org
+---
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index ee1ba5a8c8fc..9860bda3be1d 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -1742,6 +1742,9 @@ pcie0: pcie@1c00000 {
+ 					<&gem_noc MASTER_APPSS_PROC 0 &cnoc_main SLAVE_PCIE_0 0>;
+ 			interconnect-names = "pcie-mem", "cpu-pcie";
+ 
++			/* Entries are reversed due to the unusual ITS DeviceID encoding */
++			msi-map = <0x0 &gic_its 0x1401 0x1>,
++				  <0x100 &gic_its 0x1400 0x1>;
+ 			iommu-map = <0x0   &apps_smmu 0x1400 0x1>,
+ 				    <0x100 &apps_smmu 0x1401 0x1>;
+ 
+@@ -1838,6 +1841,9 @@ pcie1: pcie@1c08000 {
+ 					<&gem_noc MASTER_APPSS_PROC 0 &cnoc_main SLAVE_PCIE_1 0>;
+ 			interconnect-names = "pcie-mem", "cpu-pcie";
+ 
++			/* Entries are reversed due to the unusual ITS DeviceID encoding */
++			msi-map = <0x0 &gic_its 0x1481 0x1>,
++				  <0x100 &gic_its 0x1480 0x1>;
+ 			iommu-map = <0x0   &apps_smmu 0x1480 0x1>,
+ 				    <0x100 &apps_smmu 0x1481 0x1>;
+ 
+
+---
+base-commit: 6613476e225e090cc9aad49be7fa504e290dd33d
+change-id: 20240122-topic-sm8550-upstream-pcie-its-06f4b61dfe9d
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
 
 
