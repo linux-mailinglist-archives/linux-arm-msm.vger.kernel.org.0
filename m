@@ -1,226 +1,287 @@
-Return-Path: <linux-arm-msm+bounces-7745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02B95835F1A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 11:07:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A3D1D835F21
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 11:08:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7BCE628770B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 10:07:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5479D284A11
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 10:08:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8E943A1C1;
-	Mon, 22 Jan 2024 10:07:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DEBA3A1A1;
+	Mon, 22 Jan 2024 10:08:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OG0f6K9+"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="E9pcFos/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EED439FEB;
-	Mon, 22 Jan 2024 10:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D4F3A8D6;
+	Mon, 22 Jan 2024 10:08:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705918058; cv=none; b=QZSZhDz9WgNpAxE0inXJE/Uvae+mo6wEN9RLSb7iAezGA97PKgsOQ3fZRn6zQhA6EAj5u+HfkBcq2pOJSUNqmkBRWFcCazxDbh61N7QkRXLePTw/lePAl2/zBGD983KSMhA7ewiQBwBIycyJic7qg8wAZEmx8KlYWrmZaayjfUs=
+	t=1705918083; cv=none; b=EFugx26yTK8jkWVcb/VfkD7Gtt7NUSHYu6iHepOmr8rDaUt9akoM9rlIFFLZxjMzLHYeuHP9KgXzXuvlR4Xarqi5Ey4/jKAVd2Dmm9U3pOozqWoyIQ2FO3gz/ZOBJO1sbrgL6eDpTPcpeXEFNvRjKsAesUllLcmcZWJhN1OxrVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705918058; c=relaxed/simple;
-	bh=0DBCtBL7EIQT2jBc+2uIH7Ya0F0CfhR/U4M8QK0l2zQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=jbxdbNku1oHTGNl+qRHokns26DjAgtyC4MbmFe00GSxGZL1BPs8KE3A1DKApWpKVNvMl7NRR5hYMGz2mYvesD9Lxeow0i/64yXQxrCRG2vL+E8vf1uTXp1TZMifl2J28vxX40ibuxdEYud/tDO2ZWu7F7/xqwUANZ5/89tpVFY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OG0f6K9+; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1705918083; c=relaxed/simple;
+	bh=ag+hYxu/A66ScY4Oq63gf3CBp+nUvvToL/T0NXkJCbg=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=lBZYpcYWbYs6UxB+kHp/XfmIIihNFCCW+FkWjvocFsyTU8f3hoTNRob2iM5cvwU8STLwGX93H/t6hGEnAyjYx39dP/q2aD+7oBhio7pJhThCdmVhB3UOcV64oadLqgiRV2nM01YraNi1Z/UCmsUh8IS3MgH/XUR7pGm561xWl2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=E9pcFos/; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40M5brQI028656;
-	Mon, 22 Jan 2024 10:07:25 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40M4qCa7029725;
+	Mon, 22 Jan 2024 10:07:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=C/vkJQ/dVUcxOvXvJM0Z+onrH+j+Sst7yDaKR3InxDY=; b=OG
-	0f6K9+9hUXEorDjkYrkxoF1fdAHr7iQrAH82gOHnJwdJad2ESCBUgLaeE77aqxF3
-	z2S2FvBq5Z+O6MjB3OaFPC2jpqss3t+NKsYKmItDd5l73ESgtW+Y3MPICegflLRv
-	nmBoGHgq28G4ep/wc/CNfL8GODnPlzjGqIyO5WdlRVgTKG2X76LteIyvhOHPdDzW
-	Q5KfQuGI05kXp0nF1txktrUIaS6I+nx0pBsjhoswPFzKlXo4eP0udHgfmSdPySG7
-	8dObQ098YhzN20TmfpVFVdHVM0m+xzqlmlUABgkS8QrlvPQzGL3r9dCnWyF3+1yw
-	20OsKnVcra+cipViU3zA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vr54wum0b-1
+	from:to:cc:subject:date:message-id:mime-version:content-type; s=
+	qcppdkim1; bh=5lALCKMEPv+nYV7+TcuQFNqiCA6mPBQQy2LrDk4B1+c=; b=E9
+	pcFos/SFtkTKzUHCtmALyk6/mUcnJ2Rx3smIoS5DnfVbaRO4j3SbefIB3O+msBfy
+	vkWLPQXZJMK93T0x64tNtFVGuRvx0lkKS2h8zr3qMVYCDdfQuiFw94axxUuUkWQg
+	7KImrJlaaf9dyUllyOVbXMx6A7wAinI3232hoak7tfL6iaFmdmlqCToPDT4ZhN/W
+	c8FpOzIBot37OV3jln3eR/Cs5HGZihwUHBp1IZfU8sfAvgn8y/eRyQqRUxVsyFmk
+	ZFoZp00G0XhQntH0Lrv3X2uYV0iOZ973V8UGCd6s7GMFm0rjSmj8dUYHC/AvfqwF
+	LULwBiFIL3wK09GjgCSw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vr7fd3fqu-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jan 2024 10:07:25 +0000 (GMT)
+	Mon, 22 Jan 2024 10:07:54 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40MA7OlM029669
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40MA7r52021190
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jan 2024 10:07:24 GMT
-Received: from [10.216.25.125] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 22 Jan
- 2024 02:07:17 -0800
-Message-ID: <391f8f48-d1f5-702d-20d4-ae8b8a7ace58@quicinc.com>
-Date: Mon, 22 Jan 2024 15:37:14 +0530
+	Mon, 22 Jan 2024 10:07:53 GMT
+Received: from hu-priyjain-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Mon, 22 Jan 2024 02:07:49 -0800
+From: Priyansh Jain <quic_priyjain@quicinc.com>
+To: Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath
+	<thara.gopinath@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad
+ Dybcio" <konrad.dybcio@linaro.org>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+        <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC: <quic_manafm@quicinc.com>, <quic_priyjain@quicinc.com>
+Subject: [PATCH] thermal/drivers/tsens: Add suspend to RAM support for tsens
+Date: Mon, 22 Jan 2024 15:37:26 +0530
+Message-ID: <20240122100726.16993-1-quic_priyjain@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 2/2] dt-bindings: hwinfo: Add Qualcomm's board-id types
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>
-CC: <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>,
-        Elliot Berman
-	<quic_eberman@quicinc.com>
-References: <1705749649-4708-1-git-send-email-quic_amrianan@quicinc.com>
- <1705749649-4708-3-git-send-email-quic_amrianan@quicinc.com>
- <54426665-90c5-4355-a174-f512004e11e5@linaro.org>
-Content-Language: en-US
-From: Amrit Anand <quic_amrianan@quicinc.com>
-In-Reply-To: <54426665-90c5-4355-a174-f512004e11e5@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: _nwZ8vsPmPDLgjgNQrNUDMbBvQBAACKm
-X-Proofpoint-GUID: _nwZ8vsPmPDLgjgNQrNUDMbBvQBAACKm
+X-Proofpoint-GUID: LRKvspd8roNNeU41nDiCVa7lb7KEq7BW
+X-Proofpoint-ORIG-GUID: LRKvspd8roNNeU41nDiCVa7lb7KEq7BW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-01-21_04,2024-01-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 mlxlogscore=999 clxscore=1015 suspectscore=0 mlxscore=0
- adultscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 malwarescore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401220072
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ priorityscore=1501 lowpriorityscore=0 mlxlogscore=999 mlxscore=0
+ phishscore=0 adultscore=0 malwarescore=0 clxscore=1011 suspectscore=0
+ impostorscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2311290000 definitions=main-2401220072
 
+Add suspend callback support for tsens which disables tsens interrupts
+in suspend to RAM callback.
+Add resume callback support for tsens which reinitializes tsens hardware
+and enables back tsens interrupts in resume callback.
 
-On 1/20/2024 7:02 PM, Konrad Dybcio wrote:
-> On 20.01.2024 12:20, Amrit Anand wrote:
->> Qualcomm based DT uses two or three different identifiers. The SoC
->> based idenfier which signifies chipset and the revision for those
->> chipsets. The board based identifier is used to distinguish different
->> boards (e.g. IDP, MTP) along with the different types of same boards.
->> The PMIC attached to the board can also be used as a identifier for
->> device tree.
->>
->> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
->> Signed-off-by: Amrit Anand <quic_amrianan@quicinc.com>
->> ---
->>   .../devicetree/bindings/hwinfo/qcom,board-id.yaml  | 86 ++++++++++++++++++++++
->>   include/dt-bindings/arm/qcom,ids.h                 | 68 +++++++++++++++--
->>   2 files changed, 146 insertions(+), 8 deletions(-)
->>   create mode 100644 Documentation/devicetree/bindings/hwinfo/qcom,board-id.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/hwinfo/qcom,board-id.yaml b/Documentation/devicetree/bindings/hwinfo/qcom,board-id.yaml
->> new file mode 100644
->> index 0000000..807f134
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/hwinfo/qcom,board-id.yaml
->> @@ -0,0 +1,86 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/hwinfo/qcom,board-id.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: QCOM Board Identifier for Devicetree Selection
->> +
->> +maintainers:
->> +  - Amrit Anand <quic_amrianan@quicinc.com>
->> +  - Elliot Berman <quic_eberman@quicinc.com>
->> +
->> +description: |
-> The '|'s are unnecessary in both commits, IIRC they're used for
-> preserving formatting which we don't really need for non-styled
-> plaintext
-Sure, will do.
->> +  Qualcomm uses two and sometimes three hardware identifiers to describe
->> +  its boards
->> +      - a SoC identifier is used to match chipsets (e.g. sm8550 vs sm8450)
->> +      - a board identifier is used to match board form factor (e.g. MTP, QRD,
->> +        ADP, CRD)
->> +      - a PMIC identifier is occasionally used when different PMICs are used
->> +        for a given board/SoC combination.
->> +  Each field and helper macros are defined at::
->> +      - include/dt-bindings/arm/qcom,ids.h
->> +
->> +  For example,
->> +    / {
->> +        #board-id-cells = <2>;
->> +        board-id = <456 0>, <457 0>, <10 0>;
->> +        board-id-types = "qcom,soc-id", "qcom,soc-id", "qcom,board-id";
->> +     }
->> +
->> +allOf:
->> +  - $ref: board-id.yaml#
->> +
->> +properties:
->> +  board-id:
->> +    minItems: 2
-> I believe some older platforms match exclusively based on socid, so
-> perhaps 1 would be okay as well.
->
-> [...]
+Signed-off-by: Priyansh Jain <quic_priyjain@quicinc.com>
+---
+ drivers/thermal/qcom/tsens-v2.c |  2 +
+ drivers/thermal/qcom/tsens.c    | 93 +++++++++++++++++++++++++++++++--
+ drivers/thermal/qcom/tsens.h    |  7 +++
+ 3 files changed, 98 insertions(+), 4 deletions(-)
 
-Ok, considering legacy targets we can make it 1.
-
-But i think ideally it should always be recommended to have a board ID 
-associated with a SoC ID, correct me if my understanding is wrong.
-
->> +examples:
->> +   - |
->> +     #include <dt-bindings/arm/qcom,ids.h>
->> +     / {
->> +         model = "Qualcomm Technologies, Inc. sc7280 IDP SKU1 platform";
->> +         compatible = "qcom,sc7280-idp", "google,senor", "qcom,sc7280";
->> +
->> +         #board-id-cells = <2>;
->> +         board-id = <QCOM_SOC_ID(SC7280) QCOM_SOC_REVISION(1)>,
->> +                    <QCOM_SOC_ID(SC7280) QCOM_SOC_REVISION(2)>,
->> +                    <QCOM_BOARD_ID(IDP, 1, 0) QCOM_BOARD_SUBTYPE(UFS, ANY, 1)>;
->> +         board-id-types = "qcom,soc-id",
->> +                          "qcom,soc-id",
->> +                          "qcom,board-id";
-> So, would the matching here would be:
->
-> loop over disctinct board-id-types
-> 	check if there's at least 1 match for all of them
-> 		use this dtb if that's the case
->
-> stop booting / "best guess match"
->
-> ?
->
-> [...]
-
-Yes, But the "if" checking would have preference in place.
-The preference logic would look something like this,
-
-First will check for SoC-ID, if we have an exact match for SoC-ID then 
-will proceed for board-ID match. Otherwise the DT would be discarded.
-Once (exact) board-ID found, will proceed for subtype , pmic and so on.
-Exact match and best match logic is used. Parameters like SoC-ID, 
-board-ID are required to be best matched. Other few fields follow best 
-match logic and best of the DT can be picked.
-
->> +#define QCOM_BOARD_ID_MTP		0x8
->> +#define QCOM_BOARD_ID_DRAGONBOARD	0x10
->> +#define QCOM_BOARD_ID_QRD		0x11
->> +#define QCOM_BOARD_ID_HDK		0x1F
->> +#define QCOM_BOARD_ID_ATP		0x21
->> +#define QCOM_BOARD_ID_IDP		0x22
->> +#define QCOM_BOARD_ID_SBC		0x24
->> +#define QCOM_BOARD_ID_QXR		0x26
->> +#define QCOM_BOARD_ID_CRD		0x28
-> Missing ADP/QCP/Ride (if they're separate)
-
-Sure, will update. Would need to work with teams.
-
-Thanks,
-Amrit.
+diff --git a/drivers/thermal/qcom/tsens-v2.c b/drivers/thermal/qcom/tsens-v2.c
+index 29a61d2d6ca3..1b74db6299c4 100644
+--- a/drivers/thermal/qcom/tsens-v2.c
++++ b/drivers/thermal/qcom/tsens-v2.c
+@@ -107,6 +107,8 @@ static const struct reg_field tsens_v2_regfields[MAX_REGFIELDS] = {
+ static const struct tsens_ops ops_generic_v2 = {
+ 	.init		= init_common,
+ 	.get_temp	= get_temp_tsens_valid,
++	.suspend	= tsens_suspend_common,
++	.resume		= tsens_resume_common,
+ };
+ 
+ struct tsens_plat_data data_tsens_v2 = {
+diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+index 6d7c16ccb44d..603ccb91009d 100644
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -17,6 +17,7 @@
+ #include <linux/pm.h>
+ #include <linux/regmap.h>
+ #include <linux/slab.h>
++#include <linux/suspend.h>
+ #include <linux/thermal.h>
+ #include "../thermal_hwmon.h"
+ #include "tsens.h"
+@@ -1153,7 +1154,7 @@ static const struct thermal_zone_device_ops tsens_of_ops = {
+ };
+ 
+ static int tsens_register_irq(struct tsens_priv *priv, char *irqname,
+-			      irq_handler_t thread_fn)
++			      irq_handler_t thread_fn, int *irq_num)
+ {
+ 	struct platform_device *pdev;
+ 	int ret, irq;
+@@ -1169,6 +1170,7 @@ static int tsens_register_irq(struct tsens_priv *priv, char *irqname,
+ 		if (irq == -ENXIO)
+ 			ret = 0;
+ 	} else {
++		*irq_num = irq;
+ 		/* VER_0 interrupt is TRIGGER_RISING, VER_0_1 and up is ONESHOT */
+ 		if (tsens_version(priv) == VER_0)
+ 			ret = devm_request_threaded_irq(&pdev->dev, irq,
+@@ -1193,6 +1195,85 @@ static int tsens_register_irq(struct tsens_priv *priv, char *irqname,
+ 	return ret;
+ }
+ 
++static int tsens_reinit(struct tsens_priv *priv)
++{
++	unsigned long flags;
++
++	spin_lock_irqsave(&priv->ul_lock, flags);
++
++	/* in VER_0 TSENS need to be explicitly enabled */
++	if (tsens_version(priv) == VER_0)
++		regmap_field_write(priv->rf[TSENS_EN], 1);
++
++	/*
++	 * Re-enable the watchdog, unmask the bark.
++	 * Disable cycle completion monitoring
++	 */
++	if (priv->feat->has_watchdog) {
++		regmap_field_write(priv->rf[WDOG_BARK_MASK], 0);
++		regmap_field_write(priv->rf[CC_MON_MASK], 1);
++	}
++
++	/* Re-enable interrupts */
++	if (tsens_version(priv) >= VER_0_1)
++		tsens_enable_irq(priv);
++
++	spin_unlock_irqrestore(&priv->ul_lock, flags);
++
++	return 0;
++}
++
++int tsens_suspend_common(struct tsens_priv *priv)
++{
++	switch (pm_suspend_target_state) {
++	case PM_SUSPEND_MEM:
++		if (priv->combo_irq > 0) {
++			disable_irq_nosync(priv->combo_irq);
++			disable_irq_wake(priv->combo_irq);
++		}
++
++		if (priv->uplow_irq > 0) {
++			disable_irq_nosync(priv->uplow_irq);
++			disable_irq_wake(priv->uplow_irq);
++		}
++
++		if (priv->crit_irq > 0) {
++			disable_irq_nosync(priv->crit_irq);
++			disable_irq_wake(priv->crit_irq);
++		}
++		break;
++	default:
++		break;
++	}
++	return 0;
++}
++
++int tsens_resume_common(struct tsens_priv *priv)
++{
++	switch (pm_suspend_target_state) {
++	case PM_SUSPEND_MEM:
++		tsens_reinit(priv);
++		if (priv->combo_irq > 0) {
++			enable_irq(priv->combo_irq);
++			enable_irq_wake(priv->combo_irq);
++		}
++
++		if (priv->uplow_irq > 0) {
++			enable_irq(priv->uplow_irq);
++			enable_irq_wake(priv->uplow_irq);
++		}
++
++		if (priv->crit_irq > 0) {
++			enable_irq(priv->crit_irq);
++			enable_irq_wake(priv->crit_irq);
++		}
++		break;
++	default:
++		break;
++	}
++	return 0;
++}
++
+ static int tsens_register(struct tsens_priv *priv)
+ {
+ 	int i, ret;
+@@ -1227,15 +1308,19 @@ static int tsens_register(struct tsens_priv *priv)
+ 
+ 	if (priv->feat->combo_int) {
+ 		ret = tsens_register_irq(priv, "combined",
+-					 tsens_combined_irq_thread);
++					 tsens_combined_irq_thread,
++					 &priv->combo_irq);
+ 	} else {
+-		ret = tsens_register_irq(priv, "uplow", tsens_irq_thread);
++		ret = tsens_register_irq(priv, "uplow",
++					 tsens_irq_thread,
++					 &priv->uplow_irq);
+ 		if (ret < 0)
+ 			return ret;
+ 
+ 		if (priv->feat->crit_int)
+ 			ret = tsens_register_irq(priv, "critical",
+-						 tsens_critical_irq_thread);
++						 tsens_critical_irq_thread,
++						 &priv->crit_irq);
+ 	}
+ 
+ 	return ret;
+diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+index cb637fa289ca..268bf56105be 100644
+--- a/drivers/thermal/qcom/tsens.h
++++ b/drivers/thermal/qcom/tsens.h
+@@ -582,6 +582,11 @@ struct tsens_priv {
+ 	const struct reg_field		*fields;
+ 	const struct tsens_ops		*ops;
+ 
++	/* For saving irq number to re-use later */
++	int				uplow_irq;
++	int				crit_irq;
++	int				combo_irq;
++
+ 	struct dentry			*debug_root;
+ 	struct dentry			*debug;
+ 
+@@ -634,6 +639,8 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *pt1, u32 *pt2, u32 mo
+ int init_common(struct tsens_priv *priv);
+ int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp);
+ int get_temp_common(const struct tsens_sensor *s, int *temp);
++int tsens_suspend_common(struct tsens_priv *priv);
++int tsens_resume_common(struct tsens_priv *priv);
+ 
+ /* TSENS target */
+ extern struct tsens_plat_data data_8960;
+-- 
+2.17.1
 
 
