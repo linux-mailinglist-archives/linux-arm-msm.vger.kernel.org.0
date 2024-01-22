@@ -1,298 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-7863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A8E083713E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 19:57:08 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4DFD8372AD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 20:35:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1AF752879B0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 18:56:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 96B57B29355
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 19:03:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39700495E3;
-	Mon, 22 Jan 2024 18:22:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACDD35B5B2;
+	Mon, 22 Jan 2024 18:44:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="bzOYzRYo"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="c8faY7MP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468C5495DF
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 18:22:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C5B56468;
+	Mon, 22 Jan 2024 18:44:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705947728; cv=none; b=Am5U+x9cK+83vPjkLr5BXc4w68W14PoIlbTaMivfFHwZOHCxZyu9UktF3SWXLGUkBUWXJZIx6yt6L44i5koLwHt+4cuxFfAge21uBDADeDTKH2zyUaf2ETvsg7uXBw4Sp5U2uetbhheJv/fCgrX3oeF2z4KZbpP1xQckhM2Zbpo=
+	t=1705949067; cv=none; b=iQDdPUelLE4oDziCkDZK9PsfqulhDeF3KJiOygNU6mXtZflX6prOPoxe+/h+KS+zqg6Y/B5w94ToNU6xKYeLtxDfyY9J6k2Zrw/blBsof6BB+6FkuNj+4ALK8X24+q9SsfT7kVSoiOxTJw0dIYEUuHwsMgWpC1011Q+tW99b+LY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705947728; c=relaxed/simple;
-	bh=LSfDWHWDoPCY7i+S7OjpOzqOfKjn9AL5nhhPZhwbX2I=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=k2mvubLSY4/fo0FYUOJ4/x9mkMDZ8vqvURD8BEQY3wDU6IULFP/ipfdLDE95aw8tprP8Kf0Q08NQqz3fCqkRtlerc773xJtYY0CI20oGd9iMW+tr7Wvf2T3XN12oLavcimL78sSUA5DCBttKqdTpE9hdXqgZCtrjc3byS/v/jOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=bzOYzRYo; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3387ef9fc62so3316445f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 10:22:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1705947724; x=1706552524; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=hD656VMGPdcFDqM7HQuNuxK5UnGwzOpStyHwjoITBkk=;
-        b=bzOYzRYoeyI+MgpjLPj8b1bp5Jo9qQ2KYzVX59nX4fAK7RY0jXPwKleBgemYgvkma7
-         0LyUxoKsQRGqDoF5jiwboF6bd2dsLbBX/hKdQOUfp12E7qgtwNBnBfOWIrLknja2tEpt
-         0uGxUGEPFx1NjmkazYiyi8YmAebD+SUfEBJoSCDdM8EMxA4tXQfs9j2AzV1Mws6Ymio3
-         DYMk9cxnuIZykpLDaPseOaso3I1/2K1poQOGqtS406nzoutvv48ky3R8id0Plr3Npj9U
-         vbJuOwIC27p5/1V4bUMNGV0Z7Vm27i5WjltKOLDXf0y94QFNdzSqHv2A6HQfa6KMXcUa
-         vmjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705947724; x=1706552524;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hD656VMGPdcFDqM7HQuNuxK5UnGwzOpStyHwjoITBkk=;
-        b=R11GXBI44mj5qrocDlfhmo7KOukEMP7jWXTEXpgNQR/h/sbc+itF2w5LJfT4JlNJYT
-         KtBEVD+QuVMXi1bAl63WksNOkrM4j01Oeqtr6utdB9A9glQh8PiAo+BAidh6D/oxTZCs
-         AaUFHYSBIvUAFNokIGRs30sZ0Mf0IPSr4IHVHY/6n6QZpkD2n8h0kVNyojhYus2sdCAN
-         QrTv7rf213HpPfebPW3gGlgmHigjI2v9yrd88+3BOn+T5BKq8ZQpL/qKHO6EYjClfBBB
-         BsbADtk4eSwSveLr1XNPoI4CTQSWlVsbaWnyW3gS33iPk+e/JMgqye8qhTmOx4Y1x1nY
-         vbPw==
-X-Gm-Message-State: AOJu0YxVxBL2Db1GXqfUO1M7sPGus9UQU/k+oicgJelljuePKUo/OR+E
-	f1vuNNR6ifF46VbkFP5eGJWP782vC6lUIFIXPR2aahL/TljGapjRCNSL9IZfrQs=
-X-Google-Smtp-Source: AGHT+IFxPoSiMcT4/JEGmI8dgXHEZUwZ8JMZUzniN5YAJO4EACKAzrcTf8uSlRJa/3r9rq6pgPrVWw==
-X-Received: by 2002:a5d:4605:0:b0:336:7794:4b9a with SMTP id t5-20020a5d4605000000b0033677944b9amr2702554wrq.33.1705947724291;
-        Mon, 22 Jan 2024 10:22:04 -0800 (PST)
-Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:92a0:6172:d229:1898])
-        by smtp.gmail.com with ESMTPSA id cp9-20020a056000400900b003392ded41c7sm5026003wrb.39.2024.01.22.10.22.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Jan 2024 10:22:03 -0800 (PST)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Alex Elder <elder@linaro.org>,
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [RFC] arm64: dts: qcom: qrb5165-rb5: model the PMU of the QCA6391
-Date: Mon, 22 Jan 2024 19:21:58 +0100
-Message-Id: <20240122182158.69183-1-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.40.1
+	s=arc-20240116; t=1705949067; c=relaxed/simple;
+	bh=1WCIOYu6o9ZNAeIt8H5e5xO3cgcftRHkmCVeQPtUoRw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=uhBUs5xCDoLK0kK2pHFNJ0sXpunE7CF+gvyslcp4aSIHsuFU/uoVBEyZQVmPBafsZQ+vbKsTjoerFtUY2Tc7SSdk3GSrZH2ptb8AxRHDab3N+cOUmoAD+nPaVPAWl+sAYTtiyanSZfAzKcn7fdChgjfKP25FA5I7PzOpNrOAR9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=c8faY7MP; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40MGx4Fq003574;
+	Mon, 22 Jan 2024 18:44:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=vnOCaYTHwMn9FwULO/VcAeFAY60b2pA3nzOOeXWRiZY=; b=c8
+	faY7MPpx6gu48CfltjP6hWpWJU8jsFLqIkbjOwBsVTA8C8na99fzG9bo9n7oU0UN
+	kkVhazR5nNUa6KtZc01ieW1b+SoM5kEchNgGrh2xs0VjcD/JT7IsLdSC+YvNSQ7q
+	6xi+ATRdQVzm6p/JQogbNyiyiRoWD4afev2m28JJi6+482D44rjGFy1cjWLjSSbK
+	CYESWov8ozcqjJM8KdjaGw6/H9t7CtGuTIxsTL5sPTDHJiVNIBQ1ys5kf3Td3DYT
+	oZpbbfG8GlrJS1Zt95Hwdan0lvzeb3MVeYEMNYpsywN08Is/loiKj7AGeeZpMbvt
+	pQoPNVDmmVtpM34Heanw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vspw8s92a-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 22 Jan 2024 18:44:12 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40MIiBas019057
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 22 Jan 2024 18:44:11 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 22 Jan
+ 2024 10:44:10 -0800
+Message-ID: <52479377-ff61-7537-e4aa-064ab4a77c03@quicinc.com>
+Date: Mon, 22 Jan 2024 11:44:09 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH 0/2] Remove QDF2xxx pinctrl drivers
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Catalin
+ Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Marijn
+ Suijten <marijn.suijten@somainline.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
+References: <20240122-topic-qdf_cleanup_pinctrl-v1-0-0c619ea25091@linaro.org>
+ <8c9b157b-4698-70a3-57b7-c588998eeda7@quicinc.com>
+ <CAA8EJprDk=HnqWJ_F5zdUKMPFPpx1RD9KN-KQP9yopP6LMh_fw@mail.gmail.com>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <CAA8EJprDk=HnqWJ_F5zdUKMPFPpx1RD9KN-KQP9yopP6LMh_fw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: aPWlgGktUCnoyDRfg-opDD3bBqYhymSU
+X-Proofpoint-ORIG-GUID: aPWlgGktUCnoyDRfg-opDD3bBqYhymSU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-22_08,2024-01-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
+ adultscore=0 mlxscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
+ clxscore=1011 suspectscore=0 impostorscore=0 mlxlogscore=712
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401220130
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 1/22/2024 10:56 AM, Dmitry Baryshkov wrote:
+> On Mon, 22 Jan 2024 at 19:43, Jeffrey Hugo <quic_jhugo@quicinc.com> wrote:
+>>
+>> On 1/22/2024 4:57 AM, Konrad Dybcio wrote:
+>>> The SoC line was never productized, remove the maintenance burden.
+>>>
+>>> Compile-tested only.
+>>>
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> ---
+>>> Konrad Dybcio (2):
+>>>         pinctrl: qcom: Remove QDF2xxx support
+>>>         arm64: defconfig: Remove QDF24XX pinctrl
+>>>
+>>>    arch/arm64/configs/defconfig           |   1 -
+>>>    drivers/pinctrl/qcom/Kconfig.msm       |   7 --
+>>>    drivers/pinctrl/qcom/Makefile          |   1 -
+>>>    drivers/pinctrl/qcom/pinctrl-qdf2xxx.c | 164 ---------------------------------
+>>>    4 files changed, 173 deletions(-)
+>>> ---
+>>> base-commit: 319fbd8fc6d339e0a1c7b067eed870c518a13a02
+>>> change-id: 20240122-topic-qdf_cleanup_pinctrl-98e17cdb375b
+>>>
+>>> Best regards,
+>>
+>> NACK.
+>>
+>> This was productized, there are some out in the wild, and the platform
+>> is still in (limited) use.
+>>
+>> I'd like to see support hang around for a few more years yet.
+> 
+> The problem is that... its support is pretty strange. I can see
+> pinctrl, ethernet and quirks for the platform in GIC-ITS and PL011
+> drivers. Is this enough to get the platform into the useful state? I
+> can imagine that "QCOM2430" ACPI handle was used for USB hosts on that
+> platform, but I don't remember when we last tested DWC3 with the ACPI.
+> 
+> So, all this boils down to the question whether mainline (or something
+> close by, LTS for example) is actually used and tested on these
+> devices?
 
-I'm limiting the audience of this compared to the PCI power sequencing
-series as I wanted to run the DT part by the maintainers before I commit
-to a doomed effort.
+Its an ACPI system, so you won't see all of the fun DTisms of a MSM chip.
 
-Here is the DT representation of the QCA6390's PMU with its inputs and
-outputs. If I were to implement the pwrseq framework that would be able
-to assign the relevant pwrseq data to the consumer based on the actual
-regulators and not abstract bt-pwrseq or wlan-pwrseq properties - would
-that fly with you?
+The platform was fully functional upstream, and had an Ubuntu 
+certification.  I run Ubuntu on the two that I have in my office.  I 
+haven't strictly checked out mainline in a while, but I could.  I still 
+have access to the documentation.
 
-We'd need to deprecate the existing BT bindings but unfortunately they
-are already described as consuming the host PMIC regulators in bindings.
+There is a small, but active set of users including myself.  From what 
+I've seen, they've been happy with things.
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 129 +++++++++++++++++++++--
- arch/arm64/boot/dts/qcom/sm8250.dtsi     |  10 ++
- 2 files changed, 128 insertions(+), 11 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index cd0db4f31d4a..c9b1600c57ef 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -108,6 +108,88 @@ lt9611_3v3: lt9611-3v3 {
- 		regulator-always-on;
- 	};
- 
-+	qca6390_pmu: pmu@0 {
-+		compatible = "qcom,qca6390-pmu";
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&bt_en_state>, <&wlan_en_state>;
-+
-+		vddaon-supply = <&vreg_s6a_0p95>;
-+		vddpmu-supply = <&vreg_s2f_0p95>;
-+		vddrfa1-supply = <&vreg_s2f_0p95>;
-+		vddrfa2-supply = <&vreg_s8c_1p3>;
-+		vddrfa3-supply = <&vreg_s5a_1p9>;
-+		vddpcie1-supply = <&vreg_s8c_1p3>;
-+		vddpcie2-supply = <&vreg_s5a_1p9>;
-+		vddio-supply = <&vreg_s4a_1p8>;
-+
-+		bt-enable-gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
-+		wifi-enable-gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
-+		swctrl-gpios = <&tlmm 124 GPIO_ACTIVE_HIGH>;
-+
-+		regulators {
-+			vreg_pmu_rfa_cmn: ldo0 {
-+				regulator-name = "vreg_pmu_rfa_cmn";
-+				regulator-min-microvolt = <760000>;
-+				regulator-max-microvolt = <840000>;
-+			};
-+
-+			vreg_pmu_aon_0p59: ldo1 {
-+				regulator-name = "vreg_pmu_aon_0p59";
-+				regulator-min-microvolt = <540000>;
-+				regulator-max-microvolt = <840000>;
-+			};
-+
-+			vreg_pmu_wlcx_0p8: ldo2 {
-+				regulator_name = "vreg_pmu_wlcx_0p8";
-+				regulator-min-microvolt = <760000>;
-+				regulator-max-microvolt = <840000>;
-+			};
-+
-+			vreg_pmu_wlmx_0p85: ldo3 {
-+				regulator-name = "vreg_pmu_wlmx_0p85";
-+				regulator-min-microvolt = <810000>;
-+				regulator-max-microvolt = <890000>;
-+			};
-+
-+			vreg_pmu_btcmx_0p85: ldo4 {
-+				regulator-name = "vreg_pmu_btcmx_0p85";
-+				regulator-min-microvolt = <810000>;
-+				regulator-max-microvolt = <890000>;
-+			};
-+
-+			vreg_pmu_rfa_0p8: ldo5 {
-+				regulator-name = "vreg_pmu_rfa_0p8";
-+				regulator-min-microvolt = <760000>;
-+				regulator-max-microvolt = <840000>;
-+			};
-+
-+			vreg_pmu_rfa_1p2: ldo6 {
-+				regulator-name = "vreg_pmu_rfa_1p2";
-+				regulator-min-microvolt = <1187000>;
-+				regulator-max-microvolt = <1313000>;
-+			};
-+
-+			vreg_pmu_rfa_1p7: ldo7 {
-+				regulator_name = "vreg_pmu_rfa_1p7";
-+				regulator-min-microvolt = <1710000>;
-+				regulator-max-microvolt = <1890000>;
-+			};
-+
-+			vreg_pmu_pcie_0p9: ldo8 {
-+				regulator_name = "vreg_pmu_pcie_0p9";
-+				regulator-min-microvolt = <870000>;
-+				regulator-max-microvolt = <970000>;
-+			};
-+
-+			vreg_pmu_pcie_1p8: ldo9 {
-+				regulator_name = "vreg_pmu_pcie_1p8";
-+				regulator-min-microvolt = <1710000>;
-+				regulator-max-microvolt = <1890000>;
-+			};
-+		};
-+	};
-+
- 	thermal-zones {
- 		conn-thermal {
- 			polling-delay-passive = <0>;
-@@ -734,6 +816,24 @@ &pcie0_phy {
- 	vdda-pll-supply = <&vreg_l9a_1p2>;
- };
- 
-+&pcieport0 {
-+	wifi@0 {
-+		compatible = "pci17cb,1101";
-+		reg = <0x10000 0x0 0x0 0x0 0x0>;
-+
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
-+		vddbtcmx-supply = <&vreg_pmu_btcmx_0p85>;
-+		vddrfa0-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa2-supply = <&vreg_pmu_rfa_1p7>;
-+		vddpcie0-supply = <&vreg_pmu_pcie_0p9>;
-+		vddpcie1-supply = <&vreg_pmu_pcie_1p8>;
-+	};
-+};
-+
- &pcie1 {
- 	status = "okay";
- };
-@@ -1303,6 +1403,14 @@ sdc2_card_det_n: sd-card-det-n-state {
- 		function = "gpio";
- 		bias-pull-up;
- 	};
-+
-+	wlan_en_state: wlan-default-state {
-+		pins = "gpio20";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		output-low;
-+		bias-pull-up;
-+	};
- };
- 
- &uart6 {
-@@ -1311,17 +1419,16 @@ &uart6 {
- 	bluetooth {
- 		compatible = "qcom,qca6390-bt";
- 
--		pinctrl-names = "default";
--		pinctrl-0 = <&bt_en_state>;
--
--		enable-gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
--
--		vddio-supply = <&vreg_s4a_1p8>;
--		vddpmu-supply = <&vreg_s2f_0p95>;
--		vddaon-supply = <&vreg_s6a_0p95>;
--		vddrfa0p9-supply = <&vreg_s2f_0p95>;
--		vddrfa1p3-supply = <&vreg_s8c_1p3>;
--		vddrfa1p9-supply = <&vreg_s5a_1p9>;
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
-+		vddbtcmx-supply = <&vreg_pmu_btcmx_0p85>;
-+		vddrfa0-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa2-supply = <&vreg_pmu_rfa_1p7>;
-+		vddpcie0-supply = <&vreg_pmu_pcie_0p9>;
-+		vddpcie1-supply = <&vreg_pmu_pcie_1p8>;
- 	};
- };
- 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 760501c1301a..fef9c314ce55 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2197,6 +2197,16 @@ pcie0: pcie@1c00000 {
- 			dma-coherent;
- 
- 			status = "disabled";
-+
-+			pcieport0: pcie@0 {
-+				device_type = "pci";
-+				reg = <0x0 0x0 0x0 0x0 0x0>;
-+				#address-cells = <3>;
-+				#size-cells = <2>;
-+				ranges;
-+
-+				bus-range = <0x01 0xff>;
-+			};
- 		};
- 
- 		pcie0_phy: phy@1c06000 {
--- 
-2.40.1
-
+-Jeff
 
