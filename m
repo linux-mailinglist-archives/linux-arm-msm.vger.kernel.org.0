@@ -1,122 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-7747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7748-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C47DF835F2B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 11:10:32 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C6D2D835F55
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 11:19:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 62AA11F26478
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 10:10:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 584ED1F2326D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 10:19:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88DDA39FFD;
-	Mon, 22 Jan 2024 10:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E7B63A262;
+	Mon, 22 Jan 2024 10:19:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="g0gTlvsO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hDZH8hZc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E443A1A3;
-	Mon, 22 Jan 2024 10:10:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AEA33A1BD
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 10:19:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705918222; cv=none; b=OUddZu/bxgo2eqYj08lwcRVS1uIhxM5ZM8C6Fm0sn2gciDjGv0Yq65oXty/BJqUzP+dPTM27Cm7Zh3TmAx3855ErOuYCCv8lIR5+NoCbogAp/o/UMqNtdbXZRpsKq3nDAsmoVEiHFCYFcowq50v0hrFG4EWl8jLtT/IYE00qMgs=
+	t=1705918768; cv=none; b=RyZnUPgYm9fBFfOxM2z01RBntJ56KzRi8hbctzXHX/paMnvC8Irhf5Zt3rpZTgQhosel6GMwDgfNNoao7ObHW9tekzRHani5MG87fJGnPZDQ6dkivmYITefErsw3/lfXQwKY/OSdUSgyU8MsyyYktJb6eGyutX1eRFUMboEMthA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705918222; c=relaxed/simple;
-	bh=PBOtkPIryD0bNegKqmqx/36FGFSN6iCMu/XYr0xn/xE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=JrrLu9adXhAZKMQpsHNKNGbiYAe+RlhH7boOQMiqPXXTm/QAlGQ6qO9xT0o5V1MP8atVECptNdVc3G627wRoRCkNwbFUQGWENG3LFiODJ9NOWfzRznYjkEGdibkgjK2N4yZG62cxb2cQWohyOQGxnnIzinRN6ne0r0mI5szMtDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=g0gTlvsO; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40M9tZsG009649;
-	Mon, 22 Jan 2024 10:10:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=Q/+GfaRYa9bykPxO1FU0xoaPYaPB0FIarp0Y35xl660=; b=g0
-	gTlvsOwMYsuCH5ODFMF5KenqMEbuSTlcEFaktipPWdnPGPig19+2Bw+HBX1z1jCN
-	ubE6Zy1ZDVjHPmgz2uh1W15e63elJrxVp191OT9VhjGOFXEN944v8B42Y3lfEyiR
-	d3aijHlQMyKaXscb6jDXi3TQD1Sx0FBEjjH1ujXfgtBTlrefpwJvadrx4Zsyp4A0
-	xY0/NolTMMnAtv8xOv/Ls7iuxCxvAIMuYR5zUgZbAP/J63BQEQqvIAyWZphbZvg4
-	yvwrsCvVxZUbuE+EcPElu7q13XJYAkY7ySTd4qzJbjEJX3qTQzpXMJxfvARjjuiE
-	SWCE5Xhyb2sYbdcYE6gw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vsn0wr68b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jan 2024 10:10:16 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40MAAFBB023958
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jan 2024 10:10:15 GMT
-Received: from [10.216.25.125] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 22 Jan
- 2024 02:10:08 -0800
-Message-ID: <f21bc259-45fa-d14b-a556-625b813287f4@quicinc.com>
-Date: Mon, 22 Jan 2024 15:40:04 +0530
+	s=arc-20240116; t=1705918768; c=relaxed/simple;
+	bh=7ew0NAPyibZscHi7tUqReuVpp5Uimj/jNK4i5Okdy1w=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=cZPVo0M9x/AIGJE+PpzJoXLwx/FJZMWNcW1Uw524Jq2qQZtzHFc3Ze8SG+4cLBbFxUX6iAagba2Ps8emLuuFfMoHohrQti+CbT7KNUuOHbnifm5fowk0THi1za3b+NqKx7Hgyp0WEhspuEbriXPmGaazllmZ+OFmD2Za2mQ9R7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hDZH8hZc; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3392b045e0aso1431188f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 02:19:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1705918764; x=1706523564; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=p5KCrRWR4ilF4vEoSC5VCKhwGShhqdS0j9kXD/3Vfb0=;
+        b=hDZH8hZcO4dZAxhic1vdeqfNr8S8aJcyAGDvYNDgS5OfiM4SWe4AptdH6PQqSjhGss
+         p9PhIu+yTEv/Vk26G79MrrH0Xm57PrxHGnZp6DMvTCTeOFTJRN0Oca+aLiWWiwtvda9e
+         fP2ShisCO3cTTgoHnvctJQGG/BKldTb29QeA+HE29ncgMs35egGlw8kqwTl1dXbyVv2V
+         1UbxlkgxGpjp7+gbbSOZzUtyoWT8oWXOxke4SJCmGnm0e3CjVryfWejlM3Mxy71Xl339
+         eZDq6pi0O4fUsvPZJ700tXPUYwIF3wbD7K213+E5sPAlgZLmL7AYu17VRaaPE19L6Biw
+         6mUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705918764; x=1706523564;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=p5KCrRWR4ilF4vEoSC5VCKhwGShhqdS0j9kXD/3Vfb0=;
+        b=SjrXvlitlPd6Uos/BgYDm5VtQUcsB8Ku3Cm8AtVLR8d6hIiAavjTYBkASx41TZP15P
+         IwZwJp41AepyRviDMry2S/abaN3gkg8swJeWXrBR1/YP5Xv+D17eUt0WTg4ENTLj8cez
+         Z2vArjktirg2CLfrwCtnpD/FjytNsrsQyqfZEMMSFxkSr0MHBZ8nbINEq6ziHH0cEpbn
+         EffrLTHYjvpP19k7+TMZnSoNcI96pQ4rE0YbeF7kZjhmZKzEURRVhic+m14Qiu439/CR
+         isJtHjWjpqx8ToDuGvab/+gIAJI/xE7UQIlrohA4n+9wxpO82QERHk/g7UEg8Xf4VLw0
+         IUnQ==
+X-Gm-Message-State: AOJu0YwwjcbEN8yZwruXslW5EtPmfmUxmqfr1Ip3oQ73uClahN5xfs38
+	jVpR/zU8Yc6x6af19mUOOBQMq9L6HsqrpnZexpokt+657OS5ZFbQQKUroAk3WuY=
+X-Google-Smtp-Source: AGHT+IHe4wXlSjtTn4jr/HiF9w2fGiO/kyyLg3woFILZwp1HItkxcNAd9zaJLjBSjvhxzWb8dh4bXQ==
+X-Received: by 2002:adf:ec05:0:b0:337:39c6:a48d with SMTP id x5-20020adfec05000000b0033739c6a48dmr2495036wrn.25.1705918764139;
+        Mon, 22 Jan 2024 02:19:24 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id q4-20020adfab04000000b00337d603fd01sm10396114wrc.66.2024.01.22.02.19.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Jan 2024 02:19:23 -0800 (PST)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 0/2] arm64: qcom: sm8550: add support for the SM8550-HDK
+ board
+Date: Mon, 22 Jan 2024 11:19:18 +0100
+Message-Id: <20240122-topic-sm8550-upstream-hdk8550-v1-0-bff7eb3a17eb@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 1/2] dt-bindings: hwinfo: Introduce board-id
-Content-Language: en-US
-To: Trilok Soni <quic_tsoni@quicinc.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>
-CC: <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>,
-        Elliot Berman
-	<quic_eberman@quicinc.com>
-References: <1705749649-4708-1-git-send-email-quic_amrianan@quicinc.com>
- <1705749649-4708-2-git-send-email-quic_amrianan@quicinc.com>
- <6e40dd60-884f-be23-0052-d14f7194f844@quicinc.com>
-From: Amrit Anand <quic_amrianan@quicinc.com>
-In-Reply-To: <6e40dd60-884f-be23-0052-d14f7194f844@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: YLj8zV_gYcLuZkKWc-w34w2Kb7XYieDq
-X-Proofpoint-GUID: YLj8zV_gYcLuZkKWc-w34w2Kb7XYieDq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-21_04,2024-01-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 phishscore=0 mlxscore=0 lowpriorityscore=0 spamscore=0
- mlxlogscore=605 bulkscore=0 clxscore=1015 suspectscore=0 malwarescore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401220072
+X-B4-Tracking: v=1; b=H4sIACZBrmUC/x3M3QpAQBBA4VfRXJva8RPrVeRCdjAJ2w5S8u42l
+ 9+5OA8oB2GFJnkg8CUq+xZBaQLD3G8To7hoyExWGCKLx+5lQF3rsjR4ej0C9yvObvlDbS1byit
+ 2hiA+fOBR7v/fdu/7Ae+DACpvAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1692;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=7ew0NAPyibZscHi7tUqReuVpp5Uimj/jNK4i5Okdy1w=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlrkEqDU5S9hf5alNl6YJGm698DwtFMj622jrhx2DZ
+ Y1B2aZOJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZa5BKgAKCRB33NvayMhJ0cgcEA
+ CeKDZ4/c4Zvu1/gfShtQOBt1m5KjG8d4zIU6ZNlzng52CjCCpFwXln9vvfiWoOsxpMx+YmtRh0MNEk
+ aaM7roJywNTPN6EkYqjoyx1dF7Sd0P0dngKVcvEixK3QtYnHM7z2sz55UMwaMgzYKbEwkcX3zRES8d
+ FoV7htavkUzRx8F8siLvRTCCK+BydTM/OdVLVJcfJ6gvuDpgBg/JIaO5Cka6ISln/oh449HwxaX2Zv
+ FEuSlebcgqyQXfVQTMRrklvgJtC3I2JVHgRgs26scWEPiqb//qC4ZGmaSIKYwYsAbraqsbNbZaIddF
+ rRXUi5cNbhCvVrAIWRJm4/3lV8ASs+dW/ppCpWOe+uukOTEXrUipCf9kPSXlvxaX2lkNtYqoc0MNYa
+ V1nAGdz1LhYz7iB6LhTkdbqH7psPDFCeCWGlmh131ZD7Jk/TTLm8k1cHiFBKKlIDWbWcta8XPxe0ld
+ HsvXQnGxJ21NEyDU7vwKwbEKP1z9KpgMJmIqzKIKSAnLXWB2S4GkH14uDSf9xwmJfYlXZIoJpxXtdP
+ B4kRKWpio/7F4AI0SErwYxRN2zjRvPgMK5QO9A/v3Tjb5dUasemKcpSeKbG6aW31XjeYtv3WZcbN+L
+ +u9/fQdTyFjJYYjWt9rlwnq3kjGDeRveTN+/8j5XTmojG4mLX3Qf678eErJw==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
+The SM8550-HDK is an embedded development platforms for the
+Snapdragon 8 Gen 2 SoC aka SM8550, with the followwing features:
+- Qualcomm SM8550 SoC
+- 16GiB On-board LPDDR5
+- On-board WiFi 7 + Bluetooth 5.3/BLE
+- On-board UFS4.0
+- M.2 Key B+M Gen3x2 PCIe Slot
+- HDMI Output
+- USB-C Connector with DP Almode & Audio Accessory mode
+- Micro-SDCard Slot
+- Audio Jack with Playback and Microphone
+- 2 On-board Analog microphones
+- 2 On-board Speakers
+- 96Boards Compatible Low-Speed and High-Speed connectors [1]
+- For Camera, Sensors and external Display cards
+- Compatible with the Linaro Debug board [2]
+- SIM Slot for Modem
+- Debug connectors
+- 6x On-Board LEDs
 
-On 1/21/2024 12:40 AM, Trilok Soni wrote:
-> On 1/20/2024 3:20 AM, Amrit Anand wrote:
->> From: Elliot Berman <quic_eberman@quicinc.com>
->>
->> Device manufacturers frequently ship multiple boards or SKUs under a
->> single software package. These software packages will ship multiple
->> devicetree blobs and require some mechanism to pick the correct DTB for
->> the board the software package was deployed. Introduce a common
->> definition for adding board identifiers to device trees. board-id
->> provides a mechanism for bootloaders to select the appropriate DTB which
->> is vendor/OEM-agnostic.
-> Please extend CC list to more architectures? linux-arm-kernel, risc-v etc; since
-> the proposal below is not specific to ARM but any architecture is using the
-> devicetree.
-Wouldn't devicetree@vger.kernel.org will have concern folks from all the 
-architectures?
-Please correct me.
+On-Board PMICs:
+- PMK8550 2.1
+- PM8550 2.0
+- PM8550VS 2.0 x4
+- PM8550VE 2.0
+- PM8550B 2.0
+- PMR735D 2.0
+- PM8010 1.1 x2
 
-Thanks,
-Amrit.
+Product Page: [3]
+
+Dependencies: None
+
+[1] https://www.96boards.org/specifications/
+[2] https://git.codelinaro.org/linaro/qcomlt/debugboard
+[3] https://www.lantronix.com/products/snapdragon-8-gen-2-mobile-hardware-development-kit/
+
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Neil Armstrong (2):
+      dt-bindings: arm: qcom: Document the HDK8550 board
+      arm64: dts: qcom: sm8550: add support for the SM8550-HDK board
+
+ Documentation/devicetree/bindings/arm/qcom.yaml |    1 +
+ arch/arm64/boot/dts/qcom/Makefile               |    1 +
+ arch/arm64/boot/dts/qcom/sm8550-hdk.dts         | 1291 +++++++++++++++++++++++
+ 3 files changed, 1293 insertions(+)
+---
+base-commit: 29a509493dd4da77c9109aa54cc4c145ca64ec23
+change-id: 20240119-topic-sm8550-upstream-hdk8550-899e9137ed01
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
 
