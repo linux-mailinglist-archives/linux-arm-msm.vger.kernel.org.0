@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-7854-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7855-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 307F8836F91
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 19:18:18 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A0BE837025
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 19:37:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D494A28CDB4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 18:18:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4EC75B33709
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 18:22:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74D613DBB8;
-	Mon, 22 Jan 2024 17:46:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29C3D4C62E;
+	Mon, 22 Jan 2024 17:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ioBK2xZJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HSbkB7nq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9DFE3DBA5;
-	Mon, 22 Jan 2024 17:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A12D54CB31;
+	Mon, 22 Jan 2024 17:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705945601; cv=none; b=AAVjo/eb3msaXB7K/L2sRxaDxAPCHM1U7/ttmO5ryE66Bbs73m8oNCS3qD34ucn/F+gSrRXvQcQmkvql6zfD/bwptVW9pABs0r87TIvnKaImgCU47BNyMotTIsp33znIUwN9dfFaTab8fIj3epHjgNSVRMrFQ0s4LP5I7spfOfw=
+	t=1705945811; cv=none; b=RNm/R1UrxoS2Kaort5y+6ghPKQJVvrctR00aBGvPW9JL9OnqunfqwblBdTs8kY1YEb8Ez7s1U6ht1ITv2qTaxuIBlxSw7t2CEox/HuWXOlRf4JYPwoICRLRBO3ES/CExCszCv7ewQ+U4Rk/lpBbizDcga4wy3rvMjNItH7VubaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705945601; c=relaxed/simple;
-	bh=e4V9gVDnH5g/BjgcqLGkLNGLWlAqhNlDvw/xrXdlMFA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=CpUoiTGnMaMAX9y4SJEeWUWteC66/aIW3hE2EmusnQK9cp5pC8iXaftq5qWa2bGrdfyLJGQhRtk0uTu2OfC0McExiGzNPC8s3kBt2XZjGcxwjyUFUz1abzNBsi/LkjERUuMWCKS/H42jl2nmM/iHP1QFh3KpoxVLkYU8tUgkE24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ioBK2xZJ; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1705945811; c=relaxed/simple;
+	bh=nrjMhgFBwkaAZ6DvfofhjPey8YCxeJKDIVmE6A5ckUE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=lWq4UjQ8NadYmJonOlC0UCkj6p6Vw4wb56QzF+TSaXYAylt0GC+OwXuccK+ehnlGwji5pF37o9a/missZcfRJ9QYiDuP1lpvtunSzw2VPVdse1as0H29W5REaC0Qiwy5E5gXxc18/+KHgsaSP+80ELKjxNLDmpEXqIbqXQjLXvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HSbkB7nq; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40MFU72h004074;
-	Mon, 22 Jan 2024 17:46:34 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40MDaFQe003288;
+	Mon, 22 Jan 2024 17:50:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:references:from
+	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=rH5RZ7wzk8tepWbpNiSNYb2L1ssV1ELX2qEh7rhnGAM=; b=io
-	BK2xZJBy/JLSJglEae1vr3FgTtvPfOHkQtX1eG+3rDZNZRwbT6TF9OX6wNfum97f
-	tsCprA3z1nE2ERQjA/dR6tgNaxl03XQdEs0E+Oar62QaIfIQGBvBiP8kh3Y2jNns
-	fVpqsI8Y4rQOnHePzVuwOzIo26wFJIioesNDkGdDnlTmLshtZHj1HT1U+ilegHlw
-	2+QBdYQwdn9wTrzoVYaJhA2c7bNyi1iYf/YZ8ycTUzmvEy15KtY5OgOEeU12C5Ja
-	QJnXQ4tNZPqc/sSAuauQ4vBlCWs7pq+R3Tz8aQqbwI2hraM6N4k4Bh5JsfCfl30Y
-	b/km0uy8R+P44gr90mQQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vsjkthr77-1
+	qcppdkim1; bh=gmrF2yQZXmlhVvRx/bjIoxB2JXFJsegupGpfsEiApCE=; b=HS
+	bkB7nqo1xBBC828dhvRL3EKRNeEZuF4dpKmSxLV03TYc6SmwvkB5qas1x4ku/w0F
+	a2j4WQUEvZPjzrBA1Mkyd/b3vWuJFus9Y144+eGU9ptly4gv5gX0N4kyUB9r0A9S
+	OhVDV4xOOjG2rv4xA5ZwHsXtF7XQUXZM2ceEgobPGg7wJBIXxJjWNxkI72VXhsHM
+	T61mqykPZORWX3qOV2mgRIsODFVqkA1Tsw4TnTLv3DhpjyICPuV3OISf0G5175+p
+	4gIkx7gGMmmDNmucn5N9EkjpdqMNyn9PohAHtH9TLcWGvah2HxH4CKGSdLIw1aPz
+	AUq72JIUdCB7WJTAhaog==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vspw8s4hf-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jan 2024 17:46:34 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40MHkVHc006937
+	Mon, 22 Jan 2024 17:50:05 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40MHo4ED020349
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jan 2024 17:46:31 GMT
-Received: from [10.216.24.76] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+	Mon, 22 Jan 2024 17:50:04 GMT
+Received: from [10.110.104.139] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 22 Jan
- 2024 09:46:27 -0800
-Message-ID: <a70e7219-5fd8-4797-be43-199f8995409b@quicinc.com>
-Date: Mon, 22 Jan 2024 23:16:23 +0530
+ 2024 09:50:00 -0800
+Message-ID: <dff70941-709c-4043-802a-16bfeb8ba4f8@quicinc.com>
+Date: Mon, 22 Jan 2024 09:50:00 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,107 +65,53 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 0/3] clk: qcom: clk-rcg2: introduce support for
- multiple conf for same freq
+Subject: Re: [PATCH 0/2] Add board-id support for multiple DT selection
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Amrit Anand
+	<quic_amrianan@quicinc.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <agross@kernel.org>, <andersson@kernel.org>
+CC: <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>,
+        <devicetree-spec@vger.kernel.org>
+References: <1705749649-4708-1-git-send-email-quic_amrianan@quicinc.com>
+ <6ceb3c5d-4171-4f0e-a1c0-22a8488ea2bc@linaro.org>
 Content-Language: en-US
-To: Christian Marangi <ansuelsmth@gmail.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael
- Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20231220221724.3822-1-ansuelsmth@gmail.com>
-From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-In-Reply-To: <20231220221724.3822-1-ansuelsmth@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <6ceb3c5d-4171-4f0e-a1c0-22a8488ea2bc@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: og2mkFzAv4ALy79YRw0iFYayGtV_ozbv
-X-Proofpoint-ORIG-GUID: og2mkFzAv4ALy79YRw0iFYayGtV_ozbv
+X-Proofpoint-GUID: 00ZgLwGHbsDfPXQ8AKTa0gTrYi7OTktY
+X-Proofpoint-ORIG-GUID: 00ZgLwGHbsDfPXQ8AKTa0gTrYi7OTktY
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-01-22_07,2024-01-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 mlxscore=0
- suspectscore=0 clxscore=1011 phishscore=0 bulkscore=0 adultscore=0
- impostorscore=0 mlxlogscore=999 priorityscore=1501 spamscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
+ adultscore=0 mlxscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
+ clxscore=1011 suspectscore=0 impostorscore=0 mlxlogscore=601
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2311290000 definitions=main-2401220124
 
++devicetree-spec
 
-
-On 12/21/2023 3:47 AM, Christian Marangi wrote:
-> This small series fix a current problem with ipq8074 where the 2 uniphy
-> port doesn't work in some corner case with some clk configuration. The
-> port to correctly work require a specific frequency, using the wrong one
-> results in the port not transmitting data.
+On 1/20/2024 5:04 AM, Konrad Dybcio wrote:
+> On 20.01.2024 12:20, Amrit Anand wrote:
+>> Device manufacturers frequently ship multiple boards or SKUs under a
+>> single software package. These software packages will ship multiple
+>> devicetree blobs and require some mechanism to pick the correct DTB for
+>> the board the software package was deployed. Introduce a common
+>> definition for adding board identifiers to device trees. board-id
+>> provides a mechanism for bootloaders to select the appropriate DTB which
+>> is vendor/OEM-agnostic.
 > 
-> With the current code with a requested freq of 125MHz, the frequency is
-> set to 105MHz. This is caused by the fact that there are 2 different
-> configuration to set 125MHz and it's always selected the first one that
-> results in 105MHz.
+> Maybe it'd be a good idea to add it to the base spec!
 > 
-> In the original QSDK code, the frequency configuration selection is
-> different and the CEIL FLOOR logic is not present. Instead it's used a
-> BEST approach where the frequency table is checked and then it's checked
-> if there are duplicate entry.
-> 
-> This proposed implementation is more specific and introduce an entire new
-> set of ops and a specific freq table to support this special configuration.
-> 
-> A union is introduced in rcg2 struct to not duplicate the struct.
-> A new set of ops clk_rcg2_fm_ops are introduced to support this new kind
-> of frequency table.
+> https://github.com/devicetree-org/devicetree-specification
 > 
 
-
-Bjorn / Stephen Boyd,
-
-I would like to know if there are any comments on this series. To enable 
-the clocks required for the Ethernet interfaces on the IPQ platforms, 
-these patches are needed. If no concerns, can this be picked up for v6.9?
-
-Thanks,
-Kathiravan T.
-
-
-> Changes v8:
-> - Add Tested-by tag
-> - Fix typo in commit description
-> - Address requested fixup for Stephen
-> Changes v7:
-> - Improve handling of exit condition on missing parent.
-> Changes v6:
-> - Small rework of best_conf selection to mute Sparse warn.
-> Changes v5:
-> - Rework selection logic with suggestion from Konrad
-> - Return -EINVAL and WARN if we fail to find a correct conf
-> Changes v4:
-> - Drop suggested but wrong re-search patch
-> - Move everything to separate ops and struct to not affect current rcg2
->    users.
-> Changes v3:
-> - Add qcom_find_freq_exact
-> - Drop re-search on rcg2_set_rate
-> - Rework multiple conf patch to follow new implementation
-> Changes v2:
-> - Out of RFC
-> - Fix compile warning from buildbot related to F redefinition
-> 
-> Christian Marangi (3):
->    clk: qcom: clk-rcg: introduce support for multiple conf for same freq
->    clk: qcom: clk-rcg2: add support for rcg2 freq multi ops
->    clk: qcom: gcc-ipq8074: rework nss_port5/6 clock to multiple conf
-> 
->   drivers/clk/qcom/clk-rcg.h     |  24 ++++-
->   drivers/clk/qcom/clk-rcg2.c    | 166 +++++++++++++++++++++++++++++++++
->   drivers/clk/qcom/common.c      |  18 ++++
->   drivers/clk/qcom/common.h      |   2 +
->   drivers/clk/qcom/gcc-ipq8074.c | 120 +++++++++++++++---------
->   5 files changed, 285 insertions(+), 45 deletions(-)
-> 
+I agree. Rob, what do you think?
 
