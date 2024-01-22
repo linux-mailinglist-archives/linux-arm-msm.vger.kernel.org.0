@@ -1,174 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-7802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F51B836844
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 16:31:36 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA13A836902
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 16:52:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 10C7E1F2452A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 15:31:36 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AFD64B28E63
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 15:42:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 010F646B80;
-	Mon, 22 Jan 2024 15:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEB8665189;
+	Mon, 22 Jan 2024 15:05:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LLE5PCUi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i1SwxWwg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667BA46559;
-	Mon, 22 Jan 2024 15:02:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F0C64CE4;
+	Mon, 22 Jan 2024 15:05:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705935763; cv=none; b=osobGjl2zqOXpPDGfJ9mIRGUBmOVoKIgb9m8A39qIjhZHsySttnQUzkV9EUKAgo5W3hLKzgZDfbERIo3/S4Zk7zCQs0UeHkUv/0fF0+jijd2JqZKjk3GkUIqifpmZWMU3KM5ch68bC3vs0w6gZa8EM80yLheETi2XEMmkWhhR8Y=
+	t=1705935949; cv=none; b=RaJzddWsNWJnOkU4PpozC8PHGTswaSZCxN12j36TGXLBgnl6njXmTg1ffPl3OuNAZ/bBDzvH2ujOhAad6aS7smW8JFJ6bSwpKduJzolpwJ2kFTYArKT+7uaoGbMgCvzELWr9VZmBUWM3JMCjjpz/K8j7nBjCtqb22YfahdhXEEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705935763; c=relaxed/simple;
-	bh=8bGFmix80U9/t8wZwLZ5Rw+q5Uz4pSAAPOUtF8Qbh94=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
-	 In-Reply-To:Content-Type; b=GhLIvtxxxHKnAUWxvWGXwoNlRMigW6piUH2xXbbfIgMhyTnybgm1s4gspC+cLD2q6yQBVsi0O6FVq5w8aTTIm+eW2Jk9jcc6oHSYWxIcBB2AgeSZ4Ec+Jm4o85ETzCn4laps2/Gd3+UtPKLmwVlkUMfLRorejL2DgZxoAlVfxy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LLE5PCUi; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40MEEKRt023856;
-	Mon, 22 Jan 2024 15:01:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:from:subject:to:cc:references
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=HQT4IJbpgLyZu2gWdGASTg7GGU/7nlJGfQLF+O8FORE=; b=LL
-	E5PCUiZBDKg8XqVuua7R999Yh9pC48m4tqG18SD1WAx0xYI+itnKZPLYT8clKoV1
-	9moXCOpKjo/n/9ZtvP1MRVOL5QfrxYO2RqrF0v8cucDiLRw5tOJnDo/xLq2cbRtr
-	9JyTOEdnirWWl/NG1i43JA7jnaNP3+HTPwGyJ94Td+MdK0mvgnCHw5oOMtc0xgDN
-	fiA8nMxxoI/X9LoDFpMjBo2VOomcTwaHZNrk+OdEzQ+37l5EyBaQ8jV5j94d99mX
-	ZJ1sUdS60CwKF5Wnc+IIUceB2UB0aHHc26pw0vkUK4i9yHY1EcYiPGzOyzd6U0cc
-	vtQESgHJVipbP86uichg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vsq7w0n1t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jan 2024 15:01:39 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40MF1c2U009224
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jan 2024 15:01:38 GMT
-Received: from [10.253.15.239] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 22 Jan
- 2024 07:01:28 -0800
-Message-ID: <fc9c3e08-a83c-4748-89e4-8b7b0c62da7f@quicinc.com>
-Date: Mon, 22 Jan 2024 23:01:26 +0800
+	s=arc-20240116; t=1705935949; c=relaxed/simple;
+	bh=czHMZ8afmUww3mrTkrBbxdizfsByb75ouQpZiiXkEuo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=M4wayymahzaSUmaK5fvXj5QBGSqTEyyOF61reFt9w5QiIAJtm3pOpK0lv7b31NCq81K28fBc6VqINv3sPewmukot51/QOfF1/3WPzdLwdpcMYHIeGaVT22cPWL9QV0IJMG1oue8/bOVK3oHDPR8TGDhSGFWgej4YsNoWAW93qZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i1SwxWwg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E594FC433F1;
+	Mon, 22 Jan 2024 15:05:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1705935949;
+	bh=czHMZ8afmUww3mrTkrBbxdizfsByb75ouQpZiiXkEuo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=i1SwxWwgfeAXS04JaQA6gpnwU7bvGKiGGtZSZb4FLEB7KkTu9hPvBu7Knm1ctwVbe
+	 pl7cPuQQgd0M+V5cyEO6foC6FgpO+1ik9gEkgLy4eT464BXdRKh+eKi5JS1Gd6rtOZ
+	 IJq6d1hE149Ek4zECIH64f9XjXR8Y8EAZL6tJgDPvCr/8esWnVNGMIwroFE+D72LL5
+	 aj4VrUdxTnqzf6ugr5zTPCNajglrj43ZYWxlHbChq6Tl955yFNEq5nTMf+80cWVTb1
+	 iEVDmenvXAKAIwukeVX9woBn3HbVo5RjIF5syS2qwgbLkco3V1VLX8ryoVZ5ADW4g6
+	 tw4jEyGQk5xKA==
+From: Sasha Levin <sashal@kernel.org>
+To: linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Cc: Neil Armstrong <neil.armstrong@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sasha Levin <sashal@kernel.org>,
+	robdclark@gmail.com,
+	quic_abhinavk@quicinc.com,
+	airlied@gmail.com,
+	daniel@ffwll.ch,
+	quic_khsieh@quicinc.com,
+	quic_bjorande@quicinc.com,
+	quic_vpolimer@quicinc.com,
+	swboyd@chromium.org,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.6 26/73] drm/msm/dp: Add DisplayPort controller for SM8650
+Date: Mon, 22 Jan 2024 10:01:40 -0500
+Message-ID: <20240122150432.992458-26-sashal@kernel.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240122150432.992458-1-sashal@kernel.org>
+References: <20240122150432.992458-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Lei Wei <quic_leiwei@quicinc.com>
-Subject: Re: [PATCH net-next 18/20] net: ethernet: qualcomm: Add PPE MAC
- support for phylink
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>,
-        Luo Jie
-	<quic_luoj@quicinc.com>
-CC: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
-        <pabeni@redhat.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <corbet@lwn.net>, <catalin.marinas@arm.com>, <will@kernel.org>,
-        <p.zabel@pengutronix.de>, <shannon.nelson@amd.com>,
-        <anthony.l.nguyen@intel.com>, <jasowang@redhat.com>,
-        <brett.creeley@amd.com>, <rrameshbabu@nvidia.com>,
-        <joshua.a.hay@intel.com>, <arnd@arndb.de>, <geert+renesas@glider.be>,
-        <neil.armstrong@linaro.org>, <dmitry.baryshkov@linaro.org>,
-        <nfraprado@collabora.com>, <m.szyprowski@samsung.com>,
-        <u-kumar1@ti.com>, <jacob.e.keller@intel.com>, <andrew@lunn.ch>,
-        <netdev@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <ryazanov.s.a@gmail.com>, <ansuelsmth@gmail.com>,
-        <quic_kkumarcs@quicinc.com>, <quic_suruchia@quicinc.com>,
-        <quic_soni@quicinc.com>, <quic_pavir@quicinc.com>,
-        <quic_souravp@quicinc.com>, <quic_linchen@quicinc.com>
-References: <20240110114033.32575-1-quic_luoj@quicinc.com>
- <20240110114033.32575-19-quic_luoj@quicinc.com>
- <ZZ6LGiSde4hHM+6j@shell.armlinux.org.uk>
-Content-Language: en-US
-In-Reply-To: <ZZ6LGiSde4hHM+6j@shell.armlinux.org.uk>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.6.13
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: rEqqTzP-nAa7s86SsOJYcDTm33YE2naW
-X-Proofpoint-ORIG-GUID: rEqqTzP-nAa7s86SsOJYcDTm33YE2naW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-22_05,2024-01-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- lowpriorityscore=0 spamscore=0 clxscore=1015 suspectscore=0
- priorityscore=1501 malwarescore=0 bulkscore=0 impostorscore=0
- mlxlogscore=742 phishscore=0 mlxscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.19.0-2311290000
- definitions=main-2401220102
 
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
+[ Upstream commit 1b2d98bdd7b7c64265732f5f0dace4c52c9ba8a8 ]
 
-On 1/10/2024 8:18 PM, Russell King (Oracle) wrote:
-> On Wed, Jan 10, 2024 at 07:40:30PM +0800, Luo Jie wrote:
->> +static void ppe_phylink_mac_link_up(struct ppe_device *ppe_dev, int port,
->> +				    struct phy_device *phy,
->> +				    unsigned int mode, phy_interface_t interface,
->> +				    int speed, int duplex, bool tx_pause, bool rx_pause)
->> +{
->> +	struct phylink_pcs *pcs = ppe_phylink_mac_select_pcs(ppe_dev, port, interface);
->> +	struct ppe_uniphy *uniphy = pcs_to_ppe_uniphy(pcs);
->> +	struct ppe_port *ppe_port = ppe_port_get(ppe_dev, port);
->> +
->> +	/* Wait uniphy auto-negotiation completion */
->> +	ppe_uniphy_autoneg_complete_check(uniphy, port);
-> 
-> Way too late...
-> 
+The Qualcomm SM8650 platform comes with a DisplayPort controller
+with a different base offset than the previous SM8550 SoC,
+add support for this in the DisplayPort driver.
 
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/571132/
+Link: https://lore.kernel.org/r/20231207-topic-sm8650-upstream-dp-v1-2-b762c06965bb@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Yes agree, this will be removed. If inband autoneg is used, 
-.pcs_get_state should report the link status.  Then this function call 
-should not be needed and should be removed.
-
->> @@ -352,6 +1230,12 @@ static int ppe_port_maxframe_set(struct ppe_device *ppe_dev,
->>   }
->>   
->>   static struct ppe_device_ops qcom_ppe_ops = {
->> +	.phylink_setup = ppe_phylink_setup,
->> +	.phylink_destroy = ppe_phylink_destroy,
->> +	.phylink_mac_config = ppe_phylink_mac_config,
->> +	.phylink_mac_link_up = ppe_phylink_mac_link_up,
->> +	.phylink_mac_link_down = ppe_phylink_mac_link_down,
->> +	.phylink_mac_select_pcs = ppe_phylink_mac_select_pcs,
->>   	.set_maxframe = ppe_port_maxframe_set,
->>   };
-> 
-> Why this extra layer of abstraction? If you need separate phylink
-> operations, why not implement separate phylink_mac_ops structures?
-> 
-
-This PPE driver will serve as the base driver for higher level drivers
-such as the ethernet DMA (EDMA) driver and the DSA switch driver. The
-ppe_device_ops is exported to these higher level drivers, to allow 
-access to PPE operations. For example, the EDMA driver (ethernet 
-netdevice driver to be pushed for review after the PPE driver) will use 
-the phylink_setup/destroy ops for managing netdevice to PHY linkage. The 
-set_maxframe op is also to be used by the EDMA driver during MTU change 
-operation on the ethernet port.
-
-I also mentioned it in the section "Exported PPE Device Operations" in 
-PPE driver documentation:
-https://lore.kernel.org/netdev/20240110114033.32575-2-quic_luoj@quicinc.com/
-
-Whereas the PPE DSA switch driver is expected to use the phylink_mac 
-ops. However，we will remove the phylink_mac ops from this patch now 
-since it is currently unused.
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 76f13954015b..eec5768aac72 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -171,6 +171,11 @@ static const struct msm_dp_desc sm8350_dp_descs[] = {
+ 	{}
+ };
+ 
++static const struct msm_dp_desc sm8650_dp_descs[] = {
++	{ .io_start = 0x0af54000, .id = MSM_DP_CONTROLLER_0, .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
++	{}
++};
++
+ static const struct of_device_id dp_dt_match[] = {
+ 	{ .compatible = "qcom,sc7180-dp", .data = &sc7180_dp_descs },
+ 	{ .compatible = "qcom,sc7280-dp", .data = &sc7280_dp_descs },
+@@ -181,6 +186,7 @@ static const struct of_device_id dp_dt_match[] = {
+ 	{ .compatible = "qcom,sc8280xp-edp", .data = &sc8280xp_edp_descs },
+ 	{ .compatible = "qcom,sdm845-dp", .data = &sc7180_dp_descs },
+ 	{ .compatible = "qcom,sm8350-dp", .data = &sm8350_dp_descs },
++	{ .compatible = "qcom,sm8650-dp", .data = &sm8650_dp_descs },
+ 	{}
+ };
+ 
+-- 
+2.43.0
 
 
