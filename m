@@ -1,130 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-7833-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7834-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82FDD836E04
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 18:43:32 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 591C7836E2B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 18:47:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B5EEE1C25B18
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 17:43:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EDA191F23F12
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 17:47:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01379482D7;
-	Mon, 22 Jan 2024 17:05:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C80CD4A9A9;
+	Mon, 22 Jan 2024 17:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iQYopB1j"
+	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="L+GO/3uS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BED93D990;
-	Mon, 22 Jan 2024 17:05:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5D44B5A5;
+	Mon, 22 Jan 2024 17:12:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705943116; cv=none; b=a56ewaOFwt1BIlWXxHKt6Nx/xlXuRmVahDMdQmoOKGbNmQpRDhIe9L770gPNfu8w+WIuVTBiEPLUIodpKPXkfzNXcc1+VRY5QT74EtUS8/7GBQDPEFCyfIJsHRlmgGlp5hNq1T+KFURuQQ2aI06u8P6f4fRZOcC5jtRcQUDWj4M=
+	t=1705943526; cv=none; b=jEfGRw0BBWmRMbQOD9g/usGNnujADEQ1BLLQxT9AGU4vYxlLPPND3ycQ58XB3VwGPCF4FcmK5ui0WvgrXyQGNo0Q0/gC/36sk2/DDjE+a9SDkrs94ztCNv8i/BdpX733wW11otHwPPBq2VHnXcKxGbJEU4jLDVRReP2vgEray5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705943116; c=relaxed/simple;
-	bh=8xWIV59LI2WPpxdJlA1amusaILQRvyy3HD+894TUW6A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=t3RUDCdZVYQlF4RlHrhDIMTozXVg3IS4ZyLdlUbGp/6A19w29cIrjFzr+mvw8B2OorH+cx1mRZ0TSIdu7+8YdidnA3UVS2GMMk6gDAykcuw5+DSEGryxFdP41QW6DTcnKQ+iWZiEDfvGYaP79MeFPURhy8r61yhn10C3SlNCZHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iQYopB1j; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40MDx3hA023315;
-	Mon, 22 Jan 2024 17:04:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=Ir2TH4bQ8UNy996Ok/fKDZNCHGxSrx9t4G+izCKVTkk=; b=iQ
-	YopB1jEpidvbcQGOVDcjSLuxhCIkPasW3PhNt6zTOj3eL2V5nyNLGt71R8b1eBje
-	zLQpIexGYHyugLzevF5owscrCXk/oJlMWAc/TANhC8L2x5ji43c2qSEIXbap7Dw8
-	9UfbwPGrDxXD0PTF7obJe1G8o5UcrA2Besdqtz/xe36wrLLDfmUJKqOlx81tMavA
-	qUVArjyqas4S/5sUwuIOWvl3WTDSmcU0dMOod+qZ+gwdx9c1Msl8dSZ3iduhdqtb
-	0M7BXpi4UYcY7Cv6NqzAoSUIChUb1uDJd5bwoiqhWQ+ZbsP66wWSlGHhqqB6xyTh
-	9FoEEEhnxSAmF1aas3hA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vsq7w0y1r-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jan 2024 17:04:56 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40MH4tPk020019
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jan 2024 17:04:55 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 22 Jan
- 2024 09:04:54 -0800
-Message-ID: <8c9b157b-4698-70a3-57b7-c588998eeda7@quicinc.com>
-Date: Mon, 22 Jan 2024 10:04:54 -0700
+	s=arc-20240116; t=1705943526; c=relaxed/simple;
+	bh=a8vk6hZ3TOAkzn/ackfXsaq39NTBfLHYum8B7uhs3mA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=rqIP/m2r/yiZKEl6sXdzWSWXNF6aVFiQ+QtUC/bBHUI9WpthmghIP3Xnqa1u2ZbXp+ljg/73/I5S1WqflY3BGV7404+y4UCKsVmbF1iEQ0Oa7e2KHrpcIbumeEGaTdkpwjLS74csQgWy4yGDQ2kIl8hEoT9ypEEHrkD4PpAANCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz; spf=pass smtp.mailfrom=z3ntu.xyz; dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b=L+GO/3uS; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=z3ntu.xyz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
+	t=1705943514; bh=a8vk6hZ3TOAkzn/ackfXsaq39NTBfLHYum8B7uhs3mA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=L+GO/3uS3c16vczNT28Ht/QB0UoI9Lsp6ivS59/FsmIngripMJe9p6CjPKDogNDNF
+	 8feWcbEEenUneCg6blD6o9Nr3Ma7CqrGOrC8vzeOlPZtDMe+tpumKx2b4cUCQmlulP
+	 GmZqLEVSv2BXkDDHPf1I3pg021odHjAbWDjQp9R0=
+From: Luca Weiss <luca@z3ntu.xyz>
+To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] ARM: dts: qcom: msm8926-htc-memul: Add rmtfs memory node
+Date: Mon, 22 Jan 2024 18:11:53 +0100
+Message-ID: <12366609.O9o76ZdvQC@z3ntu.xyz>
+In-Reply-To: <e57f3274-46a8-4c42-af29-ff2009127886@linaro.org>
+References:
+ <20240121-memul-rmtfs-v1-1-e9da29b1f856@z3ntu.xyz>
+ <e57f3274-46a8-4c42-af29-ff2009127886@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH 0/2] Remove QDF2xxx pinctrl drivers
-Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Catalin
- Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>
-CC: Marijn Suijten <marijn.suijten@somainline.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
-References: <20240122-topic-qdf_cleanup_pinctrl-v1-0-0c619ea25091@linaro.org>
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <20240122-topic-qdf_cleanup_pinctrl-v1-0-0c619ea25091@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: AdxjN5akuBy3XCYN-ut4F8rIWpAcidnV
-X-Proofpoint-ORIG-GUID: AdxjN5akuBy3XCYN-ut4F8rIWpAcidnV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-22_07,2024-01-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- lowpriorityscore=0 spamscore=0 clxscore=1011 suspectscore=0
- priorityscore=1501 malwarescore=0 bulkscore=0 impostorscore=0
- mlxlogscore=427 phishscore=0 mlxscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.19.0-2311290000
- definitions=main-2401220118
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
 
-On 1/22/2024 4:57 AM, Konrad Dybcio wrote:
-> The SoC line was never productized, remove the maintenance burden.
-> 
-> Compile-tested only.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-> Konrad Dybcio (2):
->        pinctrl: qcom: Remove QDF2xxx support
->        arm64: defconfig: Remove QDF24XX pinctrl
-> 
->   arch/arm64/configs/defconfig           |   1 -
->   drivers/pinctrl/qcom/Kconfig.msm       |   7 --
->   drivers/pinctrl/qcom/Makefile          |   1 -
->   drivers/pinctrl/qcom/pinctrl-qdf2xxx.c | 164 ---------------------------------
->   4 files changed, 173 deletions(-)
-> ---
-> base-commit: 319fbd8fc6d339e0a1c7b067eed870c518a13a02
-> change-id: 20240122-topic-qdf_cleanup_pinctrl-98e17cdb375b
-> 
-> Best regards,
+On Montag, 22. J=E4nner 2024 11:53:33 CET Konrad Dybcio wrote:
+> On 21.01.2024 11:21, Luca Weiss wrote:
+> > Add the rmtfs-mem node which was part of one of the "unknown" memory
+> > reservation. Split that one, make sure the reserved-memory in total
+> > still covers the same space.
+> >=20
+> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> > ---
+>=20
+> Could you please test dynamic rmtfs alloc, which should be possible
+> on some (most?) boards after 9265bc6bce6919c771970e5a425a66551a1c78a0?
 
-NACK.
+To be honest, I'd like to not continue to experiment with reserved-memory o=
+n=20
+this board, I've already spent way too much time figuring out how to not ma=
+ke=20
+the phone crash under some circumstances, and now it seems relatively stabl=
+e.
+I might've even put my eMMC into some weird read-only mode where any write =
+to=20
+it just weirdly fails (also original software) by writing to random locatio=
+ns=20
+in the RAM (or well, what Linux thought was non-special RAM).
 
-This was productized, there are some out in the wild, and the platform 
-is still in (limited) use.
+Regards
+Luca
 
-I'd like to see support hang around for a few more years yet.
+>=20
+> Konrad
+
+
+
+
 
