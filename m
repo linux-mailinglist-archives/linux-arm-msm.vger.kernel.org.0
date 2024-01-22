@@ -1,130 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-7871-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7872-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A56083751D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 22:16:16 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CCEE837614
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 23:29:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BEC501F28DB2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 21:16:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B6C86286E9A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 22:29:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 058D8481A1;
-	Mon, 22 Jan 2024 21:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13E46487AF;
+	Mon, 22 Jan 2024 22:29:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yn03BKO6"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gjzFFOVE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D6B481A3
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 21:16:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96AE44879F;
+	Mon, 22 Jan 2024 22:29:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705958171; cv=none; b=sXPLwocTmRJRpa46awzo4klx17r0UqDHmRmgMynGjGCP/rCawTNdT/7rTdjY7dOIa3u5SWWOOcLJqC+aseZpIZeJt4pqfwlGC8m+MsiUboO389eshzvOzsWWIeLkeRBCwR/39YgLHSL4u4f1tUv238whm5G/Bv5YQ4hPWRrg/V0=
+	t=1705962555; cv=none; b=D66XXeVgiQ7EpJxqbffyvGAXWgvsAD0nYPr6YQbAo+wrShVh6W9vBbUCK+G+L2ofRFak2+oiIWAS9L8sPoGg7bruOSly/Y+K5vi4OYma8IAlJWGnREfgdoCBuiTres1Jzi9lYwLZWaMEtjTlVN48PDxxmbG4vD3OzZ1T9lGaUhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705958171; c=relaxed/simple;
-	bh=uiBB6Mr7+8Y/fBp5o+y2R1z1a7IFad9zUlfPvcF280s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=L5xrQTTQC71UdOXTQTCRrjIdH5AkRGR6wU9JETUXq0Y9MExfNqA73RyLYGQaUxNziJgZZF4yqCWQp3QCaXScOZF2XMyUr7WlzWYxXb+hLul2AEgt0W52nUT03If1dv/EamojF1522woJ+ZQ1BkiwA9zm+X9Sa0zmTXpmAXo0dB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yn03BKO6; arc=none smtp.client-ip=209.85.128.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-5ff7a8b5e61so30543277b3.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 13:16:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705958169; x=1706562969; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=pGqZvA6E4e+NStTPc+SywkRNhWAXW+4bhcagtnUKSEg=;
-        b=yn03BKO6pKtHlUtpSvwlJxMXoKTF65yUe7NWaOCQmXwX/Ux4LF3clAiCb5V2pv0qYj
-         MqOvvygGygfghFx1XXwpIzeUBG9rEigb09Jcuo+qCxptlaafg19jQanfxKUbnWsAohMy
-         RizRr4ned/lW26ru8BzIXgHU2PCrGt2ANyyrKUSh15omnff83rc6gzWEF3wpevUQ11vc
-         litpkuK3IF7koNSoIeUGAVK9NH3tSddTl6F0st/pZvmB+6UcDJP2rqbZ1xIoN561Ejlg
-         AnHopeg2w8V1ScmB3MQFGRkdAZF0ty/Px6ysdOkC72JX5rzMvPunK41PdyHnFGjdHTgI
-         tuLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705958169; x=1706562969;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pGqZvA6E4e+NStTPc+SywkRNhWAXW+4bhcagtnUKSEg=;
-        b=Xd6Zy8zjQThT7v04gJr161+3Qv7Ks/XXEna1ap+Cs0Qec9slRbwA0Z/1iEnsZKhe28
-         0GPhDmwHWHbDSJRzIH2HX6GolvXOiwMXqnNsYfWl7w6FFJNkoXnNTbH7I/VgFNOGGKze
-         R3VAr4AuUbhkdEcCseVAAhFBJJVudsiTz57EaPjV+KowSrpUEmUggHsrb1zXo5ORyobK
-         XJpR+G8KPalPiCFpFhPele66URgkCpBiifDWTwu9FjOCaBCGow1Wn0CH1YkOT0kpZ4hV
-         1wAgF/bMSz1HnLcC0uWC69AL1sqOihlSEp9vDrZZTTnWPevAdSHo4U88wDfHBp/5JYbK
-         HuLg==
-X-Gm-Message-State: AOJu0YyjAARSnwObrzxeNCbpdngpC+aVHCQbbaeeDYt2ChbtW3IypKp6
-	ld9qnaBf2e5bSimo6SbF1FcCVWHPg2qJEDdmVBvRI1tvKUizr5ksinv7McW0B1XxrsYXOMfMvUx
-	M1X5BTxBkbbvDWdhjg/26e+WcGP9CN9vBkV0BtjmYHkfzUDVyRYU=
-X-Google-Smtp-Source: AGHT+IESaF1AXtC4BX2ZTnkzlB1e7Y9Q782BRoZWP9n/wcha9NYJnXtqtFtc+Q8WNSW5PywSQWFSXkS18fWSqnl1O9I=
-X-Received: by 2002:a0d:eb07:0:b0:5ff:6173:e98e with SMTP id
- u7-20020a0deb07000000b005ff6173e98emr4058278ywe.63.1705958169431; Mon, 22 Jan
- 2024 13:16:09 -0800 (PST)
+	s=arc-20240116; t=1705962555; c=relaxed/simple;
+	bh=ltWxxupGNMNLQsnT5so5h2i6ipm5vAjxmjxwS/aZCZ8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=B4m8NHl9ZAO7gS3CHhMYcHyk5bRO7dsJBkpk9eC1DxmF5tXrUOWBwV4enOrb9XpOzLWch5K1LwjB2vWaGY2/Rw7FTKm7n8MzcHNCjkIJsxhXnLjpbXYQN2ipU+8zRkXHJPMu3YVLzKKyPqxuTux72lvm/TyYhOq+xIAFI0LxwT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gjzFFOVE; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40MJglBa006858;
+	Mon, 22 Jan 2024 22:29:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=nxmrZmdSdZTD1wAZj6p5gkCdx09nMtdfhJ16VGucuSk=; b=gj
+	zFFOVE4knQ0ljeiZZu39ajUa6A1iaVpC1e/PWLmoXFrZk9qk6EGu5MyIPifV/UvC
+	ajDw0qu2Vyyhzya7FK/4MgSH1BNywg6q43x6D9NkJ81bP5qtiJ5OrJIPOuOZzej/
+	Zarfeye7ydS5ebKcPi4rs/0WAeVrgZ395AySgeaqUZw70i6I1Nr083HJDXTPzBmH
+	dVu/WZL8tgXLrg5ZzSazQxLM92A0Cak6hRJGAKkACJwtCqclYCt81AX++WtuMIvU
+	H9cZhdHBaE6UOJ/Ca3gHjf7MHpNfCyiVhlf5qQoNZktDvFodvn563GXuN4/4RzSy
+	7MJSvdWC5NPiOtf659RA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vssjws5qh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 22 Jan 2024 22:29:09 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40MMT9H0020075
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 22 Jan 2024 22:29:09 GMT
+Received: from [10.110.26.199] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 22 Jan
+ 2024 14:29:08 -0800
+Message-ID: <710622f7-fddd-47d6-8a5f-3d2e895571f5@quicinc.com>
+Date: Mon, 22 Jan 2024 14:29:07 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240118155711.7601-1-quic_ninanaik@quicinc.com>
- <rq2dnfh6ctn5gbf3o3op5ywxx7zhx6r5sh5ykautye56o3p4dg@rjttk3rr65ld>
- <20240119191144.GR3013251@hu-bjorande-lv.qualcomm.com> <CAA8EJppLNFReZn1HK_radSkKkf5L584fx3FCuqG0FoUt4+H=nw@mail.gmail.com>
- <Za5xj8S3Gs7N-UUc@x1>
-In-Reply-To: <Za5xj8S3Gs7N-UUc@x1>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 22 Jan 2024 23:15:57 +0200
-Message-ID: <CAA8EJpoa+ZEL=4bg+Su30kGnVTLZmrUdgxQW6t1cFECSNSPp9A@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: Add new memory map updates to SA8775P
-To: Brian Masney <bmasney@redhat.com>
-Cc: Bjorn Andersson <quic_bjorande@quicinc.com>, Eric Chanudet <echanude@redhat.com>, 
-	Ninad Naik <quic_ninanaik@quicinc.com>, andersson@kernel.org, konrad.dybcio@linaro.org, 
-	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	quic_psodagud@quicinc.com, quic_kprasan@quicinc.com, quic_ymg@quicinc.com, 
-	kernel@quicinc.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [1/4] interconnect: qcom: icc-rpmh: Add QoS config support
+Content-Language: en-US
+To: Odelu Kukatla <quic_okukatla@quicinc.com>, <georgi.djakov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20240122143030.11904-1-quic_okukatla@quicinc.com>
+ <20240122143030.11904-2-quic_okukatla@quicinc.com>
+From: Jeff Johnson <quic_jjohnson@quicinc.com>
+In-Reply-To: <20240122143030.11904-2-quic_okukatla@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 3rCOQbn9ju_VvtPgZZ7SVDDiu75iyvWJ
+X-Proofpoint-ORIG-GUID: 3rCOQbn9ju_VvtPgZZ7SVDDiu75iyvWJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-22_11,2024-01-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
+ lowpriorityscore=0 priorityscore=1501 adultscore=0 mlxlogscore=987
+ mlxscore=0 suspectscore=0 clxscore=1011 phishscore=0 spamscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401220160
 
-On Mon, 22 Jan 2024 at 15:45, Brian Masney <bmasney@redhat.com> wrote:
->
-> Hi Dmitry,
->
-> On Fri, Jan 19, 2024 at 10:35:43PM +0200, Dmitry Baryshkov wrote:
-> > This kind of change sets a very bad precedent. This way old kernels
-> > become incompatible with the updated firmware. For me it looks like
-> > Linux kernel suddenly being unable to boot after the BIOS upgrade.
-> > Generally memory map updates should be disallowed after the board hits
-> > the production and the DT is published and merged. There can be other
-> > users of DT. BSD systems, U-Boot. We spend sensible efforts in making
-> > sure that DT is an ABI: newer kernel remain compatible with older DT
-> > files. We expect the same kind of efforts from device manufacturers.
-> >
-> > I think unless there is a good reason, the memory map update should be
-> > reverted on the Qualcomm side as a breaking change.
-> > If this kind of update is absolutely necessary, it might be better to
-> > define a new set of board files utilising the new memory map, marking
-> > existing DT files as legacy.
->
-> This is on a development board that's not in production yet, so
-> personally I think this change is fine. It's in all of our best
-> interests to have SoC vendors push their code upstream early, even if
-> it means that later on we need to make memory map changes like this.
+On 1/22/2024 6:30 AM, Odelu Kukatla wrote:
+> Introduce support to initialize QoS settings for QNOC platforms.
+> 
+> Change-Id: I068d49cbcfec5d34c01e5adc930eec72d306ed89
+> Signed-off-by: Odelu Kukatla <quic_okukatla@quicinc.com>
+> ---
+>  drivers/interconnect/qcom/icc-rpmh.c | 158 +++++++++++++++++++++++++++
+>  drivers/interconnect/qcom/icc-rpmh.h |  33 ++++++
+>  2 files changed, 191 insertions(+)
+> 
+> diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+> index c1aa265c1f4e..49334065ccfa 100644
+> --- a/drivers/interconnect/qcom/icc-rpmh.c
+> +++ b/drivers/interconnect/qcom/icc-rpmh.c
+> @@ -1,8 +1,10 @@
+>  // SPDX-License-Identifier: GPL-2.0
+>  /*
+>   * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
 
-Then this should be clearly a part of the commit message. And I anyway
-would suggest having two board files, even if it's just for a few
-releases. Otherwise you have a tight lock between kernel and
-bootloader versions. In case of any regression it becomes next to
-impossible to debug if it is caused by the kernel or by the firmware
-itself.
+Should all of your copyright changes include 2024?
 
-> Once this is in production, then I agree with you that changes like
-> this should be avoided if possible.
-
-Please strike through the 'if possible' part. It must be avoided at all costs.
-
--- 
-With best wishes
-Dmitry
 
