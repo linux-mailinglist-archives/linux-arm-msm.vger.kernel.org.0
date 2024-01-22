@@ -1,132 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-7763-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3850835F8D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 11:25:23 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A2F1835FF3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 11:44:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 02E5F1C25377
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 10:25:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4EF0F1C22C89
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 10:44:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FEB73D3BC;
-	Mon, 22 Jan 2024 10:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9024B3A1DC;
+	Mon, 22 Jan 2024 10:44:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="qWLmpWb7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r2Ddwpgk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5BD3D0D9
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 10:22:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56BD3A1D0
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 10:44:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705918941; cv=none; b=RPWnpEgmHE4LBuHDqyOQpfa8KDAGhvxpLqHA7Qj/oRelTRxd8CwfhsHD/nKhKLnoACYkwmwpDym6kGAEKNR55IOMrny46isZunCb37xZGRJ6zn8x/W3Mko9PSTE0LoeGXZhS15TZ0/rUhdpC+LENYYsHI0eOS6H6/XzDiu/Tue4=
+	t=1705920276; cv=none; b=VyEVI0lL2QILyzzRWgucOW+NUU4/85b5HPfoj/G8tQ91pClJAmCNII7WRs3HyVQ8AiaopQVP05lJl66j7Q7kNa5frOni15S7bFjpEUxdy8CmSeCeZSat/ENw6nT3Jts+0Up0ATFve/8QVYXGegQV5zM2+4x4Fu3D71s1PdX1uic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705918941; c=relaxed/simple;
-	bh=LZfgbhUnLx5DwPbySeH7M/oXcgqr+FxGPWib5/pJNeI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=P9rAmb6qFkIJqElMms7L2b6Gk8EoN7fdJt41VvQw0VCA2klbTOUImaJ7F1AlCCkYYTXMOsEn6pE1kWOWCUgDx+IYoDPp+tANhETfc7WRncwukap4aS9zSci/JQTCIVhHHGlDcEYj1n6+K/FaGEsg8q5NsU+fGtJLcgGo5g1UT4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=qWLmpWb7; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-40ea5653f6bso22517135e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 02:22:19 -0800 (PST)
+	s=arc-20240116; t=1705920276; c=relaxed/simple;
+	bh=Q5IhBYcwPvBhNH3wzEDza+AtOhG3qLK6wZ3eA1Q+J0s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PYu25lZG8v7uh2vUgFi8BvwLV+f6eqpBaEY0R0hdJlmhITuXSNeGPNw86//3u5L5r4Axa2rpsmwMLPnAqePR+q7rHEIjFYe7JaEnF6Yd/jr3tJzqzwLnwX+qUrjnNaPUlxZDwkl1eRQUoZbtlzrXAlzyN3+6BSRhTHO2Cgh/NpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=r2Ddwpgk; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-40eb033c1b0so3863895e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 02:44:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1705918938; x=1706523738; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lalvSbjsX1nGni0gXE16NpSAE0FFmKU1SqK46Owrhtw=;
-        b=qWLmpWb7/ihpAkeWYU9kZojnWCuutXFJAHrz6z1D7T+kIKNTmtdS5mKEi6E+6jP79B
-         lSRhYe2Kdfc4yCUpdSxsUtmHYt2LaS8tUhLwkxYyzOfXpaP6EevPIrhSo0z6kzHfG29R
-         Nf3aQtUp/Ils7IymicuZj6EoFeGYu+Ent6K4Kg1WrHRXfU1OzQX7+svDz+GdxCL8RKC8
-         WBmu1WOK8qvhtxSu7UiXzbw1q8v2m+lFzB5EaBH2aC2Sp0/wA8A1BDkPtne21X53Ney9
-         1isWrz+z75WPjedfR/FhxxBQeXKEry4C1kOWuUC4O7xI1X7AMpdR7XM7fwKLc24TF7BA
-         EO+A==
+        d=linaro.org; s=google; t=1705920273; x=1706525073; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Nuar+kAkkGz47qh6RYxwSNi1tRVlEN4ihxC/V1hL4ts=;
+        b=r2DdwpgktGpOWrn481jG+/zK4vw8xZ8CFcLqz/E3fp+fQ+bCKeWNkuZJGE/bixmalu
+         TWK19wR1LT0S1zXsAXjnpjwbYgDh0nkdzWe8dYLvMPIGoJ8iMF4y6zyMR7X6QgMtbNWO
+         FWHjxWKi3db6ZRRBh6NP33QvYolT7mJ9viYMrtlERt4FOMezNacVtKL4xVnzh1om00Ri
+         HfePh2kf+LBHq4WLarr+3Re0xeFA5DKURPeCp+zahsPLX4zi7/h9q3o12jkbd7iFzNX2
+         vLgTXGg7+VGza3hwd7bD9yyBODj+dLnPi6yl996WAydbKb3uKE0Ye/vakkL4lYBMrxC4
+         DIUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705918938; x=1706523738;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lalvSbjsX1nGni0gXE16NpSAE0FFmKU1SqK46Owrhtw=;
-        b=JGFpGBWyAU6F0vTcivMoMGolvLmnrhkOHUL+fJcRHICo8t/C+A6hMUyYd0WcxYaPIB
-         i50TGmwdcHZLdXDUlca47VPCiYKE0oyCReXw3ehEy3hZiPyMMvv70Tar+pZ8gcOtPk/N
-         v0hW4g6shlsSyZU15OHBjDa3SQx4p1LL7OwOXYKWW0aCUMjkpsBIF9xOF4AJb2fqVmTj
-         ASmkZU5Dbxwb8xjkvQ6bD8kzwsogCjYfv82b/HZlUO+uncv66+h7e1IEb/zwpWp5bkqT
-         N3MB5vgdwqhrJ8WQCe7MjapCDyBB0/A99RN2g1DmaFslBe6A5Q9VcYMtk9NV/Lwf1CfX
-         gwlQ==
-X-Gm-Message-State: AOJu0Yzf4i1RMUUh/Azt/sR3wokcdRMyueqGVJ/25nhFsCyWlr1ooJtY
-	9TteoyQUFslIX0e3Hoat/+PeyY9YJlqM5+DqJ4gZBOWTCLkjljUfWbXl0b/Zycs=
-X-Google-Smtp-Source: AGHT+IEpKsNdwYZEVS8Yao5oTwFGu6BmEkSUNiDQ+jJqNJ8dTqzDh8ajse/ScTF26QX3aTiYAs/sYg==
-X-Received: by 2002:a05:600c:4e93:b0:40e:abb8:1b2 with SMTP id f19-20020a05600c4e9300b0040eabb801b2mr1000679wmq.90.1705918937973;
-        Mon, 22 Jan 2024 02:22:17 -0800 (PST)
-Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:92a0:6172:d229:1898])
-        by smtp.gmail.com with ESMTPSA id q7-20020adffec7000000b0033926505eafsm6377904wrs.32.2024.01.22.02.22.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Jan 2024 02:22:17 -0800 (PST)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-To: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Elliot Berman <quic_eberman@quicinc.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Guru Das Srinagesh <quic_gurus@quicinc.com>,
-	Andrew Halaney <ahalaney@redhat.com>,
-	Maximilian Luz <luzmaximilian@gmail.com>,
-	Alex Elder <elder@linaro.org>,
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	kernel@quicinc.com,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Deepti Jaggi <quic_djaggi@quicinc.com>
-Subject: [RESEND PATCH v6 12/12] arm64: defconfig: enable SHM Bridge support for the TZ memory allocator
-Date: Mon, 22 Jan 2024 11:21:57 +0100
-Message-Id: <20240122102157.22761-13-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20240122102157.22761-1-brgl@bgdev.pl>
-References: <20240122102157.22761-1-brgl@bgdev.pl>
+        d=1e100.net; s=20230601; t=1705920273; x=1706525073;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Nuar+kAkkGz47qh6RYxwSNi1tRVlEN4ihxC/V1hL4ts=;
+        b=sFirf9V6AsjNRyjnG4A+3La/BEg6rXkWu9qT2w9VXDd1Ols2LWop5USx1PKovBAZT/
+         5A1sIxwoffsKNNViShe7btCQ+WzNpdAoeTDEqLBGIbGWH/BEDbmR+IlcBu+Wca4zjQ4S
+         naLaV6XE3IqbvjAp+YskWCkXu/W14kfOSt9goAyluGWQxIuB1p4XZ1Jz83d7O6yfU4tj
+         +OxUNDh8ILe44yw8sFVas4m8dw+shRIn7C5yalHIEykm7P4xGHNSexj8nJ5k9wIGU8sL
+         2sPLJ2s1arULxrt4SCLyzUBx2A+Mv8a9tbN6yl84FfbsY2xNl8SflTCNnOzn7xS4sdPf
+         O9Pw==
+X-Gm-Message-State: AOJu0YwnFpF76KKQQ5vNV98Jm3HAn8vCAodQjWCwnASLHKmen6EDTAss
+	N0ehaSqnTei3G2ptfsRdfiG6dppL/uMsPMvH7TmDAnic1LA0GIAHg1dUDHzRFx8=
+X-Google-Smtp-Source: AGHT+IEoMM5Ktzeju5vnLOedttGHTyUOKSHdeFm390nnjOvc8Iy4TZZi3+ql+iXa08jO7ZTNiVsJnQ==
+X-Received: by 2002:a05:600c:298:b0:40e:7b48:a38d with SMTP id 24-20020a05600c029800b0040e7b48a38dmr2411352wmk.139.1705920273157;
+        Mon, 22 Jan 2024 02:44:33 -0800 (PST)
+Received: from [192.168.231.132] (178235179218.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.218])
+        by smtp.gmail.com with ESMTPSA id lz3-20020a170906fb0300b00a26a061eef8sm13254236ejb.69.2024.01.22.02.44.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Jan 2024 02:44:32 -0800 (PST)
+Message-ID: <2b43e7f9-9394-4ed2-b6d7-46fdc1e515c5@linaro.org>
+Date: Mon, 22 Jan 2024 11:44:30 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] soc: qcom: aoss: Add debugfs interface for sending
+ messages
+To: Bjorn Andersson <quic_bjorande@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Andrew Lunn <andrew@lunn.ch>, Stephen Hemminger <stephen@networkplumber.org>
+References: <20240117-qcom-aoss-debugfs-v2-v3-1-1aa779124822@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240117-qcom-aoss-debugfs-v2-v3-1-1aa779124822@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 18.01.2024 03:31, Bjorn Andersson wrote:
+> In addition to the normal runtime commands, the Always On Processor
+> (AOP) provides a number of debug commands which can be used during
+> system debugging for things such as preventing power collapse or placing
+> floor votes for certain resources. Some of these are documented in the
+> Robotics RB5 "Debug AOP ADB" linked below.
+> 
+> Provide a debugfs interface for the developer/tester to send some of
+> these commands to the AOP, which allow the user to override the DDR
+> frequency, preventing power collapse of cx and ddr, and prevent AOSS
+> from going to sleep.
+> 
+> Link: https://docs.qualcomm.com/bundle/publicresource/topics/80-88500-3/85_Debugging_AOP_ADB.html
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> ---
 
-Enable SHM Bridge support in the Qualcomm TrustZone allocator by default
-as even on architectures that don't support it, we automatically fall
-back to the default behavior.
+[...]
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Tested-by: Andrew Halaney <ahalaney@redhat.com> # sc8280xp-lenovo-thinkpad-x13s
-Tested-by: Deepti Jaggi <quic_djaggi@quicinc.com> #sa8775p-ride
-Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+>  
+> +struct qmp_debugfs_entry {
+> +	const char *name;
+> +	const char *fmt;
+> +	bool is_bool;
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index e6cf3e5d63c3..7a9428e333c1 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -253,6 +253,7 @@ CONFIG_INTEL_STRATIX10_RSU=m
- CONFIG_MTK_ADSP_IPC=m
- CONFIG_EFI_CAPSULE_LOADER=y
- CONFIG_IMX_SCU=y
-+CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE=y
- CONFIG_QCOM_QSEECOM=y
- CONFIG_QCOM_QSEECOM_UEFISECAPP=y
- CONFIG_GNSS=m
--- 
-2.40.1
+This can also be const
 
+> +	const char *true_val;
+> +	const char *false_val;
+
+All of these strings can be const ptrs to const data
+
+Konrad
 
