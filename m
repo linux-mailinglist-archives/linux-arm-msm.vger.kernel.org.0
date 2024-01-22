@@ -1,73 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-7767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9BA9D836025
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 11:54:39 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21BB9836036
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 12:00:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2C8601F21B6A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 10:54:39 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 54371B29346
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 10:54:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7289E3B19D;
-	Mon, 22 Jan 2024 10:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A237D3A1AF;
+	Mon, 22 Jan 2024 10:54:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="feMF+B0k"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NMe3Ta0q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC483AC16
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 10:53:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF633A262
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 10:54:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705920820; cv=none; b=sukHMEXK/tct+VIDyuWGgA+h26mLeWSEJq6BFbPQ+gIPox6Ad40ILccNA+OBJx3zIxi//tV2WVTjw3wsLunLwMaea2T78Oz6ulnGZacqpMOl0namsR4SBT6w/0hGYSiXwZzUPk/McC8uzP0HinxfCYf4MWQBptqs/uX2+dQmxlI=
+	t=1705920888; cv=none; b=BwDth1iRTf1n/r7doKYFI0CxU2ReN/HadKkUxCLbcIKZBmDcwyfPISC6T5ZU0IUcK4xidNOGM/z+x9dRcitW2VoHDVQ01q8d3+A2G1Y7Zj0jWf/2KPT00K2eAHMJP/Lt1p/SG9XIUmh3FygzBfsq/UcBjSCraMLt11o+pUrWbjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705920820; c=relaxed/simple;
-	bh=HvqtdsUNHvvysDTN07Znf26i8cKDghYMJxajcRlaWck=;
+	s=arc-20240116; t=1705920888; c=relaxed/simple;
+	bh=lTnarq8IAg1XM6GxuzQJXH9sGVYsO2Kix1KmRraYVVM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CUgQUE6AEDqjBioy/gcg7iJWtpAEml2LzVDom/xKeN3wJvnZ/d76mitpr0E6Bh0AOL2rZCsNJ/kgxu8Uzs60Mx5KGiZNMhHDLxnlthwnGF7dsl6ipZZXSEPO+Mk8vAMyV69sXYPhj89WGfIn8DrHbiNHPF0FEBsmGmJcgKew+eo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=feMF+B0k; arc=none smtp.client-ip=209.85.218.44
+	 In-Reply-To:Content-Type; b=dcMUXBWbjoUis3ovCMTrcyEyUsOpbmrkzXp01Kso+Fd7jQhRODxXbf/xpcLvaICA6fHoWomEZSBKvSr1HokooTVHh+GHfoliC5RhcFxyf9xZinpZ1FQSOvRMQohEF1FBR728Xx/8AiwGoJucHZ0vK9rf0NvoeKRBQaHEtcnwHow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NMe3Ta0q; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a27733ae1dfso306425466b.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 02:53:37 -0800 (PST)
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a271a28aeb4so310519366b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 02:54:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705920816; x=1706525616; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1705920885; x=1706525685; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=+PzbzDTvNuVALaQbY0SrUthp/gsyxFLfouvwcaglfa0=;
-        b=feMF+B0kR7RoHRvVJ8mp/PAkzWu0JRf8c5yqvNyQgRR0FTxdRhxdrQJJCa/+AdHERr
-         lYRFUzTPKxUWHUfqg824fAfScNiWpTL3xKTZ9mT7GeCiUq4pJxW3vNX28HkeL8N8R+ZN
-         imimCMeZM7KeFCorNAD4L72umVKRj63SUGLlodevoSq2t0kU9aHsO5jVT2W7uJlzPXEe
-         i5EHw6TQx+McZ5VOZjp4q5UmyoJuw4TcSEhfAuCjjOjqZGeIstCT76pU1Xw8HkAgai0P
-         L1kltpiMoyTCXXHBOtdrYQISn7Ajt7BijVvSSUSj9OBIlfiHJyGmf9D4bZwDL2tPh1S0
-         Ld6g==
+        bh=OLlrIj6M5dwt//auJ5YhalkWbvV9fgPK8UYw5u29EOM=;
+        b=NMe3Ta0qnOcACRHFFv1ON2x3m5W0Mb+DXhOL0Dc6Ku59X1xmGadMrQLivaDbBYiKYH
+         c4eYf7llvz/jrNdUZjos6GqkGRVpNa6+fkE31r5U/9PnSO4xld66Bgf9zUhc337zsDqN
+         V1sbevvvOAUI9NNV+priwwfj48gfermQXvvDAFr6YufBvc87rVWKW7AZZbmgPHUX6WcU
+         R2rZl2q7NwircYGvgDN7ohPTehtcyhxEXNLB6iDKN+iUtAxHQdVEVCk6hzlW0t+cA2Le
+         4EjLd8QNqiX3Ke4iBm/PtK4O5aY9ZX80hIDfNcZmmXH8pstHIhgqfCsXCsKisT3059Jh
+         sSsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705920816; x=1706525616;
+        d=1e100.net; s=20230601; t=1705920885; x=1706525685;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+PzbzDTvNuVALaQbY0SrUthp/gsyxFLfouvwcaglfa0=;
-        b=V4snWKxcj7ZhmkTm6z0zFl/U1eOk83BVnBil+XGqSTS3gpv7wyQhb+CMUSuEaYNzSm
-         NwAupqM8KmNkZ2E9kbm4l8bwkltIrXelD56X2ektuJsGj5QY7B/Gac+nU6zBmyCUIvG9
-         JAU2cuV766sAam/wivgBv5mRvz4xSJqHFDsbhADgEfERkMlG37Tpnmej99VKY1QlJ9G3
-         JxnzouYGxP6o4gpV1cm/IeixVV17NqVCfT3+ZwuKTSefNNwZ4/M7lpK4M7rolfkE8yiq
-         7WUNX/ntM9ClR8bT2bT9Z7V66vfPMcl4nluwI1iDgAQ2hUXSXJHTAZY9+2e6+Yc5fv0w
-         SFLw==
-X-Gm-Message-State: AOJu0YxLFiMSDZtUeWLKdoAsN5yFSWlDaEin9YxIzAEUGHT5/v8Zkx3h
-	P5jFOEIKqJyBPy0auRRimUpTsZJJy0InaSscTxc8Zw3rjj4Oqxa78e5Tgl1qS0g=
-X-Google-Smtp-Source: AGHT+IGVVH6NZaZvBaWo+ZsNgMlULvxvy3TRd9ITIzY70Q9BIggeGYLQaVF7dW/aNORMtZRoldadNA==
-X-Received: by 2002:a17:907:3a45:b0:a2c:cda6:e73a with SMTP id fc5-20020a1709073a4500b00a2ccda6e73amr1025140ejc.98.1705920815747;
-        Mon, 22 Jan 2024 02:53:35 -0800 (PST)
+        bh=OLlrIj6M5dwt//auJ5YhalkWbvV9fgPK8UYw5u29EOM=;
+        b=T+K6IrWyWWo/BQyVAm/38o2a2CImagUdek3x4LZ+tqqZQVdrPAmine+pWuPdvcVL66
+         Amd8kyxh7PWs/e+rZtfgx3j6UGTLcIHYW4LqT0DY+YGMGVl8bRMUeKKcylcDLxsxtjzs
+         O5N28gUnDs0aqxf5QZ49sjpgrhQthny3wboFpqnlw0QW39IcbQ9/ObHzNbvPu8h533Z7
+         UyL7WxL5WN0jD0RcFlhXHKyqItpmDHcWltT71RaJ5Ew8xCHBDEskOZWMbLcZY7cP4WE2
+         ilZzguNZv2U6MU4PqY8Axuhzdpv4EJFzqfVN7kGP/hl5zAuyd0qPGB3fxhn5vygJMH5M
+         m4ew==
+X-Gm-Message-State: AOJu0YweiVUklsD0GKubk9Aj41ZFBOI/XflCM7szcQ/nrS6vZst2948O
+	TMkJhZ0FjF3RZmnwTggwJ9QCaCqHnPKnyxh89v+fHUOT7MyK8VrEU7NTBKQGRQNoU2RN/6JKc87
+	u
+X-Google-Smtp-Source: AGHT+IEeBsyedCcVZMmrmZSF2t9z7xJutp8eKLTW8jvjhH6AzUBWIDCLo+LC1PZzVFNgQNtJS1vJyA==
+X-Received: by 2002:a17:907:8dcc:b0:a30:3ba:dae9 with SMTP id tg12-20020a1709078dcc00b00a3003badae9mr1434236ejc.77.1705920885135;
+        Mon, 22 Jan 2024 02:54:45 -0800 (PST)
 Received: from [192.168.231.132] (178235179218.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.218])
-        by smtp.gmail.com with ESMTPSA id q5-20020a170906388500b00a28a297d47esm13243272ejd.73.2024.01.22.02.53.34
+        by smtp.gmail.com with ESMTPSA id q5-20020a170906388500b00a28a297d47esm13243272ejd.73.2024.01.22.02.54.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Jan 2024 02:53:35 -0800 (PST)
-Message-ID: <e57f3274-46a8-4c42-af29-ff2009127886@linaro.org>
-Date: Mon, 22 Jan 2024 11:53:33 +0100
+        Mon, 22 Jan 2024 02:54:44 -0800 (PST)
+Message-ID: <bef1eaa5-a6e7-466c-b8a7-17537838deb3@linaro.org>
+Date: Mon, 22 Jan 2024 11:54:44 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,16 +76,11 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ARM: dts: qcom: msm8926-htc-memul: Add rmtfs memory node
+Subject: Re: [PATCH] soc: qcom: smp2p: fix all kernel-doc warnings
 Content-Language: en-US
-To: Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
- phone-devel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240121-memul-rmtfs-v1-1-e9da29b1f856@z3ntu.xyz>
+To: Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org
+Cc: Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org
+References: <20240119032859.4082-1-rdunlap@infradead.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -121,20 +117,29 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240121-memul-rmtfs-v1-1-e9da29b1f856@z3ntu.xyz>
+In-Reply-To: <20240119032859.4082-1-rdunlap@infradead.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 21.01.2024 11:21, Luca Weiss wrote:
-> Add the rmtfs-mem node which was part of one of the "unknown" memory
-> reservation. Split that one, make sure the reserved-memory in total
-> still covers the same space.
+On 19.01.2024 04:28, Randy Dunlap wrote:
+> Use the documented notation for nested struct members.
+> Add a Returns: comment for qcom_smp2p_intr().
 > 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> These changes prevent these kernel-doc warnings:
+> 
+> smp2p.c:78: warning: Excess struct member 'name' description in 'smp2p_smem_item'
+> smp2p.c:78: warning: Excess struct member 'value' description in 'smp2p_smem_item'
+> smp2p.c:280: warning: No description found for return value of 'qcom_smp2p_intr'
+> 
+> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+> Cc: Bjorn Andersson <andersson@kernel.org>
+> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Cc: linux-arm-msm@vger.kernel.org
 > ---
 
-Could you please test dynamic rmtfs alloc, which should be possible
-on some (most?) boards after 9265bc6bce6919c771970e5a425a66551a1c78a0?
+Thanks!
+
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
