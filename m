@@ -1,64 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-7869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7870-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A3AE837434
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 21:44:34 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B9E9837450
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 21:46:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C0D5728ECF9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 20:44:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3D7EB1F291DB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 20:46:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D489C47F44;
-	Mon, 22 Jan 2024 20:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8709148CFD;
+	Mon, 22 Jan 2024 20:44:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ESppTKry"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tkoPl5LS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A870947A7C;
-	Mon, 22 Jan 2024 20:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6043E47F54;
+	Mon, 22 Jan 2024 20:44:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705956259; cv=none; b=oQ9bDrfTZqKmVL/qbh5/uo1ONvhecXhrAw3XBj6d/fazZzG9gPEaqYIWdpoCRDPRuuM3/jO3KhRkT6TwzgCE8W60GElXCeySen4SfK+gY0hKUpRf6EA4a6UHvRPMRS1tu7LtWJhqhO17vIoKH1QHIodeivY/U4gHHwBSu7TbFWA=
+	t=1705956278; cv=none; b=gHCxStnricJIzckHk/wKBsBLfehP9srSXJlkLYp+dGhJwchclKxkI3c2GJiVkcWdfhfuPCz79lsTuaWGpeHeYCb6dWnDGzIKT+7m1rKedxYh1hNvWN0T/MNc3QOV8nN5iBedz1ZBNoJkW+PeyYEf0toN4LTn1zNQRUaGS+4ZL9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705956259; c=relaxed/simple;
-	bh=lozOmd/cqGod0cy3wd2A6y+CaR5n7riM80HCoDoyZuM=;
+	s=arc-20240116; t=1705956278; c=relaxed/simple;
+	bh=JtLO0MlO8Tt8madrsAxXRurd5vGRKvFlm+BBGklUVJA=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=Edu2BK6+O2eWZq4q/O/vsXmLfMj/FXTixAldqo7O3HAQL6abQ+7XZ9LJ5AcvLzWIpOjBJAUdMR1Zc6C3ntn2qvzBpiBv4es0oNlPpMeApa6+z0QEMEFXKkTfTx3cXPyGULPDZWEyizpcu8IqhSp68HZiq6re5vx0oePwTnGFMgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ESppTKry; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49C8C43394;
-	Mon, 22 Jan 2024 20:44:15 +0000 (UTC)
+	 MIME-Version:Content-Type; b=oYZksfzAFBNzI0ivPQiSIC4kGvpDkKb4W5QsIZaSniYFei1m+WJPv6Xj3vbYSA6IJfgaosKCvI+etle9RKKGgqDfRFPjtijyFtpTPU2qp3/zGzum+X6E+2GCvT4Zqh3PuwuU/J3LypmFBF6RyhvWFA+TY68WTw9bLt9goqeK2WY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tkoPl5LS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0542C43394;
+	Mon, 22 Jan 2024 20:44:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705956259;
-	bh=lozOmd/cqGod0cy3wd2A6y+CaR5n7riM80HCoDoyZuM=;
+	s=k20201202; t=1705956277;
+	bh=JtLO0MlO8Tt8madrsAxXRurd5vGRKvFlm+BBGklUVJA=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=ESppTKryqkRXLyxvtT1SCiVm+RGydcihr8lSh1lpoHOYJ0qH8j67gaVF1cLOmQCJq
-	 fD0aWHqGwuYGGAkbduME5fOHtYMNkz+F0hD90SWaDn83OoPZbbe16t1MCJ5EG2Vc1y
-	 +ttFpWsXlLAwHwqK67ozQnSCGuFhSyo7MzLqfOTy8mhTFC+5IvYpZxbs5mkYyep6cD
-	 pNhHOOt5NE6WNzrbO42enP5QjlGU5BLbBVq2Nsed3xbh05mjEKF9eN9wA2Ls1JdAtH
-	 mAtsaY+qa2rxCeKbXrFlTBm50VbGZ8RycBnE9H0i3StP2Izz0JwihTy0wQRo+E7Y5z
-	 s4oD1T1bkCXSQ==
+	b=tkoPl5LSY0xWL2R6sf7k2TjL8UqFl5s1Dv2r95mEs97/1UWfJm79jFKWRKdY/k7s7
+	 nYAbYKQGwmqZ5fwiXjvUVvPEIDAhH3V/AK4vXj/4Jt4Wu/g18nP8uZV5XFtmWhpU9I
+	 HVeUh5/ZePr5tqc6nkf/BH7eA8ACApu/6k6X1P+RunFs3QIeFCpZN8gp4EKu4ytzSo
+	 upWhhb8ypokTAQhHKl3PDHx0FsfKeUrv4NBS8iIQDmmR2cNFQ+lAEhp1WhIPClV5Oj
+	 esH+Z0nu13TNXyXOp90mKBJbMUWzjdTHvzLcT50DTz4OlF6/vfuJV7saxuKf2F6WvG
+	 UGmMY+sgkBQIA==
 From: Mark Brown <broonie@kernel.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- Banajit Goswami <bgoswami@quicinc.com>, Andy Gross <agross@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>, Neil Armstrong <neil.armstrong@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org, 
- linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20231219-topic-sm8650-upstream-wcd939x-codec-v4-0-1c3bbff2d7ab@linaro.org>
-References: <20231219-topic-sm8650-upstream-wcd939x-codec-v4-0-1c3bbff2d7ab@linaro.org>
-Subject: Re: [PATCH v4 0/5] ASoC: codecs: add support for WCD939x Codec
-Message-Id: <170595625545.145475.5243509079608923207.b4-ty@kernel.org>
-Date: Mon, 22 Jan 2024 20:44:15 +0000
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20240109-rpm_vreg_cleanup-v3-1-fa0201029f78@linaro.org>
+References: <20240109-rpm_vreg_cleanup-v3-1-fa0201029f78@linaro.org>
+Subject: Re: [PATCH v3] regulator: qcom_smd: Keep one rpm handle for all
+ vregs
+Message-Id: <170595627643.145638.11249590166441157779.b4-ty@kernel.org>
+Date: Mon, 22 Jan 2024 20:44:36 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,33 +62,25 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13-dev-5c066
 
-On Tue, 19 Dec 2023 13:45:33 +0100, Neil Armstrong wrote:
-> Add the main WCD9390/WCD9395 Audio Codec driver to support:
-> - 4 ADC inputs for up to 5 Analog Microphones
-> - 4 DMIC inputs for up to 8 Digital Microphones
-> - 4 Microphone BIAS
-> - Stereo Headphone output
-> - Mono EAR output
-> - MBHC engine for Headset Detection
+On Tue, 09 Jan 2024 11:04:49 +0100, Konrad Dybcio wrote:
+> For no apparent reason (as there's just one RPM per SoC), all vregs
+> currently store a copy of a pointer to smd_rpm. Introduce a single,
+> global one to save up on space in each definition.
+> 
+> bloat-o-meter reports a slight uptick:
+> 
+> Total: Before=44008, After=44080, chg +0.16%
 > 
 > [...]
 
 Applied to
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
 Thanks!
 
-[1/5] ASoC: dt-bindings: qcom,wcd938x: move out common properties
-      commit: 166ee0b3bfbb3611579c77fc84e44cd27a0099ef
-[2/5] ASoC: dt-bindings: document WCD939x Audio Codec
-      commit: edf647d1335fd55c81cdb8cc8cbf1da7d97739df
-[3/5] ASoC: codec: wcd-mbhc-v2: add support when connected behind an USB-C audio mux
-      commit: 0c105997eefd98603796c4e5890615527578eb04
-[4/5] ASoC: codecs: Add WCD939x Soundwire devices driver
-      commit: be2af391cea018eaea61f929eaef9394c78faaf2
-[5/5] ASoC: codecs: Add WCD939x Codec driver
-      commit: 10f514bd172a40b9d03d759678e4711612d671a1
+[1/1] regulator: qcom_smd: Keep one rpm handle for all vregs
+      commit: 5df3b41bd6b5432010d6d85e5aa7217bd8f6b0cb
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
