@@ -1,71 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-7757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A624835F7F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 11:23:46 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 44BD9835F82
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 11:24:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B660D289648
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 10:23:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B2F1B1F26765
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 10:24:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 003BC3BB23;
-	Mon, 22 Jan 2024 10:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07ED03C08D;
+	Mon, 22 Jan 2024 10:22:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="pud8Qino"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="yCQhd5eJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4923B1AB
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 10:22:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568683B786
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 10:22:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705918934; cv=none; b=ci9BfF5aV5/fnQLZs20C2iMNVUsHtibOw44Qaa+7axGzq+YD91MW1wL1v1FSboerulo45IH8jBHLOx/LPzkDUYFjakrW8ukIxr0qpZwvZ7WeqVkfjC/oFIegoxz9idv8odRn0XSDT7y2T32AvCRlUhY6hSoA5yerjjBX3GsO/Uk=
+	t=1705918935; cv=none; b=u6hka2p04yuwQvGURsgvkoNJxNozAZkBdqqHDss0Nm1djvhLbPGS52rb6eCG1TYfsxnj2ub77kVyKwnUhUzpEcSLvvcpO248jZnOomw8sPRig4OJeLOPbXUcygYru08bCfOmEfPxSJBD0EfD+jEf835sBUJqjAUZ0hukDYiukRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705918934; c=relaxed/simple;
-	bh=5OOWzBxeb7BtobnU9iNj/y8p2LAmrftIcVh9GRDhdDE=;
+	s=arc-20240116; t=1705918935; c=relaxed/simple;
+	bh=WIOe11Ytzyo9Yq0ljywUwZYIxYsyWX7ldWgffEttovw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=tzWxZk7dGsedSc3MbjWlB4n33/unP8bs3KACwgcr+Nd0DpZmTTTnPR16jJnnKIWpylx+mMfStsfiSqI7mL4HngIPqamd1kwdKlZIOyk0D0cNycKlfbS7AP9xo7+xrykuxPdCinRjB2dBL7oKVUfqtVfgH3VTck/y19cE1i4iQBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=pud8Qino; arc=none smtp.client-ip=209.85.128.49
+	 MIME-Version; b=nOCyDwZX0/3PPfzxQYWa6k1Jex+HYoT+kQaciwuNZK2C6KWu4yk1VMISTIQcDzIqbFA/3miHOTR+UZ8c0sWYf4TT81SzIeauijnP7IiJdt1gAWJmvsOk2gmYOB8BcS8D1nbfTaOElZO6PNNRzEosUztpNYosUJRnP+ePncsXvM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=yCQhd5eJ; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-40e913e3f03so38253885e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 02:22:13 -0800 (PST)
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-336c5b5c163so1745948f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 02:22:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1705918931; x=1706523731; darn=vger.kernel.org;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1705918932; x=1706523732; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Y0tdf3eyAnzGsNLeuGvazlCndWizgRVXM7rJoHxIMZA=;
-        b=pud8QinoedIIJkLXDE7JqnjdRfXJimIu5k8LQm7ZVRPZWOMqIpGY8rXaiCUdCFqf1k
-         nJJDs9b3JEvs90SGacsikkCHFALlf9Ny1HiDWU7qoPGcwFrEuDuvkW6V+FeO0sxp5LOz
-         OMi3zHBx567qO5ui5E4GOrlQXFmngYfKzlAnwrHyNfoUYE8ypqCV0sd95d1o1pAFoPn+
-         4+o2ITzSu+pRayHqq3HKbFWt7zWrcHVaAsoJwPz7xf0NuyhWnJMg16bmr3CIzFer+/nW
-         6H2HKOmUKcexXqgImskohkqow8pR8vkKcmvO0jpJbG82STpT9xK6f9ROSU6lifqhQJ9m
-         iG5Q==
+        bh=s0oEOKGcE5RDVKHJLOO6pZt7g+TRP+w7zOsv5ctScyA=;
+        b=yCQhd5eJ3Bt9R6Spqy/D5t5v8+cuTAcyX0oL9PJAoDwpqxgRay3VD3Nady6xbviIZd
+         o9b10XOKwiWjxvbRQEYqwLRoeiizoWGrQh+6sIyZhfxFIt698MxYrMy6rud9jJDkdcHb
+         iHnMqxAMyIN9ebWE6AniM+qyPgRTD7bFBfa0uidIEJib9LKCf01Ub5DDQQ3spI9+ZrIu
+         /pRXcXjyjYq3uVH7F6ljjwkVNU6wzRqX+Dry6CmBZZB5p86lpqsqjRa6Z9NBzbluYpJg
+         3NdXzTq1CSeUNkhZA6grbXn1YX3Q1LrXd6b57ilgS3g56qjNxiF7DUi7SfBa3ov31kx8
+         yrkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705918931; x=1706523731;
+        d=1e100.net; s=20230601; t=1705918932; x=1706523732;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Y0tdf3eyAnzGsNLeuGvazlCndWizgRVXM7rJoHxIMZA=;
-        b=dnpsgZ+BYQCAqH6H+RIj7x5GHKnYCATVa+PI3QlyeGw33/n+9q63OPjyiI2tezE617
-         pI/HbbLMV5oKtD0i2z4VfJXrWyqIWvmDI5mS3IyT/DgdbtdM19G0C1AWRY7M1pHWylfM
-         TCKlV1AoSyXmfsncYFse+hsUzsIThW2pWqRDrL2aZ4DJuCKuIeYF6IOfn5qbNHR96Fwi
-         jObu/dD60w5ubEJqwxqswtfJXlm+yGQX2FakRbdxZn+sOFiO+kb+ys0BbstxIdUgtbtD
-         h3u5B7Au86Tbb3AD4e86V14nbfc4zGagdKTnOFeHBEKG5i9iELvarZEDBRGsYubLVo0S
-         4+Gg==
-X-Gm-Message-State: AOJu0YyYuFWkl7QVtEMSlEL5zXtRQ8JVIdPilkR/ox1XrVlhqQbL3xY8
-	rFfH63/xl7x0rI1ffS3wMqIN3YdDf5lJomR0yAzsO6SoiX1PKUBojXf2Rmc9f3s=
-X-Google-Smtp-Source: AGHT+IH+B9VN5ZNnUgonoCwpyLkf6Q3Qt2MIRkE7DG5TIqy+hV7NtfjVLOWQzZ7VrxUQpy3bxMFZdQ==
-X-Received: by 2002:a7b:c38f:0:b0:40e:6617:fc33 with SMTP id s15-20020a7bc38f000000b0040e6617fc33mr2146170wmj.146.1705918931763;
-        Mon, 22 Jan 2024 02:22:11 -0800 (PST)
+        bh=s0oEOKGcE5RDVKHJLOO6pZt7g+TRP+w7zOsv5ctScyA=;
+        b=BYH2YpJgI6+68CUPInB8YCUZ3FugOyseuKPumu8hjG41yye8T5SsMt1fd/1ZKQXn0Y
+         nwPIdQgqRXGtXpnGB/NcAOvc+Mjxh2lnwKc15c58xU4OENnA4xQishNWH1Y6bvOdKYFD
+         G2iM09xTtytsEBsbBLMQtLl2rGucbrCzQHxRY/lkDbLdNHcDNQ7eXE9GQU5M5uXXpbaZ
+         iRjeRV6IMSVaIZStO03IemNiD0bHTLhwf0ISqsDh9mJxvzOx8YRK+fBYQxn27HJKRRl3
+         uSjbBRrY/dNj62goALohp8jWpbX8YF5K0nqtRW2LtM1qCCUcUP3PTPZ/rLc3jkqr1wVs
+         tVKA==
+X-Gm-Message-State: AOJu0YyIfn404WAiraGahvDRudMHYFXEMKlIjr9aGD8B7exm9v2cbaFr
+	7Mrtm0ZvH3OM4glmTwdIqakI2w49zRLoXgEgLJnZypf6ne54H+VfsGD0MOyr950=
+X-Google-Smtp-Source: AGHT+IFToqlcKaxkiS5LUPEGDrIetlUm4/CPOggDUt+GZFmVFqwX/xwX44NKNvyf8GINsBA/qvKbHg==
+X-Received: by 2002:a05:6000:100b:b0:337:d8a5:32d6 with SMTP id a11-20020a056000100b00b00337d8a532d6mr1954803wrx.9.1705918932721;
+        Mon, 22 Jan 2024 02:22:12 -0800 (PST)
 Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:92a0:6172:d229:1898])
-        by smtp.gmail.com with ESMTPSA id q7-20020adffec7000000b0033926505eafsm6377904wrs.32.2024.01.22.02.22.10
+        by smtp.gmail.com with ESMTPSA id q7-20020adffec7000000b0033926505eafsm6377904wrs.32.2024.01.22.02.22.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Jan 2024 02:22:11 -0800 (PST)
+        Mon, 22 Jan 2024 02:22:12 -0800 (PST)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
 To: Andy Gross <agross@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
@@ -86,9 +86,9 @@ Cc: linux-arm-msm@vger.kernel.org,
 	kernel@quicinc.com,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Deepti Jaggi <quic_djaggi@quicinc.com>
-Subject: [RESEND PATCH v6 06/12] firmware: qcom: scm: make qcom_scm_lmh_dcvsh() use the TZ allocator
-Date: Mon, 22 Jan 2024 11:21:51 +0100
-Message-Id: <20240122102157.22761-7-brgl@bgdev.pl>
+Subject: [RESEND PATCH v6 07/12] firmware: qcom: scm: make qcom_scm_qseecom_app_get_id() use the TZ allocator
+Date: Mon, 22 Jan 2024 11:21:52 +0100
+Message-Id: <20240122102157.22761-8-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20240122102157.22761-1-brgl@bgdev.pl>
 References: <20240122102157.22761-1-brgl@bgdev.pl>
@@ -103,54 +103,64 @@ Content-Transfer-Encoding: 8bit
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
 Let's use the new TZ memory allocator to obtain a buffer for this call
-instead of using dma_alloc_coherent().
+instead of manually kmalloc()ing it and then mapping to physical space.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+Tested-by: Maximilian Luz <luzmaximilian@gmail.com>
 Tested-by: Andrew Halaney <ahalaney@redhat.com> # sc8280xp-lenovo-thinkpad-x13s
 Tested-by: Deepti Jaggi <quic_djaggi@quicinc.com> #sa8775p-ride
 Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
 ---
- drivers/firmware/qcom/qcom_scm.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/firmware/qcom/qcom_scm.c | 18 ++++--------------
+ 1 file changed, 4 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index 31071a714cf1..11638daa2fe5 100644
+index 11638daa2fe5..3a6cefb4eb2e 100644
 --- a/drivers/firmware/qcom/qcom_scm.c
 +++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -1340,8 +1340,6 @@ EXPORT_SYMBOL_GPL(qcom_scm_lmh_profile_change);
- int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
- 		       u64 limit_node, u32 node_id, u64 version)
- {
--	dma_addr_t payload_phys;
--	u32 *payload_buf;
- 	int ret, payload_size = 5 * sizeof(u32);
+@@ -1525,37 +1525,27 @@ int qcom_scm_qseecom_app_get_id(const char *app_name, u32 *app_id)
+ 	unsigned long app_name_len = strlen(app_name);
+ 	struct qcom_scm_desc desc = {};
+ 	struct qcom_scm_qseecom_resp res = {};
+-	dma_addr_t name_buf_phys;
+-	char *name_buf;
+ 	int status;
  
- 	struct qcom_scm_desc desc = {
-@@ -1356,7 +1354,9 @@ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
- 		.owner = ARM_SMCCC_OWNER_SIP,
- 	};
+ 	if (app_name_len >= name_buf_size)
+ 		return -EINVAL;
  
--	payload_buf = dma_alloc_coherent(__scm->dev, payload_size, &payload_phys, GFP_KERNEL);
-+	u32 *payload_buf __free(qcom_tzmem) = qcom_tzmem_alloc(__scm->mempool,
-+							       payload_size,
-+							       GFP_KERNEL);
- 	if (!payload_buf)
+-	name_buf = kzalloc(name_buf_size, GFP_KERNEL);
++	char *name_buf __free(qcom_tzmem) = qcom_tzmem_alloc(__scm->mempool,
++							     name_buf_size,
++							     GFP_KERNEL);
+ 	if (!name_buf)
  		return -ENOMEM;
  
-@@ -1366,11 +1366,10 @@ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
- 	payload_buf[3] = 1;
- 	payload_buf[4] = payload_val;
+ 	memcpy(name_buf, app_name, app_name_len);
  
--	desc.args[0] = payload_phys;
-+	desc.args[0] = qcom_tzmem_to_phys(payload_buf);
+-	name_buf_phys = dma_map_single(__scm->dev, name_buf, name_buf_size, DMA_TO_DEVICE);
+-	status = dma_mapping_error(__scm->dev, name_buf_phys);
+-	if (status) {
+-		kfree(name_buf);
+-		dev_err(__scm->dev, "qseecom: failed to map dma address\n");
+-		return status;
+-	}
+-
+ 	desc.owner = QSEECOM_TZ_OWNER_QSEE_OS;
+ 	desc.svc = QSEECOM_TZ_SVC_APP_MGR;
+ 	desc.cmd = QSEECOM_TZ_CMD_APP_LOOKUP;
+ 	desc.arginfo = QCOM_SCM_ARGS(2, QCOM_SCM_RW, QCOM_SCM_VAL);
+-	desc.args[0] = name_buf_phys;
++	desc.args[0] = qcom_tzmem_to_phys(name_buf);
+ 	desc.args[1] = app_name_len;
  
- 	ret = qcom_scm_call(__scm->dev, &desc, NULL);
+ 	status = qcom_scm_qseecom_call(&desc, &res);
+-	dma_unmap_single(__scm->dev, name_buf_phys, name_buf_size, DMA_TO_DEVICE);
+-	kfree(name_buf);
  
--	dma_free_coherent(__scm->dev, payload_size, payload_buf, payload_phys);
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(qcom_scm_lmh_dcvsh);
+ 	if (status)
+ 		return status;
 -- 
 2.40.1
 
