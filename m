@@ -1,145 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-7768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7769-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21BB9836036
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 12:00:18 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC6B58361F1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 12:37:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 54371B29346
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 10:54:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 67A3F1F25C7A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 11:37:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A237D3A1AF;
-	Mon, 22 Jan 2024 10:54:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8293D3FB32;
+	Mon, 22 Jan 2024 11:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NMe3Ta0q"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="vlCUKnsh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF633A262
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 10:54:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31BE3B29A
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 11:27:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705920888; cv=none; b=BwDth1iRTf1n/r7doKYFI0CxU2ReN/HadKkUxCLbcIKZBmDcwyfPISC6T5ZU0IUcK4xidNOGM/z+x9dRcitW2VoHDVQ01q8d3+A2G1Y7Zj0jWf/2KPT00K2eAHMJP/Lt1p/SG9XIUmh3FygzBfsq/UcBjSCraMLt11o+pUrWbjw=
+	t=1705922862; cv=none; b=rfWcJcSs5YBPOxwdcz+5EjwRBWwHt55+klfzuNAvhp0Lg9HWxLiCsPAg3vBwm4jre4SsFBDLfzW1XbKRZ6+//4DVIo4UqcyR7NE2Yjlb8145zK11rqdLTr4edzLbKMBwPSstzOWm7XxuGS1qn3q1LpCetgsgs6fcfGzSZhsdM2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705920888; c=relaxed/simple;
-	bh=lTnarq8IAg1XM6GxuzQJXH9sGVYsO2Kix1KmRraYVVM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dcMUXBWbjoUis3ovCMTrcyEyUsOpbmrkzXp01Kso+Fd7jQhRODxXbf/xpcLvaICA6fHoWomEZSBKvSr1HokooTVHh+GHfoliC5RhcFxyf9xZinpZ1FQSOvRMQohEF1FBR728Xx/8AiwGoJucHZ0vK9rf0NvoeKRBQaHEtcnwHow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NMe3Ta0q; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a271a28aeb4so310519366b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 02:54:46 -0800 (PST)
+	s=arc-20240116; t=1705922862; c=relaxed/simple;
+	bh=1/YALr6F0ESKpBAGOERlcLO4YyaHn1XV7HKiN2JojMQ=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=GLk3S0QtPeoG7XX2aAZw8OmfKwBs2yMAh4+1IZT4TLe5RUvU2mVHLbcL/B7tnyQ+ulMKIZ3MMq+o0d5tHvEZyAMAPi1IpjyIrc5S8j5ufZHLQcrw5+7F2ebzryPvscpxXrJjGtEBPy13am1K8URPz/4lzplS3ygbkeOxFZEx4+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=vlCUKnsh; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a308db01df6so21364066b.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 03:27:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705920885; x=1706525685; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OLlrIj6M5dwt//auJ5YhalkWbvV9fgPK8UYw5u29EOM=;
-        b=NMe3Ta0qnOcACRHFFv1ON2x3m5W0Mb+DXhOL0Dc6Ku59X1xmGadMrQLivaDbBYiKYH
-         c4eYf7llvz/jrNdUZjos6GqkGRVpNa6+fkE31r5U/9PnSO4xld66Bgf9zUhc337zsDqN
-         V1sbevvvOAUI9NNV+priwwfj48gfermQXvvDAFr6YufBvc87rVWKW7AZZbmgPHUX6WcU
-         R2rZl2q7NwircYGvgDN7ohPTehtcyhxEXNLB6iDKN+iUtAxHQdVEVCk6hzlW0t+cA2Le
-         4EjLd8QNqiX3Ke4iBm/PtK4O5aY9ZX80hIDfNcZmmXH8pstHIhgqfCsXCsKisT3059Jh
-         sSsw==
+        d=fairphone.com; s=fair; t=1705922859; x=1706527659; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WIgV/QMkOZJ0bf7IGnZFc3jEnAkXvM5i+7Bl0Lz57H0=;
+        b=vlCUKnshZ6oqYxu+ZjhrB1+/WDo+nslor1Aw1PRTzc0KP+tU4hufZmPe0RSl7/vh1S
+         lFumDICxwtcqJLUf0lieaIULeKNRmN8JHltw54m6AQjUXlPuO617aJLV+6XzeyLLLAAM
+         8vhkGL7c+/ag4k19yeDSjqyGzXXH+QKXhEa+9e6xM5FwqzCV8HlfBJsEDdI0oJIQwTah
+         MG2kh+zMZdGbRVa+VoX0rfZLG9B8TW4BC7xcHt9/GxvS5dzabYCU9NCTFimbTZmC7jLD
+         v13ghABKakH5Fwri/sSgfiafKtwZIxDaqfaW+8Q7U71zfKgYAV7TdQfJU7g3fWVd2AuJ
+         TL2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705920885; x=1706525685;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OLlrIj6M5dwt//auJ5YhalkWbvV9fgPK8UYw5u29EOM=;
-        b=T+K6IrWyWWo/BQyVAm/38o2a2CImagUdek3x4LZ+tqqZQVdrPAmine+pWuPdvcVL66
-         Amd8kyxh7PWs/e+rZtfgx3j6UGTLcIHYW4LqT0DY+YGMGVl8bRMUeKKcylcDLxsxtjzs
-         O5N28gUnDs0aqxf5QZ49sjpgrhQthny3wboFpqnlw0QW39IcbQ9/ObHzNbvPu8h533Z7
-         UyL7WxL5WN0jD0RcFlhXHKyqItpmDHcWltT71RaJ5Ew8xCHBDEskOZWMbLcZY7cP4WE2
-         ilZzguNZv2U6MU4PqY8Axuhzdpv4EJFzqfVN7kGP/hl5zAuyd0qPGB3fxhn5vygJMH5M
-         m4ew==
-X-Gm-Message-State: AOJu0YweiVUklsD0GKubk9Aj41ZFBOI/XflCM7szcQ/nrS6vZst2948O
-	TMkJhZ0FjF3RZmnwTggwJ9QCaCqHnPKnyxh89v+fHUOT7MyK8VrEU7NTBKQGRQNoU2RN/6JKc87
-	u
-X-Google-Smtp-Source: AGHT+IEeBsyedCcVZMmrmZSF2t9z7xJutp8eKLTW8jvjhH6AzUBWIDCLo+LC1PZzVFNgQNtJS1vJyA==
-X-Received: by 2002:a17:907:8dcc:b0:a30:3ba:dae9 with SMTP id tg12-20020a1709078dcc00b00a3003badae9mr1434236ejc.77.1705920885135;
-        Mon, 22 Jan 2024 02:54:45 -0800 (PST)
-Received: from [192.168.231.132] (178235179218.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.218])
-        by smtp.gmail.com with ESMTPSA id q5-20020a170906388500b00a28a297d47esm13243272ejd.73.2024.01.22.02.54.44
+        d=1e100.net; s=20230601; t=1705922859; x=1706527659;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=WIgV/QMkOZJ0bf7IGnZFc3jEnAkXvM5i+7Bl0Lz57H0=;
+        b=Vd7yKnXzTcLerjhBSu08TlYSi7M55lukncgjhlphDL4TPDBKCOp5+7/zMy+Kv8t+W6
+         c4FLhgCmkXyyX4ZucBRhbKQnrCxPT3C7tKKeZwVPk1gpK9Zu7NakD3cdASvlh8CvqMdj
+         SrC2woDe8XAJ9Qgqjbf3osKLHsPZAiXHoKV4BqWIgTcQpqExWAYsEaH7Q+1CHqwJP5yC
+         qRc80iGoqhvXaTXJHcKmqIHVf2wk+PI3mXMOTkD4YNsFR9HCLrB/zHddPrDF7nVF3/ja
+         24OqEjhxkV56HdRdVYUEkL5MKvk10RxA/Pdb0C4SK4Dl/eRV04i/uGWi2EkFKFt+F/7P
+         5YAA==
+X-Gm-Message-State: AOJu0YzX2afRrEKINSuMdVNpwOPdicU/TnpCz3xrkaxNQzruF615lT+W
+	IDtZlIWMByzX5U3Rx7TYQp3d7esfw0QRVbruGrQ2b4/Sll6jlCdFMslALVJF/Y4=
+X-Google-Smtp-Source: AGHT+IFNlq6X29oAt8M85jJiLwH2VUAOWjj165S6OihyHQSXyUfaN5CoDfj1ih9bZ1mSWEGWyb48sg==
+X-Received: by 2002:a17:906:6c85:b0:a2a:35fd:d48b with SMTP id s5-20020a1709066c8500b00a2a35fdd48bmr1037397ejr.266.1705922859113;
+        Mon, 22 Jan 2024 03:27:39 -0800 (PST)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id d14-20020a170906c20e00b00a298e2f6b3csm13247972ejz.213.2024.01.22.03.27.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Jan 2024 02:54:44 -0800 (PST)
-Message-ID: <bef1eaa5-a6e7-466c-b8a7-17537838deb3@linaro.org>
-Date: Mon, 22 Jan 2024 11:54:44 +0100
+        Mon, 22 Jan 2024 03:27:38 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] soc: qcom: smp2p: fix all kernel-doc warnings
-Content-Language: en-US
-To: Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org
-Cc: Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org
-References: <20240119032859.4082-1-rdunlap@infradead.org>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20240119032859.4082-1-rdunlap@infradead.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Date: Mon, 22 Jan 2024 12:27:38 +0100
+Message-Id: <CYL76M5KT424.G3BC6JX74XVN@fairphone.com>
+Cc: "Jessica Zhang" <quic_jesszhan@quicinc.com>, "Sam Ravnborg"
+ <sam@ravnborg.org>, "David Airlie" <airlied@gmail.com>, "Daniel Vetter"
+ <daniel@ffwll.ch>, "Maarten Lankhorst" <maarten.lankhorst@linux.intel.com>,
+ "Maxime Ripard" <mripard@kernel.org>, "Thomas Zimmermann"
+ <tzimmermann@suse.de>, "Rob Herring" <robh+dt@kernel.org>, "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley"
+ <conor+dt@kernel.org>, "Bjorn Andersson" <andersson@kernel.org>, "Konrad
+ Dybcio" <konrad.dybcio@linaro.org>, "Andy Gross" <agross@kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+ <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>
+Subject: Re: [PATCH v2 2/4] drm/panel: Add driver for DJN HX83112A LCD panel
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: <neil.armstrong@linaro.org>, "Linus Walleij" <linus.walleij@linaro.org>
+X-Mailer: aerc 0.15.2
+References: <20240110-fp4-panel-v2-0-8ad11174f65b@fairphone.com>
+ <20240110-fp4-panel-v2-2-8ad11174f65b@fairphone.com>
+ <CACRpkdaWTfPDCin_L6pefHsokjNyO8Mo6hWPdzPLLi1EUkKUuA@mail.gmail.com>
+ <CYBZEZ4IM6IL.VR04W7933VI@fairphone.com>
+ <CACRpkdZQbVXfBa70nhDOqfWPbsh-6DgX-uvZOxr19pzMmF2giQ@mail.gmail.com>
+ <CYCLSCKPPBOC.1B1MP3VOOC0Q8@fairphone.com>
+ <cdc18e2a-b7eb-4b54-a513-481148fb3b0d@linaro.org>
+ <CYCMVXHYVDCI.HVH1TR8MWEUK@fairphone.com>
+ <CACRpkdacS9ojXUuogygkz6xxCf3mMq6GG_75sze8ukUu=rxVyw@mail.gmail.com>
+ <f99d363c-d4a6-44b3-8057-3925f8dac1d5@linaro.org>
+In-Reply-To: <f99d363c-d4a6-44b3-8057-3925f8dac1d5@linaro.org>
 
-On 19.01.2024 04:28, Randy Dunlap wrote:
-> Use the documented notation for nested struct members.
-> Add a Returns: comment for qcom_smp2p_intr().
-> 
-> These changes prevent these kernel-doc warnings:
-> 
-> smp2p.c:78: warning: Excess struct member 'name' description in 'smp2p_smem_item'
-> smp2p.c:78: warning: Excess struct member 'value' description in 'smp2p_smem_item'
-> smp2p.c:280: warning: No description found for return value of 'qcom_smp2p_intr'
-> 
-> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> ---
+On Fri Jan 12, 2024 at 11:26 AM CET,  wrote:
+> On 12/01/2024 11:23, Linus Walleij wrote:
+> > On Fri, Jan 12, 2024 at 10:52=E2=80=AFAM Luca Weiss <luca.weiss@fairpho=
+ne.com> wrote:
+> >=20
+> >> Since there's zero indication Truly is involved in this panel in my
+> >> documentation - much less the number 5P65 - I'm not going to add that.
+>
+> Ack
+>
+> >=20
+> > OK then, I fold, thanks for looking into it.
+> > Keep the Himax hx83112a file name and symbols.
+> >=20
+> >> So in short this panel is the model 9A-3R063-1102B from DJN, which use=
+s
+> >> a Himax HX83112A driver IC.
+> >=20
+> > So compatible =3D "djn,9a-3r063-1102b" since the setup sequences for
+> > hx83112a are clearly for this one display?
+>
+> Yep let's settle on that!
 
-Thanks!
+It's clear to me to use "djn,9a-3r063-1102b" in the driver now but what
+about dts?
 
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Currently here in v2 we have this:
+compatible =3D "fairphone,fp4-hx83112a-djn", "himax,hx83112a";
 
-Konrad
+Should this just become this?
+compatible =3D "djn,9a-3r063-1102b";
+
+Or e.g. this?
+compatible =3D "djn,9a-3r063-1102b", "himax,hx83112a";
+
+Or something else completely? Do we have some documentation / best
+practises around this maybe?
+
+Regards
+Luca
+
+>
+> Thanks,
+> Neil
+>
+> >=20
+> > Yours,
+> > Linus Walleij
+
 
