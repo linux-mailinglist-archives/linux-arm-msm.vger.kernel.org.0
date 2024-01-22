@@ -1,147 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-7865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38176837263
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 20:24:09 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 509308372A2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 20:33:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D76281F24D43
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 19:24:08 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CBDF7B29F29
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 19:28:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12A163DBBB;
-	Mon, 22 Jan 2024 19:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 050363F8CE;
+	Mon, 22 Jan 2024 19:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BzZluO4l"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="leVghTsS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6EB3DBB7
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 19:24:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075C83DBA8
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 19:27:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705951445; cv=none; b=h/hCZwHG5vX5XH7PDmu/da7RzQ+y2LN6oiUuEK1zTmy+5nsi4jehdOutvk5bSDR0EiNdU1boJPKIni4Q5uFDc/wwkmJ5WSdZvY26t9vqWmHFHJf5d9/IyBl1K/EKR4J45jUB7o0kGdgKHH/RpHy4Q+DxzXc45WUu1tsyz0lxj0I=
+	t=1705951668; cv=none; b=LUZGh6LNvXojRxYX7BY7RId0YkB0fCA3DPvYoBvQI3ax2y5ceDfq1wxda9UydU4OREkp3eBqAtFDDO5gukP7vCVxPFDCtY/UN9IIVqDjp9LEXrD1H/NtlzKqeutt+ZRBeCvE+DMzIkJOHvRmdRmsgmSMOjaHjFqugDpin44KQ1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705951445; c=relaxed/simple;
-	bh=QZXqizCmEJkLTeschCzNI3xVQ5vAq0NNymE7vlfMk5M=;
+	s=arc-20240116; t=1705951668; c=relaxed/simple;
+	bh=Mh5Kbe0KU3JUAV7ggZ8bLsdafX+tUQ2V+LveuJGisoA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=J1t0On+FHpPIRN+D9mVbRAkGOLJkFesfqgiKcfMICjPB0h+T6mye2Nf5AUEUjEYMxVFVj4qoJzAP0AnTSzrtozS4VSKALuNgpoxhYWLoxZTE77XZXuDaKjLBnn++4rhxYzyKy9gd32dows+pS0BUUj9enBl+rKSPvwTyaChTzYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BzZluO4l; arc=none smtp.client-ip=209.85.128.176
+	 To:Cc:Content-Type; b=oM3DyUmv9fCgdomg/5fZDop1lussjPqte5wa3jd58G8Or+sFL1Ut78uZves17LQAz2abyMVXX/Ylt3SvumxSHI4Y/oTEUIQOOBTMffSG1aV4QX0oKsdjwJbxg2SonmOn0G0o00bvKQYp5VSKAiPT044OmvjjuZ+OKqUQSKJM1P8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=leVghTsS; arc=none smtp.client-ip=209.85.128.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-5f2d4aaa2fdso34715387b3.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 11:24:03 -0800 (PST)
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-600273605a9so5802807b3.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 11:27:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705951442; x=1706556242; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1705951665; x=1706556465; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=OX9o7XvaEzc93ZP35IE3Ip9GAQ7HE7yiGJfHkZCdg0g=;
-        b=BzZluO4lIK/LdcgLgp2/li+1rKdlxkQwugpaFi5ksQAXrGTDiHG4bfsBBf7o875eb/
-         3O/bePWF/ndCKqNyEVyP376gv+N5qGFvtbrVk+kPNdKmkTHKn7QcoeJ5bsMvEg56O1c4
-         gwlFMfSfC1r+gmiyqIXaaxJVGJTRgKvhdMH+GPQXW0U+CAvsLO3jqbPiZGAoM5IDlq2R
-         NlioriDBYJVpjf78a7ohGisORCfvP93ZYGMoOnb98lghjBnu/ErAX3NfaK2qqq0exOLc
-         ZDxz2UuEdOc4SFVzuUG+fZzPSFwngkpnqGaQbdH/tMhJklWoTSjrdWbV4mOzBmFujkRp
-         9D0A==
+        bh=ldZM+19i4vknqpEJcz+SwZt7PNLuLGwHmstwFcNRiVw=;
+        b=leVghTsS5sLwDRGNdU9STr4ydNsQaenKuR42v/HGQ3sWt9p3DKxQmwZWYrvgrLPdDj
+         IS3jeZUA3aSwiFQ7Dn8vVhCGTli9ORJ/P7cS/lurnLiBxAf9Q97PZNwkuBxQU8NOkoaN
+         Di+fSgasN3JY1Hf+qOaDK14FZj7b9W4DHTBuo6dzrJh6Ud+UvOlHuCkIprvnHST64PNG
+         UIhwxLf/xCc8YLYKLLekBXH2Vr3V+mc8wjyDxW7ko2Zp7fdsfaDgfyR/eD7OnKUOleFz
+         FQ1grO0UNl1xV/6Ki7iwSP1ZC0l6ftAnYR10wRM8Zn15td2TYkI0i3kxEeXzmPgOCw8K
+         njow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705951442; x=1706556242;
+        d=1e100.net; s=20230601; t=1705951665; x=1706556465;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=OX9o7XvaEzc93ZP35IE3Ip9GAQ7HE7yiGJfHkZCdg0g=;
-        b=eoAeAv+dXjj94VwgpxtbhDwjc/GRZ4j1xPEv9SjKOvEKnlN/iDrYAzQA8mrNcBh4/D
-         eoiWOazoBlyCXeyf/8Dqnk8hie0YVQ3N8ibcHTVbg23rEHGaOSkug0DBv0n2F2tCPXhp
-         fXAzhLRgT+830OIYiiMqnw9EKXIqkzkfom3ujHh3VDtl4EiuZYeVnFCdkhAqXCWeju0B
-         /m33Kjf77GjyREYjJTN/UIo/ksAfjBKj5QkE/fUXY/snoxtLyO9UTdHaQMdn8DdIjtoV
-         77k84zBZ0HKS+Z2Mck+e3CFdVj182xBfo2ppn1ROJRRve1SkdvMDo26XlexDhiZCtHox
-         y4Rg==
-X-Gm-Message-State: AOJu0YxYS3XCVsOQOtr9sNC3QRy832SDyhB+IyCiwU/O1PmAzUDgRF4k
-	Nn6jP3Fbso6PqdCKZ97CaxCQya0FlzW8s0cgzz1FE91hLwTjeH8CRmD3Gv2FdpJpMFqvenEc4EI
-	9tNr5WaJDoCgfRfMW/N/MleKqVu3qSR6C7x5n8g==
-X-Google-Smtp-Source: AGHT+IF5SDxexmpKHGEI9dgqfLSo0UyVCMcmVgjFZpXLt1QYEJaISI6Lq/9f0AauIS9Iwv3B1VQ1l+v+6uOJYpFqJW4=
-X-Received: by 2002:a0d:e883:0:b0:5ff:8420:ce7f with SMTP id
- r125-20020a0de883000000b005ff8420ce7fmr3961841ywe.49.1705951442419; Mon, 22
- Jan 2024 11:24:02 -0800 (PST)
+        bh=ldZM+19i4vknqpEJcz+SwZt7PNLuLGwHmstwFcNRiVw=;
+        b=DcDRO2DecXBWwMaKMUaO/ad7tg8rQNTFYCHCkOOVHdx/gBLCo1k38FPXvvHWDsdDtk
+         3k7A/Mj/gMmEeHdPHOPsMf57SJyAhr66OpeBVD6FiDfLj61RokyqwHu68LWsl74CdqC8
+         MUX2772+MMa6JTQSLtvhfoE91+G6QKNQFxC1zPyu+exBOMQNlAsGPVNs8j5EfvhaIWE/
+         c7YEXImrYjquHgYnUAwQCH6fWY3o74Van11TX8TR0aE4vUbZnq20QMtcw4t9La2BqeLv
+         xlbtnzMz11huIhuyyFhdnYsw0WRjb3UqPwS6An7QsRakrOgQop3Oi9wv5XH5G67rxe+W
+         R3pg==
+X-Gm-Message-State: AOJu0YzQEtt+68o5Jb+qUGiA1MbZgEfKPCNxo39L/xBGTD5AVHjMQ85V
+	u4PItnl/94AcmmcHBXeUhoDJUiiUnelhr9BEXicSsnA5hls/1WDCvVLuTZLNBRMw+MCFx1XUXAF
+	1bU8jvc4N/7OQd8LQxnEShJ+KwXyqpDrYiW3+6g==
+X-Google-Smtp-Source: AGHT+IHiKVYE5aKPqU5kdfeO0Li9GseEmmCf2vRaYQ4qHPENuwALogLS/U/L6qR1t24qPpJkqmQk8KXd8hNpkFYciEc=
+X-Received: by 2002:a81:4a89:0:b0:5ff:96ea:ba12 with SMTP id
+ x131-20020a814a89000000b005ff96eaba12mr3779029ywa.23.1705951665050; Mon, 22
+ Jan 2024 11:27:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240122-topic-qdf_cleanup_pinctrl-v1-0-0c619ea25091@linaro.org>
- <8c9b157b-4698-70a3-57b7-c588998eeda7@quicinc.com> <CAA8EJprDk=HnqWJ_F5zdUKMPFPpx1RD9KN-KQP9yopP6LMh_fw@mail.gmail.com>
- <52479377-ff61-7537-e4aa-064ab4a77c03@quicinc.com>
-In-Reply-To: <52479377-ff61-7537-e4aa-064ab4a77c03@quicinc.com>
+References: <1705749649-4708-1-git-send-email-quic_amrianan@quicinc.com>
+ <1705749649-4708-3-git-send-email-quic_amrianan@quicinc.com>
+ <54426665-90c5-4355-a174-f512004e11e5@linaro.org> <391f8f48-d1f5-702d-20d4-ae8b8a7ace58@quicinc.com>
+ <065601d3-92e7-46cc-a7aa-116cd02b3c36@quicinc.com>
+In-Reply-To: <065601d3-92e7-46cc-a7aa-116cd02b3c36@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 22 Jan 2024 21:23:51 +0200
-Message-ID: <CAA8EJpr2g=b8+M9r20KJoK+VVTabgctvB9eLmwivmi5qgBddFQ@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Remove QDF2xxx pinctrl drivers
-To: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Linus Walleij <linus.walleij@linaro.org>, Catalin Marinas <catalin.marinas@arm.com>, 
-	Will Deacon <will@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
+Date: Mon, 22 Jan 2024 21:27:34 +0200
+Message-ID: <CAA8EJpquFe5v70A5bh=m0J03uHPfUMM=W1oQ=knHBx-Cgk8QPQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] dt-bindings: hwinfo: Add Qualcomm's board-id types
+To: Elliot Berman <quic_eberman@quicinc.com>
+Cc: Amrit Anand <quic_amrianan@quicinc.com>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+	agross@kernel.org, andersson@kernel.org, devicetree@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+	kernel@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 22 Jan 2024 at 20:44, Jeffrey Hugo <quic_jhugo@quicinc.com> wrote:
+On Mon, 22 Jan 2024 at 20:46, Elliot Berman <quic_eberman@quicinc.com> wrote:
 >
-> On 1/22/2024 10:56 AM, Dmitry Baryshkov wrote:
-> > On Mon, 22 Jan 2024 at 19:43, Jeffrey Hugo <quic_jhugo@quicinc.com> wrote:
-> >>
-> >> On 1/22/2024 4:57 AM, Konrad Dybcio wrote:
-> >>> The SoC line was never productized, remove the maintenance burden.
-> >>>
-> >>> Compile-tested only.
-> >>>
-> >>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> >>> ---
-> >>> Konrad Dybcio (2):
-> >>>         pinctrl: qcom: Remove QDF2xxx support
-> >>>         arm64: defconfig: Remove QDF24XX pinctrl
-> >>>
-> >>>    arch/arm64/configs/defconfig           |   1 -
-> >>>    drivers/pinctrl/qcom/Kconfig.msm       |   7 --
-> >>>    drivers/pinctrl/qcom/Makefile          |   1 -
-> >>>    drivers/pinctrl/qcom/pinctrl-qdf2xxx.c | 164 ---------------------------------
-> >>>    4 files changed, 173 deletions(-)
-> >>> ---
-> >>> base-commit: 319fbd8fc6d339e0a1c7b067eed870c518a13a02
-> >>> change-id: 20240122-topic-qdf_cleanup_pinctrl-98e17cdb375b
-> >>>
-> >>> Best regards,
-> >>
-> >> NACK.
-> >>
-> >> This was productized, there are some out in the wild, and the platform
-> >> is still in (limited) use.
-> >>
-> >> I'd like to see support hang around for a few more years yet.
+>
+>
+> On 1/22/2024 2:07 AM, Amrit Anand wrote:
 > >
-> > The problem is that... its support is pretty strange. I can see
-> > pinctrl, ethernet and quirks for the platform in GIC-ITS and PL011
-> > drivers. Is this enough to get the platform into the useful state? I
-> > can imagine that "QCOM2430" ACPI handle was used for USB hosts on that
-> > platform, but I don't remember when we last tested DWC3 with the ACPI.
+> > On 1/20/2024 7:02 PM, Konrad Dybcio wrote:
+> >> On 20.01.2024 12:20, Amrit Anand wrote:
+> >>> Qualcomm based DT uses two or three different identifiers. The SoC
+> >>> based idenfier which signifies chipset and the revision for those
+> >>> chipsets. The board based identifier is used to distinguish different
+> >>> boards (e.g. IDP, MTP) along with the different types of same boards.
+> >>> The PMIC attached to the board can also be used as a identifier for
+> >>> device tree.
+> >>>
+> >>> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> >>> Signed-off-by: Amrit Anand <quic_amrianan@quicinc.com>
+> >>> ---
+> >>>   .../devicetree/bindings/hwinfo/qcom,board-id.yaml  | 86 ++++++++++++++++++++++
+> >>>   include/dt-bindings/arm/qcom,ids.h                 | 68 +++++++++++++++--
+> >>>   2 files changed, 146 insertions(+), 8 deletions(-)
+> >>>   create mode 100644 Documentation/devicetree/bindings/hwinfo/qcom,board-id.yaml
+> >>>
+> >>> diff --git a/Documentation/devicetree/bindings/hwinfo/qcom,board-id.yaml b/Documentation/devicetree/bindings/hwinfo/qcom,board-id.yaml
+> >>> new file mode 100644
+> >>> index 0000000..807f134
+> >>> --- /dev/null
+> >>> +++ b/Documentation/devicetree/bindings/hwinfo/qcom,board-id.yaml
+> >>> @@ -0,0 +1,86 @@
+> >>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> >>> +%YAML 1.2
+> >>> +---
+> >>> +$id: http://devicetree.org/schemas/hwinfo/qcom,board-id.yaml#
+> >>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> >>> +
+> >>> +title: QCOM Board Identifier for Devicetree Selection
+> >>> +
+> >>> +maintainers:
+> >>> +  - Amrit Anand <quic_amrianan@quicinc.com>
+> >>> +  - Elliot Berman <quic_eberman@quicinc.com>
+> >>> +
+> >>> +description: |
+> >> The '|'s are unnecessary in both commits, IIRC they're used for
+> >> preserving formatting which we don't really need for non-styled
+> >> plaintext
+> > Sure, will do.
+> >>> +  Qualcomm uses two and sometimes three hardware identifiers to describe
+> >>> +  its boards
+> >>> +      - a SoC identifier is used to match chipsets (e.g. sm8550 vs sm8450)
+> >>> +      - a board identifier is used to match board form factor (e.g. MTP, QRD,
+> >>> +        ADP, CRD)
+> >>> +      - a PMIC identifier is occasionally used when different PMICs are used
+> >>> +        for a given board/SoC combination.
+> >>> +  Each field and helper macros are defined at::
+> >>> +      - include/dt-bindings/arm/qcom,ids.h
+> >>> +
+> >>> +  For example,
+> >>> +    / {
+> >>> +        #board-id-cells = <2>;
+> >>> +        board-id = <456 0>, <457 0>, <10 0>;
+> >>> +        board-id-types = "qcom,soc-id", "qcom,soc-id", "qcom,board-id";
+> >>> +     }
+> >>> +
+> >>> +allOf:
+> >>> +  - $ref: board-id.yaml#
+> >>> +
+> >>> +properties:
+> >>> +  board-id:
+> >>> +    minItems: 2
+> >> I believe some older platforms match exclusively based on socid, so
+> >> perhaps 1 would be okay as well.
+> >>
+> >> [...]
 > >
-> > So, all this boils down to the question whether mainline (or something
-> > close by, LTS for example) is actually used and tested on these
-> > devices?
+> > Ok, considering legacy targets we can make it 1.
+> >
+> > But i think ideally it should always be recommended to have a board ID associated with a SoC ID, correct me if my understanding is wrong.
+> >
 >
-> Its an ACPI system, so you won't see all of the fun DTisms of a MSM chip.
->
-> The platform was fully functional upstream, and had an Ubuntu
-> certification.  I run Ubuntu on the two that I have in my office.  I
-> haven't strictly checked out mainline in a while, but I could.  I still
-> have access to the documentation.
->
-> There is a small, but active set of users including myself.  From what
-> I've seen, they've been happy with things.
+> There is no "legacy" support needed here: Qualcomm's bootloaders
+> need to be updated to adhere to the new proposed spec. I suppose
+> we need to consider whether we have targets that only need SoC to
+> differentiate?
 
-Thanks for the information! It looks like it has a small but stable
-user base. I think we should keep it, maybe ensuring that we are able
-to test the kernel.
+What is the chance of updating the bootloader for the N year device?
+
 
 -- 
 With best wishes
