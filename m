@@ -1,283 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-7801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 500A88367DD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 16:21:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 51E938367DB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 16:21:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0717728C986
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 15:21:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0A53828AF86
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 15:21:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E1D95A78C;
-	Mon, 22 Jan 2024 14:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA54F405EA;
+	Mon, 22 Jan 2024 14:59:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oP+2HtYw"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="WAS0KDUQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3349A5A783;
-	Mon, 22 Jan 2024 14:59:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD7B5A10F;
+	Mon, 22 Jan 2024 14:59:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705935585; cv=none; b=sFARfNZL8szNp+9ZKfC2lXzQqm+xQD4Z3eLSvV93NyAwk7oYN4f8NaWSe6GexmB7XmidTV6up1wBg/R/QBD7L9Y5NCO56E+QAuGA00z+LH7vx5uIsFEB77/m45Q8XwJ0ciXvnFizym0HsFWW6b/40pbcxfv3CGaC0jfe5ibre14=
+	t=1705935582; cv=none; b=molLmWdQETVy6kwjcHtL6HveTQfaBgmxor5V1HBL94UOMfQS+0kiRXNZmgqIFz6XlvaBF+W5OZSNzfMQ1ru0zwGFhB/7oo+9MvEWv3VJsTqzlokLWPcMWVnuUJrqRH25lP2wy3yDtI500LQY2O2wivVXiRJFv6+7VyvvN3sNanU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705935585; c=relaxed/simple;
-	bh=PZYbt2vXSI+CUdsvG3KBlsiiJ83fxhrAvAHF72l/hjY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aIQBwgv0hHjEvj/YBNZ7982z+Pahux+HIam+VkvqyLrMZm0AqMTGvqazT36IX/FQ6A7CtAlTnWUAcfw3i3+JKwN6xSl93b1AOVlaekC8XYnbE98Mlr8NbkoG6gQHaTBMt1oehMkrr1TUk0xkCIlJGiVJ11BgVnT9J5/gY0m5g3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oP+2HtYw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B46C43390;
-	Mon, 22 Jan 2024 14:59:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705935585;
-	bh=PZYbt2vXSI+CUdsvG3KBlsiiJ83fxhrAvAHF72l/hjY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oP+2HtYwQBTCxMN7V9I9azNZzpnV+SuWZ/k7mVsTfTt4RTpqbn8tm3j9u3WX4CRYK
-	 9VCL7W0Ep0PrHUtIW6D9976BOHt3OPhsxUaB6/9Saq+O00qRIJwz7Q0c4G0+vNIFMR
-	 iC0cLQ06Lar7KB6jSyKzW+A9jKCNhjIdVRfQP6rGl1i28tmm/NvWpmUXLWx3CVggwk
-	 baxMxY04F3NV5RiYoJo/T1TgEQwCOCy5pjItgIkNcuYjKrzM2vgoDzMH+D3TbEo6JA
-	 WH0JhpTj5CRLymNJ/cPT/92lTUlerCnlyMSultLH2iCQi75i7KBo42TGPYl0pDESwQ
-	 cQzp1Lks+nlfw==
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Cc: Paloma Arellano <quic_parellan@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sasha Levin <sashal@kernel.org>,
-	robdclark@gmail.com,
-	quic_abhinavk@quicinc.com,
-	airlied@gmail.com,
-	daniel@ffwll.ch,
-	marijn.suijten@somainline.org,
-	quic_jesszhan@quicinc.com,
-	quic_khsieh@quicinc.com,
-	quic_vpolimer@quicinc.com,
-	quic_kalyant@quicinc.com,
-	swboyd@chromium.org,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.7 57/88] drm/msm/dpu: Add mutex lock in control vblank irq
-Date: Mon, 22 Jan 2024 09:51:30 -0500
-Message-ID: <20240122145608.990137-57-sashal@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240122145608.990137-1-sashal@kernel.org>
-References: <20240122145608.990137-1-sashal@kernel.org>
+	s=arc-20240116; t=1705935582; c=relaxed/simple;
+	bh=72awLrC95FZfePkRhHaH0kmE8jNzlhiZyJTOnOQmCaQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QCL1SrnP7R/TJ/5GGxXp4zVxINb4bUB5oz17/TutCYCzOjteX58+Khg+TgPnqkS8QU+BLhBEtFZCKaVQf4fViWBFQf0/Edx5lw95dkgq/ME3aQm/ogAT1eHqXeYDoZD5ZWcnhvSf+FKqBjnBn++yDVkk2AXFSRUFj5mMtpallWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=WAS0KDUQ; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1705935579;
+	bh=72awLrC95FZfePkRhHaH0kmE8jNzlhiZyJTOnOQmCaQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=WAS0KDUQj9f4b2k33ZTrz2Q2/N0epdobShFxXhdTDDp2L4ZIOz7Og6T5uvsEfRNYH
+	 bT3kjV46JXMvDrSOfJJ/VbojlkD2Hn2xLLZFLZvTUDEORPcrY/XZsGuxDl1QV3ppAQ
+	 4GesLbXv+GUWLRwWmNVoFi/9nOEKOD5h4YrEgJ+8dp0EXSrdgM96GywiseVLgqRJiN
+	 312VdKfycu1zSg5u24f2ijRnYMyYj1F0M2XQjXS/1WWb3F8ZYCiTuhfYerjKrJ1kSY
+	 9d38NYHpA9n0UuRmXxjmqBm6lboURxq7RMIZTf4/vbeZV9uvxpc2zaNG5jfHuIzv1U
+	 GBHK+CBWYNCPg==
+Received: from [100.113.186.2] (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 97DAE3781F89;
+	Mon, 22 Jan 2024 14:59:38 +0000 (UTC)
+Message-ID: <48946c81-dad0-4e2d-9569-5fbac1675bb6@collabora.com>
+Date: Mon, 22 Jan 2024 15:59:37 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.7.1
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 6/6] arm64: dts: qcom: msm8956-loire: Add SD Card
+ Detect to SDC2 pin states
+Content-Language: en-US
+To: Marijn Suijten <marijn.suijten@somainline.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, ~postmarketos/upstreaming@lists.sr.ht,
+ Luca Weiss <luca@z3ntu.xyz>, Adam Skladowski <a39.skl@gmail.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Martin Botka <martin.botka@somainline.org>,
+ Jami Kettunen <jami.kettunen@somainline.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240121-msm8976-dt-v2-0-7b186a02dc72@somainline.org>
+ <20240121-msm8976-dt-v2-6-7b186a02dc72@somainline.org>
+ <9d3623f8-697b-44ab-a9eb-9d2d305b0e5c@collabora.com>
+ <iatieesr52v5au4kkovw3gc34tn3snt454grq7le66oar6x7t4@4jfwxgxov36v>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <iatieesr52v5au4kkovw3gc34tn3snt454grq7le66oar6x7t4@4jfwxgxov36v>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Paloma Arellano <quic_parellan@quicinc.com>
+Il 22/01/24 14:49, Marijn Suijten ha scritto:
+> On 2024-01-22 12:48:27, AngeloGioacchino Del Regno wrote:
+>> Il 21/01/24 23:33, Marijn Suijten ha scritto:
+>>> In addition to the SDC2 pins, set the SD Card Detect pin in a sane state
+>>> to be used as an interrupt when an SD Card is slotted in or removed.
+>>>
+>>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+>>> ---
+>>>    arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi | 17 +++++++++++++++++
+>>>    1 file changed, 17 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi b/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
+>>> index b0b83edd3627..75412e37334c 100644
+>>> --- a/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire.dtsi
+>>> @@ -264,10 +264,27 @@ &sdhc_1 {
+>>>    	status = "okay";
+>>>    };
+>>>    
+>>> +&sdc2_off_state {
+>>> +	sd-cd-pins {
+>>> +		pins = "gpio100";
+>>> +		function = "gpio";
+>>> +		drive-strength = <2>;
+>>> +		bias-disable;
+>>> +	};
+>>
+>> Are you sure that you really don't want card detect during system suspend?
+> 
+> Does it make a difference if the rest of pinctrl and the SDHCI controller are
+> also turned off?
+> 
+>> You could simply add a sdc2-cd-pins out of sdc2_{on,off}_state and add use it for
+>> both default and sleep.
+> 
+> This sounds close to what Konrad suggested by using a new block wit its own
+> label rather than extending the existing state.
+> 
+>> pinctrl-0 = <&sdc2_on_state>, <&sdc2_card_det_n>;
+>> pinctrl-1 = <&sdc2_off_state>;
+> 
+> You said both, but it's not in pinctrl-1 here?  (And might unselect bias-pull-up
+> implicitly instead of explicitly selecting bias-disable via an off node?)
+> 
 
-[ Upstream commit 45284ff733e4caf6c118aae5131eb7e7cf3eea5a ]
+I meant to add it to both, sorry.
 
-Add a mutex lock to control vblank irq to synchronize vblank
-enable/disable operations happening from different threads to prevent
-race conditions while registering/unregistering the vblank irq callback.
+In any case, take the typo'ed example as a simplification of your first version :-)
 
-v4: -Removed vblank_ctl_lock from dpu_encoder_virt, so it is only a
-    parameter of dpu_encoder_phys.
-    -Switch from atomic refcnt to a simple int counter as mutex has
-    now been added
-v3: Mistakenly did not change wording in last version. It is done now.
-v2: Slightly changed wording of commit message
 
-Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/571854/
-Link: https://lore.kernel.org/r/20231212231101.9240-2-quic_parellan@quicinc.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   |  1 -
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  4 ++-
- .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 32 ++++++++++++------
- .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  | 33 ++++++++++++-------
- 4 files changed, 47 insertions(+), 23 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index ff0e3591b44d..289e4a615a08 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -2500,7 +2500,6 @@ void dpu_encoder_phys_init(struct dpu_encoder_phys *phys_enc,
- 	phys_enc->enc_spinlock = p->enc_spinlock;
- 	phys_enc->enable_state = DPU_ENC_DISABLED;
- 
--	atomic_set(&phys_enc->vblank_refcount, 0);
- 	atomic_set(&phys_enc->pending_kickoff_cnt, 0);
- 	atomic_set(&phys_enc->pending_ctlstart_cnt, 0);
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-index 6f04c3d56e77..96bda57b6959 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-@@ -155,6 +155,7 @@ enum dpu_intr_idx {
-  * @hw_wb:		Hardware interface to the wb registers
-  * @dpu_kms:		Pointer to the dpu_kms top level
-  * @cached_mode:	DRM mode cached at mode_set time, acted on in enable
-+ * @vblank_ctl_lock:	Vblank ctl mutex lock to protect vblank_refcount
-  * @enabled:		Whether the encoder has enabled and running a mode
-  * @split_role:		Role to play in a split-panel configuration
-  * @intf_mode:		Interface mode
-@@ -183,11 +184,12 @@ struct dpu_encoder_phys {
- 	struct dpu_hw_wb *hw_wb;
- 	struct dpu_kms *dpu_kms;
- 	struct drm_display_mode cached_mode;
-+	struct mutex vblank_ctl_lock;
- 	enum dpu_enc_split_role split_role;
- 	enum dpu_intf_mode intf_mode;
- 	spinlock_t *enc_spinlock;
- 	enum dpu_enc_enable_state enable_state;
--	atomic_t vblank_refcount;
-+	int vblank_refcount;
- 	atomic_t vsync_cnt;
- 	atomic_t underrun_cnt;
- 	atomic_t pending_ctlstart_cnt;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-index be185fe69793..2d788c5e26a8 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-@@ -244,7 +244,8 @@ static int dpu_encoder_phys_cmd_control_vblank_irq(
- 		return -EINVAL;
- 	}
- 
--	refcount = atomic_read(&phys_enc->vblank_refcount);
-+	mutex_lock(&phys_enc->vblank_ctl_lock);
-+	refcount = phys_enc->vblank_refcount;
- 
- 	/* Slave encoders don't report vblank */
- 	if (!dpu_encoder_phys_cmd_is_master(phys_enc))
-@@ -260,16 +261,24 @@ static int dpu_encoder_phys_cmd_control_vblank_irq(
- 		      phys_enc->hw_pp->idx - PINGPONG_0,
- 		      enable ? "true" : "false", refcount);
- 
--	if (enable && atomic_inc_return(&phys_enc->vblank_refcount) == 1)
--		ret = dpu_core_irq_register_callback(phys_enc->dpu_kms,
--				phys_enc->irq[INTR_IDX_RDPTR],
--				dpu_encoder_phys_cmd_te_rd_ptr_irq,
--				phys_enc);
--	else if (!enable && atomic_dec_return(&phys_enc->vblank_refcount) == 0)
--		ret = dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
--				phys_enc->irq[INTR_IDX_RDPTR]);
-+	if (enable) {
-+		if (phys_enc->vblank_refcount == 0)
-+			ret = dpu_core_irq_register_callback(phys_enc->dpu_kms,
-+					phys_enc->irq[INTR_IDX_RDPTR],
-+					dpu_encoder_phys_cmd_te_rd_ptr_irq,
-+					phys_enc);
-+		if (!ret)
-+			phys_enc->vblank_refcount++;
-+	} else if (!enable) {
-+		if (phys_enc->vblank_refcount == 1)
-+			ret = dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
-+					phys_enc->irq[INTR_IDX_RDPTR]);
-+		if (!ret)
-+			phys_enc->vblank_refcount--;
-+	}
- 
- end:
-+	mutex_unlock(&phys_enc->vblank_ctl_lock);
- 	if (ret) {
- 		DRM_ERROR("vblank irq err id:%u pp:%d ret:%d, enable %s/%d\n",
- 			  DRMID(phys_enc->parent),
-@@ -285,7 +294,7 @@ static void dpu_encoder_phys_cmd_irq_control(struct dpu_encoder_phys *phys_enc,
- {
- 	trace_dpu_enc_phys_cmd_irq_ctrl(DRMID(phys_enc->parent),
- 			phys_enc->hw_pp->idx - PINGPONG_0,
--			enable, atomic_read(&phys_enc->vblank_refcount));
-+			enable, phys_enc->vblank_refcount);
- 
- 	if (enable) {
- 		dpu_core_irq_register_callback(phys_enc->dpu_kms,
-@@ -763,6 +772,9 @@ struct dpu_encoder_phys *dpu_encoder_phys_cmd_init(
- 
- 	dpu_encoder_phys_init(phys_enc, p);
- 
-+	mutex_init(&phys_enc->vblank_ctl_lock);
-+	phys_enc->vblank_refcount = 0;
-+
- 	dpu_encoder_phys_cmd_init_ops(&phys_enc->ops);
- 	phys_enc->intf_mode = INTF_MODE_CMD;
- 	cmd_enc->stream_sel = 0;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-index a01fda711883..eeb0acf9665e 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-@@ -364,7 +364,8 @@ static int dpu_encoder_phys_vid_control_vblank_irq(
- 	int ret = 0;
- 	int refcount;
- 
--	refcount = atomic_read(&phys_enc->vblank_refcount);
-+	mutex_lock(&phys_enc->vblank_ctl_lock);
-+	refcount = phys_enc->vblank_refcount;
- 
- 	/* Slave encoders don't report vblank */
- 	if (!dpu_encoder_phys_vid_is_master(phys_enc))
-@@ -377,18 +378,26 @@ static int dpu_encoder_phys_vid_control_vblank_irq(
- 	}
- 
- 	DRM_DEBUG_VBL("id:%u enable=%d/%d\n", DRMID(phys_enc->parent), enable,
--		      atomic_read(&phys_enc->vblank_refcount));
-+		      refcount);
- 
--	if (enable && atomic_inc_return(&phys_enc->vblank_refcount) == 1)
--		ret = dpu_core_irq_register_callback(phys_enc->dpu_kms,
--				phys_enc->irq[INTR_IDX_VSYNC],
--				dpu_encoder_phys_vid_vblank_irq,
--				phys_enc);
--	else if (!enable && atomic_dec_return(&phys_enc->vblank_refcount) == 0)
--		ret = dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
--				phys_enc->irq[INTR_IDX_VSYNC]);
-+	if (enable) {
-+		if (phys_enc->vblank_refcount == 0)
-+			ret = dpu_core_irq_register_callback(phys_enc->dpu_kms,
-+					phys_enc->irq[INTR_IDX_VSYNC],
-+					dpu_encoder_phys_vid_vblank_irq,
-+					phys_enc);
-+		if (!ret)
-+			phys_enc->vblank_refcount++;
-+	} else if (!enable) {
-+		if (phys_enc->vblank_refcount == 1)
-+			ret = dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
-+					phys_enc->irq[INTR_IDX_VSYNC]);
-+		if (!ret)
-+			phys_enc->vblank_refcount--;
-+	}
- 
- end:
-+	mutex_unlock(&phys_enc->vblank_ctl_lock);
- 	if (ret) {
- 		DRM_ERROR("failed: id:%u intf:%d ret:%d enable:%d refcnt:%d\n",
- 			  DRMID(phys_enc->parent),
-@@ -618,7 +627,7 @@ static void dpu_encoder_phys_vid_irq_control(struct dpu_encoder_phys *phys_enc,
- 	trace_dpu_enc_phys_vid_irq_ctrl(DRMID(phys_enc->parent),
- 			    phys_enc->hw_intf->idx - INTF_0,
- 			    enable,
--			    atomic_read(&phys_enc->vblank_refcount));
-+			   phys_enc->vblank_refcount);
- 
- 	if (enable) {
- 		ret = dpu_encoder_phys_vid_control_vblank_irq(phys_enc, true);
-@@ -713,6 +722,8 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
- 	DPU_DEBUG_VIDENC(phys_enc, "\n");
- 
- 	dpu_encoder_phys_init(phys_enc, p);
-+	mutex_init(&phys_enc->vblank_ctl_lock);
-+	phys_enc->vblank_refcount = 0;
- 
- 	dpu_encoder_phys_vid_init_ops(&phys_enc->ops);
- 	phys_enc->intf_mode = INTF_MODE_VIDEO;
--- 
-2.43.0
+> - Marijn
+> 
+>> Cheers,
+>> Angelo
+>>
+>>> +};
+>>> +
+>>>    &sdc2_on_state {
+>>>    	clk-pins {
+>>>    		drive-strength = <10>;
+>>>    	};
+>>> +
+>>> +	sd-cd-pins {
+>>> +		pins = "gpio100";
+>>> +		function = "gpio";
+>>> +		drive-strength = <2>;
+>>> +		input-enable;
+>>> +		bias-pull-up;
+>>> +	};
+>>>    };
+>>>    
+>>>    &sdhc_2 {
+>>>
+>>
+>>
 
 
