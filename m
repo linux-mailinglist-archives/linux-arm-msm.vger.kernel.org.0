@@ -1,77 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-7842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7843-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE229836EC0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 19:02:03 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A001836EC9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 19:03:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E0B511C29813
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 18:02:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7FB9B1C2A02E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 18:03:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 900E9612E7;
-	Mon, 22 Jan 2024 17:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 376D2627FE;
+	Mon, 22 Jan 2024 17:25:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="EqlVXzgg"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Y4bcaRSD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21324612CF
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 17:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9621B62815
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 17:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705944284; cv=none; b=W2I2Hlbdq+Zcc/icKFTRN8pF9B8OqlNdxzsFKS/mNR2vWSZ6Fgw9mhzdiK8io1BqiJvjLinsA0GpZAZEgHr6/o1JesVuKEJrdHYwNEspg/eeuEnyxwr3xo5V8HmuIcx/OYNjCXemJbMwOHrkFd4D9SE9RC0bC8PkSfcaf/Q5ETU=
+	t=1705944323; cv=none; b=O7SuDwc23wcYzEBjARfs/vCHREv5FXTR5e4Luk+b08Th1jWY270JQAQV14SLVIFBmJ2nM+HXXQgPUeJ2++ZCrVWpK0X6Gvt9QLphb+/3oqn9fB33tsdK3I3IJEhVxlx0lqp/ABEpvn7+Azh8BmVhF90dW0pXwkS+FPGGPHxPb8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705944284; c=relaxed/simple;
-	bh=zKxNl6WkG8B4Eq9wfZgbuUODUlpOt/Exm0CtlwBwjts=;
+	s=arc-20240116; t=1705944323; c=relaxed/simple;
+	bh=W4mJLP2iaxCUp7jWQvTVdyu+M70cTTTVM83ZPvkZy40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nBvye//Ij11BE/OksXWafbs/XgKzDnDcYYKtckpXmRtzROIPGqslwWOKr5rbPfbFqz0grd8Yx4NHYWFsMccuczFn+C/H23Mfds+4pHozolw5AcFzq8sC+mKzQOpXOztfsQ+MUerWPLm9fUtP40Ea46xp3EeZ3NGad6cOifciHHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=EqlVXzgg; arc=none smtp.client-ip=170.10.133.124
+	 MIME-Version:Content-Type; b=Q0OFGqmzC4m91rmO+fvAQ7m4CSphCZqjFyNecu6PMFx96OLcNOdUbe4C3y5eQUrUlGKY0fWIfU4h23N8SKEHnLWO8VxKWTwie1SCDRriKpX0NeC0F0FH5ztX6wB6AANb3qCinXKf4r60juPUIs01y4HvWTx8Kbw9KGnWz9xQWrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Y4bcaRSD; arc=none smtp.client-ip=170.10.133.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1705944282;
+	s=mimecast20190719; t=1705944317;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=n3rKjJ1dBHRScMpZN00CyaIUSPfncYm2oVF6llIbVjU=;
-	b=EqlVXzggzmFFZmB0TS0wfEDMfCfHIBNjZa6vQ/9ok++DHIxe3zbumbyALfsmdCy8d/fqYE
-	fWa/IewbeM+ON5wqOF3h2lNzT2rQEYlokIPUdl3/aCnARMm+gx+/iyJdesPnHcjHGub5Yq
-	IdJiPKqYHKaqwVd2hOzwNbA4JAV/et8=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=Jvd6d1nUhV9LrU5f+xXncvSCqH2blthYX1l8ESnZEkg=;
+	b=Y4bcaRSDMSXVG76e7F0dPFuMcE41iBJbQGB53hfa5Sjxhpz11GMoQAJJ4+HR37jD0WQ4CN
+	qtok0JQoYHdr2ylIh8wRAlxMwxL5WdnIDaaMH2fKkTY2qFG0MeUhutzxrkFe0YrOXQNQGf
+	wkvdxSqW19hNDsyTJXocXMd4UawyzWE=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-516-ZUMP9PvjNFKg7bGUMV7dYg-1; Mon, 22 Jan 2024 12:24:40 -0500
-X-MC-Unique: ZUMP9PvjNFKg7bGUMV7dYg-1
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-429ad534cd8so52998061cf.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 09:24:40 -0800 (PST)
+ us-mta-94-Sipvs1EeOlKB3MIkF8oZnA-1; Mon, 22 Jan 2024 12:25:16 -0500
+X-MC-Unique: Sipvs1EeOlKB3MIkF8oZnA-1
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-781d8e14fd8so532085285a.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 09:25:16 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705944279; x=1706549079;
+        d=1e100.net; s=20230601; t=1705944315; x=1706549115;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=n3rKjJ1dBHRScMpZN00CyaIUSPfncYm2oVF6llIbVjU=;
-        b=mUF/UBiq+mbr2qV5b3pJ1kAeoT7wxvybm4JXFWl6ynixkR+8IvVlUlhD9odjVevdwV
-         +FF9/mQHKHa0iTJLwQZnxHRVNZL+XR0zz4gol4zJ6M2i6+ZV1rsUFeQk/O5yt/7xqMhP
-         hZUMOnuGcL8Ccbhp67uO8DdOcHvn5Qhti72JlNop6khwvt4Z1v4q7WGOstgIZnqDUONn
-         gLy/6OJttHpHFzm39BLV2/TFmkBMKdnqHvUaSmkZv/8YVr1ESBI+gU/CmlLVqyVN6guj
-         oltuLy0LPNNHRKkrtuN20woABXiifoTK9ynVmM2C3aS5/sk63T/KuDQtgcpfdXrFtIXf
-         1AoA==
-X-Gm-Message-State: AOJu0YzylkVCdAIsCvnz4MuLC4ZXc2G+CAaWNNYVpNtzhB+2BR/RzNE2
-	ymLQ2EL7yPl+lT0twtERT2hp6oW90dYhzg9gUztcYZjEWxbg02jHr8KEZSgofKGfwtM9eblNroR
-	nJRND2GVAzxokuAhSqg9JS4Qz6ZNhUBPThVB586IviBRVFdpZw0HFpxPdG7e6gdQ=
-X-Received: by 2002:a05:622a:1347:b0:42a:48e6:3d1d with SMTP id w7-20020a05622a134700b0042a48e63d1dmr681134qtk.8.1705944279385;
-        Mon, 22 Jan 2024 09:24:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEuY55kVsfL50Q7J3H8/c0F80dF+lr4iA1MexthqCvJRSr5PWyDSdjwYzVA9BBQ9jMpLW4EtA==
-X-Received: by 2002:a05:622a:1347:b0:42a:48e6:3d1d with SMTP id w7-20020a05622a134700b0042a48e63d1dmr681119qtk.8.1705944279021;
-        Mon, 22 Jan 2024 09:24:39 -0800 (PST)
+        bh=Jvd6d1nUhV9LrU5f+xXncvSCqH2blthYX1l8ESnZEkg=;
+        b=ejxkpIaAosRWCwZNEmLbd9H+7Mn4eutJm3yWthTZP5nPZUBfRL5EkZGjlzZYj+G4wc
+         c4iWeC+AkK0LbXJT4j3kId2k6ynG6xyI+pIjtXGhptwxb7vp/Wh9CFvttWl9RFSRd1zA
+         LETFKYTFdztc/80E4QuOjth55F8UkJR7bTQCVljSjftTi/4b+5WE92utoyDJcCfz4Li5
+         Xjogazkn5Y+/AGdfJEmlieCE72MsylBzFtSrAECUkWpDwUXmXmlN2CWlnZ1QoNmaA6lj
+         iK9QXGPnQQFEgWgn5/7kTOcr9CrfRHxi4A7bDHjQiMaMTsWsmJIjVPUf/UuzU0vqFT+U
+         hVUw==
+X-Gm-Message-State: AOJu0YwiZ/1uANQOafBMh3nOd4HYR15c6ZaQiDxXkQ88d44JEkbKrFrE
+	aq7wVEYc/HgNlgsTvBV/gEod2OltaEg2zMICK/4RwDGxow4Ghc+boMcDHD1UvqUIcMh9lpZbEqz
+	pxNteGmDbcIaQeNDxTJXcdUIT4S9D0rMZGuZTF2o1h7W4DpokUjizcRMptgjudbs=
+X-Received: by 2002:a05:620a:8212:b0:783:375d:452c with SMTP id ow18-20020a05620a821200b00783375d452cmr5390431qkn.33.1705944314859;
+        Mon, 22 Jan 2024 09:25:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGoliCfOOS1LOszyII+v7aqIDivdgIeZaJ30/Z5vvVM98B2l3IKb8HadDNAIgovxwuK2kQKjA==
+X-Received: by 2002:a05:620a:8212:b0:783:375d:452c with SMTP id ow18-20020a05620a821200b00783375d452cmr5390410qkn.33.1705944314547;
+        Mon, 22 Jan 2024 09:25:14 -0800 (PST)
 Received: from fedora.redhat.com ([2600:1700:1ff0:d0e0::37])
-        by smtp.gmail.com with ESMTPSA id c7-20020a05620a200700b00781ae860c31sm2280992qka.70.2024.01.22.09.24.37
+        by smtp.gmail.com with ESMTPSA id c7-20020a05620a200700b00781ae860c31sm2280992qka.70.2024.01.22.09.25.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Jan 2024 09:24:38 -0800 (PST)
+        Mon, 22 Jan 2024 09:25:14 -0800 (PST)
 From: Andrew Halaney <ahalaney@redhat.com>
 To: Andy Gross <agross@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
@@ -91,10 +91,10 @@ Cc: Andrew Halaney <ahalaney@redhat.com>,
 	linux-scsi@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH RFC v4 07/11] scsi: ufs: core: Perform read back after
- writing UTP_TASK_REQ_LIST_BASE_H
-Date: Mon, 22 Jan 2024 11:24:03 -0600
-Message-ID: <20240122-ufs-reset-ensure-effect-before-delay-v4-7-90a54c832508@redhat.com>
+Subject: [PATCH RFC v4 08/11] scsi: ufs: core: Perform read back after
+ disabling interrupts
+Date: Mon, 22 Jan 2024 11:24:04 -0600
+Message-ID: <20240122-ufs-reset-ensure-effect-before-delay-v4-8-90a54c832508@redhat.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240122-ufs-reset-ensure-effect-before-delay-v4-0-90a54c832508@redhat.com>
 References: <20240122-ufs-reset-ensure-effect-before-delay-v4-0-90a54c832508@redhat.com>
@@ -108,8 +108,9 @@ Content-Type: text/plain; charset="utf-8"
 X-Mailer: b4 0.12.3
 Content-Transfer-Encoding: quoted-printable
 
-Currently, the UTP_TASK_REQ_LIST_BASE_L/UTP_TASK_REQ_LIST_BASE_H regs=0D
-are written to and then completed with an mb().=0D
+Currently, interrupts are cleared and disabled prior to registering the=0D
+interrupt. An mb() is used to complete the clear/disable writes before=0D
+the interrupt is registered.=0D
 =0D
 mb() ensure that the write completes, but completion doesn't mean that=0D
 it isn't stored in a buffer somewhere. The recommendation for=0D
@@ -120,11 +121,12 @@ be seen over here:=0D
 =0D
     https://youtu.be/i6DayghhA8Q?si=3DMiyxB5cKJXSaoc01&t=3D1678=0D
 =0D
-Let's do that to ensure the bits hit the device. Because the mb()'s=0D
+Let's do that to ensure these bits hit the device. Because the mb()'s=0D
 purpose wasn't to add extra ordering (on top of the ordering guaranteed=0D
 by writel()/readl()), it can safely be removed.=0D
 =0D
-Fixes: 88441a8d355d ("scsi: ufs: core: Add hibernation callbacks")=0D
+Fixes: 199ef13cac7d ("scsi: ufs: avoid spurious UFS host controller interru=
+pts")=0D
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>=0D
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>=0D
 Reviewed-by: Can Guo <quic_cang@quicinc.com>=0D
@@ -134,18 +136,20 @@ Signed-off-by: Andrew Halaney <ahalaney@redhat.com>=0D
  1 file changed, 1 insertion(+), 1 deletion(-)=0D
 =0D
 diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c=0D
-index 029d017fc1b6..e2e6002fe46a 100644=0D
+index e2e6002fe46a..9b6355555897 100644=0D
 --- a/drivers/ufs/core/ufshcd.c=0D
 +++ b/drivers/ufs/core/ufshcd.c=0D
-@@ -10347,7 +10347,7 @@ int ufshcd_system_restore(struct device *dev)=0D
- 	 * are updated with the latest queue addresses. Only after=0D
- 	 * updating these addresses, we can queue the new commands.=0D
+@@ -10564,7 +10564,7 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *=
+mmio_base, unsigned int irq)=0D
+ 	 * Make sure that UFS interrupts are disabled and any pending interrupt=0D
+ 	 * status is cleared before registering UFS interrupt handler.=0D
  	 */=0D
 -	mb();=0D
-+	ufshcd_readl(hba, REG_UTP_TASK_REQ_LIST_BASE_H);=0D
++	ufshcd_readl(hba, REG_INTERRUPT_ENABLE);=0D
  =0D
- 	/* Resuming from hibernate, assume that link was OFF */=0D
- 	ufshcd_set_link_off(hba);=0D
+ 	/* IRQ registration */=0D
+ 	err =3D devm_request_irq(dev, irq, ufshcd_intr, IRQF_SHARED, UFSHCD, hba)=
+;=0D
 =0D
 -- =0D
 2.43.0=0D
