@@ -1,120 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-7783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6131B8364EB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 15:02:02 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id DECE9836573
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 15:32:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 096CD2841D0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 14:02:01 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 69860B28C33
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 14:26:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D88A3D0C9;
-	Mon, 22 Jan 2024 14:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1CAD3D555;
+	Mon, 22 Jan 2024 14:26:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=icenowy.me header.i=uwu@icenowy.me header.b="X5ymU93y"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="jr1UCVj1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-op-o10.zoho.com (sender4-op-o10.zoho.com [136.143.188.10])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A7B3D387;
-	Mon, 22 Jan 2024 14:01:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.10
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705932116; cv=pass; b=IncB+2NPWjxZxr/aZYLcMqRsx6YkxQ2kqSI+Q4tLb9gR2yKTzevDzAsH/BKKsunefZXPmHLTbCKo3pdK/TBA6rwCOt+HPDXTQGc3SPLlGkVU6IgIcN3hNcelwbUUu0B2q+l3yDcn86U0gZkEuEdgzPCIUr4oDczJdKEk/qlom+A=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705932116; c=relaxed/simple;
-	bh=3P4BMngYNQYmpkmanLDJHK2BGUcfCcvD9w0ldcpJDOQ=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=NEdKtZtD1vwtKuGkF733z7c9OQpxqQ3kwMBkpotll0VVBMDz2IUuMQ6gKB6q/Mn+GgEr2A0kUa/rM2f1EMjG6b60q6kgkw/LmFoKYYoV95cEV9fVHnRtxkaIghx6EUXzMTc2pyq381vwhuttUjLG4nntxX2II1Nq2MvV+qvan+o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=icenowy.me; spf=pass smtp.mailfrom=icenowy.me; dkim=pass (2048-bit key) header.d=icenowy.me header.i=uwu@icenowy.me header.b=X5ymU93y; arc=pass smtp.client-ip=136.143.188.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=icenowy.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icenowy.me
-Delivered-To: i@rong.moe
-ARC-Seal: i=1; a=rsa-sha256; t=1705932108; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=EjBX89v8+XTfQKy4AOInpUo5jkiU01AJIZqIom9eDQwtkbN5aIyd/PkmZuMResgoMYM+ftoSTthGMTIVjQfy5K+OUxJ9bSctXa/XS06QbG2jAMlatIhYkgvw0SBhDWM8d/GqVW8oOK7eZlq1g9Pa4LHGYWG4ygaRSjAcxhJLej0=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1705932108; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=3P4BMngYNQYmpkmanLDJHK2BGUcfCcvD9w0ldcpJDOQ=; 
-	b=gfFo5qrcQ9CyFK/aLazXTuHti3cI9m/cmZ44rJFJRB/ebDDSc0SkniLUzhBTpA/GOv2dILAUlyWUqQ1Ozr+FPx146+DO8e/S9BZrxf9/66rMoz75Is0eyjkxLXbvswTqTkKxOVkma0QnTeqaWQuVsv8MuqbdVKzFVneVnuerAqw=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=icenowy.me;
-	spf=pass  smtp.mailfrom=uwu@icenowy.me;
-	dmarc=pass header.from=<uwu@icenowy.me>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1705932108;
-	s=zmail2; d=icenowy.me; i=uwu@icenowy.me;
-	h=Message-ID:Subject:Subject:From:From:To:To:Cc:Cc:Date:Date:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:MIME-Version:Message-Id:Reply-To;
-	bh=3P4BMngYNQYmpkmanLDJHK2BGUcfCcvD9w0ldcpJDOQ=;
-	b=X5ymU93yUSBiCdsefw0CPQrWrVe2Ss1H11d+crkt/DAh5Yeaqq/weUfoFQ0hc2v5
-	haRXL+NZIPZjeVHGi2uAcmPb99OIc6PqvqIRC6/hq2KuX0B3A2dyfbIQyNPQYJA6GII
-	xk1+J93D/q59qO8xjNtfAZYasLbpJFDFq4M/oJ8FtgrvhMVQhfqacqbccNbPZTjDc4N
-	FtW6/nYcfqzvAF2b0fUCXqJq6q7mIugklGMVv2G6ReAjH5XNCPXLaAX6YaYlgoXrzwW
-	KEmHLVSR7DvEEFJ2G44cwY01FZsNAtGfSuubUE4k1uI1Cj1d45nCy6pkmgPCoc9RBPH
-	bUhQzL+LLw==
-Received: from edelgard.fodlan.icenowy.me (120.85.96.220 [120.85.96.220]) by mx.zohomail.com
-	with SMTPS id 170593210725155.73038714373831; Mon, 22 Jan 2024 06:01:47 -0800 (PST)
-Message-ID: <c633b856c9eb20288e8bc20539692083af3127ea.camel@icenowy.me>
-Subject: Re: [PATCH 4/4] ARM: dts: qcom: msm8974: Add device tree for
- Samsung Galaxy S5 China
-From: Icenowy Zheng <uwu@icenowy.me>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, Rong Zhang <i@rong.moe>, Bjorn
- Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley
- <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Date: Mon, 22 Jan 2024 22:01:41 +0800
-In-Reply-To: <1635b0e5-df47-4918-be83-edc27c59d8cf@linaro.org>
-References: <20240121154010.168440-1-i@rong.moe>
-	 <20240121154010.168440-5-i@rong.moe>
-	 <1635b0e5-df47-4918-be83-edc27c59d8cf@linaro.org>
-Organization: Anthon Open-Source Community
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.4 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5623D550;
+	Mon, 22 Jan 2024 14:26:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1705933564; cv=none; b=joOAZ8IW9nB+o62ZONNKy/AnSQhOflERtW0RiYzcxwnPSbAI9j5CPAIcc+xBCW9pxQbQGjdSBFcDreWE4xth/UIFQfEQi/1kkP+bVax5usQHO+AoN6h6ICnMIvSJ/LEWzef3sIS8kVDxnp9SJJTunxU8S+hdeJiyCJJPHFy6DLg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1705933564; c=relaxed/simple;
+	bh=pjnm2lVqgNCInFj28zDKIV7ML2AgLtVB+44YgPff9vM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YUyT/JMxaOszL0D5bp2zsUK+DDoX+QzxRJC+MNOnSDz04/ACLJCLQdyPAhZ607iJ/1u6F2twvXpw0V/V3o3kw33IfA3pKV/lryz5CnRURrDh9Fcza4uBtAnJ8ckjen148HDykE6zG5cdkH4qEsaP1xRrct4S97waok44hDHo8mU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=jr1UCVj1; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=ZgpoVOQM8qrxQhdVveMCPFTkIxUppA0Pw9b82iO99kI=; b=jr1UCVj1Q4Bptbe9SGYAU94oiy
+	+J3vFXfAUmclOcNEKiS/+8BISG6iv9l4K7FuRewcUy5Q4BfmJFtWoYCTxooiqKP6+NnNQNfyb2kTq
+	S5M9atD4TW+8KRdWxeJUAqi4r+hRuUjIeD9Qm5yNjNBe3hPRt48tN5yplKPrGtyTTUAM=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1rRvEz-005jLv-Qg; Mon, 22 Jan 2024 15:25:33 +0100
+Date: Mon, 22 Jan 2024 15:25:33 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Jie Luo <quic_luoj@quicinc.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, agross@kernel.org,
+	andersson@kernel.org, konrad.dybcio@linaro.org, davem@davemloft.net,
+	edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org, corbet@lwn.net, catalin.marinas@arm.com,
+	will@kernel.org, p.zabel@pengutronix.de, linux@armlinux.org.uk,
+	shannon.nelson@amd.com, anthony.l.nguyen@intel.com,
+	jasowang@redhat.com, brett.creeley@amd.com, rrameshbabu@nvidia.com,
+	joshua.a.hay@intel.com, arnd@arndb.de, geert+renesas@glider.be,
+	neil.armstrong@linaro.org, dmitry.baryshkov@linaro.org,
+	nfraprado@collabora.com, m.szyprowski@samsung.com, u-kumar1@ti.com,
+	jacob.e.keller@intel.com, netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, ryazanov.s.a@gmail.com,
+	ansuelsmth@gmail.com, quic_kkumarcs@quicinc.com,
+	quic_suruchia@quicinc.com, quic_soni@quicinc.com,
+	quic_pavir@quicinc.com, quic_souravp@quicinc.com,
+	quic_linchen@quicinc.com, quic_leiwei@quicinc.com
+Subject: Re: [PATCH net-next 02/20] dt-bindings: net: qcom,ppe: Add bindings
+ yaml file
+Message-ID: <6fbfc205-fffa-42bd-8019-368559db77ac@lunn.ch>
+References: <20240110114033.32575-1-quic_luoj@quicinc.com>
+ <20240110114033.32575-3-quic_luoj@quicinc.com>
+ <1d1116da-9af3-49e4-a180-cff721df5df5@linaro.org>
+ <749136bc-3db9-4b2d-a9ca-e5fb5985f639@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <749136bc-3db9-4b2d-a9ca-e5fb5985f639@quicinc.com>
 
-=E5=9C=A8 2024-01-22=E6=98=9F=E6=9C=9F=E4=B8=80=E7=9A=84 11:50 +0100=EF=BC=
-=8CKonrad Dybcio=E5=86=99=E9=81=93=EF=BC=9A
-> On 21.01.2024 16:39, Rong Zhang wrote:
-> > This device has little difference compared to Samsung Galaxy S5
-> > (klte),
-> > so the device tree is based on qcom-msm8974pro-samsung-klte.dts.
-> > The
-> > only difference is the gpio pins of i2c_led_gpio. With pins
-> > corrected,
-> > the LEDs and WiFi are able to work properly.
-> >=20
-> > Signed-off-by: Rong Zhang <i@rong.moe>
-> > ---
->=20
-> Looks like you didn't change the brcm,board-type though?
+> > > +++ b/Documentation/devicetree/bindings/net/qcom,ppe.yaml
+> > > @@ -0,0 +1,1330 @@
+> > > +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+> > > +%YAML 1.2
+> > > +---
+> > > +$id: http://devicetree.org/schemas/net/qcom,ppe.yaml#
+> > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > > +
+> > > +title: Qualcomm Packet Process Engine Ethernet controller
+> > 
+> > Where is the ref to ethernet controllers schema?
+> Sorry, the title above is not describing the device for this dtbindings
+> correctly.  It should say "Qualcomm Packet Process Engine". The
+> reference to the schema for PPE is mentioned above.
 
-This should be intentional to allow kltechn and klte to share Wi-Fi
-NVRAM file.
+I think you are not correctly understanding the comment. within the
+PPE you have a collection of Ethernet interfaces. All the common
+properties for Ethernet ports are described in
 
->=20
-> [...]
->=20
-> > +++ b/arch/arm/boot/dts/qcom/qcom-msm8974pro-samsung-kltechn.dts
-> > @@ -0,0 +1,16 @@
-> > +// SPDX-License-Identifier: GPL-2.0
-> > +#include "qcom-msm8974pro-samsung-klte.dts"
->=20
-> It's customary not to include .dts files, instead split the common
-> parts
-> into e.g. qcom-msm8974pro-samsung-klte-common.dtsi and include this
-> in
-> both the existing and the new one.
->=20
-> Konrad
+Documentation/devicetree/bindings/net/ethernet-controller.yaml
 
+so you are expected to reference this schema.
+
+> > > +description:
+> > > +  The PPE(packet process engine) is comprised of three componets, Ethernet
+> > > +  DMA, Switch core and Port wrapper, Ethernet DMA is used to transmit and
+> > > +  receive packets between Ethernet subsytem and host. The Switch core has
+> > > +  maximum 8 ports(maximum 6 front panel ports and two FIFO interfaces),
+> > > +  among which there are GMAC/XGMACs used as external interfaces and FIFO
+> > > +  interfaces connected the EDMA/EIP, The port wrapper provides connections
+> > > +  from the GMAC/XGMACS to SGMII/QSGMII/PSGMII/USXGMII/10G-BASER etc, there
+> > > +  are maximu 3 UNIPHY(PCS) instances supported by PPE.
+
+I think a big part of the problem here is, you have a flat
+representation of the PPE. But device tree is very hierarchical. The
+hardware itself is also probably very hierarchical. Please spend some
+timer studying other DT descriptions of similar hardware. Then throw
+away this vendor crap DT binding and start again from scratch, with a
+hierarchical description of the hardware.
+
+	Andrew
 
