@@ -1,187 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-7778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7779-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B600836486
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 14:37:21 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BCE908364A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 14:46:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7FA3B1C22910
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 13:37:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7DEB3285E9F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jan 2024 13:46:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 658CF3CF7D;
-	Mon, 22 Jan 2024 13:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C32EA3D0B4;
+	Mon, 22 Jan 2024 13:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pruDGg1N"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="HflLQ8Wt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E176C3CF74
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 13:37:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51FE93D0A8
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 13:45:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705930636; cv=none; b=EH4HfXuHEpjrq0dLr6pXB7p1hEXPKwSk5JB8PaZxbCigDOEsnYSdyymb27VpM/fOXWxEkizsG9M1Z/kA7ZZq3K1qapTD94SoCjVD+xis9joEYg9Wfz+oozTGK2kRAinanAT6uXiI9SRBm+3t3vSxlA6X8lLWBdPEv7yE5uyrMjM=
+	t=1705931158; cv=none; b=bBSxSMtOOORKsVx412E12zZI9RnuTiJkEnhHBWnT7hzRQJz/HwRSmqIxuTm+Ych5DGr6V6d3qfmadWV4cxNly3i7Ve1ON8VrTHpN7f/tl5aIiWY/iSVj7yuvNBvj/VNpfv3gFKmRb0DRi0CDiCfzM//BdI0W3+lfL+R9zmMqqBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705930636; c=relaxed/simple;
-	bh=wVWuq0gawOGl8KiWuRy3jGbacbix2tLimet/jRZRsJw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Cn0RgOX4LpV/nx3GQD7n+R1OIpskJHoJy3SF0ufS+pfJhMuFAPhU/2oq1LlPlTnIsT+++e4heEGD7bgaSzUhco/MyS4O2NIaGl88yrrGywKegWX3pXbJAyUngRsT+e9/q9kRehwKT1OeGhX+EEisbd+d2tBslkc82c2uAkJzCSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pruDGg1N; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6000bbdbeceso5271947b3.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 05:37:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705930634; x=1706535434; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z7oGSHsIqEAvLZa5ynsGHrZxRD+OARNhlTzhS0egCCQ=;
-        b=pruDGg1NZA+GFWey9SqXYWP+OwxwrARafzmHGL9RSFXQ0esvnS+fxmUzqPD43oNF9N
-         Be27qwzPGJh6q3lIzUGvlul2D2fz08VVpl8Vy5l3sa5GFv/uRUAihwSYrlwK4K2wizNd
-         9SDSvsTMuZ9kMf1P4yEe1cecSo28iuf7EOu9RrVuYrcDLHyg1Rq1ANHWIdhQgWoqJiuL
-         LG8bF5+QuTgyotRB+mwl1LsJTYfFaDT5PEh09oQz4aJ76xqKIKfvwDf7B299U5Q802vF
-         PuGwUlXGPNyZvpELT6u/IgdrWMKLkD2/hvEDZbx/z0ppXovCAvNqhe3x8qMD61w6J2eF
-         vvRA==
+	s=arc-20240116; t=1705931158; c=relaxed/simple;
+	bh=OyJ1bxHA59iy5wXiAvSt/tACh10vEIfuDoG3PJNT2Zs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=A9EsuK7OLOLkesydPxnjXtR3bDRgq2Vw7FdTYiqDj3pWt2XwB4qHZg+5+VSc36Feg88J/1Ons/jksMtkL2BkMx+ZW9BKV4n6/OCW3wUnY9rd4AwKG+ykcmQOU3yuFPT1xBrX9FaDAxdn+lYfj4pBsnRs35A8ffjoOwCb/7fywCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=HflLQ8Wt; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1705931156;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=plv/ArYH8njxp72HX9LenLJ5/vF2h2cX135s3bxKJy4=;
+	b=HflLQ8Wt772QVjBh5fxaRvLUIrQrDupEAqW3LXHf2PY448EukfZaelCUnE4eco1LPHw9CN
+	Pm5ZL0PnV7RUBhcMBAt1H9eDdQtEwIj/L2PMaca8makoVVZ+T9vtyprSLTvFYuxwea6Pts
+	9CNH/pWnO2qqxW/ltIM8mTU7c8RCbII=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-574-nrcpqhQdMkCu-vx7kZopkw-1; Mon, 22 Jan 2024 08:45:54 -0500
+X-MC-Unique: nrcpqhQdMkCu-vx7kZopkw-1
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7831be985c0so520880285a.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 05:45:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705930634; x=1706535434;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Z7oGSHsIqEAvLZa5ynsGHrZxRD+OARNhlTzhS0egCCQ=;
-        b=boMRwp4TmTIKF8hfkuQVTtaQKpg3JI3fqmWmq40wFUriS6GjB3hG2x+W+QejOuxDPS
-         T0s+raer0KRTvyRL3ao4qyb2j8QJyzhOfWi2Zse9iRyxexnXCEj5qJybK2HFDemsyvv+
-         vyOPXpsWTYyuCZ04UWBf4cubpHmH6KUA2p5Te8umojyFZtBXWY5zfvCD5h3X1Iz4unGL
-         AoGzW18kQ45ubqmsQ1X8Bjsc/qhzW4WXEoqWxtWIQyyWt+Edp9QOT2QVx9MFkW9HNu5A
-         4E/XFVIoMzbSG8+t+o3ce+qliLkYbTAQDwTt/qZRpRrUIKHk4xcFKyzLUgYL3wXeG8v4
-         9wCw==
-X-Gm-Message-State: AOJu0Yx2t0IeQBtzqBMQoFnInTJFhvNcbIALS6wMMzv8/5xZcd/Fh98g
-	7aGj1RgMbj/FYj5vZnKyUo777AdjJ8CpZSlhW14KXdmuCivH3iNqc57tOTU6c1dcvtiLO+Bo1S9
-	0xJO97QZb8j1Du1vsENY1SOBQcSseOHkBHJLK4/Jalse9PA08slc=
-X-Google-Smtp-Source: AGHT+IH5lciyRV60bliZfX5ohnB5VyzCzFgCc/JpZlAFrB61lN47m7UhohsA4v2BdT1+81l1WVs6Okc4CaE5fJIrDJs=
-X-Received: by 2002:a81:5344:0:b0:5f5:9898:ca3a with SMTP id
- h65-20020a815344000000b005f59898ca3amr3418967ywb.87.1705930633919; Mon, 22
- Jan 2024 05:37:13 -0800 (PST)
+        d=1e100.net; s=20230601; t=1705931154; x=1706535954;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=plv/ArYH8njxp72HX9LenLJ5/vF2h2cX135s3bxKJy4=;
+        b=D5dmAThehzRubdFy8lU47qSKpxOpBZAKmReyYoxolX1rhKf0QsVY5999by/meiLfxv
+         c01ZuDHKFbeiea53kUflRNu2rMYm5VVXXYdMAyeBvCAcYAlCMHV2MMaCtzQ4xKolIVV8
+         xGjLgbziy8p2gChsAbOzXCFhRMZf+g1hap2lrWWoR5TLCu2e4H7JE5uGM6pprptYhKfL
+         lJKyp/LjqHYpgN6RLQ9kOBmniVeEn1OUgnz5nX0fmp97oS4SEV3JokdOAZQnGEmDVaxh
+         Qtahxwt4LlnaO9nPa+T7is9esXBzlH8okOfBQlOnNGep0mg4ltWmCSxLgx9LdQj9eMXJ
+         it5A==
+X-Gm-Message-State: AOJu0YxzKt4GEg7g2TiPx97UCES95At2gCaFdyH5+/P13ycfL9cpdujV
+	xJJ7JI78dxmSRsSiVRCgVVGyQrVWHEy+jrhhqvZ5+cJ5rV56eRW54geyTS6nf2e3+/hKSQNWBpf
+	90xyEnG3Wi5NE5st0ot7WY+Gtz7a056Aarv7z5iZhu81GVi5eNlabhJhQ4k8fDPI=
+X-Received: by 2002:a05:620a:7ea:b0:781:2c00:c89d with SMTP id k10-20020a05620a07ea00b007812c00c89dmr4283020qkk.42.1705931154115;
+        Mon, 22 Jan 2024 05:45:54 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHPeJ09NoZuiWW65L8NTiarhjnXk7pv73Ms+8RbqNyNkF97fXE1zOXmVKQRxwN4jqy2upvwMQ==
+X-Received: by 2002:a05:620a:7ea:b0:781:2c00:c89d with SMTP id k10-20020a05620a07ea00b007812c00c89dmr4283004qkk.42.1705931153859;
+        Mon, 22 Jan 2024 05:45:53 -0800 (PST)
+Received: from x1 (c-24-2-114-156.hsd1.pa.comcast.net. [24.2.114.156])
+        by smtp.gmail.com with ESMTPSA id c14-20020a05620a134e00b007839e9ef1d7sm825174qkl.122.2024.01.22.05.45.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Jan 2024 05:45:53 -0800 (PST)
+Date: Mon, 22 Jan 2024 08:45:51 -0500
+From: Brian Masney <bmasney@redhat.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Eric Chanudet <echanude@redhat.com>,
+	Ninad Naik <quic_ninanaik@quicinc.com>, andersson@kernel.org,
+	konrad.dybcio@linaro.org, robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	quic_psodagud@quicinc.com, quic_kprasan@quicinc.com,
+	quic_ymg@quicinc.com, kernel@quicinc.com
+Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: Add new memory map updates to
+ SA8775P
+Message-ID: <Za5xj8S3Gs7N-UUc@x1>
+References: <20240118155711.7601-1-quic_ninanaik@quicinc.com>
+ <rq2dnfh6ctn5gbf3o3op5ywxx7zhx6r5sh5ykautye56o3p4dg@rjttk3rr65ld>
+ <20240119191144.GR3013251@hu-bjorande-lv.qualcomm.com>
+ <CAA8EJppLNFReZn1HK_radSkKkf5L584fx3FCuqG0FoUt4+H=nw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240115-lpg-v5-1-3c56f77f9cec@quicinc.com> <CAA8EJpoemnXTmshWrArVOCm0GRSkWZ5tH557nbAjRL1Tgg-Dig@mail.gmail.com>
- <e16f5ff1-9b12-4f90-89d5-f95cbfb859e7@quicinc.com> <6c29ce72-e303-406a-bb75-5b36b0cd8ee4@linaro.org>
- <44ab50c4-c63b-436c-af46-9b4543181446@quicinc.com> <CAA8EJpq8exe6n3OQnreLCsV+BnZKcu24d==rEKup=+n28nnDHw@mail.gmail.com>
- <4c82f1f0-1c5a-498f-9845-b5b26cd76468@quicinc.com> <5f6c2be1-faf9-4e64-ab3a-88046d75e2cf@quicinc.com>
- <1d948daf-1495-4208-a85f-6bd798091d82@quicinc.com>
-In-Reply-To: <1d948daf-1495-4208-a85f-6bd798091d82@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 22 Jan 2024 15:37:02 +0200
-Message-ID: <CAA8EJppqL=79rDzEvrhEA8N6wa=YFxN+595eK+JD=JOuCRm1gA@mail.gmail.com>
-Subject: Re: [PATCH v5] arm64: dts: qcom: qcm6490-idp: Add definition for
- three LEDs
-To: hui liu <quic_huliu@quicinc.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Andy Gross <agross@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, quic_fenglinw@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJppLNFReZn1HK_radSkKkf5L584fx3FCuqG0FoUt4+H=nw@mail.gmail.com>
+User-Agent: Mutt/2.2.10 (2023-03-25)
 
-On Mon, 22 Jan 2024 at 08:26, hui liu <quic_huliu@quicinc.com> wrote:
->
->
->
-> On 1/22/2024 1:42 PM, hui liu wrote:
-> >
-> >
-> > On 1/18/2024 10:06 AM, hui liu wrote:
-> >>
-> >>
-> >> On 1/17/2024 11:41 AM, Dmitry Baryshkov wrote:
-> >>> On Wed, 17 Jan 2024 at 05:02, hui liu <quic_huliu@quicinc.com> wrote:
-> >>>>
-> >>>>
-> >>>>
-> >>>> On 1/15/2024 6:26 PM, Krzysztof Kozlowski wrote:
-> >>>>> On 15/01/2024 11:18, hui liu wrote:
-> >>>>>>
-> >>>>>>
-> >>>>>> On 1/15/2024 5:56 PM, Dmitry Baryshkov wrote:
-> >>>>>>> On Mon, 15 Jan 2024 at 11:48, Hui Liu via B4 Relay
-> >>>>>>> <devnull+quic_huliu.quicinc.com@kernel.org> wrote:
-> >>>>>>>>
-> >>>>>>>> From: Hui Liu <quic_huliu@quicinc.com>
-> >>>>>>>>
-> >>>>>>>> Add definition for three LEDs to make sure they can
-> >>>>>>>> be enabled base on QCOM LPG LED driver.
-> >>>>>>>
-> >>>>>>> The "function" property is still placed incorrectly. Posting the
-> >>>>>>> next
-> >>>>>>> iteration before concluding the discussion on the previous one is
-> >>>>>>> not
-> >>>>>>> the best idea.
-> >>>>>> Do you mean I should update it as below? Seems there is no
-> >>>>>> consumer to
-> >>>>>> use the function config, do we need to add now?
-> >>>>>
-> >>>>> Paste the output of dtbs_check for your board (or CHECK_DTBS=y for
-> >>>>> your
-> >>>>> Makefile target).
-> >>>> I checked the dt-binding file of LPG LED, I will update the dts as
-> >>>> below, if you think it's correct, I will push v6.
-> >>>
-> >>> Is there any reason why you are defining three different LEDs instead
-> >>> of multi-led with three components?
-> >
-> >> In the HW design, they are three seprete LEDs, there are three LEDs on
-> >> device. why do we need to add for multi-led?
-> >>
-> >> Thanks,
-> >> Hui
->
-> I double confirmed the HW design, for IDP devcie, we should set it to
-> multi led, for another similar device(RB3-GEN2, I will push LED change
-> for this device later), it should be set to seperate LED.
-> They are different, so I will push V6 to set it for multi-led for
-> QCM6490-IDP device. Thanks for your review.
+Hi Dmitry,
 
-Ack, thank you.
+On Fri, Jan 19, 2024 at 10:35:43PM +0200, Dmitry Baryshkov wrote:
+> This kind of change sets a very bad precedent. This way old kernels
+> become incompatible with the updated firmware. For me it looks like
+> Linux kernel suddenly being unable to boot after the BIOS upgrade.
+> Generally memory map updates should be disallowed after the board hits
+> the production and the DT is published and merged. There can be other
+> users of DT. BSD systems, U-Boot. We spend sensible efforts in making
+> sure that DT is an ABI: newer kernel remain compatible with older DT
+> files. We expect the same kind of efforts from device manufacturers.
+> 
+> I think unless there is a good reason, the memory map update should be
+> reverted on the Qualcomm side as a breaking change.
+> If this kind of update is absolutely necessary, it might be better to
+> define a new set of board files utilising the new memory map, marking
+> existing DT files as legacy.
 
->
-> >>>
-> >>>>
-> >>>> +&pm8350c_pwm {
-> >>>> +       #address-cells = <1>;
-> >>>> +       #size-cells = <0>;
-> >>>> +       status = "okay";
-> >>>> +
-> >>>> +       led@1 {
-> >>>> +               reg = <1>;
-> >>>> +               color = <LED_COLOR_ID_RED>;
-> >>>> +               function = LED_FUNCTION_STATUS;
-> >>>> +       };
-> >>>> +
-> >>>> +       led@2 {
-> >>>> +               reg = <2>;
-> >>>> +               color = <LED_COLOR_ID_GREEN>;
-> >>>> +               function = LED_FUNCTION_STATUS;
-> >>>> +       };
-> >>>> +
-> >>>> +       led@3 {
-> >>>> +               reg = <3>;
-> >>>> +               color = <LED_COLOR_ID_BLUE>;
-> >>>> +               function = LED_FUNCTION_STATUS;
-> >>>> +       };
-> >>>> +};
-> >>>
-> >>>
-> >>>
+This is on a development board that's not in production yet, so
+personally I think this change is fine. It's in all of our best
+interests to have SoC vendors push their code upstream early, even if
+it means that later on we need to make memory map changes like this.
 
+Once this is in production, then I agree with you that changes like
+this should be avoided if possible.
 
+Brian
 
--- 
-With best wishes
-Dmitry
 
