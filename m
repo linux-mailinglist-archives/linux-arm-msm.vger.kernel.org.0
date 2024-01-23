@@ -1,226 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-7884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A532838729
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 07:16:17 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4DE1683874A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 07:23:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CF6AF1F22776
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 06:16:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6D5F21C222B5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 06:23:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E7064F8BA;
-	Tue, 23 Jan 2024 06:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF80E5024B;
+	Tue, 23 Jan 2024 06:23:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b="a0pvmHcw";
-	dkim=pass (1024-bit key) header.d=mediateko365.onmicrosoft.com header.i=@mediateko365.onmicrosoft.com header.b="aItbUImR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PDFAXC7I"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailgw02.mediatek.com (unknown [210.61.82.184])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E534F8B3;
-	Tue, 23 Jan 2024 06:16:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=210.61.82.184
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705990572; cv=fail; b=jFMs+fMFyIyFe6wLxfZsvO6+X9gLpIy645nI5rYvC2rFv9VePN9ULLpfCJQOo4exUeWCZZYiiZ76KEoXMREi9EkZmdN51ehWh9yuBZA7gvD32JNJUMRHfpSLgIA9pmSF1TANfsF0peiP4W2a1KbB7dFRzi5+SuzFQI3rCYgLPFc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705990572; c=relaxed/simple;
-	bh=sDB0u/GJzS3T7WwLtFDtirRx4n+HPrX0Q8O91XTjkRg=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=sFIeqf/7td5VUONWCOXJAM5dv60h0IYt86OjXZQPnLVy/mm7BtDAOCtg7UtgVWqFvyV7y7lNGLzY2WGBQOLRVkETScsEvprSXTra/m5xE5nK6W+ZYWvkQMOeo6Y4cwUwPWtp/Mn0j2fRhA6+nGTos51svfkM703nZl+GU1Yu4t0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com; spf=pass smtp.mailfrom=mediatek.com; dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b=a0pvmHcw; dkim=pass (1024-bit key) header.d=mediateko365.onmicrosoft.com header.i=@mediateko365.onmicrosoft.com header.b=aItbUImR; arc=fail smtp.client-ip=210.61.82.184
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mediatek.com
-X-UUID: e38220c8b9b611eea2298b7352fd921d-20240123
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
-	h=MIME-Version:Content-Transfer-Encoding:Content-ID:Content-Type:In-Reply-To:References:Message-ID:Date:Subject:CC:To:From; bh=sDB0u/GJzS3T7WwLtFDtirRx4n+HPrX0Q8O91XTjkRg=;
-	b=a0pvmHcwB+HCotZnLQuR8MyXlF1t07n9gn8oZgNG00BUULLJqyTDIUQINxRmcydGYZepdxhbpHItHDFGdq4Q9bBZw3u4OY9ojuCj2LTDlOLtZbUVbjotqq2j7bu5NU9CPzB2soJVX6vwUccAEIP75S7UXBqu7paRL9Z6xZZEOcE=;
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.1.36,REQID:ce110975-141b-48ca-b864-6d74edd5c257,IP:0,U
-	RL:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
-	:release,TS:-5
-X-CID-META: VersionHash:6e16cf4,CLOUDID:f9b0772f-1ab8-4133-9780-81938111c800,B
-	ulkID:nil,BulkQuantity:0,Recheck:0,SF:102,TC:nil,Content:0,EDM:-3,IP:nil,U
-	RL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,
-	SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0
-X-CID-BVR: 0
-X-CID-BAS: 0,_,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-UUID: e38220c8b9b611eea2298b7352fd921d-20240123
-Received: from mtkmbs14n1.mediatek.inc [(172.21.101.75)] by mailgw02.mediatek.com
-	(envelope-from <jason-jh.lin@mediatek.com>)
-	(Generic MTA with TLSv1.2 ECDHE-RSA-AES256-GCM-SHA384 256/256)
-	with ESMTP id 1926833074; Tue, 23 Jan 2024 14:16:04 +0800
-Received: from mtkmbs10n2.mediatek.inc (172.21.101.183) by
- mtkmbs13n2.mediatek.inc (172.21.101.108) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.26; Tue, 23 Jan 2024 14:16:03 +0800
-Received: from HK2PR02CU002.outbound.protection.outlook.com (172.21.101.237)
- by mtkmbs10n2.mediatek.inc (172.21.101.183) with Microsoft SMTP Server id
- 15.2.1118.26 via Frontend Transport; Tue, 23 Jan 2024 14:16:03 +0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Jf8UD5tAAhycGFkKO/qZXl3eZhMSfLmhuaokkxEDDjVVLaPxLOMmxXVBYozov+1YqbHLSCi1NydpmIt/meYL3FkqsoxhYUjAi6qNZNlfTb0uC9dfkVjVy/vtdRhSnSoFdyQdiFrFvZsYuy5ftHF1IUpj+CVoen6LIjVaDvJAvoZL+K96GqnUw02SRcE7goa28WZbPb4xoa5krCpprGi3bO188hTDb4zYtdFRBnQZg3Bl+SNv6CiQ/I0W7Opm/2nygWUgCZ12x27P2m0xR/JHL4uEXSFpFdlntgHXsoq3vEbDnxbYzG70Ql5lqtF+4ORcDBPwJSKWgBcsYOFR7CUnjw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=sDB0u/GJzS3T7WwLtFDtirRx4n+HPrX0Q8O91XTjkRg=;
- b=X/7uU+Co5IvPe9e37jQbfmV5TrtpsPXplbZUMMOaOsZ09cUBrasNoORzBYRQN8IrNgV6ZpSNo88wq0ywuKIoUwSui2R3TkZHuBrXdfuC6fGCdHPo9Y0uwyr3hU5Rm2IymoJItoetKlJNCOfBMsiDvzs4Kb6/CJRBT5IsjpC7tsixb6uTacJUPg0eD5/56q6ruUXTc6OztuUnPqX8eEdIF6TtCUBViN4ddPDBp6+GXWxkZ98z9no4/rRrx03eYaGetFBQVZP59krP8XPCHQf/vWFAY1oVleYE7txJiNgt8XR1LSy+0URrKSlFV0faXSk7SzSy0TgcBRfeg1SIf9pvHQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=mediatek.com; dmarc=pass action=none header.from=mediatek.com;
- dkim=pass header.d=mediatek.com; arc=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508A66FB3
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 06:23:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1705991030; cv=none; b=e6uqL7YQjkNa+okzOMqB1WCxDHti5FIs4K88BO03gjV/p2DN1dUy/7wTU++8pQbu6HuAMYr7wQdrDs6z6PQ5G6p/FkpIfgsiOHIDmAC/fh/6FFilVNj5Dl3lVA756LBpDbDwy1YIB3+hIPHalcWLpEk4R8TiOV8xu8TAvokacGw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1705991030; c=relaxed/simple;
+	bh=7WuyaHlE5zXhuxVaWnpwdo70Vp81yukPfArs5DsxNak=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bWb9K6IRLIhkGA7Zy9Bcddt1XYLK3Pjts7Qwwb1DJsedxXrzoCc2WBgMaKZ3rnqkA3lDhkqNOdxdluoHLqZ45H/EQEfg7/MeLNmyRAcM74AmwOWarUxPZLc/tU3e4WvtK3bm8RY7hPrNPBbU91BeDXhJZasREn+f6zX8YtszWRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PDFAXC7I; arc=none smtp.client-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-5ff9adbf216so33077107b3.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 22:23:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mediateko365.onmicrosoft.com; s=selector2-mediateko365-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sDB0u/GJzS3T7WwLtFDtirRx4n+HPrX0Q8O91XTjkRg=;
- b=aItbUImR7KwttlqBNhnGQvJpaeM9xgguui+r8+tlWuV+hVXH6Xi7qojgOZ3OMjJrkqz9kbBZ8cOlRxPu3Ppga9cgUT5qM1ng4TjsajJKVvyBnwPCovMPolIDuJfblwjOME6DhAsmUMpYjEHmc5NTUxI7numqszHuT2Qo4NmPotE=
-Received: from SEYPR03MB7682.apcprd03.prod.outlook.com (2603:1096:101:149::11)
- by KL1PR03MB7669.apcprd03.prod.outlook.com (2603:1096:820:e2::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7202.32; Tue, 23 Jan
- 2024 06:09:06 +0000
-Received: from SEYPR03MB7682.apcprd03.prod.outlook.com
- ([fe80::d006:ec9c:ff42:ff60]) by SEYPR03MB7682.apcprd03.prod.outlook.com
- ([fe80::d006:ec9c:ff42:ff60%5]) with mapi id 15.20.7202.031; Tue, 23 Jan 2024
- 06:09:06 +0000
-From: =?utf-8?B?SmFzb24tSkggTGluICjmnpfnnb/npaUp?= <Jason-JH.Lin@mediatek.com>
-To: "maxime@cerno.tech" <maxime@cerno.tech>, "daniel.vetter@ffwll.ch"
-	<daniel.vetter@ffwll.ch>
-CC: "manasi.d.navare@intel.com" <manasi.d.navare@intel.com>,
-	"linux-mediatek@lists.infradead.org" <linux-mediatek@lists.infradead.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"michel@daenzer.net" <michel@daenzer.net>, "intel-gfx@lists.freedesktop.org"
-	<intel-gfx@lists.freedesktop.org>, "chunkuang.hu@kernel.org"
-	<chunkuang.hu@kernel.org>, "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>, "mikita.lipski@amd.com"
-	<mikita.lipski@amd.com>, "dmitry.baryshkov@linaro.org"
-	<dmitry.baryshkov@linaro.org>, "tzimmermann@suse.de" <tzimmermann@suse.de>,
-	"daniel.vetter@intel.com" <daniel.vetter@intel.com>,
-	"nicholas.kazlauskas@amd.com" <nicholas.kazlauskas@amd.com>,
-	"dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-	"quic_abhinavk@quicinc.com" <quic_abhinavk@quicinc.com>,
-	Project_Global_Chrome_Upstream_Group
-	<Project_Global_Chrome_Upstream_Group@mediatek.com>,
-	"lucas.demarchi@intel.com" <lucas.demarchi@intel.com>, "sean@poorly.run"
-	<sean@poorly.run>, "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
-	"dmitry.osipenko@collabora.com" <dmitry.osipenko@collabora.com>,
-	"fshao@chromium.org" <fshao@chromium.org>,
-	"linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, "jani.nikula@intel.com"
-	<jani.nikula@intel.com>, "angelogioacchino.delregno@collabora.com"
-	<angelogioacchino.delregno@collabora.com>, "freedreno@lists.freedesktop.org"
-	<freedreno@lists.freedesktop.org>
-Subject: Re: [PATCH] drm/atomic-helpers: remove legacy_cursor_update hacks
-Thread-Topic: [PATCH] drm/atomic-helpers: remove legacy_cursor_update hacks
-Thread-Index: AQHaTaau1JBuNr0KqkifWFu/qedV2rDm6fyA
-Date: Tue, 23 Jan 2024 06:09:05 +0000
-Message-ID: <aac416742920953999a9ce230ac68139bf5b9790.camel@mediatek.com>
-References: <20230216111214.3489223-1-daniel.vetter@ffwll.ch>
-	 <20230307145613.xvhru3fpcudlpazt@houat>
-In-Reply-To: <20230307145613.xvhru3fpcudlpazt@houat>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=mediatek.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SEYPR03MB7682:EE_|KL1PR03MB7669:EE_
-x-ms-office365-filtering-correlation-id: 722b04c6-c86b-48d8-9f6c-08dc1bd9ce25
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: DD1Z3UaNKef19FydhDJmYEpgOiIzpTY+kF7MN6YwFEuTu9Rh5eKoTl7UaoVMaHBbfwy+HGFhwvhOzQBtouFi9MMItb/QveP2GnBZBSiUDsBzX6QYGSatHMKXQS19+y8faWTrtU8gLvseCMH/BqzKBQfBguH8PL2u+RDLW+AgSj9Die0xYHHOqpaZ7FZ5sE+ENKGeEIEkDQbm8iOmZ7SijRnPYjRBdJIphV4x87colbJp75SG7Cizl+NX09W9YoHILKrL+qltFZnTyvVZcjb/V0BYHbmGJ4RFsKaiocmx5z8W8KxRjYngUCZSc+36OdghaLUSWekrg1v0GrrVPiuWwFtx3Ib9uVRFHELPrfjmpTo8PRMT1dk6K2zcd/sXNDaGw6CXhq1euekD0vX3C6SnoydzsF/jDc5Nf9zPAlXpYLNvLYDz4c4fu2RtWdV3dQ30l66HXEIFBmzA+WJatdXklLXiB2GDTD31gzAZKUaky/75JCcGZpGYhTRUqZM7lStNPwJs6lwMmdh4Llj+OHoK7PCsqMxuyz/iwjEqAh5yJ5Fe+G1vVuHFwPQrVKznw2PE+0kTxuDWVZiwybNRc8JLhx8xjHBXMZKscb5ZcTOTrpLgY38OcNyQRpIyFk+tZYsX
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEYPR03MB7682.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(346002)(366004)(376002)(396003)(136003)(39860400002)(230922051799003)(64100799003)(1800799012)(451199024)(186009)(83380400001)(86362001)(71200400001)(2616005)(26005)(122000001)(8676002)(4326008)(8936002)(6512007)(2906002)(38100700002)(41300700001)(5660300002)(7416002)(478600001)(6486002)(66946007)(66446008)(66556008)(54906003)(110136005)(66476007)(316002)(6506007)(64756008)(76116006)(38070700009)(85182001)(36756003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Z2tWWHhoUkJ5WjFkWGpvN2xhUGpqZFN5TC93YzBXT0IzSWVyak5rYlZNU1dB?=
- =?utf-8?B?cHl4QVlWTU9ZSHpCbFhqOVNaR2FBSmNmeTl0U1RkOHMzTjlySGQyUVZZc1du?=
- =?utf-8?B?ZWJrMUhKMXRCYmpFMXBIRlJ3YWdwTyswcUhnL1Ntd3Y3UmFXdC9tWTM1MXhZ?=
- =?utf-8?B?UFhXYmhvbmp0cTljTzZFSUszK3pXZkhGcHh0RFJZMk9LYTdhYVFnMndQV3Br?=
- =?utf-8?B?d1BUL0t5VGRMTDVwTjhJWWdGaDk0RWYzNWxsLzliNzBHSHY4WjJFaHNOdWV5?=
- =?utf-8?B?bnd3WktuR1lNT1RnSHliNGhmQmxDa2xCaTh6bXdCTkUzdUpYZk9zTVVxTm9M?=
- =?utf-8?B?ck1WcjVTRmUzT2YwaXVlakVJZkZVT0NKcHFicjdmK0RjdVVocEdXV2x1VUIz?=
- =?utf-8?B?SzdtSFBEWUQybFViSmc1VU8zRnErdHRzWUREU0ViUXkzOTFRYlFTN0g4Sm5z?=
- =?utf-8?B?TDdYZG9UYVphSDhQeGlmZjhOVlR3QU5zYVRBQzRkalhLMU5Dd2FPOFdxTEZl?=
- =?utf-8?B?UTFzVFlFd2xCUUR1T0puZTVDNTdsNkVSYTNzSXhlalpNbXpFaXc0ejFyek1R?=
- =?utf-8?B?enU1L2xESy8rWndEQUNlMEo2YzZYK3ZmYWdGSVVVd3RSdlJ2OFJNQkxBUHhr?=
- =?utf-8?B?Zis4R1VyRlNlbVhGOStxRTZ0TFVkY3Y4VkF3QWRmRTk1V2hoQU53amtpU21j?=
- =?utf-8?B?M0lSbWk2UFBHQ2ZQSU5YRzY0emh3U3hiNnM5dHBsaXVGVEtrZUg5Z09CeEJJ?=
- =?utf-8?B?aUVjYTlWekd1bGVBK2hsMy9xTHIrckhwUkMyNEk1QW5DNFE5cGUxUVJra002?=
- =?utf-8?B?MGsrWVh2bXcyZExrWTd5T2dQTWpLYjBJV2tyd0pRcUJnVkQwR0xoaGk4Q1gx?=
- =?utf-8?B?SlQ5c0tuQmlIUEk0OHRLTjB4UmZDSXZicVBIUXRNemlMa0w4L3hsM1RWdklx?=
- =?utf-8?B?b1RnTTQwVWdLVDdFV3BlNVNRTG96QTNXT1VUQ0pEWGpJTTBJSFkvRFdSNndq?=
- =?utf-8?B?MDFMVDVUZlU0Y2p5TEhFTzVtZTczQkwwTTRzQXFLb0FKcytnMTRTK2pxcWU2?=
- =?utf-8?B?UzdDaDhYbUNua0wydEJjUkZleFF0WnlwTlZuSXdxMHpocjk2YnExWmRoc0dn?=
- =?utf-8?B?VFpreXRaeUFjeEd2aHkxT0dsZThEd3BHTHJwUHh6bkd1Q21qR1BmRW10M3M4?=
- =?utf-8?B?dlFsSUo1Snp1enVoZUhQczVEQzdQOTQ5K0dRaXNvM2hVbVdaZWM0S1pGQ3RP?=
- =?utf-8?B?Y05oZWxManFhemFDS0UyVENDaDZwMkh6MjNHMjM4ajFDcXdUaG4wRzdIT3lm?=
- =?utf-8?B?czVld1RXNzVQc0l6TDFpdG90SHBxcDZGTk92bGtzOWZvOTJxVzU2ZVozYnhQ?=
- =?utf-8?B?eHNtTVhCSXI2NkFTc1pJMktLQ1ROcHNKLzI3dHpQMVN3YmpkekJNa1VMd0wv?=
- =?utf-8?B?SEdyTi8yYUEwRHdiRlVlenFlRXhUL3BKV1h5T0hsbFlqdDFVaVVpZ0hQWmVO?=
- =?utf-8?B?Y3YzVlJRR3RFYmk5akZDekQzdkZwczZVRHQ2dlYreGRxa2VDeEpUU3BaQUdN?=
- =?utf-8?B?RU9TVWZmWnpWU3VCdFZKZ3BFRXdoK1dkWHJzUUxJSnVCZHFQdG9lS2RNMnI4?=
- =?utf-8?B?RXpib2JDOWRFMDlMa1R2N3gvMzRCcW5XamtLTEo3ZXBYUEVxV0p1SFg1eDNi?=
- =?utf-8?B?K01ubTVxaG1VQ1pMYjRGUWF3V0x5MjF4ZnpWYnZNc1p0dllyZDNzNzJVTzlZ?=
- =?utf-8?B?am94UVNNdmVIVys3UkRTZ1hZNmJEdWdXMGp6MHZlanNLaENIWkppbzFpV3ZD?=
- =?utf-8?B?L0pFZGF3a3BGOFV6Q3J1d3FOdjhuT0syWlZNRkdPQnJzVE85dWV5VDNHY1ox?=
- =?utf-8?B?Nm1QSTBpVTBjbmcyYUhEa1ZzQ0c2QXBqbDBJc2ZhZExHUmhnUEhHaVZXanhE?=
- =?utf-8?B?enJwYUVSZ1h3V3NkUm9aRTNrMFNBS2g5d2lhTmsxUWNmRHlVTHp4VW5TajdP?=
- =?utf-8?B?WmJJWUtlaDFvclI2emEwaS9hU3J1T3BuZHNqcyszSDZrek9vcFFkOWludWN1?=
- =?utf-8?B?Q1hUS0VCZDNLOTI5TFFjNnc0TkVGYncrbkE5R3NINWtscUtGTk82MXYyT3B2?=
- =?utf-8?B?YlV6eDBZVko1WXAvZzhLMDdiQi9yT1ltb2NFdTJEY2QxaG5HMnFjRjRFN05R?=
- =?utf-8?B?aXc9PQ==?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <A6927029EB2E954E880589887E9FB932@apcprd03.prod.outlook.com>
-Content-Transfer-Encoding: base64
+        d=linaro.org; s=google; t=1705991028; x=1706595828; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=q10a65nOeuzWQYq/rqdY1dYbV4U7Emp0GE7K5TT2nbU=;
+        b=PDFAXC7IGP3RYfEpgW/4mkMtM2GNKuIMHo6gEtOJa4iU+4IyvTx6AmyLLBOC8R1kBG
+         gnSOJ9Enfi5MDnBQiosCN4XOdvuG43MGD0H73nsggnoWDnZUtXT1jK5OVH9RDyNyePZK
+         XQS7O+c0ksbA+OSMpoAg0JrJ6fmGc4nCvl627NbdIRrI0guhm9P1Kdx7pzBBQg5ozZkI
+         hWDJA/132cvzNYayvoHNqsz+sKOhkx4m/SsMpUmkrCWpE6fbIYXaS5JaVuslZu2NEs26
+         1GfwpKRsN0CDI2B6lmgpMauZYfsp0KTMBbbPnEr7XcstHNpguXKcU7AK0G4Rjf9Pl228
+         mrsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705991028; x=1706595828;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=q10a65nOeuzWQYq/rqdY1dYbV4U7Emp0GE7K5TT2nbU=;
+        b=wKtsE0JRUvyRhfHMaGWvOQO/GYrl81yLRrrHnkAI8Q2xp7KlifWTHE9b8iQHPqF7Oj
+         omSh+pPtnEd7Zcwe2FUtPtYeTfLodYJ3xD1D5MBKSFhxa1XfXdFU9p5MFNByWhm8wkGV
+         veyvuswy8Ew+GOjEeLCtqqZNHnnnpqoW33XQKybliQnD7Lps/uP7OCrnxOHKrFetB4S0
+         9M9e6DkQO4cJjrP7YHoGMFoX5zmye4RQtmSkBdI24ID1NqA3Ox0yfzy5/EeWzGOxf8uR
+         DCIHDI3DZvkBvH5xE5+j4knOfwybo6cWd+UQ95uGL2O+1QPgeVhDc6nZ9zXuQmJ1CPms
+         Sw5Q==
+X-Gm-Message-State: AOJu0YxguDb2+oWoQIkFZKthcMX3NG5sC4okcb8pwEOk8QPENog6kdvL
+	HwSjPkW16e9FsS5WH5hBgSM40oSScg+5xG89quhiyjYiLSCyigbvbd7Oan87Snmmtx00+qq8I1/
+	bcV7EjxMAB5VE5oEU08WMEovE0x2Owg5TpE2srQ==
+X-Google-Smtp-Source: AGHT+IHojWdQNPRMKYfO/m1tZ+9E0Y2EjyizhhfEpvdUBqP/U5/pjTMhSJnd52qL/JRMfFvx3PuFRCMxfthbn17acP0=
+X-Received: by 2002:a81:89c1:0:b0:5f7:d06c:7464 with SMTP id
+ z184-20020a8189c1000000b005f7d06c7464mr4514994ywf.61.1705991028091; Mon, 22
+ Jan 2024 22:23:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SEYPR03MB7682.apcprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 722b04c6-c86b-48d8-9f6c-08dc1bd9ce25
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Jan 2024 06:09:05.9569
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: a7687ede-7a6b-4ef6-bace-642f677fbe31
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Z3DCtS9pLTiLvpUwDDS9J09eTwRk+kDeSebgiwYKYBFmrHNsTsPlwr+guGG6rSnOhtbg6NJqIQ0/XyHIvMs5UVv+9tRyGi48oVnlG1kphC4=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR03MB7669
+References: <20240118155711.7601-1-quic_ninanaik@quicinc.com>
+ <rq2dnfh6ctn5gbf3o3op5ywxx7zhx6r5sh5ykautye56o3p4dg@rjttk3rr65ld>
+ <20240119191144.GR3013251@hu-bjorande-lv.qualcomm.com> <CAA8EJppLNFReZn1HK_radSkKkf5L584fx3FCuqG0FoUt4+H=nw@mail.gmail.com>
+ <Za5xj8S3Gs7N-UUc@x1> <20240122200237.GB2936378@hu-bjorande-lv.qualcomm.com> <884f92ac-4d1a-9f0c-29ad-9d5833f10863@quicinc.com>
+In-Reply-To: <884f92ac-4d1a-9f0c-29ad-9d5833f10863@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 23 Jan 2024 08:23:37 +0200
+Message-ID: <CAA8EJpq74G7Et=vuc-K0y_wKCEiM0=YVyb7TcosAnbvOFMWDMg@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: Add new memory map updates to SA8775P
+To: Trilok Soni <quic_tsoni@quicinc.com>
+Cc: Bjorn Andersson <quic_bjorande@quicinc.com>, Brian Masney <bmasney@redhat.com>, 
+	Eric Chanudet <echanude@redhat.com>, Ninad Naik <quic_ninanaik@quicinc.com>, andersson@kernel.org, 
+	konrad.dybcio@linaro.org, robh+dt@kernel.org, 
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	quic_psodagud@quicinc.com, quic_kprasan@quicinc.com, quic_ymg@quicinc.com, 
+	kernel@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
-SGkgTWF4aW1lLCBEYW5pZWwsDQoNCldlIGVuY291bnRlcmVkIHNpbWlsYXIgaXNzdWUgd2l0aCBt
-ZWRpYXRlayBTb0NzLg0KDQpXZSBoYXZlIGZvdW5kIHRoYXQgaW4gZHJtX2F0b21pY19oZWxwZXJf
-Y29tbWl0X3JwbSgpLCB3aGVuIGRpc2FibGluZw0KdGhlIGN1cnNvciBwbGFuZSwgdGhlIG9sZF9z
-dGF0ZS0+bGVnYWN5X2N1cnNvcl91cGRhdGUgaW4NCmRybV9hdG9taWNfd2FpdF9mb3JfdmJsYW5r
-KCkgaXMgc2V0IHRvIHRydWUuDQpBcyB0aGUgcmVzdWx0LCB3ZSBhcmUgbm90IGFjdHVhbGx5IHdh
-aXRpbmcgZm9yIGEgdmxiYW5rIHRvIHdhaXQgZm9yIG91cg0KaGFyZHdhcmUgdG8gY2xvc2UgdGhl
-IGN1cnNvciBwbGFuZS4gU3Vic2VxdWVudGx5LCB0aGUgZXhlY3V0aW9uDQpwcm9jZWVkcyB0byBk
-cm1fYXRvbWljX2hlbHBlcl9jbGVhbnVwX3BsYW5lcygpIHRvICBmcmVlIHRoZSBjdXJzb3INCmJ1
-ZmZlci4gVGhpcyBjYW4gbGVhZCB0byB1c2UtYWZ0ZXItZnJlZSBpc3N1ZXMgd2l0aCBvdXIgaGFy
-ZHdhcmUuDQoNCkNvdWxkIHlvdSBwbGVhc2UgYXBwbHkgdGhpcyBwYXRjaCB0byBmaXggb3VyIHBy
-b2JsZW0/DQpPciBhcmUgdGhlcmUgYW55IGNvbnNpZGVyYXRpb25zIGZvciBub3QgYXBwbHlpbmcg
-dGhpcyBwYXRjaD8NCg0KUmVnYXJkcywNCkphc29uLUpILkxpbg0KDQpPbiBUdWUsIDIwMjMtMDMt
-MDcgYXQgMTU6NTYgKzAxMDAsIE1heGltZSBSaXBhcmQgd3JvdGU6DQo+IEhpLA0KPiANCj4gT24g
-VGh1LCBGZWIgMTYsIDIwMjMgYXQgMTI6MTI6MTNQTSArMDEwMCwgRGFuaWVsIFZldHRlciB3cm90
-ZToNCj4gPiBUaGUgc3R1ZmYgbmV2ZXIgcmVhbGx5IHdvcmtlZCwgYW5kIGxlYWRzIHRvIGxvdHMg
-b2YgZnVuIGJlY2F1c2UgaXQNCj4gPiBvdXQtb2Ytb3JkZXIgZnJlZXMgYXRvbWljIHN0YXRlcy4g
-V2hpY2ggdXBzZXRzIEtBU0FOLCBhbW9uZyBvdGhlcg0KPiA+IHRoaW5ncy4NCj4gPiANCj4gPiBG
-b3IgYXN5bmMgdXBkYXRlcyB3ZSBub3cgaGF2ZSBhIG1vcmUgc29saWQgc29sdXRpb24gd2l0aCB0
-aGUNCj4gPiAtPmF0b21pY19hc3luY19jaGVjayBhbmQgLT5hdG9taWNfYXN5bmNfY29tbWl0IGhv
-b2tzLiBTdXBwb3J0IGZvcg0KPiA+IHRoYXQNCj4gPiBmb3IgbXNtIGFuZCB2YzQgbGFuZGVkLiBu
-b3V2ZWF1IGFuZCBpOTE1IGhhdmUgdGhlaXIgb3duIGNvbW1pdA0KPiA+IHJvdXRpbmVzLCBkb2lu
-ZyBzb21ldGhpbmcgc2ltaWxhci4NCj4gPiANCj4gPiBGb3IgZXZlcnlvbmUgZWxzZSBpdCdzIHBy
-b2JhYmx5IGJldHRlciB0byByZW1vdmUgdGhlIHVzZS1hZnRlci1mcmVlDQo+ID4gYnVnLCBhbmQg
-ZW5jb3VyYWdlIGZvbGtzIHRvIHVzZSB0aGUgYXN5bmMgc3VwcG9ydCBpbnN0ZWFkLiBUaGUNCj4g
-PiBhZmZlY3RlZCBkcml2ZXJzIHdoaWNoIHJlZ2lzdGVyIGEgbGVnYWN5IGN1cnNvciBwbGFuZSBh
-bmQgZG9uJ3QNCj4gPiBlaXRoZXINCj4gPiB1c2UgdGhlIG5ldyBhc3luYyBzdHVmZiBvciB0aGVp
-ciBvd24gY29tbWl0IHJvdXRpbmUgYXJlOiBhbWRncHUsDQo+ID4gYXRtZWwsIG1lZGlhdGVrLCBx
-eGwsIHJvY2tjaGlwLCBzdGksIHN1bjRpLCB0ZWdyYSwgdmlydGlvLCBhbmQNCj4gPiB2bXdnZngu
-DQo+ID4gDQo+ID4gSW5zcGlyZWQgYnkgYW4gYW1kZ3B1IGJ1ZyByZXBvcnQuDQo+IA0KPiBUaGFu
-a3MgZm9yIHN1Ym1pdHRpbmcgdGhhdCBwYXRjaC4gSXQncyBiZWVuIGluIHRoZSBkb3duc3RyZWFt
-IFJQaQ0KPiB0cmVlDQo+IGZvciBhIHdoaWxlLCBzbyBJJ2QgcmVhbGx5IGxpa2UgaXQgdG8gYmUg
-bWVyZ2VkIGV2ZW50dWFsbHkgOikNCj4gDQo+IEFja2VkLWJ5OiBNYXhpbWUgUmlwYXJkIDxtYXhp
-bWVAY2Vybm8udGVjaD4NCj4gDQo+IE1heGltZQ0K
+On Tue, 23 Jan 2024 at 04:58, Trilok Soni <quic_tsoni@quicinc.com> wrote:
+>
+> On 1/22/2024 12:02 PM, Bjorn Andersson wrote:
+> > On Mon, Jan 22, 2024 at 08:45:51AM -0500, Brian Masney wrote:
+> >> Hi Dmitry,
+> >>
+> >> On Fri, Jan 19, 2024 at 10:35:43PM +0200, Dmitry Baryshkov wrote:
+> >>> This kind of change sets a very bad precedent. This way old kernels
+> >>> become incompatible with the updated firmware. For me it looks like
+> >>> Linux kernel suddenly being unable to boot after the BIOS upgrade.
+> >>> Generally memory map updates should be disallowed after the board hits
+> >>> the production and the DT is published and merged. There can be other
+> >>> users of DT. BSD systems, U-Boot. We spend sensible efforts in making
+> >>> sure that DT is an ABI: newer kernel remain compatible with older DT
+> >>> files. We expect the same kind of efforts from device manufacturers.
+> >>>
+> >>> I think unless there is a good reason, the memory map update should be
+> >>> reverted on the Qualcomm side as a breaking change.
+> >>> If this kind of update is absolutely necessary, it might be better to
+> >>> define a new set of board files utilising the new memory map, marking
+> >>> existing DT files as legacy.
+> >>
+> >> This is on a development board that's not in production yet, so
+> >> personally I think this change is fine. It's in all of our best
+> >> interests to have SoC vendors push their code upstream early, even if
+> >> it means that later on we need to make memory map changes like this.
+> >>
+> >
+> > The problem I have with the patch is that I don't know which precedence
+> > it sets, because the commit message indicates that we have a new
+> > firmware version, while Eric's report lacks this information.
+> >
+> > As long as everyone with access to the hardware agrees that breaking
+> > backwards compatibility is the right thing to do, I'm not against it.
+> >
+> > But then again, if the support is under active development, why would
+> > anyone run a stable@ kernel on this thing?
+> > Or are you asking for it to be included in v6.8-rc, so that you guys
+> > have a "stable" tree to do further development (with this patch) on?
+>
+> I agree with what Bjorn is mentioning here. Why we are freezing the kernel version
+> here/commit of it here. Memory map can change during the active development
+> and this target is under active development.
+>
+> New board file approach doesn't work - since how do you select the new
+> board file? Both old and new board file will still point to the same
+> platform type and version.
+
+The developer knows which firmware version is used. So the user can
+select the correct DT file manually. There is no need to pack all
+files together.
+Also it might be nice to bump the platform version when performing
+such drastic changes.
+
+>
+> We also saw recently that IOT SOCs which are similar to in some
+> sense Mobile SOCs are having the different map. The same almost
+> same SOCs used in the different product segments like Chrome
+> and Mobile and IOT can have different memory map as well. The good
+> part there was that they had different soc-id and it will be easier
+> to differentiate them.
+
+Having device-specific memory maps is also fine.
+
+>
+> As Brian M mentioned earlier, we want soc vendors to submit the support
+> for their SOCs and platforms on top it as early as possible and it means
+> such memory map changes will continue. Even memory map changes
+> continue even few months after the commercial s/w release in certain cases
+> due to critical bugs were found in some usecases which warrants the changes.
+
+So, can one handle such changes? Are we going to publish a list of
+kernels to be used with the corresponding firmware images? Then what
+if the developer wants to update just the kernel? Just to get this or
+that non-platform-related feature. Or vice versa, what if the user is
+stuck with an older kernel because some driver gets broken in the main
+branch (which unfortunately happens sometimes)  Or what if the memory
+map patch gets backported via the AUTOSEL process?
+Unlike the Qualcomm binary distributions, the firmware and the kernel
+version are no longer connected.
+
+That's why I keep on saying that memory map is an ABI. If it gets
+changed, it is a completely new, incompatible platform.
+
+-- 
+With best wishes
+Dmitry
 
