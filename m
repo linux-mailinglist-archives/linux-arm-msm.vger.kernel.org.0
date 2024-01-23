@@ -1,132 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-7998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7538839593
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 17:59:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F06C8395E6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 18:07:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 45F691F31D0D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 16:59:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CE7601F2B229
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 17:07:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62954823B5;
-	Tue, 23 Jan 2024 16:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68BBD7F7FF;
+	Tue, 23 Jan 2024 17:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="voqO2XvU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KJ+ESHvH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE13B81AD4
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 16:53:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C407F7DC
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 17:06:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706028840; cv=none; b=oYt7sRDMhL/K+QqYCkEw0q2nq/J+qUsOxo9APfmAsO5tCU/x+yDsw8sr5g5qYBDlO4O1ZCammEBxxNvgn9M6cSjaFIAtLePtFYHOavfRw3lJOhG5TemQgBc+MDfTCDdjhGjduxTlS7lx5KuAN29IQMUTqD/6lPDhOpIC2B/8Vn8=
+	t=1706029586; cv=none; b=or8L7R2DmDQhNQ/1PZRpLesC2MFdQZ3gm7mmGvZlDuEUxBnul2sA2Rxim9viOUuOc79palHrinwUoNoEnZ20vAr2QyhB6mUCSF70NinD3ZU8IVfKC3Z2q7t7C3kapa1ADshp9aZL7HtbkO1J0P1rveeJfEYVqw6jxascaqjsUi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706028840; c=relaxed/simple;
-	bh=pooQ69oU2DoOocMMkeJ4cpqIQG2BPmnIao2wByNaHUI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Gj6B0qBA6zb4FdGpZA4/+p8DqxSEw2ogEZg6ndejFJgYJaqP4zX3MAwVzZXZ6jVvANpT7g+DKq0xdotCRODwJYHatLez8XEC+QzdiU07F1vQgpRPB8bo1QB68OFYwRjKCdsAU2QT3hVcx2iPmJITxeNCYYJSZ+LMm04WmJtny+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=voqO2XvU; arc=none smtp.client-ip=209.85.128.182
+	s=arc-20240116; t=1706029586; c=relaxed/simple;
+	bh=UJ0Pt5aqaOsboBaO7LRgeYagbfq3NNfzeyAXSshCX9w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Tzy0nLcJTJ6OEcNUCwulHdFSOcLpOIO16THPbwNJQGN0S/HM/f+qwX09RqHtSfG9DsyHmnRSQ/Z0EmPUlfgVHs4jHBSviTsHBpSTfhLKAAzMQPbGziEorBESXG2dw2Ae8hv5wAwKC1Bcf/oB6Pyz0TUFcZ0MXOYNn4k+a8Wryx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KJ+ESHvH; arc=none smtp.client-ip=209.85.216.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-5ff7dd8d7ceso39692397b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 08:53:58 -0800 (PST)
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2906855ac5fso1673634a91.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 09:06:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706028838; x=1706633638; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=w7Kpr4OnTCJukmd6IPUzA5zkXhmfPHzmd2uoemc3Jdk=;
-        b=voqO2XvU0xmSWWfJt9LGbijZ1wC5J5sbxo+wF0ufNsI6va4x+SZ0YSCafc0yKkM73b
-         3Er8Nab1E1+Igbph1iDoeybupfjE8hFfMVeJspfU8MuWSHlfTAfcbg1zph9VDQ2a4MWL
-         Cac4jg9idfOBPU3IKvxVYxjIs9L1BZuxN7cIhYjtMtpgHXYydRXoB5U5i6HsGxfqKU/y
-         m1tyM6b1E9YqzJQ2+VOu3Mup6U3Tao0AEeeqYurQXg+GOh+zCLMZWfWpYXM9H65XBzsv
-         jSXoraQyghJcGktdl7lXRL1X/wzfA5cYlhz+32VlhD+6QnxgdZW3vk0vdYlg6wWkpDIH
-         NqPw==
+        d=linaro.org; s=google; t=1706029584; x=1706634384; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=2xUo3z3s9ab8bN8UwwU8Rlpi/sAJO42Q10D7NQh75U0=;
+        b=KJ+ESHvHTDXtK7J3Eul2LAdisHKBY5S/9tMUbedMtLNNAd7IecvdUFQnYlO56a8y48
+         EyqhOA/emyZSYW8dXE4y78Cohi3RD5UUIRn5V4VVn9auxF2MlGAU5Tt7/1PfkJ/jKFsO
+         O3HJpMu/GcnJ2a+B8wZMtSTxjtz0/u8RsJhKzZYMRu6L2F4hqbRAeFQ3+7cN2mR4TWNH
+         BxQcr0sQ8IyKZEhMVvAHGEk4KqZoDvr0drlI4cJY5dNn2J5BLEaTyETFJgtghrGByXWw
+         KAQhRa4gPPlcjN7kNg1lTfrU9Q/d+n0OqmBZkDOVWgDPn2lUvS4V4D+EL97so69NC79i
+         RiSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706028838; x=1706633638;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=w7Kpr4OnTCJukmd6IPUzA5zkXhmfPHzmd2uoemc3Jdk=;
-        b=nNmxA4PUaC/zYpsOmAY8u2tCABKu6EISfsHvHG95MPine6CVV/CVku+XeBk6IHDUU4
-         gH71PaTP39T1eTKRK8NAbzHgFDKtsB9NJ1PVv6smjkarbe/PL/28u0dLIVmQyH9iw81V
-         fYFQ5g6r/o3imy6w/PUGbckXAFBWxuK+0b8eL2vqjwiDxeQYbKWvW6j4FuvTjhNd/m9u
-         +zjYAC9Kb0vvtE0QM/7r46ey2/y7pE0+pKZ5o69Db0nAss62EVurxluYnD7w8ABc03Kc
-         3MS3cpQyR3M0jJqYZ6PUgP35UHFoyBwvIBzLwJNbZQnlDE4gzSQgfcxn1urB0bLXABt/
-         CrIw==
-X-Gm-Message-State: AOJu0Yyj8uw7SF9tpg26a2GCv8753jdR807NFKEHgIgrk0HS0lrJEeEB
-	PWoGHQOPeyKPFZVuHfo5SlIenHfmEnDlTQP1b78iYfS3rnrjsyskyDvDICZ68D0QtzPukHdQdQZ
-	RUgtojiZ0XI59cuRqMiArSZbSgOLCjmiSCfV8vA==
-X-Google-Smtp-Source: AGHT+IG6yH0HyJuDZxDw1e1dK7G/Xy5v2cIQbXYLFfwffB4lOyIXbr2o9XW/hXlmMP+niub/q0gByneRaxyxeM/Hosc=
-X-Received: by 2002:a81:7c87:0:b0:5ff:9128:d314 with SMTP id
- x129-20020a817c87000000b005ff9128d314mr4701207ywc.105.1706028837907; Tue, 23
- Jan 2024 08:53:57 -0800 (PST)
+        d=1e100.net; s=20230601; t=1706029584; x=1706634384;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2xUo3z3s9ab8bN8UwwU8Rlpi/sAJO42Q10D7NQh75U0=;
+        b=BgWckHxUGEq6kIgA4UNtJPGJ409oF0lSbLri9KzxPHoCfCBNZnAVRQ7Et7Fror09U3
+         T3WPsARpeIgEhrSNZszZ9jlrGl+iTtxpTwWKTzuMRLwmh/sKTEQyfAAHdt/ApcQIAMel
+         tvkF3yhyx9B1XEjoHBDz9/Y59zBFiLcSf8ZtbnsjsoHapytyjrDo/uvTvxHvacr+vQ+c
+         91sg3b5Q0yyHRcYJkKhfWQNBirke4mxSz9gCl8yp+09Hmc24zhCI33fYDgcRQZGcjcQg
+         kbESA9lGlQ7+8o4dFwt3v69wa7xVd7odZzeS8zp1V8LND45NnAZ7dB6oUMPZ0kZo6XBS
+         xOiw==
+X-Gm-Message-State: AOJu0YzWM3+PCF1zQbck1ARm9cq4wPU/16+XnJl8F9uGJvZB978M4Nk8
+	G1JsyCmDV4dYwzbImG0ML1rvEcv+SWLmsAcPH3BvgEVhs+gw4mBrnpQEaTegzQ==
+X-Google-Smtp-Source: AGHT+IGx6IBvBOrQqDuQEkKbQ1DPWZd+eSGrbU9jAEgx49dV2Bs2F/MYIebq5N7ht9Vj6k50cVTjmg==
+X-Received: by 2002:a17:90b:3784:b0:28d:dfdd:3f03 with SMTP id mz4-20020a17090b378400b0028ddfdd3f03mr2786558pjb.6.1706029584036;
+        Tue, 23 Jan 2024 09:06:24 -0800 (PST)
+Received: from thinkpad ([117.217.189.109])
+        by smtp.gmail.com with ESMTPSA id dj11-20020a17090ad2cb00b0029051dad730sm9435869pjb.26.2024.01.23.09.06.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Jan 2024 09:06:23 -0800 (PST)
+Date: Tue, 23 Jan 2024 22:36:14 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@somainline.org>
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: sc8280xp: Fix PCIe PHY
+ power-domains
+Message-ID: <20240123170614.GH19029@thinkpad>
+References: <20231227-topic-8280_pcie_dts-v1-0-13d12b1698ff@linaro.org>
+ <20231227-topic-8280_pcie_dts-v1-1-13d12b1698ff@linaro.org>
+ <ZY6sh8nlEUyEfL0u@hovoldconsulting.com>
+ <20231229170334.GA9098@thinkpad>
+ <20240122172528.GE3176@thinkpad>
+ <Za6ns-xhN3N-cmIr@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240118155711.7601-1-quic_ninanaik@quicinc.com>
- <rq2dnfh6ctn5gbf3o3op5ywxx7zhx6r5sh5ykautye56o3p4dg@rjttk3rr65ld>
- <20240119191144.GR3013251@hu-bjorande-lv.qualcomm.com> <CAA8EJppLNFReZn1HK_radSkKkf5L584fx3FCuqG0FoUt4+H=nw@mail.gmail.com>
- <Za5xj8S3Gs7N-UUc@x1> <20240122200237.GB2936378@hu-bjorande-lv.qualcomm.com>
- <884f92ac-4d1a-9f0c-29ad-9d5833f10863@quicinc.com> <CAA8EJpq74G7Et=vuc-K0y_wKCEiM0=YVyb7TcosAnbvOFMWDMg@mail.gmail.com>
- <20240123160203.GF2936378@hu-bjorande-lv.qualcomm.com>
-In-Reply-To: <20240123160203.GF2936378@hu-bjorande-lv.qualcomm.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 23 Jan 2024 18:53:46 +0200
-Message-ID: <CAA8EJprd3QibK=5JJEo=EKgRwXsveAhD+S0ZPJDoNCmgz-axAw@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: Add new memory map updates to SA8775P
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: Trilok Soni <quic_tsoni@quicinc.com>, Brian Masney <bmasney@redhat.com>, 
-	Eric Chanudet <echanude@redhat.com>, Ninad Naik <quic_ninanaik@quicinc.com>, andersson@kernel.org, 
-	konrad.dybcio@linaro.org, robh+dt@kernel.org, 
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	quic_psodagud@quicinc.com, quic_kprasan@quicinc.com, quic_ymg@quicinc.com, 
-	kernel@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Za6ns-xhN3N-cmIr@hovoldconsulting.com>
 
-On Tue, 23 Jan 2024 at 18:02, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
->
-> On Tue, Jan 23, 2024 at 08:23:37AM +0200, Dmitry Baryshkov wrote:
-> > On Tue, 23 Jan 2024 at 04:58, Trilok Soni <quic_tsoni@quicinc.com> wrote:
-> > > On 1/22/2024 12:02 PM, Bjorn Andersson wrote:
-> [..]
-> > > As Brian M mentioned earlier, we want soc vendors to submit the support
-> > > for their SOCs and platforms on top it as early as possible and it means
-> > > such memory map changes will continue. Even memory map changes
-> > > continue even few months after the commercial s/w release in certain cases
-> > > due to critical bugs were found in some usecases which warrants the changes.
-> >
-> > So, can one handle such changes? Are we going to publish a list of
-> > kernels to be used with the corresponding firmware images? Then what
-> > if the developer wants to update just the kernel? Just to get this or
-> > that non-platform-related feature. Or vice versa, what if the user is
-> > stuck with an older kernel because some driver gets broken in the main
-> > branch (which unfortunately happens sometimes)  Or what if the memory
-> > map patch gets backported via the AUTOSEL process?
-> > Unlike the Qualcomm binary distributions, the firmware and the kernel
-> > version are no longer connected.
-> >
-> > That's why I keep on saying that memory map is an ABI. If it gets
-> > changed, it is a completely new, incompatible platform.
->
-> This is only a problem because we think the DeviceTree is a part of the
-> kernel. If we actually tied the DeviceTree to the firmware - as it was
-> intended - different firmware versions could come with different memory
-> map.
+On Mon, Jan 22, 2024 at 06:36:51PM +0100, Johan Hovold wrote:
+> On Mon, Jan 22, 2024 at 10:55:28PM +0530, Manivannan Sadhasivam wrote:
+> > On Fri, Dec 29, 2023 at 10:33:34PM +0530, Manivannan Sadhasivam wrote:
+> > > On Fri, Dec 29, 2023 at 12:24:55PM +0100, Johan Hovold wrote:
+> > > > On Wed, Dec 27, 2023 at 11:28:26PM +0100, Konrad Dybcio wrote:
+> > > > > The PCIe GDSCs are only related to the RCs. The PCIe PHYs on the other
+> > > > > hand, are powered by VDD_MX and their specific VDDA_PHY/PLL regulators.
+> > > > 
+> > > > No, that does not seem to be entirely correct. I added the power-domains
+> > > > here precisely because they were needed to enable the PHYs.
+> > > > 
+> > > > This is something I stumbled over when trying to figure out how to
+> > > > add support for the second lane pair (i.e. four-lane mode), and I just
+> > > > went back and confirmed that this is still the case.
+> > > > 
+> > > > If you try to enable one of these PHYs without the corresponding GDSC
+> > > > being enabled, you end up with:
+> > > > 
+> > > > [   37.709324] ------------[ cut here ]------------
+> > > > [   37.718196] gcc_pcie_3b_aux_clk status stuck at 'off'
+> > > > [   37.718205] WARNING: CPU: 4 PID: 482 at drivers/clk/qcom/clk-branch.c:86 clk_branch_wait+0x144/0x15c
+> > > > 	
+> > > 
+> > > Technically this patch is correct. PHYs are backed by MX domain only and not
+> > > GDSCs. Only the controllers (PCIe, UFS, USB) are backed by GDSCs. The fact that
+> > > you are seeing issue with PCIe Aux clock suggests me that this clock may not be
+> > > applicable to the PHY but it needs to be enabled for working of the PHY somehow.
+> > > I'll try to find the details on how exactly it is needed.
+> > > 
+> > > But if I get the answer like, "This clock is also sourced to PHY directly", then
+> > > we may need to add dual power domain for PHY (both GDSC and MX).
+> > > 
+> > 
+> > So I answer I got from Qcom is that this clock is only applicable to the PCIe
+> > controller and not PHYs. On some platforms, there is a separate PCIE_PHY_AUX_CLK
+> > coming from GCC that is used during L1SS state. I think that caused confusion
+> > while adding PHY support for followup platforms and folks just used PCIE_AUX_CLK
+> > since they couldn't find the actual PCIE_PHY_AUX_CLK.
+> 
+> Thanks for sorting that out.
+> 
+> > I've prepared a series to fix this mess, but I want to know how you end up
+> > seeing the above "clk status stuck at off" issue. Is there an actual usecase for
+> > powering up PHY without controller or you just experimented with it?
+> 
+> As I mentioned, I ran into this when experimenting with how to enable
+> the "companion" PHY for four-lane support. There shouldn't be any use
+> case for it (apart from using it to determine that the current
+> description of the PHY resources is incomplete or incorrect).
+> 
 
-Yes, up to some point. Because then DT gets incorporated into U-Boot...
+Ok. I tested by enabling the PHY clocks during qmp_pcie_clk_init() without
+PCIE_GDSC. It worked for one instance of the PHY which doesn't have
+PCIE_PHY_AUX_CLK, but for the PHY instance with this clock, I saw the same "clk
+stuck" issue. Then checking the internal documentation revealed that this clock
+needs PCIE_GDSC to become functional >.<
 
-> The one exception would be any remoteproc/pil firmware that is not
-> relocatable, as these are distributed together with the OS (in some
-> form) and not the boot/security/etc firmware.
+So to conclude, PCIE_AUX_CLK belongs to the controller and it needs GDSC. And
+PCIE_PHY_AUX_CLK belongs to the PHY and it also needs GDSC.
+
+I will just submit a series to remove the PCIE_AUX_CLK from PHY nodes. Then
+in another series, I'll remove the GDSC for PHY instances that do not require
+PCIE_PHY_AUX_CLK.
+
+Hope this makes sense.
+
+- Mani
 
 -- 
-With best wishes
-Dmitry
+மணிவண்ணன் சதாசிவம்
 
