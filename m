@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-7891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 811718388D8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 09:25:43 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A9CE48388DF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 09:27:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A5D781C24AA6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 08:25:42 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1E26CB21CBE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 08:27:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 212B75674E;
-	Tue, 23 Jan 2024 08:25:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81A525677C;
+	Tue, 23 Jan 2024 08:26:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Uvsh9iQE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ddxWs+El"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7800F56B6E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 08:25:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08CAC56766
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 08:26:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705998329; cv=none; b=bkVYcPTyFZPw/iahVrMZHX669wnTSaPA9QNNpkAEMq7/Vo08BugMZcV6f1pPODqMdn/qLHwuzmGpd7o/OVBjel3mh6tExA8XCWr96Z2a4oXzfgIMwI//kq3Du594Cb+UI9az1usWg2g5yXA6K2BDpBdFt7xilHFiQ9grZZ7RDAg=
+	t=1705998413; cv=none; b=nDPnxlHuJlaM/qHcR4kpKQISdeY71wAq/v1Q2LUPH4mS2qH7A+KydwGYiSdI/4ObY2E8VZxO8pTOnRcSa8+tSEbXmpYpY4Wlyb+qGrmxcsqvk27uUQ/OC+Q97XMDm6rEr/fAMMUKgfYYdciHUxVi+u2xz2DZpKK5MBQ+HHxyZ5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705998329; c=relaxed/simple;
-	bh=VLPWRTePGeeAnAMDO6JWxsfnoKa21Jxlm6UG2n36eYg=;
+	s=arc-20240116; t=1705998413; c=relaxed/simple;
+	bh=nJDuhTa9w+cd8v66G8y8I0kBd3IWX4sw861v77mKq50=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IAXJUkJCLH6C2HqmSK7QwUVB0YxZVyLJqd+qNJNGDmpjd4BIkpthFKcriCLb/Kq/jiFjjBkd8kDre2/95oSXkU78xzEsTgnNVY4lkPkuzioJwOvVXuo67BOdkSw1yaz7L7Q3e9wkCsNax3ENQTNuFVO+wT8iL+pbce/QAIYyCqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Uvsh9iQE; arc=none smtp.client-ip=209.85.128.45
+	 In-Reply-To:Content-Type; b=dSYpFmgjVaoY2ml8A2wazp0ezP7xska4w0BB8sC4r/KJ/TH/Qt6zi9LGM3UfRLllBC1tdOhedM5LUBl1cHpjcqminuqmbjxOuPi+GTRRNxOsjnXuhYHmmZs4rg/RSepNluJqHwswOLeDjSKZhukzjaarjk8zRXTG7e8WlWFtOIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ddxWs+El; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-40e9d4ab5f3so43616045e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 00:25:27 -0800 (PST)
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-40ec048e0c1so398645e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 00:26:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705998325; x=1706603125; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1705998409; x=1706603209; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=FxBVK1tJbu9DvvgHsDgxg2pgzx7xyGqaQ4fEtaVXiOQ=;
-        b=Uvsh9iQE+jtpcwpnD0+7HxvMr8R+Kwb7hcgRR94GCiNayO3nWU8zYBeuZs5H2yp6/i
-         ul4U3sJdkLnPkfzZ3rhNS9F+2MLbFtFEKnIqtSAqAjaPaUW8Of0oTy/ljSFY2TD8bheY
-         L7XHHkKpFbF0BAmKqSjTNOADYB27AYYiwEc/dtUj1Blor/FRhcQymY5SYYBROt3ayamv
-         N7M4ZfBCjrXY2Zz1OtZ2nhblVlT5/xHv/lbxl0STSSkQjLHJq4cRg6SQmZcR1j3ZHT0r
-         duKh84d1kzAUC2tbdx30lT6iD1b5DooGphb/ztks77QoOXoUhJ7B4MlKF8ueTy9PsDHd
-         OTZQ==
+        bh=yQQZHZgkpjn3FHRXzoOufFNywlC/i3yKqCZ0P18kMRQ=;
+        b=ddxWs+ElS7fve0QVt/a2+LA2QwKslak4jNuvyHqkwGUd7uyrK5Ea2YA5tAyhNzGzbk
+         USee6QBbOv8Vx0jSOflGyIeyuMsxn6OOvvz67wEIZMn3GkcGc/+T1qdJ6vTz2TlPh6EU
+         r/gkfN7dxsqrQicdBNiiIEll186eMPybwV+Tax1/RzQRmySrX2+Gnj7PaHXbw55Ebe8a
+         SriyrwZL4GA4OrQT/G+xCkeZq2X95oue9RBiA6lzIl1+1s/ipQoebxWydIWhN/DczY8n
+         PD0p0AEGT4jJvO+pYtnbgLAJMqL+OBKO4z68eZSR3BL6E/1UJvIqTaz7XX6l77z8Cdo+
+         Al0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705998325; x=1706603125;
+        d=1e100.net; s=20230601; t=1705998409; x=1706603209;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FxBVK1tJbu9DvvgHsDgxg2pgzx7xyGqaQ4fEtaVXiOQ=;
-        b=SV4+WnaE3+DQ4Oy2ZFgGSkPCfeWSqJQ5MIzd5NkUhaKPusd4asQ2KaTyGF4nYtYHEH
-         tVZY9rDlUKhj/zftkB5ujGZ8Ntcqeh15k177+DYhNj8ldYqijNYFGjbM70PqxhzHF2W9
-         lbsO99ox/43pTxR8Bm9nfOjlYsOVL/7HKpmbZ90hx1TiiZU+z5PxGmLJfDIkdosAwQS2
-         01+fKLo5yqHSL+8rZrm5bOmc1lgxaM9xmIu948CYAiB/jlqzCHJa9EWGuSFcfTJj1ADP
-         weF2QzOuiFiuunv6HrhHkTROxvCHf4Cneuq3oe/y5ZAQhtcfwS9ZyAo/8f44c9WGRpMw
-         TNpg==
-X-Gm-Message-State: AOJu0YwjMpAzX07I9O/lYmTjmHCMpAHQrm4u/tArG4To8fHGdrIUy+Rx
-	BeoSOQjypZo5pxSBxHT1BCCkJgSnTFbAvRnbuqOOgW5XPTvTpxhhM9K8A9PO5tQ=
-X-Google-Smtp-Source: AGHT+IFbkzvkaHM+7stVgdOy/I0lmgqcLiu86BVZwiDUap3SxHVXW/+/y9qDny1lV6D53GMrEOKZ0w==
-X-Received: by 2002:a05:600c:2288:b0:40e:46b2:24da with SMTP id 8-20020a05600c228800b0040e46b224damr288327wmf.71.1705998325687;
-        Tue, 23 Jan 2024 00:25:25 -0800 (PST)
+        bh=yQQZHZgkpjn3FHRXzoOufFNywlC/i3yKqCZ0P18kMRQ=;
+        b=BpCOSc+/SiGB3BFp9YKA9ARAD/D/W3BuzpDouoKmh5cTf9VkqQdKUl/oIdn7a6atgq
+         8T4UWcccX+vIB6xJKYPXhkiyeefxfsn2jx3YjqtEgeENmdznwXAs63lvJabLtEeEhdeO
+         wCcs0KSO+2bqQmwwdBbpa4BI+9qz7r4AhZ36zBhhHG/WY8W9MYLyWg6Da38o0BbuTVbw
+         YQiUhPetpmzqi36t1nF4jnU8WQRrUIJe3X3vEmpk0iAyJzyISNALu/G17ySJIiw/hd2G
+         eexVIVoy/NvFSX2d2g/LENEEsl4AWSk1UYEcUZw37WVw2kb9kNYmtwqNzh6Q2FGXz7Kx
+         vYpw==
+X-Gm-Message-State: AOJu0YwST4N1VlSP1GBP3TfujoSidGcbXWE5o+MxJDU512dXt8eYPnwR
+	nlSDrPSDHamt9r7JjsPHw1YDlXTtA8Tt5U0D5xBBez2hhwbMjvsJH2TgNI7V6L8=
+X-Google-Smtp-Source: AGHT+IGc4nNnFAgOPrXhe6EjkgVvYCoYnJ+W7x12dCkE/gCccqdufAxWm3SNKjZ8635Y4ZDXVyOYrg==
+X-Received: by 2002:a05:600c:4ed1:b0:40e:bee7:41b4 with SMTP id g17-20020a05600c4ed100b0040ebee741b4mr206001wmq.55.1705998409269;
+        Tue, 23 Jan 2024 00:26:49 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.215.66])
-        by smtp.gmail.com with ESMTPSA id h16-20020a05600c351000b0040e4914f28dsm45174001wmq.18.2024.01.23.00.25.24
+        by smtp.gmail.com with ESMTPSA id h16-20020a05600c351000b0040e4914f28dsm45174001wmq.18.2024.01.23.00.26.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Jan 2024 00:25:25 -0800 (PST)
-Message-ID: <55b09f5d-1d90-426e-b2fb-0fdf073bc7b1@linaro.org>
-Date: Tue, 23 Jan 2024 09:25:23 +0100
+        Tue, 23 Jan 2024 00:26:48 -0800 (PST)
+Message-ID: <e4fe77d6-2762-4fe1-a68b-e7d152d22efd@linaro.org>
+Date: Tue, 23 Jan 2024 09:26:47 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,14 +78,13 @@ User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: Add new memory map updates to
  SA8775P
 Content-Language: en-US
-To: Brian Masney <bmasney@redhat.com>, Ninad Naik <quic_ninanaik@quicinc.com>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+To: Ninad Naik <quic_ninanaik@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  quic_psodagud@quicinc.com, quic_kprasan@quicinc.com, quic_ymg@quicinc.com,
  kernel@quicinc.com
 References: <20240118155711.7601-1-quic_ninanaik@quicinc.com>
- <ZamJ1wSXzJSyzqck@x1>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -131,29 +130,37 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <ZamJ1wSXzJSyzqck@x1>
+In-Reply-To: <20240118155711.7601-1-quic_ninanaik@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 18/01/2024 21:28, Brian Masney wrote:
-> On Thu, Jan 18, 2024 at 09:27:11PM +0530, Ninad Naik wrote:
->> New memory map layout changes (by Qualcomm firmware) have brought
->> in updates to base addresses and/or size for different memory regions
->> like cpcucp_fw, tz-stat, and also introduces new memory regions for
->> resource manager firmware. This change brings in these corresponding
->> memory map updates to the SA8775P SoC device tree.
->>
->> Signed-off-by: Ninad Naik <quic_ninanaik@quicinc.com>
+On 18/01/2024 16:57, Ninad Naik wrote:
+> New memory map layout changes (by Qualcomm firmware) have brought
+> in updates to base addresses and/or size for different memory regions
+> like cpcucp_fw, tz-stat, and also introduces new memory regions for
+> resource manager firmware. This change brings in these corresponding
+> memory map updates to the SA8775P SoC device tree.
 > 
-> Reviewed-by: Brian Masney <bmasney@redhat.com>
+> Signed-off-by: Ninad Naik <quic_ninanaik@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 103 +++++++++++++++++++++++---
+>  1 file changed, 94 insertions(+), 9 deletions(-)
 > 
-> Krzysztof: It'd be nice if you could submit this patch for inclusion
-> to the stable trees since the system can crash without the updated
-> memory regions.
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> index a7eaca33d326..20b16fb5f537 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> @@ -356,13 +356,18 @@ uefi_log: uefi-log@908b0000 {
+>  			no-map;
+>  		};
+>  
+> +		ddr_training_checksum: ddr_training_checksum@908c0000 {
 
-???
+Underscores are not allowed. Please rewrite downstream patches to match
+upstream code.
 
-It would be nice if you could submit what you want to submit...
+Also, useful is to run basic tests/tools on your patches, like W=1
+builds, before posting.
 
 Best regards,
 Krzysztof
