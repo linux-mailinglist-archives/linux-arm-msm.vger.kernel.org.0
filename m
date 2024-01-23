@@ -1,73 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-7981-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5188D8393B2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 16:51:32 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D8AC8393C3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 16:53:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CA0BE1F22CD8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 15:51:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D87611F212F3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 15:53:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBFAD6086B;
-	Tue, 23 Jan 2024 15:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBBFA5FEF2;
+	Tue, 23 Jan 2024 15:49:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tfKYRcwV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FXwezFBu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F148560894
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 15:44:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912B15FF0A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 15:49:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706024699; cv=none; b=byzPhpay/s0wjj9xfbSqZcX/mfiFH1QnoqaR93osYrdcU2laG2bG9CGa7Q+6xiNRSvpICWyYdu6oRSZiu7oHygEBTYhLVRCWPUuwpad6qyuUg/2OKmwY5HDIxt/qPH2pa9ueRgCAYX1mPxUe6+yZtHT0B2QPdTlb940gZBfqPb8=
+	t=1706024961; cv=none; b=Dvp059g/NK6W5o5h6LGFyPXIT4DQc2QRHs7Sf6qVS10MY8f18uu2xvqVanDdAaadPKFGxPKbvnY7H9oPTQz8hCzCwe797qBdWl1G5i5m+HwfF5VVeMjWZDugrN10lXEQWIFPPLqbIurD9/XrK6eRPKOXYPw4QP8i83VcVXZJkRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706024699; c=relaxed/simple;
-	bh=v66z/6SqbUGnxW01A6EAcko38iSDYwdZ7F36jFF1++U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DxO8sjuaG4kzf89foiT7UfdnXMMAQImIdogbCFAijL2Snup4a9fk/j+y4MceNx5ifqifc8Wz/VGFyMVGF1iypY2xP4ehRCIujJE5vUu1djDeOSdzVoiRzQQbN0CI+cissRCLcgu5CxfwtgTsLpThRsHJ6Pv/m5IIJnKU6EVc3Is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tfKYRcwV; arc=none smtp.client-ip=209.85.128.41
+	s=arc-20240116; t=1706024961; c=relaxed/simple;
+	bh=W/Q8+hIAfvWD3IeiPkdH00K2CKwKc05dTxcLD2HHPRI=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=fAXxLCn53YE7IYP5thCtP3PcuFhI9TMtVYYC2LdP6+DUFmc7pe3zzUIS0VsNzW8aQkDc4q6AbKnUmLuhWTzBbVeaApfP/K7M4Up/n++wfYPM05O1uRF6cfsz2wUbABMecZVUFpDj0i2yBhla2eV87j5361bGy8VV4Bpbp9QNxy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FXwezFBu; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-40ea5653f6bso41292295e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 07:44:57 -0800 (PST)
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-33924df7245so3279308f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 07:49:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706024696; x=1706629496; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fw8HiKqsvLnNZBoBe2w58hvINNLUyhw5JoLm2QBqfBU=;
-        b=tfKYRcwVkixgLVqM/G50oFO0iCTzYv/qTx9PGl3Sq60FGUJVCQldd5HkMzGwmOlZNt
-         CtzlDTkT10hgjA1D8B9Nh2gejBPlbJU0h444iLVmavBYgu2G0aoY2NJGAYPUOjjvPxpU
-         SXAbfH6G+dE/Lj80MCv99xPCSLX3BIdYKDsZodyT6ibGF7Y10ge3Tp0WXWjL5yI+Q9zf
-         12WZ/oHvTxYWRQdNoElprtKG3/eCzUyJmbfrd/CZ2/vM4PkeSdMMkS9kz8mlcVBvIAiN
-         wGoa8ZUADrh/Hh0iVCjDd21S5ZwbCBtWs0S2h+TxcY5Vnaf9uBh5QrmpK8o5iN8Y0Uhd
-         KSmQ==
+        d=linaro.org; s=google; t=1706024957; x=1706629757; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=C3q1p3YuFo/mOojuPfYR+KIg+iLfaq0IvWE/p5cieFE=;
+        b=FXwezFBuHz3lZP+c9ZxUhmvzjx1HGRptrum/KeWFHrptmEZ82uoOZZ9jjchxW9FWGC
+         7c31jF880BwvgFIBXwHoDKMSNCZJmbhWE99t9rZodS6u1CqCH+DvT89HuWWTiPE8mlGW
+         Sx0QRoZWsgkT1H19kbI3X3dyG7z5EBWCHECSGuHMjAd1HHabBudVP89rdNifJtmjxdFg
+         RDOivfvMZKYGDDP0kydw9C0GRc895BcBIDulFogaKyTFZi7cYaNo8jtG1pXnb1Wpx6Au
+         jSHTd+z/AtEP8sz+IfhcjhDq0EzsL4CEXghziDtmqpRGl3AYxg+93+2ac43RTBeXApms
+         oJsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706024696; x=1706629496;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fw8HiKqsvLnNZBoBe2w58hvINNLUyhw5JoLm2QBqfBU=;
-        b=lITt0YcdxPuAYu5TS2z7WiKe7ywSDCQcf4VQGG5Q+1NRrglkKDwwEKrQdKfKNXInF9
-         ysP5t20QrT4Im6C2t3n6MmrNldPnBRyphYRs5Ekn8mbvMxAa9twUl++fir28tOlPAIe/
-         Yx5KcHni5RnTgzoCdNnCqw9nXS2aRFyVDWZgr7dQbA/1V9LeYWdNDy+1+5dg5VdlQWJn
-         mKoja3+z8TsJAMBDzQmtVn2d3caxbMElPiqxh4RP2cO4q5i5uOU8IK8b0Fb4Yd5/o0Hc
-         NEqSjfHACzHiWO7CWGEHFEltv2yjqbjV4jtswA0lqd4jTyS6lVMf/6cTSvpWiPqm6K+q
-         nwxA==
-X-Gm-Message-State: AOJu0YwGM7MokHp5X9Y4OXs4vFqG/2JUqUBwiMCxB9j6Q5KFV6hcxNLn
-	RAt/h3D5MXy4Oglotm7N/fVUBS3ij/eo4HBDikbtgnwuCyt2YRkaifkgdvfyAlQ=
-X-Google-Smtp-Source: AGHT+IHLMgFndLZi5jz+e/VjdAkL90bxzQ3xFK2TXeY0BSXFOkpzbbQ3Qa4tKoIUoS/Mxa+Gmldvng==
-X-Received: by 2002:a05:600c:2409:b0:40e:b177:8dd5 with SMTP id 9-20020a05600c240900b0040eb1778dd5mr241750wmp.228.1706024696177;
-        Tue, 23 Jan 2024 07:44:56 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.215.66])
-        by smtp.gmail.com with ESMTPSA id w18-20020a05600c475200b0040d2d33312csm43415670wmo.2.2024.01.23.07.44.54
+        d=1e100.net; s=20230601; t=1706024957; x=1706629757;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=C3q1p3YuFo/mOojuPfYR+KIg+iLfaq0IvWE/p5cieFE=;
+        b=CMEbn2avdhLkWE45tq+ErCa9CulK92DXdL4rZtDVPCAi3KGzyT0Eyp/ivA3MaYR/tH
+         kJHJ0L1fKGQIRm/LelAu/WraXnHY7ekb8Mc+mtub9dPuWA5PP24pI4KmPC9Vp2YA95fS
+         TWh6CMyDWJD9rx4k1W2QXPJYC4dZMy/PDsumyk4iMk7fQbn9g7FBjcULeC4aCCQN3zff
+         ii5JTIaw+qfbSt8fHvY+GpuRuWtxGCE9lg0nVcE3tG7qBfEd0ta5evpfcaEsICvKaCmH
+         bX6jHwZLZ3CQz8NL1Kg4xK5+LcgNxzO8Ea9e+M658mMr8aO0RIdvKtqhJ7OzRZ0BUTP9
+         xszA==
+X-Gm-Message-State: AOJu0YxOox2G4Y5CddhZblYQ+9juxSy0z5mX9744NsbCZLh5sRGjjGBN
+	h5Yc/oBq0RHm7ICC4Xa2iFRfwvvCBISVYJeo+IlL495lKxCXpFlGGjC8oRn5vxKmOFipjRnlCI9
+	F/uO9gg==
+X-Google-Smtp-Source: AGHT+IHs1L2yO9ocstNpl+s1UrGsIvn58RlV04/exn4UOqrRZALsey0iqiYMJniRhT0iZUU6iMIxgA==
+X-Received: by 2002:adf:fe09:0:b0:337:be35:f698 with SMTP id n9-20020adffe09000000b00337be35f698mr3030943wrr.72.1706024956547;
+        Tue, 23 Jan 2024 07:49:16 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:1892:c253:b69f:39e8? ([2a01:e0a:982:cbb0:1892:c253:b69f:39e8])
+        by smtp.gmail.com with ESMTPSA id z17-20020a5d4d11000000b003392af92996sm8702777wrt.101.2024.01.23.07.49.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Jan 2024 07:44:55 -0800 (PST)
-Message-ID: <07cb226c-19d6-41b4-9af8-a3bad0ba7a5b@linaro.org>
-Date: Tue, 23 Jan 2024 16:44:53 +0100
+        Tue, 23 Jan 2024 07:49:16 -0800 (PST)
+Message-ID: <6786954e-096c-4216-94a4-71f090d7eead@linaro.org>
+Date: Tue, 23 Jan 2024 16:49:15 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,8 +78,10 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
 Subject: Re: [RFC] arm64: dts: qcom: qrb5165-rb5: model the PMU of the QCA6391
-Content-Language: en-US
+Content-Language: en-US, fr
 To: Bjorn Andersson <andersson@kernel.org>,
  Bartosz Golaszewski <brgl@bgdev.pl>
 Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring
@@ -91,53 +96,33 @@ References: <20240122182158.69183-1-brgl@bgdev.pl>
  <u5kvv3iip552yb5ykc4t2arfry2t7f34hwmemd7z6qfw677fs6@ldlwoycyacrm>
  <CAMRc=MeT08vUUqJmtVCP=kSUrbsoKFHP6gHgJPtqztC593oGpQ@mail.gmail.com>
  <2d36zymagbran5m7ggcmy2zmtpt7xpefgys7rebbwydz5bpux2@svlv75ctdow5>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
 In-Reply-To: <2d36zymagbran5m7ggcmy2zmtpt7xpefgys7rebbwydz5bpux2@svlv75ctdow5>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
 On 23/01/2024 16:34, Bjorn Andersson wrote:
@@ -212,13 +197,173 @@ On 23/01/2024 16:34, Bjorn Andersson wrote:
 > I'm not sure what you're trying to say here. There's no "PMU module" on
 > the board, it's a block within the QCA6390. But perhaps that's what
 > you're also saying?
+> 
+>>>> We'd need to deprecate the existing BT bindings but unfortunately they
+>>>> are already described as consuming the host PMIC regulators in bindings.
+>>>>
+>>>
+>>> I was under the impression that the supplies in the bluetooth binding
+>>> are the supply pads of the chip. Where the power to those pads come from
+>>> is not a property of the binding.
+>>>
+>>
+>> We already model the WLAN and BT modules as separate elements even
+>> though they're in the same package. For consistency we should model
+>> the PMU module too.
+>>
+> 
+> So what you're proposing is that the PMU is the consumer of the external
+> supplies, and it in turn provides a set of internal power-rails which
+> should be consumed by the WiFi and BT modules.
+> 
+> That's sounds like a plausible way to get around the problem that we
+> don't want to represent a fake device in DeviceTree.
+> 
+> That still doesn't answer me why bluetooth suddenly now has an input
+> named "vddpcie0", can you please point me to the documentation of the
+> internal power routing in the QCA6390 that confirms this?
+> 
+>> And for the record: I would love to stick to what we have now as it
+>> would make my PCI power sequencing series much easier to get upstream
+>> but it will result in problems later on, I have to give it to Dmitry.
+>>
+>>> So what you need to do is describe why the pads suddenly changed.
+>>>
+>>>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>>>> ---
+>>>>   arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 129 +++++++++++++++++++++--
+>>>>   arch/arm64/boot/dts/qcom/sm8250.dtsi     |  10 ++
+>>>>   2 files changed, 128 insertions(+), 11 deletions(-)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+>>>> index cd0db4f31d4a..c9b1600c57ef 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+>>>> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+>>>> @@ -108,6 +108,88 @@ lt9611_3v3: lt9611-3v3 {
+>>>>                regulator-always-on;
+>>>>        };
+>>>>
+>>>> +     qca6390_pmu: pmu@0 {
+>>>
+>>> This is not a thing.
+>>>
+>>
+>> What isn't?
+>>
+> 
+> My bad. You're right, there is a block in the corner of the QCA6390
+> called "PMU".
+> 
+>>>> +             compatible = "qcom,qca6390-pmu";
+>>>> +
+>>>> +             pinctrl-names = "default";
+>>>> +             pinctrl-0 = <&bt_en_state>, <&wlan_en_state>;
+>>>> +
+>>>> +             vddaon-supply = <&vreg_s6a_0p95>;
+>>>> +             vddpmu-supply = <&vreg_s2f_0p95>;
+>>>> +             vddrfa1-supply = <&vreg_s2f_0p95>;
+>>>> +             vddrfa2-supply = <&vreg_s8c_1p3>;
+>>>> +             vddrfa3-supply = <&vreg_s5a_1p9>;
+>>>> +             vddpcie1-supply = <&vreg_s8c_1p3>;
+>>>> +             vddpcie2-supply = <&vreg_s5a_1p9>;
+>>>> +             vddio-supply = <&vreg_s4a_1p8>;
+>>>> +
+>>>> +             bt-enable-gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
+>>>> +             wifi-enable-gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
+>>>> +             swctrl-gpios = <&tlmm 124 GPIO_ACTIVE_HIGH>;
+>>>
+>>> Are these collected here because we still have convinced ourselves that
+>>> they need to be handled from a common place, or did you actually find
+>>> some documentation you can point to that shows this is necessary?
+>>>
+>>
+>> So the datasheet is not clear on that but it says: "bluetooth enable
+>> signal from host" and since the regulators above are also "from host"
+>> I figured the best fit is here.
+>>
+> 
+> Per Dmitry's argument that you linked above, bt-enable and wifi-enable
+> should be the only things that you need to synchronize.
+> 
+>>>> +
+>>>> +             regulators {
+>>>> +                     vreg_pmu_rfa_cmn: ldo0 {
+>>>> +                             regulator-name = "vreg_pmu_rfa_cmn";
+>>>> +                             regulator-min-microvolt = <760000>;
+>>>> +                             regulator-max-microvolt = <840000>;
+>>>
+>>> These limits should be applied to &vreg_s2f_0p95 (although I'm just
+>>> guessing how this maps to the upstream supply...
+>>
+>> I'm not following. Why?
+>>
+> 
+> Are you saying that the PMU contains a set of LDOs or similar that
+> alter the voltage from what's provided on the external pads?
 
-While the board does not have, the board schematics have it, e.g. RB5.
-Also QCA datasheet (at least the one on RB5) describes relationships
-between the external supplies, feeding PMU in my understanding, and
-internal supplies, coming from PMU to specific blocks.
+It's what I observe on WCN785x, on one side we have the usual VDD_AON/VDD_PMU/VDD_RFA/...
+and on the other side the WCN internal PMU generates the VDDXX_PMU_XXX voltages that
+are consumed by the WCN785x again.
+The schematics is clearly split into different entities of the WCN785x:
+- PMU
+- VSS
+- GND
+- PWR
+- CONFIG
+- GPIO
+- RFA
+- PCIE
 
-Best regards,
-Krzysztof
+Neil
+
+> 
+>>>
+>>>> +                     };
+>>> [..]
+>>>> @@ -734,6 +816,24 @@ &pcie0_phy {
+>>>>        vdda-pll-supply = <&vreg_l9a_1p2>;
+>>>>   };
+>>>>
+>>>> +&pcieport0 {
+>>>> +     wifi@0 {
+>>>> +             compatible = "pci17cb,1101";
+>>>
+>>> Does this compatible somehow bind to a entity that knows what to do with
+>>> the regulators below?
+>>>
+>>
+>> Ok, so what does that matter? This is device-tree. What linux does
+>> behind the scenes is irrelevant - what is important is that there is
+>> an ATH11K module here as represented by this PCI vendor/model codes
+>> and that it's supplied by these regulators.
+>>
+> 
+> I'm just making guesses about the design and how this fits into previous
+> discussions on the subject of PCI power sequencing, because you didn't
+> tell me what any of the things in this patch are.
+> 
+> Regards,
+> Bjorn
+> 
+>> Bart
+>>
+>>>> +             reg = <0x10000 0x0 0x0 0x0 0x0>;
+>>>> +
+>>>> +             vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
+>>>> +             vddaon-supply = <&vreg_pmu_aon_0p59>;
+>>>> +             vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
+>>>> +             vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
+>>>> +             vddbtcmx-supply = <&vreg_pmu_btcmx_0p85>;
+>>>> +             vddrfa0-supply = <&vreg_pmu_rfa_0p8>;
+>>>> +             vddrfa1-supply = <&vreg_pmu_rfa_1p2>;
+>>>> +             vddrfa2-supply = <&vreg_pmu_rfa_1p7>;
+>>>> +             vddpcie0-supply = <&vreg_pmu_pcie_0p9>;
+>>>> +             vddpcie1-supply = <&vreg_pmu_pcie_1p8>;
+>>>> +     };
+>>>> +};
+>>>
+>>> Regards,
+>>> Bjorn
+> 
 
 
