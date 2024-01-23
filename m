@@ -1,136 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-7993-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7994-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94F6E8394C6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 17:35:24 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C51383951B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 17:45:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4C7C62832C7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 16:35:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DB759297381
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 16:45:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACA547FBD3;
-	Tue, 23 Jan 2024 16:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C781781AC1;
+	Tue, 23 Jan 2024 16:40:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RqcwivGW"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dxZqdEO1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3AD481C7;
-	Tue, 23 Jan 2024 16:34:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF7B7FBA7
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 16:40:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706027677; cv=none; b=kkZpJwxXex3KS/IrU6k6PWeLGaOT9nbjkcNYlq61eZqrJrpCev0u0E01h1XCdfmsV4ghXR0g+B1NjJRkKEMunhvzk5rBJWkaQyP1ULhcsV8j6Pmv8I3JUjtqBiKr0sf81Z1+0ayP050wcuncXFqcOjJClYqJFbviC8qhF/N++40=
+	t=1706028008; cv=none; b=F5ElPlUChFr0045zGP2EtGYOIygvSECvABECQuvFQ0ufPqctKYfpf8PzJg0g6a0BK66f0O0T0GHL2XsU/fr6/Zblqc9BPmMd2pcvB+Ofy6XNq+6l1BBKcp0/9SzbEeDjDHAHeVKTVtmyCjn2eC+CRNlw0Wj6ccTYizmRFX6T8/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706027677; c=relaxed/simple;
-	bh=ZVT6u/jVKOPURDGdsXTE55rzOKA3jVxHIiN5SEtzdcc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=FCbz+i47LY4TRmsk9W4NSWoz8Y8u1Io86G9cW+0WQzWZAA+8VM6TGnZr7RGerFrWUpuGRQJZ/AquUiabXGWc2uZ/cRCMDMupeunniJ43hb2a7ZoqcjAb5OIqDoR/9Uq2mxE6RWKw5aRQVSYIPWTEubss9/RDNXPgmmDwtSIBKcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RqcwivGW; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40NBU8k2004867;
-	Tue, 23 Jan 2024 16:34:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:date:subject:mime-version:content-type
-	:content-transfer-encoding:message-id:references:in-reply-to:to
-	:cc; s=qcppdkim1; bh=5b5fU+KTOzPUrCgOe77YLsSItA8Pgv5o+1xi3qZwPH0
-	=; b=RqcwivGWESdAuAZqs+/Dzgj6VHm0kVuX5yd/imvEFTJk8vygyB9WwL/68C6
-	d/cGY89W/dpNxB0nH4KWbsR0l5TsCVFGaSmkBplT4VbvMXTKwPw2IbDHJzNhhnt0
-	lfozjlIGbwDjnDsfgAcsJV4c9IAPIeEzTkMm/SeI+U26n+a9j5ub8JqIaoL0c5rh
-	xyla5Svfpp4qx+pNpKGj0VXGpkbK7usCTcMKWjenmT2ufYoEXBTtGuavLvlbk2fa
-	GRf8FA0gBg9+ZulAi7aZT3ZpVsR6mng6XUbERbp/lot91SUyEY6AU6TJGEAMCEYm
-	dNxaTJ9P/Rtg3mZ1JudMkzFiDNA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vt9un97ya-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Jan 2024 16:34:32 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40NGYW6i009628
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Jan 2024 16:34:32 GMT
-Received: from hu-skakitap-hyd.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 23 Jan 2024 08:34:27 -0800
-From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Date: Tue, 23 Jan 2024 22:04:09 +0530
-Subject: [PATCH 3/3] arm64: dts: qcom: sm8150: Add bi_tcxo_ao support for
- gcc
+	s=arc-20240116; t=1706028008; c=relaxed/simple;
+	bh=/Lxu3ibdZFwYSpIB8dDpNCNVTxZpLUd0wwrOHEKIIQI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tdoiL1Uuyrs9eO43mhFNVNlkNeGSsFswMI4yCB8vQweASMM9MNCkCPNrXeUv9dzfb7FfSO23wr9cduyXT++LYnWFP6AOvTJfQp9Sa98PTLii0p29wkLt6DKGoZw2PNfgKeKGx+qHEzgniPd3hqOzHL2mYolBDUjPKfFiYPwV3T0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dxZqdEO1; arc=none smtp.client-ip=209.85.128.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-6000bbdbeceso19822847b3.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 08:40:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706028006; x=1706632806; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=kYAfHM7R7rnCSNUY4kqAV2WMKXhdQppzOOG2/3x8MBw=;
+        b=dxZqdEO1gwZXch2pvaryaG1ruVjEpNldw2gEI+BcuOJsGkzssciyTeEPBs1En7uh5q
+         EXfWLKmnsDISDuT2cY/6l9h8RGTcX+hlvyv2mIp52ngVPbhdirRaewI5cU9l5eqcLQ+3
+         WT6Puk8/uxKKjGjCAQRO4Q/Hf4kVPdWi/g/AZ/pWcRthujHpiT1kU3EyyzV51pTeRrvt
+         xmLXThbQRUikjifQn3JJnG5Aeaee/RkI0TsS3jOLE//JD8b/upxGb0hfi+Lc3iuRzXbs
+         g5l6Y1Q5KX1aWqrlF/CxuoLeOu5cTmOfNzINjfpvctP2gMEqCnMI11/Lqv40jw7e805m
+         +Wug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706028006; x=1706632806;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kYAfHM7R7rnCSNUY4kqAV2WMKXhdQppzOOG2/3x8MBw=;
+        b=r+KgtfkBD2F+W/0vkxOH+ENmtUFkwZqn3akd+PDTNcVDGBaXWRm6hxiQ3wpmD3lRxk
+         Y9cvNCnCvYE0Ia+a/e5vY+S2UIJXARI9lD+u0LOxid651bK7/BBgSMgxKGGlqHHuGvJB
+         JMju6OY6CgRoAZuxwuN8vyHumHBB2g4EaQsu0ZUQcTueiSeHh4Sn3awvccsD/bIGK5Ow
+         +gcGTx3yDLxFhDbMvDHNNGFNodv2ARCULojDMcR0me152HZ+ZVPOb8KujBsBDgUOgqiw
+         CZEdhhLgbkHupmMVOGQPpvMrq5Xni5vipTTR1M3tNGyFo3qKkcxLlX0pJ1Buoia4UtD3
+         HhHg==
+X-Gm-Message-State: AOJu0YyIaAzDmYFbo1SxTubyqFEFcG9OeEFCkt8RKUhWEhNOahTBmruB
+	4/jDiudTL6wNtFHpIV2aRDFOH7rvu+bkNhf79uBXwCL5YcCoPlQC7+190nmCCQ48cTyLZp8nRXh
+	wYn5aP4rga+xyNRfC5JcLaIO4sLfZNYPnHtqW4w==
+X-Google-Smtp-Source: AGHT+IGC6FCCx/JUl5ZF8p8TNRTwdcBW/FXg69irqngvfoaQBTfEyAlrxYiVawNtHkSVTMOs3vcjUvi8P3kIalAiNeE=
+X-Received: by 2002:a0d:ca95:0:b0:5ff:e530:eeaf with SMTP id
+ m143-20020a0dca95000000b005ffe530eeafmr3085307ywd.2.1706028005745; Tue, 23
+ Jan 2024 08:40:05 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20240123-gcc-ao-support-v1-3-6c18d5310874@quicinc.com>
-References: <20240123-gcc-ao-support-v1-0-6c18d5310874@quicinc.com>
-In-Reply-To: <20240123-gcc-ao-support-v1-0-6c18d5310874@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Ajit Pandey
-	<quic_ajipan@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        "Jagadeesh Kona" <quic_jkona@quicinc.com>,
-        Satya Priya Kakitapalli
-	<quic_skakitap@quicinc.com>
-X-Mailer: b4 0.12.4
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 8MRo409U4M5HUK3i5XJqUBUDGN5clySr
-X-Proofpoint-GUID: 8MRo409U4M5HUK3i5XJqUBUDGN5clySr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-23_09,2024-01-23_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=501
- priorityscore=1501 adultscore=0 clxscore=1015 spamscore=0
- lowpriorityscore=0 bulkscore=0 mlxscore=0 impostorscore=0 phishscore=0
- malwarescore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2311290000 definitions=main-2401230122
+References: <1706026160-17520-1-git-send-email-mantas@8devices.com> <1706026160-17520-3-git-send-email-mantas@8devices.com>
+In-Reply-To: <1706026160-17520-3-git-send-email-mantas@8devices.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 23 Jan 2024 18:39:54 +0200
+Message-ID: <CAA8EJpqLYmpAt5D6g01Urg21ie7PpHkj3DRuxkqm6Epanzuksw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] phy: qcom-qmp-usb: fix serdes init sequence for IPQ6018
+To: Mantas Pucka <mantas@8devices.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, Baruch Siach <baruch@tkos.co.il>, 
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Add bi_tcxo_ao support to be able to put active only vote
-on critical clocks during suspend.
+On Tue, 23 Jan 2024 at 18:10, Mantas Pucka <mantas@8devices.com> wrote:
+>
+> Commit 23fd679249df ("phy: qcom-qmp: add USB3 PHY support for IPQ6018")
+> noted that IPQ6018 init is identical to IPQ8074. Yet downstream uses
+> separate serdes init sequence for IPQ6018. Since already existing IPQ9574
+> serdes init sequence is identical, just reuse it and fix failing USB3 mode
+> in IPQ6018.
+>
+> Fixes: 23fd679249df ("phy: qcom-qmp: add USB3 PHY support for IPQ6018")
+> Signed-off-by: Mantas Pucka <mantas@8devices.com>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 20 +++++++++++++++++++-
+>  1 file changed, 19 insertions(+), 1 deletion(-)
 
-Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 761a6757dc26..b91ef95c0c3a 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -906,9 +906,10 @@ gcc: clock-controller@100000 {
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
--			clock-names = "bi_tcxo",
-+			clock-names = "bi_tcxo", "bi_tcxo_ao",
- 				      "sleep_clk";
- 			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK_A>,
- 				 <&sleep_clk>;
- 		};
- 
 
 -- 
-2.25.1
-
+With best wishes
+Dmitry
 
