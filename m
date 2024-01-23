@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-7924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D15F838CB6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 12:02:01 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D57F0838CB9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 12:02:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 164FD2843F3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 11:02:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 636B9B251A8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 11:02:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C8925C911;
-	Tue, 23 Jan 2024 11:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B6B85D72E;
+	Tue, 23 Jan 2024 11:01:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HcmZxsu0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="umG+KiZC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60EA65C8E0
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 11:01:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B5C35C90B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 11:01:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706007716; cv=none; b=p551CfQCozH01Rr4qKnUcQiBtnMrVgWRed4Pfh8L1t68k8j988nNxQyzMIraB0bVPULeQW1KWEeTN9McgvCD5C6yr3x4Q+INVyflEni3FXD2lqZ/UK3SIcJ2lL+q84acQI9Ntk5lQh2QpNBsLUETIx2yC38Qo1VUTcBZoqZXQR0=
+	t=1706007717; cv=none; b=qx+02B+g8R5sZVC7gY0d8i+lPHIoX0Lzbp2MsKtvCY0ZfXv4+ni/M4s6pYBL+sGSngcQAGhB4fh5lOyAofRJDa7jXdWNJkxPQDLLBTNaY0Y8t91Kufd1z5bfLP6AsIzNQ3KqJO0Xnysum6mFp5/hacVMnjKtyYMQK8dh6R+Rdvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706007716; c=relaxed/simple;
-	bh=mpfY+BCg0dcdts5GW3yyXu28a14NVn8fS8CS8HwrtEA=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=IBh3/KrJpRHH+OOGnsDuRa0fMcVshG1cmO4rRW72JTHM4Mo1w2joW+SRhW/6SS1QP/9IYORoL/YGHE0NfKh+Ek1ntiHcDIDgYDByeb45t++f9pwACDMR7huph24OPPm+qPnjnbqfDZmQbsqRAIVfdRQ27/LwEoLOMOxhW857a2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HcmZxsu0; arc=none smtp.client-ip=209.85.208.54
+	s=arc-20240116; t=1706007717; c=relaxed/simple;
+	bh=50YAMmOYJzNisU5yZg0uYU/wS7zYvX4umQW0cCtPrCA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=UqgXSp/Yb3yuU7YohBlzg1Y3pnsg8OwGWbPoP41bFdXRmzAHBKiJV0OyTvz+ViwpjQa3p6yAFS89dqgqSPf+MiEcC8jW1gnXv8bgyPCAvZx3nMirkZwG5gUiMSxNKhlpMfR9W91iv65U55/ev+h9DdHA+fVA2HUX76rRF78YVCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=umG+KiZC; arc=none smtp.client-ip=209.85.208.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-55a179f5fa1so4794441a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 03:01:54 -0800 (PST)
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-55c2c90c67dso2440708a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 03:01:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706007712; x=1706612512; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=DgWgMqXX/nLyJMe6niIKtw6w9F40cOBRvzu8MWC2fKQ=;
-        b=HcmZxsu0q6kHCOtewyMIiT20RNT/8dKHjpfUF14grAea0ENwoqvF+gzT6C2QzC8/0U
-         WNMFf5f1ktecFXn/uF5DiR/DkVTPzpa8EKvWyIM64TVRRFAVKDmZgqlFRZDz+nTzJpFQ
-         uPnUUwCdSmj6ovQXh7BF6ZeL7fSWvUw9KA3ly63OlUuZlqI3I8Pyx1mUKRfyVeSfB8gV
-         0YptmEkCtDjFR2XXKAH821WiHgIB+iT8pdS5r0sCAdjqjf6xTqYuESdwF3YrurqRjLjK
-         athC6L3NDCGKnSrjaSTKYyFh5gitHOIId156s9dwrB87u9o7annTkbcSwuw5zPHpiJnI
-         lRvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706007712; x=1706612512;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1706007714; x=1706612514; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=DgWgMqXX/nLyJMe6niIKtw6w9F40cOBRvzu8MWC2fKQ=;
-        b=DNJIpwMwnPKMc2SB5/SVZFPpwYqA3hgwS2Gl4A/KmlRAwe/oUMKxV/PQaDMuspcghA
-         sVgD+UXlx38yAl0a16PhIsVqlGdbYjfwb2aamIx+VGeFeoNja/ujyjFGSBAZRSOp4DYI
-         RfhzscuwvL8/1cUYhHB9dxRIz8J2/sxz/1hY/O/BfxUJCDZRgT2PGtpOoV0vtNQjoAbk
-         PuJ7INcQ5w5Oryz7+feBkr8xZoFPW4G6pNTAFE2GU6lXG4iRFe9XcsMTxFYV/kYVZfNI
-         X90+1f4hNE2pXTTFcplOSIJcEmcGQW9mnsPdngRwHtzaRzee5VJRO/EdGapLhqZzYQmP
-         puHw==
-X-Gm-Message-State: AOJu0YxADUJ80lnDxjDSAyQDjyQMDUn9plwmKlQCe/9giZRHXP1HfeDu
-	KwFhR1gNORyDki13g0diDAfVCdP3Dj2ibOrhPTK2kZrTMFwRJy5i2OoqSI5g5to=
-X-Google-Smtp-Source: AGHT+IG+zaTU8TxCbFcnuYXxlRDTCoKwH1GT1+AG7ChImV8EqNnoFYWpE5t731S5ytaSWx8Db66dHQ==
-X-Received: by 2002:a05:6402:1292:b0:559:fd27:13af with SMTP id w18-20020a056402129200b00559fd2713afmr655840edv.12.1706007712479;
-        Tue, 23 Jan 2024 03:01:52 -0800 (PST)
+        bh=jNYUIgDvOBG1nDWJh0kXOFeqoIQY7BdgluW0bM1fVK4=;
+        b=umG+KiZC3rRCbsznqLeUY+f7lIzo08wEQNdmdbUbSEIJfCV60PkPkzWwhukU57Q8q8
+         zwC7x9GEKhI9JJL2aEzrALjVYgUTzNrcUcfRZV8jTtqMcVjAyK8uoCsmeU5Z28PnjjYy
+         DeiQoN7d/CUNWQLq+A87Nrrg55+zNyB/vCBYYLnZigz4APNz7Aidwub8MSTCvo/lMlRs
+         0RMKeCsl52LvS4eqsV6MyMnmmnTRHSgC4cb7avGuLYSOyxkNu7SE5LYCfi0uWv/FPaZg
+         +6zIFCS7XUB4z+qW7pARpPj6+rkGqPCMjZI6kLVBwUrtzoWbsO505Svcp3yeILIvxFlb
+         zklg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706007714; x=1706612514;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jNYUIgDvOBG1nDWJh0kXOFeqoIQY7BdgluW0bM1fVK4=;
+        b=iRqtLCFsEPr8DY2DsznstpBCAmo2X55vQJ/Ek5O94GdRtwhXX8PjUhu7aZSgIhq4Yl
+         JQwQ+qPVukeoT4C3IqkDaopwKxs3+MstoczrLxzjYy8ytUuDxV7cFwVgj4FcoTL71qk6
+         hXKI6PwhE6OdCqrQ0qWq+MYThP8Wh3gmtljCJSgWGkGvqScV2+swP1OWEO+DqdLYSO9h
+         Mo17czzd9g6kZhNSaWHuCjPGZK2kOKgYF43vWJn/Msz4qXcFZ+jUsclzOlLXtbc8Zj2C
+         rJVrZM2N3giafBguouf9h2/O6Vil7dMqdMesPEmRWmR3b8dB7Ajouv1NF/At0IzJrGyR
+         Le5g==
+X-Gm-Message-State: AOJu0YypDrLfbL/7LmHWtmwMyKQKYGlH+jmlFJWpS1X9OdHquGhwHn2/
+	eX1Rcs8fbrjNXCf+EiB38/3q+DwH1ZL+B/EIy/icLHAtnKGkPofRhNuYlDBGMZE=
+X-Google-Smtp-Source: AGHT+IG6GiPgvzhcDFmsHZG2F8SNYJ1Lt3Yj3ROJb2O6QLFtgCeyrrbABMF9oeclecS30vq88eDgsg==
+X-Received: by 2002:aa7:c887:0:b0:55a:34e1:4d13 with SMTP id p7-20020aa7c887000000b0055a34e14d13mr765839eds.17.1706007713761;
+        Tue, 23 Jan 2024 03:01:53 -0800 (PST)
 Received: from [127.0.1.1] ([79.115.23.25])
-        by smtp.gmail.com with ESMTPSA id fg7-20020a056402548700b005593c83bdafsm11430074edb.45.2024.01.23.03.01.50
+        by smtp.gmail.com with ESMTPSA id fg7-20020a056402548700b005593c83bdafsm11430074edb.45.2024.01.23.03.01.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jan 2024 03:01:51 -0800 (PST)
+        Tue, 23 Jan 2024 03:01:53 -0800 (PST)
 From: Abel Vesa <abel.vesa@linaro.org>
-Subject: [PATCH v4 00/11] arm64: dts: qcom: Add more support to X1E80100
- base dtsi, CRD and QCP boards
-Date: Tue, 23 Jan 2024 13:01:14 +0200
-Message-Id: <20240123-x1e80100-dts-missing-nodes-v4-0-072dc2f5c153@linaro.org>
+Date: Tue, 23 Jan 2024 13:01:15 +0200
+Subject: [PATCH v4 01/11] arm64: dts: qcom: x1e80100: Add IPCC node
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,11 +77,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAHqcr2UC/43OwU7DMAwG4FeZcsZgp9noOPEeiEOaOG2kkkxxV
- Q1NfXeSgRAIacK335Y//RclXCKLetpdVOE1SsypBnO3U26yaWSIvmalUXekkeBM3CMhgl8E3qJ
- ITCOk7FnA4jEQ+2MbVYHBCsNQbHJTIwbz8P38ecp5gSWDTDzP7eFUOMTztc3La81TlCWX92u5l
- dr2qwfpWz1WAgQyj5oDOz1g/zzHZEu+z2VUzV31T2t/09LV2tsDB4fGI7o/Vvd/q6uWM9x76g/
- WB/3L2rbtA2NdMcuOAQAA
+Message-Id: <20240123-x1e80100-dts-missing-nodes-v4-1-072dc2f5c153@linaro.org>
+References: <20240123-x1e80100-dts-missing-nodes-v4-0-072dc2f5c153@linaro.org>
+In-Reply-To: <20240123-x1e80100-dts-missing-nodes-v4-0-072dc2f5c153@linaro.org>
 To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
@@ -90,78 +88,58 @@ To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2467; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=mpfY+BCg0dcdts5GW3yyXu28a14NVn8fS8CS8HwrtEA=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlr5yLn90B09qjP+Yw2LZTpARY3/7N31dGA1ydT
- 1+0zBY4xdaJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZa+ciwAKCRAbX0TJAJUV
- VjIKEADHOF3OjHdot5pRmYNv27P5WmoVGIfFimfUf0mW38cuEbl1n/TFQD3jgmO7RprJZBAqj2g
- IjiYUuhS8u9syplenul0BWGp7y6bwVhiG4DucfZcleQno1jGOFvUln4JyIU0c1IV9aqFbvIV1II
- AlVo1GySVDSm2u4xBOu4IiKlAk+kMbSo+rR0b5aL4GdMExwijBZjshhnaS4tA1s9kBFnjK0voqK
- vKjU5UfvQ0KhpXl3u/pFdDooPNlP3mjUrPzFjc0YXj2LHF9b/lKnjgZo8Itd9vfRDmQhjTVee0C
- 617QyWb/tdpqYAiQ3g1I2vL8uvW9YjKoopEdr1QMet3T/e5cQ+FlsPDnnHITwAWMB8GufhXDJcn
- dnTgcAWq6ZFXoitDk5ZXcUFZ0DsRy0NW1nP47di/+yTyCey62/f7/5ILURgy5zDSwAYe6ZPxIo8
- OyYdt62dEn1pMKe+tV1FwoZmUAOxaEX12SlEoUiSIqMizx6EJ7BhMrYa7DdT/h9CZr3V4BYGlO3
- vymEWW693nJompQkiOykldmjoeiSC+Af+fjuVnmZp960V4IdT+3ayyQrZJKPWbBHSA9/xPZWmEx
- ba/MzJGcQ1tOq+9xnJJPCqc6BTCYXk8epiowSwdBI/sdA2+ZsLIDrQRuK0YBsIMh5IvxQIEqran
- r4QGbHMf0RN0CAg==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1023; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=B6cUt3TzJgP69BQkJMXOG1vdu+0w4ubweb5duiU79oY=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlr5yRXb874h4KDzLbsn64jXcTBlCmBhebxizTC
+ +eVufR0MXOJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZa+ckQAKCRAbX0TJAJUV
+ VvhJD/9ARJm+1Jun/5qh2snlkt3fLwhwF1aiN6PFF4hm/EjPQLFhNZDQ236NBUnp8NspK9QM23+
+ T57mBAJCjFnjRR8AX4X7OOPqxh1GhTd5ijJAy8wgyUrJo6H1I1t4MNwpcj16Zskr1eyknj9GH52
+ 1LqqbhAHklyeoTSxIL/ZC8uq3O2EjlaOIGr0X664HK9gL3IHlDrkS9JePPpmuqvk14PjLxdo6Vd
+ gq1sIqsKjduKhbcyxQK9ryc09TQ8CRQNLp8sE1Jhv/2rEykx+4wNC9uTofvHj5wVO8CQAHGjuYN
+ tXBTjMmy2yL8M548XZaxMY+x4XbTMVqdngm6JMgB/tnBks/XJSWRJRj7FsQVoy+eogB6HZP2fRC
+ UHpVXgAQTtXuSbI5O5nBZLtyBCjKp5BssaJ+odCv8uKdUfDgAPHNsT8oQyq5uD+70qLfh4BqA73
+ NKwcrR7mwn6sq6xZsz/W5PbTcsY/qWJi3LGppzFEtErEC9E6KhYXoROuhVJfHszeY/Q6eiAai/f
+ 0BwwS/FRt8w9Hl+yFVfn0K5GfYLpRq5UZp+b3kckGXiprfbqBOysSjpum567dezKH0TCm2Gl4jK
+ 2yTwCSxpJx64Z+CEPW3FgG7RuSP7PzP3FPH4VDFB6iZuSUVSt4ELzl3Y43d5gfbipBhzg9U/1z+
+ l1j8Z3W/J/EqM9A==
 X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
  fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-This patchset adds every node necessary for both the CRD and QCP to boot
-with PCIe, USB and embedded DisplayPort.
+From: Sibi Sankar <quic_sibis@quicinc.com>
 
+Add the IPCC node, used to send and receive IPC signals with
+remoteprocs.
+
+Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
-Changes in v4:
-- After a discussion off-list, it was suggested by Bjorn to split in separate patches.
-- Addressed all of Konrad's comments, except of the clock-names one for the mdss,
-  which there is nothing to be done about as all non-v5 do clk_bulk_get_all.
-- Added more support to QCP, to be more aligned with CRD (except touchscreen
-  and keyboard)
-- Added a patch to fix some LDOs supplies on QCP
-- Link to v3: https://lore.kernel.org/r/20231215-x1e80100-dts-missing-nodes-v3-0-c4e8d186adf2@linaro.org
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-Changes in v3:
-- Reword the commit messages
-- Link to v2: https://lore.kernel.org/r/20231215-x1e80100-dts-missing-nodes-v2-0-5a6efc04d00c@linaro.org
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index 6f75fc342ceb..954f2bd9b1de 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -691,6 +691,17 @@ gcc: clock-controller@100000 {
+ 			#power-domain-cells = <1>;
+ 		};
+ 
++		ipcc: mailbox@408000 {
++			compatible = "qcom,x1e80100-ipcc", "qcom,ipcc";
++			reg = <0 0x00408000 0 0x1000>;
++
++			interrupts = <GIC_SPI 229 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-controller;
++			#interrupt-cells = <3>;
++
++			#mbox-cells = <2>;
++		};
++
+ 		gpi_dma2: dma-controller@800000 {
+ 			compatible = "qcom,x1e80100-gpi-dma", "qcom,sm6350-gpi-dma";
+ 			reg = <0 0x00800000 0 0x60000>;
 
-Changes in v2:
-- Reword both commits to make it more clear nodes that are being added
-- Dropped comments from interrupt maps from pcie nodes
-- Replace all 0x0 with 0 in all reg properties
-- Moved on separate lines reg, reset and clock names
-- Dropped the sram and cpucp nodes
-- Dropped pmic glink node
-- Reordered all new clock controller nodes based on address
-- Dropped unnecessary indent from touchpad and keyboard TLMM nodes
-- Link to v1: https://lore.kernel.org/r/20231212-x1e80100-dts-missing-nodes-v1-0-1472efec2b08@linaro.org
-
----
-Abel Vesa (7):
-      arm64: dts: qcom: x1e80100: Add TCSR node
-      arm64: dts: qcom: x1e80100: Add USB nodes
-      arm64: dts: qcom: x1e80100: Add PCIe nodes
-      arm64: dts: qcom: x1e80100: Add display nodes
-      arm64: dts: qcom: x1e80100-crd: Enable more support
-      arm64: dts: qcom: x1e80100-qcp: Enable more support
-      arm64: dts: qcom: x1e80100-qcp: Fix supplies for LDOs 3E and 2J
-
-Sibi Sankar (4):
-      arm64: dts: qcom: x1e80100: Add IPCC node
-      arm64: dts: qcom: x1e80100: Add SMP2P nodes
-      arm64: dts: qcom: x1e80100: Add QMP AOSS node
-      arm64: dts: qcom: x1e80100: Add ADSP/CDSP remoteproc nodes
-
- arch/arm64/boot/dts/qcom/x1e80100-crd.dts |  222 +++++
- arch/arm64/boot/dts/qcom/x1e80100-qcp.dts |  175 +++-
- arch/arm64/boot/dts/qcom/x1e80100.dtsi    | 1349 ++++++++++++++++++++++++++++-
- 3 files changed, 1739 insertions(+), 7 deletions(-)
----
-base-commit: 853dab01a34378871b37a5e6a800e97a997fe16c
-change-id: 20231201-x1e80100-dts-missing-nodes-a09f1ed99999
-
-Best regards,
 -- 
-Abel Vesa <abel.vesa@linaro.org>
+2.34.1
 
 
