@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-7929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7930-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1C81838CC4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 12:03:08 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7338A838CC9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 12:03:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A7C2F1F25366
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 11:03:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9559C1C23DB3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 11:03:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8378B5DF3D;
-	Tue, 23 Jan 2024 11:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B2C45EE8D;
+	Tue, 23 Jan 2024 11:02:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xqN4FL+j"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eoIuT5CC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E215DF03
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 11:02:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18AA5DF2A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 11:02:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706007722; cv=none; b=YnD/Cg9MuIlBHFk0PdwX2G9sLivIA0AtYvCeqvXAGNyr5YPoGbRIdBsEY6S0iBIKmmjlF+w7Nyo1S/WyAxk+k4AW5qB6/e1/1AkxyhiydX9u510p9aFI7K3Xk5uAJsi3n9EPLRxm1OMlNdXFhG9eDpIAEiH37o6IIZXnDqmWcY8=
+	t=1706007723; cv=none; b=cTRqh28KHuhr3Rq2G4/SnEEoHduooUnjxlNJ3/CzgDcAta6fqiIy9fo3orQfe8tO1wvpKiMgFFCotucBZ6rIyXazPgR9Ih/hPmN5H0rq9XVX+Ujtz8NpLT2Yb+/Io1vacoK1jwn9YdGe2oJ2r9AwPrFMC96gh4sR1H909vrgfIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706007722; c=relaxed/simple;
-	bh=HYLSQEPjLTHsLCOtnQWyK+73kxtr4D0UNDKvnORfl+E=;
+	s=arc-20240116; t=1706007723; c=relaxed/simple;
+	bh=vErKlrWaDPwNtgEaFdHdpG+FQBhi9+wO94U1qfuxpyQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Jby+prl4mXea9t5qbZKaeye+O3S0s7r1iTNo9+l1WNIpioUPCsSElcXJcEBWvb7ipS3jG8wmZdDy49OPawvbNuwtmLLJrbUjbg8U5N4xclg0jf9B2IqnOtKKnM6OKPp81MjTPEX5Vq/DTdiiMQfSnMuhGv8c4PufP0X5H2ohGLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xqN4FL+j; arc=none smtp.client-ip=209.85.208.173
+	 In-Reply-To:To:Cc; b=iOFEYJ6dgFVxvieVX9hbB63mDTWPyza9Y/DqOCKct7XtJvtBS3UM2ImxsrAz0XsoLUdpUG9z9Jsw3wgHPZgYNhps+t6EOCSNdyk8d2zcicRulXfryYJQbip3yqBpiX9lwHqXwirKI9lSJv7c9COmMaxAIzHduixT2AtZbdiqfAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eoIuT5CC; arc=none smtp.client-ip=209.85.208.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2cd0d05838fso49171081fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 03:02:00 -0800 (PST)
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-55a539d205aso4452751a12.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 03:02:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706007719; x=1706612519; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706007720; x=1706612520; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=o5WaaYgxPRIpa+cm/eww9pybjfHe8k/X9h+aDZZrfgU=;
-        b=xqN4FL+jMpBccicp9Zrckl8XvKDzeuQ+ITxk8cfPsBdCSbDsC8LTBPs3yKIEcjIxH7
-         uAcN00lKvmxAOj1nopAOchWCHeJ3uP8nStJRlb9MPinEPL8cqOFTH9Jei63RlctONThP
-         HHunZ4SzPuqS4Xc9svj49B9DCMjyHUyD5tGFfVb5tvhxw13MPWPZ2jrQkI4XF7aaB8N2
-         w/uYMwkmey6+mi4+Tj/2Z/T6U7C9r3/FCwR67GDB6rcLRsGn6ss/ysGUCaUq49BX2PsD
-         8ktbMotXrhGn6HFWhUDQsa+izjVLbxJOypNowLEEKvYrkbna2KBjUqNtXxPoVMCI7OWC
-         MeGg==
+        bh=uTy2AXVcHHnDzH2zDwiwWjIULS3zlhntooUMg2ylCDo=;
+        b=eoIuT5CCZgNp+9HhDpy9He3GLEeVW55eNmaj174SIDFBylp5g8o3xndG+pc8Or7UIn
+         gZHFs06Zz19VsqGIDpGSGcAIAMb5MK+NcrT+89HK0fDhkgptYsnfsjPoK/tX9eFb/6xT
+         gFb/1RVdSJycxdAAGe5fBCPto6V0Uzjp+zaaZvXJcoPT7/htuZ4/JdqFCiRmdjgNthvr
+         40L52dDkhqsDjBhvI8H7jbMhQTXRfH7m91GQSNmnTY3NoxsWfhBkJBiRogSoa+a/bZVo
+         QOQ2KJ8MLxK2PjMcwXTYGce2q1qwbFPXrV+oK4D2KxTy+QojQ03ZfGKevHceVCglw4u/
+         wX0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706007719; x=1706612519;
+        d=1e100.net; s=20230601; t=1706007720; x=1706612520;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=o5WaaYgxPRIpa+cm/eww9pybjfHe8k/X9h+aDZZrfgU=;
-        b=AbIBrE4QKKg9XI9RC5xrQQ22VCfaewGOMMKFPNVtdHWLRglTViOyoA5EbtVfywg6bF
-         w+3kQlPeitH1/iTVISNHd6M+3KUZMDvWUIaXczWgDIgT8vHmf9RoMEjUbOxOjpTyy2b+
-         VAknkSpZ1wRwA5AZcsBKAX9IhxoYz5kLYlyQXXAFQIBDklQdPu3pB9sorlrlwjhiZds3
-         LSuPaBxwrdVTdNqlRq7+IL4lKZLiJS6MG7MFMd2Vo6QHEGSEBMUsk/fs7+BkDMYCXJpW
-         uSMijMebqsg0s0PJzGiN5cR4wPwW9ZEKVccX//YBbHVsmA6te6JGamMBGjAz+1SHkJtR
-         5wYA==
-X-Gm-Message-State: AOJu0YxGpv+AAX6MvDcRvA69HIj5jAPw7+r4UPwLafq6yo0N/dHjq8iH
-	1I4JA7m76Q2cvWVu8wstw39S2zEayblXv7ehx2v3Xyz+cQkxXwNATUo0EtzwLc0=
-X-Google-Smtp-Source: AGHT+IHKtsCaNsXkr0/tQMWsX/YIjmclB/2S7p4pxJCHCYv0uC6mvmDekFPR/rTwXEy/d0NP9HW0zA==
-X-Received: by 2002:a05:651c:1037:b0:2cf:15ec:b68b with SMTP id w23-20020a05651c103700b002cf15ecb68bmr280112ljm.95.1706007718751;
-        Tue, 23 Jan 2024 03:01:58 -0800 (PST)
+        bh=uTy2AXVcHHnDzH2zDwiwWjIULS3zlhntooUMg2ylCDo=;
+        b=k6hKhdJVLYadAxAmjVoWE8wsBUzZylzI1TBdVzERP2kpcA8aTiOjEJG0+P+JXd4G8R
+         auC8/A+eAhefnvJsQ0fXdsHOFPMgGdS/qh/1vlBMJzcwQr4rZxIveeJYufQ1Zfv3Anua
+         OF+BbmY3Qqmq+DxHgV/kJv5qNzFFP8HUQYDOh9fncPAUwbfzgTi7ABzQhWyBVTWz2yp+
+         Nn312VeJ4P6geKOnQ5RPra6Ro5xgOHeH3mMLGMKxpu/pmkhp+naWpW6g5NGtqjfvuKZp
+         Z+/TFZT/yOByfDu+uiclq0HYlfaZPmFvLCn6HiQmjZduiVZzBk2fmqIm2TVIqdFUUm4S
+         Q6vA==
+X-Gm-Message-State: AOJu0YzTuLcpZ+JV7/1IZWpfW7BIz2UbJ1IZO/q+D1tmvMehld5YW/p6
+	FZVTBsJoy7tbPKaxPVtYTMDLMnyAPgtjJNzli7W8q9iHLpY26dd7TpjaHaMfrt0=
+X-Google-Smtp-Source: AGHT+IHlsFWr0I4L3TW9e9ZJiZ7T/Yuc1tGfKBaomON8DUWmGWSlJAidX1DS8iB8CUjiaKIzcH0buQ==
+X-Received: by 2002:aa7:df13:0:b0:555:2b97:3f57 with SMTP id c19-20020aa7df13000000b005552b973f57mr781356edy.84.1706007720020;
+        Tue, 23 Jan 2024 03:02:00 -0800 (PST)
 Received: from [127.0.1.1] ([79.115.23.25])
-        by smtp.gmail.com with ESMTPSA id fg7-20020a056402548700b005593c83bdafsm11430074edb.45.2024.01.23.03.01.57
+        by smtp.gmail.com with ESMTPSA id fg7-20020a056402548700b005593c83bdafsm11430074edb.45.2024.01.23.03.01.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jan 2024 03:01:58 -0800 (PST)
+        Tue, 23 Jan 2024 03:01:59 -0800 (PST)
 From: Abel Vesa <abel.vesa@linaro.org>
-Date: Tue, 23 Jan 2024 13:01:19 +0200
-Subject: [PATCH v4 05/11] arm64: dts: qcom: x1e80100: Add TCSR node
+Date: Tue, 23 Jan 2024 13:01:20 +0200
+Subject: [PATCH v4 06/11] arm64: dts: qcom: x1e80100: Add USB nodes
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,7 +77,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240123-x1e80100-dts-missing-nodes-v4-5-072dc2f5c153@linaro.org>
+Message-Id: <20240123-x1e80100-dts-missing-nodes-v4-6-072dc2f5c153@linaro.org>
 References: <20240123-x1e80100-dts-missing-nodes-v4-0-072dc2f5c153@linaro.org>
 In-Reply-To: <20240123-x1e80100-dts-missing-nodes-v4-0-072dc2f5c153@linaro.org>
 To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
@@ -88,49 +88,506 @@ To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=878; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=HYLSQEPjLTHsLCOtnQWyK+73kxtr4D0UNDKvnORfl+E=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlr5yWIFLURlTkCS0NDMhAha55dDELUlApp8GSv
- UzFxRaGvTOJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZa+clgAKCRAbX0TJAJUV
- VpnLD/sHE0/psYj/Qs8B/z+9sUSjEoh3aTgjIhEhyYs6ZxYiKmdmB+5uK2LNRgtElLfJEWLYBR/
- RfuDwVDlrO9yseXDzp1JKY3eHoSSq9A5U/tiaDHu0OH9FzmPqAX2SAY9fe+IYLGTg3RBrhi3HjN
- hGavqjuNWzwR9oAdJCPlCRJ4kFXMZJcQTJJ/EJWy5sTYk60kDplCCvHzeI/Q4aHBg9w3HLLlU7z
- QvWE41uVIRPwmZCEhgPDlIGBruUS67qaAqSo0gIYpCTuu5ysV2FoIdXvHocPdFd64Kmf+cWIdn6
- VD+hsFZrBzYHDfc6r/PF8csIdfDz3Tgmaw7YyckZqy+66qxtwCjmDbcSMdB+CUMcEjBb5OJIwVi
- aVOqtUUObMJMLitEOLTeY7Rwj4NozAXqQ+nmKWGQiJJlok8TQTOakdfnQjJNz60HOi+CUQjHla0
- jRj/eNftZj5A9HsPT6Zm5kMxTVKiVxGlSTYHI70O8FicHhm/26OIBZmoBY/baFvLKDOkhgnmi5k
- WXai4pBx1iC4DDBCXyGSAbmGd5Op1lhZtZkJNA6jXyK5Vrm5C0f4yJE7JkNFTtFua1wAxMBiD1h
- O1k1m6pUKrVD31sJOj9KTZvTjZ9zSz3Fk6tiHm9ue15Foi9CidlUZygWfcRCxdktprTHEFHQVLI
- 3ZXy5CUIASnTc9g==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=14158; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=vErKlrWaDPwNtgEaFdHdpG+FQBhi9+wO94U1qfuxpyQ=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlr5yX4sCxm95uuEFOPKgh3ilY2ZRuz2xr2TLqM
+ j2wNpJYmwOJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZa+clwAKCRAbX0TJAJUV
+ VhtuD/91dITs7lNXuD9apwri4++GQvkOpcbA7K7Jah48Q+1nKqXeoXod3om9Zjwn/NdNzbOORu2
+ /qIjFFOHcpW3ITp3qOjspbfhjraNdyJdKRQ63fCGWTcAEl37SKYhYZLd9bD8ofFTzO1oXWbgIdk
+ h+9o1gNDzC9dVU9vDba4JL0oBFjbIQa4qiQFP5xUBDpU44+tQV5gwzMvgrHuzCVxPpwJgByIbVX
+ tV+HYMR+aGQRsz5nAdQUJYeLxSLV6KPw4ppdn/x3gM+kpZRitZvxaZ+OvW/2ZfZ7dmDS6bn5/Am
+ 0gCSnzjxACmAPcQQ5UBrS7caUOXCX4xlS+XVBs1pLcgzn7cBwXxGOtgq0d35d8mwOK4zPIHu4t2
+ qPBHIzTTObJxcudI8UtEfBku7FEQczdage+orWfbtiq24OrnvWd2rpEC1q/GFFd77XEkDkR2UUR
+ MK85suD4La21iD/WU733JKdkHAh5IZ5Q12BZd/Iz29VfLmiKJsIsY7YIMBT0jbqiSk1qpwlUWYg
+ +NIZ5yuCgDCIlslZkuR7fq6KOq0FuAU6oIfYhNW1spJc+5L4ZYgV9q30Z5urJe9Ny+OD9yjVXWh
+ 9zMWCA4C1ix6LFLyBYAVd1tU1n7ghYpfShMVIz9rw2wQWoK/S8mSW0bz8NO6IZ9EzBnFhQ/T6T+
+ TKzH7snbVifSqAg==
 X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
  fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-Add the TCSR clock controller and halt register space node.
+Add nodes for all USB controllers and their PHYs for X1E80100 platform.
 
+Co-developed-by: Sibi Sankar <quic_sibis@quicinc.com>
+Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+Co-developed-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 435 ++++++++++++++++++++++++++++++++-
+ 1 file changed, 432 insertions(+), 3 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index be69e71b7f53..2b6c55a486b2 100644
+index 2b6c55a486b2..593ead89706c 100644
 --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
 +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -2606,6 +2606,14 @@ tcsr_mutex: hwlock@1f40000 {
- 			#hwlock-cells = <1>;
+@@ -5,11 +5,13 @@
+ 
+ #include <dt-bindings/clock/qcom,rpmh.h>
+ #include <dt-bindings/clock/qcom,x1e80100-gcc.h>
++#include <dt-bindings/clock/qcom,x1e80100-tcsr.h>
+ #include <dt-bindings/dma/qcom-gpi.h>
+ #include <dt-bindings/interconnect/qcom,icc.h>
+ #include <dt-bindings/interconnect/qcom,x1e80100-rpmh.h>
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
+ #include <dt-bindings/mailbox/qcom-ipcc.h>
++#include <dt-bindings/phy/phy-qcom-qmp.h>
+ #include <dt-bindings/power/qcom,rpmhpd.h>
+ #include <dt-bindings/power/qcom-rpmpd.h>
+ #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+@@ -734,9 +736,9 @@ gcc: clock-controller@100000 {
+ 				 <0>,
+ 				 <0>,
+ 				 <0>,
+-				 <0>,
+-				 <0>,
+-				 <0>;
++				 <&usb_1_ss0_qmpphy QMP_USB43DP_USB3_PIPE_CLK>,
++				 <&usb_1_ss1_qmpphy QMP_USB43DP_USB3_PIPE_CLK>,
++				 <&usb_1_ss2_qmpphy QMP_USB43DP_USB3_PIPE_CLK>;
+ 
+ 			power-domains = <&rpmhpd RPMHPD_CX>;
+ 			#clock-cells = <1>;
+@@ -2492,6 +2494,126 @@ &config_noc SLAVE_QUP_0 QCOM_ICC_TAG_ALWAYS>,
+ 			};
  		};
  
-+		tcsr: clock-controller@1fc0000 {
-+			compatible = "qcom,x1e80100-tcsr", "syscon";
-+			reg = <0 0x01fc0000 0 0x30000>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
++		usb_1_ss0_hsphy: phy@fd3000 {
++			compatible = "qcom,x1e80100-snps-eusb2-phy",
++				     "qcom,sm8550-snps-eusb2-phy";
++			reg = <0 0x00fd3000 0 0x154>;
++			#phy-cells = <0>;
++
++			clocks = <&tcsr TCSR_USB2_1_CLKREF_EN>;
++			clock-names = "ref";
++
++			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
++
++			status = "disabled";
 +		};
 +
- 		gem_noc: interconnect@26400000 {
- 			compatible = "qcom,x1e80100-gem-noc";
- 			reg = <0 0x26400000 0 0x311200>;
++		usb_1_ss0_qmpphy: phy@fd5000 {
++			compatible = "qcom,x1e80100-qmp-usb3-dp-phy";
++			reg = <0 0x00fd5000 0 0x4000>;
++
++			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK>,
++				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
++				 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
++			clock-names = "aux",
++				      "ref",
++				      "com_aux",
++				      "usb3_pipe";
++
++			power-domains = <&gcc GCC_USB_0_PHY_GDSC>;
++
++			resets = <&gcc GCC_USB3_PHY_PRIM_BCR>,
++				 <&gcc GCC_USB4_0_DP0_PHY_PRIM_BCR>;
++			reset-names = "phy",
++				      "common";
++
++			#clock-cells = <1>;
++			#phy-cells = <1>;
++
++			status = "disabled";
++		};
++
++		usb_1_ss1_hsphy: phy@fd9000 {
++			compatible = "qcom,x1e80100-snps-eusb2-phy",
++				     "qcom,sm8550-snps-eusb2-phy";
++			reg = <0 0x00fd9000 0 0x154>;
++			#phy-cells = <0>;
++
++			clocks = <&tcsr TCSR_USB2_1_CLKREF_EN>;
++			clock-names = "ref";
++
++			resets = <&gcc GCC_QUSB2PHY_SEC_BCR>;
++
++			status = "disabled";
++		};
++
++		usb_1_ss1_qmpphy: phy@fda000 {
++			compatible = "qcom,x1e80100-qmp-usb3-dp-phy";
++			reg = <0 0x00fda000 0 0x4000>;
++
++			clocks = <&gcc GCC_USB3_SEC_PHY_AUX_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK>,
++				 <&gcc GCC_USB3_SEC_PHY_COM_AUX_CLK>,
++				 <&gcc GCC_USB3_SEC_PHY_PIPE_CLK>;
++			clock-names = "aux",
++				      "ref",
++				      "com_aux",
++				      "usb3_pipe";
++
++			power-domains = <&gcc GCC_USB_1_PHY_GDSC>;
++
++			resets = <&gcc GCC_USB3_PHY_SEC_BCR>,
++				 <&gcc GCC_USB4_1_DP0_PHY_SEC_BCR>;
++			reset-names = "phy",
++				      "common";
++
++			#clock-cells = <1>;
++			#phy-cells = <1>;
++
++			status = "disabled";
++		};
++
++		usb_1_ss2_hsphy: phy@fde000 {
++			compatible = "qcom,x1e80100-snps-eusb2-phy",
++				     "qcom,sm8550-snps-eusb2-phy";
++			reg = <0 0x00fde000 0 0x154>;
++			#phy-cells = <0>;
++
++			clocks = <&tcsr TCSR_USB2_1_CLKREF_EN>;
++			clock-names = "ref";
++
++			resets = <&gcc GCC_QUSB2PHY_TERT_BCR>;
++
++			status = "disabled";
++		};
++
++		usb_1_ss2_qmpphy: phy@fdf000 {
++			compatible = "qcom,x1e80100-qmp-usb3-dp-phy";
++			reg = <0 0x00fdf000 0 0x4000>;
++
++			clocks = <&gcc GCC_USB3_TERT_PHY_AUX_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK>,
++				 <&gcc GCC_USB3_TERT_PHY_COM_AUX_CLK>,
++				 <&gcc GCC_USB3_TERT_PHY_PIPE_CLK>;
++			clock-names = "aux",
++				      "ref",
++				      "com_aux",
++				      "usb3_pipe";
++
++			power-domains = <&gcc GCC_USB_2_PHY_GDSC>;
++
++			resets = <&gcc GCC_USB3_PHY_TERT_BCR>,
++				 <&gcc GCC_USB4_2_DP0_PHY_TERT_BCR>;
++			reset-names = "phy",
++				      "common";
++
++			#clock-cells = <1>;
++			#phy-cells = <1>;
++
++			status = "disabled";
++		};
++
+ 		cnoc_main: interconnect@1500000 {
+ 			compatible = "qcom,x1e80100-cnoc-main";
+ 			reg = <0 0x1500000 0 0x14400>;
+@@ -2659,6 +2781,313 @@ lpass_lpicx_noc: interconnect@7430000 {
+ 			#interconnect-cells = <2>;
+ 		};
+ 
++		usb_2_hsphy: phy@88e0000 {
++			compatible = "qcom,x1e80100-snps-eusb2-phy",
++				     "qcom,sm8550-snps-eusb2-phy";
++			reg = <0 0x088e0000 0 0x154>;
++			#phy-cells = <0>;
++
++			clocks = <&tcsr TCSR_USB2_1_CLKREF_EN>;
++			clock-names = "ref";
++
++			resets = <&gcc GCC_QUSB2PHY_USB20_HS_BCR>;
++
++			status = "disabled";
++		};
++
++		usb_1_ss2: usb@a0f8800 {
++			compatible = "qcom,x1e80100-dwc3", "qcom,dwc3";
++			reg = <0 0x0a0f8800 0 0x400>;
++
++			clocks = <&gcc GCC_CFG_NOC_USB3_TERT_AXI_CLK>,
++				 <&gcc GCC_USB30_TERT_MASTER_CLK>,
++				 <&gcc GCC_AGGRE_USB3_TERT_AXI_CLK>,
++				 <&gcc GCC_USB30_TERT_SLEEP_CLK>,
++				 <&gcc GCC_USB30_TERT_MOCK_UTMI_CLK>,
++				 <&gcc GCC_AGGRE_USB_NOC_AXI_CLK>,
++				 <&gcc GCC_AGGRE_NOC_USB_NORTH_AXI_CLK>,
++				 <&gcc GCC_AGGRE_NOC_USB_SOUTH_AXI_CLK>,
++				 <&gcc GCC_SYS_NOC_USB_AXI_CLK>;
++			clock-names = "cfg_noc",
++				      "core",
++				      "iface",
++				      "sleep",
++				      "mock_utmi",
++				      "noc_aggr",
++				      "noc_aggr_north",
++				      "noc_aggr_south",
++				      "noc_sys";
++
++			assigned-clocks = <&gcc GCC_USB30_TERT_MOCK_UTMI_CLK>,
++					  <&gcc GCC_USB30_TERT_MASTER_CLK>;
++			assigned-clock-rates = <19200000>,
++					       <200000000>;
++
++			interrupts-extended = <&intc GIC_SPI 370 IRQ_TYPE_LEVEL_HIGH>,
++					      <&pdc 57 IRQ_TYPE_EDGE_BOTH>,
++					      <&pdc 58 IRQ_TYPE_EDGE_BOTH>,
++					      <&pdc 10 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "pwr_event",
++					  "dm_hs_phy_irq",
++					  "dp_hs_phy_irq",
++					  "ss_phy_irq";
++
++			power-domains = <&gcc GCC_USB30_TERT_GDSC>;
++			required-opps = <&rpmhpd_opp_nom>;
++
++			resets = <&gcc GCC_USB30_TERT_BCR>;
++
++			interconnects = <&usb_south_anoc MASTER_USB3_2 QCOM_ICC_TAG_ALWAYS
++					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
++					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++					 &config_noc SLAVE_USB3_2 QCOM_ICC_TAG_ALWAYS>;
++			interconnect-names = "usb-ddr",
++					     "apps-usb";
++
++			wakeup-source;
++
++			#address-cells = <2>;
++			#size-cells = <2>;
++			ranges;
++
++			status = "disabled";
++
++			usb_1_ss2_dwc3: usb@a000000 {
++				compatible = "snps,dwc3";
++				reg = <0 0x0a000000 0 0xcd00>;
++				interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
++				iommus = <&apps_smmu 0x14a0 0x0>;
++				snps,dis_u2_susphy_quirk;
++				snps,dis_enblslpm_quirk;
++				snps,usb3_lpm_capable;
++				phys = <&usb_1_ss2_hsphy>,
++				       <&usb_1_ss2_qmpphy QMP_USB43DP_USB3_PHY>;
++				phy-names = "usb2-phy",
++				            "usb3-phy";
++
++				port {
++					usb_1_ss2_role_switch: endpoint {
++					};
++				};
++			};
++		};
++
++		usb_2: usb@a2f8800 {
++			compatible = "qcom,x1e80100-dwc3", "qcom,dwc3";
++			reg = <0 0x0a2f8800 0 0x400>;
++			#address-cells = <2>;
++			#size-cells = <2>;
++			ranges;
++
++			clocks = <&gcc GCC_CFG_NOC_USB2_PRIM_AXI_CLK>,
++				 <&gcc GCC_USB20_MASTER_CLK>,
++				 <&gcc GCC_AGGRE_USB2_PRIM_AXI_CLK>,
++				 <&gcc GCC_USB20_SLEEP_CLK>,
++				 <&gcc GCC_USB20_MOCK_UTMI_CLK>,
++				 <&gcc GCC_AGGRE_USB_NOC_AXI_CLK>,
++				 <&gcc GCC_AGGRE_NOC_USB_NORTH_AXI_CLK>,
++				 <&gcc GCC_AGGRE_NOC_USB_SOUTH_AXI_CLK>,
++				 <&gcc GCC_SYS_NOC_USB_AXI_CLK>;
++			clock-names = "cfg_noc",
++				      "core",
++				      "iface",
++				      "sleep",
++				      "mock_utmi",
++				      "noc_aggr",
++				      "noc_aggr_north",
++				      "noc_aggr_south",
++				      "noc_sys";
++
++			assigned-clocks = <&gcc GCC_USB20_MOCK_UTMI_CLK>,
++					  <&gcc GCC_USB20_MASTER_CLK>;
++			assigned-clock-rates = <19200000>, <200000000>;
++
++			interrupts-extended = <&intc GIC_SPI 240 IRQ_TYPE_LEVEL_HIGH>,
++					      <&pdc 50 IRQ_TYPE_EDGE_BOTH>,
++					      <&pdc 49 IRQ_TYPE_EDGE_BOTH>;
++			interrupt-names = "pwr_event",
++					  "dp_hs_phy_irq",
++					  "dm_hs_phy_irq";
++
++			power-domains = <&gcc GCC_USB20_PRIM_GDSC>;
++			required-opps = <&rpmhpd_opp_nom>;
++
++			resets = <&gcc GCC_USB20_PRIM_BCR>;
++
++			interconnects = <&usb_north_anoc MASTER_USB2 QCOM_ICC_TAG_ALWAYS
++					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
++					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++					 &config_noc SLAVE_USB2 QCOM_ICC_TAG_ALWAYS>;
++			interconnect-names = "usb-ddr",
++					     "apps-usb";
++
++			wakeup-source;
++
++			status = "disabled";
++
++			usb_2_dwc3: usb@a200000 {
++				compatible = "snps,dwc3";
++				reg = <0 0x0a200000 0 0xcd00>;
++				interrupts = <GIC_SPI 241 IRQ_TYPE_LEVEL_HIGH>;
++				iommus = <&apps_smmu 0x14e0 0x0>;
++				phys = <&usb_2_hsphy>;
++				phy-names = "usb2-phy";
++				maximum-speed = "high-speed";
++
++				port {
++					usb_2_role_switch: endpoint {
++					};
++				};
++			};
++		};
++
++		usb_1_ss0: usb@a6f8800 {
++			compatible = "qcom,x1e80100-dwc3", "qcom,dwc3";
++			reg = <0 0x0a6f8800 0 0x400>;
++
++			clocks = <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
++				 <&gcc GCC_USB30_PRIM_MASTER_CLK>,
++				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
++				 <&gcc GCC_USB30_PRIM_SLEEP_CLK>,
++				 <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
++				 <&gcc GCC_AGGRE_USB_NOC_AXI_CLK>,
++				 <&gcc GCC_CFG_NOC_USB_ANOC_NORTH_AHB_CLK>,
++				 <&gcc GCC_CFG_NOC_USB_ANOC_SOUTH_AHB_CLK>,
++				 <&gcc GCC_SYS_NOC_USB_AXI_CLK>;
++			clock-names = "cfg_noc",
++				      "core",
++				      "iface",
++				      "sleep",
++				      "mock_utmi",
++				      "noc_aggr",
++				      "noc_aggr_north",
++				      "noc_aggr_south",
++				      "noc_sys";
++
++			assigned-clocks = <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
++					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
++			assigned-clock-rates = <19200000>,
++					       <200000000>;
++
++			interrupts-extended = <&intc GIC_SPI 371 IRQ_TYPE_LEVEL_HIGH>,
++					      <&pdc 15 IRQ_TYPE_EDGE_BOTH>,
++					      <&pdc 61 IRQ_TYPE_EDGE_BOTH>,
++					      <&pdc 17 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "pwr_event",
++					  "dm_hs_phy_irq",
++					  "dp_hs_phy_irq",
++					  "ss_phy_irq";
++
++			power-domains = <&gcc GCC_USB30_PRIM_GDSC>;
++			required-opps = <&rpmhpd_opp_nom>;
++
++			resets = <&gcc GCC_USB30_PRIM_BCR>;
++
++			wakeup-source;
++
++			#address-cells = <2>;
++			#size-cells = <2>;
++			ranges;
++
++			status = "disabled";
++
++			usb_1_ss0_dwc3: usb@a600000 {
++				compatible = "snps,dwc3";
++				reg = <0 0x0a600000 0 0xcd00>;
++				interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
++				iommus = <&apps_smmu 0x1420 0x0>;
++				snps,dis_u2_susphy_quirk;
++				snps,dis_enblslpm_quirk;
++				snps,usb3_lpm_capable;
++				phys = <&usb_1_ss0_hsphy>,
++				       <&usb_1_ss0_qmpphy QMP_USB43DP_USB3_PHY>;
++				phy-names = "usb2-phy",
++					    "usb3-phy";
++
++				port {
++					usb_1_ss0_role_switch: endpoint {
++					};
++				};
++			};
++		};
++
++		usb_1_ss1: usb@a8f8800 {
++			compatible = "qcom,x1e80100-dwc3", "qcom,dwc3";
++			reg = <0 0x0a8f8800 0 0x400>;
++
++			clocks = <&gcc GCC_CFG_NOC_USB3_SEC_AXI_CLK>,
++				 <&gcc GCC_USB30_SEC_MASTER_CLK>,
++				 <&gcc GCC_AGGRE_USB3_SEC_AXI_CLK>,
++				 <&gcc GCC_USB30_SEC_SLEEP_CLK>,
++				 <&gcc GCC_USB30_SEC_MOCK_UTMI_CLK>,
++				 <&gcc GCC_AGGRE_USB_NOC_AXI_CLK>,
++				 <&gcc GCC_AGGRE_NOC_USB_NORTH_AXI_CLK>,
++				 <&gcc GCC_AGGRE_NOC_USB_SOUTH_AXI_CLK>,
++				 <&gcc GCC_SYS_NOC_USB_AXI_CLK>;
++			clock-names = "cfg_noc",
++				      "core",
++				      "iface",
++				      "sleep",
++				      "mock_utmi",
++				      "noc_aggr",
++				      "noc_aggr_north",
++				      "noc_aggr_south",
++				      "noc_sys";
++
++			assigned-clocks = <&gcc GCC_USB30_SEC_MOCK_UTMI_CLK>,
++					  <&gcc GCC_USB30_SEC_MASTER_CLK>;
++			assigned-clock-rates = <19200000>,
++					       <200000000>;
++
++			interrupts-extended = <&intc GIC_SPI 372 IRQ_TYPE_LEVEL_HIGH>,
++					      <&pdc 11 IRQ_TYPE_EDGE_BOTH>,
++					      <&pdc 60 IRQ_TYPE_EDGE_BOTH>,
++					      <&pdc 47 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "pwr_event",
++					  "dm_hs_phy_irq",
++					  "dp_hs_phy_irq",
++					  "ss_phy_irq";
++
++			power-domains = <&gcc GCC_USB30_SEC_GDSC>;
++			required-opps = <&rpmhpd_opp_nom>;
++
++			resets = <&gcc GCC_USB30_SEC_BCR>;
++
++			interconnects = <&usb_south_anoc MASTER_USB3_1 QCOM_ICC_TAG_ALWAYS
++					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
++					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++					 &config_noc SLAVE_USB3_1 QCOM_ICC_TAG_ALWAYS>;
++			interconnect-names = "usb-ddr",
++					     "apps-usb";
++
++			wakeup-source;
++
++			#address-cells = <2>;
++			#size-cells = <2>;
++			ranges;
++
++			status = "disabled";
++
++			usb_1_ss1_dwc3: usb@a800000 {
++				compatible = "snps,dwc3";
++				reg = <0 0x0a800000 0 0xcd00>;
++				interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
++				iommus = <&apps_smmu 0x1460 0x0>;
++				snps,dis_u2_susphy_quirk;
++				snps,dis_enblslpm_quirk;
++				snps,usb3_lpm_capable;
++				phys = <&usb_1_ss1_hsphy>,
++				       <&usb_1_ss1_qmpphy QMP_USB43DP_USB3_PHY>;
++				phy-names = "usb2-phy",
++					    "usb3-phy";
++
++				port {
++					usb_1_ss1_role_switch: endpoint {
++					};
++				};
++			};
++		};
++
+ 		pdc: interrupt-controller@b220000 {
+ 			compatible = "qcom,x1e80100-pdc", "qcom,pdc";
+ 			reg = <0 0x0b220000 0 0x30000>, <0 0x174000f0 0 0x64>;
 
 -- 
 2.34.1
