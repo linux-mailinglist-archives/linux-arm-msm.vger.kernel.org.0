@@ -1,153 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-8034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8035-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69CD6839998
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 20:35:18 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 418CA8399F5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 21:06:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 93FE31C261F4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 19:35:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EE358286E35
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 20:06:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41A29823DC;
-	Tue, 23 Jan 2024 19:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77BCE82D87;
+	Tue, 23 Jan 2024 20:06:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ZLCqypvj"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UxL+L9NL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E5B81215
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 19:35:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAEE63511;
+	Tue, 23 Jan 2024 20:06:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706038512; cv=none; b=bNmpVtT3TMubCB/Egi0MIwYrSTmWu6RGaTSuiWAOZF+ETxmhIrxnIRsag0Q1sKYk5bDZC/H+fCv0RzqOk1n2ax/pba8CsmhfmPy7llAKtXjfbuKY3kTVD7ijfA1guWBi4ZfBWV/pF00dkTaCtKlOyZJswQnD1P9rrEkPQ0n7+m0=
+	t=1706040371; cv=none; b=cZ/PrgUupvO1pNmarddrkkYKb70mkQXcbEr9GmfGhbHy2nu5QZrwCpSur/f3+aZAdMjnsby0i3R25Db2Z0xwj+vex1IGlmvf3efxooNuF9znIH7PTCw5huaFTj9AT3oEOhM0to1Nd8fUQ3oqntO72aZg1VsZkX33O4vzskitG40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706038512; c=relaxed/simple;
-	bh=1ufWa9+DhMazuCg6k/kGAKu9JKJdvlAyAGQCtBYJHHk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-type; b=hCPfze6w6mvKr6JszMk0hMdUQBkEWYSdIdt5nEX3v75pa1Yiaqg3eC4PjrgoLvBaDXMF1BledMGJY7k5fvn5s/hD2v+B0qLCF5kG94JX0M+g7Ac1khNx20uPLL9+gYx7wRTkRXWLYB87NCvu8q9gALUduy9LLSG1jSzO9xqfpes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ZLCqypvj; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1706038509;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=H24shksCDeTPX45yEa+ObHdQIbM519gVV0wB9Kkfn3A=;
-	b=ZLCqypvj0xtLzQSiC9WCuNc44KWcs27Z+rDRYV4zhDuLUEzHxEw2RAHgsDGDZ3D/2E8Yoi
-	NJXGWdzVxoN73m3QMY01f+wstM/gTOO4hYM31WxA8wFnUrtqHkEIiVpwx+UTxQGpeqoRBc
-	2GtfeXt/tMwkT6jQ8xcizG+LM4SS+ao=
-Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
- [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-541-trSCWWQoMNuSMD6t-S0suQ-1; Tue, 23 Jan 2024 14:35:07 -0500
-X-MC-Unique: trSCWWQoMNuSMD6t-S0suQ-1
-Received: by mail-ot1-f69.google.com with SMTP id 46e09a7af769-6ddee727096so5608548a34.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 11:35:07 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706038506; x=1706643306;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=H24shksCDeTPX45yEa+ObHdQIbM519gVV0wB9Kkfn3A=;
-        b=djIxdpoMUk9Y8d2baMXPdwr1W51pKGOGOwBBLbgBt9V9Uv26vv6VPq2KOEznx9Lswv
-         /BLwbBEQo4fUibTRe5f5TepIdfdBagKO2R9dgWLQkpNLTcOTpIiXXiCXOqrVtuhiiAVA
-         bFwU4DlKlknajny+hbPGNxdr3eKXJUOOvq7Mr2DInkdZxVj2yRFg+sUpEHCg3pXDYEi8
-         O2FrmCJlWtfq5fN0xwLq8pwXXReUP5TFfh1mDAPvPo2S8JmbAFADMA8e6mPp48HHh4bI
-         zprAy1gYig+8/Pt6/ntRaOVP/MKZFxw8A6nyhN5M9XNA++5r/DwnuZCrhGfOchqbQNLD
-         oe7w==
-X-Gm-Message-State: AOJu0YznAoEWGubxvK8VTlxxHdSJqfyPuIAqqH6iLx+zXPy0kN+6D19T
-	lH1fY01gBrofFzIZrmgiOZy2hhP0lJqV509nLzRr9Oifo5RZqvsOw0LJnkZJQilMkF6zPrg98bU
-	9JJGgn/Fo0NfIoYhtX1W1tHciDdHd1V255sm7aJbfCGdmcnPoa7gU7tnPOMgx3A+m2nm54lY=
-X-Received: by 2002:a05:6358:27a8:b0:175:49f7:952f with SMTP id l40-20020a05635827a800b0017549f7952fmr4343847rwb.63.1706038506671;
-        Tue, 23 Jan 2024 11:35:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG55nVARfi6rbNbtYFtYEGGYgAOCYX6yFXx3Hm30MskjrUGrGE8LCEbfcX1uBv7zLrzCl5LcQ==
-X-Received: by 2002:a05:6358:27a8:b0:175:49f7:952f with SMTP id l40-20020a05635827a800b0017549f7952fmr4343833rwb.63.1706038506364;
-        Tue, 23 Jan 2024 11:35:06 -0800 (PST)
-Received: from localhost (pool-71-184-142-128.bstnma.fios.verizon.net. [71.184.142.128])
-        by smtp.gmail.com with ESMTPSA id or9-20020a056214468900b00686a4f9312bsm656719qvb.50.2024.01.23.11.35.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jan 2024 11:35:05 -0800 (PST)
-From: Eric Chanudet <echanude@redhat.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-scsi@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Eric Chanudet <echanude@redhat.com>
-Subject: [PATCH v2] scsi: ufs: qcom: avoid re-init quirk when gears match
-Date: Tue, 23 Jan 2024 14:28:57 -0500
-Message-ID: <20240123192854.1724905-4-echanude@redhat.com>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1706040371; c=relaxed/simple;
+	bh=GzhJCzJzKpc9xeFhTpsdwMvee7CM5aTLill6q4USv3U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=nNgJFY8pYQz6l4ko0JKZD3FJAdN9fhcX/lWv6sOp50QtlENpWQFLUZFjJzcTRw3L1jmm0+HqJx3cuRWHqWFmHODhYbJND0Ndr/1dn16kOA0x+sSPjxGC/BIsal7c7ArZTm5lIyKgl5tKfrseSOLvP1nWYdns9qRCo90Ed/u+M2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UxL+L9NL; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40NGPRR5029341;
+	Tue, 23 Jan 2024 20:06:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=hUYsYhKG8zh/NNdalZUM0dorkIoNrzpo0eGcmzdbCH4=; b=Ux
+	L+L9NL7W3fcIBkONqHWLOW36dZTeWbd+HPbi4EFcKAV6JZr41W7+xaANSML/P/cb
+	9G7Qw+65VseuGMlWiNptOiO9ViqhfdjEBRyeDNfN7vF/+AiTtDh/PkV7Ep0onY50
+	6vb3yAz1BmjO8J4hOvuLsmAMEqostsCsyXR4ndGZ/lDme8zDforBZnF6Pkja2E7O
+	eYB8L0A4tOHPp8R7Q/5iXdMdw+25u6THmb/Ee43t+OKpbb98OhLvfmo34QllQdm/
+	TlYQEa87hfYRdb5xzrl4LUBSRo31DUGGlfR8rkJD6qCyAAgPI3DGcy0d/1bmbOKI
+	MEhkJsOjMX/ehg7PpstQ==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vtesch2a5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 23 Jan 2024 20:06:01 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40NK60r0023727
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 23 Jan 2024 20:06:00 GMT
+Received: from [10.110.28.150] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 23 Jan
+ 2024 12:05:56 -0800
+Message-ID: <fd2c8c1b-02f3-2750-3449-f93fc119fda2@quicinc.com>
+Date: Tue, 23 Jan 2024 12:05:56 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 1/2] dt-bindings: hwinfo: Introduce board-id
+Content-Language: en-US
+To: Elliot Berman <quic_eberman@quicinc.com>,
+        Amrit Anand
+	<quic_amrianan@quicinc.com>
+CC: <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <agross@kernel.org>, <konrad.dybcio@linaro.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>,
+        Conor Dooley
+	<conor@kernel.org>, <andersson@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>
+References: <1705749649-4708-1-git-send-email-quic_amrianan@quicinc.com>
+ <1705749649-4708-2-git-send-email-quic_amrianan@quicinc.com>
+ <6e40dd60-884f-be23-0052-d14f7194f844@quicinc.com>
+ <f21bc259-45fa-d14b-a556-625b813287f4@quicinc.com>
+ <499320f4-f6b1-4582-9512-89ab505305b6@linaro.org>
+ <20240123-sterilize-flap-8971aa3bad4b@spud>
+ <1941558d-d1e0-43b7-9208-65b9ba191bc2@quicinc.com>
+From: Trilok Soni <quic_tsoni@quicinc.com>
+In-Reply-To: <1941558d-d1e0-43b7-9208-65b9ba191bc2@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Tbf2azYCNSayz4Q5wH74QmTAEgBJ7PpC
+X-Proofpoint-ORIG-GUID: Tbf2azYCNSayz4Q5wH74QmTAEgBJ7PpC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-23_11,2024-01-23_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 malwarescore=0
+ bulkscore=0 spamscore=0 phishscore=0 mlxscore=0 mlxlogscore=892
+ impostorscore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401230148
 
-On sa8775p-ride, probing the hba will go through the
-UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH path although the power info
-are same during the second init.
+On 1/23/2024 10:51 AM, Elliot Berman wrote:
+> 
+> 
+> On 1/23/2024 9:18 AM, Conor Dooley wrote:
+>> On Tue, Jan 23, 2024 at 12:50:07PM +0100, Krzysztof Kozlowski wrote:
+>>> On 22/01/2024 11:10, Amrit Anand wrote:
+>>>>
+>>>> On 1/21/2024 12:40 AM, Trilok Soni wrote:
+>>>>> On 1/20/2024 3:20 AM, Amrit Anand wrote:
+>>>>>> From: Elliot Berman <quic_eberman@quicinc.com>
+>>>>>>
+>>>>>> Device manufacturers frequently ship multiple boards or SKUs under a
+>>>>>> single software package. These software packages will ship multiple
+>>>>>> devicetree blobs and require some mechanism to pick the correct DTB for
+>>>>>> the board the software package was deployed. Introduce a common
+>>>>>> definition for adding board identifiers to device trees. board-id
+>>>>>> provides a mechanism for bootloaders to select the appropriate DTB which
+>>>>>> is vendor/OEM-agnostic.
+>>>>> Please extend CC list to more architectures? linux-arm-kernel, risc-v etc; since
+>>>>> the proposal below is not specific to ARM but any architecture is using the
+>>>>> devicetree.
+>>>> Wouldn't devicetree@vger.kernel.org will have concern folks from all the 
+>>>> architectures?
+>>>> Please correct me.
+>>>
+>>> No.
+>>
+>> The chromium guys should get a CC on future versions of this stuff,
+>> since they like doing wacky things with compatible strings in their
+>> bootloader and this problem is one they also face. Doug Anderson and the
+>> mediatek chromebook folks would be a good start.
+>>
+> 
+> Please CC Peter Griffin from Linaro as he helped restart this 
+> discussion at Plumbers.
+> 
+> Peter Griffin <peter.griffin@linaro.org>
+> 
+> Also, for the oneplus boards:
+> Caleb Connolly <caleb.connolly@linaro.org>
 
-The REINIT quirk only applies starting with controller v4. For these,
-ufs_qcom_get_hs_gear() reads the highest supported gear when setting the
-host_params. After the negotiation, if the host and device are on the
-same gear, it is the highest gear supported between the two. Skip REINIT
-to save some time.
+Thank you everyone. Amrit - please take care of above comments
+when you post next revision and as suggested please add other
+architecture mailing lists using the devicetree. Thank you. 
 
-Signed-off-by: Eric Chanudet <echanude@redhat.com>
----
-
-v1 -> v2:
-* drop test against host->hw_ver.major >= 4 and amend description as a
-  result (Andrew/Mani)
-* add comment, test device gear against host->phy_gear and reset
-  host->phy_gear only if necessary (Mani)
-* Link to v1: https://lore.kernel.org/linux-arm-msm/20240119185537.3091366-11-echanude@redhat.com/
-
-trace_event=ufs:ufshcd_init reports the time spent in ufshcd_probe_hba
-where the re-init quirk is performed:
-Currently:
-0.355879: ufshcd_init: 1d84000.ufs: took 103377 usecs, dev_state: UFS_ACTIVE_PWR_MODE, link_state: UIC_LINK_ACTIVE_STATE, err 0
-With this patch:
-0.297676: ufshcd_init: 1d84000.ufs: took 43553 usecs, dev_state: UFS_ACTIVE_PWR_MODE, link_state: UIC_LINK_ACTIVE_STATE, err 0
-
- drivers/ufs/host/ufs-qcom.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 39eef470f8fa..f7dba7236c6e 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -738,8 +738,17 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
- 		 * the second init can program the optimal PHY settings. This allows one to start
- 		 * the first init with either the minimum or the maximum support gear.
- 		 */
--		if (hba->ufshcd_state == UFSHCD_STATE_RESET)
--			host->phy_gear = dev_req_params->gear_tx;
-+		if (hba->ufshcd_state == UFSHCD_STATE_RESET) {
-+			/*
-+			 * Skip REINIT if the negotiated gear matches with the
-+			 * initial phy_gear. Otherwise, update the phy_gear to
-+			 * program the optimal gear setting during REINIT.
-+			 */
-+			if (host->phy_gear == dev_req_params->gear_tx)
-+				hba->quirks &= ~UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
-+			else
-+				host->phy_gear = dev_req_params->gear_tx;
-+		}
- 
- 		/* enable the device ref clock before changing to HS mode */
- 		if (!ufshcd_is_hs_mode(&hba->pwr_info) &&
 -- 
-2.43.0
+---Trilok Soni
 
 
