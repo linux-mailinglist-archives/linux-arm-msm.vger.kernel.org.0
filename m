@@ -1,75 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-7939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7940-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B591838DE3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 12:50:22 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55733838E2F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 13:09:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D0D3EB21664
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 11:50:19 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A148BB212B5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 12:09:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 708425D8F7;
-	Tue, 23 Jan 2024 11:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E80EB5DF04;
+	Tue, 23 Jan 2024 12:09:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="m0soKmaO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="j6MkMbWm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B9756B65
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 11:50:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E875D917
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 12:09:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706010613; cv=none; b=MnjfVFm0wWvydOUimYVr2jseKZM1E4TrxUOOphAvz+RrjSqFh/odK7B212Le1C5QWlqZNrc67tAtRE4v3qxY8ryNr7G+5xllX4Vs683KOeh8IraGp5A2+GpKx3eQZmI9tSANQuKscvwKH/+QItidgufs4Dk260uwKslnuK/JbTg=
+	t=1706011753; cv=none; b=iMj6kZ5ZOinOVkbgD6KjO1BcX/GSN3rligg+RCxnMvQWycuMKV6zxqLPDvojzuMBK7oJo0wyMPfwXkMWuJPP95TM/hxz8hZN5OkRwO3SXfKwQnPdmFcOliFsGzwPbJkX3aFmN90yLWbbDMACQ8g2PCLAg7f2mConUQa2KY7ybSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706010613; c=relaxed/simple;
-	bh=9555B2ryPbuiIQDf8ekp7mA6MOJBs0lVUPtThIkd8no=;
+	s=arc-20240116; t=1706011753; c=relaxed/simple;
+	bh=FFfT5q80Hs3zDMjLI3EodrE/Zh2o/sWHApPCFclFeC0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uw/XeELUVM/VOJ7vEUUG+zAZ74XmQHIDd5CyBGa90r2sv+t1tzn4pDQpSWzW2Pyt1bLsLbH2m4IG3mhod0E9MtbdCw7a6Bb0nqSoT9w4uQzDhQ7NoC0el1BtZUjrxukMrgQOzYen7OZxYujnCLx0Maaib+NZFoX4VOGzi9F8DOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=m0soKmaO; arc=none smtp.client-ip=209.85.221.42
+	 In-Reply-To:Content-Type; b=E3Weyqo41rB23ZYdmp4bfY+zBTKA5bny8zrMoFpcXNE72dqKBklBC5K7ekpEilpMC9lgwPD31DpNIe4ZSdzu8LF2oeqytBFA9ZuL+MIjkDZ78YZCUn7ySTxAngCTIAEEaVQGFVNZ99FIfLfiOocsGqdzCvW2onTOaEHdvrXfQFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=j6MkMbWm; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-33922d2cb92so3764417f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 03:50:11 -0800 (PST)
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3387ef9fc62so3969449f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 04:09:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706010610; x=1706615410; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=PmJ/o8ozNMBzFxt9ubcx7MPH2oFzFtnhKzW9CqW+CS4=;
-        b=m0soKmaOQ95c0rYDVWnQU98fpt1lTlWL/udpBAKhiqYeyjAVknQs/ZnG8b8IdbqIRx
-         UZeby6LGxQHkmRW5u0XO1U3/bmacXUJi8rc1xSf1yEhNzmjhTsU5xS1zbMquZ41M7Dbb
-         jZJbF/OKFTSxYtq6Jm1x8MxZevo3O5iubt32NVtiUCGVSCgyjTFWaRKOJq/KkgFT4+2J
-         XO4Kbc/L+Q3mA5lgdl76ZnWo1DWpM6iwP0CgSXEu+BfNX5O5gF5DZ1OcFqIHYI8eUtfX
-         hP2EbCx3Vad8PXgNcf1m4tXGpXWEFeYJzTGcxOMWs22HV1HMGYjaQnS4VUbCdgrrRUEg
-         eaKA==
+        d=linaro.org; s=google; t=1706011749; x=1706616549; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=l3C8Fw5l+jhncPA4wDIldFznr0WXO1yKPR2qB2QrPqU=;
+        b=j6MkMbWm/Ky+OXkpG8xFxAoK6HPI8/NmzIXR/+CHWPrj8HvPFbQGmX7CKu+xqi1z1m
+         lkls/ofkWLmM1H2JLoGr9b86FFF6if14T8L4VlzkvMVQC//RzL6P5lHwPEwyC/7wumU+
+         2VNodlIz4kV5EAFz/aLK7o6zzFhTjcuPv4xzXr5mt6OTEHcRiu1Krtjf8Wbw2t5uS//9
+         Z8dzEcuFEMCUe/hXKbCdnbVv0eso1qkUpdKDNYZjNsEZyFlc7Z704XyQlFDUUrzO/M8w
+         S8ZgtjyQnT+E1tPZTAKb5NaXT875yQKnYEtWotHLGIVd6n7YDJnED64ddHCAg93kllTW
+         TA9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706010610; x=1706615410;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PmJ/o8ozNMBzFxt9ubcx7MPH2oFzFtnhKzW9CqW+CS4=;
-        b=oS1qcvbEyTR1qO1wOFfyPahSIGZW2pkFdPlxL00URJMlY3gOnT+N+x9UFSIjgKena8
-         ffX6GY7PIPT6glIsgUU14xlXnq5fUsKOAFDPx79OhROkuBrKFgzZ9Sl9qriqpmgY7k7e
-         hA6xk70mj50h8BuNSRaxC+vXBagqzNMQgBcb1nj8/rpj9s5q//nL+YO6t4sW5tuSRimY
-         8KYpdW707hglWqPvzrWBPMtE7fNw7EOGcF0hk4VOVL6HsluCRMbZs/zP00Xziabu2q/+
-         lKpyTyyFW9vWjhQ925vPeEDmcR5sRNSCfZZ2GJ3DsPHMPPhiN2Jl4q3Cv2VNYEoXrMmu
-         Hqpg==
-X-Gm-Message-State: AOJu0YyBvpF/oP8MTWg9DYy4mwPlCBh1YUuDDm+gnaJhf+8kOi5wtiHj
-	I5alrBx3l0ni6QDFUubveEbmLJRf8hwF9Sw4uISMcK+IGZT8pjoRMbZA9moRmFDlKyX4GXVSSAv
-	9
-X-Google-Smtp-Source: AGHT+IH5mzkgfaXIZu/ClQ8zhEi3UlYUq0xV6dhMaTicnoagP3Jt9FhoFjXiAGLJLyvE8L571PiOyA==
-X-Received: by 2002:a5d:64eb:0:b0:339:45f2:f418 with SMTP id g11-20020a5d64eb000000b0033945f2f418mr220231wri.118.1706010609961;
-        Tue, 23 Jan 2024 03:50:09 -0800 (PST)
+        d=1e100.net; s=20230601; t=1706011749; x=1706616549;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=l3C8Fw5l+jhncPA4wDIldFznr0WXO1yKPR2qB2QrPqU=;
+        b=GaaRZXS306DFP6mpx6xCCxQguWyA3NTdUY048EF3fwN6JDaG6RmAv7PXqgdB6bTtm/
+         bE4gQrWext17WOyw0nmTN7JhgAbzQul2A7gFMK/35PyT1p5uQ/Ns3lVcjo/4VSDQy83u
+         7bMzB/oeHBcnPgOnWEuRR1X8gD3JqGfLqhjEkJ+IdCnMYPZptAy0u6Ld2AwTRtg153um
+         zes3DgHyfOuSloNZxCtCBfZMa3BXPreYwi5an/atiDt5PmHu8Bqh08xN8TKVysrZcgjJ
+         6yk1f7l1CcE+tg3QG9Io4yor58je2Jar1x9WoxWVPporcbBLdQq3qTcNwj5TzzP95t+J
+         Tw0A==
+X-Gm-Message-State: AOJu0Yz5fqq8fWp3BYszNbLqkY1hvUXU4mqKv4Acy1EuUiLpuKoOEuc4
+	6H3y/PJ0Nf3RM9JleS+L+dyrYsT0c9QSN0ccC1Rhtup32UCC5jUDbWvv2QkODYc=
+X-Google-Smtp-Source: AGHT+IHQmsUP+BU7Tso5igJYN5GTEPdX50NGuYMN9RVsXOr4bhNHRPYgbh0Bp1hDTMEC9YUNwolbyQ==
+X-Received: by 2002:a05:6000:1f89:b0:339:372e:7714 with SMTP id bw9-20020a0560001f8900b00339372e7714mr2297966wrb.32.1706011749386;
+        Tue, 23 Jan 2024 04:09:09 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.215.66])
-        by smtp.gmail.com with ESMTPSA id w15-20020adfec4f000000b00338a3325331sm11233113wrn.69.2024.01.23.03.50.08
+        by smtp.gmail.com with ESMTPSA id j14-20020a5d604e000000b003392cdeb3a2sm7140080wrt.103.2024.01.23.04.09.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Jan 2024 03:50:09 -0800 (PST)
-Message-ID: <499320f4-f6b1-4582-9512-89ab505305b6@linaro.org>
-Date: Tue, 23 Jan 2024 12:50:07 +0100
+        Tue, 23 Jan 2024 04:09:09 -0800 (PST)
+Message-ID: <1fc9815e-76dd-41d7-aa1a-caa72ef4ad34@linaro.org>
+Date: Tue, 23 Jan 2024 13:09:07 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,8 +76,8 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 1/2] dt-bindings: hwinfo: Introduce board-id
-To: Amrit Anand <quic_amrianan@quicinc.com>,
- Trilok Soni <quic_tsoni@quicinc.com>, robh+dt@kernel.org,
+Content-Language: en-US
+To: Amrit Anand <quic_amrianan@quicinc.com>, robh+dt@kernel.org,
  krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, agross@kernel.org,
  andersson@kernel.org, konrad.dybcio@linaro.org
 Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
@@ -87,9 +85,6 @@ Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  Elliot Berman <quic_eberman@quicinc.com>
 References: <1705749649-4708-1-git-send-email-quic_amrianan@quicinc.com>
  <1705749649-4708-2-git-send-email-quic_amrianan@quicinc.com>
- <6e40dd60-884f-be23-0052-d14f7194f844@quicinc.com>
- <f21bc259-45fa-d14b-a556-625b813287f4@quicinc.com>
-Content-Language: en-US
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -135,31 +130,134 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <f21bc259-45fa-d14b-a556-625b813287f4@quicinc.com>
+In-Reply-To: <1705749649-4708-2-git-send-email-quic_amrianan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 22/01/2024 11:10, Amrit Anand wrote:
+On 20/01/2024 12:20, Amrit Anand wrote:
+> From: Elliot Berman <quic_eberman@quicinc.com>
 > 
-> On 1/21/2024 12:40 AM, Trilok Soni wrote:
->> On 1/20/2024 3:20 AM, Amrit Anand wrote:
->>> From: Elliot Berman <quic_eberman@quicinc.com>
->>>
->>> Device manufacturers frequently ship multiple boards or SKUs under a
->>> single software package. These software packages will ship multiple
->>> devicetree blobs and require some mechanism to pick the correct DTB for
->>> the board the software package was deployed. Introduce a common
->>> definition for adding board identifiers to device trees. board-id
->>> provides a mechanism for bootloaders to select the appropriate DTB which
->>> is vendor/OEM-agnostic.
->> Please extend CC list to more architectures? linux-arm-kernel, risc-v etc; since
->> the proposal below is not specific to ARM but any architecture is using the
->> devicetree.
-> Wouldn't devicetree@vger.kernel.org will have concern folks from all the 
-> architectures?
-> Please correct me.
 
-No.
+
+
+> 
+> How is this better than Qualcomm's qcom,msm-id/qcom,board-id?
+> -------------------------------------------------------------
+> The selection process for devicetrees was Qualcomm-specific and not
+> useful for other devices and bootloaders that were not developed by
+> Qualcomm because a complex algorithm was used to implement. Board-ids
+> provide a matching solution that can be implemented by bootloaders
+> without introducing vendor-specific code. Qualcomm uses three
+> devicetree properties: msm-id (interchangeably: soc-id), board-id, and
+> pmic-id.  This does not scale well for use casese which use identifiers,
+> for example, to distinguish between a display panel. For a display
+> panel, an approach could be to add a new property: display-id,
+> but now	bootloaders need to be updated to also read this property. We
+> want to	avoid requiring to update bootloaders with new hardware
+
+Some mis-indentation in two lines above.
+
+> identifiers: a bootloader need only recognize the identifiers it can
+> handle.
+> 
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> Signed-off-by: Amrit Anand <quic_amrianan@quicinc.com>
+> ---
+>  .../devicetree/bindings/hwinfo/board-id.yaml       | 53 ++++++++++++++++++++++
+>  1 file changed, 53 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/hwinfo/board-id.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/hwinfo/board-id.yaml b/Documentation/devicetree/bindings/hwinfo/board-id.yaml
+
+I think we should add it to dtschema, because bootloaders are using these.
+
+> new file mode 100644
+> index 0000000..82d5ff7
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/hwinfo/board-id.yaml
+> @@ -0,0 +1,53 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/hwinfo/board-id.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Board Identifier for Devicetree Selection
+> +
+> +maintainers:
+> +  - Amrit Anand <quic_amrianan@quicinc.com>
+> +  - Elliot Berman <quic_eberman@quicinc.com>
+> +
+> +description: |
+
+Do not need '|' unless you need to preserve formatting.
+
+> +  Device manufacturers frequently ship multiple boards under a single
+> +  software package. These software packages will ship multiple devicetree
+> +  blobs and require some mechanism to pick the correct DTB for the board
+> +  the software package was deployed. board-id provides a mechanism for
+> +  bootloaders to select the appropriate DTB which is vendor/OEM-agnostic.
+> +
+> +select:
+> +  anyOf:
+> +    - required:
+> +        - 'board-id'
+> +    - required:
+> +        - 'board-id-types'
+> +    - required:
+> +        - '#board-id-cells'
+
+I don't fully get why do you need this select. Isn't the schema selected
+by nodename? Or maybe it is for the final required: but then this could
+be just set of dependencies.
+
+> +
+> +properties:
+> +  $nodename:
+> +    const: "/"
+
+Blank line.
+
+> +  board-id:
+> +    $ref: /schemas/types.yaml#/definitions/uint32-matrix
+> +    description: |
+
+Do not need '|' unless you need to preserve formatting.
+
+> +      A list of identifiers that can be used to match with this devicetree.
+
+s/devicetree/Devicetree/ ?
+
+> +      The interpretatation of each cell can be matched with the
+
+Typo: interpretation
+
+> +      board-id-type at the same index.
+> +
+> +  board-id-types:
+> +    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
+> +    description:
+> +      Defines the type of each cell, indicating to the DeviceTree selection
+
+s/DeviceTree/Devicetree/ ?
+
+
+> +      mechanism how to parse the board-id.
+> +
+> +  '#board-id-cells':
+
+ What are the cells for?
+
+> +    minimum: 1
+> +
+> +required:
+> +  - board-id
+> +  - board-id-types
+> +  - '#board-id-cells'
+
+
+> +
+> +additionalProperties: true
 
 Best regards,
 Krzysztof
