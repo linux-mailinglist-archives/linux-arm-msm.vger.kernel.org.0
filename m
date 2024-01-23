@@ -1,159 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-7916-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7917-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2B77838A5F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 10:33:33 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84372838ADE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 10:50:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8BFFE286DC2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 09:33:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 12E561F26652
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 09:50:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEA4459B57;
-	Tue, 23 Jan 2024 09:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38B055F842;
+	Tue, 23 Jan 2024 09:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RmYaGF1Y"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SgqeWKKk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBBB59B4C;
-	Tue, 23 Jan 2024 09:33:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664205D75E
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 09:45:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706002407; cv=none; b=n/kS31Z2KOPvCjIylzTXtTDteetasoMmJzQY0zaLVPbiEHnPqJaBBp4MnElCfZfORwFPHN8J1lWKnQ7T7ZpYQFa+WmLtbnaRDwCRCUFT1FooJ22KYm7C5A7Ii+2zmNSRkHlfmxN6jcQjCsg/OU4coN0uj8denvhBPB5quxpmd7c=
+	t=1706003140; cv=none; b=R8zZyhkC6MmuSDkyDNweXyKNJRlquwUFrOuRQ1RrQ2mnxvUf+9C7J3xbg5VH3s/GVrhYfdrD/+1NegTfOVvvKyLKg1FLhPvWvke5l0EXp1C2Yh7TPrpDpgxCx8RuCC0M8LnYV+/2ql8oM8JfraPPOnpKRJZs+owSsWJI1YZyhi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706002407; c=relaxed/simple;
-	bh=tUV9HeYaIlBPoxnsQQp32B4Sy5G/GzhwU1EEi/HJ3HE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=LaFfbfVNZWU0vz/pQVJLuHzx+cORRBWaD1fi/YxdofwVylnfVaoeHOKG9zo5r5uen9XV1U7QOMXIrwZwe/YnkTFdFgASqgmvrP1ClgK+xCjpORJNmrLBA6y3vCNPlj+9LC8aj71pAHLPVtAfuYC7+ygK3tLZSl9nFRSby1MBFO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RmYaGF1Y; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40N7MUfQ010744;
-	Tue, 23 Jan 2024 09:33:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=LTfonBMvnMBR44qAE8QB5c/aqCnkCTT8Mrrh/XXED9o=; b=Rm
-	YaGF1YQ496OaN+QiCMoPOtu2QkqktvVXFRaYPFGIHjmgTsuTTkbC0QJ14IZ9N++Z
-	/nnpDWeQ0GKouFANAA9T+xCZi404flJ1/mujpUxu8KJex5VgB5AmJQ1G8DoXshxa
-	cuFOPSl9VPbDPh/yfwjWOyacF37o+5v4JKeMrJMfm6MAvB80WbkMxdC2fmfnxcUC
-	puEcFKlsqaIcmOdnMB58gL401GVsqJYWyOqXhyBD2bAs9EwW9nxlvvvLkEDdv8CE
-	4cHsm3wAYdOcnU0n7Dbj05ElXAeqoreKXthQFmpoLa4q62so+HCX87QF63PYHFUD
-	3xw1AsBsMs2Q4tIJvz8w==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vt8140cu1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Jan 2024 09:33:17 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40N9XGOZ014957
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Jan 2024 09:33:16 GMT
-Received: from [10.216.0.128] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 23 Jan
- 2024 01:33:11 -0800
-Message-ID: <e993b237-46fb-3a0b-dc91-41e27ea0ab98@quicinc.com>
-Date: Tue, 23 Jan 2024 15:03:03 +0530
+	s=arc-20240116; t=1706003140; c=relaxed/simple;
+	bh=aLi4ni515fDPLmheTfXWKONnXtTpxfLwvtIiaSEI/pI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YYm8VoOqtEgGwAOsaj1V3lSeLv/lYnyfMXuBI+uIhr6Hi7wvqhM+N185pJtIST2C3qKhzxf6i2sVAW8tS4FSQQLop/TwhQ7TsE47fvYZqiPZHMZsfoYmsAcuIS2TQAQPUIsqHhfKmK7UaQBGElh7/CoJsmUxr+tXNuzbsHCNOY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SgqeWKKk; arc=none smtp.client-ip=209.85.160.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-42a0ba5098bso22904121cf.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 01:45:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706003136; x=1706607936; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=GPuIu+Od8YPZ7JAGfosVr9r0tWmFr9cTu0oqbB+e0Zo=;
+        b=SgqeWKKkVfxFi6U7w1Pb3K8TdafaRdah6HPMhYpQCSjsPbxITaoq/4gOfakq4uHny1
+         iyaLBJIoOITozXmV3Nf8bZ+uVxL2n2qzAPyhagNapf5fXxmWWg74khT9OZ3jKdzVKj5M
+         Vw20FKcGeQi3Soibai1EkTr//02S+07D7D0xp9zq/809AI/yyg+Z3Ty/AP/sV+a2Ibam
+         RoiqsJMcCApxz6LVBRkyeMGYfLJ8or+rRMa9fDWXCvv6v40HOHQ2aWpRL0ICazeaV6i1
+         vUsLTYN3FdfpbhpJxyhF5Mkpe04uKOcGnLVKUz0fvZJY+MWoKXAEeHrpt7NWTU4hPflv
+         jrZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706003136; x=1706607936;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GPuIu+Od8YPZ7JAGfosVr9r0tWmFr9cTu0oqbB+e0Zo=;
+        b=SsqjAPxcY6Cwd5x1W/Le6hYoWe4FcFh94msgWzSUYheSgAqIvLNSizPGDBLp5aOHAX
+         PWKi0t6Euh5B1oAlI03PFvVu9XFjM9EqwrLcBIUcjLBfQ5BcOQybeIO8j86w0Nvsdyd3
+         UvasvdQepGJPbfhSqiptb1KFzw8nVmMbEfSqUPf9yQ4VZqiPjXv4p5OtUzIV4fVAQK7T
+         gZxP6bGJh0FVn+rH72uEZ1VxmHVzT8t7V05xFvnMhCjUtxtKFOLA/gt0V3Im7osSNT9b
+         I+a7EcCnqGzDsEdvR456kGeMcL7wfe7YPV9yxkZrThG2Rq1saKkYAzUbwCtUT2WXWpzp
+         6asQ==
+X-Gm-Message-State: AOJu0YwCcZUqJ5nP7X/Pwy55pAsT1iArQkQky4nZEJTit+jY1ImV497M
+	CLhEEg6slFn8CB+hmrSrPCNpVMsOGOqM4kOf3Itdqg6KoPyf31X5YZZGnMJXWcOyQuPTWZwVzfs
+	=
+X-Google-Smtp-Source: AGHT+IGwmRddd4hbzIPzChpuRO0Dfx5I4nzCNEfptJ98zrnanML4MnrVA1G0oVNdUJTPC+nD4BLe2g==
+X-Received: by 2002:ac8:4e93:0:b0:42a:3a03:7ea0 with SMTP id 19-20020ac84e93000000b0042a3a037ea0mr450084qtp.111.1706003136386;
+        Tue, 23 Jan 2024 01:45:36 -0800 (PST)
+Received: from thinkpad ([120.56.197.174])
+        by smtp.gmail.com with ESMTPSA id fg6-20020a05622a580600b00429be14d3bbsm3323313qtb.13.2024.01.23.01.45.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Jan 2024 01:45:36 -0800 (PST)
+Date: Tue, 23 Jan 2024 15:15:28 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Amit Pundir <amit.pundir@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: gcc-sdm845: Add soft dependency on rpmhpd
+Message-ID: <20240123094528.GA19029@thinkpad>
+References: <20240123062814.2555649-1-amit.pundir@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v6 01/12] clk: qcom: branch: Add a helper for setting the
- enable bit
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: Marijn Suijten <marijn.suijten@somainline.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Johan Hovold
-	<johan+linaro@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-References: <20230717-topic-branch_aon_cleanup-v6-0-46d136a4e8d0@linaro.org>
- <20230717-topic-branch_aon_cleanup-v6-1-46d136a4e8d0@linaro.org>
-Content-Language: en-US
-From: Imran Shaik <quic_imrashai@quicinc.com>
-In-Reply-To: <20230717-topic-branch_aon_cleanup-v6-1-46d136a4e8d0@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -9zgUxEza7hK566H9pMD3G5V06JJNCFs
-X-Proofpoint-ORIG-GUID: -9zgUxEza7hK566H9pMD3G5V06JJNCFs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-23_04,2024-01-23_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- spamscore=0 mlxlogscore=999 clxscore=1011 impostorscore=0 malwarescore=0
- suspectscore=0 bulkscore=0 adultscore=0 phishscore=0 mlxscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401230069
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240123062814.2555649-1-amit.pundir@linaro.org>
 
-
-
-On 1/13/2024 8:20 PM, Konrad Dybcio wrote:
-> We hardcode some clocks to be always-on, as they're essential to the
-> functioning of the SoC / some peripherals. Add a helper to do so
-> to make the writes less magic.
+On Tue, Jan 23, 2024 at 11:58:14AM +0530, Amit Pundir wrote:
+> With the addition of RPMh power domain to the GCC node in
+> device tree, we noticed a significant delay in getting the
+> UFS driver probed on AOSP which futher led to mount failures
+> because Android do not support rootwait. So adding a soft
+> dependency on RPMh power domain which informs modprobe to
+> load rpmhpd module before gcc-sdm845.
 > 
-> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Cc: <stable@vger.kernel.org> # v5.4+
+> Fixes: 4b6ea15c0a11 ("arm64: dts: qcom: sdm845: Add missing RPMh power domain to GCC")
+> Suggested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+- Mani
+
 > ---
->   drivers/clk/qcom/clk-branch.h | 7 +++++++
->   1 file changed, 7 insertions(+)
+>  drivers/clk/qcom/gcc-sdm845.c | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> diff --git a/drivers/clk/qcom/clk-branch.h b/drivers/clk/qcom/clk-branch.h
-> index 8ffed603c050..0514bc43100b 100644
-> --- a/drivers/clk/qcom/clk-branch.h
-> +++ b/drivers/clk/qcom/clk-branch.h
-> @@ -64,6 +64,7 @@ struct clk_mem_branch {
->   #define CBCR_FORCE_MEM_PERIPH_OFF	BIT(12)
->   #define CBCR_WAKEUP			GENMASK(11, 8)
->   #define CBCR_SLEEP			GENMASK(7, 4)
-> +#define CBCR_CLOCK_ENABLE		BIT(0)
->   
->   static inline void qcom_branch_set_force_mem_core(struct regmap *regmap,
->   						  struct clk_branch clk, bool on)
-> @@ -98,6 +99,12 @@ static inline void qcom_branch_set_sleep(struct regmap *regmap, struct clk_branc
->   			   FIELD_PREP(CBCR_SLEEP, val));
->   }
->   
-> +static inline void qcom_branch_set_clk_en(struct regmap *regmap, u32 cbcr)
-> +{
-> +	regmap_update_bits(regmap, cbcr, CBCR_CLOCK_ENABLE,
-> +			   CBCR_CLOCK_ENABLE);
-> +}
-> +
-
-Could you please help me understand how this helper function is useful?
-Seems like this is just for reducing parameters compared to 
-regmap_update_bits(). But anyhow the same is being done in the existing
-clock controller drivers with a comment which explains the functionality.
-
-Thanks & Regards,
-Imran
-
->   extern const struct clk_ops clk_branch_ops;
->   extern const struct clk_ops clk_branch2_ops;
->   extern const struct clk_ops clk_branch_simple_ops;
+> diff --git a/drivers/clk/qcom/gcc-sdm845.c b/drivers/clk/qcom/gcc-sdm845.c
+> index 725cd52d2398..ea4c3bf4fb9b 100644
+> --- a/drivers/clk/qcom/gcc-sdm845.c
+> +++ b/drivers/clk/qcom/gcc-sdm845.c
+> @@ -4037,3 +4037,4 @@ module_exit(gcc_sdm845_exit);
+>  MODULE_DESCRIPTION("QTI GCC SDM845 Driver");
+>  MODULE_LICENSE("GPL v2");
+>  MODULE_ALIAS("platform:gcc-sdm845");
+> +MODULE_SOFTDEP("pre: rpmhpd");
+> -- 
+> 2.25.1
 > 
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
