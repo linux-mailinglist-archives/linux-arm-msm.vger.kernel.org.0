@@ -1,183 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-7878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7879-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10A18838669
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 05:47:06 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 309058386C2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 06:33:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 360951C23E86
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 04:47:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E54221F21C7F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 05:33:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65D071FA5;
-	Tue, 23 Jan 2024 04:47:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44DBED313;
+	Tue, 23 Jan 2024 05:33:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oagS0n7u"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="SMQ4hJ1u"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC6C4400;
-	Tue, 23 Jan 2024 04:46:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD89D30E;
+	Tue, 23 Jan 2024 05:33:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705985220; cv=none; b=H6LbZbQQDZ/i/JEkSl1qh6UyPC69Kegm3o8J4W17h8SoezxuCfLpDWzbdfTS9sEgVq2PAKQFTBK43J4ggu34D1hz+tS5N4CRKUsewPmfyI0UxayEXD03L2cobn1jNUGZNob72BpGvytg5HVVBAxuKWVq1Z13N/uge882YZdoA7s=
+	t=1705988002; cv=none; b=VI183U4zrVnCA72UiovdDuDWzmnx48leIhNiljIrxGZumx6Tx/R6w7HvOvT2zrp1FafcXArRdsbQtnR1M5JHpBZGkP/jVfaJ/WU9BUp9xh1vQ2Pv504B/s2GA7HjOzZHshBQ3//UOnTBq40VtCt2O0DqCLhbb5jXdXgoTSUhdnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705985220; c=relaxed/simple;
-	bh=K85h1uIVAI2yS1PUV8EPwIVpnUVo14WfZ2GVpIaRSx4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aR+JBcil+9CWivNvuGc1HXst+dpgVyRkdCZ9s8L4MyKozCyqMfxdOyw1+9psBNSOv9caDG4LBS6tsg4MEQZ+CalcUWthfCH2zZl0tnXmrem+1EJ9Yg9gR709wiy+dzzFJPi8vwXM86RtrumNtGHgwR19/rLHX60YXSAF0uFx5rY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oagS0n7u; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5A3AC433F1;
-	Tue, 23 Jan 2024 04:46:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705985219;
-	bh=K85h1uIVAI2yS1PUV8EPwIVpnUVo14WfZ2GVpIaRSx4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=oagS0n7uvpLTWhnxg1wIncNlNwSerWJDfFgQt7HXv8+dICMLDLo6Duj4IeujOGwzR
-	 4XBH3KTN49MgfLM5sr8iIbLJkW0N7St3Xi2GGqiSS40hwxJ35+jUteEOcWc8XgXLam
-	 Y/G8xAZJOQM03FZbgzj3Uca84+VAZotwcawlM6OpG7HalgEhKKDpf7RLElPAdgf6/m
-	 1ZwQPmDypYO0CRGggkZl03K3Qkky7IPUII00wmBZ5ApPjXbeJA3F8j4y3D2FE+wjFT
-	 YOiZ77zOC6OBMaX0dZGLlzG2AVvZjM9JIPP0HI3ok1S+IOQI8bcXhUTZ9w1o/5ZI2m
-	 /2Wwox/ufHV/A==
-Date: Mon, 22 Jan 2024 22:46:56 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Abel Vesa <abel.vesa@linaro.org>, Alex Elder <elder@linaro.org>, 
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [RFC] arm64: dts: qcom: qrb5165-rb5: model the PMU of the QCA6391
-Message-ID: <u5kvv3iip552yb5ykc4t2arfry2t7f34hwmemd7z6qfw677fs6@ldlwoycyacrm>
-References: <20240122182158.69183-1-brgl@bgdev.pl>
+	s=arc-20240116; t=1705988002; c=relaxed/simple;
+	bh=KxubCZ0ZLxXuFu1K0HJc0P2pRv5s1BsQOdzl8aQk9fg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VPiLLpmCX1s/546aNFjabykU4fJdRk7THh/4xdFLjFKS3UDSX5+19iJy+HA5ll20dtloPB8YpzskF2CbgjXeMCsLBw3ojy8mierYP+1tbGR6q31wmpMQxHF+gK11bTUldoOffU7Ia1W7Jr9+1KYd3f6LXPdZy2mG4SyHpdktkvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=SMQ4hJ1u; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	MIME-Version:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=piuK4jmXPkNXZigQnP+7ADJheOUNtn+jvTH5r5ncPSo=; b=SMQ4hJ1uoGUrOnFC+E5O5ttRNl
+	8hSwuHfySZ1Iod50RkDBW6atpwhF+XtQLV0TeW1NXrXKb1exFGsBUDS67I5YtXcx1v4t8sAlGwmYi
+	xc8DiDP8mnlQL8zFodm+lUG/9okxgLJr0oL1pz2p/PC73vRlss1//UCqMGrFRiU1bna0wvBz6WrwE
+	Gp9tymiMolNG0Hn8Cuouatz2YO2PhN/1M92YslWjv8NVUQe6FjNoOIGi9uQ5joXtDlo/IL7+LOsOp
+	CAPP5KE0hBbnDhEuoij/sa4zhSXTwJbQlKM2xfpkk57Pw95/K2kPGL4CGZPotTSIEjjJhYFwzvxoX
+	Nf5Qc+6g==;
+Received: from [50.53.50.0] (helo=bombadil.infradead.org)
+	by bombadil.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
+	id 1rS9PT-00F9se-2M;
+	Tue, 23 Jan 2024 05:33:19 +0000
+From: Randy Dunlap <rdunlap@infradead.org>
+To: linux-kernel@vger.kernel.org
+Cc: Randy Dunlap <rdunlap@infradead.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	Jeff Johnson <quic_jjohnson@quicinc.com>
+Subject: [PATCH v2] soc: qcom: smp2p: fix all kernel-doc warnings
+Date: Mon, 22 Jan 2024 21:33:19 -0800
+Message-ID: <20240123053319.11196-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240122182158.69183-1-brgl@bgdev.pl>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jan 22, 2024 at 07:21:58PM +0100, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> I'm limiting the audience of this compared to the PCI power sequencing
-> series as I wanted to run the DT part by the maintainers before I commit
-> to a doomed effort.
-> 
+Use the documented notation for nested struct members.
+Add a Return: comment for qcom_smp2p_intr().
 
-With linux-arm-msm and deviectree in there, you have a fairly big
-limited audience... I think if anything, your proposal is doomed by the
-lack of a proper commit message describing what this is.
+These changes prevent these kernel-doc warnings:
 
-Below you'll find some questions/feedback based on our previous
-discussions on the topic, although I'm not able to understand the
-motivations behind what you propose - or even fully what it is that
-you're proposing.
+smp2p.c:78: warning: Excess struct member 'name' description in 'smp2p_smem_item'
+smp2p.c:78: warning: Excess struct member 'value' description in 'smp2p_smem_item'
+smp2p.c:280: warning: No description found for return value of 'qcom_smp2p_intr'
 
-> Here is the DT representation of the QCA6390's PMU with its inputs and
-> outputs. If I were to implement the pwrseq framework that would be able
-> to assign the relevant pwrseq data to the consumer based on the actual
-> regulators and not abstract bt-pwrseq or wlan-pwrseq properties - would
-> that fly with you?
-> 
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: Jeff Johnson <quic_jjohnson@quicinc.com>
+---
+v2: use Return: instead of Returns: for consistency with documentation
+    (Jeff Johnson)
 
-Why do you need to make up this intermediate/fake "PMU" thing? The
-regulators are reference counted already.
+ drivers/soc/qcom/smp2p.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-> We'd need to deprecate the existing BT bindings but unfortunately they
-> are already described as consuming the host PMIC regulators in bindings.
-> 
-
-I was under the impression that the supplies in the bluetooth binding
-are the supply pads of the chip. Where the power to those pads come from
-is not a property of the binding.
-
-So what you need to do is describe why the pads suddenly changed.
-
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 129 +++++++++++++++++++++--
->  arch/arm64/boot/dts/qcom/sm8250.dtsi     |  10 ++
->  2 files changed, 128 insertions(+), 11 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> index cd0db4f31d4a..c9b1600c57ef 100644
-> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> @@ -108,6 +108,88 @@ lt9611_3v3: lt9611-3v3 {
->  		regulator-always-on;
->  	};
->  
-> +	qca6390_pmu: pmu@0 {
-
-This is not a thing.
-
-> +		compatible = "qcom,qca6390-pmu";
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&bt_en_state>, <&wlan_en_state>;
-> +
-> +		vddaon-supply = <&vreg_s6a_0p95>;
-> +		vddpmu-supply = <&vreg_s2f_0p95>;
-> +		vddrfa1-supply = <&vreg_s2f_0p95>;
-> +		vddrfa2-supply = <&vreg_s8c_1p3>;
-> +		vddrfa3-supply = <&vreg_s5a_1p9>;
-> +		vddpcie1-supply = <&vreg_s8c_1p3>;
-> +		vddpcie2-supply = <&vreg_s5a_1p9>;
-> +		vddio-supply = <&vreg_s4a_1p8>;
-> +
-> +		bt-enable-gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
-> +		wifi-enable-gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
-> +		swctrl-gpios = <&tlmm 124 GPIO_ACTIVE_HIGH>;
-
-Are these collected here because we still have convinced ourselves that
-they need to be handled from a common place, or did you actually find
-some documentation you can point to that shows this is necessary?
-
-> +
-> +		regulators {
-> +			vreg_pmu_rfa_cmn: ldo0 {
-> +				regulator-name = "vreg_pmu_rfa_cmn";
-> +				regulator-min-microvolt = <760000>;
-> +				regulator-max-microvolt = <840000>;
-
-These limits should be applied to &vreg_s2f_0p95 (although I'm just
-guessing how this maps to the upstream supply...
-
-> +			};
-[..]
-> @@ -734,6 +816,24 @@ &pcie0_phy {
->  	vdda-pll-supply = <&vreg_l9a_1p2>;
->  };
->  
-> +&pcieport0 {
-> +	wifi@0 {
-> +		compatible = "pci17cb,1101";
-
-Does this compatible somehow bind to a entity that knows what to do with
-the regulators below?
-
-> +		reg = <0x10000 0x0 0x0 0x0 0x0>;
-> +
-> +		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-> +		vddaon-supply = <&vreg_pmu_aon_0p59>;
-> +		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-> +		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
-> +		vddbtcmx-supply = <&vreg_pmu_btcmx_0p85>;
-> +		vddrfa0-supply = <&vreg_pmu_rfa_0p8>;
-> +		vddrfa1-supply = <&vreg_pmu_rfa_1p2>;
-> +		vddrfa2-supply = <&vreg_pmu_rfa_1p7>;
-> +		vddpcie0-supply = <&vreg_pmu_pcie_0p9>;
-> +		vddpcie1-supply = <&vreg_pmu_pcie_1p8>;
-> +	};
-> +};
-
-Regards,
-Bjorn
+diff -- a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
+--- a/drivers/soc/qcom/smp2p.c
++++ b/drivers/soc/qcom/smp2p.c
+@@ -58,8 +58,8 @@
+  * @valid_entries:	number of allocated entries
+  * @flags:
+  * @entries:		individual communication entries
+- *     @name:		name of the entry
+- *     @value:		content of the entry
++ * @entries.name:	name of the entry
++ * @entries.value:	content of the entry
+  */
+ struct smp2p_smem_item {
+ 	u32 magic;
+@@ -275,6 +275,8 @@ static void qcom_smp2p_notify_in(struct
+  *
+  * Handle notifications from the remote side to handle newly allocated entries
+  * or any changes to the state bits of existing entries.
++ *
++ * Return: %IRQ_HANDLED
+  */
+ static irqreturn_t qcom_smp2p_intr(int irq, void *data)
+ {
 
