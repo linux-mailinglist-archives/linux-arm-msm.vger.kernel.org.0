@@ -1,92 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-7978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7979-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E1C0839273
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 16:18:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 36625839342
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 16:41:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BD8B41F24656
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 15:18:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A15021F21744
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 15:41:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 809A05FEE5;
-	Tue, 23 Jan 2024 15:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80DF85FEF6;
+	Tue, 23 Jan 2024 15:34:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Kau2+w4a"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EC4y9jAb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB855FDBA
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 15:18:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5722F651A0;
+	Tue, 23 Jan 2024 15:34:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706023111; cv=none; b=BTv+5fkaQXq6xRKw9pgix5Dj23UXJvRv6+pya+6F+8BuEMo175rga6AyywZU0u2LY7co7g3ARcsrBUVxW5g+j67zYEBGd++x5O9PsyRMuj0er4+Z3BQc/nefl6fTztZD+XxTBfwl4qJI53sM0A1rLU1VmAU9+GDyk9hpyUjak50=
+	t=1706024098; cv=none; b=eKgsyFeX8OgAp8FsSofu0vUOGHAyiOl/JVmb9SYZ6bpnl2tvuZiGq6buHUJypn2vfBnWuNvTiruVFXmoM9gjH1PgbuIWjer4cfCGWQmooJqcBk1lGNxvWIEc7zCLZ+AQI/bcK7Obqo/zOaKGUKlbRy23W5jufZNsjMcXD+D3dDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706023111; c=relaxed/simple;
-	bh=crUOVrMbeEO4wnicc5iui9hOeN4LYMI9Jn8rCfHnCRM=;
+	s=arc-20240116; t=1706024098; c=relaxed/simple;
+	bh=VbPelRCCDKpgv5pSny6yARVrK5k1xRKALab50cBgQ8s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dJRiKM3CxtzEuNu5RByR+2eyvGRaPLmS5jk9/Y1t0xUzcXQdBe9bJAhK2qTFh/t8Z0JG+A0/yKv1Z9WKDLF0RKFbbLJ6EhTnX/FBETVsrpXVKFYqkazvhZaO6LvGpmY61RI6aFT8ABTsWx00zZho6EChtIz4AHhr8iL7SCsYtQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Kau2+w4a; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1706023108;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Cg9rVYslPOYKyRxMw9IkZlsZENR/nLG/k/wm9SQRp04=;
-	b=Kau2+w4at34mAMTGBm61nyOhUxyEURCrVIl5uu63PuxfvvOt30Pu9kplsI1/dToRcuXiIz
-	I83Pjn6c/9kOJUSniV9GbmCqtjeObVQLcwz8pcA5C9SiJ6HLwYAS5B62kp4+6NgK3Eq8kg
-	Rk1ImQINlUpkCm9g487Q/M0fjbg84xw=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-356-xp2CL2V3PhuSWidZJScIwQ-1; Tue, 23 Jan 2024 10:18:24 -0500
-X-MC-Unique: xp2CL2V3PhuSWidZJScIwQ-1
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-68058b0112cso96872056d6.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 07:18:24 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706023104; x=1706627904;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Cg9rVYslPOYKyRxMw9IkZlsZENR/nLG/k/wm9SQRp04=;
-        b=qq3suxXE6Zkr7porCaspCNF4pcwwTLtz5i8GAog8avBXNMGTNfOJe/q7C5+vmCLx8u
-         kyrr1WILEgcT4IvIC9+G35Z4zy4FcUc4S09pL3Wj8xZv37oFhbhbMzYuxBFndDw04G8Q
-         3EhtfzYvSnDRtYsEHssKK81VmCSMKj7Pk9tUAS+sisklNRlkRo3xyHeD8yKoDtBdQ7hS
-         auilL4mFtK+/9r2GAP2M6jeTrMWgmg3UbgSR5YaAxJ50mg3fQkNVgyxcEUxqZ9DF9o+A
-         kthkbjOGxa2CfUbP+TwHXtBhC2jM1Oc6cNBRZpMgqehagGPVHADbbPcraDcUYDpzxphe
-         Ov4w==
-X-Gm-Message-State: AOJu0YwRSkhotVRRjPfvHeUO6beMWLwhUWoyQPMr1sThXqdRVBEFtX7T
-	FQf7hWpGVMV+/QONaYomyvTiAwFa/EXUefLuewmRAjTc9NKVb7PTiHP7VhIyhd95pOGseneGMVu
-	PVYiDwgyZRnGCKdqz7yDDsfpxFH1xrgw9y34ujFRffmHnd4kQiZNJ7K7QTW9b0qQ=
-X-Received: by 2002:a05:622a:34b:b0:42a:35bf:40f2 with SMTP id r11-20020a05622a034b00b0042a35bf40f2mr999992qtw.58.1706023104373;
-        Tue, 23 Jan 2024 07:18:24 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF7iVj9B700sdyhUCZJUNpfTHatf50PZK1/4/aA5N7R1oR+82VHoBiI7HHMIcCXwDPVqd7kSg==
-X-Received: by 2002:a05:622a:34b:b0:42a:35bf:40f2 with SMTP id r11-20020a05622a034b00b0042a35bf40f2mr999977qtw.58.1706023104039;
-        Tue, 23 Jan 2024 07:18:24 -0800 (PST)
-Received: from localhost (pool-71-184-142-128.bstnma.fios.verizon.net. [71.184.142.128])
-        by smtp.gmail.com with ESMTPSA id s13-20020ac8758d000000b00423e9316931sm3522132qtq.83.2024.01.23.07.18.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jan 2024 07:18:23 -0800 (PST)
-Date: Tue, 23 Jan 2024 10:18:22 -0500
-From: Eric Chanudet <echanude@redhat.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Andrew Halaney <ahalaney@redhat.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	"James E.J. Bottomley" <jejb@linux.ibm.com>, "Martin K. Petersen" <martin.petersen@oracle.com>, 
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: Re: Re: Re: [PATCH] scsi: ufs: qcom: avoid re-init quirk when
- gears match
-Message-ID: <hnig5l4y3yc3h4khjgpkdbooop2ctah4pzplumjdzxzdxs3rqu@vsrubpdl26bp>
-References: <20240119185537.3091366-11-echanude@redhat.com>
- <3xnedre2d32rkad6n2ln4rrah7sgg6epxnzsdm54uab3zrutnz@fww7wb5mvykj>
- <otgj6524k6wiy27depeo7ckopmrr2v3xdnaoph4c5djjohnpmg@f7hyetygcyyr>
- <graeyylgohsukni35djpbxibnz5ya7laqvsydharkzcktv2iwz@knbu5uq5fa4x>
- <20240123143615.GD19029@thinkpad>
+	 Content-Type:Content-Disposition:In-Reply-To; b=tqjXaF06WlauXaW2bKt0t+66WSHD6lHiB/RxpyoowCNgI6CW/69bcVUF33HuFnSHey22ygb/lhL6J4Ny+ruYdDzKav9x69c0qVkm/UI86wVi80gtRPIjgEAGo5RW7GxCVAMZ+Z+4pwLH5l8T4rU5RFGehWyIBctgcR0hPyt3aXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EC4y9jAb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAFCEC433F1;
+	Tue, 23 Jan 2024 15:34:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706024097;
+	bh=VbPelRCCDKpgv5pSny6yARVrK5k1xRKALab50cBgQ8s=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=EC4y9jAbLuWFJtma4SAgnPX7BwLaBtiTahC6rRRtRr4WCjKEd4SojjhFtCkejh6ih
+	 hWz9FYqLI+hngoPkwT/OL0S4PGIJo9Q2kk1JZCem0qbP7zyV3aS/Lz0Yk3sL1RHcXR
+	 NzpOaETq9A7pcsfXaKVAD1EpEl3SNG+W22l+kIamnEl5WVNsRxUhXbn/0eqqeSDWzR
+	 lid0cALuTpEwNmc7jGT/MvzintD+Ti+cmY8HhGMSrvaIanVSQM8Ifs5xyiu3gyxs13
+	 FFjlAJ5M2/i0Fg+Cg2gTO4pUvjWs0X9pRlwUgmZtKOId5xiRIUft1uqaN7jLkXOuvM
+	 QEnJ7kM2sCXxg==
+Date: Tue, 23 Jan 2024 09:34:53 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Abel Vesa <abel.vesa@linaro.org>, Alex Elder <elder@linaro.org>, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: Re: [RFC] arm64: dts: qcom: qrb5165-rb5: model the PMU of the
+ QCA6391
+Message-ID: <2d36zymagbran5m7ggcmy2zmtpt7xpefgys7rebbwydz5bpux2@svlv75ctdow5>
+References: <20240122182158.69183-1-brgl@bgdev.pl>
+ <u5kvv3iip552yb5ykc4t2arfry2t7f34hwmemd7z6qfw677fs6@ldlwoycyacrm>
+ <CAMRc=MeT08vUUqJmtVCP=kSUrbsoKFHP6gHgJPtqztC593oGpQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -96,67 +65,228 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240123143615.GD19029@thinkpad>
+In-Reply-To: <CAMRc=MeT08vUUqJmtVCP=kSUrbsoKFHP6gHgJPtqztC593oGpQ@mail.gmail.com>
 
-On Tue, Jan 23, 2024 at 08:06:15PM +0530, Manivannan Sadhasivam wrote:
-> On Fri, Jan 19, 2024 at 04:33:10PM -0500, Eric Chanudet wrote:
-> > On Fri, Jan 19, 2024 at 02:33:32PM -0600, Andrew Halaney wrote:
-> > > On Fri, Jan 19, 2024 at 02:07:15PM -0600, Andrew Halaney wrote:
-> > > > On Fri, Jan 19, 2024 at 01:55:47PM -0500, Eric Chanudet wrote:
-> > > > > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> > > > > index 39eef470f8fa..f9f161340e78 100644
-> > > > > --- a/drivers/ufs/host/ufs-qcom.c
-> > > > > +++ b/drivers/ufs/host/ufs-qcom.c
-> > > > > @@ -738,8 +738,12 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
-> > > > >  		 * the second init can program the optimal PHY settings. This allows one to start
-> > > > >  		 * the first init with either the minimum or the maximum support gear.
-> > > > >  		 */
-> > > > > -		if (hba->ufshcd_state == UFSHCD_STATE_RESET)
-> > > > > +		if (hba->ufshcd_state == UFSHCD_STATE_RESET) {
-> > > > > +			if (host->hw_ver.major >= 0x4 &&
-> > > > 
-> > > > Is this check really necessary?
-> > 
-> > I *think* so.
-> > 
-> > For example, if hw_ver < 4, ufs_qcom_set_phy_gear() has a comment saying
-> > "power up the PHY using minimum supported gear (UFS_HS_G2). Switching to
-> > max gear will be performed during reinit if supported."
-> > 
-> > > > 
-> > > > The initial phy_gear state is something like this (my phrasing of
-> > > > ufs_qcom_set_phy_gear()):
-> > > > 
-> > > >     if hw_ver < 4:
-> > > >         # Comments about powering up with minimum gear (with no
-> > > >         # reasoning in the comment afaict), and mentions switching
-> > > >         # to higher gear in reinit quirk. This is opposite of the later
-> > > >         # versions which start at the max and scale down
-> > > >         phy_gear = UFS_HS_G2
-> > 
-> > IIUC, the device would not be able to negotiate a gear higher than the
-> > minimum set for the phy_gear on initialization.
-> > 
-> > ufshcd_init_host_params() and ufs_qcom_get_hs_gear() both set the
-> > controller <v4 host_params to G3. So if the device is HS capable, the
-> > re-init would set G3, instead of the G2 selected by
-> > ufs_qcom_set_phy_gear().
-> > 
+On Tue, Jan 23, 2024 at 10:22:33AM +0100, Bartosz Golaszewski wrote:
+> On Tue, Jan 23, 2024 at 5:47 AM Bjorn Andersson <andersson@kernel.org> wrote:
+> >
+> > On Mon, Jan 22, 2024 at 07:21:58PM +0100, Bartosz Golaszewski wrote:
+> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > >
+> > > I'm limiting the audience of this compared to the PCI power sequencing
+> > > series as I wanted to run the DT part by the maintainers before I commit
+> > > to a doomed effort.
+> > >
+> >
+> > With linux-arm-msm and deviectree in there, you have a fairly big
+> > limited audience... I think if anything, your proposal is doomed by the
+> > lack of a proper commit message describing what this is.
+> >
 > 
-> REINIT quirk is applicable for controllers starting from v4 only, because legacy
-> controllers don't need separate PHY init sequences. So you can get rid of that
-> check.
-
-My bad, I overlooked the check in ufs_qcom_advertise_quirks().
-Thank you, I'll send a v2 soon.
-
-> - Mani
+> By limiting I meant compared to the PCI power sequencing series but
+> you're right, I should have linked that series in here. In any case -
+> this is not intended for upstream, I literally wanted input on whether
+> this representation is correct before I send a PoC of the pwrseq
+> subsystem using it.
 > 
-> -- 
-> மணிவண்ணன் சதாசிவம்
+> > Below you'll find some questions/feedback based on our previous
+> > discussions on the topic, although I'm not able to understand the
+> > motivations behind what you propose - or even fully what it is that
+> > you're proposing.
+> >
+> > > Here is the DT representation of the QCA6390's PMU with its inputs and
+> > > outputs. If I were to implement the pwrseq framework that would be able
+> > > to assign the relevant pwrseq data to the consumer based on the actual
+> > > regulators and not abstract bt-pwrseq or wlan-pwrseq properties - would
+> > > that fly with you?
+> > >
+> >
+> > Why do you need to make up this intermediate/fake "PMU" thing? The
+> > regulators are reference counted already.
+> >
+> 
+> Dmitry insists that for QCA6490 we *do* need to implement a proper
+> power sequencing with delays between enabling WLAN and BT GPIOs.
+> 
+> See: https://lore.kernel.org/netdev/CAA8EJpqyK=pkjEofWV595tp29vjkCeWKYr-KOJh_hBiBbkVBew@mail.gmail.com/
 > 
 
--- 
-Eric Chanudet
+I had not seen that comment before, would have been excellent to include
+in your "problem description".
 
+> Even though the regulators are reference counted, this is not enough.
+> Dmitry tried to implement a power sequencing framework some time ago
+> but the main complaint was that explicit properties like bt-pwrseq are
+> not a right fit for DT as they don't represent hardware. We still need
+> to centralize the control over the shared resources though but what I
+> want to propose is doing that with a more realistic representation of
+> HW and just reusing phandle connections between DT nodes to retrieve
+> the correct pwrseq struct in the driver. But this is implementation
+> detail and before I want to clear the HW representation with DT
+> maintainers.
+> 
+
+In my view Dmitry had at least one proposal, that was rejected, where he
+represented the qca6390 package as a thing in DeviceTree.
+
+> Dmitry is also correct in pointing out that It's also simply an
+> incorrect representation of what is on the board as the PMU is a
+> discrete module, has its inputs and outputs, even though they're
+> inside the package.
+> 
+
+I'm not sure what you're trying to say here. There's no "PMU module" on
+the board, it's a block within the QCA6390. But perhaps that's what
+you're also saying?
+
+> > > We'd need to deprecate the existing BT bindings but unfortunately they
+> > > are already described as consuming the host PMIC regulators in bindings.
+> > >
+> >
+> > I was under the impression that the supplies in the bluetooth binding
+> > are the supply pads of the chip. Where the power to those pads come from
+> > is not a property of the binding.
+> >
+> 
+> We already model the WLAN and BT modules as separate elements even
+> though they're in the same package. For consistency we should model
+> the PMU module too.
+> 
+
+So what you're proposing is that the PMU is the consumer of the external
+supplies, and it in turn provides a set of internal power-rails which
+should be consumed by the WiFi and BT modules.
+
+That's sounds like a plausible way to get around the problem that we
+don't want to represent a fake device in DeviceTree.
+
+That still doesn't answer me why bluetooth suddenly now has an input
+named "vddpcie0", can you please point me to the documentation of the
+internal power routing in the QCA6390 that confirms this?
+
+> And for the record: I would love to stick to what we have now as it
+> would make my PCI power sequencing series much easier to get upstream
+> but it will result in problems later on, I have to give it to Dmitry.
+> 
+> > So what you need to do is describe why the pads suddenly changed.
+> >
+> > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 129 +++++++++++++++++++++--
+> > >  arch/arm64/boot/dts/qcom/sm8250.dtsi     |  10 ++
+> > >  2 files changed, 128 insertions(+), 11 deletions(-)
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> > > index cd0db4f31d4a..c9b1600c57ef 100644
+> > > --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> > > +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> > > @@ -108,6 +108,88 @@ lt9611_3v3: lt9611-3v3 {
+> > >               regulator-always-on;
+> > >       };
+> > >
+> > > +     qca6390_pmu: pmu@0 {
+> >
+> > This is not a thing.
+> >
+> 
+> What isn't?
+> 
+
+My bad. You're right, there is a block in the corner of the QCA6390
+called "PMU".
+
+> > > +             compatible = "qcom,qca6390-pmu";
+> > > +
+> > > +             pinctrl-names = "default";
+> > > +             pinctrl-0 = <&bt_en_state>, <&wlan_en_state>;
+> > > +
+> > > +             vddaon-supply = <&vreg_s6a_0p95>;
+> > > +             vddpmu-supply = <&vreg_s2f_0p95>;
+> > > +             vddrfa1-supply = <&vreg_s2f_0p95>;
+> > > +             vddrfa2-supply = <&vreg_s8c_1p3>;
+> > > +             vddrfa3-supply = <&vreg_s5a_1p9>;
+> > > +             vddpcie1-supply = <&vreg_s8c_1p3>;
+> > > +             vddpcie2-supply = <&vreg_s5a_1p9>;
+> > > +             vddio-supply = <&vreg_s4a_1p8>;
+> > > +
+> > > +             bt-enable-gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
+> > > +             wifi-enable-gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
+> > > +             swctrl-gpios = <&tlmm 124 GPIO_ACTIVE_HIGH>;
+> >
+> > Are these collected here because we still have convinced ourselves that
+> > they need to be handled from a common place, or did you actually find
+> > some documentation you can point to that shows this is necessary?
+> >
+> 
+> So the datasheet is not clear on that but it says: "bluetooth enable
+> signal from host" and since the regulators above are also "from host"
+> I figured the best fit is here.
+> 
+
+Per Dmitry's argument that you linked above, bt-enable and wifi-enable
+should be the only things that you need to synchronize.
+
+> > > +
+> > > +             regulators {
+> > > +                     vreg_pmu_rfa_cmn: ldo0 {
+> > > +                             regulator-name = "vreg_pmu_rfa_cmn";
+> > > +                             regulator-min-microvolt = <760000>;
+> > > +                             regulator-max-microvolt = <840000>;
+> >
+> > These limits should be applied to &vreg_s2f_0p95 (although I'm just
+> > guessing how this maps to the upstream supply...
+> 
+> I'm not following. Why?
+> 
+
+Are you saying that the PMU contains a set of LDOs or similar that
+alter the voltage from what's provided on the external pads?
+
+> >
+> > > +                     };
+> > [..]
+> > > @@ -734,6 +816,24 @@ &pcie0_phy {
+> > >       vdda-pll-supply = <&vreg_l9a_1p2>;
+> > >  };
+> > >
+> > > +&pcieport0 {
+> > > +     wifi@0 {
+> > > +             compatible = "pci17cb,1101";
+> >
+> > Does this compatible somehow bind to a entity that knows what to do with
+> > the regulators below?
+> >
+> 
+> Ok, so what does that matter? This is device-tree. What linux does
+> behind the scenes is irrelevant - what is important is that there is
+> an ATH11K module here as represented by this PCI vendor/model codes
+> and that it's supplied by these regulators.
+> 
+
+I'm just making guesses about the design and how this fits into previous
+discussions on the subject of PCI power sequencing, because you didn't
+tell me what any of the things in this patch are.
+
+Regards,
+Bjorn
+
+> Bart
+> 
+> > > +             reg = <0x10000 0x0 0x0 0x0 0x0>;
+> > > +
+> > > +             vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
+> > > +             vddaon-supply = <&vreg_pmu_aon_0p59>;
+> > > +             vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
+> > > +             vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
+> > > +             vddbtcmx-supply = <&vreg_pmu_btcmx_0p85>;
+> > > +             vddrfa0-supply = <&vreg_pmu_rfa_0p8>;
+> > > +             vddrfa1-supply = <&vreg_pmu_rfa_1p2>;
+> > > +             vddrfa2-supply = <&vreg_pmu_rfa_1p7>;
+> > > +             vddpcie0-supply = <&vreg_pmu_pcie_0p9>;
+> > > +             vddpcie1-supply = <&vreg_pmu_pcie_1p8>;
+> > > +     };
+> > > +};
+> >
+> > Regards,
+> > Bjorn
 
