@@ -1,117 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-7886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B1DD583874F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 07:28:28 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67F668387A5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 07:43:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 91CD01C22A13
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 06:28:27 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EB704B20C4C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 06:43:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 850CD5025F;
-	Tue, 23 Jan 2024 06:28:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B311524C1;
+	Tue, 23 Jan 2024 06:43:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WoG35ga/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XlcoJ8v0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B3650258
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 06:28:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E17D51C5F;
+	Tue, 23 Jan 2024 06:43:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705991302; cv=none; b=DG8ban4vA2hZJJHSJFTT2kHfuVABEDf7NALtB47af/BYjZT44w8QFuZ7FrGz6VBWC1wIF4k0eB96YkpoOp7gdIuGdw+1AkumJskCE/TwHroeOBf1EmxZWOm+CArvsD3KkSGmWq0zGF7t26RJfqmvIKFRLv4MwI9XbgtT2GAJxag=
+	t=1705992199; cv=none; b=pqzjB9LS1M26MXkM9je1mcaxCo1TunYK2VlItsO7veblwpnUon5t8aYhEISXzX8ehCbMzzHSdtXlK6g09oFNQzkMQlERGuqenlaeQv/8jlyl4YJsSLu+pBX8/VmEG6+YhKGPJpVF6Y/mgZ0YuzHfHe6heY+DgEBf0H5Hcbkrud8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705991302; c=relaxed/simple;
-	bh=mvGSN5uOQdpLSxdblzS+Kyroku8p1YkV6i+4w8z9/8c=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=MvV1Ngu3p/PiUDX2yl8nnAeF/oifz6b2/ih3nFFhgEha5Oio6Mlf3KIMyU2BOgqnbXlG01jJgMjRu+FgVmTUG7Iuu9dL0T+kCoTokt1welCAoDY6aQBureSjOx+AGhBKO1wxlqSnriCMiAkboIorEXBLfB9+fTlaZi1KpLNIbas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WoG35ga/; arc=none smtp.client-ip=209.85.167.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-3bd9030d68fso2446364b6e.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jan 2024 22:28:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1705991300; x=1706596100; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=li3BvdPJaGd7zO4rcHjt0R+2G0nMHzQJfJYUns+g7hE=;
-        b=WoG35ga/qdIatirgqbBOIATBCGYRcdPYgWjbBoY3L7bsJxcYGCs8Mm11hX2zfumBQD
-         1atZoeaqwEGMoQWa7CHdjSLEFJKE0Z+jrF8Gc2CqFGUx8YUW9U6w5nZYl/Gbb55Pqv89
-         YFbocq5Hm3tp4jVYrrhrweB3M3m7b5AAwamro5IyISh9qF9TcGAOwqUZCsCpePtZDn/N
-         62vv9zcl8/E0Bp+d7n1aySeMHsl3+PS/Z0gfRfmpL4FoRkicm3DakbzA6nAFPLt+MxCr
-         GrrH7KTJEkJnzIuGP2FRz8WCfpwM/kuiJbBSwGO7PcaaMgXdBZCF9AAEZtXZtw+bmi1g
-         16Hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705991300; x=1706596100;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=li3BvdPJaGd7zO4rcHjt0R+2G0nMHzQJfJYUns+g7hE=;
-        b=Mdnrs/8yUadJD3RiHaMvZE1uIq7BlyhK3VmIcc/q4kKEuJzkGdDl6h8/CZ4zB7bzYh
-         tTLb8O0CaLrlywu/okhOvELvooYRpA2dy41MwUrLykS3DQ09N365yjUyZvd2zz2qv3tp
-         ic/5wvk1KymZbXnmfvH1RVF4086kDnqlehdKveeC6Iov3xbpHp1zhNyHlvJZlXRwRvME
-         04iv69LQabv83o1t8tv7uM63MRhM6qwNJj4hbb8kjuycVQUSASpGuqIuWig90X7TcgSk
-         aQPWSo2CKEroyhmLUq4vg05OjyjjE8bCneGzotcguZ6IK854jyZc2VtBlwewGEAAZwcu
-         E+iQ==
-X-Gm-Message-State: AOJu0YxGlWFdc0nrGIkvVDqXm+NDbd8dSo5uBGAvqktJ2ftQBiURNYsY
-	+a7/wsoD2EnzRsL4ajex1h2j6P2nXapWvBQfgks2VXV8DiSRr6Dx1ksx43aZcaA=
-X-Google-Smtp-Source: AGHT+IEE6NYJUUZo1MHOAb9vyXoaJsRCOqjIqYlRHXQQUQ5WgJbzwERpTVKmo6uPWT0uPwMEGd5KWA==
-X-Received: by 2002:a05:6808:1991:b0:3bd:bcd2:9e2d with SMTP id bj17-20020a056808199100b003bdbcd29e2dmr2252929oib.33.1705991300075;
-        Mon, 22 Jan 2024 22:28:20 -0800 (PST)
-Received: from x-wing.lan ([106.51.165.154])
-        by smtp.gmail.com with ESMTPSA id r3-20020aa79883000000b006da5e1638b6sm11062657pfl.19.2024.01.22.22.28.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Jan 2024 22:28:19 -0800 (PST)
-From: Amit Pundir <amit.pundir@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: [PATCH] clk: qcom: gcc-sdm845: Add soft dependency on rpmhpd
-Date: Tue, 23 Jan 2024 11:58:14 +0530
-Message-Id: <20240123062814.2555649-1-amit.pundir@linaro.org>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1705992199; c=relaxed/simple;
+	bh=HbkqSj51Sa9IVM8rrG6Dn3HDORo0yZkDPCYmR5xjh70=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=q+OeYK7jg4lfcG9dY7VWpDYxOyJeaRza4EdfHvu4lWoVTokWm+dKL2A87/vZykQmPu4ulVwxcvhNafkySp/EphW3Xqhg04FFIcN/1cG418uWJ9R1MKOm60YW+RtpJWr2T4XAyfX+d5sd7UYPGZe7YVIxurOYyXTCHBf5nS880hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XlcoJ8v0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id B2F9DC433F1;
+	Tue, 23 Jan 2024 06:43:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1705992198;
+	bh=HbkqSj51Sa9IVM8rrG6Dn3HDORo0yZkDPCYmR5xjh70=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=XlcoJ8v0nu8rC+uHVB5h0kPyNxuobFe8VQ5uLmBbp3Vk675yMEVCAq2fZnz567Joa
+	 oX57JdBbRJTuuOH73LI7nkm2OO7OGBH0JAhGrh6ITurrnpy2koeCODl8MPY4sCEQAe
+	 8R5RxA9118ngGfe7IzXCKNwN6TLAv8cWBJEBS8EzOqQtRCqIbw4cODWU92IIkabYQi
+	 eaQUAbxdOVN46JgncZMBN4Ei0P7cn05hj8l36mvl2F8ARlkgTjvA6Ab6yu4AYlW5Bo
+	 G25Udk+lF+7kDovEZ63ttvOCH3Xe8Md4Y38/x8CsFnv4tSCYenf2zi72xRNTYa/1+D
+	 kIl3deicFaadA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D69EC47258;
+	Tue, 23 Jan 2024 06:43:18 +0000 (UTC)
+From: Fenglin Wu via B4 Relay <devnull+quic_fenglinw.quicinc.com@kernel.org>
+Subject: [PATCH 0/2] Add PM8010 regulators for sm8650 boards.
+Date: Tue, 23 Jan 2024 14:42:22 +0800
+Message-Id: <20240123-sm8650_pm8010_support-v1-0-dec2224d5740@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAM5fr2UC/x3MQQqEMAxA0atI1hbSOhnFq4iItNHJQi2NiiDe3
+ TLLt/j/BuUkrNAWNyQ+RWVbM2xZgP+N68xGQjY4dB+0rjK6NF/CIS4NWhz0iHFLu6kJPdJIPlC
+ A3MbEk1z/b9c/zwuY8LXjZwAAAA==
+To: kernel@quicinc.com, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, quic_collinsd@quicinc.com, 
+ Fenglin Wu <quic_fenglinw@quicinc.com>
+X-Mailer: b4 0.13-dev-83828
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1705992197; l=642;
+ i=quic_fenglinw@quicinc.com; s=20230725; h=from:subject:message-id;
+ bh=HbkqSj51Sa9IVM8rrG6Dn3HDORo0yZkDPCYmR5xjh70=;
+ b=FAllM/If3g3hJGSiylVVhhgt1gWcFDF1jpAg5NjShOSW0/QP04BOrFTOagJ+zTaTG+0FVqUoQ
+ SGV7RWOr5kiATAwgy7btqMSYHKQNWmRwIBBfG4kSu094FjMvKvIgGvL
+X-Developer-Key: i=quic_fenglinw@quicinc.com; a=ed25519;
+ pk=hleIDz3Unk1zeiwwOnZUjoQVMMelRancDFXg927lNjI=
+X-Endpoint-Received:
+ by B4 Relay for quic_fenglinw@quicinc.com/20230725 with auth_id=68
+X-Original-From: Fenglin Wu <quic_fenglinw@quicinc.com>
+Reply-To: <quic_fenglinw@quicinc.com>
 
-With the addition of RPMh power domain to the GCC node in
-device tree, we noticed a significant delay in getting the
-UFS driver probed on AOSP which futher led to mount failures
-because Android do not support rootwait. So adding a soft
-dependency on RPMh power domain which informs modprobe to
-load rpmhpd module before gcc-sdm845.
+Add PM8010 RPMh regulators for sm8650-mtp and sm8650-qrd boards.
 
-Cc: <stable@vger.kernel.org> # v5.4+
-Fixes: 4b6ea15c0a11 ("arm64: dts: qcom: sdm845: Add missing RPMh power domain to GCC")
-Suggested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
 ---
- drivers/clk/qcom/gcc-sdm845.c | 1 +
- 1 file changed, 1 insertion(+)
+Fenglin Wu (2):
+      arm64: dts: qcom: sm8650-mtp: add PM8010 regulators
+      arm64: dts: qcom: sm8650-qrd: add PM8010 regulators
 
-diff --git a/drivers/clk/qcom/gcc-sdm845.c b/drivers/clk/qcom/gcc-sdm845.c
-index 725cd52d2398..ea4c3bf4fb9b 100644
---- a/drivers/clk/qcom/gcc-sdm845.c
-+++ b/drivers/clk/qcom/gcc-sdm845.c
-@@ -4037,3 +4037,4 @@ module_exit(gcc_sdm845_exit);
- MODULE_DESCRIPTION("QTI GCC SDM845 Driver");
- MODULE_LICENSE("GPL v2");
- MODULE_ALIAS("platform:gcc-sdm845");
-+MODULE_SOFTDEP("pre: rpmhpd");
+ arch/arm64/boot/dts/qcom/sm8650-mtp.dts | 118 ++++++++++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8650-qrd.dts | 118 ++++++++++++++++++++++++++++++++
+ 2 files changed, 236 insertions(+)
+---
+base-commit: 6613476e225e090cc9aad49be7fa504e290dd33d
+change-id: 20240123-sm8650_pm8010_support-750c05a5cd5d
+
+Best regards,
 -- 
-2.25.1
+Fenglin Wu <quic_fenglinw@quicinc.com>
 
 
