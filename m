@@ -1,180 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-7974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F3E4839231
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 16:11:11 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A058A839238
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 16:11:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A45471C20BBA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 15:11:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EB978B28F44
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 15:11:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52C50605AF;
-	Tue, 23 Jan 2024 15:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B0535FDD6;
+	Tue, 23 Jan 2024 15:11:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wUTA0JaM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VXINKWz/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A05605A1
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 15:09:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A2E5FDC1
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 15:11:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706022578; cv=none; b=uc/XZ2+mimYksxwoOsk7Ctg4piYEoJNZlwIMLf5Y6IcUiXQnur5Rx3qwn8pTCrUFQy995sD/geVVRyse5KSNjBepzwcGxENJv4GTeB42/bjoG1ozvAcgheufXnWDDr2elHlbSmX6G9LncMwLAvi3ZkfgYJIVbkAxnCud7h+AjUE=
+	t=1706022672; cv=none; b=A/YMIWH99vEJO5oeDL1J/DMSyFs0VcojjDPeJLuQ/PR05QBNwQQGpVUc1hFXrr3cEGwlsfjkk0xhlWicUhihQqbIrodzG5gilffCyza6qJTtaWCj+E1cj69ChriAKutWO+2N6YqvvBEEkQn7ck65yYb0bbxFaLb5IP3x8BP/SvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706022578; c=relaxed/simple;
-	bh=FC12r15c8qoJ56xscNoWLmRKP8OG5vLxG6qsu5FpU0A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=A0gD1gudsvR6Dog/tx3wbrSsTchfV5lhcUrsn71rSDwu6v4Rl+TK5mnXtKX96jbxstOn57tadUMhQ/K/pnjE4uie+M6rPxXbT1fXovAqdphuPtk6Gxl2YhLUOScQ7gRWmerbz3//nrmTCIpYJ0rTwgLVi/08Pu5A00Xcu6p/YU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wUTA0JaM; arc=none smtp.client-ip=209.85.221.43
+	s=arc-20240116; t=1706022672; c=relaxed/simple;
+	bh=PPm9boZjwBn6Xzyt0g83ZrbCoWDaQwNE36cwpign/kQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Wf3li3wxSMTeOyaAiY4XA8W1ja3NE4/pQ8bY1p0DjExrKkuIYU52UW+ecUFp3aew19YZ+Z6g/zGhODwicS1WvxbVGt+nBbzKPLQ4BTFmprsEJW5icnUMoCGK8SmF79zv7NtoGciIiggqMvYtNU24p6XH6O6TEqTrCRjPN3elAhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VXINKWz/; arc=none smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3367a304091so4787429f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 07:09:36 -0800 (PST)
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-6dd7b525cd6so478214b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 07:11:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706022575; x=1706627375; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=E0YK6sTszqN6wf/65nVYY49AEDvllrXDOsB5a2JLKho=;
-        b=wUTA0JaM1WU8KGDDtpJ/3rswlgtqMdU/OyuAcNriP+tSe3WLyWmKhFaL13SoKiKgxf
-         KMsALtVmnFZe82AuS2sF348cH6IITxeGLmBHXXAfAd9pFEFSvv7OeMyAI40+dVyqhbZa
-         ycL/VuqjYCT35h3YolCkMrr6t4IJqA6INb/X6CJzQwaGoMplOydaSs2fS5I+IqHDl4Vy
-         bdnwcRJ0cb6SkVyIPYaOycsBVCSWTHh3RwBhoylU8xAZTVHoPCd9uEGSl9Gb0ndCBUrm
-         BEGThT48vSthzKSQErMnv2oo0v5Et+FthaUSR3vNFqnyEgawXkhmeAkWcHv/0Ugeq7wf
-         /x/A==
+        d=linaro.org; s=google; t=1706022670; x=1706627470; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=4TDMZtp4Rk/MyqeG91tpztAQaCoeOy1ImodF5oM5/C8=;
+        b=VXINKWz/RqJyQsbef7Qhp0b/TaaiZaU9h32F8bwFGfE2hx378WqsEsgdYNZg5X3LJO
+         n9ttFF0Bf9X9lBSRyO29FUcTtL9X6l9XA1MR2KMnPFta9wCESIMkOGyX9HlovJNP8S2I
+         fKaRsVbWuF/e5WPKhJL6pyM9XhrmwzRM8n2iWBhEbuX7oDubPOSpqPtvmMDODcYqtn4H
+         KfkK8imYEsvwpj7qAR97meraLk2jPWpzaGE6QUI5pBE9eaObSCU+7UCNkV46+e+EaF87
+         xXKGVYnyPn1m1mzu1GP7j3KRDuESiwm+RabSJ8Iv74d8hc/p+Bz+axJF00AqRKRQS8HE
+         HE2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706022575; x=1706627375;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1706022670; x=1706627470;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=E0YK6sTszqN6wf/65nVYY49AEDvllrXDOsB5a2JLKho=;
-        b=QEv2Vd1n297jB6OzrsQPjDrvDW7iZhOa8irv3PZrjo/9SOVQIIBoUfg54ZMUm2+I5X
-         cb0s2CsvlAK7YO4kFbfKoqyVKenINxFwzapYKjp2YcStAv/rFfqTHGpT+Md5e3gKn50q
-         7h0t3IFNQ0Ppye8LCvSM6AWI5QpieUTVzGir2vB+v1tx+fKUZSzGTnNK3lw0Rn95gV00
-         EMDaj2rVfkFtmhBjZ86QKgLcdm0wMgd5HwQfkG/iOpKNyqjQYUnm7MJ0HblwIP2wKnVl
-         WaM/5hqhkTFgpEn1Q9XJ+yNCMLJ/jCZWcyRFYQ8bO25aEoZAxhFdsIJLzpQf/fnnSY/2
-         xMVw==
-X-Gm-Message-State: AOJu0YyIAxHjSLZOphr+u/ztK4Y//Pru+KvqdIE3QCTXL/fIsHLhBeUx
-	AWZzWAMN5+XxHeO66g7hTLylYxywoPTMSQlLuYw4hfGir0JGFhmeCZFghuWTARs=
-X-Google-Smtp-Source: AGHT+IHUeqf9aiTISpJgFGpaVzshf9D6yund4OvXIARA/X68tz51m0R6JFCIJH1A5WBFEyFsP9ieoQ==
-X-Received: by 2002:adf:f283:0:b0:337:aa17:c8a8 with SMTP id k3-20020adff283000000b00337aa17c8a8mr2130906wro.213.1706022574849;
-        Tue, 23 Jan 2024 07:09:34 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.215.66])
-        by smtp.gmail.com with ESMTPSA id q12-20020adfab0c000000b00337d8c40ff7sm12599140wrc.3.2024.01.23.07.09.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Jan 2024 07:09:34 -0800 (PST)
-Message-ID: <08903b30-b321-4f13-b8a7-ddd31a94ca5e@linaro.org>
-Date: Tue, 23 Jan 2024 16:09:32 +0100
+        bh=4TDMZtp4Rk/MyqeG91tpztAQaCoeOy1ImodF5oM5/C8=;
+        b=biweB/RyJvkuN3TAoG7EtDxfvyKfSOG1bhn2YP1faJ3tAlh1Wo0Vspc8m1w99x7EJM
+         DpXGFBvXfrkzl0JW8nS9gYHiovq+mAUXTEA4afasQJ4eYEuD1GDMjE+kSjdyJ/6WKIiU
+         TK5p29cuEKF8pnhh59g6Fe/OPjkI6ZKeM8b1ZwsS1E6mwyYcm8hRrRsi/dpKKa2TwI4D
+         hTOBqovHPq1n5/c7L7vAyLnYEkPcQuDqSiW/aHCKdmeQcBetRLCOmDZ68cmlz2z188Gs
+         V1fL4f4f54IK1nkYVYFF/B9YOX41uf80J6hLostJRsQAoFchtoPvqprEy20BMEYWs6zc
+         IbiA==
+X-Gm-Message-State: AOJu0Yzk74TrI/uph46ewMJEiHSvhRexfDBiZOix3kVU2zGqtBGMTTAb
+	RyiWTVrH+bzb1CFLy9CdaRsUwXsmDfjqSishK7dpN0CxTw9t5jsQcPZwVi0SSA==
+X-Google-Smtp-Source: AGHT+IEOKhrSQ2AAiD6B4preFnkzitZWz56/vBVAw7INI+RAQyhQg8QHxAEyl6Hrgx0FmHXbiPe34Q==
+X-Received: by 2002:a62:5e06:0:b0:6d9:eb24:4c5f with SMTP id s6-20020a625e06000000b006d9eb244c5fmr2890544pfb.37.1706022670014;
+        Tue, 23 Jan 2024 07:11:10 -0800 (PST)
+Received: from thinkpad ([117.217.189.109])
+        by smtp.gmail.com with ESMTPSA id y22-20020a62b516000000b006dbd2405882sm6021527pfe.148.2024.01.23.07.11.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Jan 2024 07:11:09 -0800 (PST)
+Date: Tue, 23 Jan 2024 20:41:02 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Eric Chanudet <echanude@redhat.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] scsi: ufs: qcom: avoid re-init quirk when gears match
+Message-ID: <20240123151102.GE19029@thinkpad>
+References: <20240119185537.3091366-11-echanude@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC] arm64: dts: qcom: qrb5165-rb5: model the PMU of the QCA6391
-Content-Language: en-US
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Abel Vesa <abel.vesa@linaro.org>, Alex Elder <elder@linaro.org>,
- Srini Kandagatla <srinivas.kandagatla@linaro.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20240122182158.69183-1-brgl@bgdev.pl>
- <98925264-badb-4954-b542-9287a0c7d184@linaro.org>
- <CAMRc=Mc+GNoi57eTQg71DXkQKjdaoAmCpB=h2ndEpGnmdhVV-Q@mail.gmail.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <CAMRc=Mc+GNoi57eTQg71DXkQKjdaoAmCpB=h2ndEpGnmdhVV-Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240119185537.3091366-11-echanude@redhat.com>
 
-On 23/01/2024 11:04, Bartosz Golaszewski wrote:
-> On Tue, Jan 23, 2024 at 9:30 AM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> On 22/01/2024 19:21, Bartosz Golaszewski wrote:
->>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>>
->>> I'm limiting the audience of this compared to the PCI power sequencing
->>> series as I wanted to run the DT part by the maintainers before I commit
->>> to a doomed effort.
->>>
->>> Here is the DT representation of the QCA6390's PMU with its inputs and
->>> outputs. If I were to implement the pwrseq framework that would be able
->>> to assign the relevant pwrseq data to the consumer based on the actual
->>> regulators and not abstract bt-pwrseq or wlan-pwrseq properties - would
->>> that fly with you?
->>>
->>> We'd need to deprecate the existing BT bindings but unfortunately they
->>> are already described as consuming the host PMIC regulators in bindings.
->>>
->>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>
->> Please provide lore link to the binding.
->>
->> Best regards,
->> Krzysztof
->>
+On Fri, Jan 19, 2024 at 01:55:47PM -0500, Eric Chanudet wrote:
+> On sa8775p-ride, probing the hba will go through the
+> UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH path although the power info
+> are same during the second init.
 > 
-> This is the one:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
+> If the host is at least v4, ufs_qcom_get_hs_gear() picked the highest
+> supported gear when setting the host_params. After the negotiation, if
+> the host and device are on the same gear, it is the highest gear
+> supported between the two. Skip the re-init to save some time.
+> 
+> Signed-off-by: Eric Chanudet <echanude@redhat.com>
+> ---
+> 
+> "trace_event=ufs:ufshcd_init" reports the time spent where the re-init
+> quirk is performed. On sa8775p-ride:
+> Baseline:
+>   0.355879: ufshcd_init: 1d84000.ufs: took 103377 usecs, dev_state: UFS_ACTIVE_PWR_MODE, link_state: UIC_LINK_ACTIVE_STATE, err 0
+> With this patch:
+>   0.297676: ufshcd_init: 1d84000.ufs: took 43553 usecs, dev_state: UFS_ACTIVE_PWR_MODE, link_state: UIC_LINK_ACTIVE_STATE, err 0
+> 
+>  drivers/ufs/host/ufs-qcom.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 39eef470f8fa..f9f161340e78 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -738,8 +738,12 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
+>  		 * the second init can program the optimal PHY settings. This allows one to start
+>  		 * the first init with either the minimum or the maximum support gear.
+>  		 */
+> -		if (hba->ufshcd_state == UFSHCD_STATE_RESET)
+> +		if (hba->ufshcd_state == UFSHCD_STATE_RESET) {
+> +			if (host->hw_ver.major >= 0x4 &&
 
-This does not describe your PMU node. Maybe lack of the binding was
-intentional? In such case I missed it from commit msg...
+You can get rid of this check as I said in the reply.
 
+> +			    host_params->hs_tx_gear == dev_req_params->gear_tx)
 
-Best regards,
-Krzysztof
+How about?
 
+			/*
+			 * Skip REINIT if the negotiated gear matches with the
+			 * initial phy_gear. Otherwise, update the phy_gear to
+			 * program the optimal gear setting during REINIT.
+			 */
+			if (host->phy_gear == dev_req_params->gear_tx)
+				hba->quirks &= ~UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
+			else
+				host->phy_gear = dev_req_params->gear_tx;
+
+- Mani
+
+> +				hba->quirks &= ~UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
+>  			host->phy_gear = dev_req_params->gear_tx;
+> +		}
+>  
+>  		/* enable the device ref clock before changing to HS mode */
+>  		if (!ufshcd_is_hs_mode(&hba->pwr_info) &&
+> -- 
+> 2.43.0
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
