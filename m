@@ -1,176 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-7915-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7916-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D7BB838A57
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 10:29:02 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D2B77838A5F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 10:33:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D28C428643C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 09:29:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8BFFE286DC2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 09:33:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACDB159B55;
-	Tue, 23 Jan 2024 09:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEA4459B57;
+	Tue, 23 Jan 2024 09:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="M3CUlTi3"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RmYaGF1Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9055A0E6
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 09:28:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBBB59B4C;
+	Tue, 23 Jan 2024 09:33:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706002138; cv=none; b=kCS00V8niwKSpPEXW28e5qBqUufELI+VUcQrcnL6RKCpTRBKOg/rua6nVvUAv5BOMWDskYEHs2T9WOtt82MYn2pQCFiUWFgauUwrPtZexzoIuHJ0l2iP8hwn02JP/z3O2ZZ+GjgPhdcT9vCrSR7+zFnjoQzp9Hf9A+X5mM2MNkY=
+	t=1706002407; cv=none; b=n/kS31Z2KOPvCjIylzTXtTDteetasoMmJzQY0zaLVPbiEHnPqJaBBp4MnElCfZfORwFPHN8J1lWKnQ7T7ZpYQFa+WmLtbnaRDwCRCUFT1FooJ22KYm7C5A7Ii+2zmNSRkHlfmxN6jcQjCsg/OU4coN0uj8denvhBPB5quxpmd7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706002138; c=relaxed/simple;
-	bh=6lLhD6Ou8v8X9OhipbrM+HkIk2vyyy6/FHAjHd/tYgk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=o/pysMCLhUBwjpULeDLwEUXh/t4o0EMD8Q3Fr+7Ya+OhNc6MdVoDN9p+Rx2PDdaBs6wm2BIROcfsLVofg4UJVE05qK7fvJr5tmDywKQwlhmMyGaWYF2Y7be5eCNe2o5UaVAQHkQ0yq8McpEXUMfQq+vrJ+lHQEtUrlPGwfFwzYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=M3CUlTi3; arc=none smtp.client-ip=209.85.222.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-ua1-f42.google.com with SMTP id a1e0cc1a2514c-7d130979108so1173723241.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 01:28:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1706002135; x=1706606935; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oWoXPJ4PQlvmmz3cFANOqRDdLm6hLsEi8tDxwbdYEkg=;
-        b=M3CUlTi3AZl5tQIMbxqVFLy3Tgi5EF8ZE8bP+Wg2bBgov+Klpb/Im0G7QnsoSgDXIy
-         62O+joq7fg7KXfVcuUKVIVzBNfukZSo8R+a/Wy6ZoqhnGAMZv7ZyIjr4OQzUoDfujTyN
-         kvLiZ7SYBUBtqFzYFKCAZd5GjIaP/g04n6TGnH6OhIBHChKWKa3+FlCEjhDC+gPTy3E3
-         zSOpIO+/K33mcpDoWuRZlk/XbBWM3WOO3sG+zGHkY5ixF7n6mVyYfbbVf//AVBReMPPb
-         qKIle9tN3VrMei/MZQ7NQoqLmkZhpvWYodG3yUkEUXvZHW5QKjKoUF2SBP1gyLPXEEg4
-         n13g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706002135; x=1706606935;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oWoXPJ4PQlvmmz3cFANOqRDdLm6hLsEi8tDxwbdYEkg=;
-        b=TzSraGnhEEC8C2rYqGtq8IlaU9xHT5oD9R9nJSL/yQRq21Fidv07S9C33ytnIeTqla
-         kupvCuG6sEMdby3vn/C+lpBPRtEOBARpOo9/uGGIUKh+n0L5w/nCsB77gB/EI/OAgevZ
-         UXqVK3YP3OPXrGGkd7mH+JwhxNSzdUo9be9NBl0sKTZ5DgKwKj6/hwq9oYtaTrCIF94s
-         YiKiNlX9HBcRzIy3ERGv0TjWYvk2gK2Thvm6Uzzl9xcF9AuqPV66qvwts5vKhCp8LUAI
-         6/NUhL9v9EeTZMYCeGcr5XteF1He4tQSDh0fHX1hJI1caui3cTnQNXXEUkMV/Du9VQqw
-         gCLw==
-X-Gm-Message-State: AOJu0YxViy36AjiaMH92Oud4I8X5uDSyTY3Ar0J5lOvq+DX89jQUE9Bj
-	g6+IPBfPeCcVzXOMKm2hCVhde7rKWSUW/nnOUy1gQSDlb28oWjwBzACibGvsMFNVcSPDPE/5BKK
-	V8Skkw6b2CxTxclQUjRNPrpr8PV7KdkfLcYfBPw==
-X-Google-Smtp-Source: AGHT+IE6tOoVX4H2ydA2JWMrPnKov2bAQLC/xKMHC/aZHlJrBhefIWfkyZptba0P66ZjnByBY2KBgljIzXEACl3D9Og=
-X-Received: by 2002:a05:6122:12f9:b0:4b6:e39a:527f with SMTP id
- k25-20020a05612212f900b004b6e39a527fmr2040825vkp.29.1706002135051; Tue, 23
- Jan 2024 01:28:55 -0800 (PST)
+	s=arc-20240116; t=1706002407; c=relaxed/simple;
+	bh=tUV9HeYaIlBPoxnsQQp32B4Sy5G/GzhwU1EEi/HJ3HE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=LaFfbfVNZWU0vz/pQVJLuHzx+cORRBWaD1fi/YxdofwVylnfVaoeHOKG9zo5r5uen9XV1U7QOMXIrwZwe/YnkTFdFgASqgmvrP1ClgK+xCjpORJNmrLBA6y3vCNPlj+9LC8aj71pAHLPVtAfuYC7+ygK3tLZSl9nFRSby1MBFO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RmYaGF1Y; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40N7MUfQ010744;
+	Tue, 23 Jan 2024 09:33:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=LTfonBMvnMBR44qAE8QB5c/aqCnkCTT8Mrrh/XXED9o=; b=Rm
+	YaGF1YQ496OaN+QiCMoPOtu2QkqktvVXFRaYPFGIHjmgTsuTTkbC0QJ14IZ9N++Z
+	/nnpDWeQ0GKouFANAA9T+xCZi404flJ1/mujpUxu8KJex5VgB5AmJQ1G8DoXshxa
+	cuFOPSl9VPbDPh/yfwjWOyacF37o+5v4JKeMrJMfm6MAvB80WbkMxdC2fmfnxcUC
+	puEcFKlsqaIcmOdnMB58gL401GVsqJYWyOqXhyBD2bAs9EwW9nxlvvvLkEDdv8CE
+	4cHsm3wAYdOcnU0n7Dbj05ElXAeqoreKXthQFmpoLa4q62so+HCX87QF63PYHFUD
+	3xw1AsBsMs2Q4tIJvz8w==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vt8140cu1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 23 Jan 2024 09:33:17 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40N9XGOZ014957
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 23 Jan 2024 09:33:16 GMT
+Received: from [10.216.0.128] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 23 Jan
+ 2024 01:33:11 -0800
+Message-ID: <e993b237-46fb-3a0b-dc91-41e27ea0ab98@quicinc.com>
+Date: Tue, 23 Jan 2024 15:03:03 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240122182158.69183-1-brgl@bgdev.pl> <CAA8EJprWddrEH+Wmh4SExPygSVz6+WpSX-MDQ+hev1gov74rng@mail.gmail.com>
-In-Reply-To: <CAA8EJprWddrEH+Wmh4SExPygSVz6+WpSX-MDQ+hev1gov74rng@mail.gmail.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Tue, 23 Jan 2024 10:28:44 +0100
-Message-ID: <CAMRc=MfsDTfhg2BO6DFWVRwUY8OYayW9XneHCvpqVYezRQ3Mjg@mail.gmail.com>
-Subject: Re: [RFC] arm64: dts: qcom: qrb5165-rb5: model the PMU of the QCA6391
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Abel Vesa <abel.vesa@linaro.org>, Alex Elder <elder@linaro.org>, 
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH v6 01/12] clk: qcom: branch: Add a helper for setting the
+ enable bit
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: Marijn Suijten <marijn.suijten@somainline.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Johan Hovold
+	<johan+linaro@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+References: <20230717-topic-branch_aon_cleanup-v6-0-46d136a4e8d0@linaro.org>
+ <20230717-topic-branch_aon_cleanup-v6-1-46d136a4e8d0@linaro.org>
+Content-Language: en-US
+From: Imran Shaik <quic_imrashai@quicinc.com>
+In-Reply-To: <20230717-topic-branch_aon_cleanup-v6-1-46d136a4e8d0@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: -9zgUxEza7hK566H9pMD3G5V06JJNCFs
+X-Proofpoint-ORIG-GUID: -9zgUxEza7hK566H9pMD3G5V06JJNCFs
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-23_04,2024-01-23_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 mlxlogscore=999 clxscore=1011 impostorscore=0 malwarescore=0
+ suspectscore=0 bulkscore=0 adultscore=0 phishscore=0 mlxscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401230069
 
-On Tue, Jan 23, 2024 at 6:54=E2=80=AFAM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Mon, 22 Jan 2024 at 20:22, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
-> >
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > I'm limiting the audience of this compared to the PCI power sequencing
-> > series as I wanted to run the DT part by the maintainers before I commi=
-t
-> > to a doomed effort.
-> >
-> > Here is the DT representation of the QCA6390's PMU with its inputs and
-> > outputs. If I were to implement the pwrseq framework that would be able
-> > to assign the relevant pwrseq data to the consumer based on the actual
-> > regulators and not abstract bt-pwrseq or wlan-pwrseq properties - would
-> > that fly with you?
-> >
-> > We'd need to deprecate the existing BT bindings but unfortunately they
-> > are already described as consuming the host PMIC regulators in bindings=
-.
-> >
-> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->
-> My main concern is whether this is going to pass the regulator
-> subsystem locking. Basically you have a driver for regulators, which
-> will itself call into the regulator subsytem. It might be reentrant.
-> Or it might not.
->
 
-This is irrelevant for the HW representation though - which is what
-I'm trying to figure out first.
 
-As I said under the previous discussion: I don't plan to use the
-regulator framework here. Instead, the regulator phandles will be used
-by the new pwrseq subsystem to retrieve the handle to the correct
-pwrseq context structure.
+On 1/13/2024 8:20 PM, Konrad Dybcio wrote:
+> We hardcode some clocks to be always-on, as they're essential to the
+> functioning of the SoC / some peripherals. Add a helper to do so
+> to make the writes less magic.
+> 
+> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>   drivers/clk/qcom/clk-branch.h | 7 +++++++
+>   1 file changed, 7 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/clk-branch.h b/drivers/clk/qcom/clk-branch.h
+> index 8ffed603c050..0514bc43100b 100644
+> --- a/drivers/clk/qcom/clk-branch.h
+> +++ b/drivers/clk/qcom/clk-branch.h
+> @@ -64,6 +64,7 @@ struct clk_mem_branch {
+>   #define CBCR_FORCE_MEM_PERIPH_OFF	BIT(12)
+>   #define CBCR_WAKEUP			GENMASK(11, 8)
+>   #define CBCR_SLEEP			GENMASK(7, 4)
+> +#define CBCR_CLOCK_ENABLE		BIT(0)
+>   
+>   static inline void qcom_branch_set_force_mem_core(struct regmap *regmap,
+>   						  struct clk_branch clk, bool on)
+> @@ -98,6 +99,12 @@ static inline void qcom_branch_set_sleep(struct regmap *regmap, struct clk_branc
+>   			   FIELD_PREP(CBCR_SLEEP, val));
+>   }
+>   
+> +static inline void qcom_branch_set_clk_en(struct regmap *regmap, u32 cbcr)
+> +{
+> +	regmap_update_bits(regmap, cbcr, CBCR_CLOCK_ENABLE,
+> +			   CBCR_CLOCK_ENABLE);
+> +}
+> +
 
-But even so: I doubt this is the first time something like this is
-used: PMICs take supplies all the time and expose their own
-regulators. I wouldn't stress about it.
+Could you please help me understand how this helper function is useful?
+Seems like this is just for reducing parameters compared to 
+regmap_update_bits(). But anyhow the same is being done in the existing
+clock controller drivers with a comment which explains the functionality.
 
-[snip]
+Thanks & Regards,
+Imran
 
-> > +
-> >         thermal-zones {
-> >                 conn-thermal {
-> >                         polling-delay-passive =3D <0>;
-> > @@ -734,6 +816,24 @@ &pcie0_phy {
-> >         vdda-pll-supply =3D <&vreg_l9a_1p2>;
-> >  };
-> >
-> > +&pcieport0 {
-> > +       wifi@0 {
-> > +               compatible =3D "pci17cb,1101";
-> > +               reg =3D <0x10000 0x0 0x0 0x0 0x0>;
-> > +
-> > +               vddrfacmn-supply =3D <&vreg_pmu_rfa_cmn>;
-> > +               vddaon-supply =3D <&vreg_pmu_aon_0p59>;
-> > +               vddwlcx-supply =3D <&vreg_pmu_wlcx_0p8>;
-> > +               vddwlmx-supply =3D <&vreg_pmu_wlmx_0p85>;
-> > +               vddbtcmx-supply =3D <&vreg_pmu_btcmx_0p85>;
-> > +               vddrfa0-supply =3D <&vreg_pmu_rfa_0p8>;
-> > +               vddrfa1-supply =3D <&vreg_pmu_rfa_1p2>;
-> > +               vddrfa2-supply =3D <&vreg_pmu_rfa_1p7>;
-> > +               vddpcie0-supply =3D <&vreg_pmu_pcie_0p9>;
-> > +               vddpcie1-supply =3D <&vreg_pmu_pcie_1p8>;
->
-> This really feels like an overkill, All those voltages are handled by
-> the PMU itself, rather than being requested by the WiFi or BT drivers.
->
-
-What alternative do you propose?
-
-Bart
-
-> > +       };
-> > +};
-> > +
-> >  &pcie1 {
-> >         status =3D "okay";
-> >  };
->
-> --
-> With best wishes
-> Dmitry
+>   extern const struct clk_ops clk_branch_ops;
+>   extern const struct clk_ops clk_branch2_ops;
+>   extern const struct clk_ops clk_branch_simple_ops;
+> 
 
