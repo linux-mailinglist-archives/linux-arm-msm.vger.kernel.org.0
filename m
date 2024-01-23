@@ -1,122 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-8033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7F2683998B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 20:31:58 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69CD6839998
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 20:35:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 290A3B2EEDE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 19:28:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 93FE31C261F4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 19:35:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BCA3823D4;
-	Tue, 23 Jan 2024 19:28:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41A29823DC;
+	Tue, 23 Jan 2024 19:35:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ZLCqypvj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from gate2.alliedtelesis.co.nz (gate2.alliedtelesis.co.nz [202.36.163.20])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC3181AC1
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 19:28:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.36.163.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E5B81215
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 19:35:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706038100; cv=none; b=mXLu14f5N7rT/GBwW8Eri6QTj+4RldE4iBScVjD89fWkqwHp4lNJnaL99SDwX/ppLO+vSNBG4B1vmf9eQff8EG/SKVtbvMNxW0hsaYDZiVurpVQzirRki7MihKDRu+bTYVkLqNzjBOMAESFppnyED9bzpm3XXYgt5tGm4Ox9OpY=
+	t=1706038512; cv=none; b=bNmpVtT3TMubCB/Egi0MIwYrSTmWu6RGaTSuiWAOZF+ETxmhIrxnIRsag0Q1sKYk5bDZC/H+fCv0RzqOk1n2ax/pba8CsmhfmPy7llAKtXjfbuKY3kTVD7ijfA1guWBi4ZfBWV/pF00dkTaCtKlOyZJswQnD1P9rrEkPQ0n7+m0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706038100; c=relaxed/simple;
-	bh=x8IFdXnCeGIrbJjs7/ipMSRqhAWyyhvahEUt53Kfbz8=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=lmSNE55hiKUN7dW3alWcTQ+r/TKMyzFnZtxXMh10Dsris+sdsWtNoqjgeja9T8UsgfEfbSg1v1aygd7omfxrxS6v7f906U/uoTSQFSyZmhxwMrugkZYPtWLRGsJhoBgKgfgqoF/GwiWB5B1yLM7GD2mX1u3JAHnYCH/BYtHubOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=alliedtelesis.co.nz; spf=pass smtp.mailfrom=alliedtelesis.co.nz; arc=none smtp.client-ip=202.36.163.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=alliedtelesis.co.nz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alliedtelesis.co.nz
-Received: from svr-chch-seg1.atlnz.lc (unknown [10.32.18.43])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	by gate2.alliedtelesis.co.nz (Postfix) with ESMTPS id 05EBF2C074C;
-	Wed, 24 Jan 2024 08:28:09 +1300 (NZDT)
-Received: from svr-chch-ex2.atlnz.lc (Not Verified[2001:df5:b000:bc8::76]) by svr-chch-seg1.atlnz.lc with Trustwave SEG (v8,2,6,11305)
-	id <B65b013480001>; Wed, 24 Jan 2024 08:28:08 +1300
-Received: from svr-chch-ex1.atlnz.lc (2001:df5:b000:bc8::77) by
- svr-chch-ex2.atlnz.lc (2001:df5:b000:bc8:f753:6de:11c0:a008) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- 15.2.1118.40; Wed, 24 Jan 2024 08:28:08 +1300
-Received: from svr-chch-ex2.atlnz.lc (2001:df5:b000:bc8::76) by
- svr-chch-ex1.atlnz.lc (2001:df5:b000:bc8::77) with Microsoft SMTP Server
- (TLS) id 15.0.1497.48; Wed, 24 Jan 2024 08:28:08 +1300
-Received: from svr-chch-ex2.atlnz.lc ([fe80::a9eb:c9b7:8b52:9567]) by
- svr-chch-ex2.atlnz.lc ([fe80::a9eb:c9b7:8b52:9567%15]) with mapi id
- 15.02.1118.040; Wed, 24 Jan 2024 08:28:08 +1300
-From: Chris Packham <Chris.Packham@alliedtelesis.co.nz>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Bjorn Andersson
-	<andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, "Srinivas
- Kandagatla" <srinivas.kandagatla@linaro.org>, Banajit Goswami
-	<bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown
-	<broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>, "Rafael J. Wysocki"
-	<rafael@kernel.org>, Viresh Kumar <viresh.kumar@linaro.org>, Frank Rowand
-	<frowand.list@gmail.com>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai
-	<tiwai@suse.com>, "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>, "alsa-devel@alsa-project.org"
-	<alsa-devel@alsa-project.org>, "linux-sound@vger.kernel.org"
-	<linux-sound@vger.kernel.org>, "devicetree@vger.kernel.org"
-	<devicetree@vger.kernel.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "linux-pm@vger.kernel.org"
-	<linux-pm@vger.kernel.org>
-CC: Bartosz Golaszewski <brgl@bgdev.pl>, Sean Anderson
-	<sean.anderson@seco.com>
-Subject: Re: [PATCH v4 0/6] reset: gpio: ASoC: shared GPIO resets
-Thread-Topic: [PATCH v4 0/6] reset: gpio: ASoC: shared GPIO resets
-Thread-Index: AQHaTgZcl1ULQf9J4Eqr3ug6OQdT9LDm7pqA
-Date: Tue, 23 Jan 2024 19:28:08 +0000
-Message-ID: <6c3e4b71-c92f-4f1e-8435-b5cfb7f47117@alliedtelesis.co.nz>
-References: <20240123141311.220505-1-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20240123141311.220505-1-krzysztof.kozlowski@linaro.org>
-Accept-Language: en-NZ, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <6388DE1362E6534FADA1D4908BCF3227@atlnz.lc>
-Content-Transfer-Encoding: base64
+	s=arc-20240116; t=1706038512; c=relaxed/simple;
+	bh=1ufWa9+DhMazuCg6k/kGAKu9JKJdvlAyAGQCtBYJHHk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-type; b=hCPfze6w6mvKr6JszMk0hMdUQBkEWYSdIdt5nEX3v75pa1Yiaqg3eC4PjrgoLvBaDXMF1BledMGJY7k5fvn5s/hD2v+B0qLCF5kG94JX0M+g7Ac1khNx20uPLL9+gYx7wRTkRXWLYB87NCvu8q9gALUduy9LLSG1jSzO9xqfpes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ZLCqypvj; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1706038509;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=H24shksCDeTPX45yEa+ObHdQIbM519gVV0wB9Kkfn3A=;
+	b=ZLCqypvj0xtLzQSiC9WCuNc44KWcs27Z+rDRYV4zhDuLUEzHxEw2RAHgsDGDZ3D/2E8Yoi
+	NJXGWdzVxoN73m3QMY01f+wstM/gTOO4hYM31WxA8wFnUrtqHkEIiVpwx+UTxQGpeqoRBc
+	2GtfeXt/tMwkT6jQ8xcizG+LM4SS+ao=
+Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
+ [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-541-trSCWWQoMNuSMD6t-S0suQ-1; Tue, 23 Jan 2024 14:35:07 -0500
+X-MC-Unique: trSCWWQoMNuSMD6t-S0suQ-1
+Received: by mail-ot1-f69.google.com with SMTP id 46e09a7af769-6ddee727096so5608548a34.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 11:35:07 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706038506; x=1706643306;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=H24shksCDeTPX45yEa+ObHdQIbM519gVV0wB9Kkfn3A=;
+        b=djIxdpoMUk9Y8d2baMXPdwr1W51pKGOGOwBBLbgBt9V9Uv26vv6VPq2KOEznx9Lswv
+         /BLwbBEQo4fUibTRe5f5TepIdfdBagKO2R9dgWLQkpNLTcOTpIiXXiCXOqrVtuhiiAVA
+         bFwU4DlKlknajny+hbPGNxdr3eKXJUOOvq7Mr2DInkdZxVj2yRFg+sUpEHCg3pXDYEi8
+         O2FrmCJlWtfq5fN0xwLq8pwXXReUP5TFfh1mDAPvPo2S8JmbAFADMA8e6mPp48HHh4bI
+         zprAy1gYig+8/Pt6/ntRaOVP/MKZFxw8A6nyhN5M9XNA++5r/DwnuZCrhGfOchqbQNLD
+         oe7w==
+X-Gm-Message-State: AOJu0YznAoEWGubxvK8VTlxxHdSJqfyPuIAqqH6iLx+zXPy0kN+6D19T
+	lH1fY01gBrofFzIZrmgiOZy2hhP0lJqV509nLzRr9Oifo5RZqvsOw0LJnkZJQilMkF6zPrg98bU
+	9JJGgn/Fo0NfIoYhtX1W1tHciDdHd1V255sm7aJbfCGdmcnPoa7gU7tnPOMgx3A+m2nm54lY=
+X-Received: by 2002:a05:6358:27a8:b0:175:49f7:952f with SMTP id l40-20020a05635827a800b0017549f7952fmr4343847rwb.63.1706038506671;
+        Tue, 23 Jan 2024 11:35:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG55nVARfi6rbNbtYFtYEGGYgAOCYX6yFXx3Hm30MskjrUGrGE8LCEbfcX1uBv7zLrzCl5LcQ==
+X-Received: by 2002:a05:6358:27a8:b0:175:49f7:952f with SMTP id l40-20020a05635827a800b0017549f7952fmr4343833rwb.63.1706038506364;
+        Tue, 23 Jan 2024 11:35:06 -0800 (PST)
+Received: from localhost (pool-71-184-142-128.bstnma.fios.verizon.net. [71.184.142.128])
+        by smtp.gmail.com with ESMTPSA id or9-20020a056214468900b00686a4f9312bsm656719qvb.50.2024.01.23.11.35.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Jan 2024 11:35:05 -0800 (PST)
+From: Eric Chanudet <echanude@redhat.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-scsi@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Eric Chanudet <echanude@redhat.com>
+Subject: [PATCH v2] scsi: ufs: qcom: avoid re-init quirk when gears match
+Date: Tue, 23 Jan 2024 14:28:57 -0500
+Message-ID: <20240123192854.1724905-4-echanude@redhat.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-SEG-SpamProfiler-Analysis: v=2.3 cv=LZFCFQXi c=1 sm=1 tr=0 a=Xf/6aR1Nyvzi7BryhOrcLQ==:117 a=xqWC_Br6kY4A:10 a=75chYTbOgJ0A:10 a=IkcTkHD0fZMA:10 a=dEuoMetlWLkA:10 a=35lJjsoYTdPToEE-BswA:9 a=QEXdDO2ut3YA:10
-X-SEG-SpamProfiler-Score: 0
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
 
-DQpPbiAyNC8wMS8yNCAwMzoxMywgS3J6eXN6dG9mIEtvemxvd3NraSB3cm90ZToNCj4gSGksDQo+
-DQo+IFBhdGNoICMyIChjcHVmcmVxOiBkbyBub3Qgb3Blbi1jb2RlIG9mX3BoYW5kbGVfYXJnc19l
-cXVhbCgpKSBhbmQgcGF0Y2ggIzQNCj4gKHJlc2V0OiBJbnN0YW50aWF0ZSByZXNldCBHUElPIGNv
-bnRyb2xsZXIgZm9yIHNoYXJlZCByZXNldC1ncGlvcykgZGVwZW5kIG9uIE9GDQo+IGNoYW5nZSAo
-cGF0Y2ggIzEpLg0KPg0KPiBDaGFuZ2VzIGluIHY0DQo+ID09PT09PT09PT09PT0NCj4gMS4gTmV3
-IHBhdGNoZXM6DQo+ICAgICBvZjogYWRkIG9mX3BoYW5kbGVfYXJnc19lcXVhbCgpIGhlbHBlcg0K
-PiAgICAgY3B1ZnJlcTogZG8gbm90IG9wZW4tY29kZSBvZl9waGFuZGxlX2FyZ3NfZXF1YWwoKQ0K
-Pg0KPiAyLiByZXNldC1ncGlvLmM6DQo+ICAgICAtIERyb3AgdW5uZWVkZWQgY29tbWVudCAoQmFy
-dG9zeiksIGFkZCBSYiB0YWcuDQo+ICAgICAtIERvIG5vdCBhc3NpZ24gb2Zfbm9kZS4NCj4NCj4g
-My4gcmVzZXQvY29yZS5jOg0KPiAgICAgLSBJbXBsZW1lbnQgbW9zdCBvZiBCYXJ0b3N6IGZlZWRi
-YWNrIChJIHJlc3BvbmRlZCB0byBvbmUgd2hpY2ggSSBkaWQgbm90DQo+ICAgICAgIGltcGxlbWVu
-dCkgYW5kIGNvbW1lbnRzIGZyb20gUGhpbGlwcC4NCj4gICAgIC0gRXhwZWN0IGVpdGhlciByY2Rl
-di0+b2ZfYXJncyBvciByY2Rldi0+b2Zfbm9kZS4NCj4gICAgIC0gRHJvcCBfX3Jlc2V0X2dwaW9z
-X2FyZ3NfbWF0Y2goKSBhbmQgdXNlIGNvbW1vbiBoZWxwZXIgKFBoaWxpcHApLg0KPiAgICAgLSBN
-b3ZlIGRlY2xhcmF0aW9ucyBvZiBhdXRvbWF0aWMtY2xlYW51cCB2YXJpYWJsZXMgaW4NCj4gICAg
-ICAgX19yZXNldF9hZGRfcmVzZXRfZ3Bpb19sb29rdXAoKSB0byBwbGFjZSBvZiB1c2UgKEJhcnRv
-c3opLg0KPiAgICAgLSBTZXBhcmF0ZSBncGlvX2RldmljZV9nZXRfbGFiZWwoKSBhbmQga3N0cmR1
-cCgpIChQaGlsaXBwKS4NCj4gICAgIC0gQ29ycmVjdCBkb2MgZm9yIF9fcmVzZXRfYWRkX3Jlc2V0
-X2dwaW9fZGV2aWNlKCksIHJld3JpdGUgZmV3IGNvbW1lbnRzLg0KPiAgICAgLSBEcm9wIHVubmVl
-ZGVkICJyIiB2YXJpYWJsZSBpbiBfX3Jlc2V0X2ZpbmRfcmNkZXYoKSAoUGhpbGlwcCkuDQo+ICAg
-ICAtIERyb3Agb2ZfcGhhbmRsZV9hcmdzIGluaXRpYWxpemF0aW9uIGluIF9fb2ZfcmVzZXRfY29u
-dHJvbF9nZXQgKFBoaWxpcHApLg0KPiAgICAgLSBDaGVjayBpZiBDT05GSUdfUkVTRVRfR1BJTyBp
-cyBlbmFibGVkIGJlZm9yZSB0cnlpbmcgdG8gbG9vayB1cCByZXNldC1ncGlvcy4NCj4NCj4gNC4g
-RHJvcCBDaHJpcycgcGF0Y2g6ICJpMmM6IG11eGVzOiBwY2E5NTR4OiBBbGxvdyBzaGFyaW5nIHJl
-c2V0IEdQSU8iLCBiZWNhdXNlDQo+ICAgICBkaXNjdXNzaW9uIGlzIG9uIGdvaW5nLg0KDQpJIGFj
-dHVhbGx5IHRoaW5rIGl0IHdvdWxkIGhhdmUgYmVlbiBPSyBhcy1pcyB3aXRoIHlvdXIgbGF0ZXN0
-IGNoYW5nZSB0byANCnJldHVybiBOVUxMIHdoZW4gQ09ORklHX1JFU0VUX0dQSU8gaXMgbm90IGVu
-YWJsZWQuIEJ1dCBJJ20gaGFwcHkgdG8gDQpzdWJtaXQgaXQgaW5kZXBlbmRlbnRseSBhZnRlciB0
-aGlzIHNlcmllcyBsYW5kcy4gSXQnbGwgZ2l2ZSBtZSBhIGNoYW5jZSANCnRvIGRvIGEgYml0IG1v
-cmUgdGVzdGluZy4NCg0K
+On sa8775p-ride, probing the hba will go through the
+UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH path although the power info
+are same during the second init.
+
+The REINIT quirk only applies starting with controller v4. For these,
+ufs_qcom_get_hs_gear() reads the highest supported gear when setting the
+host_params. After the negotiation, if the host and device are on the
+same gear, it is the highest gear supported between the two. Skip REINIT
+to save some time.
+
+Signed-off-by: Eric Chanudet <echanude@redhat.com>
+---
+
+v1 -> v2:
+* drop test against host->hw_ver.major >= 4 and amend description as a
+  result (Andrew/Mani)
+* add comment, test device gear against host->phy_gear and reset
+  host->phy_gear only if necessary (Mani)
+* Link to v1: https://lore.kernel.org/linux-arm-msm/20240119185537.3091366-11-echanude@redhat.com/
+
+trace_event=ufs:ufshcd_init reports the time spent in ufshcd_probe_hba
+where the re-init quirk is performed:
+Currently:
+0.355879: ufshcd_init: 1d84000.ufs: took 103377 usecs, dev_state: UFS_ACTIVE_PWR_MODE, link_state: UIC_LINK_ACTIVE_STATE, err 0
+With this patch:
+0.297676: ufshcd_init: 1d84000.ufs: took 43553 usecs, dev_state: UFS_ACTIVE_PWR_MODE, link_state: UIC_LINK_ACTIVE_STATE, err 0
+
+ drivers/ufs/host/ufs-qcom.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 39eef470f8fa..f7dba7236c6e 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -738,8 +738,17 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
+ 		 * the second init can program the optimal PHY settings. This allows one to start
+ 		 * the first init with either the minimum or the maximum support gear.
+ 		 */
+-		if (hba->ufshcd_state == UFSHCD_STATE_RESET)
+-			host->phy_gear = dev_req_params->gear_tx;
++		if (hba->ufshcd_state == UFSHCD_STATE_RESET) {
++			/*
++			 * Skip REINIT if the negotiated gear matches with the
++			 * initial phy_gear. Otherwise, update the phy_gear to
++			 * program the optimal gear setting during REINIT.
++			 */
++			if (host->phy_gear == dev_req_params->gear_tx)
++				hba->quirks &= ~UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
++			else
++				host->phy_gear = dev_req_params->gear_tx;
++		}
+ 
+ 		/* enable the device ref clock before changing to HS mode */
+ 		if (!ufshcd_is_hs_mode(&hba->pwr_info) &&
+-- 
+2.43.0
+
 
