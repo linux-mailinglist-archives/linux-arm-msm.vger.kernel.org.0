@@ -1,111 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-8038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 977F1839AC0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 22:04:42 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 793A9839BDE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 23:10:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 341461F21C10
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 21:04:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 30A56292552
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 22:10:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CA5A2C1A4;
-	Tue, 23 Jan 2024 21:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DE8D4EB44;
+	Tue, 23 Jan 2024 22:10:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="VhEfb8xu"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lXBtnw+3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD231A27A;
-	Tue, 23 Jan 2024 21:04:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0663B4F201;
+	Tue, 23 Jan 2024 22:10:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706043876; cv=none; b=aUR/XuvdNC7sevQv7OWXd25eV5wMI6GPWmIpbxDEC4wi+NAXgxR4hoatvtWexr+X68zaMZMj2+Xf7TfDNh+g6aX3EGvbFgCE4lGAdXN6TLSFOZOlzbkXt2oI7bdhAs0IGC5uqS3D3hgePWXWTZX3eq80XwOpX/VQf2ko+/Vov/0=
+	t=1706047822; cv=none; b=Oz48J+8L74KGkgEShejbkoyKp8jw6dksadPf9124JCB39Fj3m75UpOX9BLlg3nyVmO+zSxQUCjteSO80qjmWJApgqYBhdds1P7JFCmsTXW1743JJi3kbD3C/klK3HrGMS0kqzOz8UcBkmdtYyNONuZ4fdb5ELHXMB2a4+QhBd1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706043876; c=relaxed/simple;
-	bh=iUZ9ff9Sy/VGyfLsHpEtkeYzZrimjw/PLUyxTEaxB+8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=loWzWMLJ+hh6vpKC2OYiCB1/VXpOK3G67ZFMOojgPYhprTvogiG6oDRcUYl1DcCy3rUR6W+e8B2secijNPCWH/0mDZzGiTov31ymfyPcI8TBFWji1Nk3XplEebJJvRBGsxd5wumUUvBSO1irt1+HKnbVaw24oRBpoYg2hZTLR9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz; spf=pass smtp.mailfrom=z3ntu.xyz; dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b=VhEfb8xu; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=z3ntu.xyz
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
-	t=1706043867; bh=iUZ9ff9Sy/VGyfLsHpEtkeYzZrimjw/PLUyxTEaxB+8=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=VhEfb8xuK6Z+e0ASbBsRCW8WXFX3p/aLRwG3yVVu1N6eWhIG0/9JKrS7F1NBQBOxC
-	 IeWZ+v1tqDX4Yiw2SYzJj1Ez8aN/464YRdXYpfU2meZAZsSV8T15puoTzCdaYuX+2z
-	 zMqQnTjKY5NwCjIHsV9DCYzc0S4o9CYCvokFNr3w=
-From: Luca Weiss <luca@z3ntu.xyz>
-Date: Tue, 23 Jan 2024 22:03:57 +0100
-Subject: [PATCH 3/3] arm64: dts: qcom: msm8953: add reset for display
- subsystem
+	s=arc-20240116; t=1706047822; c=relaxed/simple;
+	bh=4tLvgtW9phV6f8odf0il9TWr49sI69U76al3modxrbs=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fkhCeqODo7jp41j4Pw83UBOXp8GRKNPHE2t383Wtaz5zO09DCLKMIqzCe2cTsWboZi2RoOBhk8m73fHiEYPljOYR3E6tcJoppDYbK9PWccC87DiNOItEsLwru39BhePqOQUHs4hnRZTirlCcjw5nuUJyQlAXvyTfQeJs+3lwTw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lXBtnw+3; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40NKvwjl024439;
+	Tue, 23 Jan 2024 22:10:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=bMUGP/ExetbQlmoXaOtIF
+	/n/k5ZMkOe7YT4/9Tx2TRE=; b=lXBtnw+3NINvG0kz8cksz6lSjMy12Huo61tvD
+	EiP86dOOImKlLThEVW2VrWhiDMji3D0YHgVA9tfXT95HYmEoHlyPsM5gQYy2eLI6
+	b2Mfh2pOxc5yNlrQ/TEe0wZZIX80TPQcC4DlZsH9ZoV/J/AH4Wl9C5Py3UOsP3V2
+	27X3bErqnCx5jglbFp1lCPUi7suKmOVTCM+26UjiWK8ELCgRMdM9xTN8HZkj8AVD
+	oUY59ONOwYi58mjMqU1GqyIWzVBqBGdX0bCaPfiHQci5WhMXg62k9X+CoVE3njaV
+	YdegOHoJtvDFtOuS44Tj2NAWBZ0f1VLHoDAKNhMDl+IeOk8Jg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vtmgwg5ub-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 23 Jan 2024 22:10:16 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40NMAGgZ023105
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 23 Jan 2024 22:10:16 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Tue, 23 Jan 2024 14:10:15 -0800
+Date: Tue, 23 Jan 2024 14:10:14 -0800
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+To: Chris Lew <quic_clew@quicinc.com>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] soc: qcom: aoss: Add tracepoints in qmp_send()
+Message-ID: <20240123221014.GG2936378@hu-bjorande-lv.qualcomm.com>
+References: <20240117-qcom-aoss-tracepoints-v1-1-4f935920cf4b@quicinc.com>
+ <02dc2748-e73d-f565-9879-6a05e84cbd8b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240123-msm8953-mdss-reset-v1-3-bb8c6d3ce897@z3ntu.xyz>
-References: <20240123-msm8953-mdss-reset-v1-0-bb8c6d3ce897@z3ntu.xyz>
-In-Reply-To: <20240123-msm8953-mdss-reset-v1-0-bb8c6d3ce897@z3ntu.xyz>
-To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Luca Weiss <luca@z3ntu.xyz>, Vladimir Lypak <vladimir.lypak@gmail.com>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=774; i=luca@z3ntu.xyz;
- h=from:subject:message-id; bh=2eGHbPBMdO+UgME/Y6wGkZ+t0vRvxXHXtjw6rDrXCQA=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBlsCnY8IywGYM0+ByxpNlLjwe0KF31yb0R24nKo
- 3uRQqntBqiJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZbAp2AAKCRBy2EO4nU3X
- VkT4D/wPDY9u4kI772wMuV+JU85Ok3ODvWBeV65f2Aj5mic3HAOfGFQzvBnED3RY5v68/T5t0iN
- hpHpxQvletMss+auTI4T/PXBF8JsFCfoQY3mn+eGFJQil2NrXrqfhQjeRNGT4b0X1aBtFQ+EQDY
- HU82Mfq2R5GophhKMW0oa0RhCX2w1D2LVcTAg8hU2/ygTKCQ6zK34kkgyJMZAVBmhBocTFu1F49
- IUU2js0Irq4RN2gN1TDiOqDo9uOGLkAh0jLCoSve4YsnmPx67PB8WpkIJS0RGVxOwPtAM7lD2yc
- 0j+0Z8CPikioyLaogYNma9RHo1FliEADpTsmVMDeKCp5fh4ddE4ZO5GAKgCr7ecDWHUb+z+OWNg
- xWVzaq5WiRYo1LFM8BNjlN4+Ko8uQ1MiMG0/N0zEYlvd942mAuD5t9rARfbPbMgXL5WRQuFVb7a
- wjlKLpaduvTnNpyz0KUb4425j3IAj5AL+Eo5dhginLcKUMeaC60S6wVVljPN/nqV1RJgtti5W1A
- 2xc2pEp1E4RYZlpJZ2hAHpH3TRhba0zzoWDpnQXCWA9vIHO1bPQdXJZx/7wT2sM5e25HCF+YQcb
- hXQXRl1Bzr8PaqnxkhUf7I49TnAuis8Kfp6VnyKucUqfiupwurZXgYt1O4AooMO7ZQnmTMuTd+n
- dsEgawnrk5b2QCA==
-X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
- fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <02dc2748-e73d-f565-9879-6a05e84cbd8b@quicinc.com>
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: FBBPbl3TJbuz1fzTOxSoVcJMpshJVUq1
+X-Proofpoint-ORIG-GUID: FBBPbl3TJbuz1fzTOxSoVcJMpshJVUq1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-23_13,2024-01-23_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ impostorscore=0 spamscore=0 mlxscore=0 bulkscore=0 suspectscore=0
+ lowpriorityscore=0 clxscore=1015 mlxlogscore=999 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401190000 definitions=main-2401230164
 
-From: Vladimir Lypak <vladimir.lypak@gmail.com>
+On Tue, Jan 23, 2024 at 10:54:16AM -0800, Chris Lew wrote:
+> 
+> 
+> On 1/17/2024 7:52 PM, Bjorn Andersson wrote:
+> > @@ -235,6 +238,8 @@ int qmp_send(struct qmp *qmp, const char *fmt, ...)
+> >   	mutex_lock(&qmp->tx_lock);
+> > +	trace_aoss_send(buf);
+> > +
+> >   	/* The message RAM only implements 32-bit accesses */
+> >   	__iowrite32_copy(qmp->msgram + qmp->offset + sizeof(u32),
+> >   			 buf, sizeof(buf) / sizeof(u32));
+> > @@ -256,6 +261,8 @@ int qmp_send(struct qmp *qmp, const char *fmt, ...)
+> >   		ret = 0;
+> >   	}
+> > +	trace_aoss_send_done(buf, ret);
+> > +
+> 
+> As a side note, another place where we've traced before is on the receiving
+> irq to get the full timing of how long AOSS takes to process a command. I
+> think we've discussed this in the past and decided that we can use kprobes
+> if that need occurs.
+> 
 
-With this reset we can avoid situations like IRQ storms from DSI host
-before it even started probing (because boot-loader left DSI IRQs on).
+Right, these two tracepoints would not provide an accurate measurement
+for the that time. But as we discussed, we can use this in combination
+with other events to acquire such measurements.
 
-Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
- arch/arm64/boot/dts/qcom/msm8953.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+> >   	mutex_unlock(&qmp->tx_lock);
+> >   	return ret;
+> > diff --git a/drivers/soc/qcom/trace-aoss.h b/drivers/soc/qcom/trace-aoss.h
+> > new file mode 100644
+> > index 000000000000..48cd3f0f4cb8
+> > --- /dev/null
+> > +++ b/drivers/soc/qcom/trace-aoss.h
+> > @@ -0,0 +1,48 @@
+> > +/* SPDX-License-Identifier: GPL-2.0 */
+> > +/*
+> > + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> > + */
+> > +
+> > +#undef TRACE_SYSTEM
+> > +#define TRACE_SYSTEM qcom_aoss
+> > +
+> > +#if !defined(_TRACE_RPMH_H) || defined(TRACE_HEADER_MULTI_READ)
+> > +#define _TRACE_RPMH_H
+> 
+> Any Reason for this to be _TRACE_RPMH_H instead of _TRACE_AOSS_H?
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-index ad2f8cf9c966..dcb5c98b793c 100644
---- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-@@ -859,6 +859,8 @@ mdss: display-subsystem@1a00000 {
- 				      "vsync",
- 				      "core";
- 
-+			resets = <&gcc GCC_MDSS_BCR>;
-+
- 			#address-cells = <1>;
- 			#size-cells = <1>;
- 			ranges;
+That's what copy-paste gave me... Thanks for spotting that!
 
--- 
-2.43.0
-
+Regards,
+Bjorn
 
