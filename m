@@ -1,127 +1,250 @@
-Return-Path: <linux-arm-msm+bounces-7941-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41D4C838E5C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 13:18:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 035B6838EAD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 13:44:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EB5CF1F24AC0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 12:18:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 865A91F26547
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 12:43:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCA805DF19;
-	Tue, 23 Jan 2024 12:18:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA19A5EE64;
+	Tue, 23 Jan 2024 12:43:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zaFv2H3l"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FYfP5UPX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6426F5DF0C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 12:18:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB1B5DF00;
+	Tue, 23 Jan 2024 12:43:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706012310; cv=none; b=MTmg65VmeeATMFp2iX6OGl5PxDr2Ce0XTfJt+Y4hCpW0xA/o5ULrdFX5e/ad7mqQ9KBUmPG7lbQbFLxUFm5hUfUuGljvt2QcMvDBvklRWR/FLI26cuhPg3tDIO++IE9ofErqiNP5unBWf3CetRfYNlxqvDAnclmJjYYYqSlBQ/4=
+	t=1706013833; cv=none; b=lSUjG8TurWyYQqtXFIT9Y504KTRLF4zOrVrFqVY2ipc4zx1DPReRLyqIqHZSMUqTDNJ15Yf/6k8/MOGRmpmlrxdJZta7v6F5oDRpPW1aB6VALLTOARGHOMWgFhWiD166X3RqN28xSA3VX7ecsDIIX1ntPTNTbhKLPMw7laEjz1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706012310; c=relaxed/simple;
-	bh=2V+Bx4FIrH1pc364z+9nImn5SzIBGQp/BaM/gj1sj74=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Zqhkc1s24JNjvpdrU7yF4leM+nlu5Hj4rGjVeIc5zWZEV0/0Gpsve91V40662MEP9TAmHLlsxZ+rFDp92e1jI7AZbCby7jFOi7cSqRFtinUxFD5mFO5nu0x9SyrX+lN/huMNBBmLBiKqjVzN/gfrbpRIbfbgiRuvC2fWdjd76sk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zaFv2H3l; arc=none smtp.client-ip=209.85.128.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-5ffdf06e009so19286367b3.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 04:18:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706012308; x=1706617108; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Gh62vRSBG030L7L0RyJ3ueU0okLJVyWTJjLMCyBYbyQ=;
-        b=zaFv2H3lY3gABTnim+cZ7p7QZGduWasw8MPaooj0p39PDsq41Juu/MbsiS3eLvGWDC
-         UoUzDK64eFNlK88tnlfhzSekUweYP1csobrEpfVVPoiH53zaXmRkiwkQh13bAQxuyEJB
-         gJ+97+7BIrLannpyPKn+lXFtGnSCyiGa5wK5uOFPnmydgS1tZEJWnzmuzqfILH+/H40z
-         y/GcaRL5oH9aE4HrQHl3XKcSatiRq8s6XYgHo1bLUIY0/mI1U/d76NHpIqfNfC7Rlhob
-         rXLX5Og9wjuDFEyZ7Ip8NrjqcfMQ1bFBWyzErVq5vCVL7Y6hVFNKUz5XdHd5QfFNwO/P
-         JC8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706012308; x=1706617108;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Gh62vRSBG030L7L0RyJ3ueU0okLJVyWTJjLMCyBYbyQ=;
-        b=GK99CKWSMHXeLcb3jRFG7P+mUi9Q0y3N88mgji0FLiD/XWQP1P3hQ3yJPzPAiCa+lA
-         1WVl6GbScuBUHD9OJEFzObFU86yzsZ1wPUEYMQMQ//X3jt/efGLryrab1E/Qye7W1pR6
-         bjUvx25fOUDD+33pijrgWXUjVUFTisNHoEL/OhxjTrRjaNB+FJGqaqRM3XcnK+QV2uTl
-         AerXrDKBo+D94DrxlPOYAYrQHzI7FgRqEylW4ByLbaG6ow2a0dtd5uUZ8FKPkoTqV698
-         VyKDSqd3bvABSzZUWjs2TCa2zy4Xeg2WC3NhUJRv+6lTigwa1pRTaQKT+/EdLY2ZzLoX
-         DdtQ==
-X-Gm-Message-State: AOJu0Yy09ivxRfMkB/0p5FJ1fMB0pvTgauHsan1+C0ZwpKtdNnzeIex0
-	2AiUDYWen4gLOO7kic6D28+IdSkIz5GklLh7CNQ8z+nMuBX7kLUMxfn7JEMImFp4M0VlwvPfJ/Z
-	r2rnTbwQQ2A6ymO5m16alYk1vWr/xeGohhqlVqw==
-X-Google-Smtp-Source: AGHT+IE3HOE1WBjbwtEXORZxD29BZLU+G+gsdsCkXBrEeww2LPidC5QdtJcqX1/Wzpcr8U8LXecicY1xPGse7G9nY4E=
-X-Received: by 2002:a25:c791:0:b0:dc2:3cf6:9bc3 with SMTP id
- w139-20020a25c791000000b00dc23cf69bc3mr2811724ybe.58.1706012308255; Tue, 23
- Jan 2024 04:18:28 -0800 (PST)
+	s=arc-20240116; t=1706013833; c=relaxed/simple;
+	bh=UCvBeVxZH1I1W7aFnfZBfhYgFfhsl9L84uwbqQ3nMCM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=h8KGWNUjWAVlQVYll7C2+ChZoPAZ/ozJg1UaOaW8PTL98HJ833Mws8kjnvcqIIUs65b+Pr4Cb1pIMJpk6T53hCnjiXA35tmJOqVtcoNz4H1XmF7Bve2ctCPxiENj7h4xvuecgKIIx/cTpW0I+vg5eMOM+6t6DKbAIgW2gEGt+M8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FYfP5UPX; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40NC54D4030979;
+	Tue, 23 Jan 2024 12:43:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=TooN9L+vXIdff2SYsZTJWgp3hQjbI0Ip9LJ8U0o9bcQ=; b=FY
+	fP5UPXWheHCqFQhE5URa3APBOfqtn/JraDFCKNUvdPqFu/HHAZZCpBX37YXuKWcO
+	aCbrGgV7E6HRNyauGHAl/L1WnmD5BwcrcN4zV20nw6A0pSqOMAM3EyfNEP3gm2sW
+	zL5yTvTA8eTkp/95+pf0ATh+JsSYu9/Q9913EhuBng3fDQzcTXpHu6e7dR0kgo7c
+	QBoZYhagYptRp83aJmwK/jhzlJUqHVTcBIsqYiuVoXKH541rgccFO3p9To6EE10P
+	8zENnzII0mpi2UFE77Ix/mBpCbmcVZUqOqWFWXRbhkN69WwIbrWBm57ON8Ll2cr0
+	J5ZW4j7UVfubbIsOB1yA==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vspw8ubfc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 23 Jan 2024 12:43:33 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40NChWmh008205
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 23 Jan 2024 12:43:32 GMT
+Received: from [10.204.67.124] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 23 Jan
+ 2024 04:43:26 -0800
+Message-ID: <b9012927-b357-4875-9e8e-90df5cc8d8bb@quicinc.com>
+Date: Tue, 23 Jan 2024 18:13:22 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240123102817.2414155-1-quic_uchheda@quicinc.com>
-In-Reply-To: <20240123102817.2414155-1-quic_uchheda@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 23 Jan 2024 14:18:17 +0200
-Message-ID: <CAA8EJppwboaEbKFFACr3LO0OHg4iOJPapKRqoH2EGEYcjV6HfA@mail.gmail.com>
-Subject: Re: [PATCH RESEND] arm64: dts: qcom: qcm6490-idp: Add support for
- PM7250B PMIC
-To: Umang Chheda <quic_uchheda@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Kamal Wadhwa <quic_kamalw@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-
-On Tue, 23 Jan 2024 at 12:28, Umang Chheda <quic_uchheda@quicinc.com> wrote:
->
-> qcm6490-idp platform supports PM7250B PMIC as well.
-> Add support for the same.
-
-The platform can not "support" PMIC. Please fix the commit message.
-
->
-> Signed-off-by: Umang Chheda <quic_uchheda@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 5 +++++
->  1 file changed, 5 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> index 03e97e27d16d..2a6e4907c5ee 100644
-> --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> @@ -5,8 +5,13 @@
->
->  /dts-v1/;
->
-> +/* PM7250B is configured to use SID8/9 */
-> +#define PM7250B_SID 8
-> +#define PM7250B_SID1 9
-> +
->  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->  #include "sc7280.dtsi"
-> +#include "pm7250b.dtsi"
->  #include "pm7325.dtsi"
->  #include "pm8350c.dtsi"
->  #include "pmk8350.dtsi"
-> --
-> 2.25.1
->
->
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: qcm6490-idp: add display and panel
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <quic_bjorande@quicinc.com>, <geert+renesas@glider.be>,
+        <arnd@arndb.de>, <neil.armstrong@linaro.org>,
+        <nfraprado@collabora.com>, <m.szyprowski@samsung.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <quic_abhinavk@quicinc.com>, <quic_rajeevny@quicinc.com>,
+        <quic_vproddut@quicinc.com>
+References: <20240116094935.9988-1-quic_riteshk@quicinc.com>
+ <20240116094935.9988-3-quic_riteshk@quicinc.com>
+ <CAA8EJpp3WJ8132aB-tyzJPXsdczvQC+TvKemm9NvUNYNrEntow@mail.gmail.com>
+From: Ritesh Kumar <quic_riteshk@quicinc.com>
+In-Reply-To: <CAA8EJpp3WJ8132aB-tyzJPXsdczvQC+TvKemm9NvUNYNrEntow@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: xDS6e3yalMauhsyKjjuTFgUI0ZJslTnJ
+X-Proofpoint-ORIG-GUID: xDS6e3yalMauhsyKjjuTFgUI0ZJslTnJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-23_06,2024-01-23_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
+ adultscore=0 mlxscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
+ clxscore=1015 suspectscore=0 impostorscore=0 mlxlogscore=999
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401230094
 
 
--- 
-With best wishes
-Dmitry
+On 1/16/2024 3:28 PM, Dmitry Baryshkov wrote:
+
+> On Tue, 16 Jan 2024 at 11:49, Ritesh Kumar <quic_riteshk@quicinc.com> wrote:
+>> Enable Display Subsystem with Novatek NT36672E Panel
+>> on qcm6490 idp platform.
+> Is this panel always present on the IDP board or is it an optional
+> addon, like the panels for all the RBn boards?
+
+This panel is always present on the IDP board.
+
+>> Signed-off-by: Ritesh Kumar <quic_riteshk@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 100 +++++++++++++++++++++++
+>>   1 file changed, 100 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>> index 2a6e4907c5ee..efa5252130a1 100644
+>> --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>> @@ -9,6 +9,7 @@
+>>   #define PM7250B_SID 8
+>>   #define PM7250B_SID1 9
+>>
+>> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+>>   #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>>   #include "sc7280.dtsi"
+>>   #include "pm7250b.dtsi"
+>> @@ -38,6 +39,25 @@
+>>                  stdout-path = "serial0:115200n8";
+>>          };
+>>
+>> +       lcd_disp_bias: lcd-disp-bias-regulator {
+>> +               compatible = "regulator-fixed";
+>> +               regulator-name = "lcd_disp_bias";
+>> +               regulator-min-microvolt = <5500000>;
+>> +               regulator-max-microvolt = <5500000>;
+>> +               gpio = <&pm7250b_gpios 2 GPIO_ACTIVE_HIGH>;
+>> +               enable-active-high;
+>> +               pinctrl-names = "default";
+>> +               pinctrl-0 = <&lcd_disp_bias_en>;
+>> +       };
+>> +
+>> +       pm8350c_pwm_backlight: backlight {
+>> +               compatible = "pwm-backlight";
+>> +               pwms = <&pm8350c_pwm 3 65535>;
+>> +               enable-gpios = <&pm8350c_gpios 7 GPIO_ACTIVE_HIGH>;
+>> +               pinctrl-names = "default";
+>> +               pinctrl-0 = <&pmic_lcd_bl_en>;
+>> +       };
+>> +
+>>          reserved-memory {
+>>                  xbl_mem: xbl@80700000 {
+>>                          reg = <0x0 0x80700000 0x0 0x100000>;
+>> @@ -420,6 +440,86 @@
+>>          };
+>>   };
+>>
+>> +&gpu {
+>> +       status = "disabled";
+>> +};
+>> +
+>> +&mdss {
+>> +       status = "okay";
+>> +};
+>> +
+>> +&mdss_dsi {
+>> +       vdda-supply = <&vreg_l6b_1p2>;
+>> +       status = "okay";
+>> +
+>> +       panel@0 {
+>> +               compatible = "novatek,nt36672e";
+>> +               reg = <0>;
+>> +
+>> +               reset-gpios = <&tlmm 44 GPIO_ACTIVE_HIGH>;
+>> +
+>> +               vddi-supply = <&vreg_l8c_1p62>;
+>> +               avdd-supply = <&lcd_disp_bias>;
+>> +               avee-supply = <&lcd_disp_bias>;
+>> +
+>> +               backlight = <&pm8350c_pwm_backlight>;
+>> +
+>> +               port {
+>> +                       panel0_in: endpoint {
+>> +                               remote-endpoint = <&mdss_dsi0_out>;
+>> +                       };
+>> +               };
+>> +       };
+>> +};
+>> +
+>> +&mdss_dsi0_out {
+>> +       remote-endpoint = <&panel0_in>;
+>> +       data-lanes = <0 1 2 3>;
+>> +};
+>> +
+>> +&mdss_dsi_phy {
+>> +       vdds-supply = <&vreg_l10c_0p88>;
+>> +       status = "okay";
+>> +};
+>> +
+>> +&pm7250b_gpios {
+>> +       lcd_disp_bias_en: lcd-disp-bias-en-state {
+>> +               pins = "gpio2";
+>> +               function = "func1";
+>> +               bias-disable;
+>> +               qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
+>> +               input-disable;
+>> +               output-enable;
+>> +               power-source = <0>;
+>> +       };
+>> +};
+>> +
+>> +&pm8350c_gpios {
+>> +       pmic_lcd_bl_en: pmic-lcd-bl-en-state {
+>> +               pins = "gpio7";
+>> +               function = "normal";
+>> +               bias-disable;
+>> +               qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
+>> +               output-low;
+>> +               power-source = <0>;
+>> +       };
+>> +
+>> +       pmic_lcd_bl_pwm: pmic-lcd-bl-pwm-state {
+>> +               pins = "gpio8";
+>> +               function = "func1";
+>> +               bias-disable;
+>> +               qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
+>> +               output-low;
+>> +               power-source = <0>;
+>> +       };
+>> +};
+>> +
+>> +&pm8350c_pwm {
+>> +       pinctrl-names = "default";
+>> +       pinctrl-0 = <&pmic_lcd_bl_pwm>;
+>> +       status = "okay";
+>> +};
+>> +
+>>   &qupv3_id_0 {
+>>          status = "okay";
+>>   };
+>> --
+>> 2.17.1
+>>
+
+Thanks,
+Ritesh
 
