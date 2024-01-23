@@ -1,171 +1,261 @@
-Return-Path: <linux-arm-msm+bounces-7963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96045839181
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 15:36:29 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A492C8391A6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 15:46:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 47388286407
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 14:36:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 324901F26626
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 14:46:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 916235026C;
-	Tue, 23 Jan 2024 14:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7A8A56777;
+	Tue, 23 Jan 2024 14:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MUnOFEmh"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QPsZw2/x"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F6750271
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 14:36:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610F450A78;
+	Tue, 23 Jan 2024 14:46:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706020586; cv=none; b=fAsy3tF4frpx8RnIeu+0UuuZHFF2Gpv7ejBhzWHqHd5pqpWxwUwx6ga0rqm3eilEW6nq8id6JH5xGnILhl18eVeHcP0r191E5N2VPPczT3yKUkJ+/IKbhxJ631GzX0hINhAfEEyhX3NEalSa8uMkV2ohJbLzDdfnrTI2T+xIGa4=
+	t=1706021200; cv=none; b=JUENDFBB5VmKWyil+D7DyCjkTuchwdyXLfI/qDs/uCK1ng4kgLr83rMQYkr/rc+Q7l1RVm8FB9RmfM2oWF/jpGaIV8hxeZAidCUNxj7g0sYdYY8VLOKyIouMvnV+Q6EbER16/uosbDx9S/S/jCfZtXTnEs5Dnbai7A+9/+oR9JE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706020586; c=relaxed/simple;
-	bh=KCs4dAp32MVQLZSoY2iIieFhYKhRLJochENga8+TbuU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ciRr4GP88ubjGojwrZHd/CrSj4/0z+u9vLRBsC0LBtnjhaucDi+fwKZGOHr4K/fW5FLiST85rb9PDLIjbauZLW4bVPxb9nAXb/QpbNO7nqDXR+FGwUOS+7awj0pu11SNX0F8iOhAvoaEP69PXFYPwSm2m8I9Ifanxrib6BcHu0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MUnOFEmh; arc=none smtp.client-ip=209.85.216.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2901ac9ba23so2321689a91.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 06:36:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706020584; x=1706625384; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=rKLcX29OWFYkuH0PtL6skunmUTEl57ir3ALlBCZtCIg=;
-        b=MUnOFEmhB7wF8yZ1PzLMURL6mGxwLg01uUmmEmuQRObueJEszmlwgSbyvoRAXeoLUE
-         5698oTM+2QNuim6SpKtaXTIQS3vaPiL3tppYusLlPVWGIQ1HxGnTCtL/pXobMVr7lC8F
-         /wftkxM2PgOFyqoRlFPPcX2Rio7k6F4VlENwn2z/HzAYaZk0CpwXzWpEP+648U+y2LZA
-         FveiHdJeqkZnr5kQAru3RleOTpKCZRAkLzG/RlLLfM8isV7s7Y8IpqgGTS06M4E/Lh6L
-         OKp6q+d47rK9yn3/KdtZstpLTI36XUFj9tU5QggO3QAAF2adLc7HTi2qafSIvQA80mnI
-         JEMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706020584; x=1706625384;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rKLcX29OWFYkuH0PtL6skunmUTEl57ir3ALlBCZtCIg=;
-        b=TNdhZ9tQL9jdqE/VzPtNxUT7B140fKL0BuQL+X2sE/8HFDUswpYFnFYkWReqVq7iPg
-         9FkoX9uPtmhJs+40bzfsMgxoNxWFekbw30r2DxJMEA37gezaJnKxcpXglMsKvjPtXBAT
-         Gk/rfwcQxL48KIBKeTwJUmRR4r8yJgODB+ItX6cDnsLt2iipK5qnz4r27wH4DRGYgG/u
-         mqCEcSmjlEsJ/zd/Up9ptPxQkaK44fzcZCtOiSaalxLCc5cYj+3/PdvCyhI8M/Z4DsZK
-         64cZ+522VZdknFJs5DCIOXRzKNT6b6f5FhuH1TNG9QwGb2gFdYtAtLcN+7Sb0ecfRKnW
-         W2bQ==
-X-Gm-Message-State: AOJu0YxXusfXize3Q9iNbwUMjL/Vdham0/+AvpCpsSYWTHegpwodflUL
-	l8n3V+tvHvgRdqqtZVMxYjcQv90IrIFxJ2ovoW7kcuF5rjaIFojP3MB4CxGQzQ==
-X-Google-Smtp-Source: AGHT+IG3dsJ0nsLlvmUVmSWeW+v5Fy3gNBcQs+lxHbj0zWkZJViAOBXM3/pSyKOuORy9MvCzY5aF2w==
-X-Received: by 2002:a17:90a:989:b0:28e:96b:f8ca with SMTP id 9-20020a17090a098900b0028e096bf8camr2500428pjo.55.1706020584262;
-        Tue, 23 Jan 2024 06:36:24 -0800 (PST)
-Received: from thinkpad ([117.217.189.109])
-        by smtp.gmail.com with ESMTPSA id r5-20020a17090ad40500b0028e01ddb6c2sm12027335pju.12.2024.01.23.06.36.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jan 2024 06:36:23 -0800 (PST)
-Date: Tue, 23 Jan 2024 20:06:15 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Eric Chanudet <echanude@redhat.com>
-Cc: Andrew Halaney <ahalaney@redhat.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: Re: Re: [PATCH] scsi: ufs: qcom: avoid re-init quirk when gears
- match
-Message-ID: <20240123143615.GD19029@thinkpad>
-References: <20240119185537.3091366-11-echanude@redhat.com>
- <3xnedre2d32rkad6n2ln4rrah7sgg6epxnzsdm54uab3zrutnz@fww7wb5mvykj>
- <otgj6524k6wiy27depeo7ckopmrr2v3xdnaoph4c5djjohnpmg@f7hyetygcyyr>
- <graeyylgohsukni35djpbxibnz5ya7laqvsydharkzcktv2iwz@knbu5uq5fa4x>
+	s=arc-20240116; t=1706021200; c=relaxed/simple;
+	bh=y5K+bn+6kYj3NQTFG8gV490drCChfqHyFgKT+vZ6Qv8=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Rsi2/PvIdS48oWWuhXWQvuvQMVaOHHujDZhGn3cFOwB94Uy+3GSPtkEFB6iwl2vnIIogpUdQqTZJCyGxOhKzHc4/KL6XisqJadMHBjIViz2xkBeCWZgdM1NkTcOCib2FZ33uwH3jyBR8kDARaD4u8TzjBBk+gTT7wLsLa+0SJ4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QPsZw2/x; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40N8XY9V029529;
+	Tue, 23 Jan 2024 14:46:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version:content-type; s=
+	qcppdkim1; bh=CqfzTVbqafdFPbOP4LDygxGzuLhm64EdkKTCFVLVM6g=; b=QP
+	sZw2/xNPaAMIsCcZlKTBBXBnmHpdEoNanErlvsnOQPPnVqxxp3+hcUlW07BpjV2T
+	RPdmwvOOe2J0UAX+T1CT2lwvNPwrdc/QbJaVlVPmScCfa/6eWtkf14z4+6gVIPv7
+	CfLFUdugU5l5lBUNxjzaWLwDp6ldG+U3hViyDVELuN4z2bsAY/vFdue4B8XOohac
+	nVOB+ZLxMsAWMZM56I84QDc/6k9Y43G7Liqejn+MU3/uV82rdOj6mtG/wyBoihvy
+	lsqm8mTByEV/uMTMfBxQuUV5rJPNrLZtlR4nHm19OCBVBO3ufVSOtMnbr6nXb69b
+	zCyKS/efBK3K/zLSmukQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vt9djry35-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 23 Jan 2024 14:46:11 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40NEkAVh006639
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 23 Jan 2024 14:46:10 GMT
+Received: from hu-bibekkum-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Tue, 23 Jan 2024 06:46:05 -0800
+From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+To: <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
+        <dmitry.baryshkov@linaro.org>, <konrad.dybcio@linaro.org>,
+        <jsnitsel@redhat.com>, <quic_bjorande@quicinc.com>, <mani@kernel.org>,
+        <quic_eberman@quicinc.com>, <robdclark@chromium.org>,
+        <u.kleine-koenig@pengutronix.de>, <robh@kernel.org>,
+        <vladimir.oltean@nxp.com>, <quic_pkondeti@quicinc.com>,
+        <quic_molvera@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <iommu@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+        Bibek Kumar Patro
+	<quic_bibekkum@quicinc.com>
+Subject: [PATCH v9 0/5] iommu/arm-smmu: introduction of ACTLR implementation for Qualcomm SoCs
+Date: Tue, 23 Jan 2024 20:15:38 +0530
+Message-ID: <20240123144543.9405-1-quic_bibekkum@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <graeyylgohsukni35djpbxibnz5ya7laqvsydharkzcktv2iwz@knbu5uq5fa4x>
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: nn3I6x9oWtTaqvQhx_3dN7otFwMI2CXx
+X-Proofpoint-ORIG-GUID: nn3I6x9oWtTaqvQhx_3dN7otFwMI2CXx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-23_08,2024-01-23_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 adultscore=0
+ priorityscore=1501 spamscore=0 impostorscore=0 bulkscore=0 mlxscore=0
+ lowpriorityscore=0 suspectscore=0 clxscore=1015 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401230108
 
-On Fri, Jan 19, 2024 at 04:33:10PM -0500, Eric Chanudet wrote:
-> On Fri, Jan 19, 2024 at 02:33:32PM -0600, Andrew Halaney wrote:
-> > On Fri, Jan 19, 2024 at 02:07:15PM -0600, Andrew Halaney wrote:
-> > > On Fri, Jan 19, 2024 at 01:55:47PM -0500, Eric Chanudet wrote:
-> > > > On sa8775p-ride, probing the hba will go through the
-> > > > UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH path although the power info
-> > > > are same during the second init.
-> > > > 
-> > > > If the host is at least v4, ufs_qcom_get_hs_gear() picked the highest
-> > > > supported gear when setting the host_params. After the negotiation, if
-> > > > the host and device are on the same gear, it is the highest gear
-> > > > supported between the two. Skip the re-init to save some time.
-> > > > 
-> > > > Signed-off-by: Eric Chanudet <echanude@redhat.com>
-> > > > ---
-> > > > 
-> > > > "trace_event=ufs:ufshcd_init" reports the time spent where the re-init
-> > > > quirk is performed. On sa8775p-ride:
-> > > > Baseline:
-> > > >   0.355879: ufshcd_init: 1d84000.ufs: took 103377 usecs, dev_state: UFS_ACTIVE_PWR_MODE, link_state: UIC_LINK_ACTIVE_STATE, err 0
-> > > > With this patch:
-> > > >   0.297676: ufshcd_init: 1d84000.ufs: took 43553 usecs, dev_state: UFS_ACTIVE_PWR_MODE, link_state: UIC_LINK_ACTIVE_STATE, err 0
-> > > > 
-> > > >  drivers/ufs/host/ufs-qcom.c | 6 +++++-
-> > > >  1 file changed, 5 insertions(+), 1 deletion(-)
-> > > > 
-> > > > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> > > > index 39eef470f8fa..f9f161340e78 100644
-> > > > --- a/drivers/ufs/host/ufs-qcom.c
-> > > > +++ b/drivers/ufs/host/ufs-qcom.c
-> > > > @@ -738,8 +738,12 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
-> > > >  		 * the second init can program the optimal PHY settings. This allows one to start
-> > > >  		 * the first init with either the minimum or the maximum support gear.
-> > > >  		 */
-> > > > -		if (hba->ufshcd_state == UFSHCD_STATE_RESET)
-> > > > +		if (hba->ufshcd_state == UFSHCD_STATE_RESET) {
-> > > > +			if (host->hw_ver.major >= 0x4 &&
-> > > 
-> > > Is this check really necessary?
-> 
-> I *think* so.
-> 
-> For example, if hw_ver < 4, ufs_qcom_set_phy_gear() has a comment saying
-> "power up the PHY using minimum supported gear (UFS_HS_G2). Switching to
-> max gear will be performed during reinit if supported."
-> 
-> > > 
-> > > The initial phy_gear state is something like this (my phrasing of
-> > > ufs_qcom_set_phy_gear()):
-> > > 
-> > >     if hw_ver < 4:
-> > >         # Comments about powering up with minimum gear (with no
-> > >         # reasoning in the comment afaict), and mentions switching
-> > >         # to higher gear in reinit quirk. This is opposite of the later
-> > >         # versions which start at the max and scale down
-> > >         phy_gear = UFS_HS_G2
-> 
-> IIUC, the device would not be able to negotiate a gear higher than the
-> minimum set for the phy_gear on initialization.
-> 
-> ufshcd_init_host_params() and ufs_qcom_get_hs_gear() both set the
-> controller <v4 host_params to G3. So if the device is HS capable, the
-> re-init would set G3, instead of the G2 selected by
-> ufs_qcom_set_phy_gear().
-> 
+This patch series consist of five parts and covers the following:
 
-REINIT quirk is applicable for controllers starting from v4 only, because legacy
-controllers don't need separate PHY init sequences. So you can get rid of that
-check.
+1. Re-enable context caching for Qualcomm SoCs to retain prefetcher
+   settings during reset and runtime suspend.
 
-- Mani
+2. Remove cfg inside qcom_smmu structure and replace it with single
+   pointer to qcom_smmu_match_data avoiding replication of multiple
+   members from same.
 
--- 
-மணிவண்ணன் சதாசிவம்
+3. Introduce intital set of driver changes to implement ACTLR register
+   for custom prefetcher settings in Qualcomm SoCs.
+
+4. Add ACTLR data and implementation operations for SM8550.
+
+5. Add ACTLR data and implementation operations for SC7280.
+
+Changes in v9 from v8:
+ Changes to incorporate suggestions from Konrad as follows:
+ - Re-wrap struct members of actlr_variant in patch 4/5,5/5
+   in a cleaner way.
+ - Move actlr_config members to the header.
+ Link to v8:
+ https://lore.kernel.org/all/20240116150411.23876-1-quic_bibekkum@quicinc.com/
+
+Changes in v8 from v7:
+ - Added reviewed-by tags on patch 1/5, 2/5.
+ Changes to incorporate suggestions from Pavan and Konrad:
+ - Remove non necessary extra lines.
+ - Use num_smmu and num_actlrcfg to store the array size and use the
+   same to traverse the table and save on sentinel space along with
+   indentation levels.
+ - Refactor blocks containing qcom_smmu_set_actlr to remove block
+   repetition in patch 3/5.
+ - Change copyright year from 2023 to 2022-2023 in patch 3/5.
+ - Modify qcom_smmu_match_data.actlrvar and actlr_variant.actlrcfg to
+   const pointer to a const resource.
+ - use C99 designated initializers and put the address first.
+ Link to v7:
+ https://lore.kernel.org/all/20240109114220.30243-1-quic_bibekkum@quicinc.com/
+
+Changes in v7 from v6:
+ Changes to incorporate suggestions from Dmitry as follows:
+ - Use io_start address instead of compatible string to identify the
+   correct instance by comparing with smmu start address and check for
+   which smmu the corresponding actlr table is to be picked.
+Link to v6:
+https://lore.kernel.org/all/20231220133808.5654-1-quic_bibekkum@quicinc.com/
+
+Changes in v6 from v5:
+ - Remove extra Suggested-by tags.
+ - Add return check for arm_mmu500_reset in 1/5 as discussed.
+Link to v5:
+https://lore.kernel.org/all/20231219135947.1623-1-quic_bibekkum@quicinc.com/
+
+Changes in v5 from v4:
+ New addition:
+ - Modify copyright year in arm-smmu-qcom.h to 2023 from 2022.
+ Changes to incorporate suggestions from Dmitry as follows:
+ - Modify the defines for prefetch in (foo << bar) format
+   as suggested.(FIELD_PREP could not be used in defines
+   is not inside any block/function)
+ Changes to incorporate suggestions from Konrad as follows:
+ - Shift context caching enablement patch as 1/5 instead of 5/5 to
+   be picked up as independent patch.
+ - Fix the codestyle to orient variables in reverse xmas tree format
+   for patch 1/5.
+ - Fix variable name in patch 1/5 as suggested.
+ Link to v4:
+https://lore.kernel.org/all/20231215101827.30549-1-quic_bibekkum@quicinc.com/
+
+Changes in v4 from v3:
+ New addition:
+ - Remove actlrcfg_size and use NULL end element instead to traverse
+   the actlr table, as this would be a cleaner approach by removing
+   redundancy of actlrcfg_size.
+ - Renaming of actlr set function to arm_smmu_qcom based proprietary
+   convention.
+ - break from loop once sid is found and ACTLR value is initialized
+   in qcom_smmu_set_actlr.
+ - Modify the GFX prefetch value separating into 2 sensible defines.
+ - Modify comments for prefetch defines as per SMMU-500 TRM.
+ Changes to incorporate suggestions from Konrad as follows:
+ - Use Reverse-Christmas-tree sorting wherever applicable.
+ - Pass arguments directly to arm_smmu_set_actlr instead of creating
+   duplicate variables.
+ - Use array indexing instead of direct pointer addressed by new
+   addition of eliminating actlrcfg_size.
+ - Switch the HEX value's case from upper to lower case in SC7280
+   actlrcfg table.
+ Changes to incorporate suggestions from Dmitry as follows:
+ - Separate changes not related to ACTLR support to different commit
+   with patch 5/5.
+ - Using pointer to struct for arguments in smr_is_subset().
+ Changes to incorporate suggestions from Bjorn as follows:
+ - fix the commit message for patch 2/5 to properly document the
+   value space to avoid confusion.
+ Fixed build issues reported by kernel test robot [1] for
+ arm64-allyesconfig [2].
+ [1]: https://lore.kernel.org/all/202312011750.Pwca3TWE-lkp@intel.com/
+ [2]:
+https://download.01.org/0day-ci/archive/20231201/202312011750.Pwca3TWE-lkp@intel.com/config
+ Link to v3:
+https://lore.kernel.org/all/20231127145412.3981-1-quic_bibekkum@quicinc.com/
+
+Changes in v3 from v2:
+ New addition:
+ - Include patch 3/4 for adding ACTLR support and data for SC7280.
+ - Add driver changes for actlr support in gpu smmu.
+ - Add target wise actlr data and implementation ops for gpu smmu.
+ Changes to incorporate suggestions from Robin as follows:
+ - Match the ACTLR values with individual corresponding SID instead
+   of assuming that any SMR will be programmed to match a superset of
+   the data.
+ - Instead of replicating each elements from qcom_smmu_match_data to
+   qcom_smmu structre during smmu device creation, replace the
+   replicated members with qcom_smmu_match_data structure inside
+   qcom_smmu structre and handle the dereference in places that
+   requires them.
+ Changes to incorporate suggestions from Dmitry and Konrad as follows:
+ - Maintain actlr table inside a single structure instead of
+   nested structure.
+ - Rename prefetch defines to more appropriately describe their
+   behavior.
+ - Remove SM8550 specific implementation ops and roll back to default
+   qcom_smmu_500_impl implementation ops.
+ - Add back the removed comments which are NAK.
+ - Fix commit description for patch 4/4.
+ Link to v2:
+https://lore.kernel.org/all/20231114135654.30475-1-quic_bibekkum@quicinc.com/
+
+Changes in v2 from v1:
+ - Incorporated suggestions on v1 from Dmitry,Konrad,Pratyush.
+ - Added defines for ACTLR values.
+ - Linked sm8550 implementation structure to corresponding
+   compatible string.
+ - Repackaged actlr value set implementation to separate function.
+ - Fixed indentation errors.
+ - Link to v1:
+https://lore.kernel.org/all/20231103215124.1095-1-quic_bibekkum@quicinc.com/
+
+Changes in v1 from RFC:
+ - Incorporated suggestion form Robin on RFC
+ - Moved the actlr data table into driver, instead of maintaining
+   it inside soc specific DT and piggybacking on exisiting iommus
+   property (iommu = <SID, MASK, ACTLR>) to set this value during
+   smmu probe.
+ - Link to RFC:
+https://lore.kernel.org/all/a01e7e60-6ead-4a9e-ba90-22a8a6bbd03f@quicinc.com/
+
+Bibek Kumar Patro (5):
+  iommu/arm-smmu: re-enable context caching in smmu reset operation
+  iommu/arm-smmu: refactor qcom_smmu structure to include single pointer
+  iommu/arm-smmu: introduction of ACTLR for custom prefetcher settings
+  iommu/arm-smmu: add ACTLR data and support for SM8550
+  iommu/arm-smmu: add ACTLR data and support for SC7280
+
+ .../iommu/arm/arm-smmu/arm-smmu-qcom-debug.c  |   2 +-
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c    | 224 +++++++++++++++++-
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h    |  18 +-
+ drivers/iommu/arm/arm-smmu/arm-smmu.c         |   5 +-
+ drivers/iommu/arm/arm-smmu/arm-smmu.h         |   5 +
+ 5 files changed, 244 insertions(+), 10 deletions(-)
+
+--
+2.17.1
+
 
