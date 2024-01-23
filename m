@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-8005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5381C83971E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 19:00:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BC991839735
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 19:05:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7713E1C276E8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 18:00:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E1E131C25860
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 18:05:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D02A981AB6;
-	Tue, 23 Jan 2024 18:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67AA481214;
+	Tue, 23 Jan 2024 18:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WSyyzlYs"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QM2uDo9t"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CBA081AAA
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 18:00:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C51C8120B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 18:05:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706032823; cv=none; b=VihepoEqLpzQEhV6AW6RTRTdzeqTh8IlOPCB7LbxAPlI83kyPBgOb1IzW7aH2leLrBgM/PyeJS64pqN6gBN3Ef5Jf0WP+wCIx8z136NkpBISKrujVgD2A3hnDTGHi5ppQYPojqj0W1PakbJeNHaW0iBnDzpo2CN3huUnhZW1hY0=
+	t=1706033105; cv=none; b=oulTpZ8fSPjtPJpAOvCXsjlObX3kiMWVJnOGNyZpSFPM1KLFvmRPhlkJCJjFBDeevfINIHt1pSVAcKF2mapQC2tIX4iMz5SgOpRj1N2S81xxYQFSmLwuKj99Vx6Som0u6XB2VrtGNuh7Hxt05n47pu5esTapQR1Ht7sKOjGWcnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706032823; c=relaxed/simple;
-	bh=MtJ/HqiEUxScIQTHutFj2dKX6h9i2hpJKWEAmQsLjIw=;
+	s=arc-20240116; t=1706033105; c=relaxed/simple;
+	bh=gsXUKdJc7wRra5pgHweHxeJz0Mz3gnHrJb85noNs6uk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=J4pvI0Hjy41Gc1jhyqf2zeN2MNMEBQ2aZ/UmfkP5FrdGKe0exC//oEbopREusF7Ybq2/bf1ShTbAlRyZQArkbnYNCMMHMhv0tzawaVVPmnbiqhEJkYqvCUR28fV1RlxJHzlZKh+DywdQlf3YKhqbIVqVlhw3p81IzerrzdX/pIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WSyyzlYs; arc=none smtp.client-ip=209.85.208.182
+	 In-Reply-To:Content-Type; b=CL/EQcWTMw+i81gd+p2LI+qD/pJgf4J9+BPJB+E0Zj3iaYzF1nW4hTvbehANxD9j1VaetKKdlQ0/n6uczod203dN4sJvNcID5/fm0oZoFOM3sXEIb9zpNY/OZkaggE6WCuyHimzbvUJmkGJVkCEvJXuL1nCq1IwGPesqiBk29HM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QM2uDo9t; arc=none smtp.client-ip=209.85.167.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2cf1c3b23aeso1505831fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 10:00:21 -0800 (PST)
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-50e5a9bcec9so5127815e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 10:05:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706032820; x=1706637620; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706033101; x=1706637901; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=TnoRqNG9BylPXm1qN1DFm/eBxnmuuTJ523N0hc6cFDs=;
-        b=WSyyzlYsQvy0asmn23QNx/AhxlktRfpIZ4/nyEWv9tmccquD7/I/t3vVyG4qzGeZ84
-         Vi4Vg5hT+E6fwgoNZaEBS/HTqI0HykXm7dHJkFdp5kqdAZmvBk28ECHqZZh6zHYomLew
-         l6QLYPLkWfNAvj233fq5BjNKDg9p3Bt8FW2uLytHAD3Fffw/3MD7wNqpTpB/JkenPWqs
-         th6hJkuNv2douaf0kSGZhIAOsHBH6O6wV15sO26P0K6u8tB+ygqj1DUV3/qiFJ3VZj3Y
-         EKlDrfJ/ntqsFoMwO/SW+xHeU3QEzSF5pGlB7gFZ7RUIUb6s73qQD4C2p+4BlSzj7Qk6
-         wMRw==
+        bh=jhUxqAeCnBFu1QAeXMQuhkGVHepSO7xrReBByIkm20w=;
+        b=QM2uDo9t/xpX4oLnioITpfo6tG7CyRW+mnZDDyY9r7aTPR/rl8dXc8hIfst0GkCvd4
+         5p78UZZ7xGQRfRsYy3i4xBAaELdicZMY5jlKNDH6Fl6YN/N5szvJzaCxfBWAEz284lur
+         vNz9n8/A3SfwdPpU0OAGFVLcXqYwIz6AJl3Z16u2gyTzNon5tunJDzfmBrbswninorip
+         6a8uOgD5BFyUPIWL3PYVWGB/Hdc4BME/1f1+Tuds/OyMYR8yCWEpICfEOhxBAjMoQJwd
+         HP1FvCHLJSWBMOCiwMRoAbzsAvx1H25WowDS6PIZhgG4Jn2Td19WmS6X/Vv+dmjHv8Kz
+         LB+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706032820; x=1706637620;
+        d=1e100.net; s=20230601; t=1706033101; x=1706637901;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TnoRqNG9BylPXm1qN1DFm/eBxnmuuTJ523N0hc6cFDs=;
-        b=LN+HEtS+ZfulrbUaUUfAk0nmxWzqyenXbba85Ks4haD4niRSn7VjKPgoPZJ5RPbBAs
-         bT43K/A9d4MouICc/I30mL67GCXpWW43Ua/KwpGXtAPrMYMeIxXRXanxmksod6p/o/x8
-         r+urkAZsxtYVhkY46w0srYsyZWz1OImPgZAkPjXAE1/0qKpxxD0QqLnTZ1uC/l4YO785
-         krE8VfDW3uZe3tW0ojKha+lN7EKM9qd2MtJ6HiDQlS4Abotmw7pojBLyjCjpOpBxoHnM
-         FC1ViZ5lDcThoFzWf+e4AzpbppOC/PfoXgIgXQk8IpQVbFAVqOISPyO/gY3Sc2wRDZaL
-         XpgQ==
-X-Gm-Message-State: AOJu0YxqQ5XQNPEhftLLLr0aI05SHea27GxGuYkRHXB4e79UvaQyqXZn
-	HLTwnbIWqw0aFBgIPWPz3CrcqZS3Kqg14oTpwOoVExSQ6wUm6/6ZNjx5GbXhNMA=
-X-Google-Smtp-Source: AGHT+IFnEfC3oawTRwTitOxgaBUV+CKV0/WT2dwdHRRdkvC9cRcn6wvyopZjVpQbq/DqeMFnxofbKg==
-X-Received: by 2002:a05:651c:8e:b0:2cd:285f:7d39 with SMTP id 14-20020a05651c008e00b002cd285f7d39mr115795ljq.15.1706032820038;
-        Tue, 23 Jan 2024 10:00:20 -0800 (PST)
+        bh=jhUxqAeCnBFu1QAeXMQuhkGVHepSO7xrReBByIkm20w=;
+        b=GX09b49OhNE37nvxit9cGbNQp7jA7Muy7sSL0UPXq9+sNWYtx8okyQwihDM5QNc8X0
+         lp1dCLPjmXVfpcJFQCidIoO8eVY104VOwGGuJXQobzcVWZLDV9EDqkHxeRuyBpNHtTVD
+         +Vka4x1DEH1SbEevIO1qvDInsuZOs+iWyoUVqqUw1gXBSVFyMAZ+9K0w3ctF89TgaJxd
+         mJgRP2QAw3cbQs+LNbinJ+4L/SQna8HprA8bum+N5W1KWLHEZqlniEc5h++8lFS0yijC
+         hkeB8wORtmSz7+gbNsViXYh2b1GTLccmyQzNWNx9eiEMS7pyrl59hXE+080B3Bui6v/+
+         H6IQ==
+X-Gm-Message-State: AOJu0YxGK18HHAxHm0B6vUi/et/wRnmj3ks0P/jEtHX/Qia/OR0ExqC3
+	B4ybUPxwSHlrkqur5bf9ivS+XUuxsGtuPF0zWJDGimll1Zg96YZATfOruTMlKZE=
+X-Google-Smtp-Source: AGHT+IGUagvilGdAPFParze+DvIy1PHzFc4+kDXXDtaPTzsMuztDgG4YMCi6Uj1xWvA6rOePhkbkhA==
+X-Received: by 2002:a05:6512:3192:b0:50e:74e2:af58 with SMTP id i18-20020a056512319200b0050e74e2af58mr4121827lfe.52.1706033101479;
+        Tue, 23 Jan 2024 10:05:01 -0800 (PST)
 Received: from [172.30.205.123] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id f17-20020a05651c03d100b002cdfc29b46dsm1514699ljp.88.2024.01.23.10.00.18
+        by smtp.gmail.com with ESMTPSA id s9-20020a197709000000b0050ffd0a3728sm645760lfc.63.2024.01.23.10.05.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Jan 2024 10:00:19 -0800 (PST)
-Message-ID: <0069beea-72d6-4a31-8f8b-282dbdd4bf94@linaro.org>
-Date: Tue, 23 Jan 2024 19:00:18 +0100
+        Tue, 23 Jan 2024 10:05:01 -0800 (PST)
+Message-ID: <9d1c684f-51ac-4d9c-a189-940ff65e0cab@linaro.org>
+Date: Tue, 23 Jan 2024 19:04:59 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,88 +75,133 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Remove QDF2xxx pinctrl drivers
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: qcm6490-idp: add display and panel
 Content-Language: en-US
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Linus Walleij <linus.walleij@linaro.org>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-References: <20240122-topic-qdf_cleanup_pinctrl-v1-0-0c619ea25091@linaro.org>
- <8c9b157b-4698-70a3-57b7-c588998eeda7@quicinc.com>
- <CAA8EJprDk=HnqWJ_F5zdUKMPFPpx1RD9KN-KQP9yopP6LMh_fw@mail.gmail.com>
- <52479377-ff61-7537-e4aa-064ab4a77c03@quicinc.com>
- <CAA8EJpr2g=b8+M9r20KJoK+VVTabgctvB9eLmwivmi5qgBddFQ@mail.gmail.com>
+ Ritesh Kumar <quic_riteshk@quicinc.com>
+Cc: andersson@kernel.org, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+ catalin.marinas@arm.com, will@kernel.org, quic_bjorande@quicinc.com,
+ geert+renesas@glider.be, arnd@arndb.de, neil.armstrong@linaro.org,
+ nfraprado@collabora.com, m.szyprowski@samsung.com,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ quic_abhinavk@quicinc.com, quic_rajeevny@quicinc.com,
+ quic_vproddut@quicinc.com
+References: <20240116094935.9988-1-quic_riteshk@quicinc.com>
+ <20240116094935.9988-3-quic_riteshk@quicinc.com>
+ <20a8efd1-e243-434e-8f75-aa786ac8014f@linaro.org>
+ <CAA8EJpqQVuS+yqXQ2y5sNQrRVg7tcQAJ3ywsEjg+O=7TkUZWLQ@mail.gmail.com>
+ <99a9a562-9f6f-411c-be1c-0a28fc2524dd@quicinc.com>
+ <CAA8EJppj+cDnw7p4yANvF0FmEhX3+L5xUq8w3TeevAGhcpo1Yg@mail.gmail.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAA8EJpr2g=b8+M9r20KJoK+VVTabgctvB9eLmwivmi5qgBddFQ@mail.gmail.com>
+In-Reply-To: <CAA8EJppj+cDnw7p4yANvF0FmEhX3+L5xUq8w3TeevAGhcpo1Yg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
-On 1/22/24 20:23, Dmitry Baryshkov wrote:
-> On Mon, 22 Jan 2024 at 20:44, Jeffrey Hugo <quic_jhugo@quicinc.com> wrote:
+On 1/23/24 16:12, Dmitry Baryshkov wrote:
+> On Tue, 23 Jan 2024 at 15:43, Ritesh Kumar <quic_riteshk@quicinc.com> wrote:
 >>
->> On 1/22/2024 10:56 AM, Dmitry Baryshkov wrote:
->>> On Mon, 22 Jan 2024 at 19:43, Jeffrey Hugo <quic_jhugo@quicinc.com> wrote:
+>>
+>> On 1/16/2024 6:27 PM, Dmitry Baryshkov wrote:
+>>
+>>> On Tue, 16 Jan 2024 at 14:06, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
 >>>>
->>>> On 1/22/2024 4:57 AM, Konrad Dybcio wrote:
->>>>> The SoC line was never productized, remove the maintenance burden.
+>>>>
+>>>> On 1/16/24 10:49, Ritesh Kumar wrote:
+>>>>> Enable Display Subsystem with Novatek NT36672E Panel
+>>>>> on qcm6490 idp platform.
 >>>>>
->>>>> Compile-tested only.
->>>>>
->>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>>> Signed-off-by: Ritesh Kumar <quic_riteshk@quicinc.com>
 >>>>> ---
->>>>> Konrad Dybcio (2):
->>>>>          pinctrl: qcom: Remove QDF2xxx support
->>>>>          arm64: defconfig: Remove QDF24XX pinctrl
+>>>>>     arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 100 +++++++++++++++++++++++
+>>>>>     1 file changed, 100 insertions(+)
 >>>>>
->>>>>     arch/arm64/configs/defconfig           |   1 -
->>>>>     drivers/pinctrl/qcom/Kconfig.msm       |   7 --
->>>>>     drivers/pinctrl/qcom/Makefile          |   1 -
->>>>>     drivers/pinctrl/qcom/pinctrl-qdf2xxx.c | 164 ---------------------------------
->>>>>     4 files changed, 173 deletions(-)
->>>>> ---
->>>>> base-commit: 319fbd8fc6d339e0a1c7b067eed870c518a13a02
->>>>> change-id: 20240122-topic-qdf_cleanup_pinctrl-98e17cdb375b
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>>>>> index 2a6e4907c5ee..efa5252130a1 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>>>>> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>>>>> @@ -9,6 +9,7 @@
+>>>>>     #define PM7250B_SID 8
+>>>>>     #define PM7250B_SID1 9
 >>>>>
->>>>> Best regards,
+>>>>> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+>>>>>     #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>>>>>     #include "sc7280.dtsi"
+>>>>>     #include "pm7250b.dtsi"
+>>>>> @@ -38,6 +39,25 @@
+>>>>>                 stdout-path = "serial0:115200n8";
+>>>>>         };
+>>>>>
+>>>>> +     lcd_disp_bias: lcd-disp-bias-regulator {
+>>>>> +             compatible = "regulator-fixed";
+>>>>> +             regulator-name = "lcd_disp_bias";
+>>>>> +             regulator-min-microvolt = <5500000>;
+>>>>> +             regulator-max-microvolt = <5500000>;
+>>>>> +             gpio = <&pm7250b_gpios 2 GPIO_ACTIVE_HIGH>;
+>>>>> +             enable-active-high;
+>>>>> +             pinctrl-names = "default";
+>>>>> +             pinctrl-0 = <&lcd_disp_bias_en>;
+>>>> property-n
+>>>> property-names
 >>>>
->>>> NACK.
+>>>> all throughout the patch
+>>
+>> Thanks, I will update in the new version.
+>>
+>>>>> +&gpu {
+>>>>> +     status = "disabled";
+>>>>> +};
+>>>> Hm.. generally we disable the GPU in the SoC DT, but that doesn't
+>>>> seem to have happened here..
 >>>>
->>>> This was productized, there are some out in the wild, and the platform
->>>> is still in (limited) use.
->>>>
->>>> I'd like to see support hang around for a few more years yet.
+>>>> Thinking about it more, is disabling it here necessary? Does it
+>>>> not fail gracefully?
+>>> Missed this.
 >>>
->>> The problem is that... its support is pretty strange. I can see
->>> pinctrl, ethernet and quirks for the platform in GIC-ITS and PL011
->>> drivers. Is this enough to get the platform into the useful state? I
->>> can imagine that "QCOM2430" ACPI handle was used for USB hosts on that
->>> platform, but I don't remember when we last tested DWC3 with the ACPI.
->>>
->>> So, all this boils down to the question whether mainline (or something
->>> close by, LTS for example) is actually used and tested on these
->>> devices?
+>>> I'd say, I don't see a reason to disable it at all. The GPU should be
+>>> working on sc7280 / qcm4290.
 >>
->> Its an ACPI system, so you won't see all of the fun DTisms of a MSM chip.
->>
->> The platform was fully functional upstream, and had an Ubuntu
->> certification.  I run Ubuntu on the two that I have in my office.  I
->> haven't strictly checked out mainline in a while, but I could.  I still
->> have access to the documentation.
->>
->> There is a small, but active set of users including myself.  From what
->> I've seen, they've been happy with things.
+>> With GPU device node enabled, adreno_bind failure is seen as the
+>> "speed_bin" was not populated on QCM6490 target which leads to display
+>> bind failure.
 > 
-> Thanks for the information! It looks like it has a small but stable
-> user base. I think we should keep it, maybe ensuring that we are able
-> to test the kernel.
+> Excuse me please. The GPU node for sc7280 already has speed_bin, which
+> points to qfprom + 0x1e9, bits 5 to 9.
+> 
+> Do you mean that qcm6490 uses different speed bin location? Or
+> different values for the speed bins?
+> 
+>> Spoke with GPU team and on QCM6490 board, only CPU rendering is
+>> supported for now and there is no plan to enable GPU rendering in near
+>> future.
+> 
+> This sounds like having the feature disabled for no particular reason.
+> Both the kernel and Mesa have supported the Adreno 635 for quite a
+> while.
 
-Alright, please make sure it still boots etc. then!
+643 [1], [2]
+
+> 
+>> In this regard, what do you suggest
+>>
+>> 1) Disable GPU in QCM6490 DT (as per the current patch)
+>> 2) Disable GPU in the SoC DT, but enable it in other platform DTs. (This
+>> will prompt change in all the dt's and we don't have all the devices to
+>> test)
+> 
+> The second option definitely follows what is present on other platforms.
+> 
+>> Please let me know your views on it.
+> 
+> Please enable the GPU instead.
+
++1
 
 Konrad
+
+[1] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/25408/diffs?commit_id=b1e851d66c3a3e53f1a464023f675f3f6cbd3503
+[2] https://patches.linaro.org/project/linux-arm-msm/cover/20230926-topic-a643-v1-0-7af6937ac0a3@linaro.org/
 
