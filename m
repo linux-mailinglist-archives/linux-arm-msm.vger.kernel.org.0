@@ -1,141 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-7989-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7990-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 930B8839456
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 17:10:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9DBEC8394B9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 17:34:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4AF001F265C0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 16:10:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 518EF282C08
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 16:34:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3D0766B35;
-	Tue, 23 Jan 2024 16:09:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28CD26A01D;
+	Tue, 23 Jan 2024 16:34:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=8devices.com header.i=@8devices.com header.b="askbaJZJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AZPeFiH0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9CA66B2B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 16:09:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7FB47A5C;
+	Tue, 23 Jan 2024 16:34:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706026186; cv=none; b=Bt2Sv2SFZ3y6+qmgVr1pFaFpgMIMJStlB/NYA9OqONPT5MPzcNswHSZVXmVakxZ6JC3mOP8fOM7ge47+hzga18NJDtGKM2waC6TXAZflslxvQYc9S+0Vbg/d0p6/kwJVLJappYlQoAlDF0F9HjPEBDA2ZYOFmowx9lgWuxvodqI=
+	t=1706027664; cv=none; b=pLtzSzY/h+XFYVHKcNbHZlJ2kyi068uyhuiG2nfu/985RUeUDaohSIRPX3hX+FkuWyBwj9E8WI0eMA/LM9Wajo94z7FBmCcdYW1QE7iKTIBd4nKjF4RRRS5y5y12f0vbrYBvtZD/f7H5E3RWAmmVKFDrsJA/rXt7PtBDmEgHrvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706026186; c=relaxed/simple;
-	bh=3kUIcHMZp9ESusmAFQXmdY4T9ktzKZmqQiYsfpE2vKE=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=ppfUZl9H7OqpdjeKRSC9meSoga3lBr9ZLV3DSiqd6IlWutrdl7XRRSrCvwN2mroa30UCkoKQKn1efXltCsUYP4ubxXwfCaAUOX8G+KlfU9PJ3RGlKSAtsHQIO9WSG6KvITycGJ33+J/21xW/7JVKJDBgV5McK2LnZpmuIGmUAmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=8devices.com; spf=pass smtp.mailfrom=8devices.com; dkim=pass (2048-bit key) header.d=8devices.com header.i=@8devices.com header.b=askbaJZJ; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=8devices.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=8devices.com
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-50e6ee8e911so6041771e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 08:09:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=8devices.com; s=8devices; t=1706026183; x=1706630983; darn=vger.kernel.org;
-        h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=9aeZ9T+ieCTjHLP9T+AlBqZqFSYlGNv4TaAS0kSX4XE=;
-        b=askbaJZJl8eLH+SG4IGtvx2/Mc1OHptftXBj/5S7ugFVaxO8dtnrtwOSrhS0o/Rn6e
-         cCuhvvDSGVcyTTGmu8rLkvVRytjQiYnEu3V8Pm6h7tUUq7TBozdYY108uQtQbie6T/PL
-         CZFoKVAxh+1qaRF06NfvznmQixtPQPOF6bneY3WEvDrbOsQPOHJBXHwWWmZmUrodtcaT
-         hYr1EYyIIViPVvzIZ595TrbHwabh4GIPYWAunw4xExOMCUyFbnEyc15ZdJK/Uwx4lsp9
-         XvjNJkkAs6Vvg3PNNRot5pKNgqNC+eokeZiThA2o8M4ZrpmtTobI+1LT8ol5N9yCOdLU
-         1Vsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706026183; x=1706630983;
-        h=references:in-reply-to:message-id:date:subject:cc:to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9aeZ9T+ieCTjHLP9T+AlBqZqFSYlGNv4TaAS0kSX4XE=;
-        b=bRECqFOm5QMSUBiAqHCcZ9R/VV44icxC1QiblmYSRNwpX3xCXiuWdj4blho2w/D7+9
-         YfEAI7z/C0jUMZWJSO0VeM1v1jDBWUXsIXk6DcJ+g5LhT6Kelq0Za329lnryR/jpSS8h
-         kfnrtC4ZLb428ALiDOx3t2f/1WsPWk3Nnn/4eLLIa3s22EJySnMO1fciL0CGw6fFAPcu
-         Dq4wpt/QicWQr2cCu4WcmVYEEEHhZZ6gMk1Va0KbNCTdVGDDTuANu7/9W2RWVHs5t7OD
-         d3y8oZfSLWW5pr0SLe3Tgq0ivWhxDavKKl8DVG+0BVL27KRXZNCgc5srX5YJ2G4BoqWm
-         cmgg==
-X-Gm-Message-State: AOJu0YwbVgdw+qo9RXdE+2qutKsa2C/6CMPF12dfaFpIZ8G6Yu/+ZlQh
-	hst9ZRxhcHydOXy2ptq7jbs6/4qlbVkJzNIvXc+vW9p5u62ng3vPg5pSZnokD/c=
-X-Google-Smtp-Source: AGHT+IGFvyHOYbubVCuNY4+CxwTD27nCRHbuPg5Mi/FdVx2PZLy5oltclL6DN3yH53ibrsQ5Gwo47g==
-X-Received: by 2002:a05:6512:a90:b0:50e:a9da:7b2b with SMTP id m16-20020a0565120a9000b0050ea9da7b2bmr3401307lfu.94.1706026183207;
-        Tue, 23 Jan 2024 08:09:43 -0800 (PST)
-Received: from mantas-MS-7994.8devices.com ([84.15.37.222])
-        by smtp.gmail.com with ESMTPSA id q20-20020a0565123a9400b0050e7be886d9sm2336950lfu.56.2024.01.23.08.09.42
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 23 Jan 2024 08:09:42 -0800 (PST)
-From: Mantas Pucka <mantas@8devices.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Baruch Siach <baruch@tkos.co.il>
-Cc: Mantas Pucka <mantas@8devices.com>,
-	linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] phy: qcom-qmp-usb: fix serdes init sequence for IPQ6018
-Date: Tue, 23 Jan 2024 18:09:20 +0200
-Message-Id: <1706026160-17520-3-git-send-email-mantas@8devices.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1706026160-17520-1-git-send-email-mantas@8devices.com>
-References: <1706026160-17520-1-git-send-email-mantas@8devices.com>
+	s=arc-20240116; t=1706027664; c=relaxed/simple;
+	bh=bfhzVn1hP+QZBnypxJ+88hpIKpoq9xX/idRXag47xwU=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=ULpk4ChII745FCikDiGPknQpdbq5dIl1+z1c/cRehN9o8M+38HwOIOIzrHzSJQWHnOX5B1qkhmCTB+kRpwbEQMGzfGTeN6pvklgFilpO3H3KZ9ULZ16glHUZXfGhL90o7zKPef4EEHlehyUksi5LHaMzw9owbIUxJC3hT02XFsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AZPeFiH0; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40NEtAdl020663;
+	Tue, 23 Jan 2024 16:34:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding:to:cc; s=qcppdkim1; bh=mGsEKb/+NbwmVL
+	ChAgEgiU/b6/YVRfzxJPwJ1D6l1eQ=; b=AZPeFiH0TTDCgK624g8NfMemWaFLp9
+	S1UEXxHMqlnqBbZetrxhlrUDLppvK2y72loaWhbP1WOKX5q3bUHoV+MYdPjVEi9M
+	RMPEUev4PJKrFggIOnyFi2R++4otZFQ96epsXgonq9QuZv5vZzf9Bnr/YQ99kdwM
+	owGrxCwV+Rk4xEoynMlIIi1gArLH90A/fQ+kwLjvSqnpvwRH/g7AqU3fNQLq8pCZ
+	rZ3G7te08/PVz+7O5bVZbXiliTrgaMhFOt6owzZRWfqsjoNGCstyNUd8reS/vyv4
+	emjwYpTvsDh1ora3fPAFVvnFqJT70cr1rnpWf3gzWpEFKFGh1vpnRlcA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vt388a1t0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 23 Jan 2024 16:34:18 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40NGYHKF009508
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 23 Jan 2024 16:34:17 GMT
+Received: from hu-skakitap-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Tue, 23 Jan 2024 08:34:13 -0800
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Subject: [PATCH 0/3] clk: qcom: gcc-sm8150: Add gcc_parents_0_ao support
+Date: Tue, 23 Jan 2024 22:04:06 +0530
+Message-ID: <20240123-gcc-ao-support-v1-0-6c18d5310874@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAH7qr2UC/x3MMQ6AIAxA0auQzjYBlMWrGAfAil2EgBoTwt0lj
+ m/4v0KhzFRgFhUyPVw4nh1qEOAPewZC3rpBSz1JpUcM3qONWO6UYr5wc9YZo8hOu4QepUw7v/9
+ wWVv7AO388/xgAAAA
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Ajit Pandey
+	<quic_ajipan@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        "Jagadeesh Kona" <quic_jkona@quicinc.com>,
+        Satya Priya Kakitapalli
+	<quic_skakitap@quicinc.com>
+X-Mailer: b4 0.12.4
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: d2ktCOWIBol5Uv9V6ttD2ehKIFYEKvAh
+X-Proofpoint-ORIG-GUID: d2ktCOWIBol5Uv9V6ttD2ehKIFYEKvAh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-23_09,2024-01-23_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=464
+ malwarescore=0 phishscore=0 suspectscore=0 mlxscore=0 lowpriorityscore=0
+ adultscore=0 bulkscore=0 impostorscore=0 clxscore=1015 priorityscore=1501
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401230121
 
-Commit 23fd679249df ("phy: qcom-qmp: add USB3 PHY support for IPQ6018")
-noted that IPQ6018 init is identical to IPQ8074. Yet downstream uses
-separate serdes init sequence for IPQ6018. Since already existing IPQ9574
-serdes init sequence is identical, just reuse it and fix failing USB3 mode
-in IPQ6018.
+Add support for active_only parent data for gcc_parents_0
+as some of the clocks under it are crtical and vote on XO
+during suspend.
 
-Fixes: 23fd679249df ("phy: qcom-qmp: add USB3 PHY support for IPQ6018")
-Signed-off-by: Mantas Pucka <mantas@8devices.com>
+Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+Satya Priya Kakitapalli (3):
+      dt-bindings: clock: qcom,gcc-sm8150: Add support for bi_tcxo_ao
+      clk: qcom: gcc-sm8150: Add gcc_parents_0_ao support
+      arm64: dts: qcom: sm8150: Add bi_tcxo_ao support for gcc
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-index 05b4c0e67896..6621246e4ddf 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-@@ -1621,6 +1621,24 @@ static const struct qmp_usb_offsets qmp_usb_offsets_v7 = {
- 	.rx		= 0x1000,
- };
- 
-+static const struct qmp_phy_cfg ipq6018_usb3phy_cfg = {
-+	.lanes			= 1,
-+
-+	.offsets		= &qmp_usb_offsets_ipq8074,
-+
-+	.serdes_tbl		= ipq9574_usb3_serdes_tbl,
-+	.serdes_tbl_num		= ARRAY_SIZE(ipq9574_usb3_serdes_tbl),
-+	.tx_tbl			= msm8996_usb3_tx_tbl,
-+	.tx_tbl_num		= ARRAY_SIZE(msm8996_usb3_tx_tbl),
-+	.rx_tbl			= ipq8074_usb3_rx_tbl,
-+	.rx_tbl_num		= ARRAY_SIZE(ipq8074_usb3_rx_tbl),
-+	.pcs_tbl		= ipq8074_usb3_pcs_tbl,
-+	.pcs_tbl_num		= ARRAY_SIZE(ipq8074_usb3_pcs_tbl),
-+	.vreg_list		= qmp_phy_vreg_l,
-+	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-+	.regs			= qmp_v3_usb3phy_regs_layout,
-+};
-+
- static const struct qmp_phy_cfg ipq8074_usb3phy_cfg = {
- 	.lanes			= 1,
- 
-@@ -2571,7 +2589,7 @@ static int qmp_usb_probe(struct platform_device *pdev)
- static const struct of_device_id qmp_usb_of_match_table[] = {
- 	{
- 		.compatible = "qcom,ipq6018-qmp-usb3-phy",
--		.data = &ipq8074_usb3phy_cfg,
-+		.data = &ipq6018_usb3phy_cfg,
- 	}, {
- 		.compatible = "qcom,ipq8074-qmp-usb3-phy",
- 		.data = &ipq8074_usb3phy_cfg,
+ Documentation/devicetree/bindings/clock/qcom,gcc-sm8150.yaml |  6 ++++--
+ arch/arm64/boot/dts/qcom/sm8150.dtsi                         |  3 ++-
+ drivers/clk/qcom/gcc-sm8150.c                                | 10 ++++++++--
+ 3 files changed, 14 insertions(+), 5 deletions(-)
+---
+base-commit: 774551425799cb5bbac94e1768fd69eec4f78dd4
+change-id: 20240123-gcc-ao-support-dbab551ea4f0
+
+Best regards,
 -- 
-2.7.4
+Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 
 
