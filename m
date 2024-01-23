@@ -1,128 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-7997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC63483958E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 17:59:23 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A7538839593
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 17:59:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9518A2930FF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 16:59:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 45F691F31D0D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 16:59:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0EDD81AC3;
-	Tue, 23 Jan 2024 16:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62954823B5;
+	Tue, 23 Jan 2024 16:54:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=8devices.com header.i=@8devices.com header.b="Y1qzR435"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="voqO2XvU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9953281AB3
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 16:52:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE13B81AD4
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 16:53:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706028745; cv=none; b=MYSzPCLbQUBHbw2YVrn35bACQtMUTmsFkr87aEcn4yTRoQd6hEFemnpjstT/kQpRJW4qDhi60FBcaXVCzGtoj2PHaH7z6HSy1zpRyNaRECCSxYwl05vxPbBCB0oIWJSXI6yztJkTILLy8Dpp03AC6Zzl8vjzb3x/lYUgzfvjaLk=
+	t=1706028840; cv=none; b=oYt7sRDMhL/K+QqYCkEw0q2nq/J+qUsOxo9APfmAsO5tCU/x+yDsw8sr5g5qYBDlO4O1ZCammEBxxNvgn9M6cSjaFIAtLePtFYHOavfRw3lJOhG5TemQgBc+MDfTCDdjhGjduxTlS7lx5KuAN29IQMUTqD/6lPDhOpIC2B/8Vn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706028745; c=relaxed/simple;
-	bh=FqxuIhOKwqFFkvdg6FWTdDc61t6BPsqD82lPrYLR5iY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dAMtj0v1hK64AAi3ZUKb90QRVLJMnHBDJeaNKo0Q68iGTLDJ0C/NaKZVf11pooI++EZIgqN6m2vrf3XAdHTdy4Q6MqXY1lcPJLflgDhrVId8RqCdcX3bKdlr5qljmURaavBTAwUWSLIMuOozN5cFGZc9y0Lmfk7SKIeaiBrBUU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=8devices.com; spf=pass smtp.mailfrom=8devices.com; dkim=pass (2048-bit key) header.d=8devices.com header.i=@8devices.com header.b=Y1qzR435; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=8devices.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=8devices.com
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-50e766937ddso5354902e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 08:52:22 -0800 (PST)
+	s=arc-20240116; t=1706028840; c=relaxed/simple;
+	bh=pooQ69oU2DoOocMMkeJ4cpqIQG2BPmnIao2wByNaHUI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Gj6B0qBA6zb4FdGpZA4/+p8DqxSEw2ogEZg6ndejFJgYJaqP4zX3MAwVzZXZ6jVvANpT7g+DKq0xdotCRODwJYHatLez8XEC+QzdiU07F1vQgpRPB8bo1QB68OFYwRjKCdsAU2QT3hVcx2iPmJITxeNCYYJSZ+LMm04WmJtny+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=voqO2XvU; arc=none smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-5ff7dd8d7ceso39692397b3.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 08:53:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=8devices.com; s=8devices; t=1706028740; x=1706633540; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kXm+8B2oUV6NHB3wV69TO5cqSgcr9Tcvgdp6j8iimmU=;
-        b=Y1qzR4359Eotry6fI+O0r3gbmmP+2AJmM4h2QMFt/spL+8ESbhDRl9uI4UZVH+qfQe
-         3nTXfEBYZy0XKBiMhnEpERKpCGO27GDF2wceo/9RE8FHA20FQBZGVKy1dTJJejeLC/gM
-         IN01G135vUgcqE+QK7z2KDfjBAxu7jbFubl4WtpsbDPEG/6WjuYfxnVytGxotJp+zDi6
-         8P7eXNVcyhgwDDOktbP9tyWak6Dn3D+Fg1bHbyrn2BmcyLEZSkqPLZJmoHFSG3tKr8h/
-         bnNL+0GsQC66gqmRQ0elt0jf2p8orllYn4qRC015xUgfwZXi1AMpZpuEWTA7vnE3774i
-         /OxA==
+        d=linaro.org; s=google; t=1706028838; x=1706633638; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=w7Kpr4OnTCJukmd6IPUzA5zkXhmfPHzmd2uoemc3Jdk=;
+        b=voqO2XvU0xmSWWfJt9LGbijZ1wC5J5sbxo+wF0ufNsI6va4x+SZ0YSCafc0yKkM73b
+         3Er8Nab1E1+Igbph1iDoeybupfjE8hFfMVeJspfU8MuWSHlfTAfcbg1zph9VDQ2a4MWL
+         Cac4jg9idfOBPU3IKvxVYxjIs9L1BZuxN7cIhYjtMtpgHXYydRXoB5U5i6HsGxfqKU/y
+         m1tyM6b1E9YqzJQ2+VOu3Mup6U3Tao0AEeeqYurQXg+GOh+zCLMZWfWpYXM9H65XBzsv
+         jSXoraQyghJcGktdl7lXRL1X/wzfA5cYlhz+32VlhD+6QnxgdZW3vk0vdYlg6wWkpDIH
+         NqPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706028740; x=1706633540;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kXm+8B2oUV6NHB3wV69TO5cqSgcr9Tcvgdp6j8iimmU=;
-        b=hAiRfjUKobr/aAG2X0YSusYYRQnTPLvSshy6As/JpiKrirYR0PCY9gY0QTmMsr/NTQ
-         LxcC6YdlVbDoO37oR4UL0GXNI1dM+wXOhcSYOE8PIdvOwB9dcZlLVA3I/flj0zKslo86
-         f/d+SlhnJAusF6W+armS5LQ1YbjNHo5+HT4IWOCVn/F27KXP9ArJD7xh6/cKYJJ5Gq7Z
-         ZoXSojbhLzUNo0bhwwHFWV4nfplE2h/gAAeb45trHVXNeOBnnE6H3bvB1cxTpJDsFXM9
-         ZHbFmReK/dBnYuE8Q37TUigDKLIkJu/ooxhSpQa8M4ZeCvBZ4cPaX6QuXCgN2kjZcQbv
-         760Q==
-X-Gm-Message-State: AOJu0YysHSER3vziXc+LjbNj6iElz1+K9FaQbsnJHsAUurK3HGbbMpvt
-	UUR7cdHiZp9Y9wGP2GJEYb9F9DcoMgT1urb2/WA/nGTy+UMlYvVxRv/tcUPpv58=
-X-Google-Smtp-Source: AGHT+IEChfJWs7cJSnwDKWXR/KKorWCddOvN+gTAgT9MMdF8s9TVHEO/yl02oBF4vRBhKurbwB9fIg==
-X-Received: by 2002:a05:6512:3050:b0:50e:30a8:4c8e with SMTP id b16-20020a056512305000b0050e30a84c8emr3204334lfb.43.1706028740692;
-        Tue, 23 Jan 2024 08:52:20 -0800 (PST)
-Received: from [192.168.2.155] (78-62-132-154.static.zebra.lt. [78.62.132.154])
-        by smtp.gmail.com with ESMTPSA id g21-20020a19e055000000b0050e94329e7csm2407169lfj.269.2024.01.23.08.52.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Jan 2024 08:52:20 -0800 (PST)
-Message-ID: <57b3be8b-0953-4686-b370-6d395b8124ff@8devices.com>
-Date: Tue, 23 Jan 2024 18:52:19 +0200
+        d=1e100.net; s=20230601; t=1706028838; x=1706633638;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=w7Kpr4OnTCJukmd6IPUzA5zkXhmfPHzmd2uoemc3Jdk=;
+        b=nNmxA4PUaC/zYpsOmAY8u2tCABKu6EISfsHvHG95MPine6CVV/CVku+XeBk6IHDUU4
+         gH71PaTP39T1eTKRK8NAbzHgFDKtsB9NJ1PVv6smjkarbe/PL/28u0dLIVmQyH9iw81V
+         fYFQ5g6r/o3imy6w/PUGbckXAFBWxuK+0b8eL2vqjwiDxeQYbKWvW6j4FuvTjhNd/m9u
+         +zjYAC9Kb0vvtE0QM/7r46ey2/y7pE0+pKZ5o69Db0nAss62EVurxluYnD7w8ABc03Kc
+         3MS3cpQyR3M0jJqYZ6PUgP35UHFoyBwvIBzLwJNbZQnlDE4gzSQgfcxn1urB0bLXABt/
+         CrIw==
+X-Gm-Message-State: AOJu0Yyj8uw7SF9tpg26a2GCv8753jdR807NFKEHgIgrk0HS0lrJEeEB
+	PWoGHQOPeyKPFZVuHfo5SlIenHfmEnDlTQP1b78iYfS3rnrjsyskyDvDICZ68D0QtzPukHdQdQZ
+	RUgtojiZ0XI59cuRqMiArSZbSgOLCjmiSCfV8vA==
+X-Google-Smtp-Source: AGHT+IG6yH0HyJuDZxDw1e1dK7G/Xy5v2cIQbXYLFfwffB4lOyIXbr2o9XW/hXlmMP+niub/q0gByneRaxyxeM/Hosc=
+X-Received: by 2002:a81:7c87:0:b0:5ff:9128:d314 with SMTP id
+ x129-20020a817c87000000b005ff9128d314mr4701207ywc.105.1706028837907; Tue, 23
+ Jan 2024 08:53:57 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] phy: qcom-qmp-usb: fix register offsets for
- ipq8074/ipq6018
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <1706026160-17520-1-git-send-email-mantas@8devices.com>
- <1706026160-17520-2-git-send-email-mantas@8devices.com>
- <CAA8EJpqRvLE3pjkALv_hP9UJjFmEhni_vU5RDYovbpmjv-Sy-A@mail.gmail.com>
-From: Mantas <mantas@8devices.com>
-In-Reply-To: <CAA8EJpqRvLE3pjkALv_hP9UJjFmEhni_vU5RDYovbpmjv-Sy-A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20240118155711.7601-1-quic_ninanaik@quicinc.com>
+ <rq2dnfh6ctn5gbf3o3op5ywxx7zhx6r5sh5ykautye56o3p4dg@rjttk3rr65ld>
+ <20240119191144.GR3013251@hu-bjorande-lv.qualcomm.com> <CAA8EJppLNFReZn1HK_radSkKkf5L584fx3FCuqG0FoUt4+H=nw@mail.gmail.com>
+ <Za5xj8S3Gs7N-UUc@x1> <20240122200237.GB2936378@hu-bjorande-lv.qualcomm.com>
+ <884f92ac-4d1a-9f0c-29ad-9d5833f10863@quicinc.com> <CAA8EJpq74G7Et=vuc-K0y_wKCEiM0=YVyb7TcosAnbvOFMWDMg@mail.gmail.com>
+ <20240123160203.GF2936378@hu-bjorande-lv.qualcomm.com>
+In-Reply-To: <20240123160203.GF2936378@hu-bjorande-lv.qualcomm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 23 Jan 2024 18:53:46 +0200
+Message-ID: <CAA8EJprd3QibK=5JJEo=EKgRwXsveAhD+S0ZPJDoNCmgz-axAw@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: Add new memory map updates to SA8775P
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: Trilok Soni <quic_tsoni@quicinc.com>, Brian Masney <bmasney@redhat.com>, 
+	Eric Chanudet <echanude@redhat.com>, Ninad Naik <quic_ninanaik@quicinc.com>, andersson@kernel.org, 
+	konrad.dybcio@linaro.org, robh+dt@kernel.org, 
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	quic_psodagud@quicinc.com, quic_kprasan@quicinc.com, quic_ymg@quicinc.com, 
+	kernel@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 2024-01-23 18:42, Dmitry Baryshkov wrote:
-> On Tue, 23 Jan 2024 at 18:09, Mantas Pucka <mantas@8devices.com> wrote:
->> Commit 2be22aae6b18 ("phy: qcom-qmp-usb: populate offsets configuration")
->> introduced register offsets to the driver but for ipq8074/ipq6018 they do
->> not match what was in the old style device tree. Example from old
->> ipq6018.dtsi:
->>
->> <0x00078200 0x130>,     /* Tx */
->> <0x00078400 0x200>,     /* Rx */
->> <0x00078800 0x1f8>,     /* PCS */
->> <0x00078600 0x044>;     /* PCS misc */
->>
->> which would translate to:
->> {.., .pcs = 0x800, .pcs_misc = 0x600, .tx = 0x200, .rx = 0x400 }
->>
->> but was translated to:
->> {.., .pcs = 0x600, .tx = 0x200, .rx = 0x400 }
-> Even worse, it was translated to { ... .pcs = 0xc00, .pcs_misc = 0xa00 ... }
-I was referring to qmp_usb_offsets_v3 here as ipq8074/ipq6018 did use
-them, not qmp_usb_offsets_v3_qcm2290.
+On Tue, 23 Jan 2024 at 18:02, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
 >
-> With this fixed:
+> On Tue, Jan 23, 2024 at 08:23:37AM +0200, Dmitry Baryshkov wrote:
+> > On Tue, 23 Jan 2024 at 04:58, Trilok Soni <quic_tsoni@quicinc.com> wrote:
+> > > On 1/22/2024 12:02 PM, Bjorn Andersson wrote:
+> [..]
+> > > As Brian M mentioned earlier, we want soc vendors to submit the support
+> > > for their SOCs and platforms on top it as early as possible and it means
+> > > such memory map changes will continue. Even memory map changes
+> > > continue even few months after the commercial s/w release in certain cases
+> > > due to critical bugs were found in some usecases which warrants the changes.
+> >
+> > So, can one handle such changes? Are we going to publish a list of
+> > kernels to be used with the corresponding firmware images? Then what
+> > if the developer wants to update just the kernel? Just to get this or
+> > that non-platform-related feature. Or vice versa, what if the user is
+> > stuck with an older kernel because some driver gets broken in the main
+> > branch (which unfortunately happens sometimes)  Or what if the memory
+> > map patch gets backported via the AUTOSEL process?
+> > Unlike the Qualcomm binary distributions, the firmware and the kernel
+> > version are no longer connected.
+> >
+> > That's why I keep on saying that memory map is an ABI. If it gets
+> > changed, it is a completely new, incompatible platform.
 >
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
->> So split usb_offsets and fix USB initialization for IPQ8074 and IPQ6018.
->> Tested only on IPQ6018
->>
->> Fixes: 2be22aae6b18 ("phy: qcom-qmp-usb: populate offsets configuration")
->> Signed-off-by: Mantas Pucka <mantas@8devices.com>
->> ---
->>   drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 10 +++++++++-
->>   1 file changed, 9 insertions(+), 1 deletion(-)
->
+> This is only a problem because we think the DeviceTree is a part of the
+> kernel. If we actually tied the DeviceTree to the firmware - as it was
+> intended - different firmware versions could come with different memory
+> map.
+
+Yes, up to some point. Because then DT gets incorporated into U-Boot...
+
+> The one exception would be any remoteproc/pil firmware that is not
+> relocatable, as these are distributed together with the OS (in some
+> form) and not the boot/security/etc firmware.
+
+-- 
+With best wishes
+Dmitry
 
