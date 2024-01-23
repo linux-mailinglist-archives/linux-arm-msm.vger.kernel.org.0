@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-7937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB330838DB5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 12:43:17 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 88DCC838DDD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 12:50:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8E40C1F23508
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 11:43:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BBD201C212D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 11:50:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B432C5D8F5;
-	Tue, 23 Jan 2024 11:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8BE55D8F5;
+	Tue, 23 Jan 2024 11:50:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V1h+dgnf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NmfyhidD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B33F5D74F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 11:43:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E09B5D8F1
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 11:49:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706010187; cv=none; b=I2s615K3pKAZQsS6Buwm/jNKyo/Fg5RF39Uyhb/Q47QxmNbOGxCNrBh8lEaGO3QOBA0dHDqb4WDwhBe+q8B3UKK9ncLu6KjvFRMQNAxeH/GOt5paPqP6xorT0LygzmRH2Gf/0CCWGOPa0VeFI/Sr4Ck6iyfC53twHkynBckaaIE=
+	t=1706010600; cv=none; b=Uo6CjlIE/GuOxuHEykHm6a/EZkLKQwwbhDG11FFEZk4N1oMMFvW8nifHXe1KK1/ZH/lGNU1Se75rt/lYDzi+Yry6mQGwSiSPQWU02fsV5UAWQV4iCncli4jiJGol6tDRqg7yXxFzqOiGxod9hVZN7olXliLmLW8SLWzQUx45BnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706010187; c=relaxed/simple;
-	bh=yD5zgikaBnzqRFckUp4Iw29O6Q9Cu/bTBJbJ1D6g47o=;
+	s=arc-20240116; t=1706010600; c=relaxed/simple;
+	bh=5bC09vgD7VmrESs1alLhu6EpMuDiGscc90Ewm/A6g1w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Xfx5kQSyE8b8j0tlaPdxu+c2u6Pq8wC6DcZXZRXZfb40Amj5w+UAFnyfhFLuqjV7GpfFMuk2uCJBgQHyhfEBAVd9zaPy6MsdDuqByMxQd1vhfZKM9ipHJAbj96Stg0Srffu8/X/1aeZjCqxkMGC4gxTQtD+nlRzGx2lPSXMY2Qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V1h+dgnf; arc=none smtp.client-ip=209.85.218.43
+	 Content-Type:Content-Disposition:In-Reply-To; b=GBAk+cRtDXPCS/rZogIRbn8vT2miNfuERXlmo3BboWqCF9rRGFQOoac27OPTkoN5pS4ICqNBUhOtcOj6mHoc5EwvF1Qfzkx9E8HN1LtXOJb19CujO1qm6M7sL8+j5O1Z3Ax9fTEvJuoKYdkmN8+NM3SUrIRZsMCg1ExV5u+0GVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NmfyhidD; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a298accc440so457202966b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 03:43:04 -0800 (PST)
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a28a6cef709so417964466b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 03:49:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706010183; x=1706614983; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706010597; x=1706615397; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=rCBz3mYv0AakBZqsbV887sBgjYgjKky8SqdijPrpvLA=;
-        b=V1h+dgnfOmdGp+fkvd/vqG/nSF2tHTDNQjcgkv+N4qbtZ55BenntJPRZxPifaAvYMx
-         D/4XwKXBS/okr2bG5D2R5r9HG1eEK3XbLEz8N7SQH3HPbvvlpGTZ2a0HHp1M14+q5eFG
-         kZmvq3J2eRWJJqVcNYHEA0W+HJp2EoDZZP3bGM3byOYK2av8hloVDIo8fa0W/RbAvpY/
-         0yEOd2ZuVr+FuWXw8VmZ4dzR47mDoXYFqV4NgR5LDBymZpLEfMbVt6LDvMSdAiOEPT/v
-         c7jQvWjtOPfAw2CIAXl/kRWM36ug8dLX2FW8CgUq2dwQqbyYtJ3QiQ7vfxTijIPGEC02
-         3ByA==
+        bh=Nl5aSgUhW5224Zb5I6h7KA4cDC9AhC2LWUB6hKUEnbY=;
+        b=NmfyhidDi7pfjvIDWileBSr6xJX2+TiBCgHE4fjgI3IoD3sovX+0yL91dT+83OsZ1h
+         LXt9d79yMLy/50uBuIiQ3kG0cb+0y6T7eOqcgXweXSihBEVNmpMJFVwj81TR7UWZ75jM
+         V4QU+4lLBEq/ZpACpNTjLA4JAMj7qyWuKvrghPWfHqUqA+1teVfwYQ4siazilG93etn4
+         XeG68TOPfEBDimlAkFQfz084a92idhGbu63SeBa/k9pK3oA7dQuH52agwyGIQtRxzQFW
+         xk4F/ji4d5rJbzvdFkDcInE6AF+DvZKsVyWnU+tlLRkHY9wFm0C2GnK3bCEmcfKe24D8
+         fQ2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706010183; x=1706614983;
+        d=1e100.net; s=20230601; t=1706010597; x=1706615397;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rCBz3mYv0AakBZqsbV887sBgjYgjKky8SqdijPrpvLA=;
-        b=RhAAEF7m44ChznhAP5VFwunkTQCVIhccRyLMVqXyP53XSr/nIGpsNvne/QvRMhg+Vj
-         tcs5Y8eNrjVtzzPQY6F8AwYxta1lvNhXWh7V3DgZxjUOlMC1nx5JHtWX0cMmE00QL7RK
-         TRuVxtkuJ5CjDC8I6M/05a6gM0nViH6CbASdGbZ8O4ThPPcFHFwrkT1M8fAd8aGPzQ+I
-         oflIr7IbVW51ySQoEatxJPBcaGw6I3y1jOV89/IBUKAnq+HxDQqCkjzv6LIRlnE40AKD
-         ppGSeyHTqzy0yftDlcEW49yJtSxMEAHIts9PCe4+S+3rGOz/OsmQ1AZ4tu+ytK4mqYF1
-         3YLA==
-X-Gm-Message-State: AOJu0Yxdj3l8HRkx+fecPO8+LhIudO9H9NuK8DapDUbM2kNyEUPDTvyf
-	9djLpMQcC6Uj34U+glDyDkoULMWp/i8JOWyB3r9qumbiDNXeRga21rCvwvMJVok=
-X-Google-Smtp-Source: AGHT+IFyov8dO82PiLmNVMmgfIb+vNpzx5fstoBpC7KEjzuH7yt3y/nlkS6ebQk5bLYliqGYMX2O7w==
-X-Received: by 2002:a17:907:c001:b0:a2f:bf0e:ed99 with SMTP id ss1-20020a170907c00100b00a2fbf0eed99mr3629890ejc.86.1706010183301;
-        Tue, 23 Jan 2024 03:43:03 -0800 (PST)
+        bh=Nl5aSgUhW5224Zb5I6h7KA4cDC9AhC2LWUB6hKUEnbY=;
+        b=B9A+Xhr6y94+g80B/FAYLfHp3bmH6aXBh3MjII3J/HUTe8y7qsVLRbef/pi1c442u3
+         C4pwWdhcxVIC97X3XtMh1qV8wUwgIvl2titpYmFZi7O/p62PluLYs6VBtsAKl/QIM6RP
+         bhT0LXHxQknr/nEScPxzD5qJCGz4ILfiqCCq2VcvSFvBcTUbjSsMcqgeGTLDb5pa+LXn
+         ATcx2BTO1syff3ba/bO0ONBOxdMoxOEfS4dz5FzoalhQjb60Fv4w1grTESb9O9flFQEG
+         M/s7RDlBGXNxXPVjGG0HpoVRnCZi1FtpIQXRSsmz1iPtkjztcKgsG+6SpRzuBVGrYHUZ
+         Hb7w==
+X-Gm-Message-State: AOJu0YwD1ve+uG3zfhoqydgnlCb+QWVbb5nSAmYU3OK4z4VYTXkpuJkK
+	IbC1ACv/VkSflbpLJ/tzT1ZczTD6kd6xeVBqHTSgxyguOg12rHlrMPW0iN14pyo=
+X-Google-Smtp-Source: AGHT+IGMqxSLffD7NLcEGQBjjhAZx//MLEVRpkbTYe3+mhpWdIhi1Dk8+v4AX01N6tjRbyCraj7Yhg==
+X-Received: by 2002:a17:907:1dc8:b0:a28:bdbb:dca7 with SMTP id og8-20020a1709071dc800b00a28bdbbdca7mr40934ejc.15.1706010597194;
+        Tue, 23 Jan 2024 03:49:57 -0800 (PST)
 Received: from linaro.org ([79.115.23.25])
-        by smtp.gmail.com with ESMTPSA id tl12-20020a170907c30c00b00a30abba5089sm730935ejc.206.2024.01.23.03.43.01
+        by smtp.gmail.com with ESMTPSA id vk6-20020a170907cbc600b00a2ecec00a88sm7357656ejc.99.2024.01.23.03.49.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jan 2024 03:43:02 -0800 (PST)
-Date: Tue, 23 Jan 2024 13:43:01 +0200
+        Tue, 23 Jan 2024 03:49:56 -0800 (PST)
+Date: Tue, 23 Jan 2024 13:49:55 +0200
 From: Abel Vesa <abel.vesa@linaro.org>
-To: Bryan O'Donoghue <pure.logic@nexus-software.ie>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Michael Turquette <mturquette@baylibre.com>,
 	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -81,11 +80,11 @@ Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
 	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
 	linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
 	Rajendra Nayak <quic_rjendra@quicinc.com>
-Subject: Re: [PATCH v2 08/10] clk: qcom: Add GPU clock driver for x1e80100
-Message-ID: <Za+mRZD0v6zNZ27r@linaro.org>
+Subject: Re: [PATCH v2 10/10] clk: qcom: Add camcc clock driver for x1e80100
+Message-ID: <Za+n4zfzoZFhhLIa@linaro.org>
 References: <20231214-x1e80100-clock-controllers-v2-0-2b0739bebd27@linaro.org>
- <20231214-x1e80100-clock-controllers-v2-8-2b0739bebd27@linaro.org>
- <fc6f8e78-f704-4104-b3c5-bd10627c33b4@nexus-software.ie>
+ <20231214-x1e80100-clock-controllers-v2-10-2b0739bebd27@linaro.org>
+ <624956b6-d7ea-43da-bb8d-32d9166a0272@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -94,38 +93,56 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <fc6f8e78-f704-4104-b3c5-bd10627c33b4@nexus-software.ie>
+In-Reply-To: <624956b6-d7ea-43da-bb8d-32d9166a0272@linaro.org>
 
-On 23-12-15 12:40:45, Bryan O'Donoghue wrote:
-> On 14/12/2023 16:49, Abel Vesa wrote:
+On 23-12-16 14:39:48, Konrad Dybcio wrote:
+> On 14.12.2023 17:49, Abel Vesa wrote:
 > > From: Rajendra Nayak <quic_rjendra@quicinc.com>
 > > 
-> > Add Graphics Clock Controller (GPUCC) support for X1E80100 platform.
+> > Add the camcc clock driver for x1e80100
 > > 
 > > Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
 > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> [...]
 > 
-> > +static struct platform_driver gpu_cc_x1e80100_driver = {
-> > +	.probe = gpu_cc_x1e80100_probe,
-> > +	.driver = {
-> > +		.name = "gpu_cc-x1e80100",
-> 
-> I think these underscores are very unnecessary and subtractive of meaning.
-> 
-> .name = "gpucc-x1e80100"
-> 
-> > +		.of_match_table = gpu_cc_x1e80100_match_table,
-> > +	},
+> > +enum {
+> > +	DT_BI_TCXO,
+> > +	DT_BI_TCXO_AO,
+> > +	DT_SLEEP_CLK,
 > > +};
-> > +module_platform_driver(gpu_cc_x1e80100_driver);
 > > +
-> > +MODULE_DESCRIPTION("QTI GPU_CC x1e80100 Driver");
-> 
-> "QTI GPU Clock Controller Driver"
+> > +enum {
+> > +	P_BI_TCXO,
+> Please don't overload this define with DT_BI_TCXO_AO, add a new one
+> for the active-only clock. Please also do this in other drivers in
+> this series.
 
-Again, please look at other platforms (SM8650, SM8550, etc).
+Nope, that needs to stay if we want to align the dt bindings between
+SM8550, SM8650 and this. At least for dispcc. But I would like to have
+the same dt schema for the rest of the clock controller drivers between
+platforms that share basically the same ip block.
 
 > 
-> ---
-> bod
+> [...]
+> 
+> > +	clk_lucid_ole_pll_configure(&cam_cc_pll0, regmap, &cam_cc_pll0_config);
+> > +	clk_lucid_ole_pll_configure(&cam_cc_pll1, regmap, &cam_cc_pll1_config);
+> > +	clk_rivian_evo_pll_configure(&cam_cc_pll2, regmap, &cam_cc_pll2_config);
+> > +	clk_lucid_ole_pll_configure(&cam_cc_pll3, regmap, &cam_cc_pll3_config);
+> > +	clk_lucid_ole_pll_configure(&cam_cc_pll4, regmap, &cam_cc_pll4_config);
+> > +	clk_lucid_ole_pll_configure(&cam_cc_pll6, regmap, &cam_cc_pll6_config);
+> > +	clk_lucid_ole_pll_configure(&cam_cc_pll8, regmap, &cam_cc_pll8_config);
+> Do we know whether these configure calls are actually necessary?
+> > +
+> > +	/*
+> > +	 * Keep clocks always enabled:
+> > +	 *	cam_cc_gdsc_clk
+> > +	 *	cam_cc_sleep_clk
+> > +	 */
+> > +	regmap_update_bits(regmap, 0x13a9c, BIT(0), BIT(0));
+> > +	regmap_update_bits(regmap, 0x13ab8, BIT(0), BIT(0));
+> Please make the comments inline with each line
+> 
+> Konrad
 
