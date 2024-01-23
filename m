@@ -1,134 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-7948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02651838FD6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 14:28:09 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C98B583905E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 14:44:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AE10E1F2ADC3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 13:28:08 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3126FB23518
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 13:44:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 614A660278;
-	Tue, 23 Jan 2024 13:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18DF45F542;
+	Tue, 23 Jan 2024 13:43:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Mj2IQQTB"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="o855QV/e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7676024D
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 13:21:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7227E5F840;
+	Tue, 23 Jan 2024 13:43:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706016084; cv=none; b=uXt9u/iy2FxeWOeRgPIfV1mzgfYeshhcqgHBGj/RXGm7q0fZ0m7PRk5Mrvtfu7G9YRTI6mCvojaqMMCafJ/FzzyV5zxrdNX7rfwOKqAZxgvEo9+xNPyXlgkz2vdcPyTF5P2bDnW8VkIAOgkZarifud2hDFWGWcw8WivnCK8HE5o=
+	t=1706017439; cv=none; b=GheOyaGKzoqyzVN4v4cEvran/KHYjs/jWoCpZHWC7al0hQ3nrAt8AGwpseED4/xUBQ8i6/XXLlrjJRfz+U2mplOTTKqe4BdOW2v04pKD9mGMgCyWBgA9T2EYKZJuAItttEB6+D+dulFwqgiajBOg2hchTFkeMDfW70yiyxnuqEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706016084; c=relaxed/simple;
-	bh=MpVLG/UwodDdLmGV0SZN0/WbrDrYke7nzmLvuxJBZzg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VKKtLPSQtPyfpuP8p+jbLUoJK/jy+7UMdFgy3aqF0rukVUy5aHLGaYVvxnVr4n3rf6+5c7DyhDRD+p66vHS5IUFtLVXBxsHiNu+0Lj4sF4gZH8my5QEE54TQWjVGKHsLhaVgQmR/d0vjBJSYtPShas3WXenMOJsxCRYMmwM3Dnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Mj2IQQTB; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-40e60e135a7so42394915e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 05:21:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706016081; x=1706620881; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eO3A3wF59S5J5YdoyqZ6H7kiWHm6DG64im4Af+tC8FM=;
-        b=Mj2IQQTBJ9Osigk14jnSGsNiajm32YQ4R4m/yYKv4VprF7V9z9/0OV0X/WdA1xc45R
-         7ldx1LdW5/NAp+NVhv4MPqWAz864DJh2IzVrOFW25n6B86W8jtaACRjITNxt8WpUVGvu
-         K5ermjvbu007BtaYszfPWSIyIjvsJaiVs3tcuSeusZE0Glt2Iinouwn74CnPUbc2nES9
-         BVJYcIq/FoUdFnvEMbwHIr4DK3xIP8pY/I0Fut7cSWMV2lOp0IKqp+unHamFbZn8wiPY
-         hhqQ2szobJjILh586wgnyGGRvxAy6GwZEAXj9I0Y01O2HDNQZim9xnMbKR1slKtcOxHO
-         TXgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706016081; x=1706620881;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=eO3A3wF59S5J5YdoyqZ6H7kiWHm6DG64im4Af+tC8FM=;
-        b=BGFoarX6ytC/sJYc7Svxx93ffqKWhUp48WBdDSxOTqPJiy/khSfmzvQxdrHTA4er2G
-         G8/23edvMpYUvMIozHAAVypLvgkmIVCttEzJzJs9bwEFvWXR1RbV27NEyDic0+fW8qJ5
-         eoZocDjfHCfSC0w4jOuv/+KZikjuaypIDdgTHT4w0YVrbgdjs6uu23/vIfG0H6pp5SZf
-         6IOuaYETxVtMjJfHddRMRLcfMqLlaFplBfHLdSEsC7K5wCsPE2f8jPkVIV7YB4Dlt7Ta
-         DFT+BWWNRtH1jEW8PaWSUnfDFhEVCq9p4x17pXfmgu5+T3v551IRSoffTtO6l6yhvIqB
-         2hYw==
-X-Gm-Message-State: AOJu0Yye5i3zA68jY7DDQGHEeBLpJ6terbYHwGNUup4DovxsUiTfIyIY
-	powIuunwH+JQaqFln1UC1ZOBS96TC7+tvHSaiHcEpS1YWG/WqGJ5hEbZESpcmXo=
-X-Google-Smtp-Source: AGHT+IE1bvYl3RyRK6to8EcXBQTa0QhdvJ+5CcJXeETbCTgQwdMPCwNiBvPkrtALvvU1boq8TRjmLA==
-X-Received: by 2002:a05:600c:4694:b0:40e:736f:4d4c with SMTP id p20-20020a05600c469400b0040e736f4d4cmr636880wmo.34.1706016080900;
-        Tue, 23 Jan 2024 05:21:20 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id hn33-20020a05600ca3a100b0040e621feca9sm39982445wmb.17.2024.01.23.05.21.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jan 2024 05:21:20 -0800 (PST)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Tue, 23 Jan 2024 14:21:16 +0100
-Subject: [PATCH v3 2/2] arm64: defconfig: enable WCD939x USBSS driver as
- module
+	s=arc-20240116; t=1706017439; c=relaxed/simple;
+	bh=LhPh2JflSkf4Eh9L4wigdSNPjwvTJS+d6yoBjqkQUu4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=a/qwaK1P769iTLxYFYYcetJgJ8Y+dmXhqGNv62NGGU1CpOjzDM1noT9RMLL8oPGr9WVaU5MOYFMQhXotTLfr9hadLEVEvM2Q+x1/hwZgtpydlmNdUf0rnV166iqvAXYoz9sIkSGHGElUVsWUJNcnWiARoVot91nXGD0kLyKmXoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=o855QV/e; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40N9svH4025268;
+	Tue, 23 Jan 2024 13:43:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=jCQOtSJ9PoUIcSjoiIspfcchAoWUzG5bAaJvDSmlONY=; b=o8
+	55QV/eNfSUXYbsetOlNX40v7eRtXBjRlAWnV2lfd9neGmAXXvYJ89pb3KSbMOmBl
+	6j0lmqYLb0u3mlDnVBnpIAKlfcUS4zSLPIRseaoS9bjIlv9/sTsqH/rW6sMxn2UV
+	JOCTfYo+1O3gryeOTi4HtqRPcqiPki0YKl4Q2E73rZbsi4cw0lddRbAolDIaBxnh
+	wX+kLBPg74JKD9APD/NUakhvc+u/XmMRZe7wFLmgeij+9/0SSq+fimYJCR0mNLdP
+	s7BtyOkSUotzq4KTp5sSAzJuu0oPi8QDxy0gxIPprsnWfjFya5AyqyHekRDPLVzp
+	eykkoXQBcWhXIESyP93w==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vt9un8r0k-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 23 Jan 2024 13:43:35 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40NDhZXO025227
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 23 Jan 2024 13:43:35 GMT
+Received: from [10.216.46.55] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 23 Jan
+ 2024 05:43:27 -0800
+Message-ID: <99a9a562-9f6f-411c-be1c-0a28fc2524dd@quicinc.com>
+Date: Tue, 23 Jan 2024 19:13:23 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: qcm6490-idp: add display and panel
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>
+CC: <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <quic_bjorande@quicinc.com>, <geert+renesas@glider.be>,
+        <arnd@arndb.de>, <neil.armstrong@linaro.org>,
+        <nfraprado@collabora.com>, <m.szyprowski@samsung.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <quic_abhinavk@quicinc.com>, <quic_rajeevny@quicinc.com>,
+        <quic_vproddut@quicinc.com>
+References: <20240116094935.9988-1-quic_riteshk@quicinc.com>
+ <20240116094935.9988-3-quic_riteshk@quicinc.com>
+ <20a8efd1-e243-434e-8f75-aa786ac8014f@linaro.org>
+ <CAA8EJpqQVuS+yqXQ2y5sNQrRVg7tcQAJ3ywsEjg+O=7TkUZWLQ@mail.gmail.com>
+From: Ritesh Kumar <quic_riteshk@quicinc.com>
+In-Reply-To: <CAA8EJpqQVuS+yqXQ2y5sNQrRVg7tcQAJ3ywsEjg+O=7TkUZWLQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240123-topic-sm8650-upstream-altmode-v3-2-300a5ac80e1e@linaro.org>
-References: <20240123-topic-sm8650-upstream-altmode-v3-0-300a5ac80e1e@linaro.org>
-In-Reply-To: <20240123-topic-sm8650-upstream-altmode-v3-0-300a5ac80e1e@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=686;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=MpVLG/UwodDdLmGV0SZN0/WbrDrYke7nzmLvuxJBZzg=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlr71NbV4VBhFeFzKwpKWChVyPCUPG3WJo7SjUjgy4
- sRbkFzOJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZa+9TQAKCRB33NvayMhJ0YDEEA
- CMBLna5nPJSn/Hd/1/HDQu6/DvWJYTXtO4ZZi3KlJfDQ3VyPnmo65syklQu7GRBkgjzf+X6VIG/xIb
- 0OsfPJatKyrEadHXY4q6xjSpquIVpjBeY5XRdJmJGHefJTexO2d1kzT2w42xqc7Xon1SXEPM7rgpOW
- IimkDRrxkUV3Mss0yHwzHNut2WTucGfL+eRMGEEk/7Hf/M6NRUfg2CtzfEmpCZpwplC2V78642GX5Y
- 70T4dvUmW4gwS22Vdq4XNORAbnG7PcCU7CRyzL5al0T50+Hj8dfLu5WOeGJvkVsaZl7coe4KeqooZ9
- /x1USq/HrAXn18m1bsJX6iT9VN3NV7qReX15aMMYS9j73OfSOqYW15yQU2KyrNd6VLmvq6sj9271Vn
- UFX8STLEN9V+eLtoqzXeSKXchWSlb+mPdlQtvciTO6ANSgXFgleWSCz53UJnQ2FlPT0i5hBiQZ3A4S
- rzAZbTfgvvsO4jDhYJJbzrEESYCIRr+GrQeyEOSd104YCes0pmdQM3uhcrXYTBtTAVljGcam9VIPM8
- I/4lzdppNnfPa1Tw6+iziSx1/pSMQA/iOVRWHCB+xqEUK0F+hW9H3kB1qX5B/oRxtyCUuOptTcMMR8
- aI52WWHikVM+Gabphj4rTb8PiURoFXBSaKubPw3wFiMYssfyqR+assQTHN7w==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: RvR87RTdicsPBy4455whRNbg-5dkbgAK
+X-Proofpoint-GUID: RvR87RTdicsPBy4455whRNbg-5dkbgAK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-23_06,2024-01-23_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ priorityscore=1501 adultscore=0 clxscore=1015 spamscore=0
+ lowpriorityscore=0 bulkscore=0 mlxscore=0 impostorscore=0 phishscore=0
+ malwarescore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2311290000 definitions=main-2401230100
 
-Enable the Qualcomm WCD939x USBSS Type-C mux as module as
-is now used on the SM8650 QRD platform.
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+On 1/16/2024 6:27 PM, Dmitry Baryshkov wrote:
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index e6cf3e5d63c3..5c8777fb5a29 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1079,6 +1079,7 @@ CONFIG_TYPEC_HD3SS3220=m
- CONFIG_TYPEC_MUX_FSA4480=m
- CONFIG_TYPEC_MUX_GPIO_SBU=m
- CONFIG_TYPEC_MUX_NB7VPQ904M=m
-+CONFIG_TYPEC_MUX_WCD939X_USBSS=m
- CONFIG_TYPEC_DP_ALTMODE=m
- CONFIG_MMC=y
- CONFIG_MMC_BLOCK_MINORS=32
+> On Tue, 16 Jan 2024 at 14:06, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>
+>>
+>> On 1/16/24 10:49, Ritesh Kumar wrote:
+>>> Enable Display Subsystem with Novatek NT36672E Panel
+>>> on qcm6490 idp platform.
+>>>
+>>> Signed-off-by: Ritesh Kumar <quic_riteshk@quicinc.com>
+>>> ---
+>>>    arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 100 +++++++++++++++++++++++
+>>>    1 file changed, 100 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>>> index 2a6e4907c5ee..efa5252130a1 100644
+>>> --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>>> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>>> @@ -9,6 +9,7 @@
+>>>    #define PM7250B_SID 8
+>>>    #define PM7250B_SID1 9
+>>>
+>>> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+>>>    #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>>>    #include "sc7280.dtsi"
+>>>    #include "pm7250b.dtsi"
+>>> @@ -38,6 +39,25 @@
+>>>                stdout-path = "serial0:115200n8";
+>>>        };
+>>>
+>>> +     lcd_disp_bias: lcd-disp-bias-regulator {
+>>> +             compatible = "regulator-fixed";
+>>> +             regulator-name = "lcd_disp_bias";
+>>> +             regulator-min-microvolt = <5500000>;
+>>> +             regulator-max-microvolt = <5500000>;
+>>> +             gpio = <&pm7250b_gpios 2 GPIO_ACTIVE_HIGH>;
+>>> +             enable-active-high;
+>>> +             pinctrl-names = "default";
+>>> +             pinctrl-0 = <&lcd_disp_bias_en>;
+>> property-n
+>> property-names
+>>
+>> all throughout the patch
 
--- 
-2.34.1
+Thanks, I will update in the new version.
 
+>>> +&gpu {
+>>> +     status = "disabled";
+>>> +};
+>> Hm.. generally we disable the GPU in the SoC DT, but that doesn't
+>> seem to have happened here..
+>>
+>> Thinking about it more, is disabling it here necessary? Does it
+>> not fail gracefully?
+> Missed this.
+>
+> I'd say, I don't see a reason to disable it at all. The GPU should be
+> working on sc7280 / qcm4290.
+
+With GPU device node enabled, adreno_bind failure is seen as the 
+"speed_bin" was not populated on QCM6490 target which leads to display 
+bind failure.
+Spoke with GPU team and on QCM6490 board, only CPU rendering is 
+supported for now and there is no plan to enable GPU rendering in near 
+future.
+
+In this regard, what do you suggest
+
+1) Disable GPU in QCM6490 DT (as per the current patch)
+2) Disable GPU in the SoC DT, but enable it in other platform DTs. (This 
+will prompt change in all the dt's and we don't have all the devices to 
+test)
+
+Please let me know your views on it.
+
+
+Thanks,
+Ritesh
 
