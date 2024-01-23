@@ -1,156 +1,277 @@
-Return-Path: <linux-arm-msm+bounces-8035-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8036-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 418CA8399F5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 21:06:18 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id BAFAD839A4E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 21:32:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EE358286E35
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 20:06:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 42F971F2372D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 20:32:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77BCE82D87;
-	Tue, 23 Jan 2024 20:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B97B2582;
+	Tue, 23 Jan 2024 20:32:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UxL+L9NL"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="ZFr6E67K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAEE63511;
-	Tue, 23 Jan 2024 20:06:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62805228
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 20:32:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706040371; cv=none; b=cZ/PrgUupvO1pNmarddrkkYKb70mkQXcbEr9GmfGhbHy2nu5QZrwCpSur/f3+aZAdMjnsby0i3R25Db2Z0xwj+vex1IGlmvf3efxooNuF9znIH7PTCw5huaFTj9AT3oEOhM0to1Nd8fUQ3oqntO72aZg1VsZkX33O4vzskitG40=
+	t=1706041952; cv=none; b=Xi+8p8u2929bPbQNJyPBG9SB6rRbiB4AJhMDZpF2uavbRLrmsytZrbJOvBO2dAuQWnsVzIYbTTVWIqqm207z3KlMYB+T2fRImO55Y5fsHJWXRWtmblJRHK/ntiLeV8/cs4FUnDFTYxfg34PSFQogt6WlhtAcPmdYl3mEqiLYsH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706040371; c=relaxed/simple;
-	bh=GzhJCzJzKpc9xeFhTpsdwMvee7CM5aTLill6q4USv3U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=nNgJFY8pYQz6l4ko0JKZD3FJAdN9fhcX/lWv6sOp50QtlENpWQFLUZFjJzcTRw3L1jmm0+HqJx3cuRWHqWFmHODhYbJND0Ndr/1dn16kOA0x+sSPjxGC/BIsal7c7ArZTm5lIyKgl5tKfrseSOLvP1nWYdns9qRCo90Ed/u+M2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UxL+L9NL; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40NGPRR5029341;
-	Tue, 23 Jan 2024 20:06:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=hUYsYhKG8zh/NNdalZUM0dorkIoNrzpo0eGcmzdbCH4=; b=Ux
-	L+L9NL7W3fcIBkONqHWLOW36dZTeWbd+HPbi4EFcKAV6JZr41W7+xaANSML/P/cb
-	9G7Qw+65VseuGMlWiNptOiO9ViqhfdjEBRyeDNfN7vF/+AiTtDh/PkV7Ep0onY50
-	6vb3yAz1BmjO8J4hOvuLsmAMEqostsCsyXR4ndGZ/lDme8zDforBZnF6Pkja2E7O
-	eYB8L0A4tOHPp8R7Q/5iXdMdw+25u6THmb/Ee43t+OKpbb98OhLvfmo34QllQdm/
-	TlYQEa87hfYRdb5xzrl4LUBSRo31DUGGlfR8rkJD6qCyAAgPI3DGcy0d/1bmbOKI
-	MEhkJsOjMX/ehg7PpstQ==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vtesch2a5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Jan 2024 20:06:01 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40NK60r0023727
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Jan 2024 20:06:00 GMT
-Received: from [10.110.28.150] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 23 Jan
- 2024 12:05:56 -0800
-Message-ID: <fd2c8c1b-02f3-2750-3449-f93fc119fda2@quicinc.com>
-Date: Tue, 23 Jan 2024 12:05:56 -0800
+	s=arc-20240116; t=1706041952; c=relaxed/simple;
+	bh=4b7LDfndf0x2pfi/Wttei6CVEV5/thBW6qKKQoEYSGk=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=TUAHNYBLsw5I6yMFYNYMxAF2vAdFN6kP8hlR9j5wf0hQKUK0TFZEVhKXNF4Vm0cVY9XOOkXOVP/yQTEk0DgUIDTqEupJxsYhMuK4QZpgR3bwqXG23ICHqhag3komRNgDMM5t9/RULFQb/N5DBlEsz0MgyQODsuuGUY0nFnKZMTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=ZFr6E67K; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a30f7c9574eso45319566b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 12:32:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1706041948; x=1706646748; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=z20O7bYlmZHSvcuSYHlwtmasXHxMNJkIAnRQOpXMGzc=;
+        b=ZFr6E67KPHvvq52Zw9LwxDn3ubsg4GWtJuZWrMsw5NqMzYhDh9RpXXfWePk4wkgRmH
+         ekLWr6lwnuKJIt8cWd0u7dCKDfXvzOm4CMfyn+BL1pejBrWLJYWDr3BJ0wWS0v/rqct0
+         hTbJOy4/bLCc5/UaVxs42X5wWi7H4+SusbIKmN0BRw5bwoUo76dIl4OxCQ0XXkJ1ycY8
+         vOEE95m+CJOEJ1bm/dadizPfabo9xa5vw6ioMMhnM8oMIMRdCZ9lskxP62viesVBKDWE
+         /MjnDwWiDIIFsJJkR8OS/9ZCpaU2RexsnFjZmVBo4g60NE3cS65Yyn84+PEb4d53ga+6
+         lKng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706041948; x=1706646748;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=z20O7bYlmZHSvcuSYHlwtmasXHxMNJkIAnRQOpXMGzc=;
+        b=afw7Wkdy8MEUyNqBppbsilwo9Bt1VwI//lGrWIw12qQos7qXytH93ZcUKW/CiN2Gqt
+         3s4pftF3WrIfUXe+mI8sqYj9tY2YzCUFLbyLfgxkB+AhUpYLroeXZBJy/7pQbTCzgnpj
+         zcAaaJ5M+Hoc1aA5yvITRHEY1cnUtkjYLvpetEiuR/ZGhROfOaAOPp6unq+Dj84fo8dr
+         ElBP4D0Lce+gKYftLj+cotQcLDNfJyguWbUtLvb67nYWVpjc0B6uUuRCuucmK+TZB3fq
+         x8NAIulqXVMcw0ug89+I86Z16fxQRcDxuPtoL020E787aipEGcLRmFNZkGeFhM/6xSO7
+         xBIQ==
+X-Gm-Message-State: AOJu0Yx0l/+9BprKU1B3zy5ITKVxVd+dCJgKmNhS7sGCUFnPZWdv2SzS
+	i1B3YQvmQTLXdefCJCxYluTb5TBMU8w35WWB2kF8QkGqu6gwjEFIQ2Zh88Ptluk=
+X-Google-Smtp-Source: AGHT+IEzedYGdRBr5+Ok9jU9hdAPP97DOkgzEJWvYf4nzAHEUTVNt7U9mR2OB283SD62pYYY2QK+AQ==
+X-Received: by 2002:a17:906:5a4a:b0:a2c:1789:f7a3 with SMTP id my10-20020a1709065a4a00b00a2c1789f7a3mr138437ejc.79.1706041947921;
+        Tue, 23 Jan 2024 12:32:27 -0800 (PST)
+Received: from localhost (dhcp-089-099-055-216.chello.nl. [89.99.55.216])
+        by smtp.gmail.com with ESMTPSA id q5-20020a170906388500b00a28a297d47esm14709048ejd.73.2024.01.23.12.32.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Jan 2024 12:32:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 1/2] dt-bindings: hwinfo: Introduce board-id
-Content-Language: en-US
-To: Elliot Berman <quic_eberman@quicinc.com>,
-        Amrit Anand
-	<quic_amrianan@quicinc.com>
-CC: <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <agross@kernel.org>, <konrad.dybcio@linaro.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>,
-        Conor Dooley
-	<conor@kernel.org>, <andersson@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski@linaro.org>
-References: <1705749649-4708-1-git-send-email-quic_amrianan@quicinc.com>
- <1705749649-4708-2-git-send-email-quic_amrianan@quicinc.com>
- <6e40dd60-884f-be23-0052-d14f7194f844@quicinc.com>
- <f21bc259-45fa-d14b-a556-625b813287f4@quicinc.com>
- <499320f4-f6b1-4582-9512-89ab505305b6@linaro.org>
- <20240123-sterilize-flap-8971aa3bad4b@spud>
- <1941558d-d1e0-43b7-9208-65b9ba191bc2@quicinc.com>
-From: Trilok Soni <quic_tsoni@quicinc.com>
-In-Reply-To: <1941558d-d1e0-43b7-9208-65b9ba191bc2@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Tbf2azYCNSayz4Q5wH74QmTAEgBJ7PpC
-X-Proofpoint-ORIG-GUID: Tbf2azYCNSayz4Q5wH74QmTAEgBJ7PpC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-23_11,2024-01-23_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 malwarescore=0
- bulkscore=0 spamscore=0 phishscore=0 mlxscore=0 mlxlogscore=892
- impostorscore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401230148
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 23 Jan 2024 21:32:26 +0100
+Message-Id: <CYMDEAJZ0TJK.K31XZB3E9QOG@fairphone.com>
+Cc: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-usb@vger.kernel.org>, <linux-phy@lists.infradead.org>
+Subject: Re: [PATCH v2 15/15] arm64: dts: qcom: qrb4210-rb2: enable USB-C
+ port handling
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>, "Bjorn Andersson"
+ <andersson@kernel.org>, "Konrad Dybcio" <konrad.dybcio@linaro.org>, "Liam
+ Girdwood" <lgirdwood@gmail.com>, "Mark Brown" <broonie@kernel.org>, "Rob
+ Herring" <robh+dt@kernel.org>, "Krzysztof Kozlowski"
+ <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Wesley Cheng" <quic_wcheng@quicinc.com>, "Bryan O'Donoghue"
+ <bryan.odonoghue@linaro.org>, "Greg Kroah-Hartman"
+ <gregkh@linuxfoundation.org>, "Vinod Koul" <vkoul@kernel.org>, "Kishon
+ Vijay Abraham I" <kishon@kernel.org>, "Guenter Roeck" <linux@roeck-us.net>,
+ "Heikki Krogerus" <heikki.krogerus@linux.intel.com>, "Philipp Zabel"
+ <p.zabel@pengutronix.de>
+X-Mailer: aerc 0.15.2
+References: <20240113-pmi632-typec-v2-0-182d9aa0a5b3@linaro.org>
+ <20240113-pmi632-typec-v2-15-182d9aa0a5b3@linaro.org>
+In-Reply-To: <20240113-pmi632-typec-v2-15-182d9aa0a5b3@linaro.org>
 
-On 1/23/2024 10:51 AM, Elliot Berman wrote:
-> 
-> 
-> On 1/23/2024 9:18 AM, Conor Dooley wrote:
->> On Tue, Jan 23, 2024 at 12:50:07PM +0100, Krzysztof Kozlowski wrote:
->>> On 22/01/2024 11:10, Amrit Anand wrote:
->>>>
->>>> On 1/21/2024 12:40 AM, Trilok Soni wrote:
->>>>> On 1/20/2024 3:20 AM, Amrit Anand wrote:
->>>>>> From: Elliot Berman <quic_eberman@quicinc.com>
->>>>>>
->>>>>> Device manufacturers frequently ship multiple boards or SKUs under a
->>>>>> single software package. These software packages will ship multiple
->>>>>> devicetree blobs and require some mechanism to pick the correct DTB for
->>>>>> the board the software package was deployed. Introduce a common
->>>>>> definition for adding board identifiers to device trees. board-id
->>>>>> provides a mechanism for bootloaders to select the appropriate DTB which
->>>>>> is vendor/OEM-agnostic.
->>>>> Please extend CC list to more architectures? linux-arm-kernel, risc-v etc; since
->>>>> the proposal below is not specific to ARM but any architecture is using the
->>>>> devicetree.
->>>> Wouldn't devicetree@vger.kernel.org will have concern folks from all the 
->>>> architectures?
->>>> Please correct me.
->>>
->>> No.
->>
->> The chromium guys should get a CC on future versions of this stuff,
->> since they like doing wacky things with compatible strings in their
->> bootloader and this problem is one they also face. Doug Anderson and the
->> mediatek chromebook folks would be a good start.
->>
-> 
-> Please CC Peter Griffin from Linaro as he helped restart this 
-> discussion at Plumbers.
-> 
-> Peter Griffin <peter.griffin@linaro.org>
-> 
-> Also, for the oneplus boards:
-> Caleb Connolly <caleb.connolly@linaro.org>
+On Sat Jan 13, 2024 at 9:55 PM CET, Dmitry Baryshkov wrote:
+> Plug in USB-C related bits and pieces to enable USB role switching and
+> USB-C orientation handling for the Qualcomm RB2 board.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 50 ++++++++++++++++++++++++++=
+++++++
+>  arch/arm64/boot/dts/qcom/sm6115.dtsi     | 43 ++++++++++++++++++++++++++=
++
+>  2 files changed, 93 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/d=
+ts/qcom/qrb4210-rb2.dts
+> index 52f31f3166c2..696d6d43c56b 100644
+> --- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> @@ -6,8 +6,10 @@
+>  /dts-v1/;
+> =20
+>  #include <dt-bindings/leds/common.h>
+> +#include <dt-bindings/usb/pd.h>
+>  #include "sm4250.dtsi"
+>  #include "pm6125.dtsi"
+> +#include "pmi632.dtsi"
+> =20
+>  / {
+>  	model =3D "Qualcomm Technologies, Inc. QRB4210 RB2";
+> @@ -256,6 +258,46 @@ kypd_vol_up_n: kypd-vol-up-n-state {
+>  	};
+>  };
+> =20
+> +&pmi632_typec {
+> +	status =3D "okay";
+> +
+> +	connector {
+> +		compatible =3D "usb-c-connector";
+> +
+> +		power-role =3D "dual";
+> +		data-role =3D "dual";
+> +		self-powered;
+> +
+> +		typec-power-opmode =3D "default";
+> +		pd-disable;
+> +
+> +		ports {
+> +			#address-cells =3D <1>;
+> +			#size-cells =3D <0>;
+> +
+> +			port@0 {
+> +				reg =3D <0>;
+> +				pmi632_hs_in: endpoint {
+> +					remote-endpoint =3D <&usb_dwc3_hs>;
+> +				};
+> +			};
+> +
+> +			port@1 {
+> +				reg =3D <1>;
+> +				pmi632_ss_in: endpoint {
+> +					remote-endpoint =3D <&usb_qmpphy_out>;
+> +				};
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&pmi632_vbus {
+> +	regulator-min-microamp =3D <500000>;
+> +	regulator-max-microamp =3D <3000000>;
 
-Thank you everyone. Amrit - please take care of above comments
-when you post next revision and as suggested please add other
-architecture mailing lists using the devicetree. Thank you. 
+Hi Dmitry,
 
--- 
----Trilok Soni
+Are you sure vbus can supply 3000mA?
+
+In Qualcomm's document 80-PF208-77 I see 1000mA is the maximum it can
+provide, and I see the same value looking into downstream smb5 driver
+in sdm632 sources.
+
+https://gerrit-public.fairphone.software/plugins/gitiles/kernel/msm-4.9/+/r=
+efs/heads/int/13/fp3/drivers/power/supply/qcom/qpnp-smb5.c#414
+
+Regards
+Luca
+
+> +	status =3D "okay";
+> +};
+> +
+>  &pon_pwrkey {
+>  	status =3D "okay";
+>  };
+> @@ -607,6 +649,10 @@ &usb {
+>  	status =3D "okay";
+>  };
+> =20
+> +&usb_dwc3_hs {
+> +	remote-endpoint =3D <&pmi632_hs_in>;
+> +};
+> +
+>  &usb_hsphy {
+>  	vdd-supply =3D <&vreg_l4a_0p9>;
+>  	vdda-pll-supply =3D <&vreg_l12a_1p8>;
+> @@ -622,6 +668,10 @@ &usb_qmpphy {
+>  	status =3D "okay";
+>  };
+> =20
+> +&usb_qmpphy_out {
+> +	remote-endpoint =3D <&pmi632_ss_in>;
+> +};
+> +
+>  &wifi {
+>  	vdd-0.8-cx-mx-supply =3D <&vreg_l8a_0p664>;
+>  	vdd-1.8-xo-supply =3D <&vreg_l16a_1p3>;
+> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/q=
+com/sm6115.dtsi
+> index 76c429e8ebab..01dff6641280 100644
+> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> @@ -878,8 +878,29 @@ usb_qmpphy: phy@1615000 {
+>  			clock-output-names =3D "usb3_phy_pipe_clk_src";
+> =20
+>  			#phy-cells =3D <0>;
+> +			orientation-switch;
+> =20
+>  			status =3D "disabled";
+> +
+> +			ports {
+> +				#address-cells =3D <1>;
+> +				#size-cells =3D <0>;
+> +
+> +				port@0 {
+> +					reg =3D <0>;
+> +
+> +					usb_qmpphy_out: endpoint {
+> +					};
+> +				};
+> +
+> +				port@1 {
+> +					reg =3D <1>;
+> +
+> +					usb_qmpphy_usb_ss_in: endpoint {
+> +						remote-endpoint =3D <&usb_dwc3_ss>;
+> +					};
+> +				};
+> +			};
+>  		};
+> =20
+>  		system_noc: interconnect@1880000 {
+> @@ -1614,6 +1635,28 @@ usb_dwc3: usb@4e00000 {
+>  				snps,has-lpm-erratum;
+>  				snps,hird-threshold =3D /bits/ 8 <0x10>;
+>  				snps,usb3_lpm_capable;
+> +
+> +				usb-role-switch;
+> +
+> +				ports {
+> +					#address-cells =3D <1>;
+> +					#size-cells =3D <0>;
+> +
+> +					port@0 {
+> +						reg =3D <0>;
+> +
+> +						usb_dwc3_hs: endpoint {
+> +						};
+> +					};
+> +
+> +					port@1 {
+> +						reg =3D <1>;
+> +
+> +						usb_dwc3_ss: endpoint {
+> +							remote-endpoint =3D <&usb_qmpphy_usb_ss_in>;
+> +						};
+> +					};
+> +				};
+>  			};
+>  		};
+> =20
 
 
