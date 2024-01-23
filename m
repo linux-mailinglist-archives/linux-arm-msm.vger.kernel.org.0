@@ -1,153 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-7919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A87E4838B30
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 10:58:39 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E55C838B56
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 11:04:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 62F0028DA89
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 09:58:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 19B431F26AFF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 10:04:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 651205A0F1;
-	Tue, 23 Jan 2024 09:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E13A35A108;
+	Tue, 23 Jan 2024 10:04:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lWdQQ02p"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="dW4tmYxu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com [209.85.217.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8175A0E7;
-	Tue, 23 Jan 2024 09:58:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7949A5646A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 10:04:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706003910; cv=none; b=Dikb9ASX8Ksg39S1gWrYLAgHNHLs2483aFet9N1fqPxA517w2OT77Qoj+aQzsdyVK+zcmoA7MyVhs7TPmr4JKRgFfr647TeMuFpwxeZHb4XYHlLvGwGUJEIMRWa1cYfyjNNzztDofjTh6K/v7yYXuiK90r+TXVpfAwvjCG7XosY=
+	t=1706004281; cv=none; b=JcgT789MbtFO0ABbaxPburs/1z3D5SWwbE0+vHHSSQKMpBncAJ89SIHdWuCX+Nw/ktPIA6j9PJeQ+aFiurRZghLs8cne57zA/r5kvf9kHbOUlunsmVUfOTQ09d7le3VpMKXkCFa+o5TTFSuh2E3XPgAj7qLlm+ggYO6hvTlrRm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706003910; c=relaxed/simple;
-	bh=B/XdHveTk/vCgwuSUasgaL3WoKuViUrGU6zatSifKeg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=qDf40SeUmZUeAVXqAL6X5t2zXJuoBG/0qy48NQUoUMCK2PzmC3tezljtSZ5hLLKYDsGWj055JZa3Xtz9aVumamDdqttIlomOckDow6C2MViX51Ha4Zb7Qy+34he/u3AhveSm6Ynxkv5IvIfmDzIaRx+iit1PKHUtlNwCqjeMUCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lWdQQ02p; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40N6NTqu019016;
-	Tue, 23 Jan 2024 09:58:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=ML50tmsauSLPSsxul+Bt7KDrvonH8WWyY0pjbre6+vE=; b=lW
-	dQQ02pnQh1KUWrnlv/r0FUna/v/1rdnVEmKQuTU0GuOezewIE+i8SrYcwBV6HSWH
-	Gr+GkhuF0QdJ8XTOD5UJ+kY1FJNNxMsqlJDaxf4yy+4tDxQcM2ElT8v8sPDBHWD8
-	bknATzXIX8C3do7D+0b/hQP+LIbFWCuMHV7xMWiBMZY+K+IYPMxCFiHbwu2zsfdH
-	1td2Itsu/p85LHsEb2yVr9qVSAOakR47XpBCH+5Pi1MbvNacqRkz6Hn+M0xhm9Ea
-	QTy91t+Ns84tkHMoIxUWCif8yBcyOvabYkbkmyWXmq1F9hDb/3E2sZ9xTh2Vh95J
-	qbi3lodjGvE7n5pz0few==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vspw8u07j-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Jan 2024 09:58:24 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40N9wN6E030712
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Jan 2024 09:58:23 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 23 Jan
- 2024 01:58:15 -0800
-Message-ID: <1359cab8-9459-826d-4f7b-b5ffef44bebc@quicinc.com>
-Date: Tue, 23 Jan 2024 15:28:11 +0530
+	s=arc-20240116; t=1706004281; c=relaxed/simple;
+	bh=5vAc5dMR/Gkgelph0J80OaJPM3bIt5m4U43XM9yf3lk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kN08cw10sqM/llVp4HxcitrPFuRb22Sip7O1BcsQLTHOLTQDZQkDGRccf8TFt6HnWi+oN8BPgjqdIjdJnhCAE+5oW1zjxPjBpVcoFoH1wziF6FNZ3Zi9NUCUS6JDl/MGMH0SB1B+NVY3MZtm3Ti6q4vxJUFvWNOhDtyX7Kizfhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=dW4tmYxu; arc=none smtp.client-ip=209.85.217.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-vs1-f42.google.com with SMTP id ada2fe7eead31-466fb1cbfe9so962547137.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 02:04:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1706004278; x=1706609078; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5vAc5dMR/Gkgelph0J80OaJPM3bIt5m4U43XM9yf3lk=;
+        b=dW4tmYxuZb2rn3K9uG5fmNHwHHvUMv+X86L2Jt0dPPcaDJ4QDCJUi/gsj5/QvLOJoI
+         mtzFsZzLOT697oI9xtrrMdxpJpxyMpAgO1L9slgWz7qwk+Cn3ZFK4hPGaVG5tfz5LRGH
+         s8S6TrnTyROExZX4b2tplmSMe6ePhHkvi+pHvVsjsf3G5h3lIEdUhl2DMy+coh1b7f1a
+         HIMoTWuplUhyHhInIxooS0TtOz0dt6FkmjJZAyOKA/8nxBWr4B/NvUwmisJlMuaoe6qu
+         11le9/fA/93btOu6tUv8yMMkCLa78Fel+zWeOov3HteFSnpDwfQms+nl3RaZdiy+7/A1
+         jVEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706004278; x=1706609078;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5vAc5dMR/Gkgelph0J80OaJPM3bIt5m4U43XM9yf3lk=;
+        b=H8aLr9WNOicFeFBX44qybq3hpTpPckfU8vjaocm8uCEZalLwZTe6FXcqosYq9u6nmK
+         3b3KuON2a1wfLGi8+I0of8I+K0oWAQjUG0+bQixqc32lshNbxx5bTiyEDyh0R++WiKna
+         sO5NJ9rJpG8WRQTTz+yYlkznr1lJWelNk81ddrmQK4Ck+apBcTtOEog1e/MNm8FpypmT
+         rQLLucyjJlyZleSlH9Z2FMzQBpPzbnTScrrmj6cXOwJovmK/XXEuL9JD0qX3qcrAbPad
+         I0+vJeSgXn/xLVQtvsoi+Y/nJ0qdbo5u2vrd6OEhBQnjGIG/2Wax1U+ADdAUvbiVV75H
+         L1Zg==
+X-Gm-Message-State: AOJu0YzoVg0WcAn12Lrqcggb3jQXnr4BFwIB9Ropfd92GMbpN6Za5xR7
+	7wXRIzp/yny9YaZKI6Yr6Pk5jK1tYrriK4WUe7jVKylMoNK85oJT4eQqyCoFkdEG6bEzeuEg8Pz
+	6RtBog+MxzA3/jCTyOVZC+76v+jJC/GAasQGnjA==
+X-Google-Smtp-Source: AGHT+IHq+QhUDao5htbMwHdTS/OmUBt1hcN5E3DzlhYEGpGpjAeJ0k25WMpPPgDCK2so5vWCJusvRWnjPsYbXp0LbXU=
+X-Received: by 2002:a67:eb8d:0:b0:469:b6a3:453f with SMTP id
+ e13-20020a67eb8d000000b00469b6a3453fmr1561108vso.13.1706004278362; Tue, 23
+ Jan 2024 02:04:38 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v7 4/4] arm64: dts: qcom: sm8650: add missing
- qlink_logging reserved memory for mpss
-Content-Language: en-US
-To: Neil Armstrong <neil.armstrong@linaro.org>,
-        Andy Gross
-	<agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob
- Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20240123-topic-sm8650-upstream-remoteproc-v7-0-61283f50162f@linaro.org>
- <20240123-topic-sm8650-upstream-remoteproc-v7-4-61283f50162f@linaro.org>
-From: Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <20240123-topic-sm8650-upstream-remoteproc-v7-4-61283f50162f@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: pIld4pwsZ4YtLYk6XpX3LP3sF9Fkkeyo
-X-Proofpoint-ORIG-GUID: pIld4pwsZ4YtLYk6XpX3LP3sF9Fkkeyo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-23_04,2024-01-23_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
- adultscore=0 mlxscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
- clxscore=1015 suspectscore=0 impostorscore=0 mlxlogscore=902
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2401230071
+References: <20240122182158.69183-1-brgl@bgdev.pl> <98925264-badb-4954-b542-9287a0c7d184@linaro.org>
+In-Reply-To: <98925264-badb-4954-b542-9287a0c7d184@linaro.org>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Tue, 23 Jan 2024 11:04:27 +0100
+Message-ID: <CAMRc=Mc+GNoi57eTQg71DXkQKjdaoAmCpB=h2ndEpGnmdhVV-Q@mail.gmail.com>
+Subject: Re: [RFC] arm64: dts: qcom: qrb5165-rb5: model the PMU of the QCA6391
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Abel Vesa <abel.vesa@linaro.org>, 
+	Alex Elder <elder@linaro.org>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, Jan 23, 2024 at 9:30=E2=80=AFAM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 22/01/2024 19:21, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > I'm limiting the audience of this compared to the PCI power sequencing
+> > series as I wanted to run the DT part by the maintainers before I commi=
+t
+> > to a doomed effort.
+> >
+> > Here is the DT representation of the QCA6390's PMU with its inputs and
+> > outputs. If I were to implement the pwrseq framework that would be able
+> > to assign the relevant pwrseq data to the consumer based on the actual
+> > regulators and not abstract bt-pwrseq or wlan-pwrseq properties - would
+> > that fly with you?
+> >
+> > We'd need to deprecate the existing BT bindings but unfortunately they
+> > are already described as consuming the host PMIC regulators in bindings=
+.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
+> Please provide lore link to the binding.
+>
+> Best regards,
+> Krzysztof
+>
 
+This is the one:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Doc=
+umentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml
 
-On 1/23/2024 2:21 PM, Neil Armstrong wrote:
-> The qlink_logging memory region is also used by the modem firmware,
-> add it to the reserved memories and add it to the MPSS memory regions.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-
-LGTM,
-
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
-
--Mukesh
-
-> ---
->   arch/arm64/boot/dts/qcom/sm8650.dtsi | 8 +++++++-
->   1 file changed, 7 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> index 2df77123a8c7..7a1cbc823306 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> @@ -525,6 +525,11 @@ qdss_mem: qdss@82800000 {
->   			no-map;
->   		};
->   
-> +		qlink_logging_mem: qlink-logging@84800000 {
-> +			reg = <0 0x84800000 0 0x200000>;
-> +			no-map;
-> +		};
-> +
->   		mpss_dsm_mem: mpss-dsm@86b00000 {
->   			reg = <0 0x86b00000 0 0x4900000>;
->   			no-map;
-> @@ -2627,7 +2632,8 @@ remoteproc_mpss: remoteproc@4080000 {
->   					     "mss";
->   
->   			memory-region = <&mpss_mem>, <&q6_mpss_dtb_mem>,
-> -					<&mpss_dsm_mem>, <&mpss_dsm_mem_2>;
-> +					<&mpss_dsm_mem>, <&mpss_dsm_mem_2>,
-> +					<&qlink_logging_mem>;
->   
->   			qcom,qmp = <&aoss_qmp>;
->   
-> 
+Bart
 
