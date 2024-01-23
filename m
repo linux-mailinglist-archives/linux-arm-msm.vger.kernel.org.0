@@ -1,223 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-7889-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7890-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3BD3A8387A4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 07:43:39 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A5311838819
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 08:41:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DF11B285DB3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 06:43:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D890C1C2219C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 07:41:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C266524CB;
-	Tue, 23 Jan 2024 06:43:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9D6248CE4;
+	Tue, 23 Jan 2024 07:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D8iN8cPB"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="moWrO3nP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E1B7524A4;
-	Tue, 23 Jan 2024 06:43:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596B255E6C;
+	Tue, 23 Jan 2024 07:41:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705992199; cv=none; b=NE+FtUly0uI/wrBsK/WFd1H/Us29XlogLpufcf7EBTf/ipXMmhpKnEOQYnbiw+rwYW5OaHxlxc2ESUW0caR4wup2d2S0EaVtHFSHUtQ58ptvfo2VgnCysPqM4T4rdjUUxEcNL0W8vncSebt5lK4QzellW4nz85IEgkehzPuLrlo=
+	t=1705995665; cv=none; b=SobFmT2eADhqnwLEm0+xJEKqHk8UPVCHBRuwQZuIhqtw4EgFun+dBBi3g/ZPto2nwEK+BkFA9ELajBANMtXkPEE6bXJ1VOZPXVAvIvaFIiBnD7IKWipfnJj2Vnf8I3IvTeHA0MUJnid+Z64qMEphIjXcC2pQvPf/iC9xwSkYkQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705992199; c=relaxed/simple;
-	bh=W6IM59aFdpsXM36kU3enHoCT7JiyixPOs1BAXIz9u88=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=skvgQfwROEJqHuyNh5ySwC/U59iySIg/5fAvapFm659UJyq2gc/bIJBMxcwYJfNibZ/+Lyrl6BwQGmJ6SQRWOX8HSso1esUhrnyojumQAb4xk/3bxMh1QwkmL6j2mMId3xTVemCkfwXJonJBCho3LQL9ifdybTHZZBSb8Ea07CA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D8iN8cPB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C2DD8C43390;
-	Tue, 23 Jan 2024 06:43:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1705992198;
-	bh=W6IM59aFdpsXM36kU3enHoCT7JiyixPOs1BAXIz9u88=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=D8iN8cPBlCt9yrHA0E2usAWnTOv0ceVoejE0dPm6/kbSfqDHJqEukdjL/1DEZu/CW
-	 VTKglv3i5b87NHdgwBepFUb5RVtUKECrSsTmPr7dzQUaKeFXRV5rPkXMc92cxhv2c6
-	 inyWt7eAynzqgJQjAt8QvnrL5ZUGfDzqwN1Sp53KRYhr7pF2GK6MdfDStBQeZYAPzK
-	 9qeL3eU9LHGiQo/yTjzsw8mDTZbWPxLdGv0ZxsyP6KhhsM3/KhZH1xY8t3U4xyhy0w
-	 46k5ocVUP3eLujVwsjZEa2fKev1D9gfrhFuYkqcx9KMGmOJ72/bFHDZ7Rv4JIF1iOh
-	 4BeZriWbKYKlA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A50D0C47DDF;
-	Tue, 23 Jan 2024 06:43:18 +0000 (UTC)
-From: Fenglin Wu via B4 Relay <devnull+quic_fenglinw.quicinc.com@kernel.org>
-Date: Tue, 23 Jan 2024 14:42:24 +0800
-Subject: [PATCH 2/2] arm64: dts: qcom: sm8650-qrd: add PM8010 regulators
+	s=arc-20240116; t=1705995665; c=relaxed/simple;
+	bh=/Nj6Ph18ng8jZRZ3LBRkgzpbuV/nCr07jTP0oi3cSvg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=UV5JPqiXLbFI/BJ4iiZ62MCIKxLAOo3jE0MUtKHbb8vRRjsvvlrUNey9lF8HjBKfPGdgK9pPq3N684M/FhzC+5VRFPFJrhbwQ/LcaNszQslCeJbzdtjrlLadWj6AN+dGEgF3+FBySxgk9yq9vkB+I7VtEJDpYNRVTDO9ckemmDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=moWrO3nP; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40N7Mm0E005591;
+	Tue, 23 Jan 2024 07:40:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=jL8XLZCLgn5P6ZASj4WFD/DFDJQlaY/Mg8ngb9CqzhI=; b=mo
+	WrO3nP9yDomJuTFb9V7sKFG3eC5yN/NwcxGMgIEKS433amUHIi9z8687WqqqBWQ4
+	iCJZwQGBcV4VTQCKvvfuiCC4YK+0BmzpK6cO3ri0wWU+rPHhTfv2Ohr6p92LdDT6
+	x/yEJNr2dv/Tn9wdMDBpBQyP/++pdJ7W9JAYg2A2gofkY40S4Jf8qg8IA4/zdvC1
+	epABJhKjQqBXO3xtQUCoqgbh6HQF3IRwZ5/62WujA5bcfy2szw1sHlRhnBv4fD4O
+	/YoHx9qO2mZmCjKIduEZXqg25bZp6uXXyxVx99xOI6AZx+sqlC5QwRI8VbqCfJwn
+	Q4fnlpk00sIL6KB8Xz2w==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vspw8tqak-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 23 Jan 2024 07:40:49 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40N7em5c009560
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 23 Jan 2024 07:40:48 GMT
+Received: from [10.216.24.76] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 22 Jan
+ 2024 23:40:44 -0800
+Message-ID: <6fab57f0-13b5-455a-9109-1f9d475b7c3a@quicinc.com>
+Date: Tue, 23 Jan 2024 13:10:39 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240123-sm8650_pm8010_support-v1-2-dec2224d5740@quicinc.com>
-References: <20240123-sm8650_pm8010_support-v1-0-dec2224d5740@quicinc.com>
-In-Reply-To: <20240123-sm8650_pm8010_support-v1-0-dec2224d5740@quicinc.com>
-To: kernel@quicinc.com, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, quic_collinsd@quicinc.com, 
- Fenglin Wu <quic_fenglinw@quicinc.com>
-X-Mailer: b4 0.13-dev-83828
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1705992197; l=4110;
- i=quic_fenglinw@quicinc.com; s=20230725; h=from:subject:message-id;
- bh=PlYF8bjp7tmNp066AtzxBMH/atroxUuklQesSrZwfQ0=;
- b=NKWGsWHknezrrOYZwH4XD3ImCuqFjobocVLviK9pk7t4coZhezftxZQFTtMbxmGtRY80fGeTl
- k2mhbGbrw1lCY+avu+jk3Me4t/H2iDaOmRWBdFLpFDz2vUthCeCdL6x
-X-Developer-Key: i=quic_fenglinw@quicinc.com; a=ed25519;
- pk=hleIDz3Unk1zeiwwOnZUjoQVMMelRancDFXg927lNjI=
-X-Endpoint-Received:
- by B4 Relay for quic_fenglinw@quicinc.com/20230725 with auth_id=68
-X-Original-From: Fenglin Wu <quic_fenglinw@quicinc.com>
-Reply-To: <quic_fenglinw@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: ipq5018-rdp432-c2: correct board name
+Content-Language: en-US
+To: Ziyang Huang <hzyitc@outlook.com>, <agross@kernel.org>
+CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <TYZPR01MB55564BE24CE8718DBD4644A2C9762@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
+ <ac35936e-2fc0-4ca5-b746-25fa0e31afac@quicinc.com>
+ <TYZPR01MB55569715C43B7B1EBE613B86C9752@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
+From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+In-Reply-To: <TYZPR01MB55569715C43B7B1EBE613B86C9752@TYZPR01MB5556.apcprd01.prod.exchangelabs.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: qogMIMhHGYxe0Ztr-CuEH76k2_h1wH39
+X-Proofpoint-ORIG-GUID: qogMIMhHGYxe0Ztr-CuEH76k2_h1wH39
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-23_02,2024-01-23_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
+ adultscore=0 mlxscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
+ clxscore=1015 suspectscore=0 impostorscore=0 mlxlogscore=697
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2401230053
 
-From: Fenglin Wu <quic_fenglinw@quicinc.com>
 
-Add PM8010 regulator device nodes for sm8650-qrd board.
 
-Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sm8650-qrd.dts | 118 ++++++++++++++++++++++++++++++++
- 1 file changed, 118 insertions(+)
+On 1/22/2024 10:27 PM, Ziyang Huang wrote:
+> 在 2024/1/23 0:03, Kathiravan Thirumoorthy 写道:
+>>
+>>
+>> On 1/21/2024 6:22 PM, Ziyang Huang wrote:
+>>> According to Qualcomm document:
+>>>    MP03.1 is RDP404
+>>>    RDP432 is MP03.5
+>>>
+>>> Signed-off-by: Ziyang Huang <hzyitc@outlook.com>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts | 2 +-
+>>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts 
+>>> b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
+>>> index 074b78d7939c..f7e8b5af6b44 100644
+>>> --- a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
+>>> +++ b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
+>>> @@ -1,6 +1,6 @@
+>>>   // SPDX-License-Identifier: GPL-2.0+ OR BSD-3-Clause
+>>>   /*
+>>> - * IPQ5018 MP03.1-C2 board device tree source
+>>> + * IPQ5018 MP03.5-C2 board device tree source
+>>
+>>
+>> I suggest to use the RDP number itself here...
+> 
+> Here is an embarrassing thing. AP/MPxx.x name is more common in the 
+> entire QSDK while RDP number is almost never appeared.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-index 592a67a47c78..361894fa201a 100644
---- a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-@@ -436,6 +436,124 @@ vreg_l3i_1p2: ldo3 {
- 						   RPMH_REGULATOR_MODE_HPM>;
- 		};
- 	};
-+
-+	regulators-6 {
-+		compatible = "qcom,pm8010-rpmh-regulators";
-+		qcom,pmic-id = "m";
-+
-+		vdd-l1-l2-supply = <&vreg_s1c_1p2>;
-+		vdd-l3-l4-supply = <&vreg_bob2>;
-+		vdd-l5-supply = <&vreg_s6c_1p8>;
-+		vdd-l6-l7-supply = <&vreg_bob1>;
-+
-+		vreg_l1m_1p1: ldo1 {
-+			regulator-name = "vreg_l1m_1p1";
-+			regulator-min-microvolt = <1104000>;
-+			regulator-max-microvolt = <1104000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2m_1p056: ldo2 {
-+			regulator-name = "vreg_l2m_1p056";
-+			regulator-min-microvolt = <1056000>;
-+			regulator-max-microvolt = <1056000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3m_2p8: ldo3 {
-+			regulator-name = "vreg_l3m_2p8";
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l4m_2p8: ldo4 {
-+			regulator-name = "vreg_l4m_2p8";
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l5m_1p8: ldo5 {
-+			regulator-name = "vreg_l5m_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l6m_2p8: ldo6 {
-+			regulator-name = "vreg_l6m_2p8";
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7m_2p96: ldo7 {
-+			regulator-name = "vreg_l7m_2p96";
-+			regulator-min-microvolt = <2960000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-7 {
-+		compatible = "qcom,pm8010-rpmh-regulators";
-+		qcom,pmic-id = "n";
-+
-+		vdd-l1-l2-supply = <&vreg_s1c_1p2>;
-+		vdd-l3-l4-supply = <&vreg_s6c_1p8>;
-+		vdd-l5-l6-supply = <&vreg_bob2>;
-+		vdd-l7-supply = <&vreg_bob1>;
-+
-+		vreg_l1n_1p1: ldo1 {
-+			regulator-name = "vreg_l1n_1p1";
-+			regulator-min-microvolt = <1104000>;
-+			regulator-max-microvolt = <1104000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2n_1p056: ldo2 {
-+			regulator-name = "vreg_l2n_1p056";
-+			regulator-min-microvolt = <1056000>;
-+			regulator-max-microvolt = <1056000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3n_1p8: ldo3 {
-+			regulator-name = "vreg_l3n_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l4n_1p8: ldo4 {
-+			regulator-name = "vreg_l4n_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l5n_2p8: ldo5 {
-+			regulator-name = "vreg_l5n_2p8";
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l6n_2p8: ldo6 {
-+			regulator-name = "vreg_l6n_2p8";
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7n_3p3: ldo7 {
-+			regulator-name = "vreg_l7n_3p3";
-+			regulator-min-microvolt = <3304000>;
-+			regulator-max-microvolt = <3304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
- };
- 
- &dispcc {
 
--- 
-2.25.1
+That was the case but not anymore. We decided to switch to RDP number 
+instead of AP/XXXX.. So it would better if we stick with RDP number for 
+consistency.
 
+> 
+>>
+>>
+>>>    *
+>>>    * Copyright (c) 2023 The Linux Foundation. All rights reserved.
+>>>    */
+> 
 
