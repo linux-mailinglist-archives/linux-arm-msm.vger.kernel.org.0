@@ -1,69 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-7960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55DD3839132
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 15:21:30 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE4CC839135
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 15:21:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 929921C27792
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 14:21:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 69AFD1F25DBE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jan 2024 14:21:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AF275F862;
-	Tue, 23 Jan 2024 14:20:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC8BB5F876;
+	Tue, 23 Jan 2024 14:21:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mbhUlsXw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KQ6BgqFe"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A995FDC6;
-	Tue, 23 Jan 2024 14:20:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873E35F872;
+	Tue, 23 Jan 2024 14:21:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706019658; cv=none; b=SkZUJ3DUTvOutogOSSD6VmeEWQZj7wmbfuiqafBPk9vvK2eF9SRdibOffVWgfJmoDQfvnA0ePlRKi+v8rUFz1MfkA3UskUrYsUgtCbF+1SdnOPF4FYGIMBWABhQPyiUMeX+5aUp/pT0plmPFHRJ8SEpsYVmwCIYLL2q1GvHvVig=
+	t=1706019662; cv=none; b=lYkqp4AmRYjBRzSAKGifabg8CHFPlWGJzNqqDr/dYWraPfs4dQNDPd07lm3SiAJrY0kcT74/e78gytrsk8B/JKnJLsadyZDTjIKOsSwlRwCx8b+sxA4Anf8l5vfXHCKkcPjMqkF1JBysA4sEnL1rCRxUiSnxiI3eSvx07GLeFrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706019658; c=relaxed/simple;
-	bh=Fnn6kbblgPOYTHgAoSYebD9MlsrB3lhFQpPsRPT6Uyw=;
+	s=arc-20240116; t=1706019662; c=relaxed/simple;
+	bh=Y3qVpfbCxdi1d6OaDH52Zm0yMJAKCZVxKIP2XOv+Uh0=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=kaOtPgqqAqPPukrsutMR796zZFETbYo29H9GtedGRbmN5aKOOEUu23DHEAFGe7VNF+X/ObrRYmGcxFp3HxS44WWB440AbH/URoAMrLHYHUL2WzKqgH+SUCLbS2ruO+nq4SKpO+wgxLCCqAgUJ+dnAKcRfX0UjIVx7EOzfrr4Xek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mbhUlsXw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA712C433A6;
-	Tue, 23 Jan 2024 14:20:52 +0000 (UTC)
+	 MIME-Version:Content-Type; b=LW8/uMGmH1mg3D/9q5V1nLTqf7y3se9yNadPSpPLXWi3C7W75fA2qhZ0+GdrToBgyg5fGqb2IM0eiSXWzAliAk9MzS8lY1L7Wny/mfinkcXvVCk4NP01vaL1wYOB1Lg9vReUuoP8ciuinoO5bk+swLFdknKw8Gr8DUXN3FYQyT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KQ6BgqFe; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE4FC43394;
+	Tue, 23 Jan 2024 14:20:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706019657;
-	bh=Fnn6kbblgPOYTHgAoSYebD9MlsrB3lhFQpPsRPT6Uyw=;
+	s=k20201202; t=1706019662;
+	bh=Y3qVpfbCxdi1d6OaDH52Zm0yMJAKCZVxKIP2XOv+Uh0=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=mbhUlsXwMBG5JUe5GbAA98Iq95Cnu8TyvBGPHMi2m7n7xd/qfl/cu7IwlfyvUcb1p
-	 tQg6LFrmnl1mIers/nehSPv0+8/LCqpvHp+xZibvvKELZ+OwVBQ9Wxi2nW9D9CIcap
-	 rJb3S7X2GYQPY5xYnX910gcrEujTyW3wffvhQ/j5MVrm2v9KBARP/1kWcdhGOfiAJj
-	 jkO7fzjoUoKbpKUDLKFoIn6cx4t0eD3qK3zt28Iuhr7h6IxBAo9+jD/vEz+tlSQ7kP
-	 TUkxX6c1mClUpk8NmGXUg5g+o4CRu/+nTyTUdrjCpXweZ/mWnMCpgZ4Q2COV7Jo+Ud
-	 ah0qky1ifkNMQ==
+	b=KQ6BgqFe5lqpaeLoQOivVHcS6KBduwAPtR3O3W7jM4WjMA9t70U/Vf9J5Fxcv3lYy
+	 BjAKvF+rg1czCAOE9OfmpNyRdsciGK12wL6SQR0tnzXMGTojWVZvcYtbA8bs95ypi+
+	 XOK3Y+T6ekbrRebuH7A5QI3XpV7CzkBYPzm2vg39U4BjNM+97fWccGKZ3oy0w6D56V
+	 7/nPbd9NXJebFmQ9S1OeVoZmj+pTUGO4OCeW5LUVLQmtxpHVT5le/ihEkCvlnIf5RG
+	 mZI130IvUBYtwlXv1oqx+q4ilCM5JDOeutz50/qiKciwIPXgdkUAEgwPW1MPgH8ktz
+	 1tuwB+jf9qhAA==
 From: Vinod Koul <vkoul@kernel.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Lee Jones <lee@kernel.org>, 
  Rob Herring <robh+dt@kernel.org>, 
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
  Kishon Vijay Abraham I <kishon@kernel.org>, 
- Guenter Roeck <linux@roeck-us.net>, 
- Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
- Philipp Zabel <p.zabel@pengutronix.de>, 
+ Jeffrey Hugo <quic_jhugo@quicinc.com>, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-usb@vger.kernel.org, linux-phy@lists.infradead.org, 
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20240113-pmi632-typec-v2-0-182d9aa0a5b3@linaro.org>
-References: <20240113-pmi632-typec-v2-0-182d9aa0a5b3@linaro.org>
-Subject: Re: (subset) [PATCH v2 00/15] usb: typec: qcom-pmic-typec: enable
- support for PMI632 PMIC
-Message-Id: <170601965232.371263.15600839132487159612.b4-ty@kernel.org>
-Date: Tue, 23 Jan 2024 19:50:52 +0530
+ linux-phy@lists.infradead.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20240117-usbc-phy-vls-clamp-v2-0-a950c223f10f@linaro.org>
+References: <20240117-usbc-phy-vls-clamp-v2-0-a950c223f10f@linaro.org>
+Subject: Re: (subset) [PATCH v2 0/6] phy: qcom: qmp-usbc: properly handle
+ the clamping register
+Message-Id: <170601965814.371263.12044570572262863017.b4-ty@kernel.org>
+Date: Tue, 23 Jan 2024 19:50:58 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,28 +70,25 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.12.3
 
 
-On Sat, 13 Jan 2024 22:55:43 +0200, Dmitry Baryshkov wrote:
-> The Qualcomm PMI632 PMIC (found on Qualcomm Robotics RB2 platform)
-> doesn't support USB Power Delivery. However this PMIC still supports
-> handling of the Type-C port (orientation detection, etc). Reuse exiting
-> qcom-pmic-typec driver to support Type-C related functionality of this
-> PMIC. Use this to enable USB-C connector support on the RB2 platform.
+On Wed, 17 Jan 2024 16:04:21 +0200, Dmitry Baryshkov wrote:
+> The USB-C PHY on the MSM8998, QCM2290, SM6115 and several other platforms
+> doesn't have built-in PCS_MISC_CLAMP_ENABLE register. Instead clamping
+> is handled separately via the register in the TCSR space. Make the new
+> phy-qcom-qmp-usbc driver correctly handle the clamp register.
 > 
+> For backwards compatibility the driver treats these registers as
+> optional. They are only required for the PHY suspend/resume. However the
+> schema declares corresponding property as required, it should be present
+> on all relevant platforms.
 > 
 > [...]
 
 Applied, thanks!
 
-[03/15] dt-bindings: phy: qcom,msm8998-qmp-usb3-phy: split from sc8280xp PHY schema
-        commit: 159919a184c5ef82fac3605b2390b17a549c06ac
-[04/15] dt-bindings: phy: qcom,msm8998-qmp-usb3-phy: support USB-C data
-        commit: c1214b579733df7017c0e5f97f26eeb4b66df0c6
-[10/15] phy: qcom: qmp-usb: split USB-C PHY driver
-        commit: 19281571a4d5b6049dad9318db081af48818b1d2
-[11/15] phy: qcom: qmp-usb: drop dual-lane handling
-        commit: 52cfdc9c6c3306f0bda4f217396f508d3f5459fb
-[12/15] phy: qcom: qmp-usbc: add support for the Type-C handling
-        commit: dfdaba27b4660ec26de955cf4459499ddb005e2d
+[2/6] dt-bindings: phy: qcom,msm8998-qmp-usb3-phy: add TCSR registers
+      commit: f2b2f86a8bd19feb70649abf8a63d639f4c838d8
+[3/6] phy: qcom: qmp-usbc: handle CLAMP register in a correct way
+      commit: 01b086ccdeffac96f107228d581e0925e1c83f87
 
 Best regards,
 -- 
