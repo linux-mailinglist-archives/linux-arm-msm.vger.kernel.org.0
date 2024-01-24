@@ -1,86 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-8136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2A7783AB39
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 14:56:01 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39EB083AC8F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 15:57:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9FC06B27DDC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 13:55:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6AC871C222D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 14:57:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BCD77A719;
-	Wed, 24 Jan 2024 13:55:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6292F17562;
+	Wed, 24 Jan 2024 14:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="hTlBOQJl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JFLygRVd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 897CD77F37
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 13:55:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3543F2F26;
+	Wed, 24 Jan 2024 14:56:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706104528; cv=none; b=Cao6CnWXweqmbCLdyQbWQ/hXtXVrD1dhH1wbvKJTfy6/ktOFILrRwxDx85BtQPOeb83A2B3KTcrNuq29FCRd8EAzlWLnTR/FSHVWuvlwGMXx//mFMCkDQcHjfFbVXsFa+5xUnZOki5n81gDoMgisApm0NpnjvNN+xBaxlB9XBrM=
+	t=1706108194; cv=none; b=cLhnIV2lgcsCRjZB4tPBKcu60BWRD+dcmlqOZFWegBn1g8VZMBP+2FZrS0bZE4HYVhcMk78v4XmDkfjyennALWNJd4wVQMgtU43QfWxPEVrT3p0Z29/xb+7EM5+pBTLL6mReAfs+DtBVE6/1OJkZlkRTqUq7HWYwwV4HKcHWe64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706104528; c=relaxed/simple;
-	bh=uO6XYeao3+ERbDLbaGJYNsqD7iMh0uqxQitnp3GG0EI=;
+	s=arc-20240116; t=1706108194; c=relaxed/simple;
+	bh=7/wklZ6oD0ECwz1vKnU18BgeWzOozsvAiODYnadkp4s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LMqH7KwzGGuweNNx/PQzNTdgWH8om0/pq9z8umMsiWTRFYLdsPxa1Z0lxE7E7nW0QvnC73RKlPHLYvbgA3MwZYEvxEB/P/Wnp3AQBViXEnv2A/SxanxEx+gtvkXmJgUwE86xJMpxFh+UHfGrrFUfPgz9veytF3topR/nmaDdoME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=hTlBOQJl; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1706104525;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=X2HNODfBS+JrHafscRLbwZLG2NmbTl5ZUi1igtTA3Vk=;
-	b=hTlBOQJlF0s+8CYx2Wj3K5T0/sFRhFRjeiJC9dUmGBYs5tXuJJGENMNv6GLPrmphCSLV4D
-	1jCuF+q3RwPOV7mMAIMOPvymAwt7Xdt/vRGMchIJXfWNivIv64belzJID6nRoj1Tjc0xD/
-	jgxKyBkVoZX59WbQ2OAc8T2vbNg1Ono=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-312-9kSwqu67NTCIN4UJg0XHhg-1; Wed, 24 Jan 2024 08:55:22 -0500
-X-MC-Unique: 9kSwqu67NTCIN4UJg0XHhg-1
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7831ed4bb2aso1015544385a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 05:55:22 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706104521; x=1706709321;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=X2HNODfBS+JrHafscRLbwZLG2NmbTl5ZUi1igtTA3Vk=;
-        b=fIDAgKmgl3ODbDbiN4vgFxhmly6QGG9R5TthKSypgUVif0VPUT/Sh9ct7Nmh2ep0WU
-         iuTV6p04pKaRjUiT2GpKyyoKFPekWg60a/RmOsovv83FMOjNJe0ekMudlfZpyCoFThhM
-         evRROIQRNjFE/mBc0U2TxMUQpkz0Eb71V6V/LVHvvFl6BROfHjfxYSVqrJzMVhi2g0q5
-         Kk0M4mGhkcNJ0fOG7Af5Xeb5aw6YkBCueiAsNHzZBIAisN206QmAa0bDHYNH80TRlksZ
-         BI5w9bDdLiTw/4pnMkCVjnCVaORs3x7XzUCvlQ4AnCu7R32/JK6BOEyACt/vz17flld9
-         rf5A==
-X-Gm-Message-State: AOJu0YyQHV79gGPaCmlHdgz/cqj/9Htv1I00bejzO3IHysx6Fut49BHj
-	wSlXHNP2qPkFt2U6gby9jsNht+ItkU5jqzUORNJQMxiZXcRZtyBVfv2/Q0yg5sUjH0IutclgZKi
-	l1wF2ogIqazUueLD87gTUPIoGKcf7kciosySJpGzSCA+rNi706fXFUY5oNzNue0k=
-X-Received: by 2002:a05:620a:610a:b0:783:8071:2473 with SMTP id oq10-20020a05620a610a00b0078380712473mr8341385qkn.61.1706104521678;
-        Wed, 24 Jan 2024 05:55:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGTtQXSI1MSoTfgWJ8tVH7siOJkHn3LOGpV6BWnWln+S7PK+ANFnpN3awurbecqz9jTWq6izA==
-X-Received: by 2002:a05:620a:610a:b0:783:8071:2473 with SMTP id oq10-20020a05620a610a00b0078380712473mr8341369qkn.61.1706104521402;
-        Wed, 24 Jan 2024 05:55:21 -0800 (PST)
-Received: from fedora ([2600:1700:1ff0:d0e0::37])
-        by smtp.gmail.com with ESMTPSA id m26-20020ae9e01a000000b0078392eacfd4sm3940574qkk.80.2024.01.24.05.55.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Jan 2024 05:55:20 -0800 (PST)
-Date: Wed, 24 Jan 2024 07:55:18 -0600
-From: Andrew Halaney <ahalaney@redhat.com>
-To: Eric Chanudet <echanude@redhat.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
-	"James E.J. Bottomley" <jejb@linux.ibm.com>, "Martin K. Petersen" <martin.petersen@oracle.com>, 
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] scsi: ufs: qcom: avoid re-init quirk when gears match
-Message-ID: <mzfbayn2yz2egmtv2lankxn3h7p4pglaqxallczzmcevkvnp5b@jplxt7yu6xae>
-References: <20240123192854.1724905-4-echanude@redhat.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=JaBuKgd4XADzmMlrs/R5kNKrlFjufMB5ysKjwI6L+fbSxEM8OChEcylT6+3enN1NPU3l9AWNQC8oZQBkPVLYCqLIbVmO4ZMYtG2/XJrCpdonjxQBg2KzrKKeATA70RvU7MPmDR1lfdmATn8RGhv2OX/m81rIZv2cGokXkqsiDnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JFLygRVd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73B0EC433F1;
+	Wed, 24 Jan 2024 14:56:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706108193;
+	bh=7/wklZ6oD0ECwz1vKnU18BgeWzOozsvAiODYnadkp4s=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=JFLygRVdAi67WUWHRp4/WulZPT9untGPgaFZV/lYT18DrtkTQBhFtoUp91sZuVJyx
+	 0iUV4qnU6xBkADvpEtDb9X1XfomDS78VK7xZILwkZSCzvk2fFRL+DZpbh5Avu741mv
+	 mzgWrQax+cp0brWgly+g993OvOEcVjJ4pMzCs+9CVdDn9wyOJ1Z/0XIHejv9s7lFj2
+	 xTGlXAz1XrejcNZTnegODD9oXkWQRx/2qpmUxcXj60ZRuM0zKspabgcYsgxvzdLeeP
+	 9eZXD4hAbHFj6hjepm9qSpV3XXJEUtwPVYXetz7SfJvcBbk1xNDQusnlFJ0lvuUL55
+	 QxobEzuPn3zQQ==
+Date: Wed, 24 Jan 2024 08:56:31 -0600
+From: Rob Herring <robh@kernel.org>
+To: Amrit Anand <quic_amrianan@quicinc.com>
+Cc: krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+	agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, kernel@quicinc.com
+Subject: Re: [PATCH 0/2] Add board-id support for multiple DT selection
+Message-ID: <20240124145631.GA873781-robh@kernel.org>
+References: <1705749649-4708-1-git-send-email-quic_amrianan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,72 +59,72 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240123192854.1724905-4-echanude@redhat.com>
+In-Reply-To: <1705749649-4708-1-git-send-email-quic_amrianan@quicinc.com>
 
-On Tue, Jan 23, 2024 at 02:28:57PM -0500, Eric Chanudet wrote:
-> On sa8775p-ride, probing the hba will go through the
-> UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH path although the power info
-> are same during the second init.
-> 
-> The REINIT quirk only applies starting with controller v4. For these,
-> ufs_qcom_get_hs_gear() reads the highest supported gear when setting the
-> host_params. After the negotiation, if the host and device are on the
-> same gear, it is the highest gear supported between the two. Skip REINIT
-> to save some time.
-> 
-> Signed-off-by: Eric Chanudet <echanude@redhat.com>
+On Sat, Jan 20, 2024 at 04:50:47PM +0530, Amrit Anand wrote:
+> Device manufacturers frequently ship multiple boards or SKUs under a
+> single software package. These software packages will ship multiple
+> devicetree blobs and require some mechanism to pick the correct DTB for
+> the board the software package was deployed. Introduce a common
+> definition for adding board identifiers to device trees. board-id
+> provides a mechanism for bootloaders to select the appropriate DTB which
+> is vendor/OEM-agnostic.
 
-On the sa8775p-ride I have I see similar results to what you mention!
-Thanks.
+Show me a 2nd user. Or does vendor/OEM-agnostic just mean vendors of 
+QCom devices? Multiple SoC families using this would help your case. I'm 
+not inclined to take it into the DTSpec without that.
 
-Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8775p-ride
+> 
+> Isn't that what the compatible property is for?
+> -----------------------------------------------
+> The compatible property can be used for board matching, but requires
+> bootloaders and/or firmware to maintain a database of possible strings
+> to match against or have complex compatible string matching. Compatible
+> string matching becomes complicated when there are multiple versions of
+> board: the device tree selector should recognize a DTB that cares to
+> distinguish between v1/v2 and a DTB that doesn't make the distinction.
+> An eeprom either needs to store the compatible strings that could match
+> against the board or the bootloader needs to have vendor-specific
+> decoding logic for the compatible string. Neither increasing eeprom
+> storage nor adding vendor-specific decoding logic is desirable.
 
-> ---
-> 
-> v1 -> v2:
-> * drop test against host->hw_ver.major >= 4 and amend description as a
->   result (Andrew/Mani)
-> * add comment, test device gear against host->phy_gear and reset
->   host->phy_gear only if necessary (Mani)
-> * Link to v1: https://lore.kernel.org/linux-arm-msm/20240119185537.3091366-11-echanude@redhat.com/
-> 
-> trace_event=ufs:ufshcd_init reports the time spent in ufshcd_probe_hba
-> where the re-init quirk is performed:
-> Currently:
-> 0.355879: ufshcd_init: 1d84000.ufs: took 103377 usecs, dev_state: UFS_ACTIVE_PWR_MODE, link_state: UIC_LINK_ACTIVE_STATE, err 0
-> With this patch:
-> 0.297676: ufshcd_init: 1d84000.ufs: took 43553 usecs, dev_state: UFS_ACTIVE_PWR_MODE, link_state: UIC_LINK_ACTIVE_STATE, err 0
-> 
->  drivers/ufs/host/ufs-qcom.c | 13 +++++++++++--
->  1 file changed, 11 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 39eef470f8fa..f7dba7236c6e 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -738,8 +738,17 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
->  		 * the second init can program the optimal PHY settings. This allows one to start
->  		 * the first init with either the minimum or the maximum support gear.
->  		 */
-> -		if (hba->ufshcd_state == UFSHCD_STATE_RESET)
-> -			host->phy_gear = dev_req_params->gear_tx;
-> +		if (hba->ufshcd_state == UFSHCD_STATE_RESET) {
-> +			/*
-> +			 * Skip REINIT if the negotiated gear matches with the
-> +			 * initial phy_gear. Otherwise, update the phy_gear to
-> +			 * program the optimal gear setting during REINIT.
-> +			 */
-> +			if (host->phy_gear == dev_req_params->gear_tx)
-> +				hba->quirks &= ~UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
-> +			else
-> +				host->phy_gear = dev_req_params->gear_tx;
-> +		}
->  
->  		/* enable the device ref clock before changing to HS mode */
->  		if (!ufshcd_is_hs_mode(&hba->pwr_info) &&
-> -- 
-> 2.43.0
-> 
-> 
+You could hash the compatible strings if it was just a size issue.
 
+> The solution proposed here is simpler to implement and doesn't require
+> updating firmware or bootloader for every new board.
+> 
+> How is this better than Qualcomm's qcom,msm-id/qcom,board-id?
+> -------------------------------------------------------------
+> The selection process for devicetrees was Qualcomm-specific and not
+> useful for other devices and bootloaders that were not developed by
+> Qualcomm because a complex algorithm was used to implement. Board-ids
+> provide a matching solution that can be implemented by bootloaders
+> without introducing vendor-specific code. Qualcomm uses three
+> devicetree properties: msm-id (interchangeably: soc-id), board-id, and
+> pmic-id.  This does not scale well for use casese which use identifiers,
+> for example, to distinguish between a display panel. For a display
+> panel, an approach could be to add a new property: display-id, but now
+> bootloaders need to be updated to also read this property. We want to
+> avoid requiring to update bootloaders with new hardware identifiers: a
+> bootloader need only recognize the identifiers it can handle.
+
+So the id list will be always expanding list for every last component 
+that is 2nd sourced? The ChromeOS folks are also trying to solve that 
+problem.
+
+There's a similar issue for EFI boot with how to select an OS installed 
+DTB[1]. You might not care now, but users may later on (like we have 
+already with QCom devices with fixed bootloaders). If you do this 
+board-id route, then no doubt that compatible values won't be specific 
+enough or have suitable fallbacks to be used. Then EFI boot can't use 
+compatible either and needs to use this QCom specific logic. It may be a 
+common property name, but all the types you defined are QCom specific 
+and the matching logic is pretty much undocumented. I'm not saying we 
+have to use compatible. There wasn't even agreement to use it for EFI 
+boot case. This does need to work for multiple vendors and multiple boot 
+scenarios.
+
+Rob
+
+[1] https://lore.kernel.org/u-boot/20231114232012.GD6601@bill-the-cat/#r
 
