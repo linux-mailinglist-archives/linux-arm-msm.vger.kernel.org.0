@@ -1,127 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-8160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDE4883B41D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 22:37:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21C2883B432
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 22:42:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EBA381C23B7E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 21:37:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C34C9285AEE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 21:42:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34572136661;
-	Wed, 24 Jan 2024 21:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A20991350FB;
+	Wed, 24 Jan 2024 21:41:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Efpg5Jh2"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ta5qce0H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7924F135A5A;
-	Wed, 24 Jan 2024 21:37:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2855A131E26
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 21:41:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706132222; cv=none; b=bjdUvnPhGAeDBSFwAHl6mQUXXGREgtLQ5HGMKxXyQeAOgQHSm8Dcz1sPkEdSOZMCJCOEPYj5Y7287TgvMPT5g1HKU/rIVHkz78v15TJRqdfbG+hLEm+cNX+xqXSSRLlUuVYSdE/mo/Ck+lKAibtBSkLKfE2kED3ErKgtOmvOpuA=
+	t=1706132519; cv=none; b=fk2QL5QQ/3M55w2z2mjxCxExYrC3Mn3O3YQoeZjlJEASIFP/1I/9pjuV1FRDZ/RoNbZnNxyHgBGpT3bgbiPHR5SbRiC7JS5tkCK1AyOY00ycRgGjABi4THWT0IxjqS83prLha5e56tLy9Af5eFkTHJyqZE8kCnNe7AGkxJPzdVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706132222; c=relaxed/simple;
-	bh=AOE7n0KnewlaWwxbj8BBqxz1kEl4nUkcJEnkd3Rd1CM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UimU8fQzuxrtNAS6MO9PTGVm3MeiSGr7MSI30PSL5xzKcspHmpLNVaJnY0iFoXBfrHJnQDB+Xln4Y6cR2vJA2T1ckuUcScAvis1GnYV2IgOX2DG85D4rwsSPe70qAhqjJDYieoz3Y0n9McE7rCF13W19WOJ/sR2yVt3ctCS5J0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Efpg5Jh2; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-40d6b4e2945so70792175e9.0;
-        Wed, 24 Jan 2024 13:37:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706132218; x=1706737018; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1Q3Rs7PU6VZ7DHw5oiGFQEWFBt/lSJt0fN7k2NTIpww=;
-        b=Efpg5Jh2jxgCenaxgkIf7I/hW4yDtYNkk4j+q3gR0KoBae6r7dRYhTycs2sIiEOb9i
-         QRWZnyWObpVrvH/2D7a0dz87cVmL3UFLwttAaMG4ElAZ923VX1sOW0Xz1NXupU5L05ZE
-         CzH+7bU6c9bpBh5H0ZrKl9igdNOpiXVIqrMIMix0P0QpjfN1YiBW1a47E4mdWoGFzY5T
-         KlqskRpvdyS6iANyJxUta+lpDr4CCWfCq+8URKviifYrMuxW1R0nsWwmHwmiZgRHJ5gn
-         dwM/hck0zc2okkn7Dzz+QQu8s+w0jigCwqjXXYsNGQfBGGmT7JEKtM3M3SFWAQrGwGQw
-         /vUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706132218; x=1706737018;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1Q3Rs7PU6VZ7DHw5oiGFQEWFBt/lSJt0fN7k2NTIpww=;
-        b=TpPb3uU3FDV0b1BYYLh6T0m5SOTBq3AAp6NmPbPM5l5soCkcZJRbD4zquJ74Rj6Wl7
-         kP6AHRnCbzphSy/mG69N0Oscxw5piJdvjRP1rx1ZQIQC4iY8ioBGwC+HrER0rNu0qzf2
-         zkzhKr2MrYskVz9OFFrvhB2p4V6dKW84dtQr2ydvfJBIFanYuyWpizffw3SRmrTKvwWb
-         6K9bC44qWtsf0uGdFWpqxVKIZpxAY/W3iQOWbw9xRdaU4mDaZMEy2IvknLqsDc/YTmMu
-         7ps6TxQR75yNt9CWvP9dgblhIaFvrXiHi1JRETvbjkLTx2xx2EChYQHLRux9DKdQpW16
-         pECw==
-X-Gm-Message-State: AOJu0YyuPAHESjRY36cpv1C6lVn6GL82tgCl//oMYrBctyvl8bNhZRq3
-	LGRG9aOYERhwI0+LakeVudILEAC/P++fC0wYowr/kYaIVl73LUmo
-X-Google-Smtp-Source: AGHT+IHVdLu49ZheFyem/UbrZMcfgbfgZrLaOQv3BosrNO5JqxwttVmSuIpI0HNxLwOfbIJey2JX2A==
-X-Received: by 2002:a05:600c:458f:b0:40e:46f5:e5ef with SMTP id r15-20020a05600c458f00b0040e46f5e5efmr963875wmo.21.1706132218200;
-        Wed, 24 Jan 2024 13:36:58 -0800 (PST)
-Received: from localhost.localdomain (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
-        by smtp.googlemail.com with ESMTPSA id q13-20020a05600c46cd00b0040e89ade84bsm339466wmo.4.2024.01.24.13.36.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Jan 2024 13:36:57 -0800 (PST)
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Robert Marko <robert.marko@sartura.hr>,
-	linux-arm-msm@vger.kernel.org,
-	netdev@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Christian Marangi <ansuelsmth@gmail.com>
-Subject: [net-next PATCH 3/3] arm64: dts: qcom: ipq8074: add clock-frequency to MDIO node
-Date: Wed, 24 Jan 2024 22:36:33 +0100
-Message-ID: <20240124213640.7582-4-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240124213640.7582-1-ansuelsmth@gmail.com>
-References: <20240124213640.7582-1-ansuelsmth@gmail.com>
+	s=arc-20240116; t=1706132519; c=relaxed/simple;
+	bh=vj/vQ77p2v63Xsymv00xbhHZmRf+CwRmN9/3Gub/Zns=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=ZmLOv1QQt1BZNjIEBUxQnmP7xME9PqTyIfEU3u/4qGQz3N+hCX9Qcc3spT6ERV3w8LrSpNKWB7zf7X4PbL+B28M7dOoZuJy1dWNv9AFYULHqdGpFkXnD+X9SscEQq/DpTK2E9I20AegdkIog9hIhIFVUv+Nm1fLc+b/EAUTltJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ta5qce0H; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40ODvcWA010402;
+	Wed, 24 Jan 2024 21:41:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:from:to:cc:references
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=uQX9xuShpgOtVrWiP3OZBHiY1ykF6TDzrzZZ7r10cOM=; b=Ta
+	5qce0HNX3SFBPsbw2pePbOVJusLvRjnvfXl189XHnSo/ZhOkxVM8YEJ+ELORhE4H
+	InJRuD7kQH4gvy3zZ/deOsHya6lXzkXErWOhPyoeKa+7+26iQO3zwWspaPO8VPjF
+	zTTaLv4S1kcz/PpnLW3IJQF3yDMm6iJAbxMlrgz2Y012WxETdUByIfvbq98v0XGr
+	RcREem2fpTDO0QOBKwcew5aos8uEiC/lbCTmI1O1H/F3gk9S/OgVKxdcHXylPOWA
+	dT97yaY4/boPUXUC7rcqvpFs6Bazg0dkRijHVZgwfwERTKC1Awi7OXJqtUWy3eDJ
+	F3tWnHEbF6I2sMsYNYXg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vu1cche7k-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 24 Jan 2024 21:41:40 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40OLfdkH003049
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 24 Jan 2024 21:41:39 GMT
+Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 24 Jan
+ 2024 13:41:39 -0800
+Message-ID: <5835e242-ea32-7d94-6247-6bfd236424cd@quicinc.com>
+Date: Wed, 24 Jan 2024 13:41:38 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] drm/msm/dpu: drop obsolete documentation for
+ dpu_encoder_virt
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>
+CC: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, kernel test robot <lkp@intel.com>
+References: <20231217000158.912062-1-dmitry.baryshkov@linaro.org>
+ <64967f7a-8c7d-ca63-c126-e187905d3470@quicinc.com>
+In-Reply-To: <64967f7a-8c7d-ca63-c126-e187905d3470@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: S41NaIM1uzw9Px3fsm1VpdamCOCwiPwz
+X-Proofpoint-GUID: S41NaIM1uzw9Px3fsm1VpdamCOCwiPwz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-24_10,2024-01-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=504
+ clxscore=1015 malwarescore=0 adultscore=0 suspectscore=0
+ priorityscore=1501 mlxscore=0 lowpriorityscore=0 impostorscore=0
+ spamscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401190000 definitions=main-2401240157
 
-Add clock-frequency to MDIO node to set the MDC rate to 6.25Mhz instead
-of using the default value of 390KHz from MDIO default divider.
 
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
----
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 2f275c84e566..08ddfeece043 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -264,6 +264,8 @@ mdio: mdio@90000 {
- 			clocks = <&gcc GCC_MDIO_AHB_CLK>;
- 			clock-names = "gcc_mdio_ahb_clk";
- 
-+			clock-frequency = <6250000>;
-+
- 			status = "disabled";
- 		};
- 
--- 
-2.43.0
+On 12/18/2023 9:57 AM, Abhinav Kumar wrote:
+> 
+> 
+> On 12/16/2023 4:01 PM, Dmitry Baryshkov wrote:
+>> Drop obsolete kerneldoc for several fields in struct dpu_encoder_virt
+>>
+>> Reported-by: kernel test robot <lkp@intel.com>
+>> Closes: 
+>> https://lore.kernel.org/oe-kbuild-all/202312170641.5exlvQQx-lkp@intel.com/
+>> Fixes: 62d35629da80 ("drm/msm/dpu: move encoder status to standard 
+>> encoder debugfs dir")
+>> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 4 ----
+>>   1 file changed, 4 deletions(-)
+>>
+> 
+> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> 
 
+Have picked up https://patchwork.freedesktop.org/patch/572962/ instead 
+of this one as it also cleans up another doc error in addition to the 
+ones here.
 
