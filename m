@@ -1,115 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-8154-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B18B383B365
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 21:57:47 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1EBE83B3C9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 22:21:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6AE79285FE4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 20:57:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB3B8283C8C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 21:21:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 608EC13473B;
-	Wed, 24 Jan 2024 20:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91F241350F6;
+	Wed, 24 Jan 2024 21:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Zdaom4Bl"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Mme52Erm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B125F811E4;
-	Wed, 24 Jan 2024 20:57:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27907E760;
+	Wed, 24 Jan 2024 21:21:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706129862; cv=none; b=eh3tW19Ud5ZUeMVPHV2DfvAJxwTAUzKXCs++nPKvUUekmVr0tsMXkixF16/6BNjaqHQOO9f9G9tmgATjQfNmeJpbxzH0/RzXzGKX7/9MID2kPty/yoLbusDTjuUuij2OkgJJDK4RyC9IIFAcQdS4KobhKtr3oTmFE7ZMPzxHPrY=
+	t=1706131288; cv=none; b=iF8hmDiMo0Ji+eM9Nsjv3R0pTJDOU2eLQJZJLZ0hsLnaGjpoA6SMNZLim+ElFgwm9wxrDdBjqFyAHxa8CJQ3wNf5n6O5s/5bsyyqshKCDAbupvRVlw2tlnXweWyf2UXhRaawNuX66XOnwCI+f+9CgTHaOTDZ7SBRuv5iO9jGsdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706129862; c=relaxed/simple;
-	bh=H1xEbd9zzwHNfjrx1DrQsztSJNREWKYjWs+YmjUUQ0s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=XV4D+IhgE03GBSI1m9cUyNnVKkpNdeQB5djPU7alE0vqKqIVF1+VYA/7g8cqPwGLSvsVrWosu5SnmCHEPbVqo/XjrKl6reLeGOAfpqKgPyMaxvBiNfCaMFqrwO3C3s/7wxEsN8dYEzsp7ld6yjvr24v8gjpSCP1G+YLbNaMSBmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Zdaom4Bl; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1706131288; c=relaxed/simple;
+	bh=FzOKL9KxZDnA9cvK6swo/MuG4jFcfk0VvlqEQegPZuM=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NwzDoNxCrr864qeHlF53AOVBuvpdSgzOqba+aqBBsLiAH9HHjZOojj+gJ1b2EfNj0Q//YLNbRLPauxjR/k63u8WyprUL4ChJvrdC5TKAcyvIIi0VDeUpFpxnUx2gb3yPBDhCGXTj0tRU3rdE/sb18GyEf2EnwuE5dB+YA+3E6iA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Mme52Erm; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40OKZIXw032422;
-	Wed, 24 Jan 2024 20:57:34 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40OKkjkD001981;
+	Wed, 24 Jan 2024 21:21:18 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=D7PW03wxf6isXJvyOR/aX6S/q04NxOKTyXvKD94SUes=; b=Zd
-	aom4BlZzx86dNbGMDcdBPZskuxffsXcvO02Mhd+WRN4whk9qnpJure/wS58DMwuv
-	1t2jSnkxZI1ioym/zrQib3vGfOpjAGeKSlnDVMkNuV38isG7OAvGg1QEWc6t4jEQ
-	qIGja+vZ7Yzo167AnRh1xl7itgZZdteNWdtcWAM/ImbZCtajov4mKRVC0RICBYi7
-	51hqdGwgWCLCTV2+ykxaEeeyQ0dHiYUz5IGjAIsq8+i5zyzfWzp0ZBD3kbV66DnK
-	ngegwG+Biw+JJHl6jQQ5xDSOCio99C52pyAlmhSW0lx8RD28PeQddnCKd7UYMgr0
-	Ib4zUp96vNhWMbF4OpUg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vu6j2rj0c-1
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=NrQMdqBAv+lIUzaRxo00i
+	82mdCZlOLZNAfk2vB4ojS4=; b=Mme52Erm7bRgY2cHMG7zrbWV9VeZlueP72/SI
+	JzCtHwuU1jvIbLmKRsg0RAMQ7t4nsxFzJRFy+ZLB8y5n2MyYgVEiSiHgU4myr+Gu
+	4iCH8fGWtSycVUDtW5gJklU+HyTQ/dZBKVA+eu0Shf9Gv3hg0UOQinH08UMr0iNH
+	dZwPVprAOXP+2tPbYVscUV8RUMgLYWX9TWF1rqXzplwJTYt0lpOA6NGBe3ZXDWUi
+	/3jgraC2txKrPuuessJ9P3r88C+0YHbpF3laifc/xTF5BAvd+HBix5ejLYyfmq6Y
+	prHgL1hxangmbrrqWceKYs6qV3LejrDEEQXHvjxV74F/WPq+Q==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vu81g8b4k-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Jan 2024 20:57:34 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40OKvXCp009997
+	Wed, 24 Jan 2024 21:21:18 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40OLLHoS012562
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Jan 2024 20:57:33 GMT
-Received: from [192.168.142.6] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 24 Jan
- 2024 12:57:33 -0800
-Message-ID: <64e98fc4-8c4f-6a19-929b-e9a37b7d1431@quicinc.com>
-Date: Wed, 24 Jan 2024 12:57:32 -0800
+	Wed, 24 Jan 2024 21:21:17 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Wed, 24 Jan 2024 13:21:17 -0800
+Date: Wed, 24 Jan 2024 13:21:16 -0800
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Johan Hovold
+	<johan+linaro@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH v3 1/8] dt-bindings: clock: qcom: Allow VDD_GFX supply to
+ GX
+Message-ID: <20240124212116.GH2936378@hu-bjorande-lv.qualcomm.com>
+References: <20240123-sa8295p-gpu-v3-0-d5b4474c8f33@quicinc.com>
+ <20240123-sa8295p-gpu-v3-1-d5b4474c8f33@quicinc.com>
+ <f6844d28-c7c2-4afa-8520-2e62c608930d@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] soc: qcom: aoss: Add tracepoints in qmp_send()
-To: Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20240123-qcom-aoss-tracepoints-v2-1-bd73baa31977@quicinc.com>
-Content-Language: en-US
-From: Chris Lew <quic_clew@quicinc.com>
-In-Reply-To: <20240123-qcom-aoss-tracepoints-v2-1-bd73baa31977@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <f6844d28-c7c2-4afa-8520-2e62c608930d@linaro.org>
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: r9ZsZ_oaZU8FFv-mn670ze3sZzylWbPY
-X-Proofpoint-GUID: r9ZsZ_oaZU8FFv-mn670ze3sZzylWbPY
+X-Proofpoint-GUID: PnLJdRJX2jEfCfQfJoYniqoyj87W6M1A
+X-Proofpoint-ORIG-GUID: PnLJdRJX2jEfCfQfJoYniqoyj87W6M1A
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-24_09,2024-01-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
- malwarescore=0 mlxscore=0 priorityscore=1501 lowpriorityscore=0
- impostorscore=0 adultscore=0 mlxlogscore=954 spamscore=0 suspectscore=0
+ definitions=2024-01-24_10,2024-01-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ clxscore=1015 lowpriorityscore=0 suspectscore=0 phishscore=0 adultscore=0
+ spamscore=0 malwarescore=0 impostorscore=0 mlxscore=0 mlxlogscore=771
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401190000 definitions=main-2401240151
+ engine=8.19.0-2401190000 definitions=main-2401240154
 
-
-
-On 1/23/2024 7:40 PM, Bjorn Andersson wrote:
-> Add tracepoint for tracing the messages being sent and the success
-> thereof. This is useful as the system has a variety of clients sending
-> requests to the always-on subsystem.
+On Wed, Jan 24, 2024 at 07:31:34AM +0100, Krzysztof Kozlowski wrote:
+> On 24/01/2024 05:25, Bjorn Andersson wrote:
+> > +# Allow either power-domains or vdd-gfx-supply, not both
+> > +oneOf:
+> > +  - required:
+> > +      - power-domains
+> > +  - required:
+> > +      - vdd-gfx-supply
+> > +  - not:
+> > +      anyOf:
+> > +        - required:
+> > +            - power-domains
+> > +        - required:
+> > +            - vdd-gfx-supply
 > 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
-> Changes in v2:
-> - Corrected copy-paste error in include guard (now _TRACE_QCOM_AOSS_H)
-> - Link to v1: https://lore.kernel.org/r/20240117-qcom-aoss-tracepoints-v1-1-4f935920cf4b@quicinc.com
-> ---
->  drivers/soc/qcom/Makefile     |  1 +
->  drivers/soc/qcom/qcom_aoss.c  |  7 +++++++
->  drivers/soc/qcom/trace-aoss.h | 48 +++++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 56 insertions(+)
+> I don't fully understand what you want to achieve here. If only "allow
+> either", so not a "require either", then simpler:
+> 
+> https://lore.kernel.org/all/20230118163208.GA117919-robh@kernel.org/
 > 
 
-Reviewed-by: Chris Lew <quic_clew@quicinc.com>
+As discussed in v2, power-domains is currently an optional property in
+this binding and I'm adding vdd-gfx-supply as an alternative to that.
+
+As it's optional, barely any of our platforms define the property, so
+requiring this would not be compatible with existing DT source.
+
+It's clear that this does not accurately represent the power situation
+for the block, so we should fix this. But I'd prefer to see that as a
+separate task.
+
+
+Implementation-wise, we need to figure how to consume multiple
+power-domains in the GPUCC drivers in Linux, because the correct
+definition seems to be to add both CX and GX/GFX domains here - and if
+we just add them to the DT node Linux will break.
+
+Regards,
+Bjorn
 
