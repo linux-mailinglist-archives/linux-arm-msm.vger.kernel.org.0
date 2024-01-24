@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-8068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 653A483A20A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 07:31:46 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D68783A21A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 07:34:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7076F1C244EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 06:31:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E12E3281221
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 06:34:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B4D5BE69;
-	Wed, 24 Jan 2024 06:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E7BFBE69;
+	Wed, 24 Jan 2024 06:34:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZSyyBlZG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e1zk9p8s"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7775628
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 06:31:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E6614F86
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 06:34:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706077900; cv=none; b=qzY78a5d3psjgbQHgb5vTPmA5ABB+IVqiHThUlOA3s56IJHnoCbwRQSC8Cu5M1BQFkbCPrKOWa//1qj2w/3OJfi6pXOrelhpj4weGS5LDqWftZ3NXlA5DXUZQtN/o1gfIYBW/8zNN4QZpgtd+BXpktMDYyVRwcJlbMTaNA3Nnf0=
+	t=1706078055; cv=none; b=MiqfecRa4MshABvShmKLkwnNoOpnQRrGMh7Z4kFPccu5gcWr5ZM8G40VB6RWtFQ8HK2yypttT9YGMrZ4NAHUBobyVGgMQLyoF3E+6mc+H4VlucdWmXJQzH46FmZfIc4IOkDklX9gvsOM2VqG2zfnLuv7EWIWQAZGMpV3xH7X4q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706077900; c=relaxed/simple;
-	bh=n0VZEZqh+QAXQRuSThEUXWhSnB7DTGe7KU0DGk9sJ+E=;
+	s=arc-20240116; t=1706078055; c=relaxed/simple;
+	bh=L+THUiwmAARSADYIRz0u64nl4DCcopfBuIz76DH9F9o=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pYMf+zhHqmdmxttPvp9jr697WCF3jQ4JIlA/1XR5ojud5awiJJgAfFiRSj1nfr17PTa7GZWcsYEiewFF36v30TtEfTKtuEuPOWkoxvN/KAawmgX+P0S5DdZx+XLPA7fvXKoAOuACDtqw+edmyh85lhayeNn+JLh++XrYx/nBz3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZSyyBlZG; arc=none smtp.client-ip=209.85.218.46
+	 In-Reply-To:Content-Type; b=XT95If8/V2qFRdtaFDgK+lBsmTO9UZGuuicjY0DY1X/X6QRRjhMZiZTWU3jsUmXY8aam082yBaBYDH0T2r1op++n+cCIirtmYi/vKUfd+I/SuwXDxegb69jFU5gm8cQnYZOYwScmGD55BKpybURF28sfSF8eueOArrpZtoAh+QI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e1zk9p8s; arc=none smtp.client-ip=209.85.167.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a2c179aa5c4so541357766b.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 22:31:38 -0800 (PST)
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-50eabd1c701so5779438e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jan 2024 22:34:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706077897; x=1706682697; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706078051; x=1706682851; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=igkNnJ/apiECVX+hpFRvJ4DCeI4oJB4olHeNgNu9noA=;
-        b=ZSyyBlZGJYVGMcKHb7t1bzmzJEiHgwDash9cy+exzIGucTyced0vy+9Ku0FWW41/5Z
-         WiTTCNhU4rQHPQS58qgTEsfMq1XLxdRWWp0Gdw4Ujm/8QjEpwQsWpO/bNi4KRvwidUr9
-         k1lxh7dUPLC3CbTCgzrEsU8UWLyOTkhG3dBJ00o0CUxjVq8XT678wihbgajPjiJQNveo
-         XiRzFVCwxffZUkieaZtMVznm6SiGSeJX4NFPZDzPCGJIAteIh8HvR8hdJY0KKsuU0t4f
-         +SL3YMF4ypVDAuUGVb/FAFOX36ZinCnAoJ76SpK6lsB6URLKxsrgw/tw1VepTMI1k4RQ
-         NmYg==
+        bh=vfNWnUWcm3WPEBVslcuE4aBui9NgU4AGTeDXSpoH9UY=;
+        b=e1zk9p8sxOqkgK1nq39MNWxwoAzzodi0gouFTGbmtFv1C93k15LDfbW1LS+8JimgWN
+         nd/keSx7V2nhsS7sYr0PJ1eQQ0erYKhnCOvxsVFCMNw2EYKHcv+/j7KjBoKxpLS3RcXB
+         e81UnIqcSsBHFGr8ccR1xElLRfC9nxY86AyjKm0a1irWRZ5nPqCneIJkF2weHW8/5ZRN
+         5+HIBkM8fWAJSgpyNCYLxMdj7eWViWSjpr7AjzWfYdZ/FXbFSJoSAVmfnni9+OvA5/uL
+         nVbwVsBtkmVv8WoNX2mGq0YAIbfHbnnsuunMyyWxQ1WV1m4nvbS/68Bc7yfOdmzpuBxM
+         5k9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706077897; x=1706682697;
+        d=1e100.net; s=20230601; t=1706078051; x=1706682851;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=igkNnJ/apiECVX+hpFRvJ4DCeI4oJB4olHeNgNu9noA=;
-        b=qqtlLs1ilPClmELyhw9ZJu+6RVQdWoW48GzoxjCgI2J1ECegaXaMkNjatN9Dlpdhb9
-         nJDepCro0PNX0/qFvEuJ6wVEY/0Zv0m9slKUAnGPmkr/9sx4fSPttX9jSF+PaW8EDcoh
-         sHMIcDDV+7gA5LqHM/08j2V/qPyuGmJ7StkBSFf5hl8wArsoUwqqtjiuH9PHdrN8oqG9
-         q/jh5T1NayykU29LklEzpLbM8eSoeAlHMJqvgMj8s9HnAKQc+5EHw8DHz/LjcMfm8MGc
-         G8ysVK9vppJ+Hc1wzU16uzZREBub09Mi/qDb/QsgnYCvTnnC7EhHAnKVU8mGSd81lrvm
-         fIiQ==
-X-Gm-Message-State: AOJu0YwCa6I+LjVOiCKFIRBoPN2/25QFw+Kv1JBDP6dj8JVhdSDYU+ta
-	xwaehEXOrKPkZ0sr1W97ts47icYvshMI551jsgFBZaNwx9OgREV3KGfc7ZWhzjw=
-X-Google-Smtp-Source: AGHT+IHMRJdqR+XiiodihlJSSEBex64dzxxRpLmX7jtQO/zEgBtnG8jqPE7hpSlQKohhPfGCy0efXg==
-X-Received: by 2002:a17:907:d388:b0:a30:a7cd:68a5 with SMTP id vh8-20020a170907d38800b00a30a7cd68a5mr677827ejc.87.1706077896793;
-        Tue, 23 Jan 2024 22:31:36 -0800 (PST)
+        bh=vfNWnUWcm3WPEBVslcuE4aBui9NgU4AGTeDXSpoH9UY=;
+        b=XPATcOBiItMFvxbemxsOWKJk/FYVh8F5LcvkQh7/7WpOqoIhdVXguYYIBGfrfbLx7L
+         pZL1C1+L1AAmqTnZBUEw9nj9QOpqTcqaDpbAG6aXWLpCAHlDc8H6SVR3wCDnsPoql30B
+         5vZQJVvnxRvx5z305vEFWx6SQqoBoOp2R4cMBOmFVjtXtulAckZV27kl/8fpq1lOhbDt
+         jMlceggcSC3yAe5ytFTRHW9xCGXoSBTYLVIkanqS7E8eLntmAUeFNePrZeqVPLtT4BYS
+         wElRUaAesbkgzhn7//EgHim2D76C5Lk12qKXAlioWI6shm/Zgc1TfActp+WQkHFwK7e0
+         abkw==
+X-Gm-Message-State: AOJu0Yzg0dF+FrIA8X1I2/mPo6R0G0ntd6aULX8B7DphaY7XX4kzwC5n
+	yH5AHLLEsbymDlgSozGPRtDucUtvRhFpznr7JZMOQEM3VcCeeSKxIszs3Of1NSE=
+X-Google-Smtp-Source: AGHT+IG7fUo88pMASepU5qZZLwqvGAdHoLhOHiZFHeH8aD0WcxgPFajpan06yafeLMt2vz+PejV9Gw==
+X-Received: by 2002:a05:6512:718:b0:510:d70:4823 with SMTP id b24-20020a056512071800b005100d704823mr497608lfs.44.1706078051338;
+        Tue, 23 Jan 2024 22:34:11 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.215.66])
-        by smtp.gmail.com with ESMTPSA id k6-20020a170906128600b00a2b0b0fc80esm15004571ejb.193.2024.01.23.22.31.35
+        by smtp.gmail.com with ESMTPSA id d13-20020a05651233cd00b0050e7b6ee12bsm2490852lfg.296.2024.01.23.22.34.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Jan 2024 22:31:36 -0800 (PST)
-Message-ID: <f6844d28-c7c2-4afa-8520-2e62c608930d@linaro.org>
-Date: Wed, 24 Jan 2024 07:31:34 +0100
+        Tue, 23 Jan 2024 22:34:10 -0800 (PST)
+Message-ID: <28b3f4c6-9bd3-4a26-95d1-8809690b68a2@linaro.org>
+Date: Wed, 24 Jan 2024 07:34:08 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,22 +75,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/8] dt-bindings: clock: qcom: Allow VDD_GFX supply to
- GX
+Subject: Re: [PATCH 1/3] dt-bindings: clock: qcom,gcc-sm8150: Add support for
+ bi_tcxo_ao
 Content-Language: en-US
-To: Bjorn Andersson <quic_bjorande@quicinc.com>,
+To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konrad.dybcio@linaro.org>,
  Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
  <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
- Johan Hovold <johan+linaro@kernel.org>
+ Conor Dooley <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>
 Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-References: <20240123-sa8295p-gpu-v3-0-d5b4474c8f33@quicinc.com>
- <20240123-sa8295p-gpu-v3-1-d5b4474c8f33@quicinc.com>
+ Ajit Pandey <quic_ajipan@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>,
+ Jagadeesh Kona <quic_jkona@quicinc.com>
+References: <20240123-gcc-ao-support-v1-0-6c18d5310874@quicinc.com>
+ <20240123-gcc-ao-support-v1-1-6c18d5310874@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -136,29 +137,37 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240123-sa8295p-gpu-v3-1-d5b4474c8f33@quicinc.com>
+In-Reply-To: <20240123-gcc-ao-support-v1-1-6c18d5310874@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 24/01/2024 05:25, Bjorn Andersson wrote:
-> +# Allow either power-domains or vdd-gfx-supply, not both
-> +oneOf:
-> +  - required:
-> +      - power-domains
-> +  - required:
-> +      - vdd-gfx-supply
-> +  - not:
-> +      anyOf:
-> +        - required:
-> +            - power-domains
-> +        - required:
-> +            - vdd-gfx-supply
+On 23/01/2024 17:34, Satya Priya Kakitapalli wrote:
+> Add support for bi_tcxo_ao, this allows to put an active only vote on
+> the critical clocks.
+> 
+> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/clock/qcom,gcc-sm8150.yaml | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sm8150.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sm8150.yaml
+> index 58ccb7df847c..17e29e9bbc11 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,gcc-sm8150.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sm8150.yaml
+> @@ -23,11 +23,13 @@ properties:
+>    clocks:
+>      items:
+>        - description: Board XO source
+> +      - description: Board XO active only source
+>        - description: Sleep clock source
+>  
+>    clock-names:
+>      items:
+>        - const: bi_tcxo
+> +      - const: bi_tcxo_ao
+>        - const: sleep_clk
 
-I don't fully understand what you want to achieve here. If only "allow
-either", so not a "require either", then simpler:
-
-https://lore.kernel.org/all/20230118163208.GA117919-robh@kernel.org/
-
+You cannot add clocks in the middle. The order is fixed.
 
 Best regards,
 Krzysztof
