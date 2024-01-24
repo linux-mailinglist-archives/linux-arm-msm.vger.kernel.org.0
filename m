@@ -1,291 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-8117-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10CD783A764
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 12:00:34 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D2F983A79E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 12:20:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2C1E21C223F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 11:00:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B840284645
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 11:20:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 431121AAC4;
-	Wed, 24 Jan 2024 11:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C52E1AAD1;
+	Wed, 24 Jan 2024 11:20:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kdcDCVuP"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ju6HOdVb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9B9107B6;
-	Wed, 24 Jan 2024 11:00:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C177B1AACD
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 11:20:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706094029; cv=none; b=hHTaA7AkWxdwkxu4/cxUob9WLnELgZbJj4KZ4zQ1JtZ51GVdUpZFy2Jp2fu2nJ8hSo6y0HpIrUQemCy2wHsgyxbRYBOK2tDETVbM4cmi9t6Iw4M1D3x8cnetKM0jtP5ESSX/XerV5M1fI7UCt9K/3n7tPNof4StoxGyqSzIhaSA=
+	t=1706095244; cv=none; b=FV6CD71ffOtEPAML59q7KBETQqvIUM7vdQ+D2ZupXm5Mox9fo7b65D7sQZZkeldPBvxxupx8Zukkt7nEYG8lVrQXp3kVLjjT6Exfn21X8aHX+FKpIP/WAp80lWsTu5TGE6q8QC3GOr4CTi4MywcuOZLwRxJRtNBy+Hk7DcvwL6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706094029; c=relaxed/simple;
-	bh=iOU5X2itoyZXD5wlMjCe2idu1N4HYMdwpC/WV3EBbkc=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=VilZbcvS+AycA4jluSDteXW0jHQMla1I+KBYNQ0g5Oc1YNbhaOy1nk7bRHzzCNOJEwLP9qlNjXYs27RH2E850Ooi5f+N3HJMLUAeyupU0nJa+S8jwGnYw2yTFD1ubELcRg9bCdGPPS1idj2VeyVFWfp7JC91PHr8RFIU3JcNI6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kdcDCVuP; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40O9fD86003238;
-	Wed, 24 Jan 2024 11:00:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version:content-type; s=
-	qcppdkim1; bh=TcIwPwxB4omd16Xqf16m06q4Ijkx4xVaRUKgW5goPS8=; b=kd
-	cDCVuP2i0gDdLnWibR3iGokEfW3aofZ+m1DkulJFNgVJh0ROf1yNSRsVwsFHHve7
-	QzXxpV5S5vASVTciF9CAAebUwRMyNvg03n03pcRl3aErbippm3fhCMqhphTRSzuZ
-	ssNzpYJbyuVqZQkdrAwFeGLbS7Nh3H4EQEDDKBZwju2vRBK/jYEDOGebA5MYJBrv
-	6c8/7TltKN3Oop5c44gbafdHrO/YQw4SPs8pFH+qiD51mTlnUecP1lin1AtT870+
-	ifk7GdC9/pYOJGz6HhPr+gglkAaicAXqlf+iae3oydzND8R8iNapK5BsMuU3u35G
-	us6dtIfoVUA66zEiHT/w==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vtmgxhhpa-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Jan 2024 11:00:07 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40OB06c9015292
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Jan 2024 11:00:06 GMT
-Received: from hu-priyjain-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Wed, 24 Jan 2024 03:00:01 -0800
-From: Priyansh Jain <quic_priyjain@quicinc.com>
-To: Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath
-	<thara.gopinath@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad
- Dybcio" <konrad.dybcio@linaro.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
-        <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC: <quic_manafm@quicinc.com>, <quic_priyjain@quicinc.com>
-Subject: [PATCH v2] thermal/drivers/tsens: Add suspend to RAM support for tsens
-Date: Wed, 24 Jan 2024 16:29:45 +0530
-Message-ID: <20240124105945.5902-1-quic_priyjain@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+	s=arc-20240116; t=1706095244; c=relaxed/simple;
+	bh=SviQCXmDLirCs4JO1nzHIrTlDlz6LsIRudKgj0uC0xE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=t/BGcnWi7Cx/VjZxPe4bFL2B0Wg2Tdbmp/xrXKo3AWgkFBRx5Fu7F2+SXBh+VR4EBCakBI339JPggHjEoBKJfkeYzVZgiTJbbG8W061UnixgRTTfcqNwaxnTIlwz4jjhumnbskoKqiLtjOtgCJellEUBPhNS4bnI5V5++iL3y6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ju6HOdVb; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-5ebca94cf74so52351947b3.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 03:20:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706095242; x=1706700042; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=2bdIHrfXD/9hbP6UF2QacCP3XBc//BmgWJRzX/SOVJA=;
+        b=Ju6HOdVbXDs3NV5Tf2qOVc4/B5qU/6qm7+A6YyOV7oSgrBBmem+T9Dqfn45uEQM7R3
+         ghw0R3ScMqKHmA0jnjKYeJtvMr2tkoNwVUx32x5r60bktj4yCAbZrETM+s4IWCtsrS8w
+         zLOeIkC8QVP9xzjlfZR03r5XKwRvIKNps2t2s9CSw2MDGjGghpOELsYqDhncM3KeMuvP
+         tz/73/3nzAkE1JYQ3OMRAQJLnYK5VIyON/0GN6CQoNHuLExfyHBPiQCiP37FP2V3IPUW
+         HA3OPLwrFFFIxl4pW4Mv8ZEzw9cfGryuTIEaZ+YvOAjYPLyx+538VxObJ0hCeBqgI7Bp
+         4vgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706095242; x=1706700042;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2bdIHrfXD/9hbP6UF2QacCP3XBc//BmgWJRzX/SOVJA=;
+        b=JkJwsthp4/AS22KL1uf+UeOQVrKYVdBBufZTk9ByRGMN6o69oesu+0wOh4PW0S5H46
+         3WtPyySGwP2SKMsErsm/P9S+W2RBCJmd4fceUOPxWTl0fWiQI4XEvNoh+qtX0CikClbm
+         00nZlSmDCOjaTRXdPITxuXeGk62SzfnhC3YWo9UlS+7p8K4yN6fBTYrnSddwTk4sCcC7
+         uAYRprCUuZKIKYYSUYcnFeLcfF4uCwf9VGJV9DLhHaeh+5lDIvNGlTKj5xGZHzqINvZ9
+         z8UIAVR8BL+kM7YbnFAbyPkW+hG8jF6k/OUPHZ4blL0fM883dRDtWecCoCFO+U9XxbE5
+         tnaQ==
+X-Gm-Message-State: AOJu0YwCDFUddGZhSlk49HVVq1qsgRkFhNC6oIWEXZ1Q8Um14VFv7rw/
+	yFWlz0MAGHXd59uLJOfOaMPQTngyoC/cutknp5AsQsUuwdPsRahhPkWpJvqY6UTnhvLgkRqFjli
+	XOOy4ly+sE5/46zcNwbICLMQ5ivr1iJokTQIS6Q==
+X-Google-Smtp-Source: AGHT+IE1uiznvlPBDMQFqFLFS9RjLC7Gaa0RsS3QjYSWYZJzRs91oTkCJNvkTYasdSG0GHhFVhDmU5cHiNmysX9/6IU=
+X-Received: by 2002:a81:7c57:0:b0:5f5:9ba1:788a with SMTP id
+ x84-20020a817c57000000b005f59ba1788amr591735ywc.95.1706095241785; Wed, 24 Jan
+ 2024 03:20:41 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: uMKelpuAyV19RNDaOmbFoyY-qzHfVqEO
-X-Proofpoint-GUID: uMKelpuAyV19RNDaOmbFoyY-qzHfVqEO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-24_05,2024-01-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
- malwarescore=0 bulkscore=0 phishscore=0 mlxlogscore=999 suspectscore=0
- priorityscore=1501 lowpriorityscore=0 impostorscore=0 spamscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401190000 definitions=main-2401240078
+References: <20230717-topic-branch_aon_cleanup-v6-0-46d136a4e8d0@linaro.org>
+ <20230717-topic-branch_aon_cleanup-v6-1-46d136a4e8d0@linaro.org> <e993b237-46fb-3a0b-dc91-41e27ea0ab98@quicinc.com>
+In-Reply-To: <e993b237-46fb-3a0b-dc91-41e27ea0ab98@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 24 Jan 2024 13:20:30 +0200
+Message-ID: <CAA8EJpqDrFB_PmcA1uyubuaC5G8n6GqKkmY3sNDOf37AqrO=dw@mail.gmail.com>
+Subject: Re: [PATCH v6 01/12] clk: qcom: branch: Add a helper for setting the
+ enable bit
+To: Imran Shaik <quic_imrashai@quicinc.com>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Andy Gross <agross@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org, 
+	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>, 
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-As part of suspend to RAM, system doesn't want to abort suspend
-to RAM due to tsens interrupts since system is already going
-into lowest power state. Hence disable tsens interrupt during
-suspend to RAM callback.
+On Tue, 23 Jan 2024 at 11:33, Imran Shaik <quic_imrashai@quicinc.com> wrote:
+>
+>
+>
+> On 1/13/2024 8:20 PM, Konrad Dybcio wrote:
+> > We hardcode some clocks to be always-on, as they're essential to the
+> > functioning of the SoC / some peripherals. Add a helper to do so
+> > to make the writes less magic.
+> >
+> > Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+> > Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > ---
+> >   drivers/clk/qcom/clk-branch.h | 7 +++++++
+> >   1 file changed, 7 insertions(+)
+> >
+> > diff --git a/drivers/clk/qcom/clk-branch.h b/drivers/clk/qcom/clk-branch.h
+> > index 8ffed603c050..0514bc43100b 100644
+> > --- a/drivers/clk/qcom/clk-branch.h
+> > +++ b/drivers/clk/qcom/clk-branch.h
+> > @@ -64,6 +64,7 @@ struct clk_mem_branch {
+> >   #define CBCR_FORCE_MEM_PERIPH_OFF   BIT(12)
+> >   #define CBCR_WAKEUP                 GENMASK(11, 8)
+> >   #define CBCR_SLEEP                  GENMASK(7, 4)
+> > +#define CBCR_CLOCK_ENABLE            BIT(0)
+> >
+> >   static inline void qcom_branch_set_force_mem_core(struct regmap *regmap,
+> >                                                 struct clk_branch clk, bool on)
+> > @@ -98,6 +99,12 @@ static inline void qcom_branch_set_sleep(struct regmap *regmap, struct clk_branc
+> >                          FIELD_PREP(CBCR_SLEEP, val));
+> >   }
+> >
+> > +static inline void qcom_branch_set_clk_en(struct regmap *regmap, u32 cbcr)
+> > +{
+> > +     regmap_update_bits(regmap, cbcr, CBCR_CLOCK_ENABLE,
+> > +                        CBCR_CLOCK_ENABLE);
+> > +}
+> > +
+>
+> Could you please help me understand how this helper function is useful?
+> Seems like this is just for reducing parameters compared to
+> regmap_update_bits(). But anyhow the same is being done in the existing
+> clock controller drivers with a comment which explains the functionality.
 
-Once it enters to suspend to RAM, tsens hardware will be turned off.
-While resume, re-initialize tsens hardware and re-enable tsens
-interrupts back.
+So, yes, it replaces the boilerplate code with API, which is good.
 
-Signed-off-by: Priyansh Jain <quic_priyjain@quicinc.com>
----
- drivers/thermal/qcom/tsens-v2.c |  2 +
- drivers/thermal/qcom/tsens.c    | 93 +++++++++++++++++++++++++++++++--
- drivers/thermal/qcom/tsens.h    |  7 +++
- 3 files changed, 98 insertions(+), 4 deletions(-)
+>
+> Thanks & Regards,
+> Imran
+>
+> >   extern const struct clk_ops clk_branch_ops;
+> >   extern const struct clk_ops clk_branch2_ops;
+> >   extern const struct clk_ops clk_branch_simple_ops;
+> >
+>
 
-diff --git a/drivers/thermal/qcom/tsens-v2.c b/drivers/thermal/qcom/tsens-v2.c
-index 29a61d2d6ca3..1b74db6299c4 100644
---- a/drivers/thermal/qcom/tsens-v2.c
-+++ b/drivers/thermal/qcom/tsens-v2.c
-@@ -107,6 +107,8 @@ static const struct reg_field tsens_v2_regfields[MAX_REGFIELDS] = {
- static const struct tsens_ops ops_generic_v2 = {
- 	.init		= init_common,
- 	.get_temp	= get_temp_tsens_valid,
-+	.suspend	= tsens_suspend_common,
-+	.resume		= tsens_resume_common,
- };
- 
- struct tsens_plat_data data_tsens_v2 = {
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index 6d7c16ccb44d..603ccb91009d 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -17,6 +17,7 @@
- #include <linux/pm.h>
- #include <linux/regmap.h>
- #include <linux/slab.h>
-+#include <linux/suspend.h>
- #include <linux/thermal.h>
- #include "../thermal_hwmon.h"
- #include "tsens.h"
-@@ -1153,7 +1154,7 @@ static const struct thermal_zone_device_ops tsens_of_ops = {
- };
- 
- static int tsens_register_irq(struct tsens_priv *priv, char *irqname,
--			      irq_handler_t thread_fn)
-+			      irq_handler_t thread_fn, int *irq_num)
- {
- 	struct platform_device *pdev;
- 	int ret, irq;
-@@ -1169,6 +1170,7 @@ static int tsens_register_irq(struct tsens_priv *priv, char *irqname,
- 		if (irq == -ENXIO)
- 			ret = 0;
- 	} else {
-+		*irq_num = irq;
- 		/* VER_0 interrupt is TRIGGER_RISING, VER_0_1 and up is ONESHOT */
- 		if (tsens_version(priv) == VER_0)
- 			ret = devm_request_threaded_irq(&pdev->dev, irq,
-@@ -1193,6 +1195,85 @@ static int tsens_register_irq(struct tsens_priv *priv, char *irqname,
- 	return ret;
- }
- 
-+static int tsens_reinit(struct tsens_priv *priv)
-+{
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&priv->ul_lock, flags);
-+
-+	/* in VER_0 TSENS need to be explicitly enabled */
-+	if (tsens_version(priv) == VER_0)
-+		regmap_field_write(priv->rf[TSENS_EN], 1);
-+
-+	/*
-+	 * Re-enable the watchdog, unmask the bark.
-+	 * Disable cycle completion monitoring
-+	 */
-+	if (priv->feat->has_watchdog) {
-+		regmap_field_write(priv->rf[WDOG_BARK_MASK], 0);
-+		regmap_field_write(priv->rf[CC_MON_MASK], 1);
-+	}
-+
-+	/* Re-enable interrupts */
-+	if (tsens_version(priv) >= VER_0_1)
-+		tsens_enable_irq(priv);
-+
-+	spin_unlock_irqrestore(&priv->ul_lock, flags);
-+
-+	return 0;
-+}
-+
-+int tsens_suspend_common(struct tsens_priv *priv)
-+{
-+	switch (pm_suspend_target_state) {
-+	case PM_SUSPEND_MEM:
-+		if (priv->combo_irq > 0) {
-+			disable_irq_nosync(priv->combo_irq);
-+			disable_irq_wake(priv->combo_irq);
-+		}
-+
-+		if (priv->uplow_irq > 0) {
-+			disable_irq_nosync(priv->uplow_irq);
-+			disable_irq_wake(priv->uplow_irq);
-+		}
-+
-+		if (priv->crit_irq > 0) {
-+			disable_irq_nosync(priv->crit_irq);
-+			disable_irq_wake(priv->crit_irq);
-+		}
-+		break;
-+	default:
-+		break;
-+	}
-+	return 0;
-+}
-+
-+int tsens_resume_common(struct tsens_priv *priv)
-+{
-+	switch (pm_suspend_target_state) {
-+	case PM_SUSPEND_MEM:
-+		tsens_reinit(priv);
-+		if (priv->combo_irq > 0) {
-+			enable_irq(priv->combo_irq);
-+			enable_irq_wake(priv->combo_irq);
-+		}
-+
-+		if (priv->uplow_irq > 0) {
-+			enable_irq(priv->uplow_irq);
-+			enable_irq_wake(priv->uplow_irq);
-+		}
-+
-+		if (priv->crit_irq > 0) {
-+			enable_irq(priv->crit_irq);
-+			enable_irq_wake(priv->crit_irq);
-+		}
-+		break;
-+	default:
-+		break;
-+	}
-+	return 0;
-+}
-+
- static int tsens_register(struct tsens_priv *priv)
- {
- 	int i, ret;
-@@ -1227,15 +1308,19 @@ static int tsens_register(struct tsens_priv *priv)
- 
- 	if (priv->feat->combo_int) {
- 		ret = tsens_register_irq(priv, "combined",
--					 tsens_combined_irq_thread);
-+					 tsens_combined_irq_thread,
-+					 &priv->combo_irq);
- 	} else {
--		ret = tsens_register_irq(priv, "uplow", tsens_irq_thread);
-+		ret = tsens_register_irq(priv, "uplow",
-+					 tsens_irq_thread,
-+					 &priv->uplow_irq);
- 		if (ret < 0)
- 			return ret;
- 
- 		if (priv->feat->crit_int)
- 			ret = tsens_register_irq(priv, "critical",
--						 tsens_critical_irq_thread);
-+						 tsens_critical_irq_thread,
-+						 &priv->crit_irq);
- 	}
- 
- 	return ret;
-diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
-index cb637fa289ca..268bf56105be 100644
---- a/drivers/thermal/qcom/tsens.h
-+++ b/drivers/thermal/qcom/tsens.h
-@@ -582,6 +582,11 @@ struct tsens_priv {
- 	const struct reg_field		*fields;
- 	const struct tsens_ops		*ops;
- 
-+	/* For saving irq number to re-use later */
-+	int				uplow_irq;
-+	int				crit_irq;
-+	int				combo_irq;
-+
- 	struct dentry			*debug_root;
- 	struct dentry			*debug;
- 
-@@ -634,6 +639,8 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *pt1, u32 *pt2, u32 mo
- int init_common(struct tsens_priv *priv);
- int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp);
- int get_temp_common(const struct tsens_sensor *s, int *temp);
-+int tsens_suspend_common(struct tsens_priv *priv);
-+int tsens_resume_common(struct tsens_priv *priv);
- 
- /* TSENS target */
- extern struct tsens_plat_data data_8960;
+
 -- 
-2.17.1
-
+With best wishes
+Dmitry
 
