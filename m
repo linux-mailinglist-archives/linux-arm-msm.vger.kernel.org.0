@@ -1,236 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-8134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3140683AA3F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 13:47:41 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DFA1083AAD9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 14:23:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 96E851F21DB4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 12:47:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 820C1B22399
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 13:23:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D780E77634;
-	Wed, 24 Jan 2024 12:47:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A5F5199D9;
+	Wed, 24 Jan 2024 13:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="prfLhcc8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uD0zyZ3W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27AC07763E;
-	Wed, 24 Jan 2024 12:47:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1F11A28C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 13:23:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706100456; cv=none; b=e4Nd/QztjpQn8ZzjLacrYdH1L20MsY8e6nuqGP1VPft+a34g8E5kbQZGOfAuuz4KOXVN6IChlrMqqz4PDySa/EXKyDf3KLv0Rc6wiVG3xUj6PDertjWWnEyBPM3X8QVJ705sCjK9Qpu7RjrTzzeXLxZ8BM4cHHuZbItNtABOX2o=
+	t=1706102584; cv=none; b=ZyOSI6n4cllJi6UsU9Q0oWAiT3NLOCVBdV+DBFvDbmbLjm74tDfsgQZ5ACCSTok8ejbLSnlFBVBtHuAO+bv9wvDyZHnjspoPYflMH6bPTpydQU/899M+AA95fmgj9AFOsW5E/qUBsbslb2Dot2w5l5I2Pmh/S+zqbiKuREz3axM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706100456; c=relaxed/simple;
-	bh=ngwi/WQKx7M21CAQ5yqJYZz1lZBCQ4n603TIiNMV9+g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=IdKhKYqkVWcYK8JhFCwCdO6TtMl9acvk7ZdFOYilh4xpBNspLA94zEgBCdtI7ZzvotXnJO4oj+CIDKfrOzULgUEWQMYcrlOr8GEVv7HGh+s5X52jURmwIFhjXl3XYhAVdNsDA7JpC+Fq+7r15/yEmLyPnlsKsrcet8BhdId7Aq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=prfLhcc8; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40OCarpj007834;
-	Wed, 24 Jan 2024 12:47:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=cPDvLw0z8mDxBOLQy9GvIGIBQNCLv9aLEEfo2mw9Wjg=; b=pr
-	fLhcc8mhL34mqCM9emTzoRCKzuzqYSfxTvsh6gKN9fjeQrKtcZnblWTaes9sR4r0
-	f/vHHyrJeOFjcxUNEX/EPqNI5dV+ZY9pZsRetKuYVW0l7frOFQzWS3kextSAMgSu
-	x8raIHcGzhIN48JlmyOnCXAGV1v/GDeiZ7H+t/knjg4kyHYS+5/k+QMi10oWyAsL
-	kFxjRM18FvSbzHMGfq4IKtTjpccVpecbpn4v6/xU8jaIvm3qmccjw92sNXImc1Qo
-	NHZzBhwcLPK9m68bW5+N0y1EiAOLblqQAKAkWgJXs7bPZymS48CNKodSvI22NkSm
-	QdebmHQ3Ax8WWG+F/4Rg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vu1ccg6bq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Jan 2024 12:47:28 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40OClRso030466
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Jan 2024 12:47:27 GMT
-Received: from [10.216.58.233] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 24 Jan
- 2024 04:47:20 -0800
-Message-ID: <3e3e1e03-bb58-a09c-8ce5-4cd5481b059e@quicinc.com>
-Date: Wed, 24 Jan 2024 18:17:16 +0530
+	s=arc-20240116; t=1706102584; c=relaxed/simple;
+	bh=T4RmIf7VkFcj8d4ZpyZYR6aCfDUYT5c7VXzocciPTWw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TmIdcJUs99iTr5Zm9XvXeUlF8gIm5L/Q+qWlkqjEWKxFhynO1xDtNuGr8od92DhXnJ3yIBqhkc/80J0l3X56rOXGatEa+hBsMWTxHSbfgR+gBUqJutyE5XFk+nDBGxj9qzhWDUMOM1AouLDGLzfjbSwpHaBUODPasS/MglNHrEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uD0zyZ3W; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-50eac018059so7609967e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 05:23:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706102579; x=1706707379; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=11kgJruv5+K6DtBwAzB0hg6cqT5dVQUnLRiLI1MHmYk=;
+        b=uD0zyZ3W418Hxi0Js3RwCmxwiRCtoGnjxb0h0/tQysBALQdB2/OWkRmEsDP2gBSNw4
+         kaN/W34x9citNgxI9wqsLmvQnVKUdluigoZhVN5uRf/mGO8kIZirN2s/O7F1FwA5TJq4
+         VnVUhdyFE8T8bDyd2Gi9kYOIAgkTSXyUvEZOb9LyDwLd2vPZhgaapsEW5rnzneRnX8bK
+         CR2zMjEhL5ypjwWUc6q5b3G3G3reCCEDS+uqQSUq7CSdV9G5i9XFvL2DCRA7uXwET6tF
+         mAMvnDM9BcVqjVjU8lIjya4EZQKKgAerx3BnqsjHpzJOcqLIIRKQpJlZtSAkClixNDm8
+         3gbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706102579; x=1706707379;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=11kgJruv5+K6DtBwAzB0hg6cqT5dVQUnLRiLI1MHmYk=;
+        b=s4NRZld9bVWKyicatMQN2tUsIrDC5IW/S293EE9UP76ASMdhzMBSns1PAJddUvEr3L
+         OdZXEkmh1UbGesY3vLWrvIOR3I0yfRqViSVDeNLir7UOrPtWSdCJFIkzfC/ib7QjChNf
+         efUn124UE89DaBVbMjVf4tyZORXV/YvRp8CQlrnVnL+/zc//TDcJnv9UhyybW/WvDOOd
+         qy/Idj7e1fdtYWa7JDh4zNv0ozxM5avFYjdvHVUFEBOMSBAql4DyAx52/dw8xSpCt+AH
+         hCPfing3mVbeLtAhf6gQLzkHY+0x+GBPvYyTxXpLVMQhc+o/bEw+RvonpTg6e22cDZpQ
+         wm4g==
+X-Gm-Message-State: AOJu0Yz1elIOCWm7zaaMN+rAfOPuKS2cMasqWkQh0JUGwMFpPc3EFNAO
+	9s2yucZTYgpHdAk2XP5ynA1ZEEV7LO1eBgED14xIZcidPwno3t05Ul3SWvSa638=
+X-Google-Smtp-Source: AGHT+IGCJx8XZDV9wXehwa6+blBx6gU7Yw+6Pl2WRXQb/rId7vUfO2+yja1A4V5G91EOYOUuQjTl2g==
+X-Received: by 2002:a19:4305:0:b0:50e:6909:7f68 with SMTP id q5-20020a194305000000b0050e69097f68mr3327351lfa.117.1706102579410;
+        Wed, 24 Jan 2024 05:22:59 -0800 (PST)
+Received: from [172.30.205.123] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id u6-20020ac25186000000b0050e70a5b804sm2589732lfi.302.2024.01.24.05.22.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Jan 2024 05:22:59 -0800 (PST)
+Message-ID: <9feae876-5170-4b57-8cd4-dbf35dddbefc@linaro.org>
+Date: Wed, 24 Jan 2024 14:22:55 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 2/2] dt-bindings: hwinfo: Add Qualcomm's board-id types
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/14] arm64: dts: qcom: sc8280xp: Drop PCIE_AUX_CLK from
+ pcie_phy nodes
 Content-Language: en-US
-To: Elliot Berman <quic_eberman@quicinc.com>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>
-CC: <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>
-References: <1705749649-4708-1-git-send-email-quic_amrianan@quicinc.com>
- <1705749649-4708-3-git-send-email-quic_amrianan@quicinc.com>
- <54426665-90c5-4355-a174-f512004e11e5@linaro.org>
- <391f8f48-d1f5-702d-20d4-ae8b8a7ace58@quicinc.com>
- <065601d3-92e7-46cc-a7aa-116cd02b3c36@quicinc.com>
-From: Amrit Anand <quic_amrianan@quicinc.com>
-In-Reply-To: <065601d3-92e7-46cc-a7aa-116cd02b3c36@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 8OMXU6VLiaklhsQX2yhmp_UEyjDvftzZ
-X-Proofpoint-GUID: 8OMXU6VLiaklhsQX2yhmp_UEyjDvftzZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-24_06,2024-01-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
- clxscore=1015 malwarescore=0 adultscore=0 suspectscore=0
- priorityscore=1501 mlxscore=0 lowpriorityscore=0 impostorscore=0
- spamscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401190000 definitions=main-2401240092
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring
+ <robh+dt@kernel.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
+ cros-qcom-dts-watchers@chromium.org
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240124-pcie-aux-clk-fix-v1-0-d8a4852b6ba6@linaro.org>
+ <20240124-pcie-aux-clk-fix-v1-9-d8a4852b6ba6@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20240124-pcie-aux-clk-fix-v1-9-d8a4852b6ba6@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
-On 1/22/2024 11:40 PM, Elliot Berman wrote:
->
-> On 1/22/2024 2:07 AM, Amrit Anand wrote:
->> On 1/20/2024 7:02 PM, Konrad Dybcio wrote:
->>> On 20.01.2024 12:20, Amrit Anand wrote:
->>>> Qualcomm based DT uses two or three different identifiers. The SoC
->>>> based idenfier which signifies chipset and the revision for those
->>>> chipsets. The board based identifier is used to distinguish different
->>>> boards (e.g. IDP, MTP) along with the different types of same boards.
->>>> The PMIC attached to the board can also be used as a identifier for
->>>> device tree.
->>>>
->>>> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
->>>> Signed-off-by: Amrit Anand <quic_amrianan@quicinc.com>
->>>> ---
->>>>    .../devicetree/bindings/hwinfo/qcom,board-id.yaml  | 86 ++++++++++++++++++++++
->>>>    include/dt-bindings/arm/qcom,ids.h                 | 68 +++++++++++++++--
->>>>    2 files changed, 146 insertions(+), 8 deletions(-)
->>>>    create mode 100644 Documentation/devicetree/bindings/hwinfo/qcom,board-id.yaml
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/hwinfo/qcom,board-id.yaml b/Documentation/devicetree/bindings/hwinfo/qcom,board-id.yaml
->>>> new file mode 100644
->>>> index 0000000..807f134
->>>> --- /dev/null
->>>> +++ b/Documentation/devicetree/bindings/hwinfo/qcom,board-id.yaml
->>>> @@ -0,0 +1,86 @@
->>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->>>> +%YAML 1.2
->>>> +---
->>>> +$id: http://devicetree.org/schemas/hwinfo/qcom,board-id.yaml#
->>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>>> +
->>>> +title: QCOM Board Identifier for Devicetree Selection
->>>> +
->>>> +maintainers:
->>>> +  - Amrit Anand <quic_amrianan@quicinc.com>
->>>> +  - Elliot Berman <quic_eberman@quicinc.com>
->>>> +
->>>> +description: |
->>> The '|'s are unnecessary in both commits, IIRC they're used for
->>> preserving formatting which we don't really need for non-styled
->>> plaintext
->> Sure, will do.
->>>> +  Qualcomm uses two and sometimes three hardware identifiers to describe
->>>> +  its boards
->>>> +      - a SoC identifier is used to match chipsets (e.g. sm8550 vs sm8450)
->>>> +      - a board identifier is used to match board form factor (e.g. MTP, QRD,
->>>> +        ADP, CRD)
->>>> +      - a PMIC identifier is occasionally used when different PMICs are used
->>>> +        for a given board/SoC combination.
->>>> +  Each field and helper macros are defined at::
->>>> +      - include/dt-bindings/arm/qcom,ids.h
->>>> +
->>>> +  For example,
->>>> +    / {
->>>> +        #board-id-cells = <2>;
->>>> +        board-id = <456 0>, <457 0>, <10 0>;
->>>> +        board-id-types = "qcom,soc-id", "qcom,soc-id", "qcom,board-id";
->>>> +     }
->>>> +
->>>> +allOf:
->>>> +  - $ref: board-id.yaml#
->>>> +
->>>> +properties:
->>>> +  board-id:
->>>> +    minItems: 2
->>> I believe some older platforms match exclusively based on socid, so
->>> perhaps 1 would be okay as well.
->>>
->>> [...]
->> Ok, considering legacy targets we can make it 1.
->>
->> But i think ideally it should always be recommended to have a board ID associated with a SoC ID, correct me if my understanding is wrong.
->>
-> There is no "legacy" support needed here: Qualcomm's bootloaders
-> need to be updated to adhere to the new proposed spec. I suppose
-> we need to consider whether we have targets that only need SoC to
-> differentiate?
->
->>>> +examples:
->>>> +   - |
->>>> +     #include <dt-bindings/arm/qcom,ids.h>
->>>> +     / {
->>>> +         model = "Qualcomm Technologies, Inc. sc7280 IDP SKU1 platform";
->>>> +         compatible = "qcom,sc7280-idp", "google,senor", "qcom,sc7280";
->>>> +
->>>> +         #board-id-cells = <2>;
->>>> +         board-id = <QCOM_SOC_ID(SC7280) QCOM_SOC_REVISION(1)>,
->>>> +                    <QCOM_SOC_ID(SC7280) QCOM_SOC_REVISION(2)>,
->>>> +                    <QCOM_BOARD_ID(IDP, 1, 0) QCOM_BOARD_SUBTYPE(UFS, ANY, 1)>;
->>>> +         board-id-types = "qcom,soc-id",
->>>> +                          "qcom,soc-id",
->>>> +                          "qcom,board-id";
->>> So, would the matching here would be:
->>>
->>> loop over disctinct board-id-types
->>>      check if there's at least 1 match for all of them
->>>          use this dtb if that's the case
->>>
->>> stop booting / "best guess match"
->>>
->>> ?
->>>
->>> [...]
->> Yes, But the "if" checking would have preference in place.
->> The preference logic would look something like this,
->>
->> First will check for SoC-ID, if we have an exact match for SoC-ID then will proceed for board-ID match. Otherwise the DT would be discarded.
->> Once (exact) board-ID found, will proceed for subtype , pmic and so on.
->> Exact match and best match logic is used. Parameters like SoC-ID, board-ID are required to be best matched. Other few fields follow best match logic and best of the DT can be picked.
->>
->>>> +#define QCOM_BOARD_ID_MTP        0x8
->>>> +#define QCOM_BOARD_ID_DRAGONBOARD    0x10
->>>> +#define QCOM_BOARD_ID_QRD        0x11
->>>> +#define QCOM_BOARD_ID_HDK        0x1F
->>>> +#define QCOM_BOARD_ID_ATP        0x21
->>>> +#define QCOM_BOARD_ID_IDP        0x22
->>>> +#define QCOM_BOARD_ID_SBC        0x24
->>>> +#define QCOM_BOARD_ID_QXR        0x26
->>>> +#define QCOM_BOARD_ID_CRD        0x28
->>> Missing ADP/QCP/Ride (if they're separate)
->> Sure, will update. Would need to work with teams.
-> There are probably more boards that we aren't aware of.
->
-> Amrit, please add board IDs for all the boards that are
-> in kernel.org.
 
-Sure, will do that.
+On 1/24/24 08:36, Manivannan Sadhasivam wrote:
+> PCIe PHY hw doesn't require PCIE_AUX_CLK for functioning. This clock is
+> only required by the PCIe controller. Hence drop it from pcie_phy nodes.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
 
-Thanks,
-Amrit
+So, I have a small phytest module that basically does this:
+
+phy_get
+phy_init
+phy_set_mode_ext(PCIE_RC)
+phy_power_on
+
+To load it, I skip PCIe init (comment out the node), then wait for clk
+and pmdomain unused cleanup, then load the phytest module to ensure that
+I'm not piggybacking off of the RC's resources.
+
+I tried it out on the CRD, on PCIE2A (NVMe)
+
+Without this patch, the PHY seems to init fine
+
+With this patch, I get:
+
+(1) qcom-qmp-pcie-phy 1c24000.phy: phy initialization timed-out
 
 
+Kicking the PCIe GDSC from the PHY, I additionally get:
+
+(2) gcc_pcie_2a_cfg_ahb_clk status stuck at 'off'
+
+
+I think we expected (2), but is (1) okay?
+
+Konrad
 
