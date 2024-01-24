@@ -1,151 +1,432 @@
-Return-Path: <linux-arm-msm+bounces-8118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D2F983A79E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 12:20:46 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FA3983A93D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 13:12:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B840284645
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 11:20:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D95CB1F21FC7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 12:12:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C52E1AAD1;
-	Wed, 24 Jan 2024 11:20:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ju6HOdVb"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08E1760DEB;
+	Wed, 24 Jan 2024 12:08:09 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C177B1AACD
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 11:20:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BF7D60DE3;
+	Wed, 24 Jan 2024 12:08:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706095244; cv=none; b=FV6CD71ffOtEPAML59q7KBETQqvIUM7vdQ+D2ZupXm5Mox9fo7b65D7sQZZkeldPBvxxupx8Zukkt7nEYG8lVrQXp3kVLjjT6Exfn21X8aHX+FKpIP/WAp80lWsTu5TGE6q8QC3GOr4CTi4MywcuOZLwRxJRtNBy+Hk7DcvwL6I=
+	t=1706098088; cv=none; b=CkeDuYNvmC4Ml4huxdwa6FEuzH7dxawfuG1HjHPFKDA5rEQGFYx2Y1/uEdCWD1ZKD9BtJ0Xl2X45dq0vaqGS4VAjki8zWu2h60xMzxNY8RaHFzEkah+i8+185UybXhiIn86mO37H1Ya4kllah1FOrEKXwDyZBMQuG5dNjtQ7sZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706095244; c=relaxed/simple;
-	bh=SviQCXmDLirCs4JO1nzHIrTlDlz6LsIRudKgj0uC0xE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=t/BGcnWi7Cx/VjZxPe4bFL2B0Wg2Tdbmp/xrXKo3AWgkFBRx5Fu7F2+SXBh+VR4EBCakBI339JPggHjEoBKJfkeYzVZgiTJbbG8W061UnixgRTTfcqNwaxnTIlwz4jjhumnbskoKqiLtjOtgCJellEUBPhNS4bnI5V5++iL3y6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ju6HOdVb; arc=none smtp.client-ip=209.85.128.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-5ebca94cf74so52351947b3.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 03:20:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706095242; x=1706700042; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=2bdIHrfXD/9hbP6UF2QacCP3XBc//BmgWJRzX/SOVJA=;
-        b=Ju6HOdVbXDs3NV5Tf2qOVc4/B5qU/6qm7+A6YyOV7oSgrBBmem+T9Dqfn45uEQM7R3
-         ghw0R3ScMqKHmA0jnjKYeJtvMr2tkoNwVUx32x5r60bktj4yCAbZrETM+s4IWCtsrS8w
-         zLOeIkC8QVP9xzjlfZR03r5XKwRvIKNps2t2s9CSw2MDGjGghpOELsYqDhncM3KeMuvP
-         tz/73/3nzAkE1JYQ3OMRAQJLnYK5VIyON/0GN6CQoNHuLExfyHBPiQCiP37FP2V3IPUW
-         HA3OPLwrFFFIxl4pW4Mv8ZEzw9cfGryuTIEaZ+YvOAjYPLyx+538VxObJ0hCeBqgI7Bp
-         4vgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706095242; x=1706700042;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2bdIHrfXD/9hbP6UF2QacCP3XBc//BmgWJRzX/SOVJA=;
-        b=JkJwsthp4/AS22KL1uf+UeOQVrKYVdBBufZTk9ByRGMN6o69oesu+0wOh4PW0S5H46
-         3WtPyySGwP2SKMsErsm/P9S+W2RBCJmd4fceUOPxWTl0fWiQI4XEvNoh+qtX0CikClbm
-         00nZlSmDCOjaTRXdPITxuXeGk62SzfnhC3YWo9UlS+7p8K4yN6fBTYrnSddwTk4sCcC7
-         uAYRprCUuZKIKYYSUYcnFeLcfF4uCwf9VGJV9DLhHaeh+5lDIvNGlTKj5xGZHzqINvZ9
-         z8UIAVR8BL+kM7YbnFAbyPkW+hG8jF6k/OUPHZ4blL0fM883dRDtWecCoCFO+U9XxbE5
-         tnaQ==
-X-Gm-Message-State: AOJu0YwCDFUddGZhSlk49HVVq1qsgRkFhNC6oIWEXZ1Q8Um14VFv7rw/
-	yFWlz0MAGHXd59uLJOfOaMPQTngyoC/cutknp5AsQsUuwdPsRahhPkWpJvqY6UTnhvLgkRqFjli
-	XOOy4ly+sE5/46zcNwbICLMQ5ivr1iJokTQIS6Q==
-X-Google-Smtp-Source: AGHT+IE1uiznvlPBDMQFqFLFS9RjLC7Gaa0RsS3QjYSWYZJzRs91oTkCJNvkTYasdSG0GHhFVhDmU5cHiNmysX9/6IU=
-X-Received: by 2002:a81:7c57:0:b0:5f5:9ba1:788a with SMTP id
- x84-20020a817c57000000b005f59ba1788amr591735ywc.95.1706095241785; Wed, 24 Jan
- 2024 03:20:41 -0800 (PST)
+	s=arc-20240116; t=1706098088; c=relaxed/simple;
+	bh=/gzNX6zX0VN2/j2mNPeHNLWLcI8EWSYdHVJJ3XbzabM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ug2YOefk7cTWFG4jd7vAOkzCY0cy/ALWua9q6FzY6oQ5IkdixlwWKk8GXEwmOvtZ482SS3uNtdeF2Nk1Jwo8WSAxEoerov2O7D9zXp5MB3/vLtmDcxvixv/HKx29yLr/XLQngHiYM04LWs/Qd0jSy+5l9pkqSyJG+TjLWWOAndg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 382D71FB;
+	Wed, 24 Jan 2024 04:08:50 -0800 (PST)
+Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E9B463F5A1;
+	Wed, 24 Jan 2024 04:07:58 -0800 (PST)
+Message-ID: <519c187c-e362-4090-9706-6da4f44c6b36@arm.com>
+Date: Wed, 24 Jan 2024 12:07:57 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20230717-topic-branch_aon_cleanup-v6-0-46d136a4e8d0@linaro.org>
- <20230717-topic-branch_aon_cleanup-v6-1-46d136a4e8d0@linaro.org> <e993b237-46fb-3a0b-dc91-41e27ea0ab98@quicinc.com>
-In-Reply-To: <e993b237-46fb-3a0b-dc91-41e27ea0ab98@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 24 Jan 2024 13:20:30 +0200
-Message-ID: <CAA8EJpqDrFB_PmcA1uyubuaC5G8n6GqKkmY3sNDOf37AqrO=dw@mail.gmail.com>
-Subject: Re: [PATCH v6 01/12] clk: qcom: branch: Add a helper for setting the
- enable bit
-To: Imran Shaik <quic_imrashai@quicinc.com>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Andy Gross <agross@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org, 
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>, 
-	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 08/10] coresight-tpdm: Add timestamp control register
+ support for the CMB
+Content-Language: en-US
+To: Tao Zhang <quic_taozha@quicinc.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Konrad Dybcio <konradybcio@gmail.com>, Mike Leach <mike.leach@linaro.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: Jinlong Mao <quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, coresight@lists.linaro.org,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Trilok Soni <quic_tsoni@quicinc.com>, Song Chai <quic_songchai@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, andersson@kernel.org
+References: <1705634583-17631-1-git-send-email-quic_taozha@quicinc.com>
+ <1705634583-17631-9-git-send-email-quic_taozha@quicinc.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <1705634583-17631-9-git-send-email-quic_taozha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, 23 Jan 2024 at 11:33, Imran Shaik <quic_imrashai@quicinc.com> wrote:
->
->
->
-> On 1/13/2024 8:20 PM, Konrad Dybcio wrote:
-> > We hardcode some clocks to be always-on, as they're essential to the
-> > functioning of the SoC / some peripherals. Add a helper to do so
-> > to make the writes less magic.
-> >
-> > Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-> > Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > ---
-> >   drivers/clk/qcom/clk-branch.h | 7 +++++++
-> >   1 file changed, 7 insertions(+)
-> >
-> > diff --git a/drivers/clk/qcom/clk-branch.h b/drivers/clk/qcom/clk-branch.h
-> > index 8ffed603c050..0514bc43100b 100644
-> > --- a/drivers/clk/qcom/clk-branch.h
-> > +++ b/drivers/clk/qcom/clk-branch.h
-> > @@ -64,6 +64,7 @@ struct clk_mem_branch {
-> >   #define CBCR_FORCE_MEM_PERIPH_OFF   BIT(12)
-> >   #define CBCR_WAKEUP                 GENMASK(11, 8)
-> >   #define CBCR_SLEEP                  GENMASK(7, 4)
-> > +#define CBCR_CLOCK_ENABLE            BIT(0)
-> >
-> >   static inline void qcom_branch_set_force_mem_core(struct regmap *regmap,
-> >                                                 struct clk_branch clk, bool on)
-> > @@ -98,6 +99,12 @@ static inline void qcom_branch_set_sleep(struct regmap *regmap, struct clk_branc
-> >                          FIELD_PREP(CBCR_SLEEP, val));
-> >   }
-> >
-> > +static inline void qcom_branch_set_clk_en(struct regmap *regmap, u32 cbcr)
-> > +{
-> > +     regmap_update_bits(regmap, cbcr, CBCR_CLOCK_ENABLE,
-> > +                        CBCR_CLOCK_ENABLE);
-> > +}
-> > +
->
-> Could you please help me understand how this helper function is useful?
-> Seems like this is just for reducing parameters compared to
-> regmap_update_bits(). But anyhow the same is being done in the existing
-> clock controller drivers with a comment which explains the functionality.
+On 19/01/2024 03:23, Tao Zhang wrote:
+> CMB_TIER register is CMB subunit timestamp insertion enable register.
+> Bit 0 is PATT_TSENAB bit. Set this bit to 1 to request a timestamp
+> following a CMB interface pattern match. Bit 1 is XTRIG_TSENAB bit.
+> Set this bit to 1 to request a timestamp following a CMB CTI timestamp
+> request. Bit 2 is TS_ALL bit. Set this bit to 1 to request timestamp
+> for all packets.
+> 
+> Reviewed-by: James Clark <james.clark@arm.com>
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> Signed-off-by: Jinlong Mao <quic_jinlmao@quicinc.com>
+> ---
+>   .../testing/sysfs-bus-coresight-devices-tpdm  |  35 +++++
+>   drivers/hwtracing/coresight/coresight-tpdm.c  | 123 +++++++++++++++++-
+>   drivers/hwtracing/coresight/coresight-tpdm.h  |  31 +++++
+>   3 files changed, 182 insertions(+), 7 deletions(-)
+> 
+> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> index 898aee81e20d..2199ea9d731e 100644
+> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> @@ -214,3 +214,38 @@ KernelVersion	6.7
+>   Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
+>   Description:
+>   		(RW) Set/Get the mask of the pattern for the CMB subunit TPDM.
+> +
+> +What:		/sys/bus/coresight/devices/<tpdm-name>/cmb_patt/enable_ts
+> +Date:		September 2023
+> +KernelVersion	6.7
 
-So, yes, it replaces the boilerplate code with API, which is good.
+Date and version change, as in the previous patch.
 
->
-> Thanks & Regards,
-> Imran
->
-> >   extern const struct clk_ops clk_branch_ops;
-> >   extern const struct clk_ops clk_branch2_ops;
-> >   extern const struct clk_ops clk_branch_simple_ops;
-> >
->
+> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
+> +Description:
+> +		(Write) Set the pattern timestamp of CMB tpdm. Read
+> +		the pattern timestamp of CMB tpdm.
+> +
+> +		Accepts only one of the 2 values -  0 or 1.
+> +		0 : Disable CMB pattern timestamp.
+> +		1 : Enable CMB pattern timestamp.
+> +
+> +What:		/sys/bus/coresight/devices/<tpdm-name>/cmb_trig_ts
+> +Date:		September 2023
+> +KernelVersion	6.7
+> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
+> +Description:
+> +		(RW) Set/Get the trigger timestamp of the CMB for tpdm.
+> +
+> +		Accepts only one of the 2 values -  0 or 1.
+> +		0 : Set the CMB trigger type to false
+> +		1 : Set the CMB trigger type to true
+> +
+> +What:		/sys/bus/coresight/devices/<tpdm-name>/cmb_ts_all
+> +Date:		September 2023
+> +KernelVersion	6.7
+> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
+> +Description:
+> +		(RW) Read or write the status of timestamp upon all interface.
+> +		Only value 0 and 1  can be written to this node. Set this node to 1 to requeset
+> +		timestamp to all trace packet.
+> +		Accepts only one of the 2 values -  0 or 1.
+> +		0 : Disable the timestamp of all trace packets.
+> +		1 : Enable the timestamp of all trace packets.
+> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
+> index 079c875ad667..184711c946f1 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+> @@ -321,6 +321,31 @@ static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
+>   	}
+>   }
+>   
+> +static void set_cmb_tier(struct tpdm_drvdata *drvdata)
+> +{
+> +	u32 val;
+> +
+> +	val = readl_relaxed(drvdata->base + TPDM_CMB_TIER);
+> +
+> +	/* Clear all relevant fields */
+> +	val &= ~(TPDM_CMB_TIER_PATT_TSENAB | TPDM_CMB_TIER_TS_ALL |
+> +		 TPDM_CMB_TIER_XTRIG_TSENAB);
+> +
+> +	/* Set pattern timestamp type and enablement */
+> +	if (drvdata->cmb->patt_ts)
+> +		val |= TPDM_CMB_TIER_PATT_TSENAB;
+> +
+> +	/* Set trigger timestamp */
+> +	if (drvdata->cmb->trig_ts)
+> +		val |= TPDM_CMB_TIER_XTRIG_TSENAB;
+> +
+> +	/* Set all timestamp enablement*/
+> +	if (drvdata->cmb->ts_all)
+> +		val |= TPDM_CMB_TIER_TS_ALL;
+> +
+> +	writel_relaxed(val, drvdata->base + TPDM_CMB_TIER);
+> +}
+> +
+>   static void tpdm_enable_cmb(struct tpdm_drvdata *drvdata)
+>   {
+>   	u32 val, i;
+> @@ -338,6 +363,8 @@ static void tpdm_enable_cmb(struct tpdm_drvdata *drvdata)
+>   				drvdata->base + TPDM_CMB_XPMR(i));
+>   		}
+>   
+> +		set_cmb_tier(drvdata);
+> +
+>   		val = readl_relaxed(drvdata->base + TPDM_CMB_CR);
+>   		/*
+>   		 * Set to 0 for continuous CMB collection mode,
+> @@ -687,9 +714,20 @@ static ssize_t enable_ts_show(struct device *dev,
+>   			      char *buf)
+>   {
+>   	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +	struct tpdm_dataset_attribute *tpdm_attr =
+> +		container_of(attr, struct tpdm_dataset_attribute, attr);
+> +	ssize_t size = 0;
 
+super minor nit:
 
--- 
-With best wishes
-Dmitry
+	ssize_t size = -EINVAL;
+> +
+> +	if (tpdm_attr->mem == DSB_PATT)
+> +		size = sysfs_emit(buf, "%u\n",
+> +				  (unsigned int)drvdata->dsb->patt_ts);
+> +	else if (tpdm_attr->mem == CMB_PATT)
+> +		size = sysfs_emit(buf, "%u\n",
+> +				  (unsigned int)drvdata->cmb->patt_ts);
+
+  and drop the below.
+
+--- cut here ---
+
+> +	else
+> +		return -EINVAL;
+>   
+
+--- end ---
+
+> -	return sysfs_emit(buf, "%u\n",
+> -			 (unsigned int)drvdata->dsb->patt_ts);
+> +	return size;
+>   }
+>   
+>   /*
+> @@ -701,17 +739,23 @@ static ssize_t enable_ts_store(struct device *dev,
+>   			       size_t size)
+>   {
+>   	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +	struct tpdm_dataset_attribute *tpdm_attr =
+> +		container_of(attr, struct tpdm_dataset_attribute, attr);
+>   	unsigned long val;
+>   
+>   	if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
+>   		return -EINVAL;
+>   
+> -	spin_lock(&drvdata->spinlock);
+> -	drvdata->dsb->patt_ts = !!val;
+> -	spin_unlock(&drvdata->spinlock);
+> +	guard(spinlock)(&drvdata->spinlock);
+> +	if (tpdm_attr->mem == DSB_PATT)
+> +		drvdata->dsb->patt_ts = !!val;
+> +	else if (tpdm_attr->mem == CMB_PATT)
+> +		drvdata->cmb->patt_ts = !!val;
+> +	else
+> +		return -EINVAL;
+> +
+>   	return size;
+>   }
+> -static DEVICE_ATTR_RW(enable_ts);
+>   
+>   static ssize_t set_type_show(struct device *dev,
+>   			     struct device_attribute *attr,
+> @@ -843,6 +887,68 @@ static ssize_t cmb_mode_store(struct device *dev,
+>   }
+>   static DEVICE_ATTR_RW(cmb_mode);
+>   
+> +static ssize_t cmb_ts_all_show(struct device *dev,
+> +			       struct device_attribute *attr,
+> +			       char *buf)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +
+> +	return sysfs_emit(buf, "%u\n",
+> +			  (unsigned int)drvdata->cmb->ts_all);
+> +}
+> +
+> +static ssize_t cmb_ts_all_store(struct device *dev,
+> +				struct device_attribute *attr,
+> +				const char *buf,
+> +				size_t size)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +	unsigned long val;
+> +
+> +	if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
+> +		return -EINVAL;
+> +
+> +	spin_lock(&drvdata->spinlock);
+> +	if (val)
+> +		drvdata->cmb->ts_all = true;
+> +	else
+> +		drvdata->cmb->ts_all = false;
+> +	spin_unlock(&drvdata->spinlock);
+
+minor nit: Use guard(spinlock) ?
+
+> +	return size;
+> +}
+> +static DEVICE_ATTR_RW(cmb_ts_all);
+> +
+> +static ssize_t cmb_trig_ts_show(struct device *dev,
+> +				struct device_attribute *attr,
+> +				char *buf)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +
+> +	return sysfs_emit(buf, "%u\n",
+> +			  (unsigned int)drvdata->cmb->trig_ts);
+> +}
+> +
+> +static ssize_t cmb_trig_ts_store(struct device *dev,
+> +				 struct device_attribute *attr,
+> +				 const char *buf,
+> +				 size_t size)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +	unsigned long val;
+> +
+> +	if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
+> +		return -EINVAL;
+> +
+> +	spin_lock(&drvdata->spinlock);
+> +	if (val)
+> +		drvdata->cmb->trig_ts = true;
+> +	else
+> +		drvdata->cmb->trig_ts = false;
+> +	spin_unlock(&drvdata->spinlock);
+
+minor nit: Use guard(spinlock) ?
+
+> +	return size;
+> +}
+> +static DEVICE_ATTR_RW(cmb_trig_ts);
+> +
+>   static struct attribute *tpdm_dsb_edge_attrs[] = {
+>   	&dev_attr_ctrl_idx.attr,
+>   	&dev_attr_ctrl_val.attr,
+> @@ -911,7 +1017,7 @@ static struct attribute *tpdm_dsb_patt_attrs[] = {
+>   	DSB_PATT_MASK_ATTR(5),
+>   	DSB_PATT_MASK_ATTR(6),
+>   	DSB_PATT_MASK_ATTR(7),
+> -	&dev_attr_enable_ts.attr,
+> +	DSB_PATT_ENABLE_TS,
+>   	&dev_attr_set_type.attr,
+>   	NULL,
+>   };
+> @@ -965,6 +1071,7 @@ static struct attribute *tpdm_cmb_patt_attrs[] = {
+>   	CMB_PATT_ATTR(1),
+>   	CMB_PATT_MASK_ATTR(0),
+>   	CMB_PATT_MASK_ATTR(1),
+> +	CMB_PATT_ENABLE_TS,
+>   	NULL,
+>   };
+>   
+> @@ -977,6 +1084,8 @@ static struct attribute *tpdm_dsb_attrs[] = {
+>   
+>   static struct attribute *tpdm_cmb_attrs[] = {
+>   	&dev_attr_cmb_mode.attr,
+> +	&dev_attr_cmb_ts_all.attr,
+> +	&dev_attr_cmb_trig_ts.attr,
+>   	NULL,
+>   };
+>   
+> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
+> index 8cb8a9b35384..a49a4215ba63 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpdm.h
+> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
+> @@ -11,6 +11,8 @@
+>   
+>   /* CMB Subunit Registers */
+>   #define TPDM_CMB_CR		(0xA00)
+> +/*CMB subunit timestamp insertion enable register*/
+> +#define TPDM_CMB_TIER		(0xA04)
+>   /*CMB subunit timestamp pattern registers*/
+>   #define TPDM_CMB_TPR(n)		(0xA08 + (n * 4))
+>   /*CMB subunit timestamp pattern mask registers*/
+> @@ -24,6 +26,12 @@
+>   #define TPDM_CMB_CR_ENA		BIT(0)
+>   /* Trace collection mode for CMB subunit */
+>   #define TPDM_CMB_CR_MODE	BIT(1)
+> +/* Timestamp control for pattern match */
+> +#define TPDM_CMB_TIER_PATT_TSENAB	BIT(0)
+> +/* CMB CTI timestamp request */
+> +#define TPDM_CMB_TIER_XTRIG_TSENAB	BIT(1)
+> +/* For timestamp fo all trace */
+> +#define TPDM_CMB_TIER_TS_ALL		BIT(2)
+>   
+>   /*Patten register number*/
+>   #define TPDM_CMB_MAX_PATT		2
+> @@ -134,6 +142,15 @@
+>   	   }								\
+>   	})[0].attr.attr)
+>   
+> +#define tpdm_patt_enable_ts_rw(name, mem)			\
+
+minor nit: you could drop _rw
+
+> +	(&((struct tpdm_dataset_attribute[]) {			\
+> +	   {							\
+> +		__ATTR(name, 0644, enable_ts_show,		\
+> +		enable_ts_store),		\
+> +		mem,						\
+> +	   }							\
+> +	})[0].attr.attr)
+> +
+>   #define DSB_EDGE_CTRL_ATTR(nr)					\
+>   		tpdm_simple_dataset_ro(edcr##nr,		\
+>   		DSB_EDGE_CTRL, nr)
+> @@ -158,6 +175,10 @@
+>   		tpdm_simple_dataset_rw(tpmr##nr,		\
+>   		DSB_PATT_MASK, nr)
+>   
+> +#define DSB_PATT_ENABLE_TS					\
+> +		tpdm_patt_enable_ts_rw(enable_ts,		\
+> +		DSB_PATT)
+> +
+>   #define DSB_MSR_ATTR(nr)					\
+>   		tpdm_simple_dataset_rw(msr##nr,			\
+>   		DSB_MSR, nr)
+> @@ -178,6 +199,10 @@
+>   		tpdm_simple_dataset_rw(tpmr##nr,		\
+>   		CMB_PATT_MASK, nr)
+>   
+> +#define CMB_PATT_ENABLE_TS					\
+> +		tpdm_patt_enable_ts_rw(enable_ts,		\
+> +		CMB_PATT)
+> +
+>   /**
+>    * struct dsb_dataset - specifics associated to dsb dataset
+>    * @mode:             DSB programming mode
+> @@ -217,6 +242,9 @@ struct dsb_dataset {
+>    * @patt_mask:        Save value for pattern mask
+>    * @trig_patt:        Save value for trigger pattern
+>    * @trig_patt_mask:   Save value for trigger pattern mask
+> + * @patt_ts:          Indicates if pattern match for timestamp is enabled.
+> + * @trig_ts:          Indicates if CTI trigger for timestamp is enabled.
+> + * @ts_all:           Indicates if timestamp is enabled for all packets.
+>    */
+>   struct cmb_dataset {
+>   	u32			trace_mode;
+> @@ -224,6 +252,9 @@ struct cmb_dataset {
+>   	u32			patt_mask[TPDM_CMB_MAX_PATT];
+>   	u32			trig_patt[TPDM_CMB_MAX_PATT];
+>   	u32			trig_patt_mask[TPDM_CMB_MAX_PATT];
+> +	bool			patt_ts;
+> +	bool			trig_ts;
+> +	bool			ts_all;
+>   };
+
+Rest looks fine to me
+
+Suzuki
+>   
+>   /**
+
 
