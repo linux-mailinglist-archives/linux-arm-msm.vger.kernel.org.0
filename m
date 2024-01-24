@@ -1,169 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-8107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB77B83A4BE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 09:58:48 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A59F83A4CE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 10:00:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6C1591F2286F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 08:58:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9800C1F22C4E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 09:00:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A06851803E;
-	Wed, 24 Jan 2024 08:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6E3518EAD;
+	Wed, 24 Jan 2024 08:58:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="huG7CqZ5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dW+mg23T"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C7A1802B
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 08:58:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0533B18E2F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 08:58:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706086692; cv=none; b=Ho02Ww5wwNuUcqFCtsU/k3xFcwuNyFrTcTdJCma+YgiRhi9gBxJBU/79XdxKO0VM8YIyvNAkgYeIbWMYhV/tvGtFs4Gk0wG6jyJpIGZoqLOpgrD4ItIKlcxYwMpdiOHLeDFjwWpGal1y3ksrvddyDJeeiAfdMunEY8X8hQAFY1M=
+	t=1706086732; cv=none; b=TGUxthkHdD+KKB9jSIpHTmBaUj5ZW+BcLAKL+QEEKwGBieLtCCZAC5V1vUflY8ldJBsvuqzuupTG5gimtEuIsxMtuJYSg9o40stroDpg1P2S6UruxQ9xSSu6UzbzZwboVFCPNeDSEyP23T9uooNePEPnP1btoDmexIY+B6DlSys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706086692; c=relaxed/simple;
-	bh=toj0UISkiBOlqTne8wRnYSSozCtyXOg/TgCdgB0UOzs=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=L/tYbYkLBgvc1h9W/urm3k9ItGTQqeZS67mSUqT/JISw+B2sYM3jPGCq4ctCt+gbmr3bt4UUSAzQq/Hc1MqM2MP5IBIpHpIGyGWekYwQLitGse7rtPxw95Y+QgwtONyTyBjThRZnEoMCWwIRoIVqvP/ctuCnyFajAZO4Ng0CcGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=huG7CqZ5; arc=none smtp.client-ip=209.85.221.51
+	s=arc-20240116; t=1706086732; c=relaxed/simple;
+	bh=6A2agHWPglD1APaJ96geKgF4ubgM9XgIXuQcxewyelA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M8NBcNaXzMryh9Ei/po6Qii2PHivTv1CsvbZ95BG3e4i0s0RNnYCXTUhfFqPw5gFeS2PQNDFoax15Cc7SwgL4xLiuPj7jWJEbfeLGYONKnV5ACASyjddKkYwcRAzVs/u1BlwIXVgtueJvy3KkZXNhSr6RHYBu4ENHboIpOV/9hA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dW+mg23T; arc=none smtp.client-ip=209.85.221.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3367a304091so5544037f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 00:58:10 -0800 (PST)
+Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-4bd78dfe523so16149e0c.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 00:58:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706086689; x=1706691489; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ztaP5iJjQnXrgl0zMMgX8A+csccy+mQSF5M8vkU9Z2U=;
-        b=huG7CqZ5dBuCS5M2Erz93/hCkEccPDATD7I7OlzPlrUKG+mYJELMlFW9OKrg0MeqCa
-         bcVtkF9N72H6oE5OpCeKY93E6nq93Dn2OTABwZhELEx60BITSDizWSwuVfrEn5M7zv8w
-         wK/V2XFjZ8ect/AI91Me0pzEuPQ2tTd9bkSAn0hIEmMsCwvO8ZjS62BMTz5/JtIXXLOg
-         WglDza2//TWMh2LH0Qb/GDf1oS63RuQOpSetSCm/mIUwa3zJwk3ihVJuGLkU87biZNL2
-         xN8cU2K6dy0bnIHNrkmHhtktaRgQ8/9CveQwerauPYUHrcXfxtuwG2yiXJhd8BB03lBY
-         xUUQ==
+        d=linaro.org; s=google; t=1706086730; x=1706691530; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=wb2TmrQlec/Mf3yh+lhjrs8umkcGGEn+Bj8EU6iIEHk=;
+        b=dW+mg23TtUNG0gYCGkz8jFPtl6rJ0z8l0oG4jTkyGXVgaYQtH4mrONiPHv4c/bLbaL
+         75d2jv8KmET8QGo8/mjoCLIWjPnqNziPgvPOhRLHB+35THVIBCwhHbZdJZxliL5uXITF
+         KJbDjo99aj+0bw4UuzOm7GNZOgy5GJ61S54zV4GhN9yl0YLedYR/jCCogeTOhL+hXm7F
+         kKyGxQOfi11jq7q4OEBgcgrvqbJ/3eZYb+hyX79EszC4K66CrTisNp7zSIrkQwFb+AA/
+         /efdTzDmLiF7qYQEYJIHbMkf82jWSGvD+tsnz/lIGnFE3ChXscrtfnZo4ePe7rpL7x3S
+         yMAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706086689; x=1706691489;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ztaP5iJjQnXrgl0zMMgX8A+csccy+mQSF5M8vkU9Z2U=;
-        b=oKdU3fWRME531q4POkyzVWgn+6Hlnk+FvU/6TPTEXimr3whvZVstQ4sXsRZIUwKtdA
-         tlmGaeXm4/C/4idysHt3rVhBKy5S6nDSav+HDphkFDPchTb6DnJ0xR4IPJV1gh+WR5dC
-         7QRVT46X5lrHg+M4NzmHIpJKWyivf5rv1J2Oi6UjOKCKhqA0v1DjgGRsSG/SiQbUs7AG
-         GZP8w1k50bBzPqgH0wACV2GfjAKgPSO7KZmNR+nRQRD5GPRscoQ59vex6iIcfTjySX41
-         HvQV5BFaoTz7dfkauec0rIKcA/wYMn3/yNON1R4iFIh1KtxUXNeRyoje82i6/s8ZL+D9
-         /BFw==
-X-Gm-Message-State: AOJu0YzyeNKIIFdxceKfj90KB7C5M9DN+KeAkmak3WQhdZ5GCQfT7iml
-	urEplcJI+nIDG0FvE04Jf83QN19W3JC4codsOniZBznekRT/RIyBzcKprJTffYM=
-X-Google-Smtp-Source: AGHT+IF+1DNPW9ZmN2qeaSvbY7hn2ZCDh2EuftJzvf6GGLnETy6hh/0C5Quq9lTYEfAGJZSYTWh9hg==
-X-Received: by 2002:a05:6000:922:b0:337:be12:5846 with SMTP id cx2-20020a056000092200b00337be125846mr192591wrb.163.1706086688975;
-        Wed, 24 Jan 2024 00:58:08 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:fd4f:fd82:e4fb:1654? ([2a01:e0a:982:cbb0:fd4f:fd82:e4fb:1654])
-        by smtp.gmail.com with ESMTPSA id j28-20020adfb31c000000b003393457afc2sm7885382wrd.95.2024.01.24.00.58.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Jan 2024 00:58:08 -0800 (PST)
-Message-ID: <e6b8befb-82e8-4803-929c-32e86d1e825a@linaro.org>
-Date: Wed, 24 Jan 2024 09:58:06 +0100
+        d=1e100.net; s=20230601; t=1706086730; x=1706691530;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wb2TmrQlec/Mf3yh+lhjrs8umkcGGEn+Bj8EU6iIEHk=;
+        b=v9XCIQQPug83r9l7tvgeE2V57jx5NSndqKCn3Eu1TjFsAVGb5A0Se44OyndVA2pi+E
+         SCQPmb5m6ThHANRPN1KEROIqcsm7u2Fqq+uCsbR6GHbKpvZyu4lGsxESOZxa4dWJCOf/
+         SbeiAiridfeHLmA5cmnQ2d3eloEp9wKfhqX7agciMAw5XfH9V0KoVYS+ZSUxY+ENrPST
+         IRxWI3/Zee4W9yMSamfyu1dqPSRcsKhe60WC0+lxrEsrHMW6cKRmEEHIXJ7dcY4tH5UD
+         a2JBPb5CvL66JdMWrCu/GRH8Zl44flt2eKsoeeZB3/YBTULfGMcUQSe5dlUq9sUdL9SG
+         ViIg==
+X-Gm-Message-State: AOJu0YyVxp8SH0N7Rq/tSR8TCSSFZBVfTLBlCBNL8hopjOr74yj02bhG
+	Z5sSbF1KsxLODj8WTtus/SBqx0DdAAILK3vDThdlDr4nMx3Zh0M1RGrGQSoxUQ==
+X-Google-Smtp-Source: AGHT+IHNl1ACK3L5Be2b8Nbsu6WHFviUzLaBTgGDg98+Fj/yv3drk7c1yF3spYfyyD4DRj8/t8c/4w==
+X-Received: by 2002:a05:6122:1c0d:b0:4bd:1677:9458 with SMTP id et13-20020a0561221c0d00b004bd16779458mr1835683vkb.32.1706086729854;
+        Wed, 24 Jan 2024 00:58:49 -0800 (PST)
+Received: from thinkpad ([117.217.189.109])
+        by smtp.gmail.com with ESMTPSA id f1-20020a056122044100b004b723acd1e1sm2619411vkk.11.2024.01.24.00.58.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Jan 2024 00:58:49 -0800 (PST)
+Date: Wed, 24 Jan 2024 14:28:39 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Andrew Halaney <ahalaney@redhat.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	echanude@redhat.com, linux-arm-msm@vger.kernel.org,
+	linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] scsi: ufs: qcom: Clarify comments about the initial
+ phy_gear
+Message-ID: <20240124085839.GH4906@thinkpad>
+References: <20240123-ufs-reinit-comments-v1-1-ff2b3532d7fe@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 0/2] phy: qcom: qmp-pcie: Update PCIe PHY settings for
- SM8550
-Content-Language: en-US, fr
-To: Qiang Yu <quic_qianyu@quicinc.com>, agross@kernel.org,
- andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
- kishon@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-kernel@vger.kernel.org, quic_cang@quicinc.com, quic_mrana@quicinc.com
-References: <1703742157-69840-1-git-send-email-quic_qianyu@quicinc.com>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <1703742157-69840-1-git-send-email-quic_qianyu@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240123-ufs-reinit-comments-v1-1-ff2b3532d7fe@redhat.com>
 
-On 28/12/2023 06:42, Qiang Yu wrote:
-> Align PCIe0/PCIe1 PHY settings with SM8550 latest PCIe PHY Hardware
-> Programming Guide.
+On Tue, Jan 23, 2024 at 01:13:36PM -0600, Andrew Halaney wrote:
+> The comments that currently are within the hw_ver < 4 conditional
+> are misleading. They really apply to various branches of the
+> conditionals there and incorrectly state that the phy_gear value
+> can increase.
 > 
-> Can Guo (1):
->    phy: qcom: qmp-pcie: Update PCIe1 PHY settings for SM8550
+> Right now the logic is to:
 > 
-> Qiang Yu (1):
->    phy: qcom: qmp-pcie: Update PCIe0 PHY settings for SM8550
+>     * Default to max supported gear for phy_gear
+>     * Set phy_gear to minimum value if version < 4 since those versions
+>       only support one PHY init sequence (and therefore don't need reinit)
+>     * Set phy_gear to the optimal value if the device version is already
+>       populated in the controller registers on boot
 > 
->   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c             | 20 ++++++++++++++------
->   drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6.h      |  2 ++
->   drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6_20.h   |  2 ++
->   drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_20.h        |  1 +
->   .../phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v6_20.h   |  2 ++
->   5 files changed, 21 insertions(+), 6 deletions(-)
+> Let's move some of the comment to outside the if statement and clean up
+> the bit left about switching to a higher gear on reinit. This way the
+> comment more accurately reflects the logic.
+> 
+> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+- Mani
+
+> ---
+> This is a minor comment cleanup inspired by my mistaken understanding of
+> the flow over at [0]
+> 
+> [0] https://lore.kernel.org/linux-arm-msm/20240123143615.GD19029@thinkpad/
+> ---
+>  drivers/ufs/host/ufs-qcom.c | 15 ++++++++++-----
+>  1 file changed, 10 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 39eef470f8fa..d9ec2dfbbda4 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -843,15 +843,20 @@ static void ufs_qcom_set_phy_gear(struct ufs_qcom_host *host)
+>  	struct ufs_host_params *host_params = &host->host_params;
+>  	u32 val, dev_major;
+>  
+> +	/*
+> +	 * Default to powering up the PHY to the max gear possible, which is
+> +	 * backwards compatible with lower gears but not optimal from
+> +	 * a power usage point of view. After device negotiation, if the
+> +	 * gear is lower a reinit will be performed to program the PHY
+> +	 * to the ideal gear for this combo of controller and device.
+> +	 */
+>  	host->phy_gear = host_params->hs_tx_gear;
+>  
+>  	if (host->hw_ver.major < 0x4) {
+>  		/*
+> -		 * For controllers whose major HW version is < 4, power up the
+> -		 * PHY using minimum supported gear (UFS_HS_G2). Switching to
+> -		 * max gear will be performed during reinit if supported.
+> -		 * For newer controllers, whose major HW version is >= 4, power
+> -		 * up the PHY using max supported gear.
+> +		 * These controllers only have one PHY init sequence,
+> +		 * let's power up the PHY using that (the minimum supported
+> +		 * gear, UFS_HS_G2).
+>  		 */
+>  		host->phy_gear = UFS_HS_G2;
+>  	} else if (host->hw_ver.major >= 0x5) {
+> 
+> ---
+> base-commit: 319fbd8fc6d339e0a1c7b067eed870c518a13a02
+> change-id: 20240123-ufs-reinit-comments-17c44af62651
+> 
+> Best regards,
+> -- 
+> Andrew Halaney <ahalaney@redhat.com>
 > 
 
-- On SM8550-HDK:
-# lspci
-0000:00:00.0 PCI bridge: Qualcomm Device 0113
-0000:01:00.0 Network controller: Qualcomm Device 1107 (rev 01)
-0001:00:00.0 PCI bridge: Qualcomm Device 0113
-0001:01:00.0 Non-Volatile memory controller: Phison Electronics Corporation E12 NVMe Controller (rev 01)
-
-
-# lspci -nvv
-0000:00:00.0 0604: 17cb:0113 (prog-if 00 [Normal decode])
-		LnkCap:	Port #0, Speed 8GT/s, Width x2, ASPM L0s L1, Exit Latency L0s <4us, L1 <8us
-		LnkSta:	Speed 5GT/s, Width x2
-0001:00:00.0 0604: 17cb:0113 (prog-if 00 [Normal decode])
-		LnkCap:	Port #0, Speed 16GT/s, Width x2, ASPM L0s L1, Exit Latency L0s <4us, L1 <8us
-		LnkSta:	Speed 8GT/s, Width x2
-
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-HDK
-
-- On SM8550-QRD:
-# lspci
-00:00.0 PCI bridge: Qualcomm Device 0113
-01:00.0 Network controller: Qualcomm Device 1107 (rev 01)
-
-# lspci -nvv
-		LnkCap:	Port #0, Speed 8GT/s, Width x2, ASPM L0s L1, Exit Latency L0s <4us, L1 <8us
-		LnkSta:	Speed 5GT/s, Width x2
-
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-
-Thanks,
-Neil
+-- 
+மணிவண்ணன் சதாசிவம்
 
