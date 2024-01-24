@@ -1,153 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-8145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2FBD683AEE3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 17:57:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 82A8F83AF55
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 18:13:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E4E70287FDD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 16:57:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 39DF4282250
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 17:13:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39EEE7E772;
-	Wed, 24 Jan 2024 16:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB9077E784;
+	Wed, 24 Jan 2024 17:13:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uhfsk2sx"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v2pVfufL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714A7823BA
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 16:56:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C897E762;
+	Wed, 24 Jan 2024 17:13:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706115409; cv=none; b=ojXbZwPKlyZcMEcpWGBWWRpIoMfNHJHOh9gtv0Xp/PyX4M1W+eivr5HG1G5kfhzSpkKiTV87RRwY07nGJFoJuqjELD8IjUSs6v0VeBJR6jvDd7LAhCqe4h8WX9kK8xyUzke4DPk+Yalugn5zratNbJZaokrxZfRDNwpv8iH32Nw=
+	t=1706116431; cv=none; b=ldVV+G7fdPUxCIS4fpEOMS+Fv6XwlVWrEIAYgJIv9QDfxbyV58XpDgsZnnXBxngYztY/PUz4IRj10hnSZRew86hTNjtcgs+A9zv8uobOEjPc+frQ7U4PHivmRGrr1+nrgrFpqCT1uaW0B5CkQ1VHK+TRaw6Waz95WjNIrtDGgFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706115409; c=relaxed/simple;
-	bh=7DtMbw8R/RTGGwz8VPBp7rkT6a9VmHbqT3Nu49oKlSA=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=AMWUbhmYrmWNrtMUHniF3NkUsSlpomwOL7RlhuwRZ66lIXn2upY+qxWYjz8PpVSQvEOhY79UCzM30iaQ5FGHpWrr71HsEQLvT1MslcvNVOO9ADXufoi3gSo1YML8dvR1wwdl5Eoi73XXeu4/XkovMYlzmgUazvSFhb+80SoGTQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uhfsk2sx; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-40e490c2115so41508865e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 08:56:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706115405; x=1706720205; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+NFV4jdULG1OTsCLoq1bvIzj8nMbrxNVWLnFh+iXbUk=;
-        b=uhfsk2sxlx8cU6lApCjaebbIAZgFOYNV4dje+yag5HqcgiBsu5BR03YWZpph7tM6Fq
-         hiQEAw6Px4+LedmzMd9DUytEN4MCVxOXQEqu9IDKfaNuyJ4DInQWlfW5H9eysAvhECL0
-         E7hlsWffziftMZcjcEuNalhQPzarZxHGSf3fIlbLP/ZyNCW9rE00mNnPwsunu1PRguPH
-         NTp6XvEqljNqDx9RzWiFEdNyComjz5mBvNUdi9xNeOYreVMElBxo4h6sHqc+Ij0VB2EF
-         tLVWrHz9MWlMEVfpj4Ust5NkUwbiUnwYkczooWVZz0fovqQQL8j1khGDmPu47/01CShU
-         pLqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706115405; x=1706720205;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=+NFV4jdULG1OTsCLoq1bvIzj8nMbrxNVWLnFh+iXbUk=;
-        b=oIFavGxO5yio5+29+9Ax4Xi2wia94WVWnf37PAOy3TEf7TJH3EjiiYaAuSyIxmoavU
-         op4Y0/w/zoQnAlYahRBxr+BdHKMqHvK/vbwKqpxI3gaiXQC0RWyqTlQSjepIiJTMeLMK
-         s2e5at9Zco8DJy4zRnURHzLihYM1ThnHTLlB/L5nWtdLDD7PnwsfhAYTdDNosLJ/GJhm
-         KinQxL1V6oXSiKeXyEor547OTegA7u/43fIMZh2phHD5BTKqOgu0HLZkQtE4rKITE0qO
-         IXq4WW8CBS3CwffczhLoOvtHKWLFKaweCSsKFL7QWnyDRBMJThPiNfb13Mb7Gp5EXyR0
-         Wd5Q==
-X-Gm-Message-State: AOJu0YwZJaCBPmMGXHwQuC0452vIZ5NFaZbonP6YVM0puMHr63U6h0Sh
-	1MXVz8pd550zRO6TC2VcV057PZPSj3p4jL9sbsna80N+zH08Ht56xcHWpHYzrq0=
-X-Google-Smtp-Source: AGHT+IE5ZwsSoOTIkUYRVRb+W5kbdRWetCuozPXiEAkOkU5OJ4DlCGPr8+mOTboe9c6+xNWRtK+09w==
-X-Received: by 2002:a05:600c:4fcf:b0:40e:c63d:7514 with SMTP id o15-20020a05600c4fcf00b0040ec63d7514mr741743wmq.38.1706115405625;
-        Wed, 24 Jan 2024 08:56:45 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:fd4f:fd82:e4fb:1654? ([2a01:e0a:982:cbb0:fd4f:fd82:e4fb:1654])
-        by smtp.gmail.com with ESMTPSA id j33-20020a05600c1c2100b0040e559e0ba7sm227140wms.26.2024.01.24.08.56.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Jan 2024 08:56:45 -0800 (PST)
-Message-ID: <e20b2752-c874-4deb-b7c7-a890817cb861@linaro.org>
-Date: Wed, 24 Jan 2024 17:56:44 +0100
+	s=arc-20240116; t=1706116431; c=relaxed/simple;
+	bh=jvo5IXYlQYdIU6VCmACeGNP4xo23ZIbLfeE2jvqqluI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fVWsi+KevSWn+BcFviAfQvoVjSaUypMoub+WfWbIRbf9bcZDKr9RZD2lZhBD0I5ikc5Nb6eGoQTJxEbLuHu50ZkmGEUuj600qr79/331zMu57eOlgI3CH80shvpNyCg5bwpPZnfXy2MWJvQ/Iy59YFpDindHDu2AwQFT0sgA3qA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v2pVfufL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B096C43390;
+	Wed, 24 Jan 2024 17:13:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1706116430;
+	bh=jvo5IXYlQYdIU6VCmACeGNP4xo23ZIbLfeE2jvqqluI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=v2pVfufLGd3lCfp0CeG2fpxzUUsvpwbElgNFofM1ZPehhJ3gSyI8DyqjujjS7qB28
+	 HIx8X5ThDTkPR0Ay0PzOQVdIcq5n2pTAL/fkyg4/FCf2V3zKeABMVcc+DS8MIJ/Ztv
+	 A8j4KVPuFkJX9pHjYFH5A/rDYDM6TICeR0rlV7yw=
+Date: Wed, 24 Jan 2024 09:13:49 -0800
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>
+Cc: Mark Brown <broonie@kernel.org>, kernel@pengutronix.de,
+	Moritz Fischer <mdf@kernel.org>, Wu Hao <hao.wu@intel.com>,
+	Xu Yilun <yilun.xu@intel.com>, Tom Rix <trix@redhat.com>,
+	linux-fpga@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Alexander Aring <alex.aring@gmail.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	linux-wpan@vger.kernel.org, netdev@vger.kernel.org,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Michael Hennerich <Michael.Hennerich@analog.com>,
+	Jonathan Cameron <jic23@kernel.org>, linux-iio@vger.kernel.org,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	linux-input@vger.kernel.org, Ulf Hansson <ulf.hansson@linaro.org>,
+	Rayyan Ansari <rayyan@ansari.sh>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Martin Tuma <martin.tuma@digiteqautomotive.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	linux-media@vger.kernel.org, Sergey Kozlov <serjk@netup.ru>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	linux-mmc@vger.kernel.org, Richard Weinberger <richard@nod.at>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Rob Herring <robh@kernel.org>, Heiko Stuebner <heiko@sntech.de>,
+	Michal Simek <michal.simek@amd.com>,
+	Amit Kumar Mahapatra via Alsa-devel <alsa-devel@alsa-project.org>,
+	linux-mtd@lists.infradead.org,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Pali =?iso-8859-1?Q?Roh=E1r?= <pali@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Ronald Wahl <ronald.wahl@raritan.com>,
+	Benson Leung <bleung@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Guenter Roeck <groeck@chromium.org>,
+	chrome-platform@lists.linux.dev, Max Filippov <jcmvbkbc@gmail.com>,
+	linux-spi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	linux-mediatek@lists.infradead.org,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>,
+	dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org,
+	linux-staging@lists.linux.dev, Viresh Kumar <vireshk@kernel.org>,
+	Rui Miguel Silva <rmfrfs@gmail.com>,
+	Johan Hovold <johan@kernel.org>, Alex Elder <elder@kernel.org>,
+	greybus-dev@lists.linaro.org, Peter Huewe <peterhuewe@gmx.de>,
+	Jarkko Sakkinen <jarkko@kernel.org>, Jason Gunthorpe <jgg@ziepe.ca>,
+	linux-integrity@vger.kernel.org,
+	Herve Codina <herve.codina@bootlin.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Aaro Koskinen <aaro.koskinen@iki.fi>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	linux-usb@vger.kernel.org, Helge Deller <deller@gmx.de>,
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	Kalle Valo <kvalo@kernel.org>, Dmitry Antipov <dmantipov@yandex.ru>,
+	libertas-dev@lists.infradead.org, linux-wireless@vger.kernel.org,
+	Jonathan Corbet <corbet@lwn.net>, James Clark <james.clark@arm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>, linux-doc@vger.kernel.org
+Subject: Re: [PATCH v2 00/33] spi: get rid of some legacy macros
+Message-ID: <2024012417-prissy-sworn-bc55@gregkh>
+References: <cover.1705944943.git.u.kleine-koenig@pengutronix.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 2/4] arm64: dts: qcom: sm8550-mtp: correct WCD9385 TX port
- mapping
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: stable@vger.kernel.org
-References: <20240124164505.293202-1-krzysztof.kozlowski@linaro.org>
- <20240124164505.293202-2-krzysztof.kozlowski@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <20240124164505.293202-2-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover.1705944943.git.u.kleine-koenig@pengutronix.de>
 
-On 24/01/2024 17:45, Krzysztof Kozlowski wrote:
-> WCD9385 audio codec TX port mapping was copied form HDK8450, but in fact
-> it is offset by one.  Correct it to fix recording via analogue
-> microphones.
+On Mon, Jan 22, 2024 at 07:06:55PM +0100, Uwe Kleine-König wrote:
+> Hello,
 > 
-> The change is based on QRD8550 and should be correct here as well, but
-> was not tested on MTP8550.
+> this is v2 of this patch set.
 > 
-> Cc: <stable@vger.kernel.org>
-> Fixes: a541667c86a9 ("arm64: dts: qcom: sm8550-mtp: add WCD9385 audio-codec")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> Changes since (implicit) v1, sent with Message-Id:
+> cover.1705348269.git.u.kleine-koenig@pengutronix.de:
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-> index c2847fd3c209..393702fe61aa 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-> @@ -745,7 +745,7 @@ &swr2 {
->   	wcd_tx: codec@0,3 {
->   		compatible = "sdw20217010d00";
->   		reg = <0 3>;
-> -		qcom,tx-port-mapping = <1 1 2 3>;
-> +		qcom,tx-port-mapping = <2 2 3 4>;
->   	};
->   };
->   
+>  - Rebase to v6.8-rc1
+>  - Fix a build failure on sh
+>  - Added the tags received in (implicit) v1.
+> 
+> The slave-mt27xx driver needs some more work. The patch presented here
+> is enough however to get rid of the defines handled in patch 32.
+> Cleaning that up is out-of-scope for this series, so I'll delay that
+> until later.
+> 
+> Note that Jonathan Cameron has already applied patch 3 to his tree, it
+> didn't appear in a public tree though yet. I still included it here to
+> make the kernel build bots happy.
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Are we supposed to take the individual changes in our different
+subsystem trees, or do you want them all to go through the spi tree?
+
+Either is fine with me, just need to know.
+
+thanks,
+
+greg k-h
 
