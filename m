@@ -1,115 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-8163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EFAB583B43D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 22:46:34 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7093C83B46E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 23:02:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8F81A1F23449
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 21:46:34 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ACCF2B21A71
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 22:02:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11C7F1353F5;
-	Wed, 24 Jan 2024 21:46:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D0E713540C;
+	Wed, 24 Jan 2024 22:01:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iPPtqSum"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ALfkKJI0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83D042A8E;
-	Wed, 24 Jan 2024 21:46:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F921353E4;
+	Wed, 24 Jan 2024 22:01:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706132789; cv=none; b=M9J52RKm3Scn+UgqK3JHlSM1zoPU7xO5T25jKUad60ocF6shSrvMiLTu6AKdG4nhkOaf06g/0uEjihRH+FKZkvupqCYxJmvu8YN4jpZg5BJuh7bgumN631f+XaYUiyAow11xB7VRbP1Rz7VL6p5E+adfyOLSQO2jKTU+3L9k5nI=
+	t=1706133716; cv=none; b=Iqvok1qfFxNBHUxqqk3X4GcZRmLjbw/er1vJ2V0NlTWzDNk4Hx3VlIqwWIDwSadHCSFoQiaNFRYsfKcCcArVEvqzhVuRFm+pr2n619GLY7bFJw28To+c9WZ9pVX2e06G/fe9kjC8nJY6ILY1/QzaiM5S6rCaTkoeix4awzkBma4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706132789; c=relaxed/simple;
-	bh=rM6xmLejxZB/WOggpRFjLpPZvfPUObjvKe5XzLbFxYg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tC2hthVescAv+J4omp3Bk9FN/1kPjokiDkqewH8v/4s+lyjHty3aQ9PNNGLecoMN5GuJxcaZnwKg9BaR4cjgflwBIBdMYKcFoh+GMm9xQup6RqP5SRvWnLPs0J+dGLu4bOvySyGBoU0kW7IWMRajCR2t68JpeluT72nuB95sje8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iPPtqSum; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16C34C433F1;
-	Wed, 24 Jan 2024 21:46:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706132788;
-	bh=rM6xmLejxZB/WOggpRFjLpPZvfPUObjvKe5XzLbFxYg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=iPPtqSumktngzNTzqK6CM5viq3QM8pOsma4gP02ZWDiaSu10zbIjH3ILy0V2eE6vk
-	 lZEWJ6Vgdy4HDLGs/obsiird/S5aUNGtYXNeNlWJQ0BV8zievtRwPz73xo/Dv4W0mU
-	 EByQphIRodtWlH1PPyKTwqXWH7923DH5WT5yEF5C3clluqXGR0pLb9VHPJPRYjaCwN
-	 cnmJDD4SH3DP4luLymRBinnrZqYHyq7b18m6C9se05Dl2W4o/8hEhyq2c5zTTImqmd
-	 0MWsweP5j4OJ9Ks0HLxL/6bawwmerS9DbKlUSKvHyGy6TLsv4deod7imFGq6/ruM/W
-	 2tnAODNAPO5Pw==
-Date: Wed, 24 Jan 2024 15:46:24 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Rob Herring <robh+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Johan Hovold <johan+linaro@kernel.org>, 
-	cros-qcom-dts-watchers@chromium.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, quic_ppratap@quicinc.com, quic_jackp@quicinc.com
-Subject: Re: [PATCH v2 1/4] arm64: dts: qcom: Fix hs_phy_irq for QUSB2 targets
-Message-ID: <wqdqkzvni4roqulgsiqxzubxcblzxnoydcwvv2av2pobjjx5o6@b7kwl6lq7hij>
-References: <20240120191904.15408-1-quic_kriskura@quicinc.com>
- <20240120191904.15408-2-quic_kriskura@quicinc.com>
+	s=arc-20240116; t=1706133716; c=relaxed/simple;
+	bh=zdkSuzkANTQIk+Te/w5hzGOMFVUuaG+LhF1p18k7ixQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ki5qnpXMdOiLyk3YPRNfxh1BqDbI7b3K+sQKuEow0X6vI9Z3Kx44X1UEufQGi+eSU2DNSazbtKQwYN71huZGeOCWb6sHBy54R+sT4Hdzg9OiPlB9zyJnj0ZEdgIXaN5UEIMVRPFOF81PFizzbk4+VZGd6IDU/qqYrXe5f1zxStA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ALfkKJI0; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40OKub20024285;
+	Wed, 24 Jan 2024 22:01:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=T36vvmdBaye5dMkfKQLOf6XkNJoI15q5WQoR3Stfb3c=; b=AL
+	fkKJI0xKmNHGEpX7NrT9JPbIaVE9C2NDOpmOvf0ot/4boMs39EPwoYPHoqWJTG+0
+	rgdazfO+dMeLYgYlPMyBBGXNFWaVqv9JrnnAyfJ+KtPeyo7/YSyFfzLUr0ppABZs
+	7YofjQpCpVsFLj83u4uXFd4cqsxDZWBSS1uFJ7XnFaAzrwSfM8iI6Ms1GmHX6dfk
+	vWLFV9SVjeaQzchesNXlRyZMZdg31r9oMWgide3lij65T+ltnx3kOn/w1+3UtzVl
+	6grFayXmCmXk/Q5+2xfi7BKIcBrW7EHP3wZACRHjjv+tp7+mvrAUUJstDJiU/7eM
+	AxGZdzp0CMWTcW25zUBg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vtmh0ty8q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 24 Jan 2024 22:01:40 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40OM1cgD019658
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 24 Jan 2024 22:01:39 GMT
+Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 24 Jan
+ 2024 14:01:38 -0800
+Message-ID: <e125a0dc-21a8-3aa5-ac83-db6015d61625@quicinc.com>
+Date: Wed, 24 Jan 2024 14:01:37 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240120191904.15408-2-quic_kriskura@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v1] drm/msms/dp: fixed link clock divider bits be over
+ written in BPC unknown case
+Content-Language: en-US
+To: Kuogee Hsieh <quic_khsieh@quicinc.com>, <dri-devel@lists.freedesktop.org>,
+        <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
+        <airlied@gmail.com>, <agross@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <andersson@kernel.org>
+CC: <quic_jesszhan@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <marijn.suijten@somainline.org>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <1704917931-30133-1-git-send-email-quic_khsieh@quicinc.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <1704917931-30133-1-git-send-email-quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Mg2qkFV045zLwWOjlpuadpmFGlf4rgKn
+X-Proofpoint-ORIG-GUID: Mg2qkFV045zLwWOjlpuadpmFGlf4rgKn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-24_10,2024-01-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 adultscore=0
+ mlxscore=0 clxscore=1015 bulkscore=0 malwarescore=0 impostorscore=0
+ suspectscore=0 phishscore=0 priorityscore=1501 spamscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401190000 definitions=main-2401240160
 
-On Sun, Jan 21, 2024 at 12:49:01AM +0530, Krishna Kurapati wrote:
-> On several QUSB2 Targets, the hs_phy_irq mentioned is actually
-> qusb2_phy interrupt specific to QUSB2 PHY's. Rename hs_phy_irq
-> to qusb2_phy for such targets.
+
+
+On 1/10/2024 12:18 PM, Kuogee Hsieh wrote:
+> Since the value of DP_TEST_BIT_DEPTH_8 is already left shifted, in the
+> BPC unknown case, the additional shift causes spill over to the other
+> bits of the [DP_CONFIGURATION_CTRL] register.
+> Fix this by changing the return value of dp_link_get_test_bits_depth()
+> in the BPC unknown case to (DP_TEST_BIT_DEPTH_8 >> DP_TEST_BIT_DEPTH_SHIFT).
 > 
-> In actuality, the hs_phy_irq is also present in these targets, but
-> kept in for debug purposes in hw test environments. This is not
-> triggered by default and its functionality is mutually exclusive
-> to that of qusb2_phy interrupt.
-> 
-> Add missing hs_phy_irq's, pwr_event irq's for QUSB2 PHY targets.
-> Add missing ss_phy_irq on some targets which allows for remote
-> wakeup to work on a Super Speed link.
-> 
-> Also modify order of interrupts in accordance to bindings update.
-> Since driver looks up for interrupts by name and not by index, it
-> is safe to modify order of these interrupts in the DT.
-> 
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/ipq6018.dtsi | 13 +++++++++++++
->  arch/arm64/boot/dts/qcom/ipq8074.dtsi | 14 ++++++++++++++
->  arch/arm64/boot/dts/qcom/msm8953.dtsi |  7 +++++--
->  arch/arm64/boot/dts/qcom/msm8996.dtsi |  8 ++++++--
->  arch/arm64/boot/dts/qcom/msm8998.dtsi |  7 +++++--
->  arch/arm64/boot/dts/qcom/sdm630.dtsi  | 17 +++++++++++++----
->  arch/arm64/boot/dts/qcom/sm6115.dtsi  |  9 +++++++--
->  arch/arm64/boot/dts/qcom/sm6125.dtsi  |  9 +++++++--
->  8 files changed, 70 insertions(+), 14 deletions(-)
+>   drivers/gpu/drm/msm/dp/dp_ctrl.c |  5 -----
+>   drivers/gpu/drm/msm/dp/dp_link.c | 10 +++++++---
+>   2 files changed, 7 insertions(+), 8 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> index 5e1277fea725..ea70b57d1871 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> @@ -418,6 +418,12 @@ usb2: usb@70f8800 {
->  					  <&gcc GCC_USB1_MOCK_UTMI_CLK>;
->  			assigned-clock-rates = <133330000>,
->  					       <24000000>;
-> +
-> +			interrupts-extended = <GIC_SPI 128 IRQ_TYPE_LEVEL_HIGH>,
 
-interrupts-extended takes a reference to a interrupt-controller as well,
-so this doesn't build.
+Checkpatch complained about this error:
 
-Did you mean "interrupts" here instead? Please update these and build
-test...
+CHECK: Alignment should match open parenthesis
+#61: FILE: drivers/gpu/drm/msm/dp/dp_link.c:1203:
++               drm_dbg_dp(link->drm_dev, "bpp=%d not supported, use 
+bpc=8\n",
++                         bpp);
 
-Regards,
-Bjorn
+
+I will fix it while applying ... no need to spin another version for this.
 
