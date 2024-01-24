@@ -1,145 +1,305 @@
-Return-Path: <linux-arm-msm+bounces-8148-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C263B83B04E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 18:46:18 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C99F83B1BC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 20:04:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 58BBBB30A60
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 17:31:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B115E1F27A1F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 19:04:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C69408613F;
-	Wed, 24 Jan 2024 17:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F332131731;
+	Wed, 24 Jan 2024 19:04:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TE8sMbvf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="un+JTnQa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5815D85C4B;
-	Wed, 24 Jan 2024 17:30:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418C47E77D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 19:04:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706117458; cv=none; b=g2/Ec2tTrSNkWygH4MD5gwSuXvxi8bYscPTf/MEyb28zsErLI9B1qo0PowMVkwT31ZqfKBmKc3VRKbHn+QacGy17ZPUGbRZnQ6895AGCKhFkt6ii5cf1/9l51ntLlSAa3tqmLHRNutqqEcDHekTAmYK0nwDhodWGx5zciI0cDo4=
+	t=1706123055; cv=none; b=qPjWQQk0Wd8s920B0oGCujg8dRsV2E/Q+fl/ZvpbFOYg4isp3VfLRLWxg6/pTQ4ik4n3N9XUxTFYP1EBqqp/2t+cmZPqm0C8hTC4o/uOts8GlOsz/I21H/Biegi72QP3yMV3eVfJvJg1SZ/K5TBA7MfQwC71LSR0GHRS49nvUdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706117458; c=relaxed/simple;
-	bh=NNDXRpvhIGTKBi9slZ/qWQEGn6Uj559Gpw2fxZO2A8A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hpfhlR1qRxJB6kQ6fi3d6bQPohqrtiyF+cthEde/2U6mwHfmF+UwlDPj5SDfp6wV1EBVPK68UdS82RPYJYgsQP+NVrCfH4ajbPUVcbWEbYY3n/+ggoD5MZ+a2OHAqe4PImU+ytiICGPyuQ9etNR823YUOYVvL0WqQRyyUHdYHr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TE8sMbvf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA2D0C433C7;
-	Wed, 24 Jan 2024 17:30:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706117457;
-	bh=NNDXRpvhIGTKBi9slZ/qWQEGn6Uj559Gpw2fxZO2A8A=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TE8sMbvfIUEPS7l+FWWrLd9ucrffQrWpUeULzzDGbHOZntLPKHC9u7ekCFztLhU3U
-	 g9c/BN8CkGH0i32zPynRDSS6j46gbVDA6ioIe6yR345V3vEOlOOOrQK63M5gAF7wrU
-	 bDTC1oJaRecQ9F29HgZfYDFNvnxiLNzNXD19CPf8=
-Date: Wed, 24 Jan 2024 09:30:56 -0800
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
-	kernel@pengutronix.de, Moritz Fischer <mdf@kernel.org>,
-	Wu Hao <hao.wu@intel.com>, Xu Yilun <yilun.xu@intel.com>,
-	Tom Rix <trix@redhat.com>, linux-fpga@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Alexander Aring <alex.aring@gmail.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	linux-wpan@vger.kernel.org, netdev@vger.kernel.org,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Michael Hennerich <Michael.Hennerich@analog.com>,
-	Jonathan Cameron <jic23@kernel.org>, linux-iio@vger.kernel.org,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	linux-input@vger.kernel.org, Ulf Hansson <ulf.hansson@linaro.org>,
-	Rayyan Ansari <rayyan@ansari.sh>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Martin Tuma <martin.tuma@digiteqautomotive.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	linux-media@vger.kernel.org, Sergey Kozlov <serjk@netup.ru>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	linux-mmc@vger.kernel.org, Richard Weinberger <richard@nod.at>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Rob Herring <robh@kernel.org>, Heiko Stuebner <heiko@sntech.de>,
-	Michal Simek <michal.simek@amd.com>,
-	Amit Kumar Mahapatra via Alsa-devel <alsa-devel@alsa-project.org>,
-	linux-mtd@lists.infradead.org,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Pali =?iso-8859-1?Q?Roh=E1r?= <pali@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Ronald Wahl <ronald.wahl@raritan.com>,
-	Benson Leung <bleung@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Guenter Roeck <groeck@chromium.org>,
-	chrome-platform@lists.linux.dev, Max Filippov <jcmvbkbc@gmail.com>,
-	linux-spi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	linux-mediatek@lists.infradead.org,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>,
-	dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org,
-	linux-staging@lists.linux.dev, Viresh Kumar <vireshk@kernel.org>,
-	Rui Miguel Silva <rmfrfs@gmail.com>,
-	Johan Hovold <johan@kernel.org>, Alex Elder <elder@kernel.org>,
-	greybus-dev@lists.linaro.org, Peter Huewe <peterhuewe@gmx.de>,
-	Jarkko Sakkinen <jarkko@kernel.org>, Jason Gunthorpe <jgg@ziepe.ca>,
-	linux-integrity@vger.kernel.org,
-	Herve Codina <herve.codina@bootlin.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Aaro Koskinen <aaro.koskinen@iki.fi>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	linux-usb@vger.kernel.org, Helge Deller <deller@gmx.de>,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Kalle Valo <kvalo@kernel.org>, Dmitry Antipov <dmantipov@yandex.ru>,
-	libertas-dev@lists.infradead.org, linux-wireless@vger.kernel.org,
-	Jonathan Corbet <corbet@lwn.net>, James Clark <james.clark@arm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>, linux-doc@vger.kernel.org
-Subject: Re: [PATCH v2 00/33] spi: get rid of some legacy macros
-Message-ID: <2024012439-machinist-amazingly-2d2c@gregkh>
-References: <cover.1705944943.git.u.kleine-koenig@pengutronix.de>
- <2024012417-prissy-sworn-bc55@gregkh>
- <c1e38a30-5075-4d01-af24-ac684e77cf29@sirena.org.uk>
+	s=arc-20240116; t=1706123055; c=relaxed/simple;
+	bh=DAOvM9ABHyfreK7RBmD1ezSwaEP38OQINg4OoYDQ3WA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JlG1+ahU2/MT/NevRe+I72o8MuKS5Qu1W7F0/hY6hqy79b7q+umJJiPR8SngJANG9LeCZBTcN/0oIGv2M/dhtgpyUvnXut0bKS7JP59DQ4QB1IwvUH1NusWzeyStmiUZRMid5vNaIcEbRN/xe6uUnU9+rWNtwNkBDmzsql5t3UM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=un+JTnQa; arc=none smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-6002317a427so27669067b3.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 11:04:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706123052; x=1706727852; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=KmnZ+4qU2kGjhoMztUUbFnIgPcRcY/5mbRQaBPPJztg=;
+        b=un+JTnQaVp3YH6Lte5hsTVic2J4vxMJ/xxa8PYtNI2Sv7D6O09Ncc6rnji1fCxVp/u
+         xLNlq1T+ISVKSBFwjU0GcDZFtMk35SXwitNpSKusa2AsOoHubzJ6snFYzUxfPQKLFQnF
+         MzS6Hu71txzgVN9Ip9u6b54Eb/Q3uaJH5UqL31RnlzVIl84U/G4DqEp2GBcZk5GQt2Kc
+         jyqSVRC47Yz0ewt4S9ZmS46rSNibC2w+gXapXz436Jf5sq/GbkgW9Xr081/yGhHwoEMK
+         3ml17V/EkTPNvVVWLqA2a3EnccyXf4Rc8Sc9D5Z71ALyYMo3Qq9nUuWfojWrG85jVZtX
+         5OUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706123052; x=1706727852;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KmnZ+4qU2kGjhoMztUUbFnIgPcRcY/5mbRQaBPPJztg=;
+        b=a9iCzIkzYCBiuO7HBlQf/kWBVWY7CFjyee91yb9+Esw9gTNJygH53zSf0FTsU9+WnD
+         ZfNVUYM4pvt5ZdBhV1m+Fuw+RweMPqqiFMRo2Q0R8Pp6KpDS08Xulf91XSItdyHB6YeR
+         vbIn/emIJKU83Z3Gy2GhfaKq7YhkZBBlqElObFoch6jKT+3/nvn2jtp41uCOpcNejeFj
+         RtpZ3YE08qlkOQriVlkMkMOKIIN4NSP6QzzWHDU80n2AglZnsOpHAhfEJoNVLp72znip
+         6LIpYDIhhlzGNQblNjKBSVArNmvTpZ9/eMIW/IQXTFaEGHdElBM4fKoOZn36QkJriGdP
+         X16A==
+X-Gm-Message-State: AOJu0YxY1wUNJoOwhF+O5tEhAu2wmUhL51I5tkPlw2nGmDcIJhTm3nan
+	EgfN7ee2uOCgNFvS9DYNVQyU2um0sGihtmKNh29sEcEI0LyunJHy44JQ8ZFZuAch9LoDhDtWZA+
+	GHRt7Qi3TZqNKButU1LNfh0qgjAH4A5gktobULw==
+X-Google-Smtp-Source: AGHT+IHSEPyZclZ3jWHL/AqXx86hPUnY1ANQkuWp2HJuMRnsJ3Bj63IM9Jhy+hVYq6pIrY/xvsulKAmFaTci3fyfHzk=
+X-Received: by 2002:a0d:d547:0:b0:5ff:e1fe:d083 with SMTP id
+ x68-20020a0dd547000000b005ffe1fed083mr1377249ywd.81.1706123051765; Wed, 24
+ Jan 2024 11:04:11 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c1e38a30-5075-4d01-af24-ac684e77cf29@sirena.org.uk>
+References: <20231225130853.3659424-1-dmitry.baryshkov@linaro.org>
+ <20231225130853.3659424-5-dmitry.baryshkov@linaro.org> <211f0818-04a2-7dc3-fe37-c09b756765d1@quicinc.com>
+In-Reply-To: <211f0818-04a2-7dc3-fe37-c09b756765d1@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 24 Jan 2024 21:03:59 +0200
+Message-ID: <CAA8EJpqoUqMmqz1bUjWJT5shgMqLj0ta47s81t5vLbG0NragqA@mail.gmail.com>
+Subject: Re: [PATCH v3 4/5] drm/msm/dpu: move writeback's atomic_check to dpu_writeback.c
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Stephen Boyd <swboyd@chromium.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Jan 24, 2024 at 05:22:00PM +0000, Mark Brown wrote:
-> On Wed, Jan 24, 2024 at 09:13:49AM -0800, Greg Kroah-Hartman wrote:
-> > On Mon, Jan 22, 2024 at 07:06:55PM +0100, Uwe Kleine-König wrote:
-> 
-> > > Note that Jonathan Cameron has already applied patch 3 to his tree, it
-> > > didn't appear in a public tree though yet. I still included it here to
-> > > make the kernel build bots happy.
-> 
-> > Are we supposed to take the individual changes in our different
-> > subsystem trees, or do you want them all to go through the spi tree?
-> 
-> Given that the final patch removes the legacy interfaces I'm expecting
-> to take them via SPI.
+On Wed, 24 Jan 2024 at 00:23, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+> On 12/25/2023 5:08 AM, Dmitry Baryshkov wrote:
+> > dpu_encoder_phys_wb is the only user of encoder's atomic_check callback.
+> > Move corresponding checks to drm_writeback_connector's implementation
+> > and drop the dpu_encoder_phys_wb_atomic_check() function.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >   .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   | 54 ------------------
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  9 ++-
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c | 57 ++++++++++++++++++-
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.h |  3 +-
+> >   4 files changed, 64 insertions(+), 59 deletions(-)
+> >
+>
+> While validating this change with kms_writeback, we found that this is
+> breaking back to back validate of kms_writeback with a NULL ptr
+> dereference in below stack:
+>
+> [   86.701062] Call trace:
+> [   86.701067]  dpu_wb_conn_atomic_check+0x118/0x18c
+> [   86.701076]  drm_atomic_helper_check_modeset+0x2d8/0x688
+> [   86.701084]  drm_atomic_helper_check+0x24/0x98
+> [   86.701095]  msm_atomic_check+0x90/0x9c
+> [   86.701103]  drm_atomic_check_only+0x4f4/0x8e8
+> [   86.701111]  drm_atomic_commit+0x64/0xd8
+> [   86.701120]  drm_mode_atomic_ioctl+0xbfc/0xe74
+> [   86.701129]  drm_ioctl_kernel+0xd4/0x114
+> [   86.701137]  drm_ioctl+0x274/0x508
+> [   86.701143]  __arm64_sys_ioctl+0x98/0xd0
+> [   86.701152]  invoke_syscall+0x48/0xfc
+> [   86.701161]  el0_svc_common+0x88/0xe4
+> [   86.701167]  do_el0_svc+0x24/0x30
+> [   86.701175]  el0_svc+0x34/0x80
+> [   86.701184]  el0t_64_sync_handler+0x44/0xec
+> [   86.701192]  el0t_64_sync+0x1a8/0x1ac
+> [   86.701200] ---[ end trace 0000000000000000 ]---
+>
+> We analysed this and found why. Please see below.
+>
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> > index a0a28230fc31..8220cd920e6f 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> > @@ -354,59 +354,6 @@ static void dpu_encoder_helper_phys_setup_cdm(struct dpu_encoder_phys *phys_enc)
+> >       }
+> >   }
+> >
+> > -/**
+> > - * dpu_encoder_phys_wb_atomic_check - verify and fixup given atomic states
+> > - * @phys_enc:        Pointer to physical encoder
+> > - * @crtc_state:      Pointer to CRTC atomic state
+> > - * @conn_state:      Pointer to connector atomic state
+> > - */
+> > -static int dpu_encoder_phys_wb_atomic_check(
+> > -             struct dpu_encoder_phys *phys_enc,
+> > -             struct drm_crtc_state *crtc_state,
+> > -             struct drm_connector_state *conn_state)
+> > -{
+> > -     struct drm_framebuffer *fb;
+> > -     const struct drm_display_mode *mode = &crtc_state->mode;
+> > -
+> > -     DPU_DEBUG("[atomic_check:%d, \"%s\",%d,%d]\n",
+> > -                     phys_enc->hw_wb->idx, mode->name, mode->hdisplay, mode->vdisplay);
+> > -
+> > -     if (!conn_state || !conn_state->connector) {
+> > -             DPU_ERROR("invalid connector state\n");
+> > -             return -EINVAL;
+> > -     } else if (conn_state->connector->status !=
+> > -                     connector_status_connected) {
+> > -             DPU_ERROR("connector not connected %d\n",
+> > -                             conn_state->connector->status);
+> > -             return -EINVAL;
+> > -     }
+> > -
+> > -     if (!conn_state->writeback_job || !conn_state->writeback_job->fb)
+> > -             return 0;
+> > -
+> > -     fb = conn_state->writeback_job->fb;
+> > -
+> > -     DPU_DEBUG("[fb_id:%u][fb:%u,%u]\n", fb->base.id,
+> > -                     fb->width, fb->height);
+> > -
+> > -     if (fb->width != mode->hdisplay) {
+> > -             DPU_ERROR("invalid fb w=%d, mode w=%d\n", fb->width,
+> > -                             mode->hdisplay);
+> > -             return -EINVAL;
+> > -     } else if (fb->height != mode->vdisplay) {
+> > -             DPU_ERROR("invalid fb h=%d, mode h=%d\n", fb->height,
+> > -                               mode->vdisplay);
+> > -             return -EINVAL;
+> > -     } else if (fb->width > phys_enc->hw_wb->caps->maxlinewidth) {
+> > -             DPU_ERROR("invalid fb w=%d, maxlinewidth=%u\n",
+> > -                               fb->width, phys_enc->hw_wb->caps->maxlinewidth);
+> > -             return -EINVAL;
+> > -     }
+> > -
+> > -     return drm_atomic_helper_check_wb_connector_state(conn_state->connector, conn_state->state);
+> > -}
+> > -
+> > -
+> >   /**
+> >    * _dpu_encoder_phys_wb_update_flush - flush hardware update
+> >    * @phys_enc:       Pointer to physical encoder
+> > @@ -777,7 +724,6 @@ static void dpu_encoder_phys_wb_init_ops(struct dpu_encoder_phys_ops *ops)
+> >       ops->is_master = dpu_encoder_phys_wb_is_master;
+> >       ops->enable = dpu_encoder_phys_wb_enable;
+> >       ops->disable = dpu_encoder_phys_wb_disable;
+> > -     ops->atomic_check = dpu_encoder_phys_wb_atomic_check;
+> >       ops->wait_for_commit_done = dpu_encoder_phys_wb_wait_for_commit_done;
+> >       ops->prepare_for_kickoff = dpu_encoder_phys_wb_prepare_for_kickoff;
+> >       ops->handle_post_kickoff = dpu_encoder_phys_wb_handle_post_kickoff;
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > index 723cc1d82143..48728be27e15 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > @@ -630,23 +630,26 @@ static int _dpu_kms_initialize_writeback(struct drm_device *dev,
+> >   {
+> >       struct drm_encoder *encoder = NULL;
+> >       struct msm_display_info info;
+> > +     const enum dpu_wb wb_idx = WB_2;
+> > +     u32 maxlinewidth;
+> >       int rc;
+> >
+> >       memset(&info, 0, sizeof(info));
+> >
+> >       info.num_of_h_tiles = 1;
+> >       /* use only WB idx 2 instance for DPU */
+> > -     info.h_tile_instance[0] = WB_2;
+> > +     info.h_tile_instance[0] = wb_idx;
+> >       info.intf_type = INTF_WB;
+> >
+> > +     maxlinewidth = dpu_rm_get_wb(&dpu_kms->rm, info.h_tile_instance[0])->caps->maxlinewidth;
+> > +
+> >       encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_VIRTUAL, &info);
+> >       if (IS_ERR(encoder)) {
+> >               DPU_ERROR("encoder init failed for dsi display\n");
+> >               return PTR_ERR(encoder);
+> >       }
+> >
+> > -     rc = dpu_writeback_init(dev, encoder, wb_formats,
+> > -                     n_formats);
+> > +     rc = dpu_writeback_init(dev, encoder, wb_formats, n_formats, maxlinewidth);
+> >       if (rc) {
+> >               DPU_ERROR("dpu_writeback_init, rc = %d\n", rc);
+> >               return rc;
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+> > index 2a5a68366582..232b5f410de8 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+> > @@ -4,6 +4,7 @@
+> >    */
+> >
+> >   #include <drm/drm_edid.h>
+> > +#include <drm/drm_framebuffer.h>
+> >
+> >   #include "dpu_writeback.h"
+> >
+> > @@ -24,6 +25,57 @@ static int dpu_wb_conn_get_modes(struct drm_connector *connector)
+> >                       dev->mode_config.max_height);
+> >   }
+> >
+> > +static int dpu_wb_conn_atomic_check(struct drm_connector *connector,
+> > +                                 struct drm_atomic_state *state)
+> > +{
+> > +     struct drm_writeback_connector *wb_conn = drm_connector_to_writeback(connector);
+> > +     struct dpu_wb_connector *dpu_wb_conn = to_dpu_wb_conn(wb_conn);
+> > +     struct drm_connector_state *conn_state =
+> > +             drm_atomic_get_new_connector_state(state, connector);
+> > +     struct drm_crtc *crtc = conn_state->crtc;
+> > +     struct drm_crtc_state *crtc_state;
+> > +     const struct drm_display_mode *mode;
+> > +     struct drm_framebuffer *fb;
+> > +
+> > +     crtc_state = drm_atomic_get_crtc_state(state, crtc);
+>
+> To detach the CRTC associated with the connector, IGT will set the
+> associated CRTC_ID to 0 and the associated conn_state->crtc will be NULL.
+>
+> This is valid as val will be 0 in this case:
+>
+> https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/drm_atomic_uapi.c#L722
+>
+> Before this patch, for these cases, we used to call the encoder's
+> atomic_check which gets skipped when there is no valid crtc:
+>
+> https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/drm_atomic_helper.c#L440
+>
+> But now with connector atomic check, these calls are allowed by the DRM
+>
+> https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/drm_atomic_helper.c#L712
+>
+> So questions:
+>
+> 1) Should we add protection in DRM to check if conn_state->crtc is valid
+> before calling connector's atomic_check()?
 
-Great, thanks, I'll go ack the subsystem patches that are relevent for
-me.
+I think this is correct. So if !crtc, just return 0. I'll send next
+iteration in the next few days.
 
-greg k-h
+>
+> OR
+>
+> 2) Is it incorrect for us to dereference conn->crtc in connector's
+> atomic_check as its not guaranteed to be valid.
+>
+> We cannot fail atomic_check for !crtc, because if we add a !crtc check
+> and fail those checks, it bails out these disable commit calls thus
+> failing those commits.
+>
+> > +     if (IS_ERR(crtc_state))
+> > +             return PTR_ERR(crtc_state);
+> > +
+
+
+-- 
+With best wishes
+Dmitry
 
