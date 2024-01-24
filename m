@@ -1,137 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-8099-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8100-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EBFF883A391
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 08:55:28 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D32D83A3A4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 09:00:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 27F9F1C22791
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 07:55:28 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C09E3B21114
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 08:00:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B978C171A4;
-	Wed, 24 Jan 2024 07:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EFC8F501;
+	Wed, 24 Jan 2024 08:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TkRH08Og"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="XHYGjxFF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D927171A2;
-	Wed, 24 Jan 2024 07:55:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46475DDD6
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 08:00:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706082923; cv=none; b=EXilB8yHl7KqeNxS2xW2p+8eLurKp0DVSN7itScrju/KdSqsWZnm3wPUIbkvBi9YoBKviH3L9zfv3oc2fD34SxMSls1Rz7jPGh/uA6NF9h8QwC+XPdBDfswR4dIsfkD/mzsWhlnXi/t3Zh7RG+GJx+627CmRam6IJj+i9tIciOw=
+	t=1706083225; cv=none; b=IWeqkI7Q4VqANFssTFGwSyoEuhqyKsf7+tcKtfU+e6gREzc1tO8Q+/AAQxsk9LbkraW36eOzedzzX3yCpMNA9M9fxYGMHQd5ZkGAceiqnzy7puDYOztTxmj+0bt/IX6ez6fkPXBvpUNhhXxSGmmpI5/8fCb14e1OCthjjn0/Vhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706082923; c=relaxed/simple;
-	bh=NT+Vf9nE136+iQ8X8hrDDr0oPQKV4IFmb3UOTg7wN3o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bX9FBKRahkIrbS5a2cZf/IHVuOS//wBC4sj0D16jIMK2vN6mBxQCOvZCvs1rcKwtvGmxFMsBNrMo8wycKtPimeq1FkmITjzJoYwKIpGvJJ2UA4JzEL9ZH5Rh+pzSK8iCdGON16yxNx58BWVYHqV3aZE45R2xJW4z9BU2vdDgAX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TkRH08Og; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C1E6C433F1;
-	Wed, 24 Jan 2024 07:55:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706082923;
-	bh=NT+Vf9nE136+iQ8X8hrDDr0oPQKV4IFmb3UOTg7wN3o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TkRH08OgLfYznR6++IxYRcC8cWcUxVT2AGh+/llDdDJrT9H2O65CLo0sndqoqhrid
-	 JUU8ui2mXII78nEmwj4AegguQmGfCbuiVVONq0PXfrVe3Zg9wylzj6D1kCovi7KINd
-	 iJNZf0CTtBYymdHlfZn6r8g0DsufA4wb2FzSVfjcF7AOFm7xlvBXMWDdCk4BYE1uUA
-	 +kOor9A6L874Ndg2jhIB2K8nhpq0xo9mVZq8RfWOIK1JysnQWcsfgPjqTgeXpD0hVG
-	 HRnCOYHlJeDcwGm+NG+I0mNT1LeJZVxfAYeRh0NiiRbtcEZeM/pKR5PyTXAf4C7pQH
-	 RRGqU28b9c+Eg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rSY6h-000000001VA-1JkT;
-	Wed, 24 Jan 2024 08:55:35 +0100
-Date: Wed, 24 Jan 2024 08:55:35 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Sebastian Reichel <sre@kernel.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Xilin Wu <wuxilin123@gmail.com>
-Subject: Re: [PATCH v2] power: supply: qcom_battmgr: Ignore notifications
- before initialization
-Message-ID: <ZbDCd_R7NmXn6X0t@hovoldconsulting.com>
-References: <20240103-topic-battmgr2-v2-1-c07b9206a2a5@linaro.org>
- <Za_iR0ctkgYO0W5L@hovoldconsulting.com>
- <b7e91951-e554-4baf-9b8d-fca4a2f0d412@linaro.org>
+	s=arc-20240116; t=1706083225; c=relaxed/simple;
+	bh=/bEI6exRXbMrKlRchtaF047fyMak5R6T7QRu1XvTVtM=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=c+CdNvpCQZRn4RpQpcQhF/rfcpzXsBpIs7zoEHV21GOIfDJJVE3PVoOIfOSiH6tfYObYS8LpbYu44KeuM2Rge7F9oScLPZxU43efJBHiLMth8nzlbaKKiu/stQiFO0Cb0gSxKem9JUHdbui6yJYV7ofeisx7OcTAffe3mg0pFN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=XHYGjxFF; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-559cef15db5so10901004a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 00:00:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1706083221; x=1706688021; darn=vger.kernel.org;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+1iNsBQtek6e9skYq9Z1rL6ps6zVCkkZxhyX4dVD9qQ=;
+        b=XHYGjxFFgI1fRsvplyYlecOOva0RicQzptTGHR977f6pRG/fdopNdmtBCIzT1KgPEM
+         CRyHmA4hn+MU6fE0Ky2whDo/faublpfFwRJCHqwiHGoW0yPkFxOrVaUvZGjUKnvMxLAD
+         bM+dxzMS0TF9jDozVHUUfSnIGPv8erHVsSNHdC/D6or4+wS7zjgzcV0WBGAetU7GZ5kK
+         211PT2wof/QgoPR3rbY1dL0huKEyarS+FxFsN6Kmh/jUyuUCvi/oPyyPT627t9Czt6KP
+         Saug+/Bt5wwTJ49kjZow1VEUkK+F8GjU0U5YlY3b856vW7VWvVWDA0KxJtfsssWYNYQX
+         XKvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706083221; x=1706688021;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=+1iNsBQtek6e9skYq9Z1rL6ps6zVCkkZxhyX4dVD9qQ=;
+        b=fSmPTkFfEnIbYIVHwll1RLuqM4lIgAJmiTe0PSQfpbvHzzi7wQZt3Cu1DWQHM9HvqT
+         IK9PpgprZqrrMW5mkwElvIyu2cPm7p5AXmIb/co5yQ1LtKCodssJbDq21pyxHW37239e
+         VHHsNcyzWsnf7EhrXYEFIqSTlXCEi0ufldYb1JYl+O8DNwWIfGE6OtmPTLkm8kGfAelR
+         wpbzwISChH3uz+OPFFKwQbNLwnyeg26QWVZxn5TOPXQNrW47KXIUiFCFNQUUeI/lyQBu
+         IFRb2gf31E8loOqBWpRwCcFmxTRq+Ei/UB0zlZ3etTkThgz7HEVZ9f+lcNtYD8bo7PSX
+         qEiw==
+X-Gm-Message-State: AOJu0Yz+sLCNJIsklt5/a09Qgmnu16NvMnjvN85BmPOYLmbC2RKBv4yO
+	2QOGHahKWfWLHVpw28PK20Cx40+rcCt1CF/nDeEFzpV80AJH4B5eEFDpEPa8CR8=
+X-Google-Smtp-Source: AGHT+IGOfgJbOSQadnKGAiNooVHILk9J6Hx2PXu43Sowz5rh6eYZpKwjo0pLYhmByPKFPLpipcWFRg==
+X-Received: by 2002:a17:906:9c88:b0:a31:2ebe:38af with SMTP id fj8-20020a1709069c8800b00a312ebe38afmr355681ejc.8.1706083220933;
+        Wed, 24 Jan 2024 00:00:20 -0800 (PST)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id cd6-20020a170906b34600b00a2c8e9918casm14572641ejb.198.2024.01.24.00.00.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Jan 2024 00:00:20 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b7e91951-e554-4baf-9b8d-fca4a2f0d412@linaro.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 24 Jan 2024 09:00:20 +0100
+Message-Id: <CYMS0ZCCYW70.2S0E9NYRR6YPR@fairphone.com>
+Subject: Re: [RFT PATCH v2 4/4] drm/msm/dpu: enable writeback on SM6350
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Luca Weiss" <luca.weiss@fairphone.com>, "Dmitry Baryshkov"
+ <dmitry.baryshkov@linaro.org>, "Rob Clark" <robdclark@gmail.com>, "Sean
+ Paul" <sean@poorly.run>, "Abhinav Kumar" <quic_abhinavk@quicinc.com>,
+ "Marijn Suijten" <marijn.suijten@somainline.org>
+Cc: "Stephen Boyd" <swboyd@chromium.org>, "David Airlie"
+ <airlied@gmail.com>, "Daniel Vetter" <daniel@ffwll.ch>, "Bjorn Andersson"
+ <andersson@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>
+X-Mailer: aerc 0.15.2
+References: <20231203003203.1293087-1-dmitry.baryshkov@linaro.org>
+ <20231203003203.1293087-5-dmitry.baryshkov@linaro.org>
+ <CXSF8ZPWKRD9.9CMJU31KG4KP@fairphone.com>
+In-Reply-To: <CXSF8ZPWKRD9.9CMJU31KG4KP@fairphone.com>
 
-On Tue, Jan 23, 2024 at 06:53:46PM +0100, Konrad Dybcio wrote:
-> On 1/23/24 16:59, Johan Hovold wrote:
-> > On Wed, Jan 03, 2024 at 01:36:08PM +0100, Konrad Dybcio wrote:
-> >> Commit b43f7ddc2b7a ("power: supply: qcom_battmgr: Register the power
-> >> supplies after PDR is up") moved the devm_power_supply_register() calls
-> >> so that the power supply devices are not registered before we go through
-> >> the entire initialization sequence (power up the ADSP remote processor,
-> >> wait for it to come online, coordinate with userspace..).
-> >>
-> >> Some firmware versions (e.g. on SM8550) seem to leave battmgr at least
-> >> partly initialized when exiting the bootloader and loading Linux. Check
-> >> if the power supply devices are registered before consuming the battmgr
-> >> notifications.
+On Tue Dec 19, 2023 at 4:39 PM CET, Luca Weiss wrote:
+> On Sun Dec 3, 2023 at 1:32 AM CET, Dmitry Baryshkov wrote:
+> > Enable WB2 hardware block, enabling writeback support on this platform.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
+> Hi Dmitry,
+>
+> I've tried this on sm7225-fairphone-fp4 but having trouble testing this.
+>
+> I guess I'm using some ID wrong with modetest, could you check and see
+> what I do wrong?
+>
+> libdrm is on version 2.4.118 from Alpine Linux/postmarketOS, kernel is
+> v6.7.0-rc6 plus a few patches for hardware enablement (like display).
+>
+> See log:
+>
+> <snip>
+>
 
-> >> +	if (!battmgr->bat_psy)
-> >> +		return;
-> > 
-> > This is not a proper fix. You register 3-4 class devices and only check
-> > one. Even if your checked the last one, there's no locking or barriers
-> > in place to prevent this from breaking.
-> > 
-> > Deferred registration of the class devices also risks missing
-> > notifications as you'll be spending time on registration after the
-> > service has gone live.
-> > 
-> > I'm sure all of this can be handled but as it is non-trivial and the
-> > motivation for the offending commit is questionable to begin with, I
-> > suggest reverting for now.
-> > 
-> > I'll send a revert for Sebastian to consider.
-> 
-> What you're saying is valid, but a "battery" device is always expected
-> to be present. 
+Hi Dmitry,
 
-Yes, but that's not the point. battmgr->bat_psy is the first class
-device pointer to be initialised, but that being set does not mean that
-the other pointers are not still NULL when you hit this callback.
+I've tested again now and made it work.
 
-> If devm_power_supply_register fails, things would go very
-> south very fast anyway.
+$ modetest -M msm -a -s 38@64:1024x768 -o test.d -P 45@64:1024x768
 
-Eh, no. Before the offending commit, if registration fails, we bail out
-from probe() before registering the PMIC GLINK client (and callbacks) so
-all is good.
+Then display the image with
 
-That is no longer the case since b43f7ddc2b7a ("power: supply:
-qcom_battmgr: Register the power supplies after PDR is up") which
-happily ignores errors and could theoretically result in all but the
-first class device being registered leading to further NULL derefs on
-notifications.
+$ magick display -size 1024x768 -depth 8 RGBA:test.d
 
-I could have pointed this out in the commit message for the revert.
+As discussed on IRC it seems the byte order of R and B might be wrong,
+so it looks like BGRA is the format we get the data in, not RGBA.
 
-> I personally don't see this being a terribly bad fix, but I'm open to
-> different propositions.
+Anyways:
 
-It's not a correct fix, only a band-aid that papers over the immediate
-issue, I'm afraid.
+Tested-by: Luca Weiss <luca.weiss@fairphone.com>
 
-Let's revert and if you care deeply about this you can possibly propose
-a complete patch that addresses the above issues, even if I'm more
-inclined to leave things as they were and not spend more time on this.
+Regards
+Luca
 
-Johan
+>
+> Regards
+> Luca
+>
+>
+> > ---
+> >  .../drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h | 18 ++++++++++++++++++
+> >  1 file changed, 18 insertions(+)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h b/d=
+rivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
+> > index 62db84bd15f2..3c179a73c030 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
+> > @@ -27,6 +27,7 @@ static const struct dpu_mdp_cfg sm6350_mdp =3D {
+> >  		[DPU_CLK_CTRL_DMA0] =3D { .reg_off =3D 0x2ac, .bit_off =3D 8 },
+> >  		[DPU_CLK_CTRL_DMA1] =3D { .reg_off =3D 0x2b4, .bit_off =3D 8 },
+> >  		[DPU_CLK_CTRL_DMA2] =3D { .reg_off =3D 0x2c4, .bit_off =3D 8 },
+> > +		[DPU_CLK_CTRL_WB2] =3D { .reg_off =3D 0x2bc, .bit_off =3D 16 },
+> >  		[DPU_CLK_CTRL_REG_DMA] =3D { .reg_off =3D 0x2bc, .bit_off =3D 20 },
+> >  	},
+> >  };
+> > @@ -146,6 +147,21 @@ static const struct dpu_dsc_cfg sm6350_dsc[] =3D {
+> >  	},
+> >  };
+> > =20
+> > +static const struct dpu_wb_cfg sm6350_wb[] =3D {
+> > +	{
+> > +		.name =3D "wb_2", .id =3D WB_2,
+> > +		.base =3D 0x65000, .len =3D 0x2c8,
+> > +		.features =3D WB_SM8250_MASK,
+> > +		.format_list =3D wb2_formats,
+> > +		.num_formats =3D ARRAY_SIZE(wb2_formats),
+> > +		.clk_ctrl =3D DPU_CLK_CTRL_WB2,
+> > +		.xin_id =3D 6,
+> > +		.vbif_idx =3D VBIF_RT,
+> > +		.maxlinewidth =3D 1920,
+> > +		.intr_wb_done =3D DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 4),
+> > +	},
+> > +};
+> > +
+> >  static const struct dpu_intf_cfg sm6350_intf[] =3D {
+> >  	{
+> >  		.name =3D "intf_0", .id =3D INTF_0,
+> > @@ -219,6 +235,8 @@ const struct dpu_mdss_cfg dpu_sm6350_cfg =3D {
+> >  	.dsc =3D sm6350_dsc,
+> >  	.pingpong_count =3D ARRAY_SIZE(sm6350_pp),
+> >  	.pingpong =3D sm6350_pp,
+> > +	.wb_count =3D ARRAY_SIZE(sm6350_wb),
+> > +	.wb =3D sm6350_wb,
+> >  	.intf_count =3D ARRAY_SIZE(sm6350_intf),
+> >  	.intf =3D sm6350_intf,
+> >  	.vbif_count =3D ARRAY_SIZE(sdm845_vbif),
+
 
