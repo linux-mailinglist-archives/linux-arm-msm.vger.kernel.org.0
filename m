@@ -1,173 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-8138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8139-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B4C983ACA7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 16:00:28 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 251CA83AD33
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 16:25:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4A9CE29E288
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 15:00:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D127928198C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 15:25:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC9B57A707;
-	Wed, 24 Jan 2024 15:00:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D89F17A71F;
+	Wed, 24 Jan 2024 15:25:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bOWospek"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="apFh6zJ0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8049277656;
-	Wed, 24 Jan 2024 15:00:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403E87A707;
+	Wed, 24 Jan 2024 15:25:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706108405; cv=none; b=Xk49b7nbQo7IY21+3af2vpxaxAj7VDRGTosgjefv0C23Xd2OWKXVzv3Yvy9IvD4FqFrWe2PVCxhslCVaM5SmRx+2lIcrigyJVIrql42q206/IvrM2JCrQneQ/uQBFDkjHI2M56gf7fyJ2JT3TDKtKoZ7anm2Q73UClmXmG6i40k=
+	t=1706109944; cv=none; b=ZL+safbPAdIrr0y3G/hnY3e8ImadLK9cY9ikIlhjHU4W9foCJknnZGA/KhuS+n3TDzJQR5DTKbwbHvhmlU9HH0opY2tOAwkySTUykvLKdhrT2efkW2mULNGWrraeGQBu+Rjn0wQJVQST0JHDA5uExyamlgxsqYRLQ6S88UVMeZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706108405; c=relaxed/simple;
-	bh=j7Z+thFdgKlzSUoT0A5oBFaBMSTllWxRg8wQ7PRW+KQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HDS5rssGyMJ2W/EpfB2ICL3YqV4Qv0/mLDbtqMQUxs5px49JSaOws8G0cxMlN1kTSmWeZhIdF6CUbxLrnKQNTsAPD3kzdS4i41rOdEVwZlJsIiMzk/jxu4HPlk5LfSeuQY/YUgWFrRU2RaBA+4EH+AqNspOrJexX5MI4iBRKjR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bOWospek; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6833C43390;
-	Wed, 24 Jan 2024 15:00:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706108405;
-	bh=j7Z+thFdgKlzSUoT0A5oBFaBMSTllWxRg8wQ7PRW+KQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bOWospekqSSumxyb1P3s64yCAwOwrh32ACqwg34CyiHXL1AEojGnxZPEL1y52mvwT
-	 npom/UlygVuHu9teT8NJs/0asAz550dH3fCDbWAACFTVMrYVQtG4dhyoXijVVPNPpV
-	 jvfRlWjOsjsqJrASoO2GH8aB0NTluLL1tVAtx7q7wbxLCm5NM6NUebR1X03Y1P825d
-	 0pSyHsDN6NAInf7/hENqQaUr88xQk+uuEfPUnAV+IvJbB8/v37XeDFlWimze56ntAQ
-	 fhJmyqyj6pSg4eRMC5z7fZWkYfJTCH1R2mjleuTFILOHxO+Y+p1cY5+I4QI1jlkHEy
-	 5wX6byjpYxRog==
-Date: Wed, 24 Jan 2024 09:00:02 -0600
-From: Rob Herring <robh@kernel.org>
-To: Amrit Anand <quic_amrianan@quicinc.com>
-Cc: krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-	agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, kernel@quicinc.com,
-	Elliot Berman <quic_eberman@quicinc.com>
-Subject: Re: [PATCH 1/2] dt-bindings: hwinfo: Introduce board-id
-Message-ID: <20240124150002.GB873781-robh@kernel.org>
-References: <1705749649-4708-1-git-send-email-quic_amrianan@quicinc.com>
- <1705749649-4708-2-git-send-email-quic_amrianan@quicinc.com>
+	s=arc-20240116; t=1706109944; c=relaxed/simple;
+	bh=OQU/+q3vIDCVis27eIKAXr6BMKI4dpGBzkf75gwybr4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Shvda5kUNil6XNK0qHDi25ATKIi0YlOjNKCVClEobZgkyAyxwqzhRLk5SB3510rPpbcVCe7KUx67/uECB9kw0eRMdYIjggTjMYhw8YUmSvqasn4GYWXAZVtqAW3jnjkzSSYMNeSyJQ/chQzbyIsb6CWOgKgD35DvRw6HuzRcbv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=apFh6zJ0; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40OCYpQn005760;
+	Wed, 24 Jan 2024 15:25:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=TKqmN0ivHFHrIW/RN12lAs9vGB/kamk2FcWgpEX3Nh0=; b=ap
+	Fh6zJ0fSqIuVfTIhGxZc3QR1QTbqwRdl0Ob1MTI3YqExSUwSVKhvoHicL09w66sH
+	hBoc34LLrDRjUacu4/3zvUYDcalZmbRCbe4KCpLcGiclbRJFnYVYbVsvEY0kg3VD
+	Oggxh5z0V6raClKgP8L+De6ZKekaJNwrVy1+uJC6eh9JNcTmGL09POxtvY0/TlKk
+	KWbYKkFDvVRN8DeRy2Ta3v85KQ7TmH3j3ZigOsJL9xuCQ1cpjTJQGtbDu1oGUrQq
+	gwy1yntfe9yEArvMSg3qd0kV9GKN4MZ/WFfvcXFRwwCIR6ESnXcB9owe6xtgXyXS
+	BEBRyv2IX6W3zFLlKtQg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vtmh022xq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 24 Jan 2024 15:25:34 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40OFPYp4030818
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 24 Jan 2024 15:25:34 GMT
+Received: from [10.216.38.76] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 24 Jan
+ 2024 07:25:29 -0800
+Message-ID: <be69e0a6-fdc8-c24b-9beb-adaac4a97776@quicinc.com>
+Date: Wed, 24 Jan 2024 20:55:26 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1705749649-4708-2-git-send-email-quic_amrianan@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH] thermal/drivers/tsens: Add suspend to RAM support for
+ tsens
+Content-Language: en-US
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Amit Kucheria
+	<amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+        <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC: <quic_manafm@quicinc.com>
+References: <20240122100726.16993-1-quic_priyjain@quicinc.com>
+ <548e2f24-a51e-4593-9463-09506488c70e@linaro.org>
+ <f415a8cd-4cae-d7c3-60fc-674b3e660f6b@quicinc.com>
+ <aeae2e69-8407-4d90-9d16-27798e2f3248@linaro.org>
+From: Priyansh Jain <quic_priyjain@quicinc.com>
+In-Reply-To: <aeae2e69-8407-4d90-9d16-27798e2f3248@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: JZpFstnIg1RdHONUyY59S75ploup1Uug
+X-Proofpoint-ORIG-GUID: JZpFstnIg1RdHONUyY59S75ploup1Uug
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-24_06,2024-01-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
+ spamscore=0 adultscore=0 malwarescore=0 suspectscore=0 mlxlogscore=417
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 mlxscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401190000 definitions=main-2401240111
 
-On Sat, Jan 20, 2024 at 04:50:48PM +0530, Amrit Anand wrote:
-> From: Elliot Berman <quic_eberman@quicinc.com>
-> 
-> Device manufacturers frequently ship multiple boards or SKUs under a
-> single software package. These software packages will ship multiple
-> devicetree blobs and require some mechanism to pick the correct DTB for
-> the board the software package was deployed. Introduce a common
-> definition for adding board identifiers to device trees. board-id
-> provides a mechanism for bootloaders to select the appropriate DTB which
-> is vendor/OEM-agnostic.
-> 
-> Isn't that what the compatible property is for?
-> -----------------------------------------------
-> The compatible property can be used for board matching, but requires
-> bootloaders and/or firmware to maintain a database of possible strings
-> to match against or have complex compatible string matching. Compatible
-> string matching becomes complicated when there are multiple versions of
-> board: the device tree selector should recognize a DTB that cares to
-> distinguish between v1/v2 and a DTB that doesn't make the distinction.
-> An eeprom either needs to store the compatible strings that could match
-> against the board or the bootloader needs to have vendor-specific
-> decoding logic for the compatible string. Neither increasing eeprom
-> storage nor adding vendor-specific decoding logic is desirable.
-> 
-> The solution proposed here is simpler to implement and doesn't require
-> updating firmware or bootloader for every new board.
-> 
-> How is this better than Qualcomm's qcom,msm-id/qcom,board-id?
-> -------------------------------------------------------------
-> The selection process for devicetrees was Qualcomm-specific and not
-> useful for other devices and bootloaders that were not developed by
-> Qualcomm because a complex algorithm was used to implement. Board-ids
-> provide a matching solution that can be implemented by bootloaders
-> without introducing vendor-specific code. Qualcomm uses three
-> devicetree properties: msm-id (interchangeably: soc-id), board-id, and
-> pmic-id.  This does not scale well for use casese which use identifiers,
-> for example, to distinguish between a display panel. For a display
-> panel, an approach could be to add a new property: display-id,
-> but now	bootloaders need to be updated to also read this property. We
-> want to	avoid requiring to update bootloaders with new hardware
-> identifiers: a bootloader need only recognize the identifiers it can
-> handle.
-> 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> Signed-off-by: Amrit Anand <quic_amrianan@quicinc.com>
-> ---
->  .../devicetree/bindings/hwinfo/board-id.yaml       | 53 ++++++++++++++++++++++
->  1 file changed, 53 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/hwinfo/board-id.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/hwinfo/board-id.yaml b/Documentation/devicetree/bindings/hwinfo/board-id.yaml
-> new file mode 100644
-> index 0000000..82d5ff7
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/hwinfo/board-id.yaml
-> @@ -0,0 +1,53 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/hwinfo/board-id.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Board Identifier for Devicetree Selection
-> +
-> +maintainers:
-> +  - Amrit Anand <quic_amrianan@quicinc.com>
-> +  - Elliot Berman <quic_eberman@quicinc.com>
-> +
-> +description: |
-> +  Device manufacturers frequently ship multiple boards under a single
-> +  software package. These software packages will ship multiple devicetree
-> +  blobs and require some mechanism to pick the correct DTB for the board
-> +  the software package was deployed. board-id provides a mechanism for
-> +  bootloaders to select the appropriate DTB which is vendor/OEM-agnostic.
-> +
-> +select:
-> +  anyOf:
-> +    - required:
-> +        - 'board-id'
-> +    - required:
-> +        - 'board-id-types'
-> +    - required:
-> +        - '#board-id-cells'
-> +
-> +properties:
-> +  $nodename:
-> +    const: "/"
-> +  board-id:
-> +    $ref: /schemas/types.yaml#/definitions/uint32-matrix
-> +    description: |
-> +      A list of identifiers that can be used to match with this devicetree.
-> +      The interpretatation of each cell can be matched with the
-> +      board-id-type at the same index.
-> +
-> +  board-id-types:
-> +    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
-> +    description:
-> +      Defines the type of each cell, indicating to the DeviceTree selection
-> +      mechanism how to parse the board-id.
-> +
-> +  '#board-id-cells':
-> +    minimum: 1
 
-This is not how #foo-cells works. It is for provider/consumer style 
-bindings.
 
-Rob
+On 1/24/2024 6:04 PM, Konrad Dybcio wrote:
+> 
+> 
+> On 1/24/24 11:42, Priyansh Jain wrote:
+>>
+>>
+>> On 1/22/2024 8:02 PM, Konrad Dybcio wrote:
+>>> On 22.01.2024 11:07, Priyansh Jain wrote:
+>>>> Add suspend callback support for tsens which disables tsens interrupts
+>>>> in suspend to RAM callback.
+>>>
+>>> Would it not be preferrable to have the "critical overheat", wakeup-
+>>> capable interrupts be enabled, even if the system is suspended?
+>>>
+>>
+>>
+>> As part of suspend to RAM, tsens hardware will be turned off and it 
+>> cannot generate any interrupt.Also system doesn't want to abort 
+>> suspend to RAM due to tsens interrupts since system is already going 
+>> into lowest
+>> power state. Hence disabling tsens interrupt during suspend to RAM 
+>> callback.
+> 
+> Is that a hardware limitation, or a software design choice? I'm not
+> sure I want my phone to have thermal notifications disabled when
+> it's suspended.
+
+> Konrad
+
+As part of suspend to RAM , entire SOC will be off, this mode (suspend 
+to RAM) is not intended for Mobile product. Tsens interrupts are not
+disabled as part of suspend to idle(suspend mode for mobile).
+
+Regards,
+Priyansh
 
