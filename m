@@ -1,157 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-8156-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E7B183B3D2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 22:23:49 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DCE2983B412
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 22:37:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D14281C226F9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 21:23:48 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 65EB6B23B9D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 21:37:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 459181350FE;
-	Wed, 24 Jan 2024 21:23:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5731D1353F6;
+	Wed, 24 Jan 2024 21:36:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CK9J0d7C"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CWvssRvX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5091350F4;
-	Wed, 24 Jan 2024 21:23:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29CD131E26;
+	Wed, 24 Jan 2024 21:36:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706131424; cv=none; b=a5vyX9RDXXojZllYwjl65xYF3VP4HL2yfevWMUNtRFEnJWYaLRXzqP2eU4YNCTE8bkwcYGJkyzLgmnjjZlOvIcKBjensY5RtuEr5XCKJhHpBU0rYoASD6Tc6ZDclih1eCFpYPcCxjUrTiTwuBHWd4regLn7VxbTpw2Qe38puO8s=
+	t=1706132218; cv=none; b=SUwl0ajC/kyKFfBeK9IRgdLvEalkdzjp6qAiDHB2bVts+pbA9qJHc/V4EGN8cCE5tJFd/19mzVi4BYvB7ILXCDxWDFAc0KEiDTAQfZkyXqXBPkG1ZRYOXmALUCxKA6dyReURkhZFgrY2dOlw15Q8Jznv9Ll9+Tp5LeiL3XiBIOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706131424; c=relaxed/simple;
-	bh=yyw2wTBAUi65i4ZHKK9kqJJWvPudrQSeVdORmsL63CU=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jPeSGCwYq1rj4mr79I+ZJKgqOgEvIRsZQ9z00RKUWG6tk6vdgB4uXbon7LLBUcI+tbQItANitji0p5HnjTlq+Rhfq5QhKy3fesHJTDvhDrfgC3DfVYmkZ7fnmyoIfnON6oS+6iAtbCVKTdO0Fq3K44CcAD1ePdOhqD9ac+P63SQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CK9J0d7C; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40OK8BCK011436;
-	Wed, 24 Jan 2024 21:23:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=lEu9IuU4bGL5BCly4Dnyc
-	ngQdVk/sa1XqqPwqrVMMI0=; b=CK9J0d7CIztBWGgb+6OoOhovZZMX2z5S+A1A1
-	IdVAiXmAEMzNqZ6IkoF7/Mzp91HxVeekCJR6Z8oHGnC6D3YrlCZJFJxy9UcnEd8b
-	h91Fk0qI0z9Dw7t1gTWgG8MZsm/+VlagR8rjfuZNCLJwbHRe1GFtPwurHr/hDIb8
-	0pRHinnDdQQij7AtIO077fm5Zda4eZoSXtFzAM/dbc3vSxnEDRN0nX2QjCED2EJ9
-	2F5raurBtt5+L3WL9WVRGBfpoVB9pDvQb9zPwxD5/KoP27+z16nQtc0qHYH+71eL
-	iGmKa/EAMlcGuWDqoOZoDge76bk4EWWSwTTGYUmFVKjZ1Ljpg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vu99b04u4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Jan 2024 21:23:36 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40OLNY1S011669
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Jan 2024 21:23:34 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Wed, 24 Jan 2024 13:23:34 -0800
-Date: Wed, 24 Jan 2024 13:23:33 -0800
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Ulf Hansson <ulf.hansson@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Johan Hovold
-	<johan+linaro@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v3 4/8] soc: qcom: rpmhpd: Drop SA8540P gfx.lvl
-Message-ID: <20240124212333.GI2936378@hu-bjorande-lv.qualcomm.com>
-References: <20240123-sa8295p-gpu-v3-0-d5b4474c8f33@quicinc.com>
- <20240123-sa8295p-gpu-v3-4-d5b4474c8f33@quicinc.com>
- <CAPDyKFqre9Y0XOn5Xig3zbiqR0FQJ+cvK0VXMZRbtt0NsSE4+w@mail.gmail.com>
+	s=arc-20240116; t=1706132218; c=relaxed/simple;
+	bh=ER8YRl0Ubg2rVsBw6JLH22yHGovsalfF9HW2+d0UgUc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mIJovH0qIxYP+W5PtWDPIWRAPqbwGPB/yn8OntUZWcjzfBGtMMsT8BsK/uQlkApgTtdLPv8vxbcTqmeh2ipua8C5KHjKpTHMQIwshJBipzoZeBRKhNN41HE8zxgwEkNLOdYxBOblEov7lOd6wAq1BBORogerkldS6Um9WxUqGeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CWvssRvX; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-40ec048e0c1so18917555e9.2;
+        Wed, 24 Jan 2024 13:36:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706132215; x=1706737015; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=fOtE6Xk1J/NKQNtTqJEIAQz1hcLUCo0Y1saDef3VZSg=;
+        b=CWvssRvX/nyDqfGGrqBChMAN+vJvDRowNlkfvGAfJxgyFVPtr0G2OUVAzQesDfbj/d
+         bqBKAOujibLNEdS0aYiSoEzxCxYBk370D4Y0WKY4jPLr/3Bz1gi37qnlF0So5bN6T/FC
+         z1IvTMZVHxNgSNrWYKkWa7wgxfDK9+91v6zTaV690QH56W5Qh6ImjtBKd9nH0GFTS+H5
+         9zQ8NeE+a5sHWx3CKFeQVimzKqSO9VmIxhE2ocTdk8n5II6c1QTfjyRiDZnbeJbx7jrF
+         z8Ord+imHq4Sl94JnyBQSBbHaCwZUgjo45aAIGhsnfFfzfdJe4vf4kJ9c2wRI82j6Vt5
+         Jeaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706132215; x=1706737015;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fOtE6Xk1J/NKQNtTqJEIAQz1hcLUCo0Y1saDef3VZSg=;
+        b=NBUvVhnjdXHTJSGcnTJjQ4uioY9AO+FKosHcxnRxRfcBujTWJRDL1XMVoU8YG+k+5Y
+         Rq7FsVbKu5QA7hEwzS/uuV6pSNcjDunrUXzeAf1b5EjbjGnz6jCxM5L0qlFmK1QvpPeW
+         MIivHUjB7f8Y62/cbNNnpq+YdYFtMafWYw6TMUDiNeR8YO6R+t7WGSAc5S4lcBERCXsx
+         E0SXN89cjRJp++2h506WEL76NuVEhBuRY64rY9CXaSirFNXiIGPw7zhdXZhm2GGbVfDx
+         rEgp28kUrM1uLsnV5ziJLyCF+nCaZV5oLrc2fMWMtk1/T1NMcP3v8ZeBOtwRTg+ORfv1
+         RBHA==
+X-Gm-Message-State: AOJu0Yy6icuXWDhgRh2ZAU7fgwMrF/mLS+eZeacAsUcJwoGwoZ39CRY+
+	UC0FZuyRyUTWAFD81d8c21bk1Z7XFOnw9Uot/tAMQoHRXWkfJ96C
+X-Google-Smtp-Source: AGHT+IEhShE9I2lbDwxDWRi5vb+kivrkxinTFc5QgvSilZvf6DqSUcIiZ6aKZAsoR3FngQETjoBKBw==
+X-Received: by 2002:a05:600c:3115:b0:40e:7852:bc85 with SMTP id g21-20020a05600c311500b0040e7852bc85mr2216775wmo.41.1706132214635;
+        Wed, 24 Jan 2024 13:36:54 -0800 (PST)
+Received: from localhost.localdomain (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
+        by smtp.googlemail.com with ESMTPSA id q13-20020a05600c46cd00b0040e89ade84bsm339466wmo.4.2024.01.24.13.36.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Jan 2024 13:36:54 -0800 (PST)
+From: Christian Marangi <ansuelsmth@gmail.com>
+To: Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Robert Marko <robert.marko@sartura.hr>,
+	linux-arm-msm@vger.kernel.org,
+	netdev@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Christian Marangi <ansuelsmth@gmail.com>
+Subject: [net-next PATCH 0/3] net: mdio-ipq4019: fix wrong default MDC rate
+Date: Wed, 24 Jan 2024 22:36:30 +0100
+Message-ID: <20240124213640.7582-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <CAPDyKFqre9Y0XOn5Xig3zbiqR0FQJ+cvK0VXMZRbtt0NsSE4+w@mail.gmail.com>
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: zWGghweUU2-EPaZhnWMy7rfUWrenPxPX
-X-Proofpoint-ORIG-GUID: zWGghweUU2-EPaZhnWMy7rfUWrenPxPX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-24_10,2024-01-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- mlxlogscore=999 impostorscore=0 spamscore=0 suspectscore=0 malwarescore=0
- lowpriorityscore=0 clxscore=1015 adultscore=0 phishscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2401190000
- definitions=main-2401240155
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jan 24, 2024 at 10:36:34AM +0100, Ulf Hansson wrote:
-> On Wed, 24 Jan 2024 at 05:25, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
-> >
-> > On SA8295P and SA8540P gfx.lvl is not provdied by rpmh, but rather is
-> > handled by an external regulator (max20411). Drop gfx.lvl from the list
-> > of power-domains exposed on this platform.
-> >
-> > Fixes: f68f1cb3437d ("soc: qcom: rpmhpd: add sc8280xp & sa8540p rpmh power-domains")
-> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
-> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> 
-> I assume you are picking this via your tree? If not, please tell me if I should.
-> 
+This was a long journey to arrive and discover this problem.
 
-That sounds good, thanks.
+To not waste too much char, there is a race problem with PHY and driver
+probe. This was observed with Aquantia PHY firmware loading.
 
-> Before applying, please amend the prefix of commit message header to
-> be "pmdomain: ..."
-> 
+With some hacks the race problem was workarounded but an interesting
+thing was notice. It took more than a minute for the firmware to load
+via MDIO.
 
-Thanks for noticing, I will update accordingly.
+This was strange as the same operation was done by UBoot in at max 5
+second and the same data was loaded.
 
-Regards,
-Bjorn
+A similar problem was observed on a mtk board that also had an
+Aquantia PHY where the load was very slow. It was notice that the cause
+was the MDIO bus running at a very low speed and the firmware
+was missing a property (present in mtk sdk) that set the right frequency
+to the MDIO bus.
 
-> Kind regards
-> Uffe
-> 
-> > ---
-> >  drivers/pmdomain/qcom/rpmhpd.c | 1 -
-> >  1 file changed, 1 deletion(-)
-> >
-> > diff --git a/drivers/pmdomain/qcom/rpmhpd.c b/drivers/pmdomain/qcom/rpmhpd.c
-> > index 3078896b1300..27a73ff72614 100644
-> > --- a/drivers/pmdomain/qcom/rpmhpd.c
-> > +++ b/drivers/pmdomain/qcom/rpmhpd.c
-> > @@ -217,7 +217,6 @@ static struct rpmhpd *sa8540p_rpmhpds[] = {
-> >         [SC8280XP_CX] = &cx,
-> >         [SC8280XP_CX_AO] = &cx_ao,
-> >         [SC8280XP_EBI] = &ebi,
-> > -       [SC8280XP_GFX] = &gfx,
-> >         [SC8280XP_LCX] = &lcx,
-> >         [SC8280XP_LMX] = &lmx,
-> >         [SC8280XP_MMCX] = &mmcx,
-> >
-> > --
-> > 2.25.1
-> >
+It was fun to find that THE VERY SAME PROBLEM is present on IPQ in a
+different form. The MDIO apply internally a division to the feed clock
+resulting in the bus running at 390KHz instead of 6.25Mhz.
+
+Searching around the web for some documentation and some include and
+analyzing the uboot codeflow resulted in the divider being set wrongly
+at /256 instead of /16 as the value was actually never set.
+Applying the value restore the original load time for the Aquantia PHY.
+
+This series mainly handle this by adding support for the "clock-frequency"
+property.
+
+Christian Marangi (3):
+  dt-bindings: net: ipq4019-mdio: document now supported clock-frequency
+  net: mdio: ipq4019: add support for clock-frequency property
+  arm64: dts: qcom: ipq8074: add clock-frequency to MDIO node
+
+ .../bindings/net/qcom,ipq4019-mdio.yaml       | 10 +++
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi         |  2 +
+ drivers/net/mdio/mdio-ipq4019.c               | 68 +++++++++++++++++--
+ 3 files changed, 75 insertions(+), 5 deletions(-)
+
+-- 
+2.43.0
+
 
