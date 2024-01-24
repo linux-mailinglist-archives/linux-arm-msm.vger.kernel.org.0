@@ -1,50 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-8168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85D5C83B496
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 23:23:26 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5EBF883B4A5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 23:27:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DB748B21B30
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 22:23:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0C03528682C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 22:27:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3279135A41;
-	Wed, 24 Jan 2024 22:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50EC1135A51;
+	Wed, 24 Jan 2024 22:27:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="0uFhgPeh"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kzv5aaGZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B9E51021;
-	Wed, 24 Jan 2024 22:23:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD90134750;
+	Wed, 24 Jan 2024 22:27:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706134996; cv=none; b=lP2JAx19GaBSMtPbWMDFwvEbBP5Wk7wiaXzsW02JMPvovZjUl87HvcTvs+SihVaaSaVdJBrQPHIjlalGDG1ClTZghvrXNXF7rr1jGMnzRC/hQu0Pbpo8KXffEN1Isx6w0C8eXlI/xKACqBWH6FqjOZnWY/8QLpiZ8rUw3EMwaqM=
+	t=1706135247; cv=none; b=U4zw7DvvEqF9OV3LxvgQdCu0X5aAUBzbM+yfAKrMCbVEgy2YmJwCXgyYzH+QLYWR8GixeFC4Us8qAn4hlbDGhUlx2FQ56Y9fcT2DNJNMgGORF7gohKcw/NDXPs/5fLfeWiT/ykkAp7UAMqEFB/e2AA6iDuxdnAtOpBqCWB/9V0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706134996; c=relaxed/simple;
-	bh=4KWawv5j4pKYQY/3k4HM7ergA7lUvMlesIDP7T6CFEo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VEVHUNT2uLiwRCXGTsJ5kmZKoECpDMQJoBghgW6DHzrS4re+1PYg5CL/dilo3fjDMkhL/a+5u5CjB4SUUV2Oll/YecvWXHjR4zHKO0POweeLKN1fcLcCyCQrQuIWWf0K/6aes4hg4Ccl62yJ8upPI2CorZhxrpty5URgDDvAG/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=0uFhgPeh; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=WhEirDxAudvAnH2DY4Ix5qMYIV0QQ+MAj/GV7ofEVzA=; b=0uFhgPeh3dbtl5MzMakZPzBKk0
-	9WQ3VD0g1ORmSTUdXxwesZvj3LarlN9FWwA15mIQOFA9jS8B5mRC1sts+yrWXZlMLoGRkkPmVHK56
-	SRAMp4qftQB5zcWq0JqZI4kNVCNO6juUuCNG3Zz9ABpoKkMpZBRmTxgD3TFrjr5vqnd8=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1rSleD-0062G8-2i; Wed, 24 Jan 2024 23:23:05 +0100
-Date: Wed, 24 Jan 2024 23:23:05 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Christian Marangi <ansuelsmth@gmail.com>
+	s=arc-20240116; t=1706135247; c=relaxed/simple;
+	bh=o3gr9vmWJomYS3b+A7pJvyEVvUjx4yijbu5oA1OyYhs=;
+	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kujNKzK5gHP1HlL23bj1dB0FaK2qXVyG42+nyTKc51p2OlLeRijiBKzsgPLnF1ht/7adhIUZ8BdCIt64B9YEJxeCsupXOxs/QnYwtTPk68NZP5jATzxAO+hXzlzRD2PGVdml+ZoaiOIMof9YNzdM0Gt/uPtTFDB0AC9BWLxxiUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kzv5aaGZ; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-40ec048e0c1so19345765e9.2;
+        Wed, 24 Jan 2024 14:27:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706135244; x=1706740044; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=fjxjDY56LiTFFCRJEw1kPUjEBGjDsgw409gTnMdwrYU=;
+        b=kzv5aaGZDyxp+1cRtp6+SO/NT0W9sXRYWAH1YmJLqeSr4Ob5jW0D7yNg5YFckj7fGl
+         n5FaWYJMz101TndftSwwo4FftR7FxiNk/zahUSBI1n3EZ4LZr0Tpuk5jZEX9mBifrdbf
+         eetRFy875HUyUvA1OGJV8mrKQNNGJAfrFuqhim9tVR40eJLom6UjShvhqsTeg4KJc3Kh
+         tbfCX9Ir2fWfpbyZ5rMDbw5vL3eKY0jZEUVa1H3wwVtEQwHaTNoFtk3vx6oroJcdqQUU
+         CPRRSFDZB68JukXfi6VhM9PqSzdMitjJkYqR/TVm1dJXvkchZF8proQi00f7RtTGmIIz
+         CWZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706135244; x=1706740044;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fjxjDY56LiTFFCRJEw1kPUjEBGjDsgw409gTnMdwrYU=;
+        b=JGO0s8ngLsu+1O6yo3Uv1Ty9WGtLYc3QSSSZRKcpfqiY1ndIOA8K+JQlEvnyvJqmaB
+         /eMVRKxsHpENflJ/V21viF6dEGwJHjXvqdg12+ivnu9YMEPqaMpm5jUV58cIvAdvpnTg
+         6l3HtqGnyfhfyGSrnX6MXNnzkeLnCv6b60UcLK+Yi2X8RKfnwa2q85DIY8VmWy6BJHPW
+         R2k93bMJVVT94eKdddkmNjKxdCY1sRjN8H2PCQDRxHE9ON1rh8168UhaVtZjax5rbIs8
+         AqDVH5VIXoeF+CM5q7KvqaeO4kZOasyXY3FYz9jCUZJDb0LSKeYxu/Sz6bbdrrEuIiB1
+         6doQ==
+X-Gm-Message-State: AOJu0YxQggikIgI/4rW/tbSUz0vDE0GfA4uCEayzHOzn9dZwuCUk1zLh
+	k6pNeeTHAKfU8Bk6nDr+EUAvKZvRfVIZLN8L12KXYrVo3xxwGjrq
+X-Google-Smtp-Source: AGHT+IHo0xHU71Kl4mbLJfFOzOZmwFw4o0ZJNf0UzzxYJamL98tIZRGcfx8ulWIDmNIJ0ZmBHcfqMQ==
+X-Received: by 2002:a05:600c:a4c:b0:40e:ae0b:62ee with SMTP id c12-20020a05600c0a4c00b0040eae0b62eemr2057460wmq.56.1706135243495;
+        Wed, 24 Jan 2024 14:27:23 -0800 (PST)
+Received: from Ansuel-xps. (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
+        by smtp.gmail.com with ESMTPSA id v4-20020a5d6784000000b0033940bc04fesm5367320wru.16.2024.01.24.14.27.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Jan 2024 14:27:23 -0800 (PST)
+Message-ID: <65b18ecb.5d0a0220.e8e31.c94c@mx.google.com>
+X-Google-Original-Message-ID: <ZbGOyCRxCxFCiuk2@Ansuel-xps.>
+Date: Wed, 24 Jan 2024 23:27:20 +0100
+From: Christian Marangi <ansuelsmth@gmail.com>
+To: Andrew Lunn <andrew@lunn.ch>
 Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	"David S. Miller" <davem@davemloft.net>,
@@ -60,9 +85,9 @@ Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Subject: Re: [net-next PATCH 1/3] dt-bindings: net: ipq4019-mdio: document
  now supported clock-frequency
-Message-ID: <010becc5-51f6-44c1-863e-f5092ca5018c@lunn.ch>
 References: <20240124213640.7582-1-ansuelsmth@gmail.com>
  <20240124213640.7582-2-ansuelsmth@gmail.com>
+ <010becc5-51f6-44c1-863e-f5092ca5018c@lunn.ch>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,23 +96,31 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240124213640.7582-2-ansuelsmth@gmail.com>
+In-Reply-To: <010becc5-51f6-44c1-863e-f5092ca5018c@lunn.ch>
 
-> +  clock-frequency:
-> +    description:
-> +      The MDIO bus clock that must be output by the MDIO bus hardware, if
-> +      absent, the default hardware values are used.
-> +
-> +      MDC rate is feed by an external clock (fixed 100MHz) and is divider
-> +      internally. The default divider is /256 resulting in the default rate
-> +      applied of 390KHz.
-> +    enum: [ 390625, 781250, 1562500, 3125000, 6250000, 12500000 ]
+On Wed, Jan 24, 2024 at 11:23:05PM +0100, Andrew Lunn wrote:
+> > +  clock-frequency:
+> > +    description:
+> > +      The MDIO bus clock that must be output by the MDIO bus hardware, if
+> > +      absent, the default hardware values are used.
+> > +
+> > +      MDC rate is feed by an external clock (fixed 100MHz) and is divider
+> > +      internally. The default divider is /256 resulting in the default rate
+> > +      applied of 390KHz.
+> > +    enum: [ 390625, 781250, 1562500, 3125000, 6250000, 12500000 ]
+> 
+> Hi Christian
+> 
+> 802.3 says the clock should be up to 2.5MHz by default. So the nearest
+> would be 1562500. Please document that if not set, it defaults to
+> this. And make the driver actually default to that.
+>
 
-Hi Christian
+As I said, this is very fk up and default value is 390KHz unless anyone
+in the chain sets it (sometime uboot does it but it's not that common...
+default qsdk uboot doesn't do that for example)... Ok I have to change
+this to default to 1562500.
 
-802.3 says the clock should be up to 2.5MHz by default. So the nearest
-would be 1562500. Please document that if not set, it defaults to
-this. And make the driver actually default to that.
-
-	Andrew
+-- 
+	Ansuel
 
