@@ -1,56 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-8137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39EB083AC8F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 15:57:02 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B4C983ACA7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 16:00:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6AC871C222D2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 14:57:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4A9CE29E288
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 15:00:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6292F17562;
-	Wed, 24 Jan 2024 14:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC9B57A707;
+	Wed, 24 Jan 2024 15:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JFLygRVd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bOWospek"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3543F2F26;
-	Wed, 24 Jan 2024 14:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8049277656;
+	Wed, 24 Jan 2024 15:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706108194; cv=none; b=cLhnIV2lgcsCRjZB4tPBKcu60BWRD+dcmlqOZFWegBn1g8VZMBP+2FZrS0bZE4HYVhcMk78v4XmDkfjyennALWNJd4wVQMgtU43QfWxPEVrT3p0Z29/xb+7EM5+pBTLL6mReAfs+DtBVE6/1OJkZlkRTqUq7HWYwwV4HKcHWe64=
+	t=1706108405; cv=none; b=Xk49b7nbQo7IY21+3af2vpxaxAj7VDRGTosgjefv0C23Xd2OWKXVzv3Yvy9IvD4FqFrWe2PVCxhslCVaM5SmRx+2lIcrigyJVIrql42q206/IvrM2JCrQneQ/uQBFDkjHI2M56gf7fyJ2JT3TDKtKoZ7anm2Q73UClmXmG6i40k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706108194; c=relaxed/simple;
-	bh=7/wklZ6oD0ECwz1vKnU18BgeWzOozsvAiODYnadkp4s=;
+	s=arc-20240116; t=1706108405; c=relaxed/simple;
+	bh=j7Z+thFdgKlzSUoT0A5oBFaBMSTllWxRg8wQ7PRW+KQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JaBuKgd4XADzmMlrs/R5kNKrlFjufMB5ysKjwI6L+fbSxEM8OChEcylT6+3enN1NPU3l9AWNQC8oZQBkPVLYCqLIbVmO4ZMYtG2/XJrCpdonjxQBg2KzrKKeATA70RvU7MPmDR1lfdmATn8RGhv2OX/m81rIZv2cGokXkqsiDnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JFLygRVd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73B0EC433F1;
-	Wed, 24 Jan 2024 14:56:33 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=HDS5rssGyMJ2W/EpfB2ICL3YqV4Qv0/mLDbtqMQUxs5px49JSaOws8G0cxMlN1kTSmWeZhIdF6CUbxLrnKQNTsAPD3kzdS4i41rOdEVwZlJsIiMzk/jxu4HPlk5LfSeuQY/YUgWFrRU2RaBA+4EH+AqNspOrJexX5MI4iBRKjR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bOWospek; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6833C43390;
+	Wed, 24 Jan 2024 15:00:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706108193;
-	bh=7/wklZ6oD0ECwz1vKnU18BgeWzOozsvAiODYnadkp4s=;
+	s=k20201202; t=1706108405;
+	bh=j7Z+thFdgKlzSUoT0A5oBFaBMSTllWxRg8wQ7PRW+KQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JFLygRVdAi67WUWHRp4/WulZPT9untGPgaFZV/lYT18DrtkTQBhFtoUp91sZuVJyx
-	 0iUV4qnU6xBkADvpEtDb9X1XfomDS78VK7xZILwkZSCzvk2fFRL+DZpbh5Avu741mv
-	 mzgWrQax+cp0brWgly+g993OvOEcVjJ4pMzCs+9CVdDn9wyOJ1Z/0XIHejv9s7lFj2
-	 xTGlXAz1XrejcNZTnegODD9oXkWQRx/2qpmUxcXj60ZRuM0zKspabgcYsgxvzdLeeP
-	 9eZXD4hAbHFj6hjepm9qSpV3XXJEUtwPVYXetz7SfJvcBbk1xNDQusnlFJ0lvuUL55
-	 QxobEzuPn3zQQ==
-Date: Wed, 24 Jan 2024 08:56:31 -0600
+	b=bOWospekqSSumxyb1P3s64yCAwOwrh32ACqwg34CyiHXL1AEojGnxZPEL1y52mvwT
+	 npom/UlygVuHu9teT8NJs/0asAz550dH3fCDbWAACFTVMrYVQtG4dhyoXijVVPNPpV
+	 jvfRlWjOsjsqJrASoO2GH8aB0NTluLL1tVAtx7q7wbxLCm5NM6NUebR1X03Y1P825d
+	 0pSyHsDN6NAInf7/hENqQaUr88xQk+uuEfPUnAV+IvJbB8/v37XeDFlWimze56ntAQ
+	 fhJmyqyj6pSg4eRMC5z7fZWkYfJTCH1R2mjleuTFILOHxO+Y+p1cY5+I4QI1jlkHEy
+	 5wX6byjpYxRog==
+Date: Wed, 24 Jan 2024 09:00:02 -0600
 From: Rob Herring <robh@kernel.org>
 To: Amrit Anand <quic_amrianan@quicinc.com>
 Cc: krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
 	agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, kernel@quicinc.com
-Subject: Re: [PATCH 0/2] Add board-id support for multiple DT selection
-Message-ID: <20240124145631.GA873781-robh@kernel.org>
+	linux-arm-msm@vger.kernel.org, kernel@quicinc.com,
+	Elliot Berman <quic_eberman@quicinc.com>
+Subject: Re: [PATCH 1/2] dt-bindings: hwinfo: Introduce board-id
+Message-ID: <20240124150002.GB873781-robh@kernel.org>
 References: <1705749649-4708-1-git-send-email-quic_amrianan@quicinc.com>
+ <1705749649-4708-2-git-send-email-quic_amrianan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,9 +61,11 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1705749649-4708-1-git-send-email-quic_amrianan@quicinc.com>
+In-Reply-To: <1705749649-4708-2-git-send-email-quic_amrianan@quicinc.com>
 
-On Sat, Jan 20, 2024 at 04:50:47PM +0530, Amrit Anand wrote:
+On Sat, Jan 20, 2024 at 04:50:48PM +0530, Amrit Anand wrote:
+> From: Elliot Berman <quic_eberman@quicinc.com>
+> 
 > Device manufacturers frequently ship multiple boards or SKUs under a
 > single software package. These software packages will ship multiple
 > devicetree blobs and require some mechanism to pick the correct DTB for
@@ -69,11 +73,6 @@ On Sat, Jan 20, 2024 at 04:50:47PM +0530, Amrit Anand wrote:
 > definition for adding board identifiers to device trees. board-id
 > provides a mechanism for bootloaders to select the appropriate DTB which
 > is vendor/OEM-agnostic.
-
-Show me a 2nd user. Or does vendor/OEM-agnostic just mean vendors of 
-QCom devices? Multiple SoC families using this would help your case. I'm 
-not inclined to take it into the DTSpec without that.
-
 > 
 > Isn't that what the compatible property is for?
 > -----------------------------------------------
@@ -87,9 +86,7 @@ not inclined to take it into the DTSpec without that.
 > against the board or the bootloader needs to have vendor-specific
 > decoding logic for the compatible string. Neither increasing eeprom
 > storage nor adding vendor-specific decoding logic is desirable.
-
-You could hash the compatible strings if it was just a size issue.
-
+> 
 > The solution proposed here is simpler to implement and doesn't require
 > updating firmware or bootloader for every new board.
 > 
@@ -103,28 +100,74 @@ You could hash the compatible strings if it was just a size issue.
 > devicetree properties: msm-id (interchangeably: soc-id), board-id, and
 > pmic-id.  This does not scale well for use casese which use identifiers,
 > for example, to distinguish between a display panel. For a display
-> panel, an approach could be to add a new property: display-id, but now
-> bootloaders need to be updated to also read this property. We want to
-> avoid requiring to update bootloaders with new hardware identifiers: a
-> bootloader need only recognize the identifiers it can handle.
+> panel, an approach could be to add a new property: display-id,
+> but now	bootloaders need to be updated to also read this property. We
+> want to	avoid requiring to update bootloaders with new hardware
+> identifiers: a bootloader need only recognize the identifiers it can
+> handle.
+> 
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> Signed-off-by: Amrit Anand <quic_amrianan@quicinc.com>
+> ---
+>  .../devicetree/bindings/hwinfo/board-id.yaml       | 53 ++++++++++++++++++++++
+>  1 file changed, 53 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/hwinfo/board-id.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/hwinfo/board-id.yaml b/Documentation/devicetree/bindings/hwinfo/board-id.yaml
+> new file mode 100644
+> index 0000000..82d5ff7
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/hwinfo/board-id.yaml
+> @@ -0,0 +1,53 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/hwinfo/board-id.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Board Identifier for Devicetree Selection
+> +
+> +maintainers:
+> +  - Amrit Anand <quic_amrianan@quicinc.com>
+> +  - Elliot Berman <quic_eberman@quicinc.com>
+> +
+> +description: |
+> +  Device manufacturers frequently ship multiple boards under a single
+> +  software package. These software packages will ship multiple devicetree
+> +  blobs and require some mechanism to pick the correct DTB for the board
+> +  the software package was deployed. board-id provides a mechanism for
+> +  bootloaders to select the appropriate DTB which is vendor/OEM-agnostic.
+> +
+> +select:
+> +  anyOf:
+> +    - required:
+> +        - 'board-id'
+> +    - required:
+> +        - 'board-id-types'
+> +    - required:
+> +        - '#board-id-cells'
+> +
+> +properties:
+> +  $nodename:
+> +    const: "/"
+> +  board-id:
+> +    $ref: /schemas/types.yaml#/definitions/uint32-matrix
+> +    description: |
+> +      A list of identifiers that can be used to match with this devicetree.
+> +      The interpretatation of each cell can be matched with the
+> +      board-id-type at the same index.
+> +
+> +  board-id-types:
+> +    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
+> +    description:
+> +      Defines the type of each cell, indicating to the DeviceTree selection
+> +      mechanism how to parse the board-id.
+> +
+> +  '#board-id-cells':
+> +    minimum: 1
 
-So the id list will be always expanding list for every last component 
-that is 2nd sourced? The ChromeOS folks are also trying to solve that 
-problem.
-
-There's a similar issue for EFI boot with how to select an OS installed 
-DTB[1]. You might not care now, but users may later on (like we have 
-already with QCom devices with fixed bootloaders). If you do this 
-board-id route, then no doubt that compatible values won't be specific 
-enough or have suitable fallbacks to be used. Then EFI boot can't use 
-compatible either and needs to use this QCom specific logic. It may be a 
-common property name, but all the types you defined are QCom specific 
-and the matching logic is pretty much undocumented. I'm not saying we 
-have to use compatible. There wasn't even agreement to use it for EFI 
-boot case. This does need to work for multiple vendors and multiple boot 
-scenarios.
+This is not how #foo-cells works. It is for provider/consumer style 
+bindings.
 
 Rob
-
-[1] https://lore.kernel.org/u-boot/20231114232012.GD6601@bill-the-cat/#r
 
