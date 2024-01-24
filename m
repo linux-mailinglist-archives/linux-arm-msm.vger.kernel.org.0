@@ -1,166 +1,326 @@
-Return-Path: <linux-arm-msm+bounces-8048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16F16839F38
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 03:34:15 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E464F83A00B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 04:24:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BC170284CE3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 02:34:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A19D2840C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 03:24:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29FA0468F;
-	Wed, 24 Jan 2024 02:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E39853B9;
+	Wed, 24 Jan 2024 03:24:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AgbnsIy8"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lLcyncgm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FEAE441B;
-	Wed, 24 Jan 2024 02:33:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08C95392;
+	Wed, 24 Jan 2024 03:24:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706063627; cv=none; b=MFxKHnJPOkOHIbdQY0MyoT7sd9ipGWaS2KLz1cFxEKRrV0r/TdejCYup0NIXBG4htPqU5krZLzkcSHy3rxN1UfbqvrvFYhN2c1PKxiRmluk92cTnkrSjBp8SLUIdSf3xzQKdV7UeNaNoHnk9L+FxJLhYTmg1IpiJ4gHv6gG5vuM=
+	t=1706066694; cv=none; b=XJnRGjqCS3WM1MiZJs1XJN5ueY3GhKFkZ1NPV4FkYpeiTq07F38+Jfl8oYeWOxD66zyARX/+TV4Ko3XapMy5YTJ3/AEU4dYa0C4MkJAvuOdTeTjfCB+gUn6jxZT/ZRkGeMvQBZOd9/qGvevhr/7LudoaLSRnGuO4yjFPyUotSR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706063627; c=relaxed/simple;
-	bh=YU9+wroalOLdMvzmldfqEmWkmf1soj4hQyRF2NROHkY=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dPjT/nStMSyZcMAECituZjfeq615qvIbD6yq30IDE5aQe+dZ3eyG8owt5bbnEjinAJ4vgxMYNIb0zGsbjmXjBNNi5njG5l6JGmYlswoYZOJjXwFybD9NOTH4LyBTJSqnVF2n3WFjTQAyjxATnKi+02g2s636NtEM/BukU3LsxHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AgbnsIy8; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40O1nulA005028;
-	Wed, 24 Jan 2024 02:33:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-type; s=qcppdkim1; bh=vfBm3wWuombKn41PnIOC
-	2MsGqxybU5Z0ee5Y/Fq3+L4=; b=AgbnsIy8hs2sBITdplhGq7vyPP8YbrQBpLsY
-	Gumx9s0bGnJVDq9xjal0jZJbdBppO9I0ji2qp0jw0zyfRpAJKrlOVkfEMCSLtnnb
-	MqpG7BDjqQCDyEQZtmm+0ATBr35AWurbKMo7uOwZMP3a82Jlb7FtjNbkR527anaq
-	8a0jn/egVujAByBrcuRoZXBCfUb0+oxt79UIrbmxAM9gxhg7FKfvx3GzGDzbKevR
-	PooZXY8gc2kcY0OAS3pUcZnlHCkHrdMRZzooU4u1KDtXsFHUixZBeMk9nkBT3keC
-	E1r9LflJ0osj0ICFYgDJz+k64EvM03JqtvdUINdK39CYmZ5Kvg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vtmhr0k0k-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Jan 2024 02:33:41 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40O2XecK011230
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Jan 2024 02:33:40 GMT
-Received: from tengfan2-gv.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 23 Jan 2024 18:33:35 -0800
-From: Tengfei Fan <quic_tengfan@quicinc.com>
-To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linus.walleij@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>, Tengfei Fan <quic_tengfan@quicinc.com>
-Subject: [PATCH 2/2] dt-bindings: pinctrl: qcom: consolidate functions
-Date: Wed, 24 Jan 2024 10:33:05 +0800
-Message-ID: <20240124023305.15755-3-quic_tengfan@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20240124023305.15755-1-quic_tengfan@quicinc.com>
-References: <20240124023305.15755-1-quic_tengfan@quicinc.com>
+	s=arc-20240116; t=1706066694; c=relaxed/simple;
+	bh=OO19hjBQfesEcdq/8aueMqCyeS0pJFWXiXzBPSArfMQ=;
+	h=Date:From:To:Cc:Subject:Message-ID; b=ULRES+v06n29HdU+0jdH/YG4+AGHEgVrhZrXzDr7nT1jMHmhAHS0vXd7kxLDr8H8/2Z2RVXf4SqzvC7r0WGBwmeTSrarz9RSAyZfcZrsVKiHzBsEogv5xlzANIezS0Z+MblCCLHzUA/71f1ND7I9Ei46nvhEXW4K6Q0lp0JbQdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lLcyncgm; arc=none smtp.client-ip=198.175.65.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1706066692; x=1737602692;
+  h=date:from:to:cc:subject:message-id;
+  bh=OO19hjBQfesEcdq/8aueMqCyeS0pJFWXiXzBPSArfMQ=;
+  b=lLcyncgmHuPX+DsKOAtYTnjCD46JNuxpBZiFSYn5tKpdWMbprqS+icwi
+   DNpiNkq+0Nm1oaGX2SY2MhKL+SG0hTj6/S6Zf7EAURs9xrJLxU9vkDnA4
+   CAeHRUtUz3Tw7Z7PR6UwSRV1S8GUP209MD8/fEWucdC0S6R6Via4ZE65A
+   2pn0u5BEyE4w4SM+00AxVZc3I8FU/eKFKsJd0M5EiHDAKqSEF6SP1YeED
+   c99cROrlr3BG66a5V1AbpNMgfMIWl10UZy06qJmRWYvako0fkJ/XEbaDN
+   g30hpvsQnqScXgx5CWAivyzhyGPOnoswIZbu7icD2gOod1GzNJupo1Jbp
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="8381509"
+X-IronPort-AV: E=Sophos;i="6.05,215,1701158400"; 
+   d="scan'208";a="8381509"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jan 2024 19:24:51 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="959366456"
+X-IronPort-AV: E=Sophos;i="6.05,215,1701158400"; 
+   d="scan'208";a="959366456"
+Received: from lkp-server01.sh.intel.com (HELO 961aaaa5b03c) ([10.239.97.150])
+  by orsmga005.jf.intel.com with ESMTP; 23 Jan 2024 19:24:48 -0800
+Received: from kbuild by 961aaaa5b03c with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1rSTsb-0007pR-27;
+	Wed, 24 Jan 2024 03:24:45 +0000
+Date: Wed, 24 Jan 2024 11:23:58 +0800
+From: kernel test robot <lkp@intel.com>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: Linux Memory Management List <linux-mm@kvack.org>,
+ dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ etnaviv@lists.freedesktop.org, kasan-dev@googlegroups.com,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-bcachefs@vger.kernel.org, linux-usb@vger.kernel.org
+Subject: [linux-next:master] BUILD REGRESSION
+ 774551425799cb5bbac94e1768fd69eec4f78dd4
+Message-ID: <202401241153.saaJ1jP1-lkp@intel.com>
+User-Agent: s-nail v14.9.24
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: EAM-BDHOUDLE6HSa_-IA-y4ZzTmrP92w
-X-Proofpoint-GUID: EAM-BDHOUDLE6HSa_-IA-y4ZzTmrP92w
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-23_15,2024-01-23_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- spamscore=0 mlxlogscore=999 mlxscore=0 bulkscore=0 phishscore=0
- malwarescore=0 adultscore=0 impostorscore=0 priorityscore=1501
- clxscore=1015 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2401190000 definitions=main-2401240018
 
-Functions are consolidated in SM4450 tlmm driver, also consolidate these
-functions in SM4450 tlmm binding file.
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
+branch HEAD: 774551425799cb5bbac94e1768fd69eec4f78dd4  Add linux-next specific files for 20240123
 
-Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
----
- .../bindings/pinctrl/qcom,sm4450-tlmm.yaml    | 51 +++++++------------
- 1 file changed, 17 insertions(+), 34 deletions(-)
+Error/Warning reports:
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml
-index bb675c8ec220..449fe442d3b2 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml
-@@ -72,40 +72,23 @@ $defs:
-         description:
-           Specify the alternative function to be configured for the specified
-           pins.
--        enum: [ gpio, atest_char, atest_char0, atest_char1, atest_char2,
--                atest_char3, atest_usb0, atest_usb00, atest_usb01, atest_usb02,
--                atest_usb03, audio_ref, cam_mclk, cci_async, cci_i2c,
--                cci_timer0, cci_timer1, cci_timer2, cci_timer3, cci_timer4,
--                cmu_rng0, cmu_rng1, cmu_rng2, cmu_rng3, coex_uart1, cri_trng,
--                cri_trng0, cri_trng1, dbg_out, ddr_bist, ddr_pxi0, ddr_pxi1,
--                dp0_hot, gcc_gp1, gcc_gp2, gcc_gp3, host2wlan_sol, ibi_i3c,
--                jitter_bist, mdp_vsync, mdp_vsync0, mdp_vsync1, mdp_vsync2,
--                mdp_vsync3, mi2s0_data0, mi2s0_data1, mi2s0_sck, mi2s0_ws,
--                mi2s2_data0, mi2s2_data1, mi2s2_sck, mi2s2_ws, mi2s_mclk0,
--                mi2s_mclk1, nav_gpio0, nav_gpio1, nav_gpio2, pcie0_clk,
--                phase_flag0, phase_flag1, phase_flag10, phase_flag11,
--                phase_flag12, phase_flag13, phase_flag14, phase_flag15,
--                phase_flag16, phase_flag17, phase_flag18, phase_flag19,
--                phase_flag2, phase_flag20, phase_flag21, phase_flag22,
--                phase_flag23, phase_flag24, phase_flag25, phase_flag26,
--                phase_flag27, phase_flag28, phase_flag29, phase_flag3,
--                phase_flag30, phase_flag31, phase_flag4, phase_flag5,
--                phase_flag6, phase_flag7, phase_flag8, phase_flag9,
--                pll_bist, pll_clk, prng_rosc0, prng_rosc1, prng_rosc2,
--                prng_rosc3, qdss_cti, qdss_gpio, qdss_gpio0, qdss_gpio1,
--                qdss_gpio10, qdss_gpio11, qdss_gpio12, qdss_gpio13, qdss_gpio14,
--                qdss_gpio15, qdss_gpio2, qdss_gpio3, qdss_gpio4, qdss_gpio5,
--                qdss_gpio6, qdss_gpio7, qdss_gpio8, qdss_gpio9, qlink0_enable,
--                qlink0_request, qlink0_wmss, qlink1_enable, qlink1_request,
--                qlink1_wmss, qlink2_enable, qlink2_request, qlink2_wmss,
--                qup0_se0, qup0_se1, qup0_se2, qup0_se3, qup0_se4, qup0_se5,
--                qup0_se6, qup0_se7, qup1_se0, qup1_se1, qup1_se2, qup1_se3,
--                qup1_se4, qup1_se5, qup1_se6, sd_write, tb_trig, tgu_ch0,
--                tgu_ch1, tgu_ch2, tgu_ch3, tmess_prng0, tmess_prng1,
--                tmess_prng2, tmess_prng3, tsense_pwm1, tsense_pwm2, uim0_clk,
--                uim0_data, uim0_present, uim0_reset, uim1_clk, uim1_data,
--                uim1_present, uim1_reset, usb0_hs, usb0_phy, vfr_0, vfr_1,
--                vsense_trigger ]
-+        enum: [ gpio, atest_char, atest_usb0, audio_ref_clk, cam_mclk,
-+                cci_async_in0, cci_i2c, cci, cmu_rng, coex_uart1_rx,
-+                coex_uart1_tx, cri_trng, dbg_out_clk, ddr_bist,
-+                ddr_pxi0_test, ddr_pxi1_test, gcc_gp1_clk, gcc_gp2_clk,
-+                gcc_gp3_clk, host2wlan_sol, ibi_i3c_qup0, ibi_i3c_qup1,
-+                jitter_bist_ref, mdp_vsync0_out, mdp_vsync1_out,
-+                mdp_vsync2_out, mdp_vsync3_out, mdp_vsync, nav,
-+                pcie0_clk_req, phase_flag, pll_bist_sync, pll_clk_aux,
-+                prng_rosc, qdss_cti_trig0, qdss_cti_trig1,  qdss_gpio,
-+                qlink0_enable, qlink0_request, qlink0_wmss_reset,
-+                qup0_se0, qup0_se1, qup0_se2, qup0_se3, qup0_se4,
-+                qup1_se0, qup1_se1, qup1_se2, qup1_se2_l2, qup1_se3,
-+                qup1_se4, sd_write_protect, tb_trig_sdc1, tb_trig_sdc2,
-+                tgu_ch0_trigout, tgu_ch1_trigout, tgu_ch2_trigout,
-+                tgu_ch3_trigout, tmess_prng, tsense_pwm1_out,
-+                tsense_pwm2_out, uim0, uim1, usb0_hs_ac, usb0_phy_ps,
-+                vfr_0_mira, vfr_0_mirb, vfr_1, vsense_trigger_mirnat ]
- 
-         required:
-           - pins
+https://lore.kernel.org/oe-kbuild-all/202401231518.8q9LD8n7-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202401240123.wBsFom3Z-lkp@intel.com
+
+Error/Warning: (recently discovered and may have been fixed)
+
+drivers/dma/at_hdmac.c:255: warning: Enum value 'ATC_IS_CYCLIC' not described in enum 'atc_status'
+drivers/dma/at_hdmac.c:255: warning: Enum value 'ATC_IS_PAUSED' not described in enum 'atc_status'
+
+Error/Warning ids grouped by kconfigs:
+
+gcc_recent_errors
+|-- arc-randconfig-r062-20240123
+|   `-- drivers-gpu-drm-etnaviv-etnaviv_drv.c:ERROR:probable-double-put.
+|-- arm-multi_v5_defconfig
+|   |-- drivers-dma-at_hdmac.c:warning:Enum-value-ATC_IS_CYCLIC-not-described-in-enum-atc_status
+|   `-- drivers-dma-at_hdmac.c:warning:Enum-value-ATC_IS_PAUSED-not-described-in-enum-atc_status
+|-- i386-randconfig-051-20240123
+|   `-- drivers-gpu-drm-etnaviv-etnaviv_drv.c:ERROR:probable-double-put.
+|-- i386-randconfig-054-20240123
+|   `-- drivers-gpu-drm-etnaviv-etnaviv_drv.c:ERROR:probable-double-put.
+|-- i386-randconfig-062-20240123
+|   |-- drivers-usb-gadget-function-f_ncm.c:sparse:sparse:incorrect-type-in-assignment-(different-base-types)-expected-unsigned-short-usertype-max_segment_size-got-restricted-__le16-usertype
+|   `-- lib-checksum_kunit.c:sparse:sparse:incorrect-type-in-argument-(different-base-types)-expected-restricted-__wsum-usertype-sum-got-unsigned-int-assigned-csum
+|-- i386-randconfig-141-20240123
+|   |-- fs-bcachefs-btree_locking.c-bch2_trans_relock()-warn:passing-zero-to-PTR_ERR
+|   |-- fs-bcachefs-buckets.c-bch2_trans_account_disk_usage_change()-error:we-previously-assumed-trans-disk_res-could-be-null-(see-line-)
+|   `-- mm-huge_memory.c-thpsize_create()-warn:Calling-kobject_put-get-with-state-initialized-unset-from-line:
+|-- microblaze-randconfig-r064-20240123
+|   `-- drivers-gpu-drm-etnaviv-etnaviv_drv.c:ERROR:probable-double-put.
+|-- microblaze-randconfig-r123-20240123
+|   `-- drivers-regulator-qcom_smd-regulator.c:sparse:sparse:symbol-smd_vreg_rpm-was-not-declared.-Should-it-be-static
+|-- mips-allyesconfig
+|   |-- (.ref.text):relocation-truncated-to-fit:R_MIPS_26-against-start_secondary
+|   `-- (.text):relocation-truncated-to-fit:R_MIPS_26-against-kernel_entry
+|-- nios2-randconfig-r052-20240123
+|   `-- drivers-gpu-drm-etnaviv-etnaviv_drv.c:ERROR:probable-double-put.
+|-- nios2-randconfig-r054-20240123
+|   `-- drivers-gpu-drm-etnaviv-etnaviv_drv.c:ERROR:probable-double-put.
+|-- openrisc-randconfig-r131-20240123
+|   `-- lib-checksum_kunit.c:sparse:sparse:incorrect-type-in-argument-(different-base-types)-expected-restricted-__wsum-usertype-csum-got-unsigned-int-assigned-csum
+|-- sh-randconfig-r133-20240123
+|   `-- lib-checksum_kunit.c:sparse:sparse:incorrect-type-in-argument-(different-base-types)-expected-restricted-__wsum-usertype-sum-got-unsigned-int-assigned-csum
+|-- x86_64-randconfig-101-20240123
+|   `-- drivers-gpu-drm-etnaviv-etnaviv_drv.c:ERROR:probable-double-put.
+|-- x86_64-randconfig-102-20240123
+|   `-- drivers-gpu-drm-etnaviv-etnaviv_drv.c:ERROR:probable-double-put.
+`-- x86_64-randconfig-161-20240123
+    |-- mm-huge_memory.c-thpsize_create()-warn:Calling-kobject_put-get-with-state-initialized-unset-from-line:
+    |-- mm-kasan-kasan_test.c-mempool_double_free_helper()-error:double-free-of-elem
+    `-- mm-kasan-kasan_test.c-mempool_uaf_helper()-warn:passing-freed-memory-elem
+clang_recent_errors
+|-- x86_64-randconfig-121-20240123
+|   `-- lib-checksum_kunit.c:sparse:sparse:incorrect-type-in-argument-(different-base-types)-expected-restricted-__wsum-usertype-csum-got-unsigned-int-assigned-csum
+`-- x86_64-randconfig-r132-20240123
+    `-- lib-checksum_kunit.c:sparse:sparse:incorrect-type-in-argument-(different-base-types)-expected-restricted-__wsum-usertype-csum-got-unsigned-int-assigned-csum
+
+elapsed time: 1483m
+
+configs tested: 177
+configs skipped: 3
+
+tested configs:
+alpha                             allnoconfig   gcc  
+alpha                            allyesconfig   gcc  
+alpha                               defconfig   gcc  
+arc                              allmodconfig   gcc  
+arc                               allnoconfig   gcc  
+arc                              allyesconfig   gcc  
+arc                                 defconfig   gcc  
+arc                   randconfig-001-20240123   gcc  
+arc                   randconfig-002-20240123   gcc  
+arm                              allmodconfig   gcc  
+arm                               allnoconfig   gcc  
+arm                              allyesconfig   gcc  
+arm                       aspeed_g5_defconfig   gcc  
+arm                                 defconfig   clang
+arm                          ixp4xx_defconfig   clang
+arm                            mps2_defconfig   gcc  
+arm                        mvebu_v7_defconfig   gcc  
+arm                          pxa910_defconfig   gcc  
+arm                   randconfig-001-20240123   gcc  
+arm                   randconfig-002-20240123   gcc  
+arm                   randconfig-003-20240123   gcc  
+arm                   randconfig-004-20240123   gcc  
+arm                       versatile_defconfig   clang
+arm64                            allmodconfig   clang
+arm64                             allnoconfig   gcc  
+arm64                               defconfig   gcc  
+arm64                 randconfig-001-20240123   gcc  
+arm64                 randconfig-002-20240123   gcc  
+arm64                 randconfig-003-20240123   gcc  
+arm64                 randconfig-004-20240123   gcc  
+csky                             allmodconfig   gcc  
+csky                              allnoconfig   gcc  
+csky                             allyesconfig   gcc  
+csky                                defconfig   gcc  
+csky                  randconfig-001-20240123   gcc  
+csky                  randconfig-002-20240123   gcc  
+hexagon                          allmodconfig   clang
+hexagon                           allnoconfig   clang
+hexagon                          allyesconfig   clang
+hexagon                             defconfig   clang
+hexagon               randconfig-001-20240123   clang
+hexagon               randconfig-002-20240123   clang
+i386                             allmodconfig   clang
+i386                              allnoconfig   clang
+i386                             allyesconfig   clang
+i386         buildonly-randconfig-001-20240123   gcc  
+i386         buildonly-randconfig-002-20240123   gcc  
+i386         buildonly-randconfig-003-20240123   gcc  
+i386         buildonly-randconfig-004-20240123   gcc  
+i386         buildonly-randconfig-005-20240123   gcc  
+i386         buildonly-randconfig-006-20240123   gcc  
+i386                                defconfig   gcc  
+i386                  randconfig-001-20240123   gcc  
+i386                  randconfig-002-20240123   gcc  
+i386                  randconfig-003-20240123   gcc  
+i386                  randconfig-004-20240123   gcc  
+i386                  randconfig-005-20240123   gcc  
+i386                  randconfig-006-20240123   gcc  
+i386                  randconfig-011-20240123   clang
+i386                  randconfig-012-20240123   clang
+i386                  randconfig-013-20240123   clang
+i386                  randconfig-014-20240123   clang
+i386                  randconfig-015-20240123   clang
+i386                  randconfig-016-20240123   clang
+loongarch                        allmodconfig   gcc  
+loongarch                         allnoconfig   gcc  
+loongarch                           defconfig   gcc  
+loongarch             randconfig-001-20240123   gcc  
+loongarch             randconfig-002-20240123   gcc  
+m68k                             allmodconfig   gcc  
+m68k                              allnoconfig   gcc  
+m68k                             allyesconfig   gcc  
+m68k                                defconfig   gcc  
+microblaze                       allmodconfig   gcc  
+microblaze                        allnoconfig   gcc  
+microblaze                       allyesconfig   gcc  
+microblaze                          defconfig   gcc  
+mips                              allnoconfig   clang
+mips                             allyesconfig   gcc  
+mips                     cu1830-neo_defconfig   clang
+mips                       lemote2f_defconfig   gcc  
+mips                        omega2p_defconfig   clang
+nios2                            allmodconfig   gcc  
+nios2                             allnoconfig   gcc  
+nios2                            allyesconfig   gcc  
+nios2                               defconfig   gcc  
+nios2                 randconfig-001-20240123   gcc  
+nios2                 randconfig-002-20240123   gcc  
+openrisc                          allnoconfig   gcc  
+openrisc                         allyesconfig   gcc  
+openrisc                            defconfig   gcc  
+parisc                           allmodconfig   gcc  
+parisc                            allnoconfig   gcc  
+parisc                           allyesconfig   gcc  
+parisc                              defconfig   gcc  
+parisc                generic-64bit_defconfig   gcc  
+parisc                randconfig-001-20240123   gcc  
+parisc                randconfig-002-20240123   gcc  
+parisc64                            defconfig   gcc  
+powerpc                          allmodconfig   clang
+powerpc                           allnoconfig   gcc  
+powerpc                          allyesconfig   clang
+powerpc                      katmai_defconfig   clang
+powerpc                 mpc832x_rdb_defconfig   clang
+powerpc               randconfig-001-20240123   gcc  
+powerpc               randconfig-002-20240123   gcc  
+powerpc               randconfig-003-20240123   gcc  
+powerpc64             randconfig-001-20240123   gcc  
+powerpc64             randconfig-002-20240123   gcc  
+powerpc64             randconfig-003-20240123   gcc  
+riscv                            allmodconfig   gcc  
+riscv                             allnoconfig   clang
+riscv                            allyesconfig   gcc  
+riscv                               defconfig   gcc  
+riscv                 randconfig-001-20240123   gcc  
+riscv                 randconfig-002-20240123   gcc  
+s390                             allmodconfig   gcc  
+s390                              allnoconfig   gcc  
+s390                             allyesconfig   gcc  
+s390                                defconfig   gcc  
+s390                  randconfig-001-20240123   clang
+s390                  randconfig-002-20240123   clang
+sh                               allmodconfig   gcc  
+sh                                allnoconfig   gcc  
+sh                               allyesconfig   gcc  
+sh                                  defconfig   gcc  
+sh                    randconfig-001-20240123   gcc  
+sh                    randconfig-002-20240123   gcc  
+sh                           se7206_defconfig   gcc  
+sh                           sh2007_defconfig   gcc  
+sh                   sh7724_generic_defconfig   gcc  
+sparc                            allmodconfig   gcc  
+sparc64                          allmodconfig   gcc  
+sparc64                          allyesconfig   gcc  
+sparc64                             defconfig   gcc  
+sparc64               randconfig-001-20240123   gcc  
+sparc64               randconfig-002-20240123   gcc  
+um                               allmodconfig   clang
+um                                allnoconfig   clang
+um                               allyesconfig   clang
+um                                  defconfig   gcc  
+um                             i386_defconfig   gcc  
+um                    randconfig-001-20240123   gcc  
+um                    randconfig-002-20240123   gcc  
+um                           x86_64_defconfig   gcc  
+x86_64                            allnoconfig   gcc  
+x86_64                           allyesconfig   clang
+x86_64       buildonly-randconfig-001-20240123   gcc  
+x86_64       buildonly-randconfig-002-20240123   gcc  
+x86_64       buildonly-randconfig-003-20240123   gcc  
+x86_64       buildonly-randconfig-004-20240123   gcc  
+x86_64       buildonly-randconfig-005-20240123   gcc  
+x86_64       buildonly-randconfig-006-20240123   gcc  
+x86_64                              defconfig   gcc  
+x86_64                randconfig-001-20240123   clang
+x86_64                randconfig-002-20240123   clang
+x86_64                randconfig-003-20240123   clang
+x86_64                randconfig-004-20240123   clang
+x86_64                randconfig-005-20240123   clang
+x86_64                randconfig-006-20240123   clang
+x86_64                randconfig-011-20240123   gcc  
+x86_64                randconfig-012-20240123   gcc  
+x86_64                randconfig-013-20240123   gcc  
+x86_64                randconfig-014-20240123   gcc  
+x86_64                randconfig-015-20240123   gcc  
+x86_64                randconfig-016-20240123   gcc  
+x86_64                randconfig-071-20240123   gcc  
+x86_64                randconfig-072-20240123   gcc  
+x86_64                randconfig-073-20240123   gcc  
+x86_64                randconfig-074-20240123   gcc  
+x86_64                randconfig-075-20240123   gcc  
+x86_64                randconfig-076-20240123   gcc  
+x86_64                          rhel-8.3-rust   clang
+xtensa                            allnoconfig   gcc  
+xtensa                randconfig-001-20240123   gcc  
+xtensa                randconfig-002-20240123   gcc  
+xtensa                         virt_defconfig   gcc  
+
 -- 
-2.17.1
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
