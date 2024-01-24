@@ -1,229 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-8103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E1D583A437
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 09:34:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B22183A47A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 09:46:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 531DD1C2154F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 08:34:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3D8A91C21696
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jan 2024 08:46:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7B1D1773F;
-	Wed, 24 Jan 2024 08:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47977179AA;
+	Wed, 24 Jan 2024 08:46:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MkQRGVg5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="E7vTlQn9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC58E1759E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 08:33:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9168217995
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 08:46:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706085228; cv=none; b=CmRXwHAOcZKMJDa0nN26qI/mQ2yTEzRYj3hiTkHtHlcGPb39SWconXGex+VGa/J9qND+NY6gjLs8+i3aig0xb+VDEt8QBgPnCaztZa2ZBmRkW7kHAEeXakLOuXefFV4oMiUdXuTjtcoXxroc1Rg1ePUbU5agJKTsGNU3eKt9S1Y=
+	t=1706085992; cv=none; b=E2w3L1Plpaw2Wb9jntmO96nGebCwy+PVtie2qoZKow9Ihi2LqNKeT1lQI4/3dICuk2uTgFCY8+CcDIjlYf1kO9CdfySiM5brRITVRDV0EYTY6J1336J8bp4WNLXlthvTiD67kuGiQ/Nqepa3S6LMJEHaXnMOUjSse3lB/oz6TvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706085228; c=relaxed/simple;
-	bh=PX2GmyFRFn2nD4mNi7u/AP+PYTUtYKCoSLnLW+0R0YM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C0YU2QWkqjqXGp+y1L113y/f3TYNzA8kT/50E73RmDgP6l0SfejsPRzrp7/NyggSMU397T8UCi1Ug2nTMUVR9lgClTImB+x9RcXc+1u+cKmlDoGRpNF9yspoAMdqaWGKz2pB9+upSIqZwTpk2YmVWL1W9PjJVT7roWwP/HiMEzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MkQRGVg5; arc=none smtp.client-ip=209.85.214.178
+	s=arc-20240116; t=1706085992; c=relaxed/simple;
+	bh=dPFBpySFU+F52QWcLga/qfjL4CPw/XvC7r0klQNCxqo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=H6bsOu+Li66e/6yM/gsfXO2WBawE5vtaUFwfbnr1u6DNgUAH4kYGWZx2C2fN8t6zUd+r5oZG0HmvHiF7X+W0jAP3TV4BjrWQhWSV1Cirf0mEdacGLQKTdPMtE56/q3YVeg5gfP+QnE1NlAFDIlqpnQx7r1GJ6ltvNtv69mbXSGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=E7vTlQn9; arc=none smtp.client-ip=209.85.218.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-1d720c7fc04so29250355ad.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 00:33:45 -0800 (PST)
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a28a6cef709so526558266b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jan 2024 00:46:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706085225; x=1706690025; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=vPFRER/gkE3zm2pQ/KTOV3I0e5WTpUXpU3iwr5G1xwY=;
-        b=MkQRGVg5KQaz8kO59PpfA1JkXBGB+nRarrD0otaJNQwrXkUYP4UsublGyFlbOLJ0SV
-         8rvhey5drE9RT3lwh11Bssl7yNz2ebtbOYupPBxCxLn2xzoBa0UaynOIhp2T7VoV3NWw
-         4iMTbUJa9w/2CLlsFasCy45KYFExpTx8hjIlPlRafIYvcE2JpJmE5lnuHrlBMlGr8Esh
-         9pcsx+Z2BB807HPSR3hdCc0tH99AW8wqZ53mWe82ZnvQNte5vLYD5jih710m3PkAFbre
-         BDQsn89NfttpdwaL/wXG00azs+bepMZxEIYQvxR1iZQXuObOZ7Rcjqggtej3zzYMiBmT
-         dIyA==
+        d=linaro.org; s=google; t=1706085989; x=1706690789; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=M2ft88QIQ5ZBxMJ6XwQH+0caS7K/lXwIMIK+59kmVjg=;
+        b=E7vTlQn9+NnxUpotCzeR59DlFOV5dPJETeODWq40GpwGyRCkKdglNm1hl9CFPPwIg9
+         lQG5iIYGmO43qVPcy9qWDp6pc9QPO11huzZ4J5uvzghAZzAksGtiTWF6RloinhLIQHV3
+         Y74M3IoMtDMCsF2EaYu7NuwJKFbnZbo3d/0cpbn3ec3ZdZstNKEMiros/2Bx3q6XMwM6
+         OqD4dOBohdAusB+FPteSf4MBEeOxAPa2fcaeUHzPCCAEJwQApPtXKsiHUKONedis+hLM
+         4LM7bFlhlSBhg7x55LMaHLxk6vwc8whD2ZFeZaPrJKzZ1wBIdbLkNrWS7xno9hIWMeCk
+         +xQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706085225; x=1706690025;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1706085989; x=1706690789;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vPFRER/gkE3zm2pQ/KTOV3I0e5WTpUXpU3iwr5G1xwY=;
-        b=F7EmlddHpiE2jIu2c3qYo0Ik726LBpb0Y8rmMJaoOANSQDV+SZ9upwShZl57WfX98n
-         79jIOnJofjKTHrIjvFfyReTm5iwh3IXt/a9oASbk/3NqFn2eP/5ZIRIQ6+4HFO3OFt6S
-         AHR7CDoxqh0QUoKG1dq4bKDMsEQQDCfKsK48FANnMT72XDZRJ8o6Rn0YBuGM1CHfPTZF
-         YjkDicYpfnjRq78KJ/VLT0qI4Y03qY3OBlDBn9BXPO0Xz4k45+V0AgMuJO3yh31aqhqG
-         5c/ySfmULZPwRwPnP/ey4EocT/wn6wVl0nGKZXQqwtNj+y9hm295IkulZsPM9TR36/F2
-         zaNA==
-X-Gm-Message-State: AOJu0YxPb/FrapPwzbWeGGPFlMSoP/by+YAIWYvKrccuxRTfwhVYuGjl
-	VDh2yEGzvlgJUd7mOJtsYoVMibxj9WHSNda0Glf7B07MDPQw/b8Z92EW0kuBlw==
-X-Google-Smtp-Source: AGHT+IHAMGkA6E3jdrT6it59P0NjlIeY0P9GAB/kSyKZfIcGyYzIgZ45Z1bjWpdQtj9CnzDYvvwFFg==
-X-Received: by 2002:a17:902:da84:b0:1d6:f2c0:3c00 with SMTP id j4-20020a170902da8400b001d6f2c03c00mr436044plx.16.1706085225158;
-        Wed, 24 Jan 2024 00:33:45 -0800 (PST)
-Received: from thinkpad ([117.217.189.109])
-        by smtp.gmail.com with ESMTPSA id r19-20020a170903015300b001d741effb7dsm5373688plc.270.2024.01.24.00.33.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Jan 2024 00:33:44 -0800 (PST)
-Date: Wed, 24 Jan 2024 14:03:36 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Nitin Rawat <quic_nitirawa@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org,
-	Can Guo <quic_cang@quicinc.com>,
-	Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-Subject: Re: [PATCH V1 2/2] phy: qcom: Refactor phy_power_on and
- phy_calibrate callbacks
-Message-ID: <20240124083336.GB4906@thinkpad>
-References: <20240112153348.2778-1-quic_nitirawa@quicinc.com>
- <20240112153348.2778-3-quic_nitirawa@quicinc.com>
+        bh=M2ft88QIQ5ZBxMJ6XwQH+0caS7K/lXwIMIK+59kmVjg=;
+        b=NCeK8/HFMrLWWsaKgFxjgVfkFz5dhrsneuibyLnmkMFyh1mWzwVl0jEqQRfxLrAHZJ
+         /4GVo4TL+BPzmi8u4YSqAvtev0r8UjCEoytIvoC4AVP56Pdui5Cr7Or7e9tcSv0Z/jm2
+         /XeFI1ZAemaYlEwyYYTu9y0Nm1nClSDE20D6eqL2FQRWBfbpsn7U7HTd35pxiyKB3y9s
+         nVpyMUP6OzsdUQRIEMEFt6QTH+L9yokRLOBc8M5GiXzHPluTZ+FCtqb+t3xVqdSFZN3f
+         AqmFcp4dHP9f0VSugr4HN4oODPao6nzqN7Wt/v0QgO6nnS74aS9/EQg4l5tabOe/LaJe
+         mHQA==
+X-Gm-Message-State: AOJu0YyIBUJBCCF+D5jWDMgzNZGVYSmcQtzrDA58YnOG17Yscfv1dEXA
+	vM/pohhH+7JxS2LQ8JDpPoDREYz2bHRCStMcXfGC2CHEofmHfSbyZl/CsW7nT54=
+X-Google-Smtp-Source: AGHT+IGu7R91gLpuMOXByNh+unsLgnvxpr7xFo/lXx159xDTu5ANGnqD67UF5kZNcEm/+wd1FiIPcQ==
+X-Received: by 2002:a17:906:c016:b0:a27:d14b:215 with SMTP id e22-20020a170906c01600b00a27d14b0215mr613258ejz.98.1706085988786;
+        Wed, 24 Jan 2024 00:46:28 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.215.66])
+        by smtp.gmail.com with ESMTPSA id tj4-20020a170907c24400b00a311082cd00sm518950ejc.37.2024.01.24.00.46.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Jan 2024 00:46:28 -0800 (PST)
+Message-ID: <8b730cb5-871f-47b8-9abd-d8f39d3b8ec6@linaro.org>
+Date: Wed, 24 Jan 2024 09:46:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240112153348.2778-3-quic_nitirawa@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: modify the wrong
+ compatible name
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, linus.walleij@linaro.org, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20240124023305.15755-1-quic_tengfan@quicinc.com>
+ <20240124023305.15755-2-quic_tengfan@quicinc.com>
+ <88e8cffb-024d-4f4d-ba1f-e0be9ee85e31@linaro.org>
+ <CAA8EJpqXS97FXoTwiLaSeHHEDOeBFRPRbCNR6WF-ArDm22tu-Q@mail.gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <CAA8EJpqXS97FXoTwiLaSeHHEDOeBFRPRbCNR6WF-ArDm22tu-Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jan 12, 2024 at 09:03:48PM +0530, Nitin Rawat wrote:
-> Commit 052553af6a31 ("ufs/phy: qcom: Refactor to use phy_init call")
-> puts enabling regulators & clks, calibrating UFS PHY, starting serdes
-> and polling PCS ready status into phy_power_on.
+On 24/01/2024 09:07, Dmitry Baryshkov wrote:
+> On Wed, 24 Jan 2024 at 08:38, Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>>
+>> On 24/01/2024 03:33, Tengfei Fan wrote:
+>>> Use right compatible name "qcom,sm4450-tlmm" instead of
+>>> "qcom,sm4450-pinctrl".
+>>
+>> Why do you claim this one is right and other is wrong? Provide
+>> arguments. To me the compatible looks correct.
 > 
-> In Current code regulators enable, clks enable, calibrating UFS PHY,
-> start_serdes and polling PCS_ready_status are part of phy_power_on.
-> 
-> UFS PHY registers are retained after power collapse, meaning calibrating
-> UFS PHY, start_serdes and polling PCS_ready_status can be done only when
-> hba is powered_on, and not needed every time when phy_power_on is called
-> during resume. Hence keep the code which enables PHY's regulators & clks
-> in phy_power_on and move the rest steps into phy_calibrate function.
-> 
-> Refactor the code to enable PHY regulators & clks in phy_power_on and
-> move rest of the code to phy_calibrate function.
-> 
+> Yeah, but the driver (and the dtsi) use -tlmm
 
-This patch should come before UFS patch since you are introducing the
-calibrate() callback here only.
+Are they merged? If so, it would be the argument for the commit msg.
+Just provide some rationale why this is done this way, not the other
+(fixing driver and DTS).
 
-> Co-developed-by: Can Guo <quic_cang@quicinc.com>
-> Signed-off-by: Can Guo <quic_cang@quicinc.com>
-> Co-developed-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-> Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 183 +++++++++---------------
->  1 file changed, 67 insertions(+), 116 deletions(-)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> index 3c2e6255e26f..ae0218738b0b 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> @@ -32,14 +32,15 @@
->  /* QPHY_SW_RESET bit */
->  #define SW_RESET				BIT(0)
->  /* QPHY_POWER_DOWN_CONTROL */
-> -#define SW_PWRDN				BIT(0)
-> +#define SW_PWRUP				BIT(0)
-> +#define SW_PWRDN				0
+Best regards,
+Krzysztof
 
-Why 0?
-
->  /* QPHY_START_CONTROL bits */
->  #define SERDES_START				BIT(0)
->  #define PCS_START				BIT(1)
->  /* QPHY_PCS_READY_STATUS bit */
->  #define PCS_READY				BIT(0)
-> 
-> -#define PHY_INIT_COMPLETE_TIMEOUT		10000
-> +#define PHY_INIT_COMPLETE_TIMEOUT		1000000
-
-Why? This is not mentioned in the commit message. If it is not related to this
-refactoring, then it should be a separate patch with justification.
-
-> 
->  struct qmp_phy_init_tbl {
->  	unsigned int offset;
-> @@ -1464,8 +1465,25 @@ static void qmp_ufs_init_registers(struct qmp_ufs *qmp, const struct qmp_phy_cfg
->  		qmp_ufs_pcs_init(qmp, &cfg->tbls_hs_g4);
->  }
-> 
-> -static int qmp_ufs_com_init(struct qmp_ufs *qmp)
-> +static int qmp_ufs_power_off(struct phy *phy)
-> +{
-> +	struct qmp_ufs *qmp = phy_get_drvdata(phy);
-> +	const struct qmp_phy_cfg *cfg = qmp->cfg;
-> +
-> +	/* Put PHY into POWER DOWN state: active low */
-> +	qphy_clrbits(qmp->pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
-> +			SW_PWRDN);
-> +
-> +	clk_bulk_disable_unprepare(cfg->num_clks, qmp->clks);
-> +
-> +	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
-> +
-> +	return 0;
-> +}
-> +
-> +static int qmp_ufs_power_on(struct phy *phy)
->  {
-> +	struct qmp_ufs *qmp = phy_get_drvdata(phy);
->  	const struct qmp_phy_cfg *cfg = qmp->cfg;
->  	void __iomem *pcs = qmp->pcs;
->  	int ret;
-> @@ -1480,8 +1498,7 @@ static int qmp_ufs_com_init(struct qmp_ufs *qmp)
->  	if (ret)
->  		goto err_disable_regulators;
-> 
-> -	qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL], SW_PWRDN);
-> -
-> +	qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL], SW_PWRUP);
-
-Newline please. As mentioned above, why can't you use existing SW_PWRDN macro.
-
->  	return 0;
-> 
->  err_disable_regulators:
-> @@ -1490,61 +1507,7 @@ static int qmp_ufs_com_init(struct qmp_ufs *qmp)
->  	return ret;
->  }
-> 
-
-[...]
-
-> +static int qmp_ufs_get_phy_reset(struct qmp_ufs *qmp)
-> +{
-> +	const struct qmp_phy_cfg *cfg = qmp->cfg;
-> +	int ret;
-> +
-> +	if (!cfg->no_pcs_sw_reset)
-> +		return 0;
-> +
-> +	/*
-> +	 * Get UFS reset, which is delayed until now to avoid a
-> +	 * circular dependency where UFS needs its PHY, but the PHY
-> +	 * needs this UFS reset.
-> +	 */
-> +
-> +	qmp->ufs_reset = devm_reset_control_get_exclusive(qmp->dev,
-> +							  "ufsphy");
-
-You have moved this to probe from power_on() without any justification. What
-about the circular dependency mentioned in the comment.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
 
