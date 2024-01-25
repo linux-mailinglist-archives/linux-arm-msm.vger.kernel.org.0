@@ -1,147 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-8258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D195583C349
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 14:08:35 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B32E83C376
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 14:19:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 81836292AE2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 13:08:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A0CD71C2376E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 13:19:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3D4158115;
-	Thu, 25 Jan 2024 13:06:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6EB64F8A6;
+	Thu, 25 Jan 2024 13:19:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ksk4o+Cd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ClJ8Nmz5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA8455795
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 13:06:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B2750A76
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 13:19:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706188004; cv=none; b=gSupyO1GEQo0fjeN1yabftLTII171O8rmkPUShDHsLG82pzHsMKy0HEsmdlN1C0mQEzYZEfTkL2gewAUGoVEDNv0CTC+ss7Dvxev4H2g5F/l7FTc+jJOe3D2qKUt94x3b7sj/wkKwFIBNIFEVbml1CFKkWv5ZeBG7lUU7+neQm0=
+	t=1706188752; cv=none; b=dbcZYs0cgJ1QoL29FvecUA7EUODdVtaukGC9pYM4hS6pOEWMCrHsfea9EUy7E0TbjyAES8pGh9iZwwNHjmxgbYmGiFz7OO82l0AgfJhPeukeOkL48uB58rwmRstvkQ2P709LIsv2q6uWSzbYMGH8JrXNIuSnmBsJGND/KaCsHRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706188004; c=relaxed/simple;
-	bh=Vm8FYWkCbiN6pEEwfgqVnqgx6X6dabUYF1SQcOeQgi4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Bn+SW0LqDT9zoB8D+uo8Rt2fbnmkld0aA29V0LKZPkxjSPi0U7CV76qyUV0Jhs5lycHmbzP1zr6JjeODoMSXbzsj9/lLqvm8kG1v/eA9TNQbMevfhPajzM+tXsoojKpvC6hU41QdSMYRRIcK1y62L0bY6rLzrAfSlJoH8ZGcbbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ksk4o+Cd; arc=none smtp.client-ip=209.85.208.48
+	s=arc-20240116; t=1706188752; c=relaxed/simple;
+	bh=8ZwYMGT29+2aOw1eN9EP3kUeI/wEb4MnmErpaR8lCeM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AKCn1c8jfjuYgrpM7UJvAY/gOh+e+++BijEw5fj2OOWJElVKYz11Xd7syvkHg5H1xSfY3FjUpCOAZp0AOYgI4DuukIIE0NluhwXLamflD4EmDnimhWQcCVTi7T+SBHNsOJQ2tt4UpxtGeMEMqw0tkBVtzKQoRHhLlBizmPUEkrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ClJ8Nmz5; arc=none smtp.client-ip=209.85.219.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-558f523c072so7995610a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 05:06:42 -0800 (PST)
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-dc226dca91aso6327282276.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 05:19:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706188001; x=1706792801; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Hz4UOUwLaTrVZVjKRBIuuQV1CZ1n1JSNcVoZKpZXtzg=;
-        b=Ksk4o+CdSuwqgXZZ1vMSQQhoXKBocWFevZyu4NuT9i3uFKhB5ZquGNzcHPZMjuTfW7
-         UepuOrSB+CKGVq/Lg6tb2Jq22em++JBoBQrxUqWKF96MB8H/bp1T9iB7CCWd6TBq33cP
-         Rqz3Y+Dn+ySFKmNKR5axj7BB/pXlkdRvPX5jdrjH2VcCsvwNihDtxS0zRH0ty7HlRpPX
-         Obqk9BnOcmA2WM1fInPh/ANB0u2bYGUr5c+9+UCZ/bJYAZHnoVHmdKH3q/NcYevxso+a
-         y1TXk3BSUUQWvR2pjBFZqvTbZF7zqLwo8zUb/na514yY0GolgvoCcRrSW2CTJY6z7NoI
-         0NyQ==
+        d=linaro.org; s=google; t=1706188749; x=1706793549; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=13Rb80VOvvaXUse1uPuWqVFXOg9vSOw6wfFVQXf5Clw=;
+        b=ClJ8Nmz5ID7ZPKnkX5f5vXSnMoNUpuLYcmlEeJ+CeAYt5Bo3PEFQMcX8HHUZT+YZKj
+         f8phtNVxvy7IK7/xDhW2lbUjBLmhhkFbpLv64FC5+jzIbKx3oX3Szf9G782iqaAB0wsG
+         Oy92RETYDBJYX0utrKKlvj9kOvQvZPuZR3q5mPuixqpF4SjmzDfV7BemwjRtoKCfxwrL
+         z5HW9AUXavSHmT30rO/K3b20+666aC3qVwl1rJc5yL14DI4ef3dNK0y7EGvY65+EyyNG
+         leLX6HzlHmX/OaO4jv77pCyyK4c5aDtBi8Tp2JS3hEIEUDwXAoGYUNaziOR9dbukQv/M
+         nP4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706188001; x=1706792801;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Hz4UOUwLaTrVZVjKRBIuuQV1CZ1n1JSNcVoZKpZXtzg=;
-        b=CWrVKM31eI7is24l9zCMqEih2bzyijYWbOC99Hn/TQSrrqpi++KO9rFLYS35djL9R6
-         qxvY+efFg6lVbTytf5dHU69PpBp8Cifux4Mflo/64suhSz5rXi6JsJCczkvLgt5GZXXL
-         uPqxdSRFRind9LefjXb+FjynNTkZY5O0y1AgXf+3hDzkskZUtNCip18K1WrWinMeDgg4
-         vS/LgsHtGrPK1ReuK6Yo8Nq4l6Mby6Jxj/QsOGpIQ4wGGPfO0fEzQ88QvhLfC/tYBlxC
-         s0594ilRqa/oTFvsbxxmBSPZ/2ZZK8r3cP2D5yrub49sWvSyywG9NU64b7m0yTKwfxSz
-         Orsw==
-X-Gm-Message-State: AOJu0Yx3ynGefKWX74nzeNcjNVSHZFZU6w6LhXWoKA0MB9umb5GahWk5
-	jdGEqn3ah21AAdcldKayxnf5CZaHxeextZ4/2jD95xml6AX93sbAG1ch+tp3+YM=
-X-Google-Smtp-Source: AGHT+IHm6+LA7xKQVSTlAszsDlUkRYqXhWF42y0uqkcwpk8+pO6DRmRsYDU9XLKhjy6W3WVccCpC/Q==
-X-Received: by 2002:a50:99de:0:b0:55c:fd62:18a4 with SMTP id n30-20020a5099de000000b0055cfd6218a4mr283034edb.82.1706188001502;
-        Thu, 25 Jan 2024 05:06:41 -0800 (PST)
-Received: from krzk-bin.. ([178.197.215.66])
-        by smtp.gmail.com with ESMTPSA id ig1-20020a056402458100b0055ca5ce62ddsm1873315edb.12.2024.01.25.05.06.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jan 2024 05:06:40 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 6/6] arm64: dts: qcom: sm8650: describe all PCI MSI interrupts
-Date: Thu, 25 Jan 2024 14:06:26 +0100
-Message-Id: <20240125130626.390850-6-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240125130626.390850-1-krzysztof.kozlowski@linaro.org>
-References: <20240125130626.390850-1-krzysztof.kozlowski@linaro.org>
+        d=1e100.net; s=20230601; t=1706188749; x=1706793549;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=13Rb80VOvvaXUse1uPuWqVFXOg9vSOw6wfFVQXf5Clw=;
+        b=gk+7J7lOkjqbPJGefl0Rh7u/aaTsTslhaEm+AQHs/aNIESQWeX/JTu1XOQ+16MShCN
+         tw7MZjQZdLhWQauWqF0uGz3Z6z6583NaG8IqI3I7v3Lw7Lp+ckkKqJUqIyPFAE0+o02w
+         BSeMIQNbHBRaKaHjPiFE84NpcwROMJltaeSSyXqC04iAzCqVf9gF2KOKgq3zwT0UtrzD
+         stXHPuHGlurYQwsn1S2eA9e/a2B0Av3CIlKlm9rvxO7vCcWS5lDKFqErFHGq9DmYCdUt
+         7bAEPKm5Fv3mMcxhTb6fjj9rTP2zwPDRJN2gLOX5L4rVdv1cPpcXzmw6enEfKgxeyCEl
+         daXg==
+X-Gm-Message-State: AOJu0YwnqzOyAgfUMZvTH8EaEuFKzsSsa+virLVchX2pzQKQQmUDYsTm
+	ahNUbLWHlQpoaWcZMqCeY+Wid/eupvaR1uPW0/V7eX4Lcd9ZkF8IUhvrQ1nQaI7EMm96DfVqZBm
+	1PhXxVrTo971aH5l5VfTxT0uK89Cokpu0NK3oZA==
+X-Google-Smtp-Source: AGHT+IFsnb98+co8kdXhhrvZvf7JpU2va+eR8/Qjp+9lVnk0u3xiBR+WFtOcK5UiEHgsksEzWXz8zTLqItdwAHLViaw=
+X-Received: by 2002:a5b:682:0:b0:dc2:8282:8893 with SMTP id
+ j2-20020a5b0682000000b00dc282828893mr650947ybq.127.1706188748827; Thu, 25 Jan
+ 2024 05:19:08 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240125130626.390850-1-krzysztof.kozlowski@linaro.org> <20240125130626.390850-2-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20240125130626.390850-2-krzysztof.kozlowski@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 25 Jan 2024 15:18:57 +0200
+Message-ID: <CAA8EJprfhZ3m6aKcPsQMAUjDFPPeqN_L-E6Tz604pYJqgSvDZA@mail.gmail.com>
+Subject: Re: [PATCH 2/6] arm64: dts: qcom: sm8250: describe all PCI MSI interrupts
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Each group of MSI interrupts is mapped to the separate host interrupt.
-Describe each of interrupts in the device tree for PCIe hosts.  Not
-tested on hardware.
+On Thu, 25 Jan 2024 at 15:07, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> Each group of MSI interrupts is mapped to the separate host interrupt.
+> Describe each of interrupts in the device tree for PCIe hosts.  Not
+> tested on hardware.
+>
+> PCIe0 was done already in commit f2819650aab5 ("arm64: dts: qcom:
+> sm8250: provide additional MSI interrupts").
+>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi | 24 ++++++++++++++++++++----
+>  1 file changed, 20 insertions(+), 4 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> index 760501c1301a..41f5e6eb2f6b 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> @@ -2248,8 +2248,16 @@ pcie1: pcie@1c08000 {
+>                         ranges = <0x01000000 0x0 0x00000000 0x0 0x40200000 0x0 0x100000>,
+>                                  <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x1fd00000>;
+>
+> -                       interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>;
+> -                       interrupt-names = "msi";
+> +                       interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>,
+> +                                    <GIC_SPI 308 IRQ_TYPE_LEVEL_HIGH>,
+> +                                    <GIC_SPI 309 IRQ_TYPE_LEVEL_HIGH>,
+> +                                    <GIC_SPI 312 IRQ_TYPE_LEVEL_HIGH>,
+> +                                    <GIC_SPI 313 IRQ_TYPE_LEVEL_HIGH>,
+> +                                    <GIC_SPI 314 IRQ_TYPE_LEVEL_HIGH>,
+> +                                    <GIC_SPI 374 IRQ_TYPE_LEVEL_HIGH>,
+> +                                    <GIC_SPI 375 IRQ_TYPE_LEVEL_HIGH>;
+> +                       interrupt-names = "msi0", "msi1", "msi2", "msi3",
+> +                                         "msi4", "msi5", "msi6", "msi7";
+>                         #interrupt-cells = <1>;
+>                         interrupt-map-mask = <0 0 0 0x7>;
+>                         interrupt-map = <0 0 0 1 &intc 0 434 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
+> @@ -2349,8 +2357,16 @@ pcie2: pcie@1c10000 {
+>                         ranges = <0x01000000 0x0 0x00000000 0x0 0x64200000 0x0 0x100000>,
+>                                  <0x02000000 0x0 0x64300000 0x0 0x64300000 0x0 0x3d00000>;
+>
+> -                       interrupts = <GIC_SPI 243 IRQ_TYPE_LEVEL_HIGH>;
+> -                       interrupt-names = "msi";
+> +                       interrupts = <GIC_SPI 243 IRQ_TYPE_LEVEL_HIGH>,
+> +                                    <GIC_SPI 261 IRQ_TYPE_LEVEL_HIGH>,
+> +                                    <GIC_SPI 262 IRQ_TYPE_LEVEL_HIGH>,
+> +                                    <GIC_SPI 263 IRQ_TYPE_LEVEL_HIGH>,
+> +                                    <GIC_SPI 264 IRQ_TYPE_LEVEL_HIGH>,
+> +                                    <GIC_SPI 278 IRQ_TYPE_LEVEL_HIGH>,
+> +                                    <GIC_SPI 288 IRQ_TYPE_LEVEL_HIGH>,
+> +                                    <GIC_SPI 289 IRQ_TYPE_LEVEL_HIGH>;
+> +                       interrupt-names = "msi0", "msi1", "msi2", "msi3",
+> +                                         "msi4", "msi5", "msi6", "msi7";
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+This part looks a bit suspicious. All other platforms have these
+interrupts in a continuous range.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index 2df77123a8c7..9fc4f3e37a8c 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -2213,8 +2213,16 @@ pcie0: pci@1c00000 {
- 			      <0 0x60100000 0 0x100000>;
- 			reg-names = "parf", "dbi", "elbi", "atu", "config";
- 
--			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "msi";
-+			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "msi0", "msi1", "msi2", "msi3",
-+					  "msi4", "msi5", "msi6", "msi7";
- 
- 			clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
- 				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
-@@ -2317,8 +2325,16 @@ pcie1: pci@1c08000 {
- 				    "atu",
- 				    "config";
- 
--			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "msi";
-+			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 308 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 309 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 312 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 313 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 314 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 374 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 375 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "msi0", "msi1", "msi2", "msi3",
-+					  "msi4", "msi5", "msi6", "msi7";
- 
- 			clocks = <&gcc GCC_PCIE_1_AUX_CLK>,
- 				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
+Other than that, LGTM
+
+>                         #interrupt-cells = <1>;
+>                         interrupt-map-mask = <0 0 0 0x7>;
+>                         interrupt-map = <0 0 0 1 &intc 0 290 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
+> --
+> 2.34.1
+>
+>
+
+
 -- 
-2.34.1
-
+With best wishes
+Dmitry
 
