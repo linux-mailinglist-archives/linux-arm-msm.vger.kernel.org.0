@@ -1,73 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-8326-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8327-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8CB2A83CE64
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 22:20:36 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E5CF083CE71
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 22:24:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B9832896F2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 21:20:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5CA341F278E5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 21:24:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40E83745C6;
-	Thu, 25 Jan 2024 21:20:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4742613AA43;
+	Thu, 25 Jan 2024 21:23:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w179iDrB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="B/fph0R1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5369613A242
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 21:20:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 333D713AA3A
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 21:23:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706217631; cv=none; b=scigszX6tii2lmgZXqBZBnXQKO11IwkZh2lpymjJaAJxb88EWzPmOMxmJ7qF5yQtZm6E4hCnqg7rzjVUrvNjXv6nqlim3+VAt1CStrX72tJolE8KK0i1tFV5mJepnBZskgkj3+k2b+6w7MLeudOhxeEs4xqQt9P1UcXeWEp5uME=
+	t=1706217821; cv=none; b=V0ls2P478kn/CP/BNzB2Wez+qhqiwujdKg/eLRoEavNTy4DS1pPoielej6fDITApX8VKdxu1VodZt46aq5E4i8lPzO8E1rX+DuJyi4HPP0Rr1yuTz0ajm7abYLiJ1/ZhOLkk7S+FtVeICCqlVq5jieHDh0R98vEzHCSQ+/wZAjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706217631; c=relaxed/simple;
-	bh=YpuoNgturrpIC1YceiWfHga+9w2sMCSwpJsrJ+PTF90=;
+	s=arc-20240116; t=1706217821; c=relaxed/simple;
+	bh=0ndVsptsLCZ04wXeCHAod+qI2Mnrpa/RLbMD9+9Cimg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ajWcrUehva61D5thsTwPLYCTJaI79+job0sRpnsc6sdIww1Vv4U0Yh84vVLT2vqMzhmyfHhorPY3vGVhWWGj7gZFPHVQ61GRIX9DklGlsfERQRiTJwD4PfPJKLxtsQrOn09JYm7brl9Y4fM0SYY4rts1zaObqWfRkReqie3XNeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=w179iDrB; arc=none smtp.client-ip=209.85.208.181
+	 In-Reply-To:Content-Type; b=MB+dyEQeTwYRUftVIer2lOBoQEWpd9xFJvjN0wlx7/ve4TBaQ3Pw1EBwnwDMXmycd1sO2qTPHF6qZ3P5uGQM2oA9pvFfjTXRryZX1eAGXOCyvieCzjb6TvbjkOxTjtxtY84ufkVUZ+Le+aYEHFJmpToaIsBr19487y55t0MMU3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=B/fph0R1; arc=none smtp.client-ip=209.85.208.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2cf1c3b23aeso12383981fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 13:20:28 -0800 (PST)
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2cf161b5eadso38910261fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 13:23:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706217627; x=1706822427; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706217817; x=1706822617; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=BLrlWFYstTsTJtWHkx0V41MjP6qrBm8WjHVjemyC3G0=;
-        b=w179iDrB96ZfO8hZO9W6+ozuWnvr+30bzd574BLedis8qff3jEK+QcP1IKyuue8ZuT
-         ox2LLNP5H8LAcnd1qrzmEmt9BLqjMEbaZIbWf7qLjyqpqAnvBl18FnCzavInrnOuzT4O
-         xgj3jOUfSE12Wh0RhsXkWU2yEYDS5XGkx5JUlzU7/JV66u9UnJqO3KvLkNo+k4NB+06g
-         6lmMyeT+iCgYDxEZ9p0un64ApD1CMGal5SezUds69Ct73ekqR02QjA0/K176/J/H8wse
-         RzVetqvvxPJLQkZi+Gd7Dm1VrwqISJ0BqoAuPcVwbZeWtcgx1DemAnyWLoQiSSIwDzCN
-         rUrQ==
+        bh=eMti9UqjOHIvwe2jkr93A4vWwlT/U719vjlZLK4IDo0=;
+        b=B/fph0R1KI5lUrPQMDATHaH4mVd/cB0P72xgHoojAcWOSLEMGsdUYRe/ZgbURr+tXy
+         T5tolYkNBsxtpScGpObbhukWQHiL2kPeGuhB2YZwnY8UQ+OLzjPt+lt0nGTJaT3W1Mfv
+         Wty9NMu+uEXyqKurAZI+HPuAYD4Bc/ExANa7/zp6P2Zp8OrVbk2WWe9dEEsHn4A/AGKv
+         Y91m2Fl9Sx1G7ClyuSf9yX4KIU5maFp9G4J5ptkZ/xV4tpyEKkpVhqCPj4IR0h3eiRbr
+         8jbY6m3nnAnl9WqhTAgIGalhnQh8qt79HRh6XGfGHtqGqwKD3zwX7HynHPJNOgMqguYT
+         j1Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706217627; x=1706822427;
+        d=1e100.net; s=20230601; t=1706217817; x=1706822617;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BLrlWFYstTsTJtWHkx0V41MjP6qrBm8WjHVjemyC3G0=;
-        b=YO/CApmvS5bIDh8aUsNOdz0SfDy145YYjbPyxG/5Fz4wAOhvSYOEsqqv/DoN9FBrDe
-         du7ulKpMZdkEwTY8EFVUiAapItmoFu4+Zt5oM/6yy5YnY/M7LSHqPXgD/bQHTldS/lvq
-         NUeRke4Rnrb4ny4PoQb+McBMUaqzx/WHjXuJCl/QN7UJol2lTbruV4sTvlqUjsmZhcMo
-         Ts9JK0ggpTezhz7Wy1O8BV8cz4+mv6D7OpgAITwxVda/X5rdi7SIpJqQp+vJWXQZVY/u
-         FGxSj159/HX5ck8MjDGFGYg7//2PEDDEKGFIWYmqJC8HzOHrC5wtO3JIQj+7B0pIgUfJ
-         3eRg==
-X-Gm-Message-State: AOJu0Yyhb31huhXnPDSXC538VIuS7eSYyUr1ort6eu187s5eT+B2Wkgj
-	nywfuo0fniAMJPA2RSGN1F7kv9CS8MRQM1i1rmuzBb4Odm4TLESna3EiktJebYU=
-X-Google-Smtp-Source: AGHT+IH3i6HTno+Z6faG1+5ez7O4xYJPP++BGsJbxl78zsvgPngWzFj9zIjiBtKxDIIcDyQxV/S8sg==
-X-Received: by 2002:a2e:b5d7:0:b0:2cf:73b:26ae with SMTP id g23-20020a2eb5d7000000b002cf073b26aemr66424ljn.22.1706217627223;
-        Thu, 25 Jan 2024 13:20:27 -0800 (PST)
+        bh=eMti9UqjOHIvwe2jkr93A4vWwlT/U719vjlZLK4IDo0=;
+        b=ZFpOeLr7Xyi8mwLYfRqDBY79p41Ip1/d+f3YhxnIfSLZTn+1Pyr8mlV6Xj4elU25QN
+         4KSzdz5CAF2YhvocpRrocwvpdPmhPDq1BzEJ/TZIw0IQ+O3svbclDr85Bo+qdqjZWDl0
+         mThQi0Nq/RYT41JZ9dWaP6JCn8w0gwFMg5/sY/mlfFSVIxrh7ITirPfWv7NCenqb1Its
+         7wEMKf5nInL6ZRjwwo6W1PTq2dBbf8bDct8SIe3gydNs4TMo/n+xl9VAYq1ySkxlNYtL
+         q9ruD70Kv48QEzmpNKmDpmlPet1iD36vfxH5MWmGH2JGm7LU+3jHdXG9qEPAfXDeMdow
+         FXgA==
+X-Gm-Message-State: AOJu0Yy/E3kEx323cRQZuiW6mNF5/+/hYSfIViH1VA13ftrkgWNpVmLJ
+	ySLjWqZFmcLDINIjvZaLBLbwZje7S4j6V+frYM8bxzAiLJm19cveTAkvZY2gk5C1g5vPr7CtsRJ
+	2
+X-Google-Smtp-Source: AGHT+IG5FAYG5wdjdwQXIRiGG2+Js2nBfyyOCgeA+kg/BErh0akK2PU+mxWO9A2x4+tVNk08XmNyAQ==
+X-Received: by 2002:ac2:5383:0:b0:510:c31:f6f2 with SMTP id g3-20020ac25383000000b005100c31f6f2mr458862lfh.25.1706217817142;
+        Thu, 25 Jan 2024 13:23:37 -0800 (PST)
 Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id p3-20020a2e8043000000b002cd91d0ceefsm376763ljg.33.2024.01.25.13.20.26
+        by smtp.gmail.com with ESMTPSA id w19-20020a05651234d300b005101f0166b6sm199472lfr.14.2024.01.25.13.23.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Jan 2024 13:20:26 -0800 (PST)
-Message-ID: <0c6e94ef-4e9f-420b-92d9-785ee9f6ae30@linaro.org>
-Date: Thu, 25 Jan 2024 23:20:25 +0200
+        Thu, 25 Jan 2024 13:23:36 -0800 (PST)
+Message-ID: <e1a13e45-e87c-4c7b-a5cb-f46d51e66058@linaro.org>
+Date: Thu, 25 Jan 2024 23:23:36 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,8 +76,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/17] drm/msm/dp: store mode YUV420 information to be
- used by rest of DP
+Subject: Re: [PATCH 05/17] drm/msm/dp: add an API to indicate if sink supports
+ VSC SDP
 Content-Language: en-GB
 To: Paloma Arellano <quic_parellan@quicinc.com>,
  freedreno@lists.freedesktop.org
@@ -86,89 +87,131 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  quic_khsieh@quicinc.com, marijn.suijten@somainline.org,
  neil.armstrong@linaro.org
 References: <20240125193834.7065-1-quic_parellan@quicinc.com>
- <20240125193834.7065-5-quic_parellan@quicinc.com>
+ <20240125193834.7065-6-quic_parellan@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20240125193834.7065-5-quic_parellan@quicinc.com>
+In-Reply-To: <20240125193834.7065-6-quic_parellan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 25/01/2024 21:38, Paloma Arellano wrote:
-> Wide bus is not supported when the mode is YUV420 in DP. In preparation
-> for changing the DPU programming to reflect this, the value and
-> assignment location of wide_bus_en for the DP submodules must be
-> changed. Move it from boot time in dp_init_sub_modules() to run time in
-> dp_display_mode_set.
+> YUV420 format is supported only in the VSC SDP packet and not through
+> MSA. Hence add an API which indicates the sink support which can be used
+> by the rest of the DP programming.
+
+This API ideally should go to drm/display/drm_dp_helper.c
+
 > 
 > Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/dp/dp_display.c | 17 +++++++++++++----
+>   drivers/gpu/drm/msm/dp/dp_display.c |  3 ++-
+>   drivers/gpu/drm/msm/dp/dp_panel.c   | 35 +++++++++++++++++++++++++----
 >   drivers/gpu/drm/msm/dp/dp_panel.h   |  1 +
->   2 files changed, 14 insertions(+), 4 deletions(-)
+>   3 files changed, 34 insertions(+), 5 deletions(-)
 > 
 > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 9df2a8b21021e..ddac55f45a722 100644
+> index ddac55f45a722..f6b3b6ca242f8 100644
 > --- a/drivers/gpu/drm/msm/dp/dp_display.c
 > +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -784,10 +784,6 @@ static int dp_init_sub_modules(struct dp_display_private *dp)
->   		goto error_ctrl;
->   	}
->   
-> -	/* populate wide_bus_supported to different layers */
-> -	dp->ctrl->wide_bus_en = dp->wide_bus_supported;
-> -	dp->catalog->wide_bus_en = dp->wide_bus_supported;
-> -
->   	return rc;
->   
->   error_ctrl:
-> @@ -808,6 +804,7 @@ static int dp_display_set_mode(struct msm_dp *dp_display,
->   	drm_mode_copy(&dp->panel->dp_mode.drm_mode, &mode->drm_mode);
->   	dp->panel->dp_mode.bpp = mode->bpp;
->   	dp->panel->dp_mode.capabilities = mode->capabilities;
-> +	dp->panel->dp_mode.out_fmt_is_yuv_420 = mode->out_fmt_is_yuv_420;
-
-Why do we need it in dp_panel too?
-
->   	dp_panel_init_panel_info(dp->panel);
->   	return 0;
->   }
-> @@ -1402,6 +1399,9 @@ bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
->   
->   	dp = container_of(dp_display, struct dp_display_private, dp_display);
->   
-> +	if (dp->dp_mode.out_fmt_is_yuv_420)
-> +		return false;
-> +
->   	return dp->wide_bus_supported;
->   }
->   
-> @@ -1615,6 +1615,15 @@ void dp_bridge_mode_set(struct drm_bridge *drm_bridge,
->   
->   	dp_display->dp_mode.h_active_low =
+> @@ -1617,7 +1617,8 @@ void dp_bridge_mode_set(struct drm_bridge *drm_bridge,
 >   		!!(dp_display->dp_mode.drm_mode.flags & DRM_MODE_FLAG_NHSYNC);
-> +
-> +	dp_display->dp_mode.out_fmt_is_yuv_420 =
-> +		drm_mode_is_420_only(&dp->connector->display_info, adjusted_mode);
-> +
-> +	/* populate wide_bus_support to different layers */
-> +	dp_display->ctrl->wide_bus_en =
-> +		dp_display->dp_mode.out_fmt_is_yuv_420 ? false : dp_display->wide_bus_supported;
-> +	dp_display->catalog->wide_bus_en =
-> +		dp_display->dp_mode.out_fmt_is_yuv_420 ? false : dp_display->wide_bus_supported;
->   }
 >   
->   void dp_bridge_hpd_enable(struct drm_bridge *bridge)
-> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
-> index a0dfc579c5f9f..6ec68be9f2366 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_panel.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_panel.h
-> @@ -19,6 +19,7 @@ struct dp_display_mode {
->   	u32 bpp;
->   	u32 h_active_low;
->   	u32 v_active_low;
-> +	bool out_fmt_is_yuv_420;
+>   	dp_display->dp_mode.out_fmt_is_yuv_420 =
+> -		drm_mode_is_420_only(&dp->connector->display_info, adjusted_mode);
+> +		drm_mode_is_420_only(&dp->connector->display_info, adjusted_mode) &&
+> +		dp_panel_vsc_sdp_supported(dp_display->panel);
+>   
+>   	/* populate wide_bus_support to different layers */
+>   	dp_display->ctrl->wide_bus_en =
+> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+> index 127f6af995cd1..af7820b6d35ec 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+> @@ -17,6 +17,9 @@ struct dp_panel_private {
+>   	struct dp_link *link;
+>   	struct dp_catalog *catalog;
+>   	bool panel_on;
+> +	bool vsc_supported;
+> +	u8 major;
+> +	u8 minor;
 >   };
 >   
->   struct dp_panel_in {
+>   static void dp_panel_read_psr_cap(struct dp_panel_private *panel)
+> @@ -43,9 +46,10 @@ static void dp_panel_read_psr_cap(struct dp_panel_private *panel)
+>   static int dp_panel_read_dpcd(struct dp_panel *dp_panel)
+>   {
+>   	int rc;
+> +	ssize_t rlen;
+>   	struct dp_panel_private *panel;
+>   	struct dp_link_info *link_info;
+> -	u8 *dpcd, major, minor;
+> +	u8 *dpcd, rx_feature;
+>   
+>   	panel = container_of(dp_panel, struct dp_panel_private, dp_panel);
+>   	dpcd = dp_panel->dpcd;
+> @@ -53,10 +57,19 @@ static int dp_panel_read_dpcd(struct dp_panel *dp_panel)
+>   	if (rc)
+>   		return rc;
+>   
+> +	rlen = drm_dp_dpcd_read(panel->aux, DP_DPRX_FEATURE_ENUMERATION_LIST, &rx_feature, 1);
+> +	if (rlen != 1) {
+> +		panel->vsc_supported = false;
+> +		pr_debug("failed to read DP_DPRX_FEATURE_ENUMERATION_LIST\n");
+> +	} else {
+> +		panel->vsc_supported = !!(rx_feature & DP_VSC_SDP_EXT_FOR_COLORIMETRY_SUPPORTED);
+> +		pr_debug("vsc=%d\n", panel->vsc_supported);
+> +	}
+> +
+>   	link_info = &dp_panel->link_info;
+>   	link_info->revision = dpcd[DP_DPCD_REV];
+> -	major = (link_info->revision >> 4) & 0x0f;
+> -	minor = link_info->revision & 0x0f;
+> +	panel->major = (link_info->revision >> 4) & 0x0f;
+> +	panel->minor = link_info->revision & 0x0f;
+>   
+>   	link_info->rate = drm_dp_max_link_rate(dpcd);
+>   	link_info->num_lanes = drm_dp_max_lane_count(dpcd);
+> @@ -69,7 +82,7 @@ static int dp_panel_read_dpcd(struct dp_panel *dp_panel)
+>   	if (link_info->rate > dp_panel->max_dp_link_rate)
+>   		link_info->rate = dp_panel->max_dp_link_rate;
+>   
+> -	drm_dbg_dp(panel->drm_dev, "version: %d.%d\n", major, minor);
+> +	drm_dbg_dp(panel->drm_dev, "version: %d.%d\n", panel->major, panel->minor);
+>   	drm_dbg_dp(panel->drm_dev, "link_rate=%d\n", link_info->rate);
+>   	drm_dbg_dp(panel->drm_dev, "lane_count=%d\n", link_info->num_lanes);
+>   
+> @@ -280,6 +293,20 @@ void dp_panel_tpg_config(struct dp_panel *dp_panel, bool enable)
+>   	dp_catalog_panel_tpg_enable(catalog, &panel->dp_panel.dp_mode.drm_mode);
+>   }
+>   
+> +bool dp_panel_vsc_sdp_supported(struct dp_panel *dp_panel)
+> +{
+> +	struct dp_panel_private *panel;
+> +
+> +	if (!dp_panel) {
+> +		pr_err("invalid input\n");
+> +		return false;
+> +	}
+> +
+> +	panel = container_of(dp_panel, struct dp_panel_private, dp_panel);
+> +
+> +	return panel->major >= 1 && panel->minor >= 3 && panel->vsc_supported;
+> +}
+> +
+>   void dp_panel_dump_regs(struct dp_panel *dp_panel)
+>   {
+>   	struct dp_catalog *catalog;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
+> index 6ec68be9f2366..590eca5ce304b 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_panel.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_panel.h
+> @@ -66,6 +66,7 @@ int dp_panel_get_modes(struct dp_panel *dp_panel,
+>   		struct drm_connector *connector);
+>   void dp_panel_handle_sink_request(struct dp_panel *dp_panel);
+>   void dp_panel_tpg_config(struct dp_panel *dp_panel, bool enable);
+> +bool dp_panel_vsc_sdp_supported(struct dp_panel *dp_panel);
+>   
+>   /**
+>    * is_link_rate_valid() - validates the link rate
 
 -- 
 With best wishes
