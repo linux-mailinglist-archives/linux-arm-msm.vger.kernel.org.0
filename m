@@ -1,34 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-8310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8311-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB8DD83CD18
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 21:05:50 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5340E83CD21
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 21:08:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 05CDE1C22816
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 20:05:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CB294B24CE2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 20:07:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70EBA135A78;
-	Thu, 25 Jan 2024 20:05:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 043FB136642;
+	Thu, 25 Jan 2024 20:07:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="Ch5/8b3f"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="k05zkkw3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C73B134730;
-	Thu, 25 Jan 2024 20:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334B2135A45;
+	Thu, 25 Jan 2024 20:07:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706213145; cv=none; b=XfxHBL0xPIhv615+qqP55sFilt11Pi0Lo1UHbyC0C3t7eNhWdLts4uf+0vtXDJbT7N+jkvQ+JbepholezYduIhf8SfKZ/gaEJBEdiOo5R7wDdGTRPBfkYrK/WWR8g4OQBn4YmWvNYY2MZ69jTwhwIXA8n6c4CDwV/lQnMNWCP6w=
+	t=1706213273; cv=none; b=Yv1e45t8wFcbxw/vvE4gn/92XG4RNfrRwZWjMaLCFFODuC8Hi4HjkRrU/3AgqfKY4iVmNip2u52qn3da7+kcbwP5Xl7X84p4RDq/C+0tcOF7pwhK55ODQlg5hhCGZmXE9nZ7gTiYIq6XyL0yHhnSUoq73vvbkDWLjZ+g0fl8rMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706213145; c=relaxed/simple;
-	bh=WBaEFU0HD/ZpYZcSyEk08bbjDIygWcVOBE8OjlEUd3I=;
+	s=arc-20240116; t=1706213273; c=relaxed/simple;
+	bh=W/2Siwvqu0TIYxIevTR0TX66dRDvNeV8PC1Kqf/dVuU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oTMcybqrLfcJV4DDvcsHh/qfrjS2mF7xspYv6Fwl6xRh0MV7TQ+4WkaBoNBeDmXXwEcBZ9FsAUI1lX8/TDOaap+L1vg/PUZfJPmec1MQHWnDfXBG1ZI3+GHMWcnn7pqvWGr/ojN4nV2ZXb7KQNvZoIT51lby9Em64ktbOovrSBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=Ch5/8b3f; arc=none smtp.client-ip=156.67.10.101
+	 Content-Type:Content-Disposition:In-Reply-To; b=nztkIu2YTneQacoKY2lwUFi0NLJZTcS6MGJUrIGRDuNigZMVSGs5kPqe8U4G/SnVqqdpEZmdx+Dj8d2ogVf5kCaulFEPAYdPX2SZGU62UHw7zXLhlFGwANjlgvMnQYDzlNEoqfxDNyWWR4QJKn0p2TISUNBG3ItYC+DihunN1vE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=k05zkkw3; arc=none smtp.client-ip=156.67.10.101
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
@@ -36,13 +36,13 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
 	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
 	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=PSP1mwXt7pbVQqCb1c1AUqEAyMaE5dkMskynL1tp6dg=; b=Ch5/8b3frcnqGViJrO55oIG1hK
-	KCyHsGaAI2M2KL74z6fIm3tlvk2bgW8h1JTdxUdqjXUSl/LlZ8XgIJoHwGHw6hP5vIJEoIfgosfmy
-	+FeuruMUTm2HxmCCFeGWn96d6zPTUdGwoCpS47jNJuQV7CtycTpMfVlXCt6p2holagKA=;
+	bh=LW+QZV+rygeD0sv1VLqkKfoFCIbEkVehTAuF0y4Mzf0=; b=k05zkkw3S8y2+XaH16PdhECRwD
+	Fwv0+wYcso4YDHVz6GZoqd8N7ZrCpJL/pdzsoSWTPD130UWlZRbVv+Xavlv+uQo1ukr+Je1QIBxHW
+	YCUsA7CRtkeuCJ1ebg6hI7MPmVNNopjccE4d6BHlbObcxHsX+jjwRRRdrRTktIdwB2Ss=;
 Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
 	(envelope-from <andrew@lunn.ch>)
-	id 1rT5yg-0067Ml-Ai; Thu, 25 Jan 2024 21:05:34 +0100
-Date: Thu, 25 Jan 2024 21:05:34 +0100
+	id 1rT60n-0067Nq-PN; Thu, 25 Jan 2024 21:07:45 +0100
+Date: Thu, 25 Jan 2024 21:07:45 +0100
 From: Andrew Lunn <andrew@lunn.ch>
 To: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
 Cc: Bjorn Andersson <andersson@kernel.org>,
@@ -56,12 +56,13 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
 	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
 	devicetree@vger.kernel.org, netdev@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v4 2/8] clk: qcom: ipq5332: enable few nssnoc clocks in
- driver probe
-Message-ID: <7a69a68d-44c2-4589-b286-466d2f2a0809@lunn.ch>
+	linux-arm-kernel@lists.infradead.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v4 3/8] dt-bindings: clock: ipq5332: add definition for
+ GPLL0_OUT_AUX clock
+Message-ID: <b939445e-c0a8-48fd-bc95-25c4f22e1e0d@lunn.ch>
 References: <20240122-ipq5332-nsscc-v4-0-19fa30019770@quicinc.com>
- <20240122-ipq5332-nsscc-v4-2-19fa30019770@quicinc.com>
+ <20240122-ipq5332-nsscc-v4-3-19fa30019770@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,28 +71,13 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240122-ipq5332-nsscc-v4-2-19fa30019770@quicinc.com>
+In-Reply-To: <20240122-ipq5332-nsscc-v4-3-19fa30019770@quicinc.com>
 
-On Mon, Jan 22, 2024 at 11:26:58AM +0530, Kathiravan Thirumoorthy wrote:
-> gcc_snoc_nssnoc_clk, gcc_snoc_nssnoc_1_clk, gcc_nssnoc_nsscc_clk are
-> enabled by default and it's RCG is properly configured by bootloader.
+On Mon, Jan 22, 2024 at 11:26:59AM +0530, Kathiravan Thirumoorthy wrote:
+> Add the definition for GPLL0_OUT_AUX clock.
 
-Which bootloader? Mainline barebox?
+The commit message should answer the question "Why?". Why are you
+adding this clock? What consumes it?
 
-> Some of the NSS clocks needs these clocks to be enabled. To avoid
-> these clocks being disabled by clock framework, drop these entries
-> from the clock table and enable it in the driver probe itself.
-
-If they are critical clocks, i would expect a device to reference
-them. The CCF only disabled unused clocks in late_initcall_sync(),
-which means all drivers should of probed and taken a reference on any
-clocks they require.
-
-Please correctly describe the clock tree in device tree, not hide
-clocks because your DT description is not complete.
-
-    Andrew
-
----
-pw-bot: cr
+       Andrew
 
