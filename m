@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-8361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8362-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32C3483D030
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 00:02:56 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CCCB683D02F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 00:02:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8F359B29134
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F15A91C20E55
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 23:02:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80E51125BD;
-	Thu, 25 Jan 2024 23:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E9FA125BA;
+	Thu, 25 Jan 2024 23:02:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DpaXICXu"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bY/vOrcS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812B8125BC
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 23:02:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8396E125C2
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 23:02:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706223769; cv=none; b=cI5ozN5fFE2G2u9lEPUbxO4n2+5gJ27xTeH+LBtaxKXIl3+jZbAL2yD027rvasg146qWMKBYWXyaY5ia46dYaMyH8prAsLmbKSM405sWm/krDy7K5C9XIvt/nVN344AwLDJNHp5v4jAStMEL7XyXrCfJoKWsUROJSegKY8lTTLY=
+	t=1706223770; cv=none; b=QDvweehwqrTCFqXPobsdd22YkwUnvn5S3+PdW/ehH5+/izl+IoD3v1ZmLZLmQ2ltvgp0NnsFnzo0XI6s/XOCoxDyIvUGeW57bi6+9IJUCiaNHi9Xj3bSh6JK9EI4qDs6mwXljTU/BJojX8o8+OLt8th899jfokyCZ7dwt3VjI14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706223769; c=relaxed/simple;
-	bh=JHMCbSPE7gZXRzZ8Yh8uYk+Fdg3YzXkUqA/+AlXGaYM=;
+	s=arc-20240116; t=1706223770; c=relaxed/simple;
+	bh=lj8fVAqF9xjHx1KrBL3A1/vTOxjI6sPTTzeJIEKTWus=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pqzwjghGTjLELIV+qF2JpccVdA+giuLVq0g7iGmX3iFIAb8F2K6qqjhQa9DrKvEb0Zr0WiJRa9R4VdY8WHWj/gjqNjWPHBQxsaKFTnhJ9R94QfRaqs+uciiHs/3gW9pYka7DzAwuSzppFlGry/Zwg4KTodtJvr/kfvn1k/njka0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DpaXICXu; arc=none smtp.client-ip=209.85.208.182
+	 In-Reply-To:To:Cc; b=jisfl+uqHSwPek/jgOtCb3mpBPIh77OV26cMCc/lRglF80kBXiSlyI5yJZWg9Hl1cUvtAzlpd6kAVf4iGE66dxfmLvbBcHGEXIi7hFu7wpC6zMPFDcJgaYWzLXh09wW4OBgDz4vKiIzD/cY0mN/N/YQC2eVjiEDrhz8NBOAVWWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bY/vOrcS; arc=none smtp.client-ip=209.85.208.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2cf108d8dbeso41738521fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 15:02:47 -0800 (PST)
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2cf1fd1cc5bso31323731fa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 15:02:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706223765; x=1706828565; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706223766; x=1706828566; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=f23f6k2NURR3hjj9IxLe37rVyBQBMzjyoSIDJiZdG1c=;
-        b=DpaXICXuPflNGYagdGnjPh85ltDMUxIEvoWHcgbcxPurDFSUQBUY/YM8jUfvGBEUp2
-         RZhqtIgvt2AEg5i8hf3i0M4fBqcilPWwrFb+zyxlsC9W7R+D5ucPTdDeO8VvIY1sT/mL
-         IeyFkvgIxz3Y05m/s3DRjeZ1zyxpDFEtvolOoQaeM2ig3s34Texgz/mVLQQJzNcwmung
-         KbNNFEvoXgAyfXI6Tt6X5bNrRTaWvZIA/CzS+SYLaE8SzwcogcLm+4HowTtaAidpZwAK
-         k3PYC+eI0Yx3083i4F4lxcUod3b6yDbkc/k5lsLf3eE+TnEqFvNbqjciK57o/PDpj6pF
-         FIhg==
+        bh=IQTuJ8wNeg68JOx46UjSbtRu40sdbbzeiAcOLYDTPCw=;
+        b=bY/vOrcSh+knbammrC5jliob8QOTw8VB+IAU/r+qWpQHPQKZW33342p4bb/b9yjzQ4
+         rqRrZKN1/D82RZs4ckm0HOFVioH+/lp2WJ4TWA82TDZc8uCxUFAXz1A5pM3JREOOWL3n
+         Ivm5Qx/BurRvTMSHWt9qATK/1G2ZhTHlIf7MhRDhv6Z7Vgldpt+AO1IHVGcXWhemYTHS
+         zuPcbeiMyUBDbeDlfX1pQnaQRQJSOwpfC4C83NCYNbrJ5mkRYlGJ6hXa71ZENF191awG
+         Dfx+RzXIPQ2eBm94FQE2LxAqBEXSWmVjRwkrKsiJlOi5hguMY145sn17hFoAdkAHvXCQ
+         clnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706223765; x=1706828565;
+        d=1e100.net; s=20230601; t=1706223766; x=1706828566;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=f23f6k2NURR3hjj9IxLe37rVyBQBMzjyoSIDJiZdG1c=;
-        b=foOz8W4a67hIIMmfmZYARX44avap4aAsSq5RmgeAV60t2zuWHc1bcxamaJ1VaGqvkV
-         zW9pHkvg9qNdRS55w8RYPwEluj0uBgMxNecjhMKDd7Px2FbmBgywtUggArRSxDWJ9x9X
-         MtF5t0k5/2YauWVIGyAHvo4rlx8c4a+lj+iwDDc6/B3TD43K9Bf3r/P+mykXExNgVGxN
-         v//Yxa/NGvifad1MPiBsgA5Q+3OkNEkv3SY1M5UZu0XaXY3rNkoXDrZKycoiOlEYlade
-         inQd7Umdx4oIBbRrP8TzcAoy4BC4keiiLDM5TBVqkgQrRw5BDQdE3vCxMHLSWISf9BWK
-         ivkg==
-X-Gm-Message-State: AOJu0YywlsTWgdkJ/xo/qG4AvZSgRvVR0PEbE9AUrVgQ1qe49BycJWBV
-	Vfk5oth2jH94Pi7s/Dj4ysXoK5fr47unO+vsL23VieXpheDGiMQ/cGRxLDZ0a4s=
-X-Google-Smtp-Source: AGHT+IHWL7lF9e3bxYIvviM0rpRY3/N/LEZxutH26qo4iWViNLetyA61IJqVdclQuX8iyb8qCwkkDA==
-X-Received: by 2002:a2e:8856:0:b0:2cf:3037:2a35 with SMTP id z22-20020a2e8856000000b002cf30372a35mr193008ljj.48.1706223765497;
-        Thu, 25 Jan 2024 15:02:45 -0800 (PST)
+        bh=IQTuJ8wNeg68JOx46UjSbtRu40sdbbzeiAcOLYDTPCw=;
+        b=kxWV8ou+LSSL9fT6nLVINc6W/cQnmkhzkxQp/5pEvwnINjxSzeKyQeZkyZ90lj4ecS
+         K2RZHV4b/18WYDfzMNvghNMiDEAyFOiklJFnqJPJfo/kLgWX2JGziC1HSywaOCtaUqiR
+         sp9Se2F2ILoCvmf0A3YBlgNovekPFocVxl7MIQekxHhBOft+SZGXUx2Xw6bnskU/g4BH
+         OAbM5kg/KDtn3m2qgcDKcALxLkNrnxMWgdnaepa/diKkmlNQw1WhGqxYjADsBWOpxQ3Y
+         K+p2rsSDd/IYLkDm5PiHz8LepL1TKpnRPnEZHxVn8iVoCgmH0gZaxJGMWvLP8y3FdAAe
+         ZJUA==
+X-Gm-Message-State: AOJu0Yyn38el750u6aY17AhIJ1JCeXs9ryZlGznsgrBopikmFehVCKYX
+	QosoRIbUu8wzNxiekiqpMFUAM0miYWq2DkclfvArd21uoLpHKma142XNBdHvRzE=
+X-Google-Smtp-Source: AGHT+IFSrOqGPfv75v5XjL5dcp1A1v9CtUu3yzT9DTKpjnkuRzPRsIwxWVFWlVnXT6Ihnk4/ehKTnw==
+X-Received: by 2002:a2e:bb9e:0:b0:2cf:3144:3a40 with SMTP id y30-20020a2ebb9e000000b002cf31443a40mr251326lje.52.1706223766528;
+        Thu, 25 Jan 2024 15:02:46 -0800 (PST)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id x19-20020a2e8813000000b002cdfc29b46dsm405872ljh.88.2024.01.25.15.02.44
+        by smtp.gmail.com with ESMTPSA id x19-20020a2e8813000000b002cdfc29b46dsm405872ljh.88.2024.01.25.15.02.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jan 2024 15:02:44 -0800 (PST)
+        Thu, 25 Jan 2024 15:02:45 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 26 Jan 2024 01:02:38 +0200
-Subject: [PATCH v3 09/15] drm/msm/dp: move phy_configure_opts to dp_ctrl
+Date: Fri, 26 Jan 2024 01:02:39 +0200
+Subject: [PATCH v3 10/15] drm/msm/dp: remove PHY handling from dp_catalog.c
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,7 +77,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240126-dp-power-parser-cleanup-v3-9-e2e46f4d390c@linaro.org>
+Message-Id: <20240126-dp-power-parser-cleanup-v3-10-e2e46f4d390c@linaro.org>
 References: <20240126-dp-power-parser-cleanup-v3-0-e2e46f4d390c@linaro.org>
 In-Reply-To: <20240126-dp-power-parser-cleanup-v3-0-e2e46f4d390c@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -90,188 +90,155 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6449;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4868;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=JHMCbSPE7gZXRzZ8Yh8uYk+Fdg3YzXkUqA/+AlXGaYM=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlsuiI+CRVzFO0JONwDtwe7JlErZ4iifllbSvuk
- Ar1cShrPe2JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZbLoiAAKCRCLPIo+Aiko
- 1d1FB/wOltnFkPJD4pVXXHYxjDRCSYycagYhyrH65rnoMYJ8MDlUdlDKE84poWo34C6Xc/STtQP
- XwVGU47raz6l9Ck6+kDgIo/dZqCf4KwZXXTJgpcU5RkCJ6PBqHyYFDHw0sEF+1X2SWdUdUBQSJd
- 7g2+ImipGqZ8lEsr0ngQmSkR70oieMQN+3E7WWcHoxd7IzDauFnctCKqMpWFhOgi5vkaiu7skrg
- cgVzkV/kJKWRE7IA5QOH4oHZRQh3o38C9k6mWHWZ35FNPTmat+kfYa99ZxEVpfUqULKNW53RwIi
- omylb0fBjDt/ulYwdawTtynDyGTjyKMKxJd5ycXMHRxz8ZJj
+ bh=lj8fVAqF9xjHx1KrBL3A1/vTOxjI6sPTTzeJIEKTWus=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlsuiIiF6KzNUnOcKgp0Sj/juS5Fs/pBCsNxMtn
+ owYMiQX25eJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZbLoiAAKCRCLPIo+Aiko
+ 1bpAB/sEIpewx8Dya+nNOMTbkPYqk1xVeYi0cSaU7c9iJcjjsUpcreLQlzOKkOz16tTsrYsBp+3
+ mDZQ6d2VJxzT5ZJGGraJ4cP47dULClmzcUId4lMaDFUL45a4tgxXDNn5n625Ui1Ag2MDn/cMbYo
+ SL+go+fezyZ6IobYH5X4dCllpp6v4Cg1Rcv7Sy/77eu5e86hADwTVd8Vx8zNW/tQe6yhbyCmUn7
+ uzQkI3DzUk3z166gVJm5QkyEGp6uY6O7NWhUVmqA+9jX0oSFEEhECrZVwOumtHw3DlI3KDh5mNL
+ trzBSSxhH/QipIXJFrK8oYkWuvShq+E8u5brJ8QRWFYoU2Pn
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-There is little point in sharing phy configuration structure between
-several modules. Move it to dp_ctrl, which becomes the only submodule
-re-configuring the PHY.
+Inline dp_catalog_aux_update_cfg() and call phy_calibrate() from dp_aux
+functions directly.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/dp/dp_catalog.c | 19 -----------------
- drivers/gpu/drm/msm/dp/dp_catalog.h |  2 --
- drivers/gpu/drm/msm/dp/dp_ctrl.c    | 41 ++++++++++++++++++++++++-------------
- drivers/gpu/drm/msm/dp/dp_parser.h  |  3 ---
- 4 files changed, 27 insertions(+), 38 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_aux.c     |  9 +++++++--
+ drivers/gpu/drm/msm/dp/dp_aux.h     |  1 +
+ drivers/gpu/drm/msm/dp/dp_catalog.c | 12 ------------
+ drivers/gpu/drm/msm/dp/dp_catalog.h |  1 -
+ drivers/gpu/drm/msm/dp/dp_display.c |  4 +++-
+ 5 files changed, 11 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-index 5142aeb705a4..e07651768805 100644
---- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-+++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-@@ -765,25 +765,6 @@ void dp_catalog_ctrl_phy_reset(struct dp_catalog *dp_catalog)
- 	dp_write_ahb(catalog, REG_DP_PHY_CTRL, 0x0);
+diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
+index 03f4951c49f4..adbd5a367395 100644
+--- a/drivers/gpu/drm/msm/dp/dp_aux.c
++++ b/drivers/gpu/drm/msm/dp/dp_aux.c
+@@ -4,6 +4,7 @@
+  */
+ 
+ #include <linux/delay.h>
++#include <linux/phy/phy.h>
+ #include <drm/drm_print.h>
+ 
+ #include "dp_reg.h"
+@@ -23,6 +24,8 @@ struct dp_aux_private {
+ 	struct device *dev;
+ 	struct dp_catalog *catalog;
+ 
++	struct phy *phy;
++
+ 	struct mutex mutex;
+ 	struct completion comp;
+ 
+@@ -336,7 +339,7 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux *dp_aux,
+ 		if (aux->native) {
+ 			aux->retry_cnt++;
+ 			if (!(aux->retry_cnt % MAX_AUX_RETRIES))
+-				dp_catalog_aux_update_cfg(aux->catalog);
++				phy_calibrate(aux->phy);
+ 		}
+ 		/* reset aux if link is in connected state */
+ 		if (dp_catalog_link_is_connected(aux->catalog))
+@@ -439,7 +442,7 @@ void dp_aux_reconfig(struct drm_dp_aux *dp_aux)
+ 
+ 	aux = container_of(dp_aux, struct dp_aux_private, dp_aux);
+ 
+-	dp_catalog_aux_update_cfg(aux->catalog);
++	phy_calibrate(aux->phy);
+ 	dp_catalog_aux_reset(aux->catalog);
  }
  
--int dp_catalog_ctrl_update_vx_px(struct dp_catalog *dp_catalog,
--		u8 v_level, u8 p_level)
+@@ -517,6 +520,7 @@ static int dp_wait_hpd_asserted(struct drm_dp_aux *dp_aux,
+ }
+ 
+ struct drm_dp_aux *dp_aux_get(struct device *dev, struct dp_catalog *catalog,
++			      struct phy *phy,
+ 			      bool is_edp)
+ {
+ 	struct dp_aux_private *aux;
+@@ -537,6 +541,7 @@ struct drm_dp_aux *dp_aux_get(struct device *dev, struct dp_catalog *catalog,
+ 
+ 	aux->dev = dev;
+ 	aux->catalog = catalog;
++	aux->phy = phy;
+ 	aux->retry_cnt = 0;
+ 
+ 	/*
+diff --git a/drivers/gpu/drm/msm/dp/dp_aux.h b/drivers/gpu/drm/msm/dp/dp_aux.h
+index 511305da4f66..16d9b1758748 100644
+--- a/drivers/gpu/drm/msm/dp/dp_aux.h
++++ b/drivers/gpu/drm/msm/dp/dp_aux.h
+@@ -17,6 +17,7 @@ void dp_aux_deinit(struct drm_dp_aux *dp_aux);
+ void dp_aux_reconfig(struct drm_dp_aux *dp_aux);
+ 
+ struct drm_dp_aux *dp_aux_get(struct device *dev, struct dp_catalog *catalog,
++			      struct phy *phy,
+ 			      bool is_edp);
+ void dp_aux_put(struct drm_dp_aux *aux);
+ 
+diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
+index e07651768805..4c6207797c99 100644
+--- a/drivers/gpu/drm/msm/dp/dp_catalog.c
++++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+@@ -7,8 +7,6 @@
+ 
+ #include <linux/delay.h>
+ #include <linux/iopoll.h>
+-#include <linux/phy/phy.h>
+-#include <linux/phy/phy-dp.h>
+ #include <linux/rational.h>
+ #include <drm/display/drm_dp_helper.h>
+ #include <drm/drm_print.h>
+@@ -243,16 +241,6 @@ void dp_catalog_aux_enable(struct dp_catalog *dp_catalog, bool enable)
+ 	dp_write_aux(catalog, REG_DP_AUX_CTRL, aux_ctrl);
+ }
+ 
+-void dp_catalog_aux_update_cfg(struct dp_catalog *dp_catalog)
 -{
 -	struct dp_catalog_private *catalog = container_of(dp_catalog,
 -				struct dp_catalog_private, dp_catalog);
 -	struct dp_io *dp_io = catalog->io;
 -	struct phy *phy = dp_io->phy;
--	struct phy_configure_opts_dp *opts_dp = &dp_io->phy_opts.dp;
 -
--	/* TODO: Update for all lanes instead of just first one */
--	opts_dp->voltage[0] = v_level;
--	opts_dp->pre[0] = p_level;
--	opts_dp->set_voltages = 1;
--	phy_configure(phy, &dp_io->phy_opts);
--	opts_dp->set_voltages = 0;
--
--	return 0;
+-	phy_calibrate(phy);
 -}
 -
- void dp_catalog_ctrl_send_phy_pattern(struct dp_catalog *dp_catalog,
- 			u32 pattern)
+ int dp_catalog_aux_wait_for_hpd_connect_state(struct dp_catalog *dp_catalog)
  {
+ 	u32 state;
 diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
-index 38786e855b51..ba7c62ba7ca3 100644
+index ba7c62ba7ca3..1f3f58d4b8de 100644
 --- a/drivers/gpu/drm/msm/dp/dp_catalog.h
 +++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
-@@ -111,8 +111,6 @@ void dp_catalog_ctrl_set_psr(struct dp_catalog *dp_catalog, bool enter);
- u32 dp_catalog_link_is_connected(struct dp_catalog *dp_catalog);
- u32 dp_catalog_hpd_get_intr_status(struct dp_catalog *dp_catalog);
- void dp_catalog_ctrl_phy_reset(struct dp_catalog *dp_catalog);
--int dp_catalog_ctrl_update_vx_px(struct dp_catalog *dp_catalog, u8 v_level,
--				u8 p_level);
- int dp_catalog_ctrl_get_interrupt(struct dp_catalog *dp_catalog);
- u32 dp_catalog_ctrl_read_psr_interrupt_status(struct dp_catalog *dp_catalog);
- void dp_catalog_ctrl_update_transfer_unit(struct dp_catalog *dp_catalog,
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index e367eb8e5bea..4aea72a2b8e8 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -87,6 +87,8 @@ struct dp_ctrl_private {
+@@ -84,7 +84,6 @@ int dp_catalog_aux_clear_trans(struct dp_catalog *dp_catalog, bool read);
+ int dp_catalog_aux_clear_hw_interrupts(struct dp_catalog *dp_catalog);
+ void dp_catalog_aux_reset(struct dp_catalog *dp_catalog);
+ void dp_catalog_aux_enable(struct dp_catalog *dp_catalog, bool enable);
+-void dp_catalog_aux_update_cfg(struct dp_catalog *dp_catalog);
+ int dp_catalog_aux_wait_for_hpd_connect_state(struct dp_catalog *dp_catalog);
+ u32 dp_catalog_aux_get_irq(struct dp_catalog *dp_catalog);
  
- 	struct clk *pixel_clk;
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 6fbbd0f93d13..c1a51c498e01 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -729,7 +729,9 @@ static int dp_init_sub_modules(struct dp_display_private *dp)
+ 		goto error;
+ 	}
  
-+	union phy_configure_opts phy_opts;
-+
- 	struct completion idle_comp;
- 	struct completion psr_op_comp;
- 	struct completion video_comp;
-@@ -1017,6 +1019,21 @@ static int dp_ctrl_wait4video_ready(struct dp_ctrl_private *ctrl)
- 	return ret;
- }
- 
-+static int dp_ctrl_set_vx_px(struct dp_ctrl_private *ctrl,
-+			     u8 v_level, u8 p_level)
-+{
-+	union phy_configure_opts *phy_opts = &ctrl->phy_opts;
-+
-+	/* TODO: Update for all lanes instead of just first one */
-+	phy_opts->dp.voltage[0] = v_level;
-+	phy_opts->dp.pre[0] = p_level;
-+	phy_opts->dp.set_voltages = 1;
-+	phy_configure(ctrl->parser->io.phy, phy_opts);
-+	phy_opts->dp.set_voltages = 0;
-+
-+	return 0;
-+}
-+
- static int dp_ctrl_update_vx_px(struct dp_ctrl_private *ctrl)
- {
- 	struct dp_link *link = ctrl->link;
-@@ -1029,7 +1046,7 @@ static int dp_ctrl_update_vx_px(struct dp_ctrl_private *ctrl)
- 	drm_dbg_dp(ctrl->drm_dev,
- 		"voltage level: %d emphasis level: %d\n",
- 			voltage_swing_level, pre_emphasis_level);
--	ret = dp_catalog_ctrl_update_vx_px(ctrl->catalog,
-+	ret = dp_ctrl_set_vx_px(ctrl,
- 		voltage_swing_level, pre_emphasis_level);
- 
- 	if (ret)
-@@ -1425,16 +1442,14 @@ static void dp_ctrl_link_clk_disable(struct dp_ctrl *dp_ctrl)
- static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl)
- {
- 	int ret = 0;
--	struct dp_io *dp_io = &ctrl->parser->io;
--	struct phy *phy = dp_io->phy;
--	struct phy_configure_opts_dp *opts_dp = &dp_io->phy_opts.dp;
-+	struct phy *phy = ctrl->parser->io.phy;
- 	const u8 *dpcd = ctrl->panel->dpcd;
- 
--	opts_dp->lanes = ctrl->link->link_params.num_lanes;
--	opts_dp->link_rate = ctrl->link->link_params.rate / 100;
--	opts_dp->ssc = drm_dp_max_downspread(dpcd);
-+	ctrl->phy_opts.dp.lanes = ctrl->link->link_params.num_lanes;
-+	ctrl->phy_opts.dp.link_rate = ctrl->link->link_params.rate / 100;
-+	ctrl->phy_opts.dp.ssc = drm_dp_max_downspread(dpcd);
- 
--	phy_configure(phy, &dp_io->phy_opts);
-+	phy_configure(phy, &ctrl->phy_opts);
- 	phy_power_on(phy);
- 
- 	dev_pm_opp_set_rate(ctrl->dev, ctrl->link->link_params.rate * 1000);
-@@ -1572,14 +1587,12 @@ static bool dp_ctrl_use_fixed_nvid(struct dp_ctrl_private *ctrl)
- 
- static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private *ctrl)
- {
-+	struct phy *phy = ctrl->parser->io.phy;
- 	int ret = 0;
--	struct dp_io *dp_io = &ctrl->parser->io;
--	struct phy *phy = dp_io->phy;
--	struct phy_configure_opts_dp *opts_dp = &dp_io->phy_opts.dp;
- 
- 	dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, false);
--	opts_dp->lanes = ctrl->link->link_params.num_lanes;
--	phy_configure(phy, &dp_io->phy_opts);
-+	ctrl->phy_opts.dp.lanes = ctrl->link->link_params.num_lanes;
-+	phy_configure(phy, &ctrl->phy_opts);
- 	/*
- 	 * Disable and re-enable the mainlink clock since the
- 	 * link clock might have been adjusted as part of the
-@@ -1659,7 +1672,7 @@ static bool dp_ctrl_send_phy_test_pattern(struct dp_ctrl_private *ctrl)
- 
- 	drm_dbg_dp(ctrl->drm_dev, "request: 0x%x\n", pattern_requested);
- 
--	if (dp_catalog_ctrl_update_vx_px(ctrl->catalog,
-+	if (dp_ctrl_set_vx_px(ctrl,
- 			ctrl->link->phy_params.v_level,
- 			ctrl->link->phy_params.p_level)) {
- 		DRM_ERROR("Failed to set v/p levels\n");
-diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
-index cad82c4d07da..b28052e87101 100644
---- a/drivers/gpu/drm/msm/dp/dp_parser.h
-+++ b/drivers/gpu/drm/msm/dp/dp_parser.h
-@@ -7,8 +7,6 @@
- #define _DP_PARSER_H_
- 
- #include <linux/platform_device.h>
--#include <linux/phy/phy.h>
--#include <linux/phy/phy-dp.h>
- 
- #include "msm_drv.h"
- 
-@@ -37,7 +35,6 @@ struct dss_io_data {
- struct dp_io {
- 	struct dss_io_data dp_controller;
- 	struct phy *phy;
--	union phy_configure_opts phy_opts;
- };
- 
- /**
+-	dp->aux = dp_aux_get(dev, dp->catalog, dp->dp_display.is_edp);
++	dp->aux = dp_aux_get(dev, dp->catalog,
++			     dp->parser->io.phy,
++			     dp->dp_display.is_edp);
+ 	if (IS_ERR(dp->aux)) {
+ 		rc = PTR_ERR(dp->aux);
+ 		DRM_ERROR("failed to initialize aux, rc = %d\n", rc);
 
 -- 
 2.39.2
