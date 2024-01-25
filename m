@@ -1,162 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-8183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF4DB83B776
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 04:00:11 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FE3283B928
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 06:49:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 87D271F232C8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 03:00:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8764F1C22909
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 05:49:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B593E567F;
-	Thu, 25 Jan 2024 03:00:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B2CAD533;
+	Thu, 25 Jan 2024 05:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QbMd3ANx"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Gv6rVzxO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB0E1866;
-	Thu, 25 Jan 2024 03:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05DF7CA50;
+	Thu, 25 Jan 2024 05:49:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706151605; cv=none; b=bWjFi/9TSDKc47jQlMTqY/AhrmBXM2qpeh24st2CkBfV4xH5lHBNUWOXbgbsS6K4RubGK441yAGxTg0/clKCwIRQy2MWkNAq3XS/rFQSm7bcRFZGmox6aZo3COA1vReqa1S5qE1QLwJKWRFWLAHFZ2k6jjDS9a98zqFsDpVT0Gw=
+	t=1706161788; cv=none; b=VgpXeVz7m8EAP/yWH/2lWs2iQ3DP5cpYlgOoidKjabjHkAZuuCgyaVmryDet/3NNUriYgB/mvXrIS7vRXiUe1nregARLZaNofrtthL/HadiK3rwVyPWOCTw06KQdcuoqYpnCKlFwJ4fj68kbBT6nZGaUKlulvi1xvPcNEtSCAjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706151605; c=relaxed/simple;
-	bh=CzCGo2cwBcCnpe1GOqCp97yh7LTPW/HI2epJpINBHwY=;
+	s=arc-20240116; t=1706161788; c=relaxed/simple;
+	bh=jEtOBCWHvTb4uHYP5yQCZ1yuaW6/UAwy+xaIHbriYL8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=g5F/jdHuTvFvRFLmzH9RX3HMHcysaM7yPaLosjMnD9uPL7JdIHx/tRyiAQ6/dRu+QDlCE6IEpEU5YBYxvNDcGs3d4VRVgDjtTDwUHhZ1hz3SysIEWVUdj8yHH423x7lxyqj78jl2KO9/OJ7lyizi1Q7bp1This0LU5MZ26qRa6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QbMd3ANx; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=O0uRb2o0zg3yRbsk8QFHR3Mp5czS24On7sF5CEVN26FwIhXz1tF57Ob2PhFgdke2BYLjk4uPSR3K+VJFPz6XfflnbQ2VE8c87fNntTKa5ndu+s39jqcKzJwmOYK945a/yjBgyoML/PzmCjRokttDK9Uq8anKN1cdviqrbLWmduk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Gv6rVzxO; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40P2ktLR015835;
-	Thu, 25 Jan 2024 02:59:53 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40P5i5aT014826;
+	Thu, 25 Jan 2024 05:49:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=P0bdtGkJXJ10AYPIH4XmGaFlRnPnceLPtZRfk+9/dvs=; b=Qb
-	Md3ANxdwA9ak8p0Fu2rcnbgQOx8Dyt5tksj9xzYsGUWsrCdFLfP4FBDzAFCUBb3C
-	UqPEjpvEzHl2oS8paF6RMCWgNxXuA7NQmqejbjjMFKbYcqN+U/UBb4Cg9U2G9bR6
-	EFvAS/MHiZCSwSAqMPYctJnM8wfBkW9pg62Q5Hkjrxg6ggX0QVqqzgJBFzzHFo+j
-	fy4GWrU9erx1ZbvUbpXH6eXyGs9PjJj9IvnsLTyCnkkGMGG3L3K77cY6tJ3cJpgd
-	nZzvo/fmi4n8+DygC6DJU+GCbHj5G8Kb4k4xlFPe4kLpVEfI7lomBQEQTqMVG+ld
-	npC0LNOtqDpfXa/L1GaQ==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vu99b0pt0-1
+	qcppdkim1; bh=P2TR27uCwnO+U4fKCMWikVRqcirqj04TH+FzUWx6064=; b=Gv
+	6rVzxON7mjLI0yZUqypAExCs0cFXGZZXsRWTTEP5fZcmZbShhbDftxcvwBPDCR6s
+	AOhDU8jrulH2xYxdNogw5VOjoKjDwHoQPwDDwsrIxVjHIJG37c2P/7oLo0vbZK4D
+	QIVIZE7eaQuCOQooL9cgyvCKlXwIYrpljircnfGeiK4oERaelDtNwLisFjNO9Lt+
+	1tPEyU4WtmDmUwJHbghmSTWyab1HvkXbxJE9pvL1Q5hxaWobcxcFhpOIm8ZGGh0Q
+	JuRgaj6XMYDI/2doP37KrjC61eq3/1ABKF5mDpTGhtE2y6rxHH0ZwmkRkT7mp7Lf
+	X5BOq+ACRKIV1LaGwu2w==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vufc80976-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 25 Jan 2024 02:59:53 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40P2xqlW019041
+	Thu, 25 Jan 2024 05:49:41 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40P5neqI002427
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 25 Jan 2024 02:59:52 GMT
-Received: from [10.239.34.220] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+	Thu, 25 Jan 2024 05:49:40 GMT
+Received: from [10.218.19.46] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 24 Jan
- 2024 18:59:49 -0800
-Message-ID: <0a3f486d-0135-454e-9da6-b888e516a39e@quicinc.com>
-Date: Thu, 25 Jan 2024 10:59:32 +0800
+ 2024 21:49:34 -0800
+Message-ID: <77903574-696b-90f9-f136-be5c5d219ba1@quicinc.com>
+Date: Thu, 25 Jan 2024 11:19:31 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] phy: qcom: qmp-pcie: Update PCIe PHY settings for
- SM8550
-To: <neil.armstrong@linaro.org>, <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>, <kishon@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
-        <quic_mrana@quicinc.com>
-References: <1703742157-69840-1-git-send-email-quic_qianyu@quicinc.com>
- <e6b8befb-82e8-4803-929c-32e86d1e825a@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH 2/3] clk: qcom: gcc-sm8150: Add gcc_parents_0_ao support
 Content-Language: en-US
-From: Qiang Yu <quic_qianyu@quicinc.com>
-In-Reply-To: <e6b8befb-82e8-4803-929c-32e86d1e825a@linaro.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Stephen
+ Boyd" <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Ajit Pandey
+	<quic_ajipan@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        "Jagadeesh Kona" <quic_jkona@quicinc.com>
+References: <20240123-gcc-ao-support-v1-0-6c18d5310874@quicinc.com>
+ <20240123-gcc-ao-support-v1-2-6c18d5310874@quicinc.com>
+ <d31a52fc-9073-483d-b84b-1f02a5698a89@linaro.org>
+From: "Satya Priya Kakitapalli (Temp)" <quic_skakitap@quicinc.com>
+In-Reply-To: <d31a52fc-9073-483d-b84b-1f02a5698a89@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: QvtK0XzjqVZl3qlEtnNQuGk1Yb5P-uMV
-X-Proofpoint-ORIG-GUID: QvtK0XzjqVZl3qlEtnNQuGk1Yb5P-uMV
+X-Proofpoint-ORIG-GUID: 962Qzww9toPsXtvzkXVnHV6vFwJI1sfr
+X-Proofpoint-GUID: 962Qzww9toPsXtvzkXVnHV6vFwJI1sfr
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-24_12,2024-01-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- mlxlogscore=441 impostorscore=0 spamscore=0 suspectscore=0 malwarescore=0
- lowpriorityscore=0 clxscore=1011 adultscore=0 phishscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2401190000
- definitions=main-2401250020
+ definitions=2024-01-25_02,2024-01-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
+ suspectscore=0 bulkscore=0 spamscore=0 priorityscore=1501 mlxscore=0
+ phishscore=0 lowpriorityscore=0 mlxlogscore=834 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401190000 definitions=main-2401250037
 
 
-On 1/24/2024 4:58 PM, neil.armstrong@linaro.org wrote:
-> On 28/12/2023 06:42, Qiang Yu wrote:
->> Align PCIe0/PCIe1 PHY settings with SM8550 latest PCIe PHY Hardware
->> Programming Guide.
+On 1/23/2024 11:17 PM, Konrad Dybcio wrote:
+>
+>
+> On 1/23/24 17:34, Satya Priya Kakitapalli wrote:
+>> Add active_only support for gcc_parents_0, this is needed because
+>> some of the clocks under it are critical which would vote on xo
+>> blocking the suspend.
 >>
->> Can Guo (1):
->>    phy: qcom: qmp-pcie: Update PCIe1 PHY settings for SM8550
->>
->> Qiang Yu (1):
->>    phy: qcom: qmp-pcie: Update PCIe0 PHY settings for SM8550
->>
->>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c             | 20 
->> ++++++++++++++------
->>   drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6.h      |  2 ++
->>   drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6_20.h   |  2 ++
->>   drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_20.h        |  1 +
->>   .../phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v6_20.h   |  2 ++
->>   5 files changed, 21 insertions(+), 6 deletions(-)
->>
+>> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+>> ---
 >
-> - On SM8550-HDK:
-> # lspci
-> 0000:00:00.0 PCI bridge: Qualcomm Device 0113
-> 0000:01:00.0 Network controller: Qualcomm Device 1107 (rev 01)
-> 0001:00:00.0 PCI bridge: Qualcomm Device 0113
-> 0001:01:00.0 Non-Volatile memory controller: Phison Electronics 
-> Corporation E12 NVMe Controller (rev 01)
+> Is there a need to keep gcc_cpuss_ahb_clk_src around? Do we do any
+> ratesetting on it? Should we ever turn it off?
 >
->
-> # lspci -nvv
-> 0000:00:00.0 0604: 17cb:0113 (prog-if 00 [Normal decode])
->         LnkCap:    Port #0, Speed 8GT/s, Width x2, ASPM L0s L1, Exit 
-> Latency L0s <4us, L1 <8us
->         LnkSta:    Speed 5GT/s, Width x2
-> 0001:00:00.0 0604: 17cb:0113 (prog-if 00 [Normal decode])
->         LnkCap:    Port #0, Speed 16GT/s, Width x2, ASPM L0s L1, Exit 
-> Latency L0s <4us, L1 <8us
->         LnkSta:    Speed 8GT/s, Width x2
->
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-HDK
->
-> - On SM8550-QRD:
-> # lspci
-> 00:00.0 PCI bridge: Qualcomm Device 0113
-> 01:00.0 Network controller: Qualcomm Device 1107 (rev 01)
->
-> # lspci -nvv
->         LnkCap:    Port #0, Speed 8GT/s, Width x2, ASPM L0s L1, Exit 
-> Latency L0s <4us, L1 <8us
->         LnkSta:    Speed 5GT/s, Width x2
->
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
->
-> Thanks,
-> Neil
 
-Hi Neil,
-
-Thanks for testing this patch. I verified on aim300, did not see speed 
-downgrade. Let me have a try on HDK8550.
-
-Thanks,
-Qiang
-
+The branch clocks under gcc_cpuss_ahb_clk_src are critical clocks, which 
+are running at 19.2Mhz causing vote on XO during suspend. As of now no 
+rate setting is happening but this rcg is useful to get the exact rates 
+from debugfs. Hence this change is needed to avoid XO shutdown issues.
 
