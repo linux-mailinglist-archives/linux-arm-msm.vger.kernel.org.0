@@ -1,195 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-8239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F85683C118
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 12:40:07 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id DCFC483C15B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 12:53:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9E7781C22E05
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 11:40:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1B4F71C22C81
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 11:53:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 728444F8B4;
-	Thu, 25 Jan 2024 11:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D92533CC8;
+	Thu, 25 Jan 2024 11:53:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PSqj+YfC"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="h1B88CGc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C404A5731D;
-	Thu, 25 Jan 2024 11:36:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9216E405F9;
+	Thu, 25 Jan 2024 11:53:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706182614; cv=none; b=uL+vNXcJYbPyx26PUxc/enJgqIXNqXBv9DVyhcK3gIxghRVbnz8q9ZHdVbpA0a/9pGbcZGrnQr3OK7mp0sjUpqihYgF5qrDW/UUITydS2KTXAw6l374IlVnTwSFHrGbfbMW2kH/OZie9RYSZ+e5XkDrj7NVTJE/E1I+W4XmywmY=
+	t=1706183615; cv=none; b=gLpm4a7Q3mfVZciiNBxaJiWD911SBlXo8qkzevXcyGBuk36gTEhuEjWKhAheCP2owCeK3Q26mho7TEE18rHnSNu/XKXFV9BiekATtm0AQ81VGAwjYTwBPPpSffGbg/3xV4A5oYRRxTU1pwTZsmHaEqk2k7dT5Cl9yM6GAjQUgR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706182614; c=relaxed/simple;
-	bh=9OP2AYCXD7CTzXDDBNhR6z28ox5cvhSWUThScGzrt+w=;
-	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bog0JRlwdCPUSVbuAXDdv39qB2Zu0Kc7gudh39RlLYC3h04vYNGGH7Ft8bAPobjNStoMmtMYWlkAw5EfhSEioESQCjyjjkp/kg+xun7iqFtdH/vcy8ojGsdwad/nRr06DhYNxAe0H/oFQDb7FMLoK1lXW2PY+pUozWFyvDOvI3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PSqj+YfC; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-40ea5653f6bso68137195e9.3;
-        Thu, 25 Jan 2024 03:36:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706182610; x=1706787410; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=DYXWEmKQIsLe7nv5ynnIoPrTMyRKUKUjaFaattLgh4Y=;
-        b=PSqj+YfC4dKUf3TITfNWqC9Y/OljlkLJ+hVYL0FhM/Dcot19NQxX5Bl20+5m+CbCZr
-         pkehB2n3JmKF1Orw3gmWgclhwkbtAP32k5jqNSZZR6LQzKHO+RzG2oij1r4OI9pilDge
-         3/A+HSO85uK/vA5IFoLokw6mDrRwoRZx8yeRheNPugJ2i9cKQ74vxLMQP1kyK7wnk3Zi
-         Aw3l1Ra0SMuAm09HX7g8FMpG57Wz4vuzU9g7MMQJ+tnajXF6loO0k/S72c3DwJSHRYxh
-         geu3YQVrUTWQ5ACxTXHsnpFhEORbR/uU+jkDboj1ZHfDf/HrSLMsla3QJXxatpEyoCYY
-         iBqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706182610; x=1706787410;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DYXWEmKQIsLe7nv5ynnIoPrTMyRKUKUjaFaattLgh4Y=;
-        b=Qqyfdg3L0749d8eo4FDiphObPWzp4qLABYAKRu25lmiTfi4N+A+z+HJXmSgQr11n5C
-         82Opv8eDtwOP7wCwXKtt6Y5XP3G9LLw1oqTxmNlwic7gA7uC2InwLJuaCcVn5XV1WCoD
-         X+5HYW4z4YYlik5/EVvof2bGk/f0kFPrYxzxKZ9TSHEdGtTALzSgt0lo4BEANaTgor+O
-         HNlH+Anpr0LHNRw17cPIVQrKuXkdnLuNacHFQOJyx22wVUY7O0pvqay/Vy+7yBHzrnBV
-         HF/h2sMX65LFgyBo8WToVLvO+Y9KKs2eevvz1jtP2L+ToaWxAlA/r2m48+gquvrjDbRG
-         z9Gw==
-X-Gm-Message-State: AOJu0YxEpIzX1bWFJU6caXg8FfRuo/Nw8R79LSsdyOSYk1ZNhh0DX+0F
-	vjHdFQgn38AwKs+hyCHRTo3Y84hVvAj2BPX1pLtIUiofILhmFb+6
-X-Google-Smtp-Source: AGHT+IH+/n86D85sKsgvGlpJ6zoWcRtr5Zg1ujyeXp+NnFo+8QR08EJvB11lYtfkWyctEvjXABh0bg==
-X-Received: by 2002:a05:600c:6a90:b0:40e:5aa4:44f8 with SMTP id jl16-20020a05600c6a9000b0040e5aa444f8mr405862wmb.216.1706182609563;
-        Thu, 25 Jan 2024 03:36:49 -0800 (PST)
-Received: from Ansuel-xps. (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
-        by smtp.gmail.com with ESMTPSA id bl1-20020adfe241000000b0033935779a23sm10153265wrb.89.2024.01.25.03.36.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jan 2024 03:36:49 -0800 (PST)
-Message-ID: <65b247d1.df0a0220.12334.efd9@mx.google.com>
-X-Google-Original-Message-ID: <ZbJHzSCj8oGm-OJ3@Ansuel-xps.>
-Date: Thu, 25 Jan 2024 12:36:45 +0100
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: Jie Luo <quic_luoj@quicinc.com>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Robert Marko <robert.marko@sartura.hr>,
-	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Sergey Ryazanov <ryazanov.s.a@gmail.com>
-Subject: Re: [net-next PATCH 0/3] net: mdio-ipq4019: fix wrong default MDC
- rate
-References: <20240124213640.7582-1-ansuelsmth@gmail.com>
- <53445feb-a02c-4859-a993-ccf957208115@quicinc.com>
+	s=arc-20240116; t=1706183615; c=relaxed/simple;
+	bh=t+VQA/syYUhHOkpRPOnOYkh/XE/KeU/nkhfWoM5A9Jw=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GlLbfC5TUADVTeSlFd034ogdleMXZLJOM4jWm14mVEM32pwsu7x6M82Yt8MlDifsfwiF0JNmsONL8N+JvP+XrWF+rLH6t3f0Bw0Z1R+NP+aygtifV21SdF05m45Hp6+9MrNzOBXHBNlA4yL18e9wXeuyDJzOW53LmyCB+YWtkYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=h1B88CGc; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40PAdbAG018981;
+	Thu, 25 Jan 2024 11:53:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=9KPKt2C
+	DE8oGLm2AWBrcsrEbWMl7TgEeWSNHxD36Buo=; b=h1B88CGcsD+d03ArotSOhoY
+	VihZg5CwvZX+etDD2aP+H0+Fa8WcJgpIqP4+OT1Z7EtnxRR1LS/OB0wI6ziOuSXD
+	A+YsJ1/vQI/qv6yFZmN75gpP95xC6DMsSrRzxDuUEETkVON1F95X72D0bzINPgav
+	UAT50ZEVF/FiwTvHsc04JxRVJvAq3e42sX+9aheoKrW2hDkFOEv9fiVlHuu38qgz
+	xp7i0jLWls6mFq4E9Wx1uZpYfFxISA4Nr7K3IeTTTdGSStcZiYJCGhwio7QWHiYm
+	42I5zdHkGSVsD26QPyGwu72Une92rmOycrCHX5MA/qJ7HM/opvcjBtu1cv6cDcg=
+	=
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vup2tg78w-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 25 Jan 2024 11:53:17 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40PBrH5e010760
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 25 Jan 2024 11:53:17 GMT
+Received: from hu-uchheda-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Thu, 25 Jan 2024 03:53:13 -0800
+From: Umang Chheda <quic_uchheda@quicinc.com>
+To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_kamalw@quicinc.com>,
+        <quic_uchheda@quicinc.com>
+Subject: [PATCH v2] arm64: dts: qcom: qcm6490-idp: Include PM7250B
+Date: Thu, 25 Jan 2024 17:23:00 +0530
+Message-ID: <20240125115300.3496783-1-quic_uchheda@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <53445feb-a02c-4859-a993-ccf957208115@quicinc.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: jr6SBlKuke4e5PX50Bmep-kOLX03c-cP
+X-Proofpoint-ORIG-GUID: jr6SBlKuke4e5PX50Bmep-kOLX03c-cP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-25_06,2024-01-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ lowpriorityscore=0 spamscore=0 mlxlogscore=746 phishscore=0 mlxscore=0
+ priorityscore=1501 adultscore=0 malwarescore=0 clxscore=1015
+ impostorscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2401190000 definitions=main-2401250082
 
-On Thu, Jan 25, 2024 at 01:57:20PM +0800, Jie Luo wrote:
-> 
-> 
-> On 1/25/2024 5:36 AM, Christian Marangi wrote:
-> > This was a long journey to arrive and discover this problem.
-> > 
-> > To not waste too much char, there is a race problem with PHY and driver
-> > probe. This was observed with Aquantia PHY firmware loading.
-> > 
-> > With some hacks the race problem was workarounded but an interesting
-> > thing was notice. It took more than a minute for the firmware to load
-> > via MDIO.
-> > 
-> > This was strange as the same operation was done by UBoot in at max 5
-> > second and the same data was loaded.
-> > 
-> > A similar problem was observed on a mtk board that also had an
-> > Aquantia PHY where the load was very slow. It was notice that the cause
-> > was the MDIO bus running at a very low speed and the firmware
-> > was missing a property (present in mtk sdk) that set the right frequency
-> > to the MDIO bus.
-> > 
-> > It was fun to find that THE VERY SAME PROBLEM is present on IPQ in a
-> > different form. The MDIO apply internally a division to the feed clock
-> > resulting in the bus running at 390KHz instead of 6.25Mhz.
-> > 
-> > Searching around the web for some documentation and some include and
-> > analyzing the uboot codeflow resulted in the divider being set wrongly
-> > at /256 instead of /16 as the value was actually never set.
-> > Applying the value restore the original load time for the Aquantia PHY.
-> > 
-> > This series mainly handle this by adding support for the "clock-frequency"
-> > property.
-> > 
-> > Christian Marangi (3):
-> >    dt-bindings: net: ipq4019-mdio: document now supported clock-frequency
-> >    net: mdio: ipq4019: add support for clock-frequency property
-> >    arm64: dts: qcom: ipq8074: add clock-frequency to MDIO node
-> > 
-> >   .../bindings/net/qcom,ipq4019-mdio.yaml       | 10 +++
-> >   arch/arm64/boot/dts/qcom/ipq8074.dtsi         |  2 +
-> >   drivers/net/mdio/mdio-ipq4019.c               | 68 +++++++++++++++++--
-> >   3 files changed, 75 insertions(+), 5 deletions(-)
-> > 
-> 
-> Hi Christian,
-> Just a gentle reminder.
->
+Include PM7250B PMIC for qcm6490-idp.
 
-Hi Jie,
-hope you can understand my reason.
+Signed-off-by: Umang Chheda <quic_uchheda@quicinc.com>
+---
+Changes in v2:
+ - Rephrased commit text.
 
-> The MDIO frequency config is already added by the following patch series.
-> https://lore.kernel.org/netdev/28c8b31c-8dcb-4a19-9084-22c77a74b9a1@linaro.org/T/#m840cb8d269dca133c3ad3da3d112c63382ec2058
-> 
+ arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-Wasn't aware of this, as I said in the cover letter this all comes by a
-problem we notice in the Aquantia firmware load that was slow as hell
-and we just notice the misconfiguration of the divisor.
-
-The feature in this series is really a simple one and almost ready (I
-already have v2 ready for the request from Andrew to follow 802.3 spec)
-and we really need it ASAP as we are trying to move our ipq807x targets to
-upstream driver and finally start using the integrated firmware loading
-for Aquantia PHY.
-
-Also I can see some fundamental difference between the 2 patch, mainly
-in how the value is applied and setting a sane divisor by default
-instead of using 0xff. (probably Andrew would have pointed out the same
-thing in some later revision to your series)
-
-Looking at the linked series I notice there are still some thing to
-polish and to clarify with DT and driver and I think it's only
-beneficial if this feature is worked separately as it's not only needed
-for ipq50xx but affects every user of this (ipq40xx, ipq807x, ipq60xx)
-and it would be a pitty to wait the entire ipq50xx series to be handled
-just to fix a long lasting misconfiguration on various SoC family.
-
-Hope you can understand these reasons, it's all for the sake of making
-this driver more mature quicker.
-
-> This MDIO patch series will be updated to just keep the MDIO frequency
-> patch and DT document for this MDIO frequency property added.
-> 
-> For CMN PLL config will be moved to the CMN PLL clock driver and the UNIPHY
-> clock config will be moved the uniphy driver as suggested by
-> Sergey's suggestions.
-> 
-> Thanks.
-> 
-> 
-
+diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+index 03e97e27d16d..2a6e4907c5ee 100644
+--- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
++++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+@@ -5,8 +5,13 @@
+ 
+ /dts-v1/;
+ 
++/* PM7250B is configured to use SID8/9 */
++#define PM7250B_SID 8
++#define PM7250B_SID1 9
++
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ #include "sc7280.dtsi"
++#include "pm7250b.dtsi"
+ #include "pm7325.dtsi"
+ #include "pm8350c.dtsi"
+ #include "pmk8350.dtsi"
 -- 
-	Ansuel
+2.25.1
+
 
