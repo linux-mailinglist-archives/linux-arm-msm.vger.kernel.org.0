@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-8271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8272-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0625C83C7A8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 17:15:05 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9221B83C80B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 17:30:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B295E2952FB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 16:15:03 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F2870B20DBE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 16:30:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54A5A129A6C;
-	Thu, 25 Jan 2024 16:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A2B62207A;
+	Thu, 25 Jan 2024 16:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DP2Ytr5X"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hELJsJsC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F8B1292F6
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 16:14:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96060129A82
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 16:30:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706199299; cv=none; b=SkT7SiIeXj6bsqKC2i8LNNohDDxC8tckm+iM6U0QfIa+aJZ60PZv0cIyNf52zwJf6z3Ih96SjkSRYlxB44ukyCsT98UQJLGg2kahZkURfeMVlH2gtE+ljGWsuKbvxA39ZUR1Oj8P1AGPKiAZHD1dO2LbLYEbX4tqRGQolINvozs=
+	t=1706200214; cv=none; b=RRiuwRO/baPrZz+zCw1hGwGnyTwB4KS8UZZzXkYx7IOZtZTX8SdXKkvf2Zu8TsFpoKWhYRv7b5MYdzwbYVHI9p7T4tag/nWEB9ajrThshWxujsLH5vi20WOHM+ZooTIV2a9HmKGCBCeB2EwWIgJxInKle5cRSnKdHX6FN2S28yQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706199299; c=relaxed/simple;
-	bh=phDWEm7E2RCC4IWzHMQu5zDaitdfQlVSfh1cl5FhwkE=;
+	s=arc-20240116; t=1706200214; c=relaxed/simple;
+	bh=TR6aGTPM9t5wwOjuYIaOf09pZ339d/Sdvarehyw+RI4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WhPG04ckH+7fXr3VCi8PkVpWnieHVE/aKm4w+32TMOoNvvnUP3oNXg5YY+NhiAgrhFBKQdxjfIm8J+9dXXVzAPWIFG7OA4mpo5X8RZ07SsIij+auwaH3qBuKLppLbpDyk9ElHkYU3kg1yNMz6axD1VMF7VIi6OvRD2pHUBXkUPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DP2Ytr5X; arc=none smtp.client-ip=209.85.167.48
+	 In-Reply-To:Content-Type; b=MJU0bVHNV//CxsZC8XKMwfs9YApraFcll5fwATxct3H9SHnbnRHW/yYAwUSIbe6xaFnJPsXSDbwCChoAG2wZp+2FgD7Ali0loeHT4u2vRQyLSkohKJthmayGEgduwNNQYXn/gJBbOEQ+43hVU6gZVHv9axAiTEA/6xKw4uWdbWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hELJsJsC; arc=none smtp.client-ip=209.85.167.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-50f1c524010so7882628e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 08:14:57 -0800 (PST)
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-51013a784easo2389190e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 08:30:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706199295; x=1706804095; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1706200211; x=1706805011; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=h0jv+o9A+wYCzDu98VpZP/cBQ9vOtBitYiceIg2K51c=;
-        b=DP2Ytr5XDihUTxMv0OSsCQ1olRSyB7aaSkZYpIdNBN/GhOZLGvQXpfUdlqkk/4YH7R
-         RGMdof/uSBov6J+ZlD7mINb24sf4OmkUmw4LOCOI3YdCCrU/hq+hxh4otMm4UcVwuukK
-         YqiPhdiIlJCanTUFHFpaRj9eWjcl097ULWeJPGrJORQUsv7e4eBNUGl9nhP89XV1ZJx+
-         c5J4+BZ8e+noovw8LIvPv5Fi8Nifg+cXQk2hyGURaFN25O8C7ephXfHLjr67ZPVH7nxc
-         dhMKcaJe68Ghuo5M/M1fDzfufyOnIY4TZEiWYygfD8PD+1+gzxwX4PWbQSr98leTVVem
-         eWkw==
+        bh=L9ORfXvOUXdfPDPAdOO8WW7EHE91PZVtFj2Y6hJfxfM=;
+        b=hELJsJsC4b2TK7Ce2bWZTJ59anlKiW4dm8aRfyASmVbDHvs1g4WrdzRGo5UYrdTMTg
+         9wbSAIxiaqAGoxtm5NL5vmFvMEedMAsVmv70go6vgU/W7+EPtpkxU4xC/A0mGCCYHXIy
+         cZVpPy4QzAqHlpdm3DhOC57j2DW6JEcqz94bpjYH43M8Ms4Luzel4dLKzKcwAaAFRs6Z
+         IBdYdTxcBIptdGWnIOJ6+cmiZ/cQBKnpnR9IyCGXh4NHNpZk5zHdjHw/cVXr4U3eSi+B
+         aBhC/8Cbyu2VZnvM6tB+riRyplmIaTw7qgRgNnC3QKjrpFH7Fmd0AutixRMwz3uTlcPg
+         RpTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706199295; x=1706804095;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1706200211; x=1706805011;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=h0jv+o9A+wYCzDu98VpZP/cBQ9vOtBitYiceIg2K51c=;
-        b=f8ucrZmvhEZdA2i5Ew18CLNf2zV7HUMA3rz5k2tQ5bk79fZ9ih+se8opogdHR8OtiT
-         Oz3hrkp7u7oLhIaoC7/1u4631ZOX9kTGx15qRVsl/3q2qWEzFxdmHFWxeOf933HxxbTS
-         JS1ioeFUbn/AIHzBPium24ltkcsb2ZWGqrZ8vxxzVw0xKsRURQ9gPbCwfx1CKXT3lk5I
-         Ccs/gK7aQxoXleLcXR3/xWnuFZWE0UV2mrqoGqhrWRZzUleAN52ZvRD21rLQWdYnZPpY
-         BY2d1Zy/1zB8XwLEYMXcRHlS/J/3zwREE/UYKP71g3GM+aEHoWZIQzMeY9Xf5vzGKxgr
-         CQ3g==
-X-Gm-Message-State: AOJu0YyhaQRm1d9DAxIlzjiz/B/ygFariW0ZTu0LLWW4rz0VokrAuXlg
-	gc1GFQOO6+oWAXUwlhVKv18QD68t4omskJjBhO4wHkjsqRZkA8GU5SqPw9DKeKY=
-X-Google-Smtp-Source: AGHT+IFZ/h4luzDKQ5Wha8fN0MhJ7rQBNObQhu+xNDCHND/tH2/sOdGz9/MbywzPqywUbLdy3dKWnA==
-X-Received: by 2002:a05:6512:2202:b0:50e:7b34:c18a with SMTP id h2-20020a056512220200b0050e7b34c18amr13800lfu.111.1706199295600;
-        Thu, 25 Jan 2024 08:14:55 -0800 (PST)
+        bh=L9ORfXvOUXdfPDPAdOO8WW7EHE91PZVtFj2Y6hJfxfM=;
+        b=wRrpf7kzxdE2sY0MaxTZudgCi9N3L75gmCPTVS27YN3kTUniDCeUDQ4EVSaFf++MkD
+         8m1pAlGnMALk/44Y+rz4JQLqO+gECmWHh4X+38aDsDKE6889/GOUsQNlmx824h9isiOV
+         v7uGkxzHk9oga5s3I2hzLd4f1gUhHOl/D2bo1tnk3CljAiRKRWLbTJtDM/Eb1dYZkI6M
+         6L/eanr6noDIftWH8YxkYpRR5tVh9irPZFV8BQdg1lsbGalnJqxxAh4Wj12U5fdGP7ON
+         j2+gCQQR6wOI2b7RPuyIE9OHhCgjrRgWyFWHIE8NAqctuIcMAQaBIsI6bhaSTwY+zgXV
+         E8sw==
+X-Gm-Message-State: AOJu0Yw+rmhKj2yOdd0pdoiJbO2m+W/0PpkFb0dxn6zApnBc/kWllsQd
+	vs7lVCTqmDLXANXE3lzH9mzbyb03wRnPWeT07wLV56N018L7qeDTTF7gqm9yj9g=
+X-Google-Smtp-Source: AGHT+IGab5rWCzYSyVXGFlz/nGkyGkJHUkwn1MhWbiuyzkrOOqOp2GzA20uUEh9GMufP45z0IUFQ9A==
+X-Received: by 2002:ac2:428a:0:b0:510:c8a:d496 with SMTP id m10-20020ac2428a000000b005100c8ad496mr18520lfh.41.1706200210713;
+        Thu, 25 Jan 2024 08:30:10 -0800 (PST)
 Received: from [172.30.205.155] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id h22-20020a056512221600b005101ee22b84sm145726lfu.1.2024.01.25.08.14.53
+        by smtp.gmail.com with ESMTPSA id h4-20020a056512350400b0050eebe0b7d2sm2931938lfs.183.2024.01.25.08.30.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Jan 2024 08:14:55 -0800 (PST)
-Message-ID: <a1e4f2aa-0746-4731-bcd2-ae71f5ca713d@linaro.org>
-Date: Thu, 25 Jan 2024 17:14:52 +0100
+        Thu, 25 Jan 2024 08:30:10 -0800 (PST)
+Message-ID: <da281c50-9dcb-46d6-8cb1-ef4662e24a9e@linaro.org>
+Date: Thu, 25 Jan 2024 17:30:08 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,58 +75,50 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] arm64: dts: qcom: sm8550-mtp: correct WCD9385 TX port
- mapping
-To: neil.armstrong@linaro.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: stable@vger.kernel.org
-References: <20240124164505.293202-1-krzysztof.kozlowski@linaro.org>
- <20240124164505.293202-2-krzysztof.kozlowski@linaro.org>
- <d1cde782-c223-4400-a129-18e63a10a415@linaro.org>
- <3f03ebc4-c67a-40cb-8863-d9c800af54fa@linaro.org>
- <8819b406-34a4-48ba-8d69-25cb4cbcf3e1@linaro.org>
- <320eeed2-af8c-4a83-b0d6-301ceb74f532@linaro.org>
+Subject: Re: [PATCH] arm64: dts: qcom: sm6350: Add tsens thermal zones
 Content-Language: en-US
+To: Luca Weiss <luca.weiss@fairphone.com>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240124-sm6350-tsens-v1-1-d37ec82140af@fairphone.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <320eeed2-af8c-4a83-b0d6-301ceb74f532@linaro.org>
+In-Reply-To: <20240124-sm6350-tsens-v1-1-d37ec82140af@fairphone.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
 
 
-On 1/25/24 14:02, neil.armstrong@linaro.org wrote:
-> On 25/01/2024 11:47, Konrad Dybcio wrote:
->>
->>
->> On 1/25/24 11:43, Krzysztof Kozlowski wrote:
->>> On 25/01/2024 10:59, Konrad Dybcio wrote:
->>>>
->>>>
->>>> On 1/24/24 17:45, Krzysztof Kozlowski wrote:
->>>>> WCD9385 audio codec TX port mapping was copied form HDK8450, but in fact
->>>>> it is offset by one.  Correct it to fix recording via analogue
->>>>> microphones.
->>>>>
->>>>> The change is based on QRD8550 and should be correct here as well, but
->>>>> was not tested on MTP8550.
->>>>
->>>> Would this not be codec-and-not-board-specific, anyway?
->>>
->>> Yes, indeed, it should be.
->>
->> Should we move this to the driver and drop the then-uselesss
->> dt property?
+On 1/24/24 16:31, Luca Weiss wrote:
+> Add the definitions for the various thermal zones found on the SM6350
+> SoC. Hooking up GPU and CPU cooling can limit the clock speeds there to
+> reduce the temperature again to good levels.
 > 
-> Actually it's codec-and-soc specific, so I'm against dropping this.
+> Most thermal zones only have one critical temperature configured at
+> 125°C which can be mostly considered a placeholder until those zones can
+> be hooked up to cooling.
+> 
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
 
-Aaaah snap :(
+[...]
 
-Let's leave it as-is then.
+> +		cpuss0-thermal {
+> +			polling-delay-passive = <0>;
+> +			polling-delay = <0>;
+> +
+> +			thermal-sensors = <&tsens0 7>;
+
+cpuss0-thermal and cpuss1-thermal are very likely the sensors for
+cluster0/1, can you test that out, perhaps with corepinning+stress?
+
+You can then assign multiple cpu cooling devices.
+
+LGTM otherwise!
+
 
 Konrad
 
