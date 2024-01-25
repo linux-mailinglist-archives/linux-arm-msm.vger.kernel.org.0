@@ -1,76 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-8375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA9A683D09B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 00:23:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D44283D09D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 00:23:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 640BFB2508D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 23:23:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E1D8EB24955
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 23:23:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26ED612E5C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C29A412E75;
 	Thu, 25 Jan 2024 23:23:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VRqk6B1p"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZQ3wH4Gg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0275612E75
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 23:23:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA76134B2
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 23:23:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706224985; cv=none; b=A5hozKuHCAGLcXFOKSyKQayGsEL4dcREAkZMlmn5j/FnGeoVWNe31vpvu9IFuxDe00GkRJgYJUL2G2izRcUVaz65oLKzfpIBVgHxiec/9KWjnfHapCkFn5rYGG/vOJSDnsyxBn5XG5n74JlUr8/r7b/at48DSoRQnl4fBD2R8pI=
+	t=1706224985; cv=none; b=RGusOg1N8wMD8YuyPSGNO3tEZfvu6mT/gGku3pYGKyBMUpuP+YP9NrM0N6TVeb3+Y0t4bfv4cGiwkluz4HB1NoFW5r4zMukX372RGYZ0VAfN2+qc1298iAG9KBEKNoBqRkKFRwolD4VZQRkt5a20LHH0zfxbmz1kKEJkSJ5eFkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706224985; c=relaxed/simple;
-	bh=wzZm1Snfn+S6vji4L2JQdN0+CBVcVBvtUE7gaG12uiY=;
+	bh=FRVvslUljyOQBLlaNGTAULZaLPWz/2M8wuWvzbq5CX0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qHM12PZcnHlQITHN7RDaEiUG61QLUWZLkn/hEdMoD2n7a+iGJxPK0Dvr+9XnGtxPe6KkMo9wJRc9vXSqXLYVQ3A7MOr31QDQUzMJC52a9Dkov4U5nQWpid8lqJqckFosHvMsGFs+lw9Ki/9ebo1ePQVH0CmSzSEl/VC2YGpfCY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VRqk6B1p; arc=none smtp.client-ip=209.85.167.47
+	 In-Reply-To:To:Cc; b=H/rAzm3BioegwPqkUdiutpPV3T26bVScHn8CCnK1icJ7S/bGQOG7Ui/v+qpiAe1mHbuWUY8sErX71zp7735w4zvpPn9TFPZiSxuIq75EcvPym6T3xNAxIKqr32IKQsVC8pFkILKhDxjxdgk/swHlGovKZQ2HWJJFBNj7+02hW+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZQ3wH4Gg; arc=none smtp.client-ip=209.85.167.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-51020e061b5so985484e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 15:23:02 -0800 (PST)
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-51021b25396so890294e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 15:23:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1706224981; x=1706829781; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Rv0q5k3NRshGB6WXnPMvW65Ufa6bV3x6w2h5kW9SRqs=;
-        b=VRqk6B1pUwCKfY0LKZR6o2B9lV6jwyl4Gfe2Y8fOde/XDQgDgfNp02v0meSm8kFLKx
-         Za7udJ5+sLlgZJnpOIx5djWTVal3VRqYpVgehR/OUGKK3yJzx2XrqEzPFQwes1XIP0//
-         j4f3V3Jr6Be8aVIEdKpj2BK6K9pVR3Sg3Ic9+pmE8umLCF5TBSoa4RQNLJ4J16HeEc4y
-         i0GoefBluOXk7WrBApgfA1byh53P+ODdam3dWP8hFyUpBVxCGIAkZS+Fi9WA8oi/PW3r
-         FX/nJcQLde1oYVrIhwGzhhtmpZmq6Src69drtsaIWekpsqEXDLAJ/EERH0CeTK/x40+Z
-         tQ9g==
+        bh=Wdc2xHZt2Xz4uzpCvpYR0URs1PZWGBE8ZjwolkRZWZ8=;
+        b=ZQ3wH4GgCBpHNS9NW0YQ8R+aNMGpZ/hOZRvv/n4fhJc5SX18zBdEWijRp3ETpEc7SY
+         LHoqqrqmZIbQMq36FKK4P9qMwEwNJX/cWE2V+VA/USSjK9JWS4EV0i4Hx79GaJc4Lgmu
+         DAyebM8KrNp5yLj78zUbb4VsRYHLcCxUXzLpSbkNVQrP/NM2j08pFTQUjQ2b7R0uxPWn
+         vqlkE3psdQd5f0puG6mPnEfvVkhtq+6cIEupim+t7LMjVf6WG6L9MdRVkTKvMAh18Af3
+         C3RWRy34epzEzK0TaIAIt4WYJuNO7qSjuX7hyjmKYXpudcDbFF0nWiRft/gmo5PazbLd
+         4v9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1706224981; x=1706829781;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Rv0q5k3NRshGB6WXnPMvW65Ufa6bV3x6w2h5kW9SRqs=;
-        b=cmBUfqgGE2ySMwuMAmkX/59u+wvDkskI+GsWoZuuj7tEHfXj6GyBu2ItSt28CaUjZB
-         +zrHJg5UdgQ2iFK98aqT1uRzuydgd6qppd6/hNNO1aE7afNTa/yxe9h7Xh/yTdL/ekst
-         gnSvDiHqb2IUEIlpNO5LMecfk1N4e4Q/SWi1DK3s7MVeQ18wvvmVZBYTFl7b8pj7X651
-         CZUyEAg0j22DcPXgXyMr4yb2sQlDu9OQI6Gm2M9orEhK3frgc+kM6av6HgxVMp+dUMKS
-         vmUwCNu1lyfa9eX9bMTiEn609VMprjv4AyFLRNSJoG/26rMt3VjfCqkIPi+xq95RfSSK
-         XA0A==
-X-Gm-Message-State: AOJu0YzVIAoKZAjuAZTo3AGhX8QEaq5OFxk7Q+VHr9NysFYYZIi0VCMl
-	T5wEXALsV6GZnh3XXbv6i5aiFW6tLMgXHNc8Q6/ZWuYnpEZo9HxgrSRCAGLZuBXZ8Hjk3abiVDj
-	k
-X-Google-Smtp-Source: AGHT+IG3kOrudBbF+VGJ1GLM5SD+5/5GLoEux1XiZW52SKchndgwbEzti2cRK3j/+v3HNHwEsTrWXA==
-X-Received: by 2002:a05:6512:370b:b0:50e:93fa:336 with SMTP id z11-20020a056512370b00b0050e93fa0336mr232707lfr.95.1706224980770;
-        Thu, 25 Jan 2024 15:23:00 -0800 (PST)
+        bh=Wdc2xHZt2Xz4uzpCvpYR0URs1PZWGBE8ZjwolkRZWZ8=;
+        b=vicc+PecZFs2OFVGzICpM2Y71ejE1FzxtF+jdI6BT17OM4zrNmtngpMWrsrxV9yj3u
+         tq2tfKHMhroOSK+8+etdtx6W0a/Yz5kTNuQX4747b9DyuPZKDsZ5oSfI5DCp/Fxrq9QH
+         qmSuEtrw5wKqNetMLa63IPpVeNnt+Ly4858sI9TMiKckUz6H3AMdtBcU1dzZR7KnXA2N
+         OTyRFGsYXTY+58PW4SOMkMep5UfBvk+FUsGbRty1GuuGYC62E5QQA8H52rfG57L4Ie95
+         x6MnO52dnxHa2MFLlqTfzw9UESaqSGcxCpmIZRzEagfTroNnz6/OSX+NPVxmZntf45h3
+         4LYg==
+X-Gm-Message-State: AOJu0YxyhcwIklO4nzl9nCNPMxNpoiatY+b0zvTeKyEIr5Oiu9dR54rb
+	G47/JN6wE5m6pISaDAksiQbbsAd5VKkPkPdeHPfSuEX7BdzjyzdKgJ4JKVUS3N7iJuL84IM1GvJ
+	P
+X-Google-Smtp-Source: AGHT+IHkbQVKPwVIcgIr43lbGB27+XfyECmMTgLwkgL5C53cu2kpPUUTpHTWaCCSzJKTYfn3iRAmnQ==
+X-Received: by 2002:a05:6512:2207:b0:510:544:78f with SMTP id h7-20020a056512220700b005100544078fmr214125lfu.14.1706224981632;
+        Thu, 25 Jan 2024 15:23:01 -0800 (PST)
 Received: from umbar.lan ([192.130.178.91])
         by smtp.gmail.com with ESMTPSA id k3-20020a05651210c300b0050e6df07728sm3920lfg.180.2024.01.25.15.23.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jan 2024 15:23:00 -0800 (PST)
+        Thu, 25 Jan 2024 15:23:01 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 26 Jan 2024 01:22:39 +0200
-Subject: [PATCH v2 5/8] phy: qcom: qmp: move common bits definitions to
- common header
+Date: Fri, 26 Jan 2024 01:22:40 +0200
+Subject: [PATCH v2 6/8] phy: qcom: qmp-usbc: drop has_pwrdn_delay handling
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240126-phy-qmp-merge-common-v2-5-a463d0b57836@linaro.org>
+Message-Id: <20240126-phy-qmp-merge-common-v2-6-a463d0b57836@linaro.org>
 References: <20240126-phy-qmp-merge-common-v2-0-a463d0b57836@linaro.org>
 In-Reply-To: <20240126-phy-qmp-merge-common-v2-0-a463d0b57836@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -88,299 +87,51 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9656;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1040;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=wzZm1Snfn+S6vji4L2JQdN0+CBVcVBvtUE7gaG12uiY=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlsu1Qy5GdMJvZB0kHAKuGe3tl7KsVMd94Elmp/
- KIKkCQoWACJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZbLtUAAKCRCLPIo+Aiko
- 1WW1B/sFpiL6n+OO50TBfApS1gFuJqOG+cKiFn+VuWlEQ1Wb1R9q2R/9E5uvbXCFwxH3SN2TPLz
- Q6iRqAeA97mE0zib94YSnRFg7nKsVkrgGVjK8Mmn/QU2Wc2CJ2Biogh0sLx7FPBie3EjRXbO/u2
- YOCHvkRKr7OAyPewchTy4zaSAR0AMAF2+jKeCfPRv5qE4JHnjppnOU0oUo+DrteossfcABDjoHk
- bQuqktXObQa7MdJ+qaUXVvl53opbp9cYrVNhQ/RC7bWjGRS/Hsfm9igArwKNvaPOeVFdJ25E//X
- Z5/ToMilJ6tQkZojAUaLMt+1Rx4U4gPqIUWX4MYCJocNpukE
+ bh=FRVvslUljyOQBLlaNGTAULZaLPWz/2M8wuWvzbq5CX0=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlsu1QRqPS+qA22zL86pzpN1d0spnPOswdMPEIP
+ R0a2xRUyT6JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZbLtUAAKCRCLPIo+Aiko
+ 1YTkB/42sz6uBhO6BPVJ/6X4X2gXBdyN2xzgtruBGC9V7X6ZrpLK6jcdUkVcYT1eAG4iKohlrUn
+ FU4RMVP+Hkf/gcWJ09hVb94xno/F834I2Co1oaap9PCXEx+OM9MVeS1EQDOGY9H6dPRqTlZsKew
+ lmPwIV8PY+w4jpc/KjFOThBvn1AmmDFBWwsbqQCVupKonCHyS1Tcfpf/w8eD8XxRCxtqd4n9i0B
+ bB/OgBWWR0CUKC6OM4okf38GBQM/I2/qIROrsY+83yNF52KOTMnibI4JdwMs8T7SmzJe2H4he7q
+ YNbBZT/5Nrvk6+MAOyOpgbQMyl1q6E4+tBnsNY/bKwy6kxyF
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Move bit definitions for the common headers to the common phy-qcom-qmp.h
-header.
+None of the PHYs supported by the USBC driver need power down delay.
+Drop corresponding flag and code.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c        | 21 --------------
- drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c | 10 +------
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c         | 12 --------
- drivers/phy/qualcomm/phy-qcom-qmp-ufs.c          |  7 -----
- drivers/phy/qualcomm/phy-qcom-qmp-usb-legacy.c   | 21 --------------
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c          | 35 ------------------------
- drivers/phy/qualcomm/phy-qcom-qmp-usbc.c         | 32 ----------------------
- drivers/phy/qualcomm/phy-qcom-qmp.h              | 25 +++++++++++++++++
- 8 files changed, 26 insertions(+), 137 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-usbc.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index bb961094e41a..b6908a03da58 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -41,16 +41,6 @@
- #include "phy-qcom-qmp-dp-phy-v5.h"
- #include "phy-qcom-qmp-dp-phy-v6.h"
- 
--/* QPHY_SW_RESET bit */
--#define SW_RESET				BIT(0)
--/* QPHY_POWER_DOWN_CONTROL */
--#define SW_PWRDN				BIT(0)
--/* QPHY_START_CONTROL bits */
--#define SERDES_START				BIT(0)
--#define PCS_START				BIT(1)
--/* QPHY_PCS_STATUS bit */
--#define PHYSTATUS				BIT(6)
--
- /* QPHY_V3_DP_COM_RESET_OVRD_CTRL register bits */
- /* DP PHY soft reset */
- #define SW_DPPHY_RESET				BIT(0)
-@@ -65,17 +55,6 @@
- #define USB3_MODE				BIT(0) /* enables USB3 mode */
- #define DP_MODE					BIT(1) /* enables DP mode */
- 
--/* QPHY_PCS_AUTONOMOUS_MODE_CTRL register bits */
--#define ARCVR_DTCT_EN				BIT(0)
--#define ALFPS_DTCT_EN				BIT(1)
--#define ARCVR_DTCT_EVENT_SEL			BIT(4)
--
--/* QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR register bits */
--#define IRQ_CLEAR				BIT(0)
--
--/* QPHY_V3_PCS_MISC_CLAMP_ENABLE register bits */
--#define CLAMP_EN				BIT(0) /* enables i/o clamp_n */
--
- /* QPHY_V3_DP_COM_TYPEC_CTRL register bits */
- #define SW_PORTSELECT_VAL			BIT(0)
- #define SW_PORTSELECT_MUX			BIT(1)
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
-index 07c6f20a49d4..0442b3120563 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
-@@ -23,17 +23,9 @@
- 
- #include "phy-qcom-qmp.h"
- 
--/* QPHY_SW_RESET bit */
--#define SW_RESET				BIT(0)
--/* QPHY_POWER_DOWN_CONTROL */
--#define SW_PWRDN				BIT(0)
--#define REFCLK_DRV_DSBL				BIT(1)
- /* QPHY_START_CONTROL bits */
--#define SERDES_START				BIT(0)
--#define PCS_START				BIT(1)
- #define PLL_READY_GATE_EN			BIT(3)
--/* QPHY_PCS_STATUS bit */
--#define PHYSTATUS				BIT(6)
-+
- /* QPHY_COM_PCS_READY_STATUS bit */
- #define PCS_READY				BIT(0)
- 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index 6119950e455e..5985d019252c 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -34,18 +34,6 @@
- #include "phy-qcom-qmp-pcs-pcie-v6_20.h"
- #include "phy-qcom-qmp-pcie-qhp.h"
- 
--/* QPHY_SW_RESET bit */
--#define SW_RESET				BIT(0)
--/* QPHY_POWER_DOWN_CONTROL */
--#define SW_PWRDN				BIT(0)
--#define REFCLK_DRV_DSBL				BIT(1)
--/* QPHY_START_CONTROL bits */
--#define SERDES_START				BIT(0)
--#define PCS_START				BIT(1)
--/* QPHY_PCS_STATUS bit */
--#define PHYSTATUS				BIT(6)
--#define PHYSTATUS_4_20				BIT(7)
--
- #define PHY_INIT_COMPLETE_TIMEOUT		10000
- 
- /* set of registers with offsets different per-PHY */
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-index 01a96c60c913..38c4a4cc670a 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-@@ -32,13 +32,6 @@
- 
- #include "phy-qcom-qmp-qserdes-txrx-ufs-v6.h"
- 
--/* QPHY_SW_RESET bit */
--#define SW_RESET				BIT(0)
--/* QPHY_POWER_DOWN_CONTROL */
--#define SW_PWRDN				BIT(0)
--/* QPHY_START_CONTROL bits */
--#define SERDES_START				BIT(0)
--#define PCS_START				BIT(1)
- /* QPHY_PCS_READY_STATUS bit */
- #define PCS_READY				BIT(0)
- 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb-legacy.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb-legacy.c
-index ca220878c630..6d0ba39c1943 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-usb-legacy.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb-legacy.c
-@@ -27,16 +27,6 @@
- 
- #include "phy-qcom-qmp-dp-com-v3.h"
- 
--/* QPHY_SW_RESET bit */
--#define SW_RESET				BIT(0)
--/* QPHY_POWER_DOWN_CONTROL */
--#define SW_PWRDN				BIT(0)
--/* QPHY_START_CONTROL bits */
--#define SERDES_START				BIT(0)
--#define PCS_START				BIT(1)
--/* QPHY_PCS_STATUS bit */
--#define PHYSTATUS				BIT(6)
--
- /* QPHY_V3_DP_COM_RESET_OVRD_CTRL register bits */
- /* DP PHY soft reset */
- #define SW_DPPHY_RESET				BIT(0)
-@@ -51,17 +41,6 @@
- #define USB3_MODE				BIT(0) /* enables USB3 mode */
- #define DP_MODE					BIT(1) /* enables DP mode */
- 
--/* QPHY_PCS_AUTONOMOUS_MODE_CTRL register bits */
--#define ARCVR_DTCT_EN				BIT(0)
--#define ALFPS_DTCT_EN				BIT(1)
--#define ARCVR_DTCT_EVENT_SEL			BIT(4)
--
--/* QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR register bits */
--#define IRQ_CLEAR				BIT(0)
--
--/* QPHY_V3_PCS_MISC_CLAMP_ENABLE register bits */
--#define CLAMP_EN				BIT(0) /* enables i/o clamp_n */
--
- #define PHY_INIT_COMPLETE_TIMEOUT		10000
- 
- struct qmp_phy_init_tbl {
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-index 02d90850baf2..80071f688671 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-@@ -29,41 +29,6 @@
- #include "phy-qcom-qmp-pcs-usb-v6.h"
- #include "phy-qcom-qmp-pcs-usb-v7.h"
- 
--/* QPHY_SW_RESET bit */
--#define SW_RESET				BIT(0)
--/* QPHY_POWER_DOWN_CONTROL */
--#define SW_PWRDN				BIT(0)
--/* QPHY_START_CONTROL bits */
--#define SERDES_START				BIT(0)
--#define PCS_START				BIT(1)
--/* QPHY_PCS_STATUS bit */
--#define PHYSTATUS				BIT(6)
--
--/* QPHY_V3_DP_COM_RESET_OVRD_CTRL register bits */
--/* DP PHY soft reset */
--#define SW_DPPHY_RESET				BIT(0)
--/* mux to select DP PHY reset control, 0:HW control, 1: software reset */
--#define SW_DPPHY_RESET_MUX			BIT(1)
--/* USB3 PHY soft reset */
--#define SW_USB3PHY_RESET			BIT(2)
--/* mux to select USB3 PHY reset control, 0:HW control, 1: software reset */
--#define SW_USB3PHY_RESET_MUX			BIT(3)
--
--/* QPHY_V3_DP_COM_PHY_MODE_CTRL register bits */
--#define USB3_MODE				BIT(0) /* enables USB3 mode */
--#define DP_MODE					BIT(1) /* enables DP mode */
--
--/* QPHY_PCS_AUTONOMOUS_MODE_CTRL register bits */
--#define ARCVR_DTCT_EN				BIT(0)
--#define ALFPS_DTCT_EN				BIT(1)
--#define ARCVR_DTCT_EVENT_SEL			BIT(4)
--
--/* QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR register bits */
--#define IRQ_CLEAR				BIT(0)
--
--/* QPHY_V3_PCS_MISC_CLAMP_ENABLE register bits */
--#define CLAMP_EN				BIT(0) /* enables i/o clamp_n */
--
- #define PHY_INIT_COMPLETE_TIMEOUT		10000
- 
- /* set of registers with offsets different per-PHY */
 diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
-index 2de440f0bf02..d316a541f628 100644
+index d316a541f628..5cbc5fd529eb 100644
 --- a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
 +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
-@@ -28,38 +28,6 @@
- #include "phy-qcom-qmp.h"
- #include "phy-qcom-qmp-pcs-misc-v3.h"
+@@ -315,9 +315,6 @@ struct qmp_phy_cfg {
  
--/* QPHY_SW_RESET bit */
--#define SW_RESET				BIT(0)
--/* QPHY_POWER_DOWN_CONTROL */
--#define SW_PWRDN				BIT(0)
--/* QPHY_START_CONTROL bits */
--#define SERDES_START				BIT(0)
--#define PCS_START				BIT(1)
--/* QPHY_PCS_STATUS bit */
--#define PHYSTATUS				BIT(6)
+ 	/* array of registers with different offsets */
+ 	const unsigned int *regs;
 -
--/* QPHY_V3_DP_COM_RESET_OVRD_CTRL register bits */
--/* DP PHY soft reset */
--#define SW_DPPHY_RESET				BIT(0)
--/* mux to select DP PHY reset control, 0:HW control, 1: software reset */
--#define SW_DPPHY_RESET_MUX			BIT(1)
--/* USB3 PHY soft reset */
--#define SW_USB3PHY_RESET			BIT(2)
--/* mux to select USB3 PHY reset control, 0:HW control, 1: software reset */
--#define SW_USB3PHY_RESET_MUX			BIT(3)
--
--/* QPHY_V3_DP_COM_PHY_MODE_CTRL register bits */
--#define USB3_MODE				BIT(0) /* enables USB3 mode */
--#define DP_MODE					BIT(1) /* enables DP mode */
--
--/* QPHY_PCS_AUTONOMOUS_MODE_CTRL register bits */
--#define ARCVR_DTCT_EN				BIT(0)
--#define ALFPS_DTCT_EN				BIT(1)
--#define ARCVR_DTCT_EVENT_SEL			BIT(4)
--
--/* QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR register bits */
--#define IRQ_CLEAR				BIT(0)
--
- #define PHY_INIT_COMPLETE_TIMEOUT		10000
+-	/* true, if PHY needs delay after POWER_DOWN */
+-	bool has_pwrdn_delay;
+ };
  
- /* set of registers with offsets different per-PHY */
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.h b/drivers/phy/qualcomm/phy-qcom-qmp.h
-index d6a9c9b5ea12..d10b8f653c4b 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
-@@ -50,4 +50,29 @@
+ struct qmp_usbc {
+@@ -546,9 +543,6 @@ static int qmp_usbc_power_on(struct phy *phy)
  
- #include "phy-qcom-qmp-pcs-v7.h"
+ 	qmp_configure(qmp->pcs, cfg->pcs_tbl, cfg->pcs_tbl_num);
  
-+/* QPHY_SW_RESET bit */
-+#define SW_RESET				BIT(0)
-+/* QPHY_POWER_DOWN_CONTROL */
-+#define SW_PWRDN				BIT(0)
-+#define REFCLK_DRV_DSBL				BIT(1) /* PCIe */
-+
-+/* QPHY_START_CONTROL bits */
-+#define SERDES_START				BIT(0)
-+#define PCS_START				BIT(1)
-+
-+/* QPHY_PCS_STATUS bit */
-+#define PHYSTATUS				BIT(6)
-+#define PHYSTATUS_4_20				BIT(7)
-+
-+/* QPHY_PCS_AUTONOMOUS_MODE_CTRL register bits */
-+#define ARCVR_DTCT_EN				BIT(0)
-+#define ALFPS_DTCT_EN				BIT(1)
-+#define ARCVR_DTCT_EVENT_SEL			BIT(4)
-+
-+/* QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR register bits */
-+#define IRQ_CLEAR				BIT(0)
-+
-+/* QPHY_PCS_MISC_CLAMP_ENABLE register bits */
-+#define CLAMP_EN				BIT(0) /* enables i/o clamp_n */
-+
- #endif
+-	if (cfg->has_pwrdn_delay)
+-		usleep_range(10, 20);
+-
+ 	/* Pull PHY out of reset state */
+ 	qphy_clrbits(qmp->pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
+ 
 
 -- 
 2.39.2
