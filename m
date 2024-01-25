@@ -1,122 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-8270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D12383C71A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 16:45:52 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0625C83C7A8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 17:15:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B0215B21A8D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 15:45:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B295E2952FB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 16:15:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9773D7318F;
-	Thu, 25 Jan 2024 15:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54A5A129A6C;
+	Thu, 25 Jan 2024 16:14:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FkZxV+zU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DP2Ytr5X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22277316D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 15:45:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F8B1292F6
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 16:14:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706197539; cv=none; b=IClfNkhXZHjIKfLPXtxQs4YeRFuiTJoRw3l+2hWZ76MseYnqH4VamnY7O0WhDrch1jZCOQvSicbizIkT+xhM1H6w/DyiE+Az0ubLbm0ahYfm4/tWAdNyagd1l5+WixH9XSm3m+E9mIecZ1oVE6CNiOTQNBWzN3wcLQLhlVMWga0=
+	t=1706199299; cv=none; b=SkT7SiIeXj6bsqKC2i8LNNohDDxC8tckm+iM6U0QfIa+aJZ60PZv0cIyNf52zwJf6z3Ih96SjkSRYlxB44ukyCsT98UQJLGg2kahZkURfeMVlH2gtE+ljGWsuKbvxA39ZUR1Oj8P1AGPKiAZHD1dO2LbLYEbX4tqRGQolINvozs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706197539; c=relaxed/simple;
-	bh=q1qkIXtslpnOwyKogLlXnCMaPNppQH6HlI4rFEyb7Bg=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=T4Z3SQzmOa7bO1bEzHk6GAIV9/3WHX/2BKx1A4YTECUIwcMK7X0ezNogN51moKlmP/xR+ki6168Fd5Uo2FsmhWDRlW4I69kFRwZGx6WbKaOwkGtXGQQPSDw9O86cn/wd+zPDj14qxNdq0L6ITfFhj4MFPZuYDgpLKgnoRJ9Rtvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FkZxV+zU; arc=none smtp.client-ip=209.85.128.45
+	s=arc-20240116; t=1706199299; c=relaxed/simple;
+	bh=phDWEm7E2RCC4IWzHMQu5zDaitdfQlVSfh1cl5FhwkE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WhPG04ckH+7fXr3VCi8PkVpWnieHVE/aKm4w+32TMOoNvvnUP3oNXg5YY+NhiAgrhFBKQdxjfIm8J+9dXXVzAPWIFG7OA4mpo5X8RZ07SsIij+auwaH3qBuKLppLbpDyk9ElHkYU3kg1yNMz6axD1VMF7VIi6OvRD2pHUBXkUPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DP2Ytr5X; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-40ed2333c8fso8288405e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 07:45:36 -0800 (PST)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-50f1c524010so7882628e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 08:14:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706197535; x=1706802335; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=/ZKp3uqQYAmq1YVDENjbc/8chIdFJnXVp5TeqqADjso=;
-        b=FkZxV+zUVnyuTCuXiMSYx561hRcu9OrmwxksFuutHP6M8iqftS86fp5FkFT5NhmdHE
-         FE6EoOTZiQkfyCYR63rNZEM7pVp2N3L58vGawFBw/WetCS1CB3i1YkAP11FKBm5zPOER
-         EoSAxE8dgrEm7LujSJ6DcASMPSZqWfkYnBcWEQmruyuTUVAx0MuOgkbPezstfPRkcQ1C
-         MsYZ8yEr23jIZX+6O2+V9ccgkCZVAVEWYY80Yq4fHWnQ2MPJYRVZsgFYb/bVyBb//zB6
-         bW4pBis+2V0P3TvfQYzNHi0ZF5vwzB0bqd9eZTz8FFNAMws3zcJQrp+/w1Y8zelAk5eK
-         t45g==
+        d=linaro.org; s=google; t=1706199295; x=1706804095; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=h0jv+o9A+wYCzDu98VpZP/cBQ9vOtBitYiceIg2K51c=;
+        b=DP2Ytr5XDihUTxMv0OSsCQ1olRSyB7aaSkZYpIdNBN/GhOZLGvQXpfUdlqkk/4YH7R
+         RGMdof/uSBov6J+ZlD7mINb24sf4OmkUmw4LOCOI3YdCCrU/hq+hxh4otMm4UcVwuukK
+         YqiPhdiIlJCanTUFHFpaRj9eWjcl097ULWeJPGrJORQUsv7e4eBNUGl9nhP89XV1ZJx+
+         c5J4+BZ8e+noovw8LIvPv5Fi8Nifg+cXQk2hyGURaFN25O8C7ephXfHLjr67ZPVH7nxc
+         dhMKcaJe68Ghuo5M/M1fDzfufyOnIY4TZEiWYygfD8PD+1+gzxwX4PWbQSr98leTVVem
+         eWkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706197535; x=1706802335;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/ZKp3uqQYAmq1YVDENjbc/8chIdFJnXVp5TeqqADjso=;
-        b=EPaortbeJnclTol0nayw2A1J1BTp13oJC3KRcpElgMg5ibKviQFGeYF4wSCbsmTrB6
-         51KDAkvjayWFcagxTxmZZAbh9P5uWnn+PL9U5zsvh8HUA2rXsR6kOpk0mgJGwYEtY1fD
-         n3A4coGD29U/qNFL6iI1HtztzMNBAgp9KzcMP7Da6NaVwiMjsx5PFcanhUEhpOvXpzHn
-         n1+dYpUQ+QzAnGC8JjGGYT2+NringSZSC2ts+Ad+Pa1m5IbSjiqjbCwXdQ7Xz6tJK1LN
-         iOyRvdrQRNpVt4NyATwkJoZIj2ATfeQulTx5ViJtclDvFgkPm8YwiUMP9rTsrnzEH+tk
-         xWqQ==
-X-Gm-Message-State: AOJu0YyUcdnn5qSSE2RjKclNrrupbz86n4k1j30xwYGnvc4JE6uu4eyF
-	/JjYDSK4Krddb+wz5K0lQuIL8OKjK+v+IQQMpANxM6xGNi7KkjPbspmaXguV744=
-X-Google-Smtp-Source: AGHT+IHuoNdaRTPK5NXqlIvnrcXgXqBejZK0Hmr6tF0tLG1/F4avGqmk5r5MmRqsRsj/fcgf5Ba8Jw==
-X-Received: by 2002:a05:600c:4e88:b0:40e:b95b:e482 with SMTP id f8-20020a05600c4e8800b0040eb95be482mr672975wmq.115.1706197534905;
-        Thu, 25 Jan 2024 07:45:34 -0800 (PST)
-Received: from krzk-bin.. ([178.197.215.66])
-        by smtp.gmail.com with ESMTPSA id v17-20020a05600c471100b0040ec7fcaea6sm2986552wmo.37.2024.01.25.07.45.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jan 2024 07:45:34 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] arm64: dts: qcom: sc8280xp-x13s: correct analogue microphone route
-Date: Thu, 25 Jan 2024 16:45:31 +0100
-Message-Id: <20240125154531.417098-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20230601; t=1706199295; x=1706804095;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=h0jv+o9A+wYCzDu98VpZP/cBQ9vOtBitYiceIg2K51c=;
+        b=f8ucrZmvhEZdA2i5Ew18CLNf2zV7HUMA3rz5k2tQ5bk79fZ9ih+se8opogdHR8OtiT
+         Oz3hrkp7u7oLhIaoC7/1u4631ZOX9kTGx15qRVsl/3q2qWEzFxdmHFWxeOf933HxxbTS
+         JS1ioeFUbn/AIHzBPium24ltkcsb2ZWGqrZ8vxxzVw0xKsRURQ9gPbCwfx1CKXT3lk5I
+         Ccs/gK7aQxoXleLcXR3/xWnuFZWE0UV2mrqoGqhrWRZzUleAN52ZvRD21rLQWdYnZPpY
+         BY2d1Zy/1zB8XwLEYMXcRHlS/J/3zwREE/UYKP71g3GM+aEHoWZIQzMeY9Xf5vzGKxgr
+         CQ3g==
+X-Gm-Message-State: AOJu0YyhaQRm1d9DAxIlzjiz/B/ygFariW0ZTu0LLWW4rz0VokrAuXlg
+	gc1GFQOO6+oWAXUwlhVKv18QD68t4omskJjBhO4wHkjsqRZkA8GU5SqPw9DKeKY=
+X-Google-Smtp-Source: AGHT+IFZ/h4luzDKQ5Wha8fN0MhJ7rQBNObQhu+xNDCHND/tH2/sOdGz9/MbywzPqywUbLdy3dKWnA==
+X-Received: by 2002:a05:6512:2202:b0:50e:7b34:c18a with SMTP id h2-20020a056512220200b0050e7b34c18amr13800lfu.111.1706199295600;
+        Thu, 25 Jan 2024 08:14:55 -0800 (PST)
+Received: from [172.30.205.155] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id h22-20020a056512221600b005101ee22b84sm145726lfu.1.2024.01.25.08.14.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Jan 2024 08:14:55 -0800 (PST)
+Message-ID: <a1e4f2aa-0746-4731-bcd2-ae71f5ca713d@linaro.org>
+Date: Thu, 25 Jan 2024 17:14:52 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] arm64: dts: qcom: sm8550-mtp: correct WCD9385 TX port
+ mapping
+To: neil.armstrong@linaro.org,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: stable@vger.kernel.org
+References: <20240124164505.293202-1-krzysztof.kozlowski@linaro.org>
+ <20240124164505.293202-2-krzysztof.kozlowski@linaro.org>
+ <d1cde782-c223-4400-a129-18e63a10a415@linaro.org>
+ <3f03ebc4-c67a-40cb-8863-d9c800af54fa@linaro.org>
+ <8819b406-34a4-48ba-8d69-25cb4cbcf3e1@linaro.org>
+ <320eeed2-af8c-4a83-b0d6-301ceb74f532@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <320eeed2-af8c-4a83-b0d6-301ceb74f532@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Starting with Qualcomm SM8350 SoC, so Low Power Audio SubSystem (LPASS)
-block version v9.2, the register responsible for TX SMIC MUXn muxes is
-different.  The LPASS TX macro codec driver is being fixed to handle
-that difference, so the DTS must be updated as well for new widget name.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
----
+On 1/25/24 14:02, neil.armstrong@linaro.org wrote:
+> On 25/01/2024 11:47, Konrad Dybcio wrote:
+>>
+>>
+>> On 1/25/24 11:43, Krzysztof Kozlowski wrote:
+>>> On 25/01/2024 10:59, Konrad Dybcio wrote:
+>>>>
+>>>>
+>>>> On 1/24/24 17:45, Krzysztof Kozlowski wrote:
+>>>>> WCD9385 audio codec TX port mapping was copied form HDK8450, but in fact
+>>>>> it is offset by one.  Correct it to fix recording via analogue
+>>>>> microphones.
+>>>>>
+>>>>> The change is based on QRD8550 and should be correct here as well, but
+>>>>> was not tested on MTP8550.
+>>>>
+>>>> Would this not be codec-and-not-board-specific, anyway?
+>>>
+>>> Yes, indeed, it should be.
+>>
+>> Should we move this to the driver and drop the then-uselesss
+>> dt property?
+> 
+> Actually it's codec-and-soc specific, so I'm against dropping this.
 
-This unfortunately depends on:
-https://lore.kernel.org/alsa-devel/20240125153110.410295-1-krzysztof.kozlowski@linaro.org/T/#m62da29e6b80fa419e6339d3c27439894cb04cecb
+Aaaah snap :(
 
-and my tries to make it backwards compatible failed.
----
- arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Let's leave it as-is then.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index def3976bd5bb..0165492e4e11 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -986,7 +986,7 @@ &sound {
- 		"VA DMIC0", "VA MIC BIAS1",
- 		"VA DMIC1", "VA MIC BIAS1",
- 		"VA DMIC2", "VA MIC BIAS3",
--		"TX SWR_ADC1", "ADC2_OUTPUT";
-+		"TX SWR_INPUT1", "ADC2_OUTPUT";
- 
- 	wcd-playback-dai-link {
- 		link-name = "WCD Playback";
--- 
-2.34.1
-
+Konrad
 
