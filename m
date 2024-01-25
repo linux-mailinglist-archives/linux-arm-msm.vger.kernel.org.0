@@ -1,79 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-8291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8293-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15F4D83CBC7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 20:01:10 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0BEF383CCA1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 20:40:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BF07B1F21F35
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 19:01:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2DCFF1C225F8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 19:40:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FD7D137C49;
-	Thu, 25 Jan 2024 19:00:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A40B1350E6;
+	Thu, 25 Jan 2024 19:39:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kL9B3p5z"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MY2Fm2C/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6278137C3D;
-	Thu, 25 Jan 2024 18:59:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9DBD1BDD6
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 19:39:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706209201; cv=none; b=aSHSJieFRUgT1RyfqpoKXpe7kfr5Pv84sEQT8Rs3iRiMmH7MxiFhZRvPED0QeY8cGyshd7M5SHvUYetItJhq7Awkv74K3kYx7p2mm5fio7Aa85qdJv+Zawfl0tvub04iseJuokL55QEBKeiFIl6QOiJOzff34X02umgA6qdoSMI=
+	t=1706211545; cv=none; b=XE8d2x5gMXURsos4hOmeMl0ykTOoO/m6RFJHBfF7DqTfDyz8aBHvuVjQM9eE4wJyYbTZQBe45dq3qZ3Lc84+77ulPnfjJ6VHa63NuymkUGLfsOe+6c9nUgH7Opf49bn37JYdnQWRpQSN4KXxD7dt1aC8KQpz5/l/9XwbLKLvxq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706209201; c=relaxed/simple;
-	bh=HDJDZ7O9mdNe/Y3AxDRfD6+ErhPOkpfNXxy4R/TlEVM=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OM+fbyx0YaC7wEkeavMeRaM6MLFL5ucMsOkUmLOVqWYBsuMQdfpcaL8+FBcUgEvX92e8a9oUsLNhbu2qbtOrjnrNbA5I8NFaZX6ultr+iu9ZijRKwejXFN1yrb4rxilnbNR8ZXixh8hjl13E4sqJkrJvC5uZOntZP8XdgXDramg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kL9B3p5z; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1706211545; c=relaxed/simple;
+	bh=r3nOhd3Maw9ZCpcXjZaarPIM6R5/U9TeXmQzg5sTr0g=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=JpjhJ4D/5eb1QFeyJOW9bkJZ6MN7PGf7SqVsk0GXLKaUx1QcXUFMlQCoPAmUYj2S3llkdxgj8wbIGoY+RNSi5id8mB+1xmq9T9Tc7v21yZ3mnAtIT1P9EG7hU10lDRruFker8DbgERpBs329Eye2mKEggZZWmWtjgwJgbQ9C5OM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MY2Fm2C/; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40PIB9qL007932;
-	Thu, 25 Jan 2024 18:59:56 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40PJOIMh001884;
+	Thu, 25 Jan 2024 19:38:53 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=JAN4K8Xa62IAsqf/M72hM6xabS3g3wSCJxBQxVgkqKM=; b=kL
-	9B3p5z+HiJSSWJFL1Bmm3qDUPMvx7CCrfyoPrQqOyfAfY93afoP7mLAkkItKSZuY
-	cQop515lfjGx9LKwByW1XxHgTfRjJpNc/DSm8xkUcRaT06t+How46xv/XMqKvaAs
-	4e1LkkDa0cpQ1RDi5r7x8cbJ1sgNpI31Lcylqc3LGGVH1uINxYkveKtb4X5mqzTK
-	NtIROhshOjEyG5To8NuP/MS5TVnRU1jdVGmaH8tULFhuJBWZHAR5fimup2Z/X8DS
-	iT93SqQyynjIdAdP9qNwmAmk/qIJgNzOiuH0JrEEIpHiiPVHNMxbNX9txD1751YL
-	befFIifFNjrySozzBzvQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vupy897ky-1
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=58wOxlJ
+	bp3Kn/3g9GzCq33PP7tx3KaUvybCYMFQi0ws=; b=MY2Fm2C/tJJfQaK8fmeByrz
+	1O/cjzjjXWgzLBJLqOrHiOXXGtu03NcxvC8z8lcOsnvMYocYjOVwXiwyUc5zGX5h
+	FlL/GjiO45HbM6qhD0KiL2JerbLNxHW/OC0EAR114qt1A9Kfj8lViYX5UFqRm3P9
+	N46IHpnR6BreGAxsFSbz9SS5PXHSSC+L87+b0pHTL2qyqV6QKgs7Ax2k+7xqKnVU
+	5CbUqnEF+IOBKhLCr7GXyZZmb5h+KRQY4XGrhUM3GfWED5hZjAZKlh5tFt/AUn0v
+	Tz+baBns+u88sUADt+o6AvZNQrH+gi+8U8i+BkqeAPvLQWSXK15U/OxosOrGUxA=
+	=
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vuqra12ga-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 25 Jan 2024 18:59:55 +0000 (GMT)
+	Thu, 25 Jan 2024 19:38:53 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40PIxsaf017202
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40PJcqsg023478
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 25 Jan 2024 18:59:54 GMT
-Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
+	Thu, 25 Jan 2024 19:38:52 GMT
+Received: from hu-parellan-lv.qualcomm.com (10.49.16.6) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Thu, 25 Jan 2024 10:59:50 -0800
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring
-	<robh+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        <cros-qcom-dts-watchers@chromium.org>
-CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>, Krishna Kurapati <quic_kriskura@quicinc.com>
-Subject: [PATCH v3 4/4] arm64: dts: qcom: Add missing interrupts for qcs404/ipq5332
-Date: Fri, 26 Jan 2024 00:29:21 +0530
-Message-ID: <20240125185921.5062-5-quic_kriskura@quicinc.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20240125185921.5062-1-quic_kriskura@quicinc.com>
-References: <20240125185921.5062-1-quic_kriskura@quicinc.com>
+ 15.2.1118.40; Thu, 25 Jan 2024 11:38:52 -0800
+From: Paloma Arellano <quic_parellan@quicinc.com>
+To: <freedreno@lists.freedesktop.org>
+CC: Paloma Arellano <quic_parellan@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <robdclark@gmail.com>, <seanpaul@chromium.org>, <swboyd@chromium.org>,
+        <dmitry.baryshkov@linaro.org>, <quic_abhinavk@quicinc.com>,
+        <quic_jesszhan@quicinc.com>, <quic_khsieh@quicinc.com>,
+        <marijn.suijten@somainline.org>, <neil.armstrong@linaro.org>
+Subject: [PATCH 00/17] Add support for CDM over DP
+Date: Thu, 25 Jan 2024 11:38:09 -0800
+Message-ID: <20240125193834.7065-1-quic_parellan@quicinc.com>
+X-Mailer: git-send-email 2.41.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,86 +75,85 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Xc1Pb3bBJfh54XCTb1wgQNi8qdmt51Mf
-X-Proofpoint-ORIG-GUID: Xc1Pb3bBJfh54XCTb1wgQNi8qdmt51Mf
+X-Proofpoint-GUID: djni7z6NjcZS465uKvDhKEp6yYCF5pJK
+X-Proofpoint-ORIG-GUID: djni7z6NjcZS465uKvDhKEp6yYCF5pJK
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-01-25_12,2024-01-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 mlxscore=0
- adultscore=0 phishscore=0 bulkscore=0 malwarescore=0 mlxlogscore=276
- impostorscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2401190000 definitions=main-2401250137
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 mlxlogscore=836 phishscore=0 lowpriorityscore=0 bulkscore=0
+ spamscore=0 malwarescore=0 mlxscore=0 impostorscore=0 suspectscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401190000 definitions=main-2401250142
 
-For qcs404 and ipq5332, certain interrupts are missing in DT.
-Add them to ensure they are in accordance to bindings.
+The Chroma Down Sampling (CDM) block is a hardware component in the DPU
+pipeline that includes a CSC block capable of converting RGB input from
+the DPU to YUV data.
 
-The interrupts added enable remote wakeup functionality for these SoCs.
+This block can be used with either HDMI, DP, or writeback interfaces.
+This series adds support for the CDM block to be used with DP in
+YUV420 mode format.
 
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
----
- arch/arm64/boot/dts/qcom/ipq5332.dtsi |  8 ++++++--
- arch/arm64/boot/dts/qcom/qcs404.dtsi  | 16 ++++++++++++++++
- 2 files changed, 22 insertions(+), 2 deletions(-)
+This series allows selection of the YUV420 format for monitors which support
+certain resolutions only in YUV420 thus unblocking the validation of many
+other resolutions which were previously filtered out if the connector did
+not support YUV420.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-index 42e2e48b2bc3..770d9c2fb456 100644
---- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-@@ -320,8 +320,12 @@ usb: usb@8af8800 {
- 			compatible = "qcom,ipq5332-dwc3", "qcom,dwc3";
- 			reg = <0x08af8800 0x400>;
- 
--			interrupts = <GIC_SPI 62 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "hs_phy_irq";
-+			interrupts = <GIC_SPI 62 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 53 IRQ_TYPE_EDGE_BOTH>,
-+				     <GIC_SPI 52 IRQ_TYPE_EDGE_BOTH>;
-+			interrupt-names = "pwr_event",
-+					  "dp_hs_phy_irq",
-+					  "dm_hs_phy_irq";
- 
- 			clocks = <&gcc GCC_USB0_MASTER_CLK>,
- 				 <&gcc GCC_SNOC_USB_CLK>,
-diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-index 2f2eeaf2e945..a05d0234f7fc 100644
---- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-@@ -675,6 +675,14 @@ usb3: usb@7678800 {
- 			assigned-clocks = <&gcc GCC_USB20_MOCK_UTMI_CLK>,
- 					  <&gcc GCC_USB30_MASTER_CLK>;
- 			assigned-clock-rates = <19200000>, <200000000>;
-+
-+			interrupts = <GIC_SPI 25 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 24 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 319 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "pwr_event",
-+					  "hs_phy_irq",
-+					  "qusb2_phy";
-+
- 			status = "disabled";
- 
- 			usb3_dwc3: usb@7580000 {
-@@ -704,6 +712,14 @@ usb2: usb@79b8800 {
- 			assigned-clocks = <&gcc GCC_USB20_MOCK_UTMI_CLK>,
- 					  <&gcc GCC_USB_HS_SYSTEM_CLK>;
- 			assigned-clock-rates = <19200000>, <133333333>;
-+
-+			interrupts = <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 318 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "pwr_event",
-+					  "hs_phy_irq",
-+					  "qusb2_phy";
-+
- 			status = "disabled";
- 
- 			usb@78c0000 {
+This was validated using a DP connected monitor requiring the use of
+YUV420 format.
+
+This series currently works as-is. But it was also validated to function on
+top of in the case of future integration:
+
+https://patchwork.freedesktop.org/series/118831/
+
+Kuogee Hsieh (1):
+  drm/msm/dpu: add support of new peripheral flush mechanism
+
+Paloma Arellano (16):
+  drm/msm/dpu: allow dpu_encoder_helper_phys_setup_cdm to work for DP
+  drm/msm/dpu: move dpu_encoder_helper_phys_setup_cdm to dpu_encoder
+  drm/msm/dp: rename wide_bus_en to wide_bus_supported
+  drm/msm/dp: store mode YUV420 information to be used by rest of DP
+  drm/msm/dp: add an API to indicate if sink supports VSC SDP
+  drm/msm/dpu: move widebus logic to its own API
+  drm/msm/dpu: disallow widebus en in INTF_CONFIG2 when DP is YUV420
+  drm/msm/dp: change YUV420 related programming for DP
+  drm/msm/dp: move parity calculation to dp_catalog
+  drm/msm/dp: modify dp_catalog_hw_revision to show major and minor val
+  drm/msm/dp: add VSC SDP support for YUV420 over DP
+  drm/msm/dp: enable SDP and SDE periph flush update
+  drm/msm/dpu: modify encoder programming for CDM over DP
+  drm/msm/dpu: allow certain formats for CDM for DP
+  drm/msm/dpu: reserve CDM blocks for DP if mode is YUV420
+  drm/msm/dp: allow YUV420 mode for DP connector when VSC SDP supported
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 143 ++++++++++++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h   |  12 ++
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  13 +-
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  |  36 +++-
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   | 101 +---------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cdm.c    |   2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c    |  17 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h    |  10 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c   |   4 +-
+ drivers/gpu/drm/msm/dp/dp_audio.c             | 100 ++--------
+ drivers/gpu/drm/msm/dp/dp_catalog.c           | 182 +++++++++++++++++-
+ drivers/gpu/drm/msm/dp/dp_catalog.h           |  81 +++++++-
+ drivers/gpu/drm/msm/dp/dp_ctrl.c              |  17 +-
+ drivers/gpu/drm/msm/dp/dp_display.c           |  79 +++++---
+ drivers/gpu/drm/msm/dp/dp_panel.c             |  82 +++++++-
+ drivers/gpu/drm/msm/dp/dp_panel.h             |   2 +
+ drivers/gpu/drm/msm/dp/dp_reg.h               |   5 +
+ drivers/gpu/drm/msm/msm_drv.h                 |   9 +-
+ drivers/gpu/drm/msm/msm_kms.h                 |   3 +
+ 19 files changed, 655 insertions(+), 243 deletions(-)
+
 -- 
-2.42.0
+2.39.2
 
 
