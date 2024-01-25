@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-8222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8223-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5936A83BE20
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 10:59:06 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A6A883BE27
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 10:59:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0F4781F268E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 09:59:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5966B1C20F37
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 09:59:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2738B1C6A1;
-	Thu, 25 Jan 2024 09:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 971831C290;
+	Thu, 25 Jan 2024 09:59:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ayPiKa1V"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qTRTDKBo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com [209.85.217.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7201C696
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 09:59:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AEED1C69A
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 09:59:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706176743; cv=none; b=creoa7SVy6PBqsKTULBA29xA3jS1sX1SvQ8g8FKJme48U2q7kJX0jlQ1LK7B9+AMeB5NE3kG1kDncO9uylbUooqInR0kAEacbY3m5+WDSodjN1u47B+4uqjXN4OQQdXojttfKLRz2hRYmY3pGBeIskUt7So1kbfPfU0eVi6iP+k=
+	t=1706176793; cv=none; b=M8kQJVTzgF9/htTGFYqUeRymBJUlo4QCk1MXi25BY/PMnkP8GmswpaHZoGdnkA6kPl7H4xnAVyuNEeLEC8VjQtSYsDLlRSczRvRz+1s6DI4ha4ybPieM00MpRCjgP3SaNFZ8lgsqebNIF1cY92+4jkEpd2SSW6UAk5LrIIU9HiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706176743; c=relaxed/simple;
-	bh=WKpvg0X+iL12WtuMds4/SdTYP/Rq0wCzwew5aiXY4jM=;
+	s=arc-20240116; t=1706176793; c=relaxed/simple;
+	bh=ApUQmlkxa81ceXyof4WusvA21E0Fg32BgwslQHx9PRw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=X8UdVPHdESkgHQL8aDhZInivaz3BFrUBfXM8gLSlNYab4ZWDHU2Gnr+5+Xs1T5WOOJ0SVvkIu4AB/f/vixYy+RqFyDhv3LBgoG6QlNeIJh1dTc5lFr8boKCIF9trEPfCAhxm0SgQjBLx5k3Ln2/B34sdgASX3iTA3wZINoVF1Q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ayPiKa1V; arc=none smtp.client-ip=209.85.219.52
+	 In-Reply-To:Content-Type; b=FOGfXeTmj7/l79CUwIWa6CjckctxUKR27UGg/TNo0N5oykHo0jrESwvH4hGhp5IB03/UIWYjHdSnAHF+BXOTozJDkNLUgAy8ljdrU02He6cVR9lIDhDN1iWVm440ChlLV+GqIZ7Jp7qhm02WWeaZkBn08Wdyp4ZBuz4QpRcz98g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qTRTDKBo; arc=none smtp.client-ip=209.85.217.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6818a9fe380so38546806d6.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 01:59:01 -0800 (PST)
+Received: by mail-vs1-f42.google.com with SMTP id ada2fe7eead31-46b1f0ff2ccso15569137.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 01:59:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706176740; x=1706781540; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706176791; x=1706781591; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=79PYbjK8bosV8v03uRxryBv/M1N0jqOVv+qRTvu/Lno=;
-        b=ayPiKa1V9dKP6lRTLAZxRV4ljG22qpiUX3TjTSajZFcvf/0skpB5IAxbxFvBt0oWoA
-         gW7bEcl682Xm4FXztOLFtpJGo1HfbBx52YT0cvYFJPyzZaZfZaIjkaJ/DGudMPeuF0ee
-         BNrqR+xng1TlqL+cfAS81OvSs1KsaMJtvFKXYJUHRHoh5fkn7epeL1G/PH3sFtqfcC+s
-         7Q9w9H89EMxLGlbml27qX21Dfc00yHu+j5/JLQthrui8itozHSCxpmJQaRj+4wLgtIWH
-         hmVQL+1GAr/E+zq/RLIje03Qnw+VvivPB5T3KAMDtjqTEOOFNeyO15QZy/EAjAgX4tbL
-         UsHg==
+        bh=ejpu0N1U5cHhvf5maKcL218cl9a8A4V67n7tDOsobsg=;
+        b=qTRTDKBoYEnBJVmGeAriqheOMCFgxFbGYja3wAvgRE5HN8iuDw8iMUAZAFgk1THjY8
+         v8mseMujNwe4eKVXEMjrvoQ739+R0eooTNGGKDH3FViaoFRohnqL9iUif7FG5XaiVL0k
+         hun1E7xOdKoUVkHnVKBeCV9KxqYVSQTLe3jGzBRCHM5mqifbTS5YestLbj4T5nKFufYy
+         gadrWmmzpvSLjC8DeI7D9ZpcLwYmSUhpY2hSjZud5wUvLDCXDby9tX5oACrifV07jyBt
+         C4S8ildnTdqMAVAaMHlA/mI4HMollFf0aClTVjxgkmei6GeCIamHJz0NQGOpmORq9ihD
+         spXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706176740; x=1706781540;
+        d=1e100.net; s=20230601; t=1706176791; x=1706781591;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=79PYbjK8bosV8v03uRxryBv/M1N0jqOVv+qRTvu/Lno=;
-        b=jAygGA3SL0F11NVl6KvURXC6TtWhSBbpI7B4EC5JREJUAGrq3SnP+A7APrCE2t49FH
-         DBeAWpmDzE1FgWfekmai5STwhdqw/NOudbQR17zdxH+XtRqsO1SNj7UJqgFbXRJnTZ8j
-         8umd21J5oWbjcZUicE9anYkGJaazZY6m7gps6jEYOyOoYf+FPUu+Hr7uAvhmC3P0ZNFO
-         PBHDOLdifcI3KYykH+/3DYPDQgH8ISGyFLn3+MguqzLG3xHQVAFJJt9JUvZW9GlyRnn+
-         /55ojbr+OTXO2DwbX8GxgKy1zkY5z54rvchctApmEbqG0X93WvvVo5uroYye00AqHYM+
-         0Nyw==
-X-Gm-Message-State: AOJu0Yy1+KEYrv0t7dhuruTFf0R65AjlyKfOrEdU+3m+n1gpBonNFl9Q
-	mkwvad+wiNh9Fc+R9tvVNjUlI95JjuEcwcYCQoku2VNtyO0oANP1hMWEbsvt61VnSqqWNwhljg+
-	m
-X-Google-Smtp-Source: AGHT+IFX+WJUjKVyMoF7VIqz7lwHkgo+xeYgCH/keHCQa06QjpPB++UCo/heJp7KdhTg47KNUQpu+A==
-X-Received: by 2002:a05:6214:d65:b0:683:6621:c006 with SMTP id 5-20020a0562140d6500b006836621c006mr828558qvs.81.1706176740540;
-        Thu, 25 Jan 2024 01:59:00 -0800 (PST)
+        bh=ejpu0N1U5cHhvf5maKcL218cl9a8A4V67n7tDOsobsg=;
+        b=HMYnc5hL8A+KZpAz52hcpn/Fmnu+sAncjh/lSRruYzsnEwb20vyYcte8rq1epJNPaY
+         H387xie/y25tLFpsp5JjRmqZVrMAWBEqrjxuiE5iRAvPpDxB0BID2b4r3uSHgd7Tp4oc
+         3X4rFdimypyzyMU947jvAXXm/uV99PG9XIscUY/w9CGTj9gX2QYRJ5aCU8QR4gDp+AR8
+         8ISvvsyJbBIDfJVqrYjmCeOGxLZ3PG844AbbcvXtGwO+8FooCsKqx2KCNS/yhe3CJVTD
+         XTiWnBGA+MYVWyTK3DXQB6ZIlxHQL91T2iy0n/ZSDqtHuUQI5zr2GL3PvIlQDAn1+5Cn
+         5m1g==
+X-Gm-Message-State: AOJu0YyFO0z6+3z41I5eNCmCratAY6hlfvQ4iGvaleOg51Q102FgsAXd
+	anOflaXNTsQjMDDU/kjxD5EZ3LgoK1OKJ50RK1urCOCSgud9v4oCbE9XjxV3cNo7mE9e9hhYJxt
+	4
+X-Google-Smtp-Source: AGHT+IGcTSAtyt5YyT/kCBTYuBr4kS+3tQLcpFk3BxLBOchKz3KQftdbjqQ7cAMcDL/VuYKBY/YQQQ==
+X-Received: by 2002:a05:6102:3c96:b0:46b:1013:16d7 with SMTP id c22-20020a0561023c9600b0046b101316d7mr607038vsv.12.1706176791010;
+        Thu, 25 Jan 2024 01:59:51 -0800 (PST)
 Received: from [172.30.205.155] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id qm17-20020a056214569100b006879b82e6f0sm375625qvb.38.2024.01.25.01.58.57
+        by smtp.gmail.com with ESMTPSA id qm17-20020a056214569100b006879b82e6f0sm375625qvb.38.2024.01.25.01.59.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Jan 2024 01:59:00 -0800 (PST)
-Message-ID: <91c047da-aff7-4e31-9fd8-ef4c3ffef27f@linaro.org>
-Date: Thu, 25 Jan 2024 10:58:55 +0100
+        Thu, 25 Jan 2024 01:59:50 -0800 (PST)
+Message-ID: <d1cde782-c223-4400-a129-18e63a10a415@linaro.org>
+Date: Thu, 25 Jan 2024 10:59:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,7 +76,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] arm64: dts: qcom: sm8550-qrd: correct WCD9385 TX port
+Subject: Re: [PATCH 2/4] arm64: dts: qcom: sm8550-mtp: correct WCD9385 TX port
  mapping
 Content-Language: en-US
 To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
@@ -87,8 +87,9 @@ To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc: stable@vger.kernel.org
 References: <20240124164505.293202-1-krzysztof.kozlowski@linaro.org>
+ <20240124164505.293202-2-krzysztof.kozlowski@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240124164505.293202-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20240124164505.293202-2-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
@@ -99,12 +100,16 @@ On 1/24/24 17:45, Krzysztof Kozlowski wrote:
 > it is offset by one.  Correct it to fix recording via analogue
 > microphones.
 > 
+> The change is based on QRD8550 and should be correct here as well, but
+> was not tested on MTP8550.
+
+Would this not be codec-and-not-board-specific, anyway?
+
+> 
 > Cc: <stable@vger.kernel.org>
-> Fixes: 83fae950c992 ("arm64: dts: qcom: sm8550-qrd: add WCD9385 audio-codec")
+> Fixes: a541667c86a9 ("arm64: dts: qcom: sm8550-mtp: add WCD9385 audio-codec")
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
-
-That matches what I believe to be the corresponding part in the DT!
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
