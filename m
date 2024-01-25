@@ -1,104 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-8265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 610CF83C399
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 14:26:36 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D648883C3B1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 14:33:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 00C911F24E41
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 13:26:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8D1AD1F26918
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 13:33:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5691F4F8B0;
-	Thu, 25 Jan 2024 13:26:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAE0858215;
+	Thu, 25 Jan 2024 13:32:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rrOkFtiH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EFpAGx/z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2034F8A6
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 13:26:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B471E5820F;
+	Thu, 25 Jan 2024 13:32:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706189192; cv=none; b=FD8b5UJ1UfYlaSan5cMhpFdqXjKhNdTLQTVdghPf/+3dHHU0JJyWpGhwpLjRjA46MGaBnTXaL9X9PBqutkNn39k4CR/jo6yn/VN77WGtTjuFajhhBfLYhRGqztAfUr7OgM+3NM5JI3juN9TROV06zzAomoAfSvyTS4C8k3JFhYk=
+	t=1706189554; cv=none; b=X77jc0EPVV4Cqj36XuDzr1YxKjosBmkjFc0H99zRW2gMw6VAOb8tgorlMjZcwIQq44rSk1ozArQPXoTj0F6BF3bb+8WyU6v88MWla5cLBIq5lcxhLzQmli1ZxP1xYxCLmEbJH/QYZVdlEgvSnBK0CbjeRIO/7RwZR87I5LlRh4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706189192; c=relaxed/simple;
-	bh=tjVa0aI9q6ew9EUWXQVX3W1VrK2Rhj45J/HNTMLU6qE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MRPD2N5lWVKUUGsuf2zGY5BxRuGgwP+nYnZte/fWJm5kb5loYGuyCkI5twukbspKpvDBAXka0e9Q2+1Lzp4RAQtFN12pdOmJhk6G06Sqy8biZmE1jWy9HGnKcsxzg/JuAqqlqPE/iVJB0Zjos5lqwoiVC4Tq/qFXrbnJmOrcLK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rrOkFtiH; arc=none smtp.client-ip=209.85.128.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-5edfcba97e3so67985757b3.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 05:26:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706189190; x=1706793990; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=TbqG0TlSQM9fkiKnL3FpwdOMIuGQfy8Lt7OuP0KmsYM=;
-        b=rrOkFtiHfpOCy6HaRGQwhErMH3e/j1zZJ1Ce7wUaaCXSLMND8mz7ndJcy6+Q4xgy2j
-         ZQANSzziYUzRqXr8Gm8Yhfe8svRSUVIjwEpgVxktXmKh5C/xwgP/QkPUv9hjpNJ4EhAg
-         4/o8Wy1JXsOUT8211eK/4srqQBGdZX9cArtPl/7TuuR6tDy25CbPNg/hIx5dxUoYghzv
-         flwtPdZVdZgxQU+6lk01dYjLaBsDxkAMSOrKR4vNDnE4kadid3U63uU/geYA4mrqeSdB
-         A9A+S7OCLo7LWnIYU33HBM4IhIPz5KYn6pTyd6B/zU562jt7HncJ402slHed6Zsw2hMW
-         6qWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706189190; x=1706793990;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TbqG0TlSQM9fkiKnL3FpwdOMIuGQfy8Lt7OuP0KmsYM=;
-        b=Rf/hoY3B6pqNjVYRrd9k1jwYOhDZKAeyM3t6h2EIt/9lTqn2YgjSkJYdvNFk5agFPr
-         ITov4xTPqyUCE/A6H4znkDhZQru/iRo9N4qzT7iigLSQI1DPUGdGIJqyl1uIlPozqH/o
-         2GD7zs9kKJYak2U2GLRhGmut6lR+Gr7V47p5XC3kOV7yZjAL2BcW8Kc9Pl01l/aJN7Am
-         yFmysG+ppy+ZxnewaMHFZL5MNh8N6JdhgFY6myPbcIPVH3Fr6TyhrPLqtz4si9l1YBzN
-         q93WNlChYLoByFdwNLbj6e4ak9+edNtZnvcYEkMM1XKWhXCdppcqXfLnOa4t6i+AREOF
-         3Huw==
-X-Gm-Message-State: AOJu0YzA1P+LP4n2yNAy3vgaXS1rkKhrif2yjK++UxgxaR9UBhKbTK4r
-	Ou5H3rCvWwTqeUORSmhRKDYIITxiP/qjntfj2XBrehlP775fw+EaBJ9oSXTDl+Z6X1cffDa3Mel
-	dJNMB/NOpN2LgBGsKUK68Ta8NpX59lxMpjiRKGQ==
-X-Google-Smtp-Source: AGHT+IGO4JRw3ujg4HNVlq3irc0sTtMnxnmiwsPgbhs3j13dAPqNvOwPcHonxI/dO3veJg/vB9BphuDzRgiaLhbMIZw=
-X-Received: by 2002:a81:484d:0:b0:5e7:c9de:1ae3 with SMTP id
- v74-20020a81484d000000b005e7c9de1ae3mr638734ywa.47.1706189189665; Thu, 25 Jan
- 2024 05:26:29 -0800 (PST)
+	s=arc-20240116; t=1706189554; c=relaxed/simple;
+	bh=KxLZlbCo3u1vof5nxjef2s7Hno6q6TkxdPQGhqT/7a4=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=Zaa/Mfovj4FHjTqCIlebQOFzpD9ngAjiZd/FFXFyFkPY2DzTnwRaCjGgFrssnnPXOvHXFnAmLjbAkBNK9/P2a5Bj/aUSzHddGdIC/zehrxv+i6XaQoL0FqUVPhRCer1VRmS6O1VOREFA8eAl38qjxtUcPdTn/zTIsHFGh8Va0LU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EFpAGx/z; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED323C43390;
+	Thu, 25 Jan 2024 13:32:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706189554;
+	bh=KxLZlbCo3u1vof5nxjef2s7Hno6q6TkxdPQGhqT/7a4=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=EFpAGx/z7gIAqn0gkdd/exC+5TMy9ncA9amTLW/b6wd/iw1OLhLajYpiIIb2BHgDR
+	 RnpKO5X3UO+ejyKlC+LhcotXtpvHWJUSZixm3U7GI05HMyYpWGiRpGEMynYsL+4VLE
+	 xF37fiN47+NQLj0mjEQiVGqOm2QzRwnqOdGyWz+ekOMxdWKfS79My8glaEZ99JO9Od
+	 /fOaYaoqoGzL/txcXDPVQkpmhUy/JFTIgPvXnklUzGE6aInGsK9d1o3jNgA6UWuMZT
+	 nobuHUOGIo0PimuUWmjQH/bBsqZdJDFx1OvhTJe/gGBDxNFWxYjlKL5A+nNjOAzMkL
+	 vY9lMZLfKg/Ag==
+From: Lee Jones <lee@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Lee Jones <lee@kernel.org>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Jeffrey Hugo <quic_jhugo@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-phy@lists.infradead.org
+In-Reply-To: <20240116-usbc-phy-vls-clamp-v1-1-73b2da7691c5@linaro.org>
+References: <20240116-usbc-phy-vls-clamp-v1-0-73b2da7691c5@linaro.org>
+ <20240116-usbc-phy-vls-clamp-v1-1-73b2da7691c5@linaro.org>
+Subject: Re: (subset) [PATCH 1/6] dt-bindings: mfd: qcom,tcsr: Add
+ compatibles for QCM2290 and SM6115
+Message-Id: <170618955168.1465157.430419163826466989.b4-ty@kernel.org>
+Date: Thu, 25 Jan 2024 13:32:31 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240125130626.390850-1-krzysztof.kozlowski@linaro.org> <20240125130626.390850-6-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20240125130626.390850-6-krzysztof.kozlowski@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 25 Jan 2024 15:26:18 +0200
-Message-ID: <CAA8EJpq+LMsPXXcyYQNxCnymP_WPD-rStw12cywq8jhdM-VCUg@mail.gmail.com>
-Subject: Re: [PATCH 6/6] arm64: dts: qcom: sm8650: describe all PCI MSI interrupts
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.12.3
 
-On Thu, 25 Jan 2024 at 15:08, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> Each group of MSI interrupts is mapped to the separate host interrupt.
-> Describe each of interrupts in the device tree for PCIe hosts.  Not
-> tested on hardware.
->
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8650.dtsi | 24 ++++++++++++++++++++----
->  1 file changed, 20 insertions(+), 4 deletions(-)
->
+On Tue, 16 Jan 2024 03:08:27 +0200, Dmitry Baryshkov wrote:
+> Add qcom,qcm2290-tcsr and qcom,sm6115-tcsr, compatibles for TCSR blocks
+> on the corresponding platforms.
+> 
+> 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Applied, thanks!
 
--- 
-With best wishes
-Dmitry
+[1/6] dt-bindings: mfd: qcom,tcsr: Add compatibles for QCM2290 and SM6115
+      commit: cd84e6bd331fd556116ec4889dc282b07c392e42
+
+--
+Lee Jones [李琼斯]
+
 
