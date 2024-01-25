@@ -1,142 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-8238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2FF983C089
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 12:15:36 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F85683C118
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 12:40:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E66381C226C0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 11:15:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9E7781C22E05
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 11:40:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 715422EAEA;
-	Thu, 25 Jan 2024 11:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 728444F8B4;
+	Thu, 25 Jan 2024 11:36:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UMq//pwD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PSqj+YfC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3EF50A96
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 11:08:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C404A5731D;
+	Thu, 25 Jan 2024 11:36:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706180891; cv=none; b=rL7mHHxyh8c7FoDSn31/S/J5oqtTCqEeGh/shcdimMhTb0C6LmwWwTOdihGrANY8EkPGdyH9TQrr+Z6MBdLTEqWzwsxMcJ2OLDCtfYd0texqrDrRHd7Sj3+ceXdvyBTgUsHXl7dubv7Thp4UBN4DI+2e3P4Dg0MH0g9e6ubRMCM=
+	t=1706182614; cv=none; b=uL+vNXcJYbPyx26PUxc/enJgqIXNqXBv9DVyhcK3gIxghRVbnz8q9ZHdVbpA0a/9pGbcZGrnQr3OK7mp0sjUpqihYgF5qrDW/UUITydS2KTXAw6l374IlVnTwSFHrGbfbMW2kH/OZie9RYSZ+e5XkDrj7NVTJE/E1I+W4XmywmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706180891; c=relaxed/simple;
-	bh=OXF4CCNwN7MFURfmPr5WAKq/3GKPFepxulJn7BECNSs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oj8nLVtt2fzwIgj7fVA40vBMZ69o1H9lduz6exMK7xN845GNndHI68LbDbTP+0/kiKk0DGb+hEy7AHHZOZIECFN0O3NI8tZx2h2MfUFEnkvRedQbaSuW54oVlfX4KRed5mVq+iJfTXKkUNEpkMxoLCCEVpSBaqO+a9cTnv6es3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UMq//pwD; arc=none smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-5100cb64e7dso2962806e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 03:08:09 -0800 (PST)
+	s=arc-20240116; t=1706182614; c=relaxed/simple;
+	bh=9OP2AYCXD7CTzXDDBNhR6z28ox5cvhSWUThScGzrt+w=;
+	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bog0JRlwdCPUSVbuAXDdv39qB2Zu0Kc7gudh39RlLYC3h04vYNGGH7Ft8bAPobjNStoMmtMYWlkAw5EfhSEioESQCjyjjkp/kg+xun7iqFtdH/vcy8ojGsdwad/nRr06DhYNxAe0H/oFQDb7FMLoK1lXW2PY+pUozWFyvDOvI3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PSqj+YfC; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-40ea5653f6bso68137195e9.3;
+        Thu, 25 Jan 2024 03:36:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706180887; x=1706785687; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1lENeQVE9Bv2rk1ViR2R2CP4axbEYZgu2pD0QISWuHM=;
-        b=UMq//pwDJZIhfl1PxWcY33JTolADQWXVt1dkloHimjwpkwl2U0W9WV1Oh46lVhuYJX
-         7cUlwvObovwNjvprEg3gFWiubJp8aSnqBo07kmtzRSTE5yvIQaS99luzJkKhq/qNdJZ3
-         8qx9+Y+k8LXsblw2VmvUyLdRzg3HG4Y7HCm/0eK3xlTJL49wFYKyZghZr/UXOUPs7y9o
-         s7XPSGiVRvuJYgDol6BSKGNeO5beicBhXWchG3kQVzxHFcXEoMy0cH/UQe5VkAtVgH2V
-         tCvGKoBLBfnmK5OAuQw0n/Uu3wmnOAJ4eGnU6PpKj0bJpHqFG9Am24OfP8Vl0Ix4TbdZ
-         rWaw==
+        d=gmail.com; s=20230601; t=1706182610; x=1706787410; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=DYXWEmKQIsLe7nv5ynnIoPrTMyRKUKUjaFaattLgh4Y=;
+        b=PSqj+YfC4dKUf3TITfNWqC9Y/OljlkLJ+hVYL0FhM/Dcot19NQxX5Bl20+5m+CbCZr
+         pkehB2n3JmKF1Orw3gmWgclhwkbtAP32k5jqNSZZR6LQzKHO+RzG2oij1r4OI9pilDge
+         3/A+HSO85uK/vA5IFoLokw6mDrRwoRZx8yeRheNPugJ2i9cKQ74vxLMQP1kyK7wnk3Zi
+         Aw3l1Ra0SMuAm09HX7g8FMpG57Wz4vuzU9g7MMQJ+tnajXF6loO0k/S72c3DwJSHRYxh
+         geu3YQVrUTWQ5ACxTXHsnpFhEORbR/uU+jkDboj1ZHfDf/HrSLMsla3QJXxatpEyoCYY
+         iBqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706180887; x=1706785687;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1lENeQVE9Bv2rk1ViR2R2CP4axbEYZgu2pD0QISWuHM=;
-        b=rG63tDw6sc4nk0Ij4KAzKUNmJrjMhRP5A2dnRWGC9rx3PVDpbkSsDFZY15oMHQ+4qk
-         /70FSBIHzaB7lwPC9H61Gp+4010dJDn8aF6Abr8eAcnoeuPrzd8Yak5Cq0Aq/I6YVJiX
-         SFHineo4mEbQmZbNF3u1NTvrp4pHug06ekZkOvBQyt/fFKXuLKGeWdgi0lpQrsgK6EWy
-         ia24l35jH0IDnN6hJZVSzEcXL+HtvOMC8f2OjvlmmDVrpFETUmT7WYPx9H/5PQvtKwoh
-         p6V59yP0Zspa3XEt8a//VT4Arzi+PhuC7dbuOOi2A0hM5KKjN29Aib3rF/qyeP1dAGh/
-         aRQA==
-X-Gm-Message-State: AOJu0YylT0PDN8X1ZESZov+YuNY9F2bHdHy4QH5udUXu9sxZxPyXx0Rl
-	MtZcl2E4rXrtuNaxNc2d7MoYA9J0a6gKKhlwuDkO31QUFuyAy2ATbNpj2qQHPcY=
-X-Google-Smtp-Source: AGHT+IF1SKkZsDhmiAU0ddYoWXOT3/212iNyF8V8TpY5qe4Q2Hb2/WQC1bm94pc/Je2t2pfpioC7aA==
-X-Received: by 2002:ac2:59dd:0:b0:510:ffd:31be with SMTP id x29-20020ac259dd000000b005100ffd31bemr192437lfn.42.1706180887536;
-        Thu, 25 Jan 2024 03:08:07 -0800 (PST)
-Received: from [172.30.205.155] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id m16-20020a0565120a9000b0050eb207ab58sm2836949lfu.74.2024.01.25.03.08.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Jan 2024 03:08:07 -0800 (PST)
-Message-ID: <b5ea1c8c-c35d-45e3-9b90-d3dc480f4463@linaro.org>
-Date: Thu, 25 Jan 2024 12:08:05 +0100
+        d=1e100.net; s=20230601; t=1706182610; x=1706787410;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DYXWEmKQIsLe7nv5ynnIoPrTMyRKUKUjaFaattLgh4Y=;
+        b=Qqyfdg3L0749d8eo4FDiphObPWzp4qLABYAKRu25lmiTfi4N+A+z+HJXmSgQr11n5C
+         82Opv8eDtwOP7wCwXKtt6Y5XP3G9LLw1oqTxmNlwic7gA7uC2InwLJuaCcVn5XV1WCoD
+         X+5HYW4z4YYlik5/EVvof2bGk/f0kFPrYxzxKZ9TSHEdGtTALzSgt0lo4BEANaTgor+O
+         HNlH+Anpr0LHNRw17cPIVQrKuXkdnLuNacHFQOJyx22wVUY7O0pvqay/Vy+7yBHzrnBV
+         HF/h2sMX65LFgyBo8WToVLvO+Y9KKs2eevvz1jtP2L+ToaWxAlA/r2m48+gquvrjDbRG
+         z9Gw==
+X-Gm-Message-State: AOJu0YxEpIzX1bWFJU6caXg8FfRuo/Nw8R79LSsdyOSYk1ZNhh0DX+0F
+	vjHdFQgn38AwKs+hyCHRTo3Y84hVvAj2BPX1pLtIUiofILhmFb+6
+X-Google-Smtp-Source: AGHT+IH+/n86D85sKsgvGlpJ6zoWcRtr5Zg1ujyeXp+NnFo+8QR08EJvB11lYtfkWyctEvjXABh0bg==
+X-Received: by 2002:a05:600c:6a90:b0:40e:5aa4:44f8 with SMTP id jl16-20020a05600c6a9000b0040e5aa444f8mr405862wmb.216.1706182609563;
+        Thu, 25 Jan 2024 03:36:49 -0800 (PST)
+Received: from Ansuel-xps. (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
+        by smtp.gmail.com with ESMTPSA id bl1-20020adfe241000000b0033935779a23sm10153265wrb.89.2024.01.25.03.36.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Jan 2024 03:36:49 -0800 (PST)
+Message-ID: <65b247d1.df0a0220.12334.efd9@mx.google.com>
+X-Google-Original-Message-ID: <ZbJHzSCj8oGm-OJ3@Ansuel-xps.>
+Date: Thu, 25 Jan 2024 12:36:45 +0100
+From: Christian Marangi <ansuelsmth@gmail.com>
+To: Jie Luo <quic_luoj@quicinc.com>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Robert Marko <robert.marko@sartura.hr>,
+	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Sergey Ryazanov <ryazanov.s.a@gmail.com>
+Subject: Re: [net-next PATCH 0/3] net: mdio-ipq4019: fix wrong default MDC
+ rate
+References: <20240124213640.7582-1-ansuelsmth@gmail.com>
+ <53445feb-a02c-4859-a993-ccf957208115@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] thermal/drivers/tsens: Add suspend to RAM support for
- tsens
-Content-Language: en-US
-To: Priyansh Jain <quic_priyjain@quicinc.com>,
- Amit Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- "Rafael J . Wysocki" <rafael@kernel.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
- Lukasz Luba <lukasz.luba@arm.com>, linux-pm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: quic_manafm@quicinc.com
-References: <20240122100726.16993-1-quic_priyjain@quicinc.com>
- <548e2f24-a51e-4593-9463-09506488c70e@linaro.org>
- <f415a8cd-4cae-d7c3-60fc-674b3e660f6b@quicinc.com>
- <aeae2e69-8407-4d90-9d16-27798e2f3248@linaro.org>
- <be69e0a6-fdc8-c24b-9beb-adaac4a97776@quicinc.com>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <be69e0a6-fdc8-c24b-9beb-adaac4a97776@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <53445feb-a02c-4859-a993-ccf957208115@quicinc.com>
 
-
-
-On 1/24/24 16:25, Priyansh Jain wrote:
+On Thu, Jan 25, 2024 at 01:57:20PM +0800, Jie Luo wrote:
 > 
 > 
-> On 1/24/2024 6:04 PM, Konrad Dybcio wrote:
->>
->>
->> On 1/24/24 11:42, Priyansh Jain wrote:
->>>
->>>
->>> On 1/22/2024 8:02 PM, Konrad Dybcio wrote:
->>>> On 22.01.2024 11:07, Priyansh Jain wrote:
->>>>> Add suspend callback support for tsens which disables tsens interrupts
->>>>> in suspend to RAM callback.
->>>>
->>>> Would it not be preferrable to have the "critical overheat", wakeup-
->>>> capable interrupts be enabled, even if the system is suspended?
->>>>
->>>
->>>
->>> As part of suspend to RAM, tsens hardware will be turned off and it cannot generate any interrupt.Also system doesn't want to abort suspend to RAM due to tsens interrupts since system is already going into lowest
->>> power state. Hence disabling tsens interrupt during suspend to RAM callback.
->>
->> Is that a hardware limitation, or a software design choice? I'm not
->> sure I want my phone to have thermal notifications disabled when
->> it's suspended.
+> On 1/25/2024 5:36 AM, Christian Marangi wrote:
+> > This was a long journey to arrive and discover this problem.
+> > 
+> > To not waste too much char, there is a race problem with PHY and driver
+> > probe. This was observed with Aquantia PHY firmware loading.
+> > 
+> > With some hacks the race problem was workarounded but an interesting
+> > thing was notice. It took more than a minute for the firmware to load
+> > via MDIO.
+> > 
+> > This was strange as the same operation was done by UBoot in at max 5
+> > second and the same data was loaded.
+> > 
+> > A similar problem was observed on a mtk board that also had an
+> > Aquantia PHY where the load was very slow. It was notice that the cause
+> > was the MDIO bus running at a very low speed and the firmware
+> > was missing a property (present in mtk sdk) that set the right frequency
+> > to the MDIO bus.
+> > 
+> > It was fun to find that THE VERY SAME PROBLEM is present on IPQ in a
+> > different form. The MDIO apply internally a division to the feed clock
+> > resulting in the bus running at 390KHz instead of 6.25Mhz.
+> > 
+> > Searching around the web for some documentation and some include and
+> > analyzing the uboot codeflow resulted in the divider being set wrongly
+> > at /256 instead of /16 as the value was actually never set.
+> > Applying the value restore the original load time for the Aquantia PHY.
+> > 
+> > This series mainly handle this by adding support for the "clock-frequency"
+> > property.
+> > 
+> > Christian Marangi (3):
+> >    dt-bindings: net: ipq4019-mdio: document now supported clock-frequency
+> >    net: mdio: ipq4019: add support for clock-frequency property
+> >    arm64: dts: qcom: ipq8074: add clock-frequency to MDIO node
+> > 
+> >   .../bindings/net/qcom,ipq4019-mdio.yaml       | 10 +++
+> >   arch/arm64/boot/dts/qcom/ipq8074.dtsi         |  2 +
+> >   drivers/net/mdio/mdio-ipq4019.c               | 68 +++++++++++++++++--
+> >   3 files changed, 75 insertions(+), 5 deletions(-)
+> > 
 > 
->> Konrad
+> Hi Christian,
+> Just a gentle reminder.
+>
+
+Hi Jie,
+hope you can understand my reason.
+
+> The MDIO frequency config is already added by the following patch series.
+> https://lore.kernel.org/netdev/28c8b31c-8dcb-4a19-9084-22c77a74b9a1@linaro.org/T/#m840cb8d269dca133c3ad3da3d112c63382ec2058
 > 
-> As part of suspend to RAM , entire SOC will be off,
 
-What do you mean by "entire SOC[sic] will be off"? Surely the memory
-controller must be on to keep refreshing the memory? Are you thinking
-of suspend-to-disk (hibernation), by chance?
+Wasn't aware of this, as I said in the cover letter this all comes by a
+problem we notice in the Aquantia firmware load that was slow as hell
+and we just notice the misconfiguration of the divisor.
 
-> this mode (suspend to RAM) is not intended for Mobile product. Tsens interrupts are not
-> disabled as part of suspend to idle(suspend mode for mobile).
+The feature in this series is really a simple one and almost ready (I
+already have v2 ready for the request from Andrew to follow 802.3 spec)
+and we really need it ASAP as we are trying to move our ipq807x targets to
+upstream driver and finally start using the integrated firmware loading
+for Aquantia PHY.
 
-That's clearly untrue, e.g. the PSCI firmware on SM8550 implements
-PSCI_SYSTEM_SUSPEND, which does S2R.
+Also I can see some fundamental difference between the 2 patch, mainly
+in how the value is applied and setting a sane divisor by default
+instead of using 0xff. (probably Andrew would have pointed out the same
+thing in some later revision to your series)
 
-Konrad
+Looking at the linked series I notice there are still some thing to
+polish and to clarify with DT and driver and I think it's only
+beneficial if this feature is worked separately as it's not only needed
+for ipq50xx but affects every user of this (ipq40xx, ipq807x, ipq60xx)
+and it would be a pitty to wait the entire ipq50xx series to be handled
+just to fix a long lasting misconfiguration on various SoC family.
+
+Hope you can understand these reasons, it's all for the sake of making
+this driver more mature quicker.
+
+> This MDIO patch series will be updated to just keep the MDIO frequency
+> patch and DT document for this MDIO frequency property added.
+> 
+> For CMN PLL config will be moved to the CMN PLL clock driver and the UNIPHY
+> clock config will be moved the uniphy driver as suggested by
+> Sergey's suggestions.
+> 
+> Thanks.
+> 
+> 
+
+-- 
+	Ansuel
 
