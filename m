@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-8338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3EC1583CEE0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 22:49:44 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 74A2683CEE2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 22:51:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AC5281F2931D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 21:49:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 98E0F1C225BE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 21:50:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20C4613A256;
-	Thu, 25 Jan 2024 21:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 439F813A256;
+	Thu, 25 Jan 2024 21:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wdi8/FXk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oobpKp+f"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CBD4A1D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 21:49:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 539731CA89
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 21:50:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706219380; cv=none; b=WipMqAn1xQPkWGQYa8gqF7KK5GQxKqUx5IyMchgt8aAYvAVvvytl2H0eg2jv4sBz5cIkjd+HYFubON008g9yydWdiSuu99yM5k6P1ott/L91SkQwgtlConJXnoyfNQQqOFcSxlkooM+bfrqLnwUqNNyCRl1lGa2TgRd36ChBL+c=
+	t=1706219457; cv=none; b=soff9HQxbVbzgVJLcg79bHeM175t3hfsyykla1yJQRtS3zlKYKC5M0hfnKU2+vXfkBi9NHCSgBwYUiRJsLXfJQLM8WIczzDRQhfIDyRyQ/N35lCxTXRLKrR0JI4jmAIFvASFsrYbfuCJ6Mwbp0R+LZ/XyUOoXsfh8CtJNdDDmIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706219380; c=relaxed/simple;
-	bh=MiY7bKzRymiYrfq4erE/dHXtDlhoBDTRLNDyp8Fpqqs=;
+	s=arc-20240116; t=1706219457; c=relaxed/simple;
+	bh=c1eBTfBGpbJ4bNKA5HFnXrrhWgBuN1Z6KCQSeVmzh1w=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eZYSiZS7uPkQ8sG0l4GU1BiMdboWVJCjqEFPpijcK0cO5OPtmvrP1uER0pDKs0VE4KudGH8NCcoSvNq+i4r0+3mMZKEGfj26/hOVMLkVBrfk3XSuRydbnYxGqQUGxJpySYmoazfANNieN4pXNc/0+O7hA4bDeUmBOCy8UowJbTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wdi8/FXk; arc=none smtp.client-ip=209.85.167.54
+	 In-Reply-To:Content-Type; b=taSNScx9RfCYxoh2kQ/MTcx/70o8tXmnOecIad9kZ8wYcrArnTXidclgLPwZtn0W1Djt4l76lXOU60zic60LXaHxx3W7SlvIy8ppRdTKbqkLL4KRjk8dG39XP0UBn2hGT5U+RN9Va/5uUylbxUEOPcx2oHIKrmjSuyV7I1f84vM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oobpKp+f; arc=none smtp.client-ip=209.85.167.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5101ae8ac40so1706550e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 13:49:37 -0800 (PST)
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-51005675963so5705918e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 13:50:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706219376; x=1706824176; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706219453; x=1706824253; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=lT446C1cDJ2MeTjJ8AuDT4OnFUwaKY6MBXv7uZTSL6A=;
-        b=wdi8/FXkbKDwsDp9OcoOLqG6zKFl608ZmW1Jirknl8EQlIPMRmFcC987KnWYbzMcWR
-         7vMIzhn6b55W1sg8UDQ5f105n55N4vAG/1JFBYUcnJFS9ulYM172PHBLgZGNFax0Z9LN
-         j/wLOK4rNhunhisH73fRTjRjiyc45adk7LOfXM/SVSrEa9fTVBDWTMDxXm+77XSSJfQw
-         c5L7DE9Cgmq2yFTvjqMV6lTRX8prmWE7+a4CNb+Pqi/2ozItENo/PuB0Yr7Yxs6HsuaG
-         Mla76vYXgauV0iBtyDBhQ0t92nNAeY4vIDeLFDMqkqhD8cJmaatbktnr4LdJZZpsA8Q3
-         lUkw==
+        bh=T54fsLBTRmT4jgVEtxyLn6mAS33agnyvi4UEMgBVoWQ=;
+        b=oobpKp+f+dNWQmCz4Ww+Q3KzN+LeRAhKYn8rF4ZVQCgFP0d0gFq7G7NsC1ch32+xfi
+         QbaHLsqa4/G9wnXogENYm8UGwoYli4J7Nvw9iUr20AhVtHI/PpL1MgPU5Ko6WBSkSpc0
+         1QL2N0woyOtIy0qmv8aAhHSA8XhwRrP1dAbdIzwdpgB9sdyb9OCYg+oDSN5t5pUQiVWz
+         A4jN8TC4Zg5PXSuok8mqhaPeY1db8moFVYzzmed6tZHixfmhphSjLke8anpBWfdhoPW7
+         nODk3N9FDKvhTCviXAPTumypQdOoIPAsf1hpMVafqPpRCc55+nNjPNaC2I7NgcnFg4oX
+         frMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706219376; x=1706824176;
+        d=1e100.net; s=20230601; t=1706219453; x=1706824253;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lT446C1cDJ2MeTjJ8AuDT4OnFUwaKY6MBXv7uZTSL6A=;
-        b=WYlUwh9w3qmJu/EiLdyNWCMteti8os6J5QsAPWl9n/EtSPkEneLJ3atNnzgvQQc+PI
-         r+MLaZ0Kd8qzzT63IHZVQQYkjT4XFR1Ug/yMIAbWoe86xW9v6LkZ29g8/O2dMbzqh/j/
-         zfLKdyNEyC2fYBD2ewNl8LcPdVLucIcg2xgztYyKasVPqMdzoAUlRYPQCKKfdJbDWZ8y
-         Ztd1LId1U82gnyQZBikYqDBzC6E3fkwOkPGZtY5UZhQrfjDmzSytMVcCo6hCyubeRCoC
-         yfF5mnNTCPGgrHDLJX1NgJrVYUAoygb4sYS7vhaasBqWjGlkQfXjf508Woc852yS1ijE
-         DnKw==
-X-Gm-Message-State: AOJu0YxAHAWKXBG+7KgQ21DNXoxeSuGCEzuqphyL5v+31ACFfXcpEWsK
-	24H579zxEFlbZ9p6Tx1Zy3uMkXRHvK3+BH2Z8b7RnYnEFQGHfPd7ILof4+Vv/b4=
-X-Google-Smtp-Source: AGHT+IGp0Nb1IIX2TBKIKJrczEPn+M7kqIhQaZRIvBsCa1UBKExOdH9CwlGJ5kpcdDmnx1XyagO8Vg==
-X-Received: by 2002:ac2:47e4:0:b0:510:d4a:d367 with SMTP id b4-20020ac247e4000000b005100d4ad367mr248636lfp.2.1706219376108;
-        Thu, 25 Jan 2024 13:49:36 -0800 (PST)
+        bh=T54fsLBTRmT4jgVEtxyLn6mAS33agnyvi4UEMgBVoWQ=;
+        b=aIhI7CGklH02l4OLgkBNlKhhqqYXyMMAx39yO3/BOjXcglTzQW1VaZ51yasgB2t9XJ
+         PdXbdpgQGjV7GTO9ywXlqIh8D9pPp+UIhQgen+sDqK+ZtTCK6/ZsxHEDh8gwWzHT7gnn
+         BQ9VqyYRsiW6oNjva1vf+ExFzlW5hy+Nw0c/olEMMgkaLidhXCaGnJEnHXBUAEzmNi8J
+         YiVnxAsdJF47G/N16khFaOODpu2mn5rqKAarZX2Br6TbvH95RWYF25yvXDTcTr8qiMss
+         0sKZ6MojjpqaeQu4zc2U9k00NOS0kNfnM218+DFzvV5PJ+CHcqiP4dPwOwc/6OSxC1CC
+         JAAg==
+X-Gm-Message-State: AOJu0YxHfH+H1aEBTmQCmFds4A3FmtDD6+Sm0/qEcqSE0abyaW3mtLdS
+	ZUH/qK0DQuW0tjYhQVDxPlV82gr0uKinj82jm3VRDqkq+p/fSfKCeCzR8z1eypI=
+X-Google-Smtp-Source: AGHT+IFCdBHp2PBFHOeepK/hfxpQeySTG1iUcHe72e+6UbKprHQdajEkeHG41o05AtpkYezNWRUIMQ==
+X-Received: by 2002:ac2:48ba:0:b0:50f:13f8:3879 with SMTP id u26-20020ac248ba000000b0050f13f83879mr144675lfg.75.1706219453369;
+        Thu, 25 Jan 2024 13:50:53 -0800 (PST)
 Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id f12-20020a05651232cc00b0050f0dce126bsm2942118lfg.214.2024.01.25.13.49.35
+        by smtp.gmail.com with ESMTPSA id f12-20020a05651232cc00b0050f0dce126bsm2942118lfg.214.2024.01.25.13.50.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Jan 2024 13:49:35 -0800 (PST)
-Message-ID: <96cf7370-b825-4ee9-ae17-8a6d72cb02d4@linaro.org>
-Date: Thu, 25 Jan 2024 23:49:35 +0200
+        Thu, 25 Jan 2024 13:50:52 -0800 (PST)
+Message-ID: <64c9c8ee-6ae3-4db5-8952-b8b1fff71d8b@linaro.org>
+Date: Thu, 25 Jan 2024 23:50:52 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,141 +75,111 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/17] drm/msm/dpu: add support of new peripheral flush
- mechanism
+Subject: Re: [PATCH 13/17] drm/msm/dp: enable SDP and SDE periph flush update
 Content-Language: en-GB
 To: Paloma Arellano <quic_parellan@quicinc.com>,
  freedreno@lists.freedesktop.org
-Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>, linux-arm-msm@vger.kernel.org,
- dri-devel@lists.freedesktop.org, robdclark@gmail.com, seanpaul@chromium.org,
- swboyd@chromium.org, quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
- marijn.suijten@somainline.org, neil.armstrong@linaro.org
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
+ quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
+ quic_khsieh@quicinc.com, marijn.suijten@somainline.org,
+ neil.armstrong@linaro.org
 References: <20240125193834.7065-1-quic_parellan@quicinc.com>
- <20240125193834.7065-13-quic_parellan@quicinc.com>
+ <20240125193834.7065-14-quic_parellan@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20240125193834.7065-13-quic_parellan@quicinc.com>
+In-Reply-To: <20240125193834.7065-14-quic_parellan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 25/01/2024 21:38, Paloma Arellano wrote:
-> From: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> DP controller can be setup to operate in either SDP update flush mode or
+> peripheral flush mode based on the DP controller hardware version.
 > 
-> Introduce a peripheral flushing mechanism to decouple peripheral
-> metadata flushing from timing engine related flush.
+> Starting in DP v1.2, the hardware documents require the use of
+> peripheral flush mode for SDP packets such as PPS OR VSC SDP packets.
 > 
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> In-line with this guidance, lets program the DP controller to use
+> peripheral flush mode starting DP v1.2
+> 
 > Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
 > ---
->   .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c    |  3 +++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c      | 17 +++++++++++++++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h      | 10 ++++++++++
->   3 files changed, 30 insertions(+)
+>   drivers/gpu/drm/msm/dp/dp_catalog.c | 18 ++++++++++++++++++
+>   drivers/gpu/drm/msm/dp/dp_catalog.h |  1 +
+>   drivers/gpu/drm/msm/dp/dp_ctrl.c    |  1 +
+>   drivers/gpu/drm/msm/dp/dp_reg.h     |  2 ++
+>   4 files changed, 22 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> index d0f56c5c4cce9..e284bf448bdda 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> @@ -437,6 +437,9 @@ static void dpu_encoder_phys_vid_enable(struct dpu_encoder_phys *phys_enc)
->   	if (ctl->ops.update_pending_flush_merge_3d && phys_enc->hw_pp->merge_3d)
->   		ctl->ops.update_pending_flush_merge_3d(ctl, phys_enc->hw_pp->merge_3d->idx);
->   
-> +	if (ctl->ops.update_pending_flush_periph && phys_enc->hw_intf->cap->type == INTF_DP)
-> +		ctl->ops.update_pending_flush_periph(ctl, phys_enc->hw_intf->idx);
-> +
->   skip_flush:
->   	DPU_DEBUG_VIDENC(phys_enc,
->   		"update pending flush ctl %d intf %d\n",
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> index e76565c3e6a43..bf45afeb616d3 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> @@ -39,6 +39,7 @@
->   #define   CTL_WB_FLUSH                  0x108
->   #define   CTL_INTF_FLUSH                0x110
->   #define   CTL_CDM_FLUSH                0x114
-> +#define   CTL_PERIPH_FLUSH              0x128
->   #define   CTL_INTF_MASTER               0x134
->   #define   CTL_DSPP_n_FLUSH(n)           ((0x13C) + ((n) * 4))
->   
-> @@ -49,6 +50,7 @@
->   #define  MERGE_3D_IDX   23
->   #define  DSC_IDX        22
->   #define CDM_IDX         26
-> +#define  PERIPH_IDX     30
->   #define  INTF_IDX       31
->   #define WB_IDX          16
->   #define  DSPP_IDX       29  /* From DPU hw rev 7.x.x */
-> @@ -151,6 +153,10 @@ static inline void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
->   				ctx->pending_dspp_flush_mask[dspp - DSPP_0]);
->   		}
->   
-> +	if (ctx->pending_flush_mask & BIT(PERIPH_IDX))
-> +		DPU_REG_WRITE(&ctx->hw, CTL_PERIPH_FLUSH,
-> +			      ctx->pending_periph_flush_mask);
-> +
->   	if (ctx->pending_flush_mask & BIT(DSC_IDX))
->   		DPU_REG_WRITE(&ctx->hw, CTL_DSC_FLUSH,
->   			      ctx->pending_dsc_flush_mask);
-> @@ -311,6 +317,13 @@ static void dpu_hw_ctl_update_pending_flush_intf_v1(struct dpu_hw_ctl *ctx,
->   	ctx->pending_flush_mask |= BIT(INTF_IDX);
+> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> index 7e4c68be23e56..b43083b9c2df6 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> @@ -446,6 +446,24 @@ void dp_catalog_ctrl_config_misc(struct dp_catalog *dp_catalog,
+>   	dp_write_link(catalog, REG_DP_MISC1_MISC0, misc_val);
 >   }
 >   
-> +static void dpu_hw_ctl_update_pending_flush_periph(struct dpu_hw_ctl *ctx,
-> +		enum dpu_intf intf)
-
-I assume this is _v1.
-Also the argument is misaligned.
-
+> +void dp_catalog_setup_peripheral_flush(struct dp_catalog *dp_catalog)
 > +{
-> +	ctx->pending_periph_flush_mask |= BIT(intf - INTF_0);
-> +	ctx->pending_flush_mask |= BIT(PERIPH_IDX);
+> +	u32 mainlink_ctrl;
+> +	u16 major = 0, minor = 0;
+> +	struct dp_catalog_private *catalog = container_of(dp_catalog,
+> +				struct dp_catalog_private, dp_catalog);
+> +
+> +	mainlink_ctrl = dp_read_link(catalog, REG_DP_MAINLINK_CTRL);
+> +
+> +	dp_catalog_hw_revision(dp_catalog, &major, &minor);
+> +	if (major >= 1 && minor >= 2)
+
+if (major > 1 || (major == 1 && minor >= 2))
+
+As a check, which of the values should be written for maj.min = 2.1?
+
+> +		mainlink_ctrl |= DP_MAINLINK_FLUSH_MODE_SDE_PERIPH_UPDATE;
+> +	else
+> +		mainlink_ctrl |= DP_MAINLINK_FLUSH_MODE_UPDATE_SDP;
+> +
+> +	dp_write_link(catalog, REG_DP_MAINLINK_CTRL, mainlink_ctrl);
 > +}
 > +
->   static void dpu_hw_ctl_update_pending_flush_merge_3d_v1(struct dpu_hw_ctl *ctx,
->   		enum dpu_merge_3d merge_3d)
->   {
-> @@ -680,6 +693,10 @@ static void _setup_ctl_ops(struct dpu_hw_ctl_ops *ops,
->   		ops->reset_intf_cfg = dpu_hw_ctl_reset_intf_cfg_v1;
->   		ops->update_pending_flush_intf =
->   			dpu_hw_ctl_update_pending_flush_intf_v1;
-> +
-> +		ops->update_pending_flush_periph =
-> +			dpu_hw_ctl_update_pending_flush_periph;
-> +
->   		ops->update_pending_flush_merge_3d =
->   			dpu_hw_ctl_update_pending_flush_merge_3d_v1;
->   		ops->update_pending_flush_wb = dpu_hw_ctl_update_pending_flush_wb_v1;
-
-What about the pre-active platforms?
-
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> index ff85b5ee0acf8..5d86c560b6d3f 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> @@ -122,6 +122,15 @@ struct dpu_hw_ctl_ops {
->   	void (*update_pending_flush_intf)(struct dpu_hw_ctl *ctx,
->   		enum dpu_intf blk);
+>   void dp_catalog_ctrl_config_msa(struct dp_catalog *dp_catalog,
+>   					u32 rate, u32 stream_rate_khz,
+>   					bool fixed_nvid, bool is_ycbcr_420)
+> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
+> index 6b757249c0698..1d57988aa6689 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_catalog.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
+> @@ -169,6 +169,7 @@ void dp_catalog_ctrl_config_ctrl(struct dp_catalog *dp_catalog, u32 config);
+>   void dp_catalog_ctrl_lane_mapping(struct dp_catalog *dp_catalog);
+>   void dp_catalog_ctrl_mainlink_ctrl(struct dp_catalog *dp_catalog, bool enable);
+>   void dp_catalog_ctrl_psr_mainlink_enable(struct dp_catalog *dp_catalog, bool enable);
+> +void dp_catalog_setup_peripheral_flush(struct dp_catalog *dp_catalog);
+>   void dp_catalog_ctrl_config_misc(struct dp_catalog *dp_catalog, u32 cc, u32 tb);
+>   void dp_catalog_ctrl_config_msa(struct dp_catalog *dp_catalog, u32 rate,
+>   				u32 stream_rate_khz, bool fixed_nvid, bool is_ycbcr_420);
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> index ddd92a63d5a67..c375b36f53ce1 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> @@ -170,6 +170,7 @@ static void dp_ctrl_configure_source_params(struct dp_ctrl_private *ctrl)
 >   
-> +	/**
-> +	 * OR in the given flushbits to the cached pending_(periph_)flush_mask
-> +	 * No effect on hardware
-> +	 * @ctx       : ctl path ctx pointer
-> +	 * @blk       : interface block index
-> +	 */
-> +	void (*update_pending_flush_periph)(struct dpu_hw_ctl *ctx,
-> +		enum dpu_intf blk);
-> +
->   	/**
->   	 * OR in the given flushbits to the cached pending_(merge_3d_)flush_mask
->   	 * No effect on hardware
-> @@ -264,6 +273,7 @@ struct dpu_hw_ctl {
->   	u32 pending_flush_mask;
->   	u32 pending_intf_flush_mask;
->   	u32 pending_wb_flush_mask;
-> +	u32 pending_periph_flush_mask;
->   	u32 pending_merge_3d_flush_mask;
->   	u32 pending_dspp_flush_mask[DSPP_MAX - DSPP_0];
->   	u32 pending_dsc_flush_mask;
+>   	dp_catalog_ctrl_lane_mapping(ctrl->catalog);
+>   	dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, true);
+> +	dp_catalog_setup_peripheral_flush(ctrl->catalog);
+>   
+>   	dp_ctrl_config_ctrl(ctrl);
+>   
+> diff --git a/drivers/gpu/drm/msm/dp/dp_reg.h b/drivers/gpu/drm/msm/dp/dp_reg.h
+> index 756ddf85b1e81..05a1009d2f678 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_reg.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_reg.h
+> @@ -102,6 +102,8 @@
+>   #define DP_MAINLINK_CTRL_ENABLE			(0x00000001)
+>   #define DP_MAINLINK_CTRL_RESET			(0x00000002)
+>   #define DP_MAINLINK_CTRL_SW_BYPASS_SCRAMBLER	(0x00000010)
+> +#define DP_MAINLINK_FLUSH_MODE_UPDATE_SDP	(0x00800000)
+> +#define DP_MAINLINK_FLUSH_MODE_SDE_PERIPH_UPDATE	(0x01800000)
+>   #define DP_MAINLINK_FB_BOUNDARY_SEL		(0x02000000)
+>   
+>   #define REG_DP_STATE_CTRL			(0x00000004)
 
 -- 
 With best wishes
