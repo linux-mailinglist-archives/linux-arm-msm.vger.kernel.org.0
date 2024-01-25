@@ -1,237 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-8212-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8512683BD68
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 10:33:48 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 147E383BDAD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 10:45:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AAB521C211AF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 09:33:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 44E521C23835
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 09:45:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECA7C1CA8F;
-	Thu, 25 Jan 2024 09:31:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ovksOdtA"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF1101C696;
+	Thu, 25 Jan 2024 09:43:25 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAEFB1C6BE;
-	Thu, 25 Jan 2024 09:31:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EBF71C69A
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 09:43:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706175081; cv=none; b=n4tW6yFxfqHjBXYC5RGxZWEoI4BLHw8+/AxJGFB4WTXe0C0uPJ5IEkX1eAPQ0gxvR8GteKXqyndXoZ39jN8L4e3wSnE+tCJCSSE8DYp6wfF7L0gUbpzcV7wsQS5hr1e6xcclO19uW1Vy7s9S9b4o2HGWwwDeI+cvh3PgKVlkIRA=
+	t=1706175805; cv=none; b=o9JDKEsCcHzELR7kW+K2jsgs2owyqjgpOgEJdeB6YhpC7+HLvfmRDKRoHnPbMMugj4eJ7e1nehfUU1Z8KYrg4y7J6L22BYwG0FjCvPzJtn+iTviU+UuaYImEpv2aVZi24K018fU507SlCtDHFH/7asHAyQYliTTIYSIVBp8EnNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706175081; c=relaxed/simple;
-	bh=zKAon4rhCDLxrAShb2I1lmfyDlokHotqCogBLSlxoaI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Ivk8a6DvYtm0NiQ7x28CoFsl7mnUJXwQfvQAmc/DpT9eqiE5HGeNT+4pIN6U/7CvtCWE94gp0vTIteddlqBibm/GS0ZPhVA6GDz/gHVGuwdnJGhnfUMc69HeTTOA3kddpqGket5yinTj1KtJbSPzLwltKv7TnrMj1em0Cz2jIkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ovksOdtA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 4CBDBC433F1;
-	Thu, 25 Jan 2024 09:31:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706175081;
-	bh=zKAon4rhCDLxrAShb2I1lmfyDlokHotqCogBLSlxoaI=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=ovksOdtA/mLfMGT0ZYCaKr/aPxhzoYbCx5TU5i1GjqULQaaJ5VmttLfDqtpZHHUiE
-	 MR0GOxYD3OjD6TuN9DHJM2IgRZxl6DUXRPo4bsC8RG+6nGb8ctfQp1Bdt1aE1ZXpDt
-	 8kElrD0HN1gjpzaOl3JMSi6d8Vq/mZinF1fk3iDVF99N06M6+CjWEgf95e7lF1tKVF
-	 O8vPjrLX7SocMwvvVIOq+hRoGCB6ojEttVTlRf9RICoYpRd9LgEbH5lAPb1tXd2of7
-	 IXuohtljNEaRprEMBM/x4X0tvyHUhVmxtsmS2d2zvhtMuHwpUhVDXGZYcjTFLPYrMc
-	 0GhblCGqnzXDw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22C29C47258;
-	Thu, 25 Jan 2024 09:31:21 +0000 (UTC)
-From: Fenglin Wu via B4 Relay <devnull+quic_fenglinw.quicinc.com@kernel.org>
-Date: Thu, 25 Jan 2024 17:31:16 +0800
-Subject: [PATCH v3 2/2] arm64: dts: qcom: sm8650-qrd: add PM8010 regulators
+	s=arc-20240116; t=1706175805; c=relaxed/simple;
+	bh=NO+cYd0QNeHPKrWW+ljDppiytbZEHXhjbmaRFrtMguc=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=RrQO7m7A0CrJIuW/UVTwtghEM6XeT1UhO827RrgrP+mi7kO0xy4Yj7xMcreFCuzK39JTgKKl318KYIQr3gWRPAggFHDFEWZO6j2cSSuAo1aQ9rgCuZhl3wdkwpPOKOYDCisUIUSS3p6/kMVKI6nPyygVF3KpVd6UNUVdA/jbrm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1rSwGI-0002Fp-20; Thu, 25 Jan 2024 10:43:06 +0100
+Received: from [2a0a:edc0:0:900:1d::4e] (helo=lupine)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1rSwGF-002Fm4-V4; Thu, 25 Jan 2024 10:43:03 +0100
+Received: from pza by lupine with local (Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1rSwGF-0003hB-2q;
+	Thu, 25 Jan 2024 10:43:03 +0100
+Message-ID: <88b75ffea33078d092ffa15e3be235358f576c8d.camel@pengutronix.de>
+Subject: Re: [PATCH v5 1/6] of: Add of_phandle_args_equal() helper
+From: Philipp Zabel <p.zabel@pengutronix.de>
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
+	 <krzysztof.kozlowski@linaro.org>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Banajit Goswami
+ <bgoswami@quicinc.com>, Bjorn Andersson <andersson@kernel.org>, Konrad
+ Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley <conor+dt@kernel.org>,
+ "Rafael J. Wysocki" <rafael@kernel.org>, Viresh Kumar
+ <viresh.kumar@linaro.org>, Frank Rowand <frowand.list@gmail.com>, Jaroslav
+ Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+ alsa-devel@alsa-project.org,  linux-arm-msm@vger.kernel.org,
+ linux-sound@vger.kernel.org,  devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org,  linux-pm@vger.kernel.org
+Date: Thu, 25 Jan 2024 10:43:03 +0100
+In-Reply-To: <20240124220716.GA2454626-robh@kernel.org>
+References: <20240124074527.48869-1-krzysztof.kozlowski@linaro.org>
+	 <20240124074527.48869-2-krzysztof.kozlowski@linaro.org>
+	 <20240124220716.GA2454626-robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240125-sm8650_pm8010_support-v3-2-2f291242a7c4@quicinc.com>
-References: <20240125-sm8650_pm8010_support-v3-0-2f291242a7c4@quicinc.com>
-In-Reply-To: <20240125-sm8650_pm8010_support-v3-0-2f291242a7c4@quicinc.com>
-To: kernel@quicinc.com, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, quic_collinsd@quicinc.com, 
- Fenglin Wu <quic_fenglinw@quicinc.com>
-X-Mailer: b4 0.13-dev-83828
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1706175079; l=4668;
- i=quic_fenglinw@quicinc.com; s=20230725; h=from:subject:message-id;
- bh=tB1NmHqD8nUjJXF8aywAhtmMrcFxquNbzFe/xKtf690=;
- b=oPOr5MqkKEKxzvCt/RvCLa7xz2dVi2lNZBFFwbJ6xREv8ywm0D29FUjNAvlxlo44Exy6nms8P
- MQeYiw5UzSkCjxT2d0J2W3zOq1yRQkJq1aLW99KUh51J43M7hrrIDFO
-X-Developer-Key: i=quic_fenglinw@quicinc.com; a=ed25519;
- pk=hleIDz3Unk1zeiwwOnZUjoQVMMelRancDFXg927lNjI=
-X-Endpoint-Received:
- by B4 Relay for quic_fenglinw@quicinc.com/20230725 with auth_id=68
-X-Original-From: Fenglin Wu <quic_fenglinw@quicinc.com>
-Reply-To: <quic_fenglinw@quicinc.com>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 
-From: Fenglin Wu <quic_fenglinw@quicinc.com>
+On Mi, 2024-01-24 at 16:07 -0600, Rob Herring wrote:
+> On Wed, Jan 24, 2024 at 08:45:22AM +0100, Krzysztof Kozlowski wrote:
+> > Add a helper comparing two "struct of_phandle_args" to avoid
+> > reinventing the wheel.
+> >=20
+> > Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+> > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > ---
+> >=20
+> > Dependency of cpufreq and reset change.
+> > ---
+> >  include/linux/of.h | 16 ++++++++++++++++
+> >  1 file changed, 16 insertions(+)
+>=20
+> Acked-by: Rob Herring <robh@kernel.org>
+>=20
+> I've wanted to write this series for some time. Great work.
 
-Add PM8010 regulator device nodes for sm8650-qrd board.
+How would you prefer this to be merged? Stable tag from the devicetree
+tree? Go through the reset tree as part of this series?
 
-Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sm8650-qrd.dts | 132 ++++++++++++++++++++++++++++++++
- 1 file changed, 132 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-index 592a67a47c78..294fb3f37af1 100644
---- a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-@@ -436,6 +436,138 @@ vreg_l3i_1p2: ldo3 {
- 						   RPMH_REGULATOR_MODE_HPM>;
- 		};
- 	};
-+
-+	regulators-6 {
-+		compatible = "qcom,pm8010-rpmh-regulators";
-+		qcom,pmic-id = "m";
-+
-+		vdd-l1-l2-supply = <&vreg_s1c_1p2>;
-+		vdd-l3-l4-supply = <&vreg_bob2>;
-+		vdd-l5-supply = <&vreg_s6c_1p8>;
-+		vdd-l6-supply = <&vreg_bob1>;
-+		vdd-l7-supply = <&vreg_bob1>;
-+
-+		vreg_l1m_1p1: ldo1 {
-+			regulator-name = "vreg_l1m_1p1";
-+			regulator-min-microvolt = <1104000>;
-+			regulator-max-microvolt = <1104000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-+						   RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2m_1p056: ldo2 {
-+			regulator-name = "vreg_l2m_1p056";
-+			regulator-min-microvolt = <1056000>;
-+			regulator-max-microvolt = <1056000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-+						   RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3m_2p8: ldo3 {
-+			regulator-name = "vreg_l3m_2p8";
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l4m_2p8: ldo4 {
-+			regulator-name = "vreg_l4m_2p8";
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l5m_1p8: ldo5 {
-+			regulator-name = "vreg_l5m_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l6m_2p8: ldo6 {
-+			regulator-name = "vreg_l6m_2p8";
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7m_2p96: ldo7 {
-+			regulator-name = "vreg_l7m_2p96";
-+			regulator-min-microvolt = <2960000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-7 {
-+		compatible = "qcom,pm8010-rpmh-regulators";
-+		qcom,pmic-id = "n";
-+
-+		vdd-l1-l2-supply = <&vreg_s1c_1p2>;
-+		vdd-l3-l4-supply = <&vreg_s6c_1p8>;
-+		vdd-l5-supply = <&vreg_bob2>;
-+		vdd-l6-supply = <&vreg_bob2>;
-+		vdd-l7-supply = <&vreg_bob1>;
-+
-+		vreg_l1n_1p1: ldo1 {
-+			regulator-name = "vreg_l1n_1p1";
-+			regulator-min-microvolt = <1104000>;
-+			regulator-max-microvolt = <1104000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-+						   RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2n_1p056: ldo2 {
-+			regulator-name = "vreg_l2n_1p056";
-+			regulator-min-microvolt = <1056000>;
-+			regulator-max-microvolt = <1056000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-+						   RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3n_1p8: ldo3 {
-+			regulator-name = "vreg_l3n_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l4n_1p8: ldo4 {
-+			regulator-name = "vreg_l4n_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l5n_2p8: ldo5 {
-+			regulator-name = "vreg_l5n_2p8";
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l6n_2p8: ldo6 {
-+			regulator-name = "vreg_l6n_2p8";
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7n_3p3: ldo7 {
-+			regulator-name = "vreg_l7n_3p3";
-+			regulator-min-microvolt = <3304000>;
-+			regulator-max-microvolt = <3304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
- };
- 
- &dispcc {
-
--- 
-2.25.1
-
+regards
+Philipp
 
