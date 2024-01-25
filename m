@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-8268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8269-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8CDF283C3E8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 14:43:11 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C9F383C51A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 15:47:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 083751F227FC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 13:43:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2B4B51F222CE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 14:47:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A27B855E5A;
-	Thu, 25 Jan 2024 13:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D9FB6EB45;
+	Thu, 25 Jan 2024 14:47:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mAB9krfD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="henT+Gff"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D307B55E40
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 13:43:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44C66DD1D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 14:46:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706190187; cv=none; b=H1Rl5sD9JsTuacsDJf143YF0vvaJpmbbZuX24dq5HNpxq2v7ejAC6EQ1/HSR+Dsa7fxpGbc8Ugfa1v5O3SiswiFw0rcAHERfhIGm2mKOh4LlKJJvuGLEeZ6P6DOCiDaLGoEkXn71sRvP1eWP6csFdKKZYUKWNhy9QdmK1jOPEPs=
+	t=1706194020; cv=none; b=SGd/69K/jxday4s2smpTkUAaN5lOeWz88e2qD5ybAS2l+3aGzT8XfBRQ2sLWUzvrfYwTdOYNkMnMeLKnzN7vGhIAZJl9KutzV/RZN9GHAKRsOXVu6PE0to/3vJ1/vYf/U+XAGFub1LDqX93zssKiiaTi36T5IAQKHvgo53Dyjrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706190187; c=relaxed/simple;
-	bh=CLMiGZb99qiGs0po0LQ2ck2GX30OXK41bHI/SHAhM1Y=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:References:
-	 In-Reply-To:Content-Type; b=aEYumcYqSlwXiEHrutIFOGVbYfiQ2mx/cF/VDgWPeh6bv6aOVhQtn9vPD/GWdCmUHCVinbF+v5NdkKBahLiyrBVR8crb4OUPB/03+OX/79Ju+odncbCxtaBwNStBLxTdAqIMlQ2HLjYbH7T9hVCaTPvMbH8oJsf360D2ZbsywWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mAB9krfD; arc=none smtp.client-ip=209.85.221.41
+	s=arc-20240116; t=1706194020; c=relaxed/simple;
+	bh=GSabaqaJdXnU/qRSD1BuTU9GYupaRm2owUIzdswd99c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Ishy9/GM84rZ81kEoh3dDLO59jX1i6bKJDzQwzIhr5iZJIFFlgfS9SFHhE75n/QCk2XWTpjj5/QCDP5bHFThvH+62mOc/qYpgpWLjxg4eZeLfoh6m64dv6H4nPafkLO4LRRhnTdJgdgaFzNBkrR7vhXJUdnTITf+jlEnZVjEL2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=henT+Gff; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3394ca0c874so1612427f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 05:43:05 -0800 (PST)
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-40e80046264so85702775e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 06:46:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706190184; x=1706794984; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RiqoviQXGM/czPfXIjMxujYMnPmJeDkpHzRHL7FpUdI=;
-        b=mAB9krfD2SrV+bPdo+0QsMvwyGRBBzmGsYR9pNCgVwNGIdsLCh2W39xFZIg2WnXhNb
-         gjMJtN2TTAXCV73zGa0bP7XDfPTUba9XmbEz8krItyNs23cgVjmKoZv7VTm3gyMr1Wz2
-         LDw6Cp1MNJBxJl4hn+lovGT2E0diniCudLt0nuAlwT5ghASesRNFv2+zKG/cKGf+Z9vL
-         fT4dCU1HPywLET+BGZu7nsuJcVxc80W+uGeNJh2Ss8GQP0KXyF+R71HDPPAWbhINBqi9
-         pP6tVraSln1jI5GHlohVPcylGebNSpBlg0LrZxmH6HyG4WZWSwN+soYhp16tp3fgoPWd
-         gIXQ==
+        d=linaro.org; s=google; t=1706194016; x=1706798816; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=c5TYYoSIS6DFr2+M25tAHJQD5shuiaKNFicKqBEZydQ=;
+        b=henT+GfffYwVUw8HMHNJjOTsaJR6TuhdpU2v7KAHc/daxIZb4ra0VBxMhIfHfXcdR0
+         D+MFExvRK6WtYGnt9JXn7+V5GXR1Mgx2s7SvxnsnO17ZTmbBly1JGujlKnUB5edDutI8
+         KgRMVIhMTm9P5hTLYhBfJ7Ch7VxM/bpvwaeBQD3x9DoB6bRGsnH8h1btFrq6LFBu0voT
+         aAScgJv8ZKDUxw1fVUevdz6D+3MZ6QujsK/ZrnB8m2A9CBN7Gtz+uIGycIay9FNTPIC8
+         c89WMzANFf0rYtDKZGz+v7OaTSsPYjql2YNfz2K20QRWjIY55PD6z5Ji6kMxXv7+O+CJ
+         99zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706190184; x=1706794984;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=RiqoviQXGM/czPfXIjMxujYMnPmJeDkpHzRHL7FpUdI=;
-        b=pRdZ87aFRLlqGBUcFUHv9DQuZMrhrWezS9RMvGOyJQbhPXprLq2zqk6xBbEHJwvk66
-         HWBNE/WwSCqyUxBq7hmkaq4apHzcM0s0RQPq/G741kWZFpi8CXgoHeMCmiN4/pr1DwYd
-         jSPREl3ySqg9CO43MApPDzTJJaWlOOo7PygyqQTaLIue7s24IZrmUeQWyOdLGkihi7A1
-         yzqUmE70lJoDTUc0t08Ym3q5dlgQlAzinYp4HNNNNRCq9QuPtzIhpuq1fZ0Qr1gwsN+Q
-         iQ5svhimGLynH5S+g91bvqLm8hiHix4OzmaLFXSJlUm2BBAr9i7Wy0VwDXillY9Or++M
-         +xhw==
-X-Gm-Message-State: AOJu0YyKIlGkRxswjqcIx0V6VCYFW3bLCL+vNDf8s/HfianzQ4ANiFLp
-	8q3rZwlasUMv0zOu3M+c+djFuKLUPXrPu+RgSrf+6F/R/ud/yHCGhTQhP2Lu5xk=
-X-Google-Smtp-Source: AGHT+IElvR+L8tozYGzsd7mvdLxlUMTooJMXJNqiSCYmS/kXO1pBEAc6rKhiqik6jajBUIaLpDpQwQ==
-X-Received: by 2002:adf:efd2:0:b0:339:3968:65a5 with SMTP id i18-20020adfefd2000000b00339396865a5mr557214wrp.41.1706190184014;
-        Thu, 25 Jan 2024 05:43:04 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:1a7d:7b36:3842:9bc3? ([2a01:e0a:982:cbb0:1a7d:7b36:3842:9bc3])
-        by smtp.gmail.com with ESMTPSA id x16-20020adfcc10000000b00337b47ae539sm10652410wrh.42.2024.01.25.05.43.03
+        d=1e100.net; s=20230601; t=1706194016; x=1706798816;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=c5TYYoSIS6DFr2+M25tAHJQD5shuiaKNFicKqBEZydQ=;
+        b=UTyOtOuNZPZX6RIGBarL8mCkoYDSsucC7UkfHkeo/BkRpL91X3nxBZ1TvX9YNwGabP
+         FoV40VNB0o/t6+7kIGzOHXSmgi/vbWke/ePL9gYkc73NuirbZ/tU1Oo1GZ1s4iZyXWzQ
+         C8e2cceyPCGVED/H1WWDiqy4w7KhZa+fAIsOpy0CowGKrBqxq31tfKShXMqMEXwhrfOK
+         7AZsDp83lphZK+tY8ODclpwNdVZAzX+0eeaEow/rFWq/lq+QdKI5WN4s20AnKLnE9g/l
+         dSu4dSFqmRttr+oXrL4aEyaS1NoLkwmswrUNivdSg7FzW55jU7V4Q1yGSI5EUQavtEE4
+         WAjg==
+X-Gm-Message-State: AOJu0Yxij/CA2+ai8nHY7c7lvTgmJ9dsebZgUPJBDGM4wfC4orl3XUkl
+	LRloG2DaJsQYW3oLEnfVD59JyX7I/Yv63FgSn1aCJX9ROZ1Ikebi2pCGTGQvPgA=
+X-Google-Smtp-Source: AGHT+IHLEzrC0jE3m+aMfp4HdU7bsgKUkZeL0aBj6XPyWrx2MilZirtRPTy4/Zv3Xrq5v+g9JAEzPA==
+X-Received: by 2002:a05:600c:6023:b0:40e:d24d:1448 with SMTP id az35-20020a05600c602300b0040ed24d1448mr542822wmb.121.1706194015963;
+        Thu, 25 Jan 2024 06:46:55 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.215.66])
+        by smtp.gmail.com with ESMTPSA id w11-20020adfec4b000000b003392bfcf508sm12538230wrn.29.2024.01.25.06.46.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Jan 2024 05:43:03 -0800 (PST)
-Message-ID: <59ea1ace-7505-4275-bcfa-766e25e621b4@linaro.org>
-Date: Thu, 25 Jan 2024 14:43:02 +0100
+        Thu, 25 Jan 2024 06:46:55 -0800 (PST)
+Message-ID: <475b4eaf-bdf9-4f55-b6bd-4ba215e24144@linaro.org>
+Date: Thu, 25 Jan 2024 15:46:54 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,116 +76,96 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 6/6] arm64: dts: qcom: sm8650: describe all PCI MSI
+Subject: Re: [PATCH 2/6] arm64: dts: qcom: sm8250: describe all PCI MSI
  interrupts
-Content-Language: en-US, fr
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
  Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20240125130626.390850-1-krzysztof.kozlowski@linaro.org>
- <20240125130626.390850-6-krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <20240125130626.390850-6-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <20240125130626.390850-2-krzysztof.kozlowski@linaro.org>
+ <CAA8EJprfhZ3m6aKcPsQMAUjDFPPeqN_L-E6Tz604pYJqgSvDZA@mail.gmail.com>
+ <CAA8EJpoEMsrEp02pLpceMx7fr-j9=xVDiUYt1SKHsF4YCmfvAQ@mail.gmail.com>
+Content-Language: en-US
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <CAA8EJpoEMsrEp02pLpceMx7fr-j9=xVDiUYt1SKHsF4YCmfvAQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 25/01/2024 14:06, Krzysztof Kozlowski wrote:
-> Each group of MSI interrupts is mapped to the separate host interrupt.
-> Describe each of interrupts in the device tree for PCIe hosts.  Not
-> tested on hardware.
+On 25/01/2024 14:25, Dmitry Baryshkov wrote:
+>>>                         interrupt-map = <0 0 0 1 &intc 0 434 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
+>>> @@ -2349,8 +2357,16 @@ pcie2: pcie@1c10000 {
+>>>                         ranges = <0x01000000 0x0 0x00000000 0x0 0x64200000 0x0 0x100000>,
+>>>                                  <0x02000000 0x0 0x64300000 0x0 0x64300000 0x0 0x3d00000>;
+>>>
+>>> -                       interrupts = <GIC_SPI 243 IRQ_TYPE_LEVEL_HIGH>;
+>>> -                       interrupt-names = "msi";
+>>> +                       interrupts = <GIC_SPI 243 IRQ_TYPE_LEVEL_HIGH>,
+>>> +                                    <GIC_SPI 261 IRQ_TYPE_LEVEL_HIGH>,
+>>> +                                    <GIC_SPI 262 IRQ_TYPE_LEVEL_HIGH>,
+>>> +                                    <GIC_SPI 263 IRQ_TYPE_LEVEL_HIGH>,
+>>> +                                    <GIC_SPI 264 IRQ_TYPE_LEVEL_HIGH>,
+>>> +                                    <GIC_SPI 278 IRQ_TYPE_LEVEL_HIGH>,
+>>> +                                    <GIC_SPI 288 IRQ_TYPE_LEVEL_HIGH>,
+>>> +                                    <GIC_SPI 289 IRQ_TYPE_LEVEL_HIGH>;
+>>> +                       interrupt-names = "msi0", "msi1", "msi2", "msi3",
+>>> +                                         "msi4", "msi5", "msi6", "msi7";
+>>
+>> This part looks a bit suspicious. All other platforms have these
+>> interrupts in a continuous range.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/sm8650.dtsi | 24 ++++++++++++++++++++----
->   1 file changed, 20 insertions(+), 4 deletions(-)
+> Hmm, pcie1 interrupts are also not contiguous. Okay, fine then:
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> index 2df77123a8c7..9fc4f3e37a8c 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> @@ -2213,8 +2213,16 @@ pcie0: pci@1c00000 {
->   			      <0 0x60100000 0 0x100000>;
->   			reg-names = "parf", "dbi", "elbi", "atu", "config";
->   
-> -			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
-> -			interrupt-names = "msi";
-> +			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "msi0", "msi1", "msi2", "msi3",
-> +					  "msi4", "msi5", "msi6", "msi7";
->   
->   			clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
->   				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
-> @@ -2317,8 +2325,16 @@ pcie1: pci@1c08000 {
->   				    "atu",
->   				    "config";
->   
-> -			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>;
-> -			interrupt-names = "msi";
-> +			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 308 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 309 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 312 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 313 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 314 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 374 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 375 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "msi0", "msi1", "msi2", "msi3",
-> +					  "msi4", "msi5", "msi6", "msi7";
->   
->   			clocks = <&gcc GCC_PCIE_1_AUX_CLK>,
->   				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
 
-175:          4          0          0          0          0          0          0          0   PCI-MSI 524288 Edge      bhi
-176:          5          0          0          0          0          0          0          0   PCI-MSI 524289 Edge      mhi
-177:         34          0          0          0          0          0          0          0   PCI-MSI 524290 Edge      mhi
-178:          3          0          0          0          0          0          0          0   PCI-MSI 524291 Edge      ce0
-179:          2          0          0          0          0          0          0          0   PCI-MSI 524292 Edge      ce1
-180:         42          0          0          0          0          0          0          0   PCI-MSI 524293 Edge      ce2
-181:         29          0          0          0          0          0          0          0   PCI-MSI 524294 Edge      ce3
-182:          0          0          0          0          0          0          0          0   PCI-MSI 524295 Edge      ce5
-183:          0          0          0          0          0          0          0          0   PCI-MSI 524296 Edge      DP_EXT_IRQ
-184:          0          0          0          0          0          0          0          0   PCI-MSI 524297 Edge      DP_EXT_IRQ
-185:          0          0          0          0          0          0          0          0   PCI-MSI 524298 Edge      DP_EXT_IRQ
-186:          0          0          0          0          0          0          0          0   PCI-MSI 524299 Edge      DP_EXT_IRQ
-187:          0          0          0          0          0          0          0          0   PCI-MSI 524300 Edge      DP_EXT_IRQ
-188:          0          0          0          0          0          0          0          0   PCI-MSI 524301 Edge      DP_EXT_IRQ
-189:          0          0          0          0          0          0          0          0   PCI-MSI 524302 Edge      DP_EXT_IRQ
+Yeah, the other case has even two gaps.
 
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
+Best regards,
+Krzysztof
+
 
