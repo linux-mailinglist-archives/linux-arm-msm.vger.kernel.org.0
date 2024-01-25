@@ -1,175 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-8282-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8283-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1FF683C938
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 18:05:02 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D338483C9AF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 18:17:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 50A671F2523A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 17:05:02 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5B6C9B25C41
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 17:17:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF52213664D;
-	Thu, 25 Jan 2024 16:55:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0692613172F;
+	Thu, 25 Jan 2024 17:14:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vOf1aFCA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FJxgyyNh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B198E141984
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 16:55:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BBED4F611;
+	Thu, 25 Jan 2024 17:14:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706201709; cv=none; b=snLEAj3RlkYuUv3JuEKrt017cdpKMJDppDsi22T5zGGXij4h5oYgc3RrPHILkidizkXa3cGfTELj0CRDXeT3ZcYTaZGkXVvyE7gwRMxOe/ERyEoRerfJFGm2vmrMbDb475mC6vm42QuOahMFN3GhG94DdZbAKTBA5pudDMudP3Y=
+	t=1706202890; cv=none; b=jLWhf8Bu+CpBfG0oPtkvkhexYYZHwXGZrd550oun8DPQ9ITDr2iHia+1CWXlolZI8bxoNxSSthdAzw6ZQ2NGeMLx4iD5WcpelR0uaTiJ45ovvvxi17iyWriQIM4+Ceb2fkCjr+qRFBVAuxL8ZauKCLSgx/xWKDEf3eKNw/PRMrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706201709; c=relaxed/simple;
-	bh=Rw+Oj/BjNcnqfn7QvDWzv7ZoteAVYbGdEhGHUSoxplQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ecFzClszLR5XHzPQED10q66ukHkdsiGWUDGz0EYcN7fv90Rhu8czPo5iCb2TeqlKHCYAEyCNoZjWphLWixFHI3hqtsfcEwv+zPxqjwmEySXLXU7EmXIOhsdaeKy+cadQIOxiTOokIjghtQwvkuYEEGxXaFuRfPYWjdXdoOZshN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vOf1aFCA; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-337d32cd9c1so5982266f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 08:55:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706201706; x=1706806506; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=yB4jfE0/XJsodASjO1q01zoyOa02tPYQ2u4yeHlxV2k=;
-        b=vOf1aFCAGVFyR9bUCGRhcsSv9TWFF6y1INiJR7odljiQVtUoZ8+nr/UQvyj+0z6iqo
-         9mpBaOiTzZUEwdW8awz478UNCwQaAypiSk92MoSrak10skQGvJBdfu2HRvjE1yzSqbmQ
-         bdDcyoqGf13wIJd8l7R59QrSMPmE1oF4kgWH+w++g2okxNzCOv9VFDEfqMzPfwPDrqUV
-         t8LNjgsQY4KzBnG+Qk49bJ9AE4on1Y3gBMz22eLDiCjgx7MrdakUYs9LwtsOvROV0zLn
-         +LpWhpbD2xu06502tpGBsdYq21Fyt3bsgVfVxD06fIVSgvB3UxSI9WxMXIsK0LwvDRXU
-         5swg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706201706; x=1706806506;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yB4jfE0/XJsodASjO1q01zoyOa02tPYQ2u4yeHlxV2k=;
-        b=VBgIDITbyiKeUQqt9N+I7QxUeib3k7PCcugA/1ODMogECmzmDx/ZCECY25mqPooY4m
-         r3jTL8iNB3tlRG+sGzOlhbaxa1ITGxrE+fQK3B6BU6Jn1Yiiza/bFUNsa01wVIsCYK2L
-         T/JftdfkVTkqAGhNW3OpgcG8cM25Uk4JqgBv6lshb80k6CaBW3qELUBGmfrnPI3c4Idf
-         A9H3DceiWfjbTGEXmVms0DsL/vFxbAlEMYDpqjHiDMW4Hfhpf4hh+g6CbDHPYMvBjflX
-         xXC76WZkcNyWwByLzpRwvT1zSzhC3w+DNl3OrIE202QbT7++Cysrrhh+o6OpgmaZbJ0a
-         iPrQ==
-X-Gm-Message-State: AOJu0Yye8CAtIH7RV90eQMijEd/NJaPdnhPrk5x1v7Mv8uJu3L+XtbzE
-	iFw/a5Jdq158e3eB6D+2E7OsA7D1a46mTJJ18Vjc2JYf6VUjtqSzIIvsSrOvoGsKZALj5mUo7qJ
-	u8HM4jQ==
-X-Google-Smtp-Source: AGHT+IHleA7Y4H0hQ5T4pCCE6WJ098hqFPCRZ9zv/Lp/YDzqnFQIDqHIGMPuwk9ZPkjXATQtn6dqeQ==
-X-Received: by 2002:a05:600c:4ecd:b0:40e:622e:7449 with SMTP id g13-20020a05600c4ecd00b0040e622e7449mr23392wmq.22.1706201705917;
-        Thu, 25 Jan 2024 08:55:05 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id bs8-20020a056000070800b0033959354b59sm1940271wrb.13.2024.01.25.08.55.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jan 2024 08:55:05 -0800 (PST)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Thu, 25 Jan 2024 17:55:04 +0100
-Subject: [PATCH] arm64: dts: qcom: sm8650: Use GIC-ITS for PCIe0 and PCIe1
+	s=arc-20240116; t=1706202890; c=relaxed/simple;
+	bh=FhdGxpb8WRLhcPuhsyXPUQ/OHyb7n5wxsxPBiROQ59I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=BhCr7rT2fJM10RbaeN9lLtNra8EmiVEONW8NezpQDSjnTpfWL3NdviUjHG9enxXK3OKF9cVGpiVmktuKZ2+iCZqq5STK4n54Sgn+w8VFVLuwZvywP0WW/oslPwHmm0WCy7TkcH+IeZMwxoqTL+YTuyXpvWToSEeEAeVTSV32UWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FJxgyyNh; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40P6U5C7016792;
+	Thu, 25 Jan 2024 17:14:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=QVBi23eTif8k1KMpbX3/5gFCMzFOXHrSwUxTig2rOoU=; b=FJ
+	xgyyNh6KGEbV3J7nosNLR6HiZ8eB6gX8Jhi7VpfT+6XmGiw6Cyi1gaQ3f0w9qWOE
+	bCA79aMwzv0sVF6s1PCRolBLgu475QtMnnnNvKYI873uHHnEiWdMmnu7tc64Ddw4
+	DYuGpGPVHpXzsmDOlbV/3jR4+6xRjFU3DuiNszp5B+Aoh1sZBAR8Q5Yh2tp6SGEi
+	otWyjGDKIHXc23vQseWnASv4rFeAS+k/gTjkz6lpAfVdWzW32wi7CGHrQ7yS62uI
+	y1dRb4+IbEWaKaWe6g88jEDCYlWF52aISKQsqPZF4/rj3H/9Oae8eYWMA5ZkGPL0
+	DzmbNr2hohDCy9hikvJw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vufc8245p-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 25 Jan 2024 17:14:41 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40PHEeVH002310
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 25 Jan 2024 17:14:40 GMT
+Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 25 Jan
+ 2024 09:14:39 -0800
+Message-ID: <ba27bb80-2234-60c8-5f76-34a9f7ae6ae9@quicinc.com>
+Date: Thu, 25 Jan 2024 09:14:39 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] drm/msm/dpu: make "vblank timeout" more useful
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel
+ Vetter <daniel@ffwll.ch>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20240106-fd-dpu-debug-timeout-v1-1-6d9762884641@linaro.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240106-fd-dpu-debug-timeout-v1-1-6d9762884641@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240125-topic-sm8650-upstream-pcie-its-v1-1-cb506deeb43e@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAGeSsmUC/x2NQQqDMBAAvyJ7diFJTaN+RXoIcbV7SAzZWAri3
- xt6HBhmLhAqTAJzd0GhDwsfqYHuOwhvn3ZCXhuDUWZQ2lisR+aAEsenVXhmqYV8xBy4mVVwGqw
- zwW3auwe0SC608fc/WF73/QNTQahTcAAAAA==
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3857;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=Rw+Oj/BjNcnqfn7QvDWzv7ZoteAVYbGdEhGHUSoxplQ=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlspJoGGRyEvcAaOXkVwtzoVk7+NYQoHE5INxRMVDO
- VjxpyiiJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZbKSaAAKCRB33NvayMhJ0VcQD/
- 43v9OgaZf/HPPogg7KXWahD0LDbAHVRbH++55dePgGF/NJkvVdtTbebcV3LlLUEvf04VFAcaD+NPhH
- uycaYzUqc161NRy2KavibircNqQF9fKrX3ay4z/l1db1MJxK2WgPZjzhAptZG/AbA87sQVf2mfAsnz
- UHMMhrM9dom8uQHTUk7mAbjfYeJeVgfadCB9/4hKXrF5RTgfebhm8JbI1RSsNrWmOy+qQxPGwNv6VB
- p3ORPIT4g5LVGtPq1cTg7fhLFidF+fr/D9GZTNip2oZDO8CtUEjcfC5SV+Zf2PQ21lJNrUR7j2wTNl
- 2k712xezO0lkO2aLG7Q2dNRbQ46Q8zaRvV0q5T6JkO6ijm7JYMp+yO/9VHjXaQSr2e0vJPLFuvEl+b
- vDUWDxsrFvuf1ihfW5avhzqLBiAH6i81Bh0D0KtXLzN4/Ge12j/44HAAG12fBwt0mMCtXEWYjgWEGH
- 61lkForwMQVDyYvmEyZEuF/vQ+hAed08l4sCG21Ml5OJwIqXhUPOtnxWOUDDrLVMKBH2AHbVO5YARN
- 5UjMOFht24QoxsIXnbkqPFe5yc1S8Xamh0sbVyA16a6UHCXfncZ/bJNuFil90FkqFoIcqKtn/t7lIv
- yU4IIgnK84R8rEZ7yEot9Fifwl0QUFrRUoIJ2UjHyTpUH0ADPvOFlZyt7ulw==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: SHvHfoZSlaQVkG37NNG_upCDrdy3PfRO
+X-Proofpoint-GUID: SHvHfoZSlaQVkG37NNG_upCDrdy3PfRO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-25_10,2024-01-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
+ suspectscore=0 bulkscore=0 spamscore=0 priorityscore=1501 mlxscore=0
+ phishscore=0 lowpriorityscore=0 mlxlogscore=738 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401190000 definitions=main-2401250122
 
-Both PCIe0 and PCIe1 controllers are capable of signalling the MSIs
-received from endpoint devices to the CPU using GIC-ITS MSI controller.
-Add support for it.
 
-The GIC-ITS MSI implementation provides an advantage over internal MSI
-implementation using Locality-specific Peripheral Interrupts (LPI) that
-would allow MSIs to be targeted for each CPU core.
 
-Like SM8450 & SM8550, the IDs are swapped, but works fine on PCIe0 and PCIe1.
+On 1/5/2024 3:50 PM, Dmitry Baryshkov wrote:
+> We have several reports of vblank timeout messages. However after some
+> debugging it was found that there might be different causes to that.
+> Include the actual CTL_FLUSH value into the timeout message. This allows
+> us to identify the DPU block that gets stuck.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> index d0f56c5c4cce..fb34067ab6af 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> @@ -489,7 +489,7 @@ static int dpu_encoder_phys_vid_wait_for_commit_done(
+>   		(hw_ctl->ops.get_flush_register(hw_ctl) == 0),
+>   		msecs_to_jiffies(50));
+>   	if (ret <= 0) {
+> -		DPU_ERROR("vblank timeout\n");
+> +		DPU_ERROR("vblank timeout: %x\n", hw_ctl->ops.get_flush_register(hw_ctl));
+>   		return -ETIMEDOUT;
+>   	}
 
-WiFi PCIe Device on SM8650-QRD using GIC-ITS:
-159:          0          0          0          0          0          0          0          0   ITS-MSI   0 Edge      PCIe PME, aerdrv
-167:          0          4          0          0          0          0          0          0   ITS-MSI 524288 Edge      bhi
-168:          0          0          4          0          0          0          0          0   ITS-MSI 524289 Edge      mhi
-169:          0          0          0         34          0          0          0          0   ITS-MSI 524290 Edge      mhi
-170:          0          0          0          0          3          0          0          0   ITS-MSI 524291 Edge      ce0
-171:          0          0          0          0          0          2          0          0   ITS-MSI 524292 Edge      ce1
-172:          0          0          0          0          0          0        806          0   ITS-MSI 524293 Edge      ce2
-173:          0          0          0          0          0          0          0         76   ITS-MSI 524294 Edge      ce3
-174:          0          0          0          0          0          0          0          0   ITS-MSI 524295 Edge      ce5
-175:          0         13          0          0          0          0          0          0   ITS-MSI 524296 Edge      DP_EXT_IRQ
-176:          0          0          0          0          0          0          0          0   ITS-MSI 524297 Edge      DP_EXT_IRQ
-177:          0          0          0       5493          0          0          0          0   ITS-MSI 524298 Edge      DP_EXT_IRQ
-178:          0          0          0          0         82          0          0          0   ITS-MSI 524299 Edge      DP_EXT_IRQ
-179:          0          0          0          0          0       7204          0          0   ITS-MSI 524300 Edge      DP_EXT_IRQ
-180:          0          0          0          0          0          0        672          0   ITS-MSI 524301 Edge      DP_EXT_IRQ
-181:          0          0          0          0          0          0          0         30   ITS-MSI 524302 Edge      DP_EXT_IRQ
+Nothing wrong with this change.
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
+But I dont know how much information this is giving to really find out 
+what is causing the vblank timeout. Sure, we know which flush bit is 
+actually stuck but we dont know why its stuck.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index 2df77123a8c7..7b3dfcb9a57b 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -2255,6 +2255,10 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
- 			interrupt-map-mask = <0 0 0 0x7>;
- 			#interrupt-cells = <1>;
- 
-+			/* Entries are reversed due to the unusual ITS DeviceID encoding */
-+			msi-map = <0x0 &gic_its 0x1401 0x1>,
-+				  <0x100 &gic_its 0x1400 0x1>;
-+
- 			linux,pci-domain = <0>;
- 			num-lanes = <2>;
- 			bus-range = <0 0xff>;
-@@ -2364,6 +2368,10 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
- 			interrupt-map-mask = <0 0 0 0x7>;
- 			#interrupt-cells = <1>;
- 
-+			/* Entries are reversed due to the unusual ITS DeviceID encoding */
-+			msi-map = <0x0 &gic_its 0x1481 0x1>,
-+				  <0x100 &gic_its 0x1480 0x1>;
-+
- 			linux,pci-domain = <1>;
- 			num-lanes = <2>;
- 			bus-range = <0 0xff>;
+We should add a logic here to get the snapshot on the first vblank 
+timeout that way we avoid excessive capture as well similar to the other 
+fatal locations of calling snapshot.
 
----
-base-commit: 6613476e225e090cc9aad49be7fa504e290dd33d
-change-id: 20240125-topic-sm8650-upstream-pcie-its-94572c7f1a73
-
-Best regards,
--- 
-Neil Armstrong <neil.armstrong@linaro.org>
-
+>   
+> 
+> ---
+> base-commit: 39676dfe52331dba909c617f213fdb21015c8d10
+> change-id: 20240106-fd-dpu-debug-timeout-e917f0bc8063
+> 
+> Best regards,
 
