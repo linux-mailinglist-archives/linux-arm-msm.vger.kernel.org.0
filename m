@@ -1,275 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-8378-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8379-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7AE4B83D09E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 00:23:18 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E342D83D0EC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 00:50:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3242628DC6A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 23:23:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 948041F23438
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 23:50:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F009134C4;
-	Thu, 25 Jan 2024 23:23:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CDE8134AE;
+	Thu, 25 Jan 2024 23:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Vzlz7yOM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tIsiumNM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C59134DB
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 23:23:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2DF134A4
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 23:50:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706224988; cv=none; b=ldScUPrvBQmUgT7i9tgbBsjmHaIvVDuHTAogEANjgtrH4aSCJzG4i9vN/gCF/JGrNW2OyKp0gvH1Fm/sODyoHP47AdwN1YCvqUwsIBBYuMEEgNEfTr53BSmuBFLDz4v+tBbOr4/bmma2Z/u2tLv8uJbhE1yhXYT/hQOMiYimEC8=
+	t=1706226602; cv=none; b=S+fhAT4eMOHGwkEHFLLILdHNOWA+xCA2Yt4TjW2sPo2LUh3StdKgADNOOGO8rUw5ucFm6vAiKMl2IB01z62RSAZ7+PIicrz9vrw22OsrVNjqJwB0DwYiLrxCzYSMuuQBipM4L106DYZdWZ0W7PX60BwjP9tVjePMYwhRiqhZtpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706224988; c=relaxed/simple;
-	bh=DJDDkfWKXJvRaZJvE3fW57O1HFp0QUs9QFg7/6fIpIo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qOzKefWSRc92fdHJPjXcXJB5cV9svHnlAG4reFYBn7BC5XOcHS124t/PL7Ax2wjXRSwrI+iMRDuSkFPLY1TEwA6OWx1ct3Dozd0ozlHHD3pR/Gdne+8uBl+1KhCT0R4PXgUQbTyEUgD/rYYl9ti8QePCQHvMb6jW5dS7ZKIrVdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Vzlz7yOM; arc=none smtp.client-ip=209.85.167.43
+	s=arc-20240116; t=1706226602; c=relaxed/simple;
+	bh=zuALxgKBNdz+cz2IZmkcUCnj/b8C1xkO0iZjdzgUinY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=F0CXEBB42aQ0ruwCAXBQDSw6UwDfOlKmWueG/+ISS3p6Y87oTEdd8OrKTdfqGqGOtE+zvsP4TtOBpYKgf1l/Zk6Clf3AJiebV34v4MkBA4pczOKu99xneWcLUrLMJfg6gYw6MqQowySLB+ODn3W0d3PLFGZFHllN1fNc2QHs82M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tIsiumNM; arc=none smtp.client-ip=209.85.167.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-50f11e3ba3aso11007437e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 15:23:05 -0800 (PST)
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-51025cafb51so133924e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 15:50:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706224984; x=1706829784; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=v5iiDSHHZJieX628EZfrPfd+agKupJDCTMl1PcX1Hko=;
-        b=Vzlz7yOMMa+cEpXoeXZDGzii4UmYwnDBNcHLeg1JzwMxmE2o8wlM3VIBnz4Tzm0bI4
-         /3CY6lgaHY7hYMziZQ+gQjnZKNkhmLv1KsDWtoBI7EGR1oQge5PBL+rMbaUTlJTt3aE9
-         nsKbj+HiK1wv4eCJj/ntf3Il7Szv/zH+EH38RIdNaVaNdJSZg9J5o5taJ+hu3yjhMGcY
-         OZj3nVL60rL0bpPrVIPas4eZaLmOdXWbaDql6HSSzn+Ehv6PFPtt1Y7CwYJxNzHLE/bw
-         9uMJe7JBXagj/uAQgAXxDq/Cck/rzC5y8kX/oc30WvsRFvdTN2i/RxLJE1wfY5+5X8W6
-         AYEA==
+        d=linaro.org; s=google; t=1706226598; x=1706831398; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=84suYuoX3RAYz2xiQa2wUmKN0Xu6H16i6mQrUX9bctU=;
+        b=tIsiumNMfL0iUN8MvtCecFqU5qtshFGq0vlfx7W/OQ1xSpR/SYygjYTngiITZ5I7Vt
+         Uokmv0T4uNOACKHf433uGzWy8k49sQB1avUmrJCmEBnadsrc/rmxPiUGJEwZw5d5v2c5
+         Zlda83u4cRSXOx14AsXz5V5CZWTVZyziN9WsYV7Abn1Dy4zsoLAqeEgAlz9uFw6TXbu9
+         V2OOHv0Hc0d6tcPTjhT3b2isGqBAdd1VZBYVUHjYtw/Tsf9Vq7Y4frJ7lwGBngV79ByW
+         nWq97FBai64sQxiA0XMCss7I9sWikDtQmbv6TTMS1ygfjyqyXimtLOAVbgC78YHZhwkl
+         Q66w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706224984; x=1706829784;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=v5iiDSHHZJieX628EZfrPfd+agKupJDCTMl1PcX1Hko=;
-        b=PlC3gI9PmUFkP+MEWQ32MOxjUS1SAJnlzprFmjlQ4LfPxGSx1WShSPjD/I/NxPzSYn
-         Kl86xdvD2WsI3qLt7e8k57xZ7xZ/IR1zsx+GbSy79pHFcAwsRX+Vz0pUU3kxbSjQtbX7
-         RuOaIRSdjEMkxpsdugI8drVDMWcX2wqIZOT2udj2Dg/MRJoUGSDJCVm3BZBR8xTIHdVS
-         LHyjYpAFHNzd8a+ILoOOz4EgdEvQkbfACUg7kMjx2lyoMZNJE8ZmnTR9uQF5W2S2PXTn
-         vrKPJFkfC8LBmdUHzIQ/w7A5dvlvxDj6kIiWSnvUU7QL+e++IYQ+RurIII+a6bB23esS
-         62/w==
-X-Gm-Message-State: AOJu0YyMBnFenO+1krONRVYUf6U2XBLbUDdb9R/jwjPCC92mDH/4kyf7
-	4y0KvATNDobgKJ9Cjhd/VUZT7V2AMwwOklPZ96XBN2i+eScK0uciHw+a61Iy+pWN1ozHBBXL2N6
-	k
-X-Google-Smtp-Source: AGHT+IEGayCEF4rpwfmKDsp84tEGMAl2KaEMiJnDvaMD5DI5BQmpf+JZfWbnlQO6JVb5mc6B7PcDiw==
-X-Received: by 2002:a19:910a:0:b0:50e:d416:1698 with SMTP id t10-20020a19910a000000b0050ed4161698mr537519lfd.49.1706224983566;
-        Thu, 25 Jan 2024 15:23:03 -0800 (PST)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id k3-20020a05651210c300b0050e6df07728sm3920lfg.180.2024.01.25.15.23.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jan 2024 15:23:03 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 26 Jan 2024 01:22:42 +0200
-Subject: [PATCH v2 8/8] phy: qcom: sgmii-eth: move PCS registers to
- separate header
+        d=1e100.net; s=20230601; t=1706226598; x=1706831398;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=84suYuoX3RAYz2xiQa2wUmKN0Xu6H16i6mQrUX9bctU=;
+        b=dV3lPv4C74Tzzo4AiASZXp182FhSSEMTLGJa5/OGpPDVKheSAO7TKfuc+DEfv/Ylvd
+         1p9pLgMVxOOZbVEUCh5u+xhaHhovGRjcJ9OEoqJ2+bCioEnFaigEzFqiuPJCcSuy78Nk
+         HsDC0YFzxMlGfHWscXnyaXNXBHOOgfC2UzE0IssPNzNA39vCtrX5918xM7n4mUDmoVB1
+         irCFY/OQW7MB5sKwgR9yCSGWn2tu62dFA2KdxGdxihxmMW7UCgRlxxwtr9oKz3prAW2n
+         XALg3czGO57UoAH5+1N6ODwbqAxcNb1GIm/58qrnCeCpE+5h+XwTzXooTUl9agAHGFmT
+         DWaA==
+X-Gm-Message-State: AOJu0Yz9+KrcnGxvOYAP2XaAaozk42ofbAXiApWMqttld1fgzlOwI+j7
+	Wb9pRxAhuHqewz+DdZQrXcVSHEdaAKJni4p1crowmudRO8mAvQVZkeWnHigPV24=
+X-Google-Smtp-Source: AGHT+IGlZCfDWZKPWMU55TCy+VJ2zTqmY3SNUSR/poAl1Jl1Szh+xGqeR9Bx7VhdXjmN9sTmz8nYAg==
+X-Received: by 2002:a05:6512:70:b0:50e:74e2:af58 with SMTP id i16-20020a056512007000b0050e74e2af58mr288823lfo.52.1706226598453;
+        Thu, 25 Jan 2024 15:49:58 -0800 (PST)
+Received: from [172.30.205.155] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id a21-20020a195f55000000b005100af37fbcsm10614lfj.166.2024.01.25.15.49.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Jan 2024 15:49:57 -0800 (PST)
+Message-ID: <a75d8b2f-a55a-4087-b039-60769678a480@linaro.org>
+Date: Fri, 26 Jan 2024 00:49:55 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240126-phy-qmp-merge-common-v2-8-a463d0b57836@linaro.org>
-References: <20240126-phy-qmp-merge-common-v2-0-a463d0b57836@linaro.org>
-In-Reply-To: <20240126-phy-qmp-merge-common-v2-0-a463d0b57836@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7598;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=DJDDkfWKXJvRaZJvE3fW57O1HFp0QUs9QFg7/6fIpIo=;
- b=owGbwMvMwMXYbdNlx6SpcZXxtFoSQ+qmtwGTT3F/sAxxjLhqKO/06/HTbxG717JmPLpZO2dXi
- NTjVp/VnYzGLAyMXAyyYoosPgUtU2M2JYd92DG1HmYQKxPIFAYuTgGYiLUdB0PnvLO2ehc3bbrN
- tyl9X+jHmzaHTCTud9+//vrRXXPD5qcd2bHZgRrdTMpiKq9tNGdIiSS2n+X+zrKxlGtb8wxZDb3
- OF9Xz/4QteZUnqCf9bd1Z5s4P2scY2aJLrFQMJ2dPOLbmxsbXYj1qyrddLwv8UE4IVzpyXm7hC+
- eNVr9mSDYrG768322zZX6Lg2fCxoutbZv7u9UZQv1/y6VypB/V9fq0/vmqvNmeJ67z5v6RmFHC5
- KkSPbvphmFJ7RdPuzusF9UV/1WohxVkvJoquans+E32uzNaZcXlDV7JmDMzZ/8SSLmuI/zeOVYx
- da3B/akLnjSw+4k11huJ8lVIXU9q7K5dX3nl3ZwN+YuYAA==
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 1/2] arm64: dts: qcom: msm8953: Add GPU IOMMU
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
+ phone-devel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Vladimir Lypak <vladimir.lypak@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240125-msm8953-gpu-v1-0-f6493a5951f3@z3ntu.xyz>
+ <20240125-msm8953-gpu-v1-1-f6493a5951f3@z3ntu.xyz>
+ <d576e655-5d00-44ff-9405-0fceaa2d3935@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <d576e655-5d00-44ff-9405-0fceaa2d3935@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Follow the example of the rest of the QMP PHY drivers and move SGMII PCS
-registers to a separate header file.
 
-Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp-pcs-sgmii.h | 20 +++++++++
- drivers/phy/qualcomm/phy-qcom-sgmii-eth.c     | 64 +++++++++++----------------
- 2 files changed, 47 insertions(+), 37 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-sgmii.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-sgmii.h
-new file mode 100644
-index 000000000000..4d8c962f5e0f
---- /dev/null
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-sgmii.h
-@@ -0,0 +1,20 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * Copyright (c) 2023, Linaro Limited
-+ */
-+
-+#ifndef QCOM_PHY_QMP_PCS_SGMII_H_
-+#define QCOM_PHY_QMP_PCS_SGMII_H_
-+
-+#define QPHY_PCS_PHY_START				0x000
-+#define QPHY_PCS_POWER_DOWN_CONTROL			0x004
-+#define QPHY_PCS_SW_RESET				0x008
-+#define QPHY_PCS_LINE_RESET_TIME			0x00c
-+#define QPHY_PCS_TX_LARGE_AMP_DRV_LVL			0x020
-+#define QPHY_PCS_TX_SMALL_AMP_DRV_LVL			0x028
-+#define QPHY_PCS_PCS_READY_STATUS			0x094
-+#define QPHY_PCS_TX_MID_TERM_CTRL1			0x0d8
-+#define QPHY_PCS_TX_MID_TERM_CTRL2			0x0dc
-+#define QPHY_PCS_SGMII_MISC_CTRL8			0x118
-+
-+#endif
-diff --git a/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c b/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
-index 233f9b70c673..5b1c82459c12 100644
---- a/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
-+++ b/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
-@@ -11,6 +11,7 @@
- #include <linux/platform_device.h>
- #include <linux/regmap.h>
- 
-+#include "phy-qcom-qmp-pcs-sgmii.h"
- #include "phy-qcom-qmp-qserdes-com-v5.h"
- #include "phy-qcom-qmp-qserdes-txrx-v5.h"
- 
-@@ -19,17 +20,6 @@
- #define QSERDES_TX					0x400
- #define QSERDES_PCS					0xc00
- 
--#define QSERDES_PCS_PHY_START				(QSERDES_PCS + 0x0)
--#define QSERDES_PCS_POWER_DOWN_CONTROL			(QSERDES_PCS + 0x4)
--#define QSERDES_PCS_SW_RESET				(QSERDES_PCS + 0x8)
--#define QSERDES_PCS_LINE_RESET_TIME			(QSERDES_PCS + 0xc)
--#define QSERDES_PCS_TX_LARGE_AMP_DRV_LVL		(QSERDES_PCS + 0x20)
--#define QSERDES_PCS_TX_SMALL_AMP_DRV_LVL		(QSERDES_PCS + 0x28)
--#define QSERDES_PCS_TX_MID_TERM_CTRL1			(QSERDES_PCS + 0xd8)
--#define QSERDES_PCS_TX_MID_TERM_CTRL2			(QSERDES_PCS + 0xdc)
--#define QSERDES_PCS_SGMII_MISC_CTRL8			(QSERDES_PCS + 0x118)
--#define QSERDES_PCS_PCS_READY_STATUS			(QSERDES_PCS + 0x94)
--
- #define QSERDES_COM_C_READY				BIT(0)
- #define QSERDES_PCS_READY				BIT(0)
- #define QSERDES_PCS_SGMIIPHY_READY			BIT(7)
-@@ -43,8 +33,8 @@ struct qcom_dwmac_sgmii_phy_data {
- 
- static void qcom_dwmac_sgmii_phy_init_1g(struct regmap *regmap)
- {
--	regmap_write(regmap, QSERDES_PCS_SW_RESET, 0x01);
--	regmap_write(regmap, QSERDES_PCS_POWER_DOWN_CONTROL, 0x01);
-+	regmap_write(regmap, QSERDES_PCS + QPHY_PCS_SW_RESET, 0x01);
-+	regmap_write(regmap, QSERDES_PCS + QPHY_PCS_POWER_DOWN_CONTROL, 0x01);
- 
- 	regmap_write(regmap, QSERDES_QMP_PLL + QSERDES_V5_COM_PLL_IVCO, 0x0F);
- 	regmap_write(regmap, QSERDES_QMP_PLL + QSERDES_V5_COM_CP_CTRL_MODE0, 0x06);
-@@ -118,21 +108,21 @@ static void qcom_dwmac_sgmii_phy_init_1g(struct regmap *regmap)
- 	regmap_write(regmap, QSERDES_RX + QSERDES_V5_RX_RX_MODE_10_HIGH4, 0xB7);
- 	regmap_write(regmap, QSERDES_RX + QSERDES_V5_RX_DCC_CTRL1, 0x0C);
- 
--	regmap_write(regmap, QSERDES_PCS_LINE_RESET_TIME, 0x0C);
--	regmap_write(regmap, QSERDES_PCS_TX_LARGE_AMP_DRV_LVL, 0x1F);
--	regmap_write(regmap, QSERDES_PCS_TX_SMALL_AMP_DRV_LVL, 0x03);
--	regmap_write(regmap, QSERDES_PCS_TX_MID_TERM_CTRL1, 0x83);
--	regmap_write(regmap, QSERDES_PCS_TX_MID_TERM_CTRL2, 0x08);
--	regmap_write(regmap, QSERDES_PCS_SGMII_MISC_CTRL8, 0x0C);
--	regmap_write(regmap, QSERDES_PCS_SW_RESET, 0x00);
-+	regmap_write(regmap, QSERDES_PCS + QPHY_PCS_LINE_RESET_TIME, 0x0C);
-+	regmap_write(regmap, QSERDES_PCS + QPHY_PCS_TX_LARGE_AMP_DRV_LVL, 0x1F);
-+	regmap_write(regmap, QSERDES_PCS + QPHY_PCS_TX_SMALL_AMP_DRV_LVL, 0x03);
-+	regmap_write(regmap, QSERDES_PCS + QPHY_PCS_TX_MID_TERM_CTRL1, 0x83);
-+	regmap_write(regmap, QSERDES_PCS + QPHY_PCS_TX_MID_TERM_CTRL2, 0x08);
-+	regmap_write(regmap, QSERDES_PCS + QPHY_PCS_SGMII_MISC_CTRL8, 0x0C);
-+	regmap_write(regmap, QSERDES_PCS + QPHY_PCS_SW_RESET, 0x00);
- 
--	regmap_write(regmap, QSERDES_PCS_PHY_START, 0x01);
-+	regmap_write(regmap, QSERDES_PCS + QPHY_PCS_PHY_START, 0x01);
- }
- 
- static void qcom_dwmac_sgmii_phy_init_2p5g(struct regmap *regmap)
- {
--	regmap_write(regmap, QSERDES_PCS_SW_RESET, 0x01);
--	regmap_write(regmap, QSERDES_PCS_POWER_DOWN_CONTROL, 0x01);
-+	regmap_write(regmap, QSERDES_PCS + QPHY_PCS_SW_RESET, 0x01);
-+	regmap_write(regmap, QSERDES_PCS + QPHY_PCS_POWER_DOWN_CONTROL, 0x01);
- 
- 	regmap_write(regmap, QSERDES_QMP_PLL + QSERDES_V5_COM_PLL_IVCO, 0x0F);
- 	regmap_write(regmap, QSERDES_QMP_PLL + QSERDES_V5_COM_CP_CTRL_MODE0, 0x06);
-@@ -206,15 +196,15 @@ static void qcom_dwmac_sgmii_phy_init_2p5g(struct regmap *regmap)
- 	regmap_write(regmap, QSERDES_RX + QSERDES_V5_RX_RX_MODE_10_HIGH4, 0xB7);
- 	regmap_write(regmap, QSERDES_RX + QSERDES_V5_RX_DCC_CTRL1, 0x0C);
- 
--	regmap_write(regmap, QSERDES_PCS_LINE_RESET_TIME, 0x0C);
--	regmap_write(regmap, QSERDES_PCS_TX_LARGE_AMP_DRV_LVL, 0x1F);
--	regmap_write(regmap, QSERDES_PCS_TX_SMALL_AMP_DRV_LVL, 0x03);
--	regmap_write(regmap, QSERDES_PCS_TX_MID_TERM_CTRL1, 0x83);
--	regmap_write(regmap, QSERDES_PCS_TX_MID_TERM_CTRL2, 0x08);
--	regmap_write(regmap, QSERDES_PCS_SGMII_MISC_CTRL8, 0x8C);
--	regmap_write(regmap, QSERDES_PCS_SW_RESET, 0x00);
-+	regmap_write(regmap, QSERDES_PCS + QPHY_PCS_LINE_RESET_TIME, 0x0C);
-+	regmap_write(regmap, QSERDES_PCS + QPHY_PCS_TX_LARGE_AMP_DRV_LVL, 0x1F);
-+	regmap_write(regmap, QSERDES_PCS + QPHY_PCS_TX_SMALL_AMP_DRV_LVL, 0x03);
-+	regmap_write(regmap, QSERDES_PCS + QPHY_PCS_TX_MID_TERM_CTRL1, 0x83);
-+	regmap_write(regmap, QSERDES_PCS + QPHY_PCS_TX_MID_TERM_CTRL2, 0x08);
-+	regmap_write(regmap, QSERDES_PCS + QPHY_PCS_SGMII_MISC_CTRL8, 0x8C);
-+	regmap_write(regmap, QSERDES_PCS + QPHY_PCS_SW_RESET, 0x00);
- 
--	regmap_write(regmap, QSERDES_PCS_PHY_START, 0x01);
-+	regmap_write(regmap, QSERDES_PCS + QPHY_PCS_PHY_START, 0x01);
- }
- 
- static inline int
-@@ -251,14 +241,14 @@ static int qcom_dwmac_sgmii_phy_calibrate(struct phy *phy)
- 	}
- 
- 	if (qcom_dwmac_sgmii_phy_poll_status(data->regmap,
--					     QSERDES_PCS_PCS_READY_STATUS,
-+					     QSERDES_PCS + QPHY_PCS_PCS_READY_STATUS,
- 					     QSERDES_PCS_READY)) {
- 		dev_err(dev, "PCS_READY timed-out");
- 		return -ETIMEDOUT;
- 	}
- 
- 	if (qcom_dwmac_sgmii_phy_poll_status(data->regmap,
--					     QSERDES_PCS_PCS_READY_STATUS,
-+					     QSERDES_PCS + QPHY_PCS_PCS_READY_STATUS,
- 					     QSERDES_PCS_SGMIIPHY_READY)) {
- 		dev_err(dev, "SGMIIPHY_READY timed-out");
- 		return -ETIMEDOUT;
-@@ -285,11 +275,11 @@ static int qcom_dwmac_sgmii_phy_power_off(struct phy *phy)
- {
- 	struct qcom_dwmac_sgmii_phy_data *data = phy_get_drvdata(phy);
- 
--	regmap_write(data->regmap, QSERDES_PCS_TX_MID_TERM_CTRL2, 0x08);
--	regmap_write(data->regmap, QSERDES_PCS_SW_RESET, 0x01);
-+	regmap_write(data->regmap, QSERDES_PCS + QPHY_PCS_TX_MID_TERM_CTRL2, 0x08);
-+	regmap_write(data->regmap, QSERDES_PCS + QPHY_PCS_SW_RESET, 0x01);
- 	udelay(100);
--	regmap_write(data->regmap, QSERDES_PCS_SW_RESET, 0x00);
--	regmap_write(data->regmap, QSERDES_PCS_PHY_START, 0x01);
-+	regmap_write(data->regmap, QSERDES_PCS + QPHY_PCS_SW_RESET, 0x00);
-+	regmap_write(data->regmap, QSERDES_PCS + QPHY_PCS_PHY_START, 0x01);
- 
- 	clk_disable_unprepare(data->refclk);
- 
+On 1/25/24 23:24, Dmitry Baryshkov wrote:
+> On 25/01/2024 23:56, Luca Weiss wrote:
+>> From: Vladimir Lypak <vladimir.lypak@gmail.com>
+>>
+>> Add the IOMMU used for the GPU on MSM8953.
+>>
+>> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/msm8953.dtsi | 31 +++++++++++++++++++++++++++++++
+>>   1 file changed, 31 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi b/arch/arm64/boot/dts/qcom/msm8953.dtsi
+>> index dcb5c98b793c..91d083871ab0 100644
+>> --- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
+>> @@ -1046,6 +1046,37 @@ mdss_dsi1_phy: phy@1a96400 {
+>>               };
+>>           };
+>> +        gpu_iommu: iommu@1c48000 {
+> 
+> Nit: most of the platforms use the adreno_smmu label. But maybe the msm-iommu vs arm-smmu makes difference here.
 
--- 
-2.39.2
+Not really :)
 
+Please keep the labels unified
+> 
+> Nevertheless:
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
+>> +            compatible = "qcom,msm8953-iommu", "qcom,msm-iommu-v2";
+>> +            ranges = <0 0x01c48000 0x8000>;
+>> +
+>> +            clocks = <&gcc GCC_OXILI_AHB_CLK>,
+>> +                 <&gcc GCC_BIMC_GFX_CLK>;
+
+And align these
+
+Konrad
 
