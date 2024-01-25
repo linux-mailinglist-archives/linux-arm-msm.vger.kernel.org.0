@@ -1,206 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-8231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8233-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C42F083BF19
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 11:40:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 230D583BFB9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 11:56:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 73C37286B96
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 10:40:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D00A0287EC4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 10:56:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 799341CD00;
-	Thu, 25 Jan 2024 10:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89CB061687;
+	Thu, 25 Jan 2024 10:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KUJ4F+Az"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="a9uTMdnc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6111CABB
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 10:40:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C3C1CD0B
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 10:44:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706179246; cv=none; b=oCS1Py+B+kxWF3rAnGUm5x8r5zF68XRhhXk5Z0hJ5SSZN5jt6EW4aoFaTBNe22Cw+A73m858Jyv6tXpF1MwIPrB7EGe5bgqKr2RuXEME0YHbHmVBecyZ11Mj9+5w091pEFCOMHVyhLTwhFntp2WZRUCXM2J7DPowu98oztzdvcQ=
+	t=1706179482; cv=none; b=Gl+ojGEPpTk+lRk3uK0ORTYSdhshCxc+zcgWFXHGPHxfn93aIaRTZ/XiZDDmegCnLwyiAoj9tGXECHV8wVA7nmb7Ion2vvTJnHnsR7TgpN5GltA+JctIUsPliWj9DRF0RqjoRKmhFJWr3mwOuUJPdqjQO0oO4JBRtQzjVMWYDg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706179246; c=relaxed/simple;
-	bh=b92M9Wx0Kjvz8/GRBKt2gDk64pigjf71puB291ddRj0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Q4VUZqJlQR4U0NsMHD6V4fcpsb3b2Joz6uOZyzaPOQGwoXq7weCK+l9kVCVuUiz4Uht7o7tpQBHsb0Ex2aS2FEzb6M11Rez1l48PhPAH176Jd3nEWd0qiGJ2woaHKI2tt29n5xC1Y3m2ctBJiz0aRRonnsY2Sevo+74CIcNvPbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KUJ4F+Az; arc=none smtp.client-ip=209.85.128.43
+	s=arc-20240116; t=1706179482; c=relaxed/simple;
+	bh=yT1mRF6XNlXaTfuWIVMhLXVcISTzbXHuEXNJEvgnJqs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EVzV5RVB0PSOo+I9W14JQYfxOt6BaoPZ1TZMCssg4YDsNSPp8qt9Ro15TC3ulNK9rKSgVv5u5tKr0uf+qgB2qBFesXD7BUzL3KEBW7PmQrg1Jf+Mw5hjBnSIOjU6DZtM1jFK2Hb2dKdzLgezC+pCwqWWqdZ4/5KZtXIwIsiiDy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=a9uTMdnc; arc=none smtp.client-ip=209.85.208.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-40e76109cdeso72650265e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 02:40:44 -0800 (PST)
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-559f92bf7b6so1239446a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 02:44:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706179243; x=1706784043; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wz3t7EJZ1eNdyOYD/Kh4skvS3WQ/kt2sR4TG8rwI5Po=;
-        b=KUJ4F+AziXYkMbs6X+o7D6OLvEUopFpuCrn+jobjlSQrRHuHvHoy8WRu6LKwh0xKrO
-         g6SE3GtuSE26xQxES5yZIZ5rJr37otz6bTq6tzhNlbmMHRaFGwXJhCoZOrfNEM1z9EnI
-         Qrua3yu4dQx52ix3gis19OVTEU++byRRbgZlxnil+b41So+qTiqpJQ4z4P84EqmGknu7
-         Fx3jyFEXfALDSL1yYpBQhykqwyf8OJwyLDL+cCM0o/oCgghHXeH910idmS1Dx3SXSvuH
-         lRriCkAnFK6wFn05YAEMgR0ESMQXzrQAWNRsS/A4n8Gt1UOpQvuFK6gucc8YVhU4QvS5
-         TJ2w==
+        d=linaro.org; s=google; t=1706179478; x=1706784278; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=DP1TkMGJCcP03wjm/2IvbB0Zl5zG12ipI2nSUEb0ViM=;
+        b=a9uTMdnc5HKWIM6ieliulr3BHXgwysfjW028gwnVeVZ2qZr/U9WbCRnWbjzVmumKHA
+         mwwl/6BtHFs8tJkhCDlVStk03+ffHCejCwK3uw1Eg4+C0n2LXJWDd5efWjsH9BzmGgKR
+         1j3C2xEmSDvDKxc0OeI1Nirkva/MTPpbIuXA2f+6741zGkWVYAoEjTyNSG3hLH5opRMe
+         PN42Gx3nqxXQ1ny6h2JHIFcR7AhF09r8rmXhE/l6LzNDJ18tOyYL3d/y/GNtIP6EHo5T
+         dMwmqiaxhT3DdU4LNdD08RMDtF9xwaBadNSxmAMY8jkWnTzxoIPojryIacOGZn2xwKHk
+         2wcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706179243; x=1706784043;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wz3t7EJZ1eNdyOYD/Kh4skvS3WQ/kt2sR4TG8rwI5Po=;
-        b=VBciWdYYDurTrrbn5gW3U4FLoxJklJUQ4wl5gZY6TyT894vABq98nfnwVzNbSuNAxd
-         APvHN2RUrtvjEJd9jB6PV/W96zaTvF5c11dLiOIoFrPAPgK3WSO89YV3r2l0XxiOmg+Y
-         S/Gw0Nh7cHg/HdCMFBH7izVM6wHVmVPfLZ06w6Zaluwy5MhR+YZF/BYHwDbVyybJUlTW
-         QeVE130b1k05yaw2irwArPt3A6n/OfivgOhwsMDKraEb8huaIdSL1h+maGLTuTj2K2RG
-         p+FtvaLwR6l62A5A2EcBhNVD5SEEopHglQ7j3vWUvUpwm4mdhHnxZG4WVWKd3HOB5BPB
-         HgoQ==
-X-Gm-Message-State: AOJu0YyVaSXsc5A1P19qARrp6N38jdXNRgYEc6WAtWgc/U8/f7YLzlQG
-	1mowTzpUT8U+CtBig+uGI/7IFyeQ4HPfD5wLl+2ndo9m52l3rJrDSbADmgkRVUE=
-X-Google-Smtp-Source: AGHT+IHlFpzaQSEfsjUXLD10CregE5JH3j619Oan9H22R6Hoj+cIAxJtAF19gomSvLp/kDE593/Byg==
-X-Received: by 2002:a05:600c:1986:b0:40e:b106:d2a with SMTP id t6-20020a05600c198600b0040eb1060d2amr413239wmq.22.1706179242981;
-        Thu, 25 Jan 2024 02:40:42 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.215.66])
-        by smtp.gmail.com with ESMTPSA id n10-20020a05600c4f8a00b0040e3ac9f4c8sm2099097wmq.28.2024.01.25.02.40.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Jan 2024 02:40:42 -0800 (PST)
-Message-ID: <21eda361-ae7c-48d7-b1ea-ef1bfe8d9104@linaro.org>
-Date: Thu, 25 Jan 2024 11:40:40 +0100
+        d=1e100.net; s=20230601; t=1706179478; x=1706784278;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DP1TkMGJCcP03wjm/2IvbB0Zl5zG12ipI2nSUEb0ViM=;
+        b=KA8nPF23aD/d3Jn1HHYf5g4EqfqCS7ndwXXWnQuz0fouP+AeS9yxE3tRep5xbabwMm
+         cOufTtUglLRL/833I5i1Le1DCwOme8Q44BWEr+dVcFhIlgMybXCswRa3kfnOVH9YlfOK
+         1Q0DAcF5uBYkKaUhXrjU2fxv7LzneGkXojzmHrRSKkBze2fYeVnHrEkJRSW/qH6Kzop3
+         7ScfjXwvFpgzAXoAGuQLaXl7lrkjm6YKLZ6d0LfLh2oZZAGQimN6xQiOIHtQaL8Pv9Oh
+         XtacTwnNN95Sy6E1upC3YMGdOdU7W42HTpq/0/O2w/PUW744kkSyOiQX5OmPHgYlnjAI
+         d5Ng==
+X-Gm-Message-State: AOJu0YxjElkyB+7mxc0Jaz1uRI8AKDi/foTh/z185ODd+lTJkKlfY8+/
+	4kSFZdJCRUrxXH9yCqO0P34vAeCu255+yvTOsfPUfESZcd/TkytSDS9Ihf7w4RQ=
+X-Google-Smtp-Source: AGHT+IGG9jiccgy/B1Ja0Qj3GOeWRI+vkQ1p7kjIJbpZvMUF9eD/sku0Vq25Up2+hLJIJLvcnhGwEw==
+X-Received: by 2002:aa7:d857:0:b0:55c:feaa:aca4 with SMTP id f23-20020aa7d857000000b0055cfeaaaca4mr661597eds.9.1706179477838;
+        Thu, 25 Jan 2024 02:44:37 -0800 (PST)
+Received: from linaro.org ([79.115.23.25])
+        by smtp.gmail.com with ESMTPSA id ig1-20020a056402458100b0055ca5ce62ddsm1760685edb.12.2024.01.25.02.44.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Jan 2024 02:44:37 -0800 (PST)
+Date: Thu, 25 Jan 2024 12:44:35 +0200
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/5] clk: qcom: sm8[56]50: Drop the Disp AHB clock from
+ Display Clock Controller
+Message-ID: <ZbI7k+bDy+KSmncq@linaro.org>
+References: <20240125-dispcc-sm8550-sm8650-drop-disp-ahb-clk-v1-0-0f8d96156156@linaro.org>
+ <99817149-4a2e-49fc-aedc-fe298964a019@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: hwinfo: Introduce board-id
-Content-Language: en-US
-To: Amrit Anand <quic_amrianan@quicinc.com>, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, agross@kernel.org,
- andersson@kernel.org, konrad.dybcio@linaro.org
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, kernel@quicinc.com,
- Elliot Berman <quic_eberman@quicinc.com>
-References: <1705749649-4708-1-git-send-email-quic_amrianan@quicinc.com>
- <1705749649-4708-2-git-send-email-quic_amrianan@quicinc.com>
- <1fc9815e-76dd-41d7-aa1a-caa72ef4ad34@linaro.org>
- <b4c27fb4-0cbf-7bad-3fc3-163fb4a5eb3f@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <b4c27fb4-0cbf-7bad-3fc3-163fb4a5eb3f@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <99817149-4a2e-49fc-aedc-fe298964a019@linaro.org>
 
-On 24/01/2024 13:42, Amrit Anand wrote:
+On 24-01-25 10:49:23, Konrad Dybcio wrote:
+> 
+> 
+> On 1/25/24 10:27, Abel Vesa wrote:
+> > The Disp AHB clock is provided by the GCC but never registered. It is
+> > instead enabled on probe as it is expected to be always-on. So it should
+> > be dropped from Disp CC entirely.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> 
+> Abel, you just raised some concerns over my series doing this and now
+> you're doing the same, plus breaking backwards compatibility for no
+> good reason, instead of solving the problem.
 
->>> +select:
->>> +  anyOf:
->>> +    - required:
->>> +        - 'board-id'
->>> +    - required:
->>> +        - 'board-id-types'
->>> +    - required:
->>> +        - '#board-id-cells'
->> I don't fully get why do you need this select. Isn't the schema selected
->> by nodename? Or maybe it is for the final required: but then this could
->> be just set of dependencies.
-> The nodename here would be "/". So it will be applied to all the DTs, right?
-> Here, we wanted this to apply only if the above mentioned properties are 
-> present.
+Sorry but, during the off-list discussion, you convinced me that it is OK to drop
+their registration as long as we enable them on probe.
 
-The nodename will select it.
+I've not seen the following reply in time before sending current series:
+https://lore.kernel.org/all/6aa58497-9727-4601-b6eb-264c478997c3@linaro.org/
 
-> Do you suggest moving this to qcom,board-id.yaml and the required: as well.
-> So that vendor specific yaml could be applied?
+Since this is blocking the patches for dispcc and dts for X1E80100, I
+thought I'd just drop the clock as required from DT point of view.
+But yeah, you're right, it breaks bindings ABI and that's wrong.
 
-I suggest dropping the select.
+> 
+> The correct solution here is to register the AHB clock with GCC and
+> pm_clk_add() it from dispcc's .probe (and enable runtime PM on dispcc
+> if it's already not the case). Then the AHB clock will be gated when
+> no display hardware (= no dispcc consumer) is in use.
 
-Different topic is that we cannot even test it because you did not
-provide any user of this binding.
+I agree.
 
->>> +
->>> +properties:
->>> +  $nodename:
->>> +    const: "/"
->> Blank line.
-> Will add it.
->>> +  board-id:
->>> +    $ref: /schemas/types.yaml#/definitions/uint32-matrix
->>> +    description: |
->> Do not need '|' unless you need to preserve formatting.
-> Ack
->>> +      A list of identifiers that can be used to match with this devicetree.
->> s/devicetree/Devicetree/ ?
-> Will update
->>> +      The interpretatation of each cell can be matched with the
->> Typo: interpretation
-> Will update
->>> +      board-id-type at the same index.
->>> +
->>> +  board-id-types:
->>> +    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
->>> +    description:
->>> +      Defines the type of each cell, indicating to the DeviceTree selection
->> s/DeviceTree/Devicetree/ ?
-> Will update
->>
->>> +      mechanism how to parse the board-id.
->>> +
->>> +  '#board-id-cells':
->>   What are the cells for?
-> Bootloader will use this to check the number of entries in a tuple of 
-> board-id.
+> 
+> 8[56]50 are in a good position for this, as they already have the
+> required DTS reference. Unfortunately, I still haven't fully dug
+> into this for platforms without one, but that's on me.
 
-Doesn't the board-id-type define number of cells? How could you have the
-same board-id-type with different number of elements on board A and board B?
+Since I need to do this for the X1E80100, I'll probably do it for the
+other two as well.
 
+Sorry for the misunderstanding.
 
-Best regards,
-Krzysztof
-
+> 
+> Konrad
 
