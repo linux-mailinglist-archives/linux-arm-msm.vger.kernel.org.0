@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-8354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D9D783D029
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3DE0683D028
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 00:02:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 97C48B28FD5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 23:02:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E613428CEEA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 23:02:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B707B125C2;
-	Thu, 25 Jan 2024 23:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 331B5125CD;
+	Thu, 25 Jan 2024 23:02:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IvbrgxxC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V91ltL4/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69D5125BA
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 23:02:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CBA5125BC
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 23:02:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706223758; cv=none; b=qQZORDzTXncqEgn1HOxv93SBKYjhxel7RstQU1HS8nyTzHT9hZTAb1dzYVrTh+fIaAH6U4y4yYU3oWRklBpxeUJONUeG+AYz3gm5kWGX2oaqKx9pg8R+rQismkdxsxWwsv90bs4qsshE4j+2Dsdm77Ruuz+V3+BO+gPT+IqMUyU=
+	t=1706223759; cv=none; b=shiJdROjQHLT5ZjV35DRQ4W4K3EQqlle7wQtBsWkOd2V5b24jnQzCSpb3kTTCq53XpXVR5UutPT1Jkc9VThAhpRevyaUM6mt+wdWTJsEfOcZzNn6HvtENoFm0GDTwdSrCCK3VIZXW/qZKn1OgeMIQknSw5IMUcNdTS0dbUyuak8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706223758; c=relaxed/simple;
-	bh=O8mpqaR8HXjJgB3eXyOdLmL7m98OK8uSbhLioXRWhf0=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=renGqF8SOhmdfLb6eyTlPaEDD6eQ0k5YUgohEE09DbuDV6rn/E7aEo34dKC/DyugVfj/h3XKEZ2P6t6RlYEMD7o92FPI0fbFjvKCRv0a0edQJeIlOSqR80rdQQGyeSwwNVZY9LeUPZqZWsOyAJASDKTwPPxpbbbISU/feA0X4Hw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IvbrgxxC; arc=none smtp.client-ip=209.85.208.171
+	s=arc-20240116; t=1706223759; c=relaxed/simple;
+	bh=yVyRmmNda9mfXwPWksVdLkO9SsjdUAzlZBACGcKQbRg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=FBijoOdp3gUIsTFGRnGmcooDCjmcQncm2GslRLgakbKb0Rskh6vxLpqc3/rGqEjuehK+1Fsx+7fiRqOxOOs5ZOJBsCaR+phaapy5UrCchsxEFOjQ9+Q++ykmmn0M3XkZoeI7JZRfyxZagDOykq3r6/nRkwzDdeBew+358nHq9co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V91ltL4/; arc=none smtp.client-ip=209.85.208.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2cf206e4d56so24254481fa.3
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2cdeb954640so91382931fa.3
         for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 15:02:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1706223755; x=1706828555; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=LYGDfQbY/xCYYNsqD+fm8Yc+HDSRw2uFMdxVRxyadQY=;
-        b=IvbrgxxCJU7kPQX/gzdeLFefriETtgUxO1mGAg5/Ywn/KR4eR0I++X3tpeMzzXqFli
-         msqo6UhYn1IaTlmFuQiWkAMOiIt5s39YXvaIzCopoG9eEadm0l9ErRvdp15FkWW8Phco
-         kh1nWQU55IMe/vFnXT02KSHLYZgP5BKBN9Oj+fQsisIGslQykMclO+8M+FLvByt2SW8M
-         +NqPoxvUBMw51HpNmOfox1Yop2Nw7+I7Q+ikgLUbHD+PZrH9SdltpLAqQlmu3NI2ouPc
-         PFv/3lZRF+BsGUfe+3mD2uUesOfUIlqUUZFJaqBAwqFhcq2igJbQgFvrmAD0/dzZTdak
-         MebA==
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3oS3e08i9+4napyM4Cx2ITHLfZ0NtaHlzp9IZJ5e4DI=;
+        b=V91ltL4/21cbSDOJyUKNhXe7NFdX0iQA13/aAhLk1lRGfqR9e1lQJiCWBodykCR4Qx
+         +ZPuOQvsJmG+Xet6FKYe9iCoywYzdTyG+MVR3rLhN+fMk5T1QVvs7Lf8xSjeq6esFBba
+         h25Sxx89ItCxGChI7EGbPjNoIuDR1FmFENfYhxI07JtaXRPxtqB+ksCIbYO4/5xUojj/
+         Tkq3AkEmXqDalmTU4UUGXBgbcA44cj7fBXNQCOia0Ab+4uevOfGahpwTGo62K9mzzuio
+         umh64Yn1KpFnz58odkEFf/Xk0GtGmXFqoxRkNn48tT0h+2t2Qcyr/uYuwXoVAx9/GjhI
+         7pHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1706223755; x=1706828555;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LYGDfQbY/xCYYNsqD+fm8Yc+HDSRw2uFMdxVRxyadQY=;
-        b=hFjAr+0W5XthlLIIqUEqcznD22OcsfVh1uuibnY9+CxJH32feC+zD4oJBO+ME/DL1Y
-         ji4CjQo/bdgQHM8SSdbGi2u2tG3pF2jf9m1qzOzaweAfkZ/JHRD08mZLzlY6DIgRcyrY
-         9TzSU+XQmO+NeLA6LmnOINbsotG5HajP3wiVsvlSkW237RRhwR71cC8NLK+eljzJRnKP
-         Lx6nOCfQfrO7Gd0NgvPmgcKznvWE0S61beyc5jzyodrfB2Aj3abJMkrCfVX0TFhmVwUD
-         vcHLm85LYQHntlhCMWJXvKAMj9+q8Feo4Ro+BvzEPpvCmMCOpWOsoEkEBImkMyPzooWf
-         W/rw==
-X-Gm-Message-State: AOJu0Yxdu9iWdhiy7xgWQHS4OyVJ7l5lqpKBet7JduLuUxOwb8lq8Isi
-	+cap4z+qW1sDzZn+4MXQBVFu/UYw38jnpFoPtz7lITT8QmmjgT0PBTCkG8P+uoU=
-X-Google-Smtp-Source: AGHT+IH+M3Xf2nCYP/B0lMAMqNOjMEpdZtiGzowCmtg/W0S4hn2lrNviimtzYXFCJ3IJMWv/tyUY+A==
-X-Received: by 2002:a2e:b60f:0:b0:2cf:13c1:6a4 with SMTP id r15-20020a2eb60f000000b002cf13c106a4mr120265ljn.75.1706223754508;
-        Thu, 25 Jan 2024 15:02:34 -0800 (PST)
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3oS3e08i9+4napyM4Cx2ITHLfZ0NtaHlzp9IZJ5e4DI=;
+        b=sWM6iQArFtXKexaXMoGwTRyfXlNwUkxypMd+og0jQG1QzF8yZstk87id+ZR+wGW2tZ
+         L5E/eWiC8qFLMlBVihXrSdM2+oKC5HKW8db99Y7ADocDHf5uf5ulvBUjwuZ7X4z277Ho
+         x65/d9hKgV9Desin0juso91wLuVOJO52RyELK4zLccX+wXY03Mqxbxg9/uSPpn6rA4+L
+         7SzSuZ0x7BIDu6DLgI75fHGyMAtZZynOcXuKKuy4cp87PP9Mt5SIKQI94lPnsXmHL8yf
+         19ZSi861GShBEkr6S+58u5aXRV52lPC1MRTrL8lRGCPYrn87T2ql1V9fvqBlG7rlpI/K
+         VVQA==
+X-Gm-Message-State: AOJu0YwABYI9E6NBBLKdQYfFJ392+aRdSvegIscC9A25XhMmwRD/oMJJ
+	8hAXiytPF5eWw47S+4ZnMWYJW+s4FDhnldQCcxV1HQ6/RBuj/r79MzwTB5PsmW137oMkewSWdUw
+	r
+X-Google-Smtp-Source: AGHT+IGSPB8nJPFKwB4TbiQzcc+eLmvCB3m7LW7+0Hir4MYc5gEZOJyeud9KXrgGzn4nvRG+ISp0FA==
+X-Received: by 2002:a2e:7a16:0:b0:2cf:3144:3a4b with SMTP id v22-20020a2e7a16000000b002cf31443a4bmr194281ljc.37.1706223755300;
+        Thu, 25 Jan 2024 15:02:35 -0800 (PST)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id x19-20020a2e8813000000b002cdfc29b46dsm405872ljh.88.2024.01.25.15.02.33
+        by smtp.gmail.com with ESMTPSA id x19-20020a2e8813000000b002cdfc29b46dsm405872ljh.88.2024.01.25.15.02.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jan 2024 15:02:33 -0800 (PST)
+        Thu, 25 Jan 2024 15:02:34 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH v3 00/15] drm/msm/dp: clear power and parser submodules
- away
-Date: Fri, 26 Jan 2024 01:02:29 +0200
-Message-Id: <20240126-dp-power-parser-cleanup-v3-0-e2e46f4d390c@linaro.org>
+Date: Fri, 26 Jan 2024 01:02:30 +0200
+Subject: [PATCH v3 01/15] drm/msm/dp: drop unused parser definitions
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,10 +78,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAIXosmUC/53PMW7DMAwF0KsEmkPDoiGnypR7FBkYh4qFOpZAu
- UqNwHevnMldOgTg8of/8PlUicVzUsfdUwlnn3wYS2j2O9X1NN4Y/LVkhTU2uhxcI8TwYIFIUrr
- QDUzjdwTLDRlnqf1ArUo7Cjv/85I/zyU7CXeYemHaeGgRTWvqymo8GA2Fv/tJ5upCMqf+K+TT4
- EeSUAW5rWrv0xRkfs3NerXfktZBGTf1fx7LCDW4rmFbI7XOXP5Ay7L8AhotHmREAQAA
+Message-Id: <20240126-dp-power-parser-cleanup-v3-1-e2e46f4d390c@linaro.org>
+References: <20240126-dp-power-parser-cleanup-v3-0-e2e46f4d390c@linaro.org>
+In-Reply-To: <20240126-dp-power-parser-cleanup-v3-0-e2e46f4d390c@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
  Abhinav Kumar <quic_abhinavk@quicinc.com>, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
@@ -91,81 +91,123 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2906;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2918;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=O8mpqaR8HXjJgB3eXyOdLmL7m98OK8uSbhLioXRWhf0=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlsuiGDQpLcmTmiCe/6wXmlwkZtq2iba+FUsfX7
- EB6skPk1j2JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZbLohgAKCRCLPIo+Aiko
- 1RrWB/0eHcko7OQB/iGbQZuNv5Uh51UC9Tna1aeJSLOXn0wEwC8w898v4kW/qZbf56zs2FGQwkF
- R7jBC38N8uFXIXuBQ/Te7BdxaB3VYTk5x3LKaNVcD9Nq1Br5CavDkC0BNf8627jjh9TSc0vsvKS
- XVxcOaE7cMdF253Pk+Au3Xa+bpCKz97GxjvCwEFulF/Sbl7DWFuqkeq2SPWvbIV68CbzoZNviy0
- 5v6WjEwS82s1xUTwz6tsEmpCOyJZEBhuR8fyiZ0jZITQk+3+tLAjBV5UnuXh4ebHw8ARn5NrJjp
- lMajfEftow2UwTrsWVUcyrHzb9IDYdVktot4KoNCGb2Vljtt
+ bh=yVyRmmNda9mfXwPWksVdLkO9SsjdUAzlZBACGcKQbRg=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlsuiGYEavyaGfF/CAioPyUcxvN+cLN32AAS7wm
+ cOjfDER+M2JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZbLohgAKCRCLPIo+Aiko
+ 1dJbB/4rFyOynpwtn4Zr+cn5sslHLwkW4VCsC9N+pjY0MLGw/rVZo7hjU59pWMXDQxZEvSZVBD9
+ yfamhNXIgzJ8b/huF7eDriTAzij0bI+SWCU6sNYgNHAi1pQjOUXhoml7LEznLOMQog0OFsKe1L0
+ 2t2C3hEGbXMHPY5Om7fYIWYixyDrFQt2Dr6mCVzQvfhSuXtVs3+UmHmXZgSrcHoxHFFAzXH8G0R
+ kJyi1bFZnhFPmFxF2z10KE7FUNWyPaeS+ljPbn+n3rJm5VFZYwBA6oRsLR3VKqv6im+qVqSMt3m
+ e1J0sRNLJvsW4OlTo67dLKtwIGvq98CZ3rdSX48ZTkHW/xzx
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Reshuffle code in the DP driver, cleaning up clocks and DT parsing and
-dropping the dp_power and dp_parser submodules.
+Drop several unused and obsolete definitions from the dp_parser module.
 
-Initially I started by looking onto stream_pixel clock handling only to
-find several wrapping layers around a single clocks. After inlining
-and/or dropping them (and thus dp_power submodule), it was more or less
-natural to continue cleaning up the dp_parser until it got removed
-completely.
-
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
-Changes in v3:
-- Fixed crash in the DP when there is no next bridge (Kuogee)
-- Removed excess documentation for the removed dp_parser::io field
-- Link to v2: https://lore.kernel.org/r/20231231-dp-power-parser-cleanup-v2-0-fc3e902a6f5b@linaro.org
+ drivers/gpu/drm/msm/dp/dp_parser.h | 46 --------------------------------------
+ 1 file changed, 46 deletions(-)
 
-Changes in v2:
-- Fixed unrelated power->ctrl change in comment (Konrad)
-- Made sure that all functions use reverse-Christmas-tree flow (Konrad)
-- Fixed indents in several moved functions
-- Added a patch splitting dp_ctlr_clk_enable
-- Link to v1: https://lore.kernel.org/r/20231229225650.912751-1-dmitry.baryshkov@linaro.org
+diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
+index 1f068626d445..90a2cdbbe344 100644
+--- a/drivers/gpu/drm/msm/dp/dp_parser.h
++++ b/drivers/gpu/drm/msm/dp/dp_parser.h
+@@ -12,7 +12,6 @@
+ 
+ #include "msm_drv.h"
+ 
+-#define DP_LABEL "MDSS DP DISPLAY"
+ #define DP_MAX_PIXEL_CLK_KHZ	675000
+ #define DP_MAX_NUM_DP_LANES	4
+ #define DP_LINK_RATE_HBR2	540000 /* kbytes */
+@@ -21,7 +20,6 @@ enum dp_pm_type {
+ 	DP_CORE_PM,
+ 	DP_CTRL_PM,
+ 	DP_STREAM_PM,
+-	DP_PHY_PM,
+ 	DP_MAX_PM
+ };
+ 
+@@ -43,28 +41,10 @@ static inline const char *dp_parser_pm_name(enum dp_pm_type module)
+ 	case DP_CORE_PM:	return "DP_CORE_PM";
+ 	case DP_CTRL_PM:	return "DP_CTRL_PM";
+ 	case DP_STREAM_PM:	return "DP_STREAM_PM";
+-	case DP_PHY_PM:		return "DP_PHY_PM";
+ 	default:		return "???";
+ 	}
+ }
+ 
+-/**
+- * struct dp_display_data  - display related device tree data.
+- *
+- * @ctrl_node: referece to controller device
+- * @phy_node:  reference to phy device
+- * @is_active: is the controller currently active
+- * @name: name of the display
+- * @display_type: type of the display
+- */
+-struct dp_display_data {
+-	struct device_node *ctrl_node;
+-	struct device_node *phy_node;
+-	bool is_active;
+-	const char *name;
+-	const char *display_type;
+-};
+-
+ /**
+  * struct dp_ctrl_resource - controller's IO related data
+  *
+@@ -77,28 +57,6 @@ struct dp_io {
+ 	union phy_configure_opts phy_opts;
+ };
+ 
+-/**
+- * struct dp_pinctrl - DP's pin control
+- *
+- * @pin: pin-controller's instance
+- * @state_active: active state pin control
+- * @state_hpd_active: hpd active state pin control
+- * @state_suspend: suspend state pin control
+- */
+-struct dp_pinctrl {
+-	struct pinctrl *pin;
+-	struct pinctrl_state *state_active;
+-	struct pinctrl_state *state_hpd_active;
+-	struct pinctrl_state *state_suspend;
+-};
+-
+-/* Regulators for DP devices */
+-struct dp_reg_entry {
+-	char name[32];
+-	int enable_load;
+-	int disable_load;
+-};
+-
+ struct dss_module_power {
+ 	unsigned int num_clk;
+ 	struct clk_bulk_data *clocks;
+@@ -109,16 +67,12 @@ struct dss_module_power {
+  *
+  * @pdev: platform data of the client
+  * @mp: gpio, regulator and clock related data
+- * @pinctrl: pin-control related data
+- * @disp_data: controller's display related data
+  * @parse: function to be called by client to parse device tree.
+  */
+ struct dp_parser {
+ 	struct platform_device *pdev;
+ 	struct dss_module_power mp[DP_MAX_PM];
+-	struct dp_pinctrl pinctrl;
+ 	struct dp_io io;
+-	struct dp_display_data disp_data;
+ 	u32 max_dp_lanes;
+ 	u32 max_dp_link_rate;
+ 	struct drm_bridge *next_bridge;
 
----
-Dmitry Baryshkov (15):
-      drm/msm/dp: drop unused parser definitions
-      drm/msm/dp: drop unused fields from dp_power_private
-      drm/msm/dp: parse DT from dp_parser_get
-      drm/msm/dp: inline dp_power_(de)init
-      drm/msm/dp: fold dp_power into dp_ctrl module
-      drm/msm/dp: simplify stream clocks handling
-      drm/msm/dp: stop parsing clock names from DT
-      drm/msm/dp: split dp_ctrl_clk_enable into four functuions
-      drm/msm/dp: move phy_configure_opts to dp_ctrl
-      drm/msm/dp: remove PHY handling from dp_catalog.c
-      drm/msm/dp: handle PHY directly in dp_ctrl
-      drm/msm/dp: move all IO handling to dp_catalog
-      drm/msm/dp: move link property handling to dp_panel
-      drm/msm/dp: move next_bridge handling to dp_display
-      drm/msm/dp: drop dp_parser
-
- drivers/gpu/drm/msm/Makefile        |   2 -
- drivers/gpu/drm/msm/dp/dp_aux.c     |   9 +-
- drivers/gpu/drm/msm/dp/dp_aux.h     |   2 +
- drivers/gpu/drm/msm/dp/dp_catalog.c | 156 +++++++++++-----
- drivers/gpu/drm/msm/dp/dp_catalog.h |   6 +-
- drivers/gpu/drm/msm/dp/dp_ctrl.c    | 358 ++++++++++++++++++++++++------------
- drivers/gpu/drm/msm/dp/dp_ctrl.h    |  17 +-
- drivers/gpu/drm/msm/dp/dp_debug.c   |   1 -
- drivers/gpu/drm/msm/dp/dp_display.c | 102 +++-------
- drivers/gpu/drm/msm/dp/dp_display.h |   3 +-
- drivers/gpu/drm/msm/dp/dp_panel.c   |  66 +++++++
- drivers/gpu/drm/msm/dp/dp_parser.c  | 327 --------------------------------
- drivers/gpu/drm/msm/dp/dp_parser.h  | 155 ----------------
- drivers/gpu/drm/msm/dp/dp_power.c   | 183 ------------------
- drivers/gpu/drm/msm/dp/dp_power.h   |  95 ----------
- 15 files changed, 465 insertions(+), 1017 deletions(-)
----
-base-commit: 39676dfe52331dba909c617f213fdb21015c8d10
-change-id: 20231231-dp-power-parser-cleanup-9e3a5f9a6821
-
-Best regards,
 -- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+2.39.2
 
 
