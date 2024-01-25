@@ -1,128 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-8309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F8B983CCB2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 20:41:15 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB8DD83CD18
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 21:05:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 51F861C22EE2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 19:41:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 05CDE1C22816
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 20:05:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89778137C23;
-	Thu, 25 Jan 2024 19:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70EBA135A78;
+	Thu, 25 Jan 2024 20:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="e7jhNSAf"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="Ch5/8b3f"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158B213666B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 19:39:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C73B134730;
+	Thu, 25 Jan 2024 20:05:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706211560; cv=none; b=JK3rRRkdgsgQAjfCGLjmWWUvj1VbNa4L7lZP6tNglBOl73S9wLCN7MBuRiV6wvw/QPgT8ejsSEa8iYvqHHesNdwle5EtZ/aO+R+IMV79yjT/Q8T/DjJgmvoLh+rGW+MBFBsPsk50oXSvMQexzvI4k0qXRvaYgQy0Tbz47XDd5YY=
+	t=1706213145; cv=none; b=XfxHBL0xPIhv615+qqP55sFilt11Pi0Lo1UHbyC0C3t7eNhWdLts4uf+0vtXDJbT7N+jkvQ+JbepholezYduIhf8SfKZ/gaEJBEdiOo5R7wDdGTRPBfkYrK/WWR8g4OQBn4YmWvNYY2MZ69jTwhwIXA8n6c4CDwV/lQnMNWCP6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706211560; c=relaxed/simple;
-	bh=ACqLWxHS9vTQlpAsgUrVDoJQowq4afXSP5k5Ggtg/Rg=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hqh2gmIVlGC46K9mv5ri9RIHzUPJDbpwt1nqL0ZD4ziTGQORn1m/0XZCHwpbSSXkSBIDe7sw13k3pGlK3GQL3oq6y7F6mchHNlYY4WJpfABjxbFxME6K9xJj5IFpAAbv/Ex7/Gybl9ahDS/dquPWMy/XItiydNHzrJg08HH973U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=e7jhNSAf; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40PDxcj9007267;
-	Thu, 25 Jan 2024 19:39:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=RNT9pg6jIeWU29Ifh0GlkQfkjtzYGOLCtviY2xL8NUw=; b=e7
-	jhNSAfBXPh6n12HS8hY/DnM+VMyVfhhSuS7mVDxofs7MUFSRajmXv+erdHtQtAli
-	lRcuAXsuGGcafj8ZByD/D3N683XZdJnNSYA7D9Tr3Ip1/tfVS04KEmqf+LqfUTpY
-	RSPdbheGX0rZXtEEtET4r3wEBtPHGH4FoH2Wsj39x2Cr2kyKDjuL6iGkkiA2/muV
-	87OT/kMkLuzjI9nXBry71QK/PgEnqKOq7cpQ6RWG8O+P8kcZCUTjBDjr33e2r3bO
-	AxuZm/+5pgF95G/uC/0N4a09cJHvyW2LbbWuSa5KP2jzgq84kz0uv7F9Nr8fBGaF
-	PfhEIQ3xE9rVBNzD7nzg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vun6w1nct-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 25 Jan 2024 19:39:13 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40PJdCbY025004
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 25 Jan 2024 19:39:12 GMT
-Received: from hu-parellan-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Thu, 25 Jan 2024 11:39:12 -0800
-From: Paloma Arellano <quic_parellan@quicinc.com>
-To: <freedreno@lists.freedesktop.org>
-CC: Paloma Arellano <quic_parellan@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <robdclark@gmail.com>, <seanpaul@chromium.org>, <swboyd@chromium.org>,
-        <dmitry.baryshkov@linaro.org>, <quic_abhinavk@quicinc.com>,
-        <quic_jesszhan@quicinc.com>, <quic_khsieh@quicinc.com>,
-        <marijn.suijten@somainline.org>, <neil.armstrong@linaro.org>
-Subject: [PATCH 17/17] drm/msm/dp: allow YUV420 mode for DP connector when VSC SDP supported
-Date: Thu, 25 Jan 2024 11:38:26 -0800
-Message-ID: <20240125193834.7065-18-quic_parellan@quicinc.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240125193834.7065-1-quic_parellan@quicinc.com>
-References: <20240125193834.7065-1-quic_parellan@quicinc.com>
+	s=arc-20240116; t=1706213145; c=relaxed/simple;
+	bh=WBaEFU0HD/ZpYZcSyEk08bbjDIygWcVOBE8OjlEUd3I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oTMcybqrLfcJV4DDvcsHh/qfrjS2mF7xspYv6Fwl6xRh0MV7TQ+4WkaBoNBeDmXXwEcBZ9FsAUI1lX8/TDOaap+L1vg/PUZfJPmec1MQHWnDfXBG1ZI3+GHMWcnn7pqvWGr/ojN4nV2ZXb7KQNvZoIT51lby9Em64ktbOovrSBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=Ch5/8b3f; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=PSP1mwXt7pbVQqCb1c1AUqEAyMaE5dkMskynL1tp6dg=; b=Ch5/8b3frcnqGViJrO55oIG1hK
+	KCyHsGaAI2M2KL74z6fIm3tlvk2bgW8h1JTdxUdqjXUSl/LlZ8XgIJoHwGHw6hP5vIJEoIfgosfmy
+	+FeuruMUTm2HxmCCFeGWn96d6zPTUdGwoCpS47jNJuQV7CtycTpMfVlXCt6p2holagKA=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1rT5yg-0067Ml-Ai; Thu, 25 Jan 2024 21:05:34 +0100
+Date: Thu, 25 Jan 2024 21:05:34 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org, netdev@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v4 2/8] clk: qcom: ipq5332: enable few nssnoc clocks in
+ driver probe
+Message-ID: <7a69a68d-44c2-4589-b286-466d2f2a0809@lunn.ch>
+References: <20240122-ipq5332-nsscc-v4-0-19fa30019770@quicinc.com>
+ <20240122-ipq5332-nsscc-v4-2-19fa30019770@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: E-LgGlCdRlARs3pC8nGZxDipdxMR_pxA
-X-Proofpoint-ORIG-GUID: E-LgGlCdRlARs3pC8nGZxDipdxMR_pxA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-25_12,2024-01-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=818
- lowpriorityscore=0 adultscore=0 spamscore=0 priorityscore=1501 mlxscore=0
- bulkscore=0 phishscore=0 impostorscore=0 malwarescore=0 suspectscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401190000 definitions=main-2401250141
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240122-ipq5332-nsscc-v4-2-19fa30019770@quicinc.com>
 
-All the components of YUV420 over DP are added. Therefore, let's mark the
-connector property as true for DP connector when the DP type is not eDP
-and when VSC SDP is supported.
+On Mon, Jan 22, 2024 at 11:26:58AM +0530, Kathiravan Thirumoorthy wrote:
+> gcc_snoc_nssnoc_clk, gcc_snoc_nssnoc_1_clk, gcc_nssnoc_nsscc_clk are
+> enabled by default and it's RCG is properly configured by bootloader.
 
-Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
+Which bootloader? Mainline barebox?
+
+> Some of the NSS clocks needs these clocks to be enabled. To avoid
+> these clocks being disabled by clock framework, drop these entries
+> from the clock table and enable it in the driver probe itself.
+
+If they are critical clocks, i would expect a device to reference
+them. The CCF only disabled unused clocks in late_initcall_sync(),
+which means all drivers should of probed and taken a reference on any
+clocks they require.
+
+Please correctly describe the clock tree in device tree, not hide
+clocks because your DT description is not complete.
+
+    Andrew
+
 ---
- drivers/gpu/drm/msm/dp/dp_display.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 4329435518351..97edd607400b8 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -370,11 +370,14 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
- 
- 	dp_link_process_request(dp->link);
- 
--	if (!dp->dp_display.is_edp)
-+	if (!dp->dp_display.is_edp) {
-+		if (dp_panel_vsc_sdp_supported(dp->panel))
-+			dp->dp_display.connector->ycbcr_420_allowed = true;
- 		drm_dp_set_subconnector_property(dp->dp_display.connector,
- 						 connector_status_connected,
- 						 dp->panel->dpcd,
- 						 dp->panel->downstream_ports);
-+	}
- 
- 	edid = dp->panel->edid;
- 
--- 
-2.39.2
-
+pw-bot: cr
 
