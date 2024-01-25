@@ -1,115 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-8215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8216-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7BE9383BDB9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 10:46:16 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFC0183BDF8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 10:53:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 33A8829276C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 09:46:15 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 51CA2B29480
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jan 2024 09:46:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6870E1CF8A;
-	Thu, 25 Jan 2024 09:44:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30F9D1CA82;
+	Thu, 25 Jan 2024 09:45:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HNTpD/NK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E209C1CF82
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 09:44:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F0F11C6B6
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 09:45:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706175843; cv=none; b=l2/rfqn5z9QCMOoXnQlI8UCuU6Dp2xHldQtDG6RlM07bpTXuCEguKxI+czyZcrdZe+Cde2jYaD2OYKaS20wQBCNHz5mpBjan9NMLm6Iq3F5pnC7khXAMIzRfHnKl/VZMfCpl4zeFGorvN8jBwfDmxlHdvnvZ6g+K6mr4FAakok4=
+	t=1706175920; cv=none; b=RPIrLJc6d6Pt2CRldxifiCtnR2GpFX3XzgiOY9I66kaCsPW77AIcl74xLuv3/If/i4mu5mOfHh8IJdofu8ihHDuHlbKSoFoyXduPtGPUZvsDSON0ZKxNnpJpoXZny6gRFIMNKa5rae4wdpSuHJn/qjVlV6Lq+UYd/N+8dy1cV+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706175843; c=relaxed/simple;
-	bh=RgBY/UGCd4plfjZ1+ESyM3yfa/sdiUadST2GFLW/M4o=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Fnud4xuKHZTKSvs9rATxTIMY96efN7b3huGSttiVyXnRpUrxABXWUi78vdlMB9iyZOXmixi1kb+aXV90ZsdF1kfbobKqjtv4wpyFxMKewQPOuH66hAbDXi8PhZPjKMA4VFr99GX9896fmvXHf+xIcdzsKS3W98sNmJ3gaW8KkLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1rSwGv-0002Ku-8h; Thu, 25 Jan 2024 10:43:45 +0100
-Received: from [2a0a:edc0:0:900:1d::4e] (helo=lupine)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1rSwGu-002FmK-Q5; Thu, 25 Jan 2024 10:43:44 +0100
-Received: from pza by lupine with local (Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1rSwGu-0003mR-2L;
-	Thu, 25 Jan 2024 10:43:44 +0100
-Message-ID: <34d4e5bc7492d51b921b0633d51ed5c71b12657e.camel@pengutronix.de>
-Subject: Re: [PATCH v5 4/6] reset: Instantiate reset GPIO controller for
- shared reset-gpios
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Srinivas
- Kandagatla <srinivas.kandagatla@linaro.org>, Banajit Goswami
- <bgoswami@quicinc.com>,  Bjorn Andersson <andersson@kernel.org>, Konrad
- Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley
- <conor+dt@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, Viresh
- Kumar <viresh.kumar@linaro.org>, Frank Rowand <frowand.list@gmail.com>,
- Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
- alsa-devel@alsa-project.org,  linux-arm-msm@vger.kernel.org,
- linux-sound@vger.kernel.org,  devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org,  linux-pm@vger.kernel.org
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Chris Packham
- <chris.packham@alliedtelesis.co.nz>, Sean Anderson <sean.anderson@seco.com>
-Date: Thu, 25 Jan 2024 10:43:44 +0100
-In-Reply-To: <20240124074527.48869-5-krzysztof.kozlowski@linaro.org>
-References: <20240124074527.48869-1-krzysztof.kozlowski@linaro.org>
-	 <20240124074527.48869-5-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+	s=arc-20240116; t=1706175920; c=relaxed/simple;
+	bh=cWPOC7NSGBppl4zfjZkFzAGHP/WbY62dZdXQCjP/xdY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XSB2PwGLbfiiYXL6YUk9XF8mk96JKDCLkUNAXx3gOTqF3CDtTm8SH2301XN57wlZrn1rttzECk5rhwqdsqyyrRkZDu9b1bFOv463RknNF3LEnHQcVLTAyzXdSvZ8pt+xUUWa0BIaJR7WbMi26duwfr9SiDAXET9fGON405Bqvp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HNTpD/NK; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-50edf4f478eso8546779e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 01:45:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706175916; x=1706780716; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DIOuj7bR7enUuseulkrPOknNgIfgoOuomvKOHhgQg6I=;
+        b=HNTpD/NKQ09l85DOQ3NB4UWYZ8zjnLYQVjeWPA6N3CncDrj/WL428qjpXGnHwjFp1v
+         /DpYIiTVrqBrgVISGkp8zwtLAS56Kflqcmajdw9Lk0PHKqRbWakQA2OLrRFNkVMHw9yr
+         6tJceIljequMnKWJRofvVIqivBPyQkGmqen7K0iXSbwX/4GytlzKfNn/Og089jcWPg6n
+         nwRKJ7zx4MordGn1syhelPPdUVccgOF5qA8sbC4x8NH1sTaSrnMRrdZmyLoULjuDoDIq
+         9UiR9aSI2SqhJY7Z0iwwJH+vg8Az/fpKPg/ECGy4oTorkljz2TDduuRdbz63bGtiSaci
+         LCvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706175916; x=1706780716;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DIOuj7bR7enUuseulkrPOknNgIfgoOuomvKOHhgQg6I=;
+        b=QQI8leHkbWeUPjZX4VqWQ0mcXIhGECK2iYQW0ID8Dixd9KkRf++B2cOSqa+3NV4Y7W
+         1nQVdivHDMQzVsYICOv257A4gbnXIrqm1TMl8lZKX5li/i1YXSkACT/OZI5f50E+cw7H
+         3MwYgy9pVSYsbS5fm1XGIu1BwmMEtG40CY7reKMptxC2GbH6iGkPgQP71nWA9LGwvkDr
+         5x3iXGvoYvU5ZoF9JCkWh2lO4LFtHhX8aKppgaSdyT+huDvxuWI04CL8K8NUuEiQng3E
+         GUBp3LPRJxbHHu3A/USyt51VlDf/bqXVhhbUinmtqWZCFHRlrhvK/Rfj8/h3RQiiq/eD
+         7fKA==
+X-Gm-Message-State: AOJu0YwzlwbIrkn7a3q3yx8qMjJHVil1rFlgB+bO1dzdyl+xL0xcNYuD
+	UiffliHxfV3NGm9QS3XsOJUllD+KxkFfg4IOUWUt6Vaul8MCr3qlee4Fr3gUZgc=
+X-Google-Smtp-Source: AGHT+IFG+yauXBwOK/woS6AE2eb7O0Y/xtBvYSRv33al+j3vbOLwgE19T/bjbbonr4enfPCkmco7kg==
+X-Received: by 2002:a2e:a608:0:b0:2cd:fdc1:8e52 with SMTP id v8-20020a2ea608000000b002cdfdc18e52mr415985ljp.71.1706175915573;
+        Thu, 25 Jan 2024 01:45:15 -0800 (PST)
+Received: from [172.30.205.155] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id p3-20020a2e8043000000b002cd91d0ceefsm232472ljg.33.2024.01.25.01.45.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Jan 2024 01:45:15 -0800 (PST)
+Message-ID: <b4a9ad3e-392f-42ff-8fed-dd86b013176b@linaro.org>
+Date: Thu, 25 Jan 2024 10:45:12 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RESEND] arm64: dts: qcom: qcm6490-idp: Add support for
+ PM7250B PMIC
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Umang Chheda <quic_uchheda@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Kamal Wadhwa <quic_kamalw@quicinc.com>
+References: <20240123102817.2414155-1-quic_uchheda@quicinc.com>
+ <CAA8EJppwboaEbKFFACr3LO0OHg4iOJPapKRqoH2EGEYcjV6HfA@mail.gmail.com>
+ <735575f5-ee46-4c91-b0bd-e9c6fb97361c@quicinc.com>
+ <CAA8EJpr6XrhNp2gdbqmCow7ShXLNXEwGZ-a_Yxr08bcxtORg6A@mail.gmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <CAA8EJpr6XrhNp2gdbqmCow7ShXLNXEwGZ-a_Yxr08bcxtORg6A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mi, 2024-01-24 at 08:45 +0100, Krzysztof Kozlowski wrote:
-> Devices sharing a reset GPIO could use the reset framework for
-> coordinated handling of that shared GPIO line.  We have several cases of
-> such needs, at least for Devicetree-based platforms.
->=20
-> If Devicetree-based device requests a reset line, while "resets"
-> Devicetree property is missing but there is a "reset-gpios" one,
-> instantiate a new "reset-gpio" platform device which will handle such
-> reset line.  This allows seamless handling of such shared reset-gpios
-> without need of changing Devicetree binding [1].
->=20
-> To avoid creating multiple "reset-gpio" platform devices, store the
-> Devicetree "reset-gpios" GPIO specifiers used for new devices on a
-> linked list.  Later such Devicetree GPIO specifier (phandle to GPIO
-> controller, GPIO number and GPIO flags) is used to check if reset
-> controller for given GPIO was already registered.
->=20
-> If two devices have conflicting "reset-gpios" property, e.g. with
-> different ACTIVE_xxx flags, this would allow to spawn two separate
-> "reset-gpio" devices, where the second would fail probing on busy GPIO
-> request.
->=20
-> Link: https://lore.kernel.org/all/YXi5CUCEi7YmNxXM@robh.at.kernel.org/ [1=
-]
-> Cc: Bartosz Golaszewski <brgl@bgdev.pl>
-> Cc: Chris Packham <chris.packham@alliedtelesis.co.nz>
-> Cc: Sean Anderson <sean.anderson@seco.com>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
 
-regards
-Philipp
+On 1/25/24 09:26, Dmitry Baryshkov wrote:
+> On Thu, 25 Jan 2024 at 10:10, Umang Chheda <quic_uchheda@quicinc.com> wrote:
+>>
+>> Hi Dmitry,
+>>
+>> On 1/23/2024 5:48 PM, Dmitry Baryshkov wrote:
+>>> On Tue, 23 Jan 2024 at 12:28, Umang Chheda <quic_uchheda@quicinc.com> wrote:
+>>>>
+>>>> qcm6490-idp platform supports PM7250B PMIC as well.
+>>>> Add support for the same.
+>>>
+>>> The platform can not "support" PMIC. Please fix the commit message.
+>> Shall I change the commit message as below in the next patch ?
+>> "Add PM7250B PMIC support for qcm6490-idp"
+> 
+> This is also not accurate. You are not adding support for the PMIC.
+> You are describing PMICs present on the board.
+
+Umang, consider one of:
+
+arm64: dts: qcom: qcm6490-idp:
+
+"Include PM7250B"
+
+"Enable PM7250B"
+
+"Configure PM7250B"
+
+Konrad
 
