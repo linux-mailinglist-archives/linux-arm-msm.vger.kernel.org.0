@@ -1,137 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-8391-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BBEF383D550
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 10:03:59 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A884683D5AF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 10:13:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EE9061C25201
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 09:03:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 66B4D286CAA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 09:13:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E6BA11CB9;
-	Fri, 26 Jan 2024 07:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1854510A17;
+	Fri, 26 Jan 2024 08:10:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Xg8LrfSr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EvTDVmpk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6971A12E57
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 07:49:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB2614006
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 08:10:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706255369; cv=none; b=sTZ7oJAr/EQb9TVMmsiO3BWVK2TLgGzy9T/b1yY8laDB5Nkr/TWX5aZRGVQCybiAZ16CFKuj1hk++bLXkURVBH2BZ4dgwDboPdxrwJ3SAX5BsoQ2SUrzIUn860m6ovUe2Xolc45/S2YK3lG4pOZZsXXAbHZDCXltM+9nn2qPYRw=
+	t=1706256618; cv=none; b=h0UHGXoiE3Tn/eIcCXXRoKodCd66X+QKBfAypV1dcdtnAFcWQzIdr1u7pJD9AHOGKruYfhf9AukFPGSG9Ep5ljP0J8TPqZm+iP9MyXLNbgLjMLR30+oO9ks1/9K2qFfwDnb/Njl15zXVt24bb1487xUmJf9AHb32MmFsoo2NdKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706255369; c=relaxed/simple;
-	bh=X2bIO9XhEirZtwD9+aodGW5ANv8mY0gQ8ZSBilmbmQw=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=K1K314TJwTE+T5TOWhvCfQcYXzg5IF2ZefEm/xbfMZEocP9u/LNxASezOx5spNAkdUFXPnif43/alE7oDsEFLhSNmQ7oSesmKOH0vPlSdPu8V+nUTqON17Nq8df4c79OOrZaR3wcxadmU8ncuNM6moACDO8MKpChO2e4oELpzaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=Xg8LrfSr; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-40eccf4a91dso1106435e9.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 23:49:26 -0800 (PST)
+	s=arc-20240116; t=1706256618; c=relaxed/simple;
+	bh=t5Xk1RT4M0Csc/jUPQRNsGr5hsLf0lR7LKm1an0iRCE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Rj7EqGOVbLGC2wB8jruhgAzIewRtoDhSROBt2HBlkdV2aq1/kUjskuxHKRAy8RySPq/8GgAs7wWpv9+TH5R3/0u5NIf78YIus4rqoDv1/eZr+m/Uol57bOM67L9a7aBEicIHBs5uD6FJowdPsNRxcEHZJIYYeivIz8kEugyaBT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EvTDVmpk; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-5ff7dd8d7ceso1352527b3.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 00:10:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1706255364; x=1706860164; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kMLN7Rz7MGbuTKXXFDmPa4TaxPrxTUAEjlgxCmYMMqE=;
-        b=Xg8LrfSrTfG+6F9AcL2BEdD+PT6M/m6/NLrgDsrXNzieaZdMEoh28ikO6laScNDyTU
-         JpIa+sq5l4WtC+5bcJLahUy2bJgc50mPzlEuJ60cxFujbqVXN3DWn7WBSVvicN7dlbsV
-         c6zTl3b47JYmnLt3zDz6T2mhCPtlmyzkCvghJzmUWMxkdsKQ6LcBOJeWXp33+6c222BC
-         TV4IMvL15PNDHAlstro6zZDMm1iRxrwFYB4X+2NzmaJIowsYcFz0tHSfbvQ7Pwi00ZYd
-         SYCQykrjxNHNfbfRUQW5+bKGvE2GypDHmfxkLjIyJKcwC9C5iNoHhk3eTk5lGISDKXsR
-         fvig==
+        d=linaro.org; s=google; t=1706256615; x=1706861415; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=t5Xk1RT4M0Csc/jUPQRNsGr5hsLf0lR7LKm1an0iRCE=;
+        b=EvTDVmpkvsQdZ3ZGkUFiT2vbNBHvwp8RqWqb56jhlCsmaHiSns8fi/CyAHYoxLokan
+         cygP1bDFibjMYUO94ENQiba9jBQubqe6magfDh28LwnSJKsPE/GBT1isrEMLUtoONaFh
+         BBkk/F7qbaktqwwAA2vivk54tSY5AbMUpxi934AZVjFf/JGKrENi4XRi3GsLTOj25AQY
+         dB3dCvSh6WdxpMEA0CdbBRd4M4RruCrwT0vfBYZVcjTKUVB1etKRxu5q0zLgszbw2RI+
+         CO0j1n8kWwaP3oxqL6oCRBmxNHMPSR4ECzv5BcdBArPCYqKaHP87OX7M7aLWyZDPEKj9
+         bIsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706255364; x=1706860164;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=kMLN7Rz7MGbuTKXXFDmPa4TaxPrxTUAEjlgxCmYMMqE=;
-        b=O1RkPB6IkMFtZQHTNks6/lb8nWWlN+WFDEvqzGe1MP4vp8pLDAChPQYdVTNY1MknCT
-         ObuLBeGesAIApPPa+eNZ+OdaFksQ0xGl+rmkDcF/JE7wT3hwJVHlk49a7gUxg3+bAhem
-         Kt3PB5y1csv8DbLsQYaeTKBLHUaE6d77wtC16xJTRAki0v8D/bGdS75lcKnR4Tfj5c5H
-         QWeursej+XQe2CNJEiapp84TIc6EWjkaKTNgcIbG/GdPrZwvjGL5awRtTPuUzuzkPTIa
-         W8uXv0Yg2PiwljhIDxJdoQwrxzxx0gxxEnYGQY1bEBe+2vMEb/dTJ+LjHXsThHYzwrix
-         8PoQ==
-X-Gm-Message-State: AOJu0YxE/cCe38fFkl2xVbw3v4jOcwYfX39cza6fazXQ7GvJXr2Xm3Bi
-	cWbD9YRcHtwaLCxm1HJ1XqATlrbYMSUMIddJMkjAoIZvpGqbY/4Pslnn7k1YrIE=
-X-Google-Smtp-Source: AGHT+IFY+1BBYpedT+Me5GvLK2bkjb5tnsE8ri1rpr97wJTETbTwBLEoVpQ9JMBcAskBjVDXMlocoA==
-X-Received: by 2002:a05:600c:1913:b0:40e:b0e8:ee96 with SMTP id j19-20020a05600c191300b0040eb0e8ee96mr547389wmq.122.1706255364640;
-        Thu, 25 Jan 2024 23:49:24 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id tb21-20020a1709078b9500b00a3025e05665sm350745ejc.14.2024.01.25.23.49.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Jan 2024 23:49:24 -0800 (PST)
+        d=1e100.net; s=20230601; t=1706256615; x=1706861415;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=t5Xk1RT4M0Csc/jUPQRNsGr5hsLf0lR7LKm1an0iRCE=;
+        b=r2gtVgxCF6NfAGwFGFivTjTPw3Vic9HVgYpqT27CJWIDSdedh1sPuXDkeHK+qCHF5v
+         gDwPtHfLVu/bIl69RxRic+9WHUfGxfXwaKsy8qjLpPnvVmFUDLZCOI4WqFIEB08V1vmD
+         TEQ2TBwv3npu63ZFV0o3tSnL1MpzUKO6e5bJACY0JkZwbZ4yGqmdn5w5BiUHh6w2X9mg
+         UDB8EPPu2qkaiC8md0z3YURcoCdUlvrAVdY8FWOwqXPZR3B423yOOv+nGeyxHzdNBStG
+         ovFDrt98t6cIkLgxx2cSLOt1bkmtB5sEtCafuD82LxRGef9CxyI6I30DZyUMJkAaLnYI
+         Vt6w==
+X-Gm-Message-State: AOJu0Yzl6fCuwSguaWHOCzfV+W0lsJYT8HHbnUDs2xJb9MTLX8zPIf0Z
+	NW1+azOwm5RjZaUgqYSsu91QvM/PgQAKisWFos10rNaXh1TlwoWNrKbsrIBu2c7DAvbwy1aLMAT
+	5Jze5XYM40NleuVnzuUBWIgbxEjlr7hVpWYYquA==
+X-Google-Smtp-Source: AGHT+IHnaNC5K++PdbgO7WEfWh0nVAaXrRXgiWebU6yDcX8FPmozYPH++dLrlUkis2bR82+yU94dtnUxE8v98Ryvz0A=
+X-Received: by 2002:a81:6d81:0:b0:5fc:d382:4bfc with SMTP id
+ i123-20020a816d81000000b005fcd3824bfcmr959161ywc.97.1706256615398; Fri, 26
+ Jan 2024 00:10:15 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 26 Jan 2024 08:49:24 +0100
-Message-Id: <CYOH1P74EWQ0.5TZX1F88C8XZ@fairphone.com>
-Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: sm6350: Add tsens thermal zones
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Konrad Dybcio" <konrad.dybcio@linaro.org>, "Bjorn Andersson"
- <andersson@kernel.org>, "Rob Herring" <robh+dt@kernel.org>, "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley"
- <conor+dt@kernel.org>
-X-Mailer: aerc 0.15.2
-References: <20240124-sm6350-tsens-v1-1-d37ec82140af@fairphone.com>
- <da281c50-9dcb-46d6-8cb1-ef4662e24a9e@linaro.org>
-In-Reply-To: <da281c50-9dcb-46d6-8cb1-ef4662e24a9e@linaro.org>
+MIME-Version: 1.0
+References: <20240126-phy-qmp-merge-common-v2-0-a463d0b57836@linaro.org> <20240126-phy-qmp-merge-common-v2-7-a463d0b57836@linaro.org>
+In-Reply-To: <20240126-phy-qmp-merge-common-v2-7-a463d0b57836@linaro.org>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Date: Fri, 26 Jan 2024 09:10:04 +0100
+Message-ID: <CACMJSeuOmz2DC0m98k9MFx71A-9jyZkrWQMGt8DVUrqKJk-bsw@mail.gmail.com>
+Subject: Re: [PATCH v2 7/8] phy: qcom: sgmii-eth: use existing register definitions
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-phy@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu Jan 25, 2024 at 5:30 PM CET, Konrad Dybcio wrote:
+On Fri, 26 Jan 2024 at 00:23, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 >
+> The Qualcomm SGMII SerDes PHY is a QMP PHY. As such, it uses standard
+> registers for QSERDES COM/RX/TX regions. Use register defines from the
+> existing headers.
 >
-> On 1/24/24 16:31, Luca Weiss wrote:
-> > Add the definitions for the various thermal zones found on the SM6350
-> > SoC. Hooking up GPU and CPU cooling can limit the clock speeds there to
-> > reduce the temperature again to good levels.
-> >=20
-> > Most thermal zones only have one critical temperature configured at
-> > 125=C2=B0C which can be mostly considered a placeholder until those zon=
-es can
-> > be hooked up to cooling.
-> >=20
-> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > ---
->
-> [...]
->
-> > +		cpuss0-thermal {
-> > +			polling-delay-passive =3D <0>;
-> > +			polling-delay =3D <0>;
-> > +
-> > +			thermal-sensors =3D <&tsens0 7>;
->
-> cpuss0-thermal and cpuss1-thermal are very likely the sensors for
-> cluster0/1, can you test that out, perhaps with corepinning+stress?
+> Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
 
-Not really, according to my docs the CPUs aren't placed symmetrically on
-the SoC and cpuss0 and cpuss1 are just somewhere inbetween all of the 6x
-LITTLE cores, the 2x big cores are a little bit further away. So apart
-from hooking up all of the cores for cooling for cpuss0 & cpuss1 I don't
-have a great idea what to do here. Shall I do that?
+I have reviewed v1 of this patch already.
 
-Regards
-Luca
-
-
-> You can then assign multiple cpu cooling devices.
->
-> LGTM otherwise!
->
->
-> Konrad
-
+Bart
 
