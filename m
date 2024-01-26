@@ -1,116 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-8387-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8388-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF93683D2CE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 04:03:23 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D46F483D317
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 04:55:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 940BB282A75
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 03:03:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0FA801C22534
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 03:55:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC68BBA5E;
-	Fri, 26 Jan 2024 03:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 026809479;
+	Fri, 26 Jan 2024 03:55:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rMDCEg4a"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JD3R4M7j"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE08CA47;
-	Fri, 26 Jan 2024 03:02:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B61BE4C;
+	Fri, 26 Jan 2024 03:55:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706238141; cv=none; b=et98Fc9BvCeqO0/UnP/fqLrz2Y9d+ws8fPtpzhaQutMqL0zlilFDQljJ7JQgeYfJWsP04ma0koAWsTGuUvnHUSR556x69Kx/qTKI5kO8ATUcfl8wmGGfnv8191am2Ft3Th7Y6A44ams1sMwrdYAz5XRdegPBNyOQX+yLjcwxdrA=
+	t=1706241331; cv=none; b=Yw6uY8bMjP97C2Yeox4+FDYYDZ7J1cjjcYIS+KKS38bDsxSF6H9fRFFUhAfHrxkEUfyDebVvmcaZmsD2EHLBZEwPFUxAhfnRTjqTppDTHy/FxoC8qnvy8sOoDYk1haWzkHVWFUTxJUgBJVmU0UY5Mvp7Om6xxbKteuk0LAham/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706238141; c=relaxed/simple;
-	bh=r9G4OZgWE+kQAAnHVLTuQu4pUWRCO754y65LPOoZ4ZA=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=cOKACpDRODs4o5hBrdQk1vxbx0NnBOsxPyt52gQJ4PA+FQ4AX+Prk5DrpD955FPjrBN6Q0G1rwtOSteaCWMXWy+weAoofiiAN6krSY16letxeeBpbijQebz1ixaMHHYZRA6E1JNJBH8DswCFsk9s8proPVtWJpNGDSL3ETNyeAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rMDCEg4a; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0AC0C433C7;
-	Fri, 26 Jan 2024 03:02:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706238141;
-	bh=r9G4OZgWE+kQAAnHVLTuQu4pUWRCO754y65LPOoZ4ZA=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=rMDCEg4a0T5ikq4vs10UbosLswFsGBZVAPtEQiFCByn2lKVPohK+KBrEj2j7LrgT9
-	 rb/W8jL9N284WcB206GsNjrvJA0nPbLgXNrEyqvFxF/gmSZZzuaD5U1MaYn16ElSo/
-	 kjfllcvZ6v+9ArYm+g32UrVpC/eXeqyr/w5HzsRNKbGPC49Fx73e/Fcs59C+Cq+5YC
-	 ph80YBjwLFF1MEeF6oT0LIZF3QXjXGCEIGlQdK8CHMb5ed/4sFiSMKbifIOVT4A20P
-	 nxbuDuXb7JjbHc7bUkXi9fGX+LTciyHz7cvzmJMpB+mMiCey8P2kv52wX0IBHPXoz+
-	 eBfn5RE8Yvamg==
-Date: Thu, 25 Jan 2024 21:02:19 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1706241331; c=relaxed/simple;
+	bh=KrhrQ0tvNVJ+4cAK8q+wOOdb/RYDdrZuBoVCellyfZg=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=SK73aKkJlvjCL0Hx68OS2gzAO/wydxTcQI9n9LBnvVXvHAS6B2Lp9q9WROiK1aH8e2Ng/D/AH/h1qIE5vyrVf3w7KocOtBtk9bL56wCbztw5aoH4Wg8M69G0RH4AKUA1gvZkTr44BH/jjb2iWYul+k7Ne6O77c5xmKTTyspXMZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JD3R4M7j; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40Q3a5ra022681;
+	Fri, 26 Jan 2024 03:55:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding:to:cc; s=qcppdkim1; bh=Q9PEpT5d0K89jY
+	+OAqVxi28NZMVH5s03aNK1+117VZ4=; b=JD3R4M7jVnYUQ0SJ56WCIGj9SFKXJc
+	UwxqWhs+0hnBVPHGdFnKInsaB6rdqbeCjiKz67Xpzrhu/yKShrhom6pQ76ieKU+3
+	edocyhNcbJEqI8mPLxfM20fAh0r+4jAIVpEZombCZ1dAzwLfoT+o+YOMUMq/JhnV
+	p0B++cERACwLAr4Vz1958ZHg40Z4FO64eKS7zzmrhZfriPyBti1Flpzj3uym+l7T
+	H4z4JmA81kDJZVhDLtyAMAWEo+2scgMwEH+NCDNK+gcXsDo02AehmHSc/UdsRUTx
+	XFIbq1Vi/oJBShcvh7/F2C5orbHK8cpg0LfQQOPhOPout2MM2K8zqAhA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vv1018f2a-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 26 Jan 2024 03:55:18 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40Q3tHFN017841
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 26 Jan 2024 03:55:17 GMT
+Received: from [169.254.0.1] (10.49.16.6) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 25 Jan
+ 2024 19:55:16 -0800
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+Subject: [PATCH 0/2] arm64: dts: qcom: sc8280xp-x13s: Enable touchscreen
+Date: Thu, 25 Jan 2024 19:55:12 -0800
+Message-ID: <20240125-x13s-touchscreen-v1-0-ab8c882def9c@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
- Manivannan Sadhasivam <mani@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
- devicetree@vger.kernel.org, Bjorn Helgaas <bhelgaas@google.com>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- linux-pci@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
-In-Reply-To: <20240125-dt-bindings-pci-qcom-split-v2-2-6b58efd91a7a@linaro.org>
-References: <20240125-dt-bindings-pci-qcom-split-v2-0-6b58efd91a7a@linaro.org>
- <20240125-dt-bindings-pci-qcom-split-v2-2-6b58efd91a7a@linaro.org>
-Message-Id: <170623813219.6729.5150130088127136653.robh@kernel.org>
-Subject: Re: [PATCH v2 2/6] dt-bindings: PCI: qcom,pcie-sm8450: move SM8450
- to dedicated schema
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACAts2UC/x2MywqAIBAAfyX2nOAriH4lOoStuRcNt0IQ/z3pO
+ AMzFRgzIcMyVMj4ElOKHdQ4gAt7PFHQ0Rm01FYqPYmiDIs7PS6wy4hR2Ll7743TFqFnV0ZP5V+
+ uW2sf2D2ow2IAAAA=
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+        Jiri Kosina
+	<jikos@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-input@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1706241316; l=740;
+ i=quic_bjorande@quicinc.com; s=20230915; h=from:subject:message-id;
+ bh=KrhrQ0tvNVJ+4cAK8q+wOOdb/RYDdrZuBoVCellyfZg=;
+ b=9+ugStnJZS5YmfVKrhUaHEkTUr4sb5UzOtiSOyv6YSrXUz8JBoQtfVjUwtw+PuGrhYTzsWGyJ
+ br6vBtXx2gECfQSQMTMIuuDqSv2bbU5O0/tSGUIs9zQfJ5ipjHyKiP/
+X-Developer-Key: i=quic_bjorande@quicinc.com; a=ed25519;
+ pk=VkhObtljigy9k0ZUIE1Mvr0Y+E1dgBEH9WoLQnUtbIM=
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: _GXpBmOPdIDcXxn0_uDGZh6BFGBMhnr_
+X-Proofpoint-GUID: _GXpBmOPdIDcXxn0_uDGZh6BFGBMhnr_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ mlxlogscore=698 adultscore=0 spamscore=0 clxscore=1011 phishscore=0
+ malwarescore=0 priorityscore=1501 mlxscore=0 lowpriorityscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401190000 definitions=main-2401260026
 
+This documents and defines the necessary properties for the I2C
+HID-based touchscreen found in some SKUs of the Lenovo Thinkpad X13s to
+work.
 
-On Thu, 25 Jan 2024 14:03:25 +0100, Krzysztof Kozlowski wrote:
-> Move SM8450 PCIe devices from qcom,pcie.yaml binding to a dedicated file
-> to make reviewing easier.
-> 
-> This creates equivalent schema file, except:
->  - Missing required compatible which is actually redundant.
->  - Expecting eight MSI interrupts, instead of only one, which was
->    incomplete hardware description.
-> 
-> Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../devicetree/bindings/pci/qcom,pcie-sm8450.yaml  | 175 +++++++++++++++++++++
->  .../devicetree/bindings/pci/qcom,pcie.yaml         |  67 --------
->  2 files changed, 175 insertions(+), 67 deletions(-)
-> 
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+---
+Bjorn Andersson (2):
+      dt-bindings: HID: i2c-hid: Document reset-related properties
+      arm64: dts: qcom: sc8280xp-x13s: Fix/enable touchscreen
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+ Documentation/devicetree/bindings/input/hid-over-i2c.yaml  | 6 ++++++
+ arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 6 +++++-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
+---
+base-commit: 8bf1262c53f50fa91fe15d01e5ef5629db55313c
+change-id: 20240125-x13s-touchscreen-48012ff3c24e
 
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/qcom,pcie-sm8450.example.dtb: pcie@1c00000: Unevaluated properties are not allowed ('#address-cells', '#interrupt-cells', '#size-cells', 'bus-range', 'device_type', 'interrupt-map', 'interrupt-map-mask', 'iommu-map', 'linux,pci-domain', 'max-link-speed', 'msi-map', 'msi-map-mask', 'num-lanes', 'perst-gpios', 'phy-names', 'phys', 'power-domains', 'ranges', 'wake-gpios' were unexpected)
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sm8450.yaml#
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240125-dt-bindings-pci-qcom-split-v2-2-6b58efd91a7a@linaro.org
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+Best regards,
+-- 
+Bjorn Andersson <quic_bjorande@quicinc.com>
 
 
