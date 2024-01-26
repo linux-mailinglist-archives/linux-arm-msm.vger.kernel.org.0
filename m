@@ -1,161 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-8439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9993C83DB90
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 15:14:44 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13B0583DBE3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 15:30:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EC437B21BF5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 14:14:41 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7CF6EB27F32
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 14:30:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB1131C288;
-	Fri, 26 Jan 2024 14:14:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B38D967C72;
+	Fri, 26 Jan 2024 14:30:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="X6jWZwJf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KWB2+Ym8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4DA11C287;
-	Fri, 26 Jan 2024 14:14:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822177F;
+	Fri, 26 Jan 2024 14:30:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706278476; cv=none; b=jMccUmijEAACM3sHVoEbHJhrEBO93f54PaXwqlvvIDqJWhfy4beTyFUx5N50ftmZeOIEoEt1SigQoHICru6CGujXMqtrB4Y76+siqEgOZEvXadcRhPN/Xfj3ouQfEFSDnF7RpeUzsyxAw0aoOwqmL74Y2IyK2NSxyQQzUcu1yqo=
+	t=1706279452; cv=none; b=ftg5TTMQiHIhjpxkJcPLry+i6UBt+j1adlWu+7LD5ho/NpPgkdLKQYYgcUfI99ik+BLwINhsG3OFgXfvMd1xvajczuoX7gVd8HfOi/ZD3fsjD45cLSGL+u7+Ub4wwyB3Gxg9UwAdkFgoX1Jplrz+PWWj5qiwQn/Ten2kniLApt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706278476; c=relaxed/simple;
-	bh=ftLuAd9U3YPVeEzec70Y/JSfQC6jcmT5YJPmcGrNDAE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=PdhEFnRYqa8PVYokJEoB5hAyZ33cq0YhqDJjP9zKlKg/toFKYf5qoUumQx+2geeDySeSojbl/h0ZzolA7rXUez1t4DdQtAB381dw80NFJu+lWxYgSR3MqjP/1PmEUysexEzTFParc9k2VJKkuxLwZyr25XI/v4eSFEzT8cRoazA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=X6jWZwJf; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40QCQ7rC005300;
-	Fri, 26 Jan 2024 14:14:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=+SpPdyF3w8Fw1tNKmk5zm/UXCiCDAnEu7aqBtZrqwjQ=; b=X6
-	jWZwJfqWJPYU5LXTLKDWkbD+7zYLaFPX1QRZo5/CLcwK3CRrlN6650Q/XVQ1GZIT
-	rJKow7yXKXeFpImvwVqa+WGTCuXO/v//TwQsP9mWIXNyzfyA5EiSBa7fi63rZSff
-	hjBandhIkhAS3GSqEcEYRNIsqckzmLvmn99PnAXclcyKi251cXpOE6xFxwzNwCXt
-	ROJxMfjSameupDRSdQL8tHbFVGzn0OPfx74gOJDTKwFWZakN4wShkmjzXVZ1ZwzY
-	592H4qbSoDvQY44XPPohaFkQrmKKg7EvzZmdEt400LpgslAaBiWaf243yEH1AM6F
-	TCHAKVOm1g89Tji5YSig==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vv4f9h8yc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Jan 2024 14:14:24 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40QEENYu021168
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Jan 2024 14:14:23 GMT
-Received: from [10.216.50.194] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 26 Jan
- 2024 06:14:19 -0800
-Message-ID: <a4606673-64e9-4e16-8d9e-307fb37d8763@quicinc.com>
-Date: Fri, 26 Jan 2024 19:44:16 +0530
+	s=arc-20240116; t=1706279452; c=relaxed/simple;
+	bh=5PTW+IqP2/VHagHq8RzcNDNtfY8AXE4R1InU9ZFsRoY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=N4yQkH5o+kBSVm8q6JNuVBel0tFUzzInpkASaqZrjgFp37PZrfH0/X15nfHC+BWyuCK1IbcS5UzAOyNt99n0Mz4oUAC+wQFSh+aWpSYYL4IOWtgpa4EXfNC96FXUjEWKD4+mkUJuq++qssBomTH/egCUvPpF4qLoeBXzwmABXlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KWB2+Ym8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F80C433C7;
+	Fri, 26 Jan 2024 14:30:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706279452;
+	bh=5PTW+IqP2/VHagHq8RzcNDNtfY8AXE4R1InU9ZFsRoY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=KWB2+Ym84uJLouqbVirqCK9/fentoQ0ElweL6zwW5q84ZepK9XW2oSbMqyOs+c6wR
+	 bbPzecqjB7lB7pB2LiY/78NJd2MSOTi57HTrxqibk6MtThVUmexxg6LVBS3eFgTzhY
+	 w5wEaZbgL33rMhDbWVXD3lNUMFXNnqjKS8EoKaqiJx1Aj4wD9sPYDE54B0eLz0K5bl
+	 ldC+Pv8RtPxYOiyLhCIf6WcE6lUu3uSQW2YaI1hVZmZzYlgapfAnfZp8VHAx1mjBDK
+	 uN1HrFnXmWq0rg8fgEXUYtmSykuEuZcdIowGn6D5LLdTMFPhXT6RwHANmDRi1QkUsf
+	 3b8pNQrkjyPtg==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rTNEU-000000007UG-3KiF;
+	Fri, 26 Jan 2024 15:31:03 +0100
+Date: Fri, 26 Jan 2024 15:31:02 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Daniel Thompson <daniel.thompson@linaro.org>
+Cc: Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Jiri Kosina <jikos@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@somainline.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sc8280xp-x13s: Fix/enable
+ touchscreen
+Message-ID: <ZbPCJv7HW8OQzPMT@hovoldconsulting.com>
+References: <20240125-x13s-touchscreen-v1-0-ab8c882def9c@quicinc.com>
+ <20240125-x13s-touchscreen-v1-2-ab8c882def9c@quicinc.com>
+ <ZbNpdaSyFS9tYrkd@hovoldconsulting.com>
+ <20240126130232.GA5506@aspen.lan>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] arm64: dts: qcom: Fix hs_phy_irq for QUSB2 targets
-To: Bjorn Andersson <andersson@kernel.org>
-CC: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring
-	<robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        <cros-qcom-dts-watchers@chromium.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>
-References: <20240120191904.15408-1-quic_kriskura@quicinc.com>
- <20240120191904.15408-2-quic_kriskura@quicinc.com>
- <wqdqkzvni4roqulgsiqxzubxcblzxnoydcwvv2av2pobjjx5o6@b7kwl6lq7hij>
-Content-Language: en-US
-From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <wqdqkzvni4roqulgsiqxzubxcblzxnoydcwvv2av2pobjjx5o6@b7kwl6lq7hij>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 6bLippXMlQBWho7Sf-qbyUXJAPAqgD9h
-X-Proofpoint-GUID: 6bLippXMlQBWho7Sf-qbyUXJAPAqgD9h
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
- priorityscore=1501 impostorscore=0 mlxscore=0 suspectscore=0
- mlxlogscore=999 spamscore=0 bulkscore=0 lowpriorityscore=0 phishscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401190000 definitions=main-2401260104
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240126130232.GA5506@aspen.lan>
 
-
-
-On 1/25/2024 3:16 AM, Bjorn Andersson wrote:
-> On Sun, Jan 21, 2024 at 12:49:01AM +0530, Krishna Kurapati wrote:
->> On several QUSB2 Targets, the hs_phy_irq mentioned is actually
->> qusb2_phy interrupt specific to QUSB2 PHY's. Rename hs_phy_irq
->> to qusb2_phy for such targets.
->>
->> In actuality, the hs_phy_irq is also present in these targets, but
->> kept in for debug purposes in hw test environments. This is not
->> triggered by default and its functionality is mutually exclusive
->> to that of qusb2_phy interrupt.
->>
->> Add missing hs_phy_irq's, pwr_event irq's for QUSB2 PHY targets.
->> Add missing ss_phy_irq on some targets which allows for remote
->> wakeup to work on a Super Speed link.
->>
->> Also modify order of interrupts in accordance to bindings update.
->> Since driver looks up for interrupts by name and not by index, it
->> is safe to modify order of these interrupts in the DT.
->>
->> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/ipq6018.dtsi | 13 +++++++++++++
->>   arch/arm64/boot/dts/qcom/ipq8074.dtsi | 14 ++++++++++++++
->>   arch/arm64/boot/dts/qcom/msm8953.dtsi |  7 +++++--
->>   arch/arm64/boot/dts/qcom/msm8996.dtsi |  8 ++++++--
->>   arch/arm64/boot/dts/qcom/msm8998.dtsi |  7 +++++--
->>   arch/arm64/boot/dts/qcom/sdm630.dtsi  | 17 +++++++++++++----
->>   arch/arm64/boot/dts/qcom/sm6115.dtsi  |  9 +++++++--
->>   arch/arm64/boot/dts/qcom/sm6125.dtsi  |  9 +++++++--
->>   8 files changed, 70 insertions(+), 14 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
->> index 5e1277fea725..ea70b57d1871 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
->> @@ -418,6 +418,12 @@ usb2: usb@70f8800 {
->>   					  <&gcc GCC_USB1_MOCK_UTMI_CLK>;
->>   			assigned-clock-rates = <133330000>,
->>   					       <24000000>;
->> +
->> +			interrupts-extended = <GIC_SPI 128 IRQ_TYPE_LEVEL_HIGH>,
+On Fri, Jan 26, 2024 at 01:02:32PM +0000, Daniel Thompson wrote:
+> On Fri, Jan 26, 2024 at 09:12:37AM +0100, Johan Hovold wrote:
+> > On Thu, Jan 25, 2024 at 07:55:14PM -0800, Bjorn Andersson wrote:
+> > > The failing read-test in __i2c_hid_core_probe() determines that there's
+> > > nothing connected at the documented address of the touchscreen.
+> > >
+> > > Introduce the 5ms after-power and 200ms after-reset delays found in the
+> > > ACPI tables. Also wire up the reset-gpio, for good measure.
+> >
+> > As the supplies for the touchscreen are always on (and left on by the
+> > bootloader) it would seem that it is really the addition of the reset
+> > gpio which makes things work here. Unless the delay is needed for some
+> > other reason.
+> >
+> > (The power-on delay also looks a bit short compared to what is used for
+> > other devices.)
+> >
+> > Reset support was only recently added with commit 2be404486c05 ("HID:
+> > i2c-hid-of: Add reset GPIO support to i2c-hid-of") so we should not
+> > backport this one before first determining that.
 > 
-> interrupts-extended takes a reference to a interrupt-controller as well,
-> so this doesn't build.
+> This comment attracted my attention so I tried booting with each of the
+> three lines individually.
 > 
-> Did you mean "interrupts" here instead? Please update these and build
-> test...
+> On Thu, Jan 25, 2024 at 07:55:14PM -0800, Bjorn Andersson wrote:
+> > +             reset-gpios = <&tlmm 99 GPIO_ACTIVE_LOW>;
 > 
+> This is not enough, on it's own, to get the touch screen running.
+> 
+> I guess that's not so much of a surprise since the rebind-the-driver
+> from userspace trick wouldn't have been touching this reset.
 
-Hi Bjorn,
+Right, I realised that after hitting send.
 
-  Thanks for the catch. I was using DTC version 1.4.0.
-When I moved to 1.5.0, I did see these warnings. Fixed them up and sent v3.
+For the record, people have successfully been using the touchpad after
+forcing the driver to reprobe through sysfs:
 
-Thanks,
-Krishna,
+	echo 4-0010 >/sys/bus/i2c/drivers/i2c_hid_of/bind
+
+> > +             post-power-on-delay-ms = <5>;
+> 
+> This line alone is enough (in v6.7.1).
+
+Thanks for confirming.
+
+> > +             post-reset-deassert-delay-ms = <200>;
+> 
+> This line alone is also enough!
+
+Yes, the driver honours this delay regardless of whether a reset gpio is
+defined currently, so this is expected.
+
+> In short it looks like the delays make the difference and, even a short
+> delay, can fix the problem.
+
+Right, but since the suppliers are left enabled by the bootloader (and
+never disabled by the kernel), that only begs the question of why this
+makes a difference.
+
+Without the delay, the other HID devices are probing (successfully)
+slightly before, but essentially in parallel with the touchscreen while
+using the same resources. Is that causing trouble somehow?
+
+Or is there a bug in the i2c controller driver affecting only this
+device that can be worked around by adding a delay before the first
+transfer?
+
+Johan
 
