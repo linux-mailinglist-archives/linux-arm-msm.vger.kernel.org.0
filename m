@@ -1,71 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-8513-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7869E83E69B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 00:20:25 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 15CB583E6A1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 00:20:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2DA811F276E7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 23:20:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A44CC1F27C81
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 23:20:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73DA860DF7;
-	Fri, 26 Jan 2024 23:16:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20682612E0;
+	Fri, 26 Jan 2024 23:16:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="YF9wJFWW"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Vpm0Alqe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343AD60B86
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 23:16:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A3060DC0
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 23:16:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706310979; cv=none; b=eSNsJirNsa8Gz8tGNYJDSBwOox11Qrueu3wvnUdsgo6zl+KmS1thLyhrEa11DfaS9X5M47f7UqmOrOWOEn2lq92oHnlyK8AaD1yXAWt1u/s9up4wb+TnKWnqVyxf9H7Vjle9fE0/eQQ1Ayn6sQt3237FlfyG+BqZeHDo0XN+dB4=
+	t=1706310981; cv=none; b=kwbvwn+HDpPaeLzxQch/DCx0FiqrASAFHkzCjU/RwhhP7/2XThntEKdcrgipTcfrnejkOjedqu1jig7A8xtmJuq3l/8b8PxJfTpoY1ovlDC18cRhWNAPHuVa7JnKPZoL4oSl3YAWlbHYYJn0qIMEIjMP8zgDiwlAffm1i0qje5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706310979; c=relaxed/simple;
-	bh=D9jb+fZPg4cu81svPtGcxnqe5Dh39wQmeEcuV3Gqubk=;
+	s=arc-20240116; t=1706310981; c=relaxed/simple;
+	bh=v/x46NG9ZtIytS9oM1clKOYXlZ53ICZmAoZoIkhTFns=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=J750ySZZRxOtltLrhwY9Gov2UMeokgKsUDBMTFw3Jg8BQRw1AfY9ZsZTkYW9i7EDAMw6Auh3WuhMgxed6gJgWMpaNd9MDAPKANxQdDffTsOzYNGNJrEIcONYiHOfYaTC//UPbGojDJfCokP/SiQ/ABt+sRQISF98NGyvXZVzMlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=YF9wJFWW; arc=none smtp.client-ip=209.85.222.182
+	 In-Reply-To:To:Cc; b=GoGKfdYVFMOahLPzzEApHCYa3EY79ymsaB4pXguGBJ27b9V15457FloS3brGm6QnbG+q+68XmAEbkXU+sJsPDx6Hv2Fb0My4+UXdPmfD6O9apL6D+61whGbX5u0nvtqWGNk0H3/XuXb1rB6r5HL7T0l7lp5EZNGpYiKF6pzxqA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Vpm0Alqe; arc=none smtp.client-ip=209.85.222.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-783cd62f1b5so41723485a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 15:16:17 -0800 (PST)
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-783d4b3ad96so78742285a.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 15:16:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1706310976; x=1706915776; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1706310977; x=1706915777; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ppFxbOlS/v6G/Iyc2Jdz2aiKlAo+YrKUjtIhEQOSvas=;
-        b=YF9wJFWW8riAvKbdCSLBp5VIkAkfizSXjINh56Ek8ykITvI/uKDpqmBdwavsJvMcXG
-         Er4tIHo5oroL+OdkIf6Xj5j6quybpiI0IvFrIuv4AsZ3ZgFeNCD028RPiISUTZ4b9uJU
-         AnI61mWZLw6N9Nk3AW7tF1BOYdggr/H7GzYbE=
+        bh=IQ2hVP5YSWUaFh2DmjHhBwG+r6f86O5FO2Ifv95SzW4=;
+        b=Vpm0Alqepbm36hTtHDgkkwNTDh6NWwz6+6fiuYEgdQt95tbDbx7oHZrR1rJ4tJNBVe
+         0uzH9p2RxdxJBdOI3YzouriamdWl9xmjdp9jX0JKkRAhqdQM+R0y6+guUwtFYR6vbSNr
+         E/7SviodFMDrj/IVT6/3lY7fiGbDwRPxN4L3I=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706310976; x=1706915776;
+        d=1e100.net; s=20230601; t=1706310977; x=1706915777;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ppFxbOlS/v6G/Iyc2Jdz2aiKlAo+YrKUjtIhEQOSvas=;
-        b=VzqEWM2BjODwwwqblMUxSpY+yGMLEyKoCooppX1FEmyCcq2kM4nl46RLqjKLtg1G0c
-         xVhOsk6HwBbyg5X8lT5smXaRlnm59J+sA0tPWMJIO2L/haVXdVLrwZrmz2JMKEFinBrj
-         MrFDOVNljpiF8SXqUszEpB8JbT9dey6D6vDGJ+c1NbDGqRgRiiF2qY15uoTtkdvXpuJq
-         tCmjYZ5I8rxMZCqJoEHQG8t2dvT7BFgilF2YkxxsaXZMpm++RxZkumWUa0QViXdIjBry
-         bJkQlAj8CL9bvNWcH0MAwbfszy6UiqMEvSzvn5wkOk4lqiu1PSdNr2aTdmWO3mUDRNN9
-         v0FQ==
-X-Gm-Message-State: AOJu0YwbTxG7wcpdU8V+vLkdle9kJeWM+THlQlC2HzBR7oXEhqPEv/Zr
-	Q+yzwyPHWWeayrea6kwE/WLZ4kpICWFvIlnKwZO3/E06+V9WUGgkJgzWVv6zqA==
-X-Google-Smtp-Source: AGHT+IGIpAsQSjaDQPGQ6LECGQr9cN1m4828+DZymi0+3bzM+4XluVJo4MprbQD7HbxK6yJ3CFbmNg==
-X-Received: by 2002:a05:620a:2182:b0:783:e064:aa09 with SMTP id g2-20020a05620a218200b00783e064aa09mr622459qka.115.1706310976118;
-        Fri, 26 Jan 2024 15:16:16 -0800 (PST)
+        bh=IQ2hVP5YSWUaFh2DmjHhBwG+r6f86O5FO2Ifv95SzW4=;
+        b=jDbQ2CbXtMDkw7ulmdTDa/LCeU26gT+xklVEY/1SRiLakykanq6ahRSFIERfzp0+mN
+         W+aSs60IYvzVOFjK+wuGm4le4oPDfP+5TAawctFjh9bofgGeBbsBoqSu9GGqYKmOkrkH
+         ZSE2ZrwswpAtRSAQ0WzcRswRyVbCauQ9Unyil6hMgPNCU4HB1Ry/Gh0C8F/ESvTM9M2L
+         +f/nl7x6DYAnFa3ib37C45T2lCiXWQXF6P1/3ZrMCNl3I922pBW0/Nw+NRcT+Y/N8vCD
+         aqDnYtSESftEqvfK0xqHOrygZYhK/yx/JSQ/eOdGgXbUTMTpVf7NcaWxHF6J+ZJbq6k9
+         3QTg==
+X-Gm-Message-State: AOJu0YxTC/6xxJDgWvKznCuxyertpYBcMcL5bSEqeYXZGCnTkpREv4di
+	W8v9OwdnosN+dMA48iG5CbhkH6vUrd34erKR1tPL7XBJPTN6OkXFZRJcDAXAmg==
+X-Google-Smtp-Source: AGHT+IHtaIwGnlHCGr2gV5vTdHthY/KJARNYO6pIlwA2CpmdH7LMlVQFPCHc4W3qOep8rQ/bvmYRGg==
+X-Received: by 2002:a05:620a:12d9:b0:783:25ba:6c70 with SMTP id e25-20020a05620a12d900b0078325ba6c70mr576836qkl.129.1706310977198;
+        Fri, 26 Jan 2024 15:16:17 -0800 (PST)
 Received: from denia.c.googlers.com (240.157.150.34.bc.googleusercontent.com. [34.150.157.240])
-        by smtp.gmail.com with ESMTPSA id m4-20020a05620a290400b00783de3ddf5esm507358qkp.70.2024.01.26.15.16.15
+        by smtp.gmail.com with ESMTPSA id m4-20020a05620a290400b00783de3ddf5esm507358qkp.70.2024.01.26.15.16.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Jan 2024 15:16:15 -0800 (PST)
+        Fri, 26 Jan 2024 15:16:16 -0800 (PST)
 From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Fri, 26 Jan 2024 23:16:09 +0000
-Subject: [PATCH 10/17] media: verisilicon: Fix kerneldoc
+Date: Fri, 26 Jan 2024 23:16:10 +0000
+Subject: [PATCH 11/17] media: qcom: venus: Fix kerneldoc
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,7 +74,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240126-gix-mtk-warnings-v1-10-eed7865fce18@chromium.org>
+Message-Id: <20240126-gix-mtk-warnings-v1-11-eed7865fce18@chromium.org>
 References: <20240126-gix-mtk-warnings-v1-0-eed7865fce18@chromium.org>
 In-Reply-To: <20240126-gix-mtk-warnings-v1-0-eed7865fce18@chromium.org>
 To: Tiffany Lin <tiffany.lin@mediatek.com>, 
@@ -112,25 +112,25 @@ Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-amlogic@lists.infradead.org, Ricardo Ribalda <ribalda@chromium.org>
 X-Mailer: b4 0.12.3
 
-The field is not part of the structure. Remove the doc.
+Remove doc for missing field.
 
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 ---
- drivers/media/platform/verisilicon/hantro.h | 1 -
+ drivers/media/platform/qcom/venus/core.h | 1 -
  1 file changed, 1 deletion(-)
 
-diff --git a/drivers/media/platform/verisilicon/hantro.h b/drivers/media/platform/verisilicon/hantro.h
-index 6f5eb975d0e3..811260dc3c77 100644
---- a/drivers/media/platform/verisilicon/hantro.h
-+++ b/drivers/media/platform/verisilicon/hantro.h
-@@ -237,7 +237,6 @@ struct hantro_dev {
-  * @codec_ops:		Set of operations related to codec mode.
-  * @postproc:		Post-processing context.
-  * @h264_dec:		H.264-decoding context.
-- * @jpeg_enc:		JPEG-encoding context.
-  * @mpeg2_dec:		MPEG-2-decoding context.
-  * @vp8_dec:		VP8-decoding context.
-  * @hevc_dec:		HEVC-decoding context.
+diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+index 4a633261ece4..a39986ce79f1 100644
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -428,7 +428,6 @@ enum venus_inst_modes {
+  * @error:	an error returned during last HFI sync operation
+  * @session_error:	a flag rised by HFI interface in case of session error
+  * @ops:		HFI operations
+- * @priv:	a private for HFI operations callbacks
+  * @session_type:	the type of the session (decoder or encoder)
+  * @hprop:	a union used as a holder by get property
+  * @core_acquired:	the Core has been acquired
 
 -- 
 2.43.0.429.g432eaa2c6b-goog
