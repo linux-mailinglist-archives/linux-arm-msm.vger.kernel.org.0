@@ -1,157 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-8389-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8391-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C89283D31B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 04:55:44 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BBEF383D550
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 10:03:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B0EDC1F245A5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 03:55:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EE9061C25201
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 09:03:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9792DB661;
-	Fri, 26 Jan 2024 03:55:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E6BA11CB9;
+	Fri, 26 Jan 2024 07:49:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FQZ2jyqn"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Xg8LrfSr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AC5EBE49;
-	Fri, 26 Jan 2024 03:55:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6971A12E57
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 07:49:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706241332; cv=none; b=Gt8i/9ZOozfhIOK6egNH8dBQ9SIFoacf+mje9oWRg6XK8obQ+YddLyidfhJwsrJTTVaML2D5PpUKqUVHJuyKJUI/uEolkVDGVMp0nu1o2cLy/aZMSPdTMNN6mqZw+3ihIi0pNEwczrXaenzacyY789vkQ8Leh5oUEv48sCQzaAg=
+	t=1706255369; cv=none; b=sTZ7oJAr/EQb9TVMmsiO3BWVK2TLgGzy9T/b1yY8laDB5Nkr/TWX5aZRGVQCybiAZ16CFKuj1hk++bLXkURVBH2BZ4dgwDboPdxrwJ3SAX5BsoQ2SUrzIUn860m6ovUe2Xolc45/S2YK3lG4pOZZsXXAbHZDCXltM+9nn2qPYRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706241332; c=relaxed/simple;
-	bh=Kk+y5hNnOiQ2qFggH/zRNiKdLX4XwYFzmrAqZbWNdE4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=p6wkreno5qS8JWm4EB9wRi6d3TYWCA0pL6+egyJEACmCHMeppPbxEqR8k0N+K9x1+fuoV7CHPO+CAXzH56jv9PHfhv6IDG8QaUirz5S4HI9U5apEOGf6zV0+uvXm5PVqgOKK80TPwsDK4GBqyaiUt70dnVwpP3gXTtGtaTLXTAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FQZ2jyqn; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40Q0uWGk023947;
-	Fri, 26 Jan 2024 03:55:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:date:subject:mime-version:content-type
-	:content-transfer-encoding:message-id:references:in-reply-to:to
-	:cc; s=qcppdkim1; bh=Cck/GJxSluI5ev4MbkCdy2c7VJsUu3P8mIgrgZQqg0o
-	=; b=FQZ2jyqnH6QiChIcx1hgrlX3uZC2Kl4xmM/4TerUXvd4Y4mKDEsM4iSINFv
-	6CBTRDiHbd/3v3hiOsb/H9/4f+9FDetcunv0zVl0146wxQH9VhjnOquoS08xB8ym
-	jvrnGlI0X4oQC6j7ZY2zEdbQ911qFcdUCFza5oiS2+tWoa2OOby4qwt+0do0fo1v
-	kV9cYGZ/O+6vnbKyVU2su/cDO63LamR4Jx2w7I/aYsUC7akGTiDyMyWrTekjdGs4
-	sD4imc+zra+q0qFxcIoMRx8rVFZpgNIuTh5//e1whHJryG8tMod6WpITGfOsXBW1
-	gpPsm2s8qyqOmx+R/uLI8u/wHJw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vuqra1xek-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Jan 2024 03:55:18 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40Q3tH9G023435
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Jan 2024 03:55:17 GMT
-Received: from [169.254.0.1] (10.49.16.6) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 25 Jan
- 2024 19:55:17 -0800
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-Date: Thu, 25 Jan 2024 19:55:14 -0800
-Subject: [PATCH 2/2] arm64: dts: qcom: sc8280xp-x13s: Fix/enable
- touchscreen
+	s=arc-20240116; t=1706255369; c=relaxed/simple;
+	bh=X2bIO9XhEirZtwD9+aodGW5ANv8mY0gQ8ZSBilmbmQw=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=K1K314TJwTE+T5TOWhvCfQcYXzg5IF2ZefEm/xbfMZEocP9u/LNxASezOx5spNAkdUFXPnif43/alE7oDsEFLhSNmQ7oSesmKOH0vPlSdPu8V+nUTqON17Nq8df4c79OOrZaR3wcxadmU8ncuNM6moACDO8MKpChO2e4oELpzaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=Xg8LrfSr; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-40eccf4a91dso1106435e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jan 2024 23:49:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1706255364; x=1706860164; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kMLN7Rz7MGbuTKXXFDmPa4TaxPrxTUAEjlgxCmYMMqE=;
+        b=Xg8LrfSrTfG+6F9AcL2BEdD+PT6M/m6/NLrgDsrXNzieaZdMEoh28ikO6laScNDyTU
+         JpIa+sq5l4WtC+5bcJLahUy2bJgc50mPzlEuJ60cxFujbqVXN3DWn7WBSVvicN7dlbsV
+         c6zTl3b47JYmnLt3zDz6T2mhCPtlmyzkCvghJzmUWMxkdsKQ6LcBOJeWXp33+6c222BC
+         TV4IMvL15PNDHAlstro6zZDMm1iRxrwFYB4X+2NzmaJIowsYcFz0tHSfbvQ7Pwi00ZYd
+         SYCQykrjxNHNfbfRUQW5+bKGvE2GypDHmfxkLjIyJKcwC9C5iNoHhk3eTk5lGISDKXsR
+         fvig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706255364; x=1706860164;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=kMLN7Rz7MGbuTKXXFDmPa4TaxPrxTUAEjlgxCmYMMqE=;
+        b=O1RkPB6IkMFtZQHTNks6/lb8nWWlN+WFDEvqzGe1MP4vp8pLDAChPQYdVTNY1MknCT
+         ObuLBeGesAIApPPa+eNZ+OdaFksQ0xGl+rmkDcF/JE7wT3hwJVHlk49a7gUxg3+bAhem
+         Kt3PB5y1csv8DbLsQYaeTKBLHUaE6d77wtC16xJTRAki0v8D/bGdS75lcKnR4Tfj5c5H
+         QWeursej+XQe2CNJEiapp84TIc6EWjkaKTNgcIbG/GdPrZwvjGL5awRtTPuUzuzkPTIa
+         W8uXv0Yg2PiwljhIDxJdoQwrxzxx0gxxEnYGQY1bEBe+2vMEb/dTJ+LjHXsThHYzwrix
+         8PoQ==
+X-Gm-Message-State: AOJu0YxE/cCe38fFkl2xVbw3v4jOcwYfX39cza6fazXQ7GvJXr2Xm3Bi
+	cWbD9YRcHtwaLCxm1HJ1XqATlrbYMSUMIddJMkjAoIZvpGqbY/4Pslnn7k1YrIE=
+X-Google-Smtp-Source: AGHT+IFY+1BBYpedT+Me5GvLK2bkjb5tnsE8ri1rpr97wJTETbTwBLEoVpQ9JMBcAskBjVDXMlocoA==
+X-Received: by 2002:a05:600c:1913:b0:40e:b0e8:ee96 with SMTP id j19-20020a05600c191300b0040eb0e8ee96mr547389wmq.122.1706255364640;
+        Thu, 25 Jan 2024 23:49:24 -0800 (PST)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id tb21-20020a1709078b9500b00a3025e05665sm350745ejc.14.2024.01.25.23.49.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Jan 2024 23:49:24 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20240125-x13s-touchscreen-v1-2-ab8c882def9c@quicinc.com>
-References: <20240125-x13s-touchscreen-v1-0-ab8c882def9c@quicinc.com>
-In-Reply-To: <20240125-x13s-touchscreen-v1-0-ab8c882def9c@quicinc.com>
-To: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Rob Herring
-	<robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-        Jiri Kosina
-	<jikos@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-input@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1706241316; l=1330;
- i=quic_bjorande@quicinc.com; s=20230915; h=from:subject:message-id;
- bh=Kk+y5hNnOiQ2qFggH/zRNiKdLX4XwYFzmrAqZbWNdE4=;
- b=XXT4ELI9bJf5JFfwnJVzWRjPWf/opRDOL12nu58PFDtuwjH3AZI9SKtQvEzhzxzkdqWkA9Fu6
- w5PjI8TexGKCCUz/IQmmsi0XRVCrjWOtx8ww5WL8+CISnVfZhjNoyWL
-X-Developer-Key: i=quic_bjorande@quicinc.com; a=ed25519;
- pk=VkhObtljigy9k0ZUIE1Mvr0Y+E1dgBEH9WoLQnUtbIM=
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: RgVbnw65RNvrWLmkuNOf9f2ff1_gARDJ
-X-Proofpoint-ORIG-GUID: RgVbnw65RNvrWLmkuNOf9f2ff1_gARDJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 mlxlogscore=999 phishscore=0 lowpriorityscore=0 bulkscore=0
- spamscore=0 malwarescore=0 mlxscore=0 impostorscore=0 suspectscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401190000 definitions=main-2401260026
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 26 Jan 2024 08:49:24 +0100
+Message-Id: <CYOH1P74EWQ0.5TZX1F88C8XZ@fairphone.com>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: sm6350: Add tsens thermal zones
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Konrad Dybcio" <konrad.dybcio@linaro.org>, "Bjorn Andersson"
+ <andersson@kernel.org>, "Rob Herring" <robh+dt@kernel.org>, "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley"
+ <conor+dt@kernel.org>
+X-Mailer: aerc 0.15.2
+References: <20240124-sm6350-tsens-v1-1-d37ec82140af@fairphone.com>
+ <da281c50-9dcb-46d6-8cb1-ef4662e24a9e@linaro.org>
+In-Reply-To: <da281c50-9dcb-46d6-8cb1-ef4662e24a9e@linaro.org>
 
-The failing read-test in __i2c_hid_core_probe() determines that there's
-nothing connected at the documented address of the touchscreen.
+On Thu Jan 25, 2024 at 5:30 PM CET, Konrad Dybcio wrote:
+>
+>
+> On 1/24/24 16:31, Luca Weiss wrote:
+> > Add the definitions for the various thermal zones found on the SM6350
+> > SoC. Hooking up GPU and CPU cooling can limit the clock speeds there to
+> > reduce the temperature again to good levels.
+> >=20
+> > Most thermal zones only have one critical temperature configured at
+> > 125=C2=B0C which can be mostly considered a placeholder until those zon=
+es can
+> > be hooked up to cooling.
+> >=20
+> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> > ---
+>
+> [...]
+>
+> > +		cpuss0-thermal {
+> > +			polling-delay-passive =3D <0>;
+> > +			polling-delay =3D <0>;
+> > +
+> > +			thermal-sensors =3D <&tsens0 7>;
+>
+> cpuss0-thermal and cpuss1-thermal are very likely the sensors for
+> cluster0/1, can you test that out, perhaps with corepinning+stress?
 
-Introduce the 5ms after-power and 200ms after-reset delays found in the
-ACPI tables. Also wire up the reset-gpio, for good measure.
+Not really, according to my docs the CPUs aren't placed symmetrically on
+the SoC and cpuss0 and cpuss1 are just somewhere inbetween all of the 6x
+LITTLE cores, the 2x big cores are a little bit further away. So apart
+from hooking up all of the cores for cooling for cpuss0 & cpuss1 I don't
+have a great idea what to do here. Shall I do that?
 
-Fixes: 32c231385ed4 ("arm64: dts: qcom: sc8280xp: add Lenovo Thinkpad X13s devicetree")
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Regards
+Luca
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index def3976bd5bb..d64d0e76c1ea 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -620,7 +620,6 @@ &i2c4 {
- 
- 	status = "okay";
- 
--	/* FIXME: verify */
- 	touchscreen@10 {
- 		compatible = "hid-over-i2c";
- 		reg = <0x10>;
-@@ -630,6 +629,11 @@ touchscreen@10 {
- 		vdd-supply = <&vreg_misc_3p3>;
- 		vddl-supply = <&vreg_s10b>;
- 
-+		reset-gpios = <&tlmm 99 GPIO_ACTIVE_LOW>;
-+
-+		post-power-on-delay-ms = <5>;
-+		post-reset-deassert-delay-ms = <200>;
-+
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&ts0_default>;
- 	};
 
--- 
-2.25.1
+> You can then assign multiple cpu cooling devices.
+>
+> LGTM otherwise!
+>
+>
+> Konrad
 
 
