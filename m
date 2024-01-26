@@ -1,152 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-8456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8457-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0FD583DFD6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 18:20:24 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 758DE83DFE0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 18:21:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1F5FC1F248ED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 17:20:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 273EA1F22DEF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 17:21:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA2C51EB5E;
-	Fri, 26 Jan 2024 17:18:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2D40210F2;
+	Fri, 26 Jan 2024 17:20:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wAEnCmob"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BkXyBCBQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1674A1D699
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 17:18:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F68B20DF6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 17:20:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706289519; cv=none; b=o5nJp/Nk7lvRFoCERYAQlHJ2y00m9Vrbz7SrvCbdpRe2mlJos1PTSxgonMfQCc26B8KAZ1xLVp6cUiNYuWxtxcLYhPYfw1qpul3yZ4Ldk5pTg2p8WKHZWwNR/4MLhxEEb/jJluIGCTnN8Cl1pUODYuFGJWbmu2e5lnSHNI225gY=
+	t=1706289616; cv=none; b=NfzOTZp9kU8JV66YlLJuuQQCTgbEqTwqJTJGXUppa7qTkGwmmkrbH10rfq10Ad7t5g4AG0NBxyKeCsPR/bFu9N/qXqD4x0LqcuUzPWcMX6djebK9Jgkw7A1fMiB57V7qy39GBMP4XvPVOAI9+uG9dY60ADoo00aHV8U/oDyHHS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706289519; c=relaxed/simple;
-	bh=uksqWwHp40lBMgTvtcAqAgVU0xz7/hA8zQTrE9LBb6U=;
+	s=arc-20240116; t=1706289616; c=relaxed/simple;
+	bh=73loVm8ly7qdwE39+2h0z6ktV12Cx5r1ZMgjVHoK8hc=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rt1WW3eYToYYH0q1iMWPUeMW2iuZ3qIPyGWRAEBe/OG93FwwiXpHEjQ9Ze/uXfS2dTr+F0yrkHRSHgTVVCGNNAPD2LjPsOw6qL8ljzrlZUhJBjmTrIPYg+tHoln51s9mIpfwoIdrKNBRN17SOCDZndDwktY5KnVSySPYtkWJCTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wAEnCmob; arc=none smtp.client-ip=209.85.219.178
+	 To:Cc:Content-Type; b=IYrYDvO29oVAbytdQToo+3tieFBLAZH0JKpDnOzost7tzN842VU7imzruWlJ7MWMNPWPdNchPb6BhOyYA10hXYQo4hMf4Y5zQG8fOK9755MLNZP0IDmLR7+zm6VGms6bd1GTNuLVhcv/5UY2l9vjdF46dXjDeyn0sjzVDqSTeRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BkXyBCBQ; arc=none smtp.client-ip=209.85.219.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-dc226bad48cso528052276.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 09:18:37 -0800 (PST)
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-dc239f84ba4so644014276.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 09:20:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706289517; x=1706894317; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706289614; x=1706894414; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=oMXftuUEwR8k3wsTwAoi8oEqR+zracFM6FSyl83rIXo=;
-        b=wAEnCmobgLm4WoVxDmAgrpHh9VonWIANbdjH8ZEtE1B7EQ54qvTjzlAhRhPMj6/LMP
-         jsOnBfGOHmUERFB8IUri4k6sUjKjn0b6lhb+zP/gzT0m+laDxWtGYUvdO/oU/6T26AaV
-         UR5/DP9BCDrkDibO2QgiQKGp8ggxI/K2ckvv987vgpar8CJK1FKRfNnoRNl27I+/gwqj
-         xIxnpE7hPFYrvS2O+G+se81lUWbJM6tY+fkOqEpID9+wJh48QBdy6+PpqwQ75FQl8FjJ
-         N6Ar80pEre8TOc1K6W1OP1fZ9oHzTLadQP5MQb+VN7rMEipxVf0fDUesZRYcg5kQ+a/+
-         SR+g==
+        bh=DfcOf0udxUc+w1U/rSjRqEr06RAjRh2n5t1k3e8n0LY=;
+        b=BkXyBCBQqJdFREGuiWymbR00OFuInOFGFYHdQAkSb1pflyPQrMoS5J7cvnxuoBaFq9
+         +miE5T6kT1RehTmU2ok8H4TDzTxUODUZ9LVDhi5RKPwo8/IZKrGd2WiHfSFdoR3JWqF9
+         iu8iRp+YyG5NYSoZYT+ospvsCI4tcLvS6eY+dlRdkX+zFN9umpGKiPPgRkLA5YRPm3pY
+         +Yosf5AoLlplqntUxaC/JI+SD4dv6Qx10aVCbUKm6lTMOQTTt1AvCHeq3LhjQeh9fPzH
+         mzPjUSLTquiXuEfhVuCtx/xTkHyCz+xIS+0wZCIZ+s2apSF7WB84zcaggRd0g+Hq9CtC
+         uItw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706289517; x=1706894317;
+        d=1e100.net; s=20230601; t=1706289614; x=1706894414;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=oMXftuUEwR8k3wsTwAoi8oEqR+zracFM6FSyl83rIXo=;
-        b=H54biuz1VX+3cR2jSCy94L8dBmIqw+nkZzO6zX9iyW2+BRSzo/aIxOivbYOgeXaIPY
-         MLf9NDlToLO4tuYnz2lQ96VOZND91xpkWWP6XciHDW6+jJYg/vD+2a1M2VArWgSiyMGT
-         OZuuVCeP2cYuf33l2fRuo+KpKcdkFzngIktY5MxDuhXQUip65amyHd+uBEGTBnublWVD
-         Is5dM8uLtoYD0SWQVCZGY0RbI3ehAwAD4tSSu7NzAyYPUGAwu5pFIhE5E9S3yFCmCYag
-         jU5XNICIHC+gCXuvPc07c5wXX/xd9pr3zFRnK1smo+ypHNkMvkB8KwbdyXNF5sekyE3j
-         Y6Gw==
-X-Gm-Message-State: AOJu0YxFhyJlRQa14eVxScFDK8PisJuiaSEzQGhHBi6EPdYYmGNeXb4G
-	VgH+5TkicmrnJPjTxsxBQgWSY+MZdiQr1/AvMZsQ20hi9FhjINYd8oN5fS3jWX8aCwlC41XpJzA
-	kzLofDDGciojlD8qIZ2QjmC4agy6sYffyzNlX6g==
-X-Google-Smtp-Source: AGHT+IEAnlZn0o2ZmMFbEsv/yJHo5VHfIkXUWs60su9mjl4yma7GKw5ryBFdJHFs3IPbaBsWmFAx/KaCXzvEWbjrj3w=
-X-Received: by 2002:a05:6902:514:b0:dbf:487b:1fe7 with SMTP id
- x20-20020a056902051400b00dbf487b1fe7mr174699ybs.17.1706289517052; Fri, 26 Jan
- 2024 09:18:37 -0800 (PST)
+        bh=DfcOf0udxUc+w1U/rSjRqEr06RAjRh2n5t1k3e8n0LY=;
+        b=cIEP/EqXWVGq/JLHQkpwYMaSJM4o/d5aN/3KgDipd0iDdBY41/rHZk9c+Gh5Z7/HJ3
+         47q9P1hl1AqMYgXfb2nEQf1xxObiu1RifAQRaoYHKv35yfi+ZjZJoqe3mr8GU4iDzVHa
+         YgofPsahQLRYZ1k0jv7X6GB/W4pgvrrDf1JS28RxOYK+VF0X+CZgqrbbhjGmZQWoMRvV
+         KTi/j2WCLTy107DFhSeM5re9u7IFTsWGEuRIv5lQdSxroW1maJGNOwPLg94kbPOixpHG
+         rNP3SzfQV/Gfw/1v4/2cqAezZbcIY4BUVODm9BQb+YJSA3v80/vPgefvbIWb4lwoha3J
+         e/Jw==
+X-Gm-Message-State: AOJu0YwC4R9wSRi3X3qavlATOanFxvaHGCVX/vg5IeK3VVbvPqTGGtcj
+	W0cuF3URQRyKx+zM2S68NevOup3LRg9clRLNBYgjIaGc5N50nWvWLAiG0ERqdX5MH5fMlBOAV4Z
+	nFYJhMu5j0QE2kSH7DAQuagBTvuKsbU19U0BBjA==
+X-Google-Smtp-Source: AGHT+IGa+zspZThxi9oRy2oS248JEsOPKalw83o4vIHdlm+VhTwbKv49+h1a4t3B8lhSzO3bv/j1ohqxDrsg6+8ov90=
+X-Received: by 2002:a05:690c:f8f:b0:5ff:4987:4ef3 with SMTP id
+ df15-20020a05690c0f8f00b005ff49874ef3mr211891ywb.24.1706289614301; Fri, 26
+ Jan 2024 09:20:14 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240120191904.15408-1-quic_kriskura@quicinc.com>
- <20240120191904.15408-2-quic_kriskura@quicinc.com> <wqdqkzvni4roqulgsiqxzubxcblzxnoydcwvv2av2pobjjx5o6@b7kwl6lq7hij>
- <a4606673-64e9-4e16-8d9e-307fb37d8763@quicinc.com>
-In-Reply-To: <a4606673-64e9-4e16-8d9e-307fb37d8763@quicinc.com>
+References: <20240124213640.7582-1-ansuelsmth@gmail.com> <53445feb-a02c-4859-a993-ccf957208115@quicinc.com>
+ <f8a9e328-5284-4f24-be5d-7e9804869ecd@lunn.ch> <5d778fc0-864c-4e91-9722-1e39551ffc45@quicinc.com>
+In-Reply-To: <5d778fc0-864c-4e91-9722-1e39551ffc45@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 26 Jan 2024 19:18:25 +0200
-Message-ID: <CAA8EJpoL=cWPJLaFZL-Sg2zW+as1ESPuQhQdzfJTGonXse9sPA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] arm64: dts: qcom: Fix hs_phy_irq for QUSB2 targets
-To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Johan Hovold <johan+linaro@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, quic_ppratap@quicinc.com, quic_jackp@quicinc.com
+Date: Fri, 26 Jan 2024 19:20:03 +0200
+Message-ID: <CAA8EJppUGH1pMg579nJmG2iTHGsOJdgDL93kfOvKofANTGGdHw@mail.gmail.com>
+Subject: Re: [net-next PATCH 0/3] net: mdio-ipq4019: fix wrong default MDC rate
+To: Jie Luo <quic_luoj@quicinc.com>
+Cc: Andrew Lunn <andrew@lunn.ch>, Christian Marangi <ansuelsmth@gmail.com>, Andy Gross <agross@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Heiner Kallweit <hkallweit1@gmail.com>, Russell King <linux@armlinux.org.uk>, 
+	Robert Marko <robert.marko@sartura.hr>, linux-arm-msm@vger.kernel.org, 
+	netdev@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Sergey Ryazanov <ryazanov.s.a@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 26 Jan 2024 at 16:14, Krishna Kurapati PSSNV
-<quic_kriskura@quicinc.com> wrote:
+On Fri, 26 Jan 2024 at 18:03, Jie Luo <quic_luoj@quicinc.com> wrote:
 >
 >
 >
-> On 1/25/2024 3:16 AM, Bjorn Andersson wrote:
-> > On Sun, Jan 21, 2024 at 12:49:01AM +0530, Krishna Kurapati wrote:
-> >> On several QUSB2 Targets, the hs_phy_irq mentioned is actually
-> >> qusb2_phy interrupt specific to QUSB2 PHY's. Rename hs_phy_irq
-> >> to qusb2_phy for such targets.
+> On 1/26/2024 1:18 AM, Andrew Lunn wrote:
+> >> Hi Christian,
+> >> Just a gentle reminder.
 > >>
-> >> In actuality, the hs_phy_irq is also present in these targets, but
-> >> kept in for debug purposes in hw test environments. This is not
-> >> triggered by default and its functionality is mutually exclusive
-> >> to that of qusb2_phy interrupt.
-> >>
-> >> Add missing hs_phy_irq's, pwr_event irq's for QUSB2 PHY targets.
-> >> Add missing ss_phy_irq on some targets which allows for remote
-> >> wakeup to work on a Super Speed link.
-> >>
-> >> Also modify order of interrupts in accordance to bindings update.
-> >> Since driver looks up for interrupts by name and not by index, it
-> >> is safe to modify order of these interrupts in the DT.
-> >>
-> >> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> >> ---
-> >>   arch/arm64/boot/dts/qcom/ipq6018.dtsi | 13 +++++++++++++
-> >>   arch/arm64/boot/dts/qcom/ipq8074.dtsi | 14 ++++++++++++++
-> >>   arch/arm64/boot/dts/qcom/msm8953.dtsi |  7 +++++--
-> >>   arch/arm64/boot/dts/qcom/msm8996.dtsi |  8 ++++++--
-> >>   arch/arm64/boot/dts/qcom/msm8998.dtsi |  7 +++++--
-> >>   arch/arm64/boot/dts/qcom/sdm630.dtsi  | 17 +++++++++++++----
-> >>   arch/arm64/boot/dts/qcom/sm6115.dtsi  |  9 +++++++--
-> >>   arch/arm64/boot/dts/qcom/sm6125.dtsi  |  9 +++++++--
-> >>   8 files changed, 70 insertions(+), 14 deletions(-)
-> >>
-> >> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> >> index 5e1277fea725..ea70b57d1871 100644
-> >> --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> >> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> >> @@ -418,6 +418,12 @@ usb2: usb@70f8800 {
-> >>                                        <&gcc GCC_USB1_MOCK_UTMI_CLK>;
-> >>                      assigned-clock-rates = <133330000>,
-> >>                                             <24000000>;
-> >> +
-> >> +                    interrupts-extended = <GIC_SPI 128 IRQ_TYPE_LEVEL_HIGH>,
+> >> The MDIO frequency config is already added by the following patch series.
+> >> https://lore.kernel.org/netdev/28c8b31c-8dcb-4a19-9084-22c77a74b9a1@linaro.org/T/#m840cb8d269dca133c3ad3da3d112c63382ec2058
 > >
-> > interrupts-extended takes a reference to a interrupt-controller as well,
-> > so this doesn't build.
+> > I admit this version was posted first. However, its embedded in a
+> > patch series which is not making much progress, and i doubt will make
+> > progress any time soon.
 > >
-> > Did you mean "interrupts" here instead? Please update these and build
-> > test...
+> > If you really want your version to be used, please split it out into a
+> > standalone patch series adding just MDIO clock-frequency support, with
+> > its binding, and nothing else.
 > >
+> >      Andrew
 >
-> Hi Bjorn,
->
->   Thanks for the catch. I was using DTC version 1.4.0.
-> When I moved to 1.5.0, I did see these warnings. Fixed them up and sent v3.
+> Hi Andrew,
+> We will rework the patch series to include only MDIO frequency related
+> function and frequency dt binding, and post the updated patch series
+> on the Monday/Tuesday of next week. We will work with Christian to
+> ensure he can re-use this patch as well.
 
-Why do you use any special DTC version? Just use whatever comes with
-the kernel. There is no need to use anything that is out-of-tree.
+Can you do the other way around: rebase your patches on top of Chritian's work?
 
 -- 
 With best wishes
