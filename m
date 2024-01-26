@@ -1,72 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-8438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9FA183DAFE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 14:35:30 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9993C83DB90
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 15:14:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 50BED1F239AF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 13:35:30 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EC437B21BF5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 14:14:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D95C1B946;
-	Fri, 26 Jan 2024 13:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB1131C288;
+	Fri, 26 Jan 2024 14:14:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tdQmU/ek"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="X6jWZwJf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996521B943
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 13:35:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4DA11C287;
+	Fri, 26 Jan 2024 14:14:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706276126; cv=none; b=VECeQi/8CIoxYIWpEBO+RLG1stTj2mnM/3uPCCe/+sltgQn0xnC3u0tM5nw+bgfxRlRc2N51DDG9FBuQR+39NylU1audSVBiZ5z98u1VqjF3T7/SfPA8YZfwp/v2iltMLvdPKuwPcAtjLO1OhcK3XracGH0l/WCY3GA0zVh2OWM=
+	t=1706278476; cv=none; b=jMccUmijEAACM3sHVoEbHJhrEBO93f54PaXwqlvvIDqJWhfy4beTyFUx5N50ftmZeOIEoEt1SigQoHICru6CGujXMqtrB4Y76+siqEgOZEvXadcRhPN/Xfj3ouQfEFSDnF7RpeUzsyxAw0aoOwqmL74Y2IyK2NSxyQQzUcu1yqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706276126; c=relaxed/simple;
-	bh=zeR8yYoTsYv5Z7vooR68zM3B6n+B9/G8N/V1UYsLVWk=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=FFxXKpC/BKB6lKG5W5Hf7H+AYQwO/tiHqb1pxR8FltYf0WYP2cE2VFSZXyl0tqVjW9tLk9Km1Q1+8XNY7N8yGFD/Wy5t099hzPTkOwcgVD10cRvT2CK+AcqPZwK5qbqo3g0eK3oQWfNEMQIWulpbBpK8rEl9xB+rVjBB2ClJChs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tdQmU/ek; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-40e80046264so10607465e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 05:35:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706276123; x=1706880923; darn=vger.kernel.org;
-        h=content-transfer-encoding:organization:autocrypt:content-language
-         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=b9a5bBdyFVhJIwedix1U39wl9TOtCRTgVWMBfmVGZGQ=;
-        b=tdQmU/ekLZ0y70rMwg6zGjLal8ytJfJhx8WCC9jSOZY/ANl/r1qqXQhdocPE774UgR
-         sLKFWinTsJDRuYPxy2aIz1ieJwP5gTtKgdspmc9zOHWVYzh01bBi60303aM0H6eyCx4Q
-         B1ITjh4i3mi7V+z1r1NhWzqoAIy4udp8x+UeWH85mQPrbkSj+ngjqPy+o6PY9ojcDn95
-         ZLUyZpdBLXJLEVO2NcS7ehvfO9uiCXg7FlRXjVbxs1EA0B1JcfRKF+FJI727jbXa3zIm
-         BQLoogoNDr4A6KjcBBdIn8a4wZepj4RrfNgtRrAEuslIbRZzycu45bTzPWo204j3Rt15
-         Le9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706276123; x=1706880923;
-        h=content-transfer-encoding:organization:autocrypt:content-language
-         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=b9a5bBdyFVhJIwedix1U39wl9TOtCRTgVWMBfmVGZGQ=;
-        b=WAgS7KNYA2Mq5XTwbD/NOQcDW2/eKrhVJoy6F0a2c9SUEgpkI+S/9G567dBlaEs2xG
-         kPCrdncbD+UH/y8Fk5bHknUIsfauD4K8/6SdqsqqrHi10EnSqJr/uT43onQXE5xdhTWc
-         LFuoKl/6BOXRR6ODQHwj3kbQUtODxfU2rjRyYwgMd19RgR6JM6YeqQXO7e7vs9LQBvE5
-         T2r3v3J9AL30458rc1Y3z+NnB9cVpB7Oh+MA4uoSy8lHWAdupeuKgDLUpi9gxGyAvWbq
-         WG+t4SBI9/EKUB+6f6A/aD110OAak75OCr5drXwJaxJYQ8G/vk2teGq3LQrqXKMa/y1V
-         B2NQ==
-X-Gm-Message-State: AOJu0YzBKSYUDHiMLBkD0Kk/+xY3oaMEV5sdt0CWjjFV5OLfELoBR3hA
-	uvUewn2YxHhQxqkKzbriUwNkWRSEIPct7ZAGBgMDSODnAB7xJbF1kqjjTqXqTzo=
-X-Google-Smtp-Source: AGHT+IGRHnqu89a3/XRm7EvLaRhopFG61nVUf1pw5Lt73M+Y/fLSzI+TrLXyYBqXjsjMEQbYXLHYow==
-X-Received: by 2002:a05:600c:248:b0:40e:ab7f:3448 with SMTP id 8-20020a05600c024800b0040eab7f3448mr894814wmj.144.1706276122772;
-        Fri, 26 Jan 2024 05:35:22 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:b66c:951b:e9ef:af35? ([2a01:e0a:982:cbb0:b66c:951b:e9ef:af35])
-        by smtp.gmail.com with ESMTPSA id fa6-20020a05600c518600b0040ee8765901sm147536wmb.43.2024.01.26.05.35.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Jan 2024 05:35:22 -0800 (PST)
-Message-ID: <465420cc-c40e-45df-9cc0-80244fed7bf4@linaro.org>
-Date: Fri, 26 Jan 2024 14:35:21 +0100
+	s=arc-20240116; t=1706278476; c=relaxed/simple;
+	bh=ftLuAd9U3YPVeEzec70Y/JSfQC6jcmT5YJPmcGrNDAE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=PdhEFnRYqa8PVYokJEoB5hAyZ33cq0YhqDJjP9zKlKg/toFKYf5qoUumQx+2geeDySeSojbl/h0ZzolA7rXUez1t4DdQtAB381dw80NFJu+lWxYgSR3MqjP/1PmEUysexEzTFParc9k2VJKkuxLwZyr25XI/v4eSFEzT8cRoazA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=X6jWZwJf; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40QCQ7rC005300;
+	Fri, 26 Jan 2024 14:14:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=+SpPdyF3w8Fw1tNKmk5zm/UXCiCDAnEu7aqBtZrqwjQ=; b=X6
+	jWZwJfqWJPYU5LXTLKDWkbD+7zYLaFPX1QRZo5/CLcwK3CRrlN6650Q/XVQ1GZIT
+	rJKow7yXKXeFpImvwVqa+WGTCuXO/v//TwQsP9mWIXNyzfyA5EiSBa7fi63rZSff
+	hjBandhIkhAS3GSqEcEYRNIsqckzmLvmn99PnAXclcyKi251cXpOE6xFxwzNwCXt
+	ROJxMfjSameupDRSdQL8tHbFVGzn0OPfx74gOJDTKwFWZakN4wShkmjzXVZ1ZwzY
+	592H4qbSoDvQY44XPPohaFkQrmKKg7EvzZmdEt400LpgslAaBiWaf243yEH1AM6F
+	TCHAKVOm1g89Tji5YSig==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vv4f9h8yc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 26 Jan 2024 14:14:24 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40QEENYu021168
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 26 Jan 2024 14:14:23 GMT
+Received: from [10.216.50.194] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 26 Jan
+ 2024 06:14:19 -0800
+Message-ID: <a4606673-64e9-4e16-8d9e-307fb37d8763@quicinc.com>
+Date: Fri, 26 Jan 2024 19:44:16 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,59 +65,97 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [GIT PULL] Add Audio topology firmware for Qualcomm SM8650 MTP
- platform
-Reply-To: neil.armstrong@linaro.org
-To: linux-firmware@kernel.org
-Cc: linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v2 1/4] arm64: dts: qcom: Fix hs_phy_irq for QUSB2 targets
+To: Bjorn Andersson <andersson@kernel.org>
+CC: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring
+	<robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>
+References: <20240120191904.15408-1-quic_kriskura@quicinc.com>
+ <20240120191904.15408-2-quic_kriskura@quicinc.com>
+ <wqdqkzvni4roqulgsiqxzubxcblzxnoydcwvv2av2pobjjx5o6@b7kwl6lq7hij>
+Content-Language: en-US
+From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <wqdqkzvni4roqulgsiqxzubxcblzxnoydcwvv2av2pobjjx5o6@b7kwl6lq7hij>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 6bLippXMlQBWho7Sf-qbyUXJAPAqgD9h
+X-Proofpoint-GUID: 6bLippXMlQBWho7Sf-qbyUXJAPAqgD9h
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 mlxscore=0 suspectscore=0
+ mlxlogscore=999 spamscore=0 bulkscore=0 lowpriorityscore=0 phishscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401190000 definitions=main-2401260104
 
-The following changes since commit 0c40df810685c15141413cee5bea7233e1db43fb:
 
-   Merge branch 'consistent-file-spacing' into 'main' (2024-01-24 16:42:17 +0000)
 
-are available in the Git repository at:
+On 1/25/2024 3:16 AM, Bjorn Andersson wrote:
+> On Sun, Jan 21, 2024 at 12:49:01AM +0530, Krishna Kurapati wrote:
+>> On several QUSB2 Targets, the hs_phy_irq mentioned is actually
+>> qusb2_phy interrupt specific to QUSB2 PHY's. Rename hs_phy_irq
+>> to qusb2_phy for such targets.
+>>
+>> In actuality, the hs_phy_irq is also present in these targets, but
+>> kept in for debug purposes in hw test environments. This is not
+>> triggered by default and its functionality is mutually exclusive
+>> to that of qusb2_phy interrupt.
+>>
+>> Add missing hs_phy_irq's, pwr_event irq's for QUSB2 PHY targets.
+>> Add missing ss_phy_irq on some targets which allows for remote
+>> wakeup to work on a Super Speed link.
+>>
+>> Also modify order of interrupts in accordance to bindings update.
+>> Since driver looks up for interrupts by name and not by index, it
+>> is safe to modify order of these interrupts in the DT.
+>>
+>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/ipq6018.dtsi | 13 +++++++++++++
+>>   arch/arm64/boot/dts/qcom/ipq8074.dtsi | 14 ++++++++++++++
+>>   arch/arm64/boot/dts/qcom/msm8953.dtsi |  7 +++++--
+>>   arch/arm64/boot/dts/qcom/msm8996.dtsi |  8 ++++++--
+>>   arch/arm64/boot/dts/qcom/msm8998.dtsi |  7 +++++--
+>>   arch/arm64/boot/dts/qcom/sdm630.dtsi  | 17 +++++++++++++----
+>>   arch/arm64/boot/dts/qcom/sm6115.dtsi  |  9 +++++++--
+>>   arch/arm64/boot/dts/qcom/sm6125.dtsi  |  9 +++++++--
+>>   8 files changed, 70 insertions(+), 14 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+>> index 5e1277fea725..ea70b57d1871 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+>> @@ -418,6 +418,12 @@ usb2: usb@70f8800 {
+>>   					  <&gcc GCC_USB1_MOCK_UTMI_CLK>;
+>>   			assigned-clock-rates = <133330000>,
+>>   					       <24000000>;
+>> +
+>> +			interrupts-extended = <GIC_SPI 128 IRQ_TYPE_LEVEL_HIGH>,
+> 
+> interrupts-extended takes a reference to a interrupt-controller as well,
+> so this doesn't build.
+> 
+> Did you mean "interrupts" here instead? Please update these and build
+> test...
+> 
 
-   https://git.codelinaro.org/neil.armstrong/linux-firmware.git sm8650-mtp-audio-fw
+Hi Bjorn,
 
-for you to fetch changes up to 85d372744a19cf78f7437c6027d7037baa0f0a52:
+  Thanks for the catch. I was using DTC version 1.4.0.
+When I moved to 1.5.0, I did see these warnings. Fixed them up and sent v3.
 
-   qcom: Add Audio firmware for SM8650 MTP (2024-01-26 14:31:24 +0100)
-
-----------------------------------------------------------------
-Neil Armstrong (1):
-       qcom: Add Audio firmware for SM8650 MTP
-
-  WHENCE                          |   1 +
-  qcom/sm8650/SM8650-MTP-tplg.bin | Bin 0 -> 24296 bytes
-  2 files changed, 1 insertion(+)
-  create mode 100644 qcom/sm8650/SM8650-MTP-tplg.bin
+Thanks,
+Krishna,
 
