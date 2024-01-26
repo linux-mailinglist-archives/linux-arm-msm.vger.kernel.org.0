@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-8558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8560-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D908583E7BE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 01:05:11 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FDE783E7C2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 01:05:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7A03F1F21EB3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 00:05:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D1E2A28E9F0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 00:05:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F39636A32A;
-	Fri, 26 Jan 2024 23:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC1336BB3E;
+	Fri, 26 Jan 2024 23:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RmmbaUVy"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lywtgH4w"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709E367738;
-	Fri, 26 Jan 2024 23:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE6967E79;
+	Fri, 26 Jan 2024 23:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706313373; cv=none; b=Xyze42t5lQXY96lEFXfWm84cDuWRQ8V1/i8sG/1b08v5H2zU3o4R+KogmbnvdClerUShJa/IECn0JgW0V8Bis7Y1+C+04KRMeyM+JHO0KRQb4IVjQ8dwvvB7DB+V+UOwd+ROcdNhBe3ueDGZBk2ztwIXANkxqMdddrHJtHr3wdI=
+	t=1706313374; cv=none; b=EckVpCGuIEZ22nMdNVeWJpg2jTZiaL6KCX/z6iZVtKwzIYd/7L2Fp4BJ0fqs1wogf3OSeBVMmfBBAkr453rXHs8yf3peG3+iyutXGwefaPKusJ3jgIuUjLM6MpEEVxuK7MskPXyZg2MbJ8WEuUQYnnQTz+l0qCI/eJGcT9tz7l0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706313373; c=relaxed/simple;
-	bh=J6pPkakqNv2daF3IrtDrH+SZuJ5STbJAmAJQb9x5eQs=;
+	s=arc-20240116; t=1706313374; c=relaxed/simple;
+	bh=qAJ+51cbXvvCfLjg82KIFwc+7aRBvLZGpb7bO+kBVSk=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c0m4Pd2w22ZM3pp/ittvv50hTCBp6DvpRQtlQPUGdMRfeOwdP4qU9M9a348Ql++g7U6Z158u8xGNVYC8zkodq7ALnQaW6VOUCOOlXr+sjbplZljEJct7zJqJ1qOZ5DWPa2nCPR2915GbYs5bbtSj3ZcyKI29XsNUfIDT8Z/THbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RmmbaUVy; arc=none smtp.client-ip=205.220.180.131
+	 MIME-Version:Content-Type; b=lYFJ5hlSkOF0MOJa6zZeFdIEwyY5DCvt1iFG2l8oZ4oXVPclxiaCRQBUGy+3bP+ODRfglOEBrMxMOlRh/2AOSNhimrRIlTu3PVtQk3ypP8eOd67qnp2WKo5nZjJfSjjs0m7Y4TWRtOpfj9Ql4ZZZ2FitZcIUhoAJ9qcRSJsxTvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lywtgH4w; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40QNB7D6025095;
-	Fri, 26 Jan 2024 23:55:32 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40QLidNf001840;
+	Fri, 26 Jan 2024 23:55:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-type; s=qcppdkim1; bh=T0h3z+K0rtV4faDRf1fw
-	pDX6H/a9sME2F2MHueBtAkE=; b=RmmbaUVyx/q9+lpQdKFEpD7F9RBa31grZwM4
-	a1vOIo5ZwdhfYOGAJ7VqIWhJTlugUNN/K+t1J3pqPDTgNToWpskXROE1XHkNSaKr
-	xXozjbugETFrj743VUsC07jm7XmtddlX5jtPXwANWBV+22zCZvDeH6SgFirrRhan
-	c6j4ksO2ci2aB82i2/yXaz4xpmHV1MIjSTtIbs7jtSxvT8i+HX/h2D908zon3BUv
-	UC1h6s7BrRTeqQVjq5rQGSZf2IJoaV0uZzED/fjZZJh0Pv3Q1TU2MktVcbBxXx+S
-	MvUcqOz+ST7vkCOK6E2pC7B6xpXNLgnOanGeJJC4H5FtMD2Klg==
+	:mime-version:content-type; s=qcppdkim1; bh=JehfiXL/jESvck/dHwB/
+	tjacBNHINenDJXJssZftYA0=; b=lywtgH4wOf75UMzKTOMrxUO+QQzBiVuwolYi
+	4+3YY51x+Vuq9uVMWrFDeAFOgYM74dj1aDZHBX5IBmUshUpNwDMnRjq/u/yueF38
+	JnBOd4pRUen/fT+EKprd54SeS0Ekj3+5wReNqHikR3Gm0O1MKUN1SbFY33yBx+E3
+	mdIEJSuNc3BK12d1R5hE8wf/4W/LsFncrddpZNP9jgXxsF+t1QjJA7chRVbGWrEJ
+	jZ/57DEy0G6Hv2+mN6h+ICl3dn/3FaTPsu6kUFAEmkPuFaG32QTvk8Y9PZWpfLBX
+	aujNRaEOavRQ0HqyD+TKReQ51Mj2/YUS3HD7+trSOKnUxHOcaA==
 Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vvfc8h025-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vvgy8gq04-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Fri, 26 Jan 2024 23:55:32 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40QNtUwj018645
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40QNtUwn018645
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Fri, 26 Jan 2024 23:55:31 GMT
 Received: from hu-obabatun-lv.qualcomm.com (10.49.16.6) by
  nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Fri, 26 Jan 2024 15:55:16 -0800
+ 15.2.1118.40; Fri, 26 Jan 2024 15:55:17 -0800
 From: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
 To: <catalin.marinas@arm.com>, <will@kernel.org>, <robh+dt@kernel.org>,
         <frowand.list@gmail.com>, <vgupta@kernel.org>, <arnd@arndb.de>,
@@ -70,9 +70,9 @@ To: <catalin.marinas@arm.com>, <will@kernel.org>, <robh+dt@kernel.org>,
 CC: <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <kernel@quicinc.com>, Oreoluwa Babatunde <quic_obabatun@quicinc.com>
-Subject: [PATCH 41/46] powerpc: reserved_mem: Switch fdt_init_reserved_mem() to dt_init_reserved_mem()
-Date: Fri, 26 Jan 2024 15:54:20 -0800
-Message-ID: <20240126235425.12233-42-quic_obabatun@quicinc.com>
+Subject: [PATCH 42/46] riscv: reserved_mem: Switch fdt_init_reserved_mem() to dt_init_reserved_mem()
+Date: Fri, 26 Jan 2024 15:54:21 -0800
+Message-ID: <20240126235425.12233-43-quic_obabatun@quicinc.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20240126235425.12233-1-quic_obabatun@quicinc.com>
 References: <20240126235425.12233-1-quic_obabatun@quicinc.com>
@@ -87,15 +87,15 @@ X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: DPuu-JorzJSPhOkMbk7tfX3FU2687aOJ
-X-Proofpoint-ORIG-GUID: DPuu-JorzJSPhOkMbk7tfX3FU2687aOJ
+X-Proofpoint-GUID: 7nA_V3mCURdgAzpTsaoIGUM62pOvtIbp
+X-Proofpoint-ORIG-GUID: 7nA_V3mCURdgAzpTsaoIGUM62pOvtIbp
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- adultscore=0 clxscore=1015 phishscore=0 malwarescore=0 spamscore=0
- suspectscore=0 priorityscore=1501 bulkscore=0 mlxlogscore=661
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=605
+ priorityscore=1501 lowpriorityscore=0 clxscore=1015 impostorscore=0
+ mlxscore=0 phishscore=0 spamscore=0 adultscore=0 suspectscore=0
+ malwarescore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2401190000 definitions=main-2401260176
 
 Switch from using fdt_init_reserved_mem() to dt_init_reserved_mem() to
@@ -104,22 +104,22 @@ reserved memory regions.
 
 Signed-off-by: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
 ---
- arch/powerpc/kernel/setup-common.c | 2 +-
+ arch/riscv/kernel/setup.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/kernel/setup-common.c b/arch/powerpc/kernel/setup-common.c
-index 96bd4c964943..fdb7cb8235d0 100644
---- a/arch/powerpc/kernel/setup-common.c
-+++ b/arch/powerpc/kernel/setup-common.c
-@@ -891,7 +891,7 @@ void __init setup_arch(char **cmdline_p)
- 	/* Unflatten the device-tree passed by prom_init or kexec */
+diff --git a/arch/riscv/kernel/setup.c b/arch/riscv/kernel/setup.c
+index 0601ed1e4ce6..3abc41217ede 100644
+--- a/arch/riscv/kernel/setup.c
++++ b/arch/riscv/kernel/setup.c
+@@ -271,7 +271,7 @@ void __init setup_arch(char **cmdline_p)
  	unflatten_device_tree();
+ #endif
  
 -	fdt_init_reserved_mem();
 +	dt_init_reserved_mem();
+ 	misc_mem_init();
  
- 	/*
- 	 * Initialize cache line/block info from device-tree (on ppc64) or
+ 	init_resources();
 -- 
 2.17.1
 
