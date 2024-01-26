@@ -1,71 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-8515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0864183E6A5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 00:21:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 445F983E6AD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 00:21:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 975FAB22C20
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 23:21:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 784541C22D14
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 23:21:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 138316168E;
-	Fri, 26 Jan 2024 23:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38371629F2;
+	Fri, 26 Jan 2024 23:16:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="XJebHFNU"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="kdAqUg7o"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D8A60DF0
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 23:16:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D77B5B1FE
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 23:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706310981; cv=none; b=afL4kaudxmDJBUXRM7SewGEXFhU8d7/F6W0eiIZvNq3qh4n4EWWOxHMP0vFnOhq/BVPAjDwvH7mS6hHQZ9uBVh4CjySIvSfV0z9yX6KKhTyEaqX1z0J/iYHwcRnjQ7kP/yXBwCVtuFysnx3bv5yVWRcCZ8c/lNEq0ngLsxsYTFw=
+	t=1706310984; cv=none; b=j2Z2JgneyChGOyzHM2Bymt830H2/Umbc5DL26qb0cjqkpCCXqS1oWrw0ueW4/KS7YMmE1lPVWmvGKVA/FZN+NUpXbCLJNX7EU8q8j2Vs/ZXa2LAJa1sFzgnRx0hwNqkqrCPZHoH5v4PB3KCRHIOH/FXpkT5M1qMYMaipfsBoieg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706310981; c=relaxed/simple;
-	bh=vK6wWsO5Przh/ojH3JfCu7YYSoz/Cg2xAeL1Dht8Uos=;
+	s=arc-20240116; t=1706310984; c=relaxed/simple;
+	bh=+48T6wmUjtEbzw2F4kReN9y5ew7crNm72mJy9gOUbCI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kO/X6VmZcGyLBl/gc32DxNwdQhdjjafqkpDHHNXnKnWNGboP50rthxpOMPKTL8BKPPsvCrwXMKCJoYKFJQ16Plbl05UDpAnuBRbSASkok2MWQmf548ZLFI+PKkHnV9XjVclZKSotXHlj/8PK7jaq8oD+x36bAMJ3o+OHlpWk25E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=XJebHFNU; arc=none smtp.client-ip=209.85.222.177
+	 In-Reply-To:To:Cc; b=jHfpFVqJ1ge5D0qdKJ3VWwWhvQWXxs6V8rEle8cR+CgMU+j2gnAKs//tyzMSokqsFmRGmX3t4hjayAEKv0X9IyL9WAUwIvtLgbvZoOcWn6pCn+1dP37tqYKL3k2ZjNei+ltuzDQjQzMBEY25yOoGsrwuXqFfswDLqVr2V3IoKF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=kdAqUg7o; arc=none smtp.client-ip=209.85.222.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-7833a51a1aaso98136385a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 15:16:19 -0800 (PST)
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-783ced12f9bso52810685a.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 15:16:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1706310978; x=1706915778; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1706310979; x=1706915779; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=vJoiaHjGhItBXZj/CWSZG5W6mZ9RrzIgj+3pNfG2j8c=;
-        b=XJebHFNUD6Q+ly97IhQVbsNuMoonpzSq5XiY+U09EHvlIs8tp5ViQr0vAGXU+ZhU9I
-         lD+SCYMoCPKLyrNj7WzpSm9T667KB5nEMgEwEcoFZV0YmvrMviHURPg8fNpPCBpPFvhP
-         1LR+YPOKIsmncuOKtTzTePos+v6HhwtZm0gdU=
+        bh=stuI7gBMJumChDGNuDa5NAtrFPgVVPyF9dOhkVEQIZs=;
+        b=kdAqUg7oKF4rdGcn3FUNPkBE+RVAfw+BRW4GKeUhTxWZY+j0n0qh81DdzJuWQinnHy
+         i9BigIvj9fNusLJogH/mpQazvrdlAbtYSkey+lpKxdWvg6i6Z2BUkLYlyAA8zRPDjiDw
+         tBYi3Yj79f1DLY5oYO5KfWnTjApALcHofsKuE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706310978; x=1706915778;
+        d=1e100.net; s=20230601; t=1706310979; x=1706915779;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vJoiaHjGhItBXZj/CWSZG5W6mZ9RrzIgj+3pNfG2j8c=;
-        b=GCuTTooz5MNjD0qrLr3trEVAVSK5/iBY8FQQnhdj1UjikoS5eQglvVhcejdUUv2Xnk
-         l9OuJe1EEPtP7Wrz2/IzmkA8/Z6tmTAQYrGrk5DXw1V/XJyDu7bvUveKaOxa/hFgx+YW
-         Sh3qG4xrInOnQRE4ue8REl5f3j8E03bQD2992vLUWgANmm7baBSC1suPC448WI09saHA
-         AbaIoxlhuQw3pT0pKi3zxgPHeJBpRANNebjWazdBdfEA0OoIDDBwfCzSga+3j9DDxg1C
-         iIDboMnj9EczR9icpr8ga6XYgSef0lh5SLifoOMZ4FFQ6uFtXMGQNWWJPeoDFMT0bmMJ
-         iC+w==
-X-Gm-Message-State: AOJu0YwPNv1ML6CUWOlcNou9ltsUkvrqpJGPQM6OKjpnH6K4QAZ+6dtQ
-	gyIUfopoH4zcKOfqH81iX2xKT3Yk/LPlAtXboAflFH+ox1edZfFItx1RLJHNRA==
-X-Google-Smtp-Source: AGHT+IFhQN8B5FsPqeRzzxRDyy6PJ/YXcjzquYxGB3Ad9UBljkLUVzxY+WO/snoMGhjDTG+ZaJzFDw==
-X-Received: by 2002:a05:620a:108f:b0:783:df3d:ae88 with SMTP id g15-20020a05620a108f00b00783df3dae88mr485948qkk.49.1706310978262;
-        Fri, 26 Jan 2024 15:16:18 -0800 (PST)
+        bh=stuI7gBMJumChDGNuDa5NAtrFPgVVPyF9dOhkVEQIZs=;
+        b=Ve7wm5k/HpJ7aQiOD4uGgg7DU7atf98uGoS52t3iJk9ZFg2mw96YbfAVtPjFueMO9+
+         ht7qm94OViQ+k5pcUFDAY/ecHBXaHkyun3MYQ3W8hu+slZ+rtyQr2rmcLoiNCy6fXjJw
+         QJlGW+/9CqoJAU7HPsLL55FZoAXGQY8gpwI0Hhyo4tLH4R5GI5LiNQPbZc4WHj+pSVli
+         BvQKKBtGS4k94rspPM06ozLy/hiITA+CEi03zm2gq0D0i/Z1pIf9BoAkIdOJHDAxE3Kw
+         nd5kl6nzabHwICICgi/ftURH/l/ovwqOOudzlLduJNKF1QLRu0pMWxTkXNttnL9IxcWW
+         delQ==
+X-Gm-Message-State: AOJu0YwOszNraiNcPVVSk7uBD6pm6LYvRXK6HdV0Hnl1/LHiK2BzlN7l
+	d3lhieRvi6RVb3AvxoyiIBmxhsyDXHesIJ0nyB28oOPkj+KIHvRKKiCz4muJng==
+X-Google-Smtp-Source: AGHT+IEd+7JsySye9GLJ+DZua0TH24OzjziTyfzLeDvrZrUGlvpFgq8zte88/+mhTsCB6LhfusGKZw==
+X-Received: by 2002:a05:620a:5593:b0:783:bd38:aca6 with SMTP id vq19-20020a05620a559300b00783bd38aca6mr655440qkn.82.1706310979526;
+        Fri, 26 Jan 2024 15:16:19 -0800 (PST)
 Received: from denia.c.googlers.com (240.157.150.34.bc.googleusercontent.com. [34.150.157.240])
-        by smtp.gmail.com with ESMTPSA id m4-20020a05620a290400b00783de3ddf5esm507358qkp.70.2024.01.26.15.16.17
+        by smtp.gmail.com with ESMTPSA id m4-20020a05620a290400b00783de3ddf5esm507358qkp.70.2024.01.26.15.16.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Jan 2024 15:16:17 -0800 (PST)
+        Fri, 26 Jan 2024 15:16:19 -0800 (PST)
 From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Fri, 26 Jan 2024 23:16:11 +0000
-Subject: [PATCH 12/17] media: samsung: exynos4-is: Fix kerneldoc
+Date: Fri, 26 Jan 2024 23:16:12 +0000
+Subject: [PATCH 13/17] media: samsung: s5p-mfc: Fix kerneldoc
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,7 +74,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240126-gix-mtk-warnings-v1-12-eed7865fce18@chromium.org>
+Message-Id: <20240126-gix-mtk-warnings-v1-13-eed7865fce18@chromium.org>
 References: <20240126-gix-mtk-warnings-v1-0-eed7865fce18@chromium.org>
 In-Reply-To: <20240126-gix-mtk-warnings-v1-0-eed7865fce18@chromium.org>
 To: Tiffany Lin <tiffany.lin@mediatek.com>, 
@@ -116,30 +116,21 @@ Remove doc from missing fields.
 
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 ---
- drivers/media/platform/samsung/exynos4-is/fimc-lite.h | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/media/platform/samsung/s5p-mfc/s5p_mfc_common.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/media/platform/samsung/exynos4-is/fimc-lite.h b/drivers/media/platform/samsung/exynos4-is/fimc-lite.h
-index ddf29e0b5b1c..2d96fb00a5c6 100644
---- a/drivers/media/platform/samsung/exynos4-is/fimc-lite.h
-+++ b/drivers/media/platform/samsung/exynos4-is/fimc-lite.h
-@@ -117,8 +117,6 @@ struct flite_buffer {
-  * @ctrl_handler: v4l2 control handler
-  * @test_pattern: test pattern controls
-  * @index: FIMC-LITE platform device index
-- * @pipeline: video capture pipeline data structure
-- * @pipeline_ops: media pipeline ops for the video node driver
-  * @slock: spinlock protecting this data structure and the hw registers
-  * @lock: mutex serializing video device and the subdev operations
-  * @clock: FIMC-LITE gate clock
-@@ -134,7 +132,6 @@ struct flite_buffer {
-  * @active_buf_q: the queue head of buffers scheduled in hardware
-  * @vb_queue: vb2 buffers queue
-  * @buf_index: helps to keep track of the DMA start address register index
-- * @active_buf_count: number of video buffers scheduled in hardware
-  * @frame_count: the captured frames counter
-  * @reqbufs_count: the number of buffers requested with REQBUFS ioctl
-  * @events: event info
+diff --git a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_common.h b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_common.h
+index 59450b324f7d..7e7e7b695b53 100644
+--- a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_common.h
++++ b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_common.h
+@@ -612,7 +612,6 @@ struct s5p_mfc_codec_ops {
+  * @chroma_dpb_size:	dpb buffer size for chroma
+  * @me_buffer_size:	size of the motion estimation buffer
+  * @tmv_buffer_size:	size of temporal predictor motion vector buffer
+- * @frame_type:		used to force the type of the next encoded frame
+  * @ref_queue:		list of the reference buffers for encoding
+  * @force_frame_type:	encoder's frame type forcing control
+  * @ref_queue_cnt:	number of the buffers in the reference list
 
 -- 
 2.43.0.429.g432eaa2c6b-goog
