@@ -1,180 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-8443-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8444-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF8D883DD0A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 16:05:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CD56683DD2D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 16:13:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7DCE2289E7C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 15:05:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 83DFC2818A8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 15:13:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02EA61CD23;
-	Fri, 26 Jan 2024 15:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2B4B1CD36;
+	Fri, 26 Jan 2024 15:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FaE03Ch/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cangrTtf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550CB1B970;
-	Fri, 26 Jan 2024 15:05:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F911CD23;
+	Fri, 26 Jan 2024 15:13:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706281528; cv=none; b=Qzf92lBbhU8ctDZmIHNMjZZE/kzZ4xWMLBTLy1mrIJwTyseUzRf7IZlzsgb83oDj3YQepQrGNwpkJLt3nvZqSLxfEPLWOAePDEbDVWs+GfrleWFjStGJh6kpahiUfCQ2TCT4ESY97hhdM6oUMfjPDlDJOUU5ul1yYX5cdWjWCd0=
+	t=1706282021; cv=none; b=KOHVEDjw3Uo7XS42Rc5m0E66ksdR7P9HJfNHiGfKg09GroSyJtdKWoajSJ3EXoLk6hmjCC8kGEizkpa8CZ2qzcQpFT5ChhpdKw5hFSfDmu3sduUcFWOLZdTyiDrakSvYCC2M8hSlLUDFGqKBQdXTzboRR+ohIqv8QL55rpPkc0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706281528; c=relaxed/simple;
-	bh=U+99tjIt56hBCPSlbSxS/+VqtJhV/6wL04M231JSrzI=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gOKTg0xi6xqlaxaaw51wNawJHsWlN5Cp6/GuS8K8Aina7Ibd9jEgkJdu2//UFbBQT10ffXgAX78BA6DEG+5QWjWUq2h+RV+8sBDLyHFK+WR3W0OUkiSWNsqy30MB0b9MmAcEynvkNaIJQ9U2xIWI97aBpyawHk7ZH9+nu7HthU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FaE03Ch/; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1706282021; c=relaxed/simple;
+	bh=cuMZ0xohqpnrjE1sn+GN/bE3cXEaSruxpkeDOj/4obA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=CRFxswmzN0gnfC3pkr+/nNj77yE14h3l1sRR6LSknCPpOGJW31ESK+bn4zeFnQdRakRhLXmbYHiZXFU7yPwsQxVt9q0CQgCqEud0kTnX2j1IfmjzsHO0oyg4GDPY82+LQdBZQ+r44k20EO/vRihDr3v8vdNh9JqplwR99R8eph4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cangrTtf; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40QDirPM006836;
-	Fri, 26 Jan 2024 15:05:14 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40QDmFdj018212;
+	Fri, 26 Jan 2024 15:13:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=jHB9hK1+IxDYTk3mHsGBs
-	lK9MjCNeNeTQmuomB3w7zM=; b=FaE03Ch/Jzfiv1T2d8ixQbSUtaq1l9MO5jj8n
-	yRFebQlkMJBdnxqtn6tchK1EdBTeT2ELjVlWC/Qdc6Jem7DazcTNPoKiA5GK1y+P
-	QqFTc8VJ3vZF+mHDkRnpgNWKBevBWtgw2ksSZx/yIxPIrC/vVTRut69wCoXhaM4d
-	2WU9VV5pc8NdWJXdnk4f/Lv6uyV21FVBosmjwYEQLt92vWF1NQDOVAZM1ujh7cSE
-	R9TCiCONAxMWHnPtXFga7TNVvHCpE3ZkeG7VIUGTKya2pBpwOvRuKvpZZHHJOD/X
-	j7d1WaQ+MKfqqlWqjlpAzLHJOtCbhCTGN2LahcOaZS01YapPw==
+	from:date:subject:mime-version:content-type
+	:content-transfer-encoding:message-id:to:cc; s=qcppdkim1; bh=knC
+	aqwLbRAz3GezKtQtpwgqOqAROHknpLYmHd715Ma4=; b=cangrTtfhNKiOkAnrxq
+	0XboSQkmRMe0bJMR8VkAF0tf99HjEGd+5cUqjMqAj60MF/QhWRxK5u6VQm8RgOMB
+	XBwi4dZ/bQM4+DcYZl5IwF9rZBbnoW5ikO7iMwe5wL5ZjMaZfjTaMPhAtkTJFGko
+	ifXJkZGCvAstptEIMxoFddw/W1ZRcseK9czgt6HkAuDr5aSi3Ff65i8gw1VCqgDg
+	jrs0AYTa6Gw9f6pqEWK53EpvpscIdeQdTLek2RcZ0Lksl0B+SQHiBBZrjDLNphKS
+	ypGMJlHuD22qeUFWeVsoF6lB5mYNQsjV+aiontEPWm//Yw008thNcMar6f6xc+T6
+	+Vg==
 Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vv4cascjm-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vv6c8h4y9-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Jan 2024 15:05:14 +0000 (GMT)
+	Fri, 26 Jan 2024 15:13:30 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40QF5DHx029835
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40QFCpuN006039
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Jan 2024 15:05:13 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Fri, 26 Jan 2024 07:05:12 -0800
-Date: Fri, 26 Jan 2024 07:05:11 -0800
+	Fri, 26 Jan 2024 15:12:51 GMT
+Received: from [169.254.0.1] (10.49.16.6) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 26 Jan
+ 2024 07:12:50 -0800
 From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Daniel Thompson <daniel.thompson@linaro.org>
-CC: Johan Hovold <johan@kernel.org>,
-        Dmitry Torokhov
-	<dmitry.torokhov@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof
- Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-        Jiri Kosina <jikos@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Johan Hovold
-	<johan+linaro@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-input@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sc8280xp-x13s: Fix/enable
- touchscreen
-Message-ID: <20240126150511.GO2936378@hu-bjorande-lv.qualcomm.com>
-References: <20240125-x13s-touchscreen-v1-0-ab8c882def9c@quicinc.com>
- <20240125-x13s-touchscreen-v1-2-ab8c882def9c@quicinc.com>
- <ZbNpdaSyFS9tYrkd@hovoldconsulting.com>
- <20240126130232.GA5506@aspen.lan>
+Date: Fri, 26 Jan 2024 07:12:45 -0800
+Subject: [PATCH v2] arm64: dts: qcom: sc8280xp: Introduce additional tsens
+ instances
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240126130232.GA5506@aspen.lan>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20240126-sc8280xp-tsens2_3-v2-1-8504d18828de@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAOzLs2UC/32NQQ6CMBBFr0JmbQ2tlFRX3sMQU9qpzMKCHSQY0
+ rtbOYDL95L//gaMiZDhUm2QcCGmMRZQhwrcYOMDBfnCoGrV1FIawc4oU6+TmBkjq/tJWB382Tb
+ Gt1pD2U0JA61789YVHojnMX32i0X+7L/aIoUUaNreoWxC24fr602Ooju68QldzvkLWyXO2LQAA
+ AA=
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Johan Hovold <johan@kernel.org>,
+        "Bjorn
+ Andersson" <quic_bjorande@quicinc.com>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1706281970; l=2337;
+ i=quic_bjorande@quicinc.com; s=20230915; h=from:subject:message-id;
+ bh=cuMZ0xohqpnrjE1sn+GN/bE3cXEaSruxpkeDOj/4obA=;
+ b=ijny0goOnqHSWBi7mijP0EEhHd9vvASaf3FCUOX34zm9hoc2TmcYvP2FHOrRw7mcbDfY8N0fh
+ IHB4Mm0Hk6sA4eP6lRF4sXyzNfwbNJpS4QIUygYQdhg1UwPbaW77RMC
+X-Developer-Key: i=quic_bjorande@quicinc.com; a=ed25519;
+ pk=VkhObtljigy9k0ZUIE1Mvr0Y+E1dgBEH9WoLQnUtbIM=
 X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: zkWHTT7R8Yj7UAoh4kZBsPEbusf-OyKI
-X-Proofpoint-GUID: zkWHTT7R8Yj7UAoh4kZBsPEbusf-OyKI
+X-Proofpoint-GUID: dpkZ8ZTPRsSbMbW6gUZELkhTwxU_auXt
+X-Proofpoint-ORIG-GUID: dpkZ8ZTPRsSbMbW6gUZELkhTwxU_auXt
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
- bulkscore=0 impostorscore=0 priorityscore=1501 spamscore=0 suspectscore=0
- mlxlogscore=999 phishscore=0 lowpriorityscore=0 adultscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401190000 definitions=main-2401260110
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=606
+ priorityscore=1501 bulkscore=0 mlxscore=0 adultscore=0 lowpriorityscore=0
+ malwarescore=0 clxscore=1015 spamscore=0 suspectscore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2401190000
+ definitions=main-2401260112
 
-On Fri, Jan 26, 2024 at 01:02:32PM +0000, Daniel Thompson wrote:
-> On Fri, Jan 26, 2024 at 09:12:37AM +0100, Johan Hovold wrote:
-> > On Thu, Jan 25, 2024 at 07:55:14PM -0800, Bjorn Andersson wrote:
-> > > The failing read-test in __i2c_hid_core_probe() determines that there's
-> > > nothing connected at the documented address of the touchscreen.
-> > >
-> > > Introduce the 5ms after-power and 200ms after-reset delays found in the
-> > > ACPI tables. Also wire up the reset-gpio, for good measure.
-> >
-> > As the supplies for the touchscreen are always on (and left on by the
-> > bootloader) it would seem that it is really the addition of the reset
-> > gpio which makes things work here. Unless the delay is needed for some
-> > other reason.
-> >
-> > (The power-on delay also looks a bit short compared to what is used for
-> > other devices.)
-> >
-> > Reset support was only recently added with commit 2be404486c05 ("HID:
-> > i2c-hid-of: Add reset GPIO support to i2c-hid-of") so we should not
-> > backport this one before first determining that.
-> 
-> This comment attracted my attention so I tried booting with each of the
-> three lines individually.
-> 
-> 
-> On Thu, Jan 25, 2024 at 07:55:14PM -0800, Bjorn Andersson wrote:
-> > +             reset-gpios = <&tlmm 99 GPIO_ACTIVE_LOW>;
-> 
-> This is not enough, on it's own, to get the touch screen running.
-> 
+The SC8280XP contains two additional tsens instances, providing among
+other things thermal measurements for the GPU.
 
-No, because pinctrl already brings the chip out of reset without this.
+Add these and a GPU thermal-zone.
 
-> I guess that's not so much of a surprise since the rebind-the-driver
-> from userspace trick wouldn't have been touching this reset.
-> 
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+---
+Changes in v2:
+- Drop TM/SROT comments
+- Remove polling delays, rely on interrupts
+- Link to v1: https://lore.kernel.org/r/20240118-sc8280xp-tsens2_3-v1-1-e86bce14f6bf@quicinc.com
+---
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 37 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-Right, it would just have been left deasserted from the first attempt.
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index febf28356ff8..7bfbb1bd8f4a 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -4033,6 +4033,28 @@ tsens1: thermal-sensor@c265000 {
+ 			#thermal-sensor-cells = <1>;
+ 		};
+ 
++		tsens2: thermal-sensor@c251000 {
++			compatible = "qcom,sc8280xp-tsens", "qcom,tsens-v2";
++			reg = <0 0x0c251000 0 0x1ff>,
++			      <0 0x0c224000 0 0x8>;
++			#qcom,sensors = <11>;
++			interrupts-extended = <&pdc 122 IRQ_TYPE_LEVEL_HIGH>,
++					      <&pdc 124 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "uplow", "critical";
++			#thermal-sensor-cells = <1>;
++		};
++
++		tsens3: thermal-sensor@c252000 {
++			compatible = "qcom,sc8280xp-tsens", "qcom,tsens-v2";
++			reg = <0 0x0c252000 0 0x1ff>,
++			      <0 0x0c225000 0 0x8>;
++			#qcom,sensors = <5>;
++			interrupts-extended = <&pdc 123 IRQ_TYPE_LEVEL_HIGH>,
++					      <&pdc 125 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "uplow", "critical";
++			#thermal-sensor-cells = <1>;
++		};
++
+ 		aoss_qmp: power-management@c300000 {
+ 			compatible = "qcom,sc8280xp-aoss-qmp", "qcom,aoss-qmp";
+ 			reg = <0 0x0c300000 0 0x400>;
+@@ -5212,6 +5234,21 @@ cpu-crit {
+ 			};
+ 		};
+ 
++		gpu-thermal {
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
++
++			thermal-sensors = <&tsens2 2>;
++
++			trips {
++				cpu-crit {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
+ 		mem-thermal {
+ 			polling-delay-passive = <250>;
+ 			polling-delay = <1000>;
 
-That said, the addition of the reset means that we're now asserting
-reset in such rebind attempts. And as such the
-post-reset-deassert-delay-ms is now needed between the explicit deassert
-from the driver and the i2c read.
+---
+base-commit: 943b9f0ab2cfbaea148dd6ac279957eb08b96904
+change-id: 20240118-sc8280xp-tsens2_3-a5fd9a48d655
 
-> 
-> > +             post-power-on-delay-ms = <5>;
-> 
-> This line alone is enough (in v6.7.1).
-> 
+Best regards,
+-- 
+Bjorn Andersson <quic_bjorande@quicinc.com>
 
-So the delay taken through really_probe() until we reach that i2c read
-is almost the entire delay needed, on your specific device.
-
-> 
-> > +             post-reset-deassert-delay-ms = <200>;
-> 
-> This line alone is also enough!
-> 
-> In short it looks like the delays make the difference and, even a short
-> delay, can fix the problem.
-> 
-> Of course, regardless of the line-by-line results I also ran with all
-> the changes so, FWIW:
-> Tested-by: Daniel Thompson <daniel.thompson@linaro.org>
-> 
-
-Thanks,
-Bjorn
-
-> 
-> Daniel.
 
