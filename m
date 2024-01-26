@@ -1,71 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-8505-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B7EE83E679
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 00:18:07 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C633583E67D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 00:18:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E95CD1C22084
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 23:18:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7D41728BBF2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 23:18:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D27D65A7B9;
-	Fri, 26 Jan 2024 23:16:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11CFE5B5BD;
+	Fri, 26 Jan 2024 23:16:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="oJy1CgN5"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="E0PImluj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0535A114
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 23:16:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7A55A79E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 23:16:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706310969; cv=none; b=ruRCm65LEoaSMlH4lPXuEvajanB4OVIXYVoXWJlSHQKg242TjCqXdExH5OvUG9xykpCFygtI4rIeTf2A53Rka40U4rDT/p0XK7iJaShXl1Fh6/Gtl6VM+X5AYP0SG+HyjO2v1o3/FK1DFdgvP30OjlUbgoTU1uE7cKGNplWKcQ0=
+	t=1706310970; cv=none; b=S3wBQK7JRp4awGN1ACwcEyg4O+0aSoTFig0uiVZrTnpleMmOem1X2SebTnyxDBpXoKxrw9nMiSdh2fCmBV/4aSQk5ZTH0Es+CgWyINRwpDLg6fp6UYbGZmZF/YjI2kq8r4EMUtSp5fLC2upJT0ZcqFT/hzuyVGv0xqw57TCzV6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706310969; c=relaxed/simple;
-	bh=GhTHyKYpLdDQHYJccb0YJVMX/ipsIOS1bQVmw69ltqg=;
+	s=arc-20240116; t=1706310970; c=relaxed/simple;
+	bh=l9cPmoT/bWbvsJfq8x1RTaIe5o9qG8C0R9ya897fz3Y=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Kl519/7BH6pjjmnei3vH+2seUZVfu4nkIbhSjcfPuu/rbXTUbx2r6PaOPo6OmuB7pfJ/cHX3laQUNgGKu1quD9nnW9XqrlNsRvJfbU9HUk7Tkac1xXQRHrkOvLrv6s5uJOi3drKc9T8SVXafjDC6KzcW+h6swP78z0gXC/ezKyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=oJy1CgN5; arc=none smtp.client-ip=209.85.222.174
+	 In-Reply-To:To:Cc; b=op/K4IAdO5k6g4MuU7q5e+JpYByx1kpGlshH8zb7ZeiwOrSF2n6UnQgWzbs2gLC5FVke74xL5xT/OZEeQ7FdMnMy56Q+4K79awGz8K5LY+hSjVm8yO/echlECAjyUvxNAGM9nuRhO62AilI/8JabDUzQg7oUWWA+Bq3LcK/nFT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=E0PImluj; arc=none smtp.client-ip=209.85.222.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-783cf58221fso77998785a.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 15:16:07 -0800 (PST)
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-783cbc38a78so62462885a.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 15:16:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1706310967; x=1706915767; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1706310968; x=1706915768; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=yKZ2I0FgT+c8VUKnt1mK+wIxC1JMtHjQ/OWMUKXoVdE=;
-        b=oJy1CgN5SfIPKCq2tLKWxaPB6qqAKJWMa6hqD9Yll3zok5+sRpZrVGcbtkXNd8UvdX
-         DVe6c1FlYpsPEgrV0Chs/KZ8SWgh4gucLbuyqgMslF8GEHY0uD5HAbchlODpClFlZ1ox
-         9B+kYSxpU0sDUwAM2kYXHofhZvgjVetm+oGTQ=
+        bh=QQhDPXykohcFJW0qtm5EHtuEzwLA0yzgLshaZoliDrY=;
+        b=E0PImlujKieADqQR6p2TtSt8HXExhPEc7NuUnPza2sZo1Wecc0QMNXlgGFVVFS4/Rs
+         CCRRhhK+eNUHJuEYmHjdUWQGlPdDC64dV5iUZfi5edeSjaY6qAP8bPACB62JYQe0h7/e
+         lJ2LMRa++Lwtk+PngbSGeJlFdL2geGh09b56U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706310967; x=1706915767;
+        d=1e100.net; s=20230601; t=1706310968; x=1706915768;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yKZ2I0FgT+c8VUKnt1mK+wIxC1JMtHjQ/OWMUKXoVdE=;
-        b=XXjUJivoaC05/kCzNRZpSLY86ZHsj/htXv/nHVg3+1i9wRElbPd5JmW1An+kbUOVQK
-         yz27b9RrjVfwlb3PzUf+bDDgTU9X/IcJmbDSBfuXhDZepYozD/bNtKksrehQsr2MmcLd
-         1L0w7/HoshF+jCPLZa20XMVXL4EkF2KGuXiD0XRFNZqgMmi9tgeJ+HXZ5z32GHgrFQGd
-         KsqgXtUB6+jg5YWHMpRW8Pv2pZmpdFS9Li7vJa12NDO+Jz7i7JjEsGvPQIwDj1hi1L3g
-         rztZF2RtqTygqcab4pMbi5YMCP0FiDq2i2a+zacPOvESqMq23hRKZcIvr8Jr1UeP2Qqq
-         HwLQ==
-X-Gm-Message-State: AOJu0YwLZpBMLWYR6fNRCswtx/bVY/SkGR7oGcfIcGbuuBijXcMxFg9n
-	CeA97O1RWeFEgAq7sTdDjGCuLNoISO1Q4kq4ITi/tI+a+UyjJR4XXUyftq/MQg==
-X-Google-Smtp-Source: AGHT+IGfaDanel4bAe+Gm4pPjfl4j2bUb1CcCFTzpsa5FCnRkAwIXhqbnMbyXrNSHptz1QBTZemCAg==
-X-Received: by 2002:a05:620a:3888:b0:783:3cee:425a with SMTP id qp8-20020a05620a388800b007833cee425amr491959qkn.141.1706310966713;
-        Fri, 26 Jan 2024 15:16:06 -0800 (PST)
+        bh=QQhDPXykohcFJW0qtm5EHtuEzwLA0yzgLshaZoliDrY=;
+        b=P4DFJthK3MV6pasEc6HaFOLeE5BEYLPqtEZjXD4Ta0FOfjCHf52TEJkvkfhV+b5T/0
+         82Oa3NNoTJVOU6B8xYD9xhg/zdXc2j6Ps2YRUvhWJLWJ77t5HDR+QD3ehw49yP38Ofro
+         DDru6s8USfw5lv+iWrWyn/kkUDy19pYHREWmV12MLbl7+quyV7FnQaH3X/WE++HOhZ0t
+         qP7HlBsJK1eOg7s8hl+rT+TRzB1Y8zPE3XauIVvkjBVmv6vMFpmb4l9KnK7PLvhAjvkj
+         XTZZXFQs8TzOHvbkmgmdKWiN1RLFvvd9OF89hRygscF3mWEVvCDJZYExY5FopwFV3ScM
+         kkvA==
+X-Gm-Message-State: AOJu0Yys+hXZ2FzWx9iNDk+EHohmU0Ot6WCaP2TTnDxOGWe4WiCOXgpl
+	uwbp4UjHTOvj+pnlYauzdm0CD2gxE369xXIMfpW8rhfstsj56Cx7ORDNkIF30A==
+X-Google-Smtp-Source: AGHT+IEYax7waeMsYzBi1V5anUAE9029IxFY99+NqU01WUd1yOqmYKRjKVGaw0nUqApkIUGiDbz6Vw==
+X-Received: by 2002:a05:620a:19aa:b0:783:e3be:9bb5 with SMTP id bm42-20020a05620a19aa00b00783e3be9bb5mr52250qkb.21.1706310968110;
+        Fri, 26 Jan 2024 15:16:08 -0800 (PST)
 Received: from denia.c.googlers.com (240.157.150.34.bc.googleusercontent.com. [34.150.157.240])
-        by smtp.gmail.com with ESMTPSA id m4-20020a05620a290400b00783de3ddf5esm507358qkp.70.2024.01.26.15.16.05
+        by smtp.gmail.com with ESMTPSA id m4-20020a05620a290400b00783de3ddf5esm507358qkp.70.2024.01.26.15.16.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Jan 2024 15:16:05 -0800 (PST)
+        Fri, 26 Jan 2024 15:16:07 -0800 (PST)
 From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Fri, 26 Jan 2024 23:16:01 +0000
-Subject: [PATCH 02/17] media: videodev2.h: Fix kerneldoc
+Date: Fri, 26 Jan 2024 23:16:02 +0000
+Subject: [PATCH 03/17] media: media-entity.h: Fix kerneldoc
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,7 +74,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240126-gix-mtk-warnings-v1-2-eed7865fce18@chromium.org>
+Message-Id: <20240126-gix-mtk-warnings-v1-3-eed7865fce18@chromium.org>
 References: <20240126-gix-mtk-warnings-v1-0-eed7865fce18@chromium.org>
 In-Reply-To: <20240126-gix-mtk-warnings-v1-0-eed7865fce18@chromium.org>
 To: Tiffany Lin <tiffany.lin@mediatek.com>, 
@@ -112,79 +112,28 @@ Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-amlogic@lists.infradead.org, Ricardo Ribalda <ribalda@chromium.org>
 X-Mailer: b4 0.12.3
 
-Named nested unions need their prefix:
-https://www.kernel.org/doc/html/latest/doc-guide/kernel-doc.html#nested-structs-unions
+The fields seems to be documented twice.
 
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 ---
- include/uapi/linux/videodev2.h | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ include/media/media-entity.h | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
-index 68e7ac178cc2..a8015e5e7fa4 100644
---- a/include/uapi/linux/videodev2.h
-+++ b/include/uapi/linux/videodev2.h
-@@ -1041,13 +1041,13 @@ struct v4l2_requestbuffers {
-  * struct v4l2_plane - plane info for multi-planar buffers
-  * @bytesused:		number of bytes occupied by data in the plane (payload)
-  * @length:		size of this plane (NOT the payload) in bytes
-- * @mem_offset:		when memory in the associated struct v4l2_buffer is
-+ * @m.mem_offset:	when memory in the associated struct v4l2_buffer is
-  *			V4L2_MEMORY_MMAP, equals the offset from the start of
-  *			the device memory for this plane (or is a "cookie" that
-  *			should be passed to mmap() called on the video node)
-- * @userptr:		when memory is V4L2_MEMORY_USERPTR, a userspace pointer
-+ * @m.userptr:		when memory is V4L2_MEMORY_USERPTR, a userspace pointer
-  *			pointing to this plane
-- * @fd:			when memory is V4L2_MEMORY_DMABUF, a userspace file
-+ * @m.fd:		when memory is V4L2_MEMORY_DMABUF, a userspace file
-  *			descriptor associated with this plane
-  * @m:			union of @mem_offset, @userptr and @fd
-  * @data_offset:	offset in the plane to the start of data; usually 0,
-@@ -1085,14 +1085,14 @@ struct v4l2_plane {
-  * @sequence:	sequence count of this frame
-  * @memory:	enum v4l2_memory; the method, in which the actual video data is
-  *		passed
-- * @offset:	for non-multiplanar buffers with memory == V4L2_MEMORY_MMAP;
-+ * @m.offset:	for non-multiplanar buffers with memory == V4L2_MEMORY_MMAP;
-  *		offset from the start of the device memory for this plane,
-  *		(or a "cookie" that should be passed to mmap() as offset)
-- * @userptr:	for non-multiplanar buffers with memory == V4L2_MEMORY_USERPTR;
-+ * @m.userptr:	for non-multiplanar buffers with memory == V4L2_MEMORY_USERPTR;
-  *		a userspace pointer pointing to this buffer
-- * @fd:		for non-multiplanar buffers with memory == V4L2_MEMORY_DMABUF;
-+ * @m.fd:		for non-multiplanar buffers with memory == V4L2_MEMORY_DMABUF;
-  *		a userspace file descriptor associated with this buffer
-- * @planes:	for multiplanar buffers; userspace pointer to the array of plane
-+ * @m.planes:	for multiplanar buffers; userspace pointer to the array of plane
-  *		info structs for this buffer
-  * @m:		union of @offset, @userptr, @planes and @fd
-  * @length:	size in bytes of the buffer (NOT its payload) for single-plane
-@@ -2423,15 +2423,15 @@ struct v4l2_meta_format {
- 
- /**
-  * struct v4l2_format - stream data format
-- * @type:	enum v4l2_buf_type; type of the data stream
-- * @pix:	definition of an image format
-- * @pix_mp:	definition of a multiplanar image format
-- * @win:	definition of an overlaid image
-- * @vbi:	raw VBI capture or output parameters
-- * @sliced:	sliced VBI capture or output parameters
-- * @raw_data:	placeholder for future extensions and custom formats
-- * @fmt:	union of @pix, @pix_mp, @win, @vbi, @sliced, @sdr, @meta
-- *		and @raw_data
-+ * @type:		enum v4l2_buf_type; type of the data stream
-+ * @fmt.pix:		definition of an image format
-+ * @fmt.pix_mp:		definition of a multiplanar image format
-+ * @fmt.win:		definition of an overlaid image
-+ * @fmt.vbi:		raw VBI capture or output parameters
-+ * @fmt.sliced:		sliced VBI capture or output parameters
-+ * @fmt.raw_data:	placeholder for future extensions and custom formats
-+ * @fmt:		union of @pix, @pix_mp, @win, @vbi, @sliced, @sdr,
-+ *			@meta and @raw_data
-  */
- struct v4l2_format {
- 	__u32	 type;
+diff --git a/include/media/media-entity.h b/include/media/media-entity.h
+index 2b6cd343ee9e..c79176ed6299 100644
+--- a/include/media/media-entity.h
++++ b/include/media/media-entity.h
+@@ -337,10 +337,6 @@ enum media_entity_type {
+  * @info.dev:	Contains device major and minor info.
+  * @info.dev.major: device node major, if the device is a devnode.
+  * @info.dev.minor: device node minor, if the device is a devnode.
+- * @major:	Devnode major number (zero if not applicable). Kept just
+- *		for backward compatibility.
+- * @minor:	Devnode minor number (zero if not applicable). Kept just
+- *		for backward compatibility.
+  *
+  * .. note::
+  *
 
 -- 
 2.43.0.429.g432eaa2c6b-goog
