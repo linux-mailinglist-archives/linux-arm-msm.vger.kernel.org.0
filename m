@@ -1,130 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-8385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8386-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EA5483D292
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 03:34:51 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98C9983D2BF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 03:57:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DBF241F2485A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 02:34:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3E15728591C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 02:57:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 309EE290C;
-	Fri, 26 Jan 2024 02:34:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5025F8F65;
+	Fri, 26 Jan 2024 02:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TkzBq7wT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FCsRD+i1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A2B8F44;
-	Fri, 26 Jan 2024 02:34:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D33E8F54;
+	Fri, 26 Jan 2024 02:57:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706236485; cv=none; b=KOHk1rTzTPaMLwfDyDDUC17U67vShgx1ys0D6F1BBMbGZSE1mUkcrQGZC5w13qtBcSezTrEUa/0zqfp1oBFBj2KtOkpmfrDM/KHKl5J4jivgcU/xoskqaPluPtOC5tuVGVBHdQxBPdKIXKchT95mxHmu4UE2nqgbVlcqN9KayuE=
+	t=1706237821; cv=none; b=Vh7SofvknQRmRcSSydH2beqpEaWHgKG9ZPy7DrUr+uEPm4XCXVqjDmMu+O7Ng75CKVnTz7Y0SvsvpvofYxlvau5Ty9YvayaKIv4fU1T/etzsr2A71hkGfitAr3osg/cI/KYXOvRJDuXEUAwudHEKWOKiMP3qxG0MsxVBVy8H2H0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706236485; c=relaxed/simple;
-	bh=gEFdeH1dz5MeH3OyYmFVrtxyGmyY5C/fWJsuhHJJiBg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Kz4JXOBFxs2Gag8TLiAfvKAHNU8jKJjyTeVfXSJ1g6UbeVBq1S3nIjRo7Unl6fowwjp1zOLtPDEVl/z8CAAapxUetS6MpejzXz+UAXikvCbt2QGOsYPtjRndwADsTlidpOb35Gd48Pn38BjmrhRPb+QiSegFM2OOalO7dK0mayY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TkzBq7wT; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40Q0qqsK019345;
-	Fri, 26 Jan 2024 02:34:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=7aCazePiOgGahy5501KDly4q9vHVLXT5EBlhyF1E9P8=; b=Tk
-	zBq7wTSWNYn00NM23lg7QZMIx6/Tert/9D9CXHgr7XUR+CVAHsKALu38DgqcIxkx
-	54ullmmC/hgyT3WN56gBNmF1U3IhZyaVZvRHxOtMBahmJiLUntE6AFM/be+6s5pU
-	mBojgS4NO5XHexqhS4TBp67srTwxVO1Lg53q+IrnMkvYocyDBiQYEAzoGjBWL8+y
-	wATMoLhi8bGWI0/xvEg2/VLP18YEkeD2iBynkPidgayFNyp9xDHzL1vpRXdATDrn
-	TrCzKRkVE4GeRAfjoRaQFS5z1wTy9IPTadv7++WM9DMZuXdI0/4U4ePh8YjF1Wv/
-	ZccaJUQhXTHdmtZU51iw==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vup2tj82c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Jan 2024 02:34:39 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40Q2Ycvt027670
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Jan 2024 02:34:38 GMT
-Received: from [10.239.29.49] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 25 Jan
- 2024 18:34:31 -0800
-Message-ID: <05a5402e-9c9e-4dbe-88a6-f990c5c2fbf0@quicinc.com>
-Date: Fri, 26 Jan 2024 10:34:26 +0800
+	s=arc-20240116; t=1706237821; c=relaxed/simple;
+	bh=ldrUB48xZDazzp/AyajgHeXxDyEX8P50st74ShQc4Ks=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Yo3Xbfuiojxau+BD+cWfoZ/ddvo2Q7z7jkgcdg07bheWfFpG2JZxEfrVAua8v3tyVgm4arwRFMuPUhn29/tE7Nt6hRBNUKnqvp6BQAXFFAupQ0eXqo4+pmt39UGMWSRG5PxnOf+JTl/93UiC6GJkZT/4/EpbhEt8meHLSBTnAcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FCsRD+i1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 8A4DBC433C7;
+	Fri, 26 Jan 2024 02:57:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706237820;
+	bh=ldrUB48xZDazzp/AyajgHeXxDyEX8P50st74ShQc4Ks=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=FCsRD+i1iA2L35y9D27Z0A0b2PEdXd8NKCdX+wl+eLWo+epQum8XUt7KYas5ZJIY7
+	 UYasEseeOdZDYO9O577kA5fbN44GE6hjPT/d7LKWFw/S7blBwgGAxpM6KsSoIq5zly
+	 jrU9NQODq9Cs+ONaCOtt/wDKf9Pb5PzRwXGdPfljc7J+XsabHEupv4Nh7QRFmolSsX
+	 AXkKtQYOyuMaAJITXNlmwwjcxXugtM6Q7/l6Fi0ObZe7NPB2g5S6zEouYpmeMD6jfW
+	 t5Y+Y6QnGLSBKdSMc8El3soZSc3VI4AJ5qqrO0ysHHg9XmltAZK6Xpjn7rNJND8pNS
+	 kzVrdrMSjbf0Q==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 714FFC47DDF;
+	Fri, 26 Jan 2024 02:57:00 +0000 (UTC)
+From: Hui Liu via B4 Relay <devnull+quic_huliu.quicinc.com@kernel.org>
+Date: Fri, 26 Jan 2024 10:56:52 +0800
+Subject: [PATCH RESEND v6] arm64: dts: qcom: qcm6490-idp: Add definition
+ for three LEDs
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8550: Add dma-coherent property
-Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, <andersson@kernel.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>
-CC: <quic_kuiw@quicinc.com>, <quic_ekangupt@quicinc.com>, <kernel@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20240125102413.3016-1-quic_lxu5@quicinc.com>
- <20240125102413.3016-2-quic_lxu5@quicinc.com>
- <918d1d55-e95a-4b00-af59-7b5d7057b9fb@linaro.org>
-From: Ling Xu <quic_lxu5@quicinc.com>
-In-Reply-To: <918d1d55-e95a-4b00-af59-7b5d7057b9fb@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: lzknJc3C8nQLOzuySaw82gYcgQJhLq8K
-X-Proofpoint-ORIG-GUID: lzknJc3C8nQLOzuySaw82gYcgQJhLq8K
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- lowpriorityscore=0 spamscore=0 mlxlogscore=587 phishscore=0 mlxscore=0
- priorityscore=1501 adultscore=0 malwarescore=0 clxscore=1015
- impostorscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2401190000 definitions=main-2401260018
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240126-lpg-v6-1-f879cecbce69@quicinc.com>
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Hui Liu <quic_huliu@quicinc.com>
+X-Mailer: b4 0.13-dev-83828
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1706237819; l=2220;
+ i=quic_huliu@quicinc.com; s=20230823; h=from:subject:message-id;
+ bh=n8xSHABdt74JEuBzHLY4lYbQGqDaAeo36uTk0NjptXM=;
+ b=vbVTdBnFQluBuMBVvOiTZdg7OyY9722Y93b02LAhqFZAgBdNYF3bQpzjNhAENodDDhgmEMiFr
+ S8NzMJ1b2UXA+ausNNd3pJt/GqmvxNzo7cEO4BF8MOVi5StH7mSuRLn
+X-Developer-Key: i=quic_huliu@quicinc.com; a=ed25519;
+ pk=1z+A50UnTuKe/FdQv2c0W3ajDsJOYddwIHo2iivhTTA=
+X-Endpoint-Received:
+ by B4 Relay for quic_huliu@quicinc.com/20230823 with auth_id=80
+X-Original-From: Hui Liu <quic_huliu@quicinc.com>
+Reply-To: <quic_huliu@quicinc.com>
 
-在 2024/1/26 0:38, Konrad Dybcio 写道:
-> 
-> 
-> On 1/25/24 11:24, Ling Xu wrote:
->> Add dma-coherent property to fastRPC context bank nodes to pass dma
->> sequence test in fastrpc sanity test, ensure that data integrity is
->> maintained during DMA operations.
->>
->> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
->> ---
-> 
-> How can we replicate this validation?
-> 
-> Konrad
+From: Hui Liu <quic_huliu@quicinc.com>
 
-Without this change, case8 and case14 about DMA sequence test in fastRPC sanity test can not pass.
+Add definition for three LEDs to make sure they can
+be enabled base on QCOM LPG LED driver.
 
-The steps to do fastRPC sanity test is:
-1.download code
-p4 login
-export PATH="$PATH:/prj/qct/asw/qctss/linux/bin/vce"
-vce.py view --base fastrpctest.common.1.0 --checkout=<username> --root .
-2.compile command
-chmod -R 777 ./fastrpc_tests && python3 ./fastrpc_tests/build_fastrpc_test.py -target=LE
-3.run fastRPC test
-fastrpc_tests_ReleaseG_push_LE.bat
-adb shell fastrpc_tests -e (case number) -d 3
+Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
+---
+Changes in v6:
+- Updated the seperate LEDs nodes to multi-led setting.
+- Link to v5: https://lore.kernel.org/r/20240115-lpg-v5-1-3c56f77f9cec@quicinc.com
 
+Changes in v5:
+- Rephrased commit text, replaced qcs6490-idp to qcm6490-idp.
+- Removed the unnecessary full.
+- Link to v4: https://lore.kernel.org/r/20240112-lpg-v4-1-c4004026686b@quicinc.com
+
+Changes in v4:
+- Removed "label" definition and added "function" definition.
+- Link to v3: https://lore.kernel.org/r/20231215-lpg-v3-1-4e2db0c6df5f@quicinc.com
+
+Changes in v3:
+- Rephrased commit text and updated the nodes to qcm6490-idp board file.
+- Link to v2: https://lore.kernel.org/all/20231110-qcom_leds-v2-1-3cad1fbbc65a@quicinc.com/
+
+Changes in v2:
+- Rephrased commit text and updated the nodes to board file.
+- Link to v1: https://lore.kernel.org/r/20231108-qcom_leds-v1-1-c3e1c8572cb0@quicinc.com
+---
+ arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+index 37c91fdf3ab9..c9e7ddcbd259 100644
+--- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
++++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+@@ -5,6 +5,7 @@
+ 
+ /dts-v1/;
+ 
++#include <dt-bindings/leds/common.h>
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ #include "sc7280.dtsi"
+ #include "pm7325.dtsi"
+@@ -414,6 +415,33 @@ vreg_bob_3p296: bob {
+ 	};
+ };
+ 
++&pm8350c_pwm {
++	status = "okay";
++
++	multi-led {
++		color = <LED_COLOR_ID_RGB>;
++		function = LED_FUNCTION_STATUS;
++
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		led@1 {
++			reg = <1>;
++			color = <LED_COLOR_ID_RED>;
++		};
++
++		led@2 {
++			reg = <2>;
++			color = <LED_COLOR_ID_GREEN>;
++		};
++
++		led@3 {
++			reg = <3>;
++			color = <LED_COLOR_ID_BLUE>;
++		};
++	};
++};
++
+ &qupv3_id_0 {
+ 	status = "okay";
+ };
+
+---
+base-commit: 17cb8a20bde66a520a2ca7aad1063e1ce7382240
+change-id: 20231215-lpg-4aadd374811a
+
+Best regards,
 -- 
-Thx and BRs,
-Ling Xu
+Hui Liu <quic_huliu@quicinc.com>
 
 
