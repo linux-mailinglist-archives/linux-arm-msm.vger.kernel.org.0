@@ -1,75 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-8486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8084383E3D5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 22:21:01 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CB7383E3DA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 22:23:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 15F912873AE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 21:21:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EDBA51F21A43
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 21:23:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F221724A04;
-	Fri, 26 Jan 2024 21:20:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64B5D249F9;
+	Fri, 26 Jan 2024 21:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tnDNMgYd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tzsgxdhU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A5B249F3
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 21:20:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE2F249F3
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 21:23:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706304055; cv=none; b=tgh9CvK7DR4cqAQLCO5uK8XevarN8Bdqw7Ep1UMHNHhKEEJBpwDcA2smG90Jt3bbmEbIozDDO2mgX3NpM75yjLAsNTu+s0Fabd9FMKyJOnNld0rFwM6A+ed88x6zNPVCtf9mg5jLww1loMq1Q8qNw4P5u4FZnFS6v/s9FzYrF9E=
+	t=1706304227; cv=none; b=bhvmP9lHNBlb/ZB8sB/xZRBESK0CAhzHpmEvmL0XeD34l4tEE4l6RtThtHZBEI4Yq3ZfnlXT8o7CfEqQoexHSotvnsthqzGw/N1qOIb3Z+KH3IGAPkKlNxToJvYf0URPk8hf2YQz/DBlo9zJQvCq8oRwsIQFFs6uGx6pcEITf9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706304055; c=relaxed/simple;
-	bh=li0J15xsdzoQMYSfgqZD+7xj6XkdotMlIQR8ht0mUpM=;
+	s=arc-20240116; t=1706304227; c=relaxed/simple;
+	bh=mngwzQ1tW4ra+TgOhuZhs7sUcDu+H/klAorbuEgjoBM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UY1Np9IrzTy+/k7fGBqA+J36AknfBpedsmsC2x62oWHZBHJGad4JXKV8Dkqej7Xtlz0wSwoPu/S5i/ijq6Q6uVpauLsvjdl/v/zOjQI+21z+/iF3H+YydA1fvphRghSIbIsg5E5GfRlpVFzihkQakJslblyYCRiCqC4CszDBwDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tnDNMgYd; arc=none smtp.client-ip=209.85.128.45
+	 In-Reply-To:Content-Type; b=FMWpey7qRJYdfXTmixQ63sJYDdTBQrg3Vxqild4uWiY952RESFaOx8eWJnFY9nhbE3HAStb9WrZeWBOka/lWL6+ruaVi6qYikuYCqEy/Xj/Mi8a2Ag4aLxQCLUrvuZhHgHSCGZP8hUHFlzUjayxLhvUbCEatfyhkOAyGxjHScEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tzsgxdhU; arc=none smtp.client-ip=209.85.167.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-40e913e3f03so13185945e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 13:20:52 -0800 (PST)
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-510133ed214so1428663e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 13:23:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706304051; x=1706908851; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ckLdbkYosqR4Batu5HIoSckjmeDoA5OjOfUTS7alHpg=;
-        b=tnDNMgYdXyWh0MiP4DjYXiHERnfiVrBYaVy3DNE/8kbw4RV+QQE8CFzCjCQQuf9lgs
-         2okP3Q8ZDUxpyXMps0qPhrfEaYdV/CNyf57DcF9noRKlNqT6OJJwa7ZA44xV2z0pd288
-         DmLGuqxn++cEU1tNsoVoe/9ZnTVaPG6jLK7+sU8JCvKVPnc+FCqlenzqRtDzQaKx/mDh
-         x9l7MGOHsBZdaiu/0yDRho8n3FQbVVevXlsAiHwltkHKl6ChIyT5CMAI3Wb2FEOnwCJC
-         xaodCevnMkFQukMaqlos/ocX35ofNzapPEJohZ+Nd7vRLwD1Ljp3SKm67uB1qIQsJDp2
-         EIPw==
+        d=linaro.org; s=google; t=1706304223; x=1706909023; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nb6lh03t2Y/P5wpyJLZs3j8XPaxvw2LYek8NlAlQ38A=;
+        b=tzsgxdhUhDxcUjZimCLtlJodtzfOf09iSvVwif/+29kyNMvY0GVI51cgioc+K69riV
+         cOgCUzcUIGK9IAmIqCofsynzXkSmsh6zgmyUT0L+SoGdAtL6zLfEebpWtSXXUPeLeJz8
+         wnDjRs1AlBXd5qBSPQk+rQvU1ajlLFDuYlUsd2R+UAGV5AVdY5JeBDc96HvZoV/Wis+8
+         EcsY2QPJugr1MmvOT72rXQ9KScrc8Q3j3+52onQW2DXLFRMhlmG+NB+LPj1LXBzFCRBQ
+         5/8091tJgSKpkY089We9R8W6adjd5wcfk8gVE7rSXNccnz0xEDhduoEQFCENPl/iZBoQ
+         4w+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706304051; x=1706908851;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ckLdbkYosqR4Batu5HIoSckjmeDoA5OjOfUTS7alHpg=;
-        b=Jakari+xJa3hbG6dr4OlPO6OWmSKr4f3HtFH2+Ds/bSW9dzht+hq60kSofSmpOHBtU
-         qr2i+Z27+zN55mheV3AaN/wvedb3tXqvzyGUNeEetT3QyKYJSo4/HijwcVBs/6O6I7/a
-         mXdszHfCJ5bGZZnqNXHRpVcmSyXKLJ9VXQd+2zlQI7anYbEeAM0MoMAvO4Qkq8ZaghWP
-         UHTMxBAdmCQt2jt5a6Hzktr/18T2V8KYyvCz/7euzYJVmcWV8+2W26SAAAVuAzZQt8Jo
-         fvxc+rpJtwXRzfSl1IF4/XSdLLIlkYaYOCwWbMpA4o9FNpbLMf6OsQP5sVlJQbCK+WxV
-         ndaQ==
-X-Gm-Message-State: AOJu0YyGAZAkvmNi+2j75Be/BoMR0igYGg/tjS1zBeEV2QsDRigQ0exg
-	927vMRsynoxMlrmQk7LCgtkALrZRJNFZ6TW/RS5Y7SECmt7hgiuoescUBhKuzEEYa+kVBiavbvt
-	s
-X-Google-Smtp-Source: AGHT+IFWnVaV/VRp7Y5n09XhjbL3qsH+jvvcN81KHkbuPDQHoIiucel4O1eWjYMAYLhSs0rXQsy6Xg==
-X-Received: by 2002:a05:600c:4f13:b0:40e:df1c:cf1 with SMTP id l19-20020a05600c4f1300b0040edf1c0cf1mr295035wmq.135.1706304051180;
-        Fri, 26 Jan 2024 13:20:51 -0800 (PST)
+        d=1e100.net; s=20230601; t=1706304223; x=1706909023;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nb6lh03t2Y/P5wpyJLZs3j8XPaxvw2LYek8NlAlQ38A=;
+        b=e7VtYFe1a896/3yoRVsn5XMb6NSzv7FliWLR/Rya1y6Mgwbq9rWGAXKKDukwy7rOzP
+         7aQQew8bjbqeoAjtu/d4tm+cPDVesBqV04Wj0XFb7ZRRLwi1C3R01YR9qM0l2y2Km5LO
+         pHyHHht+Pwhjnj23NQGWULLSkj982D45kyINGTmQ9EH0sWNjtmkNqBcnInjhkPFpIlhe
+         XLUYBTSkngU+/4/DZBmN7tNv4fK5LzkQr7D7ZFTBU3m1GXbFKcxmthVOtVT9K+Mae7Bl
+         F4jmGHuXo+DbsW6oDhQufXoQaAb4xlgoLpeHdSNySJ0qNp06HQ2wl2bC5qBCujQfsU1z
+         nWGg==
+X-Gm-Message-State: AOJu0YwmGSYABHSCItwEzA+yA0nlLW5xH121Q0szVzYawMmEIGBY4Z1L
+	RPi/HwoZcHPD0ZImhZsVzfu13t+xQwPke84rffOfYRrbzD7R+fcZYUlToHcA0NM=
+X-Google-Smtp-Source: AGHT+IHgPyi0JRFd4/vgCp62QKGLsOfwgqtNUV8jYGIesmhciNt34fa6WdWZ+P+cC+dVYi3kqi9uhw==
+X-Received: by 2002:a2e:5c84:0:b0:2cd:3663:979d with SMTP id q126-20020a2e5c84000000b002cd3663979dmr284037ljb.0.1706304223477;
+        Fri, 26 Jan 2024 13:23:43 -0800 (PST)
 Received: from [192.168.231.132] (178235179146.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.146])
-        by smtp.gmail.com with ESMTPSA id ef14-20020a05640228ce00b0055d18d6a586sm972863edb.13.2024.01.26.13.20.50
+        by smtp.gmail.com with ESMTPSA id ba30-20020a0564021ade00b0055d07073cc6sm999494edb.80.2024.01.26.13.23.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Jan 2024 13:20:50 -0800 (PST)
-Message-ID: <566a10b0-a7dc-42f3-9b8c-f9acd8d3a22c@linaro.org>
-Date: Fri, 26 Jan 2024 22:20:49 +0100
+        Fri, 26 Jan 2024 13:23:43 -0800 (PST)
+Message-ID: <f28604d2-20a8-4662-9412-f09c6bf4a67b@linaro.org>
+Date: Fri, 26 Jan 2024 22:23:41 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,14 +77,17 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2] arm64: dts: qcom: sc8280xp: Introduce additional tsens
  instances
-To: Bjorn Andersson <quic_bjorande@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>
-References: <20240126-sc8280xp-tsens2_3-v2-1-8504d18828de@quicinc.com>
 Content-Language: en-US
+To: Johan Hovold <johan@kernel.org>,
+ Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240126-sc8280xp-tsens2_3-v2-1-8504d18828de@quicinc.com>
+ <ZbPfeq6ElA3vMf_O@hovoldconsulting.com>
+ <20240126165113.GS2936378@hu-bjorande-lv.qualcomm.com>
+ <ZbPlRsx3czAHRBew@hovoldconsulting.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -123,58 +124,43 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240126-sc8280xp-tsens2_3-v2-1-8504d18828de@quicinc.com>
+In-Reply-To: <ZbPlRsx3czAHRBew@hovoldconsulting.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 26.01.2024 16:12, Bjorn Andersson wrote:
-> The SC8280XP contains two additional tsens instances, providing among
-> other things thermal measurements for the GPU.
+On 26.01.2024 18:00, Johan Hovold wrote:
+> On Fri, Jan 26, 2024 at 08:51:13AM -0800, Bjorn Andersson wrote:
+>> On Fri, Jan 26, 2024 at 05:36:10PM +0100, Johan Hovold wrote:
 > 
-> Add these and a GPU thermal-zone.
-> 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
-> Changes in v2:
-> - Drop TM/SROT comments
-> - Remove polling delays, rely on interrupts
-> - Link to v1: https://lore.kernel.org/r/20240118-sc8280xp-tsens2_3-v1-1-e86bce14f6bf@quicinc.com
-> ---
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 37 ++++++++++++++++++++++++++++++++++
->  1 file changed, 37 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index febf28356ff8..7bfbb1bd8f4a 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -4033,6 +4033,28 @@ tsens1: thermal-sensor@c265000 {
->  			#thermal-sensor-cells = <1>;
->  		};
->  
-> +		tsens2: thermal-sensor@c251000 {
-> +			compatible = "qcom,sc8280xp-tsens", "qcom,tsens-v2";
-> +			reg = <0 0x0c251000 0 0x1ff>,
-> +			      <0 0x0c224000 0 0x8>;
-> +			#qcom,sensors = <11>;
-> +			interrupts-extended = <&pdc 122 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&pdc 124 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "uplow", "critical";
-> +			#thermal-sensor-cells = <1>;
-> +		};
-> +
-> +		tsens3: thermal-sensor@c252000 {
-> +			compatible = "qcom,sc8280xp-tsens", "qcom,tsens-v2";
-> +			reg = <0 0x0c252000 0 0x1ff>,
-> +			      <0 0x0c225000 0 0x8>;
-> +			#qcom,sensors = <5>;
-> +			interrupts-extended = <&pdc 123 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&pdc 125 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "uplow", "critical";
-> +			#thermal-sensor-cells = <1>;
+>>> Shall you submit a follow-on patch to set the polling delays to zero
+>>> for the other thermal zones (cpu, cluster, mem) so that we don't poll
+>>> for those?
+>>
+>> I optimistically interpreted Konrad's response as a promise by him to do
+>> so ;)
+>>
+>> I do like his patch which remove the poll-properties for non-polling
+>> mode. Would be nice to not first change the values to 0 and then remove
+>> the properties...
 
-With the sorting issue that Johan mentioned resolved:
+That was my intention as well..
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> 
+> No, that should not be an issue as it allows us to get rid of the
+> polling without waiting for a binding update which may or may not
+> materialise in 6.9-rc1.
+
+If you really insist, I may do that, but if the thermal guys act on it
+quickly and we negotiate an immutable branch, we can simply but atop it,
+saving the submitter timeof(patchset), the reviewers timeof(verify), the
+build bots timeof(builds) and the applier timeof(pick-build-push)..
+
+> 
+> But whoever updates those properties need to do some proper testing to
+> make sure that those interrupts really work.
+
+They seem to, check /proc/interrupts before and after adding an e.g. 45degC
+trip point on one of the CPU thermal zones, they fire aplenty.
 
 Konrad
 
