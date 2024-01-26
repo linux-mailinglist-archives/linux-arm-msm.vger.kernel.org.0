@@ -1,123 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-8457-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 758DE83DFE0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 18:21:25 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7BD583E023
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 18:31:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 273EA1F22DEF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 17:21:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 14D711F2528E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 17:31:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2D40210F2;
-	Fri, 26 Jan 2024 17:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6660F200D8;
+	Fri, 26 Jan 2024 17:30:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BkXyBCBQ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Pn4wFY+/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F68B20DF6
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 17:20:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F7E208C4;
+	Fri, 26 Jan 2024 17:30:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706289616; cv=none; b=NfzOTZp9kU8JV66YlLJuuQQCTgbEqTwqJTJGXUppa7qTkGwmmkrbH10rfq10Ad7t5g4AG0NBxyKeCsPR/bFu9N/qXqD4x0LqcuUzPWcMX6djebK9Jgkw7A1fMiB57V7qy39GBMP4XvPVOAI9+uG9dY60ADoo00aHV8U/oDyHHS0=
+	t=1706290252; cv=none; b=tmhc46ES0acgNCtxJSNm8N4eslELTwqMlvDiBIuoRu/afUlQrAli98LuPYIBgFW4/43L3YACI3kny3k/ouw74blqnJX6Nmg0R4zMqKxbtcfAS0d4GI1lxlwRa5/7brxwHenhy+FAi/4tI5Zgyrh5d8kgfUYKWkrVfjCp6lfNgAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706289616; c=relaxed/simple;
-	bh=73loVm8ly7qdwE39+2h0z6ktV12Cx5r1ZMgjVHoK8hc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IYrYDvO29oVAbytdQToo+3tieFBLAZH0JKpDnOzost7tzN842VU7imzruWlJ7MWMNPWPdNchPb6BhOyYA10hXYQo4hMf4Y5zQG8fOK9755MLNZP0IDmLR7+zm6VGms6bd1GTNuLVhcv/5UY2l9vjdF46dXjDeyn0sjzVDqSTeRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BkXyBCBQ; arc=none smtp.client-ip=209.85.219.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-dc239f84ba4so644014276.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 09:20:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706289614; x=1706894414; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=DfcOf0udxUc+w1U/rSjRqEr06RAjRh2n5t1k3e8n0LY=;
-        b=BkXyBCBQqJdFREGuiWymbR00OFuInOFGFYHdQAkSb1pflyPQrMoS5J7cvnxuoBaFq9
-         +miE5T6kT1RehTmU2ok8H4TDzTxUODUZ9LVDhi5RKPwo8/IZKrGd2WiHfSFdoR3JWqF9
-         iu8iRp+YyG5NYSoZYT+ospvsCI4tcLvS6eY+dlRdkX+zFN9umpGKiPPgRkLA5YRPm3pY
-         +Yosf5AoLlplqntUxaC/JI+SD4dv6Qx10aVCbUKm6lTMOQTTt1AvCHeq3LhjQeh9fPzH
-         mzPjUSLTquiXuEfhVuCtx/xTkHyCz+xIS+0wZCIZ+s2apSF7WB84zcaggRd0g+Hq9CtC
-         uItw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706289614; x=1706894414;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DfcOf0udxUc+w1U/rSjRqEr06RAjRh2n5t1k3e8n0LY=;
-        b=cIEP/EqXWVGq/JLHQkpwYMaSJM4o/d5aN/3KgDipd0iDdBY41/rHZk9c+Gh5Z7/HJ3
-         47q9P1hl1AqMYgXfb2nEQf1xxObiu1RifAQRaoYHKv35yfi+ZjZJoqe3mr8GU4iDzVHa
-         YgofPsahQLRYZ1k0jv7X6GB/W4pgvrrDf1JS28RxOYK+VF0X+CZgqrbbhjGmZQWoMRvV
-         KTi/j2WCLTy107DFhSeM5re9u7IFTsWGEuRIv5lQdSxroW1maJGNOwPLg94kbPOixpHG
-         rNP3SzfQV/Gfw/1v4/2cqAezZbcIY4BUVODm9BQb+YJSA3v80/vPgefvbIWb4lwoha3J
-         e/Jw==
-X-Gm-Message-State: AOJu0YwC4R9wSRi3X3qavlATOanFxvaHGCVX/vg5IeK3VVbvPqTGGtcj
-	W0cuF3URQRyKx+zM2S68NevOup3LRg9clRLNBYgjIaGc5N50nWvWLAiG0ERqdX5MH5fMlBOAV4Z
-	nFYJhMu5j0QE2kSH7DAQuagBTvuKsbU19U0BBjA==
-X-Google-Smtp-Source: AGHT+IGa+zspZThxi9oRy2oS248JEsOPKalw83o4vIHdlm+VhTwbKv49+h1a4t3B8lhSzO3bv/j1ohqxDrsg6+8ov90=
-X-Received: by 2002:a05:690c:f8f:b0:5ff:4987:4ef3 with SMTP id
- df15-20020a05690c0f8f00b005ff49874ef3mr211891ywb.24.1706289614301; Fri, 26
- Jan 2024 09:20:14 -0800 (PST)
+	s=arc-20240116; t=1706290252; c=relaxed/simple;
+	bh=9bLrrY4lrpiMbBAA0TQMibFdWd4L4+WTcg7fJX7LCAs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=j0kuyYVygi9qAzKk82G8mfMS+upLLN3C7rc5F/g0+oc38J0c5qTsCJVVqJQ1IpVhV7Gz1RBptV4/Tt2oCvxXlhQG/zlU24Jib5XNTeZdXYvBk33c4DaSbZsvZ6WripT9idXWinqKCS+Z2nN2Frwme0CbozNCN8hY5qa/LZK5HDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Pn4wFY+/; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40QGnIln027895;
+	Fri, 26 Jan 2024 17:30:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=hkG6MAIjZNQ1Z2obgtzdYW/nxGo77lAQ9byFBqTs2sk=; b=Pn
+	4wFY+/rx6xVBEzubUbaz1JeMPkOcd5dlQ2lIJo5UQMUdM6geSA0P3NAU6fQusOsk
+	j3CUJGt9KzfW/EyEdDUddMSIKlSaYVc4nXmL/TqZdCNiJp+jSmrF+AvIfOciAbkC
+	YkpudP9P0aqc+laeCIqgIwY91wi5ZjRlgxMtRPQBNGalW6BNJ3/RMRej9b3nbKJn
+	qGnfoGQnyUsXf4prxLms7JnkbCSMFGBgsHD5u0sAIXQJOkYGnE89qC4F7q2mM4rw
+	9GDbFxup/4QZkgFSqwMghGQaCBs+1Ky/xp6PnVw9lQT3PUdvao5ZMOs7vZA/x3Cz
+	EpoQ5ctj9jRvxI/Hf2Ww==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vv6c8hg4n-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 26 Jan 2024 17:30:42 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40QHUfVN032634
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 26 Jan 2024 17:30:41 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 26 Jan
+ 2024 09:30:40 -0800
+Message-ID: <04b76659-afb3-612c-0eea-ab305089e40d@quicinc.com>
+Date: Fri, 26 Jan 2024 10:30:40 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240124213640.7582-1-ansuelsmth@gmail.com> <53445feb-a02c-4859-a993-ccf957208115@quicinc.com>
- <f8a9e328-5284-4f24-be5d-7e9804869ecd@lunn.ch> <5d778fc0-864c-4e91-9722-1e39551ffc45@quicinc.com>
-In-Reply-To: <5d778fc0-864c-4e91-9722-1e39551ffc45@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 26 Jan 2024 19:20:03 +0200
-Message-ID: <CAA8EJppUGH1pMg579nJmG2iTHGsOJdgDL93kfOvKofANTGGdHw@mail.gmail.com>
-Subject: Re: [net-next PATCH 0/3] net: mdio-ipq4019: fix wrong default MDC rate
-To: Jie Luo <quic_luoj@quicinc.com>
-Cc: Andrew Lunn <andrew@lunn.ch>, Christian Marangi <ansuelsmth@gmail.com>, Andy Gross <agross@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Heiner Kallweit <hkallweit1@gmail.com>, Russell King <linux@armlinux.org.uk>, 
-	Robert Marko <robert.marko@sartura.hr>, linux-arm-msm@vger.kernel.org, 
-	netdev@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Sergey Ryazanov <ryazanov.s.a@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH v2 3/6] phy: qcom: qmp-usbc: handle CLAMP register in a
+ correct way
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>, Lee Jones
+	<lee@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>
+References: <20240117-usbc-phy-vls-clamp-v2-0-a950c223f10f@linaro.org>
+ <20240117-usbc-phy-vls-clamp-v2-3-a950c223f10f@linaro.org>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <20240117-usbc-phy-vls-clamp-v2-3-a950c223f10f@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: wBl7lsi-bOrmut31HkRDeXNMyfO53opC
+X-Proofpoint-ORIG-GUID: wBl7lsi-bOrmut31HkRDeXNMyfO53opC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=650
+ priorityscore=1501 bulkscore=0 mlxscore=0 adultscore=0 lowpriorityscore=0
+ malwarescore=0 clxscore=1011 spamscore=0 suspectscore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2401190000
+ definitions=main-2401260129
 
-On Fri, 26 Jan 2024 at 18:03, Jie Luo <quic_luoj@quicinc.com> wrote:
->
->
->
-> On 1/26/2024 1:18 AM, Andrew Lunn wrote:
-> >> Hi Christian,
-> >> Just a gentle reminder.
-> >>
-> >> The MDIO frequency config is already added by the following patch series.
-> >> https://lore.kernel.org/netdev/28c8b31c-8dcb-4a19-9084-22c77a74b9a1@linaro.org/T/#m840cb8d269dca133c3ad3da3d112c63382ec2058
-> >
-> > I admit this version was posted first. However, its embedded in a
-> > patch series which is not making much progress, and i doubt will make
-> > progress any time soon.
-> >
-> > If you really want your version to be used, please split it out into a
-> > standalone patch series adding just MDIO clock-frequency support, with
-> > its binding, and nothing else.
-> >
-> >      Andrew
->
-> Hi Andrew,
-> We will rework the patch series to include only MDIO frequency related
-> function and frequency dt binding, and post the updated patch series
-> on the Monday/Tuesday of next week. We will work with Christian to
-> ensure he can re-use this patch as well.
+On 1/17/2024 7:04 AM, Dmitry Baryshkov wrote:
+> The QMP USB PHYs on msm8998, qcm2290 and some other platforms don't have
+> the PCS_MISC_CLAMP_ENABLE register. Instead they need to toggle the
+> register in the TCSR space. Make the new phy-qcom-qmp-usbc driver
+> correctly handle the clamp register.
+> 
+> Fixes: a51969fafc82 ("phy: qcom-qmp: Add QMP V3 USB3 PHY support for msm8998")
+> Fixes: 8abe5e778b2c ("phy: qcom-qmp: Add QCM2290 USB3 PHY support")
+> Cc: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Can you do the other way around: rebase your patches on top of Chritian's work?
-
--- 
-With best wishes
-Dmitry
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
