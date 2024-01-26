@@ -1,71 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-8393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C94383D5B3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 10:13:43 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE89D83D5C2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 10:14:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B5EEB28958F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 09:13:41 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5F0A7B20AB6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 09:14:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C5431427F;
-	Fri, 26 Jan 2024 08:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DE18175B9;
+	Fri, 26 Jan 2024 08:18:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y1qguTP2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="H+JeTIhF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE8B7FB;
-	Fri, 26 Jan 2024 08:12:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A4D12E76
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 08:18:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706256749; cv=none; b=hhiKqeVEyNi4ZpALL3uVsmiGsixEa62iA876lrpeJH+B9i1hI1i+PFjn8e4PSaDKqmwz6iq0GwUw3nb2zrxzGIqzEONR5IGsi9Sq0nYcqRQcTrYbOf61klLy6CqmE+ic0sU0y4UyFfuKAh7zNSQifAc8HGBxYBpgHwnAn9maCwU=
+	t=1706257129; cv=none; b=uSQ0CtHX6tsQWhmPfG3+p38RMHJEkDaJ9W6Q1Pvo/gEaacLhIW8/4HSKR+B1GHJOLcDkQJwgsJ+ZPKY/ezR7BmVOsKTso+E6sL6yFdKQT7DfPtfU7yv/WaQ4xF1Toz4p20xCAwmVXlml00YC4vUEu/PJXGEN/rCqHWKZYT9eni8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706256749; c=relaxed/simple;
-	bh=e5RqXiUfA6NRNGKjt3CxSJ3zCXhBqQGuJKKlnfeXBBY=;
+	s=arc-20240116; t=1706257129; c=relaxed/simple;
+	bh=1v1p0jrAJR50Kueh7YF9CPLO/I/oXE+euJsb8wrKQ+M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LbeK09oL4yrV+E9cspBV2CXRAUv9CYzstj6lrD+O7/vDlZ7gemu4+hBw2qcf1h3kRdmd2H7zUhMXplvn8TAVh+S+e3u0C46hYCEnHXvIARTR3+x2p8PvtDOAVYa67rcfQUEd0zqde23yR6rMwd8KVme1LNofylr6FppxQoPrRWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y1qguTP2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD9EC433F1;
-	Fri, 26 Jan 2024 08:12:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706256748;
-	bh=e5RqXiUfA6NRNGKjt3CxSJ3zCXhBqQGuJKKlnfeXBBY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Y1qguTP2G1gop3ziXTuVUqHXx5FTziY9+Vs4vikiNNqRNMEA5AiB+KNUM2xpqh9yC
-	 OV/6UOKDrgKMrqLoXPSWKWvVYHAV1GfTye39ByQbjwly3N4p7WAyHWz319I2wYdbAJ
-	 y77x2kVDc1iYyh8g7UCHmfRC2jBIbbys+TF+V2rGfYabIVcISdCBqgP6s0xsW5Ctq2
-	 Oj85pr1VA+diTym8b+05ypQQ/k7MssTEpdVHejqQmpOQ/OGrQdn/sH7AqlLcqUbr58
-	 sNhoZjP6ePQpkDbJs6eZ+2gck40XuyS6f1wikmuVdjOXqVeiBZSE/BvsSFIGhljC4K
-	 CZfo9eiSwVing==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rTHKH-000000002nP-2nAg;
-	Fri, 26 Jan 2024 09:12:37 +0100
-Date: Fri, 26 Jan 2024 09:12:37 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	 Content-Type:Content-Disposition:In-Reply-To; b=juqYXi6TxByJOzRZ3Fg5LhnUW6JrVz5oRtiF/FuWHg8Ksre4LL4ErTnJGEyQgfW0SHuLhrRaZwWX6JgE/xYPY6Qm+cSGwDIIPx2kf5xefYRBXjf0LcByZYyF5861ucFD9x4QL24oCaRXRly3u+3bi3gCEU9cwUQwGbxgka4Z1vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=H+JeTIhF; arc=none smtp.client-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a3122b70439so16338466b.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 00:18:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706257124; x=1706861924; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3eKbQ9dPSaynT5h1DWbytWa8cizVUJhYOPdgPpMBlYw=;
+        b=H+JeTIhFKdgDE97RUL23Y7vt9Hab569XLsLp7NT00I2ZZ74HeOAnxqIgK9P//DwNIG
+         iengf9mXTH1kjZpDsMV97EfQMnViFr+2XiOieFlOKYEm37MRjy3bgOuJf6d+4LmHx+Hw
+         QSR3yZCf3Xzj4LbZmJCYc54l63C/qrRMqqppr+nfT5a+mXSYQR/klx/C6og0iacysYVw
+         q5QYVXfazGNnbgmsK7E8w5pezGWsHdGaJbv6NoMapvfzJNKuR4zWTo+jvraxBOiC9uGr
+         1ONZj/FMDRb/dREzmF0rpo0ywp/nYHT7XfSsbyiVvGPaFfO1vwCnWO6aPOIZL4eQFXPn
+         de+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706257124; x=1706861924;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3eKbQ9dPSaynT5h1DWbytWa8cizVUJhYOPdgPpMBlYw=;
+        b=S4ILPesq1/3FaMszxS6YK4NFAVgboNhEA4fNFrNwaoz7l4W/JW3JPZGkBSyKrEnzwe
+         pz0bdBc2UYJ2+46He0Ve40DJqnzlNHMJf4hSi2euQ75tBlVth5XyudwkFI9Jt8gCrWtT
+         0/Wy6RErQhRaDLeH8Wvme/fqMOTyxEPsMlApH0fcIRTmYlvTksjeHzKYibawkmtGRVLk
+         JZDgTB7NK/47GSYJLKdCd9HUv2JupM0BfdIAkW3Cb3gvYg/dEPz3R+TZcHWJjwrUSOcP
+         pU8bpKmltB6e1AxvmCzwMsM35XZk37BwsQPWxniZGHZCfcXeYGmz8i/p5KwWsLRfw9Jo
+         81Ig==
+X-Gm-Message-State: AOJu0YxguxF1eKxB8lWdUfULG20/397WKjLIAlcYrwrUgoKMGtlIQVNB
+	54JlNtQjDSyV/XyZJ3nzPvPGyJkGb9CR2NOOEybOIvs/3mztD/b0wxR/yw++360=
+X-Google-Smtp-Source: AGHT+IGAHjYbYuhhbEn3hJ2jgzKambyOC27Tkan/Yq9Qzl1vlpSHYnZRuSY3GbgR8HYC+EhmgrcwyQ==
+X-Received: by 2002:a17:907:1751:b0:a30:ec79:25f3 with SMTP id lf17-20020a170907175100b00a30ec7925f3mr893519ejc.42.1706257123688;
+        Fri, 26 Jan 2024 00:18:43 -0800 (PST)
+Received: from linaro.org ([79.115.23.25])
+        by smtp.gmail.com with ESMTPSA id ck5-20020a170906c44500b00a31930ffa7esm358242ejb.153.2024.01.26.00.18.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Jan 2024 00:18:43 -0800 (PST)
+Date: Fri, 26 Jan 2024 10:18:41 +0200
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
 	Rob Herring <robh+dt@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-	Jiri Kosina <jikos@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sc8280xp-x13s: Fix/enable
- touchscreen
-Message-ID: <ZbNpdaSyFS9tYrkd@hovoldconsulting.com>
-References: <20240125-x13s-touchscreen-v1-0-ab8c882def9c@quicinc.com>
- <20240125-x13s-touchscreen-v1-2-ab8c882def9c@quicinc.com>
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 05/11] arm64: dts: qcom: x1e80100: Add TCSR node
+Message-ID: <ZbNq4b813348ZiV8@linaro.org>
+References: <20240123-x1e80100-dts-missing-nodes-v4-0-072dc2f5c153@linaro.org>
+ <20240123-x1e80100-dts-missing-nodes-v4-5-072dc2f5c153@linaro.org>
+ <b0f4236a-c87e-4d50-b1a0-42ed5b015b86@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,36 +89,48 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240125-x13s-touchscreen-v1-2-ab8c882def9c@quicinc.com>
+In-Reply-To: <b0f4236a-c87e-4d50-b1a0-42ed5b015b86@linaro.org>
 
-On Thu, Jan 25, 2024 at 07:55:14PM -0800, Bjorn Andersson wrote:
-> The failing read-test in __i2c_hid_core_probe() determines that there's
-> nothing connected at the documented address of the touchscreen.
+On 24-01-23 19:09:37, Konrad Dybcio wrote:
 > 
-> Introduce the 5ms after-power and 200ms after-reset delays found in the
-> ACPI tables. Also wire up the reset-gpio, for good measure.
+> 
+> On 1/23/24 12:01, Abel Vesa wrote:
+> > Add the TCSR clock controller and halt register space node.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> 
+> The former - yes, the latter - ?
 
-As the supplies for the touchscreen are always on (and left on by the
-bootloader) it would seem that it is really the addition of the reset
-gpio which makes things work here. Unless the delay is needed for some
-other reason.
+Hm, so halt register space is at 0x1f60000. That would be in the mutex
+region. But the mutex region is 0x20000 short, even on SM8650 and
+SM8550. Need to see why is that, historically.
 
-(The power-on delay also looks a bit short compared to what is used for
-other devices.)
+Either way, the tcsr node region still contains the regs needed by the
+SCM driver to enable download mode. So I will rephrase this accordingly.
 
-Reset support was only recently added with commit 2be404486c05 ("HID:
-i2c-hid-of: Add reset GPIO support to i2c-hid-of") so we should not
-backport this one before first determining that.
-
-That commit also added a comment in the HID driver about the
-'post-reset-deassert-delay-ms' to the driver which should now be
-removed:
-
-	/*
-	 * Note this is a kernel internal device-property set by x86 platform code,
-	 * this MUST not be used in devicetree files without first adding it to
-	 * the DT bindings.
-	 */
-
-Johan
+> 
+> Konrad
+> >   arch/arm64/boot/dts/qcom/x1e80100.dtsi | 8 ++++++++
+> >   1 file changed, 8 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > index be69e71b7f53..2b6c55a486b2 100644
+> > --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > @@ -2606,6 +2606,14 @@ tcsr_mutex: hwlock@1f40000 {
+> >   			#hwlock-cells = <1>;
+> >   		};
+> > +		tcsr: clock-controller@1fc0000 {
+> > +			compatible = "qcom,x1e80100-tcsr", "syscon";
+> > +			reg = <0 0x01fc0000 0 0x30000>;
+> > +			clocks = <&rpmhcc RPMH_CXO_CLK>;
+> > +			#clock-cells = <1>;
+> > +			#reset-cells = <1>;
+> > +		};
+> > +
+> >   		gem_noc: interconnect@26400000 {
+> >   			compatible = "qcom,x1e80100-gem-noc";
+> >   			reg = <0 0x26400000 0 0x311200>;
+> > 
 
