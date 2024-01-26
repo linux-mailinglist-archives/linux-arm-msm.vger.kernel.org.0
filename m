@@ -1,138 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-8445-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8446-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9D2183DE3F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 17:04:00 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id ADE4483DE92
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 17:23:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6C764B20E1A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 16:03:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 506ADB23C1D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 16:23:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B53CC1D546;
-	Fri, 26 Jan 2024 16:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 656321D54C;
+	Fri, 26 Jan 2024 16:23:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="me5TcXcA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fEkTsWGm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910B61CD1F;
-	Fri, 26 Jan 2024 16:03:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35A231CD3F;
+	Fri, 26 Jan 2024 16:23:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706285031; cv=none; b=Hp9o6/sVIj0K8uRkseTmGvE3pHJyxRCtYSuErX+DPCpWem7HLpp3HPsngDfudTcTLZu4pE5nA1TDaAzJ58TZUh6vbNCaqVOSutVwiTSkPjffwQq7Hp53jhVvVUo5VdlUKRU9w+EKal/roTUYfU5nP6Z+5MvyfOgVaz37WQcooyM=
+	t=1706286199; cv=none; b=fkpxCt6ZMbMfdTfQBW6ORKApV4y9LnkLq+p2JQ0xV7Z8RWaSg0Q/Hrt76rcge7Gh4RzSlp1SavikUVH3j7vPXyPwETml8Fnjf8PsBa6e62ZUgxyjr7Eus3L3qpk8ia/CyfEJxDvKMRt0i+9EK274nbzfUtW3VBYHefzDxMunJuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706285031; c=relaxed/simple;
-	bh=a2FDYa8SVRiWVcXHltyA+EbeAgkQBMuaOsQcBHD69JU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=F6+OIYnBtdyITwdNppWMpTou6kvpfpp/tyMzwGoENivKt5l6afONUuwurwFTK9UE3ZOua4eKKKZHgX2zfIL6qhNsrWTfO/ipfSDmexpwmHyRXRMN4K7fmR9DBsJ3crA/AMcstqouItK/+c4RFGI+KAGQly+MLDGp49ec35Km/Gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=me5TcXcA; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40QFHQ8J009101;
-	Fri, 26 Jan 2024 16:03:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=BliTP1l+lG2LEeQXattTsm7SacSHWHKJM/bBgLnOkW0=; b=me
-	5TcXcAkB5GNCBEM/HO4zzJXYg9veoD5ZbhvIPDCo/SbXaWW7a+Fuk56GsX62n2Fu
-	XPVM+q1HQqan9FU7nOyaayBTDQuiUptBQ6Kl5RtCWH4Vm14zIwCeRtZaNVpmwuIM
-	MY1uWufjqhMuARCjUOdyGUZGs6uovZCTAp7TRqpP51BI1SMFK1wNm85J+cRIaqjl
-	39Ad7ODwP26atcw7iNfKRdrZzQftqEoeIMm4Die4Im/G72Y5qpypalIJ+1f0+9hY
-	vrYai0NOOFahOnUhJhl6gks/yNzG4DePpycyMkGAn7laE8zJlwjK/hHG58PhMQrc
-	lwlm/mamK49knkVAKZTQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vv8e88y5g-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Jan 2024 16:03:27 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40QG3QZ2015720
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Jan 2024 16:03:26 GMT
-Received: from [10.253.33.199] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 26 Jan
- 2024 08:03:21 -0800
-Message-ID: <5d778fc0-864c-4e91-9722-1e39551ffc45@quicinc.com>
-Date: Sat, 27 Jan 2024 00:03:19 +0800
+	s=arc-20240116; t=1706286199; c=relaxed/simple;
+	bh=2JCXgq32qIglC6mO72WRbjPvok3iIvPLQe2ZqDXoq+4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ACJ4xEDku3bvSGTSw2JZKg6ICFGNRqGXbXlqj0sw14WqDgvT6lr7qE8kUzM4oZA96by1+Nn55tgOhpoUky2FEso6GWIB71FT/CZB/A70Mg2NKinkTCN0NAJvEOLABOLXlzls/oKTBM86zzCFh9R1CPz4UhI8Chu+1Ik/8edcD/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fEkTsWGm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A10D0C433F1;
+	Fri, 26 Jan 2024 16:23:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706286198;
+	bh=2JCXgq32qIglC6mO72WRbjPvok3iIvPLQe2ZqDXoq+4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fEkTsWGm+pTv3JpEFsZcSKKxEWVnImncAwsQyoI3Ld7l8SqlSPkkztT/6mu8pqEam
+	 vpLLbGXpWSpvxubuMPdi5uAwFg5PAsQpDJ2RYnDpXQb18Lkdozxrjscnx2eqEOnHm8
+	 N3YGwkvhkqmRoM4YyAG0hwlgvuEX6Cw1xuO9WWStHUSB+R76n524qZSpZ52mqSDMbt
+	 qAmd1GVQf7jgU3LVhcwQgru0P+PSyZS1HKGCkz9QcV41zFIh+g6izksdFp3d+SIS53
+	 oB319QBS/gebFb4F/ER1A13hzFoCVoHbdFA3lczGeOkC/6HOiU0ADFoxFjTG9zgJ8u
+	 8cbQygMkAxiWg==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rTOzK-000000007rm-46Kw;
+	Fri, 26 Jan 2024 17:23:31 +0100
+Date: Fri, 26 Jan 2024 17:23:30 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: Daniel Thompson <daniel.thompson@linaro.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Jiri Kosina <jikos@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@somainline.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sc8280xp-x13s: Fix/enable
+ touchscreen
+Message-ID: <ZbPcgqr9gBByqV7Q@hovoldconsulting.com>
+References: <20240125-x13s-touchscreen-v1-0-ab8c882def9c@quicinc.com>
+ <20240125-x13s-touchscreen-v1-2-ab8c882def9c@quicinc.com>
+ <ZbNpdaSyFS9tYrkd@hovoldconsulting.com>
+ <20240126130232.GA5506@aspen.lan>
+ <ZbPCJv7HW8OQzPMT@hovoldconsulting.com>
+ <20240126145346.GN2936378@hu-bjorande-lv.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [net-next PATCH 0/3] net: mdio-ipq4019: fix wrong default MDC
- rate
-Content-Language: en-US
-To: Andrew Lunn <andrew@lunn.ch>
-CC: Christian Marangi <ansuelsmth@gmail.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric
- Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni
-	<pabeni@redhat.com>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Robert Marko <robert.marko@sartura.hr>,
-        <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Sergey Ryazanov <ryazanov.s.a@gmail.com>
-References: <20240124213640.7582-1-ansuelsmth@gmail.com>
- <53445feb-a02c-4859-a993-ccf957208115@quicinc.com>
- <f8a9e328-5284-4f24-be5d-7e9804869ecd@lunn.ch>
-From: Jie Luo <quic_luoj@quicinc.com>
-In-Reply-To: <f8a9e328-5284-4f24-be5d-7e9804869ecd@lunn.ch>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: hkBudbvisV_pQZDINTb_7j5f9k_yVKxx
-X-Proofpoint-ORIG-GUID: hkBudbvisV_pQZDINTb_7j5f9k_yVKxx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
- spamscore=0 malwarescore=0 priorityscore=1501 mlxlogscore=573
- impostorscore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0
- clxscore=1015 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401190000 definitions=main-2401260118
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240126145346.GN2936378@hu-bjorande-lv.qualcomm.com>
 
+On Fri, Jan 26, 2024 at 06:53:46AM -0800, Bjorn Andersson wrote:
+> On Fri, Jan 26, 2024 at 03:31:02PM +0100, Johan Hovold wrote:
+> > On Fri, Jan 26, 2024 at 01:02:32PM +0000, Daniel Thompson wrote:
 
-
-On 1/26/2024 1:18 AM, Andrew Lunn wrote:
->> Hi Christian,
->> Just a gentle reminder.
->>
->> The MDIO frequency config is already added by the following patch series.
->> https://lore.kernel.org/netdev/28c8b31c-8dcb-4a19-9084-22c77a74b9a1@linaro.org/T/#m840cb8d269dca133c3ad3da3d112c63382ec2058
+> > > In short it looks like the delays make the difference and, even a short
+> > > delay, can fix the problem.
+> > 
+> > Right, but since the suppliers are left enabled by the bootloader (and
+> > never disabled by the kernel), that only begs the question of why this
+> > makes a difference.
 > 
-> I admit this version was posted first. However, its embedded in a
-> patch series which is not making much progress, and i doubt will make
-> progress any time soon.
+> You're right, the supply is kept on by other things, so this isn't the
+> problem.
 > 
-> If you really want your version to be used, please split it out into a
-> standalone patch series adding just MDIO clock-frequency support, with
-> its binding, and nothing else.
+> > Without the delay, the other HID devices are probing (successfully)
+> > slightly before, but essentially in parallel with the touchscreen while
+> > using the same resources. Is that causing trouble somehow?
 > 
->      Andrew
+> The difference to those other HID devices is GPIO 99 - the reset pin,
+> which is configured pull down input from boot - i.e. the chip is held in
+> reset.
+> 
+> When the HID device is being probed, pinctrl applies &ts0_default starts
+> driving it high, bringing the device out of reset. But insufficient time
+> is given for the chip to come up so the I2C read fails.
 
-Hi Andrew,
-We will rework the patch series to include only MDIO frequency related
-function and frequency dt binding, and post the updated patch series
-on the Monday/Tuesday of next week. We will work with Christian to 
-ensure he can re-use this patch as well.
+Ah, that's it.
 
-Thanks
+You should drop that 'output-high' from the pin config as part of this
+patch to avoid toggling the reset line twice at boot.
+
+Looks like we have the same problem on the CRD as well. There the
+touchscreen still works, possibly because it has been enabled by the
+boot firmware or simply because that touchscreen can handle a shorter
+delay.
+
+Where exactly did you find those delay values in the ACPI tables? I
+couldn't seem to find anything in the decompiled DSDT.
+
+> If you later try to probe again, 200ms has elapsed since the reset was
+> deasserted (driven high).
+
+Right.
+
+Johan
 
