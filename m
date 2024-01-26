@@ -1,182 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-8481-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8483-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11CCB83E2E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 20:48:52 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B48583E34E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 21:24:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 36EDB1C23010
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 19:48:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 991931F26926
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 20:23:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 174DA249F3;
-	Fri, 26 Jan 2024 19:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94D7223742;
+	Fri, 26 Jan 2024 20:23:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Vce4AKX7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="go5OrEiA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA75249F4;
-	Fri, 26 Jan 2024 19:47:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFAE723745
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 20:23:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706298477; cv=none; b=KqUVNhp92S5OL4s58UicdFogCp9Wc1DiJPfm3xDpqqOTWtHbajAQppWS4Yqmf2/ICitQWb6FD7MW5+sQCGGEX4uZAnQIjj036RrG6ilF2V0C2d1PdZ49ZJQRHCkan8/MLp/BiASfR2eC5QnC56HKkPsW9Mx71mI+R//eN0LEOCs=
+	t=1706300636; cv=none; b=dxO08sBW22SmofWBMVR20TsIexbfHWDvqC0eoHe0jjBIc75QzmQI0hMSC0SUaGalyrESoYK54kHALgCmGFD+q9w0yKpuSbudI0Xiv1Wip/bpNpJSv07BeJbZ8JX2Kb+Iz6YlW1c9vuFOb19e2eLYqivkasHTCxD61znx43C3v2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706298477; c=relaxed/simple;
-	bh=Ji8V8/6QMqSvyXwiNVz2SRVGYMhG6xJrSjLOiHKq3hc=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fJ+f7YtT/hpUNNUFK5DoKKeUEk90K2kUpfrWF08/mgciOAqGdlrddEIyy89Qow+HGUx49gS6iijl6wkWrgXeOGQLbxdCsV7GY3ZTJXGdF592C0e4mO185EV4EQ7B0UOkMd7DSJdamzps2tq6puwlmLH6Lid317EW2d0BisnzKzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Vce4AKX7; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40QGP9sN013289;
-	Fri, 26 Jan 2024 19:47:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=Dwty2lX8ZQK/jKvohsYqyBDwT9yvmSCvSC15xrKSkq0=; b=Vc
-	e4AKX7a+3qwG3cj4fw78NbzGkNt9pjiMoUVe55F/jzVhcxaQ5n52EviheXxNM08D
-	M7cMYA7FlTcy2OIuSRLh91d2Tj2Fw2R5mHs+/kDInSRqxVHTSWLU6RZe4tKvl5Ql
-	LOEVbvVcd0L/i3sY+3O3kYay0dhwsxhSODtnN2iYNYjerVg7m9d2qM+wP/D0luHi
-	gIeSVbUyMlskQxIuTwj4mYWzrErKZ6cdtp4nbC+7dz8qrRxO7QNau4rOAxdB9fN3
-	gOv+NENkJ+wkQ8jIE/CenDGlO15BhnDC+qcm9V8icte8tWFSvKNqEoLwj+smVZjF
-	Lz4R1VEp0BI6j0cHluCg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vvfc8gkab-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Jan 2024 19:47:36 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40QJlZRG010276
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Jan 2024 19:47:35 GMT
-Received: from hu-uchalich-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Fri, 26 Jan 2024 11:47:32 -0800
-From: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
-Subject: [PATCH 5/5] soc: qcom: llcc: Add regmap for Broadcast_AND region
-Date: Fri, 26 Jan 2024 11:47:21 -0800
-Message-ID: <12bfdd23772c49530b8b0993cc82bc89b3eb4ada.1706296015.git.quic_uchalich@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <cover.1706296015.git.quic_uchalich@quicinc.com>
-References: <cover.1706296015.git.quic_uchalich@quicinc.com>
+	s=arc-20240116; t=1706300636; c=relaxed/simple;
+	bh=nE5OHZdLIvj/a7Lmd2brg9FJ10IxwXyugfknK5YldI8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iPtvRDw2l9zMoy9ff/a2DjU8eQUdjuXfDNQfvoQZqderDveJrcrCqoh5NO17p5UwKAXP+kZC8cwBBC2GhM9KF6Aa4ts0BT8tDTZu8hsLGXNEOeXJZi62bucF/jrQ+DZo1BVTPY/JTlp6xa8k1UNTEmCYFYhAhdl1QVJcyjI/vLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=go5OrEiA; arc=none smtp.client-ip=209.85.128.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-5ff88cbbcceso10461837b3.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 12:23:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706300634; x=1706905434; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZDpAa3J0tQehwA7Ry5x3tOdmo/d5D+jLymbO2mRHCxM=;
+        b=go5OrEiALk1Pm1OaDOc9mLle21fYZ0OZD6OLALmCcRtdRZkZnfEIfhO73YG+pjAnyc
+         PvIv2PzuYgBGT1k08QOiXZeYnk+cy+UzxhvLUKvKWydA/0H0j531edNVaZazA1AmN1D/
+         x33672s1Oa2Dwy71u7dlG0DjkuyiVSLEMa+ipwvSHr5EBWKZoIgbdOaMRBDLuQuXDwUc
+         btNSPUTfh0qzuDpHoiRqlW2vCEJ0UQsKXHL2S/JxIY+uqyDkR2oKhyGfjQmWALxKw99v
+         xek7iP3VssSmHfsVl9APV14DNIH64rE8AAGGY+2upihFQQE7Q/U0HEIz00OQPT8I5uqh
+         cWUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706300634; x=1706905434;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZDpAa3J0tQehwA7Ry5x3tOdmo/d5D+jLymbO2mRHCxM=;
+        b=xEg6aqapCl6Pd7v3ZK27DlHKLRNuZiWgUA/SKHN6Zi75kuGAa8AN36dzbpEP+OaXDq
+         yR7u8QPaJl6OXxF6WAWFg3U9lMp7s+oaXoPBVzF//by2rUPWC6ga0XyMla3skoSK49fU
+         MI+kVzo5GhlNUmuKaLHR24H6hARzu6xvCR/7bQNN8khTCTP7B1cQ8p2iVlGuaMSMzEDe
+         pKelReavWYW5pYf6L007vLefSop2hZ3+/vOH1gbUpWjONcItGGLcT6HDBYFOX0Z3qU0R
+         vfFd/nT7Tv3e6kJUl7lhFBIe37V7Au5EuFfwJof9jtx46SylTaoP0i8ZU1HgeF+0u4du
+         ZKzg==
+X-Gm-Message-State: AOJu0YzZK2IJRDK7zaNfYmULU+eUUAJJY5NYFL1eU73br19DVaYkOAO9
+	uuiseAiQSeW580scLVJlqnl2mcFidfbh924mD+xlaReuJDvBlFzWIisjlorxwpNnmaM1XHXLP7p
+	1T7IjljHSECdXscbWAoj7zhkIrcB4mH+sjg2cYTALpe/AK6a/
+X-Google-Smtp-Source: AGHT+IFPF1qh1U967GMR4IMG8c2YBW/cJng//YXeuLBPB86SGHhjM8CdAyJiEtMQUeyEpXkZzGmpDP4rnUUw9ZtJD9I=
+X-Received: by 2002:a05:690c:3603:b0:602:ce8b:6aec with SMTP id
+ ft3-20020a05690c360300b00602ce8b6aecmr735792ywb.51.1706300633869; Fri, 26 Jan
+ 2024 12:23:53 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3wlWglaAQShM26e0Aof2sS0qzvkWn8-z
-X-Proofpoint-ORIG-GUID: 3wlWglaAQShM26e0Aof2sS0qzvkWn8-z
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- adultscore=0 clxscore=1015 phishscore=0 malwarescore=0 spamscore=0
- suspectscore=0 priorityscore=1501 bulkscore=0 mlxlogscore=894
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401190000 definitions=main-2401260146
+References: <20240126-dp-power-parser-cleanup-v3-0-098d5f581dd3@linaro.org>
+In-Reply-To: <20240126-dp-power-parser-cleanup-v3-0-098d5f581dd3@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 26 Jan 2024 22:23:42 +0200
+Message-ID: <CAA8EJpoNuWaJTGs7MfHCQ+OE69HT+NZ1kjEw0ZJtvhZyS778zg@mail.gmail.com>
+Subject: Re: [PATCH RESEND v3 00/15] drm/msm/dp: clear power and parser
+ submodules away
+To: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
+	Stephen Boyd <swboyd@chromium.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-To support CSR programming, a broadcast interface is used to program
-all channels in a single command. Until SM8450 there was only one
-broadcast region (Broadcast_OR) used to broadcast write and check
-for status bit 0. From SM8450 onwards another broadcast region
-(Broadcast_AND) has been added which checks for status bit 1.
+On Fri, 26 Jan 2024 at 20:26, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> Reshuffle code in the DP driver, cleaning up clocks and DT parsing and
+> dropping the dp_power and dp_parser submodules.
+>
+> Initially I started by looking onto stream_pixel clock handling only to
+> find several wrapping layers around a single clocks. After inlining
+> and/or dropping them (and thus dp_power submodule), it was more or less
+> natural to continue cleaning up the dp_parser until it got removed
+> completely.
 
-Update llcc_drv_data structure with new regmap for Broadcast_AND
-region and initialize regmap for Broadcast_AND region when HW block
-version is greater than 4.1 for backwards compatibility.
+I see. I have resent v3 because b4 for some reason didn't pick up R-b
+tags  from v2. I didn't notice that `b4 send --resend` doesn't pick up
+changes and just resends the previous version.
+So I must beg your pardon for the spam. I'll push R-B tags via response emails.
 
-Switch from broadcast_OR to broadcast_AND region for checking
-status bit 1 as Broadcast_OR region checks only for bit 0.
-While at it, also check return value after reading Broadcast_OR
-region in llcc_update_act_ctrl().
 
-Signed-off-by: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
----
- drivers/soc/qcom/llcc-qcom.c       | 12 +++++++++++-
- include/linux/soc/qcom/llcc-qcom.h |  4 +++-
- 2 files changed, 14 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 4ca88eaebf06..5a2dac2d4772 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -849,7 +849,7 @@ static int llcc_update_act_ctrl(u32 sid,
- 		return ret;
- 
- 	if (drv_data->version >= LLCC_VERSION_4_1_0_0) {
--		ret = regmap_read_poll_timeout(drv_data->bcast_regmap, status_reg,
-+		ret = regmap_read_poll_timeout(drv_data->bcast_and_regmap, status_reg,
- 				      slice_status, (slice_status & ACT_COMPLETE),
- 				      0, LLCC_STATUS_READ_DELAY);
- 		if (ret)
-@@ -859,6 +859,8 @@ static int llcc_update_act_ctrl(u32 sid,
- 	ret = regmap_read_poll_timeout(drv_data->bcast_regmap, status_reg,
- 				      slice_status, !(slice_status & status),
- 				      0, LLCC_STATUS_READ_DELAY);
-+	if (ret)
-+		return ret;
- 
- 	if (drv_data->version >= LLCC_VERSION_4_1_0_0)
- 		ret = regmap_write(drv_data->bcast_regmap, act_clear_reg,
-@@ -1282,6 +1284,14 @@ static int qcom_llcc_probe(struct platform_device *pdev)
- 
- 	drv_data->version = version;
- 
-+	if (drv_data->version >= LLCC_VERSION_4_1_0_0) {
-+		drv_data->bcast_and_regmap = qcom_llcc_init_mmio(pdev, i + 1, "llcc_broadcast_and_base");
-+		if (IS_ERR(drv_data->bcast_and_regmap)) {
-+			ret = PTR_ERR(drv_data->bcast_and_regmap);
-+			goto err;
-+		}
-+	}
-+
- 	llcc_cfg = cfg->sct_data;
- 	sz = cfg->size;
- 
-diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
-index 1a886666bbb6..9e9f528b1370 100644
---- a/include/linux/soc/qcom/llcc-qcom.h
-+++ b/include/linux/soc/qcom/llcc-qcom.h
-@@ -115,7 +115,8 @@ struct llcc_edac_reg_offset {
- /**
-  * struct llcc_drv_data - Data associated with the llcc driver
-  * @regmaps: regmaps associated with the llcc device
-- * @bcast_regmap: regmap associated with llcc broadcast offset
-+ * @bcast_regmap: regmap associated with llcc broadcast OR offset
-+ * @bcast_and_regmap: regmap associated with llcc broadcast AND offset
-  * @cfg: pointer to the data structure for slice configuration
-  * @edac_reg_offset: Offset of the LLCC EDAC registers
-  * @lock: mutex associated with each slice
-@@ -129,6 +130,7 @@ struct llcc_edac_reg_offset {
- struct llcc_drv_data {
- 	struct regmap **regmaps;
- 	struct regmap *bcast_regmap;
-+	struct regmap *bcast_and_regmap;
- 	const struct llcc_slice_config *cfg;
- 	const struct llcc_edac_reg_offset *edac_reg_offset;
- 	struct mutex lock;
 -- 
-2.25.1
-
+With best wishes
+Dmitry
 
