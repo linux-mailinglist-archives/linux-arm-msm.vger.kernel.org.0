@@ -1,70 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-8503-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8504-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D1DBB83E672
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 00:17:44 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0DD183E678
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 00:18:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5E1AB28B0D9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 23:17:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 57D971F211AC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 23:18:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 191C35917E;
-	Fri, 26 Jan 2024 23:16:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 354EE5916E;
+	Fri, 26 Jan 2024 23:16:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="fzCCt5ng"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="X6OsNMgN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9A358114
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 23:16:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B3C5916D
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 23:16:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706310967; cv=none; b=YW8JEnRV0FtJVNPrUPos6Z3L+7FSHdkKkHGxqHeGYWAs/mZ/WVSjzuwFWs1tb+QyHd5GGVDyaHoZ+NFDTQZRypEDdmTZR3MpSXRDOepVTchyjI4YodWTDCd5cBvRN41TLzulF1wE3RR+pkD2FJqdrDnvCTf7lzLc/N2Dj7tNkkM=
+	t=1706310969; cv=none; b=WW9Q2F4L0ncI0c1xndJtffOkNWU3gxa9CJlPg5/PyMicau3twqTJhOE9Whsj2bJgLlKVaXmCARERy2H5s+ox/g11rHW8o5AfPyvgvzB7rhm/rrLbsuZFhiWPuFrCvAFWed5HyZ2QZhgbadsYwvX3Dt2JaBJ3OsV9WKQ/RfCpgZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706310967; c=relaxed/simple;
-	bh=WYMBG1J7l0m1ybFNIC2Y+ETBtIDVFmRqVIC1HYf1GvY=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=BMpwd3PW8wELQEOavZ8cYUMUJktx37VTy3gl9TRcv8v8dE8RQQ0281obHgW4WIZg/Mef6cUmavn5yawGJsXyv6zplIzN5W2Cwik76xYG9XsRQBfNibhnPti329gZlSoDH6IgVtcPuWgTdoMJke7sbsrAZeuRRYqkG36UoaPcY9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=fzCCt5ng; arc=none smtp.client-ip=209.85.222.177
+	s=arc-20240116; t=1706310969; c=relaxed/simple;
+	bh=R2OIOj19CJvWbbSWmqb+lX1DvD+M2O8JbQX48DRMZGA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=qi+idZ7vteSpRlQ7pyVJR9A5L2g2VaqgTm409xCPrv9mBhj4XOl1e/GwMGFUqXO6d/4RVo6XZeV/378cSMjzs5jmZorfoOEmWXirrgdO1383SazM8Hqd6FGcSHsBi9OAUDTBeCNRnZ2CUCJ5VGzgiKNnHbJ1tEpHVybNZCDx8JE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=X6OsNMgN; arc=none smtp.client-ip=209.85.222.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-783cd27aef4so58572085a.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 15:16:05 -0800 (PST)
+Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-783bc26b24aso66147885a.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 15:16:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1706310964; x=1706915764; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=m1FUbK+X4G1K2LR1tS4ThCJb/HchC8GmhhxPZxsSnw8=;
-        b=fzCCt5ng5XTN+SiVVLbI1IEe/7rjIqS1McXzXaiYvS3nySCsFLyGXMgA7FqF6mGysI
-         CuI0EH4rForETGJ5qQxIOr5g6STaOijt/ypwmmADWgf/pxO0iMXYQgG3bs3v4/olEFJS
-         i4hKpSZZRz+afP3R40tE+a4rt7+Uv8+uxOnaM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706310964; x=1706915764;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=chromium.org; s=google; t=1706310965; x=1706915765; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=m1FUbK+X4G1K2LR1tS4ThCJb/HchC8GmhhxPZxsSnw8=;
-        b=IX9/MXaRjaIJu3i8QGMQ4gN1yVIZJEz/YFE0x8fE8eFd5LoVtsZNkLrSJ2e3kZxGnb
-         sWCx9xApkKFyP1bJefmTZKR+eSdPnbFOnkNe0kDwM1UwkUdU646NYLfSGQjePr8F4J65
-         dnKrP/jP0H3ZMMSaH23wChvrFCOvh2vWtMfoTgtDkkXq0u6XX2eN24F74cTkA7jFhCmf
-         PWDH1hk+EwB1X42OjZjp76rhxVRoYIaLLg5T50isxBgyr6/IyWvBbTvyGAhkg7rhQL2n
-         Jp42d2A3Bz13LjsiHAm3dhx0IzHHBQWOGpfUxg5S86gxNSmMvhGqqvtSf86eFb+Kfphj
-         W2cQ==
-X-Gm-Message-State: AOJu0YyQVlAt9QhR6EnsQBRBqdAwpUId6N3mMN5vg1OAL9Y36Tw+HuLu
-	zUpzAYfzO4gHUoL0Xg4mm3ouZhA1QWnNvz8cb0VHxSZSnBB9nnsq/wCk9Zfuzg==
-X-Google-Smtp-Source: AGHT+IEQ/tz8turm1P2FDbceVdQsCYW4IY1reD0BjYRsTNFIDrY6wN0U97EZCcKxKn339wiLqTkGcQ==
-X-Received: by 2002:ae9:e647:0:b0:783:df7a:a7c4 with SMTP id x7-20020ae9e647000000b00783df7aa7c4mr586658qkl.51.1706310964150;
-        Fri, 26 Jan 2024 15:16:04 -0800 (PST)
+        bh=Ar8mBbHXqsE1e1cRGpZMgerGImf36JANUI0hlBJjqHM=;
+        b=X6OsNMgNDSbzeQguxuNF+fl2a/YABnI6Z/YQQxitxrhaNMod9dcUbOM+rNAVSWhHZN
+         hTC2O5zT+LCq5CEpa0OYUtE7Klvwx0APwKOIaWkLZ1lObj29I/xZc4Kuggv2jZfvoeQ/
+         MJf7vi2wFyx3ZZwMdtW9MdjwtZf5HDJYeDjmU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706310965; x=1706915765;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Ar8mBbHXqsE1e1cRGpZMgerGImf36JANUI0hlBJjqHM=;
+        b=ImWuWh6TDsX7QLUgRRZr+KTmMt/iMnmgt/f45q6rAGrqX4aDC24hUjkxzMRpVc1p8E
+         S+skzeugs1UMmKvoZ7q/gKj0DS8xTbnxWnL6gVK1k8mBrLtrQYAFj2vFBRKwoYxyg4m6
+         M5KPvXvw5aVgLD/NOnK8AnwinLnhcql6SlCuW3iOamgearPvh6u/sPY0iryYGOSV0j3G
+         jHEVfapv7Tz6/YshrIiw2Gz7QN4LxJlndzZDr4NlWht5eN7UD6DibnWh3u2GeJMPStk6
+         PgMnNKH+U2nO+bD8t/x+TGHFNhlFRzgqBa7KAjuHkC4zNzr9md8kC8HmiY/jShceybqf
+         k1vw==
+X-Gm-Message-State: AOJu0Yyr4uhg1lCn0iDVLE/B+aBYa7giX81tisbeRXaz+jH+pyO2cOY3
+	qOc9jKA3oi564FER3JCfTUxm1mWgf6B/DhDF1p65RIW6FUioV3btiA0x2orbvQ==
+X-Google-Smtp-Source: AGHT+IEp2TplztXDP53F55JwtnOMG+m/bhamzc+Y9PQOYbhM+M8gtls3bXtKPqVmvF6K1+rXQLaydQ==
+X-Received: by 2002:a05:620a:46a6:b0:783:35f0:d03c with SMTP id bq38-20020a05620a46a600b0078335f0d03cmr626950qkb.135.1706310965318;
+        Fri, 26 Jan 2024 15:16:05 -0800 (PST)
 Received: from denia.c.googlers.com (240.157.150.34.bc.googleusercontent.com. [34.150.157.240])
-        by smtp.gmail.com with ESMTPSA id m4-20020a05620a290400b00783de3ddf5esm507358qkp.70.2024.01.26.15.16.02
+        by smtp.gmail.com with ESMTPSA id m4-20020a05620a290400b00783de3ddf5esm507358qkp.70.2024.01.26.15.16.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Jan 2024 15:16:03 -0800 (PST)
+        Fri, 26 Jan 2024 15:16:04 -0800 (PST)
 From: Ricardo Ribalda <ribalda@chromium.org>
-Subject: [PATCH 00/17] media: kerneldoc warnings
-Date: Fri, 26 Jan 2024 23:15:59 +0000
-Message-Id: <20240126-gix-mtk-warnings-v1-0-eed7865fce18@chromium.org>
+Date: Fri, 26 Jan 2024 23:16:00 +0000
+Subject: [PATCH 01/17] media: mediatek: vcodec: Fix kerneldoc warnings
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,9 +74,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAC89tGUC/x3MQQqAIBBA0avErBtQK4WuEi2sRhsiC40KorsnL
- d/i/wcSRaYEbfFApJMTbyFDlgWMsw2ekKdsUELVQiqNnm9cjwUvGwMHn9CMRjjdVEaaAXK2R3J
- 8/8uuf98PwmNAwWIAAAA=
+Message-Id: <20240126-gix-mtk-warnings-v1-1-eed7865fce18@chromium.org>
+References: <20240126-gix-mtk-warnings-v1-0-eed7865fce18@chromium.org>
+In-Reply-To: <20240126-gix-mtk-warnings-v1-0-eed7865fce18@chromium.org>
 To: Tiffany Lin <tiffany.lin@mediatek.com>, 
  Andrew-CT Chen <andrew-ct.chen@mediatek.com>, 
  Yunfei Dong <yunfei.dong@mediatek.com>, 
@@ -111,56 +112,42 @@ Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-amlogic@lists.infradead.org, Ricardo Ribalda <ribalda@chromium.org>
 X-Mailer: b4 0.12.3
 
-While automating the CI, I found the following kernel-doc errors.
+These fields seems to be gone:
+drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp8_req_if.c:57: warning: Excess struct member 'wait_key_frame' description in 'vdec_vp8_slice_info'
+drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp9_req_lat_if.c:166: warning: Excess struct member 'mv_joint' description in 'vdec_vp9_slice_counts_map'
 
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 ---
-Ricardo Ribalda (17):
-      media: mediatek: vcodec: Fix kerneldoc warnings
-      media: videodev2.h: Fix kerneldoc
-      media: media-entity.h: Fix kerneldoc
-      media: cec.h: Fix kerneldoc
-      media: pci: dt315.h: Fix kerneldoc
-      media: i2c: css-quirk.h: Fix kerneldoc
-      media: i2c: adv748: Fix kerneldoc
-      media: mediatek: jpeg: Fix kerneldoc
-      media: mediatek: vcodec: Fix kerneldoc
-      media: verisilicon: Fix kerneldoc
-      media: qcom: venus: Fix kerneldoc
-      media: samsung: exynos4-is: Fix kerneldoc
-      media: samsung: s5p-mfc: Fix kerneldoc
-      media: dvb-usb: Fix kerneldoc
-      media: ipu3: Fix kerneldoc
-      media: staging: meson: Fix kerneldoc
-      linux: v4l2-vp9.h: Fix kerneldoc
+ drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp8_req_if.c    | 1 -
+ .../media/platform/mediatek/vcodec/decoder/vdec/vdec_vp9_req_lat_if.c    | 1 -
+ 2 files changed, 2 deletions(-)
 
- drivers/media/i2c/adv748x/adv748x.h                |  1 -
- drivers/media/i2c/ccs/ccs-quirk.h                  |  8 +++---
- drivers/media/pci/dt3155/dt3155.h                  |  1 -
- .../media/platform/mediatek/jpeg/mtk_jpeg_core.h   |  1 -
- .../mediatek/vcodec/decoder/mtk_vcodec_dec.h       |  1 -
- .../mediatek/vcodec/decoder/vdec/vdec_vp8_req_if.c |  1 -
- .../vcodec/decoder/vdec/vdec_vp9_req_lat_if.c      |  1 -
- .../platform/mediatek/vcodec/decoder/vdec_vpu_if.h |  1 -
- .../mediatek/vcodec/encoder/mtk_vcodec_enc.h       |  1 -
- drivers/media/platform/qcom/venus/core.h           |  1 -
- .../media/platform/samsung/exynos4-is/fimc-lite.h  |  3 --
- .../platform/samsung/s5p-mfc/s5p_mfc_common.h      |  1 -
- drivers/media/platform/verisilicon/hantro.h        |  1 -
- drivers/media/usb/dvb-usb/dvb-usb.h                |  2 --
- .../staging/media/ipu3/include/uapi/intel-ipu3.h   |  3 --
- drivers/staging/media/meson/vdec/vdec.h            |  1 -
- include/media/cec.h                                |  2 --
- include/media/media-entity.h                       |  4 ---
- include/media/v4l2-vp9.h                           |  6 +++-
- include/uapi/linux/videodev2.h                     | 32 +++++++++++-----------
- 20 files changed, 25 insertions(+), 47 deletions(-)
----
-base-commit: 615d300648869c774bd1fe54b4627bb0c20faed4
-change-id: 20240126-gix-mtk-warnings-7c70f653717b
+diff --git a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp8_req_if.c b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp8_req_if.c
+index f64b21c07169..f677e499fefa 100644
+--- a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp8_req_if.c
++++ b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp8_req_if.c
+@@ -37,7 +37,6 @@
+  * @bs_sz:		bitstream size
+  * @resolution_changed:resolution change flag 1 - changed,  0 - not change
+  * @frame_header_type:	current frame header type
+- * @wait_key_frame:	wait key frame coming
+  * @crc:		used to check whether hardware's status is right
+  * @reserved:		reserved, currently unused
+  */
+diff --git a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp9_req_lat_if.c b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp9_req_lat_if.c
+index 69d37b93bd35..cf48d09b78d7 100644
+--- a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp9_req_lat_if.c
++++ b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp9_req_lat_if.c
+@@ -141,7 +141,6 @@ struct vdec_vp9_slice_frame_counts {
+  * @skip:	skip counts.
+  * @y_mode:	Y prediction mode counts.
+  * @filter:	interpolation filter counts.
+- * @mv_joint:	motion vector joint counts.
+  * @sign:	motion vector sign counts.
+  * @classes:	motion vector class counts.
+  * @class0:	motion vector class0 bit counts.
 
-Best regards,
 -- 
-Ricardo Ribalda <ribalda@chromium.org>
+2.43.0.429.g432eaa2c6b-goog
 
 
