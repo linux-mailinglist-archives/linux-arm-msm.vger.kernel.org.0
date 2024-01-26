@@ -1,76 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-8446-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8447-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADE4483DE92
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 17:23:26 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B65AD83DED4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 17:36:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 506ADB23C1D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 16:23:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6E5022838A4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jan 2024 16:36:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 656321D54C;
-	Fri, 26 Jan 2024 16:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F14D1D699;
+	Fri, 26 Jan 2024 16:36:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fEkTsWGm"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QTlmYaPZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35A231CD3F;
-	Fri, 26 Jan 2024 16:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D63391DA22;
+	Fri, 26 Jan 2024 16:35:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706286199; cv=none; b=fkpxCt6ZMbMfdTfQBW6ORKApV4y9LnkLq+p2JQ0xV7Z8RWaSg0Q/Hrt76rcge7Gh4RzSlp1SavikUVH3j7vPXyPwETml8Fnjf8PsBa6e62ZUgxyjr7Eus3L3qpk8ia/CyfEJxDvKMRt0i+9EK274nbzfUtW3VBYHefzDxMunJuk=
+	t=1706286960; cv=none; b=lTHtuJmTGpSUA3+yhtEKHbJ0PxPX7B9sDN9pJlr0XymKSCnMoQ4CskgsgQsj9uOJtOXWDwd3m80a3TYbI6IzKqss6K5p4y6oyTS8NfqP+bY4Ex5FNVaisUoyk+Jo55m46QRU+P5M9QEpFIOQhuspjhQFIh5dPKbKstBRQ7ZpC0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706286199; c=relaxed/simple;
-	bh=2JCXgq32qIglC6mO72WRbjPvok3iIvPLQe2ZqDXoq+4=;
+	s=arc-20240116; t=1706286960; c=relaxed/simple;
+	bh=1CvEZcDRXJkLYSzovAlFWb7VTNYLLAWd7l3AIviMY/0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ACJ4xEDku3bvSGTSw2JZKg6ICFGNRqGXbXlqj0sw14WqDgvT6lr7qE8kUzM4oZA96by1+Nn55tgOhpoUky2FEso6GWIB71FT/CZB/A70Mg2NKinkTCN0NAJvEOLABOLXlzls/oKTBM86zzCFh9R1CPz4UhI8Chu+1Ik/8edcD/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fEkTsWGm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A10D0C433F1;
-	Fri, 26 Jan 2024 16:23:18 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=VFeEh/aFFjqB6Y/NYY5W2xitgPu7puixn11Nq80Mux9jp0vWinprmIwSFoO/jTxqAaWml94CZ6t8weiOJlscVOwbXWeVIhZYHNWNO0HW+DvgesoqVQ36KIM7nR+9gm/tTTbnKWoXKEXt1qChyX6VBpzixiSLTyq2GWvgPg0+gak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QTlmYaPZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59E45C433F1;
+	Fri, 26 Jan 2024 16:35:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706286198;
-	bh=2JCXgq32qIglC6mO72WRbjPvok3iIvPLQe2ZqDXoq+4=;
+	s=k20201202; t=1706286958;
+	bh=1CvEZcDRXJkLYSzovAlFWb7VTNYLLAWd7l3AIviMY/0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fEkTsWGm+pTv3JpEFsZcSKKxEWVnImncAwsQyoI3Ld7l8SqlSPkkztT/6mu8pqEam
-	 vpLLbGXpWSpvxubuMPdi5uAwFg5PAsQpDJ2RYnDpXQb18Lkdozxrjscnx2eqEOnHm8
-	 N3YGwkvhkqmRoM4YyAG0hwlgvuEX6Cw1xuO9WWStHUSB+R76n524qZSpZ52mqSDMbt
-	 qAmd1GVQf7jgU3LVhcwQgru0P+PSyZS1HKGCkz9QcV41zFIh+g6izksdFp3d+SIS53
-	 oB319QBS/gebFb4F/ER1A13hzFoCVoHbdFA3lczGeOkC/6HOiU0ADFoxFjTG9zgJ8u
-	 8cbQygMkAxiWg==
+	b=QTlmYaPZfmk0WzHXYdceMMa/gKFOZmoiQQeszLWFCww0as7M20/nv+JeMMwgXU1t8
+	 0Ocpmgjbg3Hfxyq56UzmzAji+I5+BfkmssrLQmGXH91zqHF4Vl8aTaZV7uWl1jMLY8
+	 SAHKlwS7lXgTm1ZP8hwVePGQzGxCh4xIKMctxnHl23wtrP6IE9O5gl0aQ03urPZt1Z
+	 1mzHGgAUmksymZl3wRtQoZF5ZjDtC0C2a2dhDwZ4P1IYGdXmBk+qUzMKeo3sBRTTVR
+	 EZjs5yn5oMEpM+IpbSZR713pFDKjc6rw6WU0txTmbI9NxviioBtVBRYiG7IO4ZjqBc
+	 8f3fgxpGaswEw==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan@kernel.org>)
-	id 1rTOzK-000000007rm-46Kw;
-	Fri, 26 Jan 2024 17:23:31 +0100
-Date: Fri, 26 Jan 2024 17:23:30 +0100
+	id 1rTPBa-00000000808-1LoK;
+	Fri, 26 Jan 2024 17:36:11 +0100
+Date: Fri, 26 Jan 2024 17:36:10 +0100
 From: Johan Hovold <johan@kernel.org>
 To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: Daniel Thompson <daniel.thompson@linaro.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Rob Herring <robh+dt@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-	Jiri Kosina <jikos@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sc8280xp-x13s: Fix/enable
- touchscreen
-Message-ID: <ZbPcgqr9gBByqV7Q@hovoldconsulting.com>
-References: <20240125-x13s-touchscreen-v1-0-ab8c882def9c@quicinc.com>
- <20240125-x13s-touchscreen-v1-2-ab8c882def9c@quicinc.com>
- <ZbNpdaSyFS9tYrkd@hovoldconsulting.com>
- <20240126130232.GA5506@aspen.lan>
- <ZbPCJv7HW8OQzPMT@hovoldconsulting.com>
- <20240126145346.GN2936378@hu-bjorande-lv.qualcomm.com>
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] arm64: dts: qcom: sc8280xp: Introduce additional
+ tsens instances
+Message-ID: <ZbPfeq6ElA3vMf_O@hovoldconsulting.com>
+References: <20240126-sc8280xp-tsens2_3-v2-1-8504d18828de@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,51 +66,86 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240126145346.GN2936378@hu-bjorande-lv.qualcomm.com>
+In-Reply-To: <20240126-sc8280xp-tsens2_3-v2-1-8504d18828de@quicinc.com>
 
-On Fri, Jan 26, 2024 at 06:53:46AM -0800, Bjorn Andersson wrote:
-> On Fri, Jan 26, 2024 at 03:31:02PM +0100, Johan Hovold wrote:
-> > On Fri, Jan 26, 2024 at 01:02:32PM +0000, Daniel Thompson wrote:
-
-> > > In short it looks like the delays make the difference and, even a short
-> > > delay, can fix the problem.
-> > 
-> > Right, but since the suppliers are left enabled by the bootloader (and
-> > never disabled by the kernel), that only begs the question of why this
-> > makes a difference.
+On Fri, Jan 26, 2024 at 07:12:45AM -0800, Bjorn Andersson wrote:
+> The SC8280XP contains two additional tsens instances, providing among
+> other things thermal measurements for the GPU.
 > 
-> You're right, the supply is kept on by other things, so this isn't the
-> problem.
+> Add these and a GPU thermal-zone.
 > 
-> > Without the delay, the other HID devices are probing (successfully)
-> > slightly before, but essentially in parallel with the touchscreen while
-> > using the same resources. Is that causing trouble somehow?
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> ---
+> Changes in v2:
+> - Drop TM/SROT comments
+> - Remove polling delays, rely on interrupts
+> - Link to v1: https://lore.kernel.org/r/20240118-sc8280xp-tsens2_3-v1-1-e86bce14f6bf@quicinc.com
+> ---
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 37 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 37 insertions(+)
 > 
-> The difference to those other HID devices is GPIO 99 - the reset pin,
-> which is configured pull down input from boot - i.e. the chip is held in
-> reset.
-> 
-> When the HID device is being probed, pinctrl applies &ts0_default starts
-> driving it high, bringing the device out of reset. But insufficient time
-> is given for the chip to come up so the I2C read fails.
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index febf28356ff8..7bfbb1bd8f4a 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -4033,6 +4033,28 @@ tsens1: thermal-sensor@c265000 {
+>  			#thermal-sensor-cells = <1>;
+>  		};
+>  
+> +		tsens2: thermal-sensor@c251000 {
+> +			compatible = "qcom,sc8280xp-tsens", "qcom,tsens-v2";
+> +			reg = <0 0x0c251000 0 0x1ff>,
+> +			      <0 0x0c224000 0 0x8>;
+> +			#qcom,sensors = <11>;
+> +			interrupts-extended = <&pdc 122 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&pdc 124 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "uplow", "critical";
+> +			#thermal-sensor-cells = <1>;
+> +		};
+> +
+> +		tsens3: thermal-sensor@c252000 {
+> +			compatible = "qcom,sc8280xp-tsens", "qcom,tsens-v2";
+> +			reg = <0 0x0c252000 0 0x1ff>,
+> +			      <0 0x0c225000 0 0x8>;
+> +			#qcom,sensors = <5>;
+> +			interrupts-extended = <&pdc 123 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&pdc 125 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "uplow", "critical";
+> +			#thermal-sensor-cells = <1>;
+> +		};
 
-Ah, that's it.
+These should go before tsens0 based on the unit address.
 
-You should drop that 'output-high' from the pin config as part of this
-patch to avoid toggling the reset line twice at boot.
+> +
+>  		aoss_qmp: power-management@c300000 {
+>  			compatible = "qcom,sc8280xp-aoss-qmp", "qcom,aoss-qmp";
+>  			reg = <0 0x0c300000 0 0x400>;
+> @@ -5212,6 +5234,21 @@ cpu-crit {
+>  			};
+>  		};
+>  
+> +		gpu-thermal {
+> +			polling-delay-passive = <0>;
+> +			polling-delay = <0>;
+> +
+> +			thermal-sensors = <&tsens2 2>;
+> +
+> +			trips {
+> +				cpu-crit {
+> +					temperature = <110000>;
+> +					hysteresis = <1000>;
+> +					type = "critical";
+> +				};
+> +			};
+> +		};
 
-Looks like we have the same problem on the CRD as well. There the
-touchscreen still works, possibly because it has been enabled by the
-boot firmware or simply because that touchscreen can handle a shorter
-delay.
+Shall you submit a follow-on patch to set the polling delays to zero
+for the other thermal zones (cpu, cluster, mem) so that we don't poll
+for those?
 
-Where exactly did you find those delay values in the ACPI tables? I
-couldn't seem to find anything in the decompiled DSDT.
+Looks good to me otherwise: 
 
-> If you later try to probe again, 200ms has elapsed since the reset was
-> deasserted (driven high).
-
-Right.
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 
 Johan
 
