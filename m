@@ -1,62 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-8627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 998A683F0D3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 23:36:09 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B012683F0D6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 23:36:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CBED11C229A4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 22:36:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A3ED28843D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 22:36:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D12E52421D;
-	Sat, 27 Jan 2024 22:34:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 653CB2E62A;
+	Sat, 27 Jan 2024 22:34:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fnbxlE8J"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iy5u4aMo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7ADD241E1;
-	Sat, 27 Jan 2024 22:34:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39CE02DF7D;
+	Sat, 27 Jan 2024 22:34:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706394893; cv=none; b=suSGK74t9PLmmot95MBlPn0pkPHOTx3oR7llB77JVdIvGVUlsIkIz18cjkHtZVermtCI4uDEm7y1njwZjIOOv+skj8ldcRmFr2uFobCfT5FsVwjPUkuoDEAK7oRmma54aD7rnaWMOufGcwSXqIwVaEG4B6dtYHTgevF85zNdZdA=
+	t=1706394894; cv=none; b=hOgn/r7gUsRxtIcghEMz/DhkgykjGvAGkcfX0w1/5chJpCZ4xsd+WohxHXbB2U0G2hiX8aLBWDMlAish9WW6SGzvYjDVclJEVcdZTTFw8P54hHNtVJ0fTb8FC27tzqvOB9VNdzPWYZmpSYGg7BhrpyU8LGaI4C1jYurGTc5rUO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706394893; c=relaxed/simple;
-	bh=PgAuTYsegsE4i+EZmHhYRd11EsxV/Yf/IyoOBaHSkfI=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bg9rn053mzAcyKZlzft6eXiXHZnVdRFWlVkdVJLvRXpdZo7r2iOXtgQW2ssNzz5iQhD3jkjZPfx4xrXmaf9b6KOJMdFf4PozkWBggVJGPhXgqnCY1L+vPY0tWsUtwqAFLPt3IB4LK/sRO1FqSVkYxBJm/n5YXt8AgevViRCvaw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fnbxlE8J; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59CC3C433F1;
-	Sat, 27 Jan 2024 22:34:52 +0000 (UTC)
+	s=arc-20240116; t=1706394894; c=relaxed/simple;
+	bh=3XI+ijAAAJlxjLXfL/N3a6o8AO58B78cy9nUhRsZQM8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ZDNfapP6PheeFkQ7Oi36c2n3v01QFKl0IyoBeBX/At6lWhOd+IatS+13D9xYvrcoLjkZw/1DkDrU5+ZUu/tROSgJj86kUDpNVs2FRN74DfSpz7PhmRZx5MjeaL5GrwEWeaO2+Rm4mtxubPMo6L0F5QlW/kI+JzEoMGHDu7gXF8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iy5u4aMo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51249C43399;
+	Sat, 27 Jan 2024 22:34:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1706394893;
-	bh=PgAuTYsegsE4i+EZmHhYRd11EsxV/Yf/IyoOBaHSkfI=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=fnbxlE8JhpvPHjv7ooYUmDJSb/kdbf97vwnmHX2wVwZrn4fi51c3eno3ASd7FQjlZ
-	 wi/EksUJKdG6/d7oiydDCzCF1/gHjz/KJ3gHQ5lpJNMEEAKuBJ16eB4botVaRMvrpt
-	 +JZU7pwVsISWxqcxGuXd89XdMHuR81iMVx9txLoxmmeXD8lVd1Y0pLWlMkm/rl/Mri
-	 mKYCrOmIx6sRUiph91oMkZREAp/ivRvLkVKPInNsONQYd4d9WGNqjJiMMpMM59Vu31
-	 /Au4wHX7LIRVtL99rMdmL1ODkot1me/Qb98E6bFaKnv2hX1FsL9MTiJDDXpQIXh3JI
-	 uKVQ90be6iFTQ==
+	bh=3XI+ijAAAJlxjLXfL/N3a6o8AO58B78cy9nUhRsZQM8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=iy5u4aMo04ysrVsyxXSf38d45o3muIZ1O1RMBgXBxniVpU8UY3A93/ADluXrqYN8J
+	 wX8mE3cbxNP9NFUsKv6hL66wEBcXEAEa9K7iifH4mlV8dNOA7HJas+SKEV6HldVFV4
+	 iI2DP0aEGiaDaJf5zzRC38Fz8urSSe/beravBE5LdVtjqbdyGtPgJAvrPIrJgVKoCy
+	 mwl1hP9MWJWozbl9/wu5jpaPY+V0cehzTTHCmLJvrr12ue4b0N1DtBArhCLpwzgGQX
+	 Lw1F0eAIynHID2abwS6Ctke91kwlgLywCLECp5++tyRyslo+36a7ke7l65Os+kFRWj
+	 ecIuvqvkCbe0g==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Andy Gross <agross@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v2] ARM: dts: qcom: use defines for interrupts
-Date: Sat, 27 Jan 2024 16:34:44 -0600
-Message-ID: <170639487716.21016.14504510609825555736.b4-ty@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Mantas Pucka <mantas@8devices.com>
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] clk: qcom: gcc-ipq6018: add qdss_at clock needed for wifi operation
+Date: Sat, 27 Jan 2024 16:34:45 -0600
+Message-ID: <170639487718.21016.15465918144131759968.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20231205153317.346109-1-krzysztof.kozlowski@linaro.org>
-References: <20231205153317.346109-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1706001970-26032-1-git-send-email-mantas@8devices.com>
+References: <1706001970-26032-1-git-send-email-mantas@8devices.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,16 +65,17 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 05 Dec 2023 16:33:17 +0100, Krzysztof Kozlowski wrote:
-> Replace hard-coded interrupt parts (GIC, flags) with standard defines
-> for readability.  No changes in resulting DTBs.
+On Tue, 23 Jan 2024 11:26:09 +0200, Mantas Pucka wrote:
+> Without it system hangs upon wifi firmware load. It should be enabled by
+> remoteproc/wifi driver. Bindings already exist for it, so add it based
+> on vendor code.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] ARM: dts: qcom: use defines for interrupts
-      commit: 81924ec7a0d50f6fe3ed5a616ae3ef30f1edd932
+[1/1] clk: qcom: gcc-ipq6018: add qdss_at clock needed for wifi operation
+      commit: fd712118aa1aa758da1fd1546b3f8a1b00e42cbc
 
 Best regards,
 -- 
