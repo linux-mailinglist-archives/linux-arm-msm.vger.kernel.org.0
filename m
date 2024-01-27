@@ -1,129 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-8599-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8600-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15B9683EF12
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 18:24:28 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 996D183EF14
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 18:25:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3AA611C215FB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 17:24:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CC6811C2146F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 17:25:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71BFE2D04A;
-	Sat, 27 Jan 2024 17:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D543E2CCB4;
+	Sat, 27 Jan 2024 17:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=rong.moe header.i=i@rong.moe header.b="C7xMRoQE"
+	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="K9mpjh1w"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29022E41C;
-	Sat, 27 Jan 2024 17:24:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706376245; cv=pass; b=U/bDnAJsiQBMZZVuvGqWxeqXWIyTBeDxnEg3be/RFbnlklPRkoOXbYYOzfFJY1zAajXk/bTwju7vRG0fe1hC+tjyKfI5GDbNT4EDXsfyJnHsFipGxV/x3gKKEv0y7A6jeMgd7pI4N4UjKkc2PZ7e7GwsNM9MBuyZkRYj+G7Q5Ms=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706376245; c=relaxed/simple;
-	bh=ZZJDvmwgaVNUkd/QLeaQQXIy40n2tDqzdfn4OklKNVA=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB522E629;
+	Sat, 27 Jan 2024 17:24:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1706376297; cv=none; b=l+r5Ue493NmytYiu8Rh3cA+/W5p7FG2Z83m2tDAyvIiGRsqavv9QquMkQyUNuaIhSBv77ISzcM2E0xg9smFrsQT7KhA3by99DBhWnaAJ4eYysZ/JlaNv4ZQOMnbFX1/691Aps/kG43IWbA8cDTcRR1qV+wFDKHvzuttoZpzcUBA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1706376297; c=relaxed/simple;
+	bh=um2zQi0rBzC8vtFhb5/Jr5Ju8k+jgRVIJhHFh1WG0GQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bKkDi9Gn3y1oiEpZ0WV5lOnZqRXuk6+lnnQu6rK4iwL+SkPdNqrsayo+2I4omN6o9ImeMzh1ChuzYWeoCnk3FoHVDXGgDTlSNVGJAce8KMyzD4p25G8yumsY0QJLlsApRDySlNIUY876CjuXyO4LVTxP9mFyHsKZQlFoRhrCDtM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rong.moe; spf=pass smtp.mailfrom=rong.moe; dkim=pass (1024-bit key) header.d=rong.moe header.i=i@rong.moe header.b=C7xMRoQE; arc=pass smtp.client-ip=136.143.188.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rong.moe
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rong.moe
-Delivered-To: i@rong.moe
-ARC-Seal: i=1; a=rsa-sha256; t=1706376240; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=nTPb8H7xvRgdLGEg2j8n83xs1KESybnQCz5lyIuil0J39LUkdE1p3QfZ0wg4ikORaQ517AQNbiOG5b0n3H2RJVEM6Q2zM4mGf8JXW42+XBrnbaMh+cRfV6q1ENRZ8m8VzwCdHpVEDr+B6SQWBfng1ZnM4kTGBqdoxGQ8AX4iqEc=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1706376240; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=j651x5Hilte5Xbmo4xSk1+lCVyQJvHUohQWSnBdMyQw=; 
-	b=CEEeMxdwNdLypKowaFmcHBUmeqYr4bIcTWuOumFPA8y5WKOwLSnITmmh+07jdUT6EC7h2p8o/QdGDrr0AGu8r9YnLrUx/qn+TqQ2/6bXPRyAEeNlEI5gnuYCCj5T6JaQHA4cEQl+jBDcxxR807Xzu0Yu8mkMWrC0FO1Cv4Qw0kY=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=rong.moe;
-	spf=pass  smtp.mailfrom=i@rong.moe;
-	dmarc=pass header.from=<i@rong.moe>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1706376240;
-	s=zmail; d=rong.moe; i=i@rong.moe;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=j651x5Hilte5Xbmo4xSk1+lCVyQJvHUohQWSnBdMyQw=;
-	b=C7xMRoQEth9LevVh3MTtyXoIBncnolsugccpdeifSTkVtGnQB7343r6fBJWO5b35
-	xH/qAFyvqfH1exttrDlp1vH6VyukwTMN14QjwN8VL4s9/aOiGutUkfVM9xCEYY3W/xP
-	Pe9oJh9STJwHcnLWkS4U8QSHksLDHhCZampfs8jk=
-Received: from tb.lan (182.118.239.249 [182.118.239.249]) by mx.zohomail.com
-	with SMTPS id 1706376237613521.4403435319042; Sat, 27 Jan 2024 09:23:57 -0800 (PST)
-From: Rong Zhang <i@rong.moe>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: Rong Zhang <i@rong.moe>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Icenowy Zheng <uwu@icenowy.me>
-Subject: [PATCH v2 4/4] ARM: dts: qcom: msm8974: Add DTS for Samsung Galaxy S5 China (kltechn)
-Date: Sun, 28 Jan 2024 01:21:53 +0800
-Message-ID: <20240127172155.63624-5-i@rong.moe>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240127172155.63624-1-i@rong.moe>
-References: <20240127172155.63624-1-i@rong.moe>
+	 MIME-Version:Content-Type; b=g4oxQLhWOX1beG1Il4PqsUqSLs33HjC01tCtnCyvzMTLvOs/jP9C8drOOnWmnn88djDarKuktzswzqj5w4wVPvgZdy9u0dyClbM47hFvmPp/XRat0+s7QJP50PHySHpvTyfQnfwUL4KZSzWZVvsHIJ5gw/qAAKEMIjespW/LuA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz; spf=pass smtp.mailfrom=z3ntu.xyz; dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b=K9mpjh1w; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=z3ntu.xyz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
+	t=1706376288; bh=um2zQi0rBzC8vtFhb5/Jr5Ju8k+jgRVIJhHFh1WG0GQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=K9mpjh1w99h/qZJXyhsZ0vx7eSlMDE5z+MlrrtjViAdsFilQbubnRXXZs7ILkS+O+
+	 HZYrfKY21rt9or3WbeMF78RgtUYmofwTbRC9UFNIpe1BR7slgcfujz52TIGKdFFBCN
+	 tTlXdkxr5ojIaE5/MqPC9ODVhxrvqpJ8/QAIrPJI=
+From: Luca Weiss <luca@z3ntu.xyz>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Vladimir Lypak <vladimir.lypak@gmail.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFC 1/2] arm64: dts: qcom: msm8953: Add GPU IOMMU
+Date: Sat, 27 Jan 2024 18:24:46 +0100
+Message-ID: <6009977.lOV4Wx5bFT@z3ntu.xyz>
+In-Reply-To: <a75d8b2f-a55a-4087-b039-60769678a480@linaro.org>
+References:
+ <20240125-msm8953-gpu-v1-0-f6493a5951f3@z3ntu.xyz>
+ <d576e655-5d00-44ff-9405-0fceaa2d3935@linaro.org>
+ <a75d8b2f-a55a-4087-b039-60769678a480@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
 
-The only difference between Samsung Galaxy S5 China (kltechn) and klte
-is the gpio pins of i2c_led_gpio. With pins corrected, the LEDs and WiFi
-are able to work properly.
+On Freitag, 26. J=E4nner 2024 00:49:55 CET Konrad Dybcio wrote:
+> On 1/25/24 23:24, Dmitry Baryshkov wrote:
+> > On 25/01/2024 23:56, Luca Weiss wrote:
+> >> From: Vladimir Lypak <vladimir.lypak@gmail.com>
+> >>=20
+> >> Add the IOMMU used for the GPU on MSM8953.
+> >>=20
+> >> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
+> >> ---
+> >>   arch/arm64/boot/dts/qcom/msm8953.dtsi | 31
+> >> +++++++++++++++++++++++++++++++ 1 file changed, 31 insertions(+)
+> >>=20
+> >> diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi
+> >> b/arch/arm64/boot/dts/qcom/msm8953.dtsi index dcb5c98b793c..91d083871a=
+b0
+> >> 100644
+> >> --- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
+> >> +++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
+> >> @@ -1046,6 +1046,37 @@ mdss_dsi1_phy: phy@1a96400 {
+> >>               };
+> >>           };
+> >> +        gpu_iommu: iommu@1c48000 {
+> >=20
+> > Nit: most of the platforms use the adreno_smmu label. But maybe the
+> > msm-iommu vs arm-smmu makes difference here.
+> Not really :)
+>=20
+> Please keep the labels unified
 
-Signed-off-by: Rong Zhang <i@rong.moe>
----
- arch/arm/boot/dts/qcom/Makefile                  |  1 +
- .../dts/qcom/qcom-msm8974pro-samsung-kltechn.dts | 16 ++++++++++++++++
- 2 files changed, 17 insertions(+)
- create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8974pro-samsung-kltechn.dts
+Ack, renaming to adreno_smmu
 
-diff --git a/arch/arm/boot/dts/qcom/Makefile b/arch/arm/boot/dts/qcom/Makefile
-index 9cc1e14e6cd0..5d7a34adf826 100644
---- a/arch/arm/boot/dts/qcom/Makefile
-+++ b/arch/arm/boot/dts/qcom/Makefile
-@@ -44,6 +44,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
- 	qcom-msm8974pro-fairphone-fp2.dtb \
- 	qcom-msm8974pro-oneplus-bacon.dtb \
- 	qcom-msm8974pro-samsung-klte.dtb \
-+	qcom-msm8974pro-samsung-kltechn.dtb \
- 	qcom-msm8974pro-sony-xperia-shinano-castor.dtb \
- 	qcom-mdm9615-wp8548-mangoh-green.dtb \
- 	qcom-sdx55-mtp.dtb \
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974pro-samsung-kltechn.dts b/arch/arm/boot/dts/qcom/qcom-msm8974pro-samsung-kltechn.dts
-new file mode 100644
-index 000000000000..b902e31b16c2
---- /dev/null
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8974pro-samsung-kltechn.dts
-@@ -0,0 +1,16 @@
-+// SPDX-License-Identifier: GPL-2.0
-+#include "qcom-msm8974pro-samsung-klte-common.dtsi"
-+
-+/ {
-+	model = "Samsung Galaxy S5 China";
-+	compatible = "samsung,kltechn", "samsung,klte", "qcom,msm8974pro", "qcom,msm8974";
-+};
-+
-+&i2c_led_gpio {
-+	scl-gpios = <&tlmm 61 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+	sda-gpios = <&tlmm 60 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+};
-+
-+&i2c_led_gpioex_pins {
-+	pins = "gpio60", "gpio61";
-+};
--- 
-2.43.0
+>=20
+> > Nevertheless:
+> >=20
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >=20
+> >> +            compatible =3D "qcom,msm8953-iommu", "qcom,msm-iommu-v2";
+> >> +            ranges =3D <0 0x01c48000 0x8000>;
+> >> +
+> >> +            clocks =3D <&gcc GCC_OXILI_AHB_CLK>,
+> >> +                 <&gcc GCC_BIMC_GFX_CLK>;
+>=20
+> And align these
+
+They are?
+
+Also any comment about the issues listed in the cover letter?
+
+Regards
+Luca
+
+>=20
+> Konrad
+
+
+
 
 
