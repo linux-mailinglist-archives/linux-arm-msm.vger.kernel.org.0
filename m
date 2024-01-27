@@ -1,165 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-8601-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8602-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 592A283EF1D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 18:32:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 606DA83EF8A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 19:46:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8BCFD1C21C59
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 17:32:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 16913285CB4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 18:46:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DAA92D043;
-	Sat, 27 Jan 2024 17:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 891B22C1AF;
+	Sat, 27 Jan 2024 18:46:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="cJ25gUiG"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="G5ToPuYY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.31])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E692D022;
-	Sat, 27 Jan 2024 17:32:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627D61E539;
+	Sat, 27 Jan 2024 18:46:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=134.134.136.31
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706376768; cv=none; b=UDDnmtkuP9vXfrTm9lT6jrZqsIXHe6Pb5e6KJJ4vPDkhh99t5tFOAFHbI9ThVtLZNtEFRlkUhpPVQopSD4wwa8psq6LKIeR0qoBDY9QlrWhPgXE/YxwOT8fxfcHHzbVss7GMqYg5NiT2NtVloT93AP/sQMsEP1aJw8XuEgfbYhc=
+	t=1706381189; cv=none; b=fYeoEyoCT24F3CNzdKL1OhdD4I5pe6bWovytrb6T6DspwA2iRuta6bq3QadvZAOi4VfOWEeMEcbao2vae07SxlLyOZ1kOjrmR827vVjzg+88NpFcgNJI1z1vc/fBiLmILPSt3+aIxOupvpn15yLO69BgsB40XGQJrXXaCM+VSQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706376768; c=relaxed/simple;
-	bh=p7QvBnitX24maA169i0Q3vHfx6Dzrw5UMf1h0W8pJdQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rcYHpJydKEpVqunJQRZseGyU+fslGt1nQg9fUktGFniFdPNVVXzkg0Zm0395H4UXwJSP7gbtIGv/5wUE+MPHLx007PaUMutq/rSGRIYbPRlwPSoeAIDrXZtWjMDpnc4R1h7BvJWKA6ViVkddgHcSHYPgy8zAx9WhgESJVRckPhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz; spf=pass smtp.mailfrom=z3ntu.xyz; dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b=cJ25gUiG; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=z3ntu.xyz
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
-	t=1706376764; bh=p7QvBnitX24maA169i0Q3vHfx6Dzrw5UMf1h0W8pJdQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cJ25gUiGIpLu6oj/VaeYRe1P1HnzHdSTbOYG+kjdv23WniqBSHs+HlPi1tZ4UTDlQ
-	 L/Xw0qZa4Ljb6CZgXw/nnPG4VEGDoUF09Lm9PzcfT999S4jXgQ72oHxeJXyKP1m1bM
-	 zSTQF6ZRs3pWtSzHnxgDC1rGk8+5iY9QuYjByLiA=
-From: Luca Weiss <luca@z3ntu.xyz>
-To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Vladimir Lypak <vladimir.lypak@gmail.com>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC 2/2] arm64: dts: qcom: msm8953: Add GPU
-Date: Sat, 27 Jan 2024 18:32:43 +0100
-Message-ID: <4539846.LvFx2qVVIh@z3ntu.xyz>
-In-Reply-To: <c58c5897-b3f0-4449-a5b1-df10b117733c@linaro.org>
-References:
- <20240125-msm8953-gpu-v1-0-f6493a5951f3@z3ntu.xyz>
- <20240125-msm8953-gpu-v1-2-f6493a5951f3@z3ntu.xyz>
- <c58c5897-b3f0-4449-a5b1-df10b117733c@linaro.org>
+	s=arc-20240116; t=1706381189; c=relaxed/simple;
+	bh=EYPyaz87RkOJljahQF8funE2XdsGXXg6gukJ+v+90GA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=K6w2M1LxCpbjeYr4jWEAtQ/edM4MsQWR5++57xh8TOPIIXsahHkYx+Gw5ylgoCQRrwWE6/xIDVtI0N5CyO/0NFF8/fGDv3I/aOL9oDF1S7AUuPqjwDTtKHjRPLVfkVuLQk+MAp7w7fpV3db32xzl8L/5OjX9szsPNrmmL8sMhS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=G5ToPuYY; arc=none smtp.client-ip=134.134.136.31
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1706381187; x=1737917187;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=EYPyaz87RkOJljahQF8funE2XdsGXXg6gukJ+v+90GA=;
+  b=G5ToPuYYxcVxXz6dt/DHtNh8u+OppP0v6ZkV3L3wSubDGUyozIWTbadN
+   4tW8MXFsBGS+hY7vjk5BFSuVleIiy88nlOi0QuTCemdsU4y2Jrw3q2Kpd
+   4txMhKh+gP44vIu4ciUCoF/lGjFpIXfpwyfFUpbcrq0uj0+qXYwIfNzdE
+   QuTr7aRMQ2dIB6soWSuAzgUF/ohTyGPqQFalsXlxlj5z6M9+AFQLGYagk
+   4wwmLBisVqomIoaEqDjQFS9a4LgMuYy1aaYfpD2hLWpvn1FJ1zHq5LAei
+   L38h+eiyXbd0Zt724yKGyXtpbWTcmtX0reCy1orQ45sDJkM04WH3trMAf
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10966"; a="466977459"
+X-IronPort-AV: E=Sophos;i="6.05,220,1701158400"; 
+   d="scan'208";a="466977459"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2024 10:46:26 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10966"; a="910649621"
+X-IronPort-AV: E=Sophos;i="6.05,220,1701158400"; 
+   d="scan'208";a="910649621"
+Received: from turnipsi.fi.intel.com (HELO kekkonen.fi.intel.com) ([10.237.72.44])
+  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2024 10:46:16 -0800
+Received: from kekkonen.localdomain (localhost [127.0.0.1])
+	by kekkonen.fi.intel.com (Postfix) with SMTP id 4755F11FB1F;
+	Sat, 27 Jan 2024 20:40:25 +0200 (EET)
+Date: Sat, 27 Jan 2024 18:40:25 +0000
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
+To: Randy Dunlap <rdunlap@infradead.org>
+Cc: Ricardo Ribalda <ribalda@chromium.org>,
+	Tiffany Lin <tiffany.lin@mediatek.com>,
+	Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
+	Yunfei Dong <yunfei.dong@mediatek.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Kieran Bingham <kieran.bingham@ideasonboard.com>,
+	Bin Liu <bin.liu@mediatek.com>,
+	Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Bingbu Cao <bingbu.cao@intel.com>,
+	Tianshu Qiu <tian.shu.qiu@intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org,
+	linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-samsung-soc@vger.kernel.org, linux-staging@lists.linux.dev,
+	linux-amlogic@lists.infradead.org
+Subject: Re: [PATCH 03/17] media: media-entity.h: Fix kerneldoc
+Message-ID: <ZbVOGaw-8qU2QNle@kekkonen.localdomain>
+References: <20240126-gix-mtk-warnings-v1-0-eed7865fce18@chromium.org>
+ <20240126-gix-mtk-warnings-v1-3-eed7865fce18@chromium.org>
+ <e6b72dff-911e-4923-9996-b3b7db36fb8e@infradead.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e6b72dff-911e-4923-9996-b3b7db36fb8e@infradead.org>
 
-On Freitag, 26. J=E4nner 2024 00:50:43 CET Konrad Dybcio wrote:
-> On 1/25/24 22:56, Luca Weiss wrote:
-> > From: Vladimir Lypak <vladimir.lypak@gmail.com>
-> >=20
-> > Add the GPU node for the Adreno 506 found on this family of SoCs. The
-> > clock speeds are a bit different per SoC variant, SDM450 maxes out at
-> > 600MHz while MSM8953 (=3D SDM625) goes up to 650MHz and SDM632 goes up =
-to
-> > 725MHz.
-> >=20
-> > To achieve this, create a new sdm450.dtsi to hold the 600MHz OPP and
-> > use the new dtsi for sdm450-motorola-ali.
-> >=20
-> > Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-> > Co-developed-by: Luca Weiss <luca@z3ntu.xyz>
-> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+Hi Randy,
+
+On Fri, Jan 26, 2024 at 05:51:06PM -0800, Randy Dunlap wrote:
+> 
+> 
+> On 1/26/24 15:16, Ricardo Ribalda wrote:
+> > The fields seems to be documented twice.
+> > 
+> > Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 > > ---
-> >=20
-> >   arch/arm64/boot/dts/qcom/msm8953.dtsi            | 115
-> >   +++++++++++++++++++++++
-> >   arch/arm64/boot/dts/qcom/sdm450-motorola-ali.dts |   2 +-
-> >   arch/arm64/boot/dts/qcom/sdm450.dtsi             |  14 +++
-> >   arch/arm64/boot/dts/qcom/sdm632.dtsi             |   8 ++
-> >   4 files changed, 138 insertions(+), 1 deletion(-)
-> >=20
-> > diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi
-> > b/arch/arm64/boot/dts/qcom/msm8953.dtsi index 91d083871ab0..1fe0c0c4fd15
-> > 100644
-> > --- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-> > @@ -1046,6 +1046,94 @@ mdss_dsi1_phy: phy@1a96400 {
-> >=20
-> >   			};
-> >   	=09
-> >   		};
-> >=20
-> > +		gpu: gpu@1c00000 {
-> > +			compatible =3D "qcom,adreno-506.0", "qcom,adreno";
-> > +			reg =3D <0x01c00000 0x40000>;
-> > +			reg-names =3D "kgsl_3d0_reg_memory";
-> > +			interrupts =3D <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
-> > +
-> > +			clocks =3D <&gcc GCC_OXILI_GFX3D_CLK>,
-> > +				 <&gcc GCC_OXILI_AHB_CLK>,
-> > +				 <&gcc GCC_BIMC_GFX_CLK>,
-> > +				 <&gcc GCC_BIMC_GPU_CLK>,
-> > +				 <&gcc GCC_OXILI_TIMER_CLK>,
-> > +				 <&gcc GCC_OXILI_AON_CLK>;
-> > +			clock-names =3D "core",
-> > +				      "iface",
-> > +				      "mem_iface",
-> > +				      "alt_mem_iface",
-> > +				      "rbbmtimer",
-> > +				      "alwayson";
-> > +			power-domains =3D <&gcc OXILI_GX_GDSC>;
-> > +
-> > +			iommus =3D <&gpu_iommu 0>;
-> > +			operating-points-v2 =3D <&gpu_opp_table>;
-> > +
-> > +			#cooling-cells =3D <2>;
-> > +
-> > +			status =3D "disabled";
-> > +
-> > +			zap-shader {
-> > +				memory-region =3D <&zap_shader_region>;
-> > +			};
-> > +
-> > +			gpu_opp_table: opp-table {
-> > +				compatible =3D "operating-points-v2";
-> > +
-> > +				opp-19200000 {
-> > +					opp-hz =3D /bits/ 64 <19200000>;
-> > +					opp-supported-hw =3D <0xff>;
-> > +					required-opps =3D <&rpmpd_opp_min_svs>;
-> > +				};
->=20
-> If you remove all OPPs but this one, can the GPU still spit out pixels?
+> >  include/media/media-entity.h | 4 ----
+> >  1 file changed, 4 deletions(-)
+> > 
+> > diff --git a/include/media/media-entity.h b/include/media/media-entity.h
+> > index 2b6cd343ee9e..c79176ed6299 100644
+> > --- a/include/media/media-entity.h
+> > +++ b/include/media/media-entity.h
+> > @@ -337,10 +337,6 @@ enum media_entity_type {
+> >   * @info.dev:	Contains device major and minor info.
+> >   * @info.dev.major: device node major, if the device is a devnode.
+> >   * @info.dev.minor: device node minor, if the device is a devnode.
+> > - * @major:	Devnode major number (zero if not applicable). Kept just
+> > - *		for backward compatibility.
+> > - * @minor:	Devnode minor number (zero if not applicable). Kept just
+> > - *		for backward compatibility.
+> >   *
+> >   * .. note::
+> >   *
+> > 
+> 
+> I'd say that this is correct based on
+> https://patchwork.kernel.org/project/linux-media/patch/20231223050707.14091-1-rdunlap@infradead.org/
+> 
+> 
+> Hans, can you please explain this message from you, on 2024-Jan-22, that
+> I cannot find in the media patchwork:
 
-Yep, phosh is starting and is rendering at a few fps.
+It's in linuxtv.org Patchwork here
+<URL:https://patchwork.linuxtv.org/project/linux-media/patch/20231223050707.14091-1-rdunlap@infradead.org/>
+and also in the media stage tree (as indicated by the state) but not yet in
+master AFAIU.
 
-fairphone-fp3:~$ cat /sys/devices/platform/soc@0/1c00000.gpu/devfreq/1c0000=
-0.gpu/min_freq
-19200000
-fairphone-fp3:~$ cat /sys/devices/platform/soc@0/1c00000.gpu/devfreq/1c0000=
-0.gpu/max_freq=20
-19200000
-fairphone-fp3:~$ cat /sys/devices/platform/soc@0/1c00000.gpu/devfreq/1c0000=
-0.gpu/cur_freq=20
-19200000
+> 
+> 
+> Subject: [git:media_stage/master] media: media-entity.h: fix Excess kernel-doc description warnings
+> 
+> 
+> 
+> This is an automatic generated email to let you know that the following patch were queued:
+> 
+> Subject: media: media-entity.h: fix Excess kernel-doc description warnings
+> Author:  Randy Dunlap <rdunlap@infradead.org>
+> Date:    Fri Dec 22 21:07:07 2023 -0800
+> 
+> Remove the @major: and @minor: lines to prevent the kernel-doc warnings:
+> 
+> include/media/media-entity.h:376: warning: Excess struct member 'major' description in 'media_entity'
+> include/media/media-entity.h:376: warning: Excess struct member 'minor' description in 'media_entity'
+> 
+> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+> Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+> Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+> Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+> 
+>  include/media/media-entity.h | 4 ----
+>  1 file changed, 4 deletions(-)
+> 
+> ---
+> 
+> diff --git a/include/media/media-entity.h b/include/media/media-entity.h
+> index 2b6cd343ee9e..c79176ed6299 100644
+> --- a/include/media/media-entity.h
+> +++ b/include/media/media-entity.h
+> @@ -337,10 +337,6 @@ enum media_entity_type {
+>   * @info.dev:	Contains device major and minor info.
+>   * @info.dev.major: device node major, if the device is a devnode.
+>   * @info.dev.minor: device node minor, if the device is a devnode.
+> - * @major:	Devnode major number (zero if not applicable). Kept just
+> - *		for backward compatibility.
+> - * @minor:	Devnode minor number (zero if not applicable). Kept just
+> - *		for backward compatibility.
+>   *
+>   * .. note::
+>   *
+> 
+> 
+> 
+> Thanks.
 
-Regards
-Luca
+-- 
+Regards,
 
->=20
-> Konrad
-
-
-
-
+Sakari Ailus
 
