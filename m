@@ -1,131 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-8574-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8575-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F7C483E900
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 02:35:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 12B6083E90B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 02:38:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C45B31F281A9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 01:35:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 76EC61F281E1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 01:38:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBA838F59;
-	Sat, 27 Jan 2024 01:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D037B9468;
+	Sat, 27 Jan 2024 01:38:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l3dh4Mx+"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="HEAXzmCx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102C68BFA;
-	Sat, 27 Jan 2024 01:35:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CADCC944D;
+	Sat, 27 Jan 2024 01:38:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706319312; cv=none; b=ZPhVxlMelWHEnvKfJEWYQKD8zs9i5vNn6e4YK/UDPx3pJe2vGHDcr02Ic84+DnS/W0tbvQpGfth1syqj268+Yh/EIMqQZlsTejm6oNueIw4jrbmAybdWCovEJqp2vd42jOVcrGmg3BEJxQMHCGIQiQi2hlFS0BJisxoWkDGLNMo=
+	t=1706319531; cv=none; b=MaC3nWxJkNNgNwDoCnavlc0rKVgC7zLCialhYhRejLNZyxC2qW/wGwa/F2gy/LVSJjCSjDup1jrbNNsXm7lPpMR1k2Ph4cfCCDCLwCKv70wzlBD0KT1RiOln3gAQamqDQn3ysry7zzHGhtaN+ItWMOj2nJmVnoSu8LrNWfm8AGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706319312; c=relaxed/simple;
-	bh=RAt4TGYj4CDfNMAaFwl+npvlbK5AdVGTFwYU7wwV5VI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=IkdumZSYjekl9D6HxyhUwiBwpDnSrDcE8jJ1svK07A/DIz5HJgt+A1CZKRZzprJPdrbL7zxGwaxlUcnxcuXULXRJ23hCfGJGXkMIQfVCu1CdWY0/bIYT4VQFppHXomdaqZNQfqBcpfBk6fJbEVXHvFHqo+3x8DhwsH7GYTOT4Kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l3dh4Mx+; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40R1IMEa029647;
-	Sat, 27 Jan 2024 01:35:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=IfiXA3f8VWPIlfEHVXfTSgzZqC70I0cKMaf6Mgip5TY=; b=l3
-	dh4Mx+DMGZEO9Dl+yNrINrUNGTlLpBtDJFhBSxPV2qbAg8XH89MFFF1qPsFVV4P3
-	z5oV0UrnMkf08+jQv0XqRX8vvmaZvxMC2GexTyEqzasOxeOctXg1hQFCQJobx044
-	dbjr8u+0C1f5EgeC5QQpzDutUURQDwx0DP7fy/UDJ+gWh+JWUKuDTpuxukV/jZdj
-	yeCY1xNZwcuJ9kPb+AAB4V5H9cXVod0GEmeTelA2S7tuUckkM1I4zZ9sMDcz+TzF
-	XA4e6xXy6zFaTvX/5R3MTX7npEuuOGq5/CwJDWxqtACsnj+M5e4SVp1xsjKNYNCu
-	DiyCzMbP8/wQ+40lk2Gg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vvgp2gw54-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 27 Jan 2024 01:35:03 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40R1Z3Xt024439
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 27 Jan 2024 01:35:03 GMT
-Received: from [10.110.53.178] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 26 Jan
- 2024 17:35:02 -0800
-Message-ID: <86f3bc0b-79cf-f1ae-02a7-79c38d0292e7@quicinc.com>
-Date: Fri, 26 Jan 2024 17:35:01 -0800
+	s=arc-20240116; t=1706319531; c=relaxed/simple;
+	bh=A1/ygdm7x3wtNRu3eyRy8/a37du/hTt3ajMykS1TWZc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ufUadhr++8z5y5mF201yYNSSEVCCvXDUuW4SvTXu29ZIjwH39qdknedFKeo2Ewlp++oXtlzZ5AZDaYcbqbfDeOLSN+Pa6JvvctI6y14M2AlvTMri1YgMImJbU4o5c0WYrBlH+45ZyyLWZIgdX9U9t8PqcxRTd3S2EQ9IdpZD5Vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=HEAXzmCx; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
+	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
+	bh=XYytVHxOlurwd5+2vgAlofMMVVyo2Oaj6o0YkShtiUY=; b=HEAXzmCxPE9euMRkJ6PQe+i7AP
+	gNkn1XIiNFqlmQ51Ukxam68ZoJwn2Dx50z9XGYSSVlVtG+QHDL4LjrGbTVZCY7HEhrQI/2MMtlb/X
+	VNmGXTLsn5t06Ji9O96CY3PotfVqeHV+/nkfI5Ulmetow1iGDkiRcRsxvunduSTNZg0oBFOGl9++O
+	sI+DYOZDI+sq0WCmP9bgglcKnI8xJL7nu7Dbn9FKOHxHWYywvcw7y8MlXP5JS0BzdvLaVllNvKpNX
+	8EE0G6ALTofZQfsWVaQDVuLSMOBLYxDtEZtUWNOuWzBvO+xel9b7pcBa9J5sEDhA43oRbp+1YhlkF
+	stt9sCog==;
+Received: from [50.53.50.0] (helo=[192.168.254.15])
+	by bombadil.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
+	id 1rTXeY-000000068Aw-1jDt;
+	Sat, 27 Jan 2024 01:38:38 +0000
+Message-ID: <4131bd36-a6a8-4ec3-b323-b7c4aa487703@infradead.org>
+Date: Fri, 26 Jan 2024 17:38:34 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v3] soc: qcom: aoss: Add debugfs interface for sending
- messages
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/17] media: mediatek: vcodec: Fix kerneldoc warnings
 Content-Language: en-US
-To: Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "Andrew
- Lunn" <andrew@lunn.ch>,
-        Stephen Hemminger <stephen@networkplumber.org>
-References: <20240117-qcom-aoss-debugfs-v2-v3-1-1aa779124822@quicinc.com>
-From: Chris Lew <quic_clew@quicinc.com>
-In-Reply-To: <20240117-qcom-aoss-debugfs-v2-v3-1-1aa779124822@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Ricardo Ribalda <ribalda@chromium.org>,
+ Tiffany Lin <tiffany.lin@mediatek.com>,
+ Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
+ Yunfei Dong <yunfei.dong@mediatek.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+ Hans Verkuil <hverkuil-cisco@xs4all.nl>, Hans Verkuil <hverkuil@xs4all.nl>,
+ Kieran Bingham <kieran.bingham@ideasonboard.com>,
+ Bin Liu <bin.liu@mediatek.com>,
+ Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Sylwester Nawrocki <s.nawrocki@samsung.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Alim Akhtar <alim.akhtar@samsung.com>,
+ Marek Szyprowski <m.szyprowski@samsung.com>,
+ Andrzej Hajda <andrzej.hajda@intel.com>, Bingbu Cao <bingbu.cao@intel.com>,
+ Tianshu Qiu <tian.shu.qiu@intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>,
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
+ linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-samsung-soc@vger.kernel.org, linux-staging@lists.linux.dev,
+ linux-amlogic@lists.infradead.org
+References: <20240126-gix-mtk-warnings-v1-0-eed7865fce18@chromium.org>
+ <20240126-gix-mtk-warnings-v1-1-eed7865fce18@chromium.org>
+From: Randy Dunlap <rdunlap@infradead.org>
+In-Reply-To: <20240126-gix-mtk-warnings-v1-1-eed7865fce18@chromium.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: zTHj7lEW9V2_lMtq_HYZQTCE4IiDEGge
-X-Proofpoint-ORIG-GUID: zTHj7lEW9V2_lMtq_HYZQTCE4IiDEGge
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
- malwarescore=0 mlxlogscore=999 phishscore=0 adultscore=0 spamscore=0
- lowpriorityscore=0 priorityscore=1501 clxscore=1011 impostorscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401190000 definitions=main-2401270010
 
 
 
-On 1/17/2024 6:31 PM, Bjorn Andersson wrote:
-> In addition to the normal runtime commands, the Always On Processor
-> (AOP) provides a number of debug commands which can be used during
-> system debugging for things such as preventing power collapse or placing
-> floor votes for certain resources. Some of these are documented in the
-> Robotics RB5 "Debug AOP ADB" linked below.
+On 1/26/24 15:16, Ricardo Ribalda wrote:
+> These fields seems to be gone:
+> drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp8_req_if.c:57: warning: Excess struct member 'wait_key_frame' description in 'vdec_vp8_slice_info'
+> drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp9_req_lat_if.c:166: warning: Excess struct member 'mv_joint' description in 'vdec_vp9_slice_counts_map'
 > 
-> Provide a debugfs interface for the developer/tester to send some of
-> these commands to the AOP, which allow the user to override the DDR
-> frequency, preventing power collapse of cx and ddr, and prevent AOSS
-> from going to sleep.
+> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+
+Thanks.
+
+> ---
+>  drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp8_req_if.c    | 1 -
+>  .../media/platform/mediatek/vcodec/decoder/vdec/vdec_vp9_req_lat_if.c    | 1 -
+>  2 files changed, 2 deletions(-)
 > 
-> Link: https://docs.qualcomm.com/bundle/publicresource/topics/80-88500-3/85_Debugging_AOP_ADB.html
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
-> Changes in v3:
-> - Stop passing command string straight from userspace to the firmware
-> - Format the commands in the driver instead
-> - Provide a few useful commands
-> - Link to v2: https://lore.kernel.org/linux-arm-msm/20230811205839.727373-3-quic_bjorande@quicinc.com/
-> ---
-> +		qmp->debugfs_files[i] = debugfs_create_file(entry->name, 0220,
-> +							    qmp->debugfs_root,
-> +							    qmp,
-> +							    &qmp_debugfs_fops);
+> diff --git a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp8_req_if.c b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp8_req_if.c
+> index f64b21c07169..f677e499fefa 100644
+> --- a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp8_req_if.c
+> +++ b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp8_req_if.c
+> @@ -37,7 +37,6 @@
+>   * @bs_sz:		bitstream size
+>   * @resolution_changed:resolution change flag 1 - changed,  0 - not change
+>   * @frame_header_type:	current frame header type
+> - * @wait_key_frame:	wait key frame coming
+>   * @crc:		used to check whether hardware's status is right
+>   * @reserved:		reserved, currently unused
+>   */
+> diff --git a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp9_req_lat_if.c b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp9_req_lat_if.c
+> index 69d37b93bd35..cf48d09b78d7 100644
+> --- a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp9_req_lat_if.c
+> +++ b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp9_req_lat_if.c
+> @@ -141,7 +141,6 @@ struct vdec_vp9_slice_frame_counts {
+>   * @skip:	skip counts.
+>   * @y_mode:	Y prediction mode counts.
+>   * @filter:	interpolation filter counts.
+> - * @mv_joint:	motion vector joint counts.
+>   * @sign:	motion vector sign counts.
+>   * @classes:	motion vector class counts.
+>   * @class0:	motion vector class0 bit counts.
+> 
 
-With group permissions fixed:
-
-Reviewed-by: Chris Lew <quic_clew@quicinc.com>
+-- 
+#Randy
 
