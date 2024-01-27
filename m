@@ -1,135 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-8584-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8585-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D75E83EBB8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 08:43:32 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72A1183EC64
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 10:48:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 319C7283A27
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 07:43:31 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0E604B215D7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 09:48:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 961BE1D540;
-	Sat, 27 Jan 2024 07:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 126B71EA7A;
+	Sat, 27 Jan 2024 09:48:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ncyyomq0"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="bu8mtCyp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B844A1E863;
-	Sat, 27 Jan 2024 07:43:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706341406; cv=none; b=hoP8vXlQApoRXPo9KdaOMgjdhkEZ1Mj+uSuGJRxW8KFpt6tvKNhQRemU+Qb3Mj2++2CdX2QaGpJgS+jeAbIYu4RG6mjyvZx+d8DUK9FsORahn0o8j4ETF8qvUSPnH0SBR7YuSLVZ+Dl48byui2uz9i0rP9cpgkhfYjfFwgxG4Dg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706341406; c=relaxed/simple;
-	bh=4MGb1qflxhwRgTrrlk/7/kijvV1dwW1KJRjikJeWShU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=cYDHbny+sgaiDEgCkQugndH6NRqORnuush6MEHMWSSutIBNUW/3qcx8D9/HTeK1NbiBhMnxs73sclpbkP9qzrPg892CR/tBB4bbr3kv9BylinUkUJ6x2AgXvDY5xg/C7EZ4WuTXGmrTTUPnZ4uQYhWdDqtgAY/AjkhzWW7kK920=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ncyyomq0; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40R7YdKa022735;
-	Sat, 27 Jan 2024 07:43:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=TT2snydsXyFTUAF8hdDPurbrANlkdPb7MXNMuqisxSo=; b=nc
-	yyomq0Yma2auskhkqpTasXpWD/F5Towp7cPPFqHRYi4i4ejkeOFSgw8XlorPJCuu
-	5NcO4/0LMNVv1DGI138eyCqbUec1kx5oqFouc0NywwiQ2n7y3M44eDGPMF+jiFqn
-	wYgAatSOftJLFTsjfZx1ef6iFtmQWHM+71UNJv/9a2jkpC6K9D9hg2rP/pVWYT6C
-	MTbex2RMOCEbsohyYCP2NgKCsZHdprQnQ3rUJ3UjLqpcsmYta0EUMZQhGeIv+JMa
-	dQn6ITWb/WbjWEgg93Pb5KV7SGE8J2QeHtkQzAy1blU3tyTVOWV51ZhopCwOBwb2
-	et2lk9V3qxteBWNhXFXw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vvse4r9d5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 27 Jan 2024 07:43:19 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40R7hIKY011758
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 27 Jan 2024 07:43:18 GMT
-Received: from [10.216.42.152] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 26 Jan
- 2024 23:43:14 -0800
-Message-ID: <ae1a2220-7494-4f7e-ac23-f0b2aebeee75@quicinc.com>
-Date: Sat, 27 Jan 2024 13:13:10 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED751DDFF;
+	Sat, 27 Jan 2024 09:48:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1706348913; cv=pass; b=Qbe9U+Hcn0++uXT+8zruqWoXEZL7URLn2QUIWVthm7nSytR4N2I5wPEqsuPrUaj9igrTXdIWxIPWZFLLX74yWkC1dSrBgZwX2cs9cDp6NlGH+FYqf1Nroq1AX3ZFjMxS+T6qYStix0WnzOrvt6GaHB5KPUalogb0DKFQgnj2V+4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1706348913; c=relaxed/simple;
+	bh=rjRtZZUKE6ZM+lpRpDG0+4ezXXpnQzD6t9nnlPgHn14=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FsaG7eMMMcYZ/3ac4Df6pkpt9rSt056Pkm0k6tl8DW2bpLN/08ll5eYH5hkwwTt/ANhV6lvv7LfkR32vjMlwERMjU4d5ahqHGUkUmXN7Xzfc/N+CL60TYWkZZHt1evillyc5KR9FpKcLa/+oKaDA03wPM6jW9JkoCtFPFiDYeDo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=bu8mtCyp; arc=pass smtp.client-ip=195.140.195.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
+Received: from hillosipuli.retiisi.eu (80-248-247-191.cust.suomicom.net [80.248.247.191])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: sailus)
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4TMV9q1pKtzyVX;
+	Sat, 27 Jan 2024 11:48:15 +0200 (EET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
+	t=1706348900;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=h3j1f2nFT/FM+fCIzcmVTXPL1EIRhYTbwlMX2+s7BIA=;
+	b=bu8mtCypj3iKYSK8u3lAX+QQ250DLbOWZj32mwDctcU2VEdE8P9xjEsSnmFGusE95DZD+M
+	nZ09JcB1/E79Bse6Dw3zkgw9S+IWYqR4+46NLBBvPUUPQNSdOngS3k6SQfGZmXvBiVv430
+	gPhxxOaSpZvgBpeDOfqJL8Dh7lp8L1g=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
+	s=meesny; t=1706348900;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=h3j1f2nFT/FM+fCIzcmVTXPL1EIRhYTbwlMX2+s7BIA=;
+	b=h4ZTQ+TfYqtfZOmMzVQYGWDkCYo25ZZ22GwkWSAK1uv0CNwQuyLIoDMtVulEbeY0XRi1am
+	VilpHrGEQ5EO/WBpH0t56i57nuTXNInYwJ6AQbe1CPU/aRoRrIUy1B0MHRnA74IYX6HIdk
+	jEVxFlf9SUZNxajkpivFC6iSjR9X/Tk=
+ARC-Authentication-Results: i=1;
+	ORIGINATING;
+	auth=pass smtp.auth=sailus smtp.mailfrom=sakari.ailus@iki.fi
+ARC-Seal: i=1; s=meesny; d=iki.fi; t=1706348900; a=rsa-sha256; cv=none;
+	b=uWyNSJYVd7TmfFi961ft1zXeW02/wtihzLSqbhgIJCjkTgT2g3uMjhC5F9d9he4mYO7Avj
+	MzjcJNVmHEgiu2R7OCRlHlHMTW9qGuIXKq8WEkLy1y2zX53xsdRqpr5zp3KYFZZEFizv9L
+	zrug8y9uME9az3LvAvLOb8qMkl5VuJw=
+Received: from valkosipuli.retiisi.eu (valkosipuli.localdomain [192.168.4.2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by hillosipuli.retiisi.eu (Postfix) with ESMTPS id 7C8FB634C93;
+	Sat, 27 Jan 2024 11:48:14 +0200 (EET)
+Date: Sat, 27 Jan 2024 09:48:14 +0000
+From: Sakari Ailus <sakari.ailus@iki.fi>
+To: Ricardo Ribalda <ribalda@chromium.org>
+Cc: Tiffany Lin <tiffany.lin@mediatek.com>,
+	Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
+	Yunfei Dong <yunfei.dong@mediatek.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Kieran Bingham <kieran.bingham@ideasonboard.com>,
+	Bin Liu <bin.liu@mediatek.com>,
+	Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Bingbu Cao <bingbu.cao@intel.com>,
+	Tianshu Qiu <tian.shu.qiu@intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org,
+	linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-samsung-soc@vger.kernel.org, linux-staging@lists.linux.dev,
+	linux-amlogic@lists.infradead.org
+Subject: Re: [PATCH 03/17] media: media-entity.h: Fix kerneldoc
+Message-ID: <ZbTRXgnBnb-hHKK_@valkosipuli.retiisi.eu>
+References: <20240126-gix-mtk-warnings-v1-0-eed7865fce18@chromium.org>
+ <20240126-gix-mtk-warnings-v1-3-eed7865fce18@chromium.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] arm64: dts: qcom: Fix hs_phy_irq for QUSB2 targets
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>
-CC: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring
-	<robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        <cros-qcom-dts-watchers@chromium.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>
-References: <20240120191904.15408-1-quic_kriskura@quicinc.com>
- <20240120191904.15408-2-quic_kriskura@quicinc.com>
- <wqdqkzvni4roqulgsiqxzubxcblzxnoydcwvv2av2pobjjx5o6@b7kwl6lq7hij>
- <a4606673-64e9-4e16-8d9e-307fb37d8763@quicinc.com>
- <7f780a0b-5f70-480e-82fc-08bd89870d13@linaro.org>
-Content-Language: en-US
-From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <7f780a0b-5f70-480e-82fc-08bd89870d13@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: bChgEQMgofsM3sNqgNFgllzcRIOB5u1p
-X-Proofpoint-GUID: bChgEQMgofsM3sNqgNFgllzcRIOB5u1p
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- malwarescore=0 bulkscore=0 mlxlogscore=916 phishscore=0 impostorscore=0
- lowpriorityscore=0 suspectscore=0 adultscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.19.0-2401190000
- definitions=main-2401270055
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240126-gix-mtk-warnings-v1-3-eed7865fce18@chromium.org>
 
+Hi Ricardo,
 
+Thanks for the patchset.
+
+On Fri, Jan 26, 2024 at 11:16:02PM +0000, Ricardo Ribalda wrote:
+> The fields seems to be documented twice.
 > 
-> v1.4.0? I am sorry, but what?
+> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+> ---
+>  include/media/media-entity.h | 4 ----
+>  1 file changed, 4 deletions(-)
 > 
-> Isn't that like 10 years old? What systems are you using there? I am
-> asking, because maybe we should be rejecting DTS patches assuming they
-> were never tested (testing on ancient dtc counts like no testing).
-> 
->> When I moved to 1.5.0, I did see these warnings. Fixed them up and sent v3.
-> 
-> Nope, you just moved from 10 years old to 5 years old.
-> 
-> Fix your systems and use the recent one. v1.6.1
+> diff --git a/include/media/media-entity.h b/include/media/media-entity.h
+> index 2b6cd343ee9e..c79176ed6299 100644
+> --- a/include/media/media-entity.h
+> +++ b/include/media/media-entity.h
+> @@ -337,10 +337,6 @@ enum media_entity_type {
+>   * @info.dev:	Contains device major and minor info.
+>   * @info.dev.major: device node major, if the device is a devnode.
+>   * @info.dev.minor: device node minor, if the device is a devnode.
+> - * @major:	Devnode major number (zero if not applicable). Kept just
+> - *		for backward compatibility.
+> - * @minor:	Devnode minor number (zero if not applicable). Kept just
+> - *		for backward compatibility.
+
+A similar patch by Randy Dunlap was recently merged. You can drop this one.
+
+>   *
+>   * .. note::
+>   *
 > 
 
-Hi Krzysztof,
+-- 
+Kind regards,
 
-  It was an old pc I was using this time and it was using local 
-/usr/bin/dtc for some reason. I got the latest version working:
-
-kriskura@hu-kriskura-hyd:/local/mnt/workspace/krishna/skales_dt_cleanup/skales/kernel$ 
-dtc -v
-Version: DTC 1.6.1-gabbd523b
-
-And with this version, I don't see any errors in the v3 pushed.
-
-Thanks,
-Krishna,
+Sakari Ailus
 
