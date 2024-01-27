@@ -1,52 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-8606-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8607-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D73EB83F018
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 22:03:03 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F57383F020
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 22:04:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8C6991F242B5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 21:03:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B666E286273
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 21:04:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25A1A17BA3;
-	Sat, 27 Jan 2024 21:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A75C118EA8;
+	Sat, 27 Jan 2024 21:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="ibM3Qz6B"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="DUIO8APS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC93418EA8;
-	Sat, 27 Jan 2024 21:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D701774B;
+	Sat, 27 Jan 2024 21:04:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706389379; cv=none; b=KM/sSUoDRKlJZ5KAh+eT+wfv356BvDsv8BAlo27bQlgRDKh/++grA7ggWrGJ4QiJ6qOJItZ3DtGqYQf9tN8b8ZzeqsO6deEofCY6kp435Jrf6pWBbXV0KJsvU8ezft68EP86gV9AqOA5a1hYL+9koyJub9+P+619jIxFTy5ReOQ=
+	t=1706389443; cv=none; b=vFN82k9mAxDN2rWaRHjUuQV/8F4IXm/G7rRN5ExMxehQ9225FxMcdrfaSQGPMAYEXONAjSceMLRAwFEAJXPlE3ACKIQy6jGXYkFp5PRq/dMVYihOpa4mNLS6fnfq2dIXRg4yC34xWAQWnkXQyn+YtJ5+MnbfMLEZmzYXKG+8uRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706389379; c=relaxed/simple;
-	bh=HMjywx9YgDjqee2LdbCwGdobVt39SnJFpWmiRKOYguo=;
+	s=arc-20240116; t=1706389443; c=relaxed/simple;
+	bh=1LFn8fP92vZ+FiNhj2fAma0+oND2LVGTGYNWYwU8wrw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZbLcwTtMjhRldphfg2eoa/PtlaVV7ddldzoyy7ML+rfs5DxJuL0DHjUC7aXq0moiH/dvFmI00JUqrAcO2jemUYRWV9fzMjUIL10rvT4Cn7/iDWV3LJ9sK0XGbGdSRfrlhpVxEzZaBRg2Rnhp7wz278P2aI7RAd7q4DrbiKXGUzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=ibM3Qz6B; arc=none smtp.client-ip=198.137.202.133
+	 In-Reply-To:Content-Type; b=HeBTDcSTLR/ZgHLOS12hyzhTxO6N4Zphg3VF0l0RzmQfOxPYq07N6sEdE+Gizd7pSJubQFXfR4CulcY51cfMMKoPEWJ2ywtYZZ5Ge5Q42Pm+mFEHGd+zPPVtJ3DmdVJn3Hd2tGnTUB+27EXCCBf+1PvWGHdti6pJ0zwJ9AakGsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=DUIO8APS; arc=none smtp.client-ip=198.137.202.133
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
 	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
 	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
-	bh=LHqW8kH7shctWwwB3SlliSPu5mFAQXdBMQK5ohwulNE=; b=ibM3Qz6BFjxEmRqv4SkKaQ+8ln
-	u4xprfF6WrJEnDSBlDOqWj21QabdevMpN9d7xLpt1hweM3nT0RA2VLZ8mvzMyypEOrGdA9RRn6Dnq
-	rJEUbPm8XUu7fY4RXO0NYKYenIBOxtojKZXYp0tE4Ulm493jfturrc3f7lF6CIlainboSs1IAn+RX
-	hS5piWSzx3zUmNnXw5FGlbgnRqu7tBFoE8THav0APkfqAx52nP7a9yikeBupejxHwp9JzV8dhhhIf
-	5n+QjwLULWl1Mn5muQQ4RfAkgWw9Pp4lGNoGYCbz2qaTJ4SlvjVkTRO4chcDGneL8tk4UC3xe5pDx
-	GegliW+A==;
+	bh=o2qMCLVTADfJ6fB50r+bipM7dIFRLMPccc6A3oE+288=; b=DUIO8APSbGUZYWrHDbpK9Ffxab
+	YWzfGaNY64URWCOlsSVr7HrAhsORN4gHnBvj/uIj2/8llJLiQWiYYyHXp3eFsCRRRPqxYY/k6utpi
+	CSAPP99E7QXq4WCtB6msnzggHRsroZuZ4DeB84G8XneVCDP0rfGv3SamhW3LTqgDeUdaU1nq7Ce4o
+	977IdPyPQk0Nnm1lr2vXJ6H42Ou93R3TENHNIsdMr5U1CreE3T2/f8f2e8MdiY4XTd7nFKbn1zocd
+	RaaJQh/hOrEM5xBO2h7APENpS1z3lhZyY3z2fWlxmBgOsEbkAvRd/0ptsWW088rLszi9QoSMSRwK8
+	XEe248Mg==;
 Received: from [50.53.50.0] (helo=[192.168.254.15])
 	by bombadil.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
-	id 1rTppC-00000008CEz-3sDa;
-	Sat, 27 Jan 2024 21:02:52 +0000
-Message-ID: <70bf533c-fd77-4e4f-819c-8299ac764ca5@infradead.org>
-Date: Sat, 27 Jan 2024 13:02:49 -0800
+	id 1rTpqG-00000008CEz-2lDd;
+	Sat, 27 Jan 2024 21:03:56 +0000
+Message-ID: <4a3150da-b71f-4d86-a69b-d72a8baef252@infradead.org>
+Date: Sat, 27 Jan 2024 13:03:55 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -54,7 +54,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/17] media: cec.h: Fix kerneldoc
+Subject: Re: [PATCH 05/17] media: pci: dt315.h: Fix kerneldoc
 Content-Language: en-US
 To: Ricardo Ribalda <ribalda@chromium.org>,
  Tiffany Lin <tiffany.lin@mediatek.com>,
@@ -91,16 +91,16 @@ Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-samsung-soc@vger.kernel.org, linux-staging@lists.linux.dev,
  linux-amlogic@lists.infradead.org
 References: <20240126-gix-mtk-warnings-v1-0-eed7865fce18@chromium.org>
- <20240126-gix-mtk-warnings-v1-4-eed7865fce18@chromium.org>
+ <20240126-gix-mtk-warnings-v1-5-eed7865fce18@chromium.org>
 From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <20240126-gix-mtk-warnings-v1-4-eed7865fce18@chromium.org>
+In-Reply-To: <20240126-gix-mtk-warnings-v1-5-eed7865fce18@chromium.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 
 
 On 1/26/24 15:16, Ricardo Ribalda wrote:
-> The fields are gone, remove their documentation.
+> The field is gone, remove it.
 > 
 > Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 
@@ -109,22 +109,21 @@ Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
 Thanks.
 
 > ---
->  include/media/cec.h | 2 --
->  1 file changed, 2 deletions(-)
+>  drivers/media/pci/dt3155/dt3155.h | 1 -
+>  1 file changed, 1 deletion(-)
 > 
-> diff --git a/include/media/cec.h b/include/media/cec.h
-> index d77982685116..10c9cf6058b7 100644
-> --- a/include/media/cec.h
-> +++ b/include/media/cec.h
-> @@ -224,8 +224,6 @@ struct cec_adap_ops {
->   * @notifier:		CEC notifier
->   * @pin:		CEC pin status struct
->   * @cec_dir:		debugfs cec directory
-> - * @status_file:	debugfs cec status file
-> - * @error_inj_file:	debugfs cec error injection file
->   * @sequence:		transmit sequence counter
->   * @input_phys:		remote control input_phys name
->   *
+> diff --git a/drivers/media/pci/dt3155/dt3155.h b/drivers/media/pci/dt3155/dt3155.h
+> index c9ce79cb5566..ce1835d9691e 100644
+> --- a/drivers/media/pci/dt3155/dt3155.h
+> +++ b/drivers/media/pci/dt3155/dt3155.h
+> @@ -162,7 +162,6 @@
+>   * @height:		frame height
+>   * @input:		current input
+>   * @sequence:		frame counter
+> - * @stats:		statistics structure
+>   * @regs:		local copy of mmio base register
+>   * @csr2:		local copy of csr2 register
+>   * @config:		local copy of config register
 > 
 
 -- 
