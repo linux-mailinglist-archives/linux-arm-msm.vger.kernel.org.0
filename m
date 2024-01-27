@@ -1,134 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-8583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8584-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 272D383EB54
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 06:42:42 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D75E83EBB8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 08:43:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5506C1C22051
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 05:42:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 319C7283A27
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 07:43:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BAE42F32;
-	Sat, 27 Jan 2024 05:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 961BE1D540;
+	Sat, 27 Jan 2024 07:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xE340seO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ncyyomq0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16747F
-	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jan 2024 05:42:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B844A1E863;
+	Sat, 27 Jan 2024 07:43:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706334158; cv=none; b=tsdVtxMhAWeJLv1/xZc0/KoZeQKsrP5v9V/3vkNwe7AMEeFmtr7SFNiWsEZCF7gKLX4K752TGNJc8aofD9iIfbuPCHP709N6UQuNi8toqNC/QlRdNApjepeM+XP2M7cwoPN1LvI3gG6DwgzNPox0y+3s4FpfNWrRegRt/8x7OGY=
+	t=1706341406; cv=none; b=hoP8vXlQApoRXPo9KdaOMgjdhkEZ1Mj+uSuGJRxW8KFpt6tvKNhQRemU+Qb3Mj2++2CdX2QaGpJgS+jeAbIYu4RG6mjyvZx+d8DUK9FsORahn0o8j4ETF8qvUSPnH0SBR7YuSLVZ+Dl48byui2uz9i0rP9cpgkhfYjfFwgxG4Dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706334158; c=relaxed/simple;
-	bh=DsyVGo9hjoRSm4gV0FPcIovbr63iQxzgfptuFbPFKNw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KgfTS1BXneOsRRMQMQCCJiOpz+ZdGvzLajP/mz0tkJaoFovW3nrv9cfAgYW5AIVIzUgZuXYG9/C/upUa/5PLKGH2LrgZ2Mr7X9gVMSEtGqp6J5WXfUZ2waw1nO41R8snWEb6AXGDgF6wOkO/VDJeEguwtIBUo2kfHSoWpGJ3T+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xE340seO; arc=none smtp.client-ip=209.85.219.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-dc372245aefso937285276.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 21:42:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706334155; x=1706938955; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=gLO6g7N21Idqil6jwJTMgSDzHCEwfR00dveBCYg6xrc=;
-        b=xE340seOsqsJ5s5p/fpP9zCLWsgl6ZT1b4M9Ru3N8PN243Dzg5zOR3iWHKLunkCagF
-         XlXB/OkhKHsBOUfheLSspzhPEQHjTd4Ui35hWgicUI13fxJ7aazOZRMt78N7TOCz7Wor
-         1+mBpkNYLqSU7cYSMKI3gATEudF6uq3TraDTzyDXScDyFul8o9z/n9/hdkywVEzf0a4d
-         AeJ5D/X72+KAmJe33DTUQudLIy3L31zO8L5ofXioQFQCFeQV/y90wlVdk1SeZuCvKCsW
-         72ycHS0658QbBBaTBQkb5QoR7sgwrJPBN73PpogJCwvahff+qkKwMtMS9tYGktvSkftz
-         e0bQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706334155; x=1706938955;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gLO6g7N21Idqil6jwJTMgSDzHCEwfR00dveBCYg6xrc=;
-        b=YsgYU14R9JcW7+wtxLaI6o+qs5dPgCj0tLtagkkaNNrkf7hzCYUGhPQC8e9DrBs4zk
-         LtcE3Nl017FWaPavYJ1YqmDlTjW5vgpsBe1LtHDSFzevKQ3ZDUA/nDK/8epcBMk2xdjI
-         cPQhZc1WYk7xxU+iUf+Annrc3iOQoUTvnA7yp7zzwsj9kpF3OXxj2ZZaQmpYRu/ZDPnM
-         ph8mAcr8rUw3pKLydhLrCT6jFtozwdLi6YR/lgqooBq7P8Pq52Q3VrkKfFg/ekIHq9Oo
-         lbVpgp1E5uglrHj3eYDmUYsSFFFlM5lihSs6t7h4zGdyM63150yFLrqwIXb+vs8dOpKO
-         nfIA==
-X-Gm-Message-State: AOJu0Yy1DgDo6JZSnE0TnE+oRRxUfoXQlZb/uDNGMNsxL4lNIeP+D99F
-	vRMgEzP8LvjVEGH5Lm4XEKTEf/CpE7q7IRYf0Lws3cRhpjwAXRW4XYbzLVIXnZOugmMGW2qCuVU
-	3rO35iFgHlUlzrLvtNi7TZkBNz+qjKeEs7cMiXQ==
-X-Google-Smtp-Source: AGHT+IGfG9ECWJtlGCx/XgHVaYHNizDSKPDhJ1K4b2ASfHNN+HUB98imY4w0O2vIuwpSbFfsezaSH4jff5xrFAtDuuI=
-X-Received: by 2002:a05:690c:3388:b0:5ff:6e27:cb4d with SMTP id
- fl8-20020a05690c338800b005ff6e27cb4dmr1007714ywb.72.1706334155548; Fri, 26
- Jan 2024 21:42:35 -0800 (PST)
+	s=arc-20240116; t=1706341406; c=relaxed/simple;
+	bh=4MGb1qflxhwRgTrrlk/7/kijvV1dwW1KJRjikJeWShU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=cYDHbny+sgaiDEgCkQugndH6NRqORnuush6MEHMWSSutIBNUW/3qcx8D9/HTeK1NbiBhMnxs73sclpbkP9qzrPg892CR/tBB4bbr3kv9BylinUkUJ6x2AgXvDY5xg/C7EZ4WuTXGmrTTUPnZ4uQYhWdDqtgAY/AjkhzWW7kK920=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ncyyomq0; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40R7YdKa022735;
+	Sat, 27 Jan 2024 07:43:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=TT2snydsXyFTUAF8hdDPurbrANlkdPb7MXNMuqisxSo=; b=nc
+	yyomq0Yma2auskhkqpTasXpWD/F5Towp7cPPFqHRYi4i4ejkeOFSgw8XlorPJCuu
+	5NcO4/0LMNVv1DGI138eyCqbUec1kx5oqFouc0NywwiQ2n7y3M44eDGPMF+jiFqn
+	wYgAatSOftJLFTsjfZx1ef6iFtmQWHM+71UNJv/9a2jkpC6K9D9hg2rP/pVWYT6C
+	MTbex2RMOCEbsohyYCP2NgKCsZHdprQnQ3rUJ3UjLqpcsmYta0EUMZQhGeIv+JMa
+	dQn6ITWb/WbjWEgg93Pb5KV7SGE8J2QeHtkQzAy1blU3tyTVOWV51ZhopCwOBwb2
+	et2lk9V3qxteBWNhXFXw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vvse4r9d5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 27 Jan 2024 07:43:19 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40R7hIKY011758
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 27 Jan 2024 07:43:18 GMT
+Received: from [10.216.42.152] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 26 Jan
+ 2024 23:43:14 -0800
+Message-ID: <ae1a2220-7494-4f7e-ac23-f0b2aebeee75@quicinc.com>
+Date: Sat, 27 Jan 2024 13:13:10 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240125193834.7065-1-quic_parellan@quicinc.com>
- <20240125193834.7065-8-quic_parellan@quicinc.com> <301cdbe2-7377-4b0f-bd24-5131f8928c29@linaro.org>
-In-Reply-To: <301cdbe2-7377-4b0f-bd24-5131f8928c29@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 27 Jan 2024 07:42:24 +0200
-Message-ID: <CAA8EJppLsGhU=1O4XcbW6ydQ87=7rk4CBv-GN=-Gp76AUiTDCA@mail.gmail.com>
-Subject: Re: [PATCH 07/17] drm/msm/dpu: disallow widebus en in INTF_CONFIG2
- when DP is YUV420
-To: Paloma Arellano <quic_parellan@quicinc.com>, freedreno@lists.freedesktop.org
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org, 
-	quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com, quic_khsieh@quicinc.com, 
-	marijn.suijten@somainline.org, neil.armstrong@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-
-On Thu, 25 Jan 2024 at 23:26, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On 25/01/2024 21:38, Paloma Arellano wrote:
-> > INTF_CONFIG2 register cannot have widebus enabled when DP format is
-> > YUV420. Therefore, program the INTF to send 1 ppc.
->
-> I think this is handled in the DP driver, where we disallow wide bus for
-> YUV 4:2:0 modes.
-
-Maybe this needs some explanation from my side:
-I think it will be better to have separate conditionals for setting
-HCTL_EN and for DATABUS_WIDEN.
-
-
->
-> >
-> > Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
-> > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 4 +++-
-> >   1 file changed, 3 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> > index 6bba531d6dc41..bfb93f02fe7c1 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> > @@ -168,7 +168,9 @@ static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *ctx,
-> >        * video timing. It is recommended to enable it for all cases, except
-> >        * if compression is enabled in 1 pixel per clock mode
-> >        */
-> > -     if (p->wide_bus_en)
-> > +     if (dp_intf && fmt->base.pixel_format == DRM_FORMAT_YUV420)
-> > +             intf_cfg2 |= INTF_CFG2_DATA_HCTL_EN;
-> > +     else if (p->wide_bus_en)
-> >               intf_cfg2 |= INTF_CFG2_DATABUS_WIDEN | INTF_CFG2_DATA_HCTL_EN;
-> >
-> >       data_width = p->width;
->
-> --
-> With best wishes
-> Dmitry
->
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/4] arm64: dts: qcom: Fix hs_phy_irq for QUSB2 targets
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>
+CC: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring
+	<robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>
+References: <20240120191904.15408-1-quic_kriskura@quicinc.com>
+ <20240120191904.15408-2-quic_kriskura@quicinc.com>
+ <wqdqkzvni4roqulgsiqxzubxcblzxnoydcwvv2av2pobjjx5o6@b7kwl6lq7hij>
+ <a4606673-64e9-4e16-8d9e-307fb37d8763@quicinc.com>
+ <7f780a0b-5f70-480e-82fc-08bd89870d13@linaro.org>
+Content-Language: en-US
+From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <7f780a0b-5f70-480e-82fc-08bd89870d13@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: bChgEQMgofsM3sNqgNFgllzcRIOB5u1p
+X-Proofpoint-GUID: bChgEQMgofsM3sNqgNFgllzcRIOB5u1p
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ malwarescore=0 bulkscore=0 mlxlogscore=916 phishscore=0 impostorscore=0
+ lowpriorityscore=0 suspectscore=0 adultscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2401190000
+ definitions=main-2401270055
 
 
---
-With best wishes
-Dmitry
+> 
+> v1.4.0? I am sorry, but what?
+> 
+> Isn't that like 10 years old? What systems are you using there? I am
+> asking, because maybe we should be rejecting DTS patches assuming they
+> were never tested (testing on ancient dtc counts like no testing).
+> 
+>> When I moved to 1.5.0, I did see these warnings. Fixed them up and sent v3.
+> 
+> Nope, you just moved from 10 years old to 5 years old.
+> 
+> Fix your systems and use the recent one. v1.6.1
+> 
+
+Hi Krzysztof,
+
+  It was an old pc I was using this time and it was using local 
+/usr/bin/dtc for some reason. I got the latest version working:
+
+kriskura@hu-kriskura-hyd:/local/mnt/workspace/krishna/skales_dt_cleanup/skales/kernel$ 
+dtc -v
+Version: DTC 1.6.1-gabbd523b
+
+And with this version, I don't see any errors in the v3 pushed.
+
+Thanks,
+Krishna,
 
