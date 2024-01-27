@@ -1,108 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-8604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8605-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 908AA83EFEE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 21:11:28 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2AD3783F008
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 21:50:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 24858282E06
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 20:11:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 47A711C2103A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 20:50:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC2052E637;
-	Sat, 27 Jan 2024 20:11:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA8281758E;
+	Sat, 27 Jan 2024 20:50:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bxezkgEh"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="c5iC6GBd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886752A1C9
-	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jan 2024 20:11:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10DF8179AB;
+	Sat, 27 Jan 2024 20:50:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706386283; cv=none; b=dxujjgArxytepfQk/jkQ+fvp096OC2dvA38onfaFL8uRFEaqiuKvwdDsgEeb9ZNH57gIMECKKZ9DXRvMSfAukOMzWVDBjfnkX0u1EpepxbWScYC/Ux3ylRapGKyyi2FDQb/6j24q9XR9+y2v1IbMvu77KC+rGDC2eyYcUvDvpKw=
+	t=1706388642; cv=none; b=H/JfNwLQeJCRAxw4MHCiFnGUPcaogoDeSvnYNoRR7TCikbh+lHsjjH2n0rPOFhCEDqnRTYUaQlWNkF01DOGpai3A/LoEOSP7BA4xUmd7p2bVrrNdJUI4TTh7FrF8K+BWN5YO+TAfnhm3T6UiPgQYbnKZW5O5Cpz5fHIgFs2GSMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706386283; c=relaxed/simple;
-	bh=sJ9tgEx/4vCHI7sx+ldFQbW4TAUPdYxPct5X6gZ9CBY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XTmz+OP4hukdlvXV+H+E5N25cCFeSienGvVdycNZmvdeS3VJ9Sdga4T1pThSqtutPqkfK+QawjTmv74ENS3N0vEVrdKBmhbP3hcDyfqqoXBAungnGdtP8SPJAA9d3X81eQwmTtKzDG9jR5hBOnHCEPoT8ycH859IfmZZVdR8Myk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bxezkgEh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8BCC43390
-	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jan 2024 20:11:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706386283;
-	bh=sJ9tgEx/4vCHI7sx+ldFQbW4TAUPdYxPct5X6gZ9CBY=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=bxezkgEhriSMgNo0yNPHHLoWx4LU0Lk5qXWlnQdW11Ne00KcgZCK4QtRpNvJDAv8x
-	 alc8idCqxuWYUMDku49533/NIVTufuYgE4jQ1v+ssHpQdHXQrOni80813BcspOE/GE
-	 yTIUdp+WJ6qVtVdVXJIZbqslfXYj7v3wzAY9QQCz+GU+LbsWMpLSD1ps9Zrml/HR94
-	 LBh0mP2cDibEniijYevyN31NO3DUFvHFZIDXZt0j04MajRXIefg3vVZjvjQg0sYv3E
-	 mwENMf8cMZ9DnP/sYDY0a9WwmpIlbmHOw2O+0xUNu6xZy30zID7f6U4udgGUOgkanm
-	 qaQrUmS40tnFQ==
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-55cdaa96f34so5417059a12.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jan 2024 12:11:23 -0800 (PST)
-X-Gm-Message-State: AOJu0Yzxu8XX7O/JzJ1sfJjZTNWhTRUYUBvkzsXqzZgr6ZJfDY01HrNe
-	pfnOWccTwjP4B3uEI3sHC91BsIQv8kjqW0fmY0EyE+mcVWxJYIy55yns1TU3+qRsdylqn8m9hoT
-	0G2IaKIFvPiZw3r2XhLvRsAeoVt4ZJY6kfB0k4Q==
-X-Google-Smtp-Source: AGHT+IEL7hwutcuJBMl+D+WwSuxDS/pjkssE+ku6P7gX/z4KapuHsOqcACKLloQ+3pbFR1f3+jrtPlK2sndRj9dNn3w=
-X-Received: by 2002:a17:906:5587:b0:a35:4331:8971 with SMTP id
- y7-20020a170906558700b00a3543318971mr1555326ejp.31.1706386281470; Sat, 27 Jan
- 2024 12:11:21 -0800 (PST)
+	s=arc-20240116; t=1706388642; c=relaxed/simple;
+	bh=i4vflHI1Xg9SsBh8fmpmvH5f4CVLxF/xtrM8J68Hi9k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cSblq4tHhxRo2VfT22KHh1N8S8ijJysQx374riefTfQqE6B6vAWBkTBuAeRN8vUsWpCeBH0uTC53IqHaVIreNx4IGwyKsxML/fz0/Qf6lDR0BnNOPvTl1hlsetyS0i38eBIX9ouu33ninSHcYD/Zynf4w+evwKMHjPRaI35RMMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=c5iC6GBd; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
+	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
+	bh=RV5yp4moMkrVYUc/CaHl4almlCVw/eYz0Zt5LSwa6CA=; b=c5iC6GBdVWd3TJwe6hRvM8TeBx
+	2TOGVpP8s6sl42ulTDbWT1eat0CKsapyevZ2FrDr2MtkDoChYbSgaDTyX8pxM8UeMgBgVJvPBIPmC
+	8JqHkGthzfyhHKydmffLAoisqEiep61tzLiMS68o0vx9uNCS8/OOxcMf689Nz+gjF9UW2dFH1s52p
+	sGQbDvMXpVJoebggnJU1eRjwAU4UxEsEdz3PqkWy0iVyvDNFJuRIR5qhbIGIOnKo53gg5Ux3Q24i6
+	5H684hczD72Wwpac4ZAdU1lnjS7OJRvGTasgj58vsNE4trqbYYfgraHOP8K7yJ2LtxGwOthR9UPTg
+	TY/h5Lvw==;
+Received: from [50.53.50.0] (helo=[192.168.254.15])
+	by bombadil.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
+	id 1rTpdE-00000008BSP-2pEF;
+	Sat, 27 Jan 2024 20:50:28 +0000
+Message-ID: <a098990b-a599-4478-92ad-8d2d1cce2c6e@infradead.org>
+Date: Sat, 27 Jan 2024 12:50:27 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240122100726.16993-1-quic_priyjain@quicinc.com>
- <548e2f24-a51e-4593-9463-09506488c70e@linaro.org> <f415a8cd-4cae-d7c3-60fc-674b3e660f6b@quicinc.com>
- <aeae2e69-8407-4d90-9d16-27798e2f3248@linaro.org> <be69e0a6-fdc8-c24b-9beb-adaac4a97776@quicinc.com>
-In-Reply-To: <be69e0a6-fdc8-c24b-9beb-adaac4a97776@quicinc.com>
-From: Amit Kucheria <amitk@kernel.org>
-Date: Sun, 28 Jan 2024 01:41:10 +0530
-X-Gmail-Original-Message-ID: <CAHLCerNx4KxzmQF8HmTTFr+W7xn5vubA=Jcg4Kwyk=cCJ4w+Wg@mail.gmail.com>
-Message-ID: <CAHLCerNx4KxzmQF8HmTTFr+W7xn5vubA=Jcg4Kwyk=cCJ4w+Wg@mail.gmail.com>
-Subject: Re: [PATCH] thermal/drivers/tsens: Add suspend to RAM support for tsens
-To: Priyansh Jain <quic_priyjain@quicinc.com>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Thara Gopinath <thara.gopinath@gmail.com>, 
-	Bjorn Andersson <andersson@kernel.org>, "Rafael J . Wysocki" <rafael@kernel.org>, 
-	Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
-	Lukasz Luba <lukasz.luba@arm.com>, linux-pm@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	quic_manafm@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 03/17] media: media-entity.h: Fix kerneldoc
+Content-Language: en-US
+To: Sakari Ailus <sakari.ailus@linux.intel.com>
+Cc: Ricardo Ribalda <ribalda@chromium.org>,
+ Tiffany Lin <tiffany.lin@mediatek.com>,
+ Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
+ Yunfei Dong <yunfei.dong@mediatek.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+ Hans Verkuil <hverkuil-cisco@xs4all.nl>, Hans Verkuil <hverkuil@xs4all.nl>,
+ Kieran Bingham <kieran.bingham@ideasonboard.com>,
+ Bin Liu <bin.liu@mediatek.com>,
+ Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Sylwester Nawrocki <s.nawrocki@samsung.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Alim Akhtar <alim.akhtar@samsung.com>,
+ Marek Szyprowski <m.szyprowski@samsung.com>,
+ Andrzej Hajda <andrzej.hajda@intel.com>, Bingbu Cao <bingbu.cao@intel.com>,
+ Tianshu Qiu <tian.shu.qiu@intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>,
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+ linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
+ linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-samsung-soc@vger.kernel.org, linux-staging@lists.linux.dev,
+ linux-amlogic@lists.infradead.org
+References: <20240126-gix-mtk-warnings-v1-0-eed7865fce18@chromium.org>
+ <20240126-gix-mtk-warnings-v1-3-eed7865fce18@chromium.org>
+ <e6b72dff-911e-4923-9996-b3b7db36fb8e@infradead.org>
+ <ZbVOGaw-8qU2QNle@kekkonen.localdomain>
+From: Randy Dunlap <rdunlap@infradead.org>
+In-Reply-To: <ZbVOGaw-8qU2QNle@kekkonen.localdomain>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jan 24, 2024 at 8:55=E2=80=AFPM Priyansh Jain <quic_priyjain@quicin=
-c.com> wrote:
->
->
->
-> On 1/24/2024 6:04 PM, Konrad Dybcio wrote:
-> >
-> >
-> > On 1/24/24 11:42, Priyansh Jain wrote:
 
-> >>
-> >> As part of suspend to RAM, tsens hardware will be turned off and it
-> >> cannot generate any interrupt.Also system doesn't want to abort
-> >> suspend to RAM due to tsens interrupts since system is already going
-> >> into lowest
-> >> power state. Hence disabling tsens interrupt during suspend to RAM
-> >> callback.
-> >
-> > Is that a hardware limitation, or a software design choice? I'm not
-> > sure I want my phone to have thermal notifications disabled when
-> > it's suspended.
->
-> > Konrad
->
-> As part of suspend to RAM , entire SOC will be off, this mode (suspend
-> to RAM) is not intended for Mobile product. Tsens interrupts are not
-> disabled as part of suspend to idle(suspend mode for mobile).
 
-You should hide the callbacks behind the CONFIG_SUSPEND Kconfig option
-so that it only gets enabled when S2R is enabled.
+On 1/27/24 10:40, Sakari Ailus wrote:
+> Hi Randy,
+> 
+> On Fri, Jan 26, 2024 at 05:51:06PM -0800, Randy Dunlap wrote:
+>>
+>>
+>> On 1/26/24 15:16, Ricardo Ribalda wrote:
+>>> The fields seems to be documented twice.
+>>>
+>>> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+>>> ---
+>>>  include/media/media-entity.h | 4 ----
+>>>  1 file changed, 4 deletions(-)
+>>>
+>>> diff --git a/include/media/media-entity.h b/include/media/media-entity.h
+>>> index 2b6cd343ee9e..c79176ed6299 100644
+>>> --- a/include/media/media-entity.h
+>>> +++ b/include/media/media-entity.h
+>>> @@ -337,10 +337,6 @@ enum media_entity_type {
+>>>   * @info.dev:	Contains device major and minor info.
+>>>   * @info.dev.major: device node major, if the device is a devnode.
+>>>   * @info.dev.minor: device node minor, if the device is a devnode.
+>>> - * @major:	Devnode major number (zero if not applicable). Kept just
+>>> - *		for backward compatibility.
+>>> - * @minor:	Devnode minor number (zero if not applicable). Kept just
+>>> - *		for backward compatibility.
+>>>   *
+>>>   * .. note::
+>>>   *
+>>>
+>>
+>> I'd say that this is correct based on
+>> https://patchwork.kernel.org/project/linux-media/patch/20231223050707.14091-1-rdunlap@infradead.org/
+>>
+
+Ah, I see. Thank you.
+
+>>
+>> Hans, can you please explain this message from you, on 2024-Jan-22, that
+>> I cannot find in the media patchwork:
+> 
+> It's in linuxtv.org Patchwork here
+> <URL:https://patchwork.linuxtv.org/project/linux-media/patch/20231223050707.14091-1-rdunlap@infradead.org/>
+> and also in the media stage tree (as indicated by the state) but not yet in
+> master AFAIU.
+> 
+>>
+>>
+>> Subject: [git:media_stage/master] media: media-entity.h: fix Excess kernel-doc description warnings
+>>
+>>
+>>
+>> This is an automatic generated email to let you know that the following patch were queued:
+>>
+>> Subject: media: media-entity.h: fix Excess kernel-doc description warnings
+>> Author:  Randy Dunlap <rdunlap@infradead.org>
+>> Date:    Fri Dec 22 21:07:07 2023 -0800
+>>
+>> Remove the @major: and @minor: lines to prevent the kernel-doc warnings:
+>>
+>> include/media/media-entity.h:376: warning: Excess struct member 'major' description in 'media_entity'
+>> include/media/media-entity.h:376: warning: Excess struct member 'minor' description in 'media_entity'
+>>
+>> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+>> Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+>> Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+>> Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+>>
+>>  include/media/media-entity.h | 4 ----
+>>  1 file changed, 4 deletions(-)
+>>
+>> ---
+>>
+>> diff --git a/include/media/media-entity.h b/include/media/media-entity.h
+>> index 2b6cd343ee9e..c79176ed6299 100644
+>> --- a/include/media/media-entity.h
+>> +++ b/include/media/media-entity.h
+>> @@ -337,10 +337,6 @@ enum media_entity_type {
+>>   * @info.dev:	Contains device major and minor info.
+>>   * @info.dev.major: device node major, if the device is a devnode.
+>>   * @info.dev.minor: device node minor, if the device is a devnode.
+>> - * @major:	Devnode major number (zero if not applicable). Kept just
+>> - *		for backward compatibility.
+>> - * @minor:	Devnode minor number (zero if not applicable). Kept just
+>> - *		for backward compatibility.
+>>   *
+>>   * .. note::
+>>   *
+>>
+>>
+>>
+>> Thanks.
+> 
+
+-- 
+#Randy
 
