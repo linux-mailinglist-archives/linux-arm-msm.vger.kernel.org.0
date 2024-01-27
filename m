@@ -1,180 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-8577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF9FC83E920
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 02:51:20 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1EC4B83E9B2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 03:26:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AF81B28C83D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 01:51:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 47BC51C225A0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 02:26:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 278379474;
-	Sat, 27 Jan 2024 01:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11D1533F6;
+	Sat, 27 Jan 2024 02:26:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="1bMYiW8P"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PIo0uXn9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BFDC8C14;
-	Sat, 27 Jan 2024 01:51:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E92B2F30
+	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jan 2024 02:26:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706320277; cv=none; b=J/2RrfqIRhXs5ybmCthzze6ZDqJ/cKAjennNnK0hrv2CWBX0X4a6v4uWA6R/14D7SoZBT/5mnbtqMgdwKARRhNhDRt0NE9+5pdqnZfTgRGu3+mD5Xxr5zzB6Lf4naCWzfnA8ZSoLjIkta6LuSp9SBXBRIK+AbrZegv6FQXwtOnU=
+	t=1706322409; cv=none; b=anZ4TrQoQwqjKuYkMQVu9ZU8N91ecRsfNJ7TuhnHGBftp9ap7IQ/ZRUkxFRIb9bzrh/2paile0C6XNYVFRIahLv7SvexvZ2HlShz0r+t7c9Xavsxw02RcpnSS5tJOS8rLiK9fxnVkWHNJbcZgN7WFRG/XzBNxbNAAc+bEKOS/7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706320277; c=relaxed/simple;
-	bh=KZpDU/PEAGyFwGtY9AhJRKxcH3CF40SmBvZ9Xq2HTvQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kmPxyjYstJb9ncLIY444V4NRq6yUeby3OZH2P1wjqxzRsAxoSxWmBMobEp3YHsI0gGF7QEQZyW1rmzgELMpf890QHdZIeOuUUJ9vz/R8Qh3E6xTzzaSv2wsiAuFBZVpE2Ode3Owh++eeK6oLv+WWpcvUgBVZ6z6hqaBI5IbJXz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=1bMYiW8P; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
-	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
-	bh=lxYFxs/8WK1pTjOIC0n7A2x231owOnOSLs3pwAFP9f4=; b=1bMYiW8PDwIA/3MpD5Mm8+w+B0
-	4HPN+fwJNQjcSaprS2W8q9+6vfk42Gb3sTsDNQ+pIabWuHzsqkf+98E96uvPutlmyddM+L/2qoMbC
-	NRpDaTwop0LKEeGTwntNwgBk2rSDpH2wGpjGjYhAlFzIEgmQ21ZJa+5nkOMlGFvsiJq+zMPrV7tBY
-	04hs3cdz9Xv5yNANmbKaCgEp4k5ZFkhxSN9PADo9l2iMGgP69sPl5nOYSRfLn2zNzmqgD0vY9LY0k
-	wxpO4av5GvnO5h4PVFD7WUt6tHeMBewPRm8f1NBGaTXuxJl4jvsXNNRyI01rOxD8P0/SttTdwfp9j
-	bxAUHJfg==;
-Received: from [50.53.50.0] (helo=[192.168.254.15])
-	by bombadil.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
-	id 1rTXqe-00000006Alx-2cQm;
-	Sat, 27 Jan 2024 01:51:08 +0000
-Message-ID: <e6b72dff-911e-4923-9996-b3b7db36fb8e@infradead.org>
-Date: Fri, 26 Jan 2024 17:51:06 -0800
+	s=arc-20240116; t=1706322409; c=relaxed/simple;
+	bh=b3z+MqbVrqazCfq/PX+AzHQNyshmb1dj5fhrVqezPDc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iBla4ztbyafyqK4WuiXy2xBIaEL24b7GzBHk+CusDN6lWfOts4SmzuD4yccJ1Ia+DrKf8bhTQS0u/ViH7KOIV9C9yMdWqC94rivesrttWafY5e13guRpwdfE4xRN2UXbsSKtezJMihtbOClXt3cQB71QK2FhmQW3VKgwBHOVpyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PIo0uXn9; arc=none smtp.client-ip=209.85.128.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-5ffe7e7b7b3so9990247b3.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jan 2024 18:26:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706322406; x=1706927206; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=PmD0X57CBkOq/PnKV2CMVVT58JH+EItJHOHqPK4CG34=;
+        b=PIo0uXn90juhPhtPz8yh1rUMLMXL63BDf1NXbH395hSs4sEAQ8OasNmpYuFP3V5sav
+         kBartQw8PYbMkDFTkSHvrqYlPt0WxH1g+XXBKUHQtkXaQDtnc4knU8pgGyJHxnyWJMv2
+         ZhI9QIU7pSuoeFPaqiOzdi/bcelLOj1fbzeneol2knmrPqNCjBI47v6lXt9phLIiezbM
+         VpDXdUstH3OfT+JSkEYmsJVPI5sxcoRt1Og0NE5Ae9umyWLx0fvhFUYUasfgssZm1hzp
+         CSAU1P3EPmS5kUaSAIDwrX848HSLmE66tDeV5hfUdy8Fc9zLly9ttasyiSt9dZUzeVX7
+         RKhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706322406; x=1706927206;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PmD0X57CBkOq/PnKV2CMVVT58JH+EItJHOHqPK4CG34=;
+        b=iw2jZ4t8/ESK2Ea3hpfsqvzC/fD8DLSlLzqzu7CO368luQp6taprhS5FUVR1jne2rX
+         Im0WNRp5gx+LSI94aQHlY/mbzPvAC2DZe8weX03lFN7MGHCXiKIwvap9VkY6M6J1JXNV
+         H2y98Q5SsysZXTFpMB2JVdwRyZr44O1mRYdulU8t2KHA2cqNgVpckJrDmI/x5fW8oF1d
+         kHk86i+MqjLO1jehKS6Z+CmquPPXfM5drrvR//gWBccVCIFUmS0qgfFdlxMdRNoBsLPd
+         NCgwVa7aFPtr70hdgSTV+mokCaRhS7HGyWmhygKCQ8lAb48QeW6U5I4YBpRUySrWPoyZ
+         PtFQ==
+X-Gm-Message-State: AOJu0YzkTsSNJsJETI9UqmJIeiv35qhbpGayUIXquSxOO8kIHeTHz7RS
+	s6PzWBrYGuHvMN/JqRxKMm25kZRmzWd8ZLpcjgM3hSECMuxGPYn1U0SA2rO+a0cYAYwiMQ10k6y
+	myl4d9kkzHC2B+lXTm+mIqzZd0AS907cqmTgj/7gXVSRUFAsD
+X-Google-Smtp-Source: AGHT+IFCsLON6Jdu5eEiLpsO0NWcRtQO8eIKqPlmdt4XTl7lsF7Hd1eYuqT5luTIzXi5AQLRYtYd/PSi7R+VWs8Gn+w=
+X-Received: by 2002:a81:b60c:0:b0:5f6:d2ee:2686 with SMTP id
+ u12-20020a81b60c000000b005f6d2ee2686mr853287ywh.2.1706322406174; Fri, 26 Jan
+ 2024 18:26:46 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/17] media: media-entity.h: Fix kerneldoc
-Content-Language: en-US
-To: Ricardo Ribalda <ribalda@chromium.org>,
- Tiffany Lin <tiffany.lin@mediatek.com>,
- Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
- Yunfei Dong <yunfei.dong@mediatek.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Sakari Ailus <sakari.ailus@linux.intel.com>,
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
- Hans Verkuil <hverkuil-cisco@xs4all.nl>, Hans Verkuil <hverkuil@xs4all.nl>,
- Kieran Bingham <kieran.bingham@ideasonboard.com>,
- Bin Liu <bin.liu@mediatek.com>,
- Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
- Philipp Zabel <p.zabel@pengutronix.de>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Sylwester Nawrocki <s.nawrocki@samsung.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Alim Akhtar <alim.akhtar@samsung.com>,
- Marek Szyprowski <m.szyprowski@samsung.com>,
- Andrzej Hajda <andrzej.hajda@intel.com>, Bingbu Cao <bingbu.cao@intel.com>,
- Tianshu Qiu <tian.shu.qiu@intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>,
- Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
- linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-samsung-soc@vger.kernel.org, linux-staging@lists.linux.dev,
- linux-amlogic@lists.infradead.org
-References: <20240126-gix-mtk-warnings-v1-0-eed7865fce18@chromium.org>
- <20240126-gix-mtk-warnings-v1-3-eed7865fce18@chromium.org>
-From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <20240126-gix-mtk-warnings-v1-3-eed7865fce18@chromium.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240125193834.7065-1-quic_parellan@quicinc.com>
+ <20240125193834.7065-3-quic_parellan@quicinc.com> <53356805-21f4-4329-bff0-82d266ab9399@linaro.org>
+ <674c5e5c-29e9-ef4a-5c5d-a24bdab27059@quicinc.com>
+In-Reply-To: <674c5e5c-29e9-ef4a-5c5d-a24bdab27059@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Sat, 27 Jan 2024 04:26:34 +0200
+Message-ID: <CAA8EJpo+AB3q+TRYMXDJqfk3p=L-EQEdS5mjkWOw9Mfcn5kFpQ@mail.gmail.com>
+Subject: Re: [PATCH 02/17] drm/msm/dpu: move dpu_encoder_helper_phys_setup_cdm
+ to dpu_encoder
+To: Paloma Arellano <quic_parellan@quicinc.com>
+Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, robdclark@gmail.com, seanpaul@chromium.org, 
+	swboyd@chromium.org, quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com, 
+	quic_khsieh@quicinc.com, marijn.suijten@somainline.org, 
+	neil.armstrong@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+
+On Sat, 27 Jan 2024 at 02:44, Paloma Arellano <quic_parellan@quicinc.com> wrote:
+>
+>
+> On 1/25/2024 1:16 PM, Dmitry Baryshkov wrote:
+> > On 25/01/2024 21:38, Paloma Arellano wrote:
+> >> Move dpu_encoder_helper_phys_setup_cdm to dpu_encoder in preparation for
+> >> implementing CDM compatibility for DP.
+> >
+> > Nit: s/CDM compatibility/YUV support/. It might make sense to spell it
+> > out that YUV over DP requires CDM.
+> Ack
+> >
+> >>
+> >> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
+> >> ---
+> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 78 +++++++++++++++++
+> >>   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  9 ++
+> >>   .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   | 84 -------------------
+> >>   3 files changed, 87 insertions(+), 84 deletions(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> >> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> >> index 83380bc92a00a..6cef98f046ea6 100644
+> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> >> @@ -2114,6 +2114,84 @@ void dpu_encoder_helper_phys_cleanup(struct
+> >> dpu_encoder_phys *phys_enc)
+> >>       ctl->ops.clear_pending_flush(ctl);
+> >>   }
+> >>   +void dpu_encoder_helper_phys_setup_cdm(struct dpu_encoder_phys
+> >> *phys_enc,
+> >> +                       const struct dpu_format *dpu_fmt,
+> >> +                       u32 output_type)
+> >
+> > My email client suggests that the parameters are not idented properly
+> > anymore.
+> On my editor it appears to be aligned correctly. Running checkpatch.pl
+> doesn't give any warnings either. So perhaps it's the email client.
+
+Checked, you are correct here.
+
+> >
+
+[skipped]
+
+> >>    * dpu_encoder_phys_wb_atomic_check - verify and fixup given atomic
+> >> states
+> >>    * @phys_enc:    Pointer to physical encoder
+> >> @@ -399,7 +316,6 @@ static int dpu_encoder_phys_wb_atomic_check(
+> >>       return
+> >> drm_atomic_helper_check_wb_connector_state(conn_state->connector,
+> >> conn_state->state);
+> >>   }
+> >>   -
+> >
+> > irrelevant, please drop.
+> Ack
+
+With this fixed:
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> >
+> >>   /**
+> >>    * _dpu_encoder_phys_wb_update_flush - flush hardware update
+> >>    * @phys_enc:    Pointer to physical encoder
+> >
 
 
 
-On 1/26/24 15:16, Ricardo Ribalda wrote:
-> The fields seems to be documented twice.
-> 
-> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-> ---
->  include/media/media-entity.h | 4 ----
->  1 file changed, 4 deletions(-)
-> 
-> diff --git a/include/media/media-entity.h b/include/media/media-entity.h
-> index 2b6cd343ee9e..c79176ed6299 100644
-> --- a/include/media/media-entity.h
-> +++ b/include/media/media-entity.h
-> @@ -337,10 +337,6 @@ enum media_entity_type {
->   * @info.dev:	Contains device major and minor info.
->   * @info.dev.major: device node major, if the device is a devnode.
->   * @info.dev.minor: device node minor, if the device is a devnode.
-> - * @major:	Devnode major number (zero if not applicable). Kept just
-> - *		for backward compatibility.
-> - * @minor:	Devnode minor number (zero if not applicable). Kept just
-> - *		for backward compatibility.
->   *
->   * .. note::
->   *
-> 
-
-I'd say that this is correct based on
-https://patchwork.kernel.org/project/linux-media/patch/20231223050707.14091-1-rdunlap@infradead.org/
-
-
-Hans, can you please explain this message from you, on 2024-Jan-22, that I cannot find in the media patchwork:
-
-
-Subject: [git:media_stage/master] media: media-entity.h: fix Excess kernel-doc description warnings
-
-
-
-This is an automatic generated email to let you know that the following patch were queued:
-
-Subject: media: media-entity.h: fix Excess kernel-doc description warnings
-Author:  Randy Dunlap <rdunlap@infradead.org>
-Date:    Fri Dec 22 21:07:07 2023 -0800
-
-Remove the @major: and @minor: lines to prevent the kernel-doc warnings:
-
-include/media/media-entity.h:376: warning: Excess struct member 'major' description in 'media_entity'
-include/media/media-entity.h:376: warning: Excess struct member 'minor' description in 'media_entity'
-
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-
- include/media/media-entity.h | 4 ----
- 1 file changed, 4 deletions(-)
-
----
-
-diff --git a/include/media/media-entity.h b/include/media/media-entity.h
-index 2b6cd343ee9e..c79176ed6299 100644
---- a/include/media/media-entity.h
-+++ b/include/media/media-entity.h
-@@ -337,10 +337,6 @@ enum media_entity_type {
-  * @info.dev:	Contains device major and minor info.
-  * @info.dev.major: device node major, if the device is a devnode.
-  * @info.dev.minor: device node minor, if the device is a devnode.
-- * @major:	Devnode major number (zero if not applicable). Kept just
-- *		for backward compatibility.
-- * @minor:	Devnode minor number (zero if not applicable). Kept just
-- *		for backward compatibility.
-  *
-  * .. note::
-  *
-
-
-
-Thanks.
 -- 
-#Randy
+With best wishes
+Dmitry
 
