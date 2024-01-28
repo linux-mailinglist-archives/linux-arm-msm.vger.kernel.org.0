@@ -1,125 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-8717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id F089D83F8F2
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 19:00:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E74E83F90D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 19:14:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A405C1F22954
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 18:00:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DE1C11F2181B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 18:14:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EFF42D61A;
-	Sun, 28 Jan 2024 18:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAAD22E40E;
+	Sun, 28 Jan 2024 18:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FsT1GXoX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hiZAlxBl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323652D044;
-	Sun, 28 Jan 2024 18:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65382E3E5;
+	Sun, 28 Jan 2024 18:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706464830; cv=none; b=jv8OSSoQSL8gzKVRoJqeKcTTMtEerVNddP1RwpV89Jwgjx69YJpGQtYL4zlWsE9cG2u2lGfynsy5m5TNQi0WghAyYcpdRruOMiU/LvjAWkA+Vrk4YUEUOddxzEnCQYyc++JhaSfa10NFbWziztMF0TDVCMJuIzUUypYqarg1kOw=
+	t=1706465639; cv=none; b=mY90CMzb5N5ZGsOtzE8DJVOx1raBo0LGHNgGo/fyrEpXREBqMnuMs/EAUOZHIK28gwta8e3Uih9nR6H9DfrDMmNkhvK2dpUQ+5LBHInJKhEgitkndYzs+nNL4TSrgcpvuzD8x28WLZtSabZDN2E8CxgpR/G+usuruvUKnlP2Jro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706464830; c=relaxed/simple;
-	bh=6qEE5iFXL0RGoiqfGo6GjJkdO/zywWgXuJlLPmA7+5k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=isJ3TLAzV502IGeCTDWnN0Tv3OEnoP1TrJ+S8zC8GQKcy0i6mD9yRt7kItCX/3WecVxliAn3FwNnl99oOxjTcIjcpKRhuTM5w5MHn13qLgn5PgJoN4hVWLRhU589yjXwBuHI4CcYO/lcB0q2qAd6kSiLuSy9XTyJM+SFRObOhAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FsT1GXoX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3FFAC433C7;
-	Sun, 28 Jan 2024 18:00:27 +0000 (UTC)
+	s=arc-20240116; t=1706465639; c=relaxed/simple;
+	bh=x5xkeH90w3zTKfbeaIMy3rP33RSNJq5Pa47+wWoCNdc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=FkFSHYBtKfyHo2ZVwH1ZuC+8knLJUuFsBNlMo1e0Marl7SiqW61lDKVxkFTlpuQ3j/8Pbo2i2mneT9jsYtD1DVO8H9wdaHGOTEOZHKr4jyXctZ+xjbuEy0O3ju+psmaRD0Sr8vr5OPVOszqPi057jvIZj5dk14n+6fECr0WSQ8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hiZAlxBl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC8EFC433C7;
+	Sun, 28 Jan 2024 18:13:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706464828;
-	bh=6qEE5iFXL0RGoiqfGo6GjJkdO/zywWgXuJlLPmA7+5k=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=FsT1GXoXSH/52LxccsjtDsNIjuDdp8OxanWHiflBkvM4boc+NDZQgx38HErpRkpjr
-	 zWNUG4SsPOUwkzQRjwyvB1o9KRmCjIw4WWycMBKjEGkTXf1FAYJZnnk+yWAbIacRSu
-	 J2bLdsy2Xs7Ev/FQCB1EqbtLo3KqFCeutoaBwdALuQWsEWpqyItBbN3TWeXzTqotwX
-	 VxF5zvN16MRc13vmRb6mx34Osu22+d5xhVzSDqsBrbug2pOW6YnLOZH+RRVSkyLGtF
-	 ejemvflsjZmD4nJRYlITF+ri8myBfU6f8pqhQ5mllrbuo6bpZoFxOWEWdkuPb2Th/5
-	 t3lTUck/b9GvA==
-Date: Sun, 28 Jan 2024 12:00:25 -0600
+	s=k20201202; t=1706465639;
+	bh=x5xkeH90w3zTKfbeaIMy3rP33RSNJq5Pa47+wWoCNdc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=hiZAlxBl/QM66pRhB8zNgzoRorx/VZwAqg3eL3kIpnjeZjOfalNxnGUFC4ir850yt
+	 YEJ7DJaX7QOsl7Zd/ju49KPLeCCE1sHzvzkVubQoT1ZoEE1giRYYx5775+FmBPBBQS
+	 Q70xaE96g9LrYsctbNqXDAMigh/LnYYsUlRaI/TO3HPMqVEe8tD+g4psmizH/TbRy4
+	 ATJ44jhMyft1Tgn2Kj+McYGPAIqAzfOgXTmuuNEnF+cnbWqhfYFuJ7fqyWZOzx2CDH
+	 GXJ8DulkIW4LPaNUXqtwqIrvY1jo0H5lOLeecBhvj22Ln/aQNzUjdlyapyepKfszoO
+	 HLxsXnn9AF+KA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc: Luca Weiss <luca.weiss@fairphone.com>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Amit Pundir <amit.pundir@linaro.org>, 
-	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>, 
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>
-Subject: Re: Re: [PATCH] arm64: dts: qcom: sdm845: Fix wild reboot during
- Antutu test
-Message-ID: <iiggyplhtyf3pnj37k4tdzymry26uxzpaldhiqfi6abxk5xjgi@6v6ovkdevn7d>
-References: <20240116115921.804185-1-daniel.lezcano@linaro.org>
- <CYG4WTCOBTG2.11PA7Q4A3H93H@fairphone.com>
- <5db88d48-4868-49f0-b702-6eea14400e5b@linaro.org>
- <CYG6QOFYOX79.2ROURJ8FK446C@fairphone.com>
- <70b359c6-f094-4874-b903-1dca07d0db7c@linaro.org>
+To: Andy Gross <agross@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>
+Cc: ~postmarketos/upstreaming@lists.sr.ht,
+	phone-devel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sm7225-fairphone-fp4: Switch firmware ext to .mbn
+Date: Sun, 28 Jan 2024 12:13:51 -0600
+Message-ID: <170646562749.66688.7240389646566501227.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240110-fp4-mbn-v1-1-45e7e33b1834@fairphone.com>
+References: <20240110-fp4-mbn-v1-1-45e7e33b1834@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <70b359c6-f094-4874-b903-1dca07d0db7c@linaro.org>
 
-On Tue, Jan 16, 2024 at 04:38:33PM +0100, Daniel Lezcano wrote:
-> On 16/01/2024 15:03, Luca Weiss wrote:
-> > On Tue Jan 16, 2024 at 1:51 PM CET, Daniel Lezcano wrote:
-> > > On 16/01/2024 13:37, Luca Weiss wrote:
-> > > > On Tue Jan 16, 2024 at 12:59 PM CET, Daniel Lezcano wrote:
-> > > > > Running an Antutu benchmark makes the board to do a hard reboot.
-> > > > > 
-> > > > > Cause: it appears the gpu-bottom and gpu-top temperature sensors are showing
-> > > > > too high temperatures, above 115°C.
-> > > > > 
-> > > > > Out of tree configuratons show the gpu thermal zone is configured to
-> > > > > be mitigated at 85°C with devfreq.
-> > > > > 
-> > > > > Add the DT snippet to enable the thermal mitigation on the sdm845
-> > > > > based board.
-> > > > > 
-> > > > > Fixes: c79800103eb18 ("arm64: dts: sdm845: Add gpu and gmu device nodes")
-> > > > > Cc: Amit Pundir <amit.pundir@linaro.org>
-> > > > > Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-> > > > 
-> > > > A part of this is already included with this patch:
-> > > > https://lore.kernel.org/linux-arm-msm/20240102-topic-gpu_cooling-v1-4-fda30c57e353@linaro.org/
-> > > > 
-> > > > Maybe rebase on top of that one and add the 85degC trip point or
-> > > > something?
-> > > 
-> > > Actually, I think the patch is wrong.
-> > 
-> > I recommend telling Konrad in that patch then, not me :)
+
+On Wed, 10 Jan 2024 16:21:19 +0100, Luca Weiss wrote:
+> Specify the file name for the squashed/non-split firmware with the .mbn
+> extension instead of the split .mdt. The kernel can load both but the
+> squashed version is preferred in dts nowadays.
 > 
-> That's good Konrad is in the recipient list :)
-> 
-> > > The cooling effect does not operate on 'hot' trip point type as it is
-> > > considered as a critical trip point. The governor is not invoked, so no
-> > > mitigation happen. The 'hot' trip point type results in sending a
-> > > notification to userspace to give the last chance to do something before
-> > > 'critical' is reached where the system is shut down.
-> > > 
-> > > I suggest to revert it and pick the one I proposed.
-> > 
-> > It hasn't been applied yet so it can be fixed in v2 there.
-> 
-> The patch was submitted without testing AFAICT. So it is preferable to pick
-> the one I sent which was tested by Amit and me.
 > 
 
-I would have loved to have that feedback in the thread that is wrong!
+Applied, thanks!
 
-Due to my lack of understanding of this detail, and only positive
-reviews I merged said series. Please fix your patch and rebase it on top
-of linux-next.
+[1/1] arm64: dts: qcom: sm7225-fairphone-fp4: Switch firmware ext to .mbn
+      commit: 410dd97e3f394a1bac444f1964754968557f844d
 
-Thanks,
-Bjorn
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
