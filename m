@@ -1,34 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-8738-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8739-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC90883FB11
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 00:49:56 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A847F83FB17
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 00:52:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4FC6DB2134E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 23:49:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 31317B21366
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 23:52:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 622D7446C7;
-	Sun, 28 Jan 2024 23:49:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC008446D0;
+	Sun, 28 Jan 2024 23:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="yx4fMni1"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="g+plIkOH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892CC3C47A;
-	Sun, 28 Jan 2024 23:49:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F84844375;
+	Sun, 28 Jan 2024 23:52:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706485789; cv=none; b=VB0oYCKjxfQmKt95BH5aZhMIJtyzmJcAzbNQ3aze25n2TXG45In0g+brHvtAktpVKVGQ02Opj9IOYq/Q+2Foc3hIxt48V4Um7ik7+KROFGqgR4ogu5aPqqtFrDjZyYAclrWRIa8olzzw9ceuqnbV3h95vUfZt3MdiV/lZGTd7mg=
+	t=1706485940; cv=none; b=Cp/2FFUdJ5sinVf9thXw7VzI6bhdVCYvbZKAUL/Y22yYDs6dLuCPHa1fHovZYm4cR6er0HjqO0YPkSvCWcGLcYjhtDpnL0Uerqv4OUgxloUq0hsGLm4fg+Nbpu7sBr1+TRh6HQZCqWbNWxvFnMDPHBhD76lIjzVwPpI5b/ZTD6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706485789; c=relaxed/simple;
-	bh=lq7eikxLGfSU1Pgsd+84ToUZtUentUsrKtNbPTnkRNI=;
+	s=arc-20240116; t=1706485940; c=relaxed/simple;
+	bh=SHqmM3uu0EufouKxED5u9CkeQtajdNFY1EgMtL8k/Ow=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=psN6dlF9p3UOq+uEOFNPvumUu6Wb68guWV3Y4uU6g5l/1dld6UUXq4OT7t7AM+Q+RU1WaTrxU/1fFH9Bbk68PceHHG0uiN3xM7FGDApD4qHHt0CR57qvc/BTycGUfsR2d+XVA27NAwn+JIXCxQnIoHYErZbWOTBDut48Lwrtzck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=yx4fMni1; arc=none smtp.client-ip=156.67.10.101
+	 Content-Type:Content-Disposition:In-Reply-To; b=mOMnXIfjuci/wWUysgqTkKTsBFaebuRRwPfi7ayypzlJBEzM7Z/nBd7rTJsUm6k+0Ctd15VzZE1IUCMuxQEZNrAXRFnHyFOMuLK9/oacwqvJBHFP0FvcWBG7M2iSLkWkOUTEwfNZvt11m8AhE98vuK1iNTYV8xr3e3L9h9MRDCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=g+plIkOH; arc=none smtp.client-ip=156.67.10.101
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
@@ -36,13 +36,13 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
 	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
 	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=m+yaHYc695suSGR2lx4a68Xx0sDS+gochYBAKxQhhNs=; b=yx4fMni16TAuPVuNgb0PR/CNMy
-	ZaPuyvfMxNy16N9QtfuueN2iYhugFZtdZ3o9T4sSVH5eoaU8PFct7K28uUWdETXrFLkvpIfrhpdDx
-	FMOWfYINyYsIVlXXjvDRF37zoKdwEuqPDyyKPY0qOtw1esYekbMBrCyMz1O7IpzgDXvI=;
+	bh=g9+FPcUGtHUPTu+7RnkMJkCX5s0s8bZFoyllSulMMCU=; b=g+plIkOHBwfFBwOAvpjtWn+Ag/
+	+4euHrCao+cFGm1zCEmNeH1Y7oSy/IXdVBjtJ7s7d+1/KADd0CfOpMGYj7uYprqds4CQCKGnuXcnJ
+	k4wYaxvbkME6S6VeZnX8lo9PjVo2xo0AgXaNbt9QDQ/yEoSxB8ODBpQU9O0r66axS99k=;
 Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
 	(envelope-from <andrew@lunn.ch>)
-	id 1rUEuC-006Khz-3x; Mon, 29 Jan 2024 00:49:40 +0100
-Date: Mon, 29 Jan 2024 00:49:40 +0100
+	id 1rUEwd-006Kj0-FT; Mon, 29 Jan 2024 00:52:11 +0100
+Date: Mon, 29 Jan 2024 00:52:11 +0100
 From: Andrew Lunn <andrew@lunn.ch>
 To: Christian Marangi <ansuelsmth@gmail.com>
 Cc: Heiner Kallweit <hkallweit1@gmail.com>,
@@ -54,11 +54,11 @@ Cc: Heiner Kallweit <hkallweit1@gmail.com>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org
-Subject: Re: [net-next PATCH v3 4/5] net: phy: qcom: move additional
- functions to shared library
-Message-ID: <669a5c03-74a3-4ffc-a530-9031b04b888c@lunn.ch>
+Subject: Re: [net-next PATCH v3 5/5] net: phy: qcom: detach qca808x PHY
+ driver from at803x
+Message-ID: <0e6dd47d-3dd2-4c8f-99f7-1c3d105ddc82@lunn.ch>
 References: <20240128120451.31219-1-ansuelsmth@gmail.com>
- <20240128120451.31219-5-ansuelsmth@gmail.com>
+ <20240128120451.31219-6-ansuelsmth@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,13 +67,23 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240128120451.31219-5-ansuelsmth@gmail.com>
+In-Reply-To: <20240128120451.31219-6-ansuelsmth@gmail.com>
 
-On Sun, Jan 28, 2024 at 01:04:25PM +0100, Christian Marangi wrote:
-> Move additional functions to shared library in preparation for qca808x
-> PHY Family to be detached from at803x driver.
+On Sun, Jan 28, 2024 at 01:04:26PM +0100, Christian Marangi wrote:
+> Almost all the QCA8081 PHY driver OPs are specific and only some of them
+> use the generic at803x.
 > 
-> Only the shared defines are moved to the shared qcom.h header.
+> To make the at803x code slimmer, move all the specific qca808x regs and
+> functions to a dedicated PHY driver.
+> 
+> Probe function and priv struct is reworked to allocate and use only the
+> qca808x specific data. Unused data from at803x PHY driver are dropped
+> from at803x priv struct.
+> 
+> Also a new Kconfig is introduced QCA808X_PHY, to compile the newly
+> introduced PHY driver for QCA8081 PHY.
+> 
+> As the Kconfig name starts with Qualcomm the same order is kept.
 > 
 > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 
