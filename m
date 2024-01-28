@@ -1,47 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-8690-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8691-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C019683F510
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 12:01:31 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 99EDB83F52C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 12:27:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 577571F21D0E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 11:01:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CBD3A1C20D0F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 11:27:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BC451D697;
-	Sun, 28 Jan 2024 11:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFF271F60B;
+	Sun, 28 Jan 2024 11:27:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="RkhbdvRH"
+	dkim=pass (2048-bit key) header.d=gmx.com header.i=erick.archer@gmx.com header.b="G4Olv8bM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17441EB29;
-	Sun, 28 Jan 2024 11:01:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C4671EB3F;
+	Sun, 28 Jan 2024 11:27:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706439687; cv=none; b=beHcnUJgHuwHMojO0k+EvudNgzDLIEikNHgVUzpsvvmUg14SKUx8rONg1AVOdoMQTFEno1sZ+SABs9yZ5cWBlXOzSROSeqXsIr1xg938p1bVHbPu2WcketHu1hWjS0IfxSlvapNo4RQVWMLHQ5u95JoEzHLkGzOTnAjuJcWWbgQ=
+	t=1706441273; cv=none; b=KvfPPl1qV/2AxC9BdjdACC+mRbCTA51CbClIrKF87KcsLCk29qMhWvAr6tOG1IRCaXKGSN6JpBPTMO7N4v7Cnb3xSrKC2Ky1j9c346JQknOl0it4PFDrBnEoPoFzK6ceTOMtCfiryFSvX3bvYLMj1CBMvdslKtVEky3OXEvMFXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706439687; c=relaxed/simple;
-	bh=5srCU8mALld93XXZWkuO9wczxnN7Mp+AiQKKleufIJY=;
-	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
-	 To:Date:Message-ID; b=rwOfOLc3St7J5m69Q2K50nggWfiydnOqYr5Rb0IvRDFrPwyW7RWsvUR1M5JO4qg7elUgiPKlj64SamdozKZFuRqF6OhJOBsJzPrvLg4nvmomQO/ZuZaqdVsOhU+nmLvCgCym5z+dfixZf+vguxx36pjYJqvzu8HdwpzownEOu90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=fail (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=RkhbdvRH reason="signature verification failed"; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from pendragon.ideasonboard.com (aztw-30-b2-v4wan-166917-cust845.vm26.cable.virginm.net [82.37.23.78])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 0639A3D9;
-	Sun, 28 Jan 2024 11:59:58 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1706439599;
-	bh=5srCU8mALld93XXZWkuO9wczxnN7Mp+AiQKKleufIJY=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=RkhbdvRHlz1v8jg4VujoVEvuFFQwER/Of6VU8hgYvGxSJ6sauMOpigUM9jwIZggbM
-	 ovsTDbzG216rVaHmdrHBTfja6Y/1kngp8TZl25L/sIL9hjrprl+/lEEC7ofAXjaoqi
-	 ogP2fskaRCqFSgwLOtdxTIoWzpGtryil4ewfj2mk=
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1706441273; c=relaxed/simple;
+	bh=0GN2Bv/A+IeP+4/5GEgM6WZAwRH4zVNjGdeSFF0auzQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=mGRBcQd76tqU7FF81ANqFH3X1WSGDAEMkEbP/BPKbSpLdetVPXsJ1qdRjESTt2zSNSr/m7iUc+YfKhNCPrDOCcig9JzrpK1U/YwLgJ7Aczj4uKwHMCwZS+KfoZ4yxzDGHfRrP6QDLtuGWc9wCLNyQNXyGQmTeY9+De1ykgs96Mg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com; spf=pass smtp.mailfrom=gmx.com; dkim=pass (2048-bit key) header.d=gmx.com header.i=erick.archer@gmx.com header.b=G4Olv8bM; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.com;
+	s=s31663417; t=1706441260; x=1707046060; i=erick.archer@gmx.com;
+	bh=0GN2Bv/A+IeP+4/5GEgM6WZAwRH4zVNjGdeSFF0auzQ=;
+	h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+	b=G4Olv8bM0Zi01S4TiGpnwHeE0U5XBriX3S3E/Shuw47w/Qvj2/yGHhzXf8CTa/Gl
+	 mp+OqfWSRI2hSmBNBg+EF/2Vwq2EaXRBNm7qpLSAMMIKkPeSRuCjC5GjR8XGiWrzL
+	 V5ld8U8JsAvGsPHf6qpjTkCcczdZAdlQgKqqc6Fsz/at5JKHGaXXoJkUTb7d5ApDd
+	 N7SJ7vPn4eUEJUadomwcHHQQFesdj3YdgQzq5PqM9/bZK5zhpc3aB+T1gfG1qhVh4
+	 edrKSUnZ1A8B/jMsJW5+cvs/1spkiN6d8fAhs7kO6NXCYQyA6MUkNQ9PSNsz3t7Pi
+	 YdEjn3T4A2vlh5s33Q==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from localhost.localdomain ([79.157.194.183]) by mail.gmx.net
+ (mrgmx005 [212.227.17.184]) with ESMTPSA (Nemesis) id
+ 1MK3W0-1rmGQc12cQ-00LXk4; Sun, 28 Jan 2024 12:27:40 +0100
+From: Erick Archer <erick.archer@gmx.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Alex Elder <elder@linaro.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>
+Cc: Erick Archer <erick.archer@gmx.com>,
+	linux-arm-msm@vger.kernel.org,
+	mhi@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-hardening@vger.kernel.org
+Subject: [PATCH v2] bus: mhi: ep: Use kcalloc() instead of kzalloc()
+Date: Sun, 28 Jan 2024 12:27:22 +0100
+Message-Id: <20240128112722.4334-1-erick.archer@gmx.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -49,48 +68,79 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20240126-gix-mtk-warnings-v1-7-eed7865fce18@chromium.org>
-References: <20240126-gix-mtk-warnings-v1-0-eed7865fce18@chromium.org> <20240126-gix-mtk-warnings-v1-7-eed7865fce18@chromium.org>
-Subject: Re: [PATCH 07/17] media: i2c: adv748: Fix kerneldoc
-From: Kieran Bingham <kieran.bingham@ideasonboard.com>
-Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org, linux-staging@lists.linux.dev, linux-amlogic@lists.infradead.org, Ricardo Ribalda <ribalda@chromium.org>
-To: Alim Akhtar <alim.akhtar@samsung.com>, Andrew-CT Chen <andrew-ct.chen@mediatek.com>, Andrzej Hajda <andrzej.hajda@intel.com>, AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Bin Liu <bin.liu@mediatek.com>, Bingbu Cao <bingbu.cao@intel.com>, Bjorn Andersson <andersson@kernel.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Hans Verkuil <hverkuil-cisco@xs4all.nl>, Hans Verkuil <hverkuil@xs4all.nl>, Jerome Brunet <jbrunet@baylibre.com>, Kevin Hilman <khilman@baylibre.com>, Konrad Dybcio <konrad.dybcio@linaro.org>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Marek Szyprowski <m.szyprowski@samsung.com>, Martin Blumenstingl <martin.blumenstingl@googlemail.com>, Matthias Brugger <matthias.bgg@gmail.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, Philipp Zab
- el <p.zabel@pengutronix.de>, Ricardo Ribalda <ribalda@chromium.org>, Sakari Ailus <sakari.ailus@linux.intel.com>, Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, Sylwester Nawrocki <s.nawrocki@samsung.com>, Tianshu Qiu <tian.shu.qiu@intel.com>, Tiffany Lin <tiffany.lin@mediatek.com>, Vikash Garodia <quic_vgarodia@quicinc.com>, Yunfei Dong <yunfei.dong@mediatek.com>
-Date: Sun, 28 Jan 2024 11:01:13 +0000
-Message-ID: <170643967334.1879520.13311953581412781310@ping.linuxembedded.co.uk>
-User-Agent: alot/0.10
+X-Provags-ID: V03:K1:EQoWUExa/DIBgOI20JFy4vw9y0S152bCMrw7Ds5pWGwDK66l/Vj
+ f9UkZeFwkKUqiv4QVkTtx9qyixY68fZn6aE/SuEexl/57uXeVm9s/sxi3GpkfA1bPLR4tXt
+ 9hEcQ801VXlcYJyOPtBsrU39GCI8Kp+rSOV24zdPPYu2RpBSlZM5+1rFkVblS6P5QMMu7j0
+ lpHJ1dACELKUZ3Ue6sfZg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:QpCG4lROFyc=;IQKTYInMl7RWTyOg1TIUJUrtwut
+ 460V792KEUzvomGrMCI4hki5D65XiZ4VSTNd/xXmS/6WZGyi7xIiPS+l8V7kXmjGosUEguvmS
+ IqsrSCmaAJUBidKc90XsPldsPcIF50k92K0WzzGbyMQlttOr09KILnWRNiQ2klVEk4qPbsI1h
+ tZ1/D54a7sKEyjXr0QnzE08/zE3cS/fE40SwWFq2ESHe5UCWVN7WFsOtye/QyzoUFI4fqzTHe
+ DEKgkVRzpLzA1IaxxntC/xxEaGsXU59EIcuZGu9D/tXAKrDilVxJ8sC+JMPQhqA+yUTl3DhQ1
+ OOEJvOoU3JpEVsXvCKaaiS3n3dTVo8zkwKkXrpmdJNpMlcSr/XbcdX+ggLvSGhVtbjWUA+Yrr
+ 9Hs1DfLTGWjkMMMZ+MIGwu1c9iBdTDtU66eOOSfDqZFJFtmn+HAL2SwhhsXkbeaEbbEot9UE6
+ UWUxPjNXIuOPRYjqrd3B1VxggeM/wWeeIO8b0txgqDtOs3N8kzSLVDmgsPDNQxujWK7fGRyG8
+ 9gDUIN2XHEI7Si13HEKe1F2+NRmbF4HLQWlt9j2mUW+hBiHnHfnIjXnmXvoYo5Sn5YRbVp52j
+ OR5MTNslL0MHdmq31rqDeqwblw2GFVzGUzq55J0M1tr9FY+m2zcHr/fn1q0p6BQ0mqlWNMdC8
+ 02vR7F1hKgpdZWscnVeeEEN3tMM/iw+k5fErwHScoD2AMggRV0M+O+aJB0eEeCG1rMRStt+rp
+ Z57ccqRvPTMyXsAukU2eLr8Kx696xZ63inmz91gzKk5FlV6qLIAgb6IYRqLT9AihhvVv2Ifjo
+ dd/ZFN7ytTn9yjQYgNXaZRm5U8CXBstZA8IPuh+pMmi4miAE50PhPmk5qQrhMySCH7MfAABRd
+ PnSSsvOgE0MKTfJdiX3Vwf5N+x9M5YvKy6eYiQOVZ/3uWBREnbDjJujMuMJGzYQDFfDMFESJ5
+ yjsDpTnkYiRjc3tP4IT4ApFgeRM=
 
-Quoting Ricardo Ribalda (2024-01-26 23:16:06)
-> The field is gone, remove the documentation.
+This is an effort to get rid of all multiplications from allocation
+functions in order to prevent integer overflows [1].
 
-Looking at 3e89586a64df ("media: i2c: adv748x: add adv748x driver")
-confims it was never added. Must have been an old leftover when I
-upstreamed.
+Here the multiplication is obviously safe because the "event_rings"
+member never can have a value greater than 255 (8 bits). This member
+is set twice using always FIELD_GET:
 
-Thanks for the fix.
+mhi_cntrl->event_rings =3D FIELD_GET(MHICFG_NER_MASK, regval);
+mhi_cntrl->event_rings =3D FIELD_GET(MHICFG_NER_MASK, regval);
 
-Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
+And the MHICFG_NER_MASK macro defines the 8 bits mask that guarantees
+a maximum value of 255.
 
-> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-> ---
->  drivers/media/i2c/adv748x/adv748x.h | 1 -
->  1 file changed, 1 deletion(-)
->=20
-> diff --git a/drivers/media/i2c/adv748x/adv748x.h b/drivers/media/i2c/adv7=
-48x/adv748x.h
-> index 6f90f78f58cf..d2b5e722e997 100644
-> --- a/drivers/media/i2c/adv748x/adv748x.h
-> +++ b/drivers/media/i2c/adv748x/adv748x.h
-> @@ -173,7 +173,6 @@ struct adv748x_afe {
->   *
->   * @endpoints:         parsed device node endpoints for each port
->   *
-> - * @i2c_addresses:     I2C Page addresses
->   * @i2c_clients:       I2C clients for the page accesses
->   * @regmap:            regmap configuration pages.
->   *
->=20
-> --=20
-> 2.43.0.429.g432eaa2c6b-goog
->
+However, using kcalloc() is more appropriate [1] and improves
+readability. This patch has no effect on runtime behavior.
+
+Link: https://github.com/KSPP/linux/issues/162 [1]
+Link: https://www.kernel.org/doc/html/next/process/deprecated.html#open-co=
+ded-arithmetic-in-allocator-arguments [1]
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Signed-off-by: Erick Archer <erick.archer@gmx.com>
+=2D--
+Changes in v2:
+- Add more info in the commit message to better explain the change.
+  (Dan Carpenter)
+- Add the "Reviewed-by:" tag.
+
+Previous versions:
+v1 - https://lore.kernel.org/linux-hardening/20240120152518.13006-1-erick.=
+archer@gmx.com/
+=2D--
+ drivers/bus/mhi/ep/main.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+index 65fc1d738bec..8d7a4102bdb7 100644
+=2D-- a/drivers/bus/mhi/ep/main.c
++++ b/drivers/bus/mhi/ep/main.c
+@@ -1149,8 +1149,9 @@ int mhi_ep_power_up(struct mhi_ep_cntrl *mhi_cntrl)
+ 	mhi_ep_mmio_mask_interrupts(mhi_cntrl);
+ 	mhi_ep_mmio_init(mhi_cntrl);
+
+-	mhi_cntrl->mhi_event =3D kzalloc(mhi_cntrl->event_rings * (sizeof(*mhi_c=
+ntrl->mhi_event)),
+-					GFP_KERNEL);
++	mhi_cntrl->mhi_event =3D kcalloc(mhi_cntrl->event_rings,
++				       sizeof(*mhi_cntrl->mhi_event),
++				       GFP_KERNEL);
+ 	if (!mhi_cntrl->mhi_event)
+ 		return -ENOMEM;
+
+=2D-
+2.25.1
+
 
