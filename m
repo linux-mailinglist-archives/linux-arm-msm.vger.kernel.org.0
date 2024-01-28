@@ -1,79 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-8651-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8652-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B58FB83F24A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 00:44:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CA03283F2A3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 01:47:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6200EB215EA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jan 2024 23:44:15 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7524EB22EE4
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 00:47:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C84722F17;
-	Sat, 27 Jan 2024 23:44:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA1D3645;
+	Sun, 28 Jan 2024 00:47:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HV8DhDsF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J+Nxv/JU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC6C1F952
-	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jan 2024 23:44:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9107FEC2;
+	Sun, 28 Jan 2024 00:47:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706399052; cv=none; b=mLBt7oy2vC9kuTWc65hgf5NmdAHIBVLJE12znczNjGPkts+S9eHJyq1mpGyNJ/uz5MUyPTJxJAaHxZq+uscI5P78NE+iC3yqUKSKkUTOQXDaVok02B2gHSNpaq3ixt6e9EiEC2T6Nf8HzA1rFyYYdvfXxJNtGsD+OtPOGMY0vIw=
+	t=1706402855; cv=none; b=JVLew9A99JUbRQd8f7B8lCE3ofzCxX7h+Pe9/TZ7FnlS+U2xS0xzLvFJbv/fADyigzpWBZDHodnsuRWjHTGsBG8+9koLfiUdDPCFvefrG/QT90b4KI5qtcPITNf/PnsmL2TyegB3hZYK84ceYVEvoNQjQxIMerddm0IMwxJ/kxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706399052; c=relaxed/simple;
-	bh=U1AxWClhKSzifIbdDnbsW9clzyYeqHy+cMhLWIr7qKc=;
+	s=arc-20240116; t=1706402855; c=relaxed/simple;
+	bh=Ll5TYvKcRN50mYE19nzxBLP/t8etE5RepKGeDrO+Tdc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kgIrqMrt3hoDNPxIj6NdHGOQrZMue5L4L/xLU7hHH4d5uVkkHH10uF+rJPRvPOxw4UB9jgJIHUsI90htXsPNo3NPsrqpsvn7FLYlt30+xCDAToxFBzaIoBKEEHRS5Z54f6mHv3gTZ91klOqfPk/AXmm6CV9C3A9MdOxZj2nQNeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HV8DhDsF; arc=none smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1706399050; x=1737935050;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=U1AxWClhKSzifIbdDnbsW9clzyYeqHy+cMhLWIr7qKc=;
-  b=HV8DhDsF8szvnFUa0Wh1UY/NOU9afXpb41fOVyPuqu+RAADqzuLY0jVD
-   1QE8GwivP7qEFN/+6Ufv+zMpwqsNXs0crKkmewgNjG4g8F04avj/+xN+3
-   VIaH2h+Nx/4gqLdY5Nr6mq/pcT/ShX0FBh1NYPIuJMFm8P8pIzozQQaC4
-   bG6oxug5vnEo6Ep0YgkwKxhsTeKApGVj5FHzHtEZuGDCuIRIhsHQZep32
-   lalyLdsBISIK4XYwOO+oq5sz355O/9LKDTX0U6f0H/Lfe+m26cQLm6e5D
-   hxWEGlRv04CbDtMlV8qR6oR6jMjwPK9xjgtvnwYw/ao7oXVOrLq+G20JS
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10966"; a="9376877"
-X-IronPort-AV: E=Sophos;i="6.05,220,1701158400"; 
-   d="scan'208";a="9376877"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2024 15:44:10 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10966"; a="737023180"
-X-IronPort-AV: E=Sophos;i="6.05,220,1701158400"; 
-   d="scan'208";a="737023180"
-Received: from lkp-server01.sh.intel.com (HELO 370188f8dc87) ([10.239.97.150])
-  by orsmga003.jf.intel.com with ESMTP; 27 Jan 2024 15:44:06 -0800
-Received: from kbuild by 370188f8dc87 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1rTsLD-0002s2-39;
-	Sat, 27 Jan 2024 23:44:03 +0000
-Date: Sun, 28 Jan 2024 07:43:16 +0800
-From: kernel test robot <lkp@intel.com>
-To: Paloma Arellano <quic_parellan@quicinc.com>,
-	freedreno@lists.freedesktop.org
-Cc: oe-kbuild-all@lists.linux.dev, neil.armstrong@linaro.org,
-	marijn.suijten@somainline.org, linux-arm-msm@vger.kernel.org,
-	quic_abhinavk@quicinc.com, dri-devel@lists.freedesktop.org,
-	swboyd@chromium.org, seanpaul@chromium.org,
-	quic_jesszhan@quicinc.com, dmitry.baryshkov@linaro.org,
-	Paloma Arellano <quic_parellan@quicinc.com>,
-	quic_khsieh@quicinc.com
-Subject: Re: [PATCH 10/17] drm/msm/dp: modify dp_catalog_hw_revision to show
- major and minor val
-Message-ID: <202401280752.AmrDI7Ox-lkp@intel.com>
-References: <20240125193834.7065-11-quic_parellan@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=Sy+4s73gFl+YTJBgV9Rb3VKDUkah1a9MaHYF8ogcicYB5lJmCh1aDaI5Kg25pK6gncwNlkn4IBCM4CoIo63NOcKESjc7nyHs1COLKj2X7TR6bpYGpmdxtj1a54wHl6J8L5PKurzjXYFpNegoMlI2eo8VVoWGDOPkSA1aee2yNdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J+Nxv/JU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F359BC433C7;
+	Sun, 28 Jan 2024 00:47:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706402855;
+	bh=Ll5TYvKcRN50mYE19nzxBLP/t8etE5RepKGeDrO+Tdc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=J+Nxv/JUNTBlkIWP3jhkdakei+RdxWlhYEtFqPC2yZJnMThEO5VTDOibobtlSQyOH
+	 BPkes4/y8nOxQSHqdHPz6VpecYIzWqRSEqA378gFvVeIStRLvxStYGIy4WvjH0xnsv
+	 bwkdAeXDPnozcJKGF9PQxv2LT2YuE3ConGynMwrIal5Ru6VHryfTyal1TVbcuQdksx
+	 f8eVZsnfmiKJ+ESfDvPyl1TA27Dvw00uSuhzx16PWzdCTBXkM2bya1Xee80Ry02znH
+	 y8YN+FsmdZQdoAOEFwWMxBUlTNwNk9Md1TkEyN4NxBkpbKTszXEkwLIhYHQVB1keHT
+	 biNice+7Ru3wQ==
+Date: Sat, 27 Jan 2024 18:47:31 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Raymond Hackley <raymondhackley@protonmail.com>
+Cc: linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>, 
+	Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	~postmarketos/upstreaming@lists.sr.ht, Walter Broemeling <wallebroem@gmail.com>, 
+	Joe Mason <buddyjojo06@outlook.com>, Siddharth Manthan <siddharth.manthan@gmail.com>
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: msm8916-samsung-fortuna: Add
+ initial device trees
+Message-ID: <th4btdwcsvvfbipshjeplvd7kuyd6qxuv5odbksydc23zfls47@awgmdy3u3ck5>
+References: <20240120095715.13689-1-raymondhackley@protonmail.com>
+ <20240120095715.13689-3-raymondhackley@protonmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,62 +63,38 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240125193834.7065-11-quic_parellan@quicinc.com>
+In-Reply-To: <20240120095715.13689-3-raymondhackley@protonmail.com>
 
-Hi Paloma,
+On Sat, Jan 20, 2024 at 09:57:50AM +0000, Raymond Hackley wrote:
+> From: Walter Broemeling <wallebroem@gmail.com>
+> This initial commit adds support for:
+>  - fortuna3g (SM-G530H)
+[..]
+>  arch/arm64/boot/dts/qcom/Makefile             |   4 +
+>  .../qcom/msm8916-samsung-fortuna-common.dtsi  | 170 ++++++++++++++++++
+>  .../dts/qcom/msm8916-samsung-gprimeltecan.dts |  26 +++
+>  .../qcom/msm8916-samsung-grandprimelte.dts    |  15 ++
+>  .../qcom/msm8916-samsung-rossa-common.dtsi    |  16 ++
+>  .../boot/dts/qcom/msm8916-samsung-rossa.dts   |  15 ++
+>  6 files changed, 246 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8916-samsung-gprimeltecan.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8916-samsung-grandprimelte.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8916-samsung-rossa.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 39889d5f8e12..1abd25e19a1f 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -23,6 +23,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp433.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp449.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp453.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp454.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8216-samsung-fortuna3g.dtb
 
-kernel test robot noticed the following build warnings:
+This is missing from the patch.
 
-[auto build test WARNING on v6.8-rc1]
-[also build test WARNING on linus/master next-20240125]
-[cannot apply to drm-misc/drm-misc-next]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Paloma-Arellano/drm-msm-dpu-allow-dpu_encoder_helper_phys_setup_cdm-to-work-for-DP/20240126-034233
-base:   v6.8-rc1
-patch link:    https://lore.kernel.org/r/20240125193834.7065-11-quic_parellan%40quicinc.com
-patch subject: [PATCH 10/17] drm/msm/dp: modify dp_catalog_hw_revision to show major and minor val
-config: arm64-defconfig (https://download.01.org/0day-ci/archive/20240128/202401280752.AmrDI7Ox-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240128/202401280752.AmrDI7Ox-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202401280752.AmrDI7Ox-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/gpu/drm/msm/dp/dp_catalog.c:541: warning: Function parameter or struct member 'major' not described in 'dp_catalog_hw_revision'
->> drivers/gpu/drm/msm/dp/dp_catalog.c:541: warning: Function parameter or struct member 'minor' not described in 'dp_catalog_hw_revision'
-
-
-vim +541 drivers/gpu/drm/msm/dp/dp_catalog.c
-
-c943b4948b5848 Chandan Uddaraju 2020-08-27  531  
-757a2f36ab095f Kuogee Hsieh     2022-02-25  532  /**
-757a2f36ab095f Kuogee Hsieh     2022-02-25  533   * dp_catalog_hw_revision() - retrieve DP hw revision
-757a2f36ab095f Kuogee Hsieh     2022-02-25  534   *
-757a2f36ab095f Kuogee Hsieh     2022-02-25  535   * @dp_catalog: DP catalog structure
-757a2f36ab095f Kuogee Hsieh     2022-02-25  536   *
-5febc52d5716d6 Paloma Arellano  2024-01-25  537   * Return: void
-757a2f36ab095f Kuogee Hsieh     2022-02-25  538   *
-757a2f36ab095f Kuogee Hsieh     2022-02-25  539   */
-5febc52d5716d6 Paloma Arellano  2024-01-25  540  void dp_catalog_hw_revision(const struct dp_catalog *dp_catalog, u16 *major, u16 *minor)
-757a2f36ab095f Kuogee Hsieh     2022-02-25 @541  {
-757a2f36ab095f Kuogee Hsieh     2022-02-25  542  	const struct dp_catalog_private *catalog = container_of(dp_catalog,
-757a2f36ab095f Kuogee Hsieh     2022-02-25  543  				struct dp_catalog_private, dp_catalog);
-5febc52d5716d6 Paloma Arellano  2024-01-25  544  	u32 reg_dp_hw_version;
-757a2f36ab095f Kuogee Hsieh     2022-02-25  545  
-5febc52d5716d6 Paloma Arellano  2024-01-25  546  	reg_dp_hw_version = dp_read_ahb(catalog, REG_DP_HW_VERSION);
-5febc52d5716d6 Paloma Arellano  2024-01-25  547  	*major = DP_HW_VERSION_MAJOR(reg_dp_hw_version);
-5febc52d5716d6 Paloma Arellano  2024-01-25  548  	*minor = DP_HW_VERSION_MINOR(reg_dp_hw_version);
-757a2f36ab095f Kuogee Hsieh     2022-02-25  549  }
-757a2f36ab095f Kuogee Hsieh     2022-02-25  550  
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Regards,
+Bjorn
 
