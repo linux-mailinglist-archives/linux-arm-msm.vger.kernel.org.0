@@ -1,146 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-8691-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99EDB83F52C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 12:27:56 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF6CE83F552
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 13:05:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CBD3A1C20D0F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 11:27:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6D7551F21C2A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 12:05:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFF271F60B;
-	Sun, 28 Jan 2024 11:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B395200DB;
+	Sun, 28 Jan 2024 12:05:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.com header.i=erick.archer@gmx.com header.b="G4Olv8bM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vu0hDtVN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C4671EB3F;
-	Sun, 28 Jan 2024 11:27:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4498523741;
+	Sun, 28 Jan 2024 12:05:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706441273; cv=none; b=KvfPPl1qV/2AxC9BdjdACC+mRbCTA51CbClIrKF87KcsLCk29qMhWvAr6tOG1IRCaXKGSN6JpBPTMO7N4v7Cnb3xSrKC2Ky1j9c346JQknOl0it4PFDrBnEoPoFzK6ceTOMtCfiryFSvX3bvYLMj1CBMvdslKtVEky3OXEvMFXM=
+	t=1706443502; cv=none; b=OtXW+rI8dKfm/AI1YC6gvNIcy56smsZ0UZnlZ7CcZf1RWDdtFg3UCaH7UwRcB75uaZnZwjhz758s7DEkH2A39r5jOE6yTtSLtfC/B4YY315crkCol34/p4lrM6byvw28i3rXVFl3dSqMYx733ux05/+RCeIusHxnpachHuJWUho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706441273; c=relaxed/simple;
-	bh=0GN2Bv/A+IeP+4/5GEgM6WZAwRH4zVNjGdeSFF0auzQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=mGRBcQd76tqU7FF81ANqFH3X1WSGDAEMkEbP/BPKbSpLdetVPXsJ1qdRjESTt2zSNSr/m7iUc+YfKhNCPrDOCcig9JzrpK1U/YwLgJ7Aczj4uKwHMCwZS+KfoZ4yxzDGHfRrP6QDLtuGWc9wCLNyQNXyGQmTeY9+De1ykgs96Mg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com; spf=pass smtp.mailfrom=gmx.com; dkim=pass (2048-bit key) header.d=gmx.com header.i=erick.archer@gmx.com header.b=G4Olv8bM; arc=none smtp.client-ip=212.227.15.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.com;
-	s=s31663417; t=1706441260; x=1707046060; i=erick.archer@gmx.com;
-	bh=0GN2Bv/A+IeP+4/5GEgM6WZAwRH4zVNjGdeSFF0auzQ=;
-	h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-	b=G4Olv8bM0Zi01S4TiGpnwHeE0U5XBriX3S3E/Shuw47w/Qvj2/yGHhzXf8CTa/Gl
-	 mp+OqfWSRI2hSmBNBg+EF/2Vwq2EaXRBNm7qpLSAMMIKkPeSRuCjC5GjR8XGiWrzL
-	 V5ld8U8JsAvGsPHf6qpjTkCcczdZAdlQgKqqc6Fsz/at5JKHGaXXoJkUTb7d5ApDd
-	 N7SJ7vPn4eUEJUadomwcHHQQFesdj3YdgQzq5PqM9/bZK5zhpc3aB+T1gfG1qhVh4
-	 edrKSUnZ1A8B/jMsJW5+cvs/1spkiN6d8fAhs7kO6NXCYQyA6MUkNQ9PSNsz3t7Pi
-	 YdEjn3T4A2vlh5s33Q==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from localhost.localdomain ([79.157.194.183]) by mail.gmx.net
- (mrgmx005 [212.227.17.184]) with ESMTPSA (Nemesis) id
- 1MK3W0-1rmGQc12cQ-00LXk4; Sun, 28 Jan 2024 12:27:40 +0100
-From: Erick Archer <erick.archer@gmx.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Dan Carpenter <error27@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Alex Elder <elder@linaro.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>
-Cc: Erick Archer <erick.archer@gmx.com>,
-	linux-arm-msm@vger.kernel.org,
-	mhi@lists.linux.dev,
+	s=arc-20240116; t=1706443502; c=relaxed/simple;
+	bh=9CbGrdI9JPoS6wbEDQZo48l0teEnfrYuvfBrz6Ww+VI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=poZDxXzzRrl5NFuFWTyV/LqBLDJ1IZF63NwHxKaBjEz2k4/NumVS7JIzWgpKHKfW4/Yqwc+6wQ48iBBR6ebLFEQxisPrhpuPXAqlSqHjalkePRtp1FMmM74fnA4YjgAl9RUm1FiNKyyqk6EBDXrkUDcWsOQ7YtBVd1BE0V1Qbkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vu0hDtVN; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3394bec856fso1654050f8f.0;
+        Sun, 28 Jan 2024 04:05:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706443499; x=1707048299; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8526VyeYHi8h135m9aHulwM3wCSi9JY+wy/BfAR44Qc=;
+        b=Vu0hDtVNOUs+BR4hR/pSZUvTPT+NuyXjVzHzbHShCM71UwAR4CRiq8+y+KB+xwqEJI
+         l8rpqMSO8pcmCYN6Wy9mAqUjtY+9clUha1h1skgkVtZi/w8NA/f6/Spz+EuHuiXZAkuT
+         NkuXCvdFAM0B5FNIFqgF9SkkyLYMqBeYWE8yTQXQ22icd/XjwExyLtVF7cG4seMzI8SX
+         xIl9NA6Mvr9KA8ltfHsz17evAqp49mxeJSrQ9xV8EVD0pImTEn0Zf63fC3DlcOKZUoNi
+         D12I7lspQBx3LDFVW0uZv2aDzRFw25TaGZT+2Yw3uVHPwa/bmvzfmoPNEUUQ9dM+2M02
+         QZ4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706443499; x=1707048299;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8526VyeYHi8h135m9aHulwM3wCSi9JY+wy/BfAR44Qc=;
+        b=dzjvud7ZWf3jwYLKbFGWhCvVYnG8qvo4Y+KgypRA15xln93CBqwhrx9ek8k3Rnx8tY
+         2isMZBPYGANMX/uJ0p2LUOyA/PFP89JA8TD49Tuyn/WPhxMMVHBE7S0ERYPwRadwPGJ0
+         knC45TfMYKITtC1JHd4IB5u1BSXW+Hwa0gxofLrbTxyoNB1tdmdrVsha6uxhrb67Iucu
+         9VppmrFtU4f7uUqENoSiSxg9R3IOVzaVcIahp5yWTnzt90K0yKDvlvgJxH4T0QUhURIC
+         5oY6KdjDcD2uRSyx6VnT7tgaxjjaK58AvHMO2AqkMFVEPQKg/x+Q5PGnS2C3F+oULFTz
+         G02Q==
+X-Gm-Message-State: AOJu0YzVGvnO5Bl3YNpcrApNijzarpfJLfiLnG5qxY9vA1GVKploKIEt
+	HZCdZ+vhjECB6RHsi3FAKs5q2jYytKh3K8x6QWrDPg7pGvq19VHk
+X-Google-Smtp-Source: AGHT+IFDQ1PvpJtRQcOjopl54qIzxgACQOr4YwRtcvX9EzsyLdnW3mvaD9HhaBTQ6OeEChLDF3xDhg==
+X-Received: by 2002:adf:ec10:0:b0:337:bfca:bd26 with SMTP id x16-20020adfec10000000b00337bfcabd26mr1873676wrn.26.1706443499122;
+        Sun, 28 Jan 2024 04:04:59 -0800 (PST)
+Received: from localhost.localdomain (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
+        by smtp.googlemail.com with ESMTPSA id v1-20020a5d59c1000000b0033aeab6f75fsm1110034wry.79.2024.01.28.04.04.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 28 Jan 2024 04:04:58 -0800 (PST)
+From: Christian Marangi <ansuelsmth@gmail.com>
+To: Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	linux-kernel@vger.kernel.org,
-	linux-hardening@vger.kernel.org
-Subject: [PATCH v2] bus: mhi: ep: Use kcalloc() instead of kzalloc()
-Date: Sun, 28 Jan 2024 12:27:22 +0100
-Message-Id: <20240128112722.4334-1-erick.archer@gmx.com>
-X-Mailer: git-send-email 2.25.1
+	netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Cc: Christian Marangi <ansuelsmth@gmail.com>
+Subject: [net-next PATCH v3 0/5] net: phy: split at803x
+Date: Sun, 28 Jan 2024 13:04:21 +0100
+Message-ID: <20240128120451.31219-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:EQoWUExa/DIBgOI20JFy4vw9y0S152bCMrw7Ds5pWGwDK66l/Vj
- f9UkZeFwkKUqiv4QVkTtx9qyixY68fZn6aE/SuEexl/57uXeVm9s/sxi3GpkfA1bPLR4tXt
- 9hEcQ801VXlcYJyOPtBsrU39GCI8Kp+rSOV24zdPPYu2RpBSlZM5+1rFkVblS6P5QMMu7j0
- lpHJ1dACELKUZ3Ue6sfZg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:QpCG4lROFyc=;IQKTYInMl7RWTyOg1TIUJUrtwut
- 460V792KEUzvomGrMCI4hki5D65XiZ4VSTNd/xXmS/6WZGyi7xIiPS+l8V7kXmjGosUEguvmS
- IqsrSCmaAJUBidKc90XsPldsPcIF50k92K0WzzGbyMQlttOr09KILnWRNiQ2klVEk4qPbsI1h
- tZ1/D54a7sKEyjXr0QnzE08/zE3cS/fE40SwWFq2ESHe5UCWVN7WFsOtye/QyzoUFI4fqzTHe
- DEKgkVRzpLzA1IaxxntC/xxEaGsXU59EIcuZGu9D/tXAKrDilVxJ8sC+JMPQhqA+yUTl3DhQ1
- OOEJvOoU3JpEVsXvCKaaiS3n3dTVo8zkwKkXrpmdJNpMlcSr/XbcdX+ggLvSGhVtbjWUA+Yrr
- 9Hs1DfLTGWjkMMMZ+MIGwu1c9iBdTDtU66eOOSfDqZFJFtmn+HAL2SwhhsXkbeaEbbEot9UE6
- UWUxPjNXIuOPRYjqrd3B1VxggeM/wWeeIO8b0txgqDtOs3N8kzSLVDmgsPDNQxujWK7fGRyG8
- 9gDUIN2XHEI7Si13HEKe1F2+NRmbF4HLQWlt9j2mUW+hBiHnHfnIjXnmXvoYo5Sn5YRbVp52j
- OR5MTNslL0MHdmq31rqDeqwblw2GFVzGUzq55J0M1tr9FY+m2zcHr/fn1q0p6BQ0mqlWNMdC8
- 02vR7F1hKgpdZWscnVeeEEN3tMM/iw+k5fErwHScoD2AMggRV0M+O+aJB0eEeCG1rMRStt+rp
- Z57ccqRvPTMyXsAukU2eLr8Kx696xZ63inmz91gzKk5FlV6qLIAgb6IYRqLT9AihhvVv2Ifjo
- dd/ZFN7ytTn9yjQYgNXaZRm5U8CXBstZA8IPuh+pMmi4miAE50PhPmk5qQrhMySCH7MfAABRd
- PnSSsvOgE0MKTfJdiX3Vwf5N+x9M5YvKy6eYiQOVZ/3uWBREnbDjJujMuMJGzYQDFfDMFESJ5
- yjsDpTnkYiRjc3tP4IT4ApFgeRM=
+Content-Transfer-Encoding: 8bit
 
-This is an effort to get rid of all multiplications from allocation
-functions in order to prevent integer overflows [1].
+This is the last patchset of a long series of cleanup and
+preparation to make at803x better maintainable and permit
+the addition of other QCOM PHY Families.
 
-Here the multiplication is obviously safe because the "event_rings"
-member never can have a value greater than 255 (8 bits). This member
-is set twice using always FIELD_GET:
+A shared library modules is created since many QCOM PHY share
+similar/exact implementation and are reused.
 
-mhi_cntrl->event_rings =3D FIELD_GET(MHICFG_NER_MASK, regval);
-mhi_cntrl->event_rings =3D FIELD_GET(MHICFG_NER_MASK, regval);
+This series doesn't introduce any new code but just move the
+function around and introduce a new module for all the functions
+that are shared between the 3 different PHY family.
 
-And the MHICFG_NER_MASK macro defines the 8 bits mask that guarantees
-a maximum value of 255.
+Since the drivers are actually detached, new probe function are
+introduced that allocate the specific priv struct for the PHYs.
 
-However, using kcalloc() is more appropriate [1] and improves
-readability. This patch has no effect on runtime behavior.
+After this patch, qca808x will be further generalized as LED
+and cable test function are also used by the QCA807x PHYs.
+This is just for reference and the additional function move will
+be done on the relates specific series.
 
-Link: https://github.com/KSPP/linux/issues/162 [1]
-Link: https://www.kernel.org/doc/html/next/process/deprecated.html#open-co=
-ded-arithmetic-in-allocator-arguments [1]
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Signed-off-by: Erick Archer <erick.archer@gmx.com>
-=2D--
-Changes in v2:
-- Add more info in the commit message to better explain the change.
-  (Dan Carpenter)
-- Add the "Reviewed-by:" tag.
+This is also needed in preparation for the introduction of
+qca807x PHYs family and PHY package concept.
 
-Previous versions:
-v1 - https://lore.kernel.org/linux-hardening/20240120152518.13006-1-erick.=
-archer@gmx.com/
-=2D--
- drivers/bus/mhi/ep/main.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Changes v3:
+- Fix compilation error on testing single change till
+  patch 4. (improve bisectability of the series)
+Changes v2:
+- Out of RFC (at808x dependency got merged)
 
-diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-index 65fc1d738bec..8d7a4102bdb7 100644
-=2D-- a/drivers/bus/mhi/ep/main.c
-+++ b/drivers/bus/mhi/ep/main.c
-@@ -1149,8 +1149,9 @@ int mhi_ep_power_up(struct mhi_ep_cntrl *mhi_cntrl)
- 	mhi_ep_mmio_mask_interrupts(mhi_cntrl);
- 	mhi_ep_mmio_init(mhi_cntrl);
+Christian Marangi (5):
+  net: phy: move at803x PHY driver to dedicated directory
+  net: phy: qcom: create and move functions to shared library
+  net: phy: qcom: deatch qca83xx PHY driver from at803x
+  net: phy: qcom: move additional functions to shared library
+  net: phy: qcom: detach qca808x PHY driver from at803x
 
--	mhi_cntrl->mhi_event =3D kzalloc(mhi_cntrl->event_rings * (sizeof(*mhi_c=
-ntrl->mhi_event)),
--					GFP_KERNEL);
-+	mhi_cntrl->mhi_event =3D kcalloc(mhi_cntrl->event_rings,
-+				       sizeof(*mhi_cntrl->mhi_event),
-+				       GFP_KERNEL);
- 	if (!mhi_cntrl->mhi_event)
- 		return -ENOMEM;
+ drivers/net/phy/Kconfig             |    7 +-
+ drivers/net/phy/Makefile            |    2 +-
+ drivers/net/phy/at803x.c            | 2759 ---------------------------
+ drivers/net/phy/qcom/Kconfig        |   22 +
+ drivers/net/phy/qcom/Makefile       |    5 +
+ drivers/net/phy/qcom/at803x.c       | 1140 +++++++++++
+ drivers/net/phy/qcom/qca808x.c      |  934 +++++++++
+ drivers/net/phy/qcom/qca83xx.c      |  275 +++
+ drivers/net/phy/qcom/qcom-phy-lib.c |  429 +++++
+ drivers/net/phy/qcom/qcom.h         |  120 ++
+ 10 files changed, 2927 insertions(+), 2766 deletions(-)
+ delete mode 100644 drivers/net/phy/at803x.c
+ create mode 100644 drivers/net/phy/qcom/Kconfig
+ create mode 100644 drivers/net/phy/qcom/Makefile
+ create mode 100644 drivers/net/phy/qcom/at803x.c
+ create mode 100644 drivers/net/phy/qcom/qca808x.c
+ create mode 100644 drivers/net/phy/qcom/qca83xx.c
+ create mode 100644 drivers/net/phy/qcom/qcom-phy-lib.c
+ create mode 100644 drivers/net/phy/qcom/qcom.h
 
-=2D-
-2.25.1
+-- 
+2.43.0
 
 
