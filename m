@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-8725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8726-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED63883FA74
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 23:53:44 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id AA56083FA76
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 23:53:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 69830B22160
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 22:53:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9B5311C2245F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 22:53:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0175A4C629;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2C9A4CB35;
 	Sun, 28 Jan 2024 22:52:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Y3pysaHP"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kTKFcWth"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301974596F
-	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jan 2024 22:52:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4BE14C3D2
+	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jan 2024 22:52:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706482367; cv=none; b=IOp7sFTp7rb8EC/GBOiSYbRgYbkWt6Fm8LjrH77Kb2SYPot7qtIbtcj6tpHwX3E3E0bhLv7PczygAFURn/zSGRbP/gCQdwZfCinu0md3p2LFdxUb+svz8gW9oVgeUee4pbOAgnl8QX+PgMnPcQv93c1O67NpQuV5Yff0Qh65JZk=
+	t=1706482368; cv=none; b=YITcBZ2no9UBd0KPt3G0CrWqOVhyIYZE5VWdk478F/lHCL7uYoWfcP2TNbVr0vG1boO2Ok8W+p79VMB2SkvczRy62Zdhg03/5ncXulBZXw6oRlIINkij1Qt+VKTEO9Hb4DOhxIiCX56IZK9JO1xL9gu2WYrQhxPix1gSTtsffS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706482367; c=relaxed/simple;
-	bh=MVhUWSY/+upRsPik4dsc/FIDp5JpvuJHiJdLly35s/8=;
+	s=arc-20240116; t=1706482368; c=relaxed/simple;
+	bh=RNTWLyTiZiBUhS5TEQLKFH3Bk5qTv5ogmNaSck4H5Kg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XSFAJ+4akMzcdUH+/E4/N8Ckn65UYoUTtiOEAi7Famw7bBnOP8phoiWkwRO5crzAU2e7b7Z82R0EmLKDQ+nIych+wCjR20iPvU8P4863KJnq6SXKuiiX+xnEdKggstsgQ4qyrAhDbo7tLNgrgS7FfFjHxiEi6PfRxQWshTnuqU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Y3pysaHP; arc=none smtp.client-ip=209.85.218.45
+	 In-Reply-To:To:Cc; b=EBN7kV+i8pcWhS+mdu/IajBRv9u5uAfwZdWGvXFuTI/sAIyLkLPoVZ8svs55/ZrrnFAXFCtE2AKf1egHm4F/Dmavj8PsSRG9ImkKJUfqJEFvNujmKnYPfNMcDTAZOERUkjwJ15kJoJVswyzBG8AvSdF5ozDcSNdrx6lsx+L0C8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kTKFcWth; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a2d7e2e7fe0so409217666b.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jan 2024 14:52:44 -0800 (PST)
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a26fa294e56so246552866b.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jan 2024 14:52:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706482363; x=1707087163; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706482365; x=1707087165; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=oATv8NOQxxuUnkhYBjrPZ5SJTfwj18//AqKtxSW/XOs=;
-        b=Y3pysaHPJzq8jnAluW+5zyG5X65xytHm0VNNrd9L9Rg/pAWPeVMo4XXjIO44on5NwS
-         OtehhmRY2M4lXNXAmU4f9Z/G/5BfiUiMbJzVBY8UyQw5CdYPrAT2GY5d3mdd1bxJ+uQH
-         M23a/Q7Esa+WEIfJt8TZRv5dT/4E1Htig1VamxEffWUOOfs12KPxsl6jqorALJw1p5nb
-         FJGnTiSUyxz+T0iRK2g/dvIxvZXohZeB4jAuQkSzKFA8AKNQdJiMUnjb7EqVRTbohE79
-         rTC6GRGImrtJnb2eumGuAzrfN5ydDVWXoF/97LKxXGAWjW3y7HuEpXWQvrOfriAI68lB
-         XuhQ==
+        bh=0xX/n0g5EwVAr63DPP+HMCiUOVUpkPp/mNAHdSRNRYg=;
+        b=kTKFcWtho4lT5o1PuOC1Vf0/LQCxsYuN3KhRvuRTjY9E42EY6wIGjKUkDTwnhbJmCP
+         CINY1DgiE84uiVsPezXVYR78mvO31V1HdJGYCl4oAO9OQ8QeokspmOivswjl4To8NWx+
+         auOdUqoV+aVu4XjaUB9nQi2NMbvm1SLPljecPk+5dU8XhI69J2Imto+WkVNWA/Y7Phpv
+         j7WiQXDA6fHKp3MBktTXTtt6SbxkpYMeDS8YnOkq6EUtgWnGMRVo5OaTEL2ZatuX/6eZ
+         S1yE9IZuMylW2w4u2zezvNg4U0W3Smd5xBfwifjkeOtJ2eTRaHzck+U3ubjTQ5Crs/gE
+         2WRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706482363; x=1707087163;
+        d=1e100.net; s=20230601; t=1706482365; x=1707087165;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=oATv8NOQxxuUnkhYBjrPZ5SJTfwj18//AqKtxSW/XOs=;
-        b=vg0+TfBlnwPZwy/bKVlmm8bfzP3R6bOr5FPT7QOtHoRMZDEJEZoyxLw5V7X5Qa/rT/
-         LWVGWmTmkL0tD1PyHtFG+R0ggu4GvtvzgVR3j6fttyNP3ewiUufkBK9bavs8YUgQg8iR
-         TT7FnAhP5hN6/SG1cVWqvZXwFprGXGC5I/ivX5H7IuVo+j5lEirUZSAm2H+kmxxNSsWz
-         vvUH+BO69asYEog61YBvBZvraiokYFtvwlsi6cBPzdQRhN5RJF9JD8yTUFpi1u5ErASL
-         cucTUUEQ2t1xKtmvMHrrhz6pMuBhkLBctqulA8zHG6Y8wD0hzX1wW1UXheV2/1eP1T77
-         eWoQ==
-X-Gm-Message-State: AOJu0YxT7MQQdNEF5d5ZZRdOdL/S1jrBSo35S71GFW/RztX6FwSfNBiQ
-	9NfveCcgZ7thG/opUNa7vWmwiAEAkzZ1tUk+QVMpItrTw4PZFdZS1x+UhbSjkP8=
-X-Google-Smtp-Source: AGHT+IGNAQQ5wUy17U75B7x5czk4mbe4d2jVSwmNa0jfDZzaEVAsZdQPzt75TXCekn2Dn7+26plF+A==
-X-Received: by 2002:a17:906:4ad0:b0:a35:3718:997c with SMTP id u16-20020a1709064ad000b00a353718997cmr4255818ejt.28.1706482363328;
-        Sun, 28 Jan 2024 14:52:43 -0800 (PST)
+        bh=0xX/n0g5EwVAr63DPP+HMCiUOVUpkPp/mNAHdSRNRYg=;
+        b=RCzdvWzpg02cXhj4ZHaHA346OuNmpsSxuqruohvcjgR2Hl4NmwCcGk5wcKXUnWEkA4
+         ElooUGOFWl1KC6CYGnsPfXkZH+zK5n7HNdjYo6BmSXIzmRLeZoLPZNIGcZrf95q50vjg
+         9/Vt8RSXOaD9v4bw3/obM+AZap+m8A/hgV4jCDzONdphZtUzj7jtcHkwlKzNzVRh2+E+
+         olL0YKu3C6rGxwQmZnuFqhcU1WUiud1wJHxu56glvVprPu5f/A+KK+RmgRX8ImNi7/qJ
+         FuULbqBxC8MxS1Ce7hbz8OSMC/BRfZGIhVcdFxl7nGjsIXmDHAF0F1qbh9AKTds8DgYS
+         fEhg==
+X-Gm-Message-State: AOJu0Ywpbv1qkPDauvgDJrggdaa2x4AOGadV9TzSQbk5dKamu384zcMV
+	qf6c7LjYbKcMefdL6MaIdXsXbOLdG+Cux3IKElY15BgfEyppaFsrWavXzSBXhVI=
+X-Google-Smtp-Source: AGHT+IHdyPNwtT0CYhBCFVqz4bJo7DU/+LBuLAlBSeYNlazecrVT1vWM6syjs2X0LTOwdQ5+4EQHiw==
+X-Received: by 2002:a17:906:5fd7:b0:a30:d4f2:1603 with SMTP id k23-20020a1709065fd700b00a30d4f21603mr3895360ejv.15.1706482364961;
+        Sun, 28 Jan 2024 14:52:44 -0800 (PST)
 Received: from [127.0.1.1] ([79.115.23.25])
-        by smtp.gmail.com with ESMTPSA id k11-20020a1709061c0b00b00a30cd599285sm3259996ejg.223.2024.01.28.14.52.41
+        by smtp.gmail.com with ESMTPSA id k11-20020a1709061c0b00b00a30cd599285sm3259996ejg.223.2024.01.28.14.52.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Jan 2024 14:52:43 -0800 (PST)
+        Sun, 28 Jan 2024 14:52:44 -0800 (PST)
 From: Abel Vesa <abel.vesa@linaro.org>
-Date: Mon, 29 Jan 2024 00:52:16 +0200
-Subject: [PATCH v3 03/10] dt-bindings: clock: qcom: Document the X1E80100
- GPU Clock Controller
+Date: Mon, 29 Jan 2024 00:52:17 +0200
+Subject: [PATCH v3 04/10] dt-bindings: clock: qcom: Document the X1E80100
+ TCSR Clock Controller
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240129-x1e80100-clock-controllers-v3-3-d96dacfed104@linaro.org>
+Message-Id: <20240129-x1e80100-clock-controllers-v3-4-d96dacfed104@linaro.org>
 References: <20240129-x1e80100-clock-controllers-v3-0-d96dacfed104@linaro.org>
 In-Reply-To: <20240129-x1e80100-clock-controllers-v3-0-d96dacfed104@linaro.org>
 To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
@@ -95,126 +95,73 @@ Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  Abel Vesa <abel.vesa@linaro.org>, Rajendra Nayak <quic_rjendra@quicinc.com>, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3720; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=vLpNxW+lAlbuQp8bP9Fd2lailtB/NBx2GC9/qnTEXIM=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlttqrfbNyNSW4QtO0s99QREx6Z7JLazWDeMdhW
- Xsdfq6IDxiJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZbbaqwAKCRAbX0TJAJUV
- Vh5YEACi/sAXnLJFtXF0/GIlZuxLvivkvfA4uL6yvgMJUNgbXxfpSzx/S3jclnc54jb+y7qnyen
- NfMQC9lK4Z/ZB4BIa137V/9xxJ5ojzn41gComt+shxJEzZrcQ1BwesT/RApwxh4eJ3Ex/p27/z/
- z/XJEPinaYinhZCpL/E0buLjzrPpkU5498567YRGlLpDUh/ogTBoqyp6NhATWIncfXm6mM9IZa6
- sxqesOZlsY07lRdh2+tNUXpPsWTv2RkUZTZq3Vtrw2DYL813euf6rd0oMd1XNJG1NN4rgXWhMHY
- Rc9a8PwPyV94P6DjfG80g9NiQS5pMSEKbZrzrcoYq/MdsbawSU1WW6efLwy1frPW/zCIEU9UmTr
- 2ZF1N4pIvNEeuKOvfAKwPSWZBly7v5hwy2Ken9UV2f0TzY6MDqfm8e+RZskwDrOB1FIP9Fxg3a9
- a7v/wJQGy2XyfWJeu0x5e2h9HJjD/NPbfA5C1ph3UEyJZRLIqrfs2oft5TbPEuDM+KTRq65B5bn
- H4S2QXMmuflsFsr8rHz7njp+kMipii1LzoeWblr2gbI7YSXZmBXuiwN0Ot+70Vojz7DgbBo1q9c
- tgp9T1DmqEmIfE1phAwxlJ99bV7/RkwCiharBDt5Vuuf0koPAW4vuHvCOm2ungzico0sjrec7In
- AYfCLr1aRhkqCEg==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1980; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=RNTWLyTiZiBUhS5TEQLKFH3Bk5qTv5ogmNaSck4H5Kg=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlttqtF9/z+G+lcXXwwDt2i2WKrEVZxywl2ybPV
+ 9oZtE4A9/+JAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZbbarQAKCRAbX0TJAJUV
+ VvE6D/wK0gkC7DP7s4FWqctuu0wQ3+GaYIUprn3HbGgPExXEUihV5tsU+yeaDc/4WbB3biguqCM
+ ZjMJHJvCD9leNLrmsVofh0KfBQrgswSIc4x7tLzh1/vVwczIMu78n4OKW2csm+9qhF0U7+LE9Rt
+ KeMWT77ZPrbVPx545BHVXFnRb+zge7zOpnU8p66U1uswqoPKYXrFIe18fXWWxteT/TQ0edl+a9m
+ AP8tjJazDwkpNnAU3hpPr9gbX6xzew+AC2c5igteWNTxoBcIoKOSV/LyCjOiIDT4hP8TuwOaFdA
+ w2+PCyXjiru4LB+femSBOTDkFRimw3lc4E/2sURlERJpw7tt1sVz+P89n8P9rtRagVV/3zFdKLa
+ JcXUvOVshz1j8ZmJ8w8Lb3IgBsyFzydJE3qI8/QlF5ij4Ue0DL971pUVT0PKCWlBensLTiz5K2S
+ 4bljZeD+uGIhhkvr+FCWfoFfcHJX79AUz8IHd/s/eN5D0yrIJH/umM1ogyry/bFE90adoT8QzDt
+ f35/v2x/jULLEx7uThf7DZ80BpP6V8dL1lMWPDauNWkDTgGbU0+4DMEleL1jJqsIEx4gOoc3dn5
+ 4f+wL/yGMkvGyyRea9dgcZLMveuJ+DM3KMkRgRAF84XXuT4eGbp4eNEt96OBkHykwq2o6Wv/YCf
+ wCkmxO7AW9qN/9g==
 X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
  fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-From: Rajendra Nayak <quic_rjendra@quicinc.com>
+Add bindings documentation for the X1E80100 TCSR Clock Controller.
 
-Add bindings documentation for the X1E80100 Graphics Clock Controller.
-
+Co-developed-by: Rajendra Nayak <quic_rjendra@quicinc.com>
 Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- .../bindings/clock/qcom,sm8450-gpucc.yaml          |  2 ++
- include/dt-bindings/clock/qcom,x1e80100-gpucc.h    | 41 ++++++++++++++++++++++
- include/dt-bindings/reset/qcom,x1e80100-gpucc.h    | 19 ++++++++++
- 3 files changed, 62 insertions(+)
+ .../bindings/clock/qcom,sm8550-tcsr.yaml           |  1 +
+ include/dt-bindings/clock/qcom,x1e80100-tcsr.h     | 23 ++++++++++++++++++++++
+ 2 files changed, 24 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-gpucc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-gpucc.yaml
-index 1a384e8532a5..36974309cf69 100644
---- a/Documentation/devicetree/bindings/clock/qcom,sm8450-gpucc.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-gpucc.yaml
-@@ -18,6 +18,7 @@ description: |
-     include/dt-bindings/clock/qcom,sm8550-gpucc.h
-     include/dt-bindings/reset/qcom,sm8450-gpucc.h
-     include/dt-bindings/reset/qcom,sm8650-gpucc.h
-+    include/dt-bindings/reset/qcom,x1e80100-gpucc.h
- 
- properties:
-   compatible:
-@@ -25,6 +26,7 @@ properties:
-       - qcom,sm8450-gpucc
-       - qcom,sm8550-gpucc
-       - qcom,sm8650-gpucc
-+      - qcom,x1e80100-gpucc
+diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
+index af16b05eac96..48fdd562d743 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
+@@ -23,6 +23,7 @@ properties:
+       - enum:
+           - qcom,sm8550-tcsr
+           - qcom,sm8650-tcsr
++          - qcom,x1e80100-tcsr
+       - const: syscon
  
    clocks:
-     items:
-diff --git a/include/dt-bindings/clock/qcom,x1e80100-gpucc.h b/include/dt-bindings/clock/qcom,x1e80100-gpucc.h
+diff --git a/include/dt-bindings/clock/qcom,x1e80100-tcsr.h b/include/dt-bindings/clock/qcom,x1e80100-tcsr.h
 new file mode 100644
-index 000000000000..61a3a8f3ac43
+index 000000000000..bae2c4654ee2
 --- /dev/null
-+++ b/include/dt-bindings/clock/qcom,x1e80100-gpucc.h
-@@ -0,0 +1,41 @@
++++ b/include/dt-bindings/clock/qcom,x1e80100-tcsr.h
+@@ -0,0 +1,23 @@
 +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
 +/*
-+ * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2023, Linaro Limited
 + */
 +
-+#ifndef _DT_BINDINGS_CLK_QCOM_X1E80100_GPU_CC_H
-+#define _DT_BINDINGS_CLK_QCOM_X1E80100_GPU_CC_H
++#ifndef _DT_BINDINGS_CLK_QCOM_X1E80100_TCSR_CC_H
++#define _DT_BINDINGS_CLK_QCOM_X1E80100_TCSR_CC_H
 +
-+/* GPU_CC clocks */
-+#define GPU_CC_AHB_CLK						0
-+#define GPU_CC_CB_CLK						1
-+#define GPU_CC_CRC_AHB_CLK					2
-+#define GPU_CC_CX_FF_CLK					3
-+#define GPU_CC_CX_GMU_CLK					4
-+#define GPU_CC_CXO_AON_CLK					5
-+#define GPU_CC_CXO_CLK						6
-+#define GPU_CC_DEMET_CLK					7
-+#define GPU_CC_DEMET_DIV_CLK_SRC				8
-+#define GPU_CC_FF_CLK_SRC					9
-+#define GPU_CC_FREQ_MEASURE_CLK					10
-+#define GPU_CC_GMU_CLK_SRC					11
-+#define GPU_CC_GX_GMU_CLK					12
-+#define GPU_CC_GX_VSENSE_CLK					13
-+#define GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK				14
-+#define GPU_CC_HUB_AON_CLK					15
-+#define GPU_CC_HUB_CLK_SRC					16
-+#define GPU_CC_HUB_CX_INT_CLK					17
-+#define GPU_CC_MEMNOC_GFX_CLK					18
-+#define GPU_CC_MND1X_0_GFX3D_CLK				19
-+#define GPU_CC_MND1X_1_GFX3D_CLK				20
-+#define GPU_CC_PLL0						21
-+#define GPU_CC_PLL1						22
-+#define GPU_CC_SLEEP_CLK					23
-+#define GPU_CC_XO_CLK_SRC					24
-+#define GPU_CC_XO_DIV_CLK_SRC					25
-+
-+/* GDSCs */
-+#define GPU_CX_GDSC						0
-+#define GPU_GX_GDSC						1
-+
-+#endif
-diff --git a/include/dt-bindings/reset/qcom,x1e80100-gpucc.h b/include/dt-bindings/reset/qcom,x1e80100-gpucc.h
-new file mode 100644
-index 000000000000..32b43e71a16f
---- /dev/null
-+++ b/include/dt-bindings/reset/qcom,x1e80100-gpucc.h
-@@ -0,0 +1,19 @@
-+/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-+/*
-+ * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+#ifndef _DT_BINDINGS_RESET_QCOM_X1E80100_GPU_CC_H
-+#define _DT_BINDINGS_RESET_QCOM_X1E80100_GPU_CC_H
-+
-+#define GPUCC_GPU_CC_ACD_BCR					0
-+#define GPUCC_GPU_CC_CB_BCR					1
-+#define GPUCC_GPU_CC_CX_BCR					2
-+#define GPUCC_GPU_CC_FAST_HUB_BCR				3
-+#define GPUCC_GPU_CC_FF_BCR					4
-+#define GPUCC_GPU_CC_GFX3D_AON_BCR				5
-+#define GPUCC_GPU_CC_GMU_BCR					6
-+#define GPUCC_GPU_CC_GX_BCR					7
-+#define GPUCC_GPU_CC_XO_BCR					8
++/* TCSR CC clocks */
++#define TCSR_PCIE_2L_4_CLKREF_EN				0
++#define TCSR_PCIE_2L_5_CLKREF_EN				1
++#define TCSR_PCIE_8L_CLKREF_EN					2
++#define TCSR_USB3_MP0_CLKREF_EN					3
++#define TCSR_USB3_MP1_CLKREF_EN					4
++#define TCSR_USB2_1_CLKREF_EN					5
++#define TCSR_UFS_PHY_CLKREF_EN					6
++#define TCSR_USB4_1_CLKREF_EN					7
++#define TCSR_USB4_2_CLKREF_EN					8
++#define TCSR_USB2_2_CLKREF_EN					9
++#define TCSR_PCIE_4L_CLKREF_EN					10
++#define TCSR_EDP_CLKREF_EN					11
 +
 +#endif
 
