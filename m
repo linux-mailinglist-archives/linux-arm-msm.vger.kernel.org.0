@@ -1,58 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-8671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8672-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72D2B83F398
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 04:10:46 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72ECB83F3A3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 04:43:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2B3C0285337
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 03:10:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DB72AB21F56
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 03:43:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89D8015C0;
-	Sun, 28 Jan 2024 03:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44A89523C;
+	Sun, 28 Jan 2024 03:43:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AQHCaSd2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j8OVdmOI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7E08BF2;
-	Sun, 28 Jan 2024 03:10:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12AEC4C85;
+	Sun, 28 Jan 2024 03:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706411443; cv=none; b=YaysLGG1AmsH8Fs5VhrirDJld+bBtIbFY3MpwbDu/RdBV2S3fXs61RhZa4g24VCvc83TKS07qRZMdZB5/w2/oeuwi4kxai59ux0npqwqGxERoPXnB3IHaaDWSGSGl1zP/aR4rDb4EWUoA0e49hipCNc4tmnwMK1y80xmRoc1ZMk=
+	t=1706413428; cv=none; b=JPn5qL+BXFGsyA73KBlkkGVIIuvjaRAPLoIvHnDRWhd1wAyQRt39MOTwtnpoBUG6Rsn2eMCya2mW/+sl5Gs5YFct2mHCIQmXzJmqwxXqSU7YHfAG/dTeqNQd70zxwGDncQhZOMDmlDNsJTG44gsy7SjJLP/g3Ygb2Q3cYaMrqCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706411443; c=relaxed/simple;
-	bh=HFfRd6LkLwTX+vbnKYAsPwyhG28/axA6Cw7j+acEa8g=;
+	s=arc-20240116; t=1706413428; c=relaxed/simple;
+	bh=aY4B8zzOWdf/8l2np8fF4UyMvfNAxrpL2qafcdX+Fas=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W43jyuu5HTLfKCoGKiL/YvcwizqNa0OFoAFb9Rf4m7WpW/po4erHPwRT9vrEC8E2qMFsjDa/6SbL5tL1e/XF2A47IfiKG2nEwauXj7A8q7n8FaP7iBVoLRveL/gMZHjxOEyrJj2h4RXpbUF9CrVJ201A2Tst+lk2udFjNEtsT3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AQHCaSd2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B73BC433C7;
-	Sun, 28 Jan 2024 03:10:41 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=S0gSWYjVfHxveJSVDeYbfivlGzOW1+RQl0Qe9bBZjf35eq+B3KIzzEXEUsZBOJj7WO4OYo2DXXfV9GXFXg5dzi5ptPGEck5cEEiB1KDDVFVpXt008kGe4w8z0GDrrUIr7SIQlcCfh+Ie14brTL8wORSXRsnPZMBiTbbqyH3T9rY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j8OVdmOI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAB65C433F1;
+	Sun, 28 Jan 2024 03:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706411442;
-	bh=HFfRd6LkLwTX+vbnKYAsPwyhG28/axA6Cw7j+acEa8g=;
+	s=k20201202; t=1706413427;
+	bh=aY4B8zzOWdf/8l2np8fF4UyMvfNAxrpL2qafcdX+Fas=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AQHCaSd2OrA3oeY7JeiunXrGswY2e6O5yf2KQD3lmFpiwc7pL+ZoDP1p/Veb/GVpU
-	 ahhM2lhfydPri04fnrdUy/hwuRGeNKBoZ5uxBVPa0XnN1OpgqGHd8bIV2LVNSx33bk
-	 Bp6wi+BdVULytUnQz2r+mh2aGR/4wrXBzWX+8Gg0qrKn3HplxaYlhJnY4XLPj4+ZPi
-	 P4tnYnmISLNecpaMhhncKnH1DlZpZRkziVgUPmyOC+SHcywsp/nTxffuld3RVHWstK
-	 1JdWzgM2trvU30orhDTZbHkfi5jX5p3pVYZM9tK/i7P8LmbxST9aFgNzBNcXaYpjlA
-	 XbjtP6NXPG6BA==
-Date: Sat, 27 Jan 2024 21:10:40 -0600
+	b=j8OVdmOIg9bXCe9vyzExOtj9qjrVgQLT4VhnwVBY6bHgeTVfVfKCiscH72ZYgLrnB
+	 dUi1VKo5TZikLO2hvBHo3RUStnYWozpIJ/g8eW5+cJzisiymjAmzNnge0678oERuDA
+	 UP9CBwFvg8zqlbH2lF9PAufRmdtVpVX2cwDB/Vsp8bAvET6zl5iG+BmDlb9PgK1yMT
+	 Ymqjb4ivPz+r0SX96FDAADKZgmB5kGTJDzP4narx8DjAQrfUnqqVRRzgwAygItgcSe
+	 RqlOvgITf78kYh2b7QC+UFUl129AC2XXbMIhyDa/g7gSsqFndd0J48fR3D21SjuCd7
+	 VcL5t+t7JZyeA==
+Date: Sat, 27 Jan 2024 21:43:45 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Douglas Anderson <dianders@chromium.org>
+To: Maulik Shah <quic_mkshah@quicinc.com>
 Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-arm-kernel@lists.infradead.org, 
-	Stephen Boyd <swboyd@chromium.org>, linux-serial@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Jiri Slaby <jirislaby@kernel.org>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] serial: qcom-geni: Don't cancel/abort if we can't
- get the port lock
-Message-ID: <fr73heymmg3rar25adkkcwybewjaridbeyhjrgi5a7xtue3c3n@i5h7i2y7hmph>
-References: <20240112150307.1.I7dc0993c1e758a1efedd651e7e1670deb1b430fb@changeid>
- <20240112150307.2.Idb1553d1d22123c377f31eacb4486432f6c9ac8d@changeid>
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, quic_eberman@quicinc.com, 
+	quic_collinsd@quicinc.com, quic_lsrao@quicinc.com
+Subject: Re: [PATCH v2] soc: qcom: rpmh-rsc: Enhance check for VREG in-flight
+ request
+Message-ID: <xjcefuurfbv7oquotsmm4iv4pnwzoone7jxrm42vjsnpfcgk4z@mnrsxec43bhp>
+References: <20240119-rpmh-rsc-fixes-v2-1-e42c0a9e36f0@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,127 +59,115 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240112150307.2.Idb1553d1d22123c377f31eacb4486432f6c9ac8d@changeid>
+In-Reply-To: <20240119-rpmh-rsc-fixes-v2-1-e42c0a9e36f0@quicinc.com>
 
-On Fri, Jan 12, 2024 at 03:03:08PM -0800, Douglas Anderson wrote:
-> As of commit d7402513c935 ("arm64: smp: IPI_CPU_STOP and
-> IPI_CPU_CRASH_STOP should try for NMI"), if we've got pseudo-NMI
-> enabled then we'll use it to stop CPUs at panic time. This is nice,
-> but it does mean that there's a pretty good chance that we'll end up
-> stopping a CPU while it holds the port lock for the console
-> UART. Specifically, I see a CPU get stopped while holding the port
-> lock nearly 100% of the time on my sc7180-trogdor based Chromebook by
-> enabling the "buddy" hardlockup detector and then doing:
+On Fri, Jan 19, 2024 at 01:56:54PM +0530, Maulik Shah wrote:
+> Each RPMh VREG accelerator resource has 3 or 4 contiguous 4-byte aligned
+> addresses associated with it. These control voltage, enable state, mode,
+> and in legacy targets, voltage headroom. The current in-flight request
+> checking logic looks for exact address matches. Requests for different
+> addresses of the same RPMh resource as thus not detected as in-flight.
 > 
->   sysctl -w kernel.hardlockup_all_cpu_backtrace=1
->   sysctl -w kernel.hardlockup_panic=1
->   echo HARDLOCKUP > /sys/kernel/debug/provoke-crash/DIRECT
+> Enhance the in-flight request check for VREG requests by ignoring the
+> address offset. This ensures that only one request is allowed to be
+> in-flight for a given VREG resource. This is needed to avoid scenarios
+> where request commands are carried out by RPMh hardware out-of-order
+> leading to LDO regulator over-current protection triggering.
 > 
-> UART drivers are _supposed_ to handle this case OK and this is why
-> UART drivers check "oops_in_progress" and only do a "trylock" in that
-> case. However, before we enabled pseudo-NMI to stop CPUs it wasn't a
-> very well-tested situation.
-> 
-> Now that we're testing the situation a lot, it can be seen that the
-> Qualcomm GENI UART driver is pretty broken. Specifically, when I run
-> my test case and look at the console output I just see a bunch of
-> garbled output like:
-> 
->   [  201.069084] NMI backtrace[  201.069084] NM[  201.069087] CPU: 6
->   PID: 10296 Comm: dnsproxyd Not tainted 6.7.0-06265-gb13e8c0ede12
->   #1 01112b9f14923cbd0b[  201.069090] Hardware name: Google Lazor
->   ([  201.069092] pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DI[
->   201.069095] pc : smp_call_function_man[  201.069099]
-> 
-> That's obviously not so great. This happens because each call to the
-> console driver exits after the data has been written to the FIFO but
-> before it's actually been flushed out of the serial port. When we have
-> multiple calls into the console one after the other then (if we can't
-> get the lock) each call tells the UART to throw away any data in the
-> FIFO that hadn't been transferred yet.
-> 
-> I've posted up a patch to change the arm64 core to avoid this
-> situation most of the time [1] much like x86 seems to do, but even if
-> that patch lands the GENI driver should still be fixed.
-> 
-> From testing, it appears that we can just delete the cancel/abort in
-> the case where we weren't able to get the UART lock and the output
-> looks good. It makes sense that we'd be able to do this since that
-> means we'll just call into __qcom_geni_serial_console_write() and
-> __qcom_geni_serial_console_write() looks much like
-> qcom_geni_serial_poll_put_char() but with a loop. However, it seems
-> safest to poll the FIFO and make sure it's empty before our
-> transfer. This should reliably make sure that we're not
-> interrupting/clobbering any existing transfers.
-> 
-> As part of this change, we'll also avoid re-setting up a TX at the end
-> of the console write function if we weren't able to get the lock,
-> since accessing "port->tx_remaining" without the lock is not
-> safe. This is only needed to re-start userspace initiated transfers.
-> 
-> [1] https://lore.kernel.org/r/20231207170251.1.Id4817adef610302554b8aa42b090d57270dc119c@changeid
-> 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+The s-o-b chain doesn't look right.
+
+> ---
+> Changes in v2:
+> - Use GENMASK() and FIELD_GET()
+> - Link to v1: https://lore.kernel.org/r/20240117-rpmh-rsc-fixes-v1-1-71ee4f8f72a4@quicinc.com
+> ---
+>  drivers/soc/qcom/rpmh-rsc.c | 21 ++++++++++++++++++++-
+>  1 file changed, 20 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+> index a021dc71807b..e480cde783fe 100644
+> --- a/drivers/soc/qcom/rpmh-rsc.c
+> +++ b/drivers/soc/qcom/rpmh-rsc.c
+> @@ -1,11 +1,13 @@
+>  // SPDX-License-Identifier: GPL-2.0
+>  /*
+>   * Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
+>   */
+>  
+>  #define pr_fmt(fmt) "%s " fmt, KBUILD_MODNAME
+>  
+>  #include <linux/atomic.h>
+> +#include <linux/bitfield.h>
+>  #include <linux/cpu_pm.h>
+>  #include <linux/delay.h>
+>  #include <linux/interrupt.h>
+> @@ -91,6 +93,15 @@ enum {
+>  #define CMD_STATUS_ISSUED		BIT(8)
+>  #define CMD_STATUS_COMPL		BIT(16)
+>  
+> +#define ACCL_TYPE(addr)			FIELD_GET(GENMASK(19, 16), addr)
+
+Command DB is there so we don't have to make assumptions about the
+addresses of resources. As such, I dislike this define.
+
+> +#define VREG_ADDR(addr)			FIELD_GET(GENMASK(19, 4), addr)
+> +
+> +enum {
+> +	HW_ACCL_CLK = 0x3,
+> +	HW_ACCL_VREG,
+> +	HW_ACCL_BUS,
+
+We already define these in the kernel, but with different names:
+CMD_DB_HW_ARC, CMD_DB_HW_VRM, CMD_DB_HW_BCM. I see no reason to use
+different names for the same thing.
+
+> +};
+> +
+>  /*
+>   * Here's a high level overview of how all the registers in RPMH work
+>   * together:
+> @@ -557,7 +568,15 @@ static int check_for_req_inflight(struct rsc_drv *drv, struct tcs_group *tcs,
+>  		for_each_set_bit(j, &curr_enabled, MAX_CMDS_PER_TCS) {
+>  			addr = read_tcs_cmd(drv, drv->regs[RSC_DRV_CMD_ADDR], i, j);
+>  			for (k = 0; k < msg->num_cmds; k++) {
+> -				if (addr == msg->cmds[k].addr)
+> +				/*
+> +				 * Each RPMh VREG accelerator resource has 3 or 4 contiguous 4-byte
+> +				 * aligned addresses associated with it. Ignore the offset to check
+> +				 * for in-flight VREG requests.
+> +				 */
+> +				if (ACCL_TYPE(msg->cmds[k].addr) == HW_ACCL_VREG &&
+> +				    VREG_ADDR(msg->cmds[k].addr) == VREG_ADDR(addr))
+
+I'm sure this work, at least for some targets, but I don't fancy
+encoding this information here. It feels like a hack.
+
+Furthermore, I really would like TP_printk() of trace_rpmh_send_msg() to
+be able to resolve the symbolic names for VRMs as well, and it would
+need the same information...
+
+Please consider how we can query command db for the type and/or grouping
+information.
 
 Regards,
 Bjorn
 
+> +					return -EBUSY;
+> +				else if (addr == msg->cmds[k].addr)
+>  					return -EBUSY;
+>  			}
+>  		}
+> 
 > ---
+> base-commit: 943b9f0ab2cfbaea148dd6ac279957eb08b96904
+> change-id: 20240117-rpmh-rsc-fixes-6c43c7051828
 > 
->  drivers/tty/serial/qcom_geni_serial.c | 27 +++++++++++++--------------
->  1 file changed, 13 insertions(+), 14 deletions(-)
-> 
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> index 7e78f97e8f43..06ebe62f99bc 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -488,18 +488,16 @@ static void qcom_geni_serial_console_write(struct console *co, const char *s,
->  
->  	geni_status = readl(uport->membase + SE_GENI_STATUS);
->  
-> -	/* Cancel the current write to log the fault */
->  	if (!locked) {
-> -		geni_se_cancel_m_cmd(&port->se);
-> -		if (!qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
-> -						M_CMD_CANCEL_EN, true)) {
-> -			geni_se_abort_m_cmd(&port->se);
-> -			qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
-> -							M_CMD_ABORT_EN, true);
-> -			writel(M_CMD_ABORT_EN, uport->membase +
-> -							SE_GENI_M_IRQ_CLEAR);
-> -		}
-> -		writel(M_CMD_CANCEL_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
-> +		/*
-> +		 * We can only get here if an oops is in progress then we were
-> +		 * unable to get the lock. This means we can't safely access
-> +		 * our state variables like tx_remaining. About the best we
-> +		 * can do is wait for the FIFO to be empty before we start our
-> +		 * transfer, so we'll do that.
-> +		 */
-> +		qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
-> +					  M_TX_FIFO_NOT_EMPTY_EN, false);
->  	} else if ((geni_status & M_GENI_CMD_ACTIVE) && !port->tx_remaining) {
->  		/*
->  		 * It seems we can't interrupt existing transfers if all data
-> @@ -516,11 +514,12 @@ static void qcom_geni_serial_console_write(struct console *co, const char *s,
->  
->  	__qcom_geni_serial_console_write(uport, s, count);
->  
-> -	if (port->tx_remaining)
-> -		qcom_geni_serial_setup_tx(uport, port->tx_remaining);
->  
-> -	if (locked)
-> +	if (locked) {
-> +		if (port->tx_remaining)
-> +			qcom_geni_serial_setup_tx(uport, port->tx_remaining);
->  		uart_port_unlock_irqrestore(uport, flags);
-> +	}
->  }
->  
->  static void handle_rx_console(struct uart_port *uport, u32 bytes, bool drop)
+> Best regards,
 > -- 
-> 2.43.0.275.g3460e3d667-goog
+> Maulik Shah <quic_mkshah@quicinc.com>
 > 
 
