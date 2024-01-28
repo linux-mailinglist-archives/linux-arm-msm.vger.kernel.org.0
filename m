@@ -1,83 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-8666-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EFC3083F2F8
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 03:19:46 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F84583F30A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 03:36:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2E0081C21313
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 02:19:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 91D17B21C1E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 02:36:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D056F23769;
-	Sun, 28 Jan 2024 02:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9DE8817;
+	Sun, 28 Jan 2024 02:36:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="afJDxpzV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZQMXw1Xx"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52E023763;
-	Sun, 28 Jan 2024 02:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A343C17;
+	Sun, 28 Jan 2024 02:36:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706408260; cv=none; b=JVyxp9V8TBU4yt89IJnLh6N/j2sTQGmRL91hubtRYVdeD3W/GhApWEoohGTN6e/142bfO1Y6au+qsmK2LTu72GF4SDQ6fORJP5UWO0AuoWgGygBvNxexcuBvs2Y1RD+EedwiPiaEUqey+pqmIWiTGkDPeCsYVPGv5cyZrTZ5q5c=
+	t=1706409396; cv=none; b=LTAVNWY3aJ6h8OpC7UjSJzQE3wOkz1uWnJ0XjAe9h3ELO9nd2e6x5F/MZxy10KSlYBY1imPxOvDEQfW151uTY96za+O3NVARqEQCeua6J/TZ/XJrX4lK67B8AEcsrxlNt8dgQGmFouevwBFsncYWvikfhsLyIHZQy9jOx5Odcq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706408260; c=relaxed/simple;
-	bh=gB6yAMSdwmn4mu9x6huRMZYduR5+uZT5zxR3wje3MwA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SgHzFmdAFFuilTyoOg+G2Dy5/qiTeMo8ZXwe4WgCRTNSkA2EEDTAN/eBOr+h6Li3Z4I3htqwEXCsOwihHSf/Zlk764wyBbpuMRvFRfl2koncLj/S1Tjm91BqhFJuity3FuY8bt+JMfUJKU+DWxvIX2rNAfK1gPpqCjMMqQJfjcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=afJDxpzV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93999C433F1;
-	Sun, 28 Jan 2024 02:17:39 +0000 (UTC)
+	s=arc-20240116; t=1706409396; c=relaxed/simple;
+	bh=lwkzL0yBH4YjD67G7PNVMhxf75iiEXFR//AEkOCpAXM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EOX4VtGjIHd381q5c91S/gpCvHILEXCSK513pHu/SY5gwfZy6aaXzRuM6aGK+CnP3zkhbrApSSeIqoAT7NRJW/N8lwUBtS7yOynJX0c2cpbzZthu4cxeV8auWNkqjcOkRBikgFatPXItCQHRYd2tjDvwkTPoHBOS9PpMh6SllCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZQMXw1Xx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C17C433F1;
+	Sun, 28 Jan 2024 02:36:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706408260;
-	bh=gB6yAMSdwmn4mu9x6huRMZYduR5+uZT5zxR3wje3MwA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=afJDxpzVlnMJ1m2g0dk+GJlnHkLaOGN223dtlgSQ3kfiyoXaDoWOheG5mC+Zpp3cq
-	 wZqfKBO3Vayje/SiIJk7qVxr/6cQDVaEC59/ybzBFRKxgWdiF9mzdy8RN9uwYOOQqM
-	 Crqo2tySKl+69Yta1rE1RsOoYwYBDarv4Yo3Tm1UsEn9pzAZPFmNPbQS3iceGrCXsj
-	 53Mw3IrbYzJTImId9BBN/9YflaygeexWYsGvH9/7pGfIADQcgifeV/8COQfvVFc5SH
-	 YSVx06AmL4mOyq48bbSmJ03iZrkFH5dYPbAyJEytWTCH+w2/+h1CrMUYgMC5A6rL9j
-	 Wjxg/zRPjaOSA==
+	s=k20201202; t=1706409396;
+	bh=lwkzL0yBH4YjD67G7PNVMhxf75iiEXFR//AEkOCpAXM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ZQMXw1XxDbm2gjwp3lPDXzLG6aI0aAO4PDr7xtGaWutUIRvlHoSTSa5UMUQw5RsvK
+	 op5fkaIGmoogJVO70700dMnj1g+C+xoipQwBE9LELa0/qc58yWkIEBGR8lNrM0ePvv
+	 XGf17sM+jU8wWAdsYUf6nZUA9m7pjHBdVgrR6mSvifbeCmqnSqI67tL15eEyW5b6sY
+	 x6l+gfTSzm6saEdw1cSjSCkbHGqVjFQlICQ9BnNKW/oLYSaYxmOKPP0aFcpF0IRMgf
+	 pS180S5iSiQ4T6S4Rn0kLaySCcNxcBB5S8E3zoxGxaYoECBDAe3FAMfQ50oB3DtTwj
+	 cohMP383s43zA==
+Date: Sat, 27 Jan 2024 20:36:33 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Rob Herring <robh@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: soc/qcom: Add size constraints on "qcom,rpm-msg-ram"
-Date: Sat, 27 Jan 2024 20:17:26 -0600
-Message-ID: <170640822836.30820.11892950661950879625.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240124190744.1554625-1-robh@kernel.org>
-References: <20240124190744.1554625-1-robh@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Sibi Sankar <quic_sibis@quicinc.com>, Rajendra Nayak <quic_rjendra@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 00/11] arm64: dts: qcom: Add more support to X1E80100
+ base dtsi, CRD and QCP boards
+Message-ID: <ui5a4sr2wa4nta6uvvlejtwuus7uuj54iirddretysd6hcgv3k@iabyr65abxhi>
+References: <20240126-x1e80100-dts-missing-nodes-v5-0-3bb716fb2af9@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240126-x1e80100-dts-missing-nodes-v5-0-3bb716fb2af9@linaro.org>
 
-
-On Wed, 24 Jan 2024 13:07:44 -0600, Rob Herring wrote:
-> The 'phandle-array' type is a bit ambiguous. It can be either just an
-> array of phandles or an array of phandles plus args. "qcom,rpm-msg-ram" is
-> the former and needs to constrain each entry to a single phandle value.
+On Fri, Jan 26, 2024 at 12:00:11PM +0200, Abel Vesa wrote:
+> This patchset adds every node necessary for both the CRD and QCP to boot
+> with PCIe, USB and embedded DisplayPort.
 > 
+> This patchset depends on the Disp CC and TCSR CC bindings.
+
+I'm guessing you're referring to the patches from December, which has
+review feedback from your colleagues?
+
+Please respin the clock series.
+
+Thanks,
+Bjorn
+
 > 
-
-Applied, thanks!
-
-[1/1] dt-bindings: soc/qcom: Add size constraints on "qcom,rpm-msg-ram"
-      commit: 8796fa0f9a08359bb87e859d6010350a9d7da38f
-
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+> Changes in v5:
+> - Added Konrad's R-b tags to patches 1 through 4 and A-b tag to patch 11
+> - Changed the clock of the usb2 HS PHY to TCSR_USB2_2_CLKREF_EN, the USB1
+>   SSx HS PHY seem to be sharing the TCSR_USB2_1_CLKREF_EN
+> - Prefixed DISP_CC_MDSS_CORE_* gdscs with MDSS_* to be more in line with
+>   SM8[56]50 platforms.
+> - Added "cpu-cfg" icc path to the mdss node.
+> - Marked all USB1 SS[1-3] controllers as dma coherent.
+> - Re-worded the adding TCSR node commit message by just dropping the
+>   "halt" word as the halt registers are not part of this region. The
+>   TCSR offers more than just a clock controller and therefore called it
+>   generically "TCSR register space".
+> - Link to v4: https://lore.kernel.org/r/20240123-x1e80100-dts-missing-nodes-v4-0-072dc2f5c153@linaro.org
+> 
+> Changes in v4:
+> - After a discussion off-list, it was suggested by Bjorn to split in separate patches.
+> - Addressed all of Konrad's comments, except of the clock-names one for the mdss,
+>   which there is nothing to be done about as all non-v5 do clk_bulk_get_all.
+> - Added more support to QCP, to be more aligned with CRD (except touchscreen
+>   and keyboard)
+> - Added a patch to fix some LDOs supplies on QCP
+> - Link to v3: https://lore.kernel.org/r/20231215-x1e80100-dts-missing-nodes-v3-0-c4e8d186adf2@linaro.org
+> 
+> Changes in v3:
+> - Reword the commit messages
+> - Link to v2: https://lore.kernel.org/r/20231215-x1e80100-dts-missing-nodes-v2-0-5a6efc04d00c@linaro.org
+> 
+> Changes in v2:
+> - Reword both commits to make it more clear nodes that are being added
+> - Dropped comments from interrupt maps from pcie nodes
+> - Replace all 0x0 with 0 in all reg properties
+> - Moved on separate lines reg, reset and clock names
+> - Dropped the sram and cpucp nodes
+> - Dropped pmic glink node
+> - Reordered all new clock controller nodes based on address
+> - Dropped unnecessary indent from touchpad and keyboard TLMM nodes
+> - Link to v1: https://lore.kernel.org/r/20231212-x1e80100-dts-missing-nodes-v1-0-1472efec2b08@linaro.org
+> 
+> ---
+> Abel Vesa (7):
+>       arm64: dts: qcom: x1e80100: Add TCSR node
+>       arm64: dts: qcom: x1e80100: Add USB nodes
+>       arm64: dts: qcom: x1e80100: Add PCIe nodes
+>       arm64: dts: qcom: x1e80100: Add display nodes
+>       arm64: dts: qcom: x1e80100-crd: Enable more support
+>       arm64: dts: qcom: x1e80100-qcp: Enable more support
+>       arm64: dts: qcom: x1e80100-qcp: Fix supplies for LDOs 3E and 2J
+> 
+> Sibi Sankar (4):
+>       arm64: dts: qcom: x1e80100: Add IPCC node
+>       arm64: dts: qcom: x1e80100: Add SMP2P nodes
+>       arm64: dts: qcom: x1e80100: Add QMP AOSS node
+>       arm64: dts: qcom: x1e80100: Add ADSP/CDSP remoteproc nodes
+> 
+>  arch/arm64/boot/dts/qcom/x1e80100-crd.dts |  222 +++++
+>  arch/arm64/boot/dts/qcom/x1e80100-qcp.dts |  175 +++-
+>  arch/arm64/boot/dts/qcom/x1e80100.dtsi    | 1368 ++++++++++++++++++++++++++++-
+>  3 files changed, 1758 insertions(+), 7 deletions(-)
+> ---
+> base-commit: 853dab01a34378871b37a5e6a800e97a997fe16c
+> change-id: 20231201-x1e80100-dts-missing-nodes-a09f1ed99999
+> 
+> Best regards,
+> -- 
+> Abel Vesa <abel.vesa@linaro.org>
+> 
 
