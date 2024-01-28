@@ -1,68 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-8679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 882F083F41B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 06:36:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B2FF83F422
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 06:39:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B9F941C20F2E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 05:36:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4FD6D1C212C6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 05:39:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57A46DDA0;
-	Sun, 28 Jan 2024 05:36:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DCA2D51A;
+	Sun, 28 Jan 2024 05:39:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jr5UtlA2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IaOGoWzz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242ABDDA1
-	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jan 2024 05:36:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0C2D50F
+	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jan 2024 05:39:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706420168; cv=none; b=oq0M8oqh/nOCu+n/GOgltKlNtMmlUfB9FUZkfs90TZfiCOSvm/iaMDGrjtyJ/xgZSlu8vKv8INifL6xxNO09hsnRibQKfOzwIjQVqzWhCCYz1OXD1c7OtxLlqvZ4QPZ21qHs3Imxoktr54beK/fiLar6HP41BmzEPAuSjWX9DRM=
+	t=1706420366; cv=none; b=LskU2TzptG+mr/GoPUtWPgpjK8NUNYgbbM019mmBDWFJRkKNohopV609KNJ9AMi7wutoYc5XxuqWzUfKpCNnPAZf+Nm22/4IJy11jj+UGedGP57dy5a9woabCJR96bItjnooKXQi6FDL9Y13nMNhH1JdjoR34C2FYF4TagY5qWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706420168; c=relaxed/simple;
-	bh=2d2YKBfSkcHsyVVx5SD9YiHwf5vWzA1md/BkP5jaE1Y=;
+	s=arc-20240116; t=1706420366; c=relaxed/simple;
+	bh=I7jBECL0756V+IRohJ968sfpim24qZQWQY3Kb2FVXOQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cDz96Rh5d9Do3k6sI4hrUrdaoCgRDagW88SkBDSRVPmVXc9Bt3HFH8eztMmHbQx39Bf6dG6l1VRAEDauuIYWrvojMYiCy8lyH/25TdOzURJ0VkbO6YgVl/RVpUpt6+n3IdgEqt1FCTmPzNW9+1N03/XzSmb+POegfl7et7ZJSuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jr5UtlA2; arc=none smtp.client-ip=209.85.128.177
+	 To:Cc:Content-Type; b=kj4mdChsch+jliLl621V1pytZicqUpFP0uFuxnHi7dvv/e7BEu6ws9x90Y4TEggeGMY2ZCgFGvPhhCqEKC1lLJUY0F/fItX9p2ws0X5g1nPIDgffK4fzIjmL8GlIlJ/NgKaglr/kMGSidIpDVHDJz3zx5rg/4MZZn66NuxPp9w8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IaOGoWzz; arc=none smtp.client-ip=209.85.219.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-602ab446cd8so16987387b3.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jan 2024 21:36:04 -0800 (PST)
+Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-d9b9adaf291so1411704276.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jan 2024 21:39:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706420164; x=1707024964; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706420363; x=1707025163; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=eb27nl58LSSIP3Iqh05TC9E1Wsp3/3yzR9D7Ha5jIfc=;
-        b=jr5UtlA29qqmUpc2dY/PXfQCbcJ3tFYJzuUamwuZ4xYNQhv9ImiEZ2dObQ0e5mIbDB
-         q21OsETq/dxsrC3eNsaqcezpTcxAIsTMz/cR0qy1mSYC9TvZNW8S76xYu2qwpFdaax19
-         KiSoWJd9NLEqo8NEU34Xr9WWXoM2bBcLEuMUd/rYdyxRLdB8qa9XSYcxn+CN8Oj5qdtf
-         eU/V4S6JykBOaTGPVIzse3fo8AEGVP/ny5mICrzY96eu2rHDnrBZjIZ8nFXuZqi16nQh
-         0UPco3TPEN5lVPJyt0CRlvLfWmj1jT4NyJL6J+HIBNE/YpAK9i5Sg83X5qZOYeEEYPHB
-         51Kg==
+        bh=UD7q/y/zZ/nesDJ3qv83TUDsiRY8bFKW1PYUjUz0t/M=;
+        b=IaOGoWzzQdRQftC4WQp9OZSAYZ0G507cb6/2OkQk39PdJe9Zs8bQS1Mi+STxR7FP59
+         Eqt046TFxhOHs8cD0HRsGiOJqK6cJ6iIUsBX9U9d8jPF4brzGUzg2bb6kqrgSruTVQ4O
+         ZDFWH1l5HKCbV3k+LZjqsvp8zj2lJsGYDKeThAUveFKTXEs7onSchmyy1pvee0avW0La
+         ymlGckjWCEyLRehKq5pAGQZtM3/Nxaw4aBmU13ktu5t+hrWHzi19jkPRbiTrfYTnOcsv
+         KPOzcOuOjeYD5tu6MpkxzeVvZbknO+Xad7aCuJ8qIgToczbT05uY02nitoQ0woznWI7D
+         7TTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706420164; x=1707024964;
+        d=1e100.net; s=20230601; t=1706420363; x=1707025163;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=eb27nl58LSSIP3Iqh05TC9E1Wsp3/3yzR9D7Ha5jIfc=;
-        b=T3fJlsyVLgsdmOpfKk7edeXVVCPT1MpZ9wDHiBWsbVJw9qjos2uzZ7RarvtN3AlNAC
-         F3X9HllkwOMtbadb0GKoeaFmx5aUtrvijmD66tqAXec08ktvkl0Ii97xzIVwb1YmkSG4
-         0Au1QsfscbgvvM9aU0jOwVxvPdkzyrfcQ7wcyEXPvynV4VYCNJpi4cAT/1wuxQj+PB34
-         y/l6z519iVUd722+TSR2A46PgSu2apvEvweqNNKJUxnqN+rIFXY2bOCXwfyoKDXOuF5c
-         83TpMJasL+C7XVw88bFIi8RC9Oyi+D8koQERF2KB2ld3gCjD3axjXJechAot0LtfqQjt
-         cr7Q==
-X-Gm-Message-State: AOJu0YxhifKvp4Vtd4Kaqa2nkYIsHIDXkWQlp5R0cQ8Ze21X0/XjbQYp
-	xiUqhI3uY1Wo7Mm2z7i4qiwX4/cvzNn5fB22XOzthl3bKLO0PprQIFQlRjydsCWEF9fdLVKRToZ
-	qelSRHprhsQg/o8D7vu3sdOF9PHUKuF1I8ERXUA==
-X-Google-Smtp-Source: AGHT+IEwo0pJM9DyAjs8fHbCytd1W+kElT7MH4NUs7dfhb8bLi8TYhWxVVt1bZC7M4yIlCkYReWK8xPOAsD+4cGtiYE=
-X-Received: by 2002:a05:690c:3603:b0:602:ab47:5a00 with SMTP id
- ft3-20020a05690c360300b00602ab475a00mr2413202ywb.60.1706420163884; Sat, 27
- Jan 2024 21:36:03 -0800 (PST)
+        bh=UD7q/y/zZ/nesDJ3qv83TUDsiRY8bFKW1PYUjUz0t/M=;
+        b=Aj6ZPOp/ADiAsp3fHauGBDsWR1UTyKCkmooZdVV3o0thTBI2xr6g+mQ1wnlocoRfL0
+         42I4mrG3CLiaRSKf+Zt3bSwTKP/3qjnpBtNs3cfakkJTYcPwjQdfYbi3VQVcOqPO7jKu
+         vIdiu1fymUm7z9zIYpQwjwwFbp3pKpU27NynR+lEPLdt9I6++GrMpsuyPJXvlm7VQRU6
+         IE3o1aBQ3rCX8Yu3eq7ra/7OpATlzUZtJ9QeZ+xnBDDNFo9ll5H+M5Red82bHcOfNYvN
+         lbtpaiOkx0XW7TqwAh7oQrEpYC5x4HVp70j5s4LEd7P7b1PsgWb1tmeN5orYlclD20o/
+         bmEQ==
+X-Gm-Message-State: AOJu0YyQdBQm8Vwl/4ftB8tEyZeyKwEkPgkS8Cx+Si2JCNXf3bqMicOw
+	EX1EiKeoPtZ2hZFWt2ljG9LM+xbzCx5KdUzjQlkYs2QFbt4NWvn6/bbIOxMgrTSwdBxjo4GD2QC
+	C/s5wnAsdl6r7767eKIaOBOA7mn2lxPbhYIFQVw==
+X-Google-Smtp-Source: AGHT+IHsWcaq/dNOaxDY7WHKON/tOZyo1ojshd+Sjx1ojPyQuaFFT+9OG3UV9udL8JToW8vmgktisZ6HA2+oIx3ttPc=
+X-Received: by 2002:a0d:e68f:0:b0:602:9c33:f315 with SMTP id
+ p137-20020a0de68f000000b006029c33f315mr1793167ywe.82.1706420363152; Sat, 27
+ Jan 2024 21:39:23 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,14 +70,13 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20240125193834.7065-1-quic_parellan@quicinc.com>
- <20240125193834.7065-11-quic_parellan@quicinc.com> <c06c4a5d-6042-4d0a-a0ca-6321792f1061@linaro.org>
- <c1133eaa-703b-21fb-8715-602e7932586e@quicinc.com>
-In-Reply-To: <c1133eaa-703b-21fb-8715-602e7932586e@quicinc.com>
+ <20240125193834.7065-12-quic_parellan@quicinc.com> <d94434ec-00fd-489f-98f2-8c811522ff82@linaro.org>
+ <11c6fdbe-f85a-088d-92df-abd8405c966b@quicinc.com>
+In-Reply-To: <11c6fdbe-f85a-088d-92df-abd8405c966b@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sun, 28 Jan 2024 07:35:53 +0200
-Message-ID: <CAA8EJpoT2cLvSyuqnwYRVPETnsmV2B-KeWFU86QcDbe3zAnoWw@mail.gmail.com>
-Subject: Re: [PATCH 10/17] drm/msm/dp: modify dp_catalog_hw_revision to show
- major and minor val
+Date: Sun, 28 Jan 2024 07:39:12 +0200
+Message-ID: <CAA8EJprPziRHhxVK9mAdQZNEeon9q95ZMKSBhs-s95O-7W10NA@mail.gmail.com>
+Subject: Re: [PATCH 11/17] drm/msm/dp: add VSC SDP support for YUV420 over DP
 To: Paloma Arellano <quic_parellan@quicinc.com>
 Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
 	dri-devel@lists.freedesktop.org, robdclark@gmail.com, seanpaul@chromium.org, 
@@ -86,96 +85,147 @@ Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
 	neil.armstrong@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Sun, 28 Jan 2024 at 07:31, Paloma Arellano <quic_parellan@quicinc.com> wrote:
+On Sun, 28 Jan 2024 at 07:34, Paloma Arellano <quic_parellan@quicinc.com> wrote:
 >
 >
-> On 1/25/2024 2:07 PM, Dmitry Baryshkov wrote:
+> On 1/25/2024 1:48 PM, Dmitry Baryshkov wrote:
 > > On 25/01/2024 21:38, Paloma Arellano wrote:
-> >> Modify dp_catalog_hw_revision to make the major and minor version values
-> >> known instead of outputting the entire hex value of the hardware version
-> >> register in preparation of using it for VSC SDP programming.
+> >> Add support to pack and send the VSC SDP packet for DP. This therefore
+> >> allows the transmision of format information to the sinks which is
+> >> needed for YUV420 support over DP.
 > >>
 > >> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
 > >> ---
-> >>   drivers/gpu/drm/msm/dp/dp_catalog.c | 12 +++++++++---
-> >>   drivers/gpu/drm/msm/dp/dp_catalog.h |  2 +-
-> >>   2 files changed, 10 insertions(+), 4 deletions(-)
+> >>   drivers/gpu/drm/msm/dp/dp_catalog.c | 147 ++++++++++++++++++++++++++++
+> >>   drivers/gpu/drm/msm/dp/dp_catalog.h |   4 +
+> >>   drivers/gpu/drm/msm/dp/dp_ctrl.c    |   4 +
+> >>   drivers/gpu/drm/msm/dp/dp_panel.c   |  47 +++++++++
+> >>   drivers/gpu/drm/msm/dp/dp_reg.h     |   3 +
+> >>   5 files changed, 205 insertions(+)
 > >>
 > >> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c
 > >> b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> >> index 5d84c089e520a..c025786170ba5 100644
+> >> index c025786170ba5..7e4c68be23e56 100644
 > >> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
 > >> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> >> @@ -24,6 +24,9 @@
-> >>   #define DP_INTERRUPT_STATUS_ACK_SHIFT    1
-> >>   #define DP_INTERRUPT_STATUS_MASK_SHIFT    2
-> >>   +#define DP_HW_VERSION_MAJOR(reg)    FIELD_GET(GENMASK(31, 28), reg)
-> >> +#define DP_HW_VERSION_MINOR(reg)    FIELD_GET(GENMASK(27, 16), reg)
+> >> @@ -29,6 +29,9 @@
+> >>     #define DP_INTF_CONFIG_DATABUS_WIDEN     BIT(4)
+> >>   +#define DP_GENERIC0_6_YUV_8_BPC        BIT(0)
+> >> +#define DP_GENERIC0_6_YUV_10_BPC    BIT(1)
 > >> +
-> >>   #define DP_INTF_CONFIG_DATABUS_WIDEN     BIT(4)
-> >>     #define DP_INTERRUPT_STATUS1 \
-> >> @@ -531,15 +534,18 @@ int
-> >> dp_catalog_ctrl_set_pattern_state_bit(struct dp_catalog *dp_catalog,
-> >>    *
-> >>    * @dp_catalog: DP catalog structure
-> >>    *
-> >> - * Return: DP controller hw revision
-> >> + * Return: void
-> >>    *
-> >>    */
-> >> -u32 dp_catalog_hw_revision(const struct dp_catalog *dp_catalog)
-> >> +void dp_catalog_hw_revision(const struct dp_catalog *dp_catalog, u16
-> >> *major, u16 *minor)
-> >>   {
-> >>       const struct dp_catalog_private *catalog =
-> >> container_of(dp_catalog,
-> >>                   struct dp_catalog_private, dp_catalog);
-> >> +    u32 reg_dp_hw_version;
-> >>   -    return dp_read_ahb(catalog, REG_DP_HW_VERSION);
-> >> +    reg_dp_hw_version = dp_read_ahb(catalog, REG_DP_HW_VERSION);
-> >> +    *major = DP_HW_VERSION_MAJOR(reg_dp_hw_version);
-> >> +    *minor = DP_HW_VERSION_MINOR(reg_dp_hw_version);
-> >
-> > After looking at the code, it might be easier to keep
-> > dp_catalog_hw_revision as is, add define for hw revision 1.2 and
-> > corepare to it directly.
-> I thought having a  define value of the version would be harder to
-> follow than what's here currently. Since having it compare to the
-> version value looks a little difficult to read versus having an explicit
-> major and minor value version to compare to. For example having (major
->  >= 1 && minor >= 2) versus having something like (hw_version >=
-> DPU_HW_VERSION_1_2)
-
-The problem is that major + minor are harder to follow and harder to
-implement. You got them wrong, btw. For example 2.1 is greater or
-equal than 1.2, but it doesn't pass your test. So, I think, a single
-define is easier and less error prone.
-
-> >
+> >>   #define DP_INTERRUPT_STATUS1 \
+> >>       (DP_INTR_AUX_XFER_DONE| \
+> >>       DP_INTR_WRONG_ADDR | DP_INTR_TIMEOUT | \
+> >> @@ -907,6 +910,150 @@ int dp_catalog_panel_timing_cfg(struct
+> >> dp_catalog *dp_catalog)
+> >>       return 0;
 > >>   }
-> >>     /**
-> >> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h
-> >> b/drivers/gpu/drm/msm/dp/dp_catalog.h
-> >> index 563903605b3a7..94c377ef90c35 100644
-> >> --- a/drivers/gpu/drm/msm/dp/dp_catalog.h
-> >> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
-> >> @@ -170,7 +170,7 @@ void dp_catalog_ctrl_config_misc(struct
-> >> dp_catalog *dp_catalog, u32 cc, u32 tb);
-> >>   void dp_catalog_ctrl_config_msa(struct dp_catalog *dp_catalog, u32
-> >> rate,
-> >>                   u32 stream_rate_khz, bool fixed_nvid, bool
-> >> is_ycbcr_420);
-> >>   int dp_catalog_ctrl_set_pattern_state_bit(struct dp_catalog
-> >> *dp_catalog, u32 pattern);
-> >> -u32 dp_catalog_hw_revision(const struct dp_catalog *dp_catalog);
-> >> +void dp_catalog_hw_revision(const struct dp_catalog *dp_catalog, u16
-> >> *major, u16 *minor);
-> >>   void dp_catalog_ctrl_reset(struct dp_catalog *dp_catalog);
-> >>   bool dp_catalog_ctrl_mainlink_ready(struct dp_catalog *dp_catalog);
-> >>   void dp_catalog_ctrl_enable_irq(struct dp_catalog *dp_catalog, bool
-> >> enable);
+> >>   +static void dp_catalog_panel_setup_vsc_sdp(struct dp_catalog
+> >> *dp_catalog)
+> >> +{
+> >> +    struct dp_catalog_private *catalog;
+> >> +    u32 header, parity, data;
+> >> +    u8 bpc, off = 0;
+> >> +    u8 buf[SZ_128];
+> >> +
+> >> +    if (!dp_catalog) {
+> >> +        pr_err("invalid input\n");
+> >> +        return;
+> >> +    }
+> >> +
+> >> +    catalog = container_of(dp_catalog, struct dp_catalog_private,
+> >> dp_catalog);
+> >> +
+> >> +    /* HEADER BYTE 1 */
+> >> +    header = dp_catalog->sdp.sdp_header.HB1;
+> >> +    parity = dp_catalog_calculate_parity(header);
+> >> +    data   = ((header << HEADER_BYTE_1_BIT) | (parity <<
+> >> PARITY_BYTE_1_BIT));
+> >> +    dp_write_link(catalog, MMSS_DP_GENERIC0_0, data);
+> >> +    memcpy(buf + off, &data, sizeof(data));
+> >> +    off += sizeof(data);
+> >> +
+> >> +    /* HEADER BYTE 2 */
+> >> +    header = dp_catalog->sdp.sdp_header.HB2;
+> >> +    parity = dp_catalog_calculate_parity(header);
+> >> +    data   = ((header << HEADER_BYTE_2_BIT) | (parity <<
+> >> PARITY_BYTE_2_BIT));
+> >> +    dp_write_link(catalog, MMSS_DP_GENERIC0_1, data);
+> >> +
+> >> +    /* HEADER BYTE 3 */
+> >> +    header = dp_catalog->sdp.sdp_header.HB3;
+> >> +    parity = dp_catalog_calculate_parity(header);
+> >> +    data   = ((header << HEADER_BYTE_3_BIT) | (parity <<
+> >> PARITY_BYTE_3_BIT));
+> >> +    data |= dp_read_link(catalog, MMSS_DP_GENERIC0_1);
+> >> +    dp_write_link(catalog, MMSS_DP_GENERIC0_1, data);
+> >> +    memcpy(buf + off, &data, sizeof(data));
+> >> +    off += sizeof(data);
 > >
+> > This seems to be common with the dp_audio code. Please extract this
+> > header writing too.
+> These are two different sdp's. audio and vsc, are different with
+> different registers being written to and different amount of registers
+> being set. Can you please clarify since in audio we only need 3
+> registers to write to, and in vsc we need 10.
 
+Bitmagic with the header is the same. Then the rest of the data is
+written one dword per register, if I'm not mistaken.
+
+> >
+> >> +
+> >> +    data = 0;
+> >> +    dp_write_link(catalog, MMSS_DP_GENERIC0_2, data);
+> >> +    memcpy(buf + off, &data, sizeof(data));
+> >> +    off += sizeof(data);
+> >
+> > Generally this is not how these functions are expected to be written.
+> > Please take a look at drivers/video/hdmi.c. It should be split into:
+> > - generic function that packs the C structure into a flat byte buffer,
+> > - driver-specific function that formats and writes the buffer to the
+> > hardware.
+> >
+> >> +    dp_write_link(catalog, MMSS_DP_GENERIC0_3, data);
+> >> +    memcpy(buf + off, &data, sizeof(data));
+> >> +    off += sizeof(data);
+> >> +
+> >> +    dp_write_link(catalog, MMSS_DP_GENERIC0_4, data);
+> >> +    memcpy(buf + off, &data, sizeof(data));
+> >> +    off += sizeof(data);
+> >> +
+> >> +    dp_write_link(catalog, MMSS_DP_GENERIC0_5, data);
+> >> +    memcpy(buf + off, &data, sizeof(data));
+> >> +    off += sizeof(data);
+> >> +
+> >> +    switch (dp_catalog->vsc_sdp_data.bpc) {
+> >> +    case 10:
+> >> +        bpc = DP_GENERIC0_6_YUV_10_BPC;
+> >> +        break;
+> >> +    case 8:
+> >> +    default:
+> >> +        bpc = DP_GENERIC0_6_YUV_8_BPC;
+> >> +        break;
+> >> +    }
+> >> +
+> >> +    /* VSC SDP payload as per table 2-117 of DP 1.4 specification */
+> >> +    data = (dp_catalog->vsc_sdp_data.colorimetry & 0xF) |
+> >> +           ((dp_catalog->vsc_sdp_data.pixelformat & 0xF) << 4) |
+> >> +           (bpc << 8) |
+> >> +           ((dp_catalog->vsc_sdp_data.dynamic_range & 0x1) << 15) |
+> >> +           ((dp_catalog->vsc_sdp_data.content_type & 0x7) << 16);
+> >> +
+> >> +    dp_write_link(catalog, MMSS_DP_GENERIC0_6, data);
+> >> +    memcpy(buf + off, &data, sizeof(data));
+> >> +    off += sizeof(data);
+> >> +
+> >> +    data = 0;
+> >> +    dp_write_link(catalog, MMSS_DP_GENERIC0_7, data);
+> >> +    memcpy(buf + off, &data, sizeof(data));
+> >> +    off += sizeof(data);
+> >> +
+> >> +    dp_write_link(catalog, MMSS_DP_GENERIC0_8, data);
+> >> +    memcpy(buf + off, &data, sizeof(data));
+> >> +    off += sizeof(data);
 
 
 -- 
