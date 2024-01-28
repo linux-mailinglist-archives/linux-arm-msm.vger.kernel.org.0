@@ -1,342 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-8686-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8687-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB22483F443
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 06:56:00 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE31083F458
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 07:30:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1E70628327A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 05:55:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B6063B21963
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 06:30:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED0BF8F61;
-	Sun, 28 Jan 2024 05:55:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01C748F68;
+	Sun, 28 Jan 2024 06:30:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RRZ9faZ3"
+	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="i/RJNKuA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92C98F4E
-	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jan 2024 05:55:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEFA08BF7;
+	Sun, 28 Jan 2024 06:30:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.87.146.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706421356; cv=none; b=Ig8AdxbgcYLRUHYnKTXKWCYzrhxBn0ze3jLjMhrtePwK1eKG/cJMPmpieqejWBUibtLx/xZyvLU2BqiAP2AEFPMhMmB+E+Y/kO9PoePM6gRnTdu6Fhce3xO7rsVB0KvrbFGQys+FOIHPBPoHMxDqim3j402Q2n7vohPDyAQ33iU=
+	t=1706423412; cv=none; b=lQGSdwnl5FQYpJZx3Ukq5orFWdtV+G57g/ReVm74F4ryW2ZgolVRruQ1OGu/lCkE22S0YRvbChQXO3C+BCnf4OQTNWuV6Ypn4yzddnHVHq6fXPGuJmzKWDSxtK9JZiiH4bueKMcTk4r9wRzK6v3e3zukTq15vuf+iTH081aGYYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706421356; c=relaxed/simple;
-	bh=Lj2c8DkjeU8HkDJLLCLSz+lUXBMHgWDppxpb2Ht2Z8E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tqBeJGCQs9Rw0cHBl8EYUcJZetuxQg7UwddWf+S8ctD/No4Wi3tMgxA5SAMbq7BkeM1IB8n2pVBYaulDywlJH61/vf7cy9Bvv/1ezBpO7zem/dlAYolXZcyVibhy7oJho0tbsJOLrQcaWojXSSAHAWJlRlM8athiHRZypNeA9s0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RRZ9faZ3; arc=none smtp.client-ip=209.85.128.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-602c714bdbeso12630387b3.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jan 2024 21:55:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706421354; x=1707026154; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=GoyXWuZuNIYb2AEQYAXtq1yea8sURCjpiGY3DNRMjFk=;
-        b=RRZ9faZ3e/t4HeRhBZD40qe1phE5YpmGw4agWciLTbue4AFpVtmmEoyPrY8zIZ4E/q
-         TWjIiL6hitSzLQlPlSMob7dUHEzGb21Oqq4W+a9EZvhLq9k/0z1J1o5vhHN9O55JQqeb
-         /x88QBAKbOGynpkFDz5kSJ7mjOeINeDPNeXbrHueYCCZsxUXWCSnglVPdK6u8QYiVbvQ
-         ibnLUcMMjivMYrzePobj89Wl+JwyM5cQW78trBHwvFCWWb1C/y6js0QvdgP81DoOsNXx
-         SPwsCmqqxHa8ocH9MmWayJJdMGTBVyvRPGny+sk1+O6Ttrc3Gs23+/OK57eQ/K+neMiL
-         bz1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706421354; x=1707026154;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GoyXWuZuNIYb2AEQYAXtq1yea8sURCjpiGY3DNRMjFk=;
-        b=KHo1BSaBtzwNHvO81sYklcs1/6idyd1ntfJAvdMjweQgRR9SYDHz4vFAU07uF1uGh0
-         dyh7kfmH3vP3ua34jyYyxFrJcocASf77Q6EbS0AMPAGyiLg6Pr/1rxmYzsBVSyfpHi4U
-         3yjm3YHMR+mf/XY6nkmMsq9yw9cLKbTICPjWWWfaQfd+QVEr5n63R7hcUXFkwVfxaqem
-         LdeOTT4mMYfE0v1fllGkyqqPFmUa4eUEQCHZoCHxHb7zpcS8Es3C+ZrY0USsNCr/5Lla
-         54k7+ZsodFC/UYXb1Wpy4M62cLSvoTyUY3+IZVj9GP1n//xKiIkG8hEEMVtqjWxlAqEV
-         pp1A==
-X-Gm-Message-State: AOJu0Yzrx8NHokE6WsFdzFyvIRyPmsRXSO5mzd0DvFtWwdUdJZSR6ZJd
-	KSentzKVc+S7P4F1aRwUmle23j3UjKnC+2z28KSstMdY1DUkZWbfvYM0mOvnqpMIdOJDbXU7OFr
-	Tbv7PMuYUR57Fom9GEcVlTYYecE81/m2AY5Tt/A==
-X-Google-Smtp-Source: AGHT+IHkSqAKYfzVsj6hVNVsU4hjWyhT1c0XzYouiW/wnj/O9gADHq1PbKAwRnHsSW6Bm37v49IKgr8/jRt5EaK4Paw=
-X-Received: by 2002:a81:520a:0:b0:5ff:79bd:ea34 with SMTP id
- g10-20020a81520a000000b005ff79bdea34mr1420288ywb.49.1706421353712; Sat, 27
- Jan 2024 21:55:53 -0800 (PST)
+	s=arc-20240116; t=1706423412; c=relaxed/simple;
+	bh=VCmVDtRIopQR4iM94FUFPE4qNYuowJ+SY98CRvdB3Ao=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=tmle+HI5BtGJyL6CnL1cTbGv9iPKMFgqkW+QGXP4xDqhXxO7j29UCMTDoza7zqWK4wWITDHlw/ZaQG4FYYFLRMQty4i5OwUm/mCfslwuBsOQldrYN3/VA7EfDEm2v7RI8rxmDysihehaLMyTtRj1B/73SwDRPtzE8utm+1BYpeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=i/RJNKuA; arc=none smtp.client-ip=194.87.146.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+	(No client certificate requested)
+	by box.trvn.ru (Postfix) with ESMTPSA id 4B69A404EC;
+	Sun, 28 Jan 2024 11:22:26 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+	t=1706422947; bh=VCmVDtRIopQR4iM94FUFPE4qNYuowJ+SY98CRvdB3Ao=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=i/RJNKuABMn10cHER0AU4knjd0neYh6UVG5NzQI3pthaY8252acpX50IT02yilj7K
+	 CGM1gv8kYAui1hSV0rxtz+BldV3V2rvztwOhBxp6VuKGcrChYYTXrPeck+Vd5SFYXO
+	 r9f/KgZZQbrXRsGtuXck39Hgy2OTjGxwjeIzoZ9+mPuyXPmxlNPpBqXwC6VJH/S/oQ
+	 +dI3jy7bvXIDSB5hd/76PUsFHWkTNn9uO6KDkS+LLrJfPeB1vyhTWQKKGCsm39cIGB
+	 mvrpTqeJUUPYXej3jC0v+VVJsvciqyAJX8rwG5Mr4NhBtkctnxyhD1mNpn891BN4Lu
+	 4Zy2X8hglzjbQ==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240125193834.7065-1-quic_parellan@quicinc.com>
- <20240125193834.7065-15-quic_parellan@quicinc.com> <52674357-2135-4784-a371-e7809b632c19@linaro.org>
- <d1679d6f-a388-2a13-2924-1e6040217c01@quicinc.com>
-In-Reply-To: <d1679d6f-a388-2a13-2924-1e6040217c01@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sun, 28 Jan 2024 07:55:42 +0200
-Message-ID: <CAA8EJppPFuP4w-OAi0hDE36tjPXOHpigg1PMyzhkOTLL-q0VMQ@mail.gmail.com>
-Subject: Re: [PATCH 14/17] drm/msm/dpu: modify encoder programming for CDM
- over DP
-To: Paloma Arellano <quic_parellan@quicinc.com>
-Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, robdclark@gmail.com, seanpaul@chromium.org, 
-	swboyd@chromium.org, quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com, 
-	quic_khsieh@quicinc.com, marijn.suijten@somainline.org, 
-	neil.armstrong@linaro.org
-Content-Type: text/plain; charset="UTF-8"
+Date: Sun, 28 Jan 2024 11:22:25 +0500
+From: Nikita Travkin <nikita@trvn.ru>
+To: Rob Herring <robh@kernel.org>
+Cc: Sebastian Reichel <sre@kernel.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
+ cros-qcom-dts-watchers@chromium.org, Andy Gross <agross@kernel.org>, Bjorn
+ Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] dt-bindings: power: supply: Add Acer Aspire 1 EC
+In-Reply-To: <207edefe4e8eac9679cd8966d28820cd@trvn.ru>
+References: <20231212-aspire1-ec-v2-0-ca495ea0a7ac@trvn.ru>
+ <20231212-aspire1-ec-v2-1-ca495ea0a7ac@trvn.ru>
+ <20231214220210.GA988134-robh@kernel.org>
+ <207edefe4e8eac9679cd8966d28820cd@trvn.ru>
+Message-ID: <ccfe718f5a9e7f54d9d2310aa6c6240f@trvn.ru>
+X-Sender: nikita@trvn.ru
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Sun, 28 Jan 2024 at 07:48, Paloma Arellano <quic_parellan@quicinc.com> wrote:
->
->
-> On 1/25/2024 1:57 PM, Dmitry Baryshkov wrote:
-> > On 25/01/2024 21:38, Paloma Arellano wrote:
-> >> Adjust the encoder format programming in the case of video mode for DP
-> >> to accommodate CDM related changes.
-> >>
-> >> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
-> >> ---
-> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 16 +++++++++
-> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h   |  8 +++++
-> >>   .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  | 35 ++++++++++++++++---
-> >>   drivers/gpu/drm/msm/dp/dp_display.c           | 12 +++++++
-> >>   drivers/gpu/drm/msm/msm_drv.h                 |  9 ++++-
-> >>   5 files changed, 75 insertions(+), 5 deletions(-)
-> >>
-> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> >> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> >> index b0896814c1562..99ec53446ad21 100644
-> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> >> @@ -222,6 +222,22 @@ static u32 dither_matrix[DITHER_MATRIX_SZ] = {
-> >>       15, 7, 13, 5, 3, 11, 1, 9, 12, 4, 14, 6, 0, 8, 2, 10
-> >>   };
-> >>   +u32 dpu_encoder_get_drm_fmt(const struct drm_encoder *drm_enc,
-> >> const struct drm_display_mode *mode)
-> >> +{
-> >> +    const struct dpu_encoder_virt *dpu_enc;
-> >> +    const struct msm_display_info *disp_info;
-> >> +    struct msm_drm_private *priv;
-> >> +
-> >> +    dpu_enc = to_dpu_encoder_virt(drm_enc);
-> >> +    disp_info = &dpu_enc->disp_info;
-> >> +    priv = drm_enc->dev->dev_private;
-> >> +
-> >> +    if (disp_info->intf_type == INTF_DP &&
-> >> + msm_dp_is_yuv_420_enabled(priv->dp[disp_info->h_tile_instance[0]],
-> >> mode))
-> >
-> > This should not require interacting with DP. If we got here, we must
-> > be sure that 4:2:0 is supported and can be configured.
-> Ack. Will drop this function and only check for if the mode is YUV420.
-> >
-> >> +        return DRM_FORMAT_YUV420;
-> >> +
-> >> +    return DRM_FORMAT_RGB888;
-> >> +}
-> >>     bool dpu_encoder_is_widebus_enabled(const struct drm_encoder
-> >> *drm_enc)
-> >>   {
-> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> >> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> >> index 7b4afa71f1f96..62255d0aa4487 100644
-> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> >> @@ -162,6 +162,14 @@ int dpu_encoder_get_vsync_count(struct
-> >> drm_encoder *drm_enc);
-> >>    */
-> >>   bool dpu_encoder_is_widebus_enabled(const struct drm_encoder
-> >> *drm_enc);
-> >>   +/**
-> >> + * dpu_encoder_get_drm_fmt - return DRM fourcc format
-> >> + * @drm_enc:    Pointer to previously created drm encoder structure
-> >> + * @mode:    Corresponding drm_display_mode for dpu encoder
-> >> + */
-> >> +u32 dpu_encoder_get_drm_fmt(const struct drm_encoder *drm_enc,
-> >> +                const struct drm_display_mode *mode);
-> >> +
-> >>   /**
-> >>    * dpu_encoder_get_crc_values_cnt - get number of physical encoders
-> >> contained
-> >>    *    in virtual encoder that can collect CRC values
-> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> >> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> >> index e284bf448bdda..a1dde0ff35dc8 100644
-> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> >> @@ -234,6 +234,7 @@ static void
-> >> dpu_encoder_phys_vid_setup_timing_engine(
-> >>   {
-> >>       struct drm_display_mode mode;
-> >>       struct dpu_hw_intf_timing_params timing_params = { 0 };
-> >> +    struct dpu_hw_cdm *hw_cdm;
-> >>       const struct dpu_format *fmt = NULL;
-> >>       u32 fmt_fourcc = DRM_FORMAT_RGB888;
-> >>       unsigned long lock_flags;
-> >> @@ -254,17 +255,26 @@ static void
-> >> dpu_encoder_phys_vid_setup_timing_engine(
-> >>       DPU_DEBUG_VIDENC(phys_enc, "enabling mode:\n");
-> >>       drm_mode_debug_printmodeline(&mode);
-> >>   -    if (phys_enc->split_role != ENC_ROLE_SOLO) {
-> >> +    hw_cdm = phys_enc->hw_cdm;
-> >> +    if (hw_cdm) {
-> >> +        intf_cfg.cdm = hw_cdm->idx;
-> >> +        fmt_fourcc = dpu_encoder_get_drm_fmt(phys_enc->parent, &mode);
-> >> +    }
-> >> +
-> >> +    if (phys_enc->split_role != ENC_ROLE_SOLO ||
-> >> +        dpu_encoder_get_drm_fmt(phys_enc->parent, &mode) ==
-> >> DRM_FORMAT_YUV420) {
-> >>           mode.hdisplay >>= 1;
-> >>           mode.htotal >>= 1;
-> >>           mode.hsync_start >>= 1;
-> >>           mode.hsync_end >>= 1;
-> >> +        mode.hskew >>= 1;
-> >
-> > Separate patch.
-> Ack.
-> >
-> >>             DPU_DEBUG_VIDENC(phys_enc,
-> >> -            "split_role %d, halve horizontal %d %d %d %d\n",
-> >> +            "split_role %d, halve horizontal %d %d %d %d %d\n",
-> >>               phys_enc->split_role,
-> >>               mode.hdisplay, mode.htotal,
-> >> -            mode.hsync_start, mode.hsync_end);
-> >> +            mode.hsync_start, mode.hsync_end,
-> >> +            mode.hskew);
-> >>       }
-> >>         drm_mode_to_intf_timing_params(phys_enc, &mode, &timing_params);
-> >> @@ -412,8 +422,15 @@ static int dpu_encoder_phys_vid_control_vblank_irq(
-> >>   static void dpu_encoder_phys_vid_enable(struct dpu_encoder_phys
-> >> *phys_enc)
-> >>   {
-> >>       struct dpu_hw_ctl *ctl;
-> >> +    struct dpu_hw_cdm *hw_cdm;
-> >> +    const struct dpu_format *fmt = NULL;
-> >> +    u32 fmt_fourcc = DRM_FORMAT_RGB888;
-> >>         ctl = phys_enc->hw_ctl;
-> >> +    hw_cdm = phys_enc->hw_cdm;
-> >> +    if (hw_cdm)
-> >> +        fmt_fourcc = dpu_encoder_get_drm_fmt(phys_enc->parent,
-> >> &phys_enc->cached_mode);
-> >> +    fmt = dpu_get_dpu_format(fmt_fourcc);
-> >>         DPU_DEBUG_VIDENC(phys_enc, "\n");
-> >>   @@ -422,6 +439,8 @@ static void dpu_encoder_phys_vid_enable(struct
-> >> dpu_encoder_phys *phys_enc)
-> >>         dpu_encoder_helper_split_config(phys_enc,
-> >> phys_enc->hw_intf->idx);
-> >>   +    dpu_encoder_helper_phys_setup_cdm(phys_enc, fmt,
-> >> CDM_CDWN_OUTPUT_HDMI);
-> >
-> > If there is no CDM, why do we need to call this?
-> Inside of dpu_encoder_helper_phys_setup_cdm(), there's a check to see if
-> there is a hw_cdm. If there is not, then it immediately exits the function.
-> >
-> >> +
-> >>       dpu_encoder_phys_vid_setup_timing_engine(phys_enc);
-> >>         /*
-> >> @@ -437,7 +456,15 @@ static void dpu_encoder_phys_vid_enable(struct
-> >> dpu_encoder_phys *phys_enc)
-> >>       if (ctl->ops.update_pending_flush_merge_3d &&
-> >> phys_enc->hw_pp->merge_3d)
-> >>           ctl->ops.update_pending_flush_merge_3d(ctl,
-> >> phys_enc->hw_pp->merge_3d->idx);
-> >>   -    if (ctl->ops.update_pending_flush_periph &&
-> >> phys_enc->hw_intf->cap->type == INTF_DP)
-> >> +    if (ctl->ops.update_pending_flush_cdm && phys_enc->hw_cdm)
-> >> +        ctl->ops.update_pending_flush_cdm(ctl, hw_cdm->idx);
-> >> +
-> >> +    /*
-> >> +     * Peripheral flush must be updated whenever flushing SDP
-> >> packets is needed.
-> >> +     * SDP packets are required for any YUV format (YUV420, YUV422,
-> >> YUV444).
-> >> +     */
-> >> +    if (ctl->ops.update_pending_flush_periph &&
-> >> phys_enc->hw_intf->cap->type == INTF_DP &&
-> >> +        phys_enc->hw_cdm)
-> >>           ctl->ops.update_pending_flush_periph(ctl,
-> >> phys_enc->hw_intf->idx);
-> >
-> > Should there be a flush if we are switching from YUV 420 to RGB mode?
-> We only need to flush for the sdp packet, but for msa we do not need to
-> flush.
+Nikita Travkin писал(а) 15.12.2023 10:29:
+> Rob Herring писал(а) 15.12.2023 03:02:
+>> On Tue, Dec 12, 2023 at 05:49:09PM +0500, Nikita Travkin wrote:
+>>> Add binding for the EC found in the Acer Aspire 1 laptop.
+>>>
+>>> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+>>> ---
+>>>  .../bindings/power/supply/acer,aspire1-ec.yaml     | 67 ++++++++++++++++++++++
+>>>  1 file changed, 67 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/power/supply/acer,aspire1-ec.yaml b/Documentation/devicetree/bindings/power/supply/acer,aspire1-ec.yaml
+>>> new file mode 100644
+>>> index 000000000000..1fbf1272a00f
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/power/supply/acer,aspire1-ec.yaml
+>>> @@ -0,0 +1,67 @@
+>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>>> +%YAML 1.2
+>>> +---
+>>> +$id: http://devicetree.org/schemas/power/supply/acer,aspire1-ec.yaml#
+>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>> +
+>>> +title: Acer Aspire 1 Embedded Controller
+>>> +
+>>> +maintainers:
+>>> +  - Nikita Travkin <nikita@trvn.ru>
+>>> +
+>>> +description:
+>>> +  The Acer Aspire 1 laptop uses an embedded controller to control battery
+>>> +  and charging as well as to provide a set of misc features such as the
+>>> +  laptop lid status and HPD events for the USB Type-C DP alt mode.
+>>> +
+>>> +properties:
+>>> +  compatible:
+>>> +    const: acer,aspire1-ec
+>>> +
+>>> +  reg:
+>>> +    const: 0x76
+>>> +
+>>> +  interrupts:
+>>> +    maxItems: 1
+>>> +
+>>> +  acer,media-keys-on-top:
+>>> +    description: Configure the keyboard layout to use media features of
+>>> +      the fn row when the fn key is not pressed. The firmware may choose
+>>> +      to add this property when user selects the fn mode in the firmware
+>>> +      setup utility.
+>>> +    type: boolean
+>>
+>> Besides the naming, this isn't really a property of the EC, but really
+>> part of the keyboard layout. It seems you just stuck it here because
+>> this is part of the specific device.
+>>
+> 
+> The EC on this device is also a keyboard controller, but the keyboard
+> part has a dedicated i2c bus with hid-over-i2c. Since this is the
+> "management" bus of the same device, I decided that it fits here.
+> 
+>> It is also hardly a feature unique to this device. I'm typing this from
+>> a device with the exact same thing (M1 Macbook Pro). Actually, all 3
+>> laptops I have in front of me have the same thing. The other 2 have
+>> a Fnlock (Fn+ESC) though.  On the M1, it's just a module param which I
+>> set as persistent. Though I now wonder if the Fnlock could be
+>> implemented on it too. Being able to switch whenever I want would be
+>> nice. That would probably have to be in Linux where as these other
+>> laptops probably implement this in their EC/firmware?
+>>
+>> What I'm getting at is controlling changing this in firmware is not a
+>> great experience and this should all be common.
+>>
+> 
+> You may be right, however my goal here is to support the original
+> firmware feature that is lost when we use DT.
+> 
+> This is a WoA laptop with UEFI/ACPI and, as usual for "Windows"
+> machines, there is a setting in the firmware setup utility ("bios") to
+> set the fn behavior. But it works by setting an ACPI value, and for
+> Snapdragon devices we can't use that now.
+> 
+> Long term I want to have a EFI driver that would automatically
+> detect/load DT and my plan is to handle things like this (and i.e. mac
+> address, different touchpad vendor, etc) there. Thus I'm adding this
+> property already, as an equivalent of that weird acpi bit that original
+> firmware sets.
+> 
+> If we only provide a module param, the "intended by OEM" way of setting
+> the fn mode will be broken, and one would need to know how to write a
+> magic special config file to set a kernel module param. I think it's not
+> the best UX. (and just adds to the silly "arm/dt bad, x86/uefi/acpi
+> "just works"" argument many people sadly have)
+> 
+> If you think I shouldn't use DT to pass this info, feel free to say so.
+> I will drop this property and see if there is something else I can do
+> to still support this without relying on Linux cooperation.
+> 
 
-What about having SDP with RGB as colorimetry? In other words, if
-there is a decision point, this one looks incorrect.
+Hi Rob, Conor,
 
-> >
-> > Also, I'd say, we should move update_pending_flush_periph invocation
-> > to this patch.
-> Ack
-> >
-> >>     skip_flush:
-> >> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c
-> >> b/drivers/gpu/drm/msm/dp/dp_display.c
-> >> index 6d764f5b08727..4329435518351 100644
-> >> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> >> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> >> @@ -1399,6 +1399,18 @@ void __exit msm_dp_unregister(void)
-> >>       platform_driver_unregister(&dp_display_driver);
-> >>   }
-> >>   +bool msm_dp_is_yuv_420_enabled(const struct msm_dp *dp_display,
-> >> +                   const struct drm_display_mode *mode)
-> >> +{
-> >> +    struct dp_display_private *dp;
-> >> +    const struct drm_display_info *info;
-> >> +
-> >> +    dp = container_of(dp_display, struct dp_display_private,
-> >> dp_display);
-> >> +    info = &dp_display->connector->display_info;
-> >> +
-> >> +    return dp_panel_vsc_sdp_supported(dp->panel) &&
-> >> drm_mode_is_420_only(info, mode);
-> >
-> > YUV 420 modes should be filtered out in mode_valid if VSC SDP is not
-> > supported.
-> Ack. Will change
-> >
-> >> +}
-> >> +
-> >>   bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
-> >>   {
-> >>       struct dp_display_private *dp;
-> >> diff --git a/drivers/gpu/drm/msm/msm_drv.h
-> >> b/drivers/gpu/drm/msm/msm_drv.h
-> >> index 16a7cbc0b7dd8..b9581bd934e9e 100644
-> >> --- a/drivers/gpu/drm/msm/msm_drv.h
-> >> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> >> @@ -387,7 +387,8 @@ void __exit msm_dp_unregister(void);
-> >>   int msm_dp_modeset_init(struct msm_dp *dp_display, struct
-> >> drm_device *dev,
-> >>                struct drm_encoder *encoder);
-> >>   void msm_dp_snapshot(struct msm_disp_state *disp_state, struct
-> >> msm_dp *dp_display);
-> >> -
-> >> +bool msm_dp_is_yuv_420_enabled(const struct msm_dp *dp_display,
-> >> +                   const struct drm_display_mode *mode);
-> >>   bool msm_dp_wide_bus_available(const struct msm_dp *dp_display);
-> >>     #else
-> >> @@ -409,6 +410,12 @@ static inline void msm_dp_snapshot(struct
-> >> msm_disp_state *disp_state, struct msm
-> >>   {
-> >>   }
-> >>   +static inline bool msm_dp_is_yuv_420_enabled(const struct msm_dp
-> >> *dp_display,
-> >> +                         const struct drm_display_mode *mode)
-> >> +{
-> >> +    return false;
-> >> +}
-> >> +
-> >>   static inline bool msm_dp_wide_bus_available(const struct msm_dp
-> >> *dp_display)
-> >>   {
-> >>       return false;
-> >
+I'd still appreciate hearing your opinion before proceeding with this.
 
+Nikita
 
-
---
-With best wishes
-Dmitry
+> Looking forward to your opinion,
+> Nikita
+> 
+>> Rob
 
