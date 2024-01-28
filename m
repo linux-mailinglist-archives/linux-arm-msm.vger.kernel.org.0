@@ -1,100 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-8652-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8653-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA03283F2A3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 01:47:42 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3853583F2AF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 02:01:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7524EB22EE4
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 00:47:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E97AF286C33
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 01:01:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA1D3645;
-	Sun, 28 Jan 2024 00:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7ED4C186F;
+	Sun, 28 Jan 2024 01:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J+Nxv/JU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iU3z4Mk8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9107FEC2;
-	Sun, 28 Jan 2024 00:47:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD3F10F4
+	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jan 2024 01:01:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706402855; cv=none; b=JVLew9A99JUbRQd8f7B8lCE3ofzCxX7h+Pe9/TZ7FnlS+U2xS0xzLvFJbv/fADyigzpWBZDHodnsuRWjHTGsBG8+9koLfiUdDPCFvefrG/QT90b4KI5qtcPITNf/PnsmL2TyegB3hZYK84ceYVEvoNQjQxIMerddm0IMwxJ/kxQ=
+	t=1706403693; cv=none; b=EtgfgBNVTtrGZlfL2Kgy0jX9lTsiPac2aVM0CFYMAniDTJJkYAJJN3zLGcWLVnhh6HM5Y2a/IUrXhBs5ict5a7N9miGB6vlomYHjHG4+hVyjem8Mg1FKwgW4kNOCGBDlKExY+DKi8bPB5p7J3V0Tt873FlYa44rcxbj3rTRM+n0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706402855; c=relaxed/simple;
-	bh=Ll5TYvKcRN50mYE19nzxBLP/t8etE5RepKGeDrO+Tdc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Sy+4s73gFl+YTJBgV9Rb3VKDUkah1a9MaHYF8ogcicYB5lJmCh1aDaI5Kg25pK6gncwNlkn4IBCM4CoIo63NOcKESjc7nyHs1COLKj2X7TR6bpYGpmdxtj1a54wHl6J8L5PKurzjXYFpNegoMlI2eo8VVoWGDOPkSA1aee2yNdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J+Nxv/JU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F359BC433C7;
-	Sun, 28 Jan 2024 00:47:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706402855;
-	bh=Ll5TYvKcRN50mYE19nzxBLP/t8etE5RepKGeDrO+Tdc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=J+Nxv/JUNTBlkIWP3jhkdakei+RdxWlhYEtFqPC2yZJnMThEO5VTDOibobtlSQyOH
-	 BPkes4/y8nOxQSHqdHPz6VpecYIzWqRSEqA378gFvVeIStRLvxStYGIy4WvjH0xnsv
-	 bwkdAeXDPnozcJKGF9PQxv2LT2YuE3ConGynMwrIal5Ru6VHryfTyal1TVbcuQdksx
-	 f8eVZsnfmiKJ+ESfDvPyl1TA27Dvw00uSuhzx16PWzdCTBXkM2bya1Xee80Ry02znH
-	 y8YN+FsmdZQdoAOEFwWMxBUlTNwNk9Md1TkEyN4NxBkpbKTszXEkwLIhYHQVB1keHT
-	 biNice+7Ru3wQ==
-Date: Sat, 27 Jan 2024 18:47:31 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Raymond Hackley <raymondhackley@protonmail.com>
-Cc: linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>, 
-	Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	~postmarketos/upstreaming@lists.sr.ht, Walter Broemeling <wallebroem@gmail.com>, 
-	Joe Mason <buddyjojo06@outlook.com>, Siddharth Manthan <siddharth.manthan@gmail.com>
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: msm8916-samsung-fortuna: Add
- initial device trees
-Message-ID: <th4btdwcsvvfbipshjeplvd7kuyd6qxuv5odbksydc23zfls47@awgmdy3u3ck5>
-References: <20240120095715.13689-1-raymondhackley@protonmail.com>
- <20240120095715.13689-3-raymondhackley@protonmail.com>
+	s=arc-20240116; t=1706403693; c=relaxed/simple;
+	bh=s1ktUUM3CbOPG51ADbCX7yYyhsiSqRrPySzxWGfX3cw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kidmhsPcnBHLix43gxXA+q2ZCdRmwosnAwrAsa4J51QgObNCUfUEmgKaL6Q50L0znlnj2zNt2ANpJVGLdsUku9AYX+CN6Sx2UFYB9Y47ZZnBQJjpoBYmwQgCyJhKLyjQz5Utp1Ioj2oz/qocikIm1st0pUsytXVMs+aLL07UUXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iU3z4Mk8; arc=none smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-5ff828b93f0so17625357b3.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jan 2024 17:01:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706403690; x=1707008490; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Akq4ZUpGAZUPtZ9ZSl7kec9+rWKqnjhKQTKGm0D6B4E=;
+        b=iU3z4Mk8LGTYyxCHw/aQclMPmjNBcd6xju8kqXbvDKIjCe792H4H12h8GKYp8Uy8d4
+         Rjq5Y/zOfU9cOqx5HHIFFnXUGVZHKKSTb/nNx+JmBdefMcUafRWfu+wK6eUJq41YcY34
+         tXVlwMIxzH+6zTm6iifdoo73zlWuLESVF6QHAa1PQLXB9RhUvrFrS3b1NjrZ+ziVn7Oy
+         Lc86UxfxxeWlSGWmVPez6uje9gdDop/if/+xXDfjbQKocyrbUEAe1rBcEggCOTDUQypZ
+         lZxQspP/3QGzHMRSMW95OSF8g7spAcO6QUOlEgo4ukdymr4uYOPWAYOM8u+sHJCsQcrG
+         79ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706403690; x=1707008490;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Akq4ZUpGAZUPtZ9ZSl7kec9+rWKqnjhKQTKGm0D6B4E=;
+        b=DGTZpW/ufhEa9nCfk89XLC2nNpMGd4x2jntwu2Qitlw433eYpLpBhZR3a9XwlHg7nq
+         mRxqj4NlGvxcHCKZcFEENAPIilzz7GDTqcoCqc02jvo5OMv7JCRt3f4Cx3AdpHKFD8LK
+         xUockIYqzOc249Qe0aVenQAvhiauW1i7tTWPrUnS63gPIwZMu+urO1cP+iKztaU0eVIr
+         WNoMvP1C60s0Muop2ReagYVHYgzKc5lohzw8fhRRQO0JsoBwY5yrTli2Q1D7FzTxVrPm
+         ngsybQGk+qIivvfmTLUKPqPnnsHDAkfa54vWp0zV0/u0A3K4lCC97immC1yL6iOu2r+w
+         0cFg==
+X-Gm-Message-State: AOJu0Yz2LKsH8gwbfQztMjdCUytswbxq1WqY6V/dvU1qU3qrDOuThOCa
+	CZgvP8rU529fAfDxLO3mC0u9RzcPwhTVFMaJEHuJ9MH5A21jiZdNBIKF4/4LY3/W5OIln1pnFdt
+	gJn2lextNGUwlgSLnnnBrAWNaXuQYjvmM3oQ2vg==
+X-Google-Smtp-Source: AGHT+IFYb7HatSQPPLoPjPqnFQmWWbGZoWPVCQcd0gG1UWF2VmrKzHToe0mTzGvGfmkPE6SpfevyHBwphWYYblRQKag=
+X-Received: by 2002:a81:6d4a:0:b0:5d7:1941:aa6 with SMTP id
+ i71-20020a816d4a000000b005d719410aa6mr2551028ywc.65.1706403689965; Sat, 27
+ Jan 2024 17:01:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240120095715.13689-3-raymondhackley@protonmail.com>
+References: <20240127232436.2632187-1-quic_gaurkash@quicinc.com> <20240127232436.2632187-16-quic_gaurkash@quicinc.com>
+In-Reply-To: <20240127232436.2632187-16-quic_gaurkash@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Sun, 28 Jan 2024 03:01:18 +0200
+Message-ID: <CAA8EJpr5fLYR1v64-DtjOigkUy3579tx_gwHpFWr9k0GyGajGw@mail.gmail.com>
+Subject: Re: [PATCH v4 15/15] arm64: dts: qcom: sm8550: add hwkm support to
+ ufs ice
+To: Gaurav Kashyap <quic_gaurkash@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, 
+	andersson@kernel.org, ebiggers@google.com, neil.armstrong@linaro.org, 
+	srinivas.kandagatla@linaro.org, krzysztof.kozlowski+dt@linaro.org, 
+	conor+dt@kernel.org, robh+dt@kernel.org, linux-kernel@vger.kernel.org, 
+	linux-mmc@vger.kernel.org, kernel@quicinc.com, linux-crypto@vger.kernel.org, 
+	devicetree@vger.kernel.org, quic_omprsing@quicinc.com, 
+	quic_nguyenb@quicinc.com, bartosz.golaszewski@linaro.org, 
+	konrad.dybcio@linaro.org, ulf.hansson@linaro.org, jejb@linux.ibm.com, 
+	martin.petersen@oracle.com, mani@kernel.org, davem@davemloft.net, 
+	herbert@gondor.apana.org.au
+Content-Type: text/plain; charset="UTF-8"
 
-On Sat, Jan 20, 2024 at 09:57:50AM +0000, Raymond Hackley wrote:
-> From: Walter Broemeling <wallebroem@gmail.com>
-> This initial commit adds support for:
->  - fortuna3g (SM-G530H)
-[..]
->  arch/arm64/boot/dts/qcom/Makefile             |   4 +
->  .../qcom/msm8916-samsung-fortuna-common.dtsi  | 170 ++++++++++++++++++
->  .../dts/qcom/msm8916-samsung-gprimeltecan.dts |  26 +++
->  .../qcom/msm8916-samsung-grandprimelte.dts    |  15 ++
->  .../qcom/msm8916-samsung-rossa-common.dtsi    |  16 ++
->  .../boot/dts/qcom/msm8916-samsung-rossa.dts   |  15 ++
->  6 files changed, 246 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8916-samsung-gprimeltecan.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8916-samsung-grandprimelte.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8916-samsung-rossa.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 39889d5f8e12..1abd25e19a1f 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -23,6 +23,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp433.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp449.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp453.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp454.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8216-samsung-fortuna3g.dtb
+On Sun, 28 Jan 2024 at 01:28, Gaurav Kashyap <quic_gaurkash@quicinc.com> wrote:
+>
+> The Inline Crypto Engine (ICE) for UFS/EMMC supports the
+> Hardware Key Manager (HWKM) to securely manage storage
+> keys. Enable using this hardware on sm8550.
+>
+> This requires two changes:
+> 1. Register size increase: HWKM is an additional piece of hardware
+>    sitting alongside ICE, and extends the old ICE's register space.
+> 2. Explicitly tell the ICE driver to use HWKM with ICE so that
+>    wrapped keys are used in sm8550.
+>
+> NOTE: Although wrapped keys cannot be independently generated and
+> tested on this platform using generate, prepare and import key calls,
+> there are non-kernel paths to create wrapped keys, and still use the
+> kernel to program them into ICE. Hence, enabling wrapped key support
+> on sm8550 too.
+>
+> Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8550.dtsi | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> index ee1ba5a8c8fc..b5b41d0a544c 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> @@ -1977,7 +1977,8 @@ ufs_mem_hc: ufs@1d84000 {
+>                 ice: crypto@1d88000 {
+>                         compatible = "qcom,sm8550-inline-crypto-engine",
+>                                      "qcom,inline-crypto-engine";
+> -                       reg = <0 0x01d88000 0 0x8000>;
+> +                       reg = <0 0x01d88000 0 0x10000>;
 
-This is missing from the patch.
+Does the driver fail gracefully with the old DT size? At least it
+should not crash.
 
-Regards,
-Bjorn
+> +                       qcom,ice-use-hwkm;
+>                         clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
+
+-- 
+With best wishes
+Dmitry
 
