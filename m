@@ -1,128 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-8688-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8689-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 760DC83F4C7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 10:24:13 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB5C883F4F8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 11:30:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 19A4CB21DA0
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 09:24:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6BE55282475
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jan 2024 10:30:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70B98DF5B;
-	Sun, 28 Jan 2024 09:24:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E6C01B27D;
+	Sun, 28 Jan 2024 10:29:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lMwxc7Qu"
+	dkim=pass (2048-bit key) header.d=gmx.com header.i=erick.archer@gmx.com header.b="f5LNqP6m"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363A8DF56;
-	Sun, 28 Jan 2024 09:24:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7EF11EB23;
+	Sun, 28 Jan 2024 10:29:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706433847; cv=none; b=OgU5IgKYSxbQtLaBoPzizDf2I6m/fXDIbNF2QyI/5S7YXRG8XPlURNqfOBvoTfpOc5/PVGqqea3CwZlJDpjuBX1ooi+kHCOhLiFlNFMXKDWUGdmJy2tT8sgFMDHyD79703OCrWCAWJ2BdMC+PffH0QnzigLg6wmS2O6gQmwOkgg=
+	t=1706437799; cv=none; b=EZp/1cRZ8PkraJrgndb3/iNqDofcBF57TyZi+4DLauS7gsETprNI6YM9K4zHtJqYmhbmQFB1oZpcCNY92DGCpAAAYcRNHxVXzUi4I16GnvQMFoQf/0yFkaes1r4v/W02D0G4DTmPG0h/mfksInWbPkEhKL1H3Nsqv9Yx6DtXHFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706433847; c=relaxed/simple;
-	bh=vAmi5VfiuPfMgpUzWVLhzkemLp43TOQ6SblaolpCpeU=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Jv+qKwNTzcTR4Mm8qyFvkzjg3SCHgWtXxViverhnxyTqOaEHaLBUta2YUcPqzmTfUPgvfIJ71U+H36/oMYmw8kt7AVJeXMMmFUQdh0Vt4Pibw1XqnaTHqnEjOLFwrwycnIk9cGc8a25Vzm59t4Wp6i5ErJesz1GYOMkBsBH9se0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lMwxc7Qu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16448C433C7;
-	Sun, 28 Jan 2024 09:24:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706433846;
-	bh=vAmi5VfiuPfMgpUzWVLhzkemLp43TOQ6SblaolpCpeU=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=lMwxc7Qu0oHVJPI91GXXDLoO+fz95+HJ9gMP4NbphuEoMcrSG9m0cDtYmdaL+mc0D
-	 8ye0Pm1XOyX9C0eEm4+3RXpCD8HukjES5r/RWWVh5RBrFE1QEr34M6pLtJ6mU12Cx/
-	 WxDJ9Bm8MQ+X83R1CtubiX91LIAJfvlQhQy5CByGrKE+rxGUx9bNv5cjkB8jMxb0x6
-	 TXVe0Vx2dgish6qtjHNFUfU+5Ts1N8aIDd3OUWbCJaqGkgngaV+Chgypy+iQySjVXr
-	 wTsOyO73lllXi3Hi1f9ROIg1cIYPW2pREtE4baRZUzOm69tHS8lo9OLj/Q4+7k6XW2
-	 jONH1sldIYSlQ==
-Date: Sun, 28 Jan 2024 10:24:02 +0100
-From: Maxime Ripard <mripard@kernel.org>
-To: Jason-JH Lin =?utf-8?B?KOael+edv+elpSk=?= <Jason-JH.Lin@mediatek.com>, 
-	"manasi.d.navare@intel.com" <manasi.d.navare@intel.com>, 
-	"linux-mediatek@lists.infradead.org" <linux-mediatek@lists.infradead.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, 
-	"michel@daenzer.net" <michel@daenzer.net>, 
-	"intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>, "chunkuang.hu@kernel.org" <chunkuang.hu@kernel.org>, 
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, "mikita.lipski@amd.com" <mikita.lipski@amd.com>, 
-	"dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>, "tzimmermann@suse.de" <tzimmermann@suse.de>, 
-	"daniel.vetter@intel.com" <daniel.vetter@intel.com>, "nicholas.kazlauskas@amd.com" <nicholas.kazlauskas@amd.com>, 
-	"dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>, "quic_abhinavk@quicinc.com" <quic_abhinavk@quicinc.com>, 
-	Project_Global_Chrome_Upstream_Group <Project_Global_Chrome_Upstream_Group@mediatek.com>, "lucas.demarchi@intel.com" <lucas.demarchi@intel.com>, 
-	"sean@poorly.run" <sean@poorly.run>, "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>, 
-	"dmitry.osipenko@collabora.com" <dmitry.osipenko@collabora.com>, "fshao@chromium.org" <fshao@chromium.org>, 
-	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "jani.nikula@intel.com" <jani.nikula@intel.com>, 
-	"angelogioacchino.delregno@collabora.com" <angelogioacchino.delregno@collabora.com>, 
-	"freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>
-Subject: Re: Re: [PATCH] drm/atomic-helpers: remove legacy_cursor_update hacks
-Message-ID: <vyh5wg2ltmrtqw2mhtyj2lii6i4eccrjjlynzpfg7x63tkrav6@cxbz3sasvjjm>
-References: <20230216111214.3489223-1-daniel.vetter@ffwll.ch>
- <20230307145613.xvhru3fpcudlpazt@houat>
- <aac416742920953999a9ce230ac68139bf5b9790.camel@mediatek.com>
- <ZbKlsTEvGPiGtzS3@phenom.ffwll.local>
+	s=arc-20240116; t=1706437799; c=relaxed/simple;
+	bh=5rF8LoO+tyQ83knbEjawZi7tXkhPE9yqcUuV6GRhvZY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cblTGd0kWU8Gk8NbmoU8D+8KcR6EGX8/HXEaTK+/fViOE9Uf1wceV5I8mdk45YPOpp3zsCc9mwOjGOxZonGK5tYByNqha5eO2F4rB4UPCwDNDjcTjZ+5bzQdgK+YdJzksqLRS81yw8hctW3sRDVZc9HK46NehQWr2b+n0jZiCLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com; spf=pass smtp.mailfrom=gmx.com; dkim=pass (2048-bit key) header.d=gmx.com header.i=erick.archer@gmx.com header.b=f5LNqP6m; arc=none smtp.client-ip=212.227.17.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.com;
+	s=s31663417; t=1706437785; x=1707042585; i=erick.archer@gmx.com;
+	bh=5rF8LoO+tyQ83knbEjawZi7tXkhPE9yqcUuV6GRhvZY=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:
+	 In-Reply-To;
+	b=f5LNqP6mmxF9MfqjweX5YmzCesuLn7rawarp/tHROWZdBgS5wxQlScV5+Tp/kxDa
+	 Dphkd0ecmogABQqACYLrejBlRNL9WcdrLg02Mr0rj4W7GHgsVKzO7k84TdK/0oq2L
+	 1wxvqKRXlymwZsuv689TSVF5bNuHSUdEDFjtdk1B0MYoVH1IMnOw8zuCWOJjVsamZ
+	 BFbpPBggCDkGs8jOXIFA6r38mwzt+NCWV6vi4zcNwqB33R8bR7fXfdi51H/Bov+GH
+	 3sV+bURw771/Y3UOCzLxyqn5/njXzMEtyNncfQZaHgUYETHF6jXLbEIGhuvtp5rRN
+	 IXxAoj0kxndnww+W4A==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from titan ([79.157.194.183]) by mail.gmx.net (mrgmx104
+ [212.227.17.174]) with ESMTPSA (Nemesis) id 1N6bfq-1qzy583tTq-01807N; Sun, 28
+ Jan 2024 11:29:45 +0100
+Date: Sun, 28 Jan 2024 11:29:33 +0100
+From: Erick Archer <erick.archer@gmx.com>
+To: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Erick Archer <erick.archer@gmx.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: ep: Use kcalloc() instead of kzalloc()
+Message-ID: <20240128102933.GA2800@titan>
+References: <20240120152518.13006-1-erick.archer@gmx.com>
+ <43614a09-d520-4111-873a-b352bd93ea07@moroto.mountain>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ogyu5zjbyc4numbu"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZbKlsTEvGPiGtzS3@phenom.ffwll.local>
-
-
---ogyu5zjbyc4numbu
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <43614a09-d520-4111-873a-b352bd93ea07@moroto.mountain>
+X-Provags-ID: V03:K1:ZdbxvZ0Mn/OkNmxnpyI6tcO9iODEyBjoc6VyPzhHpVtBsH0+gWL
+ poErAPG+L3g1f8DvFqBDN2C34AT4y/5so3j0v5hP7DxYI06IqzdnsfMFRShvwNkUTOJa0iC
+ hBBXf/WIB9/ViwDVwNwymW5trSxc8B3W/Rn7ikuxSE2hIrafzDdwyaFS1/MrKTMzeeTyrWi
+ E4CiV7w+uG0U83JwT6xZg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:Q3/bpQWk/cw=;zveX/XHwfQYoL9WZ3UioPfEM/Tp
+ xxGX7AUHZW34Nn5+GSKI2ZfBTKf2YuizqDv6nVRiXN2GNmGtHWWkS/gP1ir4rdJjBVwdFOpBn
+ 2f2k4dODbfk1Fo9nZZ8ieql2sT8R6UDeAM0y4uio8l7y50ozF+u+PHHn86s/SD60LBra8e451
+ mEWXLXg5TIjLmegrad/WA3GHwhRfE7YbVc+JBOGWUV/owimFMKhG+Jo6VHhVwPomewB/VFxfG
+ kS4BKioeuOu04B7Ohv0Ucoa7GZqrQSGsUR0zEIaRKiZkJ706SNc5GcjTVNvBcdX8F7gcVXXTZ
+ VwkxMx5nwq0t0fpz7i2zB0GGKh8/7kF/6Xtb9SGdypQFaNQgE+ohqzw7XlcUQIBTi25hcI4NA
+ xms4Owvs0ygrwcmyE05+w88S1JJzo7bTTtYbrtyP7GYPNEsP/qKXNM+eozJI5j+dOM0q0671I
+ Ju6+25h/rPgb8CKzmIEphJ5C/z5SgrjNLmHCxxJ0ZLlbRMwh4q7N6dizJ/TJlPNITz6JB5krO
+ lYqeztCIwqFCNeEUCTbE5zOs/RDalgvuJpXrEkNsrZfH/dR/Z0BxFFduYOOWqVH0yMWSmK/K6
+ ddWdfn9r43HsUCw2+GciMObPVdFZyvVJy+ps3XtCQYJ1MWx4xt4wOMl3MeHNB+cTqt3LP1vNj
+ OkPcFnreI49ZxTHpF1nvI0/R9VnAUdmVyv4vPkWfshXREI2x3FdAe4vydVTrkDHShvgGso8SD
+ pESWEy0MmV4M92JHnwcZZyQQ3FLBe6LKeQ3hXim/a2aUP4uowCQEi0YLSWssngQMl30abNzLH
+ 4+Ov52ORPtWYqtdpuO6n5zib60YwE1uebRMQfYU/8PD1yDHCXSsivloxaArNfaGFj856Lqs3t
+ 9O4lbzPWHDSm0GNFTeMC9Hi6OIxMg9x0pqXjSexC5e2eci+0xwac3kBHhstBY7+UHEXuOdSbO
+ bw368zUr7Vc17rT6x2+0vQ0lTY4=
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jan 25, 2024 at 07:17:21PM +0100, Daniel Vetter wrote:
-> On Tue, Jan 23, 2024 at 06:09:05AM +0000, Jason-JH Lin (=E6=9E=97=E7=9D=
-=BF=E7=A5=A5) wrote:
-> > Hi Maxime, Daniel,
-> >=20
-> > We encountered similar issue with mediatek SoCs.
-> >=20
-> > We have found that in drm_atomic_helper_commit_rpm(), when disabling
-> > the cursor plane, the old_state->legacy_cursor_update in
-> > drm_atomic_wait_for_vblank() is set to true.
-> > As the result, we are not actually waiting for a vlbank to wait for our
-> > hardware to close the cursor plane. Subsequently, the execution
-> > proceeds to drm_atomic_helper_cleanup_planes() to  free the cursor
-> > buffer. This can lead to use-after-free issues with our hardware.
-> >=20
-> > Could you please apply this patch to fix our problem?
-> > Or are there any considerations for not applying this patch?
->=20
-> Mostly it needs someone to collect a pile of acks/tested-by and then land
-> it.
->=20
-> I'd be _very_ happy if someone else can take care of that ...
->=20
-> There's also the potential issue that it might slow down some of the
-> legacy X11 use-cases that really needed a non-blocking cursor, but I think
-> all the drivers where this matters have switched over to the async plane
-> update stuff meanwhile. So hopefully that's good.
+Hi Dan,
 
-I think there was also a regression with msm no one really figured out?
+On Mon, Jan 22, 2024 at 10:15:20AM +0300, Dan Carpenter wrote:
+> This code does not have an integer overflow, but it might have a
+> different memory corruption bug.
 
-Maxime
+I don't see this possible memory corruption bug. More info below.
 
---ogyu5zjbyc4numbu
-Content-Type: application/pgp-signature; name="signature.asc"
+> On Sat, Jan 20, 2024 at 04:25:18PM +0100, Erick Archer wrote:
+> > As noted in the "Deprecated Interfaces, Language Features, Attributes,
+> > and Conventions" documentation [1], size calculations (especially
+> > multiplication) should not be performed in memory allocator (or simila=
+r)
+> > function arguments due to the risk of them overflowing. This could lea=
+d
+> > to values wrapping around and a smaller allocation being made than the
+> > caller was expecting. Using those allocations could lead to linear
+> > overflows of heap memory and other misbehaviors.
+> >
+> > So, use the purpose specific kcalloc() function instead of the argumen=
+t
+> > count * size in the kzalloc() function.
+> >
+>
+> This one is more complicated to analyze.  I have built a Smatch cross
+> function database so it's easy for me and I will help you.
+>
+> $ smbd.py where mhi_ep_cntrl event_rings
+> drivers/pci/endpoint/functions/pci-epf-mhi.c | pci_epf_mhi_probe        =
+      | (struct mhi_ep_cntrl)->event_rings | 0
+> drivers/bus/mhi/ep/main.c      | mhi_ep_irq                     | (struc=
+t mhi_ep_cntrl)->event_rings | min-max
+> drivers/bus/mhi/ep/mmio.c      | mhi_ep_mmio_init               | (struc=
+t mhi_ep_cntrl)->event_rings | 0-255
+> drivers/bus/mhi/ep/mmio.c      | mhi_ep_mmio_update_ner         | (struc=
+t mhi_ep_cntrl)->event_rings | 0-255
+>
+> The other way to figure this stuff out would be to do:
+>
+> $ grep -Rn "event_rings =3D " drivers/bus/mhi/ep/
+> drivers/bus/mhi/ep/mmio.c:260:  mhi_cntrl->event_rings =3D FIELD_GET(MHI=
+CFG_NER_MASK, regval);
+> drivers/bus/mhi/ep/mmio.c:261:  mhi_cntrl->hw_event_rings =3D FIELD_GET(=
+MHICFG_NHWER_MASK, regval);
+> drivers/bus/mhi/ep/mmio.c:271:  mhi_cntrl->event_rings =3D FIELD_GET(MHI=
+CFG_NER_MASK, regval);
+> drivers/bus/mhi/ep/mmio.c:272:  mhi_cntrl->hw_event_rings =3D FIELD_GET(=
+MHICFG_NHWER_MASK, regval);
+>
+> That means that this multiplication can never overflow so the patch
+> has no effect on runtime.  The patch is still useful because we don't
+> want every single person to have to do this analysis.  The kcalloc()
+> function is just safer and more obviously correct.
 
------BEGIN PGP SIGNATURE-----
+Ok, I will send a v2 patch with more info in the commit message.
 
-iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZbYdMgAKCRDj7w1vZxhR
-xSJlAP95bsUAyxzHt1gZmvkN8tKWAggATAYm9apK9+8NFj/3MAEAnkts/Yh2y6zr
-dzc9/lsQ2HaDBNTsjGfOxrlJGX+aKwE=
-=2xdS
------END PGP SIGNATURE-----
+> It's a bit concerning that ->event_rings is set multiple times, but only
+> allocated one time.  It's either unnecessary or there is a potential
+> memory corruption bug.  If it's really necessary then there should be a
+> check that the new size is <=3D the size of the original buffer that we
+> allocated.
 
---ogyu5zjbyc4numbu--
+The ->event_rings is set twice. In the mhi_ep_mmio_init function and in
+the mhi_ep_mmio_update_ner function.
+
+void mhi_ep_mmio_init(struct mhi_ep_cntrl *mhi_cntrl)
+{
+	[...]
+	mhi_cntrl->event_rings =3D FIELD_GET(MHICFG_NER_MASK, regval);
+	[...]
+}
+
+void mhi_ep_mmio_update_ner(struct mhi_ep_cntrl *mhi_cntrl)
+{
+	[...]
+	mhi_cntrl->event_rings =3D FIELD_GET(MHICFG_NER_MASK, regval);
+	[...]
+}
+
+But ->event_rings does not need to be allocated because the type is a u32.
+
+struct mhi_ep_cntrl {
+	[...]
+	u32 event_rings;
+	[...]
+};
+
+So, I don't know what you are trying to explain to me. I'm sorry.
+
+> I work in static analysis and I understand the struggle of trying to
+> understand code to see if static checker warnings are a real bug or not.
+> I'm not going to insist that you figure everything out, but I am asking
+> that you at least try.  If after spending ten minutes reading the code
+> you can't figure it out, then it's fine to write something like, "I
+> don't know whether this multiply can really overflow or not, but let's
+> make it safer by using kcalloc()."  You can put that sort of "I don't
+> know information" under the --- cut off line inf you want.
+
+Thanks a lot for the advices.
+
+Regards,
+Erick
+
+> regards,
+> dan carpenter
 
