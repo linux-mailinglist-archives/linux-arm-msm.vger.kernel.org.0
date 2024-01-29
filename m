@@ -1,110 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-8884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D8EA840978
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 16:15:38 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69C1184099C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 16:18:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2E217B23F43
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 15:15:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1E5751F232D5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 15:18:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5549153BCD;
-	Mon, 29 Jan 2024 15:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D1C2154BFC;
+	Mon, 29 Jan 2024 15:17:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="izpldgeB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kiD6PFLb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D1B15351C
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 15:15:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0C9154454
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 15:17:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706541320; cv=none; b=CKlOR/PYu62pis+XgmbHPA78N2Jhkn5JoeaYFtmaeT2BGokutpZu2PVqo1befXpdXGcBLyqFqzq1S+3aJmy68YqyFEdeaCDVwCr57mxTQyZHTz+S9bQydm5ESpBzMB2DTU0xLCt393TqgjsRGSs85AId9irAYwnVrfrbUk8mo74=
+	t=1706541461; cv=none; b=ebHyZzE6SsarRuRSL9yIn9si/0AC5pCekLXwTGkDPCLXX8srWhrj7skF5A0RU/A9yi0iqoyLl5Dlecs81ohjGTZoydYx1XZj3AoIsYb9swxB0t4BKGh5QxOnMXqE0dySqS4OfZopSZrnIZVjgGnoDnSvC6PzAIErzs+M2+3QkaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706541320; c=relaxed/simple;
-	bh=LAOkgM7jx1y/f+9AaVcx8l/Biq3RfK+MpOVFGABEq9g=;
+	s=arc-20240116; t=1706541461; c=relaxed/simple;
+	bh=VYk2kDys0glDWMk0P7roTgZucENZXxmFY1OUmtkVmJY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=s2U52kUzqvSeiSViEsEiMP/6j5JwkMuepqN38cTr8cI3kaLluWyCWKasmZfASeSGkyi6fotL4peOfBimvbxp/kwcu86N729x0lE+f1X0nWYUqzmNcBjXcFHXCJuQKcb1HY3HamPItiHXmJEY5J0nsW1DnYuwBiYcBqxQsCXwHr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=izpldgeB; arc=none smtp.client-ip=209.85.219.178
+	 To:Cc:Content-Type; b=SDr/ToxxHobBMKldJfDHFdcZgtXyuWLedhxNVy1GyNerr1Z3Ch0UEKNlMjzHAamNVafFpqSwBBA8l5xB3eybCV/NhWXw1THtXNqlTp06Ftz89IgmRD/8PP7TlFg+2RxK6EWJqm4r8iEmTwDIOQtt6Ds4AD2varc2lDKIS/7zQyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kiD6PFLb; arc=none smtp.client-ip=209.85.128.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-dc227feab99so2656736276.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 07:15:18 -0800 (PST)
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-5ffe7e7b7b3so27629387b3.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 07:17:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706541317; x=1707146117; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706541459; x=1707146259; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=19g3oA8IiRUGTXPpvDGJllhbr2rfvg3/xxxfKuMshKI=;
-        b=izpldgeBa1V17LrXxazhRySc/joJA6JPehIUWW/JTUf/o7fca7843GmqBa/LavO0cn
-         X0R5h6pQo4C5pBUhLHDwp7kaX+Y5Q74CqdJcMJeWugT7zzT7sHs1cWxln6lxYYnnWqgx
-         dE54XGeEVN8P3+54ypI7LcSum9vD9ZF5w/re/8J4eD9E2lRoJXS4En1/f2IrxvOKds/s
-         uJDgZ7xO6xVq6UjCKG4geMGBLM+/weUjCgNpnbOBjjeTxkgD8fM4GHK9jdeEXZqj0xyi
-         1d/L6XuXbdjOKqBjYIFVh7fK6OFwwYFkxaqTCe2TrEwPQzfQ+pccWXX6472+6mvtg2QL
-         BRsw==
+        bh=5MB7A9ATBDbqpsaX+ySSekE4FzWm5nmsG8f0biE3UZk=;
+        b=kiD6PFLbpoidhxUJoTiebE9iECJ54bl15yaI4ZqYjNNDKYJM3NdyhqHrX16l08Qsx7
+         kjfzLk3SXatBf+9VaxrAXLIFkbr3G3uTHIHV5V42hHrJydKnyzjulN2GXJFbbL7lcP7y
+         TOtUBzDfZHMthauxB5eSJsWAvzVuRSyL00omSrTaGPRv3b80bRDuokySymWmaBRfgbfK
+         FP16mB6CczBflP6VqZVY8XrNocGFKLKXKirhg/K0LwPwvE/6cfp/Hx/DZvSROb/RFEyj
+         WnxrcXU+b6CSUHYYWHk+S15pJyKGGykEHbvdHACc4EaFi4e8qb1GGXrDGGdrvhi52t6v
+         Taxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706541317; x=1707146117;
+        d=1e100.net; s=20230601; t=1706541459; x=1707146259;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=19g3oA8IiRUGTXPpvDGJllhbr2rfvg3/xxxfKuMshKI=;
-        b=ioey4wZS8ixnUgcEeb3K/IIygCP+iF8CwT4jW62xUgmT9sjONb33QCq+a8YabUKUGp
-         RtujJ7vGwTGg8JgyHB8squGPbAq+CEkM0MmtD6Xdch2SHbFOXtcfuMmuZYME0DuB7Sq+
-         H8pGtNjACBN8LKoLHCGSnLbVzPcDZNQsTpbtxowzJiFNK7gjJ8YmwtPqIrvjwaRpR8Mc
-         CHGwuBWatyV6II/DBxLHAUr3PyxMGRxNreS+6Of34JNmXIWKoiaN2189EtPUeC5S23kZ
-         9VaTZsVPivlv7ozo2Y0OKA/QeqTwLHX2iHvdm111O4Cud6wI4Y4+CI1q/q6akzDQrh52
-         aQbw==
-X-Gm-Message-State: AOJu0YxHpYV7Yohl4Yi8E6OYHkPfmFAuqynoDjuTHfQDQ2pkO5mAGGG6
-	hq5w+KYdrFtGkfw1wDGt6fOgA/1T6s2vNcHpP8F8CfafTxo9Uc3prqsW66GNXfseedBH2esQu82
-	zx4Ilc+Hk1gWGtccbNqBOiPll/OMccUvehJ0tpg==
-X-Google-Smtp-Source: AGHT+IFydtOcrIJRlNoXpg56zZ7tHX71n5y4JJpZgFrLYNKvhBr3oibPkEQ4p09wGzgkORErJGWYlBptWzGE6KVbIJ8=
-X-Received: by 2002:a25:ec0a:0:b0:dc2:52f4:2356 with SMTP id
- j10-20020a25ec0a000000b00dc252f42356mr3387101ybh.119.1706541317649; Mon, 29
- Jan 2024 07:15:17 -0800 (PST)
+        bh=5MB7A9ATBDbqpsaX+ySSekE4FzWm5nmsG8f0biE3UZk=;
+        b=nDw994CVUxmRlVKd0a9XvCycwjT1IYMcWkTkTSm3lBCLp9TSeEoyD5ud5zfQHPHNC1
+         aaq6GrdkdEG1QlbMnZQDsRqtLCzc0Gfs6uv0+FaAOJ7zxCZeE8W6cnefjjeFvPJCTGKh
+         a6Ludaf/If/ZaT1zTQUorbAvw33t0BDyJAz5PnBr8xu/rUNEW0pf9SLuaJciTrrwSUiO
+         DZjRo5MGJ8in1ef/6sspaFFZPTAlo8bbIfkYSAXoCKUOqgHuBMcr+DTNFsAeQQCzWubo
+         5O/i8bikvIOL5FKc+GuOb0veRu9/UdGQg2SYIcJZMyyJU/nSYmvxG1lGCx2MHHlnYg9X
+         EL5A==
+X-Gm-Message-State: AOJu0Yzy/vzC/+k+oKknZEAZSCfOv59fq4J3PBwR26EJqrDi3720wFVA
+	7VY57CYGMoA6QGCUA4cVFB/YkK4egP+AahSE11cyJYjkIeX45nNpbQ2WHwP+eIBh4A0QKvNGgvP
+	+njryeYAYXfJBBu7WF27SMLXa0kGswdvf9C3m0A==
+X-Google-Smtp-Source: AGHT+IH78q1nwygFDkOrWIMmiiOqu+94WGhjny51UtK7G2os6l1B4sEyC0mrhtNYMT1u+/g+5VZmFHg8vWtcGyCh4iE=
+X-Received: by 2002:a81:99d5:0:b0:602:b375:380d with SMTP id
+ q204-20020a8199d5000000b00602b375380dmr3586667ywg.80.1706541459045; Mon, 29
+ Jan 2024 07:17:39 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240129-x1e80100-display-v1-0-0d9eb8254df0@linaro.org> <20240129-x1e80100-display-v1-5-0d9eb8254df0@linaro.org>
-In-Reply-To: <20240129-x1e80100-display-v1-5-0d9eb8254df0@linaro.org>
+References: <20240129-x1e80100-remoteproc-v1-0-15d21ef58a4b@linaro.org> <20240129-x1e80100-remoteproc-v1-3-15d21ef58a4b@linaro.org>
+In-Reply-To: <20240129-x1e80100-remoteproc-v1-3-15d21ef58a4b@linaro.org>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 29 Jan 2024 17:15:06 +0200
-Message-ID: <CAA8EJpp_S4Ug8WoiQ5f3hEESTy9_u1wOo-ETMD2Tky1_OQH0kg@mail.gmail.com>
-Subject: Re: [PATCH 5/5] drm/msm/dpu: Add X1E80100 support
+Date: Mon, 29 Jan 2024 17:17:28 +0200
+Message-ID: <CAA8EJporoBQQtrRWL5SS4qwpmu0rF6UMpaZXQ5t-qdvoW53XOA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] remoteproc: qcom_q6v5_pas: Unload lite firmware on ADSP
 To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh+dt@kernel.org>, 
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Sibi Sankar <quic_sibis@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 29 Jan 2024 at 15:19, Abel Vesa <abel.vesa@linaro.org> wrote:
+On Mon, 29 Jan 2024 at 15:35, Abel Vesa <abel.vesa@linaro.org> wrote:
 >
-> Add definitions for the display hardware used on the Qualcomm X1E80100
-> platform.
+> From: Sibi Sankar <quic_sibis@quicinc.com>
 >
-> Co-developed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> The UEFI loads a lite variant of the ADSP firmware to support charging
+> use cases. The kernel needs to unload and reload it with the firmware
+> that has full feature support for audio. This patch arbitarily shutsdown
+> the lite firmware before loading the full firmware.
+>
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
 > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
->  .../drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h   | 449 +++++++++++++++++++++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   2 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   1 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
->  4 files changed, 453 insertions(+)
+>  drivers/remoteproc/qcom_q6v5_pas.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 >
+> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+> index 083d71f80e5c..4f6940368eb4 100644
+> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+> @@ -39,6 +39,7 @@ struct adsp_data {
+>         const char *dtb_firmware_name;
+>         int pas_id;
+>         int dtb_pas_id;
+> +       int lite_pas_id;
+>         unsigned int minidump_id;
+>         bool auto_boot;
+>         bool decrypt_shutdown;
+> @@ -72,6 +73,7 @@ struct qcom_adsp {
+>         const char *dtb_firmware_name;
+>         int pas_id;
+>         int dtb_pas_id;
+> +       int lite_pas_id;
+>         unsigned int minidump_id;
+>         int crash_reason_smem;
+>         bool decrypt_shutdown;
+> @@ -210,6 +212,10 @@ static int adsp_load(struct rproc *rproc, const struct firmware *fw)
+>         /* Store firmware handle to be used in adsp_start() */
+>         adsp->firmware = fw;
+>
+> +       /* WIP: Shutdown the ADSP if it's running a lite version of the firmware*/
 
+Why is it still marked as WIP?
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> +       if (adsp->lite_pas_id)
+> +               ret = qcom_scm_pas_shutdown(adsp->lite_pas_id);
+> +
+>         if (adsp->dtb_pas_id) {
+>                 ret = request_firmware(&adsp->dtb_firmware, adsp->dtb_firmware_name, adsp->dev);
+>                 if (ret) {
+> @@ -693,6 +699,7 @@ static int adsp_probe(struct platform_device *pdev)
+>         adsp->rproc = rproc;
+>         adsp->minidump_id = desc->minidump_id;
+>         adsp->pas_id = desc->pas_id;
+> +       adsp->lite_pas_id = desc->lite_pas_id;
+>         adsp->info_name = desc->sysmon_name;
+>         adsp->decrypt_shutdown = desc->decrypt_shutdown;
+>         adsp->region_assign_idx = desc->region_assign_idx;
+> @@ -990,6 +997,7 @@ static const struct adsp_data x1e80100_adsp_resource = {
+>         .dtb_firmware_name = "adsp_dtb.mdt",
+>         .pas_id = 1,
+>         .dtb_pas_id = 0x24,
+> +       .lite_pas_id = 0x1f,
+>         .minidump_id = 5,
+>         .auto_boot = true,
+>         .proxy_pd_names = (char*[]){
+>
+> --
+> 2.34.1
+>
+>
 
 
 -- 
