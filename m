@@ -1,254 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-8865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57DB08407E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 15:10:52 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D6358407FF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 15:17:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D6A16283BA4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 14:10:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3217E1C226AA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 14:17:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03C50657DD;
-	Mon, 29 Jan 2024 14:10:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 517FD65BD9;
+	Mon, 29 Jan 2024 14:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Hj2zh2wY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CzD8R0/r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F333C657AF;
-	Mon, 29 Jan 2024 14:10:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7785465BC4;
+	Mon, 29 Jan 2024 14:16:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706537447; cv=none; b=p4OXla4e7tBstybes6YbY3NbHxsItqCc/jYF4BHxAkqZ3BnwG/4bKWhg0gGRl/Blnwk02NBoUX61V2Q8tDf/4Ojk+ZWvYce2zduhVVZWOqcyTt6ycOx1V+TqWHesic6DB168qIwBoVJg94E5zeYEuGsbfKBjG7tAXLympytjrTU=
+	t=1706537800; cv=none; b=Z5luHKSpcp9p8gAIT8DMBIEVlXoT1DuBnVQF52ppR2gZQWD1fSwO+FNdIX06ox2/a0EwsM2Vlv2R+yLC8yYyx5ULlI5XWPvhuLBLf2/sIcSGvsOXU5VG/Oa/SPEdrXUTSPB8OO6CHeDn4fYFPw8+k15aM1yNwRFbQH32UdU8TpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706537447; c=relaxed/simple;
-	bh=cpIteSb46C7vMPSZyBEbfueXL51jR4Onxer+aqnEGgk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=O5OGVWdk3gpkZnlRrYt1xpHIgNDJ8hkCfyg23QTNRtk72HB81J3qu0kfNI5pNU2KDeRWbb6itI1JsdwjoJOSFLh5wRZeIu8DPy+1tnDge2+FxNadB30s8/fs8SBjmcGJjSHiAKRrBNprGpyAuZNBsSqAbj+2JXB/6gZqEMaPKBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Hj2zh2wY; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40TBccn5003188;
-	Mon, 29 Jan 2024 14:10:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=AobKpWswbqzb3U1KiN/ccc5Pg0YoZC3EQk3XnnWFgbE=; b=Hj
-	2zh2wYurC8clzcltNifz9pQeuPrYPwWXNo9Vb/e/iUOIT1vo4+9+ot3o0WohSFee
-	5YyzzdpfmLKkLxoFC1PBacj8d4vqj7ZMmGIE1XeINHdpO742f/JT1tJsRRFw5p8X
-	5QQM9W7eyrX4CYAj6lxIQ7pyv1mscK74w0AB9xUtbYrAZfvLnb93BLzmE93rBmZg
-	bIQshIq6jb6orGfjylzIxI28bZJ5nRcq1QHDG83FhN3FZE2P3sp1bYoYRAVsUkQA
-	yzIGt/UAoDsg04xcAZgSnRoic141cU6xutXoFwr92hiZoCwqtMnrcycjHy1ftyz2
-	4Jq4fqMTOGXprDIYMAsA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vvqhmv7ee-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 29 Jan 2024 14:10:31 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40TEAUpu026646
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 29 Jan 2024 14:10:30 GMT
-Received: from [10.216.42.199] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 29 Jan
- 2024 06:10:22 -0800
-Message-ID: <8eb63c69-b769-3623-fd34-b1df959ba7b1@quicinc.com>
-Date: Mon, 29 Jan 2024 19:40:19 +0530
+	s=arc-20240116; t=1706537800; c=relaxed/simple;
+	bh=T5c1Dbp1sJsEszxptNZeBvyymhs1/yh2Ifd/y4EA61I=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=krsCHnIoVoHaq4fD1/9ixU35mm8xMKCYyRIgjYBzc2+GcK2bOR/rMy+wVgqN5fLy6GJsy1NmGRIQfT3aaZ1aTzPZmEOcb3uilY1w7+4rs+VRK1GhSyl99ompUE3WWNSRikbHz6KuLcvNI5J6RSug07Zp47FkEvr/ir2zbiSTDb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CzD8R0/r; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-51115621f4fso728140e87.3;
+        Mon, 29 Jan 2024 06:16:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706537796; x=1707142596; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lbzAJ0F2mFrz3jQVdwTJPWtdp7o4RjOP6PbQdpOhSSQ=;
+        b=CzD8R0/rAPcdP/X0jvCwHEvsKMOs7qweanJAJDDt/FBx4keNoR6QD7FM7OuD6E8pNE
+         HpepxjPoaYnAJ8kGnh0vQpGBECfiziVcK5IMouQQfWR22BFeYb3qvraJTJhp6zw2dhLR
+         ll4Gh3am8SMJanPTrrqCWYzG8AgEOz7JNPCfJ+LYPZSf/0JNhjfTnhc5R7aGgC+g9I2s
+         Xo+DnDeDCVX20Wmnuw+GlFhjpQHz3fuetdRmADSJJBAF0EfLoCtjFVgLcJxkk4KmVqEp
+         2UZFWM4ivCz8wszNzHuWl4Z+bP5LBMjwVjRQ3AscBsjhgyEbL2Gu446giTQl5pFiLlJ1
+         Fiwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706537796; x=1707142596;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lbzAJ0F2mFrz3jQVdwTJPWtdp7o4RjOP6PbQdpOhSSQ=;
+        b=UsNXZoS+/Z21y1ynT8R4jfxjKKKOTNa5Sv7pwGOY3Cak3BLouqEi/HVeA0LMAICCCS
+         oTBxDA0mD8lzz2ru2++sk6ZfysbopvMdKp7ddlvdNXrjxL+7wQwG/+4oRgHiGQgjRrgQ
+         JejseLMi33xbLiyg2wUrW6N3VN79WQm6gL1xPgedTkjqgQv/b6H7EXOTXSsqaHGmLLX2
+         2w9mN47INTACEe2FlV/DJkW5MeaIWNOLoGpyivL0ZDa2yHf5pYgvwq/Fy7MP5K+bWDOI
+         BS5Y/AHIDL3dHQKW0oMYVQJwKDyzC5xGjgNIyzmSOONwytzMoaG8La1jSNHm5K6msRdv
+         Fk4g==
+X-Gm-Message-State: AOJu0YyHOGVsIblXPP5zU1c0WxsUf4WWRfl4Jxa7bkUHcfsr/E0c1IjD
+	bAKTEUs9S7Nma0ZBw0er/kzyBWhuVs9JmadP/+TJgbYuGroyK3yv
+X-Google-Smtp-Source: AGHT+IFwgkRoUE6Vqua20McJWLUkMmAZbTZCWg4d/w7ktsAgPSXgJV+JLW52Rwav19reovtLOABSdw==
+X-Received: by 2002:a05:6512:1082:b0:50e:75ee:ec4c with SMTP id j2-20020a056512108200b0050e75eeec4cmr4819222lfg.11.1706537796100;
+        Mon, 29 Jan 2024 06:16:36 -0800 (PST)
+Received: from localhost.localdomain ([78.208.142.203])
+        by smtp.googlemail.com with ESMTPSA id cu12-20020a170906ba8c00b00a27a32e6502sm3919470ejd.117.2024.01.29.06.16.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Jan 2024 06:16:35 -0800 (PST)
+From: Christian Marangi <ansuelsmth@gmail.com>
+To: Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-kernel@vger.kernel.org,
+	netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Cc: Christian Marangi <ansuelsmth@gmail.com>
+Subject: [net-next PATCH v4 0/5] net: phy: split at803x
+Date: Mon, 29 Jan 2024 15:15:18 +0100
+Message-ID: <20240129141600.2592-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v6 3/6] PCI: qcom: Add missing icc bandwidth vote for cpu
- to PCIe path
-Content-Language: en-US
-To: Manivannan Sadhasivam <mani@kernel.org>
-CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Bjorn
- Helgaas" <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        "Johan
- Hovold" <johan+linaro@kernel.org>,
-        Brian Masney <bmasney@redhat.com>,
-        "Georgi
- Djakov" <djakov@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <vireshk@kernel.org>, <quic_vbadigan@quicinc.com>,
-        <quic_skananth@quicinc.com>, <quic_nitegupt@quicinc.com>,
-        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
-References: <20240112-opp_support-v6-0-77bbf7d0cc37@quicinc.com>
- <20240112-opp_support-v6-3-77bbf7d0cc37@quicinc.com>
- <CAA8EJprq1s42hkbXXKtXTGnyYePQN98t+gmFoHDOGMWJH4Ot3g@mail.gmail.com>
- <2bc92420-b3b9-047d-e5e4-22a19b4d07d3@quicinc.com>
- <20240117063938.GC8708@thinkpad>
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20240117063938.GC8708@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: UMNi7JRKp41clxxn5vu224Uw6Lk23tS1
-X-Proofpoint-ORIG-GUID: UMNi7JRKp41clxxn5vu224Uw6Lk23tS1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-29_07,2024-01-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 malwarescore=0
- adultscore=0 priorityscore=1501 lowpriorityscore=0 mlxlogscore=999
- spamscore=0 impostorscore=0 clxscore=1011 mlxscore=0 bulkscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401190000 definitions=main-2401290104
+Content-Transfer-Encoding: 8bit
 
+This is the last patchset of a long series of cleanup and
+preparation to make at803x better maintainable and permit
+the addition of other QCOM PHY Families.
 
+A shared library modules is created since many QCOM PHY share
+similar/exact implementation and are reused.
 
-On 1/17/2024 12:09 PM, Manivannan Sadhasivam wrote:
-> On Tue, Jan 16, 2024 at 10:27:23AM +0530, Krishna Chaitanya Chundru wrote:
->>
->>
->> On 1/12/2024 9:00 PM, Dmitry Baryshkov wrote:
->>> On Fri, 12 Jan 2024 at 16:24, Krishna chaitanya chundru
->>> <quic_krichai@quicinc.com> wrote:
->>>>
->>>> CPU-PCIe path consits for registers PCIe BAR space, config space.
->>>> As there is less access on this path compared to pcie to mem path
->>>> add minimum vote i.e GEN1x1 bandwidth always.
->>>
->>> Is this BW amount a real requirement or just a random number? I mean,
->>> the register space in my opinion consumes much less bandwidth compared
->>> to Gen1 memory access.
->>>
->> Not register space right the BAR space and config space access from CPU
->> goes through this path only. There is no recommended value we need to
->> vote for this path. Keeping BAR space and config space we tried to vote
->> for GEN1x1.
->>
->> Please suggest any recommended value, I will change that in the next
->> series.
->>
-> 
-> You should ask the HW folks on the recommended value to keep the reg access
-> clocking. We cannot suggest a value here.
-> 
-> If they say, "there is no recommended value", then ask them what would the
-> minimum value and use it here.
-> 
-> - Mani
-> 
-HW team suggested to use minimum value of 1Kbps for this path.
-I will update the patches to use 1Kbps in the next series.
+This series doesn't introduce any new code but just move the
+function around and introduce a new module for all the functions
+that are shared between the 3 different PHY family.
 
-- Krishna Chaitanya.
->> - Krishna Chaitanya.
->>>>
->>>> In suspend remove the cpu vote after register space access is done.
->>>>
->>>> Fixes: c4860af88d0c ("PCI: qcom: Add basic interconnect support")
->>>> cc: stable@vger.kernel.org
->>>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->>>> ---
->>>>    drivers/pci/controller/dwc/pcie-qcom.c | 31 +++++++++++++++++++++++++++++--
->>>>    1 file changed, 29 insertions(+), 2 deletions(-)
->>>>
->>>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
->>>> index 11c80555d975..035953f0b6d8 100644
->>>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
->>>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
->>>> @@ -240,6 +240,7 @@ struct qcom_pcie {
->>>>           struct phy *phy;
->>>>           struct gpio_desc *reset;
->>>>           struct icc_path *icc_mem;
->>>> +       struct icc_path *icc_cpu;
->>>>           const struct qcom_pcie_cfg *cfg;
->>>>           struct dentry *debugfs;
->>>>           bool suspended;
->>>> @@ -1372,6 +1373,9 @@ static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
->>>>           if (IS_ERR(pcie->icc_mem))
->>>>                   return PTR_ERR(pcie->icc_mem);
->>>>
->>>> +       pcie->icc_cpu = devm_of_icc_get(pci->dev, "cpu-pcie");
->>>> +       if (IS_ERR(pcie->icc_cpu))
->>>> +               return PTR_ERR(pcie->icc_cpu);
->>>>           /*
->>>>            * Some Qualcomm platforms require interconnect bandwidth constraints
->>>>            * to be set before enabling interconnect clocks.
->>>> @@ -1381,7 +1385,18 @@ static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
->>>>            */
->>>>           ret = icc_set_bw(pcie->icc_mem, 0, QCOM_PCIE_LINK_SPEED_TO_BW(1));
->>>>           if (ret) {
->>>> -               dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
->>>> +               dev_err(pci->dev, "failed to set interconnect bandwidth for pcie-mem: %d\n",
->>>> +                       ret);
->>>> +               return ret;
->>>> +       }
->>>> +
->>>> +       /*
->>>> +        * The config space, BAR space and registers goes through cpu-pcie path.
->>>> +        * Set peak bandwidth to single-lane Gen1 for this path all the time.
->>>> +        */
->>>> +       ret = icc_set_bw(pcie->icc_cpu, 0, QCOM_PCIE_LINK_SPEED_TO_BW(1));
->>>> +       if (ret) {
->>>> +               dev_err(pci->dev, "failed to set interconnect bandwidth for cpu-pcie: %d\n",
->>>>                           ret);
->>>>                   return ret;
->>>>           }
->>>> @@ -1573,7 +1588,7 @@ static int qcom_pcie_suspend_noirq(struct device *dev)
->>>>            */
->>>>           ret = icc_set_bw(pcie->icc_mem, 0, kBps_to_icc(1));
->>>>           if (ret) {
->>>> -               dev_err(dev, "Failed to set interconnect bandwidth: %d\n", ret);
->>>> +               dev_err(dev, "Failed to set interconnect bandwidth for pcie-mem: %d\n", ret);
->>>>                   return ret;
->>>>           }
->>>>
->>>> @@ -1597,6 +1612,12 @@ static int qcom_pcie_suspend_noirq(struct device *dev)
->>>>                   pcie->suspended = true;
->>>>           }
->>>>
->>>> +       /* Remove cpu path vote after all the register access is done */
->>>> +       ret = icc_set_bw(pcie->icc_cpu, 0, 0);
->>>> +       if (ret) {
->>>> +               dev_err(dev, "failed to set interconnect bandwidth for cpu-pcie: %d\n", ret);
->>>> +               return ret;
->>>> +       }
->>>>           return 0;
->>>>    }
->>>>
->>>> @@ -1605,6 +1626,12 @@ static int qcom_pcie_resume_noirq(struct device *dev)
->>>>           struct qcom_pcie *pcie = dev_get_drvdata(dev);
->>>>           int ret;
->>>>
->>>> +       ret = icc_set_bw(pcie->icc_cpu, 0, QCOM_PCIE_LINK_SPEED_TO_BW(1));
->>>> +       if (ret) {
->>>> +               dev_err(dev, "failed to set interconnect bandwidth for cpu-pcie: %d\n", ret);
->>>> +               return ret;
->>>> +       }
->>>> +
->>>>           if (pcie->suspended) {
->>>>                   ret = qcom_pcie_host_init(&pcie->pci->pp);
->>>>                   if (ret)
->>>>
->>>> --
->>>> 2.42.0
->>>>
->>>>
->>>
->>>
->>
-> 
+Since the drivers are actually detached, new probe function are
+introduced that allocate the specific priv struct for the PHYs.
+
+After this patch, qca808x will be further generalized as LED
+and cable test function are also used by the QCA807x PHYs.
+This is just for reference and the additional function move will
+be done on the relates specific series.
+
+This is also needed in preparation for the introduction of
+qca807x PHYs family and PHY package concept.
+
+Changes v4:
+- Add Reviwed-by tag
+- Correctly sort new define in makefile
+Changes v3:
+- Fix compilation error on testing single change till
+  patch 4. (improve bisectability of the series)
+Changes v2:
+- Out of RFC (at808x dependency got merged)
+
+Christian Marangi (5):
+  net: phy: move at803x PHY driver to dedicated directory
+  net: phy: qcom: create and move functions to shared library
+  net: phy: qcom: deatch qca83xx PHY driver from at803x
+  net: phy: qcom: move additional functions to shared library
+  net: phy: qcom: detach qca808x PHY driver from at803x
+
+ drivers/net/phy/Kconfig             |    7 +-
+ drivers/net/phy/Makefile            |    2 +-
+ drivers/net/phy/at803x.c            | 2759 ---------------------------
+ drivers/net/phy/qcom/Kconfig        |   22 +
+ drivers/net/phy/qcom/Makefile       |    5 +
+ drivers/net/phy/qcom/at803x.c       | 1140 +++++++++++
+ drivers/net/phy/qcom/qca808x.c      |  934 +++++++++
+ drivers/net/phy/qcom/qca83xx.c      |  275 +++
+ drivers/net/phy/qcom/qcom-phy-lib.c |  429 +++++
+ drivers/net/phy/qcom/qcom.h         |  120 ++
+ 10 files changed, 2927 insertions(+), 2766 deletions(-)
+ delete mode 100644 drivers/net/phy/at803x.c
+ create mode 100644 drivers/net/phy/qcom/Kconfig
+ create mode 100644 drivers/net/phy/qcom/Makefile
+ create mode 100644 drivers/net/phy/qcom/at803x.c
+ create mode 100644 drivers/net/phy/qcom/qca808x.c
+ create mode 100644 drivers/net/phy/qcom/qca83xx.c
+ create mode 100644 drivers/net/phy/qcom/qcom-phy-lib.c
+ create mode 100644 drivers/net/phy/qcom/qcom.h
+
+-- 
+2.43.0
+
 
