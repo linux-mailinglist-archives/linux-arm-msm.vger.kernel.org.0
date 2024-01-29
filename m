@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-8818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8819-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C801840340
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 11:54:59 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E11D840343
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 11:55:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8B2211F2264B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 10:54:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D62E01F227A0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 10:55:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40CDD5B1FE;
-	Mon, 29 Jan 2024 10:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3C7D5A0F7;
+	Mon, 29 Jan 2024 10:54:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LYC8dNKP"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sHl5DKZu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694135B5B0
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 10:54:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01BD85BAE9
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 10:54:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706525682; cv=none; b=FHak06KKSpWtsJ7aw6bEjjsTgXgdVJOLeKWsWqCyBzHd0d9EdO54Jqf2carlxZ1sqLZNhsx2Y8WYqc/uuI+L6WoTAgCHbht8cq6HjWyiIeIJwZ163U8VDygc15mO15+iCFhi3Xilxfy9e15gJ8YlRxsHf84giZ94A/rCtnGp/hs=
+	t=1706525696; cv=none; b=UHNo1mXvCX7ZwGcqvkLTTAXjQfURcJ1gQC7DqIs0h4CVxaJzuxY9mZmccFssyeCP76LLsAVqY4s1Z+Wmm/wqOI17M9w5W1CoqmDVIziGZ4taiX+mTp14rlELebON3W1PMXIaSiXemEtJrI47jD1urE/N09TiF6nswb0uXeO+Y6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706525682; c=relaxed/simple;
-	bh=0OOlZAfncJbxbqjBhPaVC+/cyvvmPa7Ewj2ttV15Qwg=;
+	s=arc-20240116; t=1706525696; c=relaxed/simple;
+	bh=V7OuyigMnu5WcBt4OgeAliSy2+H1hiq1lw+Kv5s8oOk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bW8b5OJaySFn88Gnj4RfcA9Pz3MOdBdIkhwU+3XSvZ35Ar68OW+Un5RfO8mQd0tkZNEhEwkZ0xxlattbrjEpqZpv2EyoYyFjgBkfn6guvwaofUX9nj29jhKFrTzFEmqKUUIMltN9aTjr1TiZ5v5JgjQYfXN32/QNvfQRk7hSaKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LYC8dNKP; arc=none smtp.client-ip=209.85.218.42
+	 In-Reply-To:Content-Type; b=gRMWoU6Qrn+V5XVJGfnb/shMvr9l0RhPhUHuA9SR4IREQR7U1lLTbfdFD1WTuZm6k7CEy26rFKoreRBred9bXIgz58idU7G0B41doDjZOmzvCC5ObYLw+/h+AfNSV5ZEthVuKVduqTOoAOpi/Y9Uf8Q0qk4zDYG1tXfFOpzpGUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sHl5DKZu; arc=none smtp.client-ip=209.85.218.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a35e0532900so54132166b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 02:54:40 -0800 (PST)
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a35c0ed672cso81353366b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 02:54:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706525678; x=1707130478; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706525693; x=1707130493; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=YwDit8f8GdDnK6awwTY5LqMXgknscPmpERraWFVUSiE=;
-        b=LYC8dNKPaB3/SJaLI5Pe0RBAayIOSKIMG3ObShCXuw9SnANMMVPSTkH6Uyu9kax+tF
-         7IUm24pDFzScvwewEtusVUnQScWk1lUUj6yqhPPGkkoC76baYcdH5AiBJcN7Jpq5janL
-         2AAbg2tL0o4BjeUJL9C8SextBMQXA6/t2u7+oDRlTn0qFhMzQ4ZcthRMZ35jw0aceB70
-         hXlSlezFr2upcZLnupKarIEwYJihkmVYU8UB819pQl22PgQCGXmya+CFGaobGIpnOcy7
-         MgHvbdgpYSJUKZsl2eVhMRvDLA/OpcGbVno973XBVLjyovPmFmKTLsIrYTGp404OOwHf
-         8v8g==
+        bh=IpTznrccajOzjnwd4oMvr4JtfDi8gWyyWPmgWPWrgGk=;
+        b=sHl5DKZuyX7y7Q11F3f0lEohYVt3Ny00RbgNYQRwMbT6juWMwrNDtZt9vl9ZqzvO7x
+         veVxOrk1eIVKsXBy7cXQ/+XbP8HnUxQmuw7Q6ZdQ/GiKSVYdaVjwkaVWAoJnfGV6Iw4C
+         zXMWmoh8q7oNiMll72yw4dVCF+78N4woceciux4PgsV2c0fIZ+cIpE7ZH1PW9LFoC1BU
+         AFL3xA0+ipzKuRBC0bEEitKj8vSJ7UOeLvRd6OcB6/hahc4Mn7hYnGYUrKRkALUiFWmS
+         Y+s0E/8iO1nZm7qkYnf9c6sSMGJ7SPzFbNCWbnrgKrm5X/H7VC7NUSzMuDFrvrsX4wI+
+         56Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706525678; x=1707130478;
+        d=1e100.net; s=20230601; t=1706525693; x=1707130493;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YwDit8f8GdDnK6awwTY5LqMXgknscPmpERraWFVUSiE=;
-        b=j6vKg2QUjD0491tzejz4m8zBYxyYQTPNEzGzGaiWKyq3AEnS6DZW4/CyReYXqmn9ML
-         XSS5RwUGvl3ZTp2ExQpOdqrduMMAMQtRf/WOzXHs1pvUpTVz49KBVtebe9o1QKNV2NQm
-         kjpk6CM8c2Z3BAjU4K0YIxvyGZU95+E4ubdUW4Utr8sM/cKczCQt8HU1fZIZfd9VjKlK
-         ARBY2jRk9U9GI6AcU9Zlgg3eag9TkJroZAVXfcgj8s/W3+cwoRHcNMPQN+n/KBFdNBXX
-         sM+SBc7ZduDLp5wmF+dtjlzsXn5jLPAA2T8rhN/2ojHz19lBYinBQrW7s2BCYs1uBeWJ
-         i8tQ==
-X-Gm-Message-State: AOJu0Yy+EcFgTmm7mVKSzk2VZLDnipA5Y0hgcJ1yIORbQufHQJP+SX4X
-	VRqgJ8azCtHMLSItpf1Xbjgg1GLuoPUylilOXSAMETerNi9Q9AWZAKr33XBuo5g=
-X-Google-Smtp-Source: AGHT+IF84e0MIsQNIiDapf/KgFH2YIUKmDjGCHWvHDrV6RfmclMMhwIS+h+uBEf9HuqIsp3o030Wxg==
-X-Received: by 2002:a17:907:20e3:b0:a34:a9de:814a with SMTP id rh3-20020a17090720e300b00a34a9de814amr3669204ejb.61.1706525678445;
-        Mon, 29 Jan 2024 02:54:38 -0800 (PST)
+        bh=IpTznrccajOzjnwd4oMvr4JtfDi8gWyyWPmgWPWrgGk=;
+        b=hz2YnliJ0hR8JFR9zY5cY3X3rZ5682blYhb0WJqCCj00iaFO3VWrEeuq7RqsttkDHn
+         TAcbS9OEccyGKyT32POhdbJ6Xq1XEoC8idGrKtCG85c601m0IBaLPz1AkAflZE2yXNBC
+         +yOSGbYeRGFfEOj0Cb/MwwImyIt0AjY6zi6OEnBd/LXZ94WP5S+Ka2jqAIyqn/ofnsoc
+         wzH3Z/Xn0nbPx5IyjKQ6u+eTRTYfoiGrrp4UjI126sLA5ekGhE+qYe92nV3bWD95W+1c
+         rD3/95CljIMeJ4haL30e7TEuTDbYe6fJoFvbLjUrF5cPBGcix9KB/mv6iwZ/Efr4gcDI
+         fHTA==
+X-Gm-Message-State: AOJu0YwMcBSE2wl4d2HaCn+oos7bHdZHBs6JmSQP8977ucz/u5r5vG2g
+	FmY+fF/DIu473jVYhMPm8m5Tkf25qMlUtFmQxHaZA+uBZdUSch7Oc/WXl0Ct43Q=
+X-Google-Smtp-Source: AGHT+IGW84WM+W2Q5H1HuKourWjbXDvPwtx/yJaV+D9RYLGTXoq6JLzRJShWDJHNrFtqqYoagSkd2Q==
+X-Received: by 2002:a17:906:fb05:b0:a35:9ebd:f6b with SMTP id lz5-20020a170906fb0500b00a359ebd0f6bmr2257189ejb.58.1706525693018;
+        Mon, 29 Jan 2024 02:54:53 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.222.62])
-        by smtp.gmail.com with ESMTPSA id hd10-20020a170907968a00b00a35cd148c7esm636039ejc.212.2024.01.29.02.54.37
+        by smtp.gmail.com with ESMTPSA id hd10-20020a170907968a00b00a35cd148c7esm636039ejc.212.2024.01.29.02.54.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Jan 2024 02:54:38 -0800 (PST)
-Message-ID: <c127c81d-e491-4af3-9b0d-50acd09439ff@linaro.org>
-Date: Mon, 29 Jan 2024 11:54:37 +0100
+        Mon, 29 Jan 2024 02:54:52 -0800 (PST)
+Message-ID: <625f349b-45ad-4f8a-a635-15a2860d26c1@linaro.org>
+Date: Mon, 29 Jan 2024 11:54:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,8 +75,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/14] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy:
- Document missing compatible for SM8350 3x2 PHY
+Subject: Re: [PATCH 01/14] dt-bindings: phy: qcom,ipq8074-qmp-pcie: Drop
+ PCIE_AUX_CLK from pcie_phy node
 Content-Language: en-US
 To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>,
@@ -88,7 +88,7 @@ To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20240124-pcie-aux-clk-fix-v1-0-d8a4852b6ba6@linaro.org>
- <20240124-pcie-aux-clk-fix-v1-5-d8a4852b6ba6@linaro.org>
+ <20240124-pcie-aux-clk-fix-v1-1-d8a4852b6ba6@linaro.org>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -134,20 +134,20 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240124-pcie-aux-clk-fix-v1-5-d8a4852b6ba6@linaro.org>
+In-Reply-To: <20240124-pcie-aux-clk-fix-v1-1-d8a4852b6ba6@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 24/01/2024 08:36, Manivannan Sadhasivam wrote:
-> Document the compatible for SM8350 PCIe Gen3 x2 lane PHY.
+> PCIe PHY hw doesn't require PCIE_AUX_CLK for functioning. This clock is
+> only required by the PCIe controller. Hence drop it from the binding.
 > 
 > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml | 2 ++
->  1 file changed, 2 insertions(+)
-> 
+>  .../devicetree/bindings/phy/qcom,ipq8074-qmp-pcie-phy.yaml       | 9 +++------
+>  1 file changed, 3 insertions(+), 6 deletions(-)
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
