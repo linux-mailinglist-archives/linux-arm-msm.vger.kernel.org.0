@@ -1,91 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-8911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D14D98413AE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 20:42:53 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E1558414C0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 21:57:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5E8E61F21F35
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 19:42:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B17D81C23864
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 20:57:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54E776F06D;
-	Mon, 29 Jan 2024 19:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CCC4158D87;
+	Mon, 29 Jan 2024 20:57:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="MeQl1Sw4"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="DkW4ME8P"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB994C63A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 19:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CDBE15703E
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 20:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706557369; cv=none; b=YJuMD20iaBH4YzqP/GCs1q71arvA827Ej3XnCalnb1TqlQ9/tIY1/2fMVZdql3b429pAN8twKK6jf1kvp5ngLtH2VflzV0rPywh52aBUnJdQHOt9gmN/9ZGffoEUsbdUAuhTL30BJQXx1exp5jcQkYryg1VXErYxUQYbkZnsKGU=
+	t=1706561848; cv=none; b=rvoaTC6/5CNix/Jx7dQnvYs8Tx3Iso46fglEwA8JC1ZLTN1jFdcqaJCISQffdWYK38BzfpX6Jjg2rpDvWzkOA9g3p27EIwlSzUx5zDBNhg0CadPC4E3FA0v7UAlxSLfz6Box0a1mkkCotdSeKBGah+myfcH2zxSQi4uDX86sKy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706557369; c=relaxed/simple;
-	bh=0IossWu4UpgVpMtMdcmHPu1ZZhD0JBLYr94Oq6BZXiI=;
+	s=arc-20240116; t=1706561848; c=relaxed/simple;
+	bh=2b0Fm92BYrv7od4rmimCRIjuTkKWHJKFkRBuhDCF5M8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qqR2g250UQvnWqcQi6wsdsry/9xYklvRJXHHph66EVdeuAmAkZUt+FrdmYJXPPYSkm4oeHoo9jXZciDG0ZMsohrarPUdB781SIBxauzdUGwbpF2+n6x7PJQhAjjcJDo2lu+CS96p7EB+6kCa2mhAnyubpytpbhN/lbarAUAtmfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=MeQl1Sw4; arc=none smtp.client-ip=170.10.133.124
+	 Content-Type:Content-Disposition:In-Reply-To; b=H5eykMWmYF6ZrW71culDJs2zEZ8DRxHUqUX7JFdKoxk1ZjyFOps63nRIsFnmp25bUxE97EB6xsoU9GOY0+59UTfAgz92Hs4Gm3KhEo9V/PkiuX827lNoECXN5DV2AzLQ6uSyh29Ehbvexi+zPIZrR8qgVyX9eWpGC1HaPPp45Gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=DkW4ME8P; arc=none smtp.client-ip=170.10.133.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1706557366;
+	s=mimecast20190719; t=1706561845;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=6eMGjFNAQFg5AWGDSpwZ9ve2g+VcHkXFxxu/Em8ANwU=;
-	b=MeQl1Sw4g4qN2d6z80K7aA2XoVSEY1TCv/Kr5FYBfqwmbFqD5dmeCJAYg3oK8wClpjd4Ak
-	A/eHlgt/nFF2QDfgyUq1b57Gxzr1JPvSrPIJehK86KAVQRRMlD/mAJbYwcx52FQ7kl4kpy
-	1tB1rEGcKyN6yp/zKnN375/WzxMLgBs=
+	bh=ZpSdnNveS03uidkIaCRaoRGMyvrhYIOI4fp4SKhQKFg=;
+	b=DkW4ME8Pnq/6g2VqyOjh2b/PcOj8TUY5PePkbWyTSvx+RoYU5F84jW8LNLSQhbB5kRpBvn
+	DFUQWlR/wdlIKs6Y1XxxZeu0UeQATc/oPbnjucBmFbigtaUnERT0HxO85uwZ+M6uOk/qty
+	7IQ+CqqhWH7Jc0pBBDbL8MJckDjGr1c=
 Received: from mail-vk1-f198.google.com (mail-vk1-f198.google.com
  [209.85.221.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-84-l_TWf_KnNQeyg2uEDRHsfw-1; Mon, 29 Jan 2024 14:42:45 -0500
-X-MC-Unique: l_TWf_KnNQeyg2uEDRHsfw-1
-Received: by mail-vk1-f198.google.com with SMTP id 71dfb90a1353d-4b78e56d741so570844e0c.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 11:42:44 -0800 (PST)
+ us-mta-118-nakZlgmGPjqmsZb6zcft5A-1; Mon, 29 Jan 2024 15:57:23 -0500
+X-MC-Unique: nakZlgmGPjqmsZb6zcft5A-1
+Received: by mail-vk1-f198.google.com with SMTP id 71dfb90a1353d-4bdc1d595c0so624963e0c.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 12:57:23 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706557364; x=1707162164;
+        d=1e100.net; s=20230601; t=1706561843; x=1707166643;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6eMGjFNAQFg5AWGDSpwZ9ve2g+VcHkXFxxu/Em8ANwU=;
-        b=q5gwKdaG4N+OAer0S74JC6uMI8PebbTdTsxSzQYfMFeIVSqLrTxBF9Eqd3ehd2BgD4
-         qWaB3MPXIluUjHO8dyICZ4UYd3sZEFMi1KD/cQJC7TgbhiSaPLw/QjP75MzQvBgJ5hAu
-         kXsY2CmUBazrJWknW4lXCdBOP/sbISybb4e7t5Yy+Fk9z2KJJ0o5qXHyDwpTimJdCkHn
-         n6vElr6Yc8/zWKn/eEw+ItoGgHLRK68mey2I17jgOb3L8E8skD1Zsw8a8pIhApJ/aNVA
-         w6Ki407/j60MuH11YVZaawsau1PN5HO3vBcRR8seLwDujOJMHu7ypVwjSCLAmVcnn+3D
-         3tGA==
-X-Gm-Message-State: AOJu0YyZGuGesji1W9y/Ai0l0FFsI9pv73HXRDS56VUdCOIxfTXeJiJZ
-	DFPKwQGd2RV3avC2srx0x/gtXpC58Z21vlCBHKtu6cQpGdEV4lSYI8yuGD8Tk3zYVGR6BPudlQK
-	XC4ftTtrMXoxK4/Hf9nob97LtkKHNqEdCqiBxL0YN80uIdZvCv5OL1Gur/P2Muxk=
-X-Received: by 2002:a05:6122:905:b0:4b6:d44e:2897 with SMTP id j5-20020a056122090500b004b6d44e2897mr2411891vka.33.1706557364498;
-        Mon, 29 Jan 2024 11:42:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEThEh8Xkd7t3M3A0o/6ZDNQQdUgWUrOE1Coe2POYUY14FwHFSt1AWYC4c9IpcRASFz/2t94Q==
-X-Received: by 2002:a05:6122:905:b0:4b6:d44e:2897 with SMTP id j5-20020a056122090500b004b6d44e2897mr2411868vka.33.1706557364144;
-        Mon, 29 Jan 2024 11:42:44 -0800 (PST)
+        bh=ZpSdnNveS03uidkIaCRaoRGMyvrhYIOI4fp4SKhQKFg=;
+        b=N4v/0Jr2t1wcsXu5o6FQDcNw2gQbIAoOZ/A9kupKCH4ntncBWPZedwHXtd214mUcmu
+         ANCWg2GZKL9MTqTpCHB/oUrStv+H2R3sa58T2XAuV15WMmkmIRalf1N1BRSCJj/W703s
+         2mDex7QK+iKeFxYqZZtk82O+sj19OadF33jozHWNkWhOqfzynBbk2m4V9ITDD8s5c4LA
+         JUmGegfaTwQbhG9+5DihcoNRWseO5MH6XfdgMV86b0xODSm9I8gsSRinFg36K61iagDR
+         NBFk5Iyog/FNBFm644bpbOsNCsFPNw/GuCHXE8vAAfaQ8mv0qqcakalWHRSjnHwOjP2d
+         g+KA==
+X-Gm-Message-State: AOJu0YyhbMwm+izn4wgouQMTlPj9uIR0tBJnY88ebiclB+knHjwb58ee
+	QwMC4LfxwRMSUF//0lboyeBWaCTw3a5H96+wQ1r9TDfu51k1JugHlHjuL+jK4jXrS6W4M8hnsOO
+	I4MpQqaS5dzeGWPsq8rH0FyI1oQ0Dkc9zp3kOLqUzTSq41WjXUUOTHt9EXgfcJMc=
+X-Received: by 2002:a05:6122:3a19:b0:4bd:800d:72ec with SMTP id fp25-20020a0561223a1900b004bd800d72ecmr2631127vkb.19.1706561842936;
+        Mon, 29 Jan 2024 12:57:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHrcccUSIgYBufwZZNxLHJdlcGzpJI+aaJovr7DFK+X2Rmv+DVoHH+zCYCUjPVWi9ptYcSCvQ==
+X-Received: by 2002:a05:6122:3a19:b0:4bd:800d:72ec with SMTP id fp25-20020a0561223a1900b004bd800d72ecmr2631106vkb.19.1706561842670;
+        Mon, 29 Jan 2024 12:57:22 -0800 (PST)
 Received: from fedora ([2600:1700:1ff0:d0e0::47])
-        by smtp.gmail.com with ESMTPSA id pj2-20020a0562144b0200b0068c445b747bsm2266170qvb.59.2024.01.29.11.42.43
+        by smtp.gmail.com with ESMTPSA id qq2-20020a0562142c0200b0068c3f3752e5sm2671268qvb.116.2024.01.29.12.57.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jan 2024 11:42:43 -0800 (PST)
-Date: Mon, 29 Jan 2024 13:42:41 -0600
+        Mon, 29 Jan 2024 12:57:22 -0800 (PST)
+Date: Mon, 29 Jan 2024 14:57:20 -0600
 From: Andrew Halaney <ahalaney@redhat.com>
-To: Sneh Shah <quic_snehshah@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>, 
-	Bhupesh Sharma <bhupesh.sharma@linaro.org>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Jose Abreu <joabreu@synopsys.com>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
-	Paolo Abeni <pabeni@redhat.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
-	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, kernel@quicinc.com
-Subject: Re: [PATCH net-next] net: stmmac: dwmac-qcom-ethqos: Add support for
- pm ops
-Message-ID: <jnwylhbparw4uwci3epbd7th4izt3rnd3uzrnm5mdunm55kdoh@yyp4dprfh3sl>
-References: <20240127130327.22443-1-quic_snehshah@quicinc.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
+	Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, 
+	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>, 
+	Andy Gross <andy.gross@linaro.org>, "James E.J. Bottomley" <jejb@linux.ibm.com>, 
+	"Martin K. Petersen" <martin.petersen@oracle.com>, linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/3] scsi: ufs: qcom: Clarify the comment of core_reset
+ property
+Message-ID: <hm2h3uniy75vkjlnk62k3y4bz44khrdwxlk47t3lndc6c3yd2x@sbwcuvrjar5n>
+References: <20240129-ufs-core-reset-fix-v1-0-7ac628aa735f@linaro.org>
+ <20240129-ufs-core-reset-fix-v1-2-7ac628aa735f@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -94,162 +95,49 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240127130327.22443-1-quic_snehshah@quicinc.com>
+In-Reply-To: <20240129-ufs-core-reset-fix-v1-2-7ac628aa735f@linaro.org>
 
-On Sat, Jan 27, 2024 at 06:33:27PM +0530, Sneh Shah wrote:
-> Add qcom ethqos specific runtime and system sleep pm ops.
-> As part of system sleep qcom ethqos needs to disable all clocks.
-> This ops will be extended further with qcom specific features.
-
-This last sentence sounds like this series is incomplete, I'd avoid such
-wording if its untrue. Upstream typically won't accept things that are
-building infrastructure for patches that will "eventually be posted".
-
-You state in your commit what the code does (really it replaces the
-stmmac_pltfrm_ops with its own), but only gloss over the why. I'd lead
-with the "why". i.e. I'd say something like
-"net: stmmac: dwmac-qcom-ethqos: Turn clocks off/on during suspend/resume"
-
-Since there's already a handler installed for PM ops, I'd explain why
-you need to change to new ones as well.
-
+On Mon, Jan 29, 2024 at 01:22:05PM +0530, Manivannan Sadhasivam wrote:
+> core_reset is not an optional property for the platforms supported in
+> upstream. Only for the non-upstreamed legacy platforms it is optional.
+> But somehow a few of the upstreamed platforms do not pass this property
+> by mistake.
 > 
-> Signed-off-by: Sneh Shah <quic_snehshah@quicinc.com>
+> So clarify the comment to make it clear that even though core_reset is
+> required, it is kept as optional to support the DTs that do not pass this
+> property.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 51 ++++++++++++++++++-
->  1 file changed, 50 insertions(+), 1 deletion(-)
+>  drivers/ufs/host/ufs-qcom.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> index 31631e3f89d0..cba601ee9e01 100644
-> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> @@ -720,6 +720,55 @@ static void ethqos_ptp_clk_freq_config(struct stmmac_priv *priv)
->  	netdev_dbg(priv->dev, "PTP rate %d\n", plat_dat->clk_ptp_rate);
->  }
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 39eef470f8fa..32760506dfeb 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -1027,7 +1027,11 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+>  	host->hba = hba;
+>  	ufshcd_set_variant(hba, host);
 >  
-> +static int qcom_ethqos_runtime_suspend(struct device *dev)
-> +{
-> +	struct net_device *ndev = dev_get_drvdata(dev);
-> +	struct stmmac_priv *priv = netdev_priv(ndev);
-> +
-> +	return stmmac_bus_clks_config(priv, false);
-> +}
-> +
+> -	/* Setup the optional reset control of HCI */
+> +	/*
+> +	 * Even though core_reset is required on all platforms, some DTs never
+> +	 * passed this property. So we have to keep it optional for supporting
+> +	 * them.
+> +	 */
 
-This perfectly matches the stmmac_runtime_suspend() function installed
-originally. I don't see why you couldn't at a minimum reuse
-that function instead of writing your own.
+Any desire to print a warning if !host->core_reset? I'll defer to
+Qualcomm to review since they can confirm the accuracy past Can's
+comment, but this looks good to me for what its worth.
 
-> +static int qcom_ethqos_runtime_resume(struct device *dev)
-> +{
-> +	struct net_device *ndev = dev_get_drvdata(dev);
-> +	struct stmmac_priv *priv = netdev_priv(ndev);
-> +
-> +	return stmmac_bus_clks_config(priv, true);
-> +}
-
-Same idea as the stmmac_runtime_suspend() comment above!
-
-> +
-> +static int qcom_ethqos_suspend(struct device *dev)
-> +{
-> +	struct net_device *ndev = dev_get_drvdata(dev);
-> +	struct stmmac_priv *priv = netdev_priv(ndev);
-> +	int ret;
-> +
-> +	if (!ndev || !netif_running(ndev))
-> +		return -EINVAL;
-> +
-> +	ret = stmmac_suspend(dev);
-
-ret here is ignored.
-
-> +
-> +	return stmmac_bus_clks_config(priv, false);
-> +}
-> +
-> +static int qcom_ethqos_resume(struct device *dev)
-> +{
-> +	struct net_device *ndev = dev_get_drvdata(dev);
-> +	struct stmmac_priv *priv = netdev_priv(ndev);
-> +	int ret;
-
-unused ret.
-
-> +
-> +	if (!ndev || !netif_running(ndev))
-> +		return -EINVAL;
-> +
-> +	stmmac_bus_clks_config(priv, true);
-
-Probably should check this.
-
-> +
-> +	return stmmac_resume(dev);
-> +}
-
-Both the new system sleep ops installed here basically match the
-stmmac_pltfrm_suspend/resume() functions that were already installed.
-The only difference I'm noting is that you want to call
-stmmac_bus_clks_config() in your implementation, whereas the originals call
-the exit()/init() callbacks if they exist in the platform driver.
-
-I would say "let's just make a exit()/init() callback for Qualcomm", but
-looking further... (see below)
-
-> +
-> +const struct dev_pm_ops qcom_ethqos_pm_ops = {
-> +	SET_SYSTEM_SLEEP_PM_OPS(qcom_ethqos_suspend, qcom_ethqos_resume)
-> +	SET_RUNTIME_PM_OPS(qcom_ethqos_runtime_suspend, qcom_ethqos_runtime_resume, NULL)
-> +};
-> +
->  static int qcom_ethqos_probe(struct platform_device *pdev)
->  {
->  	struct device_node *np = pdev->dev.of_node;
-> @@ -838,7 +887,7 @@ static struct platform_driver qcom_ethqos_driver = {
->  	.probe  = qcom_ethqos_probe,
->  	.driver = {
->  		.name           = "qcom-ethqos",
-> -		.pm		= &stmmac_pltfr_pm_ops,
-> +		.pm		= &qcom_ethqos_pm_ops,
-
-You effectively remove the stmmac_pltfr_noirq_suspend()/resume()
-callbacks here, which do the stmmac_bus_clks_config() via
-pm_runtime_force_suspend() etc during late suspend/early resume.
-
-I do see this if statement, but I believe !device_may_wakeup() is true here,
-so the clocks should get killed.
-
-	static int __maybe_unused stmmac_pltfr_noirq_suspend(struct device *dev)
-	{
-		struct net_device *ndev = dev_get_drvdata(dev);
-		struct stmmac_priv *priv = netdev_priv(ndev);
-		int ret;
-
-		if (!netif_running(ndev))
-			return 0;
-
-		if (!device_may_wakeup(priv->device) || !priv->plat->pmt) {
-			/* Disable clock in case of PWM is off */
-			clk_disable_unprepare(priv->plat->clk_ptp_ref);
-
-			ret = pm_runtime_force_suspend(dev);
-			if (ret)
-				return ret;
-		}
-
-		return 0;
-	}
-
-Right now I'm of the opinion that this patch shouldn't really change
-much based on that digging. Please let me know if I'm missing something
-but it appears to me this should already be working.
-
->  		.of_match_table = qcom_ethqos_match,
->  	},
->  };
+>  	host->core_reset = devm_reset_control_get_optional(hba->dev, "rst");
+>  	if (IS_ERR(host->core_reset)) {
+>  		err = dev_err_probe(dev, PTR_ERR(host->core_reset),
+> 
 > -- 
-> 2.17.1
+> 2.25.1
+> 
 > 
 
 
