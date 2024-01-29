@@ -1,143 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-8912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E1558414C0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 21:57:46 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30D6D841558
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 23:03:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B17D81C23864
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 20:57:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DB86C28825C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 22:03:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CCC4158D87;
-	Mon, 29 Jan 2024 20:57:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C57E158D9E;
+	Mon, 29 Jan 2024 22:03:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="DkW4ME8P"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lkFVN1Ow"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CDBE15703E
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 20:57:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F741158D9B
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 22:03:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706561848; cv=none; b=rvoaTC6/5CNix/Jx7dQnvYs8Tx3Iso46fglEwA8JC1ZLTN1jFdcqaJCISQffdWYK38BzfpX6Jjg2rpDvWzkOA9g3p27EIwlSzUx5zDBNhg0CadPC4E3FA0v7UAlxSLfz6Box0a1mkkCotdSeKBGah+myfcH2zxSQi4uDX86sKy4=
+	t=1706565805; cv=none; b=mBOszHOsIZfAKRQ3RXKgw7GSmCcmaUTwEb430OW+2S4HCgNNwlkiIxpyMTIVfsku0tFC3aAbv4NtEjZsXlfvd3XXIrCaeIPvI+rodICWemsG1UoIIaRRzs0ajqK5H1mxAMvtPGhov9lc/hAK6V1XDKXTYOPuE3PiF7xiR0TJ22s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706561848; c=relaxed/simple;
-	bh=2b0Fm92BYrv7od4rmimCRIjuTkKWHJKFkRBuhDCF5M8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H5eykMWmYF6ZrW71culDJs2zEZ8DRxHUqUX7JFdKoxk1ZjyFOps63nRIsFnmp25bUxE97EB6xsoU9GOY0+59UTfAgz92Hs4Gm3KhEo9V/PkiuX827lNoECXN5DV2AzLQ6uSyh29Ehbvexi+zPIZrR8qgVyX9eWpGC1HaPPp45Gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=DkW4ME8P; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1706561845;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ZpSdnNveS03uidkIaCRaoRGMyvrhYIOI4fp4SKhQKFg=;
-	b=DkW4ME8Pnq/6g2VqyOjh2b/PcOj8TUY5PePkbWyTSvx+RoYU5F84jW8LNLSQhbB5kRpBvn
-	DFUQWlR/wdlIKs6Y1XxxZeu0UeQATc/oPbnjucBmFbigtaUnERT0HxO85uwZ+M6uOk/qty
-	7IQ+CqqhWH7Jc0pBBDbL8MJckDjGr1c=
-Received: from mail-vk1-f198.google.com (mail-vk1-f198.google.com
- [209.85.221.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-118-nakZlgmGPjqmsZb6zcft5A-1; Mon, 29 Jan 2024 15:57:23 -0500
-X-MC-Unique: nakZlgmGPjqmsZb6zcft5A-1
-Received: by mail-vk1-f198.google.com with SMTP id 71dfb90a1353d-4bdc1d595c0so624963e0c.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 12:57:23 -0800 (PST)
+	s=arc-20240116; t=1706565805; c=relaxed/simple;
+	bh=1VUKD21nrbIVOTIxxRybvfvlN1MBpUbaPz67ZZlJlPA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NvyqLrK5OtvV9y0PRNRXhuT7xKIBxuGe7aaJOOOf2KbV6iiqF8gJS/ZbKcpMNYETLZzBmaLKNt57FtnRBQ5eYbWbwBM6UZpo+B4ZYVpgFFcM7JnniwCYGitTHrn+0ojfh5ZzGOv5KBJkHPn2qWK4bJTr7v7zr55hWOB6LgGAxbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lkFVN1Ow; arc=none smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-602c91a76b1so42120877b3.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 14:03:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706565802; x=1707170602; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=iizRxv6NysE36xdrVEdKo+2mCUyIdpOKnLfh9KMSTAo=;
+        b=lkFVN1Owg+GMNV0ryFQOc5WHYTsYWPa2ISDlnduIY9eKrUO6YEfk00n81wWBdZyNSL
+         XtFLACiEIjq0lXdRQv/ffZWo0Di4pGfTTgtQJ07Cd6UtXy1FJM9lcx4inPEhq47hpqYs
+         P2vODrHcXb8sIBtdNYAUovDE3cMpYFvNbY1YLBIogfvIOhNQ1mQlYlYPmuanZTkOia29
+         LQjobyAab8vB9RwQzTxAMSqKS8Zsg8z0f3GK1+C8KFA0yO+08dXH1Oo4cKQlRHs/UFnX
+         GJLs0Dgg1VTiSXUIcUS3iL0T9PRME3VgjlG9B922SnehBtq5OMW0G56SJJUhvbSLV0hz
+         TW6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706561843; x=1707166643;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZpSdnNveS03uidkIaCRaoRGMyvrhYIOI4fp4SKhQKFg=;
-        b=N4v/0Jr2t1wcsXu5o6FQDcNw2gQbIAoOZ/A9kupKCH4ntncBWPZedwHXtd214mUcmu
-         ANCWg2GZKL9MTqTpCHB/oUrStv+H2R3sa58T2XAuV15WMmkmIRalf1N1BRSCJj/W703s
-         2mDex7QK+iKeFxYqZZtk82O+sj19OadF33jozHWNkWhOqfzynBbk2m4V9ITDD8s5c4LA
-         JUmGegfaTwQbhG9+5DihcoNRWseO5MH6XfdgMV86b0xODSm9I8gsSRinFg36K61iagDR
-         NBFk5Iyog/FNBFm644bpbOsNCsFPNw/GuCHXE8vAAfaQ8mv0qqcakalWHRSjnHwOjP2d
-         g+KA==
-X-Gm-Message-State: AOJu0YyhbMwm+izn4wgouQMTlPj9uIR0tBJnY88ebiclB+knHjwb58ee
-	QwMC4LfxwRMSUF//0lboyeBWaCTw3a5H96+wQ1r9TDfu51k1JugHlHjuL+jK4jXrS6W4M8hnsOO
-	I4MpQqaS5dzeGWPsq8rH0FyI1oQ0Dkc9zp3kOLqUzTSq41WjXUUOTHt9EXgfcJMc=
-X-Received: by 2002:a05:6122:3a19:b0:4bd:800d:72ec with SMTP id fp25-20020a0561223a1900b004bd800d72ecmr2631127vkb.19.1706561842936;
-        Mon, 29 Jan 2024 12:57:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHrcccUSIgYBufwZZNxLHJdlcGzpJI+aaJovr7DFK+X2Rmv+DVoHH+zCYCUjPVWi9ptYcSCvQ==
-X-Received: by 2002:a05:6122:3a19:b0:4bd:800d:72ec with SMTP id fp25-20020a0561223a1900b004bd800d72ecmr2631106vkb.19.1706561842670;
-        Mon, 29 Jan 2024 12:57:22 -0800 (PST)
-Received: from fedora ([2600:1700:1ff0:d0e0::47])
-        by smtp.gmail.com with ESMTPSA id qq2-20020a0562142c0200b0068c3f3752e5sm2671268qvb.116.2024.01.29.12.57.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jan 2024 12:57:22 -0800 (PST)
-Date: Mon, 29 Jan 2024 14:57:20 -0600
-From: Andrew Halaney <ahalaney@redhat.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
-	Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, 
-	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>, 
-	Andy Gross <andy.gross@linaro.org>, "James E.J. Bottomley" <jejb@linux.ibm.com>, 
-	"Martin K. Petersen" <martin.petersen@oracle.com>, linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/3] scsi: ufs: qcom: Clarify the comment of core_reset
- property
-Message-ID: <hm2h3uniy75vkjlnk62k3y4bz44khrdwxlk47t3lndc6c3yd2x@sbwcuvrjar5n>
-References: <20240129-ufs-core-reset-fix-v1-0-7ac628aa735f@linaro.org>
- <20240129-ufs-core-reset-fix-v1-2-7ac628aa735f@linaro.org>
+        d=1e100.net; s=20230601; t=1706565802; x=1707170602;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iizRxv6NysE36xdrVEdKo+2mCUyIdpOKnLfh9KMSTAo=;
+        b=toC4QHv0cE5draycBeSytNvngh3RfQSIC3IrsnLO4fzg4uDLvcLS2JVv2gQZ/RozBL
+         kfN1rQjhUmy8pi2eFABqVB4p6bxrlELLZU1QZwqkiUUOrOKycrC/dRpiUSfMq6giKmQe
+         faGm2R7iFHefMZ2hRLC7d1XZZ7VQfG5RhpSUJnjhhxNCfehyeAwca7fsGEUCKNi/op7V
+         Cg++bBFxtvLGngmfI3P9IWT6SK2nEPRV6e6lHEqSD5xdjwxkV/QTVqHf/h+TuiMw7c6v
+         P/rARgXsYJAaf9/JGtnhEERgh2LpiPepFRjd9wo2UpMTKWCDQqg+h9wGVlGcdVfWRmo0
+         +vLQ==
+X-Gm-Message-State: AOJu0YwnHw/mAUBEEO4Ti/8e9vwQnpC+rQSsFv+2q9ysjNWXW33hsRti
+	i3sDD1H9sUfTfCmumBpsYjM1RRdOH29+zIy7uhRanqDu7qaSBoGgcDfpycviLWKBrv/i+jebqjk
+	3Z//1bxqggwO8w1kpveq1nFlB2eCpezAvjVUPOQ==
+X-Google-Smtp-Source: AGHT+IF56uXHT4Cgjob666MahBgikEJ7dPk4T30eS88whDfuArgJB7aIwJP3xVTnl2WJOYxa9KCJ6EHOmRzxFs/98Rg=
+X-Received: by 2002:a05:690c:d1d:b0:5ff:9089:7d19 with SMTP id
+ cn29-20020a05690c0d1d00b005ff90897d19mr7855510ywb.66.1706565802609; Mon, 29
+ Jan 2024 14:03:22 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240129-ufs-core-reset-fix-v1-2-7ac628aa735f@linaro.org>
+References: <cover.1706296015.git.quic_uchalich@quicinc.com>
+ <12bfdd23772c49530b8b0993cc82bc89b3eb4ada.1706296015.git.quic_uchalich@quicinc.com>
+ <CAA8EJppapW5nOFphBWove1ni8nbkA=xHON9D13NYeYHhyqL1Fg@mail.gmail.com> <94b097d4-dcfa-4136-ba75-f665f5bc747d@quicinc.com>
+In-Reply-To: <94b097d4-dcfa-4136-ba75-f665f5bc747d@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 30 Jan 2024 00:03:11 +0200
+Message-ID: <CAA8EJpqa5YArFk893nDz_oibbV=oqGEeYq6_jw582rQs=O_WpA@mail.gmail.com>
+Subject: Re: [PATCH 5/5] soc: qcom: llcc: Add regmap for Broadcast_AND region
+To: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, kernel@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Jan 29, 2024 at 01:22:05PM +0530, Manivannan Sadhasivam wrote:
-> core_reset is not an optional property for the platforms supported in
-> upstream. Only for the non-upstreamed legacy platforms it is optional.
-> But somehow a few of the upstreamed platforms do not pass this property
-> by mistake.
-> 
-> So clarify the comment to make it clear that even though core_reset is
-> required, it is kept as optional to support the DTs that do not pass this
-> property.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  drivers/ufs/host/ufs-qcom.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 39eef470f8fa..32760506dfeb 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -1027,7 +1027,11 @@ static int ufs_qcom_init(struct ufs_hba *hba)
->  	host->hba = hba;
->  	ufshcd_set_variant(hba, host);
->  
-> -	/* Setup the optional reset control of HCI */
-> +	/*
-> +	 * Even though core_reset is required on all platforms, some DTs never
-> +	 * passed this property. So we have to keep it optional for supporting
-> +	 * them.
-> +	 */
+On Mon, 29 Jan 2024 at 20:17, Unnathi Chalicheemala
+<quic_uchalich@quicinc.com> wrote:
+>
+>
+>
+> On 1/26/2024 12:29 PM, Dmitry Baryshkov wrote:
+> > On Fri, 26 Jan 2024 at 21:48, Unnathi Chalicheemala
+> > <quic_uchalich@quicinc.com> wrote:
+> >>
+> >> To support CSR programming, a broadcast interface is used to program
+> >> all channels in a single command. Until SM8450 there was only one
+> >> broadcast region (Broadcast_OR) used to broadcast write and check
+> >> for status bit 0. From SM8450 onwards another broadcast region
+> >> (Broadcast_AND) has been added which checks for status bit 1.
+> >>
+> >> Update llcc_drv_data structure with new regmap for Broadcast_AND
+> >> region and initialize regmap for Broadcast_AND region when HW block
+> >> version is greater than 4.1 for backwards compatibility.
+> >>
+> >> Switch from broadcast_OR to broadcast_AND region for checking
+> >> status bit 1 as Broadcast_OR region checks only for bit 0.
+> >
+> > This breaks backwards compatibility with the existing DT files, doesn't it?
+> >
+>
+> It shouldn't as checking for status bit 1 is happening only when the block
+> version is greater than 4.1, which is when Broadcast_AND region support
+> is added.
 
-Any desire to print a warning if !host->core_reset? I'll defer to
-Qualcomm to review since they can confirm the accuracy past Can's
-comment, but this looks good to me for what its worth.
+Let me reiterate, please: with the existing DT files. You are patching
+DT files in patches 2-4, but this is not enough. DT files are
+considered to be ABI. As such old DT files must continue to work with
+newer kernels.
 
->  	host->core_reset = devm_reset_control_get_optional(hba->dev, "rst");
->  	if (IS_ERR(host->core_reset)) {
->  		err = dev_err_probe(dev, PTR_ERR(host->core_reset),
-> 
-> -- 
-> 2.25.1
-> 
-> 
+>
+> >> While at it, also check return value after reading Broadcast_OR
+> >> region in llcc_update_act_ctrl().
+> >
+> > Separate patch, Fixes tag.
+> >
+>
+> Ack. Will remove this from existing patch.
+> Thanks for the review Dmitry!
+>
+> >>
+> >> Signed-off-by: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
+> >> ---
+> >>  drivers/soc/qcom/llcc-qcom.c       | 12 +++++++++++-
+> >>  include/linux/soc/qcom/llcc-qcom.h |  4 +++-
+> >>  2 files changed, 14 insertions(+), 2 deletions(-)
+> >>
+> >> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+> >> index 4ca88eaebf06..5a2dac2d4772 100644
+> >> --- a/drivers/soc/qcom/llcc-qcom.c
+> >> +++ b/drivers/soc/qcom/llcc-qcom.c
+> >> @@ -849,7 +849,7 @@ static int llcc_update_act_ctrl(u32 sid,
+> >>                 return ret;
+> >>
+> >>         if (drv_data->version >= LLCC_VERSION_4_1_0_0) {
+> >> -               ret = regmap_read_poll_timeout(drv_data->bcast_regmap, status_reg,
+> >> +               ret = regmap_read_poll_timeout(drv_data->bcast_and_regmap, status_reg,
+> >>                                       slice_status, (slice_status & ACT_COMPLETE),
+> >>                                       0, LLCC_STATUS_READ_DELAY);
+> >>                 if (ret)
+> >> @@ -859,6 +859,8 @@ static int llcc_update_act_ctrl(u32 sid,
+> >>         ret = regmap_read_poll_timeout(drv_data->bcast_regmap, status_reg,
+> >>                                       slice_status, !(slice_status & status),
+> >>                                       0, LLCC_STATUS_READ_DELAY);
+> >> +       if (ret)
+> >> +               return ret;
+> >>
+> >>         if (drv_data->version >= LLCC_VERSION_4_1_0_0)
+> >>                 ret = regmap_write(drv_data->bcast_regmap, act_clear_reg,
+> >> @@ -1282,6 +1284,14 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+> >>
+> >>         drv_data->version = version;
+> >>
+> >> +       if (drv_data->version >= LLCC_VERSION_4_1_0_0) {
+> >> +               drv_data->bcast_and_regmap = qcom_llcc_init_mmio(pdev, i + 1, "llcc_broadcast_and_base");
+> >> +               if (IS_ERR(drv_data->bcast_and_regmap)) {
+> >> +                       ret = PTR_ERR(drv_data->bcast_and_regmap);
+> >> +                       goto err;
+> >> +               }
+> >> +       }
+> >> +
+> >>         llcc_cfg = cfg->sct_data;
+> >>         sz = cfg->size;
+> >>
+> >> diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
+> >> index 1a886666bbb6..9e9f528b1370 100644
+> >> --- a/include/linux/soc/qcom/llcc-qcom.h
+> >> +++ b/include/linux/soc/qcom/llcc-qcom.h
+> >> @@ -115,7 +115,8 @@ struct llcc_edac_reg_offset {
+> >>  /**
+> >>   * struct llcc_drv_data - Data associated with the llcc driver
+> >>   * @regmaps: regmaps associated with the llcc device
+> >> - * @bcast_regmap: regmap associated with llcc broadcast offset
+> >> + * @bcast_regmap: regmap associated with llcc broadcast OR offset
+> >> + * @bcast_and_regmap: regmap associated with llcc broadcast AND offset
+> >>   * @cfg: pointer to the data structure for slice configuration
+> >>   * @edac_reg_offset: Offset of the LLCC EDAC registers
+> >>   * @lock: mutex associated with each slice
+> >> @@ -129,6 +130,7 @@ struct llcc_edac_reg_offset {
+> >>  struct llcc_drv_data {
+> >>         struct regmap **regmaps;
+> >>         struct regmap *bcast_regmap;
+> >> +       struct regmap *bcast_and_regmap;
+> >>         const struct llcc_slice_config *cfg;
+> >>         const struct llcc_edac_reg_offset *edac_reg_offset;
+> >>         struct mutex lock;
+> >> --
+> >> 2.25.1
+> >>
+> >>
+> >
+> >
 
+
+
+-- 
+With best wishes
+Dmitry
 
