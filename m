@@ -1,136 +1,265 @@
-Return-Path: <linux-arm-msm+bounces-8804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6628E8401D3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 10:37:32 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 252BC8401DC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 10:38:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2341228331C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 09:37:31 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 77AA2B21102
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 09:38:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDFA455777;
-	Mon, 29 Jan 2024 09:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D18AC55777;
+	Mon, 29 Jan 2024 09:38:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NZYVK73e"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nl0TWa5S"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224D155762
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 09:37:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD32E54FAE
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 09:38:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706521046; cv=none; b=C0j+1XmmOVYizGFfRIez5/7G9j1kxe2iFDROHBnGVHFHirfh+8OnJ1aYLY5K+qC94WSAoXAKwazb/f7iTVza51V4EzHy3rBVE379Z/UO1smx0FbcSPvIne3EwCS2wDsZdIQPzCxNHtSopL6FKdH8kTDsTOW865uuR06DYXofZKE=
+	t=1706521088; cv=none; b=HuFYnq5aA0KJ/kMo2LkF94cEJGGyAv+peAibpAi1mFfyXbnYlh82f1AYgi8CReqKIJOxAZHGuhQWArzJ6w0xNXlJCvlZTNgbdxntbGXR5PWiVOIMFDYuvImwWy8pauv1/lF2ESOsTGHcAb3bSVwZ9ZgJlqtHcXFN9CNpdrgvb6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706521046; c=relaxed/simple;
-	bh=K6DKN7aRQ/8wQcAXTGDdg1XPH2FdSTVkBOvXUiptcTs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=T29bI++VRzSQlfTs4ikhczjRXymu/NrYOYlTjTOss/x6vFZTIhA/1RpZeYt22wSJ9GNyo5BIkDNPjv3rMQzjnP7p4tz3sy+45EV2Z1QuZbAvk9ueh86s/YY6Pdz7ngWuFXLPxzklXS2wxOB8THzU7nicV9Nw7epC4+jAILgpFkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NZYVK73e; arc=none smtp.client-ip=209.85.218.46
+	s=arc-20240116; t=1706521088; c=relaxed/simple;
+	bh=Ldj1FDg/nEnZb9STOe9WZ7ecK09+3FkjkQDPFWHzixs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hC4gKjwDoLimw0olxqJAIaQeVjtU7fljCq1Oz0gBzHusNh+ksmfVPFjpeUkpHIdUwDSY2w0RWf3u2gJQbrVOF+qUwrAY6w3dSqTbhh0o2PVSG02TsqQWTFwzFwX+YdU8+htd5zhV3W6TfFthLbh7x28m1209ilrLY0SnJoZoTAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nl0TWa5S; arc=none smtp.client-ip=209.85.128.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a2d7e2e7fe0so474162066b.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 01:37:24 -0800 (PST)
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-5ffcb478512so16998467b3.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 01:38:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706521043; x=1707125843; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Jr1aupACniJ4UNOaCKg9pFxJXCNdS1do4M94/4Seezg=;
-        b=NZYVK73eiudWNyOJzzeQDm/d/A1O4ILNDAJdPsOl8X6GpCgY5POy+9ob9X+DQvPnlK
-         TX8Upj4cDv524YGUic06I9Iv3MN+jFx6LYmFN8UcpYKL6i3Mg0c5aLO+h/v6zv9s9ehX
-         +89GibB2YYnlf4vUBKCmPxSBAS2+jTZWfJU5bEdtAaowk3yzPoBEeE3ZpEQYX75uweHE
-         Gz6diSgxMaFjRWjJZH7qWReeDxPFjYF6Mqh2Ii2QX7aOThWaGGcquY12P6jK9D2aT5h/
-         HhQCUgaYWRzGC4q/qhueRj2wWxEMIAsohm5EUI4p5u0+cURl/ILgYdC51k99FIIxgYrZ
-         4Eog==
+        d=linaro.org; s=google; t=1706521086; x=1707125886; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=7GUkQLMq88GAXuh3Eqx0lD6UD7ww86b8Rhtv6iqBIbU=;
+        b=nl0TWa5SnLrytGAWQRk0g4SW80M2Vo4gZU8aO+ILxSlBU6DlflrmukDGMWwy3fKHuj
+         NfBj+FGfE+hWjxiPdNrya5S4r/Q17k4mcLM+Zeg8aTFUXbePSS0gjYkBPvm+Uc3ZJ6SF
+         JB0L74Xb8+JkitijWhxS+1tw0QETuMbpiQY4la1GCCo9YygJRvtu/hp5oaWx/DNzk4sz
+         1O5rScmqiieFOSr8k+mnIjucTQ7wbFCmom+1JFY9oWZZwVB45IbT6F262ShYPeSR/V2G
+         8AYFlS73+LG1OyDmQ2fGG5NMe0/GRdrfY7uK+RGp2VWro1r+sdF+PiZkl5l9oMwGlgFw
+         AxFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706521043; x=1707125843;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1706521086; x=1707125886;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Jr1aupACniJ4UNOaCKg9pFxJXCNdS1do4M94/4Seezg=;
-        b=qOYdlnL7BUZln0QwDM9U+O3LjwPXB9dz5w3+MUT2zahN7NshSL2vFTHUzpjttezY25
-         bhLQWhrr9ucrShsdQld3Nsr35+sLrdIYsx9Hajg1UIUSVfrBX8jkhjtvWYZLdRA1sSsc
-         Ol2ofK/QLfYSW97ivJ8hhrug9ffg2wyrSd04jxccg7EZPgJYf7e87TWenEozdgrQcbK0
-         GmbgcfsyD4HgTtlQWcshKqK1dBRU/zEXvAu8l1ih87oXbm1ODW8xCfVUTFtWdxkaWjS+
-         uiVqYXCLHE3ogznVHqc5NaVLR0pjJCsejujA12+kHSvtJTWUqF1x1mw6hnsJto0qNE+O
-         DPNQ==
-X-Gm-Message-State: AOJu0YzHSYjUti/0H3/7GT2hYYesk35HSrzS7BXgyBFluxbSZ6KF6xla
-	75omdZXFmEtet0rfNRsqkr0Xeq1yN4DM6wAcj1fQbC1Jg19l8LXrSUcbEgf9AeQ=
-X-Google-Smtp-Source: AGHT+IEomOmMK6WeUYqxXrpYt64BzH5q6jwxTBS+PNp9UjG0r/7N0mbKqzWsF0v7XBb/az70GAlISw==
-X-Received: by 2002:a17:906:d96e:b0:a35:b780:9315 with SMTP id rp14-20020a170906d96e00b00a35b7809315mr1739462ejb.10.1706521043246;
-        Mon, 29 Jan 2024 01:37:23 -0800 (PST)
-Received: from [127.0.1.1] ([79.115.23.25])
-        by smtp.gmail.com with ESMTPSA id cu7-20020a170906ba8700b00a3527389447sm3000379ejd.142.2024.01.29.01.37.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jan 2024 01:37:22 -0800 (PST)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Mon, 29 Jan 2024 11:37:00 +0200
-Subject: [PATCH] PCI: qcom: Add X1E80100 PCIe support
+        bh=7GUkQLMq88GAXuh3Eqx0lD6UD7ww86b8Rhtv6iqBIbU=;
+        b=HJc0JGYHMeWTICu3Gi++MPM3hYRBVAp4mzfsDvgYt5QrUJxC75z0GgRvjMXg2ZVvsa
+         flQBHIjxi+nII8KrkXVkj+WsfxdmFf6a2inbGmV4ywziuhGS6N+/dN+bkjO+v5lTFASb
+         G3FgQrcETx6Qdmqc2cryP3b+cdzeHeWzLmYQTQKV0+rW8wKZ4L0yZ8PjaAsXCi98jAMp
+         eLxJogoARJaB4+KpBg2MYLpjKBO2/TEq2OqucvVIzUuzeQNfgXfofP/mxgi4osgMly3i
+         oJF3Q6vTn2y9/QS6rAxW2/fRVlt6qkIvVUERdExW9KAOdCeARsKK3BYJnINY6eFmPGlX
+         afvg==
+X-Gm-Message-State: AOJu0Yy3miM8ombGqqsVOkK713E6iZJH2mir9c96ROZP1huyZvnapozb
+	d7k2sgBDCxbL7mWv8IkIiE9lLrka3avVpeQCgPanY/oDc45Wl074sfeiiTza5qnfvmjcoNV4+6s
+	DtDTOe6ZPMptCq7M1726JRw/T55XhoUIdmy2paw==
+X-Google-Smtp-Source: AGHT+IEeoJUoLMtBvZJFkIJY4mg0SVO8RrXIC2eL8rV9XVO7o4cYzCCwHONGiBoxbodpc9WxXQGklKeSWkdZplHmeNA=
+X-Received: by 2002:a81:aa12:0:b0:5ff:5406:e064 with SMTP id
+ i18-20020a81aa12000000b005ff5406e064mr2222313ywh.10.1706521085719; Mon, 29
+ Jan 2024 01:38:05 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240129-x1e80100-pci-v1-1-efdf758976e0@linaro.org>
-X-B4-Tracking: v=1; b=H4sIALtxt2UC/x2NywqDQAwAf0VyNpCsFrb9leJhH2kNyFZ2qQjiv
- xs8zsAwBzSpKg1e3QFVNm36Kwbcd5DmUL6Cmo3BkRvYEePO4omJcE2KMoT85IeP0Y1gSQxNMNZ
- Q0mxR+S+LybXKR/f78Z7O8wKR4Eg6cwAAAA==
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>
-Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=935; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=K6DKN7aRQ/8wQcAXTGDdg1XPH2FdSTVkBOvXUiptcTs=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlt3HL506BtaTcU/4MXKsPmBsLPwpie8TyYb+tk
- J7evlgHpMWJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZbdxywAKCRAbX0TJAJUV
- Vl+4D/91O3m6uDUjTjzuQcLRW1kQ2aXPp9iPbBrTmnuElwJm14JZVAlcMQf0vYUW2eQLb1oUWiU
- QBzzQVMCYuBFyw6yJp849SeuCQ8oCvM5HC2z7K9T9OjIZ9teqG9ZZa73TWQO2KSCAQvkty+6Nj0
- LedUO2vvVj8nxXIjuiwlOdUmt1NmsG0dn3nxd6wBEKi0rw3XwEwIXZGWluhdhOrI8LqxVs/w/CZ
- 5nBqhNgcmzcr00KSUY9DtTxJ5QwvLivAKeP2x6mlcVeyGvt7miFNJQOtAxpXk9/KcPFsUhMZbNg
- WfCc3mq4jVeQjMl1sWRVVOrr0dAFt8Qiupj43Sa97ZOwX2qUluxDCuG/8q4V2UmkYtv21dnyj6r
- jRgXZZ2THqpuFAjr/AWJzcE6QVdqVSC5exDiPNr4kN6ueUeIUsRRqouRzJm+WQRLvfmK8azN8OE
- 8TXqhFTFwWJEwyqHNoDVaXg3LPHDm8I13A/geTUgspVlAocl3Jbp6ZUu8254AikMBlPi64aO0mu
- yu6kym0QKjyChMEcgJJt1fT8yLgeq1/BTFltAtD2eO713ASuyX2N/ew4jJz/99pvO6f5mCj5Gtj
- mvZV+0Q4nJR6HcFiGp9pWJ8HoDLlgDH/vQTlq0H0vDxQbtWZJ6w59sfNgsbT0le2GtXhGTh8Kuc
- jOlrtvcTlY5ZaQw==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+References: <20240129051104.1855487-1-quic_devipriy@quicinc.com> <20240129051104.1855487-4-quic_devipriy@quicinc.com>
+In-Reply-To: <20240129051104.1855487-4-quic_devipriy@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 29 Jan 2024 11:37:54 +0200
+Message-ID: <CAA8EJppG0NehyLPkML5_Xe__Vy_aEu=qNYAd8WU5rsgLjrW8CA@mail.gmail.com>
+Subject: Re: [PATCH V3 3/7] clk: qcom: gcc-ipq9574: Add gpll0_out_aux clock &
+ enable few nssnoc clocks
+To: Devi Priya <quic_devipriy@quicinc.com>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, mturquette@baylibre.com, 
+	sboyd@kernel.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, 
+	conor+dt@kernel.org, catalin.marinas@arm.com, will@kernel.org, 
+	p.zabel@pengutronix.de, richardcochran@gmail.com, geert+renesas@glider.be, 
+	arnd@arndb.de, neil.armstrong@linaro.org, nfraprado@collabora.com, 
+	m.szyprowski@samsung.com, linux-arm-msm@vger.kernel.org, 
+	linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	netdev@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Add the compatible and the driver data for X1E80100.
+On Mon, 29 Jan 2024 at 07:13, Devi Priya <quic_devipriy@quicinc.com> wrote:
+>
+> gcc_nssnoc_nsscc_clk, gcc_nssnoc_snoc_clk, gcc_nssnoc_snoc_1_clk are
+> enabled by default and the RCGs are properly configured by the bootloader.
+>
+> Some of the NSS clocks needs these clocks to be enabled. To avoid
+> these clocks being disabled by clock framework, drop these entries
+> from the clock table and enable it in the driver probe itself.
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
+Obvious NAK for mixing two independent changes into a single patch.
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 10f2d0bb86be..2a6000e457bc 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1642,6 +1642,7 @@ static const struct of_device_id qcom_pcie_match[] = {
- 	{ .compatible = "qcom,pcie-sm8450-pcie0", .data = &cfg_1_9_0 },
- 	{ .compatible = "qcom,pcie-sm8450-pcie1", .data = &cfg_1_9_0 },
- 	{ .compatible = "qcom,pcie-sm8550", .data = &cfg_1_9_0 },
-+	{ .compatible = "qcom,pcie-x1e80100", .data = &cfg_1_9_0 },
- 	{ }
- };
- 
+>
+> Also, add support for gpll0_out_aux clock which acts as the parent for
+> certain networking subsystem (nss) clocks.
+>
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> ---
+>  Changes in V3:
+>         - Dropped flags for gpll0_out_aux
+>         - Dropped few nss clock entries from the clock table and enabled
+>           them in the probe
+>
+>  drivers/clk/qcom/gcc-ipq9574.c | 83 ++++++++++++----------------------
+>  1 file changed, 28 insertions(+), 55 deletions(-)
+>
+> diff --git a/drivers/clk/qcom/gcc-ipq9574.c b/drivers/clk/qcom/gcc-ipq9574.c
+> index e8190108e1ae..987703431b5b 100644
+> --- a/drivers/clk/qcom/gcc-ipq9574.c
+> +++ b/drivers/clk/qcom/gcc-ipq9574.c
+> @@ -105,6 +105,20 @@ static struct clk_alpha_pll_postdiv gpll0 = {
+>         },
+>  };
+>
+> +static struct clk_alpha_pll_postdiv gpll0_out_aux = {
+> +       .offset = 0x20000,
+> +       .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
+> +       .width = 4,
+> +       .clkr.hw.init = &(const struct clk_init_data) {
+> +               .name = "gpll0_out_aux",
+> +               .parent_hws = (const struct clk_hw *[]) {
+> +                       &gpll0_main.clkr.hw
+> +               },
+> +               .num_parents = 1,
+> +               .ops = &clk_alpha_pll_postdiv_ro_ops,
+> +       },
+> +};
+> +
+>  static struct clk_alpha_pll gpll4_main = {
+>         .offset = 0x22000,
+>         .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
+> @@ -2186,23 +2200,6 @@ static struct clk_branch gcc_nsscfg_clk = {
+>         },
+>  };
+>
+> -static struct clk_branch gcc_nssnoc_nsscc_clk = {
+> -       .halt_reg = 0x17030,
+> -       .clkr = {
+> -               .enable_reg = 0x17030,
+> -               .enable_mask = BIT(0),
+> -               .hw.init = &(const struct clk_init_data) {
+> -                       .name = "gcc_nssnoc_nsscc_clk",
+> -                       .parent_hws = (const struct clk_hw *[]) {
+> -                               &pcnoc_bfdcd_clk_src.clkr.hw
+> -                       },
+> -                       .num_parents = 1,
+> -                       .flags = CLK_SET_RATE_PARENT,
+> -                       .ops = &clk_branch2_ops,
+> -               },
+> -       },
+> -};
+> -
 
----
-base-commit: 01af33cc9894b4489fb68fa35c40e9fe85df63dc
-change-id: 20231201-x1e80100-pci-e3ad9158bb24
+What is the actual consumer for these clocks? Why are you trying to
+hide them instead of making them used by the consumer device?
 
-Best regards,
+>  static struct clk_branch gcc_nsscc_clk = {
+>         .halt_reg = 0x17034,
+>         .clkr = {
+> @@ -2585,40 +2582,6 @@ static struct clk_branch gcc_q6ss_boot_clk = {
+>         },
+>  };
+>
+> -static struct clk_branch gcc_nssnoc_snoc_clk = {
+> -       .halt_reg = 0x17028,
+> -       .clkr = {
+> -               .enable_reg = 0x17028,
+> -               .enable_mask = BIT(0),
+> -               .hw.init = &(const struct clk_init_data) {
+> -                       .name = "gcc_nssnoc_snoc_clk",
+> -                       .parent_hws = (const struct clk_hw *[]) {
+> -                               &system_noc_bfdcd_clk_src.clkr.hw
+> -                       },
+> -                       .num_parents = 1,
+> -                       .flags = CLK_SET_RATE_PARENT,
+> -                       .ops = &clk_branch2_ops,
+> -               },
+> -       },
+> -};
+> -
+> -static struct clk_branch gcc_nssnoc_snoc_1_clk = {
+> -       .halt_reg = 0x1707c,
+> -       .clkr = {
+> -               .enable_reg = 0x1707c,
+> -               .enable_mask = BIT(0),
+> -               .hw.init = &(const struct clk_init_data) {
+> -                       .name = "gcc_nssnoc_snoc_1_clk",
+> -                       .parent_hws = (const struct clk_hw *[]) {
+> -                               &system_noc_bfdcd_clk_src.clkr.hw
+> -                       },
+> -                       .num_parents = 1,
+> -                       .flags = CLK_SET_RATE_PARENT,
+> -                       .ops = &clk_branch2_ops,
+> -               },
+> -       },
+> -};
+> -
+>  static struct clk_branch gcc_qdss_etr_usb_clk = {
+>         .halt_reg = 0x2d060,
+>         .clkr = {
+> @@ -4043,7 +4006,6 @@ static struct clk_regmap *gcc_ipq9574_clks[] = {
+>         [GCC_SDCC1_AHB_CLK] = &gcc_sdcc1_ahb_clk.clkr,
+>         [PCNOC_BFDCD_CLK_SRC] = &pcnoc_bfdcd_clk_src.clkr,
+>         [GCC_NSSCFG_CLK] = &gcc_nsscfg_clk.clkr,
+> -       [GCC_NSSNOC_NSSCC_CLK] = &gcc_nssnoc_nsscc_clk.clkr,
+>         [GCC_NSSCC_CLK] = &gcc_nsscc_clk.clkr,
+>         [GCC_NSSNOC_PCNOC_1_CLK] = &gcc_nssnoc_pcnoc_1_clk.clkr,
+>         [GCC_QDSS_DAP_AHB_CLK] = &gcc_qdss_dap_ahb_clk.clkr,
+> @@ -4059,8 +4021,6 @@ static struct clk_regmap *gcc_ipq9574_clks[] = {
+>         [GCC_CMN_12GPLL_AHB_CLK] = &gcc_cmn_12gpll_ahb_clk.clkr,
+>         [GCC_CMN_12GPLL_APU_CLK] = &gcc_cmn_12gpll_apu_clk.clkr,
+>         [SYSTEM_NOC_BFDCD_CLK_SRC] = &system_noc_bfdcd_clk_src.clkr,
+> -       [GCC_NSSNOC_SNOC_CLK] = &gcc_nssnoc_snoc_clk.clkr,
+> -       [GCC_NSSNOC_SNOC_1_CLK] = &gcc_nssnoc_snoc_1_clk.clkr,
+>         [GCC_QDSS_ETR_USB_CLK] = &gcc_qdss_etr_usb_clk.clkr,
+>         [WCSS_AHB_CLK_SRC] = &wcss_ahb_clk_src.clkr,
+>         [GCC_Q6_AHB_CLK] = &gcc_q6_ahb_clk.clkr,
+> @@ -4140,6 +4100,7 @@ static struct clk_regmap *gcc_ipq9574_clks[] = {
+>         [GCC_SNOC_PCIE1_1LANE_S_CLK] = &gcc_snoc_pcie1_1lane_s_clk.clkr,
+>         [GCC_SNOC_PCIE2_2LANE_S_CLK] = &gcc_snoc_pcie2_2lane_s_clk.clkr,
+>         [GCC_SNOC_PCIE3_2LANE_S_CLK] = &gcc_snoc_pcie3_2lane_s_clk.clkr,
+> +       [GPLL0_OUT_AUX] = &gpll0_out_aux.clkr,
+>  };
+>
+>  static const struct qcom_reset_map gcc_ipq9574_resets[] = {
+> @@ -4326,7 +4287,19 @@ static const struct qcom_cc_desc gcc_ipq9574_desc = {
+>
+>  static int gcc_ipq9574_probe(struct platform_device *pdev)
+>  {
+> -       return qcom_cc_probe(pdev, &gcc_ipq9574_desc);
+> +       struct regmap *regmap;
+> +
+> +       regmap = qcom_cc_map(pdev, &gcc_ipq9574_desc);
+> +
+> +       if (IS_ERR(regmap))
+> +               return PTR_ERR(regmap);
+> +
+> +       /* Keep the critical clocks always-On */
+> +       regmap_update_bits(regmap, 0x17030, BIT(0), BIT(0)); /* gcc_nssnoc_nsscc_clk */
+> +       regmap_update_bits(regmap, 0x17028, BIT(0), BIT(0)); /* gcc_nssnoc_snoc_clk */
+> +       regmap_update_bits(regmap, 0x1707C, BIT(0), BIT(0)); /* gcc_nssnoc_snoc_1_clk */
+> +
+> +       return qcom_cc_really_probe(pdev, &gcc_ipq9574_desc, regmap);
+>  }
+>
+>  static struct platform_driver gcc_ipq9574_driver = {
+> --
+> 2.34.1
+>
+>
+
+
 -- 
-Abel Vesa <abel.vesa@linaro.org>
-
+With best wishes
+Dmitry
 
