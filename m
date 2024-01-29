@@ -1,156 +1,199 @@
-Return-Path: <linux-arm-msm+bounces-8889-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8890-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 00B218409E9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 16:29:35 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DBF44840A5B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 16:44:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AFC16282A7C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 15:29:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6BBBA1F25CE7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 15:44:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEA90153BC9;
-	Mon, 29 Jan 2024 15:29:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 359851552F2;
+	Mon, 29 Jan 2024 15:43:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="n/FsBQcO"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="A6BQG4Rw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 894EC153502;
-	Mon, 29 Jan 2024 15:29:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE07D154C07;
+	Mon, 29 Jan 2024 15:43:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.55.52.88
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706542167; cv=none; b=hCl8aoGKykAnc8wIFsGxWDNhCWUzBOBYUguasIxqXrzhwT/e+kTZ/Kmp09jocavdP23wUy+37qvRkvj/aHK7hZxnSzC06ZJvW1SQl71ug1RLK5FFKFRyNiAdUoG/3I4EVkfDQ3++Cd/DztVfVnKzuxEDm/bDO8311cc0Ij7fNh0=
+	t=1706543019; cv=none; b=hyraUHWUxhktfGnycxuRz4DV1wOFC/ktVhEKTtMAExRhG7VqP+CIYZBOXE7hKAkMsVanxbi+VX3O9+Gkp5tGy4wfFpSi+b4VHvlhTXvkgiM8vjCPDYixfXOA4fzEKfLAEXdk0B0PP0YP77nkTq3+YPnn0HyVv+TE6rQYnV0zj+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706542167; c=relaxed/simple;
-	bh=temvw+fKuDYFx07W/PqfCRAulSyTIn2NnJqhzpa3B60=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GDtdKdVkDDYZXyf4QehpGk2zwB91dpWMiqDwMZsc47tCCVB/U4xjAhmMrqZ7X9Auw6pulyeK5nb+O3PwbyhVjRPBy3grQ7PzNUjk57jfkBjfOEjosMFIOI14Vy8goUAkmJ/nwXR9qHZtfMXNwmjCG3twps8MjAN/S3OIphfqCtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=n/FsBQcO; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=byNfiL/pkoggyG/+oatuw7eueKrFjxfS3K9FZq27IAg=; b=n/FsBQcOafh31HIhCxKunlMYhY
-	BINs0xUg+zirDh74DZomBMBrgPTUg6s+YKFk/eyPkCDp/foDwi2JN6quuX1kkblEZiSbOzXZpnlhP
-	4ghCJVX3y19TyJLpl+W3QY5JDnD9jcKr+o01DYgJzsz6Qek3YsJcsL41l1McDcFMbpBY=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1rUTZP-006OKZ-UE; Mon, 29 Jan 2024 16:29:11 +0100
-Date: Mon, 29 Jan 2024 16:29:11 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Christian Marangi <ansuelsmth@gmail.com>
-Cc: Jie Luo <quic_luoj@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Robert Marko <robert.marko@sartura.hr>,
-	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Sergey Ryazanov <ryazanov.s.a@gmail.com>
-Subject: Re: [net-next PATCH 0/3] net: mdio-ipq4019: fix wrong default MDC
- rate
-Message-ID: <df0e0ddc-4134-41d0-94f4-aba1186f0ede@lunn.ch>
-References: <20240124213640.7582-1-ansuelsmth@gmail.com>
- <53445feb-a02c-4859-a993-ccf957208115@quicinc.com>
- <f8a9e328-5284-4f24-be5d-7e9804869ecd@lunn.ch>
- <5d778fc0-864c-4e91-9722-1e39551ffc45@quicinc.com>
- <CAA8EJppUGH1pMg579nJmG2iTHGsOJdgDL93kfOvKofANTGGdHw@mail.gmail.com>
- <65b3ecd7.050a0220.9e26c.0d9e@mx.google.com>
- <cdd0e481-2738-465b-9ef8-b7ab79981fbe@quicinc.com>
- <65b7b565.170a0220.2666a.0d2b@mx.google.com>
+	s=arc-20240116; t=1706543019; c=relaxed/simple;
+	bh=n8a6DcN34MCg2EL+T3oLmFAy3UeopUFYPMC/oHMiox8=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:From:Subject:
+	 In-Reply-To:Content-Type; b=tJQHLkf0+wz6VVFlXlwMntx6130f1IylE8swOY1yh5kUjQiTAH5pk/o3F80r8qt6406yDLk9jQx2gxyCYoo3SApbE3hyyDk7aPIkspzldu1cJYAo//O+WsWFrnf4VceKLfFWd03AUnZ9EIfENrGaAnhXrptPdnWzyaOnCuHsmw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=A6BQG4Rw; arc=none smtp.client-ip=192.55.52.88
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1706543016; x=1738079016;
+  h=message-id:date:mime-version:to:cc:references:from:
+   subject:in-reply-to:content-transfer-encoding;
+  bh=n8a6DcN34MCg2EL+T3oLmFAy3UeopUFYPMC/oHMiox8=;
+  b=A6BQG4RwneBFN8Q4gWtiXBLKGTsuaebuepLrO3TglQ93JZ3mevmg9oRm
+   EmgU5AwqtyssKKIAXrEnmIio4ghC5e0mXkmJ4YzujE5ba2Q+VCBLJSvZF
+   iFryVKhwFL1kI+5LXp5HwJKPTQfMNtPmku4NTHlr5Ups+6oSNmw34JnUM
+   W8yNIZvOVq5I7kjyOA/tVr8lsU/9lMPF06KTYAeHc5cFTB8Mlt3bPwr4l
+   yUJf7JAHD0G+CB+fm1zd+U6/QRVOUEf6AmsLb9Mn9unh8datVb41pH7tI
+   FrfDoUu/EgyH9tjl/YL+sCIQWKnlgneyF5dCUULtRK1A1YSfgMOdfGxeU
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10968"; a="434159615"
+X-IronPort-AV: E=Sophos;i="6.05,227,1701158400"; 
+   d="scan'208";a="434159615"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jan 2024 07:43:35 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10968"; a="960921358"
+X-IronPort-AV: E=Sophos;i="6.05,227,1701158400"; 
+   d="scan'208";a="960921358"
+Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.199]) ([10.237.72.199])
+  by orsmga005.jf.intel.com with ESMTP; 29 Jan 2024 07:43:25 -0800
+Message-ID: <44a3d4db-7759-dd93-782a-1efbebfdb22c@linux.intel.com>
+Date: Mon, 29 Jan 2024 17:44:58 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <65b7b565.170a0220.2666a.0d2b@mx.google.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.13.0
+Content-Language: en-US
+To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
+ mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
+ corbet@lwn.net, gregkh@linuxfoundation.org, lgirdwood@gmail.com,
+ andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+ konrad.dybcio@linaro.org, Thinh.Nguyen@synopsys.com, broonie@kernel.org,
+ bgoswami@quicinc.com, tiwai@suse.com, robh+dt@kernel.org, agross@kernel.org
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+ alsa-devel@alsa-project.org, "Neronin, Niklas" <niklas.neronin@intel.com>
+References: <20240102214549.22498-1-quic_wcheng@quicinc.com>
+ <20240102214549.22498-5-quic_wcheng@quicinc.com>
+ <734591a1-50b4-6dc7-0b93-077355ec12e4@linux.intel.com>
+ <7b2ec96b-b72f-c848-7c35-36e61a4072ac@quicinc.com>
+ <b254f73b-a1bc-3dd4-f485-a3acf556835d@quicinc.com>
+ <2178e799-2068-7443-59b2-310dfdd1ddee@linux.intel.com>
+ <ae64ce69-dc1b-1534-7950-0a35c4a56f58@quicinc.com>
+ <ff0bff8b-f26a-87bd-9762-9f2af98abcca@quicinc.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: Re: [PATCH v12 04/41] usb: host: xhci-mem: Cleanup pending secondary
+ event ring events
+In-Reply-To: <ff0bff8b-f26a-87bd-9762-9f2af98abcca@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jan 29, 2024 at 03:25:09PM +0100, Christian Marangi wrote:
-> On Mon, Jan 29, 2024 at 09:59:03PM +0800, Jie Luo wrote:
-> > 
-> > 
-> > On 1/27/2024 1:33 AM, Christian Marangi wrote:
-> > > On Fri, Jan 26, 2024 at 07:20:03PM +0200, Dmitry Baryshkov wrote:
-> > > > On Fri, 26 Jan 2024 at 18:03, Jie Luo <quic_luoj@quicinc.com> wrote:
-> > > > > 
-> > > > > 
-> > > > > 
-> > > > > On 1/26/2024 1:18 AM, Andrew Lunn wrote:
-> > > > > > > Hi Christian,
-> > > > > > > Just a gentle reminder.
-> > > > > > > 
-> > > > > > > The MDIO frequency config is already added by the following patch series.
-> > > > > > > https://lore.kernel.org/netdev/28c8b31c-8dcb-4a19-9084-22c77a74b9a1@linaro.org/T/#m840cb8d269dca133c3ad3da3d112c63382ec2058
-> > > > > > 
-> > > > > > I admit this version was posted first. However, its embedded in a
-> > > > > > patch series which is not making much progress, and i doubt will make
-> > > > > > progress any time soon.
-> > > > > > 
-> > > > > > If you really want your version to be used, please split it out into a
-> > > > > > standalone patch series adding just MDIO clock-frequency support, with
-> > > > > > its binding, and nothing else.
-> > > > > > 
-> > > > > >       Andrew
-> > > > > 
-> > > > > Hi Andrew,
-> > > > > We will rework the patch series to include only MDIO frequency related
-> > > > > function and frequency dt binding, and post the updated patch series
-> > > > > on th/Tuesdae Mondayy of next week. We will work with Christian to
-> > > > > ensure he can re-use this patch as well.
-> > > > 
-> > > > Can you do the other way around: rebase your patches on top of Chritian's work?
-> > 
-> > Hi Dmitry,
-> > Sure, we can take this approach if fine by Andrew as well.
-> > 
-> > > > 
-> > > 
-> > > Would be ideal, also I have to send v2 that handle the 802.3 suggested
-> > > MDC rate (ready I just need to send after this has been handled).
-> > > 
-> > > Also I can see some problem with Lui patch where thse divior
-> > > value is not reapplied after MDIO reset effectively reverting to the
-> > > default value.
-> > 
-> > Hi Christian,
-> > In my version, the divisor is programmed in every MDIO operation and hence I
-> > did not add the code to revert to configured value in reset function. But
-> > sure. we can program it once during the probe/reset and avoid doing it
-> > during read/write ops.
-> > 
-> > In addition, the MDIO divisor 1, 2 and 4 are not supported by the MDIO
-> > hardware block, maybe we can remove these macros to avoid confusion, or add
-> > a comment mentioning that these are not supported.
-> >
+On 26.1.2024 23.13, Wesley Cheng wrote:
+> Hi Mathias,
 > 
-> Hi, thanks for confirming it! In v2 I already changed the logic to start
-> looping from divisor 8 and added comments in DT and driver about not
-> assuring correct funcionality with those divisor.
+> On 1/16/2024 12:24 PM, Wesley Cheng wrote:
+>> Hi Mathias,
+>>
+>> On 1/15/2024 6:01 AM, Mathias Nyman wrote:
+>>> On 10.1.2024 1.42, Wesley Cheng wrote:
+>>>> Hi Mathias,
+>>>>
+>>>> On 1/8/2024 12:51 PM, Wesley Cheng wrote:
+>>>>> Hi Mathias,
+>>>>>
+>>>>> On 1/4/2024 6:48 AM, Mathias Nyman wrote:
+>>>>>> On 2.1.2024 23.45, Wesley Cheng wrote:
+>>>>>>> As part of xHCI bus suspend, the XHCI is halted.  However, if there are
+>>>>>>> pending events in the secondary event ring, it is observed that the xHCI
+>>>>>>> controller stops responding to further commands upon host or device
+>>>>>>> initiated bus resume.  Iterate through all pending events and update the
+>>>>>>> dequeue pointer to the beginning of the event ring.
+>>>>>>>
+>>>>>>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+>>>>>> ...
+>>>>>>> +/*
+>>>>>>> + * Move the event ring dequeue pointer to skip events kept in the secondary
+>>>>>>> + * event ring.  This is used to ensure that pending events in the ring are
+>>>>>>> + * acknowledged, so the XHCI HCD can properly enter suspend/resume. The
+>>>>>>> + * secondary ring is typically maintained by an external component.
+>>>>>>> + */
+>>>>>>> +void xhci_skip_sec_intr_events(struct xhci_hcd *xhci,
+>>>>>>> +    struct xhci_ring *ring,    struct xhci_interrupter *ir)
+>>>>>>> +{
+>>>>>>> +    union xhci_trb *erdp_trb, *current_trb;
+>>>>>>> +    u64 erdp_reg;
+>>>>>>> +    u32 iman_reg;
+>>>>>>> +    dma_addr_t deq;
+>>>>>>> +
+>>>>>>> +    /* disable irq, ack pending interrupt and ack all pending events */
+>>>>>>> +    xhci_disable_interrupter(ir);
+>>>>>>> +    iman_reg = readl_relaxed(&ir->ir_set->irq_pending);
+>>>>>>> +    if (iman_reg & IMAN_IP)
+>>>>>>> +        writel_relaxed(iman_reg, &ir->ir_set->irq_pending);
+>>>>>>> +
+>>>>>>> +    /* last acked event trb is in erdp reg  */
+>>>>>>> +    erdp_reg = xhci_read_64(xhci, &ir->ir_set->erst_dequeue);
+>>>>>>> +    deq = (dma_addr_t)(erdp_reg & ERST_PTR_MASK);
+>>>>>>> +    if (!deq) {
+>>>>>>> +        xhci_err(xhci, "event ring handling not required\n");
+>>>>>>> +        return;
+>>>>>>> +    }
+>>>>>>> +
+>>>>>>> +    erdp_trb = current_trb = ir->event_ring->dequeue;
+>>>>>>> +    /* read cycle state of the last acked trb to find out CCS */
+>>>>>>> +    ring->cycle_state = le32_to_cpu(current_trb->event_cmd.flags) & TRB_CYCLE;
+>>>>>>> +
+>>>>>>> +    while (1) {
+>>>>>>> +        inc_deq(xhci, ir->event_ring);
+>>>>>>> +        erdp_trb = ir->event_ring->dequeue;
+>>>>>>> +        /* cycle state transition */
+>>>>>>> +        if ((le32_to_cpu(erdp_trb->event_cmd.flags) & TRB_CYCLE) !=
+>>>>>>> +            ring->cycle_state)
+>>>>>>> +            break;
+>>>>>>> +    }
+>>>>>>> +
+>>>>>>> +    xhci_update_erst_dequeue(xhci, ir, current_trb, true);
+>>>>>>> +}
+>>>>>>
+>>>>>> Code above is very similar to the existing event ring processing parts of xhci_irq()
+>>>>>> and xhci_handle_event()
+>>>>>>
+>>>>>> I'll see if I can refactor the existing event ring processing, decouple it from
+>>>>>> event handling so that it could be used by primary and secondary interrupters with
+>>>>>> handlers, and this case where we just want to clear the event ring.
+>>>>>>
+>>>>>
+>>>>> Thanks, that makes sense.  Will take a look as well.
+>>>>>
+>>>>
+>>>> How about something like the below?  Tested this on my set up and everything looks to be working fine.  Had to add another param to struct xhci_interrupters to tell the XHCI interrupt handler to say if that particular interrupter wants to skip_events (handling).  This way, its something that the class driver utilizing the interrupter will have to tell XHCI sideband.  It would allow the user to determine if they want to use the interrupter to actually handle events or not on the proc running Linux.
+>>>>
+>>>
+>>> Yes, I have something similar.
+>>> I'll share it soon, just need to
+>>> clean it up a bit fist.
+>>>
+>>
+>> Sure, no worries.  Will test it when its available.  Thanks!
+>>
+> 
+> Was just wondering if you had the time to clean up the changes?  If not, maybe you can provide a patch with whatever you have, and I can try my best to clean it up to your liking?  Thanks!
 
-Hi Christian
+Sure, got stuck fixing other issues.
 
-Lets go with your version. Please post V2 whenever you are ready.
+Code is not yet cleaned up, commit messages are not ready etc, but current work is in
+a fix_eventhandling branch:
 
-Jie, please spend some time reviewing to patches, make any comments
-you have, and if everything is O.K, you can add a Reviewed-by:
+git://git.kernel.org/pub/scm/linux/kernel/git/mnyman/xhci.git  fix_eventhandling
+https://git.kernel.org/pub/scm/linux/kernel/git/mnyman/xhci.git/log/?h=fix_eventhandling
 
-    Andrew
+I was in the middle of figuring out when and where the ip_autoclear and interrupt
+moderation values should be set for secondary interrupters
+
+Thanks
+Mathias
+
 
