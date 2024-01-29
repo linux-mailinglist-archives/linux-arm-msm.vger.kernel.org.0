@@ -1,150 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-8747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8748-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17ACA83FCA6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 04:17:27 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A742D83FCAA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 04:24:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7E9571F223DD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 03:17:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 22A9B1F22564
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 03:24:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A68F2FC00;
-	Mon, 29 Jan 2024 03:17:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CC75FC05;
+	Mon, 29 Jan 2024 03:23:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EBY/KTxQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NsshoncX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF7EFBEB
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 03:17:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD5BFBEB
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 03:23:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706498242; cv=none; b=XS+7t1HvbrZ+zQtMVi59jsfmoIx1uv3aK46qIU/OoqyeKJYvVbHeCWny0jqrgtxiWXF+IQznjR85ueFQhMSusLQ21R7Vm+9U7sz5wA00ExcgYvKgxHE6vvA6P4PhEyrs8b6RRZASd0QdFyc7lL3uUO1djg1rm7u3Wjh1s5NDW4c=
+	t=1706498637; cv=none; b=apTdWbU+39xUUSMttzvKE/jCDKxbEBGdTEemnPx54DF7bHQw5atWsEl3prWHm5p5C6hVw31CEVyFVnsW5T/OrT9KjumH4/vwkezU5iu7mLJ/UAYF8oCJPVRcAwkFx4/5ATTa1wLX0k5car3Hm68Iup/ZeVLjEav+NZ/8aU7AHqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706498242; c=relaxed/simple;
-	bh=7MuaNKV2kjUx6UHXNZrNK2AoPZauT23JmqHLzmI29r4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=lqh4WeoEtlTLX/amLVb2WH6iZz5Ktteh89oD1w9dFGY1WSDzELWJwkbOyh5g55O+AcNifTb5pQ/9euutikdq9AYmk8WSBDAghXGEyNgSGU0D9UuOUc3EveNlUwPm2Kw1iiUkskF55z3RRWucHwPlZYV8GAlUgCbh51Xykb5TwkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EBY/KTxQ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40T2dE5l019607;
-	Mon, 29 Jan 2024 03:17:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=MWI4it6o83/TY6rVolmxGfMq0Vm69Q01ikPcHcK2uQg=; b=EB
-	Y/KTxQ0nXVvD4+tIdSrW1nTaloitW1d8waiXc7joPE6bhUJe1jcruMRqkLVIB/vg
-	omW1Q6X/h2KTS1wl4QEQiV/9pxRoV9JODKas9qkqb+ntAUTmL8w9GMufurUECrdn
-	0ZUgOEzlJYR3r096KYRR7PbHJetT26OTTMweuksEIWDDB5sydeOCr3qhk3Ci6UF5
-	NEPgzfnrcXE7YLlCziiYouSMaQZjqureYK/BnUZWCRyZOh7USAJDjeR5pL27ms7S
-	XZ7bUlX64e1QznA1E/Q8uhJgI2VEmsZPAkR0dlS9dvJ4EPbtkIhlfYyjjKIiy7cr
-	N3BV46ZwO8MzKNdz72mg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vvt272ncj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 29 Jan 2024 03:17:12 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40T3HCGQ020635
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 29 Jan 2024 03:17:12 GMT
-Received: from [10.110.98.98] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sun, 28 Jan
- 2024 19:17:11 -0800
-Message-ID: <72ca08ac-ae16-37f6-6f85-f203ddf79084@quicinc.com>
-Date: Sun, 28 Jan 2024 19:17:10 -0800
+	s=arc-20240116; t=1706498637; c=relaxed/simple;
+	bh=Oj10kvy7WN7wy09JzPNDZXksQ/4HvzHBnlkfUYIUZDs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MhH6273rhQ9ORhSTTZJrS2q3P76/UO8hp/FtnIo76lSoMTGmHm5Y6QS212J9zIlmBS7OykckHsOdEnkirUITcLZ2bbBwZq6t9+OtYSP9Y87r3vke+/NE6Mqr4Jki1NjU/ZvZHSH7Nv4WgWu1Xz4U5ArTwRWX/RXTTnmHt7/jTrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NsshoncX; arc=none smtp.client-ip=209.85.219.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-dc22ade26d8so1812212276.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jan 2024 19:23:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706498634; x=1707103434; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=tRDEhCQbLKSx1e9jKW9m9uVml+QfUWWHZsQITGtv9yw=;
+        b=NsshoncXzMT7Kmk/YjrsIY3oa3aKetLR0aEVekTYyX5K0sJqtX2whjCWVP01n1qdRh
+         qvzWYpujrjXOUZj0Mem9/JCeG2I+dZwKSJC94j1Nmvds2KVSv+tYgcomuexEbDneNNdt
+         GvIgWjmje8xzakHF2mf2NbnyY0N6xe/uvm0Ibn0F1MVMIpo4KnmOlhB6xfcVhgZ1vyp6
+         adWT4Suy842FNG/mhKZPRu4i+5AFOYiUUjB2ygCb92ftBBU3qIDefBxwckSfqenDR+Rj
+         uVbWJiJcnP1CA2PaEiszLy5M4BRD23C/FXJ51Zf4L92H83VDM7W5wGzL3/WkZscNgN1D
+         pFRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706498634; x=1707103434;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tRDEhCQbLKSx1e9jKW9m9uVml+QfUWWHZsQITGtv9yw=;
+        b=MBRfTevtuuqvKBQppT7Vc2wgB83iyLwlZqXZQ7rvy7CV65VmLYe/HBsEicKGzo7SNd
+         yB6eYMxPNGazMzd0tHaxyJkDfdS4fY53AVS8EQFnsvkPQpt4dQ+6XeAB6sXwymV8/DTv
+         hRTeM+vPD4NOMILHwoO7Yb0YZ9OlJ+PFs98G973jrR0f4Exi+J1K1TFneFRnW/Jjvcj6
+         cLyUQZwE+HQ7tDnchQTkpEI57eQBYMn4eWdKOo/F/DPzzFhDoXk95gCAkX1DjUVs4gg/
+         wsZCvkycFK3M97v4vHNiUY3bhcVi/0R+aQxdyqMv69+T7iOWAOgioqRMsIOqIpL5YMvo
+         VbcQ==
+X-Gm-Message-State: AOJu0YwdxrGEOvzv9SSfzmjZ+Lnvjqq8GGyiglfMSisY4WjRrpnDC3IK
+	oFYMfltk2yvCbvtp7dJ7MgAGqzT4KqKpcxeNTNgEk84WHZfdn5AA0F/5pFRM0/CqS4eWZR2kB1w
+	BKJrN7xSbzW/jL4vDT4pxhxwwP45CwNQif11y5g==
+X-Google-Smtp-Source: AGHT+IF6zf1MsRwbD0c4lc43Au1jqd7ti2kqyqPXjj17xYWf7PNvSF4YZlRUSOnnYCBBGASumEomlSX+ZGxbweNusGY=
+X-Received: by 2002:a25:7489:0:b0:dc2:218b:7d71 with SMTP id
+ p131-20020a257489000000b00dc2218b7d71mr1883839ybc.103.1706498634327; Sun, 28
+ Jan 2024 19:23:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 17/17] drm/msm/dp: allow YUV420 mode for DP connector when
- VSC SDP supported
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Paloma Arellano
-	<quic_parellan@quicinc.com>,
-        <freedreno@lists.freedesktop.org>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <robdclark@gmail.com>, <seanpaul@chromium.org>, <swboyd@chromium.org>,
-        <quic_jesszhan@quicinc.com>, <quic_khsieh@quicinc.com>,
-        <marijn.suijten@somainline.org>, <neil.armstrong@linaro.org>
 References: <20240125193834.7065-1-quic_parellan@quicinc.com>
- <20240125193834.7065-18-quic_parellan@quicinc.com>
- <493926f1-90e9-493a-bd2f-ea1db16d7ee6@linaro.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <493926f1-90e9-493a-bd2f-ea1db16d7ee6@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: YLQ72lNxk27zffVsKwg49qe9xIfMlKZ1
-X-Proofpoint-ORIG-GUID: YLQ72lNxk27zffVsKwg49qe9xIfMlKZ1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- phishscore=0 suspectscore=0 lowpriorityscore=0 mlxlogscore=999
- clxscore=1015 spamscore=0 mlxscore=0 impostorscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401190000 definitions=main-2401290022
+ <20240125193834.7065-2-quic_parellan@quicinc.com> <31e4a033-1779-450c-980e-63c8567837ed@linaro.org>
+ <fa5ce695-8c00-1ae4-04cd-d1b49b42c5d6@quicinc.com> <5d0b2da2-7683-f801-0acf-255a8c2bd618@quicinc.com>
+In-Reply-To: <5d0b2da2-7683-f801-0acf-255a8c2bd618@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 29 Jan 2024 05:23:43 +0200
+Message-ID: <CAA8EJpoTtzupauFah=65Yn_cRQzDbgpLw-6GuXWCUwPcNJvKOA@mail.gmail.com>
+Subject: Re: [PATCH 01/17] drm/msm/dpu: allow dpu_encoder_helper_phys_setup_cdm
+ to work for DP
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Paloma Arellano <quic_parellan@quicinc.com>, freedreno@lists.freedesktop.org, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org, 
+	quic_jesszhan@quicinc.com, quic_khsieh@quicinc.com, 
+	marijn.suijten@somainline.org, neil.armstrong@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+
+On Mon, 29 Jan 2024 at 05:06, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+>
+>
+> On 1/26/2024 4:39 PM, Paloma Arellano wrote:
+> >
+> > On 1/25/2024 1:14 PM, Dmitry Baryshkov wrote:
+> >> On 25/01/2024 21:38, Paloma Arellano wrote:
+> >>> Generalize dpu_encoder_helper_phys_setup_cdm to be compatible with DP.
+> >>>
+> >>> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
+> >>> ---
+> >>>   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  4 +--
+> >>>   .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   | 31 ++++++++++---------
+> >>>   2 files changed, 18 insertions(+), 17 deletions(-)
+> >>>
+> >>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+> >>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+> >>> index 993f263433314..37ac385727c3b 100644
+> >>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+> >>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+> >>> @@ -153,6 +153,7 @@ enum dpu_intr_idx {
+> >>>    * @hw_intf:        Hardware interface to the intf registers
+> >>>    * @hw_wb:        Hardware interface to the wb registers
+> >>>    * @hw_cdm:        Hardware interface to the CDM registers
+> >>> + * @cdm_cfg:    CDM block config needed to store WB/DP block's CDM
+> >>> configuration
+> >>
+> >> Please realign the description.
+> > Ack
+> >>
+> >>>    * @dpu_kms:        Pointer to the dpu_kms top level
+> >>>    * @cached_mode:    DRM mode cached at mode_set time, acted on in
+> >>> enable
+> >>>    * @vblank_ctl_lock:    Vblank ctl mutex lock to protect
+> >>> vblank_refcount
+> >>> @@ -183,6 +184,7 @@ struct dpu_encoder_phys {
+> >>>       struct dpu_hw_intf *hw_intf;
+> >>>       struct dpu_hw_wb *hw_wb;
+> >>>       struct dpu_hw_cdm *hw_cdm;
+> >>> +    struct dpu_hw_cdm_cfg cdm_cfg;
+> >>
+> >> It might be slightly better to move it after all the pointers, so
+> >> after the dpu_kms.
+> > Ack
+> >>
+> >>>       struct dpu_kms *dpu_kms;
+> >>>       struct drm_display_mode cached_mode;
+> >>>       struct mutex vblank_ctl_lock;
+> >>> @@ -213,7 +215,6 @@ static inline int
+> >>> dpu_encoder_phys_inc_pending(struct dpu_encoder_phys *phys)
+> >>>    * @wbirq_refcount:     Reference count of writeback interrupt
+> >>>    * @wb_done_timeout_cnt: number of wb done irq timeout errors
+> >>>    * @wb_cfg:  writeback block config to store fb related details
+> >>> - * @cdm_cfg: cdm block config needed to store writeback block's CDM
+> >>> configuration
+> >>>    * @wb_conn: backpointer to writeback connector
+> >>>    * @wb_job: backpointer to current writeback job
+> >>>    * @dest:   dpu buffer layout for current writeback output buffer
+> >>> @@ -223,7 +224,6 @@ struct dpu_encoder_phys_wb {
+> >>>       atomic_t wbirq_refcount;
+> >>>       int wb_done_timeout_cnt;
+> >>>       struct dpu_hw_wb_cfg wb_cfg;
+> >>> -    struct dpu_hw_cdm_cfg cdm_cfg;
+> >>>       struct drm_writeback_connector *wb_conn;
+> >>>       struct drm_writeback_job *wb_job;
+> >>>       struct dpu_hw_fmt_layout dest;
+> >>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> >>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> >>> index 4cd2d9e3131a4..072fc6950e496 100644
+> >>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> >>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> >>> @@ -269,28 +269,21 @@ static void
+> >>> dpu_encoder_phys_wb_setup_ctl(struct dpu_encoder_phys *phys_enc)
+> >>>    *                                     This API does not handle
+> >>> DPU_CHROMA_H1V2.
+> >>>    * @phys_enc:Pointer to physical encoder
+> >>>    */
+> >>> -static void dpu_encoder_helper_phys_setup_cdm(struct
+> >>> dpu_encoder_phys *phys_enc)
+> >>> +static void dpu_encoder_helper_phys_setup_cdm(struct
+> >>> dpu_encoder_phys *phys_enc,
+> >>> +                          const struct dpu_format *dpu_fmt,
+> >>> +                          u32 output_type)
+> >>>   {
+> >>>       struct dpu_hw_cdm *hw_cdm;
+> >>>       struct dpu_hw_cdm_cfg *cdm_cfg;
+> >>>       struct dpu_hw_pingpong *hw_pp;
+> >>> -    struct dpu_encoder_phys_wb *wb_enc;
+> >>> -    const struct msm_format *format;
+> >>> -    const struct dpu_format *dpu_fmt;
+> >>> -    struct drm_writeback_job *wb_job;
+> >>>       int ret;
+> >>>         if (!phys_enc)
+> >>>           return;
+> >>>   -    wb_enc = to_dpu_encoder_phys_wb(phys_enc);
+> >>> -    cdm_cfg = &wb_enc->cdm_cfg;
+> >>> +    cdm_cfg = &phys_enc->cdm_cfg;
+> >>>       hw_pp = phys_enc->hw_pp;
+> >>>       hw_cdm = phys_enc->hw_cdm;
+> >>> -    wb_job = wb_enc->wb_job;
+> >>> -
+> >>> -    format = msm_framebuffer_format(wb_enc->wb_job->fb);
+> >>> -    dpu_fmt = dpu_get_dpu_format_ext(format->pixel_format,
+> >>> wb_job->fb->modifier);
+> >>>         if (!hw_cdm)
+> >>>           return;
+> >>> @@ -306,10 +299,10 @@ static void
+> >>> dpu_encoder_helper_phys_setup_cdm(struct dpu_encoder_phys *phys_enc)
+> >>>         memset(cdm_cfg, 0, sizeof(struct dpu_hw_cdm_cfg));
+> >>>   -    cdm_cfg->output_width = wb_job->fb->width;
+> >>> -    cdm_cfg->output_height = wb_job->fb->height;
+> >>> +    cdm_cfg->output_width = phys_enc->cached_mode.hdisplay;
+> >>> +    cdm_cfg->output_height = phys_enc->cached_mode.vdisplay;
+> >>
+> >> This is a semantic change. Instead of passing the FB size, this passes
+> >> the mode dimensions. They are not guaranteed to be the same,
+> >> especially for the WB case.
+> >>
+>
+> The WB job is storing the output FB of WB. I cannot think of a use-case
+> where this cannot match the current mode programmed to the WB encoder.
+>
+> Yes, if it was the drm_plane's FB, then it cannot be guaranteed as the
+> plane can scale the contents but here thats not the case. Here its the
+> output FB of WB.
+
+Is it a part of WB uAPI, to have the FB dimensions equal to mode
+dimensions? Or is it just our current limitation? I can easily imagine
+WB outputting data to a part of the FB (just like we can clip FB using
+plane's clip rectangle).
+
+This boils down to a question, whether CDM should be setup in terms of
+actual output date or the physical memory buffer parameters. I suspect
+the former is the case (which makes this change correct). But it
+either should be described in the commit message or (even better)
+split to a separate commit.
 
 
-
-On 1/25/2024 2:05 PM, Dmitry Baryshkov wrote:
-> On 25/01/2024 21:38, Paloma Arellano wrote:
->> All the components of YUV420 over DP are added. Therefore, let's mark the
->> connector property as true for DP connector when the DP type is not eDP
->> and when VSC SDP is supported.
->>
->> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/dp/dp_display.c | 5 ++++-
->>   1 file changed, 4 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
->> b/drivers/gpu/drm/msm/dp/dp_display.c
->> index 4329435518351..97edd607400b8 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->> @@ -370,11 +370,14 @@ static int dp_display_process_hpd_high(struct 
->> dp_display_private *dp)
->>       dp_link_process_request(dp->link);
->> -    if (!dp->dp_display.is_edp)
->> +    if (!dp->dp_display.is_edp) {
->> +        if (dp_panel_vsc_sdp_supported(dp->panel))
->> +            dp->dp_display.connector->ycbcr_420_allowed = true;
-> 
-> Please consider fixing a TODO in drm_bridge_connector_init().
-> 
-
-I am not totally clear if that TODO can ever go for DP/HDMI usage of 
-drm_bridge_connector.
-
-We do not know if the sink supports VSC SDP till we read the DPCD and 
-till we know that sink supports VSC SDP, there is no reason to mark the 
-YUV modes as supported. This is the same logic followed across vendors.
-
-drm_bride_connector_init() happens much earlier than the point where we 
-read DPCD. The only thing which can be done is perhaps add some callback 
-to update_ycbcr_420_allowed once DPCD is read. But I don't think its 
-absolutely necessary to have a callback just for this.
-
->>           drm_dp_set_subconnector_property(dp->dp_display.connector,
->>                            connector_status_connected,
->>                            dp->panel->dpcd,
->>                            dp->panel->downstream_ports);
->> +    }
->>       edid = dp->panel->edid;
-> 
+-- 
+With best wishes
+Dmitry
 
