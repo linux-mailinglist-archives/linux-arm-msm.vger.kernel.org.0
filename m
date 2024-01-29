@@ -1,178 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-8919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 840F8841723
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 00:50:15 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7563A84172A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 00:53:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ECCB81F23B51
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 23:50:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2646728512F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 23:53:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24A20524B1;
-	Mon, 29 Jan 2024 23:50:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E15850A70;
+	Mon, 29 Jan 2024 23:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kJb/H+Dy"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nBP36ZbC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B34524C7
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 23:50:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91590524B1
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 23:53:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706572211; cv=none; b=qSE9wXX5wmtCzGlQlEFgep2UqaEa7GPJFhjnMkujY1lGw1MI/hHDaBia4zANyjhw0Oi+iLxdI4auK6lEliZfAtD8e90l+BTuGIy7nYxwfwJYQt9G6QeKfkT2xqFc0NbSGytC2yPybwMsXNnDM7aIya5La/qJsdwIGbFo/cDJHG8=
+	t=1706572383; cv=none; b=YbsbQV8pabJ2IX8G8JScyVGD9GInowHOoJlxQ9O4ySaOs46ccDd7EJdLY012t6S/aHD1vubymfVzaJO3L25GlIalQda8oOpIbCl1UnEDUiznIuV9Jggh7gZTS0Vya6d/rB9QX7kRR15md59doythgNUMiFKAAM9OSbc4Oy0a8sY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706572211; c=relaxed/simple;
-	bh=UBzKAjw1cx6u8YMuRXY/IgE9Q07ZVbkxH/j/6WQSCcQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kWe6kq2OrzUP4NY/dtGpNlWo/kkVPk8yf9WudhupPs2q9V3RJdq68DJsK0cP74/2Fnhumj8eOp9ZalF9Hpgf7HbQnWQecN68brdnLBLvtB4HEiurvnEib+Z1oxm9RYtTvbT6kg1G6LgjC9LNR2QsuUOtT3KOzgEKKMIWyI0e3JA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kJb/H+Dy; arc=none smtp.client-ip=209.85.128.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-5ff847429d4so39792247b3.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 15:50:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706572208; x=1707177008; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=T3Y1YC77PE7gg6RUxiLjcwt8G9i7hJpA6mB4vW7ufYU=;
-        b=kJb/H+Dy0eUw0mTUGlUwL8KHDRR6bJi1XWcZY364O108a4UDr2MenBFk5UtRXDDAXP
-         28bYhoy95CxustMZK78vZi6htBtXvfTvQziDrSeFSzakcO8GIFmNhxqOKuWjg75ohVFi
-         YUku3nbG0oclTgQIPdyuYeAJokcVsztujTo24VM8QpTvkZ3RChv54l6MwP7P8KBQRKJx
-         GlE6zDKuFGWWBrRf4vfhaNMINEQQadCqPI7PzZRcME50RhcsY8PRaIJIAHGZJctAdto6
-         LoybIBNnC/r/AaM9sJwNCrKzIF/MRqVnvtAVvICK3bh7oXEEgYGY7hII8BbeZPQn/PKM
-         /x6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706572208; x=1707177008;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=T3Y1YC77PE7gg6RUxiLjcwt8G9i7hJpA6mB4vW7ufYU=;
-        b=bgO5jrH78rpq7YN75NtttUDFWLf7QBG5A+cmTHRUp7q+l5dNWfdZrXEcfoXY2FW3FB
-         zkdwV0ZHYlQsLdghzhlEJwpsny+dibZtsIa2l+1vBATnDwFY9xcof3zHUMorz8FS70Jp
-         BrT/5pv7nKjOunlfwz1FxOtyNycazJKt83MMGnhA9ztDxCq5mzOEDYd9AgNOWCFvE4GQ
-         zsZVDGU/rlUL+0aeHZd32761feXlrsotKmOkNXwLTozne7WpkHaNkPHvpfEeFPzVSJEc
-         CthBPHOi+dKj6yLfClOp80gfd/DWV0S+/CJnyiuHyXZyaD6DDbZDIt6iGimleGkoiXq3
-         rHpw==
-X-Gm-Message-State: AOJu0YyNogxo1cUfJMLsR70TvwN6JpAUjbqz1YoGIEBwfFaZ4Bbktteq
-	EpGxLdUPRI8EcdAo9YRmuiI66XdLeyNUFE6ljSfn92kNnVFUDMCZoEwpASFWB/LqoVsGSH5O2UX
-	upZDZmnK98twt7ji8HEC2WYq9Qd2d9JaYxnYoLg==
-X-Google-Smtp-Source: AGHT+IHY4mRLGmiqbzZ+aQNi3H8Nb73QQbbBMg6ZnaSyjyc4iEXN4mPvFUhRRKJriADaKhFaHy7DTlLQf5hCWRAtd5U=
-X-Received: by 2002:a81:c14a:0:b0:5ff:6ca0:4b19 with SMTP id
- e10-20020a81c14a000000b005ff6ca04b19mr6109145ywl.31.1706572208292; Mon, 29
- Jan 2024 15:50:08 -0800 (PST)
+	s=arc-20240116; t=1706572383; c=relaxed/simple;
+	bh=BMvcUJRThRV1c8JbTtdBHU/P5wZW9vPbG1vSRyqdGVA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=jLKen6IWUD39XwjMC5N/GMm82N0U80IiENzYuHf8ngb9/U7X1cnY5g8kEGUlMGP+Qc5kphuzAmow2jUyuYoXi/iEsJQbQBVF6KecZANuGi/sbsgFD07vfATr6GZ39qIFyGeihsC09+7q1CfmdBzUw9pmqxsPzibKmap0X+nJhbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nBP36ZbC; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40TMbNAB025183;
+	Mon, 29 Jan 2024 23:51:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=mZgk+b7tnMqyn4WnXpTu0pB6YvL/GJbrANNWmEG/oqM=; b=nB
+	P36ZbCwLtHO0a9Y0qhxSWksbPBayJn4MrCwXMowCBxUrIaNVtdVea3b5vUM0NCOo
+	byeW/YwpyTxLGZ0w7X785E6tEICCx8caUiFUL9WqTS4ODAGGTaUjEkh7XbotHjON
+	vMBwQpx4EPmA0k9kYE0eRjmZ+NNXbGZhWf4c5ZNX7AL2FMHngEWbdZD5Mcy4xiZ5
+	vgFvkoZQ9kIrLyMO37V556H5RbdRkGuezO4Ji2t+ooohu9ZydZm2TDkdBloQKjka
+	MPYoQEAg+n4a7xizbxJeil0kg1cfFZuPkgsFyNBlfFbUid6DND2TAImKXfTycRu/
+	ZaS2I925dkIk8q0O9KTg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vx23kapxa-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Jan 2024 23:51:55 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40TNpspF005855
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Jan 2024 23:51:54 GMT
+Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 29 Jan
+ 2024 15:51:53 -0800
+Message-ID: <31630fe2-045d-c5f1-4019-e8a8b89928c3@quicinc.com>
+Date: Mon, 29 Jan 2024 15:51:53 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240129061003.4085-1-quic_vdadhani@quicinc.com>
-In-Reply-To: <20240129061003.4085-1-quic_vdadhani@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 30 Jan 2024 01:49:57 +0200
-Message-ID: <CAA8EJpr_KXsjTUYha7OVg4HLLJLqMRvJun9DnMkBFvq3R2nk=Q@mail.gmail.com>
-Subject: Re: [V2] i2c: i2c-qcom-geni: Correct I2C TRE sequence
-To: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, andi.shyti@kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, vkoul@kernel.org, quic_bjorande@quicinc.com, 
-	manivannan.sadhasivam@linaro.org, quic_msavaliy@quicinc.com, 
-	quic_vtanuku@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-
-On Mon, 29 Jan 2024 at 08:10, Viken Dadhaniya <quic_vdadhani@quicinc.com> wrote:
->
-> For i2c read operation, we are getting gsi mode timeout due
-> to malformed TRE(Transfer Ring Element). Currently we are
-> configuring incorrect TRE sequence in gpi driver
-> (drivers/dma/qcom/gpi.c) as below
->
-> - Sets up CONFIG
-> - Sets up DMA tre
-> - Sets up GO tre
->
-> As per HPG(Hardware programming guide), We should configure TREs in below
-> sequence for any i2c transfer
->
-> - Sets up CONFIG tre
-> - Sets up GO tre
-> - Sets up DMA tre
-
-It is not clear how this is relevant and/or affected by swapping
-I2C_WRITE and I2C_READ gpi calls.
-
->
-> For only write operation or write followed by read operation,
-> existing software sequence is correct.
->
-> for only read operation, TRE sequence need to be corrected.
-> Hence, we have changed the sequence to submit GO tre before DMA tre.
->
-> Tested covering i2c read/write transfer on QCM6490 RB3 board.
-
-Please read Documentation/process/submitting-patches.rst, understand
-it and write a proper commit message.
-
->
-> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-> Fixes: commit d8703554f4de ("i2c: qcom-geni: Add support for GPI DMA")
-
-As it was pointed out, this line shows ignorance of the mentioned file
-and of the existing community practices.
-
-> ---
-> v1 -> v2:
-> - Remove redundant check.
-> - update commit log.
-> - add fix tag.
-> ---
-> ---
->  drivers/i2c/busses/i2c-qcom-geni.c | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
->
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index 0d2e7171e3a6..da94df466e83 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -613,20 +613,20 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
->
->                 peripheral.addr = msgs[i].addr;
->
-> +               ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
-> +                                   &tx_addr, &tx_buf, I2C_WRITE, gi2c->tx_c);
-> +               if (ret)
-> +                       goto err;
-> +
->                 if (msgs[i].flags & I2C_M_RD) {
->                         ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
->                                             &rx_addr, &rx_buf, I2C_READ, gi2c->rx_c);
->                         if (ret)
->                                 goto err;
-> -               }
-> -
-> -               ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
-> -                                   &tx_addr, &tx_buf, I2C_WRITE, gi2c->tx_c);
-> -               if (ret)
-> -                       goto err;
->
-> -               if (msgs[i].flags & I2C_M_RD)
->                         dma_async_issue_pending(gi2c->rx_c);
-> +               }
-> +
->                 dma_async_issue_pending(gi2c->tx_c);
->
->                 timeout = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
-> --
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
->
->
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 07/17] drm/msm/dpu: disallow widebus en in INTF_CONFIG2
+ when DP is YUV420
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Paloma Arellano
+	<quic_parellan@quicinc.com>
+CC: <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <seanpaul@chromium.org>, <swboyd@chromium.org>,
+        <quic_jesszhan@quicinc.com>, <quic_khsieh@quicinc.com>,
+        <marijn.suijten@somainline.org>, <neil.armstrong@linaro.org>
+References: <20240125193834.7065-1-quic_parellan@quicinc.com>
+ <20240125193834.7065-8-quic_parellan@quicinc.com>
+ <301cdbe2-7377-4b0f-bd24-5131f8928c29@linaro.org>
+ <09a10811-ea7c-3e99-d5eb-755aac4ecf0e@quicinc.com>
+ <CAA8EJpqFcY8yBmdW8qpMiS1p3bqY2+pgXtvR0Br9-p_VAUnN+Q@mail.gmail.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJpqFcY8yBmdW8qpMiS1p3bqY2+pgXtvR0Br9-p_VAUnN+Q@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ibWHFjrkyIrLLbHwac-caZtiXa7KvUTJ
+X-Proofpoint-GUID: ibWHFjrkyIrLLbHwac-caZtiXa7KvUTJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-29_14,2024-01-29_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 suspectscore=0 spamscore=0 malwarescore=0 mlxlogscore=619
+ mlxscore=0 lowpriorityscore=0 adultscore=0 clxscore=1015 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401190000 definitions=main-2401290176
 
 
--- 
-With best wishes
-Dmitry
+
+On 1/27/2024 9:33 PM, Dmitry Baryshkov wrote:
+> On Sun, 28 Jan 2024 at 07:16, Paloma Arellano <quic_parellan@quicinc.com> wrote:
+>>
+>>
+>> On 1/25/2024 1:26 PM, Dmitry Baryshkov wrote:
+>>> On 25/01/2024 21:38, Paloma Arellano wrote:
+>>>> INTF_CONFIG2 register cannot have widebus enabled when DP format is
+>>>> YUV420. Therefore, program the INTF to send 1 ppc.
+>>>
+>>> I think this is handled in the DP driver, where we disallow wide bus
+>>> for YUV 4:2:0 modes.
+>> Yes we do disallow wide bus for YUV420 modes, but we still need to
+>> program the INTF_CFG2_DATA_HCTL_EN. Therefore, it is necessary to add
+>> this check.
+> 
+> As I wrote in my second email, I'd prefer to have one if which guards
+> HCTL_EN and another one for WIDEN
+> 
+Its hard to separate out the conditions just for HCTL_EN . Its more 
+about handling the various pixel per clock combinations.
+
+But, here is how I can best summarize it.
+
+Lets consider DSI and DP separately:
+
+1) For DSI, for anything > DSI version 2.5 ( DPU version 7 ).
+
+This is same the same condition as widebus today in 
+msm_dsi_host_is_wide_bus_enabled().
+
+Hence no changes needed for DSI.
+
+2) For DP, whenever widebus is enabled AND YUV420 uncompressed case
+as they are independent cases. We dont support YUV420 + DSC case.
+
+There are other cases which fall outside of this bucket but they are 
+optional ones. We only follow the "required" ones.
+
+With this summary in mind, I am fine with what we have except perhaps 
+better documentation above this block.
+
+When DSC over DP gets added, I am expecting no changes to this block as 
+it will fall under the widebus_en case.
+
+With this information, how else would you like the check?
+
+>>>
+>>>>
+>>>> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
+>>>> ---
+>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 4 +++-
+>>>>    1 file changed, 3 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>>>> index 6bba531d6dc41..bfb93f02fe7c1 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>>>> @@ -168,7 +168,9 @@ static void
+>>>> dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *ctx,
+>>>>         * video timing. It is recommended to enable it for all cases,
+>>>> except
+>>>>         * if compression is enabled in 1 pixel per clock mode
+>>>>         */
+>>>> -    if (p->wide_bus_en)
+>>>> +    if (dp_intf && fmt->base.pixel_format == DRM_FORMAT_YUV420)
+>>>> +        intf_cfg2 |= INTF_CFG2_DATA_HCTL_EN;
+>>>> +    else if (p->wide_bus_en)
+>>>>            intf_cfg2 |= INTF_CFG2_DATABUS_WIDEN | INTF_CFG2_DATA_HCTL_EN;
+>>>>          data_width = p->width;
+>>>
+> 
+> 
+> 
 
