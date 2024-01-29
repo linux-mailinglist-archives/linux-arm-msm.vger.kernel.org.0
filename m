@@ -1,199 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-8890-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBF44840A5B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 16:44:36 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7F4F840A86
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 16:50:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6BBBA1F25CE7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 15:44:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D8E22837E3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 15:50:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 359851552F2;
-	Mon, 29 Jan 2024 15:43:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="A6BQG4Rw"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA14F154BFA;
+	Mon, 29 Jan 2024 15:50:22 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE07D154C07;
-	Mon, 29 Jan 2024 15:43:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.55.52.88
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91419153BE2;
+	Mon, 29 Jan 2024 15:50:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706543019; cv=none; b=hyraUHWUxhktfGnycxuRz4DV1wOFC/ktVhEKTtMAExRhG7VqP+CIYZBOXE7hKAkMsVanxbi+VX3O9+Gkp5tGy4wfFpSi+b4VHvlhTXvkgiM8vjCPDYixfXOA4fzEKfLAEXdk0B0PP0YP77nkTq3+YPnn0HyVv+TE6rQYnV0zj+s=
+	t=1706543422; cv=none; b=Et6uOZhZPpx93P4PJHr1po0V/Fnjr3x0no8jA9ScOgCNVODURzzefuTiYTASPZSKqHhRoyuFFpPlEJ29tmTi6N2Smvj3t3ydyJJBw3rSt78X/PEmjNWepoDvzPFut/mAN9IRfbr7kw0Nh/rTgkMDbYEoAR6bvpfiQyroN+IPnqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706543019; c=relaxed/simple;
-	bh=n8a6DcN34MCg2EL+T3oLmFAy3UeopUFYPMC/oHMiox8=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:From:Subject:
-	 In-Reply-To:Content-Type; b=tJQHLkf0+wz6VVFlXlwMntx6130f1IylE8swOY1yh5kUjQiTAH5pk/o3F80r8qt6406yDLk9jQx2gxyCYoo3SApbE3hyyDk7aPIkspzldu1cJYAo//O+WsWFrnf4VceKLfFWd03AUnZ9EIfENrGaAnhXrptPdnWzyaOnCuHsmw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=A6BQG4Rw; arc=none smtp.client-ip=192.55.52.88
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1706543016; x=1738079016;
-  h=message-id:date:mime-version:to:cc:references:from:
-   subject:in-reply-to:content-transfer-encoding;
-  bh=n8a6DcN34MCg2EL+T3oLmFAy3UeopUFYPMC/oHMiox8=;
-  b=A6BQG4RwneBFN8Q4gWtiXBLKGTsuaebuepLrO3TglQ93JZ3mevmg9oRm
-   EmgU5AwqtyssKKIAXrEnmIio4ghC5e0mXkmJ4YzujE5ba2Q+VCBLJSvZF
-   iFryVKhwFL1kI+5LXp5HwJKPTQfMNtPmku4NTHlr5Ups+6oSNmw34JnUM
-   W8yNIZvOVq5I7kjyOA/tVr8lsU/9lMPF06KTYAeHc5cFTB8Mlt3bPwr4l
-   yUJf7JAHD0G+CB+fm1zd+U6/QRVOUEf6AmsLb9Mn9unh8datVb41pH7tI
-   FrfDoUu/EgyH9tjl/YL+sCIQWKnlgneyF5dCUULtRK1A1YSfgMOdfGxeU
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10968"; a="434159615"
-X-IronPort-AV: E=Sophos;i="6.05,227,1701158400"; 
-   d="scan'208";a="434159615"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jan 2024 07:43:35 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10968"; a="960921358"
-X-IronPort-AV: E=Sophos;i="6.05,227,1701158400"; 
-   d="scan'208";a="960921358"
-Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.199]) ([10.237.72.199])
-  by orsmga005.jf.intel.com with ESMTP; 29 Jan 2024 07:43:25 -0800
-Message-ID: <44a3d4db-7759-dd93-782a-1efbebfdb22c@linux.intel.com>
-Date: Mon, 29 Jan 2024 17:44:58 +0200
+	s=arc-20240116; t=1706543422; c=relaxed/simple;
+	bh=VmvZDhKYfgrRdCXKs7qjeIO7NOgbgsUQBfZdk3ARslU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tbahPpA4SmP8zAGrfqUy6EdSMrUmhhl4Y9+MF9qkYkV3Opa7js5kZ9t3IL0KXIvZdCC9WllFn8OEXE+qSZi9FHFWX1hWshSCDYZYZyjsBErydduvYlfUnbsH42EZKoQQZvuWQ4BdIzsgbjGk7k+mAAn9D4KxOs0chSi/y4ypuVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CC82BDA7;
+	Mon, 29 Jan 2024 07:51:03 -0800 (PST)
+Received: from pluto (unknown [172.31.20.19])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id EF7343F738;
+	Mon, 29 Jan 2024 07:50:17 -0800 (PST)
+Date: Mon, 29 Jan 2024 15:50:15 +0000
+From: Cristian Marussi <cristian.marussi@arm.com>
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: sudeep.holla@arm.com, rafael@kernel.org, viresh.kumar@linaro.org,
+	morten.rasmussen@arm.com, dietmar.eggemann@arm.com,
+	lukasz.luba@arm.com, linux-arm-kernel@lists.infradead.org,
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_mdtipton@quicinc.com, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH V2 1/4] firmware: arm_scmi: Add perf_notify_support
+ interface
+Message-ID: <ZbfJN1c9viiLhO1L@pluto>
+References: <20240117104116.2055349-1-quic_sibis@quicinc.com>
+ <20240117104116.2055349-2-quic_sibis@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.13.0
-Content-Language: en-US
-To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
- mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
- corbet@lwn.net, gregkh@linuxfoundation.org, lgirdwood@gmail.com,
- andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
- konrad.dybcio@linaro.org, Thinh.Nguyen@synopsys.com, broonie@kernel.org,
- bgoswami@quicinc.com, tiwai@suse.com, robh+dt@kernel.org, agross@kernel.org
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
- alsa-devel@alsa-project.org, "Neronin, Niklas" <niklas.neronin@intel.com>
-References: <20240102214549.22498-1-quic_wcheng@quicinc.com>
- <20240102214549.22498-5-quic_wcheng@quicinc.com>
- <734591a1-50b4-6dc7-0b93-077355ec12e4@linux.intel.com>
- <7b2ec96b-b72f-c848-7c35-36e61a4072ac@quicinc.com>
- <b254f73b-a1bc-3dd4-f485-a3acf556835d@quicinc.com>
- <2178e799-2068-7443-59b2-310dfdd1ddee@linux.intel.com>
- <ae64ce69-dc1b-1534-7950-0a35c4a56f58@quicinc.com>
- <ff0bff8b-f26a-87bd-9762-9f2af98abcca@quicinc.com>
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: Re: [PATCH v12 04/41] usb: host: xhci-mem: Cleanup pending secondary
- event ring events
-In-Reply-To: <ff0bff8b-f26a-87bd-9762-9f2af98abcca@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240117104116.2055349-2-quic_sibis@quicinc.com>
 
-On 26.1.2024 23.13, Wesley Cheng wrote:
-> Hi Mathias,
+On Wed, Jan 17, 2024 at 04:11:13PM +0530, Sibi Sankar wrote:
+> Add a new perf_notify_support interface to the existing perf_ops to export
+> info regarding limit/level change notification support.
 > 
-> On 1/16/2024 12:24 PM, Wesley Cheng wrote:
->> Hi Mathias,
->>
->> On 1/15/2024 6:01 AM, Mathias Nyman wrote:
->>> On 10.1.2024 1.42, Wesley Cheng wrote:
->>>> Hi Mathias,
->>>>
->>>> On 1/8/2024 12:51 PM, Wesley Cheng wrote:
->>>>> Hi Mathias,
->>>>>
->>>>> On 1/4/2024 6:48 AM, Mathias Nyman wrote:
->>>>>> On 2.1.2024 23.45, Wesley Cheng wrote:
->>>>>>> As part of xHCI bus suspend, the XHCI is halted.  However, if there are
->>>>>>> pending events in the secondary event ring, it is observed that the xHCI
->>>>>>> controller stops responding to further commands upon host or device
->>>>>>> initiated bus resume.  Iterate through all pending events and update the
->>>>>>> dequeue pointer to the beginning of the event ring.
->>>>>>>
->>>>>>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->>>>>> ...
->>>>>>> +/*
->>>>>>> + * Move the event ring dequeue pointer to skip events kept in the secondary
->>>>>>> + * event ring.  This is used to ensure that pending events in the ring are
->>>>>>> + * acknowledged, so the XHCI HCD can properly enter suspend/resume. The
->>>>>>> + * secondary ring is typically maintained by an external component.
->>>>>>> + */
->>>>>>> +void xhci_skip_sec_intr_events(struct xhci_hcd *xhci,
->>>>>>> +    struct xhci_ring *ring,    struct xhci_interrupter *ir)
->>>>>>> +{
->>>>>>> +    union xhci_trb *erdp_trb, *current_trb;
->>>>>>> +    u64 erdp_reg;
->>>>>>> +    u32 iman_reg;
->>>>>>> +    dma_addr_t deq;
->>>>>>> +
->>>>>>> +    /* disable irq, ack pending interrupt and ack all pending events */
->>>>>>> +    xhci_disable_interrupter(ir);
->>>>>>> +    iman_reg = readl_relaxed(&ir->ir_set->irq_pending);
->>>>>>> +    if (iman_reg & IMAN_IP)
->>>>>>> +        writel_relaxed(iman_reg, &ir->ir_set->irq_pending);
->>>>>>> +
->>>>>>> +    /* last acked event trb is in erdp reg  */
->>>>>>> +    erdp_reg = xhci_read_64(xhci, &ir->ir_set->erst_dequeue);
->>>>>>> +    deq = (dma_addr_t)(erdp_reg & ERST_PTR_MASK);
->>>>>>> +    if (!deq) {
->>>>>>> +        xhci_err(xhci, "event ring handling not required\n");
->>>>>>> +        return;
->>>>>>> +    }
->>>>>>> +
->>>>>>> +    erdp_trb = current_trb = ir->event_ring->dequeue;
->>>>>>> +    /* read cycle state of the last acked trb to find out CCS */
->>>>>>> +    ring->cycle_state = le32_to_cpu(current_trb->event_cmd.flags) & TRB_CYCLE;
->>>>>>> +
->>>>>>> +    while (1) {
->>>>>>> +        inc_deq(xhci, ir->event_ring);
->>>>>>> +        erdp_trb = ir->event_ring->dequeue;
->>>>>>> +        /* cycle state transition */
->>>>>>> +        if ((le32_to_cpu(erdp_trb->event_cmd.flags) & TRB_CYCLE) !=
->>>>>>> +            ring->cycle_state)
->>>>>>> +            break;
->>>>>>> +    }
->>>>>>> +
->>>>>>> +    xhci_update_erst_dequeue(xhci, ir, current_trb, true);
->>>>>>> +}
->>>>>>
->>>>>> Code above is very similar to the existing event ring processing parts of xhci_irq()
->>>>>> and xhci_handle_event()
->>>>>>
->>>>>> I'll see if I can refactor the existing event ring processing, decouple it from
->>>>>> event handling so that it could be used by primary and secondary interrupters with
->>>>>> handlers, and this case where we just want to clear the event ring.
->>>>>>
->>>>>
->>>>> Thanks, that makes sense.  Will take a look as well.
->>>>>
->>>>
->>>> How about something like the below?  Tested this on my set up and everything looks to be working fine.  Had to add another param to struct xhci_interrupters to tell the XHCI interrupt handler to say if that particular interrupter wants to skip_events (handling).  This way, its something that the class driver utilizing the interrupter will have to tell XHCI sideband.  It would allow the user to determine if they want to use the interrupter to actually handle events or not on the proc running Linux.
->>>>
->>>
->>> Yes, I have something similar.
->>> I'll share it soon, just need to
->>> clean it up a bit fist.
->>>
->>
->> Sure, no worries.  Will test it when its available.  Thanks!
->>
-> 
-> Was just wondering if you had the time to clean up the changes?  If not, maybe you can provide a patch with whatever you have, and I can try my best to clean it up to your liking?  Thanks!
 
-Sure, got stuck fixing other issues.
+Hi Sibi,
 
-Code is not yet cleaned up, commit messages are not ready etc, but current work is in
-a fix_eventhandling branch:
+as I mentioned previously, in order not to add a needless stream of SCMI
+Perf accessors I posted this:
 
-git://git.kernel.org/pub/scm/linux/kernel/git/mnyman/xhci.git  fix_eventhandling
-https://git.kernel.org/pub/scm/linux/kernel/git/mnyman/xhci.git/log/?h=fix_eventhandling
+https://lore.kernel.org/linux-arm-kernel/20240129151002.1215333-1-cristian.marussi@arm.com/T/#u
 
-I was in the middle of figuring out when and where the ip_autoclear and interrupt
-moderation values should be set for secondary interrupters
+to expose all the Perf domains infos via the usual info_get(), similarly
+to how other SCMI protocols do already.
 
-Thanks
-Mathias
+I think that reworking this series on that, you can certainly drop this patch and just
+check the _notify booleans on the retrieved domain info.
 
+Thanks,
+Cristian
 
