@@ -1,241 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-8770-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F67483FDC3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 06:37:07 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB56983FDFF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 07:10:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8F3A71F21A29
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 05:37:06 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EB585B229E0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 06:10:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC3622575D;
-	Mon, 29 Jan 2024 05:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE41B45BEF;
+	Mon, 29 Jan 2024 06:10:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="f2/sYrrp"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XyFrEVFf"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00EF83211
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 05:37:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0E3446C4;
+	Mon, 29 Jan 2024 06:10:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706506622; cv=none; b=G7sADumVFqYWT18WLaGWN4Y1Wp37ksod2HZ5O3vJnzm8PFGfy42TDwdw57GqC2bpNbexMBuhgjWGUZlH2gg/fGNx0DwM8MbT/UCvUmXTlL3M6qtSHzpxPlQZkQEdAHkdGzE2JtzfSGt5toTi9XyigjZ7lzT6EH11BVzdrId0sW4=
+	t=1706508618; cv=none; b=UKZZUe5Wy8Ns1Mr4jbyfFXN26itX7txd1ydtNtDLEnZczk6VUv6nkXicRfHs3hXMiWYGx8fgLnq6bh8sOoE+KSu8lE/kkgrERiVq0+asOpPdpLWUAp0NvJLc8fDIima6ZXxgkqljbvOe71OquIWO/4cBsgBmfG30qS6rIvPTGpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706506622; c=relaxed/simple;
-	bh=8mOwAsm2AYY26YXMp5DtqGLAibXkhV3Em3LUQMKXU8g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ZU6+4TW5FVwIeRTqgz0ha8ZHa3kLCrIPFqkSh0rQkbfkBH97UHUbtPPsj7plnViRa3Lx7R81hY4sZ3ScOQRu8zi2CjjzD+znQOrOJMw7q5bw3LDb6iQuVkJ2qJ6Zy8x+oJWkxQ43f1AZUZ9T1s/tSwn8o0Q0x27XXLMX8Ml1quI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=f2/sYrrp; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1706508618; c=relaxed/simple;
+	bh=jcqJD0v4CV6bRhYa0gKiHSfLGMsUg7xc0NXAopIXwew=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=u7L3kNxRgxCgt7mOzCuclCTa49JFK+mOt1ZSsIFDL+TEvYCqBc3R8l28ypgb9jIJcPeeO4YtcpC1SDGAIoyaI1gRvtVuFaMXbLpSXpnhub3Aw3XGgCRadKIT4DfM3bK2CiI5BvgwuAzjezN15M/l8aPi4+g+rNULyeK5BaDDy9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XyFrEVFf; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40T5CIJc003778;
-	Mon, 29 Jan 2024 05:36:44 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40T3lNHf018658;
+	Mon, 29 Jan 2024 06:10:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=A4+YhRJbxAj8pl4exb8U1Diw6ayXlnWsul8WoEggIOI=; b=f2
-	/sYrrp4EVA7QaID3Oc1M4V8QPShrNd66b3sIFLEq3jQH3arK9KclwYpReIM4xms2
-	xeQ+6pZOhKejIRc0NjaBQGcj4M8luL/PeNTdjsfMQZXej91iBbOLSHcHo9X31ejt
-	ktsqM3grAkBDQFh+vUKGKvYDO8cCvoYEAC1gwmPZfTKqsXI3v1pobiQ6oUH2mLos
-	7olOVYbQohxt44SQ4adcw5ZBRihtv8g3jNduuGeW29sb4Zs1tbupiPA/QTo/Bsom
-	9Pu/BXghYCj+4+azmMxLEowMnnxFm7ttt+xpQMdbQ3MOps1rzyfnznQZ/FJGI4X6
-	YzMDe1DpsggccT/B6hlA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vvqhmu27j-1
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=fZX0r032TCAf
+	fHZLe8mY0s06DUIcXsbsa7Eh7JqVMLk=; b=XyFrEVFf6zM6RpVkrwVEw2LmzZOb
+	QmEgfZgeOKEg1Zb11linpleHvfQ1VRZMmEBOu5IV2Zo83aJ+pmnQYwKsj/2JseQO
+	jjjjXIwR83o/QdocXytl1hycs29rp4Uq2JwXqLW1mYxy/w8/wUvATq6yEzcFFLDw
+	Bb2fpU7cHrb0uI6VbysADkeC6qg406iDlxO7NIbG+fRuCpyPamCUQV5N2yDP1m/V
+	m+qH6bfd8V6IwUXtOI16rOutKYePZxBAVlgJDK5J2J2+6oqLE3Nyg9hlUoUluUHa
+	Th2Qy5WvyHc3tIuKIweKfvy1Dl8LSVHfRR+bVKMrdMT5gxhYZRnJnSNOOw==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vx23k8d9p-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 29 Jan 2024 05:36:44 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40T5ahfj023463
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 29 Jan 2024 05:36:43 GMT
-Received: from [10.110.98.98] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sun, 28 Jan
- 2024 21:36:42 -0800
-Message-ID: <3c87c423-e290-c399-30d3-3b0d94903619@quicinc.com>
-Date: Sun, 28 Jan 2024 21:36:41 -0800
+	Mon, 29 Jan 2024 06:10:12 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 40T6A9wY020666;
+	Mon, 29 Jan 2024 06:10:09 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3vvtwknh0x-1;
+	Mon, 29 Jan 2024 06:10:09 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40T6A9J0020660;
+	Mon, 29 Jan 2024 06:10:09 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-vdadhani-hyd.qualcomm.com [10.213.106.28])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 40T6A7ak020632;
+	Mon, 29 Jan 2024 06:10:09 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 4047106)
+	id 0B9615001C1; Mon, 29 Jan 2024 11:40:06 +0530 (+0530)
+From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+To: andersson@kernel.org, konrad.dybcio@linaro.org, andi.shyti@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org, vkoul@kernel.org,
+        quic_bjorande@quicinc.com, manivannan.sadhasivam@linaro.org
+Cc: quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
+        Viken Dadhaniya <quic_vdadhani@quicinc.com>
+Subject: [V2] i2c: i2c-qcom-geni: Correct I2C TRE sequence
+Date: Mon, 29 Jan 2024 11:40:03 +0530
+Message-Id: <20240129061003.4085-1-quic_vdadhani@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 2wrUhd0eEdoqHX1vfwnWRRKhWPgRdGNk
+X-Proofpoint-GUID: 2wrUhd0eEdoqHX1vfwnWRRKhWPgRdGNk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-29_02,2024-01-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 suspectscore=0 spamscore=0 malwarescore=0 mlxlogscore=999
+ mlxscore=0 lowpriorityscore=0 adultscore=0 clxscore=1015 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401190000 definitions=main-2401290042
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 17/17] drm/msm/dp: allow YUV420 mode for DP connector when
- VSC SDP supported
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Paloma Arellano <quic_parellan@quicinc.com>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <seanpaul@chromium.org>, <swboyd@chromium.org>,
-        <quic_jesszhan@quicinc.com>, <quic_khsieh@quicinc.com>,
-        <marijn.suijten@somainline.org>, <neil.armstrong@linaro.org>
-References: <20240125193834.7065-1-quic_parellan@quicinc.com>
- <20240125193834.7065-18-quic_parellan@quicinc.com>
- <493926f1-90e9-493a-bd2f-ea1db16d7ee6@linaro.org>
- <72ca08ac-ae16-37f6-6f85-f203ddf79084@quicinc.com>
- <CAA8EJppj1xN8E==VGncvW5DKMtLPixynpgAqyZoJzPQXZEEYjg@mail.gmail.com>
- <1666a8c3-f1f0-f050-aa06-cf221bdbcbb9@quicinc.com>
- <CAA8EJprDUBb7yM-16QVa_i6ONRaNYSWRvJKMG=Z2rPhJ0JfwXw@mail.gmail.com>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAA8EJprDUBb7yM-16QVa_i6ONRaNYSWRvJKMG=Z2rPhJ0JfwXw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -LgbofhnBlEELVriZVXxfi08VXU09cyN
-X-Proofpoint-ORIG-GUID: -LgbofhnBlEELVriZVXxfi08VXU09cyN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-29_02,2024-01-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 malwarescore=0
- adultscore=0 priorityscore=1501 lowpriorityscore=0 mlxlogscore=999
- spamscore=0 impostorscore=0 clxscore=1015 mlxscore=0 bulkscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401190000 definitions=main-2401290038
 
+For i2c read operation, we are getting gsi mode timeout due
+to malformed TRE(Transfer Ring Element). Currently we are
+configuring incorrect TRE sequence in gpi driver
+(drivers/dma/qcom/gpi.c) as below
 
+- Sets up CONFIG
+- Sets up DMA tre
+- Sets up GO tre
 
-On 1/28/2024 9:05 PM, Dmitry Baryshkov wrote:
-> On Mon, 29 Jan 2024 at 06:30, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->>
->>
->>
->> On 1/28/2024 7:52 PM, Dmitry Baryshkov wrote:
->>> On Mon, 29 Jan 2024 at 05:17, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->>>>
->>>>
->>>>
->>>> On 1/25/2024 2:05 PM, Dmitry Baryshkov wrote:
->>>>> On 25/01/2024 21:38, Paloma Arellano wrote:
->>>>>> All the components of YUV420 over DP are added. Therefore, let's mark the
->>>>>> connector property as true for DP connector when the DP type is not eDP
->>>>>> and when VSC SDP is supported.
->>>>>>
->>>>>> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
->>>>>> ---
->>>>>>     drivers/gpu/drm/msm/dp/dp_display.c | 5 ++++-
->>>>>>     1 file changed, 4 insertions(+), 1 deletion(-)
->>>>>>
->>>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c
->>>>>> b/drivers/gpu/drm/msm/dp/dp_display.c
->>>>>> index 4329435518351..97edd607400b8 100644
->>>>>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->>>>>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->>>>>> @@ -370,11 +370,14 @@ static int dp_display_process_hpd_high(struct
->>>>>> dp_display_private *dp)
->>>>>>         dp_link_process_request(dp->link);
->>>>>> -    if (!dp->dp_display.is_edp)
->>>>>> +    if (!dp->dp_display.is_edp) {
->>>>>> +        if (dp_panel_vsc_sdp_supported(dp->panel))
->>>>>> +            dp->dp_display.connector->ycbcr_420_allowed = true;
->>>>>
->>>>> Please consider fixing a TODO in drm_bridge_connector_init().
->>>>>
->>>>
->>>> I am not totally clear if that TODO can ever go for DP/HDMI usage of
->>>> drm_bridge_connector.
->>>>
->>>> We do not know if the sink supports VSC SDP till we read the DPCD and
->>>> till we know that sink supports VSC SDP, there is no reason to mark the
->>>> YUV modes as supported. This is the same logic followed across vendors.
->>>>
->>>> drm_bride_connector_init() happens much earlier than the point where we
->>>> read DPCD. The only thing which can be done is perhaps add some callback
->>>> to update_ycbcr_420_allowed once DPCD is read. But I don't think its
->>>> absolutely necessary to have a callback just for this.
->>>
->>> After checking the drm_connector docs, I'd still hold my opinion and
->>> consider this patch to be a misuse of the property. If you check the
->>> drm_connector::ycbcr_420_allowed docs, you'll see that it describes
->>> the output from the source point of view. In other words, it should be
->>> true if the DP connector can send YUV420 rather than being set if the
->>> attached display supports such output. This matches ycbcr420_allowed
->>> usage by AMD, dw-hdmi, intel_hdmi and even intel_dp usage.
->>>
->>
->> hmmm I think I misread intel_dp_update_420(). I saw this is called after
->> HPD so I thought they unset ycbcr_420_allowed if VSC SDP is not
->> supported. But they have other DPCD checking there so anyway they will
->> fail this bridge_connector_init() model.
->>
->> But one argument which I can give in my defense is, lets say the sink
->> exposed YUV formats but did not support SDP, then atomic_check() will
->> keep failing or should keep failing. This will avoid this scenario. But
->> we can assume that would be a rogue sink.
-> 
-> This should be handled in DP's atomic_check. As usual, bonus point if
-> this is done via helpers that can be reused by other platforms.
-> 
->> I think we can pass a yuv_supported flag to msm_dp_modeset_init() and
->> set it to true from dpu_kms if catalog has CDM block and get rid of the
->> dp_panel_vsc_sdp_supported().
-> 
-> These are two different issues. CDM should be checked in PDU (whether
-> the DPU can provide YUV data to the DP block).
-> 
+As per HPG(Hardware programming guide), We should configure TREs in below
+sequence for any i2c transfer
 
-Yes, I found this issue while discussing this. We need to make this change.
+- Sets up CONFIG tre
+- Sets up GO tre
+- Sets up DMA tre
 
->>
->> But that doesnt address the TODO you have pointed to. What is really the
->> expectation of the TODO? Do we need to pass a ycbcr_420_allowed flag to
->> drm_bridge_connector_init()?
-> 
-> Ugh. No. I was thinking about a `ycbcr420_allowed` flag in the struct
-> drm_bridge (to follow existing interlace_allowed) flag. But, this
-> might be not the best option. Each bridge can either pass through YUV
-> data from the previous bridge or generate YCbCr data on its own. So in
-> theory this demands two flags plus one flag for the encoder. Which
-> might be an overkill, until we end up in a situation when the driver
-> can not decide for the full bridge chain.
-> 
+For only write operation or write followed by read operation,
+existing software sequence is correct.
 
-Yes.
+for only read operation, TRE sequence need to be corrected.
+Hence, we have changed the sequence to submit GO tre before DMA tre.
 
-> So let's probably ignore the TODO for the purpose of this series. Just
-> fix the usage of ycbcr420_allowed according to docs.
-> 
+Tested covering i2c read/write transfer on QCM6490 RB3 board.
 
-Ack.
+Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+Fixes: commit d8703554f4de ("i2c: qcom-geni: Add support for GPI DMA")
+---
+v1 -> v2:
+- Remove redundant check.
+- update commit log.
+- add fix tag.
+---
+---
+ drivers/i2c/busses/i2c-qcom-geni.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
->>
->> That would need a tree wide cleanup and thats difficult to sign up for
->> in this series and I would not as well.
->>
->> One thing which I can suggest to be less intrusive is have a new API
->> called drm_bridge_connector_init_with_YUV() which looks something like
->> below:
->>
->> struct drm_connector *drm_bridge_connector_init_with_ycbcr_420(struct
->> drm_device *drm, struct drm_encoder *encoder)
->> {
->>          drm_bridge_connector_init();
->>          connector->ycbcr_420_allowed = true;
->> }
->>
->> But I don't know if the community would be interested in this idea or
->> would find that useful.
->>
->>>>>>             drm_dp_set_subconnector_property(dp->dp_display.connector,
->>>>>>                              connector_status_connected,
->>>>>>                              dp->panel->dpcd,
->>>>>>                              dp->panel->downstream_ports);
->>>>>> +    }
->>>>>>         edid = dp->panel->edid;
->>>>>
->>>
->>>
->>>
-> 
-> 
-> 
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index 0d2e7171e3a6..da94df466e83 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -613,20 +613,20 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
+ 
+ 		peripheral.addr = msgs[i].addr;
+ 
++		ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
++				    &tx_addr, &tx_buf, I2C_WRITE, gi2c->tx_c);
++		if (ret)
++			goto err;
++
+ 		if (msgs[i].flags & I2C_M_RD) {
+ 			ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
+ 					    &rx_addr, &rx_buf, I2C_READ, gi2c->rx_c);
+ 			if (ret)
+ 				goto err;
+-		}
+-
+-		ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
+-				    &tx_addr, &tx_buf, I2C_WRITE, gi2c->tx_c);
+-		if (ret)
+-			goto err;
+ 
+-		if (msgs[i].flags & I2C_M_RD)
+ 			dma_async_issue_pending(gi2c->rx_c);
++		}
++
+ 		dma_async_issue_pending(gi2c->tx_c);
+ 
+ 		timeout = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
+
 
