@@ -1,74 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-8815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E0528402DA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 11:34:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A423684032C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 11:49:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D8A3A2812CC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 10:34:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A51B2846F9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 10:49:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13B7E3CF77;
-	Mon, 29 Jan 2024 10:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C4AD56B94;
+	Mon, 29 Jan 2024 10:48:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tbEaabXn"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="D45sQB0K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B35956B70
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 10:34:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F4F56B70;
+	Mon, 29 Jan 2024 10:48:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706524466; cv=none; b=eDRaiArwcIW+bD+QzOgI8WRBR0ZkHtcYFGfvraOq2UFoV9lcXKQBf512WESm4vIoE5pdde9CQVDbnBIg7a8LDgkCS/0UlQ5lzUDM/jYZ7kU4ARgGzEIaBSBoIAYeYHnFdoHSuqQAG1S8l4di3wnARodQFkhMqs17fixyhIedxD0=
+	t=1706525334; cv=none; b=tu+WAJmeXZwUs6xSqK9Ztd+67eDFCG6I8TShkqOOwzfdD5LBH+Nei+XPX73IAL541lB5/D7daJb5FRJ8VQyh4U/6PwLXEANW6JGq7ctUu7L/qlwM94G1bZx5y0IRE7SMZtvEY2cLOw23g7vHZKZhlmaS4gC5Tjwi88avFhC2iZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706524466; c=relaxed/simple;
-	bh=U3Gl97xjw4oC3MXhCS40c5jo7v5dFA0H58gsCXtXEcw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RJ3r8WNCGNk2r8JBDhUor8zZdw4mmvpd1pEpFnsC9gmIsCa9quDt2bLKqQ8/HeNfiZ/YfA0twoyTdBQc0dnMYJK0HDTGhwab4VmKUmDlm8WxTygp7SwGEmqBtdcLLl/zUdrjSeAYpifW0Vx4OkWX/lj+7BWzw0x1aOFIWFUwiB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tbEaabXn; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a2f79e79f0cso288610166b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 02:34:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706524462; x=1707129262; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=qydfoZVP85IdMiubhiKm9Jneo/wEbV/EV80+UeWPEe4=;
-        b=tbEaabXnAjqHSIg0ij67hR9go6q2OJz7jAKkfkXlqk0BqHbyTjxAFo0k9lAtSVnd4+
-         U0BAoRJbzoidGW9Xb+VD6wR4Df2i/yfeluWTudg3uxp1OR/y+eQcnVZC+jZHSag5075v
-         sSJTZ6IvTdnfrbetnUaWXQC1sUtixLqFkpM0/0wxrpdEEVHPjlLLMo0ioQOFmmsGOmIE
-         s3nLChFGTuaGQqAEq2LOo2XBXhfTU2Lp5JVNuJGdjlbOgqCeveF1P2V11TQ+899hd5PY
-         FYCNbYCMoOqh4RKFPbmSnLIo6CjJM7uYJgla6ppXhM/okBJDSlehNvZPhXgLtO3O73nU
-         j/sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706524462; x=1707129262;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qydfoZVP85IdMiubhiKm9Jneo/wEbV/EV80+UeWPEe4=;
-        b=CGGeZ6VzUiL3+XAxUgq96vCXooBfbi6G6wlntdrjb0JbR4SPExRKXQ5ZHD1xZTCzti
-         B1YIlSX8teXpl9eCTt4PPCu59LO25N4HCj4uBp9mlSClUD/leTYZbx32Y1m9IY9sR90F
-         K4si+Dxdpr0vEdpWzQLePvYgm1m6pn6v1lhgwmr5tvqDP2djOBr4QYKaYvOrhgrUyVzn
-         wODC3I5MGx+Y74BjxO6Rne9Nmus2C4aFvVzKXIR5Xwevev0jvOmG6IxJtYSW+UerYzKN
-         vwgqh0TWzm5L7COxNly0dozNlOD+yIZdmT6MZWY99paYJeh9mBiTZcmPz6CMACG5XApf
-         5zjQ==
-X-Gm-Message-State: AOJu0YwN2iK5ri9uW78wOeAF4Bdb/eRrPw/3SAxoXQnleNMR/klAHNdu
-	ZH/gXB8YgiGd+MsmNTqJlfgdNEPpZknAlBqJQvrvmm7lQD4KgMvO2obovPFrikk=
-X-Google-Smtp-Source: AGHT+IFsuk/zVuo44KErQR+oNXgqwuaPiqCP9PdIhRJdXYh9l8T8nMWPKNQ3chP38rQ6nFzUtfhnKw==
-X-Received: by 2002:a17:906:2852:b0:a34:d426:1bec with SMTP id s18-20020a170906285200b00a34d4261becmr4095258ejc.12.1706524462614;
-        Mon, 29 Jan 2024 02:34:22 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.222.62])
-        by smtp.gmail.com with ESMTPSA id a10-20020a170906368a00b00a349d05c837sm3740526ejc.154.2024.01.29.02.34.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Jan 2024 02:34:22 -0800 (PST)
-Message-ID: <778ec92e-8f9f-4521-a31d-fba696518bed@linaro.org>
-Date: Mon, 29 Jan 2024 11:34:20 +0100
+	s=arc-20240116; t=1706525334; c=relaxed/simple;
+	bh=Cwwb1IrnhAqflNwwr5xSZUeDUm1bhUtrWeRJtuIBwI8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=syJt3Tqae2O5H5za9zsv/4DqdLBtEwa/qi7cwTREtHn/BgBPncsfkYL+7Ej8bGD0aPavEfofm8ZCw9blT7CmuaiJ2mYsvndQVfiiQjLCLUPiI5Da1+1q75TxeRADhfgISlRMAEW/mdx3Kf5fXtbMUCglaLojPzxz5Q7i4seLWeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=D45sQB0K; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40T7jqMX032528;
+	Mon, 29 Jan 2024 10:48:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=ZugSSSRjJH8eOzWRrav1dwHxGdpfMlgQG3DI1tTj0AA=; b=D4
+	5sQB0Kw7xD3lwRWOS6sew+n5Kzq8u07fxKWSdBBZK8F+LBGR2rOBctnssd6JAXQb
+	pHfwTrFn/NPwUHwqkZR4kMESANNhkVxRvAts0f0ZnFDpJkkFeyudiflRvcXWA8SE
+	HKrg3m7jYhJOUazEqPRligwenMRwG36zoB0kTbviwWiwWbYTjb+5aX3aIkA8pMXp
+	C9FVkF9QlMXvGkojXRQHqwQfbEjWJ7ait1NhG4D+QdbGig+wEDHy7h9SvtXiSSKh
+	anMXPDm1leRtwCEAs6A9zuptGiX1BIWGLOjAkl1bHxdY7XRnHYf9CiHk2M56QnUb
+	a5mutE+13vhQLPD+0mpQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vx23k8wsa-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Jan 2024 10:48:43 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40TAmgcl008905
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Jan 2024 10:48:42 GMT
+Received: from [10.218.35.133] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 29 Jan
+ 2024 02:48:39 -0800
+Message-ID: <151f5738-791e-42cb-b8fe-e0cfbf9f7dca@quicinc.com>
+Date: Mon, 29 Jan 2024 16:18:36 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,82 +65,85 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/8] dt-bindings: clock: qcom: Allow VDD_GFX supply to
- GX
-To: Bjorn Andersson <quic_bjorande@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
- Johan Hovold <johan+linaro@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-References: <20240125-sa8295p-gpu-v4-0-7011c2a63037@quicinc.com>
- <20240125-sa8295p-gpu-v4-1-7011c2a63037@quicinc.com>
+Subject: Re: [RFC PATCH] rpmsg: glink: Add bounds check on tx path
+To: =?UTF-8?Q?Michal_Koutn=C3=BD?= <mkoutny@suse.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>, <afaerber@suse.com>,
+        <ivan.ivanov@suse.com>
+References: <20240113002505.15503-1-mkoutny@suse.com>
 Content-Language: en-US
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240125-sa8295p-gpu-v4-1-7011c2a63037@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Deepak Kumar Singh <quic_deesin@quicinc.com>
+In-Reply-To: <20240113002505.15503-1-mkoutny@suse.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: UiTqmIwQw3BpaeOMGQ7Ee7xTrNm9Ik5I
+X-Proofpoint-GUID: UiTqmIwQw3BpaeOMGQ7Ee7xTrNm9Ik5I
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-29_06,2024-01-29_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 suspectscore=0 spamscore=0 malwarescore=0 mlxlogscore=793
+ mlxscore=0 lowpriorityscore=0 adultscore=0 clxscore=1011 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401190000 definitions=main-2401290077
 
-On 25/01/2024 22:05, Bjorn Andersson wrote:
-> In some designs the SoC's VDD_GFX pads are supplied by an external
-> regulator, rather than a power-domain. Allow this to be described in the
-> GPU clock controller binding.
+
+
+On 1/13/2024 5:55 AM, Michal Koutný wrote:
+> Add bounds check on values read from shared memory in the tx path. In
+> cases where the VM is misbehaving, the transport should exit and print a
+> warning when bogus values may cause out of bounds to be read.
 > 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> Link: https://git.codelinaro.org/clo/la/kernel/msm-5.10/-/commit/32d9c3a2f2b6a4d1fc48d6871194f3faf3184e8b
+> Suggested-by: Chris Lew <quic_clew@quicinc.com>
+> Suggested-by: Sarannya S <quic_sarannya@quicinc.com>
+> Signed-off-by: Michal Koutný <mkoutny@suse.com>
 > ---
+>   drivers/rpmsg/qcom_glink_smem.c | 9 +++++++++
+>   1 file changed, 9 insertions(+)
+> 
+> Why RFC? The patch is adopted from the link above. It would be good to
+> asses whether such conditions can also happen with rpmsg glink.
+> (And if so, whether the zeroed values are the best correction.)
+> 
+Hi Michal,
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+There is already a patch posted for similar problem -
+https://lore.kernel.org/all/20231201110631.669085-1-quic_deesin@quicinc.com/
 
-Best regards,
-Krzysztof
-
+> diff --git a/drivers/rpmsg/qcom_glink_smem.c b/drivers/rpmsg/qcom_glink_smem.c
+> index 7a982c60a8dd..3e786e590c03 100644
+> --- a/drivers/rpmsg/qcom_glink_smem.c
+> +++ b/drivers/rpmsg/qcom_glink_smem.c
+> @@ -146,6 +146,11 @@ static size_t glink_smem_tx_avail(struct qcom_glink_pipe *np)
+>   	else
+>   		avail -= FIFO_FULL_RESERVE + TX_BLOCKED_CMD_RESERVE;
+>   
+> +	if (avail > pipe->native.length) {
+> +		pr_warn_once("%s: avail clamped\n", __func__);
+> +		avail = 0;
+> +	}
+> +
+>   	return avail;
+>   }
+>   
+> @@ -177,6 +182,10 @@ static void glink_smem_tx_write(struct qcom_glink_pipe *glink_pipe,
+>   	unsigned int head;
+>   
+>   	head = le32_to_cpu(*pipe->head);
+> +	if (head > pipe->native.length) {
+> +		pr_warn_once("%s: head overflow\n", __func__);
+> +		return;
+> +	}
+>   
+>   	head = glink_smem_tx_write_one(pipe, head, hdr, hlen);
+>   	head = glink_smem_tx_write_one(pipe, head, data, dlen);
 
