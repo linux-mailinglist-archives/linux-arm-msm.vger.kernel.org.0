@@ -1,313 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-8898-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C09AA840BE3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 17:42:10 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A39B0840C35
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 17:49:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E43191C22A64
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 16:42:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 35D15B22417
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 16:49:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0984315B0F6;
-	Mon, 29 Jan 2024 16:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9700D159582;
+	Mon, 29 Jan 2024 16:48:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gIg1ffA0"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="frwD34HY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF0715B0ED;
-	Mon, 29 Jan 2024 16:38:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6C8158D98;
+	Mon, 29 Jan 2024 16:48:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706546297; cv=none; b=lQj0rKOQWhYyUggeYtSOcX4T4U9qWL4FW5mZaEEgVJ+uXlEBoxBYhzjlxC98U0ElapUSt5Gzq2ZTGgTPi2OXpW45C3i7i/AoC+MS2AhtxAcqVIyDvdJ8uSoLxc2iFOVoiQRIU1CNLFQhYkawTe5HeEFBv6rsMvb/G9jiF2G4Byk=
+	t=1706546885; cv=none; b=OEpOrksHQ3puVBylVnivYeoVZ769rCPQEOysNRO4TV7PAzXWV3nILWzrqnqYxtYqnShsS8bMK3jgV1izHO0SouPTr2kXuh6WyejUKfVQSKJVaK/irXhmjJZ+W3+AcgM/7n//WQxCigXNGLcksZDYVQgQCyW7Oxdb2VXlQSVuyMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706546297; c=relaxed/simple;
-	bh=uYwcOR5brX7r9+JRwYX8+VbyycUQFdGKUH1m0kNYxxo=;
-	h=Date:From:To:Cc:Subject:Message-ID; b=uf3NDmerISQFxXUPu1nLHQHpDJfs9orxzXgaPpGq9pSf5HtlSi9NtA1OSm652sY63LKLQYEYgqIl5nFpWZGjudBtB/p+lasKF4PfpkCGZPamTXKsoBt84MZFSwR2VZul2+fK8SU+yVZl/zX2oK/59czlbGSPaBeoHEwwAKJyjsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gIg1ffA0; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1706546296; x=1738082296;
-  h=date:from:to:cc:subject:message-id;
-  bh=uYwcOR5brX7r9+JRwYX8+VbyycUQFdGKUH1m0kNYxxo=;
-  b=gIg1ffA0Cz8wUVlZ4yykZJCvd/zWqsRbvJrDZb9d/29brNYjPfkojxoW
-   4v7AHUmC/cPPeVuttLelumeo7G7/upZAEhzs9P/nzrD2+SYskaoQv6fBL
-   xJrws+IH9pKeNQrzxFUqyFFu7ZKZMTwGM+zEfelyc5plG9cfWR9SuoIdE
-   6dGN+QjSle3cUITq33tPdYgfJW5bn9ixrLM2t6DmSrQVqofuOKV6/DKcH
-   DSPh5ZbzeuGsPBlqphYt8bZhtbwXOC/1pzkSMGjWcGFsfepVsVi8oTHaa
-   cGvV7Pzgjy1aSfutjsS5MTqx1GE4Ndi1v4hyzbyUJFdHR1VEHwVDA1YSm
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10968"; a="2827047"
-X-IronPort-AV: E=Sophos;i="6.05,227,1701158400"; 
-   d="scan'208";a="2827047"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jan 2024 08:38:04 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10968"; a="907175661"
-X-IronPort-AV: E=Sophos;i="6.05,227,1701158400"; 
-   d="scan'208";a="907175661"
-Received: from lkp-server01.sh.intel.com (HELO 370188f8dc87) ([10.239.97.150])
-  by fmsmga002.fm.intel.com with ESMTP; 29 Jan 2024 08:38:01 -0800
-Received: from kbuild by 370188f8dc87 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1rUUdz-0004SK-36;
-	Mon, 29 Jan 2024 16:37:59 +0000
-Date: Tue, 30 Jan 2024 00:37:19 +0800
-From: kernel test robot <lkp@intel.com>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Linux Memory Management List <linux-mm@kvack.org>,
- dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-arm-msm@vger.kernel.org
-Subject: [linux-next:master] BUILD REGRESSION
- 596764183be8ebb13352b281a442a1f1151c9b06
-Message-ID: <202401300015.JNiXkpyb-lkp@intel.com>
-User-Agent: s-nail v14.9.24
+	s=arc-20240116; t=1706546885; c=relaxed/simple;
+	bh=zMf4yKdogGXJoeObaueH6qXynndYIX55PcDoMto1YCA=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=mEkjXyEZ0y1Xi86An6ssQslim5JvMOBlD1bxhmQnHgtE2ZuAdgo3Bt6AeU9yqVXu+B/C5ecEYu/G8NAcX8e6TuXY17xEYRIXFxViq5PuRTWLO67XNtshi3kdtixjXEMO2r0W0UgoZQiW+SU6UP9R1Hk6vVFpRhXI7XVZpbRzvNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=frwD34HY; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40TFHYUK024662;
+	Mon, 29 Jan 2024 16:47:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding:to:cc; s=qcppdkim1; bh=CM0YBaqMELRYsB
+	aLS7k7vp9OYdBpKgjsI+yfycdpzVU=; b=frwD34HYa8I/p1qyB1P11von+fIlwc
+	OgZHANMnxyTWtNQVbhGAWySFBSMQJeyYExHUHsFSXQPS3iHvVB3lXTH3YTuAcHql
+	p/4kRhjvs7rBhW9PIRMsXKzbop5BY86jc6jUcK0frMvmnKBP6P+9lPQalvt21zrf
+	tp/uVdISJ+x3hn4gSkUq1SrdeZVfQL0MqoQJT9oR2AASYIaBWt+BP8oIEUUCTICa
+	We8+7uYF7Yose7xVI710B8OR1DcZ31ywgD72Er9CzZDwsZPA96kEU6tnaE5kjV2d
+	al1rEjdRSQkwTATtCH56aDjBqCC3WCydC0DUQjdgsenQEXlYNnuLlxMw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vx3t2htw7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Jan 2024 16:47:49 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40TGllru030126
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Jan 2024 16:47:47 GMT
+Received: from [169.254.0.1] (10.49.16.6) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 29 Jan
+ 2024 08:47:47 -0800
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+Subject: [PATCH v3 0/2] arm64: dts: qcom: sc8280xp-x13s: Enable touchscreen
+Date: Mon, 29 Jan 2024 08:47:46 -0800
+Message-ID: <20240129-x13s-touchscreen-v3-0-c4a933034145@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALLWt2UC/33NTQ6CMBCG4auYrq3pH1pceQ/jAoepzMJWW2gwh
+ LtbWGliXL5fMs9MLGEkTOy4mVjETImCL6G3GwZd42/IqS3NlFBGSFXxUerE+zBAlyAiem5s2Z3
+ ToAyycvaI6GhcyfOldEepD/G1fshyWf9gWXLBm6sFa1WLrobTcyAgDzsId7ZwWX0S+x+EKkSlD
+ wYAapSi/SbmeX4DCo+JqPUAAAA=
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+        Jiri Kosina
+	<jikos@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-input@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson
+	<quic_bjorande@quicinc.com>,
+        Daniel Thompson <daniel.thompson@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1706546867; l=1152;
+ i=quic_bjorande@quicinc.com; s=20230915; h=from:subject:message-id;
+ bh=zMf4yKdogGXJoeObaueH6qXynndYIX55PcDoMto1YCA=;
+ b=yME28zc6Zi3HsN3CIqYjgb5tmH4aF23nz1xArUUgY+Wxupp3MLpQV6FnSFvh+GHNVup27jxtF
+ zgf5yAouabbC2PebREkF7DQPmxSPZ6HTNGucBrMpSnJvzmhpqMNdZXm
+X-Developer-Key: i=quic_bjorande@quicinc.com; a=ed25519;
+ pk=VkhObtljigy9k0ZUIE1Mvr0Y+E1dgBEH9WoLQnUtbIM=
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: sIwXUeHzU4eV6rMt8hzr8PW5PYGBgAyU
+X-Proofpoint-GUID: sIwXUeHzU4eV6rMt8hzr8PW5PYGBgAyU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-29_10,2024-01-29_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
+ spamscore=0 clxscore=1015 impostorscore=0 mlxlogscore=819 mlxscore=0
+ phishscore=0 malwarescore=0 priorityscore=1501 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401190000 definitions=main-2401290124
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
-branch HEAD: 596764183be8ebb13352b281a442a1f1151c9b06  Add linux-next specific files for 20240129
+This documents and defines the necessary properties for the I2C
+HID-based touchscreen found in some SKUs of the Lenovo Thinkpad X13s to
+work.
 
-Error/Warning reports:
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+---
+Changes in v3:
+- Rewrote the commit message, to properly describe the problem being
+  resolved.
+- Link to v2: https://lore.kernel.org/r/20240126-x13s-touchscreen-v2-0-5374ccc9e10d@quicinc.com
 
-https://lore.kernel.org/oe-kbuild-all/202401291400.2iU26ixw-lkp@intel.com
+Changes in v2:
+- Dropped output-high from &ts0_default, to avoid bouncing the reset
+  line unnecessarily
+- Link to v1: https://lore.kernel.org/r/20240125-x13s-touchscreen-v1-0-ab8c882def9c@quicinc.com
 
-Error/Warning: (recently discovered and may have been fixed)
+---
+Bjorn Andersson (2):
+      dt-bindings: HID: i2c-hid: Document reset-related properties
+      arm64: dts: qcom: sc8280xp-x13s: Fix/enable touchscreen
 
-s390-linux-ld: drivers/of/kexec.c:399:(.text+0x944): undefined reference to `crashk_res'
+ Documentation/devicetree/bindings/input/hid-over-i2c.yaml  | 6 ++++++
+ arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 7 +++++--
+ 2 files changed, 11 insertions(+), 2 deletions(-)
+---
+base-commit: 8bf1262c53f50fa91fe15d01e5ef5629db55313c
+change-id: 20240125-x13s-touchscreen-48012ff3c24e
 
-Unverified Error/Warning (likely false positive, please contact us if interested):
-
-{standard input}:936: Error: unknown pseudo-op: `.cfi_def_'
-
-Error/Warning ids grouped by kconfigs:
-
-gcc_recent_errors
-|-- arm-allmodconfig
-|   |-- drivers-dma-at_hdmac.c:warning:Enum-value-ATC_IS_CYCLIC-not-described-in-enum-atc_status
-|   `-- drivers-dma-at_hdmac.c:warning:Enum-value-ATC_IS_PAUSED-not-described-in-enum-atc_status
-|-- arm-allyesconfig
-|   |-- drivers-dma-at_hdmac.c:warning:Enum-value-ATC_IS_CYCLIC-not-described-in-enum-atc_status
-|   `-- drivers-dma-at_hdmac.c:warning:Enum-value-ATC_IS_PAUSED-not-described-in-enum-atc_status
-|-- arm-randconfig-002-20240129
-|   |-- drivers-dma-at_hdmac.c:warning:Enum-value-ATC_IS_CYCLIC-not-described-in-enum-atc_status
-|   `-- drivers-dma-at_hdmac.c:warning:Enum-value-ATC_IS_PAUSED-not-described-in-enum-atc_status
-|-- arm-randconfig-004-20240129
-|   |-- drivers-dma-at_hdmac.c:warning:Enum-value-ATC_IS_CYCLIC-not-described-in-enum-atc_status
-|   `-- drivers-dma-at_hdmac.c:warning:Enum-value-ATC_IS_PAUSED-not-described-in-enum-atc_status
-|-- m68k-randconfig-r121-20240129
-|   `-- drivers-regulator-qcom_smd-regulator.c:sparse:sparse:symbol-smd_vreg_rpm-was-not-declared.-Should-it-be-static
-|-- mips-allyesconfig
-|   |-- (.ref.text):relocation-truncated-to-fit:R_MIPS_26-against-start_secondary
-|   `-- (.text):relocation-truncated-to-fit:R_MIPS_26-against-kernel_entry
-|-- s390-randconfig-r023-20230616
-|   `-- s390-linux-ld:drivers-of-kexec.c:(.text):undefined-reference-to-crashk_res
-|-- sh-allmodconfig
-|   `-- standard-input:Error:unknown-pseudo-op:cfi_def_
-|-- sparc64-randconfig-r131-20240129
-|   `-- lib-checksum_kunit.c:sparse:sparse:incorrect-type-in-argument-(different-base-types)-expected-restricted-__wsum-usertype-sum-got-unsigned-int-assigned-csum
-`-- x86_64-randconfig-161-20240129
-    `-- mm-huge_memory.c-thpsize_create()-warn:Calling-kobject_put-get-with-state-initialized-unset-from-line:
-clang_recent_errors
-|-- arm-defconfig
-|   |-- drivers-dma-at_hdmac.c:warning:Enum-value-ATC_IS_CYCLIC-not-described-in-enum-atc_status
-|   `-- drivers-dma-at_hdmac.c:warning:Enum-value-ATC_IS_PAUSED-not-described-in-enum-atc_status
-`-- hexagon-randconfig-r122-20240129
-    `-- drivers-regulator-qcom_smd-regulator.c:sparse:sparse:symbol-smd_vreg_rpm-was-not-declared.-Should-it-be-static
-
-elapsed time: 755m
-
-configs tested: 177
-configs skipped: 3
-
-tested configs:
-alpha                             allnoconfig   gcc  
-alpha                            allyesconfig   gcc  
-alpha                               defconfig   gcc  
-arc                              allmodconfig   gcc  
-arc                               allnoconfig   gcc  
-arc                              allyesconfig   gcc  
-arc                                 defconfig   gcc  
-arc                   randconfig-001-20240129   gcc  
-arc                   randconfig-002-20240129   gcc  
-arm                              allmodconfig   gcc  
-arm                               allnoconfig   gcc  
-arm                              allyesconfig   gcc  
-arm                                 defconfig   clang
-arm                        keystone_defconfig   gcc  
-arm                        mvebu_v5_defconfig   clang
-arm                          pxa3xx_defconfig   gcc  
-arm                   randconfig-001-20240129   gcc  
-arm                   randconfig-002-20240129   gcc  
-arm                   randconfig-003-20240129   gcc  
-arm                   randconfig-004-20240129   gcc  
-arm                           spitz_defconfig   clang
-arm                        vexpress_defconfig   clang
-arm64                            allmodconfig   clang
-arm64                             allnoconfig   gcc  
-arm64                               defconfig   gcc  
-arm64                 randconfig-001-20240129   gcc  
-arm64                 randconfig-002-20240129   gcc  
-arm64                 randconfig-003-20240129   gcc  
-arm64                 randconfig-004-20240129   gcc  
-csky                             allmodconfig   gcc  
-csky                              allnoconfig   gcc  
-csky                             allyesconfig   gcc  
-csky                                defconfig   gcc  
-csky                  randconfig-001-20240129   gcc  
-csky                  randconfig-002-20240129   gcc  
-hexagon                          allmodconfig   clang
-hexagon                           allnoconfig   clang
-hexagon                          allyesconfig   clang
-hexagon                             defconfig   clang
-hexagon               randconfig-001-20240129   clang
-hexagon               randconfig-002-20240129   clang
-i386                             allmodconfig   clang
-i386                              allnoconfig   clang
-i386                             allyesconfig   clang
-i386         buildonly-randconfig-001-20240129   gcc  
-i386         buildonly-randconfig-002-20240129   gcc  
-i386         buildonly-randconfig-003-20240129   gcc  
-i386         buildonly-randconfig-004-20240129   gcc  
-i386         buildonly-randconfig-005-20240129   gcc  
-i386         buildonly-randconfig-006-20240129   gcc  
-i386                                defconfig   gcc  
-i386                  randconfig-001-20240129   gcc  
-i386                  randconfig-002-20240129   gcc  
-i386                  randconfig-003-20240129   gcc  
-i386                  randconfig-004-20240129   gcc  
-i386                  randconfig-005-20240129   gcc  
-i386                  randconfig-006-20240129   gcc  
-i386                  randconfig-011-20240129   clang
-i386                  randconfig-012-20240129   clang
-i386                  randconfig-013-20240129   clang
-i386                  randconfig-014-20240129   clang
-i386                  randconfig-015-20240129   clang
-i386                  randconfig-016-20240129   clang
-loongarch                        allmodconfig   gcc  
-loongarch                         allnoconfig   gcc  
-loongarch                           defconfig   gcc  
-loongarch             randconfig-001-20240129   gcc  
-loongarch             randconfig-002-20240129   gcc  
-m68k                             allmodconfig   gcc  
-m68k                              allnoconfig   gcc  
-m68k                             allyesconfig   gcc  
-m68k                         amcore_defconfig   gcc  
-m68k                                defconfig   gcc  
-m68k                          hp300_defconfig   gcc  
-microblaze                       alldefconfig   gcc  
-microblaze                       allmodconfig   gcc  
-microblaze                        allnoconfig   gcc  
-microblaze                       allyesconfig   gcc  
-microblaze                          defconfig   gcc  
-mips                              allnoconfig   clang
-mips                             allyesconfig   gcc  
-nios2                            allmodconfig   gcc  
-nios2                             allnoconfig   gcc  
-nios2                            allyesconfig   gcc  
-nios2                               defconfig   gcc  
-nios2                 randconfig-001-20240129   gcc  
-nios2                 randconfig-002-20240129   gcc  
-openrisc                          allnoconfig   gcc  
-openrisc                         allyesconfig   gcc  
-openrisc                            defconfig   gcc  
-parisc                           allmodconfig   gcc  
-parisc                            allnoconfig   gcc  
-parisc                           allyesconfig   gcc  
-parisc                              defconfig   gcc  
-parisc                randconfig-001-20240129   gcc  
-parisc                randconfig-002-20240129   gcc  
-parisc64                            defconfig   gcc  
-powerpc                      acadia_defconfig   clang
-powerpc                    adder875_defconfig   gcc  
-powerpc                          allmodconfig   clang
-powerpc                           allnoconfig   gcc  
-powerpc                          allyesconfig   clang
-powerpc                      ep88xc_defconfig   gcc  
-powerpc                          g5_defconfig   clang
-powerpc                      pasemi_defconfig   gcc  
-powerpc                      ppc64e_defconfig   clang
-powerpc               randconfig-001-20240129   gcc  
-powerpc               randconfig-002-20240129   gcc  
-powerpc               randconfig-003-20240129   gcc  
-powerpc64             randconfig-001-20240129   gcc  
-powerpc64             randconfig-002-20240129   gcc  
-powerpc64             randconfig-003-20240129   gcc  
-riscv                            allmodconfig   gcc  
-riscv                             allnoconfig   clang
-riscv                            allyesconfig   gcc  
-riscv                               defconfig   gcc  
-riscv                    nommu_k210_defconfig   gcc  
-riscv                 randconfig-001-20240129   gcc  
-riscv                 randconfig-002-20240129   gcc  
-s390                             allmodconfig   gcc  
-s390                              allnoconfig   gcc  
-s390                             allyesconfig   gcc  
-s390                                defconfig   gcc  
-s390                  randconfig-001-20240129   clang
-s390                  randconfig-002-20240129   clang
-sh                               allmodconfig   gcc  
-sh                                allnoconfig   gcc  
-sh                               allyesconfig   gcc  
-sh                                  defconfig   gcc  
-sh                    randconfig-001-20240129   gcc  
-sh                    randconfig-002-20240129   gcc  
-sh                        sh7785lcr_defconfig   gcc  
-sparc                            allmodconfig   gcc  
-sparc                             allnoconfig   gcc  
-sparc                               defconfig   gcc  
-sparc64                          allmodconfig   gcc  
-sparc64                          allyesconfig   gcc  
-sparc64                             defconfig   gcc  
-sparc64               randconfig-001-20240129   gcc  
-sparc64               randconfig-002-20240129   gcc  
-um                               allmodconfig   clang
-um                                allnoconfig   clang
-um                               allyesconfig   clang
-um                                  defconfig   gcc  
-um                             i386_defconfig   gcc  
-um                    randconfig-001-20240129   gcc  
-um                    randconfig-002-20240129   gcc  
-um                           x86_64_defconfig   gcc  
-x86_64                            allnoconfig   gcc  
-x86_64                           allyesconfig   clang
-x86_64       buildonly-randconfig-001-20240129   gcc  
-x86_64       buildonly-randconfig-002-20240129   gcc  
-x86_64       buildonly-randconfig-003-20240129   gcc  
-x86_64       buildonly-randconfig-004-20240129   gcc  
-x86_64       buildonly-randconfig-005-20240129   gcc  
-x86_64       buildonly-randconfig-006-20240129   gcc  
-x86_64                              defconfig   gcc  
-x86_64                randconfig-001-20240129   clang
-x86_64                randconfig-002-20240129   clang
-x86_64                randconfig-003-20240129   clang
-x86_64                randconfig-004-20240129   clang
-x86_64                randconfig-005-20240129   clang
-x86_64                randconfig-006-20240129   clang
-x86_64                randconfig-011-20240129   gcc  
-x86_64                randconfig-012-20240129   gcc  
-x86_64                randconfig-013-20240129   gcc  
-x86_64                randconfig-014-20240129   gcc  
-x86_64                randconfig-015-20240129   gcc  
-x86_64                randconfig-016-20240129   gcc  
-x86_64                randconfig-071-20240129   gcc  
-x86_64                randconfig-072-20240129   gcc  
-x86_64                randconfig-073-20240129   gcc  
-x86_64                          rhel-8.3-rust   clang
-xtensa                            allnoconfig   gcc  
-xtensa                generic_kc705_defconfig   gcc  
-xtensa                randconfig-001-20240129   gcc  
-xtensa                randconfig-002-20240129   gcc  
-
+Best regards,
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Bjorn Andersson <quic_bjorande@quicinc.com>
+
 
