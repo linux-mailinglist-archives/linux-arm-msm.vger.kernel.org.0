@@ -1,328 +1,213 @@
-Return-Path: <linux-arm-msm+bounces-8742-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED8DC83FB34
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 01:26:18 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25D6F83FC00
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 03:07:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 708131F21EBF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 00:26:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 90667B21FEE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 02:07:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AE9B8F5B;
-	Mon, 29 Jan 2024 00:26:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F121FDF55;
+	Mon, 29 Jan 2024 02:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="K9y80/vn"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ggNxKTpv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52CA24C70
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 00:26:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB42DF46;
+	Mon, 29 Jan 2024 02:07:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706487968; cv=none; b=kT5hDw30HCmVwXBGweNbJGE7JHU30kAaa/mOijafSxvtDRQZ2GmuUebpsBeVvnEKq2mVanvqTgxKSJYYMGkWkEJ+sKx5yKlADZZQfPazdkaiecmSZ8XYhlMzqkDN3bYutPgUQbF4rYPLXV80UkoG/gAOtBR8DvMR7fi6aeq4XOY=
+	t=1706494026; cv=none; b=QUwhjMqtuQe8t+ZQaDdrSfmQmIyEdGS5HI1gJNaid/+AlMs6kHZRWJKeRv31ngtUzKD3MMez7bJjW9EKbndUYB3hzVN/WIJgI7KOEz7KyKkidDJmIXbSt/0zkC4MIFGEwPPJHtKkgNl775x/kIf7r3Ewi4qsQ2l+S/Hu6oAkMaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706487968; c=relaxed/simple;
-	bh=yM1HmbxAWSUJwXV+g2TEaMJpy6Jb8p7jALfobB13IKc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KGEccvB+ykXsjhNvtyYPIPhT1golqrzbMiilx+6K3ZFJGnHDVci/18Mv5c2QTqSAYGbu0dJV1qmtkQ6AIunA18bY2Pz/r1FCeSsJSfMIJh/NcCfhXd9SkKrjtnIPCGwFXF6sH8zDnhye44qOrKP8OkUZzMZ8pNTRN7CNxXWHFFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=K9y80/vn; arc=none smtp.client-ip=209.85.208.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-55790581457so2156599a12.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jan 2024 16:26:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706487964; x=1707092764; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=G+F65PytcQ8bRw7rSmz8tj7JMLr040VbpgsehDx14EU=;
-        b=K9y80/vnM0Q5nj3FpHLdKQsUbEm0D2/LtuW9EJDJzN5J61qHi1ZRjQLBHPQXuCuv4b
-         jZfExAL39nQDyM0nhSO9BDCfnfyb7Jl7YNUnHQ137Pl3tcyaFm0ocO0ldLJjEoVhy51B
-         AHBuB6PwGP0HyjY9TKjPDc+uUJbeFSJXGsQxPkKAvPvszCmztCOYsE1lEsXePQJec+HB
-         LcaW6P3I2+QuIAXxYMgszVmgEB34edFo0z2XjZrLczQHyeOuYfle+8Y1OTtUem2l2IRr
-         GtwB5v7ABLsYYVe/9COqfzV4CuASENnolLQ9g+lhjitob+XH6ZR6mRIWadKi4uCwI5b+
-         Q/dA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706487964; x=1707092764;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=G+F65PytcQ8bRw7rSmz8tj7JMLr040VbpgsehDx14EU=;
-        b=GRfQZlSMrO9suMrHcA1U8dxfLr5EUMD7HSbxh++63mnjQkzWTNIjnjwDwVKFONdHbl
-         VQzfxrU/ESOc9nmES1laTxupp9Ar8Yg/aThJeDWqp7P4NTOMwLzK0xEa/amFpI3ghUWR
-         0egtuqvf719uDtNQJqYH7K+LNPbzehb3ySjGEeG7qWf1B+9Lv5bixF/zbaiZhyn8vW6F
-         unM1WLoG3N/fZFcEisZibA5i7R63ZPzVd2E+fhVzUOHK32in+8hBZKv+dk9WBVt0VCKy
-         RL2o9ywoKrQ9SIEw9stF6XuNHNGT4LW6tSizFgATDaiwiCF0HYP3haT/lFLPm08WLiGs
-         xXVg==
-X-Gm-Message-State: AOJu0Yw9aIVRDDSr207veoOjgmYsUVBF/YY9apc1j7ZqRPXJJnfgo/kC
-	OS9UThAeEggu+7DP93dzvhP56vTBi0djzYedVBVocA7PHtnLAHAp45cAhpuKOEM=
-X-Google-Smtp-Source: AGHT+IFyUWqmlpnke6uDNFyKcCEQzDpvi2OmpUheL+tQmlsCZedhqTKqkQKEgSUx5CrdYc+q84z6Xw==
-X-Received: by 2002:a05:6402:22d9:b0:55e:da7c:607a with SMTP id dm25-20020a05640222d900b0055eda7c607amr1549330edb.15.1706487963793;
-        Sun, 28 Jan 2024 16:26:03 -0800 (PST)
-Received: from [127.0.1.1] ([79.115.23.25])
-        by smtp.gmail.com with ESMTPSA id h29-20020a0564020e9d00b0055cfb3f948fsm3208193eda.76.2024.01.28.16.26.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Jan 2024 16:26:03 -0800 (PST)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Mon, 29 Jan 2024 02:25:46 +0200
-Subject: [PATCH v3 2/2] phy: qcom: edp: Add set_mode op for configuring
- eDP/DP submode
+	s=arc-20240116; t=1706494026; c=relaxed/simple;
+	bh=3i6cKFeIQ1ytJAt62TE0JlxJs2NNSDs63DVrFTeKMcw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=SRrU4cZSTeYU5tMMYCAjoo6jjxLlgqTWdcyDJrzXbN2Z59QFtvzgp1XGoXlF8sX5RV8iVgpAHQxZVgF0mlRquEydWO7OJyUDMs0EG+mYm2PdmJ3yYFnvbqm6hj1AupdU4TXiQSfx5L/0B4/AW4bNsLxftBsSYJXBgb3IwyMVC+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ggNxKTpv; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40T0oVwn018083;
+	Mon, 29 Jan 2024 02:06:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=DDQk3+y02uSzL86nSTzmFGZIOkpXM2BW+E7wCU4D0WI=; b=gg
+	NxKTpvzmxNd/28LVQBShnH0eHfMfzIoyPe6LeHJ39vGHm3VowRVNikTJD38uzvOB
+	/f0OeOeGtldHTpuOBv3BeK2Br2REJGfw70t8IEwY5a8Xum3ELUmcLKBYUXWFB9Ku
+	BWYO67/SuznF3bFg8elAEqQFpMCo5b7uej57wUIzQMsEJFVFdnTVEOzyQNagzQT4
+	sxvOKoh5nV9br9678mshz4721tjNqLAFJoQ4PyQaPBuPMmuALxtI6/pX++JLpFXE
+	kRNi3MhJUucKnWES1Lwa245Xdiz0v7aMoKz4N44HJisdYLwTgPUqE3yI2Vm9VbSV
+	4piW06pA5P/zNoNEttSA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vvt7c2jge-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Jan 2024 02:06:52 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40T26pE6032069
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Jan 2024 02:06:51 GMT
+Received: from [10.238.139.231] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sun, 28 Jan
+ 2024 18:06:48 -0800
+Message-ID: <3ac210a6-d378-4f6a-9924-04f3dee9e79c@quicinc.com>
+Date: Mon, 29 Jan 2024 10:06:40 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5] arm64: dts: qcom: qcm6490-idp: Add definition for
+ three LEDs
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross
+	<agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_fenglinw@quicinc.com>
+References: <20240115-lpg-v5-1-3c56f77f9cec@quicinc.com>
+ <CAA8EJpoemnXTmshWrArVOCm0GRSkWZ5tH557nbAjRL1Tgg-Dig@mail.gmail.com>
+ <e16f5ff1-9b12-4f90-89d5-f95cbfb859e7@quicinc.com>
+ <6c29ce72-e303-406a-bb75-5b36b0cd8ee4@linaro.org>
+ <44ab50c4-c63b-436c-af46-9b4543181446@quicinc.com>
+ <CAA8EJpq8exe6n3OQnreLCsV+BnZKcu24d==rEKup=+n28nnDHw@mail.gmail.com>
+ <4c82f1f0-1c5a-498f-9845-b5b26cd76468@quicinc.com>
+ <5f6c2be1-faf9-4e64-ab3a-88046d75e2cf@quicinc.com>
+ <1d948daf-1495-4208-a85f-6bd798091d82@quicinc.com>
+ <CAA8EJppqL=79rDzEvrhEA8N6wa=YFxN+595eK+JD=JOuCRm1gA@mail.gmail.com>
+From: hui liu <quic_huliu@quicinc.com>
+In-Reply-To: <CAA8EJppqL=79rDzEvrhEA8N6wa=YFxN+595eK+JD=JOuCRm1gA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240129-x1e80100-phy-edp-compatible-refactor-v3-2-e71f3359c535@linaro.org>
-References: <20240129-x1e80100-phy-edp-compatible-refactor-v3-0-e71f3359c535@linaro.org>
-In-Reply-To: <20240129-x1e80100-phy-edp-compatible-refactor-v3-0-e71f3359c535@linaro.org>
-To: Vinod Koul <vkoul@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Johan Hovold <johan@kernel.org>
-Cc: linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- Abel Vesa <abel.vesa@linaro.org>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7035; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=yM1HmbxAWSUJwXV+g2TEaMJpy6Jb8p7jALfobB13IKc=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBltvCW9TNARm3SS4noZQ5mY3dhee2QdRN1DRyTm
- guXBvIlmcSJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZbbwlgAKCRAbX0TJAJUV
- VrjSEADBSV/ePjnpJojvR5Bn7TxeeIZ7zL/FVXA7KsnHrtifKS+SxSU7ohYYmRImrHIfyCT1KYD
- 9r1SpeKEKjk8uRnqYx899n0MxDcNK/l/Uub50Xz3RGsuc+2l4tnG0MyMnXkXpu7mVSsoDBxkbSw
- 0aLeQWb57pduXWOa3O3eyhsdsRmWUMpAwmrP0PXLHX3fmvyZljALWtDxvNIAhbXuOTWAp1bOUoS
- AcR+xxMqmLvFSr76hu0u8kUqtDP+ygb+JNR5iTiW6ubIzLtB4AecYvAtyT5eVHg7sFuAFP1YrVh
- q5mI9LPIE1Tvmzhv99FoHOmeUwFMDKqR8q5WhbI7/5WBSb9ZQml0Y6PohnQ6t45VrUmis7nQDkj
- CzeQKMxzJqKaHFZyY0aKXB7NmBqsd16VR4UPI8xKGmPXobmHwnu9er1reEXcdcknCANQVqd/4uG
- HJEeH5ZnFTTzxo440Fsr8zVCs6NUp6Li4wic2qNxKsJB5KOdVIP/YaE/Gv6x0dqwd4i8v6JopV5
- DgsJktl6kr769gfnMCHMAee+HkrF8TyAMdlD+4UV/Dj/uKVMg7BdjTbdCd29C2RHB6ZG4fHXByO
- dpk5lroqj+jZP9Qfs2884A6sABODt1+DA7h9maM4HFw7MFd2PYk7qHfOfnSHjYQt98jq+3y07A8
- gRXR89NRHj+25qg==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: gtvtu1ND6x4d7-6vnbaY423bquFx0xkS
+X-Proofpoint-GUID: gtvtu1ND6x4d7-6vnbaY423bquFx0xkS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ suspectscore=0 spamscore=0 clxscore=1015 impostorscore=0 mlxlogscore=999
+ mlxscore=0 malwarescore=0 bulkscore=0 phishscore=0 adultscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401190000 definitions=main-2401290014
 
-Future platforms should not use different compatibles to differentiate
-between eDP and DP mode. Instead, they should use a single compatible as the
-IP block is the same. It will be the job of the controller to set the submode
-of the PHY accordingly.
 
-The existing platforms will remain with separate compatibles for each mode.
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-edp.c | 71 ++++++++++++++++++++++++++-----------
- 1 file changed, 51 insertions(+), 20 deletions(-)
-
-diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
-index 8e5078304646..af941d6c5588 100644
---- a/drivers/phy/qualcomm/phy-qcom-edp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-edp.c
-@@ -14,6 +14,7 @@
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/phy/phy.h>
-+#include <linux/phy/phy-dp.h>
- #include <linux/platform_device.h>
- #include <linux/regulator/consumer.h>
- #include <linux/reset.h>
-@@ -68,19 +69,21 @@
- 
- #define TXn_TRAN_DRVR_EMP_EN                    0x0078
- 
--struct qcom_edp_cfg {
--	bool is_dp;
--
--	/* DP PHY swing and pre_emphasis tables */
-+struct qcom_edp_swing_pre_emph_cfg {
- 	const u8 (*swing_hbr_rbr)[4][4];
- 	const u8 (*swing_hbr3_hbr2)[4][4];
- 	const u8 (*pre_emphasis_hbr_rbr)[4][4];
- 	const u8 (*pre_emphasis_hbr3_hbr2)[4][4];
- };
- 
-+struct qcom_edp_phy_cfg {
-+	bool is_edp;
-+	const struct qcom_edp_swing_pre_emph_cfg *swing_pre_emph_cfg;
-+};
-+
- struct qcom_edp {
- 	struct device *dev;
--	const struct qcom_edp_cfg *cfg;
-+	const struct qcom_edp_phy_cfg *cfg;
- 
- 	struct phy *phy;
- 
-@@ -96,6 +99,8 @@ struct qcom_edp {
- 
- 	struct clk_bulk_data clks[2];
- 	struct regulator_bulk_data supplies[2];
-+
-+	bool is_edp;
- };
- 
- static const u8 dp_swing_hbr_rbr[4][4] = {
-@@ -126,8 +131,7 @@ static const u8 dp_pre_emp_hbr2_hbr3[4][4] = {
- 	{ 0x04, 0xff, 0xff, 0xff }
- };
- 
--static const struct qcom_edp_cfg dp_phy_cfg = {
--	.is_dp = true,
-+static const struct qcom_edp_swing_pre_emph_cfg dp_phy_swing_pre_emph_cfg = {
- 	.swing_hbr_rbr = &dp_swing_hbr_rbr,
- 	.swing_hbr3_hbr2 = &dp_swing_hbr2_hbr3,
- 	.pre_emphasis_hbr_rbr = &dp_pre_emp_hbr_rbr,
-@@ -162,18 +166,28 @@ static const u8 edp_pre_emp_hbr2_hbr3[4][4] = {
- 	{ 0x00, 0xff, 0xff, 0xff }
- };
- 
--static const struct qcom_edp_cfg edp_phy_cfg = {
--	.is_dp = false,
-+static const struct qcom_edp_swing_pre_emph_cfg edp_phy_swing_pre_emph_cfg = {
- 	.swing_hbr_rbr = &edp_swing_hbr_rbr,
- 	.swing_hbr3_hbr2 = &edp_swing_hbr2_hbr3,
- 	.pre_emphasis_hbr_rbr = &edp_pre_emp_hbr_rbr,
- 	.pre_emphasis_hbr3_hbr2 = &edp_pre_emp_hbr2_hbr3,
- };
- 
-+static const struct qcom_edp_phy_cfg sc7280_dp_phy_cfg = {
-+};
-+
-+static const struct qcom_edp_phy_cfg sc8280xp_dp_phy_cfg = {
-+	.swing_pre_emph_cfg = &dp_phy_swing_pre_emph_cfg,
-+};
-+
-+static const struct qcom_edp_phy_cfg sc8280xp_edp_phy_cfg = {
-+	.is_edp = true,
-+	.swing_pre_emph_cfg = &edp_phy_swing_pre_emph_cfg,
-+};
-+
- static int qcom_edp_phy_init(struct phy *phy)
- {
- 	struct qcom_edp *edp = phy_get_drvdata(phy);
--	const struct qcom_edp_cfg *cfg = edp->cfg;
- 	int ret;
- 	u8 cfg8;
- 
-@@ -200,7 +214,7 @@ static int qcom_edp_phy_init(struct phy *phy)
- 	       DP_PHY_PD_CTL_PLL_PWRDN | DP_PHY_PD_CTL_DP_CLAMP_EN,
- 	       edp->edp + DP_PHY_PD_CTL);
- 
--	if (cfg && cfg->is_dp)
-+	if (edp->cfg->swing_pre_emph_cfg && !edp->is_edp)
- 		cfg8 = 0xb7;
- 	else
- 		cfg8 = 0x37;
-@@ -234,7 +248,7 @@ static int qcom_edp_phy_init(struct phy *phy)
- 
- static int qcom_edp_set_voltages(struct qcom_edp *edp, const struct phy_configure_opts_dp *dp_opts)
- {
--	const struct qcom_edp_cfg *cfg = edp->cfg;
-+	const struct qcom_edp_swing_pre_emph_cfg *cfg = edp->cfg->swing_pre_emph_cfg;
- 	unsigned int v_level = 0;
- 	unsigned int p_level = 0;
- 	u8 ldo_config;
-@@ -245,6 +259,9 @@ static int qcom_edp_set_voltages(struct qcom_edp *edp, const struct phy_configur
- 	if (!cfg)
- 		return 0;
- 
-+	if (edp->is_edp)
-+		cfg = &edp_phy_swing_pre_emph_cfg;
-+
- 	for (i = 0; i < dp_opts->lanes; i++) {
- 		v_level = max(v_level, dp_opts->voltage[i]);
- 		p_level = max(p_level, dp_opts->pre[i]);
-@@ -261,7 +278,7 @@ static int qcom_edp_set_voltages(struct qcom_edp *edp, const struct phy_configur
- 	if (swing == 0xff || emph == 0xff)
- 		return -EINVAL;
- 
--	ldo_config = (cfg && cfg->is_dp) ? 0x1 : 0x0;
-+	ldo_config = edp->is_edp ? 0x0 : 0x1;
- 
- 	writel(ldo_config, edp->tx0 + TXn_LDO_CONFIG);
- 	writel(swing, edp->tx0 + TXn_TX_DRV_LVL);
-@@ -447,10 +464,9 @@ static int qcom_edp_set_vco_div(const struct qcom_edp *edp, unsigned long *pixel
- static int qcom_edp_phy_power_on(struct phy *phy)
- {
- 	const struct qcom_edp *edp = phy_get_drvdata(phy);
--	const struct qcom_edp_cfg *cfg = edp->cfg;
- 	u32 bias0_en, drvr0_en, bias1_en, drvr1_en;
- 	unsigned long pixel_freq;
--	u8 ldo_config;
-+	u8 ldo_config = 0x0;
- 	int timeout;
- 	int ret;
- 	u32 val;
-@@ -468,7 +484,8 @@ static int qcom_edp_phy_power_on(struct phy *phy)
- 		return timeout;
- 
- 
--	ldo_config = (cfg && cfg->is_dp) ? 0x1 : 0x0;
-+	if (edp->cfg->swing_pre_emph_cfg && !edp->cfg->is_edp)
-+		ldo_config = 0x1;
- 
- 	writel(ldo_config, edp->tx0 + TXn_LDO_CONFIG);
- 	writel(ldo_config, edp->tx1 + TXn_LDO_CONFIG);
-@@ -589,6 +606,18 @@ static int qcom_edp_phy_power_off(struct phy *phy)
- 	return 0;
- }
- 
-+static int qcom_edp_phy_set_mode(struct phy *phy, enum phy_mode mode, int submode)
-+{
-+	struct qcom_edp *edp = phy_get_drvdata(phy);
-+
-+	if (mode != PHY_MODE_DP)
-+		return -EINVAL;
-+
-+	edp->is_edp = submode == PHY_SUBMODE_EDP ? true : false;
-+
-+	return 0;
-+}
-+
- static int qcom_edp_phy_exit(struct phy *phy)
- {
- 	struct qcom_edp *edp = phy_get_drvdata(phy);
-@@ -604,6 +633,7 @@ static const struct phy_ops qcom_edp_ops = {
- 	.configure	= qcom_edp_phy_configure,
- 	.power_on	= qcom_edp_phy_power_on,
- 	.power_off	= qcom_edp_phy_power_off,
-+	.set_mode	= qcom_edp_phy_set_mode,
- 	.exit		= qcom_edp_phy_exit,
- 	.owner		= THIS_MODULE,
- };
-@@ -781,6 +811,7 @@ static int qcom_edp_phy_probe(struct platform_device *pdev)
- 
- 	edp->dev = dev;
- 	edp->cfg = of_device_get_match_data(&pdev->dev);
-+	edp->is_edp = edp->cfg->is_edp;
- 
- 	edp->edp = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(edp->edp))
-@@ -839,10 +870,10 @@ static int qcom_edp_phy_probe(struct platform_device *pdev)
- }
- 
- static const struct of_device_id qcom_edp_phy_match_table[] = {
--	{ .compatible = "qcom,sc7280-edp-phy" },
--	{ .compatible = "qcom,sc8180x-edp-phy" },
--	{ .compatible = "qcom,sc8280xp-dp-phy", .data = &dp_phy_cfg },
--	{ .compatible = "qcom,sc8280xp-edp-phy", .data = &edp_phy_cfg },
-+	{ .compatible = "qcom,sc7280-edp-phy" , .data = &sc7280_dp_phy_cfg, },
-+	{ .compatible = "qcom,sc8180x-edp-phy", .data = &sc7280_dp_phy_cfg, },
-+	{ .compatible = "qcom,sc8280xp-dp-phy", .data = &sc8280xp_dp_phy_cfg, },
-+	{ .compatible = "qcom,sc8280xp-edp-phy", .data = &sc8280xp_edp_phy_cfg, },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, qcom_edp_phy_match_table);
-
--- 
-2.34.1
-
+On 1/22/2024 9:37 PM, Dmitry Baryshkov wrote:
+> On Mon, 22 Jan 2024 at 08:26, hui liu <quic_huliu@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 1/22/2024 1:42 PM, hui liu wrote:
+>>>
+>>>
+>>> On 1/18/2024 10:06 AM, hui liu wrote:
+>>>>
+>>>>
+>>>> On 1/17/2024 11:41 AM, Dmitry Baryshkov wrote:
+>>>>> On Wed, 17 Jan 2024 at 05:02, hui liu <quic_huliu@quicinc.com> wrote:
+>>>>>>
+>>>>>>
+>>>>>>
+>>>>>> On 1/15/2024 6:26 PM, Krzysztof Kozlowski wrote:
+>>>>>>> On 15/01/2024 11:18, hui liu wrote:
+>>>>>>>>
+>>>>>>>>
+>>>>>>>> On 1/15/2024 5:56 PM, Dmitry Baryshkov wrote:
+>>>>>>>>> On Mon, 15 Jan 2024 at 11:48, Hui Liu via B4 Relay
+>>>>>>>>> <devnull+quic_huliu.quicinc.com@kernel.org> wrote:
+>>>>>>>>>>
+>>>>>>>>>> From: Hui Liu <quic_huliu@quicinc.com>
+>>>>>>>>>>
+>>>>>>>>>> Add definition for three LEDs to make sure they can
+>>>>>>>>>> be enabled base on QCOM LPG LED driver.
+>>>>>>>>>
+>>>>>>>>> The "function" property is still placed incorrectly. Posting the
+>>>>>>>>> next
+>>>>>>>>> iteration before concluding the discussion on the previous one is
+>>>>>>>>> not
+>>>>>>>>> the best idea.
+>>>>>>>> Do you mean I should update it as below? Seems there is no
+>>>>>>>> consumer to
+>>>>>>>> use the function config, do we need to add now?
+>>>>>>>
+>>>>>>> Paste the output of dtbs_check for your board (or CHECK_DTBS=y for
+>>>>>>> your
+>>>>>>> Makefile target).
+>>>>>> I checked the dt-binding file of LPG LED, I will update the dts as
+>>>>>> below, if you think it's correct, I will push v6.
+>>>>>
+>>>>> Is there any reason why you are defining three different LEDs instead
+>>>>> of multi-led with three components?
+>>>
+>>>> In the HW design, they are three seprete LEDs, there are three LEDs on
+>>>> device. why do we need to add for multi-led?
+>>>>
+>>>> Thanks,
+>>>> Hui
+>>
+>> I double confirmed the HW design, for IDP devcie, we should set it to
+>> multi led, for another similar device(RB3-GEN2, I will push LED change
+>> for this device later), it should be set to seperate LED.
+>> They are different, so I will push V6 to set it for multi-led for
+>> QCM6490-IDP device. Thanks for your review.
+> 
+> Ack, thank you.
+Hi Dmitry,
+Could you give the approval for V6?
+https://lore.kernel.org/all/20240126-lpg-v6-1-f879cecbce69@quicinc.com/
+Thanks,
+Hui
+> 
+>>
+>>>>>
+>>>>>>
+>>>>>> +&pm8350c_pwm {
+>>>>>> +       #address-cells = <1>;
+>>>>>> +       #size-cells = <0>;
+>>>>>> +       status = "okay";
+>>>>>> +
+>>>>>> +       led@1 {
+>>>>>> +               reg = <1>;
+>>>>>> +               color = <LED_COLOR_ID_RED>;
+>>>>>> +               function = LED_FUNCTION_STATUS;
+>>>>>> +       };
+>>>>>> +
+>>>>>> +       led@2 {
+>>>>>> +               reg = <2>;
+>>>>>> +               color = <LED_COLOR_ID_GREEN>;
+>>>>>> +               function = LED_FUNCTION_STATUS;
+>>>>>> +       };
+>>>>>> +
+>>>>>> +       led@3 {
+>>>>>> +               reg = <3>;
+>>>>>> +               color = <LED_COLOR_ID_BLUE>;
+>>>>>> +               function = LED_FUNCTION_STATUS;
+>>>>>> +       };
+>>>>>> +};
+>>>>>
+>>>>>
+>>>>>
+> 
+> 
+> 
 
