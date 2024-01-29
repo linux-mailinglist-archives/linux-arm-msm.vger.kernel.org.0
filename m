@@ -1,176 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-8863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4F7684071E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 14:35:39 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5275A8407B8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 14:59:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 48988B24A8F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 13:35:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 772361C24337
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 13:59:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0349565BAF;
-	Mon, 29 Jan 2024 13:34:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4788657AF;
+	Mon, 29 Jan 2024 13:59:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mBZK8l5W"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TRI05WaM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9150657B2
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 13:34:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE68965BA0;
+	Mon, 29 Jan 2024 13:59:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706535298; cv=none; b=OXyy/TbDjMf40ZjYD7aSz0CNDvFEsijhuz9hitdW/mNKPWYbuk1/137h0PsTLEwhI7dJwMQY8lY0FRyxYmuI7MAJ87R2v3MMQSPEkvvht5VJtuMneRQgQmgXaB2tkP6Yj76MDcwjPfkFa5qB/JIOtFXd3T4pkcnvN2jaP4n0TVg=
+	t=1706536774; cv=none; b=QMslcgx+1B4RyqBdJd4Ry6MvDR3ZOmLkXndbcHoltiahy8Ug+IXAUFJpd0imF59GKUqAxWryDpxsgfTTm5PEp4nAgpvhJm5r/81xuj9esGBUco1PIjA61TOiptD6oVf3w6ydmwNxUJm0owglhc2n76uyOp9GM1YB6WxqDvxFb7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706535298; c=relaxed/simple;
-	bh=7XEGX8tCobeF3TWbs26SkgzjQRQagB5DicUZQZndEAY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=q4YYzuQVI6pd//mh7uv6xFp4tpFTNbjbQTgk6KMLuLyTUah9Sf9bb/pB0MpHDVnbAs1pGt/4opP4v5dYzQup8bW7oxJuT0Tk4RjsSySj6l07ocC3n+N2zO9rz7o1CM+G0zjO+bbBVThGLiBIM99YLW2I6oo+yFkKMa61KJcHf8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mBZK8l5W; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a3122b70439so365735166b.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 05:34:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706535295; x=1707140095; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xXZFqpcx+yqKfOAXpJEod2Uxg4c+ixzxqWhb+cY1h8Y=;
-        b=mBZK8l5WHdwNGGDRKq6wvzQnB/T9vVNeTYM4DsT8nBOsobyRA5/Tn82Tb3Lgj/9r1/
-         qb7qDmv2l2aI0wzMLRxhWpgoc585O+zayMINaLh8un/PNg5FlRBxIRcsz8Oal5kMsIk/
-         s+dcjptQqQUG1G3lSyA2ce5P/DkCb1ffXl9pyqb/o1uf9c+VjX3f/sUl5i6AxDgtXbQt
-         gM6MoUl2pEbuBtyjdAOatFBbynpP/VOBI+/NUMS8PX16GuTT0POA5tx/kGXAdKrWVpen
-         LOSWZCpGXw8s8RLVQEzGShwy9H5ePlArYDjuxMG77HHCCDQyASfQX66xojIjuXHMbb6M
-         uZSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706535295; x=1707140095;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xXZFqpcx+yqKfOAXpJEod2Uxg4c+ixzxqWhb+cY1h8Y=;
-        b=h+NaYslSIWIx2xhH6UmjMCAwrMUcGlwTb1HbsTmkhfruTFwUetw0xhg06xsEBmukNX
-         El/UQkhY2oWR5FshvTDjghK6bJIwytXwThlD3zEIhZgX/ByBs4XtjsevMZELS6r5SzH5
-         LV+wIWzolPUenpbdZ+mstKOoZmrlnZhao0e+5I1ylP2+RpzP/prjgXNcaZULQuBXwuD/
-         Ap1yHE4YXRRzDzdA0RlypE9AXBovrs2R7U1CPu3liB2GC9l8KO6grwcUhLoAp50zUBqp
-         fSrknw0Nb6oG4dEeZIzwNahaFYR9wrGBvGXyrUawsDqcWAMn5MRsHP3lqiNWCJ2PaLh4
-         Jyuw==
-X-Gm-Message-State: AOJu0YxPsuaGZAfSOtBJ02JphoaypUp5IQd7WugPhzd182v04FP/WR68
-	DCk9H1IDWwXM5054OCx8igAEkjkWQVuASRkr2sHxZnbWXY0aAcoT4EyXGDzK2Tg=
-X-Google-Smtp-Source: AGHT+IHCFlT0NaicOgyWXFvdhxw1y4Dq6pYq28XJTkenjH+aNzp1/O+NJ3vGuzbpV29JtOx0Uln79g==
-X-Received: by 2002:a17:906:248d:b0:a2d:a6a7:b3bc with SMTP id e13-20020a170906248d00b00a2da6a7b3bcmr4409221ejb.4.1706535295144;
-        Mon, 29 Jan 2024 05:34:55 -0800 (PST)
-Received: from [127.0.1.1] ([79.115.23.25])
-        by smtp.gmail.com with ESMTPSA id vi1-20020a170907d40100b00a2f48a43c3esm3911483ejc.7.2024.01.29.05.34.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jan 2024 05:34:54 -0800 (PST)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Mon, 29 Jan 2024 15:34:39 +0200
-Subject: [PATCH 3/3] remoteproc: qcom_q6v5_pas: Unload lite firmware on
- ADSP
+	s=arc-20240116; t=1706536774; c=relaxed/simple;
+	bh=xJn1F7MAesV6tS4qm1/fKFLcvA/61etupSyvqTcNAfA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=TQc1X5qdIPpDCHKa2g0yuC85WD/KmEosrLYN6lyXFfCyTTTHGMlmqqmWecQ+L4dnVL5SS8cjuAdkHd4q9oYASJGAGHW3zwNLZgwav67bMpjQnTxFTyZVXv2RoRoggcoMpD5SKqDbhF8YbykPZsFDnnG1/aeUW/s/zbjhQUM6Bjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TRI05WaM; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40T5rKia013136;
+	Mon, 29 Jan 2024 13:59:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=YxVrAb5WKHv+F5epFgMr04iEH3uFT5hSdeiYGl8vc4E=; b=TR
+	I05WaMQ7bRubP3QMc8e8EKYvYG9urDJRwc/MXcC8bnFdT31XbXUi9b/bG2iMZ9C2
+	iP0UcHNeLLDga8cbHEiCDgVl9Ee1I2E3ms9PtZe0QxVDLIazd1ro3zDi+8hd6l4k
+	rIwKH3Zsm4v8q/sk6+5pqdyR5qGJ+ur2U071bpRbsUGVouIOdYNFQDWwNEA+211X
+	VY3QoWhlN2TSjwDfppH3fTaw9dJkypciy0zTc3mtsd4wmraPkIjpluae3OfizpNp
+	aD4bBB8ErH1HzN5JGBb0bHUdpSuuRIyOxGiPu4tO/5tWL17OVNySlynbmO5CX5va
+	DI9mW70ytYpFjh1G72Sg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vx3t9sbas-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Jan 2024 13:59:12 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40TDxBlp022523
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Jan 2024 13:59:11 GMT
+Received: from [10.253.38.251] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 29 Jan
+ 2024 05:59:06 -0800
+Message-ID: <cdd0e481-2738-465b-9ef8-b7ab79981fbe@quicinc.com>
+Date: Mon, 29 Jan 2024 21:59:03 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [net-next PATCH 0/3] net: mdio-ipq4019: fix wrong default MDC
+ rate
+Content-Language: en-US
+To: Christian Marangi <ansuelsmth@gmail.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
+CC: Andrew Lunn <andrew@lunn.ch>, Andy Gross <agross@kernel.org>,
+        Bjorn
+ Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, Rob
+ Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Robert Marko <robert.marko@sartura.hr>,
+        <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Sergey Ryazanov <ryazanov.s.a@gmail.com>
+References: <20240124213640.7582-1-ansuelsmth@gmail.com>
+ <53445feb-a02c-4859-a993-ccf957208115@quicinc.com>
+ <f8a9e328-5284-4f24-be5d-7e9804869ecd@lunn.ch>
+ <5d778fc0-864c-4e91-9722-1e39551ffc45@quicinc.com>
+ <CAA8EJppUGH1pMg579nJmG2iTHGsOJdgDL93kfOvKofANTGGdHw@mail.gmail.com>
+ <65b3ecd7.050a0220.9e26c.0d9e@mx.google.com>
+From: Jie Luo <quic_luoj@quicinc.com>
+In-Reply-To: <65b3ecd7.050a0220.9e26c.0d9e@mx.google.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240129-x1e80100-remoteproc-v1-3-15d21ef58a4b@linaro.org>
-References: <20240129-x1e80100-remoteproc-v1-0-15d21ef58a4b@linaro.org>
-In-Reply-To: <20240129-x1e80100-remoteproc-v1-0-15d21ef58a4b@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Mathieu Poirier <mathieu.poirier@linaro.org>, 
- Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Abel Vesa <abel.vesa@linaro.org>, Sibi Sankar <quic_sibis@quicinc.com>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2175; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=DYmaa/61P4GaXID7Xccu2X68XxOqzoecSVlwWNbm4oQ=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlt6l5CPj0vbamh6iXLeZP8wUB2GwT1lbw005/L
- ExfUy5EK/GJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZbepeQAKCRAbX0TJAJUV
- Vk4dD/4pyJzUu6T1+dFDIrMr5yX8AxeC5PxCSxSS82hGVyIGL0+orImNWHgf8Mso62DjkvCxf04
- AKRN9an+loItW0pAklTRZmz6VynBGbQkvh0r9sbDggpkfFh77Oqnze5qnSBpibmew/wxA+ff0Z+
- QEk224GPexwy8asTTfibFzYRbikTjHvkf/vr0Jrb460tKv3PHw05Po0kFHh85vcI5bNpHK7UFxb
- VlQ1uwTocE7bTjd1nG85YJH9DcSl5gjN3XYZsyxB4o53PSgpshHb5QbkIVX0ufjdhgv+ipUQJZA
- CfL4uXyeBq/DDYbuWF41/a8yMRdj2CUbks1hSHeAOQeniVUv2l6g8bsZRkMO/omt2yJTxHx0H8H
- 8jDx/rTgqBIdaIdpX9KhTJ1+tqlMZq2R4M0G6Bfa5Dytr42K/H4ZhcP/m6TTLhFcvNJt0O/kvOH
- uDlc9muh7K4XPHDN+UrPNIvozaCW8mAMKa1VM3QQndA7u/jtaOpYPZHk6e1SFAo7DzcWYACike3
- yw3DG0puF5gooNXTqtaAcziqQ6rsSXWPsvfqiGCGoRic4LWtMlJUL49C3+PfM6TgbdDxWrEFxZE
- gjtOedzLuSCP1kwMfUvRoQ2xaLTXF41gtCORvoxgh8MAUrgY3oK4Qv/4rQLCiYksHbFUbxILOzo
- G1afL4wVwYrGHhg==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: yZM3yuQnxIPAraWf1Mq0QMxrwzmEYYz2
+X-Proofpoint-ORIG-GUID: yZM3yuQnxIPAraWf1Mq0QMxrwzmEYYz2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-29_07,2024-01-29_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ mlxlogscore=778 phishscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0
+ impostorscore=0 clxscore=1015 spamscore=0 suspectscore=0
+ priorityscore=1501 mlxscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2401190000 definitions=main-2401290102
 
-From: Sibi Sankar <quic_sibis@quicinc.com>
 
-The UEFI loads a lite variant of the ADSP firmware to support charging
-use cases. The kernel needs to unload and reload it with the firmware
-that has full feature support for audio. This patch arbitarily shutsdown
-the lite firmware before loading the full firmware.
 
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/remoteproc/qcom_q6v5_pas.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+On 1/27/2024 1:33 AM, Christian Marangi wrote:
+> On Fri, Jan 26, 2024 at 07:20:03PM +0200, Dmitry Baryshkov wrote:
+>> On Fri, 26 Jan 2024 at 18:03, Jie Luo <quic_luoj@quicinc.com> wrote:
+>>>
+>>>
+>>>
+>>> On 1/26/2024 1:18 AM, Andrew Lunn wrote:
+>>>>> Hi Christian,
+>>>>> Just a gentle reminder.
+>>>>>
+>>>>> The MDIO frequency config is already added by the following patch series.
+>>>>> https://lore.kernel.org/netdev/28c8b31c-8dcb-4a19-9084-22c77a74b9a1@linaro.org/T/#m840cb8d269dca133c3ad3da3d112c63382ec2058
+>>>>
+>>>> I admit this version was posted first. However, its embedded in a
+>>>> patch series which is not making much progress, and i doubt will make
+>>>> progress any time soon.
+>>>>
+>>>> If you really want your version to be used, please split it out into a
+>>>> standalone patch series adding just MDIO clock-frequency support, with
+>>>> its binding, and nothing else.
+>>>>
+>>>>       Andrew
+>>>
+>>> Hi Andrew,
+>>> We will rework the patch series to include only MDIO frequency related
+>>> function and frequency dt binding, and post the updated patch series
+>>> on th/Tuesdae Mondayy of next week. We will work with Christian to
+>>> ensure he can re-use this patch as well.
+>>
+>> Can you do the other way around: rebase your patches on top of Chritian's work?
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 083d71f80e5c..4f6940368eb4 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -39,6 +39,7 @@ struct adsp_data {
- 	const char *dtb_firmware_name;
- 	int pas_id;
- 	int dtb_pas_id;
-+	int lite_pas_id;
- 	unsigned int minidump_id;
- 	bool auto_boot;
- 	bool decrypt_shutdown;
-@@ -72,6 +73,7 @@ struct qcom_adsp {
- 	const char *dtb_firmware_name;
- 	int pas_id;
- 	int dtb_pas_id;
-+	int lite_pas_id;
- 	unsigned int minidump_id;
- 	int crash_reason_smem;
- 	bool decrypt_shutdown;
-@@ -210,6 +212,10 @@ static int adsp_load(struct rproc *rproc, const struct firmware *fw)
- 	/* Store firmware handle to be used in adsp_start() */
- 	adsp->firmware = fw;
- 
-+	/* WIP: Shutdown the ADSP if it's running a lite version of the firmware*/
-+	if (adsp->lite_pas_id)
-+		ret = qcom_scm_pas_shutdown(adsp->lite_pas_id);
-+
- 	if (adsp->dtb_pas_id) {
- 		ret = request_firmware(&adsp->dtb_firmware, adsp->dtb_firmware_name, adsp->dev);
- 		if (ret) {
-@@ -693,6 +699,7 @@ static int adsp_probe(struct platform_device *pdev)
- 	adsp->rproc = rproc;
- 	adsp->minidump_id = desc->minidump_id;
- 	adsp->pas_id = desc->pas_id;
-+	adsp->lite_pas_id = desc->lite_pas_id;
- 	adsp->info_name = desc->sysmon_name;
- 	adsp->decrypt_shutdown = desc->decrypt_shutdown;
- 	adsp->region_assign_idx = desc->region_assign_idx;
-@@ -990,6 +997,7 @@ static const struct adsp_data x1e80100_adsp_resource = {
- 	.dtb_firmware_name = "adsp_dtb.mdt",
- 	.pas_id = 1,
- 	.dtb_pas_id = 0x24,
-+	.lite_pas_id = 0x1f,
- 	.minidump_id = 5,
- 	.auto_boot = true,
- 	.proxy_pd_names = (char*[]){
+Hi Dmitry,
+Sure, we can take this approach if fine by Andrew as well.
 
--- 
-2.34.1
+>>
+> 
+> Would be ideal, also I have to send v2 that handle the 802.3 suggested
+> MDC rate (ready I just need to send after this has been handled).
+> 
+> Also I can see some problem with Lui patch where thse divior
+> value is not reapplied after MDIO reset effectively reverting to the
+> default value.
 
+Hi Christian,
+In my version, the divisor is programmed in every MDIO operation and 
+hence I did not add the code to revert to configured value in reset 
+function. But sure. we can program it once during the probe/reset and 
+avoid doing it during read/write ops.
+
+In addition, the MDIO divisor 1, 2 and 4 are not supported by the MDIO
+hardware block, maybe we can remove these macros to avoid confusion, or 
+add a comment mentioning that these are not supported.
+
+> 
+> If it's a credits problem I can totally change the from or add
+> Co-devloped, I just need the feature since the thing is broken from a
+> looong time on ipq40xx and ipq807x.
+> 
 
