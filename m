@@ -1,143 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-8881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAF218408D4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 15:43:07 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 06756840955
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 16:08:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 071741C248AC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 14:43:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 871631F22672
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 15:08:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98C6D664DE;
-	Mon, 29 Jan 2024 14:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63581153519;
+	Mon, 29 Jan 2024 15:08:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="HD4Qi1t7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KLQg21T0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0C4760DEF;
-	Mon, 29 Jan 2024 14:42:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC152153510
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 15:08:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706539379; cv=none; b=kD3yw16mXn2wBS65rFLnFMX1Me6KjHMkX36yt8zexDuVGYqSmXwMjWun2DXq5JCDiP8Dobol4BuQNwKJMNNWUhhgOddC4EqPLx1cuveQzmahYXbQbJLL8slqupIUgVYfKTtXQZOdBtrp/ZkoviK+BNAO5vtgFvFqqcUzTPhqv1E=
+	t=1706540923; cv=none; b=n3JcOQqG39LYn2ZH9goZPCMpF8ZgsJ2S9xcVP+Z+nkxWQUmxmiGxJcqu8VXSMIW0edPoSNb/58FycQ51Y5YFXu/Obw7NDd2kxKlVn5ILLb7B03AhzzARVOfe50VZuhqmaxKZ3ZiaazX5YRTt4JEuXlRgVrKV7xNKqlSmlxZJ11M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706539379; c=relaxed/simple;
-	bh=++qUoPyfSFKzuZZvQ546dLVeeD7/xqChTmaE0VECfQw=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=HM0IX6bzjtB42O9hhsdgY8XyeP3IReXs+UZ+zz/7Wpln7H1FgEKQx40IOlihehLVjY+wELJh0QG/sA2SB+esPfL4BGM0eLZTvnzT/CR4QAYKTJYdwRgjJFfjrKJcvRiNuXRI6Ob8gr/afcWpm+CySTsTYvzh+gnnQV6+NU8G5mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=HD4Qi1t7; arc=none smtp.client-ip=212.227.17.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1706539355; x=1707144155; i=markus.elfring@web.de;
-	bh=++qUoPyfSFKzuZZvQ546dLVeeD7/xqChTmaE0VECfQw=;
-	h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:
-	 In-Reply-To;
-	b=HD4Qi1t7MQyDoJzZrhOAzd0xI2XWlx7WVmWrIFndluH86ZU8FTCh85utlu/SRtCu
-	 /A9E7YKJF4McMouZ8MYGroopBuqOw1WqJv1jdaUWnd12qSHFXvTcFp2kwH/pBmZzq
-	 elXbaHBfukHK3a2QoVIoF1CPJBKOsPtZzDGG//oHb4c6TdxiMyxnHKEZsFdP+PDxi
-	 QqcKvLiDN6/P5DpK+IFTR587phFlWTU0q8gfcr4v8XMRJkwoRW65QamIzkSP1LY0Q
-	 j8MFHY+lWmnnI63tzNfEAaCw14C0kW7xMe2XSUdBFxoQH/J30b+pGpqVHRZ5/lYcZ
-	 KC1UtRZJH3W3Rley+w==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.21] ([94.31.81.95]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M3V6G-1rTusT3B7y-000k58; Mon, 29
- Jan 2024 15:42:35 +0100
-Message-ID: <2541ed5c-2afe-4cd4-861c-53aad2c355ea@web.de>
-Date: Mon, 29 Jan 2024 15:42:31 +0100
+	s=arc-20240116; t=1706540923; c=relaxed/simple;
+	bh=7Ad9b8sC5p4drimOlyy33kQgcYMT6N80v45xUSMRDqA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JD2T61bsnkRws2WSvNDj4Eqv1NIw3LsrxGxMs/9PIebaATvW/xagKYTU3397czfFFgavhuAFjuEYGWoywGaNoH6445hpZSp3wFG39/NTc2ix3dhQe27sgWv9I/wsAO7zCdJPPIYzWSBvlfuvzKilF4tGftadXdmW+lsYi0A0rHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KLQg21T0; arc=none smtp.client-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-5ffb07bed9bso23134757b3.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 07:08:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706540921; x=1707145721; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=WHc0ySmd3+BUchE2A6eeEhPhJOTzoceSWy6/UF2YYmg=;
+        b=KLQg21T03+/PwPrp/bd8sHw9xBbxj4gWOBzAfzuAc0wnAR5lctlHxPGr/Z62PQkjZb
+         9o0YGarWzCHb7GBhhsuA3aCdXD0HNdDSXs/l66QHVEUE9Etn9m2kVw9jJY5LWT+1GLAz
+         5j3lUT+qz4KOZalNwE9v31ya2UyG7eIKMbVPeTRiY2u9Jchzr9BaPGAIqyEbqC07QCe4
+         R3JnOSibM43CNhMo5YNzisIqPdJhbhuA86URPbXiQ7+DrLiiUkwn7RdfEHyzZbKYr3yE
+         aNheC1DR5pkw8O4YzSUFiR1SDTp9wNedA5Ca0HS4gwzs2bXllVQTHncPXZSfNBTRSBrC
+         Cecg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706540921; x=1707145721;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WHc0ySmd3+BUchE2A6eeEhPhJOTzoceSWy6/UF2YYmg=;
+        b=hJY74XoDZlEkjcPI+87BakCl5AYnTHv+u3dFlGhphXkEi+EJfa0MjF5jJ9/huvLDGH
+         OZUgWr/t0rfWIbwW9QEHO6fBNzV/dqjZbaDGP64tJHK3PTW5AGgSgyT7JgaBs0oORlKx
+         Cpl9I4z4Ft1XJ0ZqZ/vxU/Gaaf6JEtFxwRpcNJsYW+BJtiONBM9rHjgNPH1NFOg/cnul
+         UCgFEH/jIXLS8FIMFMoScQwv1VInNjzOvLye6q3s3D5Eu4TS2uh0i3ddM92VPwk9TT7d
+         ZP+t3QbeqwXVP3omOmrDS+bePKxRnCy2OuHFCYD4E7mzcyjnbnc6UDaCWYqK2nugH7kQ
+         dm0w==
+X-Gm-Message-State: AOJu0YySXKE16B5r7g3l/hi9m5kAhwXQ4aojjJiueLRxHZu/e5y0vbBz
+	AeIcjJSRVmHTVHvD8wqvpIB2D4ZiORV9Ie7p5u1BwEKp+QBxiprTly/pL0JK2bcxlIS0PqjVdFw
+	SrAKhiBZizy+pP5et2IwNjUSlz/Ey3hNaodhubA==
+X-Google-Smtp-Source: AGHT+IEGAtVAdaZvHFjfmQf1IJOtCdXiDeGVR3eL7R75RzaD4DvPC28PHklGGBsD3t+yL5unf4AHNAwUb1afgQibw48=
+X-Received: by 2002:a5b:18d:0:b0:dc2:23cf:6ada with SMTP id
+ r13-20020a5b018d000000b00dc223cf6adamr2403587ybl.73.1706540920775; Mon, 29
+ Jan 2024 07:08:40 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH v2] misc: fastrpc: Use memdup_user() rather than duplicating
- its implementation
-Content-Language: en-GB
-From: Markus Elfring <Markus.Elfring@web.de>
-To: linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org,
- Arnd Bergmann <arnd@arndb.de>, Amol Maheshwari <amahesh@qti.qualcomm.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: LKML <linux-kernel@vger.kernel.org>, Cong Liu <liucong2@kylinos.cn>,
- Kunwu Chan <chentao@kylinos.cn>
-References: <e5d9404d-eb3b-4d35-a027-790229986cdf@web.de>
-In-Reply-To: <e5d9404d-eb3b-4d35-a027-790229986cdf@web.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:r9VMldPJx3OLpWHDPHCTbM5jKIquc7JqOrnd3z0oDELwDTPp6JW
- RFWOx7Eas9Q44RgCgaftbxhjQQ30jnxz+c0kI/LCkp/2TCHCWn6HcI6pbC0Bn/TgnOp8j2i
- JsYjFJmCTJ77FygbPhLbZ32UZ4ldmA5mehojAUT+hBSLwHmVFwa+CHL+bNg4wsVX0/tkUWl
- qeG+qAYSBo0FqKSk8it8w==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:mAP1zM/zOi0=;qcNnELy4j9lhIMdz0d55zCw3xej
- Irt4KrlFHMCYTr+AttHLh/kIo08/PXlxadMy20PvLkqBBGSIDNuLdnRQR/bujlrKVpgViLkpi
- bZMhcN00fZTpN1/v1e2D9Yrlf8wgESgFLSejRVnptLH1P3qikOk2gOlDN5UxmQR4k3FnGiiHA
- +erVyq3+IIAGLcevHFYGNrIMOSG9MRpaFYi41lJTbAyCXFYNVpwP2gYNYUn/5EhbE+tvFZrip
- pbxltq61BRYrmgDQ2BWIr29BbvlSNVCF4WrSsqOlicNbCCEKuKGPzzqdV2W8Kiznbv59fROEG
- OKYaYUOL6oWQ8y78ova8EGJxv2CFTbmORP0k2J+CzZAiEUBFA5rlSDX8t+SmDR6MyODK2RKDS
- 9NvXEiXqQ6AbAUwEaliMDpZ3d27De8w/o9mNDBoC5eI4uncVNeOD8Q/b1QMVo+vvRlWVJF3Bn
- w6K7HRa+t2KZ5uSBPLqaKYk37zJF5SKQu95GxnYStb0avw4BjdGdOqnIdzmPQnkC8pzIfkWsS
- IAd5sv/xH8bxJk2FBdlpTDCXsCU8XCEHqW9T5xPRR+JGvAKqTQc5QYqzHnXZctM/Qz874xhvn
- kEfsvRjfek/gmmARGEzlZh8q+gg6ZOzPXPa59txXuKDybfV5t4wApOrxoXE7oNb3h176O0sBd
- HFRGIKorLPGcLuv8Y8UsunyZo3eVctJr0uzcbcwJGX7vh5Sii3en+8ePFUDoxdb7Q4TlA0cCG
- IpaLc+MTgJDpxRViiCVraPf6aesdvDR+t2vMHzzLnbEYVJ5yPHd4KKS866MDp0BbeFHg1XLu7
- CWX0BErtnxcjtL8t8I01elrDlEDwqZfOXRwNAvGYezRo7t8o3x7NRk3Lz66bHGfYys2wceehN
- wWijfthjw94iRL7HbJ5hJEknlMOJYyG+hwP+d8AObRRQbpync0qqX/gNVEvM2YnbCB1fqIrfG
- hArPBw==
+References: <20240129-x1e80100-display-v1-0-0d9eb8254df0@linaro.org> <20240129-x1e80100-display-v1-4-0d9eb8254df0@linaro.org>
+In-Reply-To: <20240129-x1e80100-display-v1-4-0d9eb8254df0@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 29 Jan 2024 17:08:29 +0200
+Message-ID: <CAA8EJpq1RSi4H6m6UQcyxEr=hip=ypKz9DhHziNKvDjUHsES8Q@mail.gmail.com>
+Subject: Re: [PATCH 4/5] drm/msm/dp: Try looking for link-frequencies into the
+ port@0's endpoint first
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-From: Markus Elfring <elfring@users.sourceforge.net>
-Date: Mon, 29 Jan 2024 15:33:41 +0100
+On Mon, 29 Jan 2024 at 15:19, Abel Vesa <abel.vesa@linaro.org> wrote:
+>
+> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>
+> On platforms where the endpoint used is on port@0, looking for port@1
+> instead results in just ignoring the max link-frequencies altogether.
+> Look at port@0 first, then, if not found, look for port@1.
 
-* Reuse existing functionality from memdup_user() instead of keeping
-  duplicate source code.
+NAK. Platforms do not "use port@0". It is for the connection between
+DPU and DP, while the link-frequencies property is for the link
+between DP controller and the actual display.
 
-  Generated by: scripts/coccinelle/api/memdup_user.cocci
+>
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/dp/dp_parser.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
+> index 7032dcc8842b..eec5b8b83f4b 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_parser.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
+> @@ -97,7 +97,11 @@ static u32 dp_parser_link_frequencies(struct device_node *of_node)
+>         u64 frequency = 0;
+>         int cnt;
+>
+> -       endpoint = of_graph_get_endpoint_by_regs(of_node, 1, 0); /* port@1 */
+> +       endpoint = of_graph_get_endpoint_by_regs(of_node, 0, 0); /* port@0 */
+> +
+> +       if (!endpoint)
+> +               endpoint = of_graph_get_endpoint_by_regs(of_node, 1, 0); /* port@1 */
+> +
+>         if (!endpoint)
+>                 return 0;
+>
+>
+> --
+> 2.34.1
+>
 
-* Adjust a data type conversion for a function call parameter.
 
-Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
-=2D--
-
-v2:
-A data type conversion should still be applied for one function call param=
-eter.
-
- drivers/misc/fastrpc.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 1c6c62a7f7f5..3b18c339d091 100644
-=2D-- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -1260,17 +1260,12 @@ static int fastrpc_init_create_static_process(stru=
-ct fastrpc_user *fl,
- 		goto err;
- 	}
-
--	name =3D kzalloc(init.namelen, GFP_KERNEL);
--	if (!name) {
--		err =3D -ENOMEM;
-+	name =3D memdup_user(u64_to_user_ptr(init.name), init.namelen);
-+	if (IS_ERR(name) {
-+		err =3D PTR_ERR(name);
- 		goto err;
- 	}
-
--	if (copy_from_user(name, (void __user *)(uintptr_t)init.name, init.namel=
-en)) {
--		err =3D -EFAULT;
--		goto err_name;
--	}
--
- 	if (!fl->cctx->remote_heap) {
- 		err =3D fastrpc_remote_heap_alloc(fl, fl->sctx->dev, init.memlen,
- 						&fl->cctx->remote_heap);
-=2D-
-2.43.0
-
+-- 
+With best wishes
+Dmitry
 
