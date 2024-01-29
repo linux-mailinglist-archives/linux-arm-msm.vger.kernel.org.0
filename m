@@ -1,151 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-8750-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDACB83FD05
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 04:52:41 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B832383FD0A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 04:58:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 89D5F1F2482B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 03:52:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6D0821F2479A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 03:58:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E055210A0D;
-	Mon, 29 Jan 2024 03:52:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C706411CB8;
+	Mon, 29 Jan 2024 03:57:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NefugJT0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XrDCUYag"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BF9210A0C
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 03:52:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296B811718
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 03:57:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706500357; cv=none; b=of7uZeKBAiUtf1SRcOV9cRAQZnBqAJ2jgo48HWz1uFNcN8pz7+vGOi5ox7f1KA84++GuiRK4GgeTLr3HBqmpiVB9xFOOj/gIftJv4s9ZT2TSbJ4o+mwiHfuEy+RVZbnpv8u68XE0beSDLxxyVsRaB9r+brh2vPV/zqtS/eAdxRA=
+	t=1706500677; cv=none; b=JHRzPHVyhkTumV02dmWdrTPOEy2Zb/7DUJaAojDuiFwbmsXopWIU5A2FTmcVXoLqDh2DStTLgbHTCSMVZ3ZUlCv5FkhvfrCt3Q4h0Y1cDCdm4MFnHqp4yRDvqUXCDVAbo4AT8iBf4Xoa8MkcAlPGPu9xRRX990rqiJXdDirllaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706500357; c=relaxed/simple;
-	bh=9H/tH4/4IPpeXe9DdyRn1MteqLeVOuwZBnr+U77gtWY=;
+	s=arc-20240116; t=1706500677; c=relaxed/simple;
+	bh=/MQsZbzA6Kf+NGX5pqU34m2qRTbkSuz8iLgvvB48ojk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dU1XBvANdqW6EYZaZo5/5Z7ol03wJsl+N3MACQ+lBlxKQQL3MMW2hNFctp4h/lRd0lXKlpq1GbKu9O5K2MLLP8z1O30xGJIhWwzs4bdQxoq5ufSvcg3C1dO8Gwk32w0gzX19T/QCl/Mpqq0L3ND7FP6AZodRjT2PuQWmCVU6vEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NefugJT0; arc=none smtp.client-ip=209.85.219.175
+	 To:Cc:Content-Type; b=kdzQ/xZIWwWSs0Euo35UoJcdtmSMty8hPzcNsYFCVoGOACchDebcsz+iOZfoq7Ubch1H4k9PAouWLcZhlszJXaL2INLBzT3tNLCNOqx6Z+9RYL89RJtPlb4bNaMxs/BMV0nBrDwrT7td4TCy4CDj7TbM5dQaHYRdr226GQka3ZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XrDCUYag; arc=none smtp.client-ip=209.85.219.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-dbed0710c74so2445335276.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jan 2024 19:52:35 -0800 (PST)
+Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-dc23bf7e5aaso2536702276.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jan 2024 19:57:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706500355; x=1707105155; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706500675; x=1707105475; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=pXzkmM0Io5FhP7wU1xumZrJF60VkcQ0t5v5wmRt/yWg=;
-        b=NefugJT0/4v5CI4pHL0vNEf0y0w0tIbyq8coV1nDIHGaPlxYGTRIMuTqh0sxe75Vjr
-         2pZF3TEcKc8/58+Lq/kMEx/kzAgdgufuGW2kJs3JYiwLLBWWuNXRHdUPpU/Y2td5eBcx
-         wmxKFNqRFevt+4RPKbKOk6m7dvnpx1XrsE1I7Kk0cIJ4gVtYD+kdxaw4zyVppljeap1Z
-         VuIPmEQjIFRZLKum0degPA+82qFiwFlIplgQ+d/s7xBsvM/1tgJRIfq0T0IvMkms99zO
-         j5KTjBSpVCoyNg5cm7wsPtqIbn4k8CPQMF9HsuQWay7rrCVA5sSJiQzmsF9ttMbudnDN
-         Udeg==
+        bh=DvmPqZ2pCOoetWcGfoB/FaWoKJR0XDZxmCTI8i3VR3Y=;
+        b=XrDCUYaghyIsu0kEfayRT1YqXHj74rgQoWmbUc2VmEhC+dczANg73x0WnZwtHimAup
+         yfkABuIs293oQ7bkq0wA9fy0rVPBiAakpPbamo0N5f9ItG9RLovXX49pRn5OIZ3owWSO
+         mvwk8AmoI4Pylku9Dp4xj/x3CiLW8xKHaoSnnCI5z5SQXr5JGxX5/t+rOfeNo50PnACh
+         98pvnofG4t5TNRULZX3O2zLrGhG6W2qAYNIFDtFEFa7dafttFfSIpRwAukw7rmEmFjT2
+         Wh/YWV93ejTDu0cxOJxZ6iKgR4NOnjRyJOynP9freQY70eyYpRaZf7ioDYT2l+pIwhuk
+         U7UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706500355; x=1707105155;
+        d=1e100.net; s=20230601; t=1706500675; x=1707105475;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=pXzkmM0Io5FhP7wU1xumZrJF60VkcQ0t5v5wmRt/yWg=;
-        b=Rk/jmx2YfJOaoBV2lOdK6HvtwamETSomsdfVr3vXME9LltSZahD1Lx3tD3+/19LYez
-         ydi3N4Zr2TcyxcVpW/D/Kgxfdj2eGl8GQCJkTnAuWylQZ4pPIYs194rbcX0Fx2tnXqtg
-         2uZyB1NZ4M4XTK9MRLbgtL6jb5hSuQPujWfBEOocxS2IELa6u9uFYx8eORfw73e8Yb8D
-         mKOlyuE63rkIvXETxNu2HyMb1H2ZZ93tqbZymR5410vVF/2/CQSZ+bS9YeyCuJYjgbkg
-         kd6QnD4a71G+cCA/qbZ0EHQeIH2BlEGujVPZpS/YRAEI/0tE4CV0fKQXUWMOG9917wr7
-         pHMQ==
-X-Gm-Message-State: AOJu0YzIzHxOBRCuWkkx+8kUJPEBPXEKAkXybZX+z+tV3dtorOuuG7bv
-	cx3d7j0J0LzpK94zrPB3ZrxI0IVSPagmLAcrmX/67A3SdJSRjVPXZTMEiOky3N92Egs1nOe7xVf
-	hEju0I0ciDbRuv0ImVQU1GAnWAI3LE7bZPdMx4A==
-X-Google-Smtp-Source: AGHT+IG5C65qU/0gcWAKfSFARxzyL6u3mN0Xtc9oqbv09qPqppYihW4uBL1M+tgFQw4KqF1LuOG1RCKLgmDkBH+ElDs=
-X-Received: by 2002:a5b:bd1:0:b0:dbd:72c8:738f with SMTP id
- c17-20020a5b0bd1000000b00dbd72c8738fmr3622259ybr.103.1706500354961; Sun, 28
- Jan 2024 19:52:34 -0800 (PST)
+        bh=DvmPqZ2pCOoetWcGfoB/FaWoKJR0XDZxmCTI8i3VR3Y=;
+        b=g01WGbHEPQwH8nPlgwu58OX9jcb3SVX7xEeWR82JHutEFxb25cHVOqLqeoDD/+Vpga
+         Ie65LctGHa6McLkQSJC7Zyg18wW/i5gUwCvHsktEO+/qJgNfk0+hVsCHEyb/35b5D6Bx
+         eMsKYK1DTgnmAEgo+vrHUsIsgGIFqtq08HK9Ok3QLweYSnlzZEbiNCJY4dc9sPN9m5Pu
+         t7eXf3cfLHglEI3TYZ86pVL90rpfe+pUm3RTu7eyuUfPQzeGMxjevdL8e37Q5YcWVIuA
+         OUVRNT2p5q1R0TVna5ikWOE9m3ESATmgE69280Ty9EOhYPssYCwRL5RfPnqjT6iKaY9m
+         5VMQ==
+X-Gm-Message-State: AOJu0YzKejXhlZa+2X7j/W7ksHWUuL/4zI2jVJWB4bzShnfCT/A7djFb
+	Gx1zMQg6T8ZAGsLSIs1ECiC2cs2mZumstV6I+lne4ETlmuGw3LzjhbUiHRk0JO6OZr8Xb+p8I5n
+	7qlODid+PWA/r2SV6WuQU/3zCgMOsOw0smJvBBEL83rFMkfTP
+X-Google-Smtp-Source: AGHT+IHHJE7QfYMSAo4pwo06wVe38j/cMyogdzalD6/6Amc2mnF49VZzPcHCZuW12LqprR6B8vjAM2QrCN08H/aME1s=
+X-Received: by 2002:a5b:181:0:b0:db5:4ece:ad01 with SMTP id
+ r1-20020a5b0181000000b00db54ecead01mr2816423ybl.25.1706500675105; Sun, 28 Jan
+ 2024 19:57:55 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240125193834.7065-1-quic_parellan@quicinc.com>
- <20240125193834.7065-18-quic_parellan@quicinc.com> <493926f1-90e9-493a-bd2f-ea1db16d7ee6@linaro.org>
- <72ca08ac-ae16-37f6-6f85-f203ddf79084@quicinc.com>
-In-Reply-To: <72ca08ac-ae16-37f6-6f85-f203ddf79084@quicinc.com>
+References: <20240126-lpg-v6-1-f879cecbce69@quicinc.com>
+In-Reply-To: <20240126-lpg-v6-1-f879cecbce69@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 29 Jan 2024 05:52:24 +0200
-Message-ID: <CAA8EJppj1xN8E==VGncvW5DKMtLPixynpgAqyZoJzPQXZEEYjg@mail.gmail.com>
-Subject: Re: [PATCH 17/17] drm/msm/dp: allow YUV420 mode for DP connector when
- VSC SDP supported
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Paloma Arellano <quic_parellan@quicinc.com>, freedreno@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org, 
-	quic_jesszhan@quicinc.com, quic_khsieh@quicinc.com, 
-	marijn.suijten@somainline.org, neil.armstrong@linaro.org
+Date: Mon, 29 Jan 2024 05:57:44 +0200
+Message-ID: <CAA8EJpqqn7TPKf+h1U+Jo1wrDgeatUHJ=S4QKtN6n45=k6eSRA@mail.gmail.com>
+Subject: Re: [PATCH RESEND v6] arm64: dts: qcom: qcm6490-idp: Add definition
+ for three LEDs
+To: quic_huliu@quicinc.com
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 29 Jan 2024 at 05:17, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+On Fri, 26 Jan 2024 at 04:57, Hui Liu via B4 Relay
+<devnull+quic_huliu.quicinc.com@kernel.org> wrote:
 >
+> From: Hui Liu <quic_huliu@quicinc.com>
 >
+> Add definition for three LEDs to make sure they can
+> be enabled base on QCOM LPG LED driver.
 >
-> On 1/25/2024 2:05 PM, Dmitry Baryshkov wrote:
-> > On 25/01/2024 21:38, Paloma Arellano wrote:
-> >> All the components of YUV420 over DP are added. Therefore, let's mark the
-> >> connector property as true for DP connector when the DP type is not eDP
-> >> and when VSC SDP is supported.
-> >>
-> >> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
-> >> ---
-> >>   drivers/gpu/drm/msm/dp/dp_display.c | 5 ++++-
-> >>   1 file changed, 4 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c
-> >> b/drivers/gpu/drm/msm/dp/dp_display.c
-> >> index 4329435518351..97edd607400b8 100644
-> >> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> >> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> >> @@ -370,11 +370,14 @@ static int dp_display_process_hpd_high(struct
-> >> dp_display_private *dp)
-> >>       dp_link_process_request(dp->link);
-> >> -    if (!dp->dp_display.is_edp)
-> >> +    if (!dp->dp_display.is_edp) {
-> >> +        if (dp_panel_vsc_sdp_supported(dp->panel))
-> >> +            dp->dp_display.connector->ycbcr_420_allowed = true;
-> >
-> > Please consider fixing a TODO in drm_bridge_connector_init().
-> >
+> Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
+> ---
+> Changes in v6:
+> - Updated the seperate LEDs nodes to multi-led setting.
+> - Link to v5: https://lore.kernel.org/r/20240115-lpg-v5-1-3c56f77f9cec@quicinc.com
 >
-> I am not totally clear if that TODO can ever go for DP/HDMI usage of
-> drm_bridge_connector.
+> Changes in v5:
+> - Rephrased commit text, replaced qcs6490-idp to qcm6490-idp.
+> - Removed the unnecessary full.
+> - Link to v4: https://lore.kernel.org/r/20240112-lpg-v4-1-c4004026686b@quicinc.com
 >
-> We do not know if the sink supports VSC SDP till we read the DPCD and
-> till we know that sink supports VSC SDP, there is no reason to mark the
-> YUV modes as supported. This is the same logic followed across vendors.
+> Changes in v4:
+> - Removed "label" definition and added "function" definition.
+> - Link to v3: https://lore.kernel.org/r/20231215-lpg-v3-1-4e2db0c6df5f@quicinc.com
 >
-> drm_bride_connector_init() happens much earlier than the point where we
-> read DPCD. The only thing which can be done is perhaps add some callback
-> to update_ycbcr_420_allowed once DPCD is read. But I don't think its
-> absolutely necessary to have a callback just for this.
+> Changes in v3:
+> - Rephrased commit text and updated the nodes to qcm6490-idp board file.
+> - Link to v2: https://lore.kernel.org/all/20231110-qcom_leds-v2-1-3cad1fbbc65a@quicinc.com/
+>
+> Changes in v2:
+> - Rephrased commit text and updated the nodes to board file.
+> - Link to v1: https://lore.kernel.org/r/20231108-qcom_leds-v1-1-c3e1c8572cb0@quicinc.com
+> ---
+>  arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 28 ++++++++++++++++++++++++++++
+>  1 file changed, 28 insertions(+)
 
-After checking the drm_connector docs, I'd still hold my opinion and
-consider this patch to be a misuse of the property. If you check the
-drm_connector::ycbcr_420_allowed docs, you'll see that it describes
-the output from the source point of view. In other words, it should be
-true if the DP connector can send YUV420 rather than being set if the
-attached display supports such output. This matches ycbcr420_allowed
-usage by AMD, dw-hdmi, intel_hdmi and even intel_dp usage.
-
-> >>           drm_dp_set_subconnector_property(dp->dp_display.connector,
-> >>                            connector_status_connected,
-> >>                            dp->panel->dpcd,
-> >>                            dp->panel->downstream_ports);
-> >> +    }
-> >>       edid = dp->panel->edid;
-> >
-
-
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
