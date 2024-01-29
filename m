@@ -1,131 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-8877-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C9138408A9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 15:37:53 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C88228408C6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 15:41:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4C45D1C20919
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 14:37:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7FC801F22F16
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 14:41:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AD28148316;
-	Mon, 29 Jan 2024 14:36:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE3115B1FE;
+	Mon, 29 Jan 2024 14:41:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EGak3gxO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rUgKrzI1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357AE152E16
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 14:36:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C5460DEF
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 14:41:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706538996; cv=none; b=RJzMe2ojX3zEkXIwXkTPXgGUobdNpiypX9uh08DJRkt6gUsBIRvF+fhqMnbidFMNjsnVNvspJoBQr6NX/+u1GrlEPv8HU+4SJS0WK38eDsYUQUktO/247eZSCgcOO4poncWHYRS+aSvLjJ4eGhZq6FiBG16mdxxfEw5jNjmsw0Y=
+	t=1706539297; cv=none; b=EwlJa6xh51I1v1k2gtXLVLKL0ci9l4tGcD9wz+yErD6OdhiQtVujUjbvgRD8Qk05rlZYrUGQHBF3mQcTlh4XkikF/s3kH4a7cL4f7rGO19vza+F7QzEnkaJ/FmQl2TxqDdN8k4i9kU95W60kwJGAr0WIzkAoD19/Ttqg/SRVqRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706538996; c=relaxed/simple;
-	bh=mQz79aQlYRR6nrY8Z1ZbdTEyN+L9YfuNpdQ1leoB84U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aW+VNkPKB+qoTE8ECU8roaui/L3yJmmQgju3yxyMb6KcrDVXllj9equ0DpVyZ9pVVgbbk/UUANSFjYOGT2JkpEQRlrX27rSCzZwCFcN6/J21XxA65dLhUI68D59lL1E7Layl4wNaTMoOx3FybpAvhwRtLKniGbdBgLw+ddL8mSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EGak3gxO; arc=none smtp.client-ip=209.85.218.52
+	s=arc-20240116; t=1706539297; c=relaxed/simple;
+	bh=YmUnaTwJOUF+5HG/UU6LIU+Dr1N5LPeDWxSA+o1/Oxk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ncATSg7et80YwhWyzeYDPRjVuZ9HmK/fO692EZSjHQLmS5GMwmA5iLL9B+rUDPYdgJvJCwH4PSTiCXmsSWzkNXfAwWdTAQcdel5gz+d1Hi503p89IVuN8gW44xju2bXoDq+0KdWcrU1TPdTvW7j951sisr6K7iwckU8/KdvGq78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rUgKrzI1; arc=none smtp.client-ip=209.85.208.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a35c0ed672cso117267866b.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 06:36:32 -0800 (PST)
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-55f0b2c79cdso1144549a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 06:41:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706538991; x=1707143791; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dybJHVElyPmYmx4bcLz0bdWXp1ScZmWQPVLksWb3RYs=;
-        b=EGak3gxO3UYw4xCexNMpngBtEgh1f/MVVcOdHPJ6XDtQmEPaY/rbZZ/hf9j3Cfw2WZ
-         JP8dGx2O7WRgO9mY+e+3qtyFzb5RWhUVOl0S1u42fUCe2ziXgkvFKbhG4LBKnZJ0OzG/
-         PFOF6tVOX2AEmkcdT3rYZqyWd0zSY//+Wv/Y3OAPfSGhaK4QljY39meJYIpx5PQawaHp
-         7dBRhfun4guhC5q0sd86BRcGFbinHxY3OM1qYiHBENETNN2xzTtT6F+9ElH9z/xYaz+E
-         jca34h1EKVNacvJ3s5Zg/haLPVuCDEgw85MAEZiCQlEPTkfIJ+hlPYqybBTDtCv1BCky
-         HORQ==
+        d=linaro.org; s=google; t=1706539293; x=1707144093; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=RfCVaGYCNuqKIo4TvINYQmKbbbpUP4GXnpGkxglu05Q=;
+        b=rUgKrzI1lBaWQHdFssShZUIkqnoNP5zMoZpW96WiDf3AcBcgQ80ufFPa0F41y9THP3
+         c4Qa6n6oIkyAgtyMp3LvwvWhB0v4+dpniqVj/2QcCrqxEGyXt5Lk9DqCRoBEyuRiaV6a
+         cNNd1EIuKE0m3xbkPk7lozQvOXxCLLv45XoiQ6kDznXwvQZ4IBxeyuyp20rrMzxevhGn
+         yi0l2lyhlMwELFEEQOYZQhm3w4zoNQqlTNlu2cNQ4r6q3OrRdmo0CHhjohRU/sKv4+6q
+         HK4oPDC93xYB8uxXyRXMqzyp0AepOp1dwFG+7B20kqYbJoJBkevj7Sm3lOAPwfRbi24K
+         TA0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706538991; x=1707143791;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dybJHVElyPmYmx4bcLz0bdWXp1ScZmWQPVLksWb3RYs=;
-        b=Tq0HGVhXFwsJDW0vUlMgGzC59TzLu+fmFEe7EwTufzmCM+cC3pV4/yWFpnZt04PRVJ
-         PGO0ILWuOHiMJ0SuYJptII0Xfk8kWks9WmF38rZqL4q0ddTVIx1H2hZc4OTQV2W9dyj7
-         OEKQ+KSQiEnw/51LHlA0Bq6K6JlxtBjhIHaAR+Wg5nPJ1ckaSwVMVI0wh6jl5eJimL4J
-         0jLKyMS7chcCcsLoOCOkb+hPqZ7j0vL6M/OX0QsHwXGZLQYETsF4urcWmIZsJQO6ae/o
-         bSAhWW+YaSjKTGEBmC+5175uzRza3SaULiC7DQwmX/WDZitD+pm8/Nnd1Uz8kExXF+zD
-         c5LQ==
-X-Gm-Message-State: AOJu0YzBZCVDfuNoIbKpzxMFXS/zEPRAbjhUMwRW99JY0c8e9AW+cu2L
-	46VBgDuUsjrkJAgsrGrB+YxTI7wqxWb5GJHeiwtaulMQXFcmfR1x0F0fyAt3RPRGJpEXquBSVST
-	P
-X-Google-Smtp-Source: AGHT+IG06zxGFooOARP8WyUROQtl40mgpcuuSrve+Nx55DSoyQP/qoT2UYg2hAS6K5e2DP0BfjW90g==
-X-Received: by 2002:a17:906:b805:b0:a35:e525:b265 with SMTP id dv5-20020a170906b80500b00a35e525b265mr1091147ejb.41.1706538991382;
-        Mon, 29 Jan 2024 06:36:31 -0800 (PST)
-Received: from linaro.org ([79.115.23.25])
-        by smtp.gmail.com with ESMTPSA id vb5-20020a170907d04500b00a351d62309esm3325380ejc.39.2024.01.29.06.36.30
+        d=1e100.net; s=20230601; t=1706539293; x=1707144093;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RfCVaGYCNuqKIo4TvINYQmKbbbpUP4GXnpGkxglu05Q=;
+        b=t3oXPaRSNB+beUCXC2ytqk1pU4joDGT+inYlXtNFWZV7vIXFK7WNBFN6UZAW42P2SJ
+         1YtrvJZ4dIMmh5XsxDbNbSHrTPo/9iz59CJ/hsRth5IEhAZeNwTNdASMZdYk+OnnkuNo
+         jJHsflqva253CSS0r5WDrXJqppHuFLVPgfre3LOugpxjC9HG71p+hx7GAyO1ebAP43yz
+         ANNGmPpjcVkP2kKZm1KzhUvkijlSOl+EX/M6IOcKPSiw9QhA/zXbndawzLXIk5xzhXH8
+         9YV4rY8/YNPdPC4yJjDB0UP+kiuCqLTZVo10VEhhrMX17HfpH+v3JZm+H/1Xpj2KRlx5
+         8viA==
+X-Gm-Message-State: AOJu0YwOLLLQT/Cl86x+K53kYBFspBb/bbHX2126YBNbRsafZS/+iexS
+	OdxRy5tVNP1qNBuvese9WvYj5t6GFQUIFntW7kHabx/QH0slfmpTHs1pK6h0zLs=
+X-Google-Smtp-Source: AGHT+IEqOlwRTopVXq5z3xdY2ou7VYl/rLsBVDmB1sqMwPUY2WReRnfiyBB9wqZ5IHfTP5Nt4B63hw==
+X-Received: by 2002:a05:6402:35c2:b0:55d:2447:844f with SMTP id z2-20020a05640235c200b0055d2447844fmr5932955edc.26.1706539293650;
+        Mon, 29 Jan 2024 06:41:33 -0800 (PST)
+Received: from [127.0.1.1] ([79.115.23.25])
+        by smtp.gmail.com with ESMTPSA id em2-20020a056402364200b0055ec051ab49sm2548415edb.6.2024.01.29.06.41.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jan 2024 06:36:30 -0800 (PST)
-Date: Mon, 29 Jan 2024 16:36:29 +0200
+        Mon, 29 Jan 2024 06:41:33 -0800 (PST)
 From: Abel Vesa <abel.vesa@linaro.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: PCI: qcom: Document the X1E80100
- PCIe Controller
-Message-ID: <Zbe37Rr8LRNxEurs@linaro.org>
-References: <20240129-x1e80100-pci-v2-0-a466d10685b6@linaro.org>
- <20240129-x1e80100-pci-v2-1-a466d10685b6@linaro.org>
- <3aa071cc-32f2-4228-bd32-6dc2375a4c2c@kernel.org>
+Subject: [PATCH RESEND v2 0/2] PCI: qcom: Add PCIe support for X1E80100
+Date: Mon, 29 Jan 2024 16:41:18 +0200
+Message-Id: <20240129-x1e80100-pci-v2-0-5751ab805483@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3aa071cc-32f2-4228-bd32-6dc2375a4c2c@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAA65t2UC/32NsQ6CMBRFf4V09pn3KhRwcpDVQUfj0MJDmpBiW
+ iUYwr/bsLE43ntz7plFYG85iGMyC8+jDXZwMchdIupOuyeDbWIWEuWBJBJMxAUSIrxqC3zQTUl
+ ZYYxMRUSMDgzGa1d3EXKfvo/ly3Nrp9VxF9fqVl3O4hH7zob34L+reqR1jZYUSZZby0hAwG3T5
+ llR5orx1Fun/bAf/HN9GuU/WgKCTpVqCFWRGbWhl2X5AS36+2IEAQAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+ Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=783; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=YmUnaTwJOUF+5HG/UU6LIU+Dr1N5LPeDWxSA+o1/Oxk=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlt7kVcX1dmHcCcX4dItcbzvHLDzbeDraL9WIA7
+ CozxP8qOjOJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZbe5FQAKCRAbX0TJAJUV
+ VpzIEACF/NC1QizFmhsMb7TV3UCRTYP3/cArb81+0X5ilyC1CS/Vawvyo7uu1waeyXnGa5GRaer
+ 9UtnnBbAlIMryQUWI7uRmhLHQpAtmM+zxJVC6JSxp35HOKaCCRi5TtNNyvbhx4v742tGGGS1e0k
+ EARqsDhTbbGBPyKbAEODdv3czzYDdZfMElUK5qXab6IZnpKiMyep8KcWGcqEIGL87+lPoQmchDK
+ WXIjGn+4z9juNsQ0UKGap86m5Gs9yUOv/7hq2STOyqq6c4ntT4CfreWhA3yEwQ+sIAgn7heo8S6
+ 4BVSN7j8Z9VfmWSACaBwW8StK+JfmZPDE9a/2AxwPm017gf75lujNdN0dphUqH5naDmE6h1kxKq
+ rp39dD3h6WMnCdcfo/sVaHvchyeqoIgdQg46GGQU15LOPFpH01ucQANBUPJ1HdFBYaxldCaLwyl
+ poU73tqjlIrdPzve3r8GtRXRpaXu2n4idDVtc6NNYD4WtBQazhTTXehiXQz1lGylv8TVYMzImC0
+ mZWeNrl/B3qME4cNwQT61gYjezdIVDu2mavjGW65AJHcBoK1g5xYcXOasJZ4KzSjc/Dr+dV5fmh
+ LE82O1o3BZheSvTveOyDPzVUTK47AhBpNhPY8DzYm9MYCTKsLScM5ezvDmSG9NRfXBj3gW+DeQO
+ qD2vHQKEvAlaXIw==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-On 24-01-29 15:19:46, Krzysztof Kozlowski wrote:
-> On 29/01/2024 12:10, Abel Vesa wrote:
-> > Document the PCIe Controllers on the X1E80100 platform. They are similar
-> > to the ones found on SM8550, but they don't have SF QTB clock.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> 
-> Please use scripts/get_maintainers.pl to get a list of necessary people
-> and lists to CC. It might happen, that command when run on an older
-> kernel, gives you outdated entries. Therefore please be sure you base
-> your patches on recent Linux kernel.
-> 
-> Tools like b4 or scripts_getmaintainer.pl provide you proper list of
-> people, so fix your workflow. Tools might also fail if you work on some
-> ancient tree (don't, use mainline), work on fork of kernel (don't, use
-> mainline) or you ignore some maintainers (really don't). Just use b4 and
-> all the problems go away.
-> 
-> You missed at least devicetree list (maybe more), so this won't be
-> tested by automated tooling. Performing review on untested code might be
-> a waste of time.
+Add support for PCIe controllers found on X1E80100 platform.
 
-Oups, forgot to run "b4 prep --auto-to-cc" after I added the bindings
-patch.
+Re-sent due to CC list not properly fetched.
 
-Sorry about that. Will resend v2.
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
 
-> 
-> Please kindly resend and include all necessary To/Cc entries.
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
+Changes in v2:
+- Documented the compatible
+- Link to v1: https://lore.kernel.org/r/20240129-x1e80100-pci-v1-1-efdf758976e0@linaro.org
+
+---
+Abel Vesa (2):
+      dt-bindings: PCI: qcom: Document the X1E80100 PCIe Controller
+      PCI: qcom: Add X1E80100 PCIe support
+
+ .../devicetree/bindings/pci/qcom,pcie.yaml         | 29 ++++++++++++++++++++++
+ drivers/pci/controller/dwc/pcie-qcom.c             |  1 +
+ 2 files changed, 30 insertions(+)
+---
+base-commit: 596764183be8ebb13352b281a442a1f1151c9b06
+change-id: 20231201-x1e80100-pci-e3ad9158bb24
+
+Best regards,
+-- 
+Abel Vesa <abel.vesa@linaro.org>
+
 
