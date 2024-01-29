@@ -1,210 +1,255 @@
-Return-Path: <linux-arm-msm+bounces-8910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B7168411EA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 19:17:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D14D98413AE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 20:42:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AED971F20F51
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 18:17:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5E8E61F21F35
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 19:42:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE2DD6F06B;
-	Mon, 29 Jan 2024 18:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54E776F06D;
+	Mon, 29 Jan 2024 19:42:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UE1Rg1LD"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="MeQl1Sw4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98DC83F9FC;
-	Mon, 29 Jan 2024 18:17:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB994C63A
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 19:42:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706552255; cv=none; b=L0RaIPbu0Ig4oKGnYuLTsOsfgRVUEQPFyebTXL8duEqKsWB39d1QSEXm4Z4PoWx0Hud28Y8nmbsLCa2czckrg4IGabVZcHq0c6+tz7deJbwh06AKc7BWsKfM7jF6OGGS0OPRJm1yVL5Hd8bpetMvv6Hbf2Bt6xzrrify2ByMLAI=
+	t=1706557369; cv=none; b=YJuMD20iaBH4YzqP/GCs1q71arvA827Ej3XnCalnb1TqlQ9/tIY1/2fMVZdql3b429pAN8twKK6jf1kvp5ngLtH2VflzV0rPywh52aBUnJdQHOt9gmN/9ZGffoEUsbdUAuhTL30BJQXx1exp5jcQkYryg1VXErYxUQYbkZnsKGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706552255; c=relaxed/simple;
-	bh=nXTQEJLYxfzzSUMQN4Fj1DOD8rClNi7sxnITABri9ac=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=qqxTWo5BYmUUyezGXDL/IpiSYcJYd3mQEWKboS0qm08h049RRnZjWPCjdjYbS02phdTrsucuUYvasO0xDuTv6PZi/vuBopYHmMb3m7HJSR5OvZzqryzWFlEy5vS8AFar98C9doEJNwvQlj3Qwi+WKVmH+jlZn7UV1hWh1f2eja4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UE1Rg1LD; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40TFG5OZ009347;
-	Mon, 29 Jan 2024 18:17:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=D8iWXhqQqZQhIQEyj1RvlkqdhvGjvCNTp5i8GoZKWXs=; b=UE
-	1Rg1LD7kVhtruf/l7pN4uOoSGz0HzD/VYL/XKg+yu/ELuX3umNSPax0wycKgk16r
-	ZT7Cfy8SXBb1U5/v50o5D0L/klr+nzOuLJ60VV/4xPnDxiV5sVBCgdLGMINOqle+
-	VxZUkDfx9EVnbR1GIryrVXvG7jOvwZT/+ANxyclDrDJEMSdvMHWjocN/cr6eXxBd
-	hMvE4UKZptAA6mRfT+atpv24itbG/IBiUQBkWHffpQaEcVZUS6XKkEiISP2xu+4G
-	yoOYeKBxfJKyM0OUfkonrZ2X+0EmFlXB9m22zxieO+3TI5v8n0hbQZE0I05ks5X7
-	OGFa4c7NKcUy4konR4JQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vx3t9t2gg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 29 Jan 2024 18:17:27 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40TIHQh6016730
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 29 Jan 2024 18:17:26 GMT
-Received: from [10.110.61.36] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 29 Jan
- 2024 10:17:23 -0800
-Message-ID: <94b097d4-dcfa-4136-ba75-f665f5bc747d@quicinc.com>
-Date: Mon, 29 Jan 2024 10:17:17 -0800
+	s=arc-20240116; t=1706557369; c=relaxed/simple;
+	bh=0IossWu4UpgVpMtMdcmHPu1ZZhD0JBLYr94Oq6BZXiI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qqR2g250UQvnWqcQi6wsdsry/9xYklvRJXHHph66EVdeuAmAkZUt+FrdmYJXPPYSkm4oeHoo9jXZciDG0ZMsohrarPUdB781SIBxauzdUGwbpF2+n6x7PJQhAjjcJDo2lu+CS96p7EB+6kCa2mhAnyubpytpbhN/lbarAUAtmfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=MeQl1Sw4; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1706557366;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=6eMGjFNAQFg5AWGDSpwZ9ve2g+VcHkXFxxu/Em8ANwU=;
+	b=MeQl1Sw4g4qN2d6z80K7aA2XoVSEY1TCv/Kr5FYBfqwmbFqD5dmeCJAYg3oK8wClpjd4Ak
+	A/eHlgt/nFF2QDfgyUq1b57Gxzr1JPvSrPIJehK86KAVQRRMlD/mAJbYwcx52FQ7kl4kpy
+	1tB1rEGcKyN6yp/zKnN375/WzxMLgBs=
+Received: from mail-vk1-f198.google.com (mail-vk1-f198.google.com
+ [209.85.221.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-84-l_TWf_KnNQeyg2uEDRHsfw-1; Mon, 29 Jan 2024 14:42:45 -0500
+X-MC-Unique: l_TWf_KnNQeyg2uEDRHsfw-1
+Received: by mail-vk1-f198.google.com with SMTP id 71dfb90a1353d-4b78e56d741so570844e0c.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 11:42:44 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706557364; x=1707162164;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6eMGjFNAQFg5AWGDSpwZ9ve2g+VcHkXFxxu/Em8ANwU=;
+        b=q5gwKdaG4N+OAer0S74JC6uMI8PebbTdTsxSzQYfMFeIVSqLrTxBF9Eqd3ehd2BgD4
+         qWaB3MPXIluUjHO8dyICZ4UYd3sZEFMi1KD/cQJC7TgbhiSaPLw/QjP75MzQvBgJ5hAu
+         kXsY2CmUBazrJWknW4lXCdBOP/sbISybb4e7t5Yy+Fk9z2KJJ0o5qXHyDwpTimJdCkHn
+         n6vElr6Yc8/zWKn/eEw+ItoGgHLRK68mey2I17jgOb3L8E8skD1Zsw8a8pIhApJ/aNVA
+         w6Ki407/j60MuH11YVZaawsau1PN5HO3vBcRR8seLwDujOJMHu7ypVwjSCLAmVcnn+3D
+         3tGA==
+X-Gm-Message-State: AOJu0YyZGuGesji1W9y/Ai0l0FFsI9pv73HXRDS56VUdCOIxfTXeJiJZ
+	DFPKwQGd2RV3avC2srx0x/gtXpC58Z21vlCBHKtu6cQpGdEV4lSYI8yuGD8Tk3zYVGR6BPudlQK
+	XC4ftTtrMXoxK4/Hf9nob97LtkKHNqEdCqiBxL0YN80uIdZvCv5OL1Gur/P2Muxk=
+X-Received: by 2002:a05:6122:905:b0:4b6:d44e:2897 with SMTP id j5-20020a056122090500b004b6d44e2897mr2411891vka.33.1706557364498;
+        Mon, 29 Jan 2024 11:42:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEThEh8Xkd7t3M3A0o/6ZDNQQdUgWUrOE1Coe2POYUY14FwHFSt1AWYC4c9IpcRASFz/2t94Q==
+X-Received: by 2002:a05:6122:905:b0:4b6:d44e:2897 with SMTP id j5-20020a056122090500b004b6d44e2897mr2411868vka.33.1706557364144;
+        Mon, 29 Jan 2024 11:42:44 -0800 (PST)
+Received: from fedora ([2600:1700:1ff0:d0e0::47])
+        by smtp.gmail.com with ESMTPSA id pj2-20020a0562144b0200b0068c445b747bsm2266170qvb.59.2024.01.29.11.42.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Jan 2024 11:42:43 -0800 (PST)
+Date: Mon, 29 Jan 2024 13:42:41 -0600
+From: Andrew Halaney <ahalaney@redhat.com>
+To: Sneh Shah <quic_snehshah@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>, 
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Jose Abreu <joabreu@synopsys.com>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
+	Paolo Abeni <pabeni@redhat.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, kernel@quicinc.com
+Subject: Re: [PATCH net-next] net: stmmac: dwmac-qcom-ethqos: Add support for
+ pm ops
+Message-ID: <jnwylhbparw4uwci3epbd7th4izt3rnd3uzrnm5mdunm55kdoh@yyp4dprfh3sl>
+References: <20240127130327.22443-1-quic_snehshah@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] soc: qcom: llcc: Add regmap for Broadcast_AND region
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>
-References: <cover.1706296015.git.quic_uchalich@quicinc.com>
- <12bfdd23772c49530b8b0993cc82bc89b3eb4ada.1706296015.git.quic_uchalich@quicinc.com>
- <CAA8EJppapW5nOFphBWove1ni8nbkA=xHON9D13NYeYHhyqL1Fg@mail.gmail.com>
-Content-Language: en-US
-From: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
-In-Reply-To: <CAA8EJppapW5nOFphBWove1ni8nbkA=xHON9D13NYeYHhyqL1Fg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: jvpqyYsMayqwLjrNcPqJpHy8xoKEoccN
-X-Proofpoint-ORIG-GUID: jvpqyYsMayqwLjrNcPqJpHy8xoKEoccN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-29_11,2024-01-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- mlxlogscore=964 phishscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0
- impostorscore=0 clxscore=1011 spamscore=0 suspectscore=0
- priorityscore=1501 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2401190000 definitions=main-2401290134
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240127130327.22443-1-quic_snehshah@quicinc.com>
 
+On Sat, Jan 27, 2024 at 06:33:27PM +0530, Sneh Shah wrote:
+> Add qcom ethqos specific runtime and system sleep pm ops.
+> As part of system sleep qcom ethqos needs to disable all clocks.
+> This ops will be extended further with qcom specific features.
 
+This last sentence sounds like this series is incomplete, I'd avoid such
+wording if its untrue. Upstream typically won't accept things that are
+building infrastructure for patches that will "eventually be posted".
 
-On 1/26/2024 12:29 PM, Dmitry Baryshkov wrote:
-> On Fri, 26 Jan 2024 at 21:48, Unnathi Chalicheemala
-> <quic_uchalich@quicinc.com> wrote:
->>
->> To support CSR programming, a broadcast interface is used to program
->> all channels in a single command. Until SM8450 there was only one
->> broadcast region (Broadcast_OR) used to broadcast write and check
->> for status bit 0. From SM8450 onwards another broadcast region
->> (Broadcast_AND) has been added which checks for status bit 1.
->>
->> Update llcc_drv_data structure with new regmap for Broadcast_AND
->> region and initialize regmap for Broadcast_AND region when HW block
->> version is greater than 4.1 for backwards compatibility.
->>
->> Switch from broadcast_OR to broadcast_AND region for checking
->> status bit 1 as Broadcast_OR region checks only for bit 0.
+You state in your commit what the code does (really it replaces the
+stmmac_pltfrm_ops with its own), but only gloss over the why. I'd lead
+with the "why". i.e. I'd say something like
+"net: stmmac: dwmac-qcom-ethqos: Turn clocks off/on during suspend/resume"
+
+Since there's already a handler installed for PM ops, I'd explain why
+you need to change to new ones as well.
+
 > 
-> This breaks backwards compatibility with the existing DT files, doesn't it?
+> Signed-off-by: Sneh Shah <quic_snehshah@quicinc.com>
+> ---
+>  .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 51 ++++++++++++++++++-
+>  1 file changed, 50 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> index 31631e3f89d0..cba601ee9e01 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> @@ -720,6 +720,55 @@ static void ethqos_ptp_clk_freq_config(struct stmmac_priv *priv)
+>  	netdev_dbg(priv->dev, "PTP rate %d\n", plat_dat->clk_ptp_rate);
+>  }
+>  
+> +static int qcom_ethqos_runtime_suspend(struct device *dev)
+> +{
+> +	struct net_device *ndev = dev_get_drvdata(dev);
+> +	struct stmmac_priv *priv = netdev_priv(ndev);
+> +
+> +	return stmmac_bus_clks_config(priv, false);
+> +}
+> +
+
+This perfectly matches the stmmac_runtime_suspend() function installed
+originally. I don't see why you couldn't at a minimum reuse
+that function instead of writing your own.
+
+> +static int qcom_ethqos_runtime_resume(struct device *dev)
+> +{
+> +	struct net_device *ndev = dev_get_drvdata(dev);
+> +	struct stmmac_priv *priv = netdev_priv(ndev);
+> +
+> +	return stmmac_bus_clks_config(priv, true);
+> +}
+
+Same idea as the stmmac_runtime_suspend() comment above!
+
+> +
+> +static int qcom_ethqos_suspend(struct device *dev)
+> +{
+> +	struct net_device *ndev = dev_get_drvdata(dev);
+> +	struct stmmac_priv *priv = netdev_priv(ndev);
+> +	int ret;
+> +
+> +	if (!ndev || !netif_running(ndev))
+> +		return -EINVAL;
+> +
+> +	ret = stmmac_suspend(dev);
+
+ret here is ignored.
+
+> +
+> +	return stmmac_bus_clks_config(priv, false);
+> +}
+> +
+> +static int qcom_ethqos_resume(struct device *dev)
+> +{
+> +	struct net_device *ndev = dev_get_drvdata(dev);
+> +	struct stmmac_priv *priv = netdev_priv(ndev);
+> +	int ret;
+
+unused ret.
+
+> +
+> +	if (!ndev || !netif_running(ndev))
+> +		return -EINVAL;
+> +
+> +	stmmac_bus_clks_config(priv, true);
+
+Probably should check this.
+
+> +
+> +	return stmmac_resume(dev);
+> +}
+
+Both the new system sleep ops installed here basically match the
+stmmac_pltfrm_suspend/resume() functions that were already installed.
+The only difference I'm noting is that you want to call
+stmmac_bus_clks_config() in your implementation, whereas the originals call
+the exit()/init() callbacks if they exist in the platform driver.
+
+I would say "let's just make a exit()/init() callback for Qualcomm", but
+looking further... (see below)
+
+> +
+> +const struct dev_pm_ops qcom_ethqos_pm_ops = {
+> +	SET_SYSTEM_SLEEP_PM_OPS(qcom_ethqos_suspend, qcom_ethqos_resume)
+> +	SET_RUNTIME_PM_OPS(qcom_ethqos_runtime_suspend, qcom_ethqos_runtime_resume, NULL)
+> +};
+> +
+>  static int qcom_ethqos_probe(struct platform_device *pdev)
+>  {
+>  	struct device_node *np = pdev->dev.of_node;
+> @@ -838,7 +887,7 @@ static struct platform_driver qcom_ethqos_driver = {
+>  	.probe  = qcom_ethqos_probe,
+>  	.driver = {
+>  		.name           = "qcom-ethqos",
+> -		.pm		= &stmmac_pltfr_pm_ops,
+> +		.pm		= &qcom_ethqos_pm_ops,
+
+You effectively remove the stmmac_pltfr_noirq_suspend()/resume()
+callbacks here, which do the stmmac_bus_clks_config() via
+pm_runtime_force_suspend() etc during late suspend/early resume.
+
+I do see this if statement, but I believe !device_may_wakeup() is true here,
+so the clocks should get killed.
+
+	static int __maybe_unused stmmac_pltfr_noirq_suspend(struct device *dev)
+	{
+		struct net_device *ndev = dev_get_drvdata(dev);
+		struct stmmac_priv *priv = netdev_priv(ndev);
+		int ret;
+
+		if (!netif_running(ndev))
+			return 0;
+
+		if (!device_may_wakeup(priv->device) || !priv->plat->pmt) {
+			/* Disable clock in case of PWM is off */
+			clk_disable_unprepare(priv->plat->clk_ptp_ref);
+
+			ret = pm_runtime_force_suspend(dev);
+			if (ret)
+				return ret;
+		}
+
+		return 0;
+	}
+
+Right now I'm of the opinion that this patch shouldn't really change
+much based on that digging. Please let me know if I'm missing something
+but it appears to me this should already be working.
+
+>  		.of_match_table = qcom_ethqos_match,
+>  	},
+>  };
+> -- 
+> 2.17.1
 > 
 
-It shouldn't as checking for status bit 1 is happening only when the block
-version is greater than 4.1, which is when Broadcast_AND region support
-is added.
-
->> While at it, also check return value after reading Broadcast_OR
->> region in llcc_update_act_ctrl().
-> 
-> Separate patch, Fixes tag.
-> 
-
-Ack. Will remove this from existing patch.
-Thanks for the review Dmitry!
-
->>
->> Signed-off-by: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
->> ---
->>  drivers/soc/qcom/llcc-qcom.c       | 12 +++++++++++-
->>  include/linux/soc/qcom/llcc-qcom.h |  4 +++-
->>  2 files changed, 14 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
->> index 4ca88eaebf06..5a2dac2d4772 100644
->> --- a/drivers/soc/qcom/llcc-qcom.c
->> +++ b/drivers/soc/qcom/llcc-qcom.c
->> @@ -849,7 +849,7 @@ static int llcc_update_act_ctrl(u32 sid,
->>                 return ret;
->>
->>         if (drv_data->version >= LLCC_VERSION_4_1_0_0) {
->> -               ret = regmap_read_poll_timeout(drv_data->bcast_regmap, status_reg,
->> +               ret = regmap_read_poll_timeout(drv_data->bcast_and_regmap, status_reg,
->>                                       slice_status, (slice_status & ACT_COMPLETE),
->>                                       0, LLCC_STATUS_READ_DELAY);
->>                 if (ret)
->> @@ -859,6 +859,8 @@ static int llcc_update_act_ctrl(u32 sid,
->>         ret = regmap_read_poll_timeout(drv_data->bcast_regmap, status_reg,
->>                                       slice_status, !(slice_status & status),
->>                                       0, LLCC_STATUS_READ_DELAY);
->> +       if (ret)
->> +               return ret;
->>
->>         if (drv_data->version >= LLCC_VERSION_4_1_0_0)
->>                 ret = regmap_write(drv_data->bcast_regmap, act_clear_reg,
->> @@ -1282,6 +1284,14 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->>
->>         drv_data->version = version;
->>
->> +       if (drv_data->version >= LLCC_VERSION_4_1_0_0) {
->> +               drv_data->bcast_and_regmap = qcom_llcc_init_mmio(pdev, i + 1, "llcc_broadcast_and_base");
->> +               if (IS_ERR(drv_data->bcast_and_regmap)) {
->> +                       ret = PTR_ERR(drv_data->bcast_and_regmap);
->> +                       goto err;
->> +               }
->> +       }
->> +
->>         llcc_cfg = cfg->sct_data;
->>         sz = cfg->size;
->>
->> diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
->> index 1a886666bbb6..9e9f528b1370 100644
->> --- a/include/linux/soc/qcom/llcc-qcom.h
->> +++ b/include/linux/soc/qcom/llcc-qcom.h
->> @@ -115,7 +115,8 @@ struct llcc_edac_reg_offset {
->>  /**
->>   * struct llcc_drv_data - Data associated with the llcc driver
->>   * @regmaps: regmaps associated with the llcc device
->> - * @bcast_regmap: regmap associated with llcc broadcast offset
->> + * @bcast_regmap: regmap associated with llcc broadcast OR offset
->> + * @bcast_and_regmap: regmap associated with llcc broadcast AND offset
->>   * @cfg: pointer to the data structure for slice configuration
->>   * @edac_reg_offset: Offset of the LLCC EDAC registers
->>   * @lock: mutex associated with each slice
->> @@ -129,6 +130,7 @@ struct llcc_edac_reg_offset {
->>  struct llcc_drv_data {
->>         struct regmap **regmaps;
->>         struct regmap *bcast_regmap;
->> +       struct regmap *bcast_and_regmap;
->>         const struct llcc_slice_config *cfg;
->>         const struct llcc_edac_reg_offset *edac_reg_offset;
->>         struct mutex lock;
->> --
->> 2.25.1
->>
->>
-> 
-> 
 
