@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-8741-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8742-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB09083FB32
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 01:26:14 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED8DC83FB34
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 01:26:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 908C62828D5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 00:26:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 708131F21EBF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jan 2024 00:26:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E9648BF0;
-	Mon, 29 Jan 2024 00:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AE9B8F5B;
+	Mon, 29 Jan 2024 00:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ExQeCuOC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="K9y80/vn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403914C91
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 00:26:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52CA24C70
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 00:26:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706487967; cv=none; b=oRZM8q2OkycRXp2BSDKD446KkBsBXQnSfziXdLR7OyC9UpjsX/+giVEXMqOtFN851vrt3jV+OXRU/FW/JhGIuVALeZ6Sp444JDHpO7+ACHHaijqL4YiLsZMc3V1kHl3psPbx6hP0/DAMHz40wZVg9IKgfvk63YHSjjEHXdVk07k=
+	t=1706487968; cv=none; b=kT5hDw30HCmVwXBGweNbJGE7JHU30kAaa/mOijafSxvtDRQZ2GmuUebpsBeVvnEKq2mVanvqTgxKSJYYMGkWkEJ+sKx5yKlADZZQfPazdkaiecmSZ8XYhlMzqkDN3bYutPgUQbF4rYPLXV80UkoG/gAOtBR8DvMR7fi6aeq4XOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706487967; c=relaxed/simple;
-	bh=UEn883fEvn74EKDrMBY5HRtTZ852wPrXNTB+0TMl9N8=;
+	s=arc-20240116; t=1706487968; c=relaxed/simple;
+	bh=yM1HmbxAWSUJwXV+g2TEaMJpy6Jb8p7jALfobB13IKc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=jlkcuNYYWFA4zf1CQmbyfXMA4APbzIJmEce7JUzHxSh3jJTiwg+7j+3qExXe9VrrViUOXyGMSaOn9aeLrK8YXGeLX9tkr6NxykR4QebUU4R5pE9R7+A0ZWpHGp0+4g9Z7DaV/HuSSlkSsgUEG9jYnCFD/hn6Yil5UL70N393RWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ExQeCuOC; arc=none smtp.client-ip=209.85.167.49
+	 In-Reply-To:To:Cc; b=KGEccvB+ykXsjhNvtyYPIPhT1golqrzbMiilx+6K3ZFJGnHDVci/18Mv5c2QTqSAYGbu0dJV1qmtkQ6AIunA18bY2Pz/r1FCeSsJSfMIJh/NcCfhXd9SkKrjtnIPCGwFXF6sH8zDnhye44qOrKP8OkUZzMZ8pNTRN7CNxXWHFFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=K9y80/vn; arc=none smtp.client-ip=209.85.208.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-50eabbc3dccso2502053e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jan 2024 16:26:04 -0800 (PST)
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-55790581457so2156599a12.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jan 2024 16:26:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706487963; x=1707092763; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706487964; x=1707092764; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=YXniBx4zGce2I+zUvQZeh9F9TJPf5+YSFwkB/zgLcpo=;
-        b=ExQeCuOCw6xyz+5vYoeQRgkdchzMRH9g9Wlbpz6uoE+7MZJ09Frw1L+o8YBTfeHAXk
-         phJ3QjpZqParHnSvneML524zbtxZbbx3UaNAK+7q6lnmHxtdKZepQzCEqFYOyFIkThQa
-         LxlnAvCa5K4FnX6MSpCa1f+IfJnBin+iQx7BNmU48yBNjZuupWqsIjqMN0wO2mjPWMOV
-         OB6jZ6tHRdcvzQPzoo6odm0TwM6Lg4QqK7uw6Sg9ao+8Rlm7K1mu0T0wgyPuPf0Ic8oK
-         FNYMOSoFdwSm2Iy+lmzoeDoILVgBD6BxTu28OmMPAUOa1S/tpWHoRI/3Q5hXs59JAna2
-         QTeA==
+        bh=G+F65PytcQ8bRw7rSmz8tj7JMLr040VbpgsehDx14EU=;
+        b=K9y80/vnM0Q5nj3FpHLdKQsUbEm0D2/LtuW9EJDJzN5J61qHi1ZRjQLBHPQXuCuv4b
+         jZfExAL39nQDyM0nhSO9BDCfnfyb7Jl7YNUnHQ137Pl3tcyaFm0ocO0ldLJjEoVhy51B
+         AHBuB6PwGP0HyjY9TKjPDc+uUJbeFSJXGsQxPkKAvPvszCmztCOYsE1lEsXePQJec+HB
+         LcaW6P3I2+QuIAXxYMgszVmgEB34edFo0z2XjZrLczQHyeOuYfle+8Y1OTtUem2l2IRr
+         GtwB5v7ABLsYYVe/9COqfzV4CuASENnolLQ9g+lhjitob+XH6ZR6mRIWadKi4uCwI5b+
+         Q/dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706487963; x=1707092763;
+        d=1e100.net; s=20230601; t=1706487964; x=1707092764;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=YXniBx4zGce2I+zUvQZeh9F9TJPf5+YSFwkB/zgLcpo=;
-        b=lSsiHtYC/0Lu/omXG29VUjtOhWAdibEFFC1jW1C2CXmShRxVCtn/oSlxZzAL2T/h93
-         NXHxQsF2qfrh8QA4tq4w9Nn4rKUVZSaqhIzfuyxyC037jTIvKiK7v8xQDEZJs4cEbRzR
-         57/sxjKFfI6cPiekoCRmXD1KThOhJVVlAiFiBovFkDrQv0yOk+fIhJoOyMELN3WfNkgN
-         /7EA+4E0783OLbPRSPrNUTBL62fS4V3We+oVf3jNyAB8C3e2LTlTKkl6wviFH96vtZrN
-         KCAzLWlR5Z76BSdDacVClgN5SHKRQwoK0x+nXWn0poUYTtDIfXIEveYxVU6HjGKRpb6r
-         r2NA==
-X-Gm-Message-State: AOJu0YxlVZjlo3qpRsF/nt73LJ2JTc73tncNcTGJjBGBFYtOOCX59M9g
-	+Wl+zfYGx21xG5mECgvMMXOb31pT4B0V8vILA02Fbo+s5QIqh1PsKtT5BajZYD4=
-X-Google-Smtp-Source: AGHT+IFKiUBYLnInTq+oVg5fiUp9BFxIiVDPCRTaXeICaTOOX1dhQt8t5Z5qyar+jPWySD6PjNyDMA==
-X-Received: by 2002:a2e:bcc4:0:b0:2d0:4158:bb4a with SMTP id z4-20020a2ebcc4000000b002d04158bb4amr2188639ljp.15.1706487962427;
-        Sun, 28 Jan 2024 16:26:02 -0800 (PST)
+        bh=G+F65PytcQ8bRw7rSmz8tj7JMLr040VbpgsehDx14EU=;
+        b=GRfQZlSMrO9suMrHcA1U8dxfLr5EUMD7HSbxh++63mnjQkzWTNIjnjwDwVKFONdHbl
+         VQzfxrU/ESOc9nmES1laTxupp9Ar8Yg/aThJeDWqp7P4NTOMwLzK0xEa/amFpI3ghUWR
+         0egtuqvf719uDtNQJqYH7K+LNPbzehb3ySjGEeG7qWf1B+9Lv5bixF/zbaiZhyn8vW6F
+         unM1WLoG3N/fZFcEisZibA5i7R63ZPzVd2E+fhVzUOHK32in+8hBZKv+dk9WBVt0VCKy
+         RL2o9ywoKrQ9SIEw9stF6XuNHNGT4LW6tSizFgATDaiwiCF0HYP3haT/lFLPm08WLiGs
+         xXVg==
+X-Gm-Message-State: AOJu0Yw9aIVRDDSr207veoOjgmYsUVBF/YY9apc1j7ZqRPXJJnfgo/kC
+	OS9UThAeEggu+7DP93dzvhP56vTBi0djzYedVBVocA7PHtnLAHAp45cAhpuKOEM=
+X-Google-Smtp-Source: AGHT+IFyUWqmlpnke6uDNFyKcCEQzDpvi2OmpUheL+tQmlsCZedhqTKqkQKEgSUx5CrdYc+q84z6Xw==
+X-Received: by 2002:a05:6402:22d9:b0:55e:da7c:607a with SMTP id dm25-20020a05640222d900b0055eda7c607amr1549330edb.15.1706487963793;
+        Sun, 28 Jan 2024 16:26:03 -0800 (PST)
 Received: from [127.0.1.1] ([79.115.23.25])
-        by smtp.gmail.com with ESMTPSA id h29-20020a0564020e9d00b0055cfb3f948fsm3208193eda.76.2024.01.28.16.26.01
+        by smtp.gmail.com with ESMTPSA id h29-20020a0564020e9d00b0055cfb3f948fsm3208193eda.76.2024.01.28.16.26.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Jan 2024 16:26:02 -0800 (PST)
+        Sun, 28 Jan 2024 16:26:03 -0800 (PST)
 From: Abel Vesa <abel.vesa@linaro.org>
-Date: Mon, 29 Jan 2024 02:25:45 +0200
-Subject: [PATCH v3 1/2] phy: Add Embedded DisplayPort and DisplayPort
- submodes
+Date: Mon, 29 Jan 2024 02:25:46 +0200
+Subject: [PATCH v3 2/2] phy: qcom: edp: Add set_mode op for configuring
+ eDP/DP submode
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240129-x1e80100-phy-edp-compatible-refactor-v3-1-e71f3359c535@linaro.org>
+Message-Id: <20240129-x1e80100-phy-edp-compatible-refactor-v3-2-e71f3359c535@linaro.org>
 References: <20240129-x1e80100-phy-edp-compatible-refactor-v3-0-e71f3359c535@linaro.org>
 In-Reply-To: <20240129-x1e80100-phy-edp-compatible-refactor-v3-0-e71f3359c535@linaro.org>
 To: Vinod Koul <vkoul@kernel.org>, 
@@ -93,46 +93,234 @@ Cc: linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  Abel Vesa <abel.vesa@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=715; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=UEn883fEvn74EKDrMBY5HRtTZ852wPrXNTB+0TMl9N8=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBltvCVBACVcZrnMVBS+u5qZXFWmx75hCoRDiMe8
- 4tB4whZiQuJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZbbwlQAKCRAbX0TJAJUV
- ViXqD/0Zq/xflYC4cjb8dLUvaPg2eVQbiY0yhO7NNn7RgChfT9xZdxuvknkqI6BbJWdB/xC6Sax
- W3zekXpByUJI7mY6rAk4+7WdxUDCILW1mt7GsTMA5691iRkoTIX2bhiIqdiQN1KjQN0dDzjHgpY
- bk2CplmmI+l9ONHNwhI6rqvavP4XCEouREjX4+Ej13lSJXz0nCPHBqyaWMMRsaNoJdtZo7W791Q
- cK7nC6rzBg+KGhbWf7CN9zJMLgBcMGGNpYkEyP6KtLbQODvDOyGnIoYpVeBZXgPg6pkmslQnuS+
- fdsFRpBFdNVoTIrimhYrvF1qGsgcq7zwgCkFSS1krrDQJv/dzwbZWkPbfsR7M4mKoBXAOcJb1TZ
- umyY9I4SPiMelFFYBKBPHdadIy4Dg6Kftg7YAgMHBjmOLjdIDtLkTj2T4gJO0yFjvd5RT1WMOrh
- kMHadP/o10ZuBjWtygPs/ytEUW3XpNCVaYapGN+uiEvAwrPE+45ZH3WqUTvp6YRaB8wbF28b8y+
- /41vVQJaZrIVrc+AHSl+Ds8buUYzZ7POYJy7Lg2+uBXMJTRF2hBFxY81o+z0/6Yfep7L/vW/d0a
- HL+AEtzeaS6rJD4G90rgeqlA5tarcHWF1A+AflurwCnWmeMjKAUoUW5QWu8yQSAZ1BNkdbtDgRl
- EaQned+k0SYex4g==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7035; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=yM1HmbxAWSUJwXV+g2TEaMJpy6Jb8p7jALfobB13IKc=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBltvCW9TNARm3SS4noZQ5mY3dhee2QdRN1DRyTm
+ guXBvIlmcSJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZbbwlgAKCRAbX0TJAJUV
+ VrjSEADBSV/ePjnpJojvR5Bn7TxeeIZ7zL/FVXA7KsnHrtifKS+SxSU7ohYYmRImrHIfyCT1KYD
+ 9r1SpeKEKjk8uRnqYx899n0MxDcNK/l/Uub50Xz3RGsuc+2l4tnG0MyMnXkXpu7mVSsoDBxkbSw
+ 0aLeQWb57pduXWOa3O3eyhsdsRmWUMpAwmrP0PXLHX3fmvyZljALWtDxvNIAhbXuOTWAp1bOUoS
+ AcR+xxMqmLvFSr76hu0u8kUqtDP+ygb+JNR5iTiW6ubIzLtB4AecYvAtyT5eVHg7sFuAFP1YrVh
+ q5mI9LPIE1Tvmzhv99FoHOmeUwFMDKqR8q5WhbI7/5WBSb9ZQml0Y6PohnQ6t45VrUmis7nQDkj
+ CzeQKMxzJqKaHFZyY0aKXB7NmBqsd16VR4UPI8xKGmPXobmHwnu9er1reEXcdcknCANQVqd/4uG
+ HJEeH5ZnFTTzxo440Fsr8zVCs6NUp6Li4wic2qNxKsJB5KOdVIP/YaE/Gv6x0dqwd4i8v6JopV5
+ DgsJktl6kr769gfnMCHMAee+HkrF8TyAMdlD+4UV/Dj/uKVMg7BdjTbdCd29C2RHB6ZG4fHXByO
+ dpk5lroqj+jZP9Qfs2884A6sABODt1+DA7h9maM4HFw7MFd2PYk7qHfOfnSHjYQt98jq+3y07A8
+ gRXR89NRHj+25qg==
 X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
  fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-In some cases, a DP PHY needs to be configured to work in eDP mode.
-So add submodes for both DP and eDP so they can be used by the
-controllers for specifying the mode the PHY should be configured in.
+Future platforms should not use different compatibles to differentiate
+between eDP and DP mode. Instead, they should use a single compatible as the
+IP block is the same. It will be the job of the controller to set the submode
+of the PHY accordingly.
+
+The existing platforms will remain with separate compatibles for each mode.
 
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- include/linux/phy/phy-dp.h | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/phy/qualcomm/phy-qcom-edp.c | 71 ++++++++++++++++++++++++++-----------
+ 1 file changed, 51 insertions(+), 20 deletions(-)
 
-diff --git a/include/linux/phy/phy-dp.h b/include/linux/phy/phy-dp.h
-index 18cad23642cd..9cce5766bc0b 100644
---- a/include/linux/phy/phy-dp.h
-+++ b/include/linux/phy/phy-dp.h
-@@ -8,6 +8,9 @@
+diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
+index 8e5078304646..af941d6c5588 100644
+--- a/drivers/phy/qualcomm/phy-qcom-edp.c
++++ b/drivers/phy/qualcomm/phy-qcom-edp.c
+@@ -14,6 +14,7 @@
+ #include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/phy/phy.h>
++#include <linux/phy/phy-dp.h>
+ #include <linux/platform_device.h>
+ #include <linux/regulator/consumer.h>
+ #include <linux/reset.h>
+@@ -68,19 +69,21 @@
  
- #include <linux/types.h>
+ #define TXn_TRAN_DRVR_EMP_EN                    0x0078
  
-+#define PHY_SUBMODE_DP	0
-+#define PHY_SUBMODE_EDP	1
+-struct qcom_edp_cfg {
+-	bool is_dp;
+-
+-	/* DP PHY swing and pre_emphasis tables */
++struct qcom_edp_swing_pre_emph_cfg {
+ 	const u8 (*swing_hbr_rbr)[4][4];
+ 	const u8 (*swing_hbr3_hbr2)[4][4];
+ 	const u8 (*pre_emphasis_hbr_rbr)[4][4];
+ 	const u8 (*pre_emphasis_hbr3_hbr2)[4][4];
+ };
+ 
++struct qcom_edp_phy_cfg {
++	bool is_edp;
++	const struct qcom_edp_swing_pre_emph_cfg *swing_pre_emph_cfg;
++};
 +
- /**
-  * struct phy_configure_opts_dp - DisplayPort PHY configuration set
-  *
+ struct qcom_edp {
+ 	struct device *dev;
+-	const struct qcom_edp_cfg *cfg;
++	const struct qcom_edp_phy_cfg *cfg;
+ 
+ 	struct phy *phy;
+ 
+@@ -96,6 +99,8 @@ struct qcom_edp {
+ 
+ 	struct clk_bulk_data clks[2];
+ 	struct regulator_bulk_data supplies[2];
++
++	bool is_edp;
+ };
+ 
+ static const u8 dp_swing_hbr_rbr[4][4] = {
+@@ -126,8 +131,7 @@ static const u8 dp_pre_emp_hbr2_hbr3[4][4] = {
+ 	{ 0x04, 0xff, 0xff, 0xff }
+ };
+ 
+-static const struct qcom_edp_cfg dp_phy_cfg = {
+-	.is_dp = true,
++static const struct qcom_edp_swing_pre_emph_cfg dp_phy_swing_pre_emph_cfg = {
+ 	.swing_hbr_rbr = &dp_swing_hbr_rbr,
+ 	.swing_hbr3_hbr2 = &dp_swing_hbr2_hbr3,
+ 	.pre_emphasis_hbr_rbr = &dp_pre_emp_hbr_rbr,
+@@ -162,18 +166,28 @@ static const u8 edp_pre_emp_hbr2_hbr3[4][4] = {
+ 	{ 0x00, 0xff, 0xff, 0xff }
+ };
+ 
+-static const struct qcom_edp_cfg edp_phy_cfg = {
+-	.is_dp = false,
++static const struct qcom_edp_swing_pre_emph_cfg edp_phy_swing_pre_emph_cfg = {
+ 	.swing_hbr_rbr = &edp_swing_hbr_rbr,
+ 	.swing_hbr3_hbr2 = &edp_swing_hbr2_hbr3,
+ 	.pre_emphasis_hbr_rbr = &edp_pre_emp_hbr_rbr,
+ 	.pre_emphasis_hbr3_hbr2 = &edp_pre_emp_hbr2_hbr3,
+ };
+ 
++static const struct qcom_edp_phy_cfg sc7280_dp_phy_cfg = {
++};
++
++static const struct qcom_edp_phy_cfg sc8280xp_dp_phy_cfg = {
++	.swing_pre_emph_cfg = &dp_phy_swing_pre_emph_cfg,
++};
++
++static const struct qcom_edp_phy_cfg sc8280xp_edp_phy_cfg = {
++	.is_edp = true,
++	.swing_pre_emph_cfg = &edp_phy_swing_pre_emph_cfg,
++};
++
+ static int qcom_edp_phy_init(struct phy *phy)
+ {
+ 	struct qcom_edp *edp = phy_get_drvdata(phy);
+-	const struct qcom_edp_cfg *cfg = edp->cfg;
+ 	int ret;
+ 	u8 cfg8;
+ 
+@@ -200,7 +214,7 @@ static int qcom_edp_phy_init(struct phy *phy)
+ 	       DP_PHY_PD_CTL_PLL_PWRDN | DP_PHY_PD_CTL_DP_CLAMP_EN,
+ 	       edp->edp + DP_PHY_PD_CTL);
+ 
+-	if (cfg && cfg->is_dp)
++	if (edp->cfg->swing_pre_emph_cfg && !edp->is_edp)
+ 		cfg8 = 0xb7;
+ 	else
+ 		cfg8 = 0x37;
+@@ -234,7 +248,7 @@ static int qcom_edp_phy_init(struct phy *phy)
+ 
+ static int qcom_edp_set_voltages(struct qcom_edp *edp, const struct phy_configure_opts_dp *dp_opts)
+ {
+-	const struct qcom_edp_cfg *cfg = edp->cfg;
++	const struct qcom_edp_swing_pre_emph_cfg *cfg = edp->cfg->swing_pre_emph_cfg;
+ 	unsigned int v_level = 0;
+ 	unsigned int p_level = 0;
+ 	u8 ldo_config;
+@@ -245,6 +259,9 @@ static int qcom_edp_set_voltages(struct qcom_edp *edp, const struct phy_configur
+ 	if (!cfg)
+ 		return 0;
+ 
++	if (edp->is_edp)
++		cfg = &edp_phy_swing_pre_emph_cfg;
++
+ 	for (i = 0; i < dp_opts->lanes; i++) {
+ 		v_level = max(v_level, dp_opts->voltage[i]);
+ 		p_level = max(p_level, dp_opts->pre[i]);
+@@ -261,7 +278,7 @@ static int qcom_edp_set_voltages(struct qcom_edp *edp, const struct phy_configur
+ 	if (swing == 0xff || emph == 0xff)
+ 		return -EINVAL;
+ 
+-	ldo_config = (cfg && cfg->is_dp) ? 0x1 : 0x0;
++	ldo_config = edp->is_edp ? 0x0 : 0x1;
+ 
+ 	writel(ldo_config, edp->tx0 + TXn_LDO_CONFIG);
+ 	writel(swing, edp->tx0 + TXn_TX_DRV_LVL);
+@@ -447,10 +464,9 @@ static int qcom_edp_set_vco_div(const struct qcom_edp *edp, unsigned long *pixel
+ static int qcom_edp_phy_power_on(struct phy *phy)
+ {
+ 	const struct qcom_edp *edp = phy_get_drvdata(phy);
+-	const struct qcom_edp_cfg *cfg = edp->cfg;
+ 	u32 bias0_en, drvr0_en, bias1_en, drvr1_en;
+ 	unsigned long pixel_freq;
+-	u8 ldo_config;
++	u8 ldo_config = 0x0;
+ 	int timeout;
+ 	int ret;
+ 	u32 val;
+@@ -468,7 +484,8 @@ static int qcom_edp_phy_power_on(struct phy *phy)
+ 		return timeout;
+ 
+ 
+-	ldo_config = (cfg && cfg->is_dp) ? 0x1 : 0x0;
++	if (edp->cfg->swing_pre_emph_cfg && !edp->cfg->is_edp)
++		ldo_config = 0x1;
+ 
+ 	writel(ldo_config, edp->tx0 + TXn_LDO_CONFIG);
+ 	writel(ldo_config, edp->tx1 + TXn_LDO_CONFIG);
+@@ -589,6 +606,18 @@ static int qcom_edp_phy_power_off(struct phy *phy)
+ 	return 0;
+ }
+ 
++static int qcom_edp_phy_set_mode(struct phy *phy, enum phy_mode mode, int submode)
++{
++	struct qcom_edp *edp = phy_get_drvdata(phy);
++
++	if (mode != PHY_MODE_DP)
++		return -EINVAL;
++
++	edp->is_edp = submode == PHY_SUBMODE_EDP ? true : false;
++
++	return 0;
++}
++
+ static int qcom_edp_phy_exit(struct phy *phy)
+ {
+ 	struct qcom_edp *edp = phy_get_drvdata(phy);
+@@ -604,6 +633,7 @@ static const struct phy_ops qcom_edp_ops = {
+ 	.configure	= qcom_edp_phy_configure,
+ 	.power_on	= qcom_edp_phy_power_on,
+ 	.power_off	= qcom_edp_phy_power_off,
++	.set_mode	= qcom_edp_phy_set_mode,
+ 	.exit		= qcom_edp_phy_exit,
+ 	.owner		= THIS_MODULE,
+ };
+@@ -781,6 +811,7 @@ static int qcom_edp_phy_probe(struct platform_device *pdev)
+ 
+ 	edp->dev = dev;
+ 	edp->cfg = of_device_get_match_data(&pdev->dev);
++	edp->is_edp = edp->cfg->is_edp;
+ 
+ 	edp->edp = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(edp->edp))
+@@ -839,10 +870,10 @@ static int qcom_edp_phy_probe(struct platform_device *pdev)
+ }
+ 
+ static const struct of_device_id qcom_edp_phy_match_table[] = {
+-	{ .compatible = "qcom,sc7280-edp-phy" },
+-	{ .compatible = "qcom,sc8180x-edp-phy" },
+-	{ .compatible = "qcom,sc8280xp-dp-phy", .data = &dp_phy_cfg },
+-	{ .compatible = "qcom,sc8280xp-edp-phy", .data = &edp_phy_cfg },
++	{ .compatible = "qcom,sc7280-edp-phy" , .data = &sc7280_dp_phy_cfg, },
++	{ .compatible = "qcom,sc8180x-edp-phy", .data = &sc7280_dp_phy_cfg, },
++	{ .compatible = "qcom,sc8280xp-dp-phy", .data = &sc8280xp_dp_phy_cfg, },
++	{ .compatible = "qcom,sc8280xp-edp-phy", .data = &sc8280xp_edp_phy_cfg, },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, qcom_edp_phy_match_table);
 
 -- 
 2.34.1
