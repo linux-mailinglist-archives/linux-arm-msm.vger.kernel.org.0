@@ -1,57 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-9069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B5128842BB1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 19:23:38 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE24D842BC4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 19:27:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6B2A91F2A7E4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 18:23:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3F9A0B23DDC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 18:27:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDA7115AAB4;
-	Tue, 30 Jan 2024 18:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B61E1552FF;
+	Tue, 30 Jan 2024 18:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cl236y1F"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UGrcLcSM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A761C15AAAF;
-	Tue, 30 Jan 2024 18:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A43157050;
+	Tue, 30 Jan 2024 18:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706638911; cv=none; b=YkQspKTM7V0chTjuSmGg4lTTPhWUGX1a5ELCT1y28+FEJD3HpH2zLrwY9VMRECQuUCqgcBffmrXf6ed1y0RiXJa/XPpva2xbN5tSuqRrQdsV9oIY+nlismXT8+Yvu+CXQjQzM4kxOPNdJ/qQfZqqO63OSW2TeUZ9iyvMrukEN0c=
+	t=1706639221; cv=none; b=M4/07twpU9b1F7FYvN7/oqVDVb5Yc73V8nDNAdS2WFVkISWrtoumUgaD1rIAOcxh+gOjeBAG/al5rEJHckAw1IsdhdffRFw18I3P5z7KLm259hF4oe7h/jNgcu8HVdNivTyPSE6viNBDWy0sDUnFoFt+RvTmRISF52dpMHPOM0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706638911; c=relaxed/simple;
-	bh=f5GRuKFSaZ1KkRgF8Ss0n00WHogOOJ7yng4KR3k6hH4=;
+	s=arc-20240116; t=1706639221; c=relaxed/simple;
+	bh=HI3jiLjEm1LUR2gZFKB/wxXaBglKCk54jhHtHgjpbOw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FbM/g4mzBH1saMcBN2X3ozhCVNxGUdi8MWZ2gUmGmXlVmBIT333zwAhRhk1vPtg0CYbpZLxA3WMXho/YrC0mKFDheFKaIWII3vNFRcFrFl68eN2b9XnvkyHVfce2dLOtn+koLAEjGGbl3Uyv1vG+OzHO5j5lWbdlDB/deFSUkic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cl236y1F; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3626DC43330;
-	Tue, 30 Jan 2024 18:21:48 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=oZ0dC24DWvrOuqlswLMlyVC4Ray9jFo7O441i8NqxLI9cn/L+Qc3TtlAbaKUw9i3HC9ILGe7SptASNeiWkIMhNlMOFBVRwqpb84SF2c53iYg/JP/ga+Ec4R57yciS7U9kiV7kipRLu40QgRKdGvqO3so6XKpuFJA+FrfDjqpcCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UGrcLcSM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0FB3C433F1;
+	Tue, 30 Jan 2024 18:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706638911;
-	bh=f5GRuKFSaZ1KkRgF8Ss0n00WHogOOJ7yng4KR3k6hH4=;
+	s=k20201202; t=1706639221;
+	bh=HI3jiLjEm1LUR2gZFKB/wxXaBglKCk54jhHtHgjpbOw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Cl236y1FGXGU2GPkmy/VyZyYN2TiHmME1NwxeJDtxJcOjrTSoqiqxwFPHl+skqbJV
-	 xralLqSsjajaEGyiyJBlVsRpX7uT6tJ2xa3JtG0t0v8MsRUsrbzdiigNv9t4qU8BGR
-	 3C5KbCLoTTcGOpiqtPYIpP/V6dqx2u8kWVAFvhYjozPrv4pe32bkhOygGxM5vH7ZZ8
-	 FU8eRzi4R1kSRmNINQuHsSbjy/V7wuL46wpctER8ZFt/txSkQQ5BQWs/Oe/Ls3jef5
-	 dVIM/z1Jjd6QvOQqVD+a8rZ7D7ObiVYu/IS0uIuWaAngolX8bwt9bc12aAoAEsOtKS
-	 0IdjU3ssJRhPg==
-Date: Tue, 30 Jan 2024 23:51:45 +0530
+	b=UGrcLcSMAIBayWpIhNoGoJjNUu7h7KiMyPIMmyerBloa7mxiqX84suGkDBW9TArvb
+	 s1XHCOqNhRpAp3RjVVHDZkTS878WYNQQ9QpbsemrnCUp4wxbNLL481rtGc7PxT4ear
+	 2zt7RNWLLOCOBlflOKSb+T9IsgMJburRDV2f0WUkmj94lYw7cN5JCBp49VlIaG3VfD
+	 6UJHFzk3LsjnvHBW3Xoc4ofWOXpMKfqFD0HYDcWcTty/y3S6JehmqsTS71Rcght9iN
+	 wKtkXvOlPcRaEGT+PxjBJr6DvTS/dS1w0Oqgdt0cA+EhFkRZkgQW/pjdsCTpisSEL0
+	 Xw/RgrvrDYzbw==
+Date: Tue, 30 Jan 2024 23:56:54 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
-To: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc: Manivannan Sadhasivam <mani@kernel.org>, quic_pkanojiy@quicinc.com,
-	quic_carlv@quicinc.com, mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: host: Read PK HASH dynamically
-Message-ID: <20240130182145.GC4218@thinkpad>
-References: <20231208165938.1340587-1-quic_jhugo@quicinc.com>
- <20240130082138.GL32821@thinkpad>
- <6966f6a7-9fb0-0766-3b69-af82c723d349@quicinc.com>
+To: Steven Rostedt <rostedt@goodmis.org>
+Cc: Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
+	quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+	quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+	quic_parass@quicinc.com
+Subject: Re: [PATCH v9] bus: mhi: host: Add tracing support
+Message-ID: <20240130182654.GD4218@thinkpad>
+References: <20240105-ftrace_support-v9-1-a2dca64cc6ea@quicinc.com>
+ <20240130081152.GH32821@thinkpad>
+ <20240130092252.32801387@gandalf.local.home>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,38 +65,29 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <6966f6a7-9fb0-0766-3b69-af82c723d349@quicinc.com>
+In-Reply-To: <20240130092252.32801387@gandalf.local.home>
 
-On Tue, Jan 30, 2024 at 09:05:06AM -0700, Jeffrey Hugo wrote:
-> On 1/30/2024 1:21 AM, Manivannan Sadhasivam wrote:
-> > On Fri, Dec 08, 2023 at 09:59:38AM -0700, Jeffrey Hugo wrote:
-> > > The OEM PK HASH registers in the BHI region are read once during firmware
-> > > load (boot), cached, and displayed on demand via sysfs. This has a few
-> > > problems - if firmware load is skipped, the registers will not be read and
-> > > if the register values change over the life of the device the local cache
-> > > will be out of sync.
-> > > 
-> > > Qualcomm Cloud AI 100 can expose both these problems. It is possible for
-> > > mhi_async_power_up() to be invoked while the device is in AMSS EE, which
-> > > would bypass firmware loading. Also, Qualcomm Cloud AI 100 has 5 PK HASH
-> > > slots which can be dynamically provisioned while the device is active,
-> > > which would result in the values changing and users may want to know what
-> > > keys are active.
-> > > 
-> > > Address these concerns by reading the PK HASH registers on-demand during
-> > > the sysfs read. This will result in showing the most current information.
-> > > 
-> > > Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> > 
-> > Applied to mhi-next!
-> > 
-> > - Mani
+On Tue, Jan 30, 2024 at 09:22:52AM -0500, Steven Rostedt wrote:
+> On Tue, 30 Jan 2024 13:41:52 +0530
+> Manivannan Sadhasivam <mani@kernel.org> wrote:
 > 
-> I hope you applied v2 since this is a reply to v1.  I don't see mhi-next
-> with this change published yet, so I can't check.
+> > So same trace will get printed for both mhi_channel_command_start() and
+> > mhi_channel_command_end()?
+> 
+> The trace output will also include the tracepoint name. That is, it will
+> have the same content but will be preceded with:
+> 
+>   mhi_channel_command_start: ...
+>   mhi_channel_command_end: ...
 > 
 
-Sorry, I did apply v2.
+Yes, but the message will be the same:
+
+mhi_channel_command_start: chan%d: Updating state to: 
+mhi_channel_command_end: chan%d: Updating state to:
+
+Either only one of the trace should be present or the second one should print,
+"mhi_channel_command_end: chan%d: Updated state to:"
 
 - Mani
 
