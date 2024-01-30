@@ -1,146 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-8971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEEC6841DB3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 09:27:27 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B784841DDC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 09:35:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2E13CB28B80
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 08:27:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AE46B1C25C95
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 08:35:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B1E65477C;
-	Tue, 30 Jan 2024 08:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A16452F61;
+	Tue, 30 Jan 2024 08:34:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LQs2gxg3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fz8Jl9Mj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC3855E52;
-	Tue, 30 Jan 2024 08:27:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B0312E4D;
+	Tue, 30 Jan 2024 08:34:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706603239; cv=none; b=UtijZQzgtxO8yk/T1wYeY9xzNsLzXFk+xUcwJ8/3iQHAw6IbSCrG2mgvYj9A120qSooOHqpdoHAAPd8gaoOamYlAvCZ2u7lSEcYZyldQYAKl2Da6JzympO+y//io41h2TtT40Poe8jQSv2VbIHlc25dH1I4UWEHsy1LpIBpsErM=
+	t=1706603688; cv=none; b=ErM3ioUkRFMpD9QcERr68pOLWvxEEdMYnAr8zRPh0+fcqA6pNZ+PiK2uWgPhFMlo4g6JK4PwHjGuTbubqHYgzgKMOdL2YqVQJCYIAxRpw6PI/OOCUNOBC5vKPWZDXS2M2OCxdqTINCh0Z/EGhl18SJ9LcMn83gSLrBgvn53mIK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706603239; c=relaxed/simple;
-	bh=y/tOK4kKubOxMCb3R8YpgrR6A+4VGvjHaSVjdAE5tOo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=gWu+xYRceLbTkgE5NenXaUdkBlxQZdXMAqb9Djz2/86E3cbYcodD6fYlYnxZ7dkvNgHvdxhNtscMajdBirowNAk3OEwC5tMmisU2EzCS3t4rBoek3WWexy+TScvgX8VIkRwaszMXafUmZD0ROIuQeCggd4yzxapisXKcvzkN2VE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LQs2gxg3; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40U6dSR2012565;
-	Tue, 30 Jan 2024 08:27:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=BgZ1iZOYhcZCeI2JkhX8IJ0qmAvDNFqA67+unrC01Nk=; b=LQ
-	s2gxg3bbO9/7q9JDD9CAiWu6zJfsZCiG30wtIjFGzBH74UT26Bd4Konx/b+wSjBl
-	7gXhuE/Wop1vSN4EZi0fpCxcMWkQpanMviGYk5xumX03Z+khz7SvoqgIKXs4N4zb
-	Ljal4xa/AADiIzC1WyipokPdtxgWezQOta5fvGRDYZiAUt1bNYJdXmzuOhpV77LO
-	0g+P4NMnwESb3HXoVwbyws+73X5FNPW7rk7xMHjDhLR4I+zrPIr413DJqz9T7/6Y
-	Wlk5TXv3k421yiiP6JdEjf/+ZxBltWUey7aoJL3DUKy9qgh9Az2ojni5nhe/muW0
-	i33/QE7XBlIxRTcKVcEA==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vxsc40fng-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Jan 2024 08:27:09 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40U8R8Sl025543
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Jan 2024 08:27:08 GMT
-Received: from [10.206.101.41] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 30 Jan
- 2024 00:27:03 -0800
-Message-ID: <ecd2ffa0-b2b2-3b09-5799-6f7d4d4054c9@quicinc.com>
-Date: Tue, 30 Jan 2024 13:56:59 +0530
+	s=arc-20240116; t=1706603688; c=relaxed/simple;
+	bh=PDBalufe/OZxGpAG/naTR/fooOv/KA48jowWnj1HpOI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=i00bS+mf0BvB81r6qaDJis9yrMD04hM6EINwBWe4sCbKI+mPGj7C0WKeTKvZJKayteWFunQAp9WlKTTxMmX/ombUYsr2h7GGpeoTS0d8ESZ/UkKECEP3m2P1jqWhdRUg6L4w1iqBYFvsnG8+WYBfBZ66ezp3hPm9C9lKLfOxg44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fz8Jl9Mj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4784CC433C7;
+	Tue, 30 Jan 2024 08:34:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706603687;
+	bh=PDBalufe/OZxGpAG/naTR/fooOv/KA48jowWnj1HpOI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fz8Jl9MjAfgIKJeEbtyvr73lL20xJkHm+iy0ge/8TgeDpUF4MsFPoq+h89DdsflZH
+	 1/mO8u6Yc4OxRFzPOsiOznTCtdEt3j5Un4bRezPuu5h+5ONHwCrY82Iz8as1FLc4g9
+	 K6s+sEaK4GiSyMlOHz5dOsJbEIq3Ckp7RJiOUWK1IdBQp5QVzp2Ci8PuqFVwhmrtO6
+	 R0Twc6fzF3xp6l3v+y9DBaHgDtupj8FNvNjYvDvLG8jzqac7Bh2kTpHalW7TPYnMqJ
+	 5tzopcL3NcKRS1ocE8jtG78th8PAKD5YyoPvb6i0RTPiW73IEdWi2byr2wp5vqcblE
+	 dtsbkE326Mx2A==
+Date: Tue, 30 Jan 2024 14:04:38 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Erick Archer <erick.archer@gmx.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: ep: Use kcalloc() instead of kzalloc()
+Message-ID: <20240130083438.GM32821@thinkpad>
+References: <20240120152518.13006-1-erick.archer@gmx.com>
+ <43614a09-d520-4111-873a-b352bd93ea07@moroto.mountain>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH] media: dt-bindings: qcom,sc7280-venus: Allow one IOMMU
- entry
-Content-Language: en-US
-To: Luca Weiss <luca.weiss@fairphone.com>, Conor Dooley <conor@kernel.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob
- Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20240129-sc7280-venus-bindings-v1-1-20a9ba194c60@fairphone.com>
- <20240129-numerate-brought-4660c2a89719@spud>
- <CYRVI1IQ2UKE.15ZGCYLRT3ND3@fairphone.com>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <CYRVI1IQ2UKE.15ZGCYLRT3ND3@fairphone.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Xv8y1pP61jrbaPJVNBCBn_IPG2vNeojm
-X-Proofpoint-ORIG-GUID: Xv8y1pP61jrbaPJVNBCBn_IPG2vNeojm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-30_02,2024-01-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- mlxlogscore=805 spamscore=0 suspectscore=0 impostorscore=0
- lowpriorityscore=0 mlxscore=0 priorityscore=1501 clxscore=1011
- adultscore=0 phishscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2401190000 definitions=main-2401300060
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <43614a09-d520-4111-873a-b352bd93ea07@moroto.mountain>
 
-Hello,
+On Mon, Jan 22, 2024 at 10:15:20AM +0300, Dan Carpenter wrote:
+> This code does not have an integer overflow, but it might have a
+> different memory corruption bug.
+> 
+> On Sat, Jan 20, 2024 at 04:25:18PM +0100, Erick Archer wrote:
+> > As noted in the "Deprecated Interfaces, Language Features, Attributes,
+> > and Conventions" documentation [1], size calculations (especially
+> > multiplication) should not be performed in memory allocator (or similar)
+> > function arguments due to the risk of them overflowing. This could lead
+> > to values wrapping around and a smaller allocation being made than the
+> > caller was expecting. Using those allocations could lead to linear
+> > overflows of heap memory and other misbehaviors.
+> > 
+> > So, use the purpose specific kcalloc() function instead of the argument
+> > count * size in the kzalloc() function.
+> > 
+> 
+> This one is more complicated to analyze.  I have built a Smatch cross
+> function database so it's easy for me and I will help you.
+> 
+> $ smbd.py where mhi_ep_cntrl event_rings
+> drivers/pci/endpoint/functions/pci-epf-mhi.c | pci_epf_mhi_probe              | (struct mhi_ep_cntrl)->event_rings | 0
+> drivers/bus/mhi/ep/main.c      | mhi_ep_irq                     | (struct mhi_ep_cntrl)->event_rings | min-max
+> drivers/bus/mhi/ep/mmio.c      | mhi_ep_mmio_init               | (struct mhi_ep_cntrl)->event_rings | 0-255
+> drivers/bus/mhi/ep/mmio.c      | mhi_ep_mmio_update_ner         | (struct mhi_ep_cntrl)->event_rings | 0-255
+> 
+> The other way to figure this stuff out would be to do:
+> 
+> $ grep -Rn "event_rings = " drivers/bus/mhi/ep/
+> drivers/bus/mhi/ep/mmio.c:260:  mhi_cntrl->event_rings = FIELD_GET(MHICFG_NER_MASK, regval);
+> drivers/bus/mhi/ep/mmio.c:261:  mhi_cntrl->hw_event_rings = FIELD_GET(MHICFG_NHWER_MASK, regval);
+> drivers/bus/mhi/ep/mmio.c:271:  mhi_cntrl->event_rings = FIELD_GET(MHICFG_NER_MASK, regval);
+> drivers/bus/mhi/ep/mmio.c:272:  mhi_cntrl->hw_event_rings = FIELD_GET(MHICFG_NHWER_MASK, regval);
+> 
+> That means that this multiplication can never overflow so the patch
+> has no effect on runtime.  The patch is still useful because we don't
+> want every single person to have to do this analysis.  The kcalloc()
+> function is just safer and more obviously correct.
+> 
 
-On 1/30/2024 1:17 PM, Luca Weiss wrote:
-> On Mon Jan 29, 2024 at 6:37 PM CET, Conor Dooley wrote:
->> On Mon, Jan 29, 2024 at 08:48:54AM +0100, Luca Weiss wrote:
->>> Some SC7280-based boards crash when providing the "secure_non_pixel"
->>> context bank, so allow only one iommu in the bindings also.
->>>
->>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>
->> Do we have any idea why this happens? How is someone supposed to know
->> whether or not their system requires you to only provide one iommu?
->> Yes, a crash might be the obvious answer, but is there a way of knowing
->> without the crashes?
-> 
-> +CC Vikash Garodia
-> 
-> Unfortunately I don't really have much more information than this
-> message here:
-> https://lore.kernel.org/linux-arm-msm/ff021f49-f81b-0fd1-bd2c-895dbbb03d56@quicinc.com/
-> 
-> And see also the following replies for a bit more context, like this
-> one:
-> https://lore.kernel.org/linux-arm-msm/a4e8b531-49f9-f4a1-51cb-e422c56281cc@quicinc.com/
-> 
-> Maybe Vikash can add some more info regarding this.
+Agree.
 
-0x2184 is a secure SID i.e any transactions with that ID would be access
-controlled by trustzone (TZ). SC7280 (chromebook) was designed without TZ, while
-some other DT deriving from SC7280 (like qcm6490) might have TZ. Hence it is
-good to move the iommu entry from SC7280 to chrome-common.
+> It's a bit concerning that ->event_rings is set multiple times, but only
+> allocated one time.  It's either unnecessary or there is a potential
+> memory corruption bug.  If it's really necessary then there should be a
+> check that the new size is <= the size of the original buffer that we
+> allocated.
 
-Regards,
-Vikash
+Agree, the dual assignment could be avoided. I added it initially to have all
+the memory allocations in one place, and also there is a guarantee from the spec
+that the MHICFG_NER_MASK will always be initialized to hw max value.
+
+But looking at it again, it seems redundant. So I will drop the assignment from
+mhi_ep_mmio_init().
+
+Thanks for spotting!
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
