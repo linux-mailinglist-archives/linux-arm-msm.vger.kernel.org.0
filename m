@@ -1,59 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-8965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8966-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A459E841D43
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 09:12:09 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2EE4841D85
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 09:21:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5A21B28DA14
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 08:12:08 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7BBCAB27A09
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 08:21:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8469E54730;
-	Tue, 30 Jan 2024 08:12:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B3625823E;
+	Tue, 30 Jan 2024 08:15:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zws7NfIT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JzQ7mizS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5026F5786C;
-	Tue, 30 Jan 2024 08:12:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317BB6A32F;
+	Tue, 30 Jan 2024 08:15:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706602321; cv=none; b=LsiKZlEIjM6ljkma2pdrmyLT4hYAhevxbQ52V25LyTn+bBW4J6UYHZuovtrx6cDvCzsZfpElbQ0n46i4GJ54MDWVV2vcsAj2P3OiPyg+I6H4kK/aPVGDirkTKwd38cIcLDEsYc8rFf2zDCrrUnoT/vHKO3xC8pP1yPLViRUQGg8=
+	t=1706602526; cv=none; b=maqGst9w6dqwHrWUD5pXcQhqDhcw6FCqAGbbTuThDRdPm+6KgqQ4OTbHWVQvSj6fIEgqy1tvgMK0c+1Y3F2uSqqXTkSgi02zTh+y+U5+uawMJ1tWXkI49KsAYCTDzgR6vix+wxEp80zZuZMafMzDPc3hq4FESE+J017hvlYzLkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706602321; c=relaxed/simple;
-	bh=8mFKFjYSUuOIu6xh7rNa3DzWL/XzU+Q5rtoh7P3ST+g=;
+	s=arc-20240116; t=1706602526; c=relaxed/simple;
+	bh=lnEDll30zZ0mG+3CCuXdEvtHmVf3wq1abiTNSTpry+Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Pjr0TurKivak7dyMuFkqDYi/j83JSIqakR4WAbXvz1tmiRMJcOoZTbKj4HufVpCxTM40fMax9jx+1Vs0oCTKp/1AMqTKBTzc4kgUDQD46pGa3PQra9y93la4rtXAbCRZ1MeGUsxphVO6sD+lV3OI6buaVgim2+VyUAeeMHsiAmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zws7NfIT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1B26C433F1;
-	Tue, 30 Jan 2024 08:11:56 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=VlY/4RqmBU3TOkK8CqODkIP7lWhbqwUSBRvYJM3ctGPCVx8vU5fZrIFe/my+yz4SDQe90sskCB9uyOsLiiuYNQoKMZEasNI7vz2wyAxEMzW3epuPu79pmJZR+rf/10kxAs3cE7FDP4vDqFhv4Eb9GpwXhjxeDKLhebpSN8q6Ni8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JzQ7mizS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79804C433F1;
+	Tue, 30 Jan 2024 08:15:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706602320;
-	bh=8mFKFjYSUuOIu6xh7rNa3DzWL/XzU+Q5rtoh7P3ST+g=;
+	s=k20201202; t=1706602525;
+	bh=lnEDll30zZ0mG+3CCuXdEvtHmVf3wq1abiTNSTpry+Y=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Zws7NfITdtoBVI2DvHJmPPMvFvvGeg0CSOceSvNai57g0PBFHC4SMN3uNBvo3vwge
-	 /ReLfUwc9B4I6TvMFLDMCk+YuCfkEVdxjVG4EKaGXjqXr50Pp1fHdGi+x0l5rwdSYp
-	 InMpucqq63wWnrep6OKyQrcfGgEU0luOO9fK0ljc6xlvomqYZVDTOmG2WKJmAk41YU
-	 d2o8jLz8P5XRVY2zDA2C8i3z0kMuRAgzl0A4i5KIsffrSkB9rBycy17uimJGCoWX/c
-	 /hfFXib1ooW+GM/PPrKahrzq4MNkGrcbo2rUFhRoisoluDNjMonwAhzPpTr/qTEFnK
-	 qi9Q8TQ3LcBkA==
-Date: Tue, 30 Jan 2024 13:41:52 +0530
+	b=JzQ7mizSEYCVZZ9BZMRYendq1JdnHYBFR/V2sYFaaJJG5jixflPC1qX0mAlzWaeM0
+	 mCJ0vysMVECQ8U9PA/PRnDzda1vjVL49NeiDJ+2Lt7nQ/dKxb/IwBget5NwtSCG2sL
+	 uhzWwgiNOhgyNJuwRt9RZgRyNKLB9OscMrKm+xxNWB9AO/hNhBsVlXPrJQ2gkj3jJw
+	 tIRv5gr9YwsDbEzvqbXo1KgvME3CYvtaG9KBwK+/rtYaE4RALS55jb+mdLnhvUhg9H
+	 wgXAY3O2cQZRIiQ55sPH3c5Sc0kQsWnt1Pr4gEQKt8s8hj5PsQYPNJiDlDtB4W02+n
+	 kyLfBARCcrVXA==
+Date: Tue, 30 Jan 2024 13:45:19 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
-	quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
-	quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-	quic_parass@quicinc.com
-Subject: Re: [PATCH v9] bus: mhi: host: Add tracing support
-Message-ID: <20240130081152.GH32821@thinkpad>
-References: <20240105-ftrace_support-v9-1-a2dca64cc6ea@quicinc.com>
+To: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc: quic_pkanojiy@quicinc.com, quic_carlv@quicinc.com, mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2] bus: mhi: host: Add MHI_PM_SYS_ERR_FAIL state
+Message-ID: <20240130081519.GI32821@thinkpad>
+References: <20240112180800.536733-1-quic_jhugo@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,181 +58,163 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240105-ftrace_support-v9-1-a2dca64cc6ea@quicinc.com>
+In-Reply-To: <20240112180800.536733-1-quic_jhugo@quicinc.com>
 
-On Fri, Jan 05, 2024 at 05:53:03PM +0530, Krishna chaitanya chundru wrote:
-> This change adds ftrace support for following functions which
-> helps in debugging the issues when there is Channel state & MHI
-> state change and also when we receive data and control events:
-> 1. mhi_intvec_mhi_states
-> 2. mhi_process_data_event_ring
-> 3. mhi_process_ctrl_ev_ring
-> 4. mhi_gen_tre
-> 5. mhi_update_channel_state
-> 6. mhi_tryset_pm_state
-> 7. mhi_pm_st_worker
+On Fri, Jan 12, 2024 at 11:08:00AM -0700, Jeffrey Hugo wrote:
+> When processing a SYSERR, if the device does not respond to the MHI_RESET
+> from the host, the host will be stuck in a difficult to recover state.
+> The host will remain in MHI_PM_SYS_ERR_PROCESS and not clean up the host
+> channels.  Clients will not be notified of the SYSERR via the destruction
+> of their channel devices, which means clients may think that the device is
+> still up.  Subsequent SYSERR events such as a device fatal error will not
+> be processed as the state machine cannot transition from PROCESS back to
+> DETECT.  The only way to recover from this is to unload the mhi module
+> (wipe the state machine state) or for the mhi controller to initiate
+> SHUTDOWN.
 > 
-> Change the implementation of the arrays which has enum to strings mapping
-> to make it consistent in both trace header file and other files.
+> This issue was discovered by stress testing soc_reset events on AIC100
+> via the sysfs node.
 > 
-> Where ever the trace events are added, debug messages are removed.
+> soc_reset is processed entirely in hardware.  When the register write
+> hits the endpoint hardware, it causes the soc to reset without firmware
+> involvement.  In stress testing, there is a rare race where soc_reset N
+> will cause the soc to reset and PBL to signal SYSERR (fatal error).  If
+> soc_reset N+1 is triggered before PBL can process the MHI_RESET from the
+> host, then the soc will reset again, and re-run PBL from the beginning.
+> This will cause PBL to lose all state.  PBL will be waiting for the host
+> to respond to the new syserr, but host will be stuck expecting the
+> previous MHI_RESET to be processed.
 > 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-
-Few nitpicks below.
-
-> Reviewed-by: "Steven Rostedt (Google)" <rostedt@goodmis.org>
-> ---
-> Changes in v9:
-> - Change the implementations of some array so that the strings to enum mapping
-> - is same in both trace header and other files as suggested by steve.
-> - Link to v8: https://lore.kernel.org/r/20231207-ftrace_support-v8-1-7f62d4558555@quicinc.com
+> Additionally, the AMSS EE firmware (QSM) was hacked to synthetically
+> reproduce the issue by simulating a FW hang after the QSM issued a
+> SYSERR.  In this case, soc_reset would not recover the device.
 > 
-> Changes in v8:
-> - Pass the structure and derefernce the variables in TP_fast_assign as suggested by steve
-> - Link to v7: https://lore.kernel.org/r/20231206-ftrace_support-v7-1-aca49a04268b@quicinc.com
+> For this failure case, to recover the device, we need a state similar to
+> PROCESS, but can transition to DETECT.  There is not a viable existing
+> state to use.  POR has the needed transitions, but assumes the device is
+> in a good state and could allow the host to attempt to use the device.
+> Allowing PROCESS to transition to DETECT invites the possibility of
+> parallel SYSERR processing which could get the host and device out of
+> sync.
 > 
-> Changes in v7:
-> - change log format as pointed by mani.
-> - Link to v6: https://lore.kernel.org/r/20231204-ftrace_support-v6-1-9b206546dac2@quicinc.com
+> Thus, invent a new state - MHI_PM_SYS_ERR_FAIL
 > 
-> Changes in v6:
-> - use 'rp' directly as suggested by jeffrey.
-> - Link to v5: https://lore.kernel.org/r/20231127-ftrace_support-v5-1-eb67daead4f1@quicinc.com
+> This essentially a holding state.  It allows us to clean up the host
+> elements that are based on the old state of the device (channels), but
+> does not allow us to directly advance back to an operational state.  It
+> does allow the detection and processing of another SYSERR which may
+> recover the device, or allows the controller to do a clean shutdown.
 > 
-> Changes in v5:
-> - Use DECLARE_EVENT_CLASS for multiple events as suggested by steve.
-> - Instead of converting to u64 to print address, use %px to print the address to avoid
-> - warnings in some platforms.
-> - Link to v4: https://lore.kernel.org/r/20231111-ftrace_support-v4-1-c83602399461@quicinc.com
-> 
-> Changes in v4:
-> - Fix compilation issues in previous patch which happended due to rebasing.
-> - In the defconfig FTRACE config is not enabled due to that the compilation issue is not
-> - seen in my workspace.
-> - Link to v3: https://lore.kernel.org/r/20231111-ftrace_support-v3-1-f358d2911a74@quicinc.com
-> 
-> Changes in v3:
-> - move trace header file from include/trace/events to drivers/bus/mhi/host/ so that
-> - we can include driver header files.
-> - Use macros directly in the trace events as suggested Jeffrey Hugo.
-> - Reorder the structure in the events as suggested by steve to avoid holes in the buffer.
-> - removed the mhi_to_physical function as this can give security issues.
-> - removed macros to define strings as we can get those from driver headers.
-> - Link to v2: https://lore.kernel.org/r/20231013-ftrace_support-v2-1-6e893ce010b5@quicinc.com
-> 
-> Changes in v2:
-> - Passing the raw state into the trace event and using  __print_symbolic() as suggested by bjorn.
-> - Change mhi_pm_st_worker to mhi_pm_st_transition as suggested by bjorn.
-> - Fixed the kernel test rebot issues.
-> - Link to v1: https://lore.kernel.org/r/20231005-ftrace_support-v1-1-23a2f394fa49@quicinc.com
-> ---
->  drivers/bus/mhi/common.h        |  38 +++---
->  drivers/bus/mhi/host/init.c     |  63 +++++----
->  drivers/bus/mhi/host/internal.h |  40 ++++++
->  drivers/bus/mhi/host/main.c     |  19 ++-
->  drivers/bus/mhi/host/pm.c       |   7 +-
->  drivers/bus/mhi/host/trace.h    | 275 ++++++++++++++++++++++++++++++++++++++++
->  6 files changed, 378 insertions(+), 64 deletions(-)
-> 
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
-[...]
-
-> +TRACE_EVENT(mhi_gen_tre,
-> +
-> +	TP_PROTO(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
-> +		 struct mhi_ring_element *mhi_tre),
-> +
-> +	TP_ARGS(mhi_cntrl, mhi_chan, mhi_tre),
-> +
-> +	TP_STRUCT__entry(
-> +		__string(name, mhi_cntrl->mhi_dev->name)
-> +		__field(int, ch_num)
-> +		__field(void *, wp)
-> +		__field(__le64, tre_ptr)
-> +		__field(__le32, dword0)
-> +		__field(__le32, dword1)
-> +	),
-> +
-> +	TP_fast_assign(
-> +		__assign_str(name, mhi_cntrl->mhi_dev->name);
-> +		__entry->ch_num = mhi_chan->chan;
-> +		__entry->wp = mhi_tre;
-> +		__entry->tre_ptr = mhi_tre->ptr;
-> +		__entry->dword0 = mhi_tre->dword[0];
-> +		__entry->dword1 = mhi_tre->dword[1];
-> +	),
-> +
-> +	TP_printk("%s: Chan: %d Tre: 0x%p Tre buf: 0x%llx dword0: 0x%08x dword1: 0x%08x\n",
-
-Use caps for printing the acronyms everywhere. Like TRE, DWORD etc...
-
-> +		  __get_str(name), __entry->ch_num, __entry->wp, __entry->tre_ptr,
-> +		  __entry->dword0, __entry->dword1)
-> +);
-> +
-> +TRACE_EVENT(mhi_intvec_states,
-> +
-> +	TP_PROTO(struct mhi_controller *mhi_cntrl, int dev_ee, int dev_state),
-> +
-> +	TP_ARGS(mhi_cntrl, dev_ee, dev_state),
-> +
-> +	TP_STRUCT__entry(
-> +		__string(name, mhi_cntrl->mhi_dev->name)
-> +		__field(int, local_ee)
-> +		__field(int, state)
-> +		__field(int, dev_ee)
-> +		__field(int, dev_state)
-> +	),
-> +
-> +	TP_fast_assign(
-> +		__assign_str(name, mhi_cntrl->mhi_dev->name);
-> +		__entry->local_ee = mhi_cntrl->ee;
-> +		__entry->state = mhi_cntrl->dev_state;
-> +		__entry->dev_ee = dev_ee;
-> +		__entry->dev_state = dev_state;
-> +	),
-> +
-> +	TP_printk("%s: local ee: %s state: %s device ee: %s state: %s\n",
-
-"Local EE... State:...Device EE.."
-
-> +		  __get_str(name),
-> +		  __print_symbolic(__entry->local_ee, MHI_EE_LIST),
-> +		  __print_symbolic(__entry->state, MHI_STATE_LIST),
-> +		  __print_symbolic(__entry->dev_ee, MHI_EE_LIST),
-> +		  __print_symbolic(__entry->state, MHI_STATE_LIST))
-> +);
-> +
-
-[...]
-
-> +DECLARE_EVENT_CLASS(mhi_update_channel_state,
-> +
-> +	TP_PROTO(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan, int state),
-> +
-> +	TP_ARGS(mhi_cntrl, mhi_chan, state),
-> +
-> +	TP_STRUCT__entry(
-> +		__string(name, mhi_cntrl->mhi_dev->name)
-> +		__field(int, ch_num)
-> +		__field(int, state)
-> +	),
-> +
-> +	TP_fast_assign(
-> +		__assign_str(name, mhi_cntrl->mhi_dev->name);
-> +		__entry->ch_num = mhi_chan->chan;
-> +		__entry->state = state;
-> +	),
-> +
-> +	TP_printk("%s: chan%d: Updating state to: %s\n",
-> +		  __get_str(name), __entry->ch_num,
-> +		  __print_symbolic(__entry->state, MHI_CH_STATE_TYPE_LIST))
-
-So same trace will get printed for both mhi_channel_command_start() and
-mhi_channel_command_end()?
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 - Mani
+
+> Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
+> ---
+> 
+> v2:
+> -Add additional details about issue discovery to commit text
+> 
+>  drivers/bus/mhi/host/init.c     |  1 +
+>  drivers/bus/mhi/host/internal.h |  9 ++++++---
+>  drivers/bus/mhi/host/pm.c       | 20 +++++++++++++++++---
+>  3 files changed, 24 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+> index 15c1740a2c88..cca2731bc98b 100644
+> --- a/drivers/bus/mhi/host/init.c
+> +++ b/drivers/bus/mhi/host/init.c
+> @@ -62,6 +62,7 @@ static const char * const mhi_pm_state_str[] = {
+>  	[MHI_PM_STATE_FW_DL_ERR] = "Firmware Download Error",
+>  	[MHI_PM_STATE_SYS_ERR_DETECT] = "SYS ERROR Detect",
+>  	[MHI_PM_STATE_SYS_ERR_PROCESS] = "SYS ERROR Process",
+> +	[MHI_PM_STATE_SYS_ERR_FAIL] = "SYS ERROR Failure",
+>  	[MHI_PM_STATE_SHUTDOWN_PROCESS] = "SHUTDOWN Process",
+>  	[MHI_PM_STATE_LD_ERR_FATAL_DETECT] = "Linkdown or Error Fatal Detect",
+>  };
+> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
+> index 2e139e76de4c..d2858236af52 100644
+> --- a/drivers/bus/mhi/host/internal.h
+> +++ b/drivers/bus/mhi/host/internal.h
+> @@ -88,6 +88,7 @@ enum mhi_pm_state {
+>  	MHI_PM_STATE_FW_DL_ERR,
+>  	MHI_PM_STATE_SYS_ERR_DETECT,
+>  	MHI_PM_STATE_SYS_ERR_PROCESS,
+> +	MHI_PM_STATE_SYS_ERR_FAIL,
+>  	MHI_PM_STATE_SHUTDOWN_PROCESS,
+>  	MHI_PM_STATE_LD_ERR_FATAL_DETECT,
+>  	MHI_PM_STATE_MAX
+> @@ -104,14 +105,16 @@ enum mhi_pm_state {
+>  #define MHI_PM_FW_DL_ERR				BIT(7)
+>  #define MHI_PM_SYS_ERR_DETECT				BIT(8)
+>  #define MHI_PM_SYS_ERR_PROCESS				BIT(9)
+> -#define MHI_PM_SHUTDOWN_PROCESS				BIT(10)
+> +#define MHI_PM_SYS_ERR_FAIL				BIT(10)
+> +#define MHI_PM_SHUTDOWN_PROCESS				BIT(11)
+>  /* link not accessible */
+> -#define MHI_PM_LD_ERR_FATAL_DETECT			BIT(11)
+> +#define MHI_PM_LD_ERR_FATAL_DETECT			BIT(12)
+>  
+>  #define MHI_REG_ACCESS_VALID(pm_state)			((pm_state & (MHI_PM_POR | MHI_PM_M0 | \
+>  						MHI_PM_M2 | MHI_PM_M3_ENTER | MHI_PM_M3_EXIT | \
+>  						MHI_PM_SYS_ERR_DETECT | MHI_PM_SYS_ERR_PROCESS | \
+> -						MHI_PM_SHUTDOWN_PROCESS | MHI_PM_FW_DL_ERR)))
+> +						MHI_PM_SYS_ERR_FAIL | MHI_PM_SHUTDOWN_PROCESS |  \
+> +						MHI_PM_FW_DL_ERR)))
+>  #define MHI_PM_IN_ERROR_STATE(pm_state)			(pm_state >= MHI_PM_FW_DL_ERR)
+>  #define MHI_PM_IN_FATAL_STATE(pm_state)			(pm_state == MHI_PM_LD_ERR_FATAL_DETECT)
+>  #define MHI_DB_ACCESS_VALID(mhi_cntrl)			(mhi_cntrl->pm_state & mhi_cntrl->db_access)
+> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+> index 8a4362d75fc4..27f8a40f288c 100644
+> --- a/drivers/bus/mhi/host/pm.c
+> +++ b/drivers/bus/mhi/host/pm.c
+> @@ -36,7 +36,10 @@
+>   *     M0 <--> M0
+>   *     M0 -> FW_DL_ERR
+>   *     M0 -> M3_ENTER -> M3 -> M3_EXIT --> M0
+> - * L1: SYS_ERR_DETECT -> SYS_ERR_PROCESS --> POR
+> + * L1: SYS_ERR_DETECT -> SYS_ERR_PROCESS
+> + *     SYS_ERR_PROCESS -> SYS_ERR_FAIL
+> + *     SYS_ERR_FAIL -> SYS_ERR_DETECT
+> + *     SYS_ERR_PROCESS --> POR
+>   * L2: SHUTDOWN_PROCESS -> LD_ERR_FATAL_DETECT
+>   *     SHUTDOWN_PROCESS -> DISABLE
+>   * L3: LD_ERR_FATAL_DETECT <--> LD_ERR_FATAL_DETECT
+> @@ -93,7 +96,12 @@ static const struct mhi_pm_transitions dev_state_transitions[] = {
+>  	},
+>  	{
+>  		MHI_PM_SYS_ERR_PROCESS,
+> -		MHI_PM_POR | MHI_PM_SHUTDOWN_PROCESS |
+> +		MHI_PM_POR | MHI_PM_SYS_ERR_FAIL | MHI_PM_SHUTDOWN_PROCESS |
+> +		MHI_PM_LD_ERR_FATAL_DETECT
+> +	},
+> +	{
+> +		MHI_PM_SYS_ERR_FAIL,
+> +		MHI_PM_SYS_ERR_DETECT | MHI_PM_SHUTDOWN_PROCESS |
+>  		MHI_PM_LD_ERR_FATAL_DETECT
+>  	},
+>  	/* L2 States */
+> @@ -624,7 +632,13 @@ static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
+>  					!in_reset, timeout);
+>  		if (!ret || in_reset) {
+>  			dev_err(dev, "Device failed to exit MHI Reset state\n");
+> -			goto exit_sys_error_transition;
+> +			write_lock_irq(&mhi_cntrl->pm_lock);
+> +			cur_state = mhi_tryset_pm_state(mhi_cntrl,
+> +							MHI_PM_SYS_ERR_FAIL);
+> +			write_unlock_irq(&mhi_cntrl->pm_lock);
+> +			/* Shutdown may have occurred, otherwise cleanup now */
+> +			if (cur_state != MHI_PM_SYS_ERR_FAIL)
+> +				goto exit_sys_error_transition;
+>  		}
+>  
+>  		/*
+> -- 
+> 2.34.1
+> 
+> 
 
 -- 
 மணிவண்ணன் சதாசிவம்
