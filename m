@@ -1,119 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-9051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E78CD8427B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 16:13:02 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0AC88427FC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 16:25:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 262A61C22CC8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 15:13:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A836C1F22E78
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 15:25:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EA79811E2;
-	Tue, 30 Jan 2024 15:12:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6127E86AEC;
+	Tue, 30 Jan 2024 15:24:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="JYKw4HzD"
+	dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b="vInUSoCl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14DF7F7CF
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 15:12:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5262386AD7
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 15:24:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706627577; cv=none; b=mZAMhmPwMh977XZNK6ZjPFW0QH3JYNOhGVdxol5TEwBYFOMf1e4BRF3E+M45d3WKMuHT3I07co9P7UDfLYy0wb/tzmLS3stmrljCPCMqMYWXEMrOMMAjusROiSdA1kPRcwwyfX4zZ5s0dLyMC+KmipwwrxxZMNZHb8+LE3Ewr4U=
+	t=1706628252; cv=none; b=eEDC4AVqlp7VP6s4jJGVkxnbJhHdSCTx0sjn4I1zD0Y+J+uWgt5/iVMcK+hIgj340QQqAGUa87P3haqSO2dRVtFfhFhLohx3eK9iEqUmc3I1UPp6arGKIseQ9C9mMe5xoGUkVoQRQkV9ebfrmT3naVXlWjjp+ZKgP6u+iGk/tFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706627577; c=relaxed/simple;
-	bh=0DFkUFct/ugpR387roshgw0jmipzQatTIY1QClEk+/c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JJwwXMzlmOF+boiM866Gdu96MbRPYtt0/5JtWOxcWC6hj8hJOJnuqMpER0sziqgsx9Ro72T3pKByK6Tx0E2K6KTlSkVnYcMhtEyl6LU0MNinrVHtleLq60VJXNqMGh5ihfxHc7JypNQX9dcUOdWFzA+BUmPW01bST61DqXcS7Iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=JYKw4HzD; arc=none smtp.client-ip=209.85.128.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-603dc95b8f3so23238017b3.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 07:12:55 -0800 (PST)
+	s=arc-20240116; t=1706628252; c=relaxed/simple;
+	bh=RWoMbArJCJ2qut8LsUpeWadEL9hpH4D1vGmVcW9tVmE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uJWbkyMhJGFXHUQXSeqHjJ+R4xVh7tDv7S3JRmIF5vqtl5S5rLSxTQsWhRGsV2AJsjQ6MxpP2DMo/SBM25mwSR0UeMG6pzEO3xIcVsFRpj5ZIuyo4dv4MfED2sf13fQ+Wb61ieE71+xomNDeyvlTQClC+GBC6ACSiu5xQ85iCtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie; spf=none smtp.mailfrom=nexus-software.ie; dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b=vInUSoCl; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=nexus-software.ie
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-40fb0c4bb9fso295305e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 07:24:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1706627575; x=1707232375; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0DFkUFct/ugpR387roshgw0jmipzQatTIY1QClEk+/c=;
-        b=JYKw4HzD8UHaCRMuh3hBPjlFEJ3R8jl7CQ7ppDDDRMY8wha2/QSJNQ7LO+ZXeiUEgE
-         E1PzSF0oWktF366KA+ZdPzqCJeKCGGnfBSvYYLvhWzGXuYMFYAHXo5cdCJ8nBtLwfHkU
-         5h/VGwlnC5Zy7cYX05Bwe0pSMuuiYgwuPMc/ehME9UKQdbF7iUfxAO0kPqCwiwC3tX8n
-         cb8c6l4VIJQVAMLqmqpIjwr0uf9bKB2HGcEDkUY9ycoqWMVGXd67CBqw3hjgUHTYgAeL
-         aIY5KfBwCOjF190ljJoYpiXVqreyBzXIq9MPgdxrRS7Y3yefVGx88OMpDFlSjP6CY16u
-         6jxA==
+        d=nexus-software-ie.20230601.gappssmtp.com; s=20230601; t=1706628248; x=1707233048; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=i3sobrlmzlgQ267qaogC7twZ6ZN3NAHO1POj2V3Oyvc=;
+        b=vInUSoClga+Hdun7P/75sHfAVkuFCj0eP0pP3d6vxtIJ+RtuZ/wW0wSVKKyb4qsn2s
+         M9WMNpjvXLbAyIDREq8VPlWXFJF435offpdz4zz86kM61WMYqlBAanpLN6FL8XpohL4t
+         /76F0nMb7G4Q2IGYmSD5lNP8ZYcMd33pznTy9fyhDOV1B/xSIbNGYjALXIEJPwHN8LXp
+         c/zmeeOW1cMyABPd5DK+BG0GaTUuS0Fx0jyOZFfhR642lGP1koIKXWCIrbnCWww622Q+
+         +hw73MaAK81X7xfYRyfYe2n9iyliX80o7cWjx9HY6Q87unu2CTAs6afETUiGj+Kcs/nO
+         wHzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706627575; x=1707232375;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0DFkUFct/ugpR387roshgw0jmipzQatTIY1QClEk+/c=;
-        b=QUM2k8HfWgEYncTTDTBczBWZ1giAiImshjqqi7Hh2r1z81pyA/+dbkpS/+z7HoFpqB
-         wfwLGaStqaDBnwveZmZQlDwiyx3yHNwwP3JHl9KCo+ro6gpq4SNLxNBm6nY4Ia+IGlL3
-         w2PCah97dsIr8oXAfVBMkiSB0T0zDDoDkt2bUY2bQbKqQ/yl75DKebrYT0ZW4s8ylxvK
-         7dWN/q2eYLcyZk/jOf280YmmIX9EtjUEVH/jK+nvc4NDmxexbNcrjz98NEzXj7joIHzl
-         yshQhJJLav4SEfzguKiAiZttNN1lOpSQHgZVPvNp24uTMWrVB1fSvgKsqIp1v9WtrTxU
-         h1IA==
-X-Gm-Message-State: AOJu0Yz/LUlxBWjGanJLSTfJGQ2avdG1ea786ZHmUGE8yr2+yGc81K/4
-	JXKjGIINf9PmR8F/MqS6yEk+AcQ/asblAoxu1NkF5jH5tSLPq06300NGKQpsEXz2hn0Lgs9o7Ah
-	JymRt7HYyPH7nVSmHhaM9zKQXh0hTofQHXvWqvg==
-X-Google-Smtp-Source: AGHT+IH2LCbeMRSP9X7Ok3vkK3v+WUD6xQZxMdyDiVi8B1Q07WJwPWe+Zz0oJ1EcFj1EyfZwcK1Vi2tiEtpfMGUKcnQ=
-X-Received: by 2002:a81:c406:0:b0:5ff:4a64:a8ec with SMTP id
- j6-20020a81c406000000b005ff4a64a8ecmr7620907ywi.38.1706627574732; Tue, 30 Jan
- 2024 07:12:54 -0800 (PST)
+        d=1e100.net; s=20230601; t=1706628248; x=1707233048;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=i3sobrlmzlgQ267qaogC7twZ6ZN3NAHO1POj2V3Oyvc=;
+        b=CNrNjSP5olLB82Z9KMFpupC721+/qxzZBPZm7td/WiR6Y3HWa0z5KmapivbPAVoq4s
+         IMdgh7GiEAGg33jxCKJi4xQlRwLphVo2TYzoHfI5NGj8ZxfhEMIokwoLCvciqgUrLha0
+         X/TJkRpvVQy6Kbp7jacwYgF86yBhL7fc6UBCK5vrQnyNAhB0jf7XXshKltDQNX0aYFbw
+         Kq1mJAIHPdt5lSqjDOr1Xw8SDML4wr1rfdeC5+XzT1a4J1L6ZCWMX19vF04n7uGyYDx7
+         0g0J2d7CHnFYCBwh7p2j5oqv1Z+ebUFs6nCzua6DEiebxz3ZH/W5PKBqsNABt90I6UUf
+         hxOw==
+X-Gm-Message-State: AOJu0YzAcgSOTZEULV0qfr1jePy1uRxcabm9aUKv/MSq6WVWPkLP9ru4
+	cyWbOcssrfDzya1bjB5pzTtw2fqxKkDGaDNCw0pVjWZZYeKW6uY/Apu1NYpTxLc=
+X-Google-Smtp-Source: AGHT+IEyAAbMLGJbgqPjXgEAeGFmKuS59P8+cb/8gbye9868qSzHvrPXIkwWwsrpovu8gtwuNUB1sQ==
+X-Received: by 2002:a05:600c:198c:b0:40e:cdff:8d10 with SMTP id t12-20020a05600c198c00b0040ecdff8d10mr6966048wmq.6.1706628248296;
+        Tue, 30 Jan 2024 07:24:08 -0800 (PST)
+Received: from [192.168.100.86] ([176.61.106.68])
+        by smtp.gmail.com with ESMTPSA id bj12-20020a0560001e0c00b00337d6f0013esm7683953wrb.107.2024.01.30.07.24.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Jan 2024 07:24:07 -0800 (PST)
+Message-ID: <b94c4c9f-a3dd-40fb-a80e-569199e93ee2@nexus-software.ie>
+Date: Tue, 30 Jan 2024 15:24:06 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240130130930.18683-1-brgl@bgdev.pl> <9016fa2b-fdd6-4124-a53b-e06d45acd673@linaro.org>
-In-Reply-To: <9016fa2b-fdd6-4124-a53b-e06d45acd673@linaro.org>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Tue, 30 Jan 2024 16:12:43 +0100
-Message-ID: <CAMRc=MderwyjSGL3vhFngSnsX2rA3Gy7UG+9UFxsgryTcvdjWQ@mail.gmail.com>
-Subject: Re: [PATCH] Revert "arm64: dts: qcom: qrb5165-rb5: add the Bluetooth node"
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [V2] i2c: i2c-qcom-geni: Correct I2C TRE sequence
+Content-Language: en-US
+To: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, andi.shyti@kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+ linux-kernel@vger.kernel.org, vkoul@kernel.org, quic_bjorande@quicinc.com,
+ manivannan.sadhasivam@linaro.org
+Cc: quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com
+References: <20240129061003.4085-1-quic_vdadhani@quicinc.com>
+From: Bryan O'Donoghue <pure.logic@nexus-software.ie>
+In-Reply-To: <20240129061003.4085-1-quic_vdadhani@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jan 30, 2024 at 3:27=E2=80=AFPM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 30/01/2024 14:09, Bartosz Golaszewski wrote:
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > This reverts commit 71a73864e144aadaa582fe8296ef73fcf3ea7377.
-> >
-> > The bluetooth module of the QCA6391 should be represented as consuming
-> > the power outputs of the PMU and not the regulators that are PMU's
-> > inputs. We will be able to model it this way (together with the WLAN
-> > module) once the pwrseq subsystem gets upstream with a dedicated driver
-> > for the PMU.
-> >
-> > Thankfully this change has no corresponding DT bindings yet so we can
-> > safely revert adding the bluetooth node.
-> >
-> > Fixes: 71a73864e144 ("arm64: dts: qcom: qrb5165-rb5: add the Bluetooth =
-node")
->
-> I don't think that dropping more-or-less correct DTS nodes is a fix. A
-> fix could be changing the less-correct DTS into fully-correct DTS.
->
+On 29/01/2024 06:10, Viken Dadhaniya wrote:
+> As per HPG(Hardware programming guide
 
-This node was added this merge window, the bindings didn't make it.
-It's not used anywhere AFAIK and a better version is coming.
+Since you are doing a V3 here, please amend this too.
 
-I'm not going to insist but I think it's useless right now.
+"As per HPG" means almost nothing outside of qcom.
 
-Bart
+"As per Qualcomm's internal Hardware Programming Guide"
+
+Right thing to do to reference the document IMO but, you should make 
+clear its an internal silicon specification that's not public.
+
+Also not sure the TRE description adds much.
+
+Just give a high level description of the sequences being out-of-order 
+with respect to the hardware spec.
+
+---
+bod
 
