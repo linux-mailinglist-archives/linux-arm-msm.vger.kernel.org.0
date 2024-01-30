@@ -1,151 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-8957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6A24841C63
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 08:15:07 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AEEFE841C87
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 08:25:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7CC222888B2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 07:15:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A04D283C4E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 07:25:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 739274595D;
-	Tue, 30 Jan 2024 07:15:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 176654EB41;
+	Tue, 30 Jan 2024 07:25:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tQUzVE32"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZubvYpTB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E3D045006;
-	Tue, 30 Jan 2024 07:15:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D344C610;
+	Tue, 30 Jan 2024 07:25:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706598902; cv=none; b=LdMPMJ4CEM3oeDvc11KP+e8lGLj0XbXKz9U+z/Em0zRlEVG/GiC7c3MpC+WDfuLWK5e0W9EwZrxeAw7fald65avp3+q9uyDItA6iH9Slwu30NziyWm1qvMykpizvAxOOIf2PGYWzfhMl4lg+1FTY4mmbKjFKI19rqZKJWTeN+yk=
+	t=1706599544; cv=none; b=Yz1KVHyvrNpWHi5nvHjAzN0fcOGDCXqKBoQL0QmzukcEeIn5jVUXe78RlYm+Z3yJcnj72qAxyX46RGow5nx/+YWVw984eJNJKF8WHnH7sqjnIuANOuaJD+UrTbhxToz4RUw2lDSD3/BKBdIkGXdQsTNqjQv1J3MT35TJBWje938=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706598902; c=relaxed/simple;
-	bh=3O2f3C735+i3w3e95T2JFKr5hUPP5tDZtu+rWvTmjuY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d+GPi7OSLEbT8I1LPymYNfJcdDJKTUAdNrD9+O8IQYEcsKNYezOLzBfweGVgB0duWclWvvPT2UUeeA4eKsL/8nmvhA5lq8HPxj0K6ZeX1HX6V7jU9arosD3o7GQYq9OBmbaUUYP7WngHln0FoJYUVycSS/9uniiE6aH8NUJRInw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tQUzVE32; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F7E5C433C7;
-	Tue, 30 Jan 2024 07:14:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706598901;
-	bh=3O2f3C735+i3w3e95T2JFKr5hUPP5tDZtu+rWvTmjuY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tQUzVE32pRfeLHULf0XVo2M0xQIfe8i4jvnS8c2seESF4a9Uwx+lGrzKu/FLDdNXS
-	 Zk3inblB2vJfluBo6SBAYsbGf6rbjFM7kV2IhN3cR09JMjXi2Dc/zxAx6O1itT9Os2
-	 mpfxSjZjTcw4cuHQ9vUdvxwrbeJ+Kzfb8MFkQnGgNKT4mlQMcmjQx8CFZb4J65BK1c
-	 jvXq0zFxhESchT72bs03+YznWaPr5Cndpnphex39hCYFpShT85x64J9QQodCDlM6ND
-	 fYcwZ+QeUdDkSg7g098MdLFezdzVVgTGoRKN3hQGnYQbFF4GArgSo25LLYOiU4dsxj
-	 25v2pDD0LeViw==
-Date: Tue, 30 Jan 2024 12:44:49 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Viresh Kumar <viresh.kumar@linaro.org>
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
-	Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Brian Masney <bmasney@redhat.com>,
-	Georgi Djakov <djakov@kernel.org>, linux-arm-msm@vger.kernel.org,
-	vireshk@kernel.org, quic_vbadigan@quicinc.com,
-	quic_skananth@quicinc.com, quic_nitegupt@quicinc.com,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 5/6] arm64: dts: qcom: sm8450: Add opp table support
- to PCIe
-Message-ID: <20240130071449.GG32821@thinkpad>
-References: <20240112-opp_support-v6-0-77bbf7d0cc37@quicinc.com>
- <20240112-opp_support-v6-5-77bbf7d0cc37@quicinc.com>
- <20240129160420.GA27739@thinkpad>
- <20240130061111.eeo2fzaltpbh35sj@vireshk-i7>
+	s=arc-20240116; t=1706599544; c=relaxed/simple;
+	bh=MRA41ka2nVnCbPPGCvn7oFWP5clgArfJ49C9bC+V1/c=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=TGVV5Jer0Y6toqtAEorPp9R1+DajX55oXFsLuRyrCy8OnDWrqHCwTLplIVE6COEHjPjMygsstzfWhWFpCFcunABXP97HcyTyoAd6LtUHt0wtXB/cysQwIXTRqMD/8lFLVx8UUd3N/7Wafq3aag90WnSM13G9s7a1FcbEhgPQJoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZubvYpTB; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40U58bYQ019343;
+	Tue, 30 Jan 2024 07:25:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:from:to:cc:references
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=oTne4YMLOus8vGIzuyLPoBXkJ+ZLYaFNZ+RfBayVdyk=; b=Zu
+	bvYpTB4kwNwB0/Kwja0fxCcrr7UrA6OAM2q6cEBk2WBg/FtIPVvTPftDry5lDKS3
+	D6C6Tuiqjeqy4HR4UlBxZb32xdqXUZWt3PCxaiqFHe3ouoXPGYGB4lGIdE1EAT2b
+	t3gwvtLI+JVG2SsBr8LQsuncYkiWPHoDYv3Jvk+GMdtSSNTmDPRZ9ajToVjfjoQq
+	HevosAsMK8/24dCFgDWQ57gYcrerU29DanZYFwvtgOOFxahKCQyeDVO1HZxgu/lD
+	2aXlGxJrPwiwrJO0j7o5wrxrJJ132FWkIQTFtwgCpZ4Y58qYDbo2fjaa4NTbXILX
+	o1Q9BTFKvUtAjn5nRqKg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vxtp30705-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 30 Jan 2024 07:25:35 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40U7PYiF017742
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 30 Jan 2024 07:25:34 GMT
+Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 29 Jan
+ 2024 23:25:29 -0800
+Message-ID: <c17dafd2-db89-4fe2-8e98-2a031f7237c2@quicinc.com>
+Date: Tue, 30 Jan 2024 15:25:26 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 6/6] arm64: dts: qcom: aim300: add AIM300 AIoT
+From: Tengfei Fan <quic_tengfan@quicinc.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <dmitry.baryshkov@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
+        Qiang Yu
+	<quic_qianyu@quicinc.com>,
+        Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+References: <20240119100621.11788-1-quic_tengfan@quicinc.com>
+ <20240119100621.11788-7-quic_tengfan@quicinc.com>
+ <d3ef45cf-2de8-4f5b-8857-62d1996f3f58@linaro.org>
+ <842bf6ad-46e1-43d8-86be-79ab0f49710b@quicinc.com>
+In-Reply-To: <842bf6ad-46e1-43d8-86be-79ab0f49710b@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240130061111.eeo2fzaltpbh35sj@vireshk-i7>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ue10aO-2c8EtjIE0C8dO9fOw6FOoVxOi
+X-Proofpoint-GUID: ue10aO-2c8EtjIE0C8dO9fOw6FOoVxOi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-30_02,2024-01-29_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ spamscore=0 clxscore=1015 lowpriorityscore=0 adultscore=0 bulkscore=0
+ mlxlogscore=361 malwarescore=0 mlxscore=0 impostorscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401190000 definitions=main-2401300052
 
-On Tue, Jan 30, 2024 at 11:41:11AM +0530, Viresh Kumar wrote:
-> On 29-01-24, 21:34, Manivannan Sadhasivam wrote:
-> > On Fri, Jan 12, 2024 at 07:52:04PM +0530, Krishna chaitanya chundru wrote:
-> > > PCIe needs to choose the appropriate performance state of RPMH power
-> > > domain and interconnect bandwidth based up on the PCIe gen speed.
-> > > 
-> > > Add the OPP table support to specify RPMH performance states and
-> > > interconnect peak bandwidth.
-> > > 
-> > > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/sm8450.dtsi | 74 ++++++++++++++++++++++++++++++++++++
-> > >  1 file changed, 74 insertions(+)
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> > > index 6b1d2e0d9d14..eab85ecaeff0 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> > > @@ -1827,7 +1827,32 @@ pcie0: pcie@1c00000 {
-> > >  			pinctrl-names = "default";
-> > >  			pinctrl-0 = <&pcie0_default_state>;
-> > >  
-> > > +			operating-points-v2 = <&pcie0_opp_table>;
-> > > +
-> > >  			status = "disabled";
-> > > +
-> > > +			pcie0_opp_table: opp-table {
-> > > +				compatible = "operating-points-v2";
-> > > +
-> > > +				opp-2500000 {
-> > > +					opp-hz = /bits/ 64 <2500000>;
-> > > +					required-opps = <&rpmhpd_opp_low_svs>;
-> > > +					opp-peak-kBps = <250000 250000>;
-> > 
-> > This is a question for Viresh: We already have macros in the driver to derive
-> > the bandwidth based on link speed. So if OPP core exposes a callback to allow
-> > the consumers to set the bw on its own, we can get rid of this entry.
-> > 
-> > Similar to config_clks()/config_regulators(). Is that feasible?
+
+
+On 1/29/2024 4:18 PM, Tengfei Fan wrote:
 > 
-> I don't have any issues with a new callback for bw. But, AFAIU, the DT
-> is required to represent the hardware irrespective of what any OS
-> would do with it. So DT should ideally have these values here, right ?
 > 
-
-Not necessarily. Because, right now the bandwidth values of the all peripherals
-are encoded within the drivers. Only OPP has the requirement to define the
-values in DT.
-
-> Also, the driver has already moved away from using those macros now
-> and depend on the OPP core to do the right thing. It only uses the
-> macro for the cases where the DT OPP table isn't available. And as
-> said by few others as well already, the driver really should try to
-> add OPPs dynamically in that case to avoid multiple code paths and
-> stick to a single OPP based solution.
+> On 1/29/2024 4:09 PM, Krzysztof Kozlowski wrote:
+>> On 19/01/2024 11:06, Tengfei Fan wrote:
+>>> Add AIM300 AIoT board DTS support, including usb, serial, PCIe, mpss,
+>>> adsp, cdsp and sound card functions support.
+>>>
+>>
+>> ...
+>>
+>>> +
+>>> +    sound {
+>>> +        compatible = "qcom,sm8550-sndcard", "qcom,sm8450-sndcard";
+>>> +        model = "AIM300-AIOT";
+>>> +        audio-routing = "SpkrLeft IN", "WSA_SPK1 OUT",
+>>> +                "SpkrRight IN", "WSA_SPK2 OUT",
+>>> +                "IN1_HPHL", "HPHL_OUT",
+>>> +                "IN2_HPHR", "HPHR_OUT",
+>>> +                "AMIC2", "MIC BIAS2",
+>>> +                "VA DMIC0", "MIC BIAS1",
+>>> +                "VA DMIC1", "MIC BIAS1",
+>>> +                "VA DMIC2", "MIC BIAS3",
+>>> +                "TX DMIC0", "MIC BIAS1",
+>>> +                "TX DMIC1", "MIC BIAS2",
+>>> +                "TX DMIC2", "MIC BIAS3",
+>>> +                "TX SWR_ADC1", "ADC2_OUTPUT";
+>>
+>> This should be probably TX SWR_INPUT1.
+>>
+>> Best regards,
+>> Krzysztof
+>>
+> 
+> I will double check this with related team and I will update this.
 > 
 
-Still I prefer to use OPP for bandwidth control because both the voltage and
-bandwidth values need to be updated at the same time. My only point here is, if
-OPP exposes a callback for bw, then we can keep the DT behavior consistent.
-
-- Mani
-
-> -- 
-> viresh
+I will apply "TX SWR_INPUT1" on audio-routing node in the next patch 
+series.
 
 -- 
-மணிவண்ணன் சதாசிவம்
+Thx and BRs,
+Tengfei Fan
 
