@@ -1,139 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-8998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E6BC84226B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 12:13:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83B2D84228F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 12:16:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B29671F29959
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 11:13:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3AC37293483
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 11:16:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B49E664D9;
-	Tue, 30 Jan 2024 11:13:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B86036D1A9;
+	Tue, 30 Jan 2024 11:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="Qt0nsFEZ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OWRMTAsW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6C5664AE;
-	Tue, 30 Jan 2024 11:13:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4EF96BB45;
+	Tue, 30 Jan 2024 11:13:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706613197; cv=none; b=ZZTncZ47W62MGa2Wc7ABxCURX8/bdOu1VXiRuE5AbJqknVhiZWxVJnKyi5cTc32JMuFFlnA760DiyqE8TjOhZ83OwCrhGZI1PjZfxZ27ZHgPVAlp3wRHcxEPzI1Q7fARAEmWt932tnbhnKaUdYxkWEZcaQt5qnCLTLddnznG1VI=
+	t=1706613210; cv=none; b=W/Bz7qD9yhXwNmf8NX+welOPR/5cZp3/URhktajXq5mzfq2Xvhs563CmYKW3JeO6Jh3572tswo+c7efIg9/R+0zpxXxQCTiqodMBwOAUXDpgANT+wzpW2Njde48uV97eX6D2dn2Z3PjPApGFhsNNwi1vBl/ZDSpJWYO2LmWbObc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706613197; c=relaxed/simple;
-	bh=NMhqSFdRSjNI1p1vyp5dOffkk1ADZ0MeWiy+ifEvnrE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a6A+YXIeqtedJSq1x3qSAwDSBg17IFFcZu0iFAc1qPE1fm8iu7FoWRPTrzn8d7GB8bak/k9QxmQtSrJ3LNYtr3tMuDKkxULbL4OW6rVWIESSECkeUb0/neYZQmQTMyH4pV4ldI0fTVLzJYngnDBVTZFm89ECfo4UrZCfjjgU1bU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=Qt0nsFEZ; arc=none smtp.client-ip=46.235.227.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1706613192;
-	bh=NMhqSFdRSjNI1p1vyp5dOffkk1ADZ0MeWiy+ifEvnrE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qt0nsFEZO5QpPc8PT9E0Lm/cgu375vY8D/mR9k7Z3W1Wv+myVR0nC/5GsZAjx1uOg
-	 IOPezeLBWscheyDiOgrc/qZAVxW2SIrVUutDo7DZ63z9zUaXkaOq4XWiQV+cYY6Cb/
-	 a6gCdWmh3IEA5qY5GYnH3bdWQBTID73s0OeKIN3eC0naUOfwNSfz1+7Gn+mzXamZZ1
-	 LbYglX3oHMZWJBash/KF827A8A2VN09xGuA48AaHftWY8fjbotKGMviiOHH6Ui9Wl9
-	 +4O3dOIUxOrUpnxr2lKSbzRngscGghNZAZQNMEs9YlAtIaUx9luxx0GphbKNcEdKnI
-	 Xff/+eqNdXpPA==
-Received: from IcarusMOD.eternityproject.eu (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id F116F37811F4;
-	Tue, 30 Jan 2024 11:13:09 +0000 (UTC)
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-To: daniel.lezcano@linaro.org
-Cc: miquel.raynal@bootlin.com,
-	rafael@kernel.org,
-	rui.zhang@intel.com,
-	lukasz.luba@arm.com,
-	support.opensource@diasemi.com,
-	shawnguo@kernel.org,
-	s.hauer@pengutronix.de,
-	kernel@pengutronix.de,
-	festevam@gmail.com,
-	linux-imx@nxp.com,
-	andersson@kernel.org,
-	konrad.dybcio@linaro.org,
-	amitk@kernel.org,
-	thara.gopinath@gmail.com,
-	niklas.soderlund@ragnatech.se,
-	srinivas.pandruvada@linux.intel.com,
-	angelogioacchino.delregno@collabora.com,
-	baolin.wang@linux.alibaba.com,
-	u.kleine-koenig@pengutronix.de,
-	hayashi.kunihiko@socionext.com,
-	d-gole@ti.com,
-	linus.walleij@linaro.org,
-	DLG-Adam.Ward.opensource@dm.renesas.com,
-	error27@gmail.com,
-	heiko@sntech.de,
-	hdegoede@redhat.com,
-	jernej.skrabec@gmail.com,
-	f.fainelli@gmail.com,
-	bchihi@baylibre.com,
-	linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
-	kernel@collabora.com
-Subject: [PATCH v1 01/18] thermal: core: Change governor name to const char pointer
-Date: Tue, 30 Jan 2024 12:12:33 +0100
-Message-ID: <20240130111250.185718-2-angelogioacchino.delregno@collabora.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240130111250.185718-1-angelogioacchino.delregno@collabora.com>
-References: <20240130111250.185718-1-angelogioacchino.delregno@collabora.com>
+	s=arc-20240116; t=1706613210; c=relaxed/simple;
+	bh=o6+Qv1XSc0r+DjzQ+UN0Go47sR7OYXlbbTVApQEvHdM=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=Q4QkmwUpZGsvYy1bfD3H6sST4Denh/f9trtqVULb4OK56ZNEtwLLRliHAhItmgVk5/ucnph37AiaP6mmD5Nn4S05Oc7kPOY2q4YKmBoT8N3Wu15IjXtBCU1uUHcAUNrcPnmttkG1ugxau6E8T03VgFNrov2zfbJv2F8AISAGi+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OWRMTAsW; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40U9Subu021047;
+	Tue, 30 Jan 2024 11:12:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=c1BeU21acqQL
+	zZJuqF68xS9O05SDPWdTDcRcFxY/38g=; b=OWRMTAsWnkKImj/9LnuWiTySySXF
+	uXk2g82g+Myo6CihJAEdo3c67Zi2KFwoffH9nIndKVJeZqnUy0wK2+FY9HszOorf
+	waOXBfilSLLAN0LTf3vprUbTPfNlq5sAp+ZtrtUrB5NeJFmRsL/l7IIrzwshBpWq
+	2xnenLJ5peM/IimVZT0Ni/1YnyNraEdCE3kDTf0iABJLOSduMHBQ80OqBzr5DaD8
+	VklyHcJeN7UbPehh9s4XAS5W5Fyc68J2pU8plAqd0KAyVc3UrpiBRK6hO7rP3BLq
+	6+uTLoEPzkBW+8VM+rsVnAEFYcv5iSqzXP6uuggGbv9pKnK9RB0ruw8/gQ==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vxupk8jhf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 30 Jan 2024 11:12:42 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 40UBCdSF021685;
+	Tue, 30 Jan 2024 11:12:39 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3vvtwkst75-1;
+	Tue, 30 Jan 2024 11:12:39 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40UBCdhL021680;
+	Tue, 30 Jan 2024 11:12:39 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-snehshah-hyd.qualcomm.com [10.147.246.35])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 40UBCcOD021676;
+	Tue, 30 Jan 2024 11:12:39 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2319345)
+	id 72D145013A3; Tue, 30 Jan 2024 16:42:37 +0530 (+0530)
+From: Sneh Shah <quic_snehshah@quicinc.com>
+To: Vinod Koul <vkoul@kernel.org>, Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Jose Abreu <joabreu@synopsys.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Cc: Sneh Shah <quic_snehshah@quicinc.com>, kernel@quicinc.com,
+        Andrew Halaney <ahalaney@redhat.com>
+Subject: [PATCH net-next v3] net: stmmac: dwmac-qcom-ethqos: Add support for 2.5G SGMII
+Date: Tue, 30 Jan 2024 16:42:34 +0530
+Message-Id: <20240130111234.1244-1-quic_snehshah@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 51Ok5m-SS5P1ZlilOA2gsYNrEpR3IESr
+X-Proofpoint-ORIG-GUID: 51Ok5m-SS5P1ZlilOA2gsYNrEpR3IESr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-30_05,2024-01-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ malwarescore=0 impostorscore=0 priorityscore=1501 clxscore=1015
+ phishscore=0 spamscore=0 bulkscore=0 adultscore=0 suspectscore=0
+ mlxscore=0 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2401190000 definitions=main-2401300082
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-All users are already assigning a const char * to the `governor_name`
-member of struct thermal_zone_params and to the `name` member of
-struct thermal_governor.
-Even if users are technically wrong, it just makes more sense to change
-this member to be a const char pointer instead of doing the other way
-around.
+Serdes phy needs to operate at 2500 mode for 2.5G speed and 1000
+mode for 1G/100M/10M speed.
+Added changes to configure serdes phy and mac based on link speed.
+Changing serdes phy speed involves multiple register writes for
+serdes block. To avoid redundant write opertions only update serdes
+phy when new speed is different.
 
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Sneh Shah <quic_snehshah@quicinc.com>
 ---
- include/linux/thermal.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+v3 changelog:
+- updated commit message
+---
+v2 changelog:
+- updated stmmac_pcs_ane to support autoneg disable
+- Update serdes speed to 1000 for 100M and 10M also
+---
+ .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 27 +++++++++++++++++++
+ .../net/ethernet/stmicro/stmmac/stmmac_pcs.h  |  2 ++
+ 2 files changed, 29 insertions(+)
 
-diff --git a/include/linux/thermal.h b/include/linux/thermal.h
-index b7a3deb372fd..65d8f92a9a0d 100644
---- a/include/linux/thermal.h
-+++ b/include/linux/thermal.h
-@@ -214,7 +214,7 @@ struct thermal_zone_device {
-  * @governor_list:	node in thermal_governor_list (in thermal_core.c)
-  */
- struct thermal_governor {
--	char name[THERMAL_NAME_LENGTH];
-+	const char *name;
- 	int (*bind_to_tz)(struct thermal_zone_device *tz);
- 	void (*unbind_from_tz)(struct thermal_zone_device *tz);
- 	int (*throttle)(struct thermal_zone_device *tz,
-@@ -226,7 +226,7 @@ struct thermal_governor {
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+index 31631e3f89d0..3ead32cd49a4 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+@@ -106,6 +106,7 @@ struct qcom_ethqos {
+ 	struct clk *link_clk;
+ 	struct phy *serdes_phy;
+ 	unsigned int speed;
++	int serdes_speed;
+ 	phy_interface_t phy_mode;
  
- /* Structure to define Thermal Zone parameters */
- struct thermal_zone_params {
--	char governor_name[THERMAL_NAME_LENGTH];
-+	const char *governor_name;
+ 	const struct ethqos_emac_por *por;
+@@ -608,17 +609,38 @@ static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos)
+ {
+ 	int val;
  
- 	/*
- 	 * a boolean to indicate if the thermal to hwmon sysfs interface
++	struct platform_device *pdev = ethqos->pdev;
++	struct net_device *dev = platform_get_drvdata(pdev);
++	struct stmmac_priv *priv = netdev_priv(dev);
+ 	val = readl(ethqos->mac_base + MAC_CTRL_REG);
+ 
+ 	switch (ethqos->speed) {
++	case SPEED_2500:
++		val &= ~ETHQOS_MAC_CTRL_PORT_SEL;
++		rgmii_updatel(ethqos, RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
++			      RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
++			      RGMII_IO_MACRO_CONFIG2);
++		if (ethqos->serdes_speed != SPEED_2500)
++			phy_set_speed(ethqos->serdes_phy, SPEED_2500);
++		ethqos->serdes_speed = SPEED_2500;
++		stmmac_pcs_ctrl_ane(priv, priv->ioaddr, 0, 0, 0);
++		break;
+ 	case SPEED_1000:
+ 		val &= ~ETHQOS_MAC_CTRL_PORT_SEL;
+ 		rgmii_updatel(ethqos, RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
+ 			      RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
+ 			      RGMII_IO_MACRO_CONFIG2);
++		if (ethqos->serdes_speed != SPEED_1000)
++			phy_set_speed(ethqos->serdes_phy, SPEED_1000);
++		ethqos->serdes_speed = SPEED_1000;
++		stmmac_pcs_ctrl_ane(priv, priv->ioaddr, 1, 0, 0);
+ 		break;
+ 	case SPEED_100:
+ 		val |= ETHQOS_MAC_CTRL_PORT_SEL | ETHQOS_MAC_CTRL_SPEED_MODE;
++		if (ethqos->serdes_speed != SPEED_1000)
++			phy_set_speed(ethqos->serdes_phy, SPEED_1000);
++		ethqos->serdes_speed = SPEED_1000;
++		stmmac_pcs_ctrl_ane(priv, priv->ioaddr, 1, 0, 0);
+ 		break;
+ 	case SPEED_10:
+ 		val |= ETHQOS_MAC_CTRL_PORT_SEL;
+@@ -627,6 +649,10 @@ static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos)
+ 			      FIELD_PREP(RGMII_CONFIG_SGMII_CLK_DVDR,
+ 					 SGMII_10M_RX_CLK_DVDR),
+ 			      RGMII_IO_MACRO_CONFIG);
++		if (ethqos->serdes_speed != SPEED_1000)
++			phy_set_speed(ethqos->serdes_phy, ethqos->speed);
++		ethqos->serdes_speed = SPEED_1000;
++		stmmac_pcs_ctrl_ane(priv, priv->ioaddr, 1, 0, 0);
+ 		break;
+ 	}
+ 
+@@ -799,6 +825,7 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+ 				     "Failed to get serdes phy\n");
+ 
+ 	ethqos->speed = SPEED_1000;
++	ethqos->serdes_speed = SPEED_1000;
+ 	ethqos_update_link_clk(ethqos, SPEED_1000);
+ 	ethqos_set_func_clk_en(ethqos);
+ 
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
+index aefc121464b5..13a30e6df4c1 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
+@@ -110,6 +110,8 @@ static inline void dwmac_ctrl_ane(void __iomem *ioaddr, u32 reg, bool ane,
+ 	/* Enable and restart the Auto-Negotiation */
+ 	if (ane)
+ 		value |= GMAC_AN_CTRL_ANE | GMAC_AN_CTRL_RAN;
++	else
++		value &= ~GMAC_AN_CTRL_ANE;
+ 
+ 	/* In case of MAC-2-MAC connection, block is configured to operate
+ 	 * according to MAC conf register.
 -- 
-2.43.0
+2.17.1
 
 
