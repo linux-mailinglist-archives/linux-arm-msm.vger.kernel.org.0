@@ -1,171 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-8953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8954-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF97B841C26
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 07:47:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E545B841C2F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 07:53:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3830828C1FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 06:47:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7930A286033
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 06:53:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BAF15467B;
-	Tue, 30 Jan 2024 06:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7986B3F9EF;
+	Tue, 30 Jan 2024 06:53:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GqOIcAA8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e+UghyA0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E230537F8
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 06:47:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3987B3F9FF
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 06:53:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706597234; cv=none; b=KAeZpUsdjNC3xIYgViAS92HoaMCNyWzky1VdteB1+NYHVNtvJGWduXnquDkPoc5jMiDZMITyWmcQnWmXL/FFEACu9y2UvmjheYqCPtBywVP0hJGW7DTAkZctkVAUnWOG9emAg5ovr4xKfyqpS3SI7GzNKoKtiv9xw2gGHEcRfVk=
+	t=1706597589; cv=none; b=BVfhGxQz4dban4QZT9ATugCt8VKOnNon11eAoS6aAEQefz03ucVUm1Gr0QkTSPdnvGvf1hTEVkaflYR8ojQr7SlbApz2KaUN8xnuMeY3I3v5C/ij/QRk3WAjFgjM4pnpvrJ1+OOQ4HTmwAjjg2M8Gj1IJXGE7ue/xrDl6GBL9tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706597234; c=relaxed/simple;
-	bh=Yr9q5taAxzx5jxxmv1tRyH2+HoyzMTNzkhBu27q+7l0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=lAHmFF7IUMuNYMN33RhGMTchAwkndMW/fkGL4WyQ8me6tD7X8GcJnaAChN+BxnnQ3diEKzgqydFUiTdCnOE5xRMHVQJ6X37K8Wz4PRCvEd1OuFWPk/lbFo4nU8nsTrspGyScbAA1kcn3Sm8wRLuE51pcghYKK7cxbv/21IOsojs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GqOIcAA8; arc=none smtp.client-ip=209.85.167.47
+	s=arc-20240116; t=1706597589; c=relaxed/simple;
+	bh=Uua8AEJpGWmpkqTiwzFsY8wXVc9KJY6aZ72D91JKadI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JdZI/8ekQfD3eShr/ADWMc5G1jTJJuQ7afM/Er3MwlcYCwosfqTU9lHQ0yqQkJd5bEpxJpjiIRDBBj9asy7eN1un0qS9xq+B6XSuS7wNhS6gUcTVvfgE84D7M1wpyrGo9xGHjQPCDqTC+5G2GGVnDI3AFk5fadZhEeLKBoDIMek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e+UghyA0; arc=none smtp.client-ip=209.85.216.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-51030667cedso4243312e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 22:47:11 -0800 (PST)
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-2906773c7e9so1801444a91.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 22:53:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706597230; x=1707202030; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TIZlNpio2xRbKCelL+jH7Jv0TEbudBZ5ilP6roQWReA=;
-        b=GqOIcAA8Kd1xDgsDSkQ2CwwosZ8/V+9zTblaAHSdMvPUHvyiTnJrPPhm/LLTFiDzED
-         QXOVc7H4irr7sbVbNxWev/zYBORrWf57Nd7GSQzSXK3d1+EUBWDIdDW+C3s/BOcElFVi
-         DyhMbcUGbpsKxkmiIJ20jGter4DkLp0d6Pu42mMAwQDwc4uvqlIIXSK3Y5zb2cyMKMYw
-         lV1Fb2HbfV0UVx4rMsZfH5bdj1kpQm3llo3OejTxnAOevWn6SMAvtdfCifIRfxpOgRw3
-         kjEo6CGQ9nMnqQJX5OhylGUGFKmwGqGus8P5ZHgmx+tx5enj7ndcGPVErUAacja9iJoF
-         aseQ==
+        d=linaro.org; s=google; t=1706597586; x=1707202386; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=HBYeRPxem/erlBXPgzZrx2qdN8I83pDKmoAAgmzuOtU=;
+        b=e+UghyA0c46HGxDNp5VB2PnBJRcPC2YBoPjYeJMz0+QTFSGcfuL58BJIW84euopFze
+         JnPrb5YPgw1Bn9buSgANK7Lw+I6a+I3Va+KWjIzYumbTyOD9KSfMEh2cP5UGeIjd2soM
+         m/NC/lTrUQCf2k6uLVGiS0fbCMMqpRlJluSYnL3Xe+PnCX4yyk7IyfIRlI7Dd7fgnY1g
+         VQj38CaH2l1AJScWR7y+O51K2VmXj0nf+/gDpxTFYi6zWfJRdQMBvNhZBWFVAuzpZZr9
+         7GEsehmuOc7eEz8qh2FymwWuTD+bSLDhNMQVk9rU2MZ/GljhdQxmleLAxYlWe1LqjO0D
+         Nmnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706597230; x=1707202030;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TIZlNpio2xRbKCelL+jH7Jv0TEbudBZ5ilP6roQWReA=;
-        b=cgvHjHjVEmvltze9mwVziSpVTwL7jrZsHwyC5KVx9ZYcHYRWedZYj+8Yxzr7L8tDnB
-         hvcY7c3kF0EdvMTdljf812U6OQZKWSO/3oijBQcHGjRFYE7bUOoUF8USvAU2+LE60Kqc
-         bso99ZPLUFOJW+i8a4vOeR9Mi/N00zRr93KQQUHF/lci+Q0t8beE/dnKi1VHdTDx8ZVt
-         w9T7SO5bHn5i1s+D8dCbfptPh8foTVG48lu+U58l1FTgPOtoBfVtJS34QVpM6oTLgEd1
-         5mqDlbXBZwFuzZ/UV8aaZRbvRVw3yu1+R6bd7btYBp3i7QCw/nR2ZE+pcXRGbyI/RADb
-         M2Pg==
-X-Gm-Message-State: AOJu0Yx4ihOeZvr4HVwKlmZiYGBcgwdfPu5xFNe4U+aVuA8BBfgjuKVP
-	MXCTwtNe6zlzoon33ZqwUxX9V+sXxST1Wi3kGh8SgfW30OMjUP/0/1Xm1ECRGcP4oRF6NCgwrPx
-	G
-X-Google-Smtp-Source: AGHT+IGIJ+oFaSjayPTR7DspAKUxRE/rmpexVTQ5OvG66TcD07PnSzDDWMlJxJOFbC1rISlDii7GYA==
-X-Received: by 2002:a05:6512:234e:b0:511:1775:5a1b with SMTP id p14-20020a056512234e00b0051117755a1bmr1802509lfu.38.1706597229926;
-        Mon, 29 Jan 2024 22:47:09 -0800 (PST)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id d18-20020a056512369200b005101e1870aasm1367068lfs.162.2024.01.29.22.47.09
+        d=1e100.net; s=20230601; t=1706597586; x=1707202386;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HBYeRPxem/erlBXPgzZrx2qdN8I83pDKmoAAgmzuOtU=;
+        b=pZVtkFLTyjtA1yYyVDzMO8cmxJ6IMtLot64IWNBMHseaEjue4k6x6fmDRskSHmfCzu
+         /HWWuXl7rovtBUCUA+1uwVhnLGPUFveY0MQ9KjIYrIwgF5KiPIw8aBrSUd5ftRKNBB4N
+         XeYZQZ9VYSIW3IAGa2r/n96qlUch+NMMr2ytjIra1Pc+LbtW1UtlxqQucJJzcYb54Ghy
+         dHGRFbOapC2acd1QT8AdYbymk+Q6hLlvu5+AMK9yJMxyY3mko5PIDvvGYQeMNh4nlmLJ
+         EfgKZqfq4znnb2Jz/0aaWy43/nZYTeD4o6zQZVRYQ+ag2Zgw4sbK4gDCsRX9UzTCWrRO
+         6h4g==
+X-Gm-Message-State: AOJu0Yz8Exi40d4jwte4S6CY/82BbOzG3QN1tRgk7sZbkQJOsFV6ke1F
+	h4X069bsqPZ7B10TcD+YMoiqrfRiwJunC63PiRj+6bsCutdxKgS5Ii4sadP1nA==
+X-Google-Smtp-Source: AGHT+IEGPtPBk1jGlW6ugBIW9qVPUdO2XKCvAewXwuo17gBW50pqPF4/Q5IXrkOCWtFprXXV4sCDcQ==
+X-Received: by 2002:a17:90b:1947:b0:290:1cd6:6acf with SMTP id nk7-20020a17090b194700b002901cd66acfmr3581438pjb.37.1706597586547;
+        Mon, 29 Jan 2024 22:53:06 -0800 (PST)
+Received: from thinkpad ([117.202.188.6])
+        by smtp.gmail.com with ESMTPSA id h21-20020a17090a9c1500b0028e87ce1de0sm9391496pjp.51.2024.01.29.22.53.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jan 2024 22:47:09 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 30 Jan 2024 08:47:08 +0200
-Subject: [PATCH 3/3] wifi: ath10k: drop fw.eboard file name
+        Mon, 29 Jan 2024 22:53:06 -0800 (PST)
+Date: Tue, 30 Jan 2024 12:22:59 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH RESEND v2 1/2] dt-bindings: PCI: qcom: Document the
+ X1E80100 PCIe Controller
+Message-ID: <20240130065259.GD32821@thinkpad>
+References: <20240129-x1e80100-pci-v2-0-5751ab805483@linaro.org>
+ <20240129-x1e80100-pci-v2-1-5751ab805483@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240130-wcn3990-board-fw-v1-3-738f7c19a8c8@linaro.org>
-References: <20240130-wcn3990-board-fw-v1-0-738f7c19a8c8@linaro.org>
-In-Reply-To: <20240130-wcn3990-board-fw-v1-0-738f7c19a8c8@linaro.org>
-To: Kalle Valo <kvalo@kernel.org>, Jeff Johnson <quic_jjohnson@quicinc.com>
-Cc: ath10k@lists.infradead.org, linux-wireless@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2741;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=Yr9q5taAxzx5jxxmv1tRyH2+HoyzMTNzkhBu27q+7l0=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBluJtrbsu2CTKAvl9H5XQ/cJRM6VTif6qlSydVi
- EzPhKX+Iu6JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZbibawAKCRCLPIo+Aiko
- 1dH9B/0XaL30eMhfCcqfeZI5LYlwAC+ZdjQF02vG8KUQRjqGCvf6K/1fb3mac/phOkoXYpalOT/
- 4FOnBv+qHbylchHd8eBnw3S20LnMj59pxRHl7totV1aiIsepBEcLu0L85drAlNNr6bWeK8K7GQD
- R8mzON5WfYOt1SZqpcqxuzksL4TWk2Qow4r6QHvE75uLHkvlK42zmRmrIIDHKjbmadntQ+QL2dZ
- 2K2vC+sOiFDjZclIpkLAxI4A0+7300tH3nuaPRtHu/O4Guj4FCvjR9TSaKkz8+oMaubr+ZBlquK
- XYrQVXhA9OkwcViNDMs4TnznjwWh3iy2OW8xrT8sQQknnBqf
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240129-x1e80100-pci-v2-1-5751ab805483@linaro.org>
 
-Follow the example set up by previous commit and drop .fw.eboard
-setting. Instead always use "eboard.bin" in this case. QCA9984 already
-uses that file name, any (im)possible future users will just have to use
-the same file name.
+On Mon, Jan 29, 2024 at 04:41:19PM +0200, Abel Vesa wrote:
+> Document the PCIe Controllers on the X1E80100 platform. They are similar
+> to the ones found on SM8550, but they don't have SF QTB clock.
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/net/wireless/ath/ath10k/core.c | 8 +-------
- drivers/net/wireless/ath/ath10k/hw.h   | 3 +--
- 2 files changed, 2 insertions(+), 9 deletions(-)
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
-index e01a7b196b99..71ca1c1a528f 100644
---- a/drivers/net/wireless/ath/ath10k/core.c
-+++ b/drivers/net/wireless/ath/ath10k/core.c
-@@ -448,7 +448,6 @@ static const struct ath10k_hw_params ath10k_hw_params_list[] = {
- 		.cal_data_len = 12064,
- 		.fw = {
- 			.dir = QCA9984_HW_1_0_FW_DIR,
--			.eboard = QCA9984_HW_1_0_EBOARD_DATA_FILE,
- 			.board_size = QCA99X0_BOARD_DATA_SZ,
- 			.board_ext_size = QCA99X0_BOARD_EXT_DATA_SZ,
- 			.ext_board_size = QCA99X0_EXT_BOARD_DATA_SZ,
-@@ -1294,13 +1293,8 @@ static int ath10k_core_fetch_board_data_api_1(struct ath10k *ar, int bd_ie_type)
- 		ar->normal_mode_fw.board_data = ar->normal_mode_fw.board->data;
- 		ar->normal_mode_fw.board_len = ar->normal_mode_fw.board->size;
- 	} else if (bd_ie_type == ATH10K_BD_IE_BOARD_EXT) {
--		if (!ar->hw_params.fw.eboard) {
--			ath10k_err(ar, "failed to find eboard file fw entry\n");
--			return -EINVAL;
--		}
--
- 		fw = ath10k_fetch_fw_file(ar, ar->hw_params.fw.dir,
--					  ar->hw_params.fw.eboard);
-+					  ATH10K_EBOARD_DATA_FILE);
- 		ar->normal_mode_fw.ext_board = fw;
- 		if (IS_ERR(ar->normal_mode_fw.ext_board))
- 			return PTR_ERR(ar->normal_mode_fw.ext_board);
-diff --git a/drivers/net/wireless/ath/ath10k/hw.h b/drivers/net/wireless/ath/ath10k/hw.h
-index 12e8aebab1e9..48897e5eca06 100644
---- a/drivers/net/wireless/ath/ath10k/hw.h
-+++ b/drivers/net/wireless/ath/ath10k/hw.h
-@@ -102,7 +102,6 @@ enum qca9377_chip_id_rev {
- #define QCA9984_HW_DEV_TYPE		0xa
- #define QCA9984_HW_1_0_CHIP_ID_REV	0x0
- #define QCA9984_HW_1_0_FW_DIR		ATH10K_FW_DIR "/QCA9984/hw1.0"
--#define QCA9984_HW_1_0_EBOARD_DATA_FILE "eboard.bin"
- #define QCA9984_HW_1_0_PATCH_LOAD_ADDR	0x1234
- 
- /* QCA9888 2.0 defines */
-@@ -152,6 +151,7 @@ enum qca9377_chip_id_rev {
- 
- #define ATH10K_BOARD_DATA_FILE         "board.bin"
- #define ATH10K_BOARD_API2_FILE         "board-2.bin"
-+#define ATH10K_EBOARD_DATA_FILE        "eboard.bin"
- 
- #define REG_DUMP_COUNT_QCA988X 60
- 
-@@ -546,7 +546,6 @@ struct ath10k_hw_params {
- 	struct ath10k_hw_params_fw {
- 		const char *dir;
- 		size_t board_size;
--		const char *eboard;
- 		size_t ext_board_size;
- 		size_t board_ext_size;
- 	} fw;
+- Mani
+
+> ---
+>  .../devicetree/bindings/pci/qcom,pcie.yaml         | 29 ++++++++++++++++++++++
+>  1 file changed, 29 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> index a93ab3b54066..7381e38b7398 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> @@ -41,6 +41,7 @@ properties:
+>            - qcom,pcie-sm8450-pcie0
+>            - qcom,pcie-sm8450-pcie1
+>            - qcom,pcie-sm8550
+> +          - qcom,pcie-x1e80100
+>        - items:
+>            - enum:
+>                - qcom,pcie-sm8650
+> @@ -227,6 +228,7 @@ allOf:
+>                - qcom,pcie-sm8450-pcie0
+>                - qcom,pcie-sm8450-pcie1
+>                - qcom,pcie-sm8550
+> +              - qcom,pcie-x1e80100
+>      then:
+>        properties:
+>          reg:
+> @@ -826,6 +828,32 @@ allOf:
+>            items:
+>              - const: pci # PCIe core reset
+>  
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,pcie-x1e80100
+> +    then:
+> +      properties:
+> +        clocks:
+> +          maxItems: 7
+> +        clock-names:
+> +          items:
+> +            - const: aux # Auxiliary clock
+> +            - const: cfg # Configuration clock
+> +            - const: bus_master # Master AXI clock
+> +            - const: bus_slave # Slave AXI clock
+> +            - const: slave_q2a # Slave Q2A clock
+> +            - const: noc_aggr # Aggre NoC PCIe AXI clock
+> +            - const: cnoc_sf_axi # Config NoC PCIe1 AXI clock
+> +        resets:
+> +          maxItems: 2
+> +        reset-names:
+> +          items:
+> +            - const: pci # PCIe core reset
+> +            - const: link_down # PCIe link down reset
+> +
+>    - if:
+>        properties:
+>          compatible:
+> @@ -884,6 +912,7 @@ allOf:
+>                - qcom,pcie-sm8450-pcie0
+>                - qcom,pcie-sm8450-pcie1
+>                - qcom,pcie-sm8550
+> +              - qcom,pcie-x1e80100
+>      then:
+>        oneOf:
+>          - properties:
+> 
+> -- 
+> 2.34.1
+> 
 
 -- 
-2.39.2
-
+மணிவண்ணன் சதாசிவம்
 
