@@ -1,152 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-9054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9BAE842876
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 16:53:52 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D4498428BF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 17:05:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9608628A4E7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 15:53:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 045B0B273D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 16:05:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F145F86AD9;
-	Tue, 30 Jan 2024 15:53:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8656286ADC;
+	Tue, 30 Jan 2024 16:05:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="IopQ6CkF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="R10HlOMP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CDD085C66
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 15:53:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDA47F7CF;
+	Tue, 30 Jan 2024 16:05:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706630011; cv=none; b=G+GQ0R3MdTtY+AVlxDnpryteHOrrAkHhuMC0p5H6LYbwPgqNqHfCvjcVXNDzs+aHTPK51k1xghJ7NQrMTFOyTCypqsea45IyFswEDB28D/J8rl97o/1zWw9w+2oUZ4f1KL2QEdjpylkTqD/7T/1OLfAMJ3R139ifrACIq+jqpr4=
+	t=1706630717; cv=none; b=NbXov3j5wv6EdaiorvJKuYV258L6yvpgiTDX+fSwvyTgWUMXULNSIqY59bUtrEiPWcZyo8XXmzIPS48e+k5l+FKvjGyIdST5IC1fNR/jIfIl+sFqM0U9D7LVT1pd0GiX3DzArKNzemAS5hXrmyX7skHT8z1E6rtUwHs1qIum3DQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706630011; c=relaxed/simple;
-	bh=5gq9bk2CACo+T8MhwqInhSIy3rOGWTcRWK1IgBCsVxI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oGbbFevGscbl81/IH4I6t6hAgmAzQRhXT5hICip4rmTzt8MbZcseg0G+73Zx22z825ex95tkDDdr5yYpy+5d3tbM3KyzjimsrO+8ccKwuskgO0qkq0R/VQRxh8D6eBtfGZTZ3/zuUxw4BekFvqv6482yT0kK+6QmLMB8aWR1/U0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=IopQ6CkF; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1706630009;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=oSj1lyNclmh9b1DFiLfFnvUIxkzThYLUPlpLm9/wz/A=;
-	b=IopQ6CkFdtaCaqV5cZ7dzixRvffYOoCKSoWpBlyKmr4hl10LYNAoynDeTDKhN4BjWUJqpE
-	hgz3Eh5ZjBkbOqH7HaagGu2qIG4gP2dM8CKmGjarZGRNuZyiqhso8Si1dsWpTiPhUQGQvc
-	vQ5nBVOIn3kzRE5EQoaWwvZn2S6rtC0=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-651-cvjMjgRvP-iEBlfoCCyKZQ-1; Tue, 30 Jan 2024 10:53:25 -0500
-X-MC-Unique: cvjMjgRvP-iEBlfoCCyKZQ-1
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-42ab1521acfso19923161cf.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 07:53:25 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706630005; x=1707234805;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oSj1lyNclmh9b1DFiLfFnvUIxkzThYLUPlpLm9/wz/A=;
-        b=rz2a5UPm3l1Tn0akbNKlgUp4+f9AS/fgbZjtKFbpYN3N4Emy+GBOD7W4SQGOimdGYV
-         fuNX/P01UR96iXWDbZBsF7lsfo0L7jAzZD82Snp5P1hpwo5qvA+CJL0iwQn7kj7r82QO
-         AW6Oi6dVPKMRMaLTTO+G6XnzAWPj0Z55JYxrEBKQsG1L4HkFo9iZW06ovKmcq/F4e8ES
-         ORpazZzYIHlzP3QWgWLMws08jaLie4TPfnfEkyfLp3xt1bywgapckD6S0jcpSzK76Mok
-         N98CnzQ2S8HMLzBI1x7g/sdxSzgv4KGVmJmX/SGmoXqyEWObGwp/Zy6QP5ZDsrJjWq4+
-         gsyA==
-X-Gm-Message-State: AOJu0YynzygSRgztWLE8K+UV+EeRJL6zyhfpQIqm+SvbG6NIbTz+Vw+x
-	m0nwu399EkrySTgwL1pnaidG2hh4oTA13Hh/OlC/nK2wA5JTyiXPrOAsgkdAcsIlz4xcAHut3DJ
-	1TDb0az4uDhaF6a6nYCpQVWRI/17Siuv2QaB8EZXcCH5DZv17+mhViY+HqdCHDtU=
-X-Received: by 2002:ac8:5950:0:b0:42a:6df3:1f1d with SMTP id 16-20020ac85950000000b0042a6df31f1dmr12272881qtz.74.1706630005301;
-        Tue, 30 Jan 2024 07:53:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFVEawnHTN95Z6HJiyigSQy1AJjcgY3k8TnIlbRXYXuot4rDh5Z3hGCkiEuIFI9fTvFfvDK0Q==
-X-Received: by 2002:ac8:5950:0:b0:42a:6df3:1f1d with SMTP id 16-20020ac85950000000b0042a6df31f1dmr12272860qtz.74.1706630005018;
-        Tue, 30 Jan 2024 07:53:25 -0800 (PST)
-Received: from fedora ([2600:1700:1ff0:d0e0::47])
-        by smtp.gmail.com with ESMTPSA id z12-20020ac87cac000000b0042a1223cb9bsm3313663qtv.70.2024.01.30.07.53.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jan 2024 07:53:24 -0800 (PST)
-Date: Tue, 30 Jan 2024 09:53:22 -0600
-From: Andrew Halaney <ahalaney@redhat.com>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: bhupesh.linux@gmail.com, 
-	Alexandre Torgue <alexandre.torgue@foss.st.com>, Jose Abreu <joabreu@synopsys.com>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org
-Subject: Re: Re: [PATCH] MAINTAINERS: Drop unreachable reviewer for Qualcomm
- ETHQOS ethernet driver
-Message-ID: <ual3c4fuuz5trgn2ekklsfeslwvswfjg5nij5epbnuf5mihfay@pp32fs6btwxk>
-References: <20240129-remove-dwmac-qcom-ethqos-reviewer-v1-1-2645eab61451@redhat.com>
- <ZbkWwn-oN5wqoPfJ@matsya>
+	s=arc-20240116; t=1706630717; c=relaxed/simple;
+	bh=BZ8JtjWH10t0sEg0/vuGfNmzZGWVPUHR/fGt79wyKJY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=IpYIGP/aPWEJTDA16H+Z7KIjP07PVlRpzB2lwtf496CGAU/psWcWa9H6QlMoe6lhU+Yn3Gx7BTdZFyjHMEQJRcDY2UYGHPSpWKrxf5hCyII8sDsbq81P2WWEltW0eO9h9Mm/F5DWXgtvAbXPMp+4AbqXkzz9AY0dvhAswse9gqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=R10HlOMP; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40U9Sgj0013639;
+	Tue, 30 Jan 2024 16:05:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=stfUhhoXEJ83Uc7cEU93PsVCwTX9veCXNlBP7fdmPZo=; b=R1
+	0HlOMPUbBMsgM+r/+AhdgAisiPHEaW40DfvQ410K64wduZdzlKbUKEAp42MZ7ej0
+	BDOWaJMXMysvfMDVt/k7YZ1BXPadL/d2rhevqK/js41mOC7lPTJfHoSwI/qx7UdH
+	O6TXzwi1mpE/6wKYwkbkDquKJjzQXCFjiI7CFEkPT54ygT8EaBdFZnrGvV7vmqK7
+	xZc2lL0CiPv4ciFSHxvdvtRI3CgHU2r22W+Hob5Yu7i9y7sKgdMGRTavhzYEeHz4
+	81y/IaHx1KfhYm1T4cFVr4l2TsxjJYjk9aEKrBAt92LERYVXJXyQWwSR6DlwqFj7
+	rwMvDrUbkLr1ck1eqyFA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vxwynh1ba-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 30 Jan 2024 16:05:08 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40UG57U1017424
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 30 Jan 2024 16:05:07 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 30 Jan
+ 2024 08:05:07 -0800
+Message-ID: <6966f6a7-9fb0-0766-3b69-af82c723d349@quicinc.com>
+Date: Tue, 30 Jan 2024 09:05:06 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZbkWwn-oN5wqoPfJ@matsya>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH] bus: mhi: host: Read PK HASH dynamically
+Content-Language: en-US
+To: Manivannan Sadhasivam <mani@kernel.org>
+CC: <quic_pkanojiy@quicinc.com>, <quic_carlv@quicinc.com>,
+        <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>
+References: <20231208165938.1340587-1-quic_jhugo@quicinc.com>
+ <20240130082138.GL32821@thinkpad>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <20240130082138.GL32821@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 2P7bo05FKudKAO10soc6V_LC5d8qEzbx
+X-Proofpoint-GUID: 2P7bo05FKudKAO10soc6V_LC5d8qEzbx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-30_07,2024-01-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
+ priorityscore=1501 mlxscore=0 bulkscore=0 mlxlogscore=962 malwarescore=0
+ suspectscore=0 clxscore=1011 impostorscore=0 lowpriorityscore=0
+ spamscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401190000 definitions=main-2401300118
 
-On Tue, Jan 30, 2024 at 09:03:22PM +0530, Vinod Koul wrote:
-> On 29-01-24, 11:12, Andrew Halaney wrote:
-> > Bhupesh's email responds indicating they've changed employers and with
-> > no new contact information. Let's drop the line from MAINTAINERS to
-> > avoid getting the same response over and over.
+On 1/30/2024 1:21 AM, Manivannan Sadhasivam wrote:
+> On Fri, Dec 08, 2023 at 09:59:38AM -0700, Jeffrey Hugo wrote:
+>> The OEM PK HASH registers in the BHI region are read once during firmware
+>> load (boot), cached, and displayed on demand via sysfs. This has a few
+>> problems - if firmware load is skipped, the registers will not be read and
+>> if the register values change over the life of the device the local cache
+>> will be out of sync.
+>>
+>> Qualcomm Cloud AI 100 can expose both these problems. It is possible for
+>> mhi_async_power_up() to be invoked while the device is in AMSS EE, which
+>> would bypass firmware loading. Also, Qualcomm Cloud AI 100 has 5 PK HASH
+>> slots which can be dynamically provisioned while the device is active,
+>> which would result in the values changing and users may want to know what
+>> keys are active.
+>>
+>> Address these concerns by reading the PK HASH registers on-demand during
+>> the sysfs read. This will result in showing the most current information.
+>>
+>> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 > 
-> Looks like Bhupesh sent the patch changing but never followed up with a
-> v2 for this:
-> lore.kernel.org/r/20230915191600.3410862-1-bhupesh.linux@gmail.com
+> Applied to mhi-next!
 > 
-> Would prefer if this is changed to his email (copied him as well)
-> 
+> - Mani
 
-Thanks for finding that! Bhupesh, do you plan on spinning a v2 soon? If
-so I will not send a v2, otherwise I can respin this with your email and
-no .mailmap change.
+I hope you applied v2 since this is a reply to v1.  I don't see mhi-next 
+with this change published yet, so I can't check.
 
-> 
-> > 
-> > Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-> > ---
-> > If anyone knows how to contact Bhupesh / if they're willing to continue
-> > being a reviewer feel free to suggest an alternative, but for the moment
-> > this is better than nothing.
-> > ---
-> >  MAINTAINERS | 1 -
-> >  1 file changed, 1 deletion(-)
-> > 
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index 939f6dd0ef6a..b285d9a123ce 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -18080,7 +18080,6 @@ F:	drivers/net/ethernet/qualcomm/emac/
-> >  
-> >  QUALCOMM ETHQOS ETHERNET DRIVER
-> >  M:	Vinod Koul <vkoul@kernel.org>
-> > -R:	Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> >  L:	netdev@vger.kernel.org
-> >  L:	linux-arm-msm@vger.kernel.org
-> >  S:	Maintained
-> > 
-> > ---
-> > base-commit: 596764183be8ebb13352b281a442a1f1151c9b06
-> > change-id: 20240129-remove-dwmac-qcom-ethqos-reviewer-1a37d8c71383
-> > 
-> > Best regards,
-> > -- 
-> > Andrew Halaney <ahalaney@redhat.com>
-> 
-> -- 
-> ~Vinod
-> 
-
+-Jeff
 
