@@ -1,93 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-8956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 860FE841C3B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 07:56:03 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6A24841C63
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 08:15:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1E5531F24CE3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 06:56:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7CC222888B2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 07:15:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD17B3F9E3;
-	Tue, 30 Jan 2024 06:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 739274595D;
+	Tue, 30 Jan 2024 07:15:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HTWnnUBb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tQUzVE32"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5674F29421
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 06:55:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E3D045006;
+	Tue, 30 Jan 2024 07:15:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706597759; cv=none; b=rxb7+aacuqQXz7WCTUZ/P2UR4DeKkUWUMDE1E+PmtvhAzYcrm9/zoLXCVfy/UHDSZwXg9Wu9SCf8vbM2cU7p503qxiWHoMYCUOPy/o+wrJ7YHg3pM74FD2EskmR8QhprCSH9DJBvGPrBaDyTKPfwzxpLfTLIrpehj2CkGm1/mM8=
+	t=1706598902; cv=none; b=LdMPMJ4CEM3oeDvc11KP+e8lGLj0XbXKz9U+z/Em0zRlEVG/GiC7c3MpC+WDfuLWK5e0W9EwZrxeAw7fald65avp3+q9uyDItA6iH9Slwu30NziyWm1qvMykpizvAxOOIf2PGYWzfhMl4lg+1FTY4mmbKjFKI19rqZKJWTeN+yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706597759; c=relaxed/simple;
-	bh=f38rd62FtvryxBuzls0JeAXhQpMqirBsUt1TSAhd7+8=;
+	s=arc-20240116; t=1706598902; c=relaxed/simple;
+	bh=3O2f3C735+i3w3e95T2JFKr5hUPP5tDZtu+rWvTmjuY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p9wrE3zhVsXzXJEhMtMyF21bXkB75diCIeCsJNjiUyR8Yed8CGiYgifb3CzYU8AqTdUa//ZB7sxAagplvrMmbDE96uCOSaUwk6RxypanP46PAo9yJ0Fehu64qRShnrASCZVPRUGvGldyCRQJOgGTEpG/VEsmId6arJ8kJiX0x3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HTWnnUBb; arc=none smtp.client-ip=209.85.215.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-5d81b08d6f2so3086669a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 22:55:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706597757; x=1707202557; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=5PJMH/HdUunOAP7tpQfdMSgZ5hDGSyOYNqx/qwkN+W4=;
-        b=HTWnnUBbj1XOR11QxUL5xwZM7iW4vzbEwO1dseiCsuQI8wwDFWoMhn0/Cy+DgM9ln8
-         LCM2hfn6MXVTYRmNThofHVEW9sdcV9fDcfcZswD0pgnScUTvpPT43Xz82W4aZmUyHhlU
-         UvRkwlSN/yTwtl13Uu/e3xLyAmI2eKuVk7mr0gJv4xWmjS5scnUTkqq6cwTJSDAhWo9b
-         Gf4Ilghq2Q/QH6peRjDQ689B2+i4+fMcj21iHeHsNEqMDOv2zuJTYJkx03tXyDnBiOci
-         2FB0dILtl44vdigsPfsA/J7tDHpHLY+JaR2mX1/eUhf5DgRYm6u6IiJyYLTHr1yULQ9m
-         DyqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706597757; x=1707202557;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5PJMH/HdUunOAP7tpQfdMSgZ5hDGSyOYNqx/qwkN+W4=;
-        b=QC/ik859XBQic/7Rc86VJH0ULhxDfrg/o23DjRuozaZBtmeOywXKtiUW89sKG5kyAy
-         /05mRkf6FYhLLA0bK0zUep8qGywO0im76qytIh/A3+SOx46vqZa7InOcOqD+1xqSeVAb
-         qFbpj+qos2uRdQ/XwcoGVYSSAzA8S7+Opm85+U6a5Z3LZbn2l7Hi8UHwxpehK3dzdAZe
-         XzhkN3mkrPX09PzXOma43eZEtIRnYo2fh1pzcHRv0d8Df4KfobNugUMPvirwPC2ryC61
-         C5f85HXEY2AEbInro3PcdLA/cwwogNQLk15cwcoo/RwlDnBq3WbKe4khpG7qkSSNCDPL
-         WUTA==
-X-Gm-Message-State: AOJu0Yy+77wYs04U2Ggs8EgbIXLPNplCzZ0krkYFvkQVwbsQ8KZkAdY/
-	iep8dy5S776uzwEwsZt42S2eSKAMo3n/tmxo/21GuBTrPFoIvuOX6wRcrxDo3Q==
-X-Google-Smtp-Source: AGHT+IFpEKVElT7de8BCoRgnp58zQKc7aOBfHYJC5E5RO4pmtcDt56YFkl+Z4pxHAPHQcV7Yg0OhZg==
-X-Received: by 2002:a05:6a20:4d99:b0:19a:54df:b77f with SMTP id gj25-20020a056a204d9900b0019a54dfb77fmr6054994pzb.60.1706597757608;
-        Mon, 29 Jan 2024 22:55:57 -0800 (PST)
-Received: from thinkpad ([117.202.188.6])
-        by smtp.gmail.com with ESMTPSA id u2-20020a170902b28200b001d8ef97de4asm2314948plr.38.2024.01.29.22.55.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jan 2024 22:55:57 -0800 (PST)
-Date: Tue, 30 Jan 2024 12:25:50 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
+	 Content-Type:Content-Disposition:In-Reply-To; b=d+GPi7OSLEbT8I1LPymYNfJcdDJKTUAdNrD9+O8IQYEcsKNYezOLzBfweGVgB0duWclWvvPT2UUeeA4eKsL/8nmvhA5lq8HPxj0K6ZeX1HX6V7jU9arosD3o7GQYq9OBmbaUUYP7WngHln0FoJYUVycSS/9uniiE6aH8NUJRInw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tQUzVE32; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F7E5C433C7;
+	Tue, 30 Jan 2024 07:14:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706598901;
+	bh=3O2f3C735+i3w3e95T2JFKr5hUPP5tDZtu+rWvTmjuY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tQUzVE32pRfeLHULf0XVo2M0xQIfe8i4jvnS8c2seESF4a9Uwx+lGrzKu/FLDdNXS
+	 Zk3inblB2vJfluBo6SBAYsbGf6rbjFM7kV2IhN3cR09JMjXi2Dc/zxAx6O1itT9Os2
+	 mpfxSjZjTcw4cuHQ9vUdvxwrbeJ+Kzfb8MFkQnGgNKT4mlQMcmjQx8CFZb4J65BK1c
+	 jvXq0zFxhESchT72bs03+YznWaPr5Cndpnphex39hCYFpShT85x64J9QQodCDlM6ND
+	 fYcwZ+QeUdDkSg7g098MdLFezdzVVgTGoRKN3hQGnYQbFF4GArgSo25LLYOiU4dsxj
+	 25v2pDD0LeViw==
+Date: Tue, 30 Jan 2024 12:44:49 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Viresh Kumar <viresh.kumar@linaro.org>
+Cc: Manivannan Sadhasivam <mani@kernel.org>,
+	Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Rob Herring <robh+dt@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-	Andy Gross <andy.gross@linaro.org>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: msm8996: Add missing UFS host
- controller reset
-Message-ID: <20240130065550.GF32821@thinkpad>
-References: <20240129-ufs-core-reset-fix-v1-0-7ac628aa735f@linaro.org>
- <20240129-ufs-core-reset-fix-v1-3-7ac628aa735f@linaro.org>
- <CAA8EJpphzwoCaetGfnM8dE478ic1-BMqXKA3XVLeC9j5BBu3SA@mail.gmail.com>
+	Conor Dooley <conor+dt@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Brian Masney <bmasney@redhat.com>,
+	Georgi Djakov <djakov@kernel.org>, linux-arm-msm@vger.kernel.org,
+	vireshk@kernel.org, quic_vbadigan@quicinc.com,
+	quic_skananth@quicinc.com, quic_nitegupt@quicinc.com,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 5/6] arm64: dts: qcom: sm8450: Add opp table support
+ to PCIe
+Message-ID: <20240130071449.GG32821@thinkpad>
+References: <20240112-opp_support-v6-0-77bbf7d0cc37@quicinc.com>
+ <20240112-opp_support-v6-5-77bbf7d0cc37@quicinc.com>
+ <20240129160420.GA27739@thinkpad>
+ <20240130061111.eeo2fzaltpbh35sj@vireshk-i7>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -97,26 +78,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAA8EJpphzwoCaetGfnM8dE478ic1-BMqXKA3XVLeC9j5BBu3SA@mail.gmail.com>
+In-Reply-To: <20240130061111.eeo2fzaltpbh35sj@vireshk-i7>
 
-On Mon, Jan 29, 2024 at 11:44:15AM +0200, Dmitry Baryshkov wrote:
-> On Mon, 29 Jan 2024 at 09:55, Manivannan Sadhasivam
-> <manivannan.sadhasivam@linaro.org> wrote:
-> >
-> > UFS host controller reset is required for the drivers to properly reset the
-> > controller. Hence, add it.
-> >
-> > Fixes: 57fc67ef0d35 ("arm64: dts: qcom: msm8996: Add ufs related nodes")
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+On Tue, Jan 30, 2024 at 11:41:11AM +0530, Viresh Kumar wrote:
+> On 29-01-24, 21:34, Manivannan Sadhasivam wrote:
+> > On Fri, Jan 12, 2024 at 07:52:04PM +0530, Krishna chaitanya chundru wrote:
+> > > PCIe needs to choose the appropriate performance state of RPMH power
+> > > domain and interconnect bandwidth based up on the PCIe gen speed.
+> > > 
+> > > Add the OPP table support to specify RPMH performance states and
+> > > interconnect peak bandwidth.
+> > > 
+> > > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/sm8450.dtsi | 74 ++++++++++++++++++++++++++++++++++++
+> > >  1 file changed, 74 insertions(+)
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> > > index 6b1d2e0d9d14..eab85ecaeff0 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> > > @@ -1827,7 +1827,32 @@ pcie0: pcie@1c00000 {
+> > >  			pinctrl-names = "default";
+> > >  			pinctrl-0 = <&pcie0_default_state>;
+> > >  
+> > > +			operating-points-v2 = <&pcie0_opp_table>;
+> > > +
+> > >  			status = "disabled";
+> > > +
+> > > +			pcie0_opp_table: opp-table {
+> > > +				compatible = "operating-points-v2";
+> > > +
+> > > +				opp-2500000 {
+> > > +					opp-hz = /bits/ 64 <2500000>;
+> > > +					required-opps = <&rpmhpd_opp_low_svs>;
+> > > +					opp-peak-kBps = <250000 250000>;
+> > 
+> > This is a question for Viresh: We already have macros in the driver to derive
+> > the bandwidth based on link speed. So if OPP core exposes a callback to allow
+> > the consumers to set the bw on its own, we can get rid of this entry.
+> > 
+> > Similar to config_clks()/config_regulators(). Is that feasible?
 > 
-> I think I had issues previously when I attempted to reset the
-> controller, but it might be because of the incomplete clocks
-> programming. Let met check whether it works first.
+> I don't have any issues with a new callback for bw. But, AFAIU, the DT
+> is required to represent the hardware irrespective of what any OS
+> would do with it. So DT should ideally have these values here, right ?
 > 
 
-Sure. Please let me know.
+Not necessarily. Because, right now the bandwidth values of the all peripherals
+are encoded within the drivers. Only OPP has the requirement to define the
+values in DT.
+
+> Also, the driver has already moved away from using those macros now
+> and depend on the OPP core to do the right thing. It only uses the
+> macro for the cases where the DT OPP table isn't available. And as
+> said by few others as well already, the driver really should try to
+> add OPPs dynamically in that case to avoid multiple code paths and
+> stick to a single OPP based solution.
+> 
+
+Still I prefer to use OPP for bandwidth control because both the voltage and
+bandwidth values need to be updated at the same time. My only point here is, if
+OPP exposes a callback for bw, then we can keep the DT behavior consistent.
 
 - Mani
+
+> -- 
+> viresh
 
 -- 
 மணிவண்ணன் சதாசிவம்
