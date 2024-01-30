@@ -1,77 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-9106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7EE87842F97
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 23:22:46 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 76F0F842FBE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 23:35:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B08F2898B3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 22:22:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 339EB28446E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 22:35:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87A9B7BAFE;
-	Tue, 30 Jan 2024 22:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABAF871B49;
+	Tue, 30 Jan 2024 22:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NkLqlFp+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TfXOa8eN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575407BAF4;
-	Tue, 30 Jan 2024 22:22:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C9514F61;
+	Tue, 30 Jan 2024 22:35:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706653348; cv=none; b=B8SNICiMk1A2jox8DAzsLK5QpypdBciieBVv8JamrCvclL4jx9dX3qTYvA7a1BhF7oDB0RCuNenF+Azkx7E8pbpMyzqGMSBtg+sIKc5y/FkIngrgbipdScQFIf2IMNk7SwGy7FAryUoU4uZDPlYaoKNLBMMlqYJV68lT7KH9WT4=
+	t=1706654140; cv=none; b=GJDzsd5F9Qu8ue20PMPVeFBY8mgCMpO1XUI7X+8HTKhQY4i6PtaHZ5tzp9o8MGK4DfcrINxk/GZIPqD/y4rlwWQ8FCKaRVs0Vm+Bs1Y7LE556vKDejy51B4gtmZrm3FXA8yibCmJDmcpqHnm2WwagmdP2faBOpgu8YoQ6rfOrso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706653348; c=relaxed/simple;
-	bh=CkFoaSeaycRC/DdmqGseEXgolv8sOgi4brXXvJsnits=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rhL/HoG0jkxO5/OKiIxg1J8uZUQpnvE3EIiGnUVPCc6W4z02fJn9wPJTdMFEu/DHy8S4LraW1yZRU7iTUjGQSgv9OyBm2W1+WcczHAajTcbnv5WEC5MMWbMg88WfZMjlDuX4akwydkXapuXAQu7WOt0fhFSJe6E2Ct2XKN0BC+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NkLqlFp+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C7CC433F1;
-	Tue, 30 Jan 2024 22:22:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706653347;
-	bh=CkFoaSeaycRC/DdmqGseEXgolv8sOgi4brXXvJsnits=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NkLqlFp+p02rJhYrNCRAMkgDSzYY1khObhOkevhg8VHgOnkRR1dp4964AVQtOALIA
-	 /8ywsB3PYTq6nkTy4ZufaRlj9IrgV46bGtsmJ+I4zz+Zozzz5BwM3LpC0kit1f/2cq
-	 Y3bKEdlF3gwTSBhSX+fPtjBrnhrjXC24CVD0KM4v+Uirfec98sb4vJghQcKrb3DZOb
-	 WulpVYvV1bkG+q+kFwbSjfjkv04pQQ+6+Yw3DhIsTvqd+VWoEkRoc8Be8G1ZiZ7Wq+
-	 1AVrayqAoA3UrfFhFglkL2Vmvxt8GaPsQvL1OoCZT8MUKeQI4nkakdOBCFs8LrS7jI
-	 gQ14+uHVy/0PA==
-Date: Tue, 30 Jan 2024 16:22:23 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Mao Jinlong <quic_jinlmao@quicinc.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, 
-	Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@arm.com>, Leo Yan <leo.yan@linaro.org>, 
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
-	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Tingwei Zhang <quic_tingweiz@quicinc.com>, Yuanfang Zhang <quic_yuanfang@quicinc.com>, 
-	Tao Zhang <quic_taozha@quicinc.com>
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: Add coresight nodes for sm8450
-Message-ID: <i6frhaxuhadqzf6tnci4pkvza2ajz6djn3pqdm3f7tvhvpixzg@mkntoeo2d2if>
-References: <20240119092500.7154-1-quic_jinlmao@quicinc.com>
- <20240119092500.7154-3-quic_jinlmao@quicinc.com>
+	s=arc-20240116; t=1706654140; c=relaxed/simple;
+	bh=qd+uYXWXLg/AiJYexFHfgFf/wOf03uG1TaUcBZV0vsY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=An3XIBttL76l1m4T6cZP1aY6uXfZgVSSdwHw+t4mE6h2+/2A8DGxu4RHwejoun8Kb82AEZwdz558hCpCgSoP4Zwu8O3WOHpPTjVbAMvMTw6Dn4edbApcWeFCgzYQ5HBMdgdTt78yWk9HAn1RYXWQJoiG3sYvl3GO6au9AiFZdnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TfXOa8eN; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1d51ba18e1bso40518565ad.0;
+        Tue, 30 Jan 2024 14:35:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706654138; x=1707258938; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=nQdNB3amLD3wgWN5nJoJwd+J8vfuxzeUi86+HaqASZA=;
+        b=TfXOa8eNb/fh3zJy4xFyARglaiYB9u2sdjtl+Js67Fm2Pt5x1z6zBNrq5JRfgTRrap
+         LGkbk19d/cqJF3HjqdF0X1p45vwrRE+uyAQD/bPkFvFMo4aFEkoejZGsHaEnOW4bdV7N
+         GqMH3YdNGWMN/ZxhW8pJaa3/DTDVzE6i5owTKRuaMjIweytW+3TjFDsMI0FI8q3inhk1
+         dKccFMuuqvjxTNP1f51LdiC8SdW2yiegVRZTh0YWaCNwzvj5OFvaojwljhygcX4O90xR
+         iLgOThl9qzSYi8qLlLCvoDWIIEeDqYEpAJFQevi3LDJREH8wxBg5AF4zFtrxC05QqJoT
+         Gt0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706654138; x=1707258938;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nQdNB3amLD3wgWN5nJoJwd+J8vfuxzeUi86+HaqASZA=;
+        b=LmdfQlFP965+8/Zb+4qzH1yFgYlnumbrIaymXvuoimI+yN4ftGv7kg3tdFHNT+jiR5
+         O5NbILE65U6f85iRJwSn9NUUszniDdoltFpzituhmu5oah1oBMrETjlH1S2UVxTcSP8v
+         pqi5+UNJ/8SElpQZfZTmMmwGll0BvvkuxJzp+tc/gKgmScjAZ+oa2EssWx0FWp4iqgPb
+         T8g4ZktMbMwLeDPTXQpBCeyxh6ybKpfAM9B/sGCz0GePT94DdHKL7XJAbF9yY9Lvb2fL
+         ph+NoUrEaduGu5dJ2+1Hu38NyTKgVZ5uTFQ/tqCiaSb4l+Pqahw2oDMUgGbipOSVD+pM
+         FHPw==
+X-Gm-Message-State: AOJu0YzAgGoRhfsTdCbExLQbWUMpcIuPU4sITpAOgsHlj0CO5mb0KQgQ
+	rhpwplF11BpfCi2eBqXk0y49UiD3STWuR86CwueGdRL/demwgQKR
+X-Google-Smtp-Source: AGHT+IFkj+E3wXJek3COMk2XISaWLhZObNoUmBCYA2ECXaBh+4x1L68p53d2Yn6DikZr614ZjhXc1w==
+X-Received: by 2002:a17:902:780f:b0:1d8:d6b9:c0c0 with SMTP id p15-20020a170902780f00b001d8d6b9c0c0mr5944770pll.46.1706654137509;
+        Tue, 30 Jan 2024 14:35:37 -0800 (PST)
+Received: from localhost ([2a00:79e1:2e00:1301:e1c5:6354:b45d:8ffc])
+        by smtp.gmail.com with ESMTPSA id k11-20020a170902f28b00b001d8e4b85636sm4115407plc.138.2024.01.30.14.35.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Jan 2024 14:35:36 -0800 (PST)
+From: Rob Clark <robdclark@gmail.com>
+To: dri-devel@lists.freedesktop.org
+Cc: linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	Rob Clark <robdclark@chromium.org>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/gem: Fix double resv lock aquire
+Date: Tue, 30 Jan 2024 14:35:33 -0800
+Message-ID: <20240130223533.25713-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240119092500.7154-3-quic_jinlmao@quicinc.com>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jan 19, 2024 at 01:24:58AM -0800, Mao Jinlong wrote:
+From: Rob Clark <robdclark@chromium.org>
 
-In line with other changes to sm8450.dtsi, the subject should be:
-arm64: dts: qcom: sm8450: Add coresight nodes
+Since commit 56e5abba8c3e ("dma-buf: Add unlocked variant of vmapping
+functions"), the resv lock is already held in the prime vmap path, so
+don't try to grab it again.
 
-Regards,
-Bjorn
+Fixes: 56e5abba8c3e ("dma-buf: Add unlocked variant of vmapping functions")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/msm_gem_prime.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c b/drivers/gpu/drm/msm/msm_gem_prime.c
+index 5f68e31a3e4e..8a27b57a5bea 100644
+--- a/drivers/gpu/drm/msm/msm_gem_prime.c
++++ b/drivers/gpu/drm/msm/msm_gem_prime.c
+@@ -26,7 +26,7 @@ int msm_gem_prime_vmap(struct drm_gem_object *obj, struct iosys_map *map)
+ {
+ 	void *vaddr;
+ 
+-	vaddr = msm_gem_get_vaddr(obj);
++	vaddr = msm_gem_get_vaddr_locked(obj);
+ 	if (IS_ERR(vaddr))
+ 		return PTR_ERR(vaddr);
+ 	iosys_map_set_vaddr(map, vaddr);
+-- 
+2.43.0
+
 
