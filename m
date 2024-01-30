@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-9105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B098F842F78
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 23:17:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7EE87842F97
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 23:22:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6E108286C24
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 22:17:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B08F2898B3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 22:22:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B149F7D40F;
-	Tue, 30 Jan 2024 22:17:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87A9B7BAFE;
+	Tue, 30 Jan 2024 22:22:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XdEo/pFD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NkLqlFp+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81BF67D406;
-	Tue, 30 Jan 2024 22:17:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575407BAF4;
+	Tue, 30 Jan 2024 22:22:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706653070; cv=none; b=NkFCH6MiMjz9CLN/wE6JnuGefItjJLEcHdutO7kP4ne7inwVfKdxrX1DA5hqMeSY21lPPEqTGYnSvQz5hbPdYXfERsqQuH1rEw2hgyFIETxtZLHv0nHEmi0UaXCyoQKDfPAJR/Hk1qy7nB+Dr96jY4ON/31m5/SmZvVEgIjiPu4=
+	t=1706653348; cv=none; b=B8SNICiMk1A2jox8DAzsLK5QpypdBciieBVv8JamrCvclL4jx9dX3qTYvA7a1BhF7oDB0RCuNenF+Azkx7E8pbpMyzqGMSBtg+sIKc5y/FkIngrgbipdScQFIf2IMNk7SwGy7FAryUoU4uZDPlYaoKNLBMMlqYJV68lT7KH9WT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706653070; c=relaxed/simple;
-	bh=O4fXDnLnUAaa/RdBv6EbHu0KGbuvVOeIH7UneTfQU7M=;
+	s=arc-20240116; t=1706653348; c=relaxed/simple;
+	bh=CkFoaSeaycRC/DdmqGseEXgolv8sOgi4brXXvJsnits=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JaQxxaH0qPyoi6pE6g6nUHYcptPA+lbxQl02JlB6ClRdWPv6tC+5itTmQmSAuxUQav4xXC+ztfxYp/9fs3sPH84mwS/RCq/Z9Qd/2nRuOGkudmme7fge3JSU621rx0vemqXkWijAFFyz5V9kXLpMfSYeTls365cyNLPl47HXdNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XdEo/pFD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82389C43390;
-	Tue, 30 Jan 2024 22:17:48 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=rhL/HoG0jkxO5/OKiIxg1J8uZUQpnvE3EIiGnUVPCc6W4z02fJn9wPJTdMFEu/DHy8S4LraW1yZRU7iTUjGQSgv9OyBm2W1+WcczHAajTcbnv5WEC5MMWbMg88WfZMjlDuX4akwydkXapuXAQu7WOt0fhFSJe6E2Ct2XKN0BC+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NkLqlFp+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C7CC433F1;
+	Tue, 30 Jan 2024 22:22:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706653070;
-	bh=O4fXDnLnUAaa/RdBv6EbHu0KGbuvVOeIH7UneTfQU7M=;
+	s=k20201202; t=1706653347;
+	bh=CkFoaSeaycRC/DdmqGseEXgolv8sOgi4brXXvJsnits=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=XdEo/pFDUusB9x+ZODME3BoYG1R4MGowmocf34l7WvMQnTqW8ZncTtfi9FUr+LrQL
-	 PYv7nzIQzRCrogdkqS8mWgKLXQbLUMNoeMAbdX6md2LhSByzuB9F6sJ8vKGJp4Bq8B
-	 uxPSYlphk0UISAaVyxylgmtzFQTO585OCTS+QyM5HJNwbjlAUnfCBWbaTVDx3kvF0f
-	 3rFFGFJWN6BghKfmxSQ+k+bpuZgEZ0JtIh8Ka2Rnjwrm1JTCDZzeWTXhar9B/TYm7x
-	 pBh5VSQGO/XD5gEZ/qzI+Mcc6XEM2s3Ud20IwfL1T4eqVo8aURVwFoDY3OQiN3+7UB
-	 h5e7hgo1FZYew==
-Date: Tue, 30 Jan 2024 16:17:46 -0600
+	b=NkLqlFp+p02rJhYrNCRAMkgDSzYY1khObhOkevhg8VHgOnkRR1dp4964AVQtOALIA
+	 /8ywsB3PYTq6nkTy4ZufaRlj9IrgV46bGtsmJ+I4zz+Zozzz5BwM3LpC0kit1f/2cq
+	 Y3bKEdlF3gwTSBhSX+fPtjBrnhrjXC24CVD0KM4v+Uirfec98sb4vJghQcKrb3DZOb
+	 WulpVYvV1bkG+q+kFwbSjfjkv04pQQ+6+Yw3DhIsTvqd+VWoEkRoc8Be8G1ZiZ7Wq+
+	 1AVrayqAoA3UrfFhFglkL2Vmvxt8GaPsQvL1OoCZT8MUKeQI4nkakdOBCFs8LrS7jI
+	 gQ14+uHVy/0PA==
+Date: Tue, 30 Jan 2024 16:22:23 -0600
 From: Bjorn Andersson <andersson@kernel.org>
 To: Mao Jinlong <quic_jinlmao@quicinc.com>
 Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, 
@@ -53,11 +53,10 @@ Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
 	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
 	Tingwei Zhang <quic_tingweiz@quicinc.com>, Yuanfang Zhang <quic_yuanfang@quicinc.com>, 
 	Tao Zhang <quic_taozha@quicinc.com>
-Subject: Re: [PATCH v3 1/2] dt-bindings: arm: coresight: Remove pattern match
- of ETE node name
-Message-ID: <px3fj5e4mk3siruehhmazxnxbrleetdpb2slt64agtvbcqhts2@gmrtdonybmzd>
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: Add coresight nodes for sm8450
+Message-ID: <i6frhaxuhadqzf6tnci4pkvza2ajz6djn3pqdm3f7tvhvpixzg@mkntoeo2d2if>
 References: <20240119092500.7154-1-quic_jinlmao@quicinc.com>
- <20240119092500.7154-2-quic_jinlmao@quicinc.com>
+ <20240119092500.7154-3-quic_jinlmao@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,52 +65,13 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240119092500.7154-2-quic_jinlmao@quicinc.com>
+In-Reply-To: <20240119092500.7154-3-quic_jinlmao@quicinc.com>
 
-On Fri, Jan 19, 2024 at 01:24:57AM -0800, Mao Jinlong wrote:
-> Remove pattern match of ETE node name. Use ete as the name for ete nodes.
-> 
+On Fri, Jan 19, 2024 at 01:24:58AM -0800, Mao Jinlong wrote:
 
-Not saying that you're wrong, but...why?
+In line with other changes to sm8450.dtsi, the subject should be:
+arm64: dts: qcom: sm8450: Add coresight nodes
 
 Regards,
 Bjorn
-
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> ---
->  .../bindings/arm/arm,embedded-trace-extension.yaml          | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml b/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml
-> index f725e6940993..a10a570bd9bc 100644
-> --- a/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml
-> +++ b/Documentation/devicetree/bindings/arm/arm,embedded-trace-extension.yaml
-> @@ -22,8 +22,6 @@ description: |
->    with any optional connection graph as per the coresight bindings.
->  
->  properties:
-> -  $nodename:
-> -    pattern: "^ete([0-9a-f]+)$"
->    compatible:
->      items:
->        - const: arm,embedded-trace-extension
-> @@ -55,13 +53,13 @@ examples:
->  
->  # An ETE node without legacy CoreSight connections
->    - |
-> -    ete0 {
-> +    ete {
->        compatible = "arm,embedded-trace-extension";
->        cpu = <&cpu_0>;
->      };
->  # An ETE node with legacy CoreSight connections
->    - |
-> -   ete1 {
-> +   ete {
->        compatible = "arm,embedded-trace-extension";
->        cpu = <&cpu_1>;
->  
-> -- 
-> 2.41.0
-> 
 
