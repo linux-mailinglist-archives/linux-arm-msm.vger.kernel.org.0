@@ -1,113 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-9101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40E48842EA4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 22:29:21 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7249842F2F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 22:54:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 742731C21107
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 21:29:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 838CA282D3C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 21:54:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB258762FB;
-	Tue, 30 Jan 2024 21:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64C7E7D3E7;
+	Tue, 30 Jan 2024 21:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q8ziWRqT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d9uVnBa8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E08E762C7;
-	Tue, 30 Jan 2024 21:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278457D3E3;
+	Tue, 30 Jan 2024 21:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706650156; cv=none; b=bCc1fv1LYVnd36Tk/2jghMBW0zmdOiO8INeJxdQo4lkDbU8Jo/8X/iSpKHieVlFqFfGT8Q3LzU7TCqzqc5goNmCkoyXv/kc2Tr2HhJWNF9LbZKDAjuPKNQDutn1uSXJw4igK6b159KRAc6v3dxhaExzZvurby0ByOFr4c0c+o70=
+	t=1706651656; cv=none; b=MSLRyESbpHNIekqzJ5IvSWjRxsruUR4iZl1wd/yB4d5k/aGuohLAIbraLWvLHnVCoBat/KLsWzSq0QtFoGYu1K7INRH0oi0RHzjKffhINu9vXTPmZ+zgA6u5d620Qa9+mpxwdEi4ctQy82Cd5ZdlTrmK5+DvwtR6DBJrJePZVW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706650156; c=relaxed/simple;
-	bh=htS2vi71gOQBI40lDiMqxxDjzh4dd9HyjhwVvwvSlpM=;
+	s=arc-20240116; t=1706651656; c=relaxed/simple;
+	bh=LTMVYrnQ0Ac5UrUfHkqd52vj2qm9n46fuacsL4mVVR8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SJwTLKQNqtqQwssXmjvjDxTkgNuSWh9BsLyOGqSXTFeU/8moOHnA4BlEVwmuCva024Hq/R4mSTRLnpwywJLfUaur0F33/d1GdrDuzuZK5TaL+daODTGL3tZQ4sUbZpzqGdJ94Xu8L08QonYrpLcVQnkjxw3VSTmuM3UTUXQSXJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q8ziWRqT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A927C433F1;
-	Tue, 30 Jan 2024 21:29:15 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=CT5c683JYJ/sloXDikQCsJ9kI1N9+q+5z6aaLXVtoSsjJWHN6I5WOEHfTWdTjBIYci3CM40L5d4kSMOEKp7Lhfyif39km5fwc23zSqUztDWdVvQknPw+93o2jpSTsA85G0lIXDhtrfGwxe6yM/XdBWvMEPcbOgxqzBDqtxs0uJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d9uVnBa8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B482CC433F1;
+	Tue, 30 Jan 2024 21:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706650156;
-	bh=htS2vi71gOQBI40lDiMqxxDjzh4dd9HyjhwVvwvSlpM=;
+	s=k20201202; t=1706651655;
+	bh=LTMVYrnQ0Ac5UrUfHkqd52vj2qm9n46fuacsL4mVVR8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Q8ziWRqTU1/k4ahFMKzw3ycKFIPnH4YRRmEJrRNGlwuYuDxo8WSFjfWw2K+G/yl2P
-	 F8d/FjV0nTx28FtFg6jlh6CmgGXj8ae3k028J/DhpcX480GeSfXmgHhxN0t1ijLWqH
-	 I0WlBdLWyOMVLgmSbCCncvCPYmTIbEvipENY2Bgi1SwrGRrf3SVJhfj3IUSzHjg411
-	 PP5wo7Qn5f+MNopTKCoKE+bQSnDZq1aDogbY5hHTDJBrygBQElLMvQx2g1TySzI6MZ
-	 dZaTX8R3LLkJe0u79X2uze3TQlgsdFKLi5YLYO0FsCdl/4E2Y6wxVal2R4auHViZNj
-	 ktDDYqJJkqmSg==
-Date: Tue, 30 Jan 2024 15:29:13 -0600
+	b=d9uVnBa8V4EX3P0L1wK1PVj+miY4+RIkfPIpH2K9TfKIAIQN9ZgpI+Ru+O9K0+Cde
+	 YKHMlEpMJ3tf1RwQ90YWtoBLJvxkS5uP5vAO914uS1bErG4AX1gB3ja33Nnpb8obPw
+	 vvomTc7HUQSZ3vqbhEm7l3Jq0JrL5ZmjRchPK+b+pRY1DLx2gnBBjVc+9hgleG3odt
+	 JXOwZu8e7iPvzuvHTQZV9CTGrBAIVR0aNv6qwPnyfu3foshVlhkE6Hrh4Q7dgbloL8
+	 cBFVhghTwNmG/tvmyoVAbKAXhwG1H9IdWkfbUz/WvPYTgDCqUybPNsVpRTzqeQLBfL
+	 7Eh52wD8vn8hQ==
+Date: Tue, 30 Jan 2024 15:54:10 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Lucas Karpinski <lkarpins@redhat.com>
-Cc: Andy Gross <agross@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] arm64: dts: qcom: sa8540p-ride: disable pcie2a node
-Message-ID: <mfdvit7jgr53qlhuedkrq6mtgjjmgfoejsuh6pgy6gusqq7vxq@rkufgqtht2ve>
-References: <qcoqksikfvdqxk6stezbzc7l2br37ccgqswztzqejmhrkhbrwt@ta4npsm35mqk>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Kalle Valo <kvalo@kernel.org>, 
+	"David S . Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Heiko Stuebner <heiko@sntech.de>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Chris Morgan <macromorgan@hotmail.com>, 
+	Linus Walleij <linus.walleij@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Arnd Bergmann <arnd@arndb.de>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	=?utf-8?B?TsOtY29sYXMgRiAuIFIgLiBBIC4=?= Prado <nfraprado@collabora.com>, Marek Szyprowski <m.szyprowski@samsung.com>, 
+	Peng Fan <peng.fan@nxp.com>, Robert Richter <rrichter@amd.com>, 
+	Dan Williams <dan.j.williams@intel.com>, Jonathan Cameron <Jonathan.Cameron@huawei.com>, 
+	Terry Bowman <terry.bowman@amd.com>, Lukas Wunner <lukas@wunner.de>, 
+	Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>, Abel Vesa <abel.vesa@linaro.org>, linux-wireless@vger.kernel.org, 
+	netdev@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: Re: [PATCH 4/9] PCI: create platform devices for child OF nodes
+ of the port node
+Message-ID: <d2he3ufg6m46zos4swww4t3peyq55blxhirsx37ou37rwqxmz2@5khumvic62je>
+References: <20240117160748.37682-1-brgl@bgdev.pl>
+ <20240117160748.37682-5-brgl@bgdev.pl>
+ <2024011707-alibi-pregnancy-a64b@gregkh>
+ <CAMRc=Mef7wxRccnfQ=EDLckpb1YN4DNLoC=AYL8v1LLJ=uFH2Q@mail.gmail.com>
+ <2024011836-wok-treadmill-c517@gregkh>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <qcoqksikfvdqxk6stezbzc7l2br37ccgqswztzqejmhrkhbrwt@ta4npsm35mqk>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2024011836-wok-treadmill-c517@gregkh>
 
-On Tue, Jan 09, 2024 at 10:20:50AM -0500, Lucas Karpinski wrote:
-> pcie2a and pcie3a both cause interrupt storms to occur. However, when
-> both are enabled simultaneously, the two combined interrupt storms will
-> lead to rcu stalls. Red Hat is the only company still using this board
-> and since we still need pcie3a, just disable pcie2a.
+On Thu, Jan 18, 2024 at 12:15:27PM +0100, Greg Kroah-Hartman wrote:
+> On Thu, Jan 18, 2024 at 11:58:50AM +0100, Bartosz Golaszewski wrote:
+> > On Wed, Jan 17, 2024 at 5:45 PM Greg Kroah-Hartman
+> > <gregkh@linuxfoundation.org> wrote:
+> > >
+> > > On Wed, Jan 17, 2024 at 05:07:43PM +0100, Bartosz Golaszewski wrote:
+> > > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > > >
+> > > > In order to introduce PCI power-sequencing, we need to create platform
+> > > > devices for child nodes of the port node.
+> > >
+> > > Ick, why a platform device?  What is the parent of this device, a PCI
+> > > device?  If so, then this can't be a platform device, as that's not what
+> > > it is, it's something else so make it a device of that type,.
+> > >
+> > 
+> > Greg,
+> > 
+> > This is literally what we agreed on at LPC. In fact: during one of the
+> > hall track discussions I said that you typically NAK any attempts at
+> > using the platform bus for "fake" devices but you responded that this
+> > is what the USB on-board HUB does and while it's not pretty, this is
+> > what we need to do.
+> 
+> Ah, you need to remind me of these things, this changelog was pretty
+> sparse :)
 > 
 
-Why are there interrupt storms? What interrupt(s) is(are) involved?
+I believe I missed this part of the discussion, why does this need to be
+a platform_device? What does the platform_bus bring that can't be
+provided by some other bus?
 
-Do you consider this a temporary fix?
-
-Are you okay with pcie3a misbehaving?
+(I'm not questioning the need for having a bus, creating devices, and
+matching/binding them to a set of drivers)
 
 Regards,
 Bjorn
 
-> Signed-off-by: Lucas Karpinski <lkarpins@redhat.com>
-> ---
-> v2:
-> - don't remove the entire pcie2a node, just set status to disabled.
-> - update commit message.
+> > Now as for the implementation, the way I see it we have two solutions:
+> > either we introduce a fake, top-level PCI slot platform device device
+> > that will reference the PCI host controller by phandle or we will live
+> > with a secondary, "virtual" platform device for power sequencing that
+> > is tied to the actual PCI device. The former requires us to add DT
+> > bindings, add a totally fake DT node representing the "slot" which
+> > doesn't really exist (and Krzysztof already expressed his negative
+> > opinion of that) and then have code that will be more complex than it
+> > needs to be. The latter allows us to not change DT at all (other than
+> > adding regulators, clocks and GPIOs to already existing WLAN nodes),
+> > reuse the existing parent-child relationship between the port node and
+> > the instantiated platform device as well as result in simpler code.
+> > 
+> > Given that DT needs to be stable while the underlying C code can
+> > freely change if we find a better solution, I think that the second
+> > option is a no-brainer here.
 > 
->  arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> Ok, I remove my objections, sorry about that, my confusion.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-> index b04f72ec097c..177b9dad6ff7 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-> @@ -376,14 +376,14 @@ &pcie2a {
->  	pinctrl-names = "default";
->  	pinctrl-0 = <&pcie2a_default>;
->  
-> -	status = "okay";
-> +	status = "disabled";
->  };
->  
->  &pcie2a_phy {
->  	vdda-phy-supply = <&vreg_l11a>;
->  	vdda-pll-supply = <&vreg_l3a>;
->  
-> -	status = "okay";
-> +	status = "disabled";
->  };
->  
->  &pcie3a {
-> -- 
-> 2.43.0
-> 
+> greg k-h
 
