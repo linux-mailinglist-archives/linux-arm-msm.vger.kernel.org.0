@@ -1,71 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-8922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8923-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BA40841746
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 01:05:33 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B01884176F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 01:27:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C53231F23627
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 00:05:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B05DA1C22D81
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 00:27:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DD9BEC4;
-	Tue, 30 Jan 2024 00:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2714412E4C;
+	Tue, 30 Jan 2024 00:26:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=layalina-io.20230601.gappssmtp.com header.i=@layalina-io.20230601.gappssmtp.com header.b="wwwFuAlg"
+	dkim=pass (2048-bit key) header.d=layalina-io.20230601.gappssmtp.com header.i=@layalina-io.20230601.gappssmtp.com header.b="YUdrdMAL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078272594
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 00:05:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74EED2FA
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 00:26:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706573129; cv=none; b=E3iOTG4TZ2XSViRp/s8vv2ySEPoTQPBniyw/DlloDup+e8KVgZEYn7DMhvRE5g9d5I8GjYYrbRl1IXT+fbzoodxkaYeIwq7R+YIQMOhsVGRwDcMyC2hWXm89hzi6GrrpkTwnez6rMZFpYpYOAxYOeXeIto3/5h8hAqDRtMn5AIE=
+	t=1706574419; cv=none; b=jTDH6F+pvTIEb0bnJa/FxK89uM2YrluSI6n3KKayMpsYD9pB02xQJ6mMTWuBfRhT4XW7sFicUmgBi/RBN8Zr2/bw9MDe3eABBFxcb8XlusLxBr7KAnYJrlvc03yUE66mvyyr0annNnvOc4mRAwHfwZhKs/A9Oejk8Xkzx0DBZWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706573129; c=relaxed/simple;
-	bh=m+0FwiboCnTUjVYArGv7RhH9oT8oe6HzEysbTX1aTGc=;
+	s=arc-20240116; t=1706574419; c=relaxed/simple;
+	bh=z2PvlQJy6oSu55Ar0+qrueOuia9IRx4cYjiHsPmCbKg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d07W7GmDluzyaqjZR1KOfnyjB1maytCDuEBiVJqnmOypm77EiKIRu9dYn59pa7QBgHu+VGdFXLAwCkaU0cRpBITzccnAZkq2+y8vL0oNZ/TOPwrlKoICzYRgwCLA/oXDCt7MJDW9at7s/7ekZD/MXcDsxvfmdd6p/C59jgO/cPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=layalina.io; spf=pass smtp.mailfrom=layalina.io; dkim=pass (2048-bit key) header.d=layalina-io.20230601.gappssmtp.com header.i=@layalina-io.20230601.gappssmtp.com header.b=wwwFuAlg; arc=none smtp.client-ip=209.85.128.51
+	 Content-Type:Content-Disposition:In-Reply-To; b=jLCNx5IY7IqwKz3Eoqh+vUl62kXKLks1pic+u1EA6/iuYmJOOHSjUBoQLzj27YcetCWXDeYOdCDai1nGpb5HFedIyY89M1X9oa6rgUtFFTPKkvVXi3X/DekbA+/W9TSoSNO3loGxXrxiaj0ylPqbEOichSfMclT2vLBvCbk4RV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=layalina.io; spf=pass smtp.mailfrom=layalina.io; dkim=pass (2048-bit key) header.d=layalina-io.20230601.gappssmtp.com header.i=@layalina-io.20230601.gappssmtp.com header.b=YUdrdMAL; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=layalina.io
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=layalina.io
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-40eac352733so40940875e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 16:05:27 -0800 (PST)
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-40efcd831f5so5053495e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 16:26:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=layalina-io.20230601.gappssmtp.com; s=20230601; t=1706573126; x=1707177926; darn=vger.kernel.org;
+        d=layalina-io.20230601.gappssmtp.com; s=20230601; t=1706574415; x=1707179215; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=YxbSifhVqIOt2/m5QZSeFQNg25CWOD22Pv4LfmhthMA=;
-        b=wwwFuAlgXdGlNk/Fd8yxAyxoqzRYrM88nLXFzcu/ZGDxpxe3Qd1/idUSwldAqTOWoI
-         1Vbz6lN5D0qiBNR9BSW7PGi6bIr2cTDddmaO4w+Swh7ZLAL8I9pIbp3sfXi47fDUNIRC
-         e7kDFfRLtAD13KLWMwP79Ph7ISRDRmyPTFOqTn0j3fy6DhOnIZuPbLIAmKTUJSkK3ceS
-         8+xy+3aFuE4tzYaoPsIg9rb3kdH8V/QiiAZpCNHCKae0KkhXMkVErya2frTd+S6lam4a
-         n8ulkBTAu/Jf9A9MNh5OmUGCOk/v/2kkrXSnn9aGqYVGLZ7qop6S9cTLDYY3vHlWVI6B
-         mF9A==
+        bh=LoTHTB8+351LtvZp8jPnaErRIgkgUFGS9zCIdeKBry0=;
+        b=YUdrdMALuXpNIHKmT4M3EsL/YH2dZ+m9DtlR2YqiKEEb36ldg/NK+ZIq2/cJqenI1Q
+         DCxLwqMJ/m++FxV627exZ2pn1xQtLWB4IXWb9Ail+rnrzpWygPokCQ2pTID1EV6gqBPj
+         wb2grmh/v/j2zhCggjO9uVhwgHBW+DvjLbR8lrbZ2NPZ2iY9dtv8iRtmrssnaWp8OJ75
+         C5HETPoTAlcW9CfszEZyvs5ns3UF9w2ii0Vy0biLZRjVVfd2H8syyh+P4wMC+c8YTR21
+         8R1C9Pct7+xEiJA1CBsdTzuAAVnY4IB1bKkZ2O+ieYZCgWwU2gw6vfgJBX5Magmex6px
+         3o6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706573126; x=1707177926;
+        d=1e100.net; s=20230601; t=1706574415; x=1707179215;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YxbSifhVqIOt2/m5QZSeFQNg25CWOD22Pv4LfmhthMA=;
-        b=qF1ZDtIRxUueVie6hEkp3gt4c+rT9ey5fR4RrnctPO7wPBUGIVlfV1eLwlUMzwqeoC
-         wqRHDxVkuM9BsQVFS8wBy3YqtkCMnz/nQrsIE98mmL+qnZVS92kj7TQZIiN2OjV+DQPd
-         fTT1QapREAv3KbX1aTqacXsuXgqSQBLz1Nw1aEHZz8q5vLbS3VHAMkFjycPFI+FFlI5s
-         5AxP/eWuhp/s3zserjDyr+EGI1Uy/b/7EFozC+3Ahm0QUmKHEfQY1hDyCjvqZQ8gfINp
-         o0lhFMD5/bFS52Lvv+577hCgQ/6lIKNRcUXR1XgJXVfCKFXqQ4Yz8dLr0YFXJGh7vAw9
-         vJsQ==
-X-Gm-Message-State: AOJu0YxUpuOCDVBcHtlijJplbk+d2X5wdZKb+xTqkQO82dyy1CkCWAgQ
-	3WPfrzlHbWd1rdad2hqk/B5DDVKzjrZvevh0BWnS+mmzhqWyLh8L3QK8DVnpwRI=
-X-Google-Smtp-Source: AGHT+IEcOm4ToE+OjMANypBdoNmKfiC7rumN1mFFCPVcffivoLtpNe7xAo25vCDii/5hc1czCprBwQ==
-X-Received: by 2002:a05:600c:4654:b0:40e:b29c:7103 with SMTP id n20-20020a05600c465400b0040eb29c7103mr5917032wmo.8.1706573126220;
-        Mon, 29 Jan 2024 16:05:26 -0800 (PST)
+        bh=LoTHTB8+351LtvZp8jPnaErRIgkgUFGS9zCIdeKBry0=;
+        b=SPPLTYxcuBKjYhbEz4/kd+CHhRBNu84sMo7KToOVLHRhfnzMenTl4eW0SesVYBqbsB
+         QcsCk6CvHhHZ3NIXZ+m1itm4IoObhZaB9vRA7i4QCHwHtXePhcbDum37mufcKKxI/vNB
+         5Aa4I7ULEEX7X9AL5WwzJ1GQWn+XNsVo4zC0bvoOui8HlBKbTJxQ1yqHu842PQSflRWN
+         l3RdRC5rBSqhpJQIlQhWK1L8Vq6IURF9hvAPj+W7YMgTy50X1o70qqrCJrjVH+7UGbie
+         NfM4zV4YhuctWXkUIOf4TkCrl12Sm4hPOd4AfHhT5CUL/ELjwcSoeHhS5B62Vi4CzUOD
+         YsIQ==
+X-Gm-Message-State: AOJu0Yw46sQSS6hbj5dL8OsJpwVkWjXaC3WtWsvP85h+mz2Gj5lTbaHV
+	f+lcYZwkXDbJfsyIqmiMFfrXDmX8ww36SoyGZK2Q4ZI0Yd4pGnqc9QIDIafBYtE=
+X-Google-Smtp-Source: AGHT+IErDNsPgM+53jLYQa1JKmwsqFgEKm+SIF4elZJgJyMfY1ZqEXDjNiAXRyQHViZAKn/wfHl2FA==
+X-Received: by 2002:a5d:6691:0:b0:33a:e8be:51bd with SMTP id l17-20020a5d6691000000b0033ae8be51bdmr3789565wru.51.1706574415100;
+        Mon, 29 Jan 2024 16:26:55 -0800 (PST)
 Received: from airbuntu ([213.122.231.14])
-        by smtp.gmail.com with ESMTPSA id n6-20020a05600c500600b0040e3488f16dsm11277752wmr.12.2024.01.29.16.05.25
+        by smtp.gmail.com with ESMTPSA id u17-20020adff891000000b0033ae55db108sm6611757wrp.20.2024.01.29.16.26.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jan 2024 16:05:25 -0800 (PST)
-Date: Tue, 30 Jan 2024 00:05:24 +0000
+        Mon, 29 Jan 2024 16:26:54 -0800 (PST)
+Date: Tue, 30 Jan 2024 00:26:52 +0000
 From: Qais Yousef <qyousef@layalina.io>
 To: Vincent Guittot <vincent.guittot@linaro.org>
 Cc: linux@armlinux.org.uk, catalin.marinas@arm.com, will@kernel.org,
@@ -80,11 +80,10 @@ Cc: linux@armlinux.org.uk, catalin.marinas@arm.com, will@kernel.org,
 	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
 	linux-doc@vger.kernel.org
-Subject: Re: [PATCH v4 1/5] cpufreq: Add a cpufreq pressure feedback for the
- scheduler
-Message-ID: <20240130000524.4dlivtwn427csjj5@airbuntu>
+Subject: Re: [PATCH v4 2/5] sched: Take cpufreq feedback into account
+Message-ID: <20240130002652.ipdyqs3sjy6qqt6t@airbuntu>
 References: <20240109164655.626085-1-vincent.guittot@linaro.org>
- <20240109164655.626085-2-vincent.guittot@linaro.org>
+ <20240109164655.626085-3-vincent.guittot@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -93,109 +92,194 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240109164655.626085-2-vincent.guittot@linaro.org>
+In-Reply-To: <20240109164655.626085-3-vincent.guittot@linaro.org>
 
 On 01/09/24 17:46, Vincent Guittot wrote:
-> Provide to the scheduler a feedback about the temporary max available
-> capacity. Unlike arch_update_thermal_pressure, this doesn't need to be
-> filtered as the pressure will happen for dozens ms or more.
+> Aggregate the different pressures applied on the capacity of CPUs and
+> create a new function that returns the actual capacity of the CPU:
+>   get_actual_cpu_capacity()
 > 
 > Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+> Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
 > ---
->  drivers/cpufreq/cpufreq.c | 36 ++++++++++++++++++++++++++++++++++++
->  include/linux/cpufreq.h   | 10 ++++++++++
->  2 files changed, 46 insertions(+)
+>  kernel/sched/fair.c | 45 +++++++++++++++++++++++++--------------------
+>  1 file changed, 25 insertions(+), 20 deletions(-)
 > 
-> diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-> index 44db4f59c4cc..f4eee3d107f1 100644
-> --- a/drivers/cpufreq/cpufreq.c
-> +++ b/drivers/cpufreq/cpufreq.c
-> @@ -2563,6 +2563,40 @@ int cpufreq_get_policy(struct cpufreq_policy *policy, unsigned int cpu)
+> diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+> index 9cc20855dc2b..e54bbf8b4936 100644
+> --- a/kernel/sched/fair.c
+> +++ b/kernel/sched/fair.c
+> @@ -4910,13 +4910,22 @@ static inline void util_est_update(struct cfs_rq *cfs_rq,
+>  	trace_sched_util_est_se_tp(&p->se);
 >  }
->  EXPORT_SYMBOL(cpufreq_get_policy);
 >  
-> +DEFINE_PER_CPU(unsigned long, cpufreq_pressure);
-> +
-> +/**
-> + * cpufreq_update_pressure() - Update cpufreq pressure for CPUs
-> + * @policy: cpufreq policy of the CPUs.
-> + *
-> + * Update the value of cpufreq pressure for all @cpus in the policy.
-> + */
-> +static void cpufreq_update_pressure(struct cpufreq_policy *policy)
+> +static inline unsigned long get_actual_cpu_capacity(int cpu)
 > +{
-> +	unsigned long max_capacity, capped_freq, pressure;
-> +	u32 max_freq;
-> +	int cpu;
+> +	unsigned long capacity = arch_scale_cpu_capacity(cpu);
 > +
-> +	cpu = cpumask_first(policy->related_cpus);
-> +	max_freq = arch_scale_freq_ref(cpu);
-> +	capped_freq = policy->max;
+> +	capacity -= max(thermal_load_avg(cpu_rq(cpu)), cpufreq_get_pressure(cpu));
+
+Does cpufreq_get_pressure() reflect thermally throttled frequency, or just the
+policy->max being capped by user etc? I didn't see an update to cpufreq when we
+topology_update_hw_pressure(). Not sure if it'll go through another path.
+
+maxing with thermal_load_avg() will change the behavior below where we used to
+compare against instantaneous pressure. The concern was that it not just can
+appear quickly, but disappear quickly too. thermal_load_avg() will decay
+slowly, no?  This means we'll lose a lot of opportunities for better task
+placement until this decays which can take relatively long time.
+
+So maxing handles the direction where a pressure suddenly appears. But it
+doesn't handle where it disappears.
+
+I suspect your thoughts are that if it was transient then thermal_load_avg()
+should be small anyway - which I think makes sense.
+
+I think we need a comment to explain these nuance differences.
+
 > +
-> +	/*
-> +	 * Handle properly the boost frequencies, which should simply clean
-> +	 * the cpufreq pressure value.
-> +	 */
-> +	if (max_freq <= capped_freq) {
-> +		pressure = 0;
-> +	} else {
-> +		max_capacity = arch_scale_cpu_capacity(cpu);
-> +		pressure = max_capacity -
-> +			   mult_frac(max_capacity, capped_freq, max_freq);
-> +	}
-> +
-> +	for_each_cpu(cpu, policy->related_cpus)
-> +		WRITE_ONCE(per_cpu(cpufreq_pressure, cpu), pressure);
-
-Is this WRITE_ONCE() required? I don't see why. But assuming I missed
-something, better pair it with READ_ONCE() in cpufreq_get_pressure()?
-
-Beside that, LGTM
-
-Reviewed-by: Qais Yousef <qyousef@layalina.io>
-
+> +	return capacity;
 > +}
 > +
->  /**
->   * cpufreq_set_policy - Modify cpufreq policy parameters.
->   * @policy: Policy object to modify.
-> @@ -2618,6 +2652,8 @@ static int cpufreq_set_policy(struct cpufreq_policy *policy,
->  	policy->max = __resolve_freq(policy, policy->max, CPUFREQ_RELATION_H);
->  	trace_cpu_frequency_limits(policy);
->  
-> +	cpufreq_update_pressure(policy);
-> +
->  	policy->cached_target_freq = UINT_MAX;
->  
->  	pr_debug("new min and max freqs are %u - %u kHz\n",
-> diff --git a/include/linux/cpufreq.h b/include/linux/cpufreq.h
-> index afda5f24d3dd..b1d97edd3253 100644
-> --- a/include/linux/cpufreq.h
-> +++ b/include/linux/cpufreq.h
-> @@ -241,6 +241,12 @@ struct kobject *get_governor_parent_kobj(struct cpufreq_policy *policy);
->  void cpufreq_enable_fast_switch(struct cpufreq_policy *policy);
->  void cpufreq_disable_fast_switch(struct cpufreq_policy *policy);
->  bool has_target_index(void);
-> +
-> +DECLARE_PER_CPU(unsigned long, cpufreq_pressure);
-> +static inline unsigned long cpufreq_get_pressure(int cpu)
-> +{
-> +	return per_cpu(cpufreq_pressure, cpu);
-> +}
->  #else
->  static inline unsigned int cpufreq_get(unsigned int cpu)
+>  static inline int util_fits_cpu(unsigned long util,
+>  				unsigned long uclamp_min,
+>  				unsigned long uclamp_max,
+>  				int cpu)
 >  {
-> @@ -263,6 +269,10 @@ static inline bool cpufreq_supports_freq_invariance(void)
->  	return false;
->  }
->  static inline void disable_cpufreq(void) { }
-> +static inline unsigned long cpufreq_get_pressure(int cpu)
-> +{
-> +	return 0;
-> +}
->  #endif
+> -	unsigned long capacity_orig, capacity_orig_thermal;
+>  	unsigned long capacity = capacity_of(cpu);
+> +	unsigned long capacity_orig;
+>  	bool fits, uclamp_max_fits;
 >  
->  #ifdef CONFIG_CPU_FREQ_STAT
+>  	/*
+> @@ -4948,7 +4957,6 @@ static inline int util_fits_cpu(unsigned long util,
+>  	 * goal is to cap the task. So it's okay if it's getting less.
+>  	 */
+>  	capacity_orig = arch_scale_cpu_capacity(cpu);
+> -	capacity_orig_thermal = capacity_orig - arch_scale_thermal_pressure(cpu);
+>  
+>  	/*
+>  	 * We want to force a task to fit a cpu as implied by uclamp_max.
+> @@ -5023,7 +5031,8 @@ static inline int util_fits_cpu(unsigned long util,
+>  	 * handle the case uclamp_min > uclamp_max.
+>  	 */
+>  	uclamp_min = min(uclamp_min, uclamp_max);
+> -	if (fits && (util < uclamp_min) && (uclamp_min > capacity_orig_thermal))
+> +	if (fits && (util < uclamp_min) &&
+> +	    (uclamp_min > get_actual_cpu_capacity(cpu)))
+>  		return -1;
+>  
+>  	return fits;
+> @@ -7404,7 +7413,7 @@ select_idle_capacity(struct task_struct *p, struct sched_domain *sd, int target)
+>  		 * Look for the CPU with best capacity.
+>  		 */
+>  		else if (fits < 0)
+> -			cpu_cap = arch_scale_cpu_capacity(cpu) - thermal_load_avg(cpu_rq(cpu));
+> +			cpu_cap = get_actual_cpu_capacity(cpu);
+>  
+>  		/*
+>  		 * First, select CPU which fits better (-1 being better than 0).
+> @@ -7897,8 +7906,8 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
+>  	struct root_domain *rd = this_rq()->rd;
+>  	int cpu, best_energy_cpu, target = -1;
+>  	int prev_fits = -1, best_fits = -1;
+> -	unsigned long best_thermal_cap = 0;
+> -	unsigned long prev_thermal_cap = 0;
+> +	unsigned long best_actual_cap = 0;
+> +	unsigned long prev_actual_cap = 0;
+>  	struct sched_domain *sd;
+>  	struct perf_domain *pd;
+>  	struct energy_env eenv;
+> @@ -7928,7 +7937,7 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
+>  
+>  	for (; pd; pd = pd->next) {
+>  		unsigned long util_min = p_util_min, util_max = p_util_max;
+> -		unsigned long cpu_cap, cpu_thermal_cap, util;
+> +		unsigned long cpu_cap, cpu_actual_cap, util;
+>  		long prev_spare_cap = -1, max_spare_cap = -1;
+>  		unsigned long rq_util_min, rq_util_max;
+>  		unsigned long cur_delta, base_energy;
+> @@ -7940,18 +7949,17 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
+>  		if (cpumask_empty(cpus))
+>  			continue;
+>  
+> -		/* Account thermal pressure for the energy estimation */
+> +		/* Account external pressure for the energy estimation */
+>  		cpu = cpumask_first(cpus);
+> -		cpu_thermal_cap = arch_scale_cpu_capacity(cpu);
+> -		cpu_thermal_cap -= arch_scale_thermal_pressure(cpu);
+> +		cpu_actual_cap = get_actual_cpu_capacity(cpu);
+>  
+> -		eenv.cpu_cap = cpu_thermal_cap;
+> +		eenv.cpu_cap = cpu_actual_cap;
+>  		eenv.pd_cap = 0;
+>  
+>  		for_each_cpu(cpu, cpus) {
+>  			struct rq *rq = cpu_rq(cpu);
+>  
+> -			eenv.pd_cap += cpu_thermal_cap;
+> +			eenv.pd_cap += cpu_actual_cap;
+>  
+>  			if (!cpumask_test_cpu(cpu, sched_domain_span(sd)))
+>  				continue;
+> @@ -8022,7 +8030,7 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
+>  			if (prev_delta < base_energy)
+>  				goto unlock;
+>  			prev_delta -= base_energy;
+> -			prev_thermal_cap = cpu_thermal_cap;
+> +			prev_actual_cap = cpu_actual_cap;
+>  			best_delta = min(best_delta, prev_delta);
+>  		}
+>  
+> @@ -8037,7 +8045,7 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
+>  			 * but best energy cpu has better capacity.
+>  			 */
+>  			if ((max_fits < 0) &&
+> -			    (cpu_thermal_cap <= best_thermal_cap))
+> +			    (cpu_actual_cap <= best_actual_cap))
+>  				continue;
+>  
+>  			cur_delta = compute_energy(&eenv, pd, cpus, p,
+> @@ -8058,14 +8066,14 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
+>  			best_delta = cur_delta;
+>  			best_energy_cpu = max_spare_cap_cpu;
+>  			best_fits = max_fits;
+> -			best_thermal_cap = cpu_thermal_cap;
+> +			best_actual_cap = cpu_actual_cap;
+>  		}
+>  	}
+>  	rcu_read_unlock();
+>  
+>  	if ((best_fits > prev_fits) ||
+>  	    ((best_fits > 0) && (best_delta < prev_delta)) ||
+> -	    ((best_fits < 0) && (best_thermal_cap > prev_thermal_cap)))
+> +	    ((best_fits < 0) && (best_actual_cap > prev_actual_cap)))
+>  		target = best_energy_cpu;
+>  
+>  	return target;
+> @@ -9441,8 +9449,8 @@ static inline void init_sd_lb_stats(struct sd_lb_stats *sds)
+>  
+>  static unsigned long scale_rt_capacity(int cpu)
+>  {
+> +	unsigned long max = get_actual_cpu_capacity(cpu);
+>  	struct rq *rq = cpu_rq(cpu);
+> -	unsigned long max = arch_scale_cpu_capacity(cpu);
+>  	unsigned long used, free;
+>  	unsigned long irq;
+>  
+> @@ -9454,12 +9462,9 @@ static unsigned long scale_rt_capacity(int cpu)
+>  	/*
+>  	 * avg_rt.util_avg and avg_dl.util_avg track binary signals
+>  	 * (running and not running) with weights 0 and 1024 respectively.
+> -	 * avg_thermal.load_avg tracks thermal pressure and the weighted
+> -	 * average uses the actual delta max capacity(load).
+>  	 */
+>  	used = READ_ONCE(rq->avg_rt.util_avg);
+>  	used += READ_ONCE(rq->avg_dl.util_avg);
+> -	used += thermal_load_avg(rq);
+>  
+>  	if (unlikely(used >= max))
+>  		return 1;
 > -- 
 > 2.34.1
 > 
