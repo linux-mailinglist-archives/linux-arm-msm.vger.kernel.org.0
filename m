@@ -1,162 +1,310 @@
-Return-Path: <linux-arm-msm+bounces-9048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C37E28426EB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 15:27:47 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 89D29842734
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 15:53:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E81D91C24870
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 14:27:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 045091F29EE0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 14:53:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09E846E2A1;
-	Tue, 30 Jan 2024 14:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B7718002C;
+	Tue, 30 Jan 2024 14:52:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WMJnfP2z"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Bru1iKqG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404176DD12
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 14:27:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7477A811E2
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 14:52:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706624860; cv=none; b=HN+8R/aq/Vj50G10NCTeq+PlcWojmr6DrH77n9UREh4FBMK7CekP1B0USiTrsxfsbgvULVuPgV8pNkm02x/SfNwZzRAZhVstH+b28Euo07ugXn4O/jrH3wx2aMjSSf8vO4i84cvH+Y/oYEznWMzvKcbaa6v1rZzajnsH9SLDk+w=
+	t=1706626372; cv=none; b=FzDiQ2heTzrCyLVXzZ3QPGhNL9Ze87vssarkoaxpYP/j19xDdP51eIaQJOMSjRfsscGAIHe8nz2H+eM5BsutybJkOFNCEli/+Eu0GzoN7oHJvdUy7R/RI3sGwgIDvqHM64NeG2UEP3nTG+JMeUCNNQmvUCSThIQ3jiLRjxeytgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706624860; c=relaxed/simple;
-	bh=1f5OFWRGCFNuCnU0woByAM3fR2l/VC/oHJ1U3YhfhlA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sgK3+XfluoFxVNO3jLH1gcgQ+q2ICsIIsOO48ihS28+cBdcOmtF5brFkgqgnmtsoI2hW9iIqz/IV8t3YiqMwOmsPJnYPYwC8WrjPisIsOwfy2HvkIKGW0MpBYByEuFjBM88l8qor80jIwJQBdGXzarRH6em4JK8fO73PVi8ct2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WMJnfP2z; arc=none smtp.client-ip=209.85.218.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a36126ee41eso130007066b.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 06:27:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706624857; x=1707229657; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EECbX8jgSq+DfODAOJ8mQuJ3bJhPgpsfxnfB2ud2Lr8=;
-        b=WMJnfP2zxCdV0tQcQRJb4VBNJd7HILoTETaWa7xvSdsYUeHYLaVIrcRySauTVOaXjv
-         5LW1p0njPqvj5Xy4fikYQThm0RaXs4neU+8MVksnAbeE6et8Whlpb14+CsyvkYyRD0cR
-         BF+75upDTsOvM9Vl5qw9ibf032y13LCLeKy/srJderYMVIl8UdtfQ0Fi9z764BTEdDVM
-         eZ7OWsg2hLPg8lpwlg8SAJeS+wAk5wEmwWZ7ZD+HgbHrTQwtx1i7vqY961m8c3xav0hM
-         epJloM7Ddbt9pkuzX+52BAudpxmTxWe8Jeu7NPbyMkX8tylccgvm0c5pfFmsF9BpYDEl
-         +aeQ==
+	s=arc-20240116; t=1706626372; c=relaxed/simple;
+	bh=vSTH+qJFTV87gQKqkaHX5SCjGsU6KRFuGCr3IlFlsyE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lEZ3YLAKgqeb29tyOfKxRPEHxiebaZsvcnXv65/7tJjpcdTzuE0w18wcKjPiECpvT15DZm7uX79jZOf07X6X8XfbK40jTqsSP2CjMo1XloqJNnrkc0ah/5SSvLu0sUfhS3v1Vlgt3gYUNmeQYjAdhTZVibXvNFMq8ZZWTVugx8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Bru1iKqG; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1706626368;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8zXIEHqxnF5x8fqME0EnzRwI4pZGwBIorp0Z18etWBg=;
+	b=Bru1iKqGIXSaHwgiOYKtDVlo+5Z9oTnN3z9vrkxlhyr+VfO9wCYBSjZ0qrM6hNH+ykKVuW
+	PEIbithmkb99oo6Cfja+PyIDFwP8Uxj0hsB5pCiu3xJlSDpSC1w/L5S2rK2Q6V8IZs6LWc
+	PHQKlBjpEAx2jmaUfZ0V/Zgi6Vya3Wk=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-575-oigZ-3CyO1C0ixF_uD3IKQ-1; Tue, 30 Jan 2024 09:52:47 -0500
+X-MC-Unique: oigZ-3CyO1C0ixF_uD3IKQ-1
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-42aa67d8f27so27652161cf.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 06:52:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706624857; x=1707229657;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EECbX8jgSq+DfODAOJ8mQuJ3bJhPgpsfxnfB2ud2Lr8=;
-        b=srQVusjpJYZMZu43y2auIR9qBj/QqevmrZ9R84kObLTah992/FtqSSiRMeYiOKQpAS
-         jU7zccKI1248tT61eKDeIxf41Y99SlkZe5Ri3MxoUbnHBOX3YTIwBBddFsNMhcpt0xnV
-         lyXUZDTEBmiEf3SToaZzzecBnAu8YkNbAjpk7k0GQObyj2y5oBSY5Mnw+rgTnhGmTQbi
-         FHqCnD1xdzFxYhFq9qFydtapzXkFkEZU8hwmFqIl/YimX1WEbBTOHMN1EOhmeeYdtRkk
-         lhofQf8Fn/PTspNYL3gmwzGTY9+/I7IutxnLq7qC0Qnm9SnXpuibnNPmx9lWihcVe+lp
-         1IFA==
-X-Gm-Message-State: AOJu0YwP/PN+C8f+ETm8ODVjI702y1EHlHhC4uNrrrmzjU5gqEBSKtYM
-	BnqelJqtdCG12fE2y1IEosCS2opQx31mesaJoLf2UywrPQgoW4m5slaZI7M9cgM=
-X-Google-Smtp-Source: AGHT+IEhDwot7I0Ca1EErZYG0g2gyImoJB4jCcK3FTPIxS7iueWSzoFuwIkQmoA+D3cUQxOJ8mRJqw==
-X-Received: by 2002:a17:906:4eda:b0:a36:50fb:37ef with SMTP id i26-20020a1709064eda00b00a3650fb37efmr187019ejv.28.1706624857388;
-        Tue, 30 Jan 2024 06:27:37 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCUnK5Kra680jGPQFlC9Zs/4lIqIMu+w0s4ov8PcmJoaKnb95Fm9Tu8/8hGnyGjnG4ZZkjezJyZGe+wBzEQpaktB9BZKM6kiecN5wI/0FKrJ2NT4/00weUSmQHga9EZoId8HDZECK9sjOLjTMt0OwTIkPbTkwwNvkAPPOHbSbu7h3eudPUTCmseiG9E77jzyyNlIWCqOrFiUjABZo4elqO1LALg511NPpT30Io3FLEa12z8+lezMIriJ5kdHRNvp84tuoYeTGdiXEBBX2Aa9klZ3AXcJ62MmvGsBVBHFJ4D2k2Q36SE7+SSfSJp4iNn0d+Ly8vS+LFo+PNaBMCO5DCAy1o1USQ==
-Received: from [192.168.1.20] ([178.197.222.62])
-        by smtp.gmail.com with ESMTPSA id k4-20020a1709061c0400b00a349e943828sm5148913ejg.75.2024.01.30.06.27.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Jan 2024 06:27:37 -0800 (PST)
-Message-ID: <9016fa2b-fdd6-4124-a53b-e06d45acd673@linaro.org>
-Date: Tue, 30 Jan 2024 15:27:35 +0100
+        d=1e100.net; s=20230601; t=1706626366; x=1707231166;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8zXIEHqxnF5x8fqME0EnzRwI4pZGwBIorp0Z18etWBg=;
+        b=ni3yDOPWRpQgyezezL6p00VWu4beuIPOdUWppnuCCXxxe2yQOSvMVO6WhBv/5Q4Bu1
+         zV/FarMN5vxuSPlRsr6DJFcuvZb7/z73iftZKrShUSGYmxb8q/AyjTPagb5q21xqfo8j
+         9HSe5izQWUs9az2HdGJNJ06ir6SeepBbIoiNU0yfPos0Cn4lZQ/nuX3vaO9qiIUYgaxg
+         YOAa0lJoxgNJDpYOUnut7ZSLW+NcOVylXRzioXVBByv0eBRXq2RpmfM62wE2bbrZsVVz
+         nfEk+3QSlzLIxz607+9McJ2nhkryRpodEvXWS7Sn9tEUmk32EBcD3z1m5iMy/+E6QQxT
+         MHVA==
+X-Gm-Message-State: AOJu0YyjzYiFBN4GoVSv5X7f2sU+oEvGrWLdqx07TqyXF78DDF/9I5N3
+	9qNXpe/ED7htDvOCSY8Q/SgScLB6MLV7JYVugKKtLge1ZS4IFpWcMGd+85LmGA2RUocmjO7DdgH
+	ZL79rv/AnwRVY9iCJg5x9KcuehWBvpnTw0ptW0QPvfdcykIRPtBAOhzSD5pecdbQ=
+X-Received: by 2002:a05:622a:58d:b0:42a:2c06:8d80 with SMTP id c13-20020a05622a058d00b0042a2c068d80mr8749399qtb.132.1706626366479;
+        Tue, 30 Jan 2024 06:52:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHjaFGcc9l+3mqQTXVG4vcaZkKQ72af4sAX8tJbGEAhm+gTtc8Kb28IE9sd3pI/NnMzvO8UDg==
+X-Received: by 2002:a05:622a:58d:b0:42a:2c06:8d80 with SMTP id c13-20020a05622a058d00b0042a2c068d80mr8749382qtb.132.1706626366172;
+        Tue, 30 Jan 2024 06:52:46 -0800 (PST)
+Received: from localhost (pool-71-184-142-128.bstnma.fios.verizon.net. [71.184.142.128])
+        by smtp.gmail.com with ESMTPSA id kf13-20020a05622a2a8d00b0042a9a2e43ffsm2913586qtb.92.2024.01.30.06.52.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Jan 2024 06:52:45 -0800 (PST)
+Date: Tue, 30 Jan 2024 09:52:44 -0500
+From: Eric Chanudet <echanude@redhat.com>
+To: Ninad Naik <quic_ninanaik@quicinc.com>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org, 
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, quic_psodagud@quicinc.com, quic_kprasan@quicinc.com, 
+	kernel@quicinc.com
+Subject: Re: [PATCH v2] arm64: dts: qcom: sa8775p: Add new memory map updates
+ to SA8775P
+Message-ID: <p462blapygqos3upzf74las4bze7b54guln4d3cvblw6dtsxga@676j2l7fchy4>
+References: <20240125055134.7015-1-quic_ninanaik@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Revert "arm64: dts: qcom: qrb5165-rb5: add the Bluetooth
- node"
-Content-Language: en-US
-To: Bartosz Golaszewski <brgl@bgdev.pl>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20240130130930.18683-1-brgl@bgdev.pl>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240130130930.18683-1-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240125055134.7015-1-quic_ninanaik@quicinc.com>
 
-On 30/01/2024 14:09, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Thu, Jan 25, 2024 at 11:21:34AM +0530, Ninad Naik wrote:
+> New memory map layout changes (by Qualcomm firmware) have brought
+> in updates to base addresses and/or size for different memory regions
+> like cpcucp_fw, tz-stat, and also introduces new memory regions for
+> resource manager firmware. The updated memory map also fixes existing
+> issues pertaining to boot up failure while running memtest, thus
+> improving stability.
 > 
-> This reverts commit 71a73864e144aadaa582fe8296ef73fcf3ea7377.
+> This change brings in these corresponding memory map updates to the
+> device tree for SA8775P SoC platform, which currently is in its
+> development stage.
 > 
-> The bluetooth module of the QCA6391 should be represented as consuming
-> the power outputs of the PMU and not the regulators that are PMU's
-> inputs. We will be able to model it this way (together with the WLAN
-> module) once the pwrseq subsystem gets upstream with a dedicated driver
-> for the PMU.
+> Signed-off-by: Ninad Naik <quic_ninanaik@quicinc.com>
+> ---
+> Changes since v1:
+> - Updated commit message.
+> - Fixed reserved memory node naming, by replacing underscore with
+>   hyphen.
+> - https://lore.kernel.org/all/20240118155711.7601-1-quic_ninanaik@quicinc.com/
+> ---
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 103 +++++++++++++++++++++++---
+>  1 file changed, 94 insertions(+), 9 deletions(-)
 > 
-> Thankfully this change has no corresponding DT bindings yet so we can
-> safely revert adding the bluetooth node.
-> 
-> Fixes: 71a73864e144 ("arm64: dts: qcom: qrb5165-rb5: add the Bluetooth node")
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> index a7eaca33d326..2e9606c80381 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> @@ -356,13 +356,18 @@ uefi_log: uefi-log@908b0000 {
+>  			no-map;
+>  		};
+>  
+> +		ddr_training_checksum: ddr-training-checksum@908c0000 {
+> +			reg = <0x0 0x908c0000 0x0 0x1000>;
+> +			no-map;
+> +		};
+> +
+>  		reserved_mem: reserved@908f0000 {
+> -			reg = <0x0 0x908f0000 0x0 0xf000>;
+> +			reg = <0x0 0x908f0000 0x0 0xe000>;
+>  			no-map;
+>  		};
+>  
+> -		secdata_apss_mem: secdata-apss@908ff000 {
+> -			reg = <0x0 0x908ff000 0x0 0x1000>;
+> +		secdata_apss_mem: secdata-apss@908fe000 {
+> +			reg = <0x0 0x908fe000 0x0 0x2000>;
+>  			no-map;
+>  		};
+>  
+> @@ -373,8 +378,43 @@ smem_mem: smem@90900000 {
+>  			hwlocks = <&tcsr_mutex 3>;
+>  		};
+>  
+> -		cpucp_fw_mem: cpucp-fw@90b00000 {
+> -			reg = <0x0 0x90b00000 0x0 0x100000>;
 
-I don't think that dropping more-or-less correct DTS nodes is a fix. A
-fix could be changing the less-correct DTS into fully-correct DTS.
+On the latest firmware I have access to (mid-January), I still trigger a
+fault on that block with these changes applied:
+[    0.000000] earlycon: qcom_geni0 at MMIO 0x0000000000a8c000 (options '115200n8')
+[    0.000000] printk: legacy bootconsole [qcom_geni0] enabled
+[    0.000000] early_memtest: # of tests: 1
+[    0.000000]   0x0000000090880000 - 0x00000000908b0000 pattern 0000000000000000
+[    0.000000]   0x00000000908c1000 - 0x00000000908f0000 pattern 0000000000000000
+[    0.000000]   0x0000000090b00000 - 0x0000000090c00000 pattern 0000000000000000
+[    0.000000] Internal error: synchronous external abort: 0000000096000010 [#1] PREEMPT SMP
+[    0.000000] Modules linked in:
+[    0.000000] CPU: 0 PID: 0 Comm: swapper Not tainted 6.8.0-rc1-next-20240129-00001-g487b7c881fa6 #179
+[    0.000000] Hardware name: Qualcomm SA8775P Ride (DT)
+[    0.000000] pstate: 800000c5 (Nzcv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    0.000000] pc : early_memtest+0x1e0/0x2a8
+[    0.000000] lr : early_memtest+0x1a8/0x2a8
+[    0.000000] sp : ffffc3168c233c60
+[    0.000000] x29: ffffc3168c233c60 x28: 0000000000000000 x27: ffff244650b00000
+[    0.000000] x26: 0000000090b00000 x25: 0000000000000000 x24: ffff244650c00000
+[    0.000000] x23: ffffc3168c872980 x22: ffffc3168c30c000 x21: ffffc3168c30c000
+[    0.000000] x20: 0000000080000000 x19: 0000000f54100000 x18: 0000000000000006
+[    0.000000] x17: 3030303030303030 x16: 303030303030206e x15: 7265747461702030
+[    0.000000] x14: 3030303063303930 x13: 3030303030303030 x12: 3030303030303030
+[    0.000000] x11: 206e726574746170 x10: ffffc3168c2bc578 x9 : ffffc3168c264578
+[    0.000000] x8 : 00000000ffffefff x7 : ffffc3168c2bc578 x6 : 80000000fffff000
+[    0.000000] x5 : 0000000000100000 x4 : 0000000090b00007 x3 : 0000244650b00000
+[    0.000000] x2 : 0000000000000000 x1 : ffffc3168c244ec0 x0 : ffff244650b00000
+[    0.000000] Call trace:
+[    0.000000]  early_memtest+0x1e0/0x2a8
+[    0.000000]  bootmem_init+0x54/0x228
+[    0.000000]  setup_arch+0x21c/0x658
+[    0.000000]  start_kernel+0x7c/0x8c0
+[    0.000000]  __primary_switched+0xb8/0xc8
+[    0.000000] Code: eb18037f 540003a2 aa1b03e0 d503201f (f800841c) 
+[    0.000000] ---[ end trace 0000000000000000 ]---
+[    0.000000] Kernel panic - not syncing: Attempted to kill the idle task!
+[    0.000000] ---[ end Kernel panic - not syncing: Attempted to kill the idle task! ]---
 
-Best regards,
-Krzysztof
+Adding back 0x90b00000-0x90bfffff as no-map passed memtest=1.
+
+> +		tz_sail_mailbox_mem: tz-sail-mailbox@90c00000 {
+> +			reg = <0x0 0x90c00000 0x0 0x100000>;
+> +			no-map;
+> +		};
+> +
+> +		sail_mailbox_mem: sail-ss@90d00000 {
+> +			reg = <0x0 0x90d00000 0x0 0x100000>;
+> +			no-map;
+> +		};
+> +
+> +		sail_ota_mem: sail-ss@90e00000 {
+> +			reg = <0x0 0x90e00000 0x0 0x300000>;
+> +			no-map;
+> +		};
+> +
+> +		aoss_backup_mem: aoss-backup@91b00000 {
+> +			reg = <0x0 0x91b00000 0x0 0x40000>;
+> +			no-map;
+> +		};
+> +
+> +		cpucp_backup_mem: cpucp-backup@91b40000 {
+> +			reg = <0x0 0x91b40000 0x0 0x40000>;
+> +			no-map;
+> +		};
+> +
+> +		tz_config_backup_mem: tz-config-backup@91b80000 {
+> +			reg = <0x0 0x91b80000 0x0 0x10000>;
+> +			no-map;
+> +		};
+> +
+> +		ddr_training_data_mem: ddr-training-data@91b90000 {
+> +			reg = <0x0 0x91b90000 0x0 0x10000>;
+> +			no-map;
+> +		};
+> +
+> +		cdt_data_backup_mem: cdt-data-backup@91ba0000 {
+> +			reg = <0x0 0x91ba0000 0x0 0x1000>;
+>  			no-map;
+>  		};
+>  
+> @@ -433,13 +473,43 @@ pil_video_mem: pil-video@9fc00000 {
+>  			no-map;
+>  		};
+>  
+> +		audio_mdf_mem: audio-mdf-region@ae000000 {
+> +			reg = <0x0 0xae000000 0x0 0x1000000>;
+> +			no-map;
+> +		};
+> +
+> +		firmware_mem: firmware-region@b0000000 {
+> +			reg = <0x0 0xb0000000 0x0 0x800000>;
+> +			no-map;
+> +		};
+> +
+>  		hyptz_reserved_mem: hyptz-reserved@beb00000 {
+>  			reg = <0x0 0xbeb00000 0x0 0x11500000>;
+>  			no-map;
+>  		};
+>  
+> -		tz_stat_mem: tz-stat@d0000000 {
+> -			reg = <0x0 0xd0000000 0x0 0x100000>;
+> +		scmi_mem: scmi-region@d0000000 {
+> +			reg = <0x0 0xd0000000 0x0 0x40000>;
+> +			no-map;
+> +		};
+> +
+> +		firmware_logs_mem: firmware-logs@d0040000 {
+> +			reg = <0x0 0xd0040000 0x0 0x10000>;
+> +			no-map;
+> +		};
+> +
+> +		firmware_audio_mem: firmware-audio@d0050000 {
+> +			reg = <0x0 0xd0050000 0x0 0x4000>;
+> +			no-map;
+> +		};
+> +
+> +		firmware_reserved_mem: firmware-reserved@d0054000 {
+> +			reg = <0x0 0xd0054000 0x0 0x9c000>;
+> +			no-map;
+> +		};
+> +
+> +		firmware_quantum_test_mem: firmware-quantum-test@d00f0000 {
+> +			reg = <0x0 0xd00f0000 0x0 0x10000>;
+>  			no-map;
+>  		};
+>  
+> @@ -453,8 +523,23 @@ qtee_mem: qtee@d1300000 {
+>  			no-map;
+>  		};
+>  
+> -		trusted_apps_mem: trusted-apps@d1800000 {
+> -			reg = <0x0 0xd1800000 0x0 0x3900000>;
+> +		deepsleep_backup_mem: deepsleep-backup@d1800000 {
+> +			reg = <0x0 0xd1800000 0x0 0x100000>;
+> +			no-map;
+> +		};
+> +
+> +		trusted_apps_mem: trusted-apps@d1900000 {
+> +			reg = <0x0 0xd1900000 0x0 0x3800000>;
+> +			no-map;
+> +		};
+> +
+> +		tz_stat_mem: tz-stat@db100000 {
+> +			reg = <0x0 0xdb100000 0x0 0x100000>;
+> +			no-map;
+> +		};
+> +
+> +		cpucp_fw_mem: cpucp-fw@db200000 {
+> +			reg = <0x0 0xdb200000 0x0 0x100000>;
+>  			no-map;
+>  		};
+>  	};
+> -- 
+> 2.42.0
+> 
+> 
+
+-- 
+Eric Chanudet
 
 
