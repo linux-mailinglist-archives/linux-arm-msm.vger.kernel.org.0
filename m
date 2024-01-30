@@ -1,294 +1,250 @@
-Return-Path: <linux-arm-msm+bounces-8932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D7F88417DA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 01:50:58 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 032948417E2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 01:53:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CD9901F25866
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 00:50:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5E7B71F25C35
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 00:53:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F1F52CCD5;
-	Tue, 30 Jan 2024 00:50:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3A591E895;
+	Tue, 30 Jan 2024 00:53:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=layalina-io.20230601.gappssmtp.com header.i=@layalina-io.20230601.gappssmtp.com header.b="Jdxsxuo6"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="YSaXjHg4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A7B42C85F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 00:50:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77501E52A;
+	Tue, 30 Jan 2024 00:53:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706575835; cv=none; b=iws1GZZO6SiU3bTrKVHSMMuViU8hAJB0tQ7UPEi65gIV1F/+xC1+nT4Vg38lps3KSDJ1lLklop6CbmauNO2RPPxfHhqGY2A3TT2IeiHTGBkvLD2+t0eADkxiP8+YPgj01zDXDEAlglKa7RlqzIE9VwrEmDS6sTynQUuCKlazICY=
+	t=1706576024; cv=none; b=hpkDVadKOnfY9cecqSCQS9aOUSG+ukCCQcgfeAjdsQlNAHLTlkuHxitSNvH1WaohVWyfAzutwspy7e/4cIOnAKSIcrxj9NGfPThJDZi4tOpr0QZTqIEuU7so8ZO0XfdUC5mWkXUMm5UZAuQnCvmB+8RcbQOr+FUvOTwl6wS1FE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706575835; c=relaxed/simple;
-	bh=8uR6wJrDKIwzf8jtp013Y/LkpZjOzqcwDYTEo12aixg=;
+	s=arc-20240116; t=1706576024; c=relaxed/simple;
+	bh=PWxwW8DGD1qMG7u+SXX5E9whYTavzrUnlw13TG8n894=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qr2YI2LvUqJvZeF0L/NnjGMAylNsDIDRcBvp37BtyHagc7OVcW3HUbDIa1cx0zTZlLmbnx8G/25SqbHyOmovLf6htpnYWFSL51zaAJFXZXCJpb2UOBeCh2Ij5WnzeQNs32tLsFgQD4ul5hXeVTlxP7g+FdDtENGMEE936cd5F1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=layalina.io; spf=pass smtp.mailfrom=layalina.io; dkim=pass (2048-bit key) header.d=layalina-io.20230601.gappssmtp.com header.i=@layalina-io.20230601.gappssmtp.com header.b=Jdxsxuo6; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=layalina.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=layalina.io
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-40eacb4bfa0so38084435e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 16:50:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=layalina-io.20230601.gappssmtp.com; s=20230601; t=1706575830; x=1707180630; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qs+y4O2B1OYSA4cr438d5JeMKWKUT/MLDmsJLyrN1SM=;
-        b=Jdxsxuo6Gtc+ZiI1qPS1aRVpmxpD6s7Ju7xSfzlDcNbHyKaMkJZPHL+ygozyzL+eP9
-         65RuxsZHnOfkoHIvaofpBhoF55JpYdi0jyIzIguIROkejGTiBsI6iMyqkU5gy0yJgWNu
-         WZoHzzuOzxZbpF3ogYrsNCd29LvwJnN9eKW4cX4uv5sUmpXPXGcK3hRp2aaKZvtbwkzt
-         XybBNxOj3ZJb3swWGYMYBpvC3gj0X1E36BdW3GbKvhb3LACaB/tWJf2Nqw3XWS8sbwRN
-         y8IPUr4cNkoyIV9GUZLrxefukazeWtHQpN+fc0bIHcU2RPvOr8F8yun+TUIwe9AUdQ5C
-         w5Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706575830; x=1707180630;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Qs+y4O2B1OYSA4cr438d5JeMKWKUT/MLDmsJLyrN1SM=;
-        b=TYmFRwqlejf+UUKRRQxozLrdQiD7i7FjiQ2OaJVAOsb2sKL1tfQ9x/ItEtc7ef5MtY
-         pnDaR63gAG0RhwFErr00XjMYTAnA5654fl7JB8SK1A0CbGvxGmjsNIU19sEe2DFJL+N9
-         /VJVjbCzlPTOKQJQD+Hw7WwudsskGKtIWgtnyOYPr/sj4CYpM9HkLjGELuqmqRx6elM3
-         JcFV/BtJQ5jyM0ZLakSqZkZSmeJbz3UdrGdCEr4FKCsX26pMHHlNAGgw+OHYwH669WHE
-         E1JFfPOubSaVkyFRo4ovdPIYdOxFuwDwQcEQDdpYZ8DiP0ozpEFPqUHBFwMZq5FPmeAK
-         CmcA==
-X-Gm-Message-State: AOJu0Yy8F3WJ6+BVn/ioRnc9nRs/oUIxa5hDgqNvLphQezpr5EPJCg9+
-	JTN00XGulVtEAlYBJM+pbt0y6w0kAURx2Ndh0UrLIe/pGYtA6l1pq9rBPHcSpOI=
-X-Google-Smtp-Source: AGHT+IHLN1+buLQoJe3CsC2pPffF77XR7b5tioLXgDk6AGjLOjLn7IfqgbCRr2RPM7DQKSSBIXuwrQ==
-X-Received: by 2002:a1c:4b19:0:b0:40e:46b6:bc48 with SMTP id y25-20020a1c4b19000000b0040e46b6bc48mr5604406wma.41.1706575830411;
-        Mon, 29 Jan 2024 16:50:30 -0800 (PST)
-Received: from airbuntu ([213.122.231.14])
-        by smtp.gmail.com with ESMTPSA id c11-20020a05600c0a4b00b0040ebf603a89sm15065440wmq.11.2024.01.29.16.50.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jan 2024 16:50:29 -0800 (PST)
-Date: Tue, 30 Jan 2024 00:50:28 +0000
-From: Qais Yousef <qyousef@layalina.io>
-To: Vincent Guittot <vincent.guittot@linaro.org>
-Cc: linux@armlinux.org.uk, catalin.marinas@arm.com, will@kernel.org,
-	sudeep.holla@arm.com, rafael@kernel.org, viresh.kumar@linaro.org,
-	agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-	mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com,
-	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com,
-	mgorman@suse.de, bristot@redhat.com, vschneid@redhat.com,
-	lukasz.luba@arm.com, rui.zhang@intel.com, mhiramat@kernel.org,
-	daniel.lezcano@linaro.org, amit.kachhap@gmail.com, corbet@lwn.net,
-	gregkh@linuxfoundation.org, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org
-Subject: Re: [PATCH v4 2/5] sched: Take cpufreq feedback into account
-Message-ID: <20240130005028.vbqg27ctmanxsej6@airbuntu>
-References: <20240109164655.626085-1-vincent.guittot@linaro.org>
- <20240109164655.626085-3-vincent.guittot@linaro.org>
- <20240130002652.ipdyqs3sjy6qqt6t@airbuntu>
+	 Content-Type:Content-Disposition:In-Reply-To; b=hn2U3niBr8yr2+1GYSGpJmLWsziNAXX/n8oGssiQtgg2qgxm1d+fRuM8HslXZgIn0rcpwkXfJP1WrNGhOFyO1L3sK9prEjr7Ht/r7EzlWMnV3UbMg+EgXkZx2VMSbayt6DbM49dUMlnvTA2VlPsLrK4feDUIyJBqq1xIe9Z/Z+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=YSaXjHg4; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=dO+iHtbzXa56lyxPAuz5ejwpIfXOr6Sor8PoQQ7vU+s=; b=YSaXjHg4FvURM3e6Kd13581NGR
+	WLSfXO5FkxZ1aWuOLyThKM0U0ohYOLc2RLR/OBZ0N9tpo5ld5nLVBquBMUhKRBj+Xz8iq0PtMVAM1
+	0lJAapLnETdiSx6PyzuUsEMjhqsG1s6owKlwoSxd0xKenj1DejqNcs8p/A07gRiLfwRc=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1rUcNY-006Qof-Ng; Tue, 30 Jan 2024 01:53:32 +0100
+Date: Tue, 30 Jan 2024 01:53:32 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Christian Marangi <ansuelsmth@gmail.com>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Robert Marko <robert.marko@sartura.hr>,
+	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Jie Luo <quic_luoj@quicinc.com>
+Subject: Re: [net-next PATCH v2 2/3] net: mdio: ipq4019: add support for
+ clock-frequency property
+Message-ID: <27b6701b-f3f1-4277-8720-b436dc8cc75a@lunn.ch>
+References: <20240130003546.1546-1-ansuelsmth@gmail.com>
+ <20240130003546.1546-3-ansuelsmth@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240130002652.ipdyqs3sjy6qqt6t@airbuntu>
+In-Reply-To: <20240130003546.1546-3-ansuelsmth@gmail.com>
 
-On 01/30/24 00:26, Qais Yousef wrote:
-> On 01/09/24 17:46, Vincent Guittot wrote:
-> > Aggregate the different pressures applied on the capacity of CPUs and
-> > create a new function that returns the actual capacity of the CPU:
-> >   get_actual_cpu_capacity()
-> > 
-> > Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
-> > Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-> > ---
-> >  kernel/sched/fair.c | 45 +++++++++++++++++++++++++--------------------
-> >  1 file changed, 25 insertions(+), 20 deletions(-)
-> > 
-> > diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-> > index 9cc20855dc2b..e54bbf8b4936 100644
-> > --- a/kernel/sched/fair.c
-> > +++ b/kernel/sched/fair.c
-> > @@ -4910,13 +4910,22 @@ static inline void util_est_update(struct cfs_rq *cfs_rq,
-> >  	trace_sched_util_est_se_tp(&p->se);
-> >  }
-> >  
-> > +static inline unsigned long get_actual_cpu_capacity(int cpu)
-> > +{
-> > +	unsigned long capacity = arch_scale_cpu_capacity(cpu);
-> > +
-> > +	capacity -= max(thermal_load_avg(cpu_rq(cpu)), cpufreq_get_pressure(cpu));
+On Tue, Jan 30, 2024 at 01:35:21AM +0100, Christian Marangi wrote:
+> The IPQ4019 MDIO internally divide the clock feed by AHB based on the
+> MDIO_MODE reg. On reset or power up, the default value for the
+> divider is 0xff that reflect the divider set to /256.
 > 
-> Does cpufreq_get_pressure() reflect thermally throttled frequency, or just the
-> policy->max being capped by user etc? I didn't see an update to cpufreq when we
-> topology_update_hw_pressure(). Not sure if it'll go through another path.
+> This makes the MDC run at a very low rate, that is, considering AHB is
+> always fixed to 100Mhz, a value of 390KHz.
+> 
+> This hasn't have been a problem as MDIO wasn't used for time sensitive
+> operation, it is now that on IPQ807x is usually mounted with PHY that
+> requires MDIO to load their firmware (example Aquantia PHY).
+> 
+> To handle this problem and permit to set the correct designed MDC
+> frequency for the SoC add support for the standard "clock-frequency"
+> property for the MDIO node.
+> 
+> The divider supports value from /1 to /256 and the common value are to
+> set it to /16 to reflect 6.25Mhz or to /8 on newer platform to reflect
+> 12.5Mhz.
+> 
+> To scan if the requested rate is supported by the divider, loop with
+> each supported divider and stop when the requested rate match the final
+> rate with the current divider. An error is returned if the rate doesn't
+> match any value.
+> 
+> On MDIO reset, the divider is restored to the requested value to prevent
+> any kind of downclocking caused by the divider reverting to a default
+> value.
+> 
+> To follow 802.3 spec of 2.5MHz of default value, if divider is set at
+> /256 and "clock-frequency" is not set in DT, assume nobody set the
+> divider and try to find the closest MDC rate to 2.5MHz. (in the case of
+> AHB set to 100MHz, it's 1.5625MHz)
+> 
+> While at is also document other bits of the MDIO_MODE reg to have a
+> clear idea of what is actually applied there.
+> 
+> Documentation of some BITs is skipped as they are marked as reserved and
+> their usage is not clear (RES 11:9 GENPHY 16:13 RES1 19:17)
+> 
+> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> ---
+>  drivers/net/mdio/mdio-ipq4019.c | 109 ++++++++++++++++++++++++++++++--
+>  1 file changed, 103 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/net/mdio/mdio-ipq4019.c b/drivers/net/mdio/mdio-ipq4019.c
+> index abd8b508ec16..61638f25c184 100644
+> --- a/drivers/net/mdio/mdio-ipq4019.c
+> +++ b/drivers/net/mdio/mdio-ipq4019.c
+> @@ -14,6 +14,20 @@
+>  #include <linux/clk.h>
+>  
+>  #define MDIO_MODE_REG				0x40
+> +#define   MDIO_MODE_MDC_MODE			BIT(12)
+> +/* 0 = Clause 22, 1 = Clause 45 */
+> +#define   MDIO_MODE_C45				BIT(8)
+> +#define   MDIO_MODE_DIV_MASK			GENMASK(7, 0)
+> +#define     MDIO_MODE_DIV(x)			FIELD_PREP(MDIO_MODE_DIV_MASK, (x) - 1)
+> +#define     MDIO_MODE_DIV_1			0x0
+> +#define     MDIO_MODE_DIV_2			0x1
+> +#define     MDIO_MODE_DIV_4			0x3
+> +#define     MDIO_MODE_DIV_8			0x7
+> +#define     MDIO_MODE_DIV_16			0xf
+> +#define     MDIO_MODE_DIV_32			0x1f
+> +#define     MDIO_MODE_DIV_64			0x3f
+> +#define     MDIO_MODE_DIV_128			0x7f
+> +#define     MDIO_MODE_DIV_256			0xff
+>  #define MDIO_ADDR_REG				0x44
+>  #define MDIO_DATA_WRITE_REG			0x48
+>  #define MDIO_DATA_READ_REG			0x4c
+> @@ -26,9 +40,6 @@
+>  #define MDIO_CMD_ACCESS_CODE_C45_WRITE	1
+>  #define MDIO_CMD_ACCESS_CODE_C45_READ	2
+>  
+> -/* 0 = Clause 22, 1 = Clause 45 */
+> -#define MDIO_MODE_C45				BIT(8)
+> -
+>  #define IPQ4019_MDIO_TIMEOUT	10000
+>  #define IPQ4019_MDIO_SLEEP		10
+>  
+> @@ -41,6 +52,7 @@ struct ipq4019_mdio_data {
+>  	void __iomem	*membase;
+>  	void __iomem *eth_ldo_rdy;
+>  	struct clk *mdio_clk;
+> +	unsigned int mdc_rate;
+>  };
+>  
+>  static int ipq4019_mdio_wait_busy(struct mii_bus *bus)
+> @@ -203,6 +215,38 @@ static int ipq4019_mdio_write_c22(struct mii_bus *bus, int mii_id, int regnum,
+>  	return 0;
+>  }
+>  
+> +static int ipq4019_mdio_set_div(struct ipq4019_mdio_data *priv)
+> +{
+> +	unsigned long ahb_rate;
+> +	int div;
+> +	u32 val;
+> +
+> +	/* If we don't have a clock for AHB use the fixed value */
+> +	ahb_rate = IPQ_MDIO_CLK_RATE;
+> +	if (priv->mdio_clk)
+> +		ahb_rate = clk_get_rate(priv->mdio_clk);
+> +
+> +	/* MDC rate is ahb_rate/(MDIO_MODE_DIV + 1)
+> +	 * While supported, internal documentation doesn't
+> +	 * assure correct functionality of the MDIO bus
+> +	 * with divider of 1, 2 or 4.
+> +	 */
+> +	for (div = 8; div <= 256; div *= 2) {
+> +		/* The requested rate is supported by the div */
+> +		if (priv->mdc_rate == DIV_ROUND_UP(ahb_rate, div)) {
+> +			val = readl(priv->membase + MDIO_MODE_REG);
+> +			val &= ~MDIO_MODE_DIV_MASK;
+> +			val |= MDIO_MODE_DIV(div);
+> +			writel(val, priv->membase + MDIO_MODE_REG);
+> +
+> +			return 0;
+> +		}
+> +	}
+> +
+> +	/* The requested rate is not supported */
+> +	return -EINVAL;
+> +}
+> +
+>  static int ipq_mdio_reset(struct mii_bus *bus)
+>  {
+>  	struct ipq4019_mdio_data *priv = bus->priv;
+> @@ -225,10 +269,58 @@ static int ipq_mdio_reset(struct mii_bus *bus)
+>  		return ret;
+>  
+>  	ret = clk_prepare_enable(priv->mdio_clk);
+> -	if (ret == 0)
+> -		mdelay(10);
+> +	if (ret)
+> +		return ret;
+>  
+> -	return ret;
+> +	mdelay(10);
+> +
+> +	/* Restore MDC rate */
+> +	return ipq4019_mdio_set_div(priv);
+> +}
+> +
+> +static void ipq4019_mdio_select_mdc_rate(struct platform_device *pdev,
+> +					 struct ipq4019_mdio_data *priv)
+> +{
+> +	unsigned long ahb_rate;
+> +	int div;
+> +	u32 val;
+> +
+> +	/* MDC rate defined in DT, we don't have to decide a default value */
+> +	if (!of_property_read_u32(pdev->dev.of_node, "clock-frequency",
+> +				  &priv->mdc_rate))
+> +		return;
+> +
+> +	/* If we don't have a clock for AHB use the fixed value */
+> +	ahb_rate = IPQ_MDIO_CLK_RATE;
+> +	if (priv->mdio_clk)
+> +		ahb_rate = clk_get_rate(priv->mdio_clk);
+> +
+> +	/* Check what is the current div set */
+> +	val = readl(priv->membase + MDIO_MODE_REG);
+> +	div = FIELD_GET(MDIO_MODE_DIV_MASK, val);
+> +
+> +	/* div is not set to the default value of /256
+> +	 * Probably someone changed that (bootloader, other drivers)
+> +	 * Keep this and doesn't overwrite it.
 
-It is done via the cooling device. And assume any limitations on freq due to
-power etc are assumed to always to cause the policy->max to change.
+doesn't -> don't 
 
-(sorry if I missed earlier discussions about this)
+Otherwise please add my Reviewed-by on the next version.
 
-> 
-> maxing with thermal_load_avg() will change the behavior below where we used to
-> compare against instantaneous pressure. The concern was that it not just can
-> appear quickly, but disappear quickly too. thermal_load_avg() will decay
-> slowly, no?  This means we'll lose a lot of opportunities for better task
-> placement until this decays which can take relatively long time.
-> 
-> So maxing handles the direction where a pressure suddenly appears. But it
-> doesn't handle where it disappears.
-> 
-> I suspect your thoughts are that if it was transient then thermal_load_avg()
-> should be small anyway - which I think makes sense.
-> 
-> I think we need a comment to explain these nuance differences.
-> 
-> > +
-> > +	return capacity;
-> > +}
-> > +
-> >  static inline int util_fits_cpu(unsigned long util,
-> >  				unsigned long uclamp_min,
-> >  				unsigned long uclamp_max,
-> >  				int cpu)
-> >  {
-> > -	unsigned long capacity_orig, capacity_orig_thermal;
-> >  	unsigned long capacity = capacity_of(cpu);
-> > +	unsigned long capacity_orig;
-> >  	bool fits, uclamp_max_fits;
-> >  
-> >  	/*
-> > @@ -4948,7 +4957,6 @@ static inline int util_fits_cpu(unsigned long util,
-> >  	 * goal is to cap the task. So it's okay if it's getting less.
-> >  	 */
-> >  	capacity_orig = arch_scale_cpu_capacity(cpu);
-> > -	capacity_orig_thermal = capacity_orig - arch_scale_thermal_pressure(cpu);
-> >  
-> >  	/*
-> >  	 * We want to force a task to fit a cpu as implied by uclamp_max.
-> > @@ -5023,7 +5031,8 @@ static inline int util_fits_cpu(unsigned long util,
-> >  	 * handle the case uclamp_min > uclamp_max.
-> >  	 */
-> >  	uclamp_min = min(uclamp_min, uclamp_max);
-> > -	if (fits && (util < uclamp_min) && (uclamp_min > capacity_orig_thermal))
-> > +	if (fits && (util < uclamp_min) &&
-> > +	    (uclamp_min > get_actual_cpu_capacity(cpu)))
-> >  		return -1;
-> >  
-> >  	return fits;
-> > @@ -7404,7 +7413,7 @@ select_idle_capacity(struct task_struct *p, struct sched_domain *sd, int target)
-> >  		 * Look for the CPU with best capacity.
-> >  		 */
-> >  		else if (fits < 0)
-> > -			cpu_cap = arch_scale_cpu_capacity(cpu) - thermal_load_avg(cpu_rq(cpu));
-> > +			cpu_cap = get_actual_cpu_capacity(cpu);
-> >  
-> >  		/*
-> >  		 * First, select CPU which fits better (-1 being better than 0).
-> > @@ -7897,8 +7906,8 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
-> >  	struct root_domain *rd = this_rq()->rd;
-> >  	int cpu, best_energy_cpu, target = -1;
-> >  	int prev_fits = -1, best_fits = -1;
-> > -	unsigned long best_thermal_cap = 0;
-> > -	unsigned long prev_thermal_cap = 0;
-> > +	unsigned long best_actual_cap = 0;
-> > +	unsigned long prev_actual_cap = 0;
-> >  	struct sched_domain *sd;
-> >  	struct perf_domain *pd;
-> >  	struct energy_env eenv;
-> > @@ -7928,7 +7937,7 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
-> >  
-> >  	for (; pd; pd = pd->next) {
-> >  		unsigned long util_min = p_util_min, util_max = p_util_max;
-> > -		unsigned long cpu_cap, cpu_thermal_cap, util;
-> > +		unsigned long cpu_cap, cpu_actual_cap, util;
-> >  		long prev_spare_cap = -1, max_spare_cap = -1;
-> >  		unsigned long rq_util_min, rq_util_max;
-> >  		unsigned long cur_delta, base_energy;
-> > @@ -7940,18 +7949,17 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
-> >  		if (cpumask_empty(cpus))
-> >  			continue;
-> >  
-> > -		/* Account thermal pressure for the energy estimation */
-> > +		/* Account external pressure for the energy estimation */
-> >  		cpu = cpumask_first(cpus);
-> > -		cpu_thermal_cap = arch_scale_cpu_capacity(cpu);
-> > -		cpu_thermal_cap -= arch_scale_thermal_pressure(cpu);
-> > +		cpu_actual_cap = get_actual_cpu_capacity(cpu);
-> >  
-> > -		eenv.cpu_cap = cpu_thermal_cap;
-> > +		eenv.cpu_cap = cpu_actual_cap;
-> >  		eenv.pd_cap = 0;
-> >  
-> >  		for_each_cpu(cpu, cpus) {
-> >  			struct rq *rq = cpu_rq(cpu);
-> >  
-> > -			eenv.pd_cap += cpu_thermal_cap;
-> > +			eenv.pd_cap += cpu_actual_cap;
-> >  
-> >  			if (!cpumask_test_cpu(cpu, sched_domain_span(sd)))
-> >  				continue;
-> > @@ -8022,7 +8030,7 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
-> >  			if (prev_delta < base_energy)
-> >  				goto unlock;
-> >  			prev_delta -= base_energy;
-> > -			prev_thermal_cap = cpu_thermal_cap;
-> > +			prev_actual_cap = cpu_actual_cap;
-> >  			best_delta = min(best_delta, prev_delta);
-> >  		}
-> >  
-> > @@ -8037,7 +8045,7 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
-> >  			 * but best energy cpu has better capacity.
-> >  			 */
-> >  			if ((max_fits < 0) &&
-> > -			    (cpu_thermal_cap <= best_thermal_cap))
-> > +			    (cpu_actual_cap <= best_actual_cap))
-> >  				continue;
-> >  
-> >  			cur_delta = compute_energy(&eenv, pd, cpus, p,
-> > @@ -8058,14 +8066,14 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
-> >  			best_delta = cur_delta;
-> >  			best_energy_cpu = max_spare_cap_cpu;
-> >  			best_fits = max_fits;
-> > -			best_thermal_cap = cpu_thermal_cap;
-> > +			best_actual_cap = cpu_actual_cap;
-> >  		}
-> >  	}
-> >  	rcu_read_unlock();
-> >  
-> >  	if ((best_fits > prev_fits) ||
-> >  	    ((best_fits > 0) && (best_delta < prev_delta)) ||
-> > -	    ((best_fits < 0) && (best_thermal_cap > prev_thermal_cap)))
-> > +	    ((best_fits < 0) && (best_actual_cap > prev_actual_cap)))
-> >  		target = best_energy_cpu;
-> >  
-> >  	return target;
-> > @@ -9441,8 +9449,8 @@ static inline void init_sd_lb_stats(struct sd_lb_stats *sds)
-> >  
-> >  static unsigned long scale_rt_capacity(int cpu)
-> >  {
-> > +	unsigned long max = get_actual_cpu_capacity(cpu);
-> >  	struct rq *rq = cpu_rq(cpu);
-> > -	unsigned long max = arch_scale_cpu_capacity(cpu);
-> >  	unsigned long used, free;
-> >  	unsigned long irq;
-> >  
-> > @@ -9454,12 +9462,9 @@ static unsigned long scale_rt_capacity(int cpu)
-> >  	/*
-> >  	 * avg_rt.util_avg and avg_dl.util_avg track binary signals
-> >  	 * (running and not running) with weights 0 and 1024 respectively.
-> > -	 * avg_thermal.load_avg tracks thermal pressure and the weighted
-> > -	 * average uses the actual delta max capacity(load).
-> >  	 */
-> >  	used = READ_ONCE(rq->avg_rt.util_avg);
-> >  	used += READ_ONCE(rq->avg_dl.util_avg);
-> > -	used += thermal_load_avg(rq);
-> >  
-> >  	if (unlikely(used >= max))
-> >  		return 1;
-> > -- 
-> > 2.34.1
-> > 
+	Andrew
 
