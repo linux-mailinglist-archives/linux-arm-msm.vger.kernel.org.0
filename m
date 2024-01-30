@@ -1,164 +1,213 @@
-Return-Path: <linux-arm-msm+bounces-8961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8962-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2AC2841CE0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 08:47:13 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A535841CEC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 08:49:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 69131286A33
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 07:47:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B82F7B20FDF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 07:49:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AD9354667;
-	Tue, 30 Jan 2024 07:47:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E8AA55E51;
+	Tue, 30 Jan 2024 07:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="HiGPYP4d"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gLAI3Ozq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4355381A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 07:47:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DC355E52
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 07:49:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706600825; cv=none; b=OGZrsxQ7UYDFe5eRi0/Y7F41nDNVN42CpNpttJxxW037viWLtaQj6GYFDrLhkdwA+xEqtQUwXWURAKQ8IAcxdsADMMiKHijNmjC0u4LhMkvkDFem6Gc9GHfbobXdaFv+CysONThCXpXuNK1mN12vsOBSwzfOToNYvV/Xr+t5j7Q=
+	t=1706600963; cv=none; b=euiFXMlPRt9/LMf6fbeNFwXlo7QUkaLRJi3NLquvBEYicyi0pTGT0cED8W5TK6/I143imwUbcCsPtdSbw3YKpTHJkncnO/T26ZyTIFS1VyqC4LRAQaPOi9/Orfz6p/3YKXhFZQv4+kS5OT5kMspSCw+vy5z1kkn7oEbDnvwnT10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706600825; c=relaxed/simple;
-	bh=6wF3pjl+xGSbuQROF2HwbVRfOfePnmBeqT9YPU+Cd88=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=hl3Qqw+PPkj0O7mb5zc9au4hQ4dlktscK22N/49BVcLXKR4Wra8HSuAkOq2ZGv6l1EQoktgByYUpdFccVWa590TQwVVz3RVJNHW4TWwRrMM5yZvahlRfagQjFkXrJ7CrgwbjYKyvKCRJm9kj0j9Iq66F2jHYmVnaYVAqof8h/jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=HiGPYP4d; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-55ef0465507so2569691a12.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 23:47:02 -0800 (PST)
+	s=arc-20240116; t=1706600963; c=relaxed/simple;
+	bh=W7EdgnKkjMwfQrVjMkuKi/Np1ROI0dXe8/JY64Hyjnw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CQ/Vycon9XPCypuz5JPMmcm/uFD5XOK8FxOTa4MLMIohO2f5OI8fSgdMuL1y+CDeVdxt3zOHFoS9mPUdPe7tEIPX72yDzxju2t7MD5izZyuslGtPUkkyMj/1bAM9S7Yce5Sc1R0m3lPNI5NOnt0IU+T05PmlhMBZgyWNT6Wt8Q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gLAI3Ozq; arc=none smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-55817a12ad8so3601598a12.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 23:49:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1706600821; x=1707205621; darn=vger.kernel.org;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QlGtGfNm9kPhTsKQ1zfGwKYIV+yyIvsTE/Mjc0NVPIk=;
-        b=HiGPYP4dYhUZByAnXCCfDyML/k5Tvd6nNZeKOF1+AtmmNXus/UUnslfILqa8rUm2gJ
-         9HBwMHR8Zcrj3Jidevt7zIlYx4IqEC20W8ys7x1PWXZc8BiZLfqmP8RpF0px0ytZQWko
-         I+FkP2gEYOyHXLrRqAV16brvLen0EWVDspuM1j+RdoedCPtTagGBCXKIc7ymagE410bC
-         C13k39T3q33FXUvZrEwyzUmM98bmvllEzzg2HN/RccxvNRWz9G5aBadfgBa3hgcpMCco
-         IIkUJc2qWddJXXBRnYcuFhDo0MdGaTj455hVkVa8mbINkt6Z1IMVGlfAB7bvJVNU6iCF
-         N3ng==
+        d=linaro.org; s=google; t=1706600959; x=1707205759; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Uxspv7T9EX1JvzDaKvkxxJalTAmoTENXDL7KG2k5zvk=;
+        b=gLAI3OzqufLCU0iMF/nuv1F5M8xRMOLml0GmmeH3KaXcGZMhVI/Yb3fS1YsHFlbtXS
+         lXK3BFY4P7H7MbVM+T9vVbPbkjY/QKSm0muidPbFVlNHW0wnBuQl3ImicLsX87Ff3Ldk
+         H1ZdhCTQnv25zKwIz1s+nuYlNvv3oKTgWY+bo69SmEVVTyhs4dQzv9mfDcogreLtI1ky
+         R23XI7o8zguOTJVE2XrHNWU9uN77xvRYLTu8eF6SVC4dd/DJjvyrjStX3GCFhx3kB4mR
+         5IoQwEUcJwIVX5RsCE/boaMYo33q6kR/Dib2nJdoa6EGAy9+n828V7xIz9XvUxelfKtj
+         VaxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706600821; x=1707205621;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=QlGtGfNm9kPhTsKQ1zfGwKYIV+yyIvsTE/Mjc0NVPIk=;
-        b=PfxyrlC5rSo1O0NhbA90HvvxlWrCIxailFNoOtEKuOxLv9x0h6FafO5RTG3GEmLR2Y
-         mjUUJn6CbU20oAq/oNK7K+7ySe/nokW065lQE9e6zxbROhkjrc2EJrr2M88vURLZQayg
-         bcu29b9l+jTL0eo1WXBmhIgCh1bvCAHVpHYfNLv7CUvq6nGzhb+HH3Gc6aKi5j90Qnr2
-         2S7+sWUcTecfpxb0A0ZoYZJb2vcyn20ExDP51Lrjv5I3tXJGVrg8Bj1NtB7iYa8mFK3E
-         6hDfu1WhJuCKdNjm0SmhQnFiwCcothECy/jOXnFJhGA14OuK3CLMHG17LmAd4QPxywNd
-         ouCw==
-X-Gm-Message-State: AOJu0YyreCzq2PJ+2BB27uS9bcQZs4Y9pp7Y4+qcLS8PmzH2rg80zJX6
-	jDwINKRwiUYRoK20Lntgcy3bxF8uFlDxEt15aqO2x2qn4ud0i7seYrOYbhgIXEU=
-X-Google-Smtp-Source: AGHT+IE7X9hDipYR0YX/csSCqzOnet8vdLtg+tkdmtHjx4F4Cc1elveRWT2+rBnQl0qvijzggQV9ow==
-X-Received: by 2002:a50:ed90:0:b0:55f:43af:4a29 with SMTP id h16-20020a50ed90000000b0055f43af4a29mr420603edr.18.1706600821066;
-        Mon, 29 Jan 2024 23:47:01 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id q10-20020aa7cc0a000000b0055ef56f4575sm2182091edt.39.2024.01.29.23.47.00
+        d=1e100.net; s=20230601; t=1706600959; x=1707205759;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Uxspv7T9EX1JvzDaKvkxxJalTAmoTENXDL7KG2k5zvk=;
+        b=tD51dOSVUSB/qxz33rSyTwHmXZ0wGCW/BVF3dyo3KuEy2DesbSOU/ac764yDAHqqIx
+         uXMuZ3tPJvUbf+pNVyLwDvkEIjbSr/OdniopSRngyHMeHW5hTE3Lv/PM3HpDl/IfyBug
+         7fJTRLSMXJ2BXXCoeNOalxGBpzNnGjqndyiepwURp5zEAJMu7Z9ZE+ZkLmyBs83bAaY7
+         uztgS+RQrskA7OCiWEQoA3n132/A2Jjncd1VoofwqUn0Y11yXTNeb2UfTy1eUkQIjKsg
+         wjS/cxWkKyfjR+4vUfijx1CSIP3xJo0JBcG7hAK1F0tR89jfsDPSrwowIlRgcQorSRAR
+         diPQ==
+X-Gm-Message-State: AOJu0YyYtFTaV4kP3COvpEyFv6ZcaPsUSotqv9vV8ipWB+Iut8tq8WSs
+	Klq2M4P61jDksbazekQ6tNfsRcv8xCCMEltBC/qcA6sONW/od9Wxz0oJk9MqCc8=
+X-Google-Smtp-Source: AGHT+IG1xXX60P1E9wvgTOwUcYJgL8esE8Tn4P1CwLs2NJhb1wxXIfMRpHq7hOsXi2L9gkTKKPCiCA==
+X-Received: by 2002:a05:6402:27d1:b0:55f:1311:bebb with SMTP id c17-20020a05640227d100b0055f1311bebbmr3059008ede.26.1706600959660;
+        Mon, 29 Jan 2024 23:49:19 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.222.62])
+        by smtp.gmail.com with ESMTPSA id fj11-20020a0564022b8b00b0055c69e0751fsm4501758edb.3.2024.01.29.23.49.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Jan 2024 23:47:00 -0800 (PST)
+        Mon, 29 Jan 2024 23:49:19 -0800 (PST)
+Message-ID: <97ff8fd2-14b7-427e-8ca2-8da42bfcb53e@linaro.org>
+Date: Tue, 30 Jan 2024 08:49:17 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] ARM: dts: qcom: msm8960: Add gsbi3 node
+Content-Language: en-US
+To: guptarud@gmail.com, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240129-expressatt_mxt224s_touchscreen-v1-0-fb8552e1c32c@gmail.com>
+ <20240129-expressatt_mxt224s_touchscreen-v1-1-fb8552e1c32c@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20240129-expressatt_mxt224s_touchscreen-v1-1-fb8552e1c32c@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 30 Jan 2024 08:47:00 +0100
-Message-Id: <CYRVI1IQ2UKE.15ZGCYLRT3ND3@fairphone.com>
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Conor Dooley" <conor@kernel.org>, "Vikash Garodia"
- <quic_vgarodia@quicinc.com>
-Cc: "Bjorn Andersson" <andersson@kernel.org>, "Konrad Dybcio"
- <konrad.dybcio@linaro.org>, "Stanimir Varbanov"
- <stanimir.k.varbanov@gmail.com>, "Vikash Garodia"
- <quic_vgarodia@quicinc.com>, "Bryan O'Donoghue"
- <bryan.odonoghue@linaro.org>, "Mauro Carvalho Chehab" <mchehab@kernel.org>,
- "Rob Herring" <robh+dt@kernel.org>, "Krzysztof Kozlowski"
- <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley" <conor+dt@kernel.org>,
- <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- "Stanimir Varbanov" <stanimir.varbanov@linaro.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] media: dt-bindings: qcom,sc7280-venus: Allow one IOMMU
- entry
-X-Mailer: aerc 0.15.2
-References: <20240129-sc7280-venus-bindings-v1-1-20a9ba194c60@fairphone.com>
- <20240129-numerate-brought-4660c2a89719@spud>
-In-Reply-To: <20240129-numerate-brought-4660c2a89719@spud>
+Content-Transfer-Encoding: 7bit
 
-On Mon Jan 29, 2024 at 6:37 PM CET, Conor Dooley wrote:
-> On Mon, Jan 29, 2024 at 08:48:54AM +0100, Luca Weiss wrote:
-> > Some SC7280-based boards crash when providing the "secure_non_pixel"
-> > context bank, so allow only one iommu in the bindings also.
-> >=20
-> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->
-> Do we have any idea why this happens? How is someone supposed to know
-> whether or not their system requires you to only provide one iommu?
-> Yes, a crash might be the obvious answer, but is there a way of knowing
-> without the crashes?
+On 30/01/2024 03:43, Rudraksha Gupta via B4 Relay wrote:
+> From: Rudraksha Gupta <guptarud@gmail.com>
+> 
+> Copy gsbi3 node from qcom-apq8064.dtsi and set appropriate properties
+> 
+> Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
+> ---
+>  arch/arm/boot/dts/qcom/qcom-msm8960-pins.dtsi | 29 +++++++++++++++++++++++++++
+>  arch/arm/boot/dts/qcom/qcom-msm8960.dtsi      | 27 +++++++++++++++++++++++++
+>  2 files changed, 56 insertions(+)
+> 
+> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960-pins.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8960-pins.dtsi
+> new file mode 100644
+> index 000000000000..c74c6625d276
+> --- /dev/null
+> +++ b/arch/arm/boot/dts/qcom/qcom-msm8960-pins.dtsi
+> @@ -0,0 +1,29 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +
+> +&msmgpio {
+> +	i2c3_pins: i2c3 {
+> +		mux {
+> +			pins = "gpio16", "gpio17";
+> +			function = "gsbi3";
+> +		};
+> +
+> +		pinconf {
+> +			pins = "gpio16", "gpio17";
+> +			drive-strength = <8>;
+> +			bias-disable;
+> +		};
+> +	};
+> +
+> +	i2c3_pins_sleep: i2c3_pins_sleep {
 
-+CC Vikash Garodia
 
-Unfortunately I don't really have much more information than this
-message here:
-https://lore.kernel.org/linux-arm-msm/ff021f49-f81b-0fd1-bd2c-895dbbb03d56@=
-quicinc.com/
+No underscores in node names.
 
-And see also the following replies for a bit more context, like this
-one:
-https://lore.kernel.org/linux-arm-msm/a4e8b531-49f9-f4a1-51cb-e422c56281cc@=
-quicinc.com/
+It does not look like you tested the DTS against bindings. Please run
+`make dtbs_check W=1` (see
+Documentation/devicetree/bindings/writing-schema.rst or
+https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
+for instructions).
 
-Maybe Vikash can add some more info regarding this.
 
-Regards
-Luca
+> +		mux {
+> +			pins = "gpio16", "gpio17";
+> +			function = "gpio";
+> +		};
+> +
+> +		pinconf {
+> +			pins = "gpio16", "gpio17";
+> +			drive-strength = <2>;
+> +			bias-bus-hold;
+> +		};
+> +	};
+> +};
+> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
+> index f420740e068e..62a5a9622e82 100644
+> --- a/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
+> +++ b/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
+> @@ -359,5 +359,32 @@ usb_hs1_phy: phy {
+>  				};
+>  			};
+>  		};
+> +
+> +		gsbi3: gsbi@16200000 {
+> +			status = "disabled";
 
->
-> Cheers,
-> Conor.
->
-> > ---
-> > Reference:
-> > https://lore.kernel.org/linux-arm-msm/20231201-sc7280-venus-pas-v3-2-bc=
-132dc5fc30@fairphone.com/
-> > ---
-> >  Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml | 1 +
-> >  1 file changed, 1 insertion(+)
-> >=20
-> > diff --git a/Documentation/devicetree/bindings/media/qcom,sc7280-venus.=
-yaml b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
-> > index 8f9b6433aeb8..10c334e6b3dc 100644
-> > --- a/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
-> > +++ b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
-> > @@ -43,6 +43,7 @@ properties:
-> >        - const: vcodec_bus
-> > =20
-> >    iommus:
-> > +    minItems: 1
-> >      maxItems: 2
-> > =20
-> >    interconnects:
-> >=20
-> > ---
-> > base-commit: 596764183be8ebb13352b281a442a1f1151c9b06
-> > change-id: 20240129-sc7280-venus-bindings-6e62a99620de
-> >=20
-> > Best regards,
-> > --=20
-> > Luca Weiss <luca.weiss@fairphone.com>
-> >=20
+Please order the properties according to DTS coding style:
+https://www.kernel.org/doc/html/latest/devicetree/bindings/dts-coding-style.html#order-of-properties-in-device-node
+
+
+Best regards,
+Krzysztof
 
 
