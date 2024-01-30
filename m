@@ -1,170 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-9080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42834842C9E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 20:25:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 12DA7842CD5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 20:33:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D6CAB1F25673
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 19:25:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7CCD91F268F8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 19:33:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9FB2155300;
-	Tue, 30 Jan 2024 19:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3107E7B3F6;
+	Tue, 30 Jan 2024 19:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QeSnJgc2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kdd9OqWn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-il1-f182.google.com (mail-il1-f182.google.com [209.85.166.182])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D74A7AE5E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 19:23:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4976F7B3D9
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 19:33:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706642598; cv=none; b=k8McZwb7T9Xv1BtciOjufXGvicFiiB2cCXNIp/74ikfe04hdhSvYkjbZT315Nkv0CSxd9ta3M4LExa6b0OkrrVwxUPl9NXLzrtW/2FFdAqwSAqSdyher+HNNhyzkYKLHNF8f6CVk1jWpUh3FhztqeeAJNdADfj22OMph1fTD+z8=
+	t=1706643191; cv=none; b=Vb8uKK4I/aYBXLy5vinHva63q+eEEevuyBBGQVDOE6xo0/n+OuwYTxcXvDGKZujgg1KxCpBUfejpt2yKX/FY4Z3t3taPPLHSD+In7/9hA4uOCXpHby5SoZzBZJ/bu4rnrSAKhTKqn1gYjk6OUnpL7GRjIQLp93OyQEnM+2ZI+KI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706642598; c=relaxed/simple;
-	bh=svy2Y/cgyQ7iZi2hQoEHT6Pbe1rIEc4pAjdeVhTs3Xk=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Gja3Et81hytD2ljktILchZ+vhTE1PVPpqIdhPdXmN9Z77tNytJIcXGqJtUUwp1U5z34SmG8Arsa1m6wLWPxYAGQMzAvYP4ckVTw7JMc5r7wx0jpqwAVtrQtfEKRJiTeziulDtVO19oGTHhi7kq7S7kPZHcB0kr1p9S3u+ei6Ep0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QeSnJgc2; arc=none smtp.client-ip=209.85.166.182
+	s=arc-20240116; t=1706643191; c=relaxed/simple;
+	bh=gTALmY1ibvA6Jtkm5qB1yZj76kmQUeK0FP623MAzOGQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=bXEZORBp4nwdKKkDRBG3Y9XL2YfZR5qi2vfKTs3oS1Aq8Q7cd0M64E2DEas361DkjJafAYmfBwIdSbCogOLIEfO7u9EoV6YxRLjxrCF3efA6+YwgFx7fhkJ55E34wMK+PMQ7/IONcWgAX6bg2VHxGsawifXMgKVKU8nNLtndhio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kdd9OqWn; arc=none smtp.client-ip=209.85.167.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-il1-f182.google.com with SMTP id e9e14a558f8ab-3638f07f2a3so2949715ab.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 11:23:16 -0800 (PST)
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-5100cb238bcso7911600e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 11:33:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706642596; x=1707247396; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sjtwPzfATFl6gd93BqfU7z6ovF0ULYud2+oCqQjCPeY=;
-        b=QeSnJgc2CqUVatkdfVoNIwshLBxqYad2FXUlpqPdj5n3cfKBKplr7UswjUVL9bNShw
-         4q2ckUOHvBMsrxyLQnPEz9Nvgu3TQ69SMJTQOONbFez9Wm94qZLP3bTlQl9E5fpukhEe
-         pRM37nfIWLRLuvK0o8qyM/Wce5Hl4B8RLHcAfLGe6IyqedNEShK68P4PMzlzWHMhpl+C
-         ucBO65MiXVLY4NXBag7Z49huPKpOBRD9UzqhBkqEudfwQgzqYvNyY1y7mtaJQi7ExyPL
-         /ms1gnuQfVBWrntDSZ6nP45KJocZ8Sr0aSjKRZ2BDAMflLHeAiOTkRGur4ec5EOvekj7
-         aYKQ==
+        d=linaro.org; s=google; t=1706643187; x=1707247987; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tEnSLoLi220+mC/dDdMZUm59oVdTAXtir30jTLPlVL8=;
+        b=kdd9OqWnLT/FARqT+RsnA5Cqy+B3mjfAZkGTL3Dm140JFNXD62vvfC0mKOV8/CWQpA
+         KG255Nb+n9pDfGfDt0dY/9GeExfbkCMHcpRtLpQVl7G8paU0HaZ2Kz/Vrl6bCSP6zUcl
+         /45N255VPgqLpS9c8TtvA4WNU016pjOn8z89/hVDKE0xcrainwkwlyfO4jzWSyj6CxWx
+         BgaUy13/jU7WvfGykXnQhf94cHSs4FrbOG9FI30AAxb1z+hCc18WkGtCEg4oFMs0PGQI
+         6ingeajqde1wlcJtJ3UsTVK4+TGgz1vg8FVnHw7doqz2KYqrGNvz0haWgoFZ7WGwjklC
+         EdcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706642596; x=1707247396;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sjtwPzfATFl6gd93BqfU7z6ovF0ULYud2+oCqQjCPeY=;
-        b=vTHhD1QqvGQjhfsFWnX/EF8Sz+I26kaapw6epjp7gf/mM0oSc3KEO1uoi6LROccpTw
-         oehhpKpz9JxDuV5Tgb9hlou5ECIIj+p7luLwFkEEDkgEf7obGEMEF3NDWw1bAezU+2BB
-         kCwozZZ5F7zox79/Ujkw3j4XJrYtzlffRa1NpkS7xKBolrszIc0Kw3MGFzEkeVbMa7nk
-         1VFgCU2PeyeD11H8tzrxfLZl3+W+cbJb/02sAZ6awMmBwyuBBmYgSnQMcpQcqvsX9W+L
-         T/+TbY0dJhdNTkK3ENOqTsMfP/J7td0ySo26WV2r2T7P8FclbT79SRpTKZ7j6NyOsBg7
-         H5eg==
-X-Gm-Message-State: AOJu0YxRTc9dPJwNBBe/J8/4IpCUm7n98mHcc3UJlTaGsWys6V42ZKdw
-	KNQRcWTZjkzo5cuE8gi+Tu3Su7PXPrip7SrLkCrPjko/ImMJdozOp0z+bcrbTLk=
-X-Google-Smtp-Source: AGHT+IGMJFkq2oSExjhyhojj9ERT7X94COzELPYpHP3ZGYxq79rTjtGtAIdVOacbYS0g3wHQy0Dalg==
-X-Received: by 2002:a05:6e02:eeb:b0:363:90c2:228f with SMTP id j11-20020a056e020eeb00b0036390c2228fmr1764028ilk.27.1706642596134;
-        Tue, 30 Jan 2024 11:23:16 -0800 (PST)
-Received: from localhost.localdomain (c-98-61-227-136.hsd1.mn.comcast.net. [98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id t18-20020a92c912000000b003637871ec98sm2157762ilp.27.2024.01.30.11.23.15
+        d=1e100.net; s=20230601; t=1706643187; x=1707247987;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tEnSLoLi220+mC/dDdMZUm59oVdTAXtir30jTLPlVL8=;
+        b=bDmd8UUXSP84bktPBI6FtqB1/c/JWhxdarJ/Q65LIhblkBqO5/W5vl4AkoYlwm4scY
+         3lDkCQpLTAdGhvzc0r32wGPpFrZeb5PhfVNp9WGJUFW1Zyoj9FbtT9qXa0OtTt5kokF4
+         3Om51pDxPYNQtJvjaOSV+AiopMXQoNWRXHAqbakX5EY8ct+HXOZEKN9VQmwI7lS5TC1I
+         LWZDgT5GnEeS/djUexc+mkCnGB6xq/xAR9NbwEZzvoo1ILd8ClfkdSceWyoTNeDUctyp
+         Opj+lSKsM3838TOdyLUBcDe7Th9BPic0LdzLLuWIerp4Oy0+LSUhHfHLCw8OGeo6Y2ln
+         Xutw==
+X-Gm-Message-State: AOJu0Yy/dEehZNN+gEyiXniCz3uLL0L6zOXNqTORhtN3Ib4QMrWEXUz5
+	JQ7D2wNnbyXgSe/RFwmbo39gOOS/+is5iRdqqUS8UVX4TInKdxLsLpTeWvqDjYE=
+X-Google-Smtp-Source: AGHT+IE4LmyyKrYFNUgc2u4caIRB+1DkAm9YREubGqYrnHtiuhsnJgv7HXCPy+ds1gyzL506r76+DA==
+X-Received: by 2002:ac2:5b11:0:b0:50e:6c1d:5dee with SMTP id v17-20020ac25b11000000b0050e6c1d5deemr6157961lfn.33.1706643187329;
+        Tue, 30 Jan 2024 11:33:07 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCWFstMsJWadz62lZvjVYfOqBwvQLKPeVs4uhdxSYFBbrJWlUNH+Kq7VIuhwAKHhgppKE2qZ0PUCjUUCrvpt17A1ufW6H7d3+hdTPGpsj0ZIJhLXToO2GWOxAUYvLvtN01MWAzHGFLvDjE82L2048gRbs8Mn7NKX+Ox4b8CEuSQqSbzq4UTor0lK+AMgMCdqDDVL4gOCYnqPtN93w4JIAqFwj2SEu2/tVsU2LT/OBbyv9QtKcrP1WNdmbHFGGoQF1D8EKL2rsDM1Kg6EmAgTREHhtHw7lJycq2vn4/8KFQ26aMen72QCIa90NOhMkSINrMowOdlCZiWf2dP3zLs9plxefTV0jYBIcoypR+NGF6TlOBlqHgFDVQEwaiwx1BpWj1+ceoFH4dyeNB6Hnwm1Pz+O1bTk5EsknXVa79uwvah9zK5+MwRmYImf8DthaLp5rNlYqFfi3wIDcSQ+d+Iw2IszPfAOY18acTafFcFy0FM14mx3cV/k/2zROyZWVoeSbg2gLGfbdqjZhqavaxPr5rsAiJWSc2uOLxDuqhee8VTtcf5FU86IjB2m3YVIQtTcVm5h+GmHSSIP6vgMav+0hXqhQ+V9x57exM21uti2ntaF45rqnlDAGmESzWSsAzIFDgE2FsllH8HEn8AaB7DrMyNk9zd2/Zm0kgDer2M2+ZSE/ZE+9E17r2ql53I5NanU
+Received: from umbar.lan ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id u25-20020a05651220d900b0051119371e7csm366525lfr.120.2024.01.30.11.33.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jan 2024 11:23:15 -0800 (PST)
-From: Alex Elder <elder@linaro.org>
-To: davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com
-Cc: mka@chromium.org,
-	andersson@kernel.org,
-	quic_cpratapa@quicinc.com,
-	quic_avuyyuru@quicinc.com,
-	quic_jponduru@quicinc.com,
-	quic_subashab@quicinc.com,
-	elder@kernel.org,
-	netdev@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 7/7] net: ipa: kill ipa_power_modem_queue_wake()
-Date: Tue, 30 Jan 2024 13:23:04 -0600
-Message-Id: <20240130192305.250915-8-elder@linaro.org>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20240130192305.250915-1-elder@linaro.org>
-References: <20240130192305.250915-1-elder@linaro.org>
+        Tue, 30 Jan 2024 11:33:06 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 0/6] usb: typec: qcom-pmic-typec: enable support for
+ PMI632 PMIC
+Date: Tue, 30 Jan 2024 21:32:53 +0200
+Message-Id: <20240130-pmi632-typec-v3-0-b05fe44f0a51@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOVOuWUC/33MQQ6CMBCF4auQrq1pZ6iAK+9hXFRaYBKlTUsaC
+ eHuFhIXbFy+l/zfwqINZCO7FgsLNlEkN+aBp4K1gx57y8nkzUBAKaQE7t90QeDT7G3Ly7ZSiKI
+ BrCuWEx9sR5+duz/yHihOLsy7nuT2/iA8QklywY2tTGdK1aDC24tGHdzZhZ5tUoJ/NeRa1mAar
+ YVWz2O9rusXaA0/uecAAAA=
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Guenter Roeck <linux@roeck-us.net>, 
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-usb@vger.kernel.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Luca Weiss <luca.weiss@fairphone.com>, 
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2777;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=gTALmY1ibvA6Jtkm5qB1yZj76kmQUeK0FP623MAzOGQ=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBluU7xxwlT5ScISdUnOHH2TX7uG97SJ4h1IgCX4
+ 40Ct0ayn3KJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZblO8QAKCRCLPIo+Aiko
+ 1ekAB/9hUMv/ndpN+V2jmP+9lAodWkuJrLYMysXc1D3Z/rk0YCazA3gsQ8N37Cber3CS7JOc9rK
+ SEHcCbZpvPEGtc52IRvFgByp76Wxcj6dFFLb3kRBNyrQ2ZxzgaGDmDUz97JZjejjM9Xa98fwFnw
+ k6FHCvY5aZ8u9ldnb1TtsRh5HBgd4zuZAsWRyHO7v+YRQdgb3x0PRCUjqVksszJ7oe4rZdy6qDa
+ rNwMyAZIR472Z4N8hPuNw7CTWou3GT+x0KVjeu3VhLrhIGQgMnZPpwm3Aqr6yE4rbE6XBGWDlDg
+ 8vwE7Fi1nEpOjABQTOR/IMkxBx2TeLVZKOVGTNKkMxV1vny3
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-All ipa_power_modem_queue_wake() does is call netif_wake_queue()
-on the modem netdev.  There is no need to wrap that call in a
-trivial function (and certainly not one defined in "ipa_power.c").
+The Qualcomm PMI632 PMIC (found on Qualcomm Robotics RB2 platform)
+doesn't support USB Power Delivery. However this PMIC still supports
+handling of the Type-C port (orientation detection, etc). Reuse exiting
+qcom-pmic-typec driver to support Type-C related functionality of this
+PMIC. Use this to enable USB-C connector support on the RB2 platform.
 
-So get rid of ipa_power_modem_queue_wake(), and replace its one
-caller with a direct call to netif_wake_queue().  Determine the
-netdev pointer to use from the private TX endpoint's netdev pointer.
-
-Signed-off-by: Alex Elder <elder@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/net/ipa/ipa_modem.c |  2 +-
- drivers/net/ipa/ipa_power.c | 13 -------------
- drivers/net/ipa/ipa_power.h |  6 ------
- 3 files changed, 1 insertion(+), 20 deletions(-)
+Changes in v3:
+- Added constraints to qcom,pmic-typec / reg property (Krzysztof)
+- Dropped merged TCPM and Qualcomm PHY patches
+- Link to v2: https://lore.kernel.org/r/20240113-pmi632-typec-v2-0-182d9aa0a5b3@linaro.org
 
-diff --git a/drivers/net/ipa/ipa_modem.c b/drivers/net/ipa/ipa_modem.c
-index 0c298060468eb..1d1be92fbebcb 100644
---- a/drivers/net/ipa/ipa_modem.c
-+++ b/drivers/net/ipa/ipa_modem.c
-@@ -277,7 +277,7 @@ static void ipa_modem_wake_queue_work(struct work_struct *work)
- {
- 	struct ipa_priv *priv = container_of(work, struct ipa_priv, work);
- 
--	ipa_power_modem_queue_wake(priv->ipa);
-+	netif_wake_queue(priv->tx->netdev);
- }
- 
- /** ipa_modem_resume() - resume callback for runtime_pm
-diff --git a/drivers/net/ipa/ipa_power.c b/drivers/net/ipa/ipa_power.c
-index fd2abce043fa5..128a816f65237 100644
---- a/drivers/net/ipa/ipa_power.c
-+++ b/drivers/net/ipa/ipa_power.c
-@@ -227,19 +227,6 @@ void ipa_power_suspend_handler(struct ipa *ipa, enum ipa_irq_id irq_id)
- 	ipa_interrupt_suspend_clear_all(ipa->interrupt);
- }
- 
--/* Transmit can run concurrent with power resume.  When transmitting,
-- * we disable further transmits until we can determine whether power
-- * is ACTIVE.  If it is, future transmits are re-enabled and the buffer
-- * gets sent (or dropped).  If power is not ACTIVE, it will eventually
-- * be, and transmits stay disabled until after it is.  This function
-- * starts the transmit queue and is used in the power resume path after
-- * power has become ACTIVE.
-- */
--void ipa_power_modem_queue_wake(struct ipa *ipa)
--{
--	netif_wake_queue(ipa->modem_netdev);
--}
--
- static int ipa_power_retention_init(struct ipa_power *power)
- {
- 	struct qmp *qmp = qmp_get(power->dev);
-diff --git a/drivers/net/ipa/ipa_power.h b/drivers/net/ipa/ipa_power.h
-index dcd36a6a718f2..718aacf5e2b23 100644
---- a/drivers/net/ipa/ipa_power.h
-+++ b/drivers/net/ipa/ipa_power.h
-@@ -23,12 +23,6 @@ extern const struct dev_pm_ops ipa_pm_ops;
-  */
- u32 ipa_core_clock_rate(struct ipa *ipa);
- 
--/**
-- * ipa_power_modem_queue_wake() - Possibly wake the modem netdev TX queue
-- * @ipa:	IPA pointer
-- */
--void ipa_power_modem_queue_wake(struct ipa *ipa);
--
- /**
-  * ipa_power_retention() - Control register retention on power collapse
-  * @ipa:	IPA pointer
+Changes in v2:
+- Split qcom_pmic_typec_pdphy_set_roles() changes to separate patch
+  (Konrad)
+- Simplified devm_kzalloc / sizeof() argument (Konrad)
+- Made start / stop callbacks mandatory (Bryan)
+- Reworked Type-C port handling into a backend similar to PD PHY (Bryan)
+- Made more qcom-pmic-typec data static const (Bryan)
+- Squashed usbc PHY single-lane removal patch (Konrad)
+- Further usbc PHY cleanup (Konrad)
+- Fixed order of DT properties in pmi632.dtsi (Konrad)
+- Instead of specifying bogus PDOs for the port, specify pd-disable and
+  typec-power-opmode properties for the connector
+- Moved orientation-switch / usb-dual-role properties to sm6115.dtsi
+  (Konrad)
+- Linked usb_dwc3_ss and usb_qmpphy_usb_ss_in
+- Link to v1: https://lore.kernel.org/r/20240113-pmi632-typec-v1-0-de7dfd459353@linaro.org
+
+---
+Dmitry Baryshkov (5):
+      dt-bindings: regulator: qcom,usb-vbus-regulator: add support for PMI632
+      dt-bindings: usb: qcom,pmic-typec: add support for the PMI632 block
+      usb: typec: qcom-pmic-typec: add support for PMI632 PMIC
+      arm64: dts: qcom: pmi632: define USB-C related blocks
+      arm64: dts: qcom: qrb4210-rb2: enable USB-C port handling
+
+Vladimir Zapolskiy (1):
+      arm64: dts: qcom: sm6115: drop pipe clock selection
+
+ .../regulator/qcom,usb-vbus-regulator.yaml         |  9 ++-
+ .../devicetree/bindings/usb/qcom,pmic-typec.yaml   | 32 ++++++++-
+ arch/arm64/boot/dts/qcom/pmi632.dtsi               | 30 ++++++++
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts           | 50 +++++++++++++-
+ arch/arm64/boot/dts/qcom/sm6115.dtsi               | 44 +++++++++++-
+ drivers/usb/typec/tcpm/qcom/Makefile               |  3 +-
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c      | 30 ++++++--
+ .../usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.h    |  2 +
+ .../typec/tcpm/qcom/qcom_pmic_typec_pdphy_stub.c   | 80 ++++++++++++++++++++++
+ 9 files changed, 266 insertions(+), 14 deletions(-)
+---
+base-commit: 41d66f96d0f15a0a2ad6fa2208f6bac1a66cbd52
+change-id: 20240112-pmi632-typec-4c7533092387
+
+Best regards,
 -- 
-2.40.1
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 
