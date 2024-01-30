@@ -1,123 +1,93 @@
-Return-Path: <linux-arm-msm+bounces-9107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76F0F842FBE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 23:35:44 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 12EEF843060
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 23:49:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 339EB28446E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 22:35:43 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 90681B214D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 22:49:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABAF871B49;
-	Tue, 30 Jan 2024 22:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D9C47EEFA;
+	Tue, 30 Jan 2024 22:49:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TfXOa8eN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HOhvN486"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C9514F61;
-	Tue, 30 Jan 2024 22:35:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4467EEF0;
+	Tue, 30 Jan 2024 22:49:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706654140; cv=none; b=GJDzsd5F9Qu8ue20PMPVeFBY8mgCMpO1XUI7X+8HTKhQY4i6PtaHZ5tzp9o8MGK4DfcrINxk/GZIPqD/y4rlwWQ8FCKaRVs0Vm+Bs1Y7LE556vKDejy51B4gtmZrm3FXA8yibCmJDmcpqHnm2WwagmdP2faBOpgu8YoQ6rfOrso=
+	t=1706654959; cv=none; b=MvSAXSWiFvo0qHK7XMOVNzR3eTEWKNblHPx3052U8qfPFt/Xty1PG67scgn21bLh8QTvsWCTPIGF/lclvgGpy2ugtpgDlyiiliR8kCV034IR/4R947uxpFzVw91yvuVP1gBoE3x08NyPHedPZ2zcX/8fCQsviKJUKYI6Cu+riSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706654140; c=relaxed/simple;
-	bh=qd+uYXWXLg/AiJYexFHfgFf/wOf03uG1TaUcBZV0vsY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=An3XIBttL76l1m4T6cZP1aY6uXfZgVSSdwHw+t4mE6h2+/2A8DGxu4RHwejoun8Kb82AEZwdz558hCpCgSoP4Zwu8O3WOHpPTjVbAMvMTw6Dn4edbApcWeFCgzYQ5HBMdgdTt78yWk9HAn1RYXWQJoiG3sYvl3GO6au9AiFZdnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TfXOa8eN; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1d51ba18e1bso40518565ad.0;
-        Tue, 30 Jan 2024 14:35:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706654138; x=1707258938; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=nQdNB3amLD3wgWN5nJoJwd+J8vfuxzeUi86+HaqASZA=;
-        b=TfXOa8eNb/fh3zJy4xFyARglaiYB9u2sdjtl+Js67Fm2Pt5x1z6zBNrq5JRfgTRrap
-         LGkbk19d/cqJF3HjqdF0X1p45vwrRE+uyAQD/bPkFvFMo4aFEkoejZGsHaEnOW4bdV7N
-         GqMH3YdNGWMN/ZxhW8pJaa3/DTDVzE6i5owTKRuaMjIweytW+3TjFDsMI0FI8q3inhk1
-         dKccFMuuqvjxTNP1f51LdiC8SdW2yiegVRZTh0YWaCNwzvj5OFvaojwljhygcX4O90xR
-         iLgOThl9qzSYi8qLlLCvoDWIIEeDqYEpAJFQevi3LDJREH8wxBg5AF4zFtrxC05QqJoT
-         Gt0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706654138; x=1707258938;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nQdNB3amLD3wgWN5nJoJwd+J8vfuxzeUi86+HaqASZA=;
-        b=LmdfQlFP965+8/Zb+4qzH1yFgYlnumbrIaymXvuoimI+yN4ftGv7kg3tdFHNT+jiR5
-         O5NbILE65U6f85iRJwSn9NUUszniDdoltFpzituhmu5oah1oBMrETjlH1S2UVxTcSP8v
-         pqi5+UNJ/8SElpQZfZTmMmwGll0BvvkuxJzp+tc/gKgmScjAZ+oa2EssWx0FWp4iqgPb
-         T8g4ZktMbMwLeDPTXQpBCeyxh6ybKpfAM9B/sGCz0GePT94DdHKL7XJAbF9yY9Lvb2fL
-         ph+NoUrEaduGu5dJ2+1Hu38NyTKgVZ5uTFQ/tqCiaSb4l+Pqahw2oDMUgGbipOSVD+pM
-         FHPw==
-X-Gm-Message-State: AOJu0YzAgGoRhfsTdCbExLQbWUMpcIuPU4sITpAOgsHlj0CO5mb0KQgQ
-	rhpwplF11BpfCi2eBqXk0y49UiD3STWuR86CwueGdRL/demwgQKR
-X-Google-Smtp-Source: AGHT+IFkj+E3wXJek3COMk2XISaWLhZObNoUmBCYA2ECXaBh+4x1L68p53d2Yn6DikZr614ZjhXc1w==
-X-Received: by 2002:a17:902:780f:b0:1d8:d6b9:c0c0 with SMTP id p15-20020a170902780f00b001d8d6b9c0c0mr5944770pll.46.1706654137509;
-        Tue, 30 Jan 2024 14:35:37 -0800 (PST)
-Received: from localhost ([2a00:79e1:2e00:1301:e1c5:6354:b45d:8ffc])
-        by smtp.gmail.com with ESMTPSA id k11-20020a170902f28b00b001d8e4b85636sm4115407plc.138.2024.01.30.14.35.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jan 2024 14:35:36 -0800 (PST)
-From: Rob Clark <robdclark@gmail.com>
-To: dri-devel@lists.freedesktop.org
-Cc: linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	Rob Clark <robdclark@chromium.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/gem: Fix double resv lock aquire
-Date: Tue, 30 Jan 2024 14:35:33 -0800
-Message-ID: <20240130223533.25713-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1706654959; c=relaxed/simple;
+	bh=wufVf89FBbzS40Tb6P4wB9pAf1/vCzzKTz/PUGrNOOY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=i0VQnIpuYJR/cpSFOXOw2eWe19iIBVVUF7XVRGD3Kt8O6q67fgsm1WkqXnaBIFZ23vJIM9siC/sgntuC6ODeHxFehYlTDMG8XlPAXPa9IhfOVjFNFgKPGTtHliWcNCFJUcjHWs1XIoq+CZlOd4iG6xeKDxnYVGC4uLCrGSIAJsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HOhvN486; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B819C43609;
+	Tue, 30 Jan 2024 22:49:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706654958;
+	bh=wufVf89FBbzS40Tb6P4wB9pAf1/vCzzKTz/PUGrNOOY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=HOhvN486y0a/3xne7IsJWEF7CeoRX77RnR3Dx3MJdiE7VL/6u3AIMO4eccU+ynXD4
+	 tgYUf3CqzW1AsELFoZZHcnN3rz+WCTf5PgJ4aLpcbZHlhf0xQjHXhhuFxIAjcDFVMf
+	 L+/owbQhxjOYe7VVsA0g+qSFMZO76FkCzC/iPGL6LdCDM0si2lvv7+1qPmx/UaA7E6
+	 Ot43ABSiL0fAUOsAcUHii61348ZDmRRsDseQ0devbHHRuDVQtfsv3AUd/BMnG/oNdH
+	 NW7hgPRqlQ0DM7v6BCykMDla7uyCtVyLU+hhWXLjefgDlMWlmnIf8mq18e8Df9ltVd
+	 8vSHsobSy6NLA==
+Date: Tue, 30 Jan 2024 16:49:15 -0600
+From: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>, devicetree@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: Re: [PATCH v3 2/6] dt-bindings: PCI: qcom,pcie-sm8450: move SM8450
+ to dedicated schema
+Message-ID: <170665495522.2559069.14002850909301395083.robh@kernel.org>
+References: <20240126-dt-bindings-pci-qcom-split-v3-0-f23cda4d74c0@linaro.org>
+ <20240126-dt-bindings-pci-qcom-split-v3-2-f23cda4d74c0@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240126-dt-bindings-pci-qcom-split-v3-2-f23cda4d74c0@linaro.org>
 
-From: Rob Clark <robdclark@chromium.org>
 
-Since commit 56e5abba8c3e ("dma-buf: Add unlocked variant of vmapping
-functions"), the resv lock is already held in the prime vmap path, so
-don't try to grab it again.
+On Fri, 26 Jan 2024 09:56:43 +0100, Krzysztof Kozlowski wrote:
+> Move SM8450 PCIe devices from qcom,pcie.yaml binding to a dedicated file
+> to make reviewing easier.
+> 
+> This creates equivalent schema file, except:
+>  - Missing required compatible which is actually redundant.
+>  - Expecting eight MSI interrupts, instead of only one, which was
+>    incomplete hardware description.
+> 
+> Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  .../devicetree/bindings/pci/qcom,pcie-sm8450.yaml  | 178 +++++++++++++++++++++
+>  .../devicetree/bindings/pci/qcom,pcie.yaml         |  67 --------
+>  2 files changed, 178 insertions(+), 67 deletions(-)
+> 
 
-Fixes: 56e5abba8c3e ("dma-buf: Add unlocked variant of vmapping functions")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_gem_prime.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c b/drivers/gpu/drm/msm/msm_gem_prime.c
-index 5f68e31a3e4e..8a27b57a5bea 100644
---- a/drivers/gpu/drm/msm/msm_gem_prime.c
-+++ b/drivers/gpu/drm/msm/msm_gem_prime.c
-@@ -26,7 +26,7 @@ int msm_gem_prime_vmap(struct drm_gem_object *obj, struct iosys_map *map)
- {
- 	void *vaddr;
- 
--	vaddr = msm_gem_get_vaddr(obj);
-+	vaddr = msm_gem_get_vaddr_locked(obj);
- 	if (IS_ERR(vaddr))
- 		return PTR_ERR(vaddr);
- 	iosys_map_set_vaddr(map, vaddr);
--- 
-2.43.0
+Reviewed-by: Rob Herring <robh@kernel.org>
 
 
