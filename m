@@ -1,70 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-9034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9035-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B28EC8424A5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 13:18:13 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6EA74842500
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 13:35:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5229A1F2501B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 12:18:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EF9BF1F26D9C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 12:35:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C11567E64;
-	Tue, 30 Jan 2024 12:18:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ieee.org header.i=@ieee.org header.b="B/oOkdhx"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8B716A010;
+	Tue, 30 Jan 2024 12:35:09 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6E767A19
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 12:18:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.47
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2C8F67E7F;
+	Tue, 30 Jan 2024 12:35:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706617089; cv=none; b=RIZQHB4yevwfAMDrTG3B+DuGgfiXY0O7VPm4X2WhM4vry8zj+8EX7ilJUfVj+ClcSS+eGytsRv0IgKCbdWTi6CGNKAgAwrf+bB+ACtwJ9S4PHYPYf52LDJeO1B5iFL+Gz7eIxVlbD+ii+eWsfcaqljJwqPZ2nSIJxRTj5btSp8Q=
+	t=1706618109; cv=none; b=Cq4DOqfdznuYTGZSQK+OJr1uFUmAtWxJc467H0TehRWWpyqXZBTXc7DB9F63c+jvEqR3QDv2LqPiNR7RcwFxTOij1iMySGMSGBfysrvwyvO0LBG+HMDlBMnUxTOwKX+N9CVujoQFoxTA+hoeN0H1E9Oj9fvKNbvW8K7cgat62qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706617089; c=relaxed/simple;
-	bh=aDZg9Ysv9ypMXY8FZH7IcBkC8f4G67xupV2uxqvZIGk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=My6ECSlpMxjMEXD1q9KHHHeAMD6qaRnnAcmls8nfdANbxpZ9gvHd0dQxHOT6CNVTuDHFdw5uYX9rguruimcj0pPvW1y1kCHdM7Bg03rCR1evNGqTuLtIP3FAFWUkJUh6iiz4TtswDk8HeqFBtBoUKPSRhGP1YCyCUX66gboA0Rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ieee.org; spf=pass smtp.mailfrom=ieee.org; dkim=pass (1024-bit key) header.d=ieee.org header.i=@ieee.org header.b=B/oOkdhx; arc=none smtp.client-ip=209.85.166.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ieee.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ieee.org
-Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-7bc332d3a8cso209462639f.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 04:18:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ieee.org; s=google; t=1706617087; x=1707221887; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EVuVKhonMTk5V3LL9uQwVTl3LUQ4N4vNXM25emFwWhY=;
-        b=B/oOkdhxDjrJtU7NY3EMbK1AXNzpVu0d4W2DTes3+OSw9uoGjtq4xiEAoyHA7N1xvj
-         JUW9bCkz32Fg/FeaTgUyntoxl8VRfgarrqJiHXCEfL+ziD9gpMPXioq+DMGQO2kMzKyU
-         Quv0leMON8QXKw7c4MD9wpEvW1mAZ7XcXjusI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706617087; x=1707221887;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EVuVKhonMTk5V3LL9uQwVTl3LUQ4N4vNXM25emFwWhY=;
-        b=U+3yFx1odDBZJu6Q7rjhWDYk0RlHX+/0Euom+1SkA6hjU/c5pN1MVy6G1pd6cw75ZN
-         cMmQ7CPmW/pBHAlzbe3Cy0di+GVomcNWrvt4arsJYTOof52qSR9xDOY0QgF5mJkV43XQ
-         vJFcGymiwCKfr85oYYnyAyvn/9djR72mnBB/gsY61ltBTH4e2tqWGEYo9G1+WL3TLzRF
-         xHkLrtZ7xAosBMm++fA3i74M/cwu737aQSfbmj/0/WoR0LnlH2XfR6WjtiM2xsgzhKHY
-         L3zE/2fm1ZMQsClbkha/2McY2krYfd82iRrzuO9gXyMA0fiYaF5jbf5z29XJww0pdsQq
-         5iJg==
-X-Gm-Message-State: AOJu0YzeIR+idZgEWYvW7QE+4U1tGL4n+sYGJdxFBapjem+1ZWc8HGTn
-	JnAxZbwI9gJhk++/NZQsY0WeUB7RAF1iiZEgkGHqqfyB9HSqnFUhefORP43ldg==
-X-Google-Smtp-Source: AGHT+IEH3KOqJ1oHywcrGCu2pHFm7feqj1n5lzJpLDg26IuVpHt7ix13wz4jRmSDBxCcW0ABiiLpww==
-X-Received: by 2002:a05:6602:2d89:b0:7bf:b56c:ac25 with SMTP id k9-20020a0566022d8900b007bfb56cac25mr14110896iow.0.1706617086797;
-        Tue, 30 Jan 2024 04:18:06 -0800 (PST)
-Received: from [172.22.22.28] (c-98-61-227-136.hsd1.mn.comcast.net. [98.61.227.136])
-        by smtp.googlemail.com with ESMTPSA id q18-20020a5ea612000000b007bfea3c536esm1539313ioi.28.2024.01.30.04.18.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Jan 2024 04:18:06 -0800 (PST)
-Message-ID: <a03fdf68-efbb-4cc4-aea6-d5f01b0fc604@ieee.org>
-Date: Tue, 30 Jan 2024 06:18:05 -0600
+	s=arc-20240116; t=1706618109; c=relaxed/simple;
+	bh=FjucVxqt30Vtepeq9kUvqCOzcmOtmYscLeSgDyFRdL0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Cv2Hb6jCUjIOWlZH4tGaPDLScxY9xJSw5+zPOyUidkinxAwtELMXKXmCahFJCr1VNKC/ktjnw9C9r12ozWzAWf7kiT/u95mRGkiqTaLZWp4Emt6bCW0lC4GXjWWcZTPlHxEw5GhteIMIhLS+HL6zCAtSmgCQG8AfdaSuF2F3EwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 90344DA7;
+	Tue, 30 Jan 2024 04:35:50 -0800 (PST)
+Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9271E3F762;
+	Tue, 30 Jan 2024 04:35:04 -0800 (PST)
+Message-ID: <6ccb98f2-2f68-45db-9941-1c7b05da84d0@arm.com>
+Date: Tue, 30 Jan 2024 12:35:03 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,52 +42,168 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: net: qcom,ipa: do not override firmware-name
- $ref
+Subject: Re: [PATCH v5 05/10] coresight-tpda: Add support to configure CMB
+ element
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+To: Tao Zhang <quic_taozha@quicinc.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Konrad Dybcio <konradybcio@gmail.com>, Mike Leach <mike.leach@linaro.org>,
  Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Alex Elder <elder@kernel.org>,
- linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240129142121.102450-1-krzysztof.kozlowski@linaro.org>
-From: Alex Elder <elder@ieee.org>
-In-Reply-To: <20240129142121.102450-1-krzysztof.kozlowski@linaro.org>
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: Jinlong Mao <quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, coresight@lists.linaro.org,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Trilok Soni <quic_tsoni@quicinc.com>, Song Chai <quic_songchai@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, andersson@kernel.org
+References: <1706605366-31705-1-git-send-email-quic_taozha@quicinc.com>
+ <1706605366-31705-6-git-send-email-quic_taozha@quicinc.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <1706605366-31705-6-git-send-email-quic_taozha@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 1/29/24 8:21 AM, Krzysztof Kozlowski wrote:
-> dtschema package defines firmware-name as string-array, so individual
-> bindings should not make it a string but instead just narrow the number
-> of expected firmware file names.
+On 30/01/2024 09:02, Tao Zhang wrote:
+> Read the CMB element size from the device tree. Set the register
+> bit that controls the CMB element size of the corresponding port.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Fine with me.
-
-Acked-by: Alex Elder <elder@linaro.org>
-
+> Reviewed-by: James Clark <james.clark@arm.com>
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
 > ---
->   Documentation/devicetree/bindings/net/qcom,ipa.yaml | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   drivers/hwtracing/coresight/coresight-tpda.c | 123 +++++++++++--------
+>   drivers/hwtracing/coresight/coresight-tpda.h |   6 +
+>   2 files changed, 79 insertions(+), 50 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-> index c30218684cfe..53cae71d9957 100644
-> --- a/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-> +++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-> @@ -159,7 +159,7 @@ properties:
->         when the AP (not the modem) performs early initialization.
+> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/hwtracing/coresight/coresight-tpda.c
+> index 4ac954f4bc13..fcddff3ded81 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpda.c
+> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
+> @@ -18,6 +18,7 @@
+>   #include "coresight-priv.h"
+>   #include "coresight-tpda.h"
+>   #include "coresight-trace-id.h"
+> +#include "coresight-tpdm.h"
 >   
->     firmware-name:
-> -    $ref: /schemas/types.yaml#/definitions/string
-> +    maxItems: 1
->       description:
->         If present, name (or relative path) of the file within the
->         firmware search path containing the firmware image used when
+>   DEFINE_CORESIGHT_DEVLIST(tpda_devs, "tpda");
+>   
+> @@ -28,24 +29,57 @@ static bool coresight_device_is_tpdm(struct coresight_device *csdev)
+>   			CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM);
+>   }
+>   
+> +static void tpdm_clear_element_size(struct coresight_device *csdev)
+> +{
+> +	struct tpda_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+> +
+> +	drvdata->dsb_esize = 0;
+> +	drvdata->cmb_esize = 0;
+> +}
+> +
+> +static void tpda_set_element_size(struct tpda_drvdata *drvdata, u32 *val)
+> +{
+> +
+
+
+
+> +	if (drvdata->dsb_esize == 64)
+> +		*val |= TPDA_Pn_CR_DSBSIZE;
+
+We don't seem to be clearing the fields we modify, before updating them. 
+This may be OK in real world where the device connected to TPDA port
+may not change. But it is always safer to clear the bits and set it.
+
+e.g.:
+	*val &= ~(TPDA_Pn_CR_DSBSIZE | TPDA_Pn_CR_CMBSIZE);
+
+	
+
+> +	else if (drvdata->dsb_esize == 32)
+> +		*val &= ~TPDA_Pn_CR_DSBSIZE;
+> +
+> +	if (drvdata->cmb_esize == 64)
+> +		*val |= FIELD_PREP(TPDA_Pn_CR_CMBSIZE, 0x2);
+> +	else if (drvdata->cmb_esize == 32)
+> +		*val |= FIELD_PREP(TPDA_Pn_CR_CMBSIZE, 0x1);
+
+Similarly here ^^^. I am happy to fix it up if you are OK with it 
+(unless there are other changes that need a respin)
+
+> +	else if (drvdata->cmb_esize == 8)
+> +		*val &= ~TPDA_Pn_CR_CMBSIZE;
+> +}
+
+> +
+>   /*
+> - * Read the DSB element size from the TPDM device
+> + * Read the element size from the TPDM device. One TPDM must have at least one of the
+> + * element size property.
+>    * Returns
+> - *    The dsb element size read from the devicetree if available.
+> - *    0 - Otherwise, with a warning once.
+> + *    0 - The element size property is read
+> + *    Others - Cannot read the property of the element size
+>    */
+> -static int tpdm_read_dsb_element_size(struct coresight_device *csdev)
+> +static int tpdm_read_element_size(struct tpda_drvdata *drvdata,
+> +				  struct coresight_device *csdev)
+>   {
+> -	int rc = 0;
+> -	u8 size = 0;
+> +	int rc = -EINVAL;
+> +	struct tpdm_drvdata *tpdm_data = dev_get_drvdata(csdev->dev.parent);
+> +
+> +	if (tpdm_has_dsb_dataset(tpdm_data)) {
+> +		rc = fwnode_property_read_u8(dev_fwnode(csdev->dev.parent),
+> +				"qcom,dsb-element-size", &drvdata->dsb_esize);
+> +	}
+> +	if (tpdm_has_cmb_dataset(tpdm_data)) {
+> +		rc = fwnode_property_read_u32(dev_fwnode(csdev->dev.parent),
+> +				"qcom,cmb-element-bits", &drvdata->cmb_esize);
+> +	}
+>   
+> -	rc = fwnode_property_read_u8(dev_fwnode(csdev->dev.parent),
+> -			"qcom,dsb-element-size", &size);
+>   	if (rc)
+>   		dev_warn_once(&csdev->dev,
+> -			"Failed to read TPDM DSB Element size: %d\n", rc);
+> +			"Failed to read TPDM Element size: %d\n", rc);
+>   
+> -	return size;
+> +	return rc;
+>   }
+>   
+>   /*
+> @@ -56,11 +90,12 @@ static int tpdm_read_dsb_element_size(struct coresight_device *csdev)
+>    * Parameter "inport" is used to pass in the input port number
+>    * of TPDA, and it is set to -1 in the recursize call.
+>    */
+> -static int tpda_get_element_size(struct coresight_device *csdev,
+> +static int tpda_get_element_size(struct tpda_drvdata *drvdata,
+> +				 struct coresight_device *csdev,
+>   				 int inport)
+>   {
+> -	int dsb_size = -ENOENT;
+> -	int i, size;
+> +	int rc = 0;
+> +	int i;
+>   	struct coresight_device *in;
+>   
+>   	for (i = 0; i < csdev->pdata->nr_inconns; i++) {
+> @@ -69,30 +104,26 @@ static int tpda_get_element_size(struct coresight_device *csdev,
+>   			continue;
+>   
+>   		/* Ignore the paths that do not match port */
+> -		if (inport > 0 &&
+> +		if (inport >= 0 &&
+
+That looks like a bug fix, but if you don't care about fixing this in < 
+v6.8,  I don't mind.
+
+
+Rest looks fine to me
+
+Suzuki
 
 
