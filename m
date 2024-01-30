@@ -1,62 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-8972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B784841DDC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 09:35:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 487E7841DE2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 09:36:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AE46B1C25C95
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 08:35:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 738781C2524A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 08:36:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A16452F61;
-	Tue, 30 Jan 2024 08:34:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9133252F62;
+	Tue, 30 Jan 2024 08:35:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fz8Jl9Mj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="stIGp61e"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B0312E4D;
-	Tue, 30 Jan 2024 08:34:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A683F9E7;
+	Tue, 30 Jan 2024 08:35:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706603688; cv=none; b=ErM3ioUkRFMpD9QcERr68pOLWvxEEdMYnAr8zRPh0+fcqA6pNZ+PiK2uWgPhFMlo4g6JK4PwHjGuTbubqHYgzgKMOdL2YqVQJCYIAxRpw6PI/OOCUNOBC5vKPWZDXS2M2OCxdqTINCh0Z/EGhl18SJ9LcMn83gSLrBgvn53mIK0=
+	t=1706603742; cv=none; b=XLI5qXr8NjnAvSpN0hnKdb443mDfW+8WUo46anBGgvgN8bpQrLSD5qzhDbh1D8UxZNbeh5VFA5axPyiBPcIAahXafJMRR66AZjOhAoEEPXZQynOTHf07OS9ajk3r8YbA9afWFfdnmF22nP6r9bUlN29nssbwdbSo1HNhaE9yqOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706603688; c=relaxed/simple;
-	bh=PDBalufe/OZxGpAG/naTR/fooOv/KA48jowWnj1HpOI=;
+	s=arc-20240116; t=1706603742; c=relaxed/simple;
+	bh=N0kg3YjJSti8U3lrmYd2PIZvWMjVDyjRAbAKeR5/VQI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i00bS+mf0BvB81r6qaDJis9yrMD04hM6EINwBWe4sCbKI+mPGj7C0WKeTKvZJKayteWFunQAp9WlKTTxMmX/ombUYsr2h7GGpeoTS0d8ESZ/UkKECEP3m2P1jqWhdRUg6L4w1iqBYFvsnG8+WYBfBZ66ezp3hPm9C9lKLfOxg44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fz8Jl9Mj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4784CC433C7;
-	Tue, 30 Jan 2024 08:34:42 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=WIiw0lR3SVF2oMvgnlikhPPZt9eaU3zmG67COdptYXclJ9WI18AB00UQvb9QDNYlafkeivBeIYR33vP4FTdbRVBGJjhe0aktbXi9fZMS7Qlo7pQu1yQz6HDLkAIG0/lfDazyLYYtvEbWOV9Bi4F28HDYCveJULb5ZzPkYMZUZOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=stIGp61e; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D69BC433C7;
+	Tue, 30 Jan 2024 08:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706603687;
-	bh=PDBalufe/OZxGpAG/naTR/fooOv/KA48jowWnj1HpOI=;
+	s=k20201202; t=1706603741;
+	bh=N0kg3YjJSti8U3lrmYd2PIZvWMjVDyjRAbAKeR5/VQI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fz8Jl9MjAfgIKJeEbtyvr73lL20xJkHm+iy0ge/8TgeDpUF4MsFPoq+h89DdsflZH
-	 1/mO8u6Yc4OxRFzPOsiOznTCtdEt3j5Un4bRezPuu5h+5ONHwCrY82Iz8as1FLc4g9
-	 K6s+sEaK4GiSyMlOHz5dOsJbEIq3Ckp7RJiOUWK1IdBQp5QVzp2Ci8PuqFVwhmrtO6
-	 R0Twc6fzF3xp6l3v+y9DBaHgDtupj8FNvNjYvDvLG8jzqac7Bh2kTpHalW7TPYnMqJ
-	 5tzopcL3NcKRS1ocE8jtG78th8PAKD5YyoPvb6i0RTPiW73IEdWi2byr2wp5vqcblE
-	 dtsbkE326Mx2A==
-Date: Tue, 30 Jan 2024 14:04:38 +0530
+	b=stIGp61ecKDJCp1aKRrgyOnjdbW+DOKiNvEnjoYFJMS3mAwrPVRuj/Y9kajPVMGmf
+	 TR6tosqeQN0mmn/BsIWJvq69h6P937eA+qeluljHRzp/yik8a/kiiXPx+0eipPTHji
+	 9cAQ8Mv+DpGyjxnJI9UQIms/uGRXSjIdpnggugM//gmoGIQCV8ZcAJwtjnWl2h7zXI
+	 zRDs2FwSPcer4UfsteWT/XqwWQidtlDu/DXJ77yYe6miDSvUmD2OZ2VDw1IZVj7UVI
+	 160/yowj4poODko5QTeP0qaC9TE4u9bcCcDDI0ZzIcx56f/KCu8J/9kJESmmmOP+R1
+	 UnzJlR/YtXBaQ==
+Date: Tue, 30 Jan 2024 14:05:33 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
-To: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Erick Archer <erick.archer@gmx.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+To: Erick Archer <erick.archer@gmx.com>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Jeffrey Hugo <quic_jhugo@quicinc.com>,
 	"Rafael J. Wysocki" <rafael@kernel.org>,
 	Dan Carpenter <error27@gmail.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Alex Elder <elder@linaro.org>,
 	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
 	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
 	linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: ep: Use kcalloc() instead of kzalloc()
-Message-ID: <20240130083438.GM32821@thinkpad>
-References: <20240120152518.13006-1-erick.archer@gmx.com>
- <43614a09-d520-4111-873a-b352bd93ea07@moroto.mountain>
+Subject: Re: [PATCH v2] bus: mhi: ep: Use kcalloc() instead of kzalloc()
+Message-ID: <20240130083533.GN32821@thinkpad>
+References: <20240128112722.4334-1-erick.archer@gmx.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,66 +65,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <43614a09-d520-4111-873a-b352bd93ea07@moroto.mountain>
+In-Reply-To: <20240128112722.4334-1-erick.archer@gmx.com>
 
-On Mon, Jan 22, 2024 at 10:15:20AM +0300, Dan Carpenter wrote:
-> This code does not have an integer overflow, but it might have a
-> different memory corruption bug.
+On Sun, Jan 28, 2024 at 12:27:22PM +0100, Erick Archer wrote:
+> This is an effort to get rid of all multiplications from allocation
+> functions in order to prevent integer overflows [1].
 > 
-> On Sat, Jan 20, 2024 at 04:25:18PM +0100, Erick Archer wrote:
-> > As noted in the "Deprecated Interfaces, Language Features, Attributes,
-> > and Conventions" documentation [1], size calculations (especially
-> > multiplication) should not be performed in memory allocator (or similar)
-> > function arguments due to the risk of them overflowing. This could lead
-> > to values wrapping around and a smaller allocation being made than the
-> > caller was expecting. Using those allocations could lead to linear
-> > overflows of heap memory and other misbehaviors.
-> > 
-> > So, use the purpose specific kcalloc() function instead of the argument
-> > count * size in the kzalloc() function.
-> > 
+> Here the multiplication is obviously safe because the "event_rings"
+> member never can have a value greater than 255 (8 bits). This member
+> is set twice using always FIELD_GET:
 > 
-> This one is more complicated to analyze.  I have built a Smatch cross
-> function database so it's easy for me and I will help you.
+> mhi_cntrl->event_rings = FIELD_GET(MHICFG_NER_MASK, regval);
+> mhi_cntrl->event_rings = FIELD_GET(MHICFG_NER_MASK, regval);
 > 
-> $ smbd.py where mhi_ep_cntrl event_rings
-> drivers/pci/endpoint/functions/pci-epf-mhi.c | pci_epf_mhi_probe              | (struct mhi_ep_cntrl)->event_rings | 0
-> drivers/bus/mhi/ep/main.c      | mhi_ep_irq                     | (struct mhi_ep_cntrl)->event_rings | min-max
-> drivers/bus/mhi/ep/mmio.c      | mhi_ep_mmio_init               | (struct mhi_ep_cntrl)->event_rings | 0-255
-> drivers/bus/mhi/ep/mmio.c      | mhi_ep_mmio_update_ner         | (struct mhi_ep_cntrl)->event_rings | 0-255
+> And the MHICFG_NER_MASK macro defines the 8 bits mask that guarantees
+> a maximum value of 255.
 > 
-> The other way to figure this stuff out would be to do:
+> However, using kcalloc() is more appropriate [1] and improves
+> readability. This patch has no effect on runtime behavior.
 > 
-> $ grep -Rn "event_rings = " drivers/bus/mhi/ep/
-> drivers/bus/mhi/ep/mmio.c:260:  mhi_cntrl->event_rings = FIELD_GET(MHICFG_NER_MASK, regval);
-> drivers/bus/mhi/ep/mmio.c:261:  mhi_cntrl->hw_event_rings = FIELD_GET(MHICFG_NHWER_MASK, regval);
-> drivers/bus/mhi/ep/mmio.c:271:  mhi_cntrl->event_rings = FIELD_GET(MHICFG_NER_MASK, regval);
-> drivers/bus/mhi/ep/mmio.c:272:  mhi_cntrl->hw_event_rings = FIELD_GET(MHICFG_NHWER_MASK, regval);
-> 
-> That means that this multiplication can never overflow so the patch
-> has no effect on runtime.  The patch is still useful because we don't
-> want every single person to have to do this analysis.  The kcalloc()
-> function is just safer and more obviously correct.
-> 
+> Link: https://github.com/KSPP/linux/issues/162 [1]
+> Link: https://www.kernel.org/doc/html/next/process/deprecated.html#open-coded-arithmetic-in-allocator-arguments [1]
+> Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+> Signed-off-by: Erick Archer <erick.archer@gmx.com>
 
-Agree.
-
-> It's a bit concerning that ->event_rings is set multiple times, but only
-> allocated one time.  It's either unnecessary or there is a potential
-> memory corruption bug.  If it's really necessary then there should be a
-> check that the new size is <= the size of the original buffer that we
-> allocated.
-
-Agree, the dual assignment could be avoided. I added it initially to have all
-the memory allocations in one place, and also there is a guarantee from the spec
-that the MHICFG_NER_MASK will always be initialized to hw max value.
-
-But looking at it again, it seems redundant. So I will drop the assignment from
-mhi_ep_mmio_init().
-
-Thanks for spotting!
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 - Mani
+
+> ---
+> Changes in v2:
+> - Add more info in the commit message to better explain the change.
+>   (Dan Carpenter)
+> - Add the "Reviewed-by:" tag.
+> 
+> Previous versions:
+> v1 - https://lore.kernel.org/linux-hardening/20240120152518.13006-1-erick.archer@gmx.com/
+> ---
+>  drivers/bus/mhi/ep/main.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+> index 65fc1d738bec..8d7a4102bdb7 100644
+> --- a/drivers/bus/mhi/ep/main.c
+> +++ b/drivers/bus/mhi/ep/main.c
+> @@ -1149,8 +1149,9 @@ int mhi_ep_power_up(struct mhi_ep_cntrl *mhi_cntrl)
+>  	mhi_ep_mmio_mask_interrupts(mhi_cntrl);
+>  	mhi_ep_mmio_init(mhi_cntrl);
+> 
+> -	mhi_cntrl->mhi_event = kzalloc(mhi_cntrl->event_rings * (sizeof(*mhi_cntrl->mhi_event)),
+> -					GFP_KERNEL);
+> +	mhi_cntrl->mhi_event = kcalloc(mhi_cntrl->event_rings,
+> +				       sizeof(*mhi_cntrl->mhi_event),
+> +				       GFP_KERNEL);
+>  	if (!mhi_cntrl->mhi_event)
+>  		return -ENOMEM;
+> 
+> --
+> 2.25.1
+> 
 
 -- 
 மணிவண்ணன் சதாசிவம்
