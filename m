@@ -1,116 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-9045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67B0484264E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 14:41:41 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 345B08426B2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 15:12:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C7B3FB2F421
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 13:41:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DDE7B1F26639
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 14:12:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C15B56D1A0;
-	Tue, 30 Jan 2024 13:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5F846DCE7;
+	Tue, 30 Jan 2024 14:12:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="GwNTLTQ8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09796BB54;
-	Tue, 30 Jan 2024 13:41:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3B867A0A;
+	Tue, 30 Jan 2024 14:12:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706622065; cv=none; b=reTrB8BEMGxGe3BjfJXQk19ulA71A6qBjGNi7aIEeuURG5Xy1UtHuLIS2/dED/Zs9D8v8O2yvAHpYptPmOY3E/+Csx6yJ3IBaqzrQXCrJWmyTULe00mXNXEdy76EUnG/u5v9+25fxV1eJFzPaGWFT5vRvzIx+gTB7JUEFiAIoQs=
+	t=1706623926; cv=none; b=ViY73QJNes6+uf/vaiAxiCjAScbcVoHTbo07lQeRdevkg4oSPauCZ+PsFALtYwkwJukaOajWkIlPGzoMEonfSTeLPn8VWfoe9x3Qo1OTvjNITUjyqTUlgZZacLxlas86fAyiZ1Kxg8U48hnOqY7JlIZBaB2Max0f6wNvxK3qyOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706622065; c=relaxed/simple;
-	bh=RiNHswsYrPk3kor4Gr8r0ain5u5aP5cCPnQ3TBQxNew=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HUdlv6pfrfUr9Tg/zVSlu0qiKVeqoLb+ZOSE436MlgE/wawsBmtVdgUrAX6qdm8Le4s/Qwtdwk0uZiYng4E8s0/oXBY6+i+SOyub+lLhK67nYeFxKP+uv4Tngmk6r8wDczF5wboyopcJK+QyXU9u4kzVVmId5VZ6JYCcK99ZG3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-6ddd19552e6so1922685b3a.1;
-        Tue, 30 Jan 2024 05:41:03 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706622063; x=1707226863;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=frJDUedpI3YTH8Ki9s8KdkIUfyDUhvcxZMMZkPB9gtA=;
-        b=F25CRAbFZaKg0ABrkpkG4pGRGalgtMoPBOM1itxRvfF2t0VBJLJxta35g/K97lHr5v
-         EPrdPp9cDG8COz7kd/Hf31zCCAoudv9fB+mO0Jkc6lEBMZ1jxuhaPVJnkH96eKDIJiyQ
-         RJ+iDfDWUDBos2+xhet5htR736OjvMdkZAl+FxT+CPEBUDCP9zPT5kVKw9wq8AUPA27V
-         IZUM/mXi3SGfwm3L5N8MnxMqc7W+a+NyWPjGqUJhHXXReFVBkD8iY7fUa8kXRlNiHJ+s
-         GIXUZjdsQEZvSvCEn/itQNwFOZnmL2/UnflioVLDeey8xPFF37FxCGX3C3ZqH+KbozJs
-         IrLw==
-X-Gm-Message-State: AOJu0YzMIB1Wi8VfnEZCp5jtv/SVxVMe8OYn1j6XvwcF+/RmGj8qXj/D
-	Ef7UK2bKf5bFH0N1y6zCO2atRSgof1nGnpqMr5Ec2KxDga4HiiDIbXGYZ+ixk08=
-X-Google-Smtp-Source: AGHT+IHHJCN/DA5nDwh/W1iGS9pLTv+8/BwgtjewsS/JVnv80HpaGXOBEGUKUqWzXskzFujFpvaFKg==
-X-Received: by 2002:a05:6a00:1805:b0:6db:cf34:8a96 with SMTP id y5-20020a056a00180500b006dbcf348a96mr8296734pfa.26.1706622062919;
-        Tue, 30 Jan 2024 05:41:02 -0800 (PST)
-Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com. [209.85.215.182])
-        by smtp.gmail.com with ESMTPSA id w18-20020a639352000000b005b458aa0541sm8089838pgm.15.2024.01.30.05.41.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Jan 2024 05:41:02 -0800 (PST)
-Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-5cfd95130c6so2224411a12.1;
-        Tue, 30 Jan 2024 05:41:02 -0800 (PST)
-X-Received: by 2002:a25:b20c:0:b0:dc3:78d1:c5a3 with SMTP id
- i12-20020a25b20c000000b00dc378d1c5a3mr5877288ybj.13.1706621652312; Tue, 30
- Jan 2024 05:34:12 -0800 (PST)
+	s=arc-20240116; t=1706623926; c=relaxed/simple;
+	bh=zBzQq5IufcMsy/RtjMvFMem+jfEfpWCQ/Zk2VEYzx/0=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Kt94JFKY/6hagsnzAflnAsOkNTQJHkVWTCeQJc/PqpU6Et5ZCnwTKkYSyD8O7olOOLPPw4ypc7DPJdQtQnyD7lazcIzI6dKwEv7rpNPp5qBWe1NyCen0CZ0OoU/nvCTlw2Q17OT+UuWMEYAy7nee1sPubTRVCjmF/hF5SKzdv0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=GwNTLTQ8; arc=none smtp.client-ip=217.70.183.196
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 8B647E0006;
+	Tue, 30 Jan 2024 14:11:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1706623921;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=zBzQq5IufcMsy/RtjMvFMem+jfEfpWCQ/Zk2VEYzx/0=;
+	b=GwNTLTQ8StsesbERh/DoVKvxkf9n8MUZ2ccyF2WyhsNiFwgYwUAQHLjGS62ThSxJ4hOK9U
+	t/DJmfy+voD4JvFp8J5HbJ/M6hZtQNS77efTa5mY4Y96fIU3YioJNoS0Ac/tIpWaQQHOBr
+	N1cwEKKghiGlZ++Kgf4ArRVmPlH1qzKF0fZxhH10RwxaNTwiWnyuMn6Tu6FVMUHpvf57ZJ
+	MeZK6q2BsOkJMrr6cT+nUsEdn5Slgd0HrX9lpkauaRazRvmE9Vh03++0R88zGMdoYCQk9S
+	P06BTI3lsbEfKNKK91VRzvIDPVU8kduotsSln2EynOFm3V/O6l+qKj1Xx1mFTw==
+Date: Tue, 30 Jan 2024 15:11:56 +0100
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: daniel.lezcano@linaro.org, rafael@kernel.org, rui.zhang@intel.com,
+ lukasz.luba@arm.com, support.opensource@diasemi.com, shawnguo@kernel.org,
+ s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com,
+ linux-imx@nxp.com, andersson@kernel.org, konrad.dybcio@linaro.org,
+ amitk@kernel.org, thara.gopinath@gmail.com, niklas.soderlund@ragnatech.se,
+ srinivas.pandruvada@linux.intel.com, baolin.wang@linux.alibaba.com,
+ u.kleine-koenig@pengutronix.de, hayashi.kunihiko@socionext.com,
+ d-gole@ti.com, linus.walleij@linaro.org,
+ DLG-Adam.Ward.opensource@dm.renesas.com, error27@gmail.com,
+ heiko@sntech.de, hdegoede@redhat.com, jernej.skrabec@gmail.com,
+ f.fainelli@gmail.com, bchihi@baylibre.com, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+ kernel@collabora.com
+Subject: Re: [PATCH v1 14/18] thermal/drivers/armada: Migrate to
+ thermal_zone_device_register()
+Message-ID: <20240130151156.720ca0fe@xps-13>
+In-Reply-To: <20240130111250.185718-15-angelogioacchino.delregno@collabora.com>
+References: <20240130111250.185718-1-angelogioacchino.delregno@collabora.com>
+	<20240130111250.185718-15-angelogioacchino.delregno@collabora.com>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240130111250.185718-1-angelogioacchino.delregno@collabora.com> <20240130111250.185718-7-angelogioacchino.delregno@collabora.com>
-In-Reply-To: <20240130111250.185718-7-angelogioacchino.delregno@collabora.com>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Tue, 30 Jan 2024 14:34:01 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdXgT0g=0uky9FYDXk=KuC1HjkGEX8sCQdKbUMoBFQKDqQ@mail.gmail.com>
-Message-ID: <CAMuHMdXgT0g=0uky9FYDXk=KuC1HjkGEX8sCQdKbUMoBFQKDqQ@mail.gmail.com>
-Subject: Re: [PATCH v1 06/18] thermal/drivers/rcar: Migrate to thermal_zone_device_register()
-To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: daniel.lezcano@linaro.org, miquel.raynal@bootlin.com, rafael@kernel.org, 
-	rui.zhang@intel.com, lukasz.luba@arm.com, support.opensource@diasemi.com, 
-	shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de, 
-	festevam@gmail.com, linux-imx@nxp.com, andersson@kernel.org, 
-	konrad.dybcio@linaro.org, amitk@kernel.org, thara.gopinath@gmail.com, 
-	niklas.soderlund@ragnatech.se, srinivas.pandruvada@linux.intel.com, 
-	baolin.wang@linux.alibaba.com, u.kleine-koenig@pengutronix.de, 
-	hayashi.kunihiko@socionext.com, d-gole@ti.com, linus.walleij@linaro.org, 
-	DLG-Adam.Ward.opensource@dm.renesas.com, error27@gmail.com, heiko@sntech.de, 
-	hdegoede@redhat.com, jernej.skrabec@gmail.com, f.fainelli@gmail.com, 
-	bchihi@baylibre.com, linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	linux-renesas-soc@vger.kernel.org, kernel@collabora.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-GND-Sasl: miquel.raynal@bootlin.com
 
-On Tue, Jan 30, 2024 at 12:15=E2=80=AFPM AngeloGioacchino Del Regno
-<angelogioacchino.delregno@collabora.com> wrote:
+Hi,
+
+angelogioacchino.delregno@collabora.com wrote on Tue, 30 Jan 2024
+12:12:46 +0100:
+
 > The thermal API has a new thermal_zone_device_register() function which
 > is deprecating the older thermal_zone_device_register_with_trips() and
 > thermal_tripless_zone_device_register().
->
+>=20
 > Migrate to the new thermal zone device registration function.
->
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@coll=
-abora.com>
+>=20
 
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+LGTM
 
-Gr{oetje,eeting}s,
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
 
-                        Geert
-
---=20
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
-.org
-
-In personal conversations with technical people, I call myself a hacker. Bu=
-t
-when I'm talking to journalists I just say "programmer" or something like t=
-hat.
-                                -- Linus Torvalds
+Thanks,
+Miqu=C3=A8l
 
