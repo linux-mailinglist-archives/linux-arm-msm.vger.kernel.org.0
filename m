@@ -1,111 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-9052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0AC88427FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 16:25:06 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08C47842819
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 16:33:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A836C1F22E78
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 15:25:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 65B5C28CFE5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 15:33:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6127E86AEC;
-	Tue, 30 Jan 2024 15:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 557DB823A7;
+	Tue, 30 Jan 2024 15:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b="vInUSoCl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YEUZmIfF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5262386AD7
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 15:24:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A03B7F7CF;
+	Tue, 30 Jan 2024 15:33:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706628252; cv=none; b=eEDC4AVqlp7VP6s4jJGVkxnbJhHdSCTx0sjn4I1zD0Y+J+uWgt5/iVMcK+hIgj340QQqAGUa87P3haqSO2dRVtFfhFhLohx3eK9iEqUmc3I1UPp6arGKIseQ9C9mMe5xoGUkVoQRQkV9ebfrmT3naVXlWjjp+ZKgP6u+iGk/tFU=
+	t=1706628807; cv=none; b=tokEfzQudBwbjhr4bM6PvIzF+rhv/CupW/gBvGDij+J/ZYqkGZbCfEaVdh4yv62pcDEqcY+M2kBTrzJgNUL5GNd5RSA/2r9DUrSiOIwuISSujYFnf25u71m+ospwu/YqapQfvLIy5r5712bKNbpmQv4nD4rVE6pHSY4Qy7Fz1Cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706628252; c=relaxed/simple;
-	bh=RWoMbArJCJ2qut8LsUpeWadEL9hpH4D1vGmVcW9tVmE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uJWbkyMhJGFXHUQXSeqHjJ+R4xVh7tDv7S3JRmIF5vqtl5S5rLSxTQsWhRGsV2AJsjQ6MxpP2DMo/SBM25mwSR0UeMG6pzEO3xIcVsFRpj5ZIuyo4dv4MfED2sf13fQ+Wb61ieE71+xomNDeyvlTQClC+GBC6ACSiu5xQ85iCtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie; spf=none smtp.mailfrom=nexus-software.ie; dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b=vInUSoCl; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=nexus-software.ie
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-40fb0c4bb9fso295305e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 07:24:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20230601.gappssmtp.com; s=20230601; t=1706628248; x=1707233048; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=i3sobrlmzlgQ267qaogC7twZ6ZN3NAHO1POj2V3Oyvc=;
-        b=vInUSoClga+Hdun7P/75sHfAVkuFCj0eP0pP3d6vxtIJ+RtuZ/wW0wSVKKyb4qsn2s
-         M9WMNpjvXLbAyIDREq8VPlWXFJF435offpdz4zz86kM61WMYqlBAanpLN6FL8XpohL4t
-         /76F0nMb7G4Q2IGYmSD5lNP8ZYcMd33pznTy9fyhDOV1B/xSIbNGYjALXIEJPwHN8LXp
-         c/zmeeOW1cMyABPd5DK+BG0GaTUuS0Fx0jyOZFfhR642lGP1koIKXWCIrbnCWww622Q+
-         +hw73MaAK81X7xfYRyfYe2n9iyliX80o7cWjx9HY6Q87unu2CTAs6afETUiGj+Kcs/nO
-         wHzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706628248; x=1707233048;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=i3sobrlmzlgQ267qaogC7twZ6ZN3NAHO1POj2V3Oyvc=;
-        b=CNrNjSP5olLB82Z9KMFpupC721+/qxzZBPZm7td/WiR6Y3HWa0z5KmapivbPAVoq4s
-         IMdgh7GiEAGg33jxCKJi4xQlRwLphVo2TYzoHfI5NGj8ZxfhEMIokwoLCvciqgUrLha0
-         X/TJkRpvVQy6Kbp7jacwYgF86yBhL7fc6UBCK5vrQnyNAhB0jf7XXshKltDQNX0aYFbw
-         Kq1mJAIHPdt5lSqjDOr1Xw8SDML4wr1rfdeC5+XzT1a4J1L6ZCWMX19vF04n7uGyYDx7
-         0g0J2d7CHnFYCBwh7p2j5oqv1Z+ebUFs6nCzua6DEiebxz3ZH/W5PKBqsNABt90I6UUf
-         hxOw==
-X-Gm-Message-State: AOJu0YzAcgSOTZEULV0qfr1jePy1uRxcabm9aUKv/MSq6WVWPkLP9ru4
-	cyWbOcssrfDzya1bjB5pzTtw2fqxKkDGaDNCw0pVjWZZYeKW6uY/Apu1NYpTxLc=
-X-Google-Smtp-Source: AGHT+IEyAAbMLGJbgqPjXgEAeGFmKuS59P8+cb/8gbye9868qSzHvrPXIkwWwsrpovu8gtwuNUB1sQ==
-X-Received: by 2002:a05:600c:198c:b0:40e:cdff:8d10 with SMTP id t12-20020a05600c198c00b0040ecdff8d10mr6966048wmq.6.1706628248296;
-        Tue, 30 Jan 2024 07:24:08 -0800 (PST)
-Received: from [192.168.100.86] ([176.61.106.68])
-        by smtp.gmail.com with ESMTPSA id bj12-20020a0560001e0c00b00337d6f0013esm7683953wrb.107.2024.01.30.07.24.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Jan 2024 07:24:07 -0800 (PST)
-Message-ID: <b94c4c9f-a3dd-40fb-a80e-569199e93ee2@nexus-software.ie>
-Date: Tue, 30 Jan 2024 15:24:06 +0000
+	s=arc-20240116; t=1706628807; c=relaxed/simple;
+	bh=xL9kFnUvGlP9fBkvgK0in4ewf6ZPO4qQZEK2ExFEHDc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pZPHlAgUbtbS+H+C8B61WuIkHA36QZXGRY+pGgrKK6mWDI73z5cpYSoTfvcEwjDXKIJ9kWJP7hXcN5tourfxZwGbKz777oZ2SDaOiZSonxSbHjSiC97GNQ/YGVMqHgtipCS0jjtODSk86sO1qXt5ZA1yRUAy7txngiZUpDd7EQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YEUZmIfF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BEC3C433F1;
+	Tue, 30 Jan 2024 15:33:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706628806;
+	bh=xL9kFnUvGlP9fBkvgK0in4ewf6ZPO4qQZEK2ExFEHDc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=YEUZmIfF+/ZFfhkJ3j7kTnmXvKgFiXwU2qigFrT46q3b8HIMfyqkw+WzXrm9Mhkh4
+	 LZNOEMSgh85IO6caMHOLwHdKOohDvsEo3cgbbsQjw4m9c9lofKrVQ3k6yh4SNcwBoa
+	 Dan/4pjo9RcTNFU+BvpwXuRRtJxKgfg1EPWjWohZCKy2VqmS8iCmpGC48n4PHfjk6X
+	 I4Cmxyb+XMMh7NpYq0Lg9UZW1VjxvUBrilF0PRAuiQLlRj7p9jn/NYTj/IZx86z3le
+	 Eqsjgl06VCmBYhZu1PY+rAhK+lJnKpnxkgtzVZotG2k8sHTWulLXTaGFITD1+1EUxv
+	 RBELXLAODvuXA==
+Date: Tue, 30 Jan 2024 21:03:22 +0530
+From: Vinod Koul <vkoul@kernel.org>
+To: Andrew Halaney <ahalaney@redhat.com>, bhupesh.linux@gmail.com
+Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH] MAINTAINERS: Drop unreachable reviewer for Qualcomm
+ ETHQOS ethernet driver
+Message-ID: <ZbkWwn-oN5wqoPfJ@matsya>
+References: <20240129-remove-dwmac-qcom-ethqos-reviewer-v1-1-2645eab61451@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [V2] i2c: i2c-qcom-geni: Correct I2C TRE sequence
-Content-Language: en-US
-To: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org, andi.shyti@kernel.org,
- linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
- linux-kernel@vger.kernel.org, vkoul@kernel.org, quic_bjorande@quicinc.com,
- manivannan.sadhasivam@linaro.org
-Cc: quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com
-References: <20240129061003.4085-1-quic_vdadhani@quicinc.com>
-From: Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <20240129061003.4085-1-quic_vdadhani@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240129-remove-dwmac-qcom-ethqos-reviewer-v1-1-2645eab61451@redhat.com>
 
-On 29/01/2024 06:10, Viken Dadhaniya wrote:
-> As per HPG(Hardware programming guide
+On 29-01-24, 11:12, Andrew Halaney wrote:
+> Bhupesh's email responds indicating they've changed employers and with
+> no new contact information. Let's drop the line from MAINTAINERS to
+> avoid getting the same response over and over.
 
-Since you are doing a V3 here, please amend this too.
+Looks like Bhupesh sent the patch changing but never followed up with a
+v2 for this:
+lore.kernel.org/r/20230915191600.3410862-1-bhupesh.linux@gmail.com
 
-"As per HPG" means almost nothing outside of qcom.
+Would prefer if this is changed to his email (copied him as well)
 
-"As per Qualcomm's internal Hardware Programming Guide"
 
-Right thing to do to reference the document IMO but, you should make 
-clear its an internal silicon specification that's not public.
+> 
+> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+> ---
+> If anyone knows how to contact Bhupesh / if they're willing to continue
+> being a reviewer feel free to suggest an alternative, but for the moment
+> this is better than nothing.
+> ---
+>  MAINTAINERS | 1 -
+>  1 file changed, 1 deletion(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 939f6dd0ef6a..b285d9a123ce 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -18080,7 +18080,6 @@ F:	drivers/net/ethernet/qualcomm/emac/
+>  
+>  QUALCOMM ETHQOS ETHERNET DRIVER
+>  M:	Vinod Koul <vkoul@kernel.org>
+> -R:	Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>  L:	netdev@vger.kernel.org
+>  L:	linux-arm-msm@vger.kernel.org
+>  S:	Maintained
+> 
+> ---
+> base-commit: 596764183be8ebb13352b281a442a1f1151c9b06
+> change-id: 20240129-remove-dwmac-qcom-ethqos-reviewer-1a37d8c71383
+> 
+> Best regards,
+> -- 
+> Andrew Halaney <ahalaney@redhat.com>
 
-Also not sure the TRE description adds much.
-
-Just give a high level description of the sequences being out-of-order 
-with respect to the hardware spec.
-
----
-bod
+-- 
+~Vinod
 
