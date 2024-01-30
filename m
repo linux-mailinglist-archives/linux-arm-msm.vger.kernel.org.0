@@ -1,101 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-9110-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9111-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73C2A8430C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 00:01:38 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 427B584310F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 00:22:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 04370B23C79
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 23:01:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F2DBD282528
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 23:22:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56A2A7EF08;
-	Tue, 30 Jan 2024 23:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB55B14F78;
+	Tue, 30 Jan 2024 23:22:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D/4bDsru"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V2jmISR5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26DB77EF06;
-	Tue, 30 Jan 2024 23:01:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5DD7EF06;
+	Tue, 30 Jan 2024 23:22:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706655693; cv=none; b=O2p8wKuQsIBEbglnWyhtTaTr2l65jvfdeZB/1xeMuSn/ttExredTjEM5b4oO5If91IVvWRV8dNd2CoPCXTKdq7HSB99XLSyrsbn/3mZwJezhnY7iiOjSab0MUIDRte3TjRd5/a2l5OlIk6qkOsfSwHJlcDI2wlH14MaNR7y8zeI=
+	t=1706656932; cv=none; b=mqE7zmIl4RPCu29wZLFQO6Gjc1cqh+BIlTJqEInlxNtYxMtsMQ1ORExRpwCU+98pmdSKOnBgjMXPwQ9BpUklcMfx7GC056BimQZcJtC0UxnsLKFUi9d0wb4k4VccEBVemjSXVzvfTdrLtrAZ/athyBXxLqWUUlUI4LrAF0nLStE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706655693; c=relaxed/simple;
-	bh=ku1C/ZkbKX+29BRUe76r+E2vI8ZO7+6hPMyFCOiFLQQ=;
+	s=arc-20240116; t=1706656932; c=relaxed/simple;
+	bh=kv+e9Cs/2JkPD7PTMh8KOS/xZyRVE/K3NioD86J90SQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FiizZ2rotWRU+zfJ/KgqSuBZ1NSw+erq9SNQtm/OY0aYGZ1RokU0ENAeZ16REWD5kVooijriEEhAsDQkHoPCFQcc4NqCdLj8Z1ntNhHVfRj0agvFrLmPlj3Zw7lA2nZkvjmAkNTJSTF5PMhapEjYzL5RIQrI/YyvRywluXqF5eY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D/4bDsru; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 673B8C433C7;
-	Tue, 30 Jan 2024 23:01:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706655692;
-	bh=ku1C/ZkbKX+29BRUe76r+E2vI8ZO7+6hPMyFCOiFLQQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=D/4bDsruR054m2eZrmHx9bopxrE7FZ6qZLIETLGBtVSr1Klv3+vKCOGaLfD09IpK0
-	 QLusj9nMEU2zhFJOCloZsME3p6H6Spz5WOKFVCxl3P3/ZD2H9x12Tqj3rTiVKWKRd8
-	 lZcWgUru/vix1hPpGdIJ8NB73EQt/naxYOkPhg9bAhHsCXkCvNvQE0rhZ42ClEKlc/
-	 Lu1RKry+swCBJqxifi5fcxiNo+WLIg57pt+r1SmviioOBT8i+25XBxjwyYctAkG/1q
-	 HxUkrLvVa5R9Yv6kyWTpej5genuaZfEIr/1QucvIONqt0EouWdoMwzyDTFRJFrK2ac
-	 6OCK/MK1Kl7YQ==
-Date: Tue, 30 Jan 2024 18:01:31 -0500
-From: Sasha Levin <sashal@kernel.org>
-To: Sebastian Reichel <sebastian.reichel@collabora.com>
-Cc: linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Luca Weiss <luca.weiss@fairphone.com>, andersson@kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH AUTOSEL 6.7 15/39] power: supply: qcom_battmgr: Register
- the power supplies after PDR is up
-Message-ID: <Zbl_y-KmQhCnN7Tu@sashalap>
-References: <20240128161130.200783-1-sashal@kernel.org>
- <20240128161130.200783-15-sashal@kernel.org>
- <rtghydsz532x6atjeshexkgevqlfxmw5owjexmnczwepeefvlb@gxinnf23tzij>
+	 Content-Type:Content-Disposition:In-Reply-To; b=aP6hGUSz6bgeSgGKl6MqNKKQPfHEXMSXbOGj/cHmBi/5vuk84qm0Sbln3o9521dxzlxvpTsATU13ZRCJlR/7pVtQJLxozt0OKuJo/mEF9VJGT22/JWtTbo2tYh6iL1GlTjK81RA59I9vrePTN2D1FYv2mv60ot+jKpRNNqJT+fI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V2jmISR5; arc=none smtp.client-ip=209.85.166.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-3637f958e9dso5939595ab.1;
+        Tue, 30 Jan 2024 15:22:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706656930; x=1707261730; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=sEYhELlxY9RsXySQ9haft7PmND+A/JY4VFg9NvdfEZ8=;
+        b=V2jmISR58XyjnxAMPZTPCSMBj2bFFStmrabttbyOnnMkq4grnGsspogP37DnxBf/Yh
+         058eTGjEW7mu51KmKV8Jo8t7V0QOHvpzbwadAcpKs47hJReHGSvXdJh3bKczETkQV1cX
+         xJ0gpaJs80lCaUNcRwQGnkk7iV3/cwbvzMzpQO60nRsmjRKCrU4yQ2TZPNOMLYuwHjba
+         BRDjA7eJfDy4k5XLtH9ksrwhcCxsfi7i45LaKsGGEp7X0SieRVA0XyqQ1jCBHYCg0OSE
+         Z4+b9l7zzfI9w9f2Kqs6WQ6qWE2SRorvYMpptxwqPMmdFEXelDuLrWKcV63sQGxmynyg
+         ZA+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706656930; x=1707261730;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sEYhELlxY9RsXySQ9haft7PmND+A/JY4VFg9NvdfEZ8=;
+        b=K/CCu0/lBTsuSlGXbXO5iiMh9NZv9gGLv/sbWFPwqcxlKGVTF1tBA4KBKJb28NUNH5
+         D56aXsBXlJ7ambUaoGpakaN8acJ1n/Wq0FzembNddLEx8wJBxGDpSbmsJhVDxgUGmhmh
+         eRsaumGHjXr7vEppSVgO61SEMOP7GaGSOqUhjSu69WmXYAcc0yHLY/ebaDW1ieiigdhd
+         1pqWDKUXXskqXDVrFNhtgmA3DLF4J7bRyUokK20hlZSJfCZ8Qz/mxDiuL/OuM6NPeqHL
+         g6VIv4E9ugzOaLQdGMZSwH3rSCc+LyiPBoQTCqLRNPcRZqo8TQ0n6QdtZ0vraqi19H+r
+         GA0g==
+X-Gm-Message-State: AOJu0YzRMsfRDH2rcfFe0z4SFt/SPoWu1fdbY60cJtbcHK/zuXQpf/Ry
+	pBlZ1i44iXhq2qOy46CgtImrdXwxPmGWa3PT0qb4CPLNhdQF9CvK
+X-Google-Smtp-Source: AGHT+IHHlT1De7ZNKLWcKB3LNAdis9rHuBmeNy7AumhkIETFmTaOgTEA8gWxiebRB2SKhhiN4LIBXg==
+X-Received: by 2002:a05:6e02:685:b0:363:8353:324b with SMTP id o5-20020a056e02068500b003638353324bmr77262ils.1.1706656929914;
+        Tue, 30 Jan 2024 15:22:09 -0800 (PST)
+Received: from google.com ([2620:15c:9d:2:955e:133f:54ba:f642])
+        by smtp.gmail.com with ESMTPSA id n28-20020a635c5c000000b005cfba3c84b7sm7924472pgm.81.2024.01.30.15.22.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Jan 2024 15:22:09 -0800 (PST)
+Date: Tue, 30 Jan 2024 15:22:06 -0800
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: linux-input@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bastien Nocera <hadess@hadess.net>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Henrik Rydberg <rydberg@bitmath.org>,
+	Jeff LaBundy <jeff@labundy.com>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v15 0/4] Input: add initial support for Goodix Berlin
+ touchscreen IC
+Message-ID: <ZbmEnhIoJzC__4no@google.com>
+References: <20240129-topic-goodix-berlin-upstream-initial-v15-0-6f7d096c0a0a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <rtghydsz532x6atjeshexkgevqlfxmw5owjexmnczwepeefvlb@gxinnf23tzij>
+In-Reply-To: <20240129-topic-goodix-berlin-upstream-initial-v15-0-6f7d096c0a0a@linaro.org>
 
-On Mon, Jan 29, 2024 at 02:03:14PM +0100, Sebastian Reichel wrote:
->Hi,
->
->On Sun, Jan 28, 2024 at 11:10:35AM -0500, Sasha Levin wrote:
->> From: Konrad Dybcio <konrad.dybcio@linaro.org>
->>
->> [ Upstream commit b43f7ddc2b7a5a90447d96cb4d3c6d142dd4a810 ]
->>
->> Currently, a not-yet-entirely-initialized battmgr (e.g. with pd-mapper
->> not having yet started or ADSP not being up etc.) results in a couple of
->> zombie power supply devices hanging around.
->>
->> This is particularly noticeable when trying to suspend the device (even
->> s2idle): the PSY-internal thermal zone is inaccessible and returns
->> -ENODEV, which causes log spam.
->>
->> Register the power supplies only after we received some notification
->> indicating battmgr is ready to take off.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> Tested-by: Luca Weiss <luca.weiss@fairphone.com>
->> Link: https://lore.kernel.org/r/20231218-topic-battmgr_fixture_attempt-v1-1-6145745f34fe@linaro.org
->> Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
->> Signed-off-by: Sasha Levin <sashal@kernel.org>
->> ---
->
->Please drop it, I have a patch queued reverting this patch.
+On Mon, Jan 29, 2024 at 10:16:34AM +0100, Neil Armstrong wrote:
+> These touchscreen ICs support SPI, I2C and I3C interface, up to
+> 10 finger touch, stylus and gestures events.
+> 
+> This initial driver is derived from the Goodix goodix_ts_berlin
+> available at [1] and [2] and only supports the GT9916 IC
+> present on the Qualcomm SM8550/SM8650 MTP & QRD touch panel.
+> 
+> The current implementation only supports BerlinD, aka GT9916.
+> 
+> Support for advanced features like:
+> - Firmware & config update
+> - Stylus events
+> - Gestures events
+> - Previous revisions support (BerlinA or BerlinB)
+> is not included in current version.
+> 
+> The current support will work with currently flashed firmware
+> and config, and bail out if firmware or config aren't flashed yet.
+> 
+> [1] https://github.com/goodix/goodix_ts_berlin
+> [2] https://git.codelinaro.org/clo/la/platform/vendor/opensource/touch-drivers
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-Dropped, thanks!
+Applied the lot, thank you.
 
 -- 
-Thanks,
-Sasha
+Dmitry
 
