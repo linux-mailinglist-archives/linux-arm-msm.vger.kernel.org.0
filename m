@@ -1,194 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-8979-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BC8C841EA0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 10:03:37 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BAE9A841EBA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 10:05:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 40B131C255DB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 09:03:36 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B99FCB2BF4F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 08:53:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F24558ADD;
-	Tue, 30 Jan 2024 09:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29BA559148;
+	Tue, 30 Jan 2024 08:53:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QZ2sbIRk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="v1u6GWIY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0691E59147;
-	Tue, 30 Jan 2024 09:03:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5445459141
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 08:53:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706605408; cv=none; b=NgBvhmDsFLPCKADEdPg8u7uVWdWgqhWVFP7OyRu+3MGz+y+SsfF+sE3rz+XBkjz1kmQ8+ZgbZbY0s6zMTVVj+6BwVwn/hsZSGM2BvLkCaXlBuyxrTBOPPaWVdWEAcTKkcTbfQSKEvPJ68j6ujN5skmlV5Q97RzY9ldU+GPZSBtc=
+	t=1706604794; cv=none; b=NnvdqpltfdR7WPj/e6YUP2r+15yyGkv5x8Eh8zzvHgpAuNQBHlFBp+bFrdKluwmmHMg8c1+HkVtBTOKFg9C/VqibDGYKHlQZAvtH7jej/Bg+sEbOIYKSznEfWomKobkaKMk6SxoO3dZWfqjhYdhiJb+JGY2CLRhvD5a8Upy4vA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706605408; c=relaxed/simple;
-	bh=Uewh1FnrdtUjaw3IbQp5/cVxlxfhVTRPnk+3maWKx+g=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RJ8IVBtl3UvDRYV4RnSL8PuHlQfOqLn6LgRWWQWSoG4q/U0UIUdjSIB1OFIVUzL510sefk7Dm7tVvURl8EgKNiwFQeksjPmXrK8xssaTzRRRFoNrBj0WuT7S18DhrMsJzqK1YODbuvhBEbZwGlM51V//Q45HclrJ+OZms6kiN3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QZ2sbIRk; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40U6Firp004198;
-	Tue, 30 Jan 2024 09:03:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-type; s=qcppdkim1; bh=eG0cw3V2V7bP1GdeOMsX
-	cfVKOjDgrWaClaMQX8x+Rcc=; b=QZ2sbIRku2RhKBE1ImcUN4yJiln5yf2eSHWm
-	lgfJfvtneSNhSEoL6xTntsQg1ej68YMaF+zK5dH5VLhsDonBWuup2AcJuQgL4Qm7
-	dYVBrUnDW9/4OZqdDsVMGxRzU1JAbvISmiFsblU8aZMZt0MxjH7dnen/NrAOf8E+
-	VDvc3DIMaMziyC8tISA7sqw2Nmex8XjE1koqlbkKyeu6fER75OVY581ujelt5rCa
-	GwXnVxu/LgyCiAAIAHgQ1l389G6ZL5fXZYo3nMfNCsTUqpbsM1es2mHzT1SCy4rv
-	Sf7BFeXvni9zfHiig6lOK43V5x0r9m+BK00Ncib5rzeghpMALA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vxupk89jq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Jan 2024 09:03:16 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40U93FFj025850
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Jan 2024 09:03:15 GMT
-Received: from taozha-gv.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 30 Jan 2024 01:03:10 -0800
-From: Tao Zhang <quic_taozha@quicinc.com>
-To: Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose
-	<suzuki.poulose@arm.com>,
-        Alexander Shishkin
-	<alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC: Tao Zhang <quic_taozha@quicinc.com>,
-        Jinlong Mao
-	<quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni
-	<quic_tsoni@quicinc.com>,
-        Song Chai <quic_songchai@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <andersson@kernel.org>
-Subject: [PATCH v5 01/10] coresight-tpdm: Optimize the store function of tpdm simple dataset
-Date: Tue, 30 Jan 2024 17:02:37 +0800
-Message-ID: <1706605366-31705-2-git-send-email-quic_taozha@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1706605366-31705-1-git-send-email-quic_taozha@quicinc.com>
-References: <1706605366-31705-1-git-send-email-quic_taozha@quicinc.com>
+	s=arc-20240116; t=1706604794; c=relaxed/simple;
+	bh=uwmEmEVy0Kx70knw/kmKnAvju629yO2leUrWM8MOq/k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=h2rbkf9PHDMWCdoLr6DF6lmTDvUYdPDTUJbbW+Vr/57cFnCOdpLXMHLE5WlC+kkfn1mq+QjEyDOxZcNq7o9ysynZ+t3C4hefUCZk1lmeAgm8igdSzcNdNPDM+FKYlJgLnb9MNrI2da1iWAsFsgMOp+H/lPzC+NG65mqLe2SZibo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=v1u6GWIY; arc=none smtp.client-ip=209.85.219.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-dc238cb1b17so4102399276.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 00:53:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706604791; x=1707209591; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=NWbHSmMZcbcTPFNjHs15M83nAeyP7oSVXTG00tGkv3M=;
+        b=v1u6GWIYq6Hgxrk5f9TxLCFfPJHtquvT8V2pUIbrNQDu+5PHbbQhQ9XNztKl2s4E/l
+         RXwASjzJz1gkPV9lI9Eaz/+lC8lrA77EGFd3srFuxcplH5vDLZ9vuJ3j71S9k9kUduus
+         r1HM/Prwy1C0YiPlCVeT5cRt8uSn/6mYXoSCJtbopcKD90GTfpoIxcpD6DJxGHTW7lkB
+         DdVJ89ISf6TpgmzL2nHfV21h5pkFrclavbeYMhlFF2j/otX0oRTIkZFtXFfeafaCQvrU
+         twBPKwr7u291JuDdQp9y2WKK9Sw2BbT8mHCytq6w0dPmwV3uaJzETUiQMVNFoTI0/5mr
+         TVWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706604791; x=1707209591;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NWbHSmMZcbcTPFNjHs15M83nAeyP7oSVXTG00tGkv3M=;
+        b=ENoGM4IFPalyOuizApcGm8KMv1+FbkAIYH3eYw+Az6lUuliV3p5GxO/gfvlL7cTfMb
+         9XPXZ9DaDgUq7OFeVOz3ygdFFm0mdWqPaNiPMIi+elFz3+TJJD4TLi+/V/HMVRxyt09U
+         C1uS4Q0UfBlEQ5HUf+U6YahKe+wksgmMuMoUJXCZZ4F5CUPm8wxcr8HeRy02T4iTPScO
+         ZAyG1Ej3pc0KkAS+9hyfXh6Ojl6XaIJCtNIJ2Xoj3n0t9bE/2te9d/ZXoSP6DLwTv07L
+         uBI6ze+o2K4QEyamScGjPjMn45D/O/e8sUB4QdqKyeuABxwG/YPoR7tAG/57mcsJMyes
+         g9WA==
+X-Gm-Message-State: AOJu0Yz+aj+RuWhr4QeniNFEJMkohTv9OFyQrulj/ufGpVjQiAXpd+7H
+	EJwRC0zB+koJm6aNabqNSynuR8keDcVhx2Z2XvJk+C6PcYiJmA03aHmuCTwIKw==
+X-Google-Smtp-Source: AGHT+IFkWEI9cID3V5CUdGoq4dc1LLz6pv4GAVkkwfsUOjz7PyOVGVwlb9boqiHu4tXoVvXyKiLrmw==
+X-Received: by 2002:a05:6902:10b:b0:dc2:398b:fa08 with SMTP id o11-20020a056902010b00b00dc2398bfa08mr4421170ybh.31.1706604791207;
+        Tue, 30 Jan 2024 00:53:11 -0800 (PST)
+Received: from thinkpad ([117.202.188.6])
+        by smtp.gmail.com with ESMTPSA id r14-20020a63ec4e000000b005c19c586cb7sm7520170pgj.33.2024.01.30.00.53.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Jan 2024 00:53:10 -0800 (PST)
+Date: Tue, 30 Jan 2024 14:23:01 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+Cc: vkoul@kernel.org, jingoohan1@gmail.com, conor+dt@kernel.org,
+	konrad.dybcio@linaro.org, robh+dt@kernel.org,
+	quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+	quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+	dmitry.baryshkov@linaro.org, quic_krichai@quicinc.com,
+	quic_vbadigan@quicinc.com, quic_parass@quicinc.com,
+	quic_schintav@quicinc.com, quic_shijjose@quicinc.com,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	mhi@lists.linux.dev
+Subject: Re: [PATCH v1 5/6] PCI: qcom-ep: Provide number of read/write
+ channel for HDMA
+Message-ID: <20240130085301.GB83288@thinkpad>
+References: <1705669223-5655-1-git-send-email-quic_msarkar@quicinc.com>
+ <1705669223-5655-6-git-send-email-quic_msarkar@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: cS1pLCpWjv5cc5oxSj_xzyq6q3DPOhMC
-X-Proofpoint-ORIG-GUID: cS1pLCpWjv5cc5oxSj_xzyq6q3DPOhMC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-30_03,2024-01-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=881
- malwarescore=0 impostorscore=0 priorityscore=1501 clxscore=1015
- phishscore=0 spamscore=0 bulkscore=0 adultscore=0 suspectscore=0
- mlxscore=0 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2401190000 definitions=main-2401300065
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1705669223-5655-6-git-send-email-quic_msarkar@quicinc.com>
 
-Replace spin lock/unlock to avoid forgetting to unlock when the
-function exits. And refine methods for handling various conditions.
+On Fri, Jan 19, 2024 at 06:30:21PM +0530, Mrinmay Sarkar wrote:
+> There is no standard way to auto detect the number of available
+> read/write channels in a platform. So adding this change to provide
+> read/write channels count and also provide "EDMA_MF_HDMA_NATIVE"
+> flag to support HDMA for 8775 platform.
+> 
+> 8775 has IP version 1.34.0 so intruduce a new cfg(cfg_1_34_0) for
+> this platform. Add struct qcom_pcie_ep_cfg as match data. Assign
+> hdma_supported flag into struct qcom_pcie_ep_cfg and set it true
+> in cfg_1_34_0.
+> 
+> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c | 19 ++++++++++++++++++-
+>  1 file changed, 18 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> index 45008e0..8d56435 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> @@ -149,6 +149,10 @@ enum qcom_pcie_ep_link_status {
+>  	QCOM_PCIE_EP_LINK_DOWN,
+>  };
+>  
 
-Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
----
- drivers/hwtracing/coresight/coresight-tpdm.c | 39 ++++++++++----------
- 1 file changed, 19 insertions(+), 20 deletions(-)
+Add kdoc comment please as like the below struct.
 
-diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-index bd13a548375c..0427c0fc0bf3 100644
---- a/drivers/hwtracing/coresight/coresight-tpdm.c
-+++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-@@ -77,51 +77,50 @@ static ssize_t tpdm_simple_dataset_store(struct device *dev,
- 					 size_t size)
- {
- 	unsigned long val;
--	ssize_t ret = size;
-+	ssize_t ret = -EINVAL;
- 
- 	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
- 	struct tpdm_dataset_attribute *tpdm_attr =
- 		container_of(attr, struct tpdm_dataset_attribute, attr);
- 
- 	if (kstrtoul(buf, 0, &val))
--		return -EINVAL;
-+		return ret;
- 
--	spin_lock(&drvdata->spinlock);
-+	guard(spinlock)(&drvdata->spinlock);
- 	switch (tpdm_attr->mem) {
- 	case DSB_TRIG_PATT:
--		if (tpdm_attr->idx < TPDM_DSB_MAX_PATT)
-+		if (tpdm_attr->idx < TPDM_DSB_MAX_PATT) {
- 			drvdata->dsb->trig_patt[tpdm_attr->idx] = val;
--		else
--			ret = -EINVAL;
-+			ret = size;
-+		}
- 		break;
- 	case DSB_TRIG_PATT_MASK:
--		if (tpdm_attr->idx < TPDM_DSB_MAX_PATT)
-+		if (tpdm_attr->idx < TPDM_DSB_MAX_PATT) {
- 			drvdata->dsb->trig_patt_mask[tpdm_attr->idx] = val;
--		else
--			ret = -EINVAL;
-+			ret = size;
-+		}
- 		break;
- 	case DSB_PATT:
--		if (tpdm_attr->idx < TPDM_DSB_MAX_PATT)
-+		if (tpdm_attr->idx < TPDM_DSB_MAX_PATT) {
- 			drvdata->dsb->patt_val[tpdm_attr->idx] = val;
--		else
--			ret = -EINVAL;
-+			ret = size;
-+		}
- 		break;
- 	case DSB_PATT_MASK:
--		if (tpdm_attr->idx < TPDM_DSB_MAX_PATT)
-+		if (tpdm_attr->idx < TPDM_DSB_MAX_PATT) {
- 			drvdata->dsb->patt_mask[tpdm_attr->idx] = val;
--		else
--			ret = -EINVAL;
-+			ret = size;
-+		}
- 		break;
- 	case DSB_MSR:
--		if (tpdm_attr->idx < drvdata->dsb_msr_num)
-+		if (tpdm_attr->idx < drvdata->dsb_msr_num) {
- 			drvdata->dsb->msr[tpdm_attr->idx] = val;
--		else
--			ret = -EINVAL;
-+			ret = size;
-+		}
- 		break;
- 	default:
--		ret = -EINVAL;
-+		break;
- 	}
--	spin_unlock(&drvdata->spinlock);
- 
- 	return ret;
- }
+> +struct qcom_pcie_ep_cfg {
+> +	bool hdma_supported;
+> +};
+> +
+>  /**
+>   * struct qcom_pcie_ep - Qualcomm PCIe Endpoint Controller
+>   * @pci: Designware PCIe controller struct
+> @@ -167,6 +171,7 @@ enum qcom_pcie_ep_link_status {
+>   * @num_clks: PCIe clocks count
+>   * @perst_en: Flag for PERST enable
+>   * @perst_sep_en: Flag for PERST separation enable
+> + * @cfg: PCIe EP config struct
+>   * @link_status: PCIe Link status
+>   * @global_irq: Qualcomm PCIe specific Global IRQ
+>   * @perst_irq: PERST# IRQ
+> @@ -194,6 +199,7 @@ struct qcom_pcie_ep {
+>  	u32 perst_en;
+>  	u32 perst_sep_en;
+>  
+> +	const struct qcom_pcie_ep_cfg *cfg;
+>  	enum qcom_pcie_ep_link_status link_status;
+>  	int global_irq;
+>  	int perst_irq;
+> @@ -511,6 +517,10 @@ static void qcom_pcie_perst_assert(struct dw_pcie *pci)
+>  	pcie_ep->link_status = QCOM_PCIE_EP_LINK_DISABLED;
+>  }
+>  
+> +static const struct qcom_pcie_ep_cfg cfg_1_34_0 = {
+> +	.hdma_supported = true,
+> +};
+> +
+>  /* Common DWC controller ops */
+>  static const struct dw_pcie_ops pci_ops = {
+>  	.link_up = qcom_pcie_dw_link_up,
+> @@ -816,6 +826,13 @@ static int qcom_pcie_ep_probe(struct platform_device *pdev)
+>  	pcie_ep->pci.ops = &pci_ops;
+>  	pcie_ep->pci.ep.ops = &pci_ep_ops;
+>  	pcie_ep->pci.edma.nr_irqs = 1;
+> +
+> +	pcie_ep->cfg = of_device_get_match_data(dev);
+
+Why do you want to cache "cfg" since it is only used in probe()?
+
+> +	if (pcie_ep->cfg && pcie_ep->cfg->hdma_supported) {
+> +		pcie_ep->pci.edma.ll_wr_cnt = 1;
+> +		pcie_ep->pci.edma.ll_rd_cnt = 1;
+
+Is the platform really has a single r/w channel?
+
+- Mani
+
 -- 
-2.17.1
-
+மணிவண்ணன் சதாசிவம்
 
