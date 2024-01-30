@@ -1,73 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-8962-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A535841CEC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 08:49:29 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B88F841D1C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 09:00:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B82F7B20FDF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 07:49:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6C457B23A18
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 08:00:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E8AA55E51;
-	Tue, 30 Jan 2024 07:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 302F755E52;
+	Tue, 30 Jan 2024 08:00:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gLAI3Ozq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="J/6nv7pp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DC355E52
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 07:49:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787A255E43
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 08:00:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706600963; cv=none; b=euiFXMlPRt9/LMf6fbeNFwXlo7QUkaLRJi3NLquvBEYicyi0pTGT0cED8W5TK6/I143imwUbcCsPtdSbw3YKpTHJkncnO/T26ZyTIFS1VyqC4LRAQaPOi9/Orfz6p/3YKXhFZQv4+kS5OT5kMspSCw+vy5z1kkn7oEbDnvwnT10=
+	t=1706601607; cv=none; b=VMzlFn4z0JbqWr9iSeivwx1wS7AS1go85N3b/faHNdKY5EmEtKj5CMiLol2Fr0/rv2ess1MI8Tt5tK1WMeV1FGDMLrXv0tn/V5KzSk++RNevTXJV1YKMFpxp+9JA0chG2SZLxX5pGAKWFfBEXJF0a70HrFDvtBxH988epx9i16c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706600963; c=relaxed/simple;
-	bh=W7EdgnKkjMwfQrVjMkuKi/Np1ROI0dXe8/JY64Hyjnw=;
+	s=arc-20240116; t=1706601607; c=relaxed/simple;
+	bh=prwXKEAfpMsarqn1FR+YN2/OFbqwi8HRsfCkWF3MtDo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CQ/Vycon9XPCypuz5JPMmcm/uFD5XOK8FxOTa4MLMIohO2f5OI8fSgdMuL1y+CDeVdxt3zOHFoS9mPUdPe7tEIPX72yDzxju2t7MD5izZyuslGtPUkkyMj/1bAM9S7Yce5Sc1R0m3lPNI5NOnt0IU+T05PmlhMBZgyWNT6Wt8Q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gLAI3Ozq; arc=none smtp.client-ip=209.85.208.43
+	 In-Reply-To:Content-Type; b=O/NrHu4pk5DEqVx8g6KJsnNgMdKCQ33q5VhWObq4g3zzdVolI478C87cXXO6+D1L8b8aSkfzC7vBTTVHuo87iKECxyJZdJ/gfD4UyAsEDWn13hYGbY9jvgGwoncJa83kwKL4QVzfhxfIVBaB7rlKIQffIAALppYEZDVnolQhCyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=J/6nv7pp; arc=none smtp.client-ip=209.85.167.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-55817a12ad8so3601598a12.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jan 2024 23:49:21 -0800 (PST)
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5111c7d40deso426746e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 00:00:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706600959; x=1707205759; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706601603; x=1707206403; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Uxspv7T9EX1JvzDaKvkxxJalTAmoTENXDL7KG2k5zvk=;
-        b=gLAI3OzqufLCU0iMF/nuv1F5M8xRMOLml0GmmeH3KaXcGZMhVI/Yb3fS1YsHFlbtXS
-         lXK3BFY4P7H7MbVM+T9vVbPbkjY/QKSm0muidPbFVlNHW0wnBuQl3ImicLsX87Ff3Ldk
-         H1ZdhCTQnv25zKwIz1s+nuYlNvv3oKTgWY+bo69SmEVVTyhs4dQzv9mfDcogreLtI1ky
-         R23XI7o8zguOTJVE2XrHNWU9uN77xvRYLTu8eF6SVC4dd/DJjvyrjStX3GCFhx3kB4mR
-         5IoQwEUcJwIVX5RsCE/boaMYo33q6kR/Dib2nJdoa6EGAy9+n828V7xIz9XvUxelfKtj
-         VaxA==
+        bh=+HkH4XQMR2Fb/ctwAmYb0jzkl/3spUTrWnMDkagnUdU=;
+        b=J/6nv7pp4ZBD1b5+O18qrfeMblq15x+q+RyRUMbe70SOL487qWxogs6HSDS0B8cwMW
+         lWzbaF+o6sdRkVAuJc/acUQ1aUi0InGp6BLmmWSNgHsM/4ES1GN/xCgksSs3+ppHE2UG
+         Q3+8s+K+4KP32pd6vjjuVHlkaQ8RAS7r0aEZfUOm9D3Nkyeez/jtSo7zgN8nEldQrjUr
+         tB3UU8KnrSo2av/CXsSboa4kkrZiGvBlJtG0eIoN4CY9bnCE0v+kbRhgfCrbhwZb2Klf
+         RBG0EZTGEtpaIW474EW2VEGbhlj07JiplSDBZUcpzDGi+6y/HRf238qe2rB5aSd68jNx
+         Dl5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706600959; x=1707205759;
+        d=1e100.net; s=20230601; t=1706601603; x=1707206403;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Uxspv7T9EX1JvzDaKvkxxJalTAmoTENXDL7KG2k5zvk=;
-        b=tD51dOSVUSB/qxz33rSyTwHmXZ0wGCW/BVF3dyo3KuEy2DesbSOU/ac764yDAHqqIx
-         uXMuZ3tPJvUbf+pNVyLwDvkEIjbSr/OdniopSRngyHMeHW5hTE3Lv/PM3HpDl/IfyBug
-         7fJTRLSMXJ2BXXCoeNOalxGBpzNnGjqndyiepwURp5zEAJMu7Z9ZE+ZkLmyBs83bAaY7
-         uztgS+RQrskA7OCiWEQoA3n132/A2Jjncd1VoofwqUn0Y11yXTNeb2UfTy1eUkQIjKsg
-         wjS/cxWkKyfjR+4vUfijx1CSIP3xJo0JBcG7hAK1F0tR89jfsDPSrwowIlRgcQorSRAR
-         diPQ==
-X-Gm-Message-State: AOJu0YyYtFTaV4kP3COvpEyFv6ZcaPsUSotqv9vV8ipWB+Iut8tq8WSs
-	Klq2M4P61jDksbazekQ6tNfsRcv8xCCMEltBC/qcA6sONW/od9Wxz0oJk9MqCc8=
-X-Google-Smtp-Source: AGHT+IG1xXX60P1E9wvgTOwUcYJgL8esE8Tn4P1CwLs2NJhb1wxXIfMRpHq7hOsXi2L9gkTKKPCiCA==
-X-Received: by 2002:a05:6402:27d1:b0:55f:1311:bebb with SMTP id c17-20020a05640227d100b0055f1311bebbmr3059008ede.26.1706600959660;
-        Mon, 29 Jan 2024 23:49:19 -0800 (PST)
+        bh=+HkH4XQMR2Fb/ctwAmYb0jzkl/3spUTrWnMDkagnUdU=;
+        b=S3runsvz52lHzX82APAEEVmsCIZCF5jig5u5sCD3AtlMZ55sMXlPZdHndAH5QO0Gna
+         ybUO08TPTW1pmQkqN1j72kUzsFOVHmw+uOdG34l7Uzqp6ZhDK21Wn+17iXH09DhH22Ek
+         04Q3G7VhdS9g8xNLj6Izf392euNBxby+7JXwnrwZWUE2ATxpX3i+D3rXI9BmU0Dj/w19
+         Xg4/rkP/DmtqWFq+1ugaEUi7P+gLcH0k4fNse5PM8PzQhVoM42ZWb6YCzwRVUCjW8Cst
+         4Ds9A85p1oCOGh0Phj7a8QtJmytm1PWHOvXaGChGTX/abp6ZbCzPCrX5yELRfqOx1U59
+         ZClg==
+X-Gm-Message-State: AOJu0YzTI96DGzkX/97/ez/bA94dJ3gCXMibz6SXx2X7AYLvvoVsJ7qD
+	mW+4jDCEhQXE3dkf+0Y4NmJRzdX+gU+MQAT1fzwjq36IUcEKwhJ+CvoDcH1lKK7BdgXCjvn+sII
+	6
+X-Google-Smtp-Source: AGHT+IFuPg9GW35NCszZH+DhM+lLv9BCNrTEafYzWSWwdeVr6ZfYv4zy+S40oJYAS+lHGsoDq5uojQ==
+X-Received: by 2002:a05:6512:1082:b0:50e:75ee:ec4c with SMTP id j2-20020a056512108200b0050e75eeec4cmr6389637lfg.11.1706601603441;
+        Tue, 30 Jan 2024 00:00:03 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.222.62])
-        by smtp.gmail.com with ESMTPSA id fj11-20020a0564022b8b00b0055c69e0751fsm4501758edb.3.2024.01.29.23.49.18
+        by smtp.gmail.com with ESMTPSA id s15-20020a170906354f00b00a3186c2c254sm4797333eja.213.2024.01.30.00.00.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Jan 2024 23:49:19 -0800 (PST)
-Message-ID: <97ff8fd2-14b7-427e-8ca2-8da42bfcb53e@linaro.org>
-Date: Tue, 30 Jan 2024 08:49:17 +0100
+        Tue, 30 Jan 2024 00:00:02 -0800 (PST)
+Message-ID: <37dae8b0-4e23-4325-810c-e7f555894964@linaro.org>
+Date: Tue, 30 Jan 2024 09:00:01 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,16 +76,25 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] ARM: dts: qcom: msm8960: Add gsbi3 node
+Subject: Re: [PATCH 2/5] dt-bindings: display/msm: Document the DPU for
+ X1E80100
 Content-Language: en-US
-To: guptarud@gmail.com, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+To: Abel Vesa <abel.vesa@linaro.org>, Rob Clark <robdclark@gmail.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ Conor Dooley <conor+dt@kernel.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
-References: <20240129-expressatt_mxt224s_touchscreen-v1-0-fb8552e1c32c@gmail.com>
- <20240129-expressatt_mxt224s_touchscreen-v1-1-fb8552e1c32c@gmail.com>
+References: <20240129-x1e80100-display-v1-0-0d9eb8254df0@linaro.org>
+ <20240129-x1e80100-display-v1-2-0d9eb8254df0@linaro.org>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -130,81 +140,36 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240129-expressatt_mxt224s_touchscreen-v1-1-fb8552e1c32c@gmail.com>
+In-Reply-To: <20240129-x1e80100-display-v1-2-0d9eb8254df0@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 30/01/2024 03:43, Rudraksha Gupta via B4 Relay wrote:
-> From: Rudraksha Gupta <guptarud@gmail.com>
+On 29/01/2024 14:18, Abel Vesa wrote:
+> Document the DPU for Qualcomm X1E80100 platform in the SM8650 schema, as
+> they are similar.
 > 
-> Copy gsbi3 node from qcom-apq8064.dtsi and set appropriate properties
-> 
-> Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
->  arch/arm/boot/dts/qcom/qcom-msm8960-pins.dtsi | 29 +++++++++++++++++++++++++++
->  arch/arm/boot/dts/qcom/qcom-msm8960.dtsi      | 27 +++++++++++++++++++++++++
->  2 files changed, 56 insertions(+)
+>  Documentation/devicetree/bindings/display/msm/qcom,sm8650-dpu.yaml | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960-pins.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8960-pins.dtsi
-> new file mode 100644
-> index 000000000000..c74c6625d276
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/qcom/qcom-msm8960-pins.dtsi
-> @@ -0,0 +1,29 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +
-> +&msmgpio {
-> +	i2c3_pins: i2c3 {
-> +		mux {
-> +			pins = "gpio16", "gpio17";
-> +			function = "gsbi3";
-> +		};
-> +
-> +		pinconf {
-> +			pins = "gpio16", "gpio17";
-> +			drive-strength = <8>;
-> +			bias-disable;
-> +		};
-> +	};
-> +
-> +	i2c3_pins_sleep: i2c3_pins_sleep {
+> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm8650-dpu.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm8650-dpu.yaml
+> index a01d15a03317..f84fa6d5e6a2 100644
+> --- a/Documentation/devicetree/bindings/display/msm/qcom,sm8650-dpu.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/qcom,sm8650-dpu.yaml
+> @@ -13,7 +13,10 @@ $ref: /schemas/display/msm/dpu-common.yaml#
+>  
+>  properties:
+>    compatible:
+> -    const: qcom,sm8650-dpu
+> +    items:
 
+Drop items, it's just "enum :"
 
-No underscores in node names.
+> +      - enum:
+> +          - qcom,sm8650-dpu
+> +          - qcom,x1e80100-dpu
 
-It does not look like you tested the DTS against bindings. Please run
-`make dtbs_check W=1` (see
-Documentation/devicetree/bindings/writing-schema.rst or
-https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
-for instructions).
-
-
-> +		mux {
-> +			pins = "gpio16", "gpio17";
-> +			function = "gpio";
-> +		};
-> +
-> +		pinconf {
-> +			pins = "gpio16", "gpio17";
-> +			drive-strength = <2>;
-> +			bias-bus-hold;
-> +		};
-> +	};
-> +};
-> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
-> index f420740e068e..62a5a9622e82 100644
-> --- a/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
-> +++ b/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
-> @@ -359,5 +359,32 @@ usb_hs1_phy: phy {
->  				};
->  			};
->  		};
-> +
-> +		gsbi3: gsbi@16200000 {
-> +			status = "disabled";
-
-Please order the properties according to DTS coding style:
-https://www.kernel.org/doc/html/latest/devicetree/bindings/dts-coding-style.html#order-of-properties-in-device-node
 
 
 Best regards,
