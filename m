@@ -1,96 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-9017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D25A68422BC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 12:19:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 43CBD8422E7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 12:24:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 10CA81C25CD6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 11:19:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 773A71C23047
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 11:24:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C61FB82D76;
-	Tue, 30 Jan 2024 11:13:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 338E0664C9;
+	Tue, 30 Jan 2024 11:24:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="HlU33HM8"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ht80Dq2P"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38AE56EB50;
-	Tue, 30 Jan 2024 11:13:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ABE959B7C;
+	Tue, 30 Jan 2024 11:24:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706613232; cv=none; b=de3e41KbJzTCrRGcIsvKrM9xsWOQw5+8tayIIFiSQmmPcpkw5yp/0s8non8PoE/PuLJyTT6GXUm9fq0mV+TIxMoiAekGjXViBmSJfBzIo9gqxjumNZwoSGa3JsfjxP+diVBZaNaZV8MA6C57ejNjt01K53L79WaY8n6ptMLiGG4=
+	t=1706613870; cv=none; b=LDHDtvlkowByyIqJkvhOJ8diAvpEmJL0ruK/65JRujHUA4eKFw8Lpv55SQ+qcMEWBabd9HjcFrrk2EJUQPHqEQ1jumtyUjHK4jLzRYWn39Xzh9I/1jOXR57VLd6joDoTbZiyDpqQSauXOBAk+dSltuvPrzezJwgp8xjzoZbTl/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706613232; c=relaxed/simple;
-	bh=1MaXaoAlGaux22185ES05zD+Vc6KSQlHot9SWkJLGp0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m/TtpW19r7WBY8lBgKcbGa/sVEKE1PDQeaiJpBOxQuOiBUbPQfTLJhPxXuP4wFISCSYKQHSaG/DmtCkSrroMqUh+R1XomHpaslMYLMouxDHz49bS1AkK2C+CJDgdLvHUGUrgCUq0qKLsMU+aPEHVIg4p9pbGwMx0qGnw8iDmPVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=HlU33HM8; arc=none smtp.client-ip=46.235.227.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1706613229;
-	bh=1MaXaoAlGaux22185ES05zD+Vc6KSQlHot9SWkJLGp0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HlU33HM8DXvNnHd5pfL0Un12V2JosWoeboB5m/VaZSU7mn27JZRL7n0hOSbYmEV63
-	 nbQXPRYgNnV9Tg09ybHmHOhmVp5umMRDpOApeet2UUjPgeUG/2TZDKp/Kpyz+HgXZG
-	 HjC+6zWpXXGHJzQMPFzdZYEqaqQZxazoLeLlMmgd8mLUOxWzvFSmQESaHg+0Dz/Gh2
-	 HAyBQd2ww0Hzr2aKjZ1depqQEX+Q9jSqA9P+yS8KR91henEbqscmEDj2/qaW9sT9sq
-	 9WWEE88qf6woeJXZQ4+1zKcYguqf9dKIOVMXS0iAcsTnVywM4v2EaqrU0mJlnhEql4
-	 bXn5tAHgulcXA==
-Received: from IcarusMOD.eternityproject.eu (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id CCFE93780FC7;
-	Tue, 30 Jan 2024 11:13:47 +0000 (UTC)
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-To: daniel.lezcano@linaro.org
-Cc: miquel.raynal@bootlin.com,
-	rafael@kernel.org,
-	rui.zhang@intel.com,
-	lukasz.luba@arm.com,
-	support.opensource@diasemi.com,
-	shawnguo@kernel.org,
-	s.hauer@pengutronix.de,
-	kernel@pengutronix.de,
-	festevam@gmail.com,
-	linux-imx@nxp.com,
-	andersson@kernel.org,
-	konrad.dybcio@linaro.org,
-	amitk@kernel.org,
-	thara.gopinath@gmail.com,
-	niklas.soderlund@ragnatech.se,
-	srinivas.pandruvada@linux.intel.com,
-	angelogioacchino.delregno@collabora.com,
-	baolin.wang@linux.alibaba.com,
-	u.kleine-koenig@pengutronix.de,
-	hayashi.kunihiko@socionext.com,
-	d-gole@ti.com,
-	linus.walleij@linaro.org,
-	DLG-Adam.Ward.opensource@dm.renesas.com,
-	error27@gmail.com,
-	heiko@sntech.de,
-	hdegoede@redhat.com,
-	jernej.skrabec@gmail.com,
-	f.fainelli@gmail.com,
-	bchihi@baylibre.com,
-	linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
-	kernel@collabora.com
-Subject: [PATCH v1 18/18] thermal/drivers/int340x: Migrate to thermal_zone_device_register()
-Date: Tue, 30 Jan 2024 12:12:50 +0100
-Message-ID: <20240130111250.185718-19-angelogioacchino.delregno@collabora.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240130111250.185718-1-angelogioacchino.delregno@collabora.com>
-References: <20240130111250.185718-1-angelogioacchino.delregno@collabora.com>
+	s=arc-20240116; t=1706613870; c=relaxed/simple;
+	bh=55twkulurKEhU3/5jQyrocYphXr36C8mLB2dQCIalOg=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=iL45w1r8kd49gmpEUK+Mipf/KKcQorkwpRqzHr882Eh2SG4oFciAhz522iJ73PYG5ks2Jtzhj1s5R0D0PXDw+ZBlOx8rgq0dhVwPWHil+7xncbjC6H9YK1cQ+6ffqfA/OmxkVizNGtF3WMvEr5gGeVaBShCCJ3YdelqPLBsTvRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ht80Dq2P; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40U9Ruu7008388;
+	Tue, 30 Jan 2024 11:24:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=zJmbk1V
+	qksggc73frfFlV2kdKy6n+PP3JCr/btLA9JM=; b=ht80Dq2PHWzH6usw9uCqFfL
+	oeyuGoWC5EA+sg9JaOCTJwrsXCdz2sXIUVXxt/CV0Kuu2odi9ROnqnL+J5PRWN89
+	aAGo1VWchJrTCw7FKpz+homnggPwWPDK1v5GBjBCtpGsHOuM1dvww58vhk0TS/CK
+	UmWn95E6xl5gxMZcOuTickhHEpRQu4/n2kytXx02m/i98oyF092R2OFCH9bi59sK
+	v99/mxQGMsbGnQg4KkyagccLjPtk9wV8VeBYk3qMqgIwoAH8B8d9OTOKMj4MjqUd
+	HQoebTC9a2xvRzYJPBHnfbBPi+5jw8lG/qrd5r7btXVvUIa8AKMnwFF2Sam0Bxg=
+	=
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vxsc20u54-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 30 Jan 2024 11:24:23 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40UBOMcA020870
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 30 Jan 2024 11:24:22 GMT
+Received: from hu-sachinku-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Tue, 30 Jan 2024 03:24:18 -0800
+From: Sachin Kumar Garg <quic_sachinku@quicinc.com>
+To: <hverkuil-cisco@xs4all.nl>, Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia
+	<quic_vgarodia@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+CC: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        <linux-media@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH v2 0/2] add MBR type rate control for encoder
+Date: Tue, 30 Jan 2024 16:53:58 +0530
+Message-ID: <20240130112400.2636143-1-quic_sachinku@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -98,64 +78,43 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: rYOHJIX_EUsV0uMZhC82x6jx-D5jJ2lk
+X-Proofpoint-ORIG-GUID: rYOHJIX_EUsV0uMZhC82x6jx-D5jJ2lk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-30_05,2024-01-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ bulkscore=0 adultscore=0 mlxlogscore=408 phishscore=0 priorityscore=1501
+ clxscore=1015 suspectscore=0 spamscore=0 mlxscore=0 malwarescore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401190000 definitions=main-2401300083
 
-The thermal API has a new thermal_zone_device_register() function which
-is deprecating the older thermal_zone_device_register_with_trips() and
-thermal_tripless_zone_device_register().
+This series adds the support for MBR rate control type in the
+venus driver.
+This rate control type will limit the frame level maximum bitrate as
+per the target bitrate.
+It will improve the video quality of low motion video at ultra low
+bit-rates.
 
-Migrate to the new thermal zone device registration function.
+Sachin Kumar Garg (2):
+  media: v4l2-ctrls: add encoder maximum bitrate control
+  media: venus: add new rate control type MBR for encoder
 
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
----
- .../intel/int340x_thermal/int3400_thermal.c   | 20 +++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst | 2 ++
+ drivers/media/platform/qcom/venus/hfi_cmds.c              | 7 +++++++
+ drivers/media/platform/qcom/venus/hfi_helper.h            | 1 +
+ drivers/media/platform/qcom/venus/venc.c                  | 2 ++
+ drivers/media/platform/qcom/venus/venc_ctrls.c            | 5 +++--
+ drivers/media/v4l2-core/v4l2-ctrls-defs.c                 | 1 +
+ include/uapi/linux/v4l2-controls.h                        | 1 +
+ 7 files changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thermal/intel/int340x_thermal/int3400_thermal.c b/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
-index 427d370648d5..d8ca7ed37950 100644
---- a/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
-+++ b/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
-@@ -536,11 +536,6 @@ static struct thermal_zone_device_ops int3400_thermal_ops = {
- 	.change_mode = int3400_thermal_change_mode,
- };
- 
--static struct thermal_zone_params int3400_thermal_params = {
--	.governor_name = "user_space",
--	.no_hwmon = true,
--};
--
- static void int3400_setup_gddv(struct int3400_thermal_priv *priv)
- {
- 	struct acpi_buffer buffer = { ACPI_ALLOCATE_BUFFER, NULL };
-@@ -572,6 +567,16 @@ static void int3400_setup_gddv(struct int3400_thermal_priv *priv)
- static int int3400_thermal_probe(struct platform_device *pdev)
- {
- 	struct acpi_device *adev = ACPI_COMPANION(&pdev->dev);
-+	struct thermal_zone_device_params tzdp = {
-+		.tzp = {
-+			.type = "INT3400 Thermal",
-+			.no_hwmon = true,
-+			.ops = &int3400_thermal_ops,
-+		}
-+	};
-+	struct thermal_governor_params tgp = {
-+		.governor_name = "user_space"
-+	};
- 	struct int3400_thermal_priv *priv;
- 	int result;
- 
-@@ -609,9 +614,8 @@ static int int3400_thermal_probe(struct platform_device *pdev)
- 
- 	evaluate_odvp(priv);
- 
--	priv->thermal = thermal_tripless_zone_device_register("INT3400 Thermal", priv,
--							      &int3400_thermal_ops,
--							      &int3400_thermal_params);
-+	tzdp.tgp = &tgp;
-+	priv->thermal = thermal_zone_device_register(&tzdp);
- 	if (IS_ERR(priv->thermal)) {
- 		result = PTR_ERR(priv->thermal);
- 		goto free_art_trt;
 -- 
-2.43.0
+2.34.1
 
 
