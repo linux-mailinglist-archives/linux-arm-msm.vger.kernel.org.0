@@ -1,162 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-9061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B76508429DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 17:48:26 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 41600842A97
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 18:12:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 71E71282F4C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 16:48:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F1A93284ECB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 17:12:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D44521272AE;
-	Tue, 30 Jan 2024 16:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57B96129A86;
+	Tue, 30 Jan 2024 17:12:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BkrwOND5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R7Tiv5n/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16BA4823AA
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 16:48:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C23C1292DE;
+	Tue, 30 Jan 2024 17:12:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706633303; cv=none; b=YkOQihnEuVYmAg1P/OIqA9LftfbGDMtEi64tiQDHjIx38RS84nZKguM2kTxnzjDlc8QMbLByDAOwi/SwJfZ3UUPIU7QDAVW81LpkAhkruAJLIEWaDaVLeSb0xGfEkjwPq+HYRlghzgkIRyLgXoA/gDCPopmAcTNqp0tWvJX3vVg=
+	t=1706634763; cv=none; b=Oq798TsA1AAt0e72at5QQBXnSyOk5x5G7KHcYAwshVmMLdyZwv6AbM2jJbP9Wy5d5g9Luft1AFF4/h3fGL5AeTVYNr58J/b5ju3Ggok1SjfM6COoufznhc2hqJxq/8FKVYhq6ZPzhikX5z7Yh4B66tFgACXn2EpXDSm7B7vTofE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706633303; c=relaxed/simple;
-	bh=48Z3FDhWFsTEJ/wmhPTf0aZOApkiI5wL8H3cFuiRD2E=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=MLHg+cxATYO2EcmMBIfGqZYGSBEZnsyk2oB29D1Wz1X3mIUwruOH7fen96jlGkJ2K/otBiJkvAW9DOw/0c01O6umd0LaeLXfxx2VNLndYNMk/QrQ09shg4oM2Y+GcX6Tlyrx8QoIIy2IyB9WO3mVv0OoamkxCDmJu3KeljZ73Us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BkrwOND5; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5111c9e48e8so1016240e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 08:48:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706633300; x=1707238100; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=BkeKQOsWHdEZXYMWgkHXhBXL2yDR8Bm4Igl0adlNoRg=;
-        b=BkrwOND5f8z/FQhcLVOQkfax8cKe5waDjVvyOsaZJF1oYeR/eINlWl+S0qwTttQtif
-         TeVjloa90AIzVRBnVYXZy8k0TpnqYwOvRQsF6vDfk+OQ14G6+Li8LTwEogfe/5a9NJIB
-         /a9JHRjUHIq6Nvx1k2Rscf/7dESrXVsw/AW596ZpJTr3Nd8meX3Wdf4QiwM2i1AxoKBz
-         KiRVd8VyugPv+aCAHbY5ucFVgzJ294y8H6+OH1A10smqqVfd+oa1xILVmoSwbH5sCiZP
-         dedX1yyg/Pn3glHdQs5+3ABi5LaUuJR027X8bSapLAb6rU5caV52VbCzCenRZ9XXZTtr
-         Ug6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706633300; x=1707238100;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BkeKQOsWHdEZXYMWgkHXhBXL2yDR8Bm4Igl0adlNoRg=;
-        b=EkCPaMVVRpGt3TPGwxNcWgKMD8FX2PJNimK4KmHQ4sJSGe6NKuctRYZYaaKVCeFPlV
-         ej7PDL+Z3++agFp/vw3xsLMpw2OGnG2iigQ3xNIoS7camx4hkIaX8g8btxEDDImLzyOa
-         swBK4feL/pGaVMbDNhPPmVyPgChnIq0Q6NRR3gkHUJscddYQXzuzwLPBIiAdP8FeEyRf
-         wsNK2eisVyrJAI5MIoBWqwfFj5nsf9jMZu6Cdi44pCVqSmNtHI8jlibvi5+2FVIgdK+R
-         jyaQmEt54ED7KpffEy2AmL2UlgJ+Zt5rB4VroRLGZPNZc51d7PTVZEVxT6WSYTMB9h0e
-         IgBQ==
-X-Gm-Message-State: AOJu0YzlLCBcvovNJoJG7Ggbco0pPNOOwuC4UZ9i3Bcg//6YQWb3DeNG
-	8B7ECtoAtje1bmG6AKgcitKowqe7nh730D9zr4JjfbRZO1X9D1rCalUxKJAo8Kk=
-X-Google-Smtp-Source: AGHT+IHi112VNPlSJNeWOdaWvxjaB67PF+syF0OM+Tf96Lh3VlfxaaPYbxEbh9mXj/Ly++37ME9DqA==
-X-Received: by 2002:a05:6512:3050:b0:50e:50ee:f378 with SMTP id b16-20020a056512305000b0050e50eef378mr6701850lfb.65.1706633300108;
-        Tue, 30 Jan 2024 08:48:20 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCUvxn7K+iu46oWNolt8bP/XrHMwZt/ERz60vci7UAOq2XrtfLYUUvqF3q2Is41leDJuNjAdEsxxrzUekzPacQCG7pTEEg+tb5XjUz1BHCi/Pf8Rn1dctkljwPkPg1TfEmOKetZNAgiew2SL5gvuPFsf2HOCSFVmCC2Vr8/A337r0cxu68A8NzWRfPhh+OOUmnzBSi10zaS2Ig35ovN6KpdetmXpQSBOvneGHhcevjEHrQ==
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id er2-20020a05651248c200b0050e76738549sm1503182lfb.50.2024.01.30.08.48.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jan 2024 08:48:19 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 30 Jan 2024 18:48:08 +0200
-Subject: [PATCH v2] arm64: dts: qcom: qrb2210-rb1: disable cluster power
- domains
+	s=arc-20240116; t=1706634763; c=relaxed/simple;
+	bh=PkjZQsYbArDQxHJBdjmN5B4YsdpxE+UZi7kgvdMCax0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SOuiHnNb5bYS1BF4kp7laC+bTZiURsJLuE3gUfUGepLN18DIeSMq7HHrNH/P7rBxgPVxfHIak7s/a1FjHaQ8BRo0Xl8E/zqnyx5dBy5JTxk+nkqB9XoavedtQwx366NQB+wJrgE87D+XY+9MLGV4yCheGNmO8uJu7Z6soNMZa3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R7Tiv5n/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78C96C433C7;
+	Tue, 30 Jan 2024 17:12:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706634762;
+	bh=PkjZQsYbArDQxHJBdjmN5B4YsdpxE+UZi7kgvdMCax0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=R7Tiv5n/1AF3v/eZDPM2lN64tvP7ZN0+vrjw2Nf60G3hzWh7MPldpgoOAQNCAemW2
+	 FXHxsb36rjhVR1VDy0pBeb2X4SSrIfJ6Cn3S2KdK3dWCVoXu0doo7U9x6QpxI59abY
+	 fXbYLGkiqCfrGn1nZEbW8Ie24C2e4tJdt37GA/4yFM0Z/M0LdjYdgyjZIAd5l5oVru
+	 whznUDbHYf4iMFAvYMRwFYPmM/cSGyHMikyTaKa+mRySzvcqzdg1ZHhhk6KTS2QtS4
+	 6PD7frXkNb9R9CJwEWmjqIiZpFpcdKcODE1pWlLSYTjxiwbS7XWXUZs207RvH0AeTU
+	 0ePwfXAJNaD/w==
+Date: Tue, 30 Jan 2024 11:12:40 -0600
+From: Rob Herring <robh@kernel.org>
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, andersson@kernel.org,
+	konrad.dybcio@linaro.org, jassisinghbrar@gmail.com,
+	krzysztof.kozlowski+dt@linaro.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com,
+	conor+dt@kernel.org
+Subject: Re: [RFC 1/7] dt-bindings: mailbox: qcom: Add CPUCP mailbox
+ controller bindings
+Message-ID: <20240130171240.GA1929440-robh@kernel.org>
+References: <20240117173458.2312669-1-quic_sibis@quicinc.com>
+ <20240117173458.2312669-2-quic_sibis@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240130-rb1-suspend-cluster-v2-1-5bc1109b0869@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAEcouWUC/03Myw6CMBCF4VchXTumU4EaV76HcdHLAE2wxSkQE
- 8K722hiXJzFvzjfJjJxoCwu1SaY1pBDiiXUoRJuMLEnCL60UFLVEk8S2CLkJU8UPbhxyTMx6NZ
- rq5uzsq0R5TkxdeH1UW/30h2nB8wDk/mzEOHJVin8mjH9uOBHghUBwZHDuqyxUl3HEA2nY+Je7
- Psb/V2+DrkAAAA=
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1583;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=48Z3FDhWFsTEJ/wmhPTf0aZOApkiI5wL8H3cFuiRD2E=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBluShTziDo79Xuxpzbt3n0la5ce7hBGHazOjcli
- MD1uEtYhKWJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZbkoUwAKCRCLPIo+Aiko
- 1fdQB/9rDunGqBiSMJRUAyC0mANskLj3QehtPGO26+MCl1tFh/nX/0DChvRj9USTWwi+axkRw5+
- 40NNfn6rzIUlOKP2GCcwFWVLPAjQHKogrH4ZfhpvjEdVPoEG92KBDxeE70Iyv2zYWXNyJ9QSDq1
- Way3d8TaLgNnHX4kUU5v91wEJSOOHm1QiVPad0eC1i5koTiitifP/ztWUMcbaL6XMVlTbBOPm9g
- SbeC1BE9zulcZ6WVopD7btVmfYs5d0sCz91LsG5oEDwT1m39/FQNP2TyFbK4Y0tmmNXr60vnRcF
- tt5FdyiGv2CGBZp7a2CO44Xhyk8RmoJH4npE7STGv+aM8OE1
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240117173458.2312669-2-quic_sibis@quicinc.com>
 
-If cluster domain idle state is enabled on the RB1, the board becomes
-significantly less responsive. Under certain circumstances (if some of
-the devices are disabled in kernel config) the board can even lock up.
+On Wed, Jan 17, 2024 at 11:04:52PM +0530, Sibi Sankar wrote:
+> Add devicetree binding for CPUSS Control Processor (CPUCP) mailbox
+> controller.
+> 
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+>  .../bindings/mailbox/qcom,cpucp-mbox.yaml     | 51 +++++++++++++++++++
+>  1 file changed, 51 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml b/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
+> new file mode 100644
+> index 000000000000..2617e5555acb
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
+> @@ -0,0 +1,51 @@
+> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/mailbox/qcom,cpucp-mbox.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. CPUCP Mailbox Controller
+> +
+> +maintainers:
+> +  - Sibi Sankar <quic_sibis@qti.qualcomm.com>
+> +
+> +description:
+> +  The CPUSS Control Processor (CPUCP) mailbox controller enables communication
+> +  between AP and CPUCP by acting as a doorbell between them.
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - qcom,x1e80100-cpucp-mbox
+> +      - const: qcom,cpucp-mbox
 
-It seems this is caused by the MPM not updating wakeup timer during CPU
-idle (in the same way the RPMh updates it when cluster idle state is
-entered).
+A generic fallback implies multiple devices use the same unchanged 
+block. That seems doubtful given you have not defined any others and 
+given Konrad's comments.
 
-Disable cluster domain idle for the RB1 board until MPM driver is fixed
-to cooperate with the CPU idle states.
-
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
-Changes since v1:
-- Updated commit message, expaning the 'ping' phrase to point to the
-  timer being updated by MPM driver (Mani)
----
- arch/arm64/boot/dts/qcom/qrb2210-rb1.dts | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-index 64b2ab286279..6e9dd0312adc 100644
---- a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-@@ -177,6 +177,24 @@ vph_pwr: regulator-vph-pwr {
- 	};
- };
- 
-+&CPU_PD0 {
-+	/delete-property/ power-domains;
-+};
-+
-+&CPU_PD1 {
-+	/delete-property/ power-domains;
-+};
-+
-+&CPU_PD2 {
-+	/delete-property/ power-domains;
-+};
-+
-+&CPU_PD3 {
-+	/delete-property/ power-domains;
-+};
-+
-+/delete-node/ &CLUSTER_PD;
-+
- &gpi_dma0 {
- 	status = "okay";
- };
-
----
-base-commit: 596764183be8ebb13352b281a442a1f1151c9b06
-change-id: 20240130-rb1-suspend-cluster-76d7b7582b6a
-
-Best regards,
--- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+Rob
 
