@@ -1,156 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-8969-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8970-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4795B841D9D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 09:23:35 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id AFDA2841DA6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 09:24:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B11DD1F27F37
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 08:23:34 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 294FFB21BCE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 08:24:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57AFC6089A;
-	Tue, 30 Jan 2024 08:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38CFA58217;
+	Tue, 30 Jan 2024 08:21:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Rs+uJmzz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DRb9GxKY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7660E60876
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 08:18:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F99358213;
+	Tue, 30 Jan 2024 08:21:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706602728; cv=none; b=PX9UNtZF/dwWHYLPcCDQ6eHccSvHbEVP1fSg2vzzV8GINCcoNNFa7YZQz0DiHC3734hZYn6Sr9hLd+cnUB0U4yhx2wj4x0mhu3KR19gtrb7bSjsYSoC9mpfr7k25BgRVfq6Ho1wCh8cQnXtoKpGzqen/SYmjdAVEozy+ITuLhGc=
+	t=1706602905; cv=none; b=tTyOgfA0PiUkAeQezj2f5OKnBbQvCAzZfj2y4pWfu3Vecog+vxT6k1AOuh2ygfdP6qMNDblC1juuBSUQFftr15UDU7wW7tiMl0JlglKBby9688maoDRvLc7yP1q4HQV7YMb1xFqKUrfnWoVujUEG2s0XRLBHEfyh1Tgy1g1/4+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706602728; c=relaxed/simple;
-	bh=xhCYng5XsPUqcAheLymgWpz/3pjpkj1ZrM1lMocSU8w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BWmAKOthsKZiJe8QNRuvAwuxGqsfrDjp3P+az9P/RVGQ6zFCLSniCWuU3sp3PJTCM7ArG5f779FJnqMb9pmoUKA4K4BoNfzBNaPjB3ECGcViF+Wv4Bfg7fMuTcUhQd52omXlirj19vntETN658nPXtslRbzCKRgGf+ki0WDRj/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Rs+uJmzz; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-55c2c90c67dso3855630a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 00:18:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706602724; x=1707207524; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JuCZteP1NPfdNhvScPfTHC+nL3PzDXggpPOdfLB/wYc=;
-        b=Rs+uJmzzmaVXKWY0k9dro6fs8MLpcKImBCba6iVbVXODKQwCviK+sK0o7NFAm1Cg21
-         OLYYvzKXTFQdk7HT4qvU8zBNDHqH8TEkkIYI2sE4wgavlhIJwKNBNfE3xQTuh2Igvigd
-         YjdBlx1hfe4TBHZgeZQja1x0hJBJubs/wajU0w+GHjORJg1+GhGdVxBiRVgTUo3ren5m
-         tUY6fFF0IaTLXM9es/SbopugrKiuakahOlaBJDbxSPcR7amI7njvoKNvpI00GmMqM8wV
-         xGWfzPyASNBeRBwsDVogsbTbcyQP8RT7QtrtdQwZlipTiUxeQcjaogpJp529tS4rsFGH
-         faKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706602724; x=1707207524;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JuCZteP1NPfdNhvScPfTHC+nL3PzDXggpPOdfLB/wYc=;
-        b=H8h3iRtbd63nUbhvGcF62xGNyWvstQxUVsvXKURunV6pwROvXR/FHoTpm5r7hO3iRD
-         VCAr3RznqQWQbdudUF2t8XhXpBSqPn7srH0Q+hGYcYp38V/+M4t2CQlC2t91SkTGLX9T
-         JqDdGU+2FBj/hQXwUurMaSkklODu7vtBrKd8z+vqpybWRiz4mWmOEmzy6BmP+r9BsDdM
-         49b4qf4VFmaLZ7lQDT6HDJAUbvyACPEOBXrC4Vy3rGrry5TIHMMKzxTFeBHo3xa0Nvtw
-         Ed8pt5411vZt/4KVEG/MqV+zch5A9Gt/RG5zZDYODaY2Kbowbu+tUR1CdqJUvQ1J1LoL
-         r5JQ==
-X-Gm-Message-State: AOJu0YxO6A/3DvtC6h73F66RWZbh4Q+U1ktu03uW/Kom0DmZMQqGhVeN
-	PFgB218aZ4GtjHSqHlTj3RqFnLPV7h8WIwrIUX/iXqljIvqYiIhPHOZUs2n9tOc=
-X-Google-Smtp-Source: AGHT+IGLz2PnPIUzScHoMe1SAiFcLXL/On3mCPKgK3SKUXs+tYUcbsOVnbLPaSPfYDpiVj6fIxUn1Q==
-X-Received: by 2002:a17:906:6bd5:b0:a35:a1dc:8920 with SMTP id t21-20020a1709066bd500b00a35a1dc8920mr4030330ejs.45.1706602724321;
-        Tue, 30 Jan 2024 00:18:44 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.222.62])
-        by smtp.gmail.com with ESMTPSA id qo3-20020a170907874300b00a35fd93b3fasm949896ejc.64.2024.01.30.00.18.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Jan 2024 00:18:43 -0800 (PST)
-Message-ID: <e91d57f6-4dbb-4f06-b966-8f61fc54d93a@linaro.org>
-Date: Tue, 30 Jan 2024 09:18:42 +0100
+	s=arc-20240116; t=1706602905; c=relaxed/simple;
+	bh=l92rlH4QMnqWPZQBTA6fZs3p3JG1usdcirSgXEg9km0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Vr4w61NXLN+V9pg+lt2DYkwPip3YerW3JyN6weTxLGmBYO2wJ/2yslh/3vKaXffIIJTD51zKbmGlhilzA/4FQ3k+/Vwg96fFsws6tMAdDL0dKe6pDccyCbMTR14NHVnnaejkulZnJoRSDmcrBqvc3nCPWyjWWtpJ5VjjIedXUeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DRb9GxKY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E1DFC32795;
+	Tue, 30 Jan 2024 08:21:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706602904;
+	bh=l92rlH4QMnqWPZQBTA6fZs3p3JG1usdcirSgXEg9km0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=DRb9GxKYRIFgICac1eS9CRTjAOMeF0SOQGAXTE5kyTmIP1JCBCj8vZT3f34H4mitN
+	 XjbdBGfUwor1/247cAk3wDjek5QsyeEvwkfgKti5pRYIodp1HYqW3aPGaC8r5icJad
+	 WWwn0Zmv+a6MqiTkl1LVBmcG4ZR6wSuVbGbZX9xVPTQFYsvNNxEfPJWQ7Kxmn12Nmt
+	 B75lEFVxYn3COf8PHb9dzUOthdC0piN8iuNxZHv4z95bXPvbrJA55gQ4CCF81Xbrim
+	 +Yo5drU4+cJNpEA3pmzfC6YFt8q+r3JyZScqLM5YemReXcF36UuHostvJmMp9649yv
+	 8eDdnS+q5zWwQ==
+Date: Tue, 30 Jan 2024 13:51:38 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc: quic_pkanojiy@quicinc.com, quic_carlv@quicinc.com, mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: host: Read PK HASH dynamically
+Message-ID: <20240130082138.GL32821@thinkpad>
+References: <20231208165938.1340587-1-quic_jhugo@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: remoteproc: qcom,sm8550-pas: document
- the X1E80100 aDSP & cDSP
-Content-Language: en-US
-To: Abel Vesa <abel.vesa@linaro.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240129-x1e80100-remoteproc-v1-0-15d21ef58a4b@linaro.org>
- <20240129-x1e80100-remoteproc-v1-1-15d21ef58a4b@linaro.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240129-x1e80100-remoteproc-v1-1-15d21ef58a4b@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20231208165938.1340587-1-quic_jhugo@quicinc.com>
 
-On 29/01/2024 14:34, Abel Vesa wrote:
-> Document the aDSP and cDSP Peripheral Authentication Service on the
-> X1E80100 Platform.
+On Fri, Dec 08, 2023 at 09:59:38AM -0700, Jeffrey Hugo wrote:
+> The OEM PK HASH registers in the BHI region are read once during firmware
+> load (boot), cached, and displayed on demand via sysfs. This has a few
+> problems - if firmware load is skipped, the registers will not be read and
+> if the register values change over the life of the device the local cache
+> will be out of sync.
 > 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Qualcomm Cloud AI 100 can expose both these problems. It is possible for
+> mhi_async_power_up() to be invoked while the device is in AMSS EE, which
+> would bypass firmware loading. Also, Qualcomm Cloud AI 100 has 5 PK HASH
+> slots which can be dynamically provisioned while the device is active,
+> which would result in the values changing and users may want to know what
+> keys are active.
+> 
+> Address these concerns by reading the PK HASH registers on-demand during
+> the sysfs read. This will result in showing the most current information.
+> 
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+
+Applied to mhi-next!
+
+- Mani
+
+> Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
+>  drivers/bus/mhi/host/boot.c | 11 +----------
+>  drivers/bus/mhi/host/init.c | 16 ++++++++++++----
+>  include/linux/mhi.h         |  2 --
+>  3 files changed, 13 insertions(+), 16 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
+> index edc0ec5a0933..dedd29ca8db3 100644
+> --- a/drivers/bus/mhi/host/boot.c
+> +++ b/drivers/bus/mhi/host/boot.c
+> @@ -395,7 +395,7 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
+>  	void *buf;
+>  	dma_addr_t dma_addr;
+>  	size_t size, fw_sz;
+> -	int i, ret;
+> +	int ret;
+>  
+>  	if (MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)) {
+>  		dev_err(dev, "Device MHI is not in valid state\n");
+> @@ -408,15 +408,6 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
+>  	if (ret)
+>  		dev_err(dev, "Could not capture serial number via BHI\n");
+>  
+> -	for (i = 0; i < ARRAY_SIZE(mhi_cntrl->oem_pk_hash); i++) {
+> -		ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_OEMPKHASH(i),
+> -				   &mhi_cntrl->oem_pk_hash[i]);
+> -		if (ret) {
+> -			dev_err(dev, "Could not capture OEM PK HASH via BHI\n");
+> -			break;
+> -		}
+> -	}
+> -
+>  	/* wait for ready on pass through or any other execution environment */
+>  	if (!MHI_FW_LOAD_CAPABLE(mhi_cntrl->ee))
+>  		goto fw_load_ready_state;
+> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+> index 65ceac1837f9..e2c2f510b04f 100644
+> --- a/drivers/bus/mhi/host/init.c
+> +++ b/drivers/bus/mhi/host/init.c
+> @@ -97,11 +97,19 @@ static ssize_t oem_pk_hash_show(struct device *dev,
+>  {
+>  	struct mhi_device *mhi_dev = to_mhi_device(dev);
+>  	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+> -	int i, cnt = 0;
+> +	u32 hash_segment[MHI_MAX_OEM_PK_HASH_SEGMENTS];
+> +	int i, cnt = 0, ret;
+>  
+> -	for (i = 0; i < ARRAY_SIZE(mhi_cntrl->oem_pk_hash); i++)
+> -		cnt += sysfs_emit_at(buf, cnt, "OEMPKHASH[%d]: 0x%x\n",
+> -				i, mhi_cntrl->oem_pk_hash[i]);
+> +	for (i = 0; i < MHI_MAX_OEM_PK_HASH_SEGMENTS; i++) {
+> +		ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_OEMPKHASH(i), &hash_segment[i]);
+> +		if (ret) {
+> +			dev_err(dev, "Could not capture OEM PK HASH\n");
+> +			return cnt;
+> +		}
+> +	}
+> +
+> +	for (i = 0; i < MHI_MAX_OEM_PK_HASH_SEGMENTS; i++)
+> +		cnt += sysfs_emit_at(buf, cnt, "OEMPKHASH[%d]: 0x%x\n", i, hash_segment[i]);
+>  
+>  	return cnt;
+>  }
+> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> index d0f9b522f328..474d32cb0520 100644
+> --- a/include/linux/mhi.h
+> +++ b/include/linux/mhi.h
+> @@ -325,7 +325,6 @@ struct mhi_controller_config {
+>   * @major_version: MHI controller major revision number
+>   * @minor_version: MHI controller minor revision number
+>   * @serial_number: MHI controller serial number obtained from BHI
+> - * @oem_pk_hash: MHI controller OEM PK Hash obtained from BHI
+>   * @mhi_event: MHI event ring configurations table
+>   * @mhi_cmd: MHI command ring configurations table
+>   * @mhi_ctxt: MHI device context, shared memory between host and device
+> @@ -413,7 +412,6 @@ struct mhi_controller {
+>  	u32 major_version;
+>  	u32 minor_version;
+>  	u32 serial_number;
+> -	u32 oem_pk_hash[MHI_MAX_OEM_PK_HASH_SEGMENTS];
+>  
+>  	struct mhi_event *mhi_event;
+>  	struct mhi_cmd *mhi_cmd;
+> -- 
+> 2.34.1
+> 
 > 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+-- 
+மணிவண்ணன் சதாசிவம்
 
