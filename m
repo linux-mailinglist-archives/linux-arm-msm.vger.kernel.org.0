@@ -1,158 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-8997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D80268421A2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 11:41:37 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC37484226D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 12:13:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 777251F2A719
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 10:41:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F1E4D1C26C9C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 11:13:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40166664CD;
-	Tue, 30 Jan 2024 10:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 537A8664A2;
+	Tue, 30 Jan 2024 11:13:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RPz7Py+a"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="NCX6mMIG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB3F66B22
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 10:40:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B704664B9;
+	Tue, 30 Jan 2024 11:13:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706611249; cv=none; b=iZsCrGIQpVrWJefRC4OcbDqGJSMPlHvlExC3bfjZU0hfqBVQ+1ltTEKZ8pDr+OExbB6oM5kOOBPWu+i7SBLHKRfKlaxN51LwbLsO2EbAqXNbZHmHS8Qf9A9D0t5sfZadDPjogFNvXt3nXg/YIX1K2J+SzJCiCNbV5kX50le9tSI=
+	t=1706613197; cv=none; b=Gtde2ltSNAIwahV2so9MxPihKMR/DnTMGy32UjrRezX63fbOP7xVn2FyxI4kcPR83gS2j1/h9nb2OFOBBlqu48xZVs9PN/fkIzUyrWaVWfMDUCLj37B7MfFM2HV1BrlpUWHyWxYyqMxaj2wjjOvsql/EF7bm/IeJX4EwKN8YPMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706611249; c=relaxed/simple;
-	bh=i5YiiQ7bg7wuD/RiKd60lDs/l1J+lJ1xk5N97Z7zlGU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KDYwKfMK0GQyJ2Yj/WnmpFb3RaI1vQkoFQYrRKwiC7t2d2oenFg1X0z/0xIqA2l22tJcjumul4ZtwOaxL8yRKdYntiZmCkijLIXVdE3wrWdsOcmsWvLU6LqaxdMlkTLS8Y0SYKIGb01diMeAx0/ETjvLEOzHf2vuogaLo46tWJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RPz7Py+a; arc=none smtp.client-ip=209.85.208.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-55eedf5a284so2892609a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 02:40:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706611245; x=1707216045; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qFLwa3UQcdOnGrCTl945Oaq6U4cRv5l6NG+wON7vkHo=;
-        b=RPz7Py+a675d8x/sdSfsRT5V2YLd3Y7akzy43Bb97vMRYiFP3x2J7CamfZJ8wOrSZ9
-         Hjh0Dz/jKYdutih6ZpPAZonnBHEmvPZ7kZOy/dsAHSAa5Jxj1OqKcPRPApyc0Ioiw1Zy
-         wiX9HeIkSjAujsydRlBIefWXqNy118szUU+rRI18G589bnATeYdp/eEedbUqlMtYweD/
-         EjfKtpGmOeF2Qr3Fsjd7eEwPF0CYUROrX99Ru1Atyz1PapsUg8WaB5af2KtHhxe1ZZt8
-         lrMT+HFa5x7X+NCEIZX5ZyWE/cEntnAfvruTv/N06YaQxdFfu3LAdJ78overRipX1XqG
-         pxMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706611245; x=1707216045;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qFLwa3UQcdOnGrCTl945Oaq6U4cRv5l6NG+wON7vkHo=;
-        b=MXdr7D81Oh9Cq5L53S21tXvCfm83VC6yMIR03rMYVmV8cZlCDf0r2SQ5L/lStTr/cq
-         8ImDSd/EiXaw4gO89gxVG3kLmPJaIj0Tygyk9uSQnUS2oBX1pP4wme53uDKmeT+XJZyi
-         hIJy8pFy7ss66+B6apIRlR6tCw3Q928FFBiYAds/fQkkGKQpZLNnYyznZIWLazxsgFSo
-         7r20y7G2cMV0q73L7vVGzpuXDw7YJn5ZQ5s5HFFP56tTfru2q/RUrKg1tb1eK/s4Kc2f
-         onj/Wf4Cty6XtFXIrAUg23NHLm2ItOfED7HSQqXNVwzDWI5NCjhE/Ip30mjuRp75TIUm
-         mJsA==
-X-Gm-Message-State: AOJu0Yw52Hn8pcV8Sgq/gOrSpO3qSiEHZNGQqYY/zn4aLxnEbNvI757y
-	V3jHCpIQLVnTeYWZs6J//AWdokqaFgkKBfpYW2fim/t4y6XLdIwh8kURwuF54Vs=
-X-Google-Smtp-Source: AGHT+IHCNFb7FMA8kU95tZdChdnP005nbUcHExixBUxTToV5eAyWEsQ5XA1fAj7gKoKCQsermEbU4Q==
-X-Received: by 2002:a17:906:c20c:b0:a35:78e1:2d1f with SMTP id d12-20020a170906c20c00b00a3578e12d1fmr4823022ejz.71.1706611245537;
-        Tue, 30 Jan 2024 02:40:45 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCX05fQGyKIagmkhzHeMedDVupb+uPr9ILZtFlRnpn1nsL1PXYFqHGc6Gk1/mYMItGHBDufW+3Xn1qP7uxgNqlKGSCceld+0ZfykMEsfkOXWk5szudrp3rCdHhScCExZGPK2IIDLJeS9sjyDaRUkw/QstmgYAibFRtzuxTClkoigqN42IDRvxrbLVJrcNYFQg63C6dd0p5zbQiGcgCN3mdjh17KfOm1irkJkvc2/epoWJhptdG9bMQRN5xqWGZr8i2zk2nd1vFga/gcwDXMvUrVND4JxH0HUtWSLs2aUzrOp6FwwjF33aYoHHczBq8FPM48DH0tPNNTEe7udetcIn6lPhHrteUsbpcG/iWRRWtFL4iFB0t2PKMQePJ63J0SGj2VRHGSyEH1L36NZcmC9YJbOtIVLa51z2wur9zbN6zj1J3F5A5nYhYZ5HIR5eUcOv0kLa9Lc4mTxY7nYSur97LHiwjPjnxVgyc+8K/aLpLWJ+nXW6dYkRElBkAJ6gekOaoTp1YGud26REOJ3DtadaP94I4GdfoeKGB/kg0iAEz5f2+kWeYYQPU/J3eX+DiTgNYtB7hHdpNhNAwO0Ofnm+H37wEcw2SE=
-Received: from [192.168.1.20] ([178.197.222.62])
-        by smtp.gmail.com with ESMTPSA id st14-20020a170907c08e00b00a35c5491b58sm1947720ejc.174.2024.01.30.02.40.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Jan 2024 02:40:45 -0800 (PST)
-Message-ID: <5c6dbb39-2db9-40bf-b593-9cb28f257db7@linaro.org>
-Date: Tue, 30 Jan 2024 11:40:43 +0100
+	s=arc-20240116; t=1706613197; c=relaxed/simple;
+	bh=FKvT+3NXE0I7fW0WyC5auryggLUH8FeVDYu/Te5amRk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Lcc299IdA1nIQ2YRKiDn2em4dzVRpJ9Ic4bfln+fRREZXgb9Y1c+AW/kw7047KQIb4my4w5G03u7VryZbYAdWIUCe9ETMC6SSVONP12fq+oeBPnJrHj1W2SWEkYCT+eh70xEzqS//FKl/K7CSfx0Q+snTLI2Bu6GGkC1WMVBews=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=NCX6mMIG; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1706613189;
+	bh=FKvT+3NXE0I7fW0WyC5auryggLUH8FeVDYu/Te5amRk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=NCX6mMIGSPtDC/LmtlXOv7wqiyqEllBqsI4ssjeqCerI9om4r2MjKgERlBV1U80R3
+	 JP7dunRIUxUyIbaxwr0pfHJnv5q9qOuRACRuudWMN4E5i2ksgSIx6bTiUjStoXBX/D
+	 Hrl1/rG/qHjj0FZbYRz/d8w2dhtLxyobHDBb0UG3wzDTs2bTL2JzOLk2lTir09iWSd
+	 QTVioyREs3ko1I4jbZoD4JQj8pWG28pSELXgZAP1M+IPT4/lG+Grui+I6/CAu8g7DT
+	 WMhgE6Ey3AX3GUsF3YHbd8bGIb3VezTX6mMjZ27pyVDv4nlxUqQN36vp69aX1H25uj
+	 SvvubPhfa7+bg==
+Received: from IcarusMOD.eternityproject.eu (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id AEFED3780FC7;
+	Tue, 30 Jan 2024 11:13:07 +0000 (UTC)
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+To: daniel.lezcano@linaro.org
+Cc: miquel.raynal@bootlin.com,
+	rafael@kernel.org,
+	rui.zhang@intel.com,
+	lukasz.luba@arm.com,
+	support.opensource@diasemi.com,
+	shawnguo@kernel.org,
+	s.hauer@pengutronix.de,
+	kernel@pengutronix.de,
+	festevam@gmail.com,
+	linux-imx@nxp.com,
+	andersson@kernel.org,
+	konrad.dybcio@linaro.org,
+	amitk@kernel.org,
+	thara.gopinath@gmail.com,
+	niklas.soderlund@ragnatech.se,
+	srinivas.pandruvada@linux.intel.com,
+	angelogioacchino.delregno@collabora.com,
+	baolin.wang@linux.alibaba.com,
+	u.kleine-koenig@pengutronix.de,
+	hayashi.kunihiko@socionext.com,
+	d-gole@ti.com,
+	linus.walleij@linaro.org,
+	DLG-Adam.Ward.opensource@dm.renesas.com,
+	error27@gmail.com,
+	heiko@sntech.de,
+	hdegoede@redhat.com,
+	jernej.skrabec@gmail.com,
+	f.fainelli@gmail.com,
+	bchihi@baylibre.com,
+	linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	kernel@collabora.com
+Subject: [PATCH v1 00/18] Thermal: Part 1 - Introduce new structs and registration
+Date: Tue, 30 Jan 2024 12:12:32 +0100
+Message-ID: <20240130111250.185718-1-angelogioacchino.delregno@collabora.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: dt-bindings: qcom,sc7280-venus: Allow one IOMMU
- entry
-Content-Language: en-US
-To: Luca Weiss <luca.weiss@fairphone.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring
- <robh+dt@kernel.org>, Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- Stanimir Varbanov <stanimir.varbanov@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240129-sc7280-venus-bindings-v1-1-20a9ba194c60@fairphone.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240129-sc7280-venus-bindings-v1-1-20a9ba194c60@fairphone.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 29/01/2024 08:48, Luca Weiss wrote:
-> Some SC7280-based boards crash when providing the "secure_non_pixel"
-> context bank, so allow only one iommu in the bindings also.
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
+This series is a preparation for a bigger cleanup that will be split in
+three parts in order to avoid immutable branches on multiple subsystems,
+as in other parts of this series there will be changes in:
+- drivers/acpi
+- drivers/platform/x86
+- drivers/power/supply
+- drivers/net/wireless
+- drivers/net/ethernet
+
+This is the first part which adds new structures and starts reorganizing
+struct members around, plus, this migrates all of the thermal drivers
+found in drivers/thermal/ to the new thermal_zone_device_register()
+function, and advertises that the old registration functions are
+deprecated and will be removed.
+
+The reorganization is supposed to be complete (or mostly) but...
+ - struct thermal_zone_platform_params has a temporary name:
+   this is done in order to avoid compile time failures for
+   the drivers outside of drivers/thermal before migrating
+   them to thermal_zone_device_params/thermal_zone_device_register();
+ - struct thermal_zone_params temporarily has two duplicated members,
+   governor_name and no_hwmon;
+
+Part 2 of this topic will migrate all drivers that are external to
+drivers/thermal to thermal_zone_device_register(); I will send that
+part only after part 1 is confirmed to be acceptable, as otherwise
+I'd be spamming people for no reason :-)
+
+After all drivers will be migrated to thermal_zone_device_register(),
+we won't have to care about changing anything outside of drivers/thermal
+to finish this set of cleanups/changes (and no immutable branches needed)
+and this means that...
+Part 3 of this topic will contain the following changes:
+ - thermal_zone_device_register_with_trips() will be removed
+ - thermal_tripless_zone_device_register() will be removed
+ - thermal_zone_params will be renamed to thermal_governor_ipa_params
+   - governor_name, no_hwmon members will be removed
+ - thermal_zone_platform_params will be renamed to thermal_zone_params
+ - Removal of the THERMAL_NAME_LENGTH limitation for `type`
+
+More scheduled changes, which should end up in part 3 (at least that's
+my intention), or eventually entirely after this cleanup topic, include:
+ - Introduction of Thermal Zone names
+ - Disambiguation of TZ name and type
+ - Addition of `thermal-zones`, `thermal-zone-names` parsing for
+   devicetrees
+
+... Summarizing ...
+
+Part 1:
+ - Reorganize structures (some temporary names/leftovers)
+ - New registration function, deprecation of old ones
+ - Migration of drivers/thermal drivers to new registration
+
+Part 2:
+ - Migration of drivers in other subsystems to new thermal registration
+
+Part 3:
+ - Remove the two leftovers in thermal.h
+ - Rename structures with proper, final names
+ - Everything else, anyway.
 
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cheers,
+Angelo
 
-Best regards,
-Krzysztof
+AngeloGioacchino Del Regno (18):
+  thermal: core: Change governor name to const char pointer
+  thermal: Add new structures and thermal_zone_device_register()
+  thermal: Directly use thermal_zone_platform_params for
+    thermal_zone_device
+  thermal/drivers/da9062: Migrate to thermal_zone_device_register()
+  thermal/drivers/imx: Migrate to thermal_zone_device_register()
+  thermal/drivers/rcar: Migrate to thermal_zone_device_register()
+  thermal/drivers/st: Migrate to thermal_zone_device_register()
+  thermal: intel: pch_thermal: Migrate to thermal_zone_device_register()
+  thermal: intel: quark_dts: Migrate to thermal_zone_device_register()
+  thermal: intel: soc_dts_iosf: Migrate to
+    thermal_zone_device_register()
+  thermal: intel: int340x: Migrate to thermal_zone_device_register()
+  thermal: int340x: processor: Migrate to thermal_zone_device_register()
+  thermal: intel: x86_pkg_temp: Migrate to
+    thermal_zone_device_register()
+  thermal/drivers/armada: Migrate to thermal_zone_device_register()
+  thermal/drivers/dove: Migrate to thermal_zone_device_register()
+  thermal/drivers/kirkwood: Migrate to thermal_zone_device_register()
+  thermal/drivers/spear: Migrate to thermal_zone_device_register()
+  thermal/drivers/int340x: Migrate to thermal_zone_device_register()
+
+ drivers/thermal/armada_thermal.c              |  12 +-
+ drivers/thermal/da9062-thermal.c              |  16 +-
+ drivers/thermal/dove_thermal.c                |  10 +-
+ drivers/thermal/gov_power_allocator.c         |  38 ++--
+ drivers/thermal/gov_user_space.c              |   2 +-
+ drivers/thermal/imx_thermal.c                 |  21 +-
+ .../intel/int340x_thermal/int3400_thermal.c   |  20 +-
+ .../int340x_thermal/int340x_thermal_zone.c    |  28 +--
+ .../processor_thermal_device_pci.c            |  26 ++-
+ drivers/thermal/intel/intel_pch_thermal.c     |  12 +-
+ .../thermal/intel/intel_quark_dts_thermal.c   |  23 +-
+ drivers/thermal/intel/intel_soc_dts_iosf.c    |  24 ++-
+ drivers/thermal/intel/x86_pkg_temp_thermal.c  |  22 +-
+ drivers/thermal/kirkwood_thermal.c            |  10 +-
+ drivers/thermal/qcom/tsens.c                  |   4 +-
+ drivers/thermal/rcar_thermal.c                |  15 +-
+ drivers/thermal/spear_thermal.c               |  10 +-
+ drivers/thermal/st/st_thermal.c               |  15 +-
+ drivers/thermal/thermal_core.c                | 201 +++++++++++-------
+ drivers/thermal/thermal_core.h                |   6 +-
+ drivers/thermal/thermal_helpers.c             |  22 +-
+ drivers/thermal/thermal_hwmon.c               |   8 +-
+ drivers/thermal/thermal_of.c                  |  12 +-
+ drivers/thermal/thermal_sysfs.c               |  64 +++---
+ drivers/thermal/thermal_trace.h               |   8 +-
+ drivers/thermal/thermal_trip.c                |  14 +-
+ include/linux/thermal.h                       |  87 ++++++--
+ 27 files changed, 461 insertions(+), 269 deletions(-)
+
+-- 
+2.43.0
 
 
