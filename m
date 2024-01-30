@@ -1,181 +1,276 @@
-Return-Path: <linux-arm-msm+bounces-8990-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8991-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15C12841FEA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 10:43:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C4AF9841FF2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 10:44:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AB1501F25537
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 09:43:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3C6041F22C08
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 09:44:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75DCB60885;
-	Tue, 30 Jan 2024 09:43:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4007A605B1;
+	Tue, 30 Jan 2024 09:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TvvvnK8M"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IQPSBsEp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4968660884;
-	Tue, 30 Jan 2024 09:43:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48AC85B5CE;
+	Tue, 30 Jan 2024 09:44:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706607784; cv=none; b=tV0ZF4bayWCHsFr8dWJDXglGL82yqVpAVMMw+/+/5gwVmdE7DxtCaGlq8VwaCpbrQuJzwNldFMQ0gnBhCbacbS5E7dtmf5BcnL1BFokBeAb0HgntGg1HNV+5QLram+H2THKEPl1hFrAorj6Nu6xXqouX1jaHinCnMJB11zeX2Gg=
+	t=1706607875; cv=none; b=AntWh9pOKbIhFJ56rOCtA36Tjo4AqHeuJWXz2qG15t5a55U5RFFjU+UJgYuQJCATvucp7NyO+lArPm08Pv7Y/hVQnwbtrCW+lEopIfFI2f29CGO+3SxwvFXbAYV+YXEXioHJJ1fn5fiLKgonh27kJn//x3Me8wlTRliSh1pNeqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706607784; c=relaxed/simple;
-	bh=ldrlgKcrWSPBN/HSbuJTM+glXjW0wkDulQn6qoVjgNQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l8jBNpbEF1bmQzzVFxItfTPXz9CpzbtYtILh5rPl6rC8YfkaXEyfzCmj4DDgED51jqB82hbsogJf+yk+GFOq73AUg5rpqmx5JSN5apQdub3a8hBmaRXaDDB38eEPGATbag/wpW/zDyQnSzSRhn7zPGFD6duA2CvdwkLeuyP2ohw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TvvvnK8M; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0FD4C433F1;
-	Tue, 30 Jan 2024 09:43:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706607783;
-	bh=ldrlgKcrWSPBN/HSbuJTM+glXjW0wkDulQn6qoVjgNQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TvvvnK8M//BQMdjyfgNqe0NVXQyupwifsm7Gw4xTWob7fSp3IRxVz0aBGvzazjMtY
-	 0JVeNxfwhRcomwW/zCTgB1vThCBPzePW/pSpo7P2cBvQ7BkJ1B0KHJnkbXjSqfcXE0
-	 5Y8a5tQ9mRTSKXvcw9gRtFmSR3GJ4uGdsGLSodNDG9Asyi4R49qKJUP4gXeebAl/NP
-	 /SueJccH0u82j0fPsq9baa7XkdOyHtPJRxLGt+LCNKwu0v6tyulpwvnb1yfjFCMSP9
-	 v4jyAjcZXnYB/eI+6RzkbRXyUOZEqDxy/thGd69zsI4Ie+4dyND1Bte9R8ymdPIVMH
-	 lnBt+sH4XNRXg==
-Date: Tue, 30 Jan 2024 10:42:57 +0100
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andersson@kernel.org, 
-	konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, vkoul@kernel.org, quic_bjorande@quicinc.com, 
-	manivannan.sadhasivam@linaro.org, quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com
-Subject: Re: [V2] i2c: i2c-qcom-geni: Correct I2C TRE sequence
-Message-ID: <txbi7hpta26tdncbjyyyxmayos7kw7qbo6y5lcxp2nfk3hogxv@pddv45eqyc2b>
-References: <20240129061003.4085-1-quic_vdadhani@quicinc.com>
- <CAA8EJpr_KXsjTUYha7OVg4HLLJLqMRvJun9DnMkBFvq3R2nk=Q@mail.gmail.com>
+	s=arc-20240116; t=1706607875; c=relaxed/simple;
+	bh=ouY7hgTD8wiqxL73yDTOMq7/ztje8llaH3bU7gcMP/s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=OkcuUIUpsnUvr6dgDJ7htcRcJwZhvnA4m0RayAZAxZBTqUYjJDNU1x2kjhqGD7xnA06SqRMKUCTj8jPScbJXjFgYU8Fkz/Tbi3UuYTsZat+VZUMUObh3pjHLZAULdYeCn+8mC2vUHXAtuAWGW6GaCIIKOuufmJHqp6sq5gEWQZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IQPSBsEp; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40U9UBBw017740;
+	Tue, 30 Jan 2024 09:44:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=PV/qkhxMhSm6FkOTpTPSi435N2PjaZa4J3VVt4zIeqM=; b=IQ
+	PSBsEpM3umWWUdcMALD8+ARSsy5sGpCEwV4K7NKtgxngtQgMTYam/l0XonfOMlmd
+	UOyFrxjtGhWQStDMh9kJCUUyV+U++6KuP6Mt+4z3yu2Kzn9a8jLWpSaQ6gEWvPlP
+	1O9TQ1cEqjQvpQ17dEJ5hyrUE3119tB2wk6is7fPphBiOgr33aDQaSZ7ECmPjPys
+	06BkVyrZfoISN0MQsWJfqgq/dPdNmab/v+V1YXDwQ5MXjO3nUL9R+QnDqcS71rYD
+	g3xKo7y16raWkH398NtV8z6ZfKvgkNggZxokvPBjx2aYSBSVFI2uvQGXYolIESD2
+	QiQnYoZCF1pcNWN0J8xQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vxvve07y8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 30 Jan 2024 09:44:16 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40U9iFY7014745
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 30 Jan 2024 09:44:15 GMT
+Received: from [10.50.3.106] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 30 Jan
+ 2024 01:44:05 -0800
+Message-ID: <d5377d84-7c75-4f4a-9e93-a825a6ea859c@quicinc.com>
+Date: Tue, 30 Jan 2024 15:14:01 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpr_KXsjTUYha7OVg4HLLJLqMRvJun9DnMkBFvq3R2nk=Q@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next] net: stmmac: dwmac-qcom-ethqos: Add support for
+ pm ops
+Content-Language: en-US
+To: Andrew Halaney <ahalaney@redhat.com>
+CC: Vinod Koul <vkoul@kernel.org>, Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Jose Abreu
+	<joabreu@synopsys.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet
+	<edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni
+	<pabeni@redhat.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>, <netdev@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>
+References: <20240127130327.22443-1-quic_snehshah@quicinc.com>
+ <jnwylhbparw4uwci3epbd7th4izt3rnd3uzrnm5mdunm55kdoh@yyp4dprfh3sl>
+From: Sneh Shah <quic_snehshah@quicinc.com>
+In-Reply-To: <jnwylhbparw4uwci3epbd7th4izt3rnd3uzrnm5mdunm55kdoh@yyp4dprfh3sl>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: DOvChhsk8qofe4Y8xVaT37HyWdBglQsm
+X-Proofpoint-ORIG-GUID: DOvChhsk8qofe4Y8xVaT37HyWdBglQsm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-30_04,2024-01-29_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
+ suspectscore=0 priorityscore=1501 impostorscore=0 mlxscore=0
+ lowpriorityscore=0 phishscore=0 bulkscore=0 adultscore=0 malwarescore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401190000 definitions=main-2401300070
 
-Hi Dmitry,
 
-thanks a lot for your review!
 
-On Tue, Jan 30, 2024 at 01:49:57AM +0200, Dmitry Baryshkov wrote:
-> On Mon, 29 Jan 2024 at 08:10, Viken Dadhaniya <quic_vdadhani@quicinc.com> wrote:
-> >
-> > For i2c read operation, we are getting gsi mode timeout due
-> > to malformed TRE(Transfer Ring Element). Currently we are
-> > configuring incorrect TRE sequence in gpi driver
-> > (drivers/dma/qcom/gpi.c) as below
-> >
-> > - Sets up CONFIG
-> > - Sets up DMA tre
-> > - Sets up GO tre
-> >
-> > As per HPG(Hardware programming guide), We should configure TREs in below
-> > sequence for any i2c transfer
-> >
-> > - Sets up CONFIG tre
-> > - Sets up GO tre
-> > - Sets up DMA tre
+On 1/30/2024 1:12 AM, Andrew Halaney wrote:
+> On Sat, Jan 27, 2024 at 06:33:27PM +0530, Sneh Shah wrote:
+>> Add qcom ethqos specific runtime and system sleep pm ops.
+>> As part of system sleep qcom ethqos needs to disable all clocks.
+>> This ops will be extended further with qcom specific features.
 > 
-> It is not clear how this is relevant and/or affected by swapping
-> I2C_WRITE and I2C_READ gpi calls.
+> This last sentence sounds like this series is incomplete, I'd avoid such
+> wording if its untrue. Upstream typically won't accept things that are
+> building infrastructure for patches that will "eventually be posted".
 > 
-> >
-> > For only write operation or write followed by read operation,
-> > existing software sequence is correct.
-> >
-> > for only read operation, TRE sequence need to be corrected.
-> > Hence, we have changed the sequence to submit GO tre before DMA tre.
-> >
-> > Tested covering i2c read/write transfer on QCM6490 RB3 board.
+> You state in your commit what the code does (really it replaces the
+> stmmac_pltfrm_ops with its own), but only gloss over the why. I'd lead
+> with the "why". i.e. I'd say something like
+> "net: stmmac: dwmac-qcom-ethqos: Turn clocks off/on during suspend/resume"
 > 
-> Please read Documentation/process/submitting-patches.rst, understand
-> it and write a proper commit message.
+> Since there's already a handler installed for PM ops, I'd explain why
+> you need to change to new ones as well.
 > 
-> >
-> > Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-> > Fixes: commit d8703554f4de ("i2c: qcom-geni: Add support for GPI DMA")
+>>
+>> Signed-off-by: Sneh Shah <quic_snehshah@quicinc.com>
+>> ---
+>>  .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 51 ++++++++++++++++++-
+>>  1 file changed, 50 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+>> index 31631e3f89d0..cba601ee9e01 100644
+>> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+>> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+>> @@ -720,6 +720,55 @@ static void ethqos_ptp_clk_freq_config(struct stmmac_priv *priv)
+>>  	netdev_dbg(priv->dev, "PTP rate %d\n", plat_dat->clk_ptp_rate);
+>>  }
+>>  
+>> +static int qcom_ethqos_runtime_suspend(struct device *dev)
+>> +{
+>> +	struct net_device *ndev = dev_get_drvdata(dev);
+>> +	struct stmmac_priv *priv = netdev_priv(ndev);
+>> +
+>> +	return stmmac_bus_clks_config(priv, false);
+>> +}
+>> +
 > 
-> As it was pointed out, this line shows ignorance of the mentioned file
-> and of the existing community practices.
-
-If the issue is only in the commit message Viken can propose a
-proper commit message as reply to this e-mail and I can fix it
-before merging the change.
-
-Important is that no issue is seen in the code.
-
-Please, Viken, can you either send a v3 with a proper commit
-message or write it in the reply to this e-mail with the changes
-that Dmitry suggested.
-
-> > ---
-> > v1 -> v2:
-> > - Remove redundant check.
-> > - update commit log.
-> > - add fix tag.
-> > ---
-> > ---
-> >  drivers/i2c/busses/i2c-qcom-geni.c | 14 +++++++-------
-> >  1 file changed, 7 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> > index 0d2e7171e3a6..da94df466e83 100644
-> > --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> > +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> > @@ -613,20 +613,20 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
-> >
-> >                 peripheral.addr = msgs[i].addr;
-> >
-> > +               ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
-> > +                                   &tx_addr, &tx_buf, I2C_WRITE, gi2c->tx_c);
-> > +               if (ret)
-> > +                       goto err;
-> > +
-> >                 if (msgs[i].flags & I2C_M_RD) {
-> >                         ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
-> >                                             &rx_addr, &rx_buf, I2C_READ, gi2c->rx_c);
-> >                         if (ret)
-> >                                 goto err;
-> > -               }
-> > -
-> > -               ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
-> > -                                   &tx_addr, &tx_buf, I2C_WRITE, gi2c->tx_c);
-> > -               if (ret)
-> > -                       goto err;
-> >
-> > -               if (msgs[i].flags & I2C_M_RD)
-> >                         dma_async_issue_pending(gi2c->rx_c);
-> > +               }
-> > +
-> >                 dma_async_issue_pending(gi2c->tx_c);
-> >
-> >                 timeout = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
-> > --
-> > QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> > of Code Aurora Forum, hosted by The Linux Foundation
-
-If you are going to submit again, please make also sure that the
-e-mail is formatted properly.
-
-I'm not sure that this footer will be accepted by git.
-
-Thanks,
-Andi
-
-> >
-> >
+> This perfectly matches the stmmac_runtime_suspend() function installed
+> originally. I don't see why you couldn't at a minimum reuse
+> that function instead of writing your own.
 > 
+>> +static int qcom_ethqos_runtime_resume(struct device *dev)
+>> +{
+>> +	struct net_device *ndev = dev_get_drvdata(dev);
+>> +	struct stmmac_priv *priv = netdev_priv(ndev);
+>> +
+>> +	return stmmac_bus_clks_config(priv, true);
+>> +}
 > 
-> -- 
-> With best wishes
-> Dmitry
+> Same idea as the stmmac_runtime_suspend() comment above!
+> 
+>> +
+>> +static int qcom_ethqos_suspend(struct device *dev)
+>> +{
+>> +	struct net_device *ndev = dev_get_drvdata(dev);
+>> +	struct stmmac_priv *priv = netdev_priv(ndev);
+>> +	int ret;
+>> +
+>> +	if (!ndev || !netif_running(ndev))
+>> +		return -EINVAL;
+>> +
+>> +	ret = stmmac_suspend(dev);
+> 
+> ret here is ignored.
+> 
+>> +
+>> +	return stmmac_bus_clks_config(priv, false);
+>> +}
+>> +
+>> +static int qcom_ethqos_resume(struct device *dev)
+>> +{
+>> +	struct net_device *ndev = dev_get_drvdata(dev);
+>> +	struct stmmac_priv *priv = netdev_priv(ndev);
+>> +	int ret;
+> 
+> unused ret.
+> 
+>> +
+>> +	if (!ndev || !netif_running(ndev))
+>> +		return -EINVAL;
+>> +
+>> +	stmmac_bus_clks_config(priv, true);
+> 
+> Probably should check this.
+> 
+>> +
+>> +	return stmmac_resume(dev);
+>> +}
+> 
+> Both the new system sleep ops installed here basically match the
+> stmmac_pltfrm_suspend/resume() functions that were already installed.
+> The only difference I'm noting is that you want to call
+> stmmac_bus_clks_config() in your implementation, whereas the originals call
+> the exit()/init() callbacks if they exist in the platform driver.
+> 
+> I would say "let's just make a exit()/init() callback for Qualcomm", but
+> looking further... (see below)
+> 
+>> +
+>> +const struct dev_pm_ops qcom_ethqos_pm_ops = {
+>> +	SET_SYSTEM_SLEEP_PM_OPS(qcom_ethqos_suspend, qcom_ethqos_resume)
+>> +	SET_RUNTIME_PM_OPS(qcom_ethqos_runtime_suspend, qcom_ethqos_runtime_resume, NULL)
+>> +};
+>> +
+>>  static int qcom_ethqos_probe(struct platform_device *pdev)
+>>  {
+>>  	struct device_node *np = pdev->dev.of_node;
+>> @@ -838,7 +887,7 @@ static struct platform_driver qcom_ethqos_driver = {
+>>  	.probe  = qcom_ethqos_probe,
+>>  	.driver = {
+>>  		.name           = "qcom-ethqos",
+>> -		.pm		= &stmmac_pltfr_pm_ops,
+>> +		.pm		= &qcom_ethqos_pm_ops,
+> 
+> You effectively remove the stmmac_pltfr_noirq_suspend()/resume()
+> callbacks here, which do the stmmac_bus_clks_config() via
+> pm_runtime_force_suspend() etc during late suspend/early resume.
+> 
+> I do see this if statement, but I believe !device_may_wakeup() is true here,
+> so the clocks should get killed.
+> 
+> 	static int __maybe_unused stmmac_pltfr_noirq_suspend(struct device *dev)
+> 	{
+> 		struct net_device *ndev = dev_get_drvdata(dev);
+> 		struct stmmac_priv *priv = netdev_priv(ndev);
+> 		int ret;
+> 
+> 		if (!netif_running(ndev))
+> 			return 0;
+> 
+> 		if (!device_may_wakeup(priv->device) || !priv->plat->pmt) {
+> 			/* Disable clock in case of PWM is off */
+> 			clk_disable_unprepare(priv->plat->clk_ptp_ref);
+> 
+> 			ret = pm_runtime_force_suspend(dev);
+> 			if (ret)
+> 				return ret;
+> 		}
+> 
+> 		return 0;
+> 	}
+> 
+> Right now I'm of the opinion that this patch shouldn't really change
+> much based on that digging. Please let me know if I'm missing something
+> but it appears to me this should already be working.
+
+I agree with all the points above. The reason we were still pushing qcom
+specific changes is we wanted a PM wrapper function to add qcom specific
+changes for features such as deep sleep. 
+
+Looks like I had overlooked exit()/init()  platform callbacks you have
+correctly pointed out. I can use this callbacks to do all the ethqos specific 
+operations. Considering this point, the current patch is unnecessary.
+
+Thanks for pointing this out!
+> 
+>>  		.of_match_table = qcom_ethqos_match,
+>>  	},
+>>  };
+>> -- 
+>> 2.17.1
+>>
+> 
 
