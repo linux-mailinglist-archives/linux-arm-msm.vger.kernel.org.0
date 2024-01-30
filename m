@@ -1,60 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-9062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41600842A97
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 18:12:59 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FABD842AA1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 18:14:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F1A93284ECB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 17:12:57 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CD0FDB261D5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 17:14:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57B96129A86;
-	Tue, 30 Jan 2024 17:12:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 481BC1292DB;
+	Tue, 30 Jan 2024 17:14:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R7Tiv5n/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B5sVTDYc"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C23C1292DE;
-	Tue, 30 Jan 2024 17:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173E126AC6;
+	Tue, 30 Jan 2024 17:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706634763; cv=none; b=Oq798TsA1AAt0e72at5QQBXnSyOk5x5G7KHcYAwshVmMLdyZwv6AbM2jJbP9Wy5d5g9Luft1AFF4/h3fGL5AeTVYNr58J/b5ju3Ggok1SjfM6COoufznhc2hqJxq/8FKVYhq6ZPzhikX5z7Yh4B66tFgACXn2EpXDSm7B7vTofE=
+	t=1706634891; cv=none; b=CBTmoLn44A5ejrzy99Wgg9U0mvM0MOQT9+UykzJiwxrUYyfyeF1nHqBXZuj6EMup1eNWLK1u5wb4ovUevLKlx7XE+Vw8ZAIXPT32r4joh7H6RkrFLfnZZgJn4lCsXaFpKuiVmlCQO9VflBLGzo3g0CXmq1n0RJqdR0ObgEKlDIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706634763; c=relaxed/simple;
-	bh=PkjZQsYbArDQxHJBdjmN5B4YsdpxE+UZi7kgvdMCax0=;
+	s=arc-20240116; t=1706634891; c=relaxed/simple;
+	bh=A5T8FP/fhIVtH/olVEw0tzShluBYACTWaf+iE7kNjHc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SOuiHnNb5bYS1BF4kp7laC+bTZiURsJLuE3gUfUGepLN18DIeSMq7HHrNH/P7rBxgPVxfHIak7s/a1FjHaQ8BRo0Xl8E/zqnyx5dBy5JTxk+nkqB9XoavedtQwx366NQB+wJrgE87D+XY+9MLGV4yCheGNmO8uJu7Z6soNMZa3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R7Tiv5n/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78C96C433C7;
-	Tue, 30 Jan 2024 17:12:42 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=qrk7NrM89gE42QmOaElXCgtUllBsrRz6JlYZCvcBSdxAAWuAJ6CKrTQGZR1tw1UOW4FZ7jHkZTjG16uS+wDqe94U7hZhKAgVZl4p8FcG21cP/lCYL8S8Do5refGWkIhyK35rllyIuBNGY6DREq7fF4B9jRJSKOVKC8MvoViAFqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B5sVTDYc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC0B3C433C7;
+	Tue, 30 Jan 2024 17:14:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706634762;
-	bh=PkjZQsYbArDQxHJBdjmN5B4YsdpxE+UZi7kgvdMCax0=;
+	s=k20201202; t=1706634890;
+	bh=A5T8FP/fhIVtH/olVEw0tzShluBYACTWaf+iE7kNjHc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=R7Tiv5n/1AF3v/eZDPM2lN64tvP7ZN0+vrjw2Nf60G3hzWh7MPldpgoOAQNCAemW2
-	 FXHxsb36rjhVR1VDy0pBeb2X4SSrIfJ6Cn3S2KdK3dWCVoXu0doo7U9x6QpxI59abY
-	 fXbYLGkiqCfrGn1nZEbW8Ie24C2e4tJdt37GA/4yFM0Z/M0LdjYdgyjZIAd5l5oVru
-	 whznUDbHYf4iMFAvYMRwFYPmM/cSGyHMikyTaKa+mRySzvcqzdg1ZHhhk6KTS2QtS4
-	 6PD7frXkNb9R9CJwEWmjqIiZpFpcdKcODE1pWlLSYTjxiwbS7XWXUZs207RvH0AeTU
-	 0ePwfXAJNaD/w==
-Date: Tue, 30 Jan 2024 11:12:40 -0600
-From: Rob Herring <robh@kernel.org>
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, andersson@kernel.org,
-	konrad.dybcio@linaro.org, jassisinghbrar@gmail.com,
-	krzysztof.kozlowski+dt@linaro.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com,
-	conor+dt@kernel.org
-Subject: Re: [RFC 1/7] dt-bindings: mailbox: qcom: Add CPUCP mailbox
- controller bindings
-Message-ID: <20240130171240.GA1929440-robh@kernel.org>
-References: <20240117173458.2312669-1-quic_sibis@quicinc.com>
- <20240117173458.2312669-2-quic_sibis@quicinc.com>
+	b=B5sVTDYcZYQd6secc+1JOjx11SzAr4mybLbcRDSte3T8Xi62OLzcth2fj04pGx37w
+	 SfdAaUIfYHZH44RnWaSeE9sFYUpJAVvbBDO1o42UR514TdkB7qJPRdy2etQ45uYCp6
+	 DIKvVDpDFZohfFtwzm/tEAh30eyIsJHjeuts7GQ0PVks8OaC0jxNKjgm4tQXYFs9hz
+	 WaskVbC/gMNGEhjIWK5Ytt8jNaVc1+Ck49ELh5odrADWqEZb0B1IMltoNXWNuBjPo8
+	 WmLTkMkGEXr3xmf7AVnWdDUD8uDtkj4AzA9k9SbGrVkMM2T+8RC3RXS4Vs3RYjQBSj
+	 MPdAOv5LpsXWQ==
+Date: Tue, 30 Jan 2024 22:44:46 +0530
+From: Vinod Koul <vkoul@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 04/14] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Fix
+ the usage of aux clk
+Message-ID: <ZbkuhjOa31ma3Mx8@matsya>
+References: <20240124-pcie-aux-clk-fix-v1-0-d8a4852b6ba6@linaro.org>
+ <20240124-pcie-aux-clk-fix-v1-4-d8a4852b6ba6@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,49 +66,33 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240117173458.2312669-2-quic_sibis@quicinc.com>
+In-Reply-To: <20240124-pcie-aux-clk-fix-v1-4-d8a4852b6ba6@linaro.org>
 
-On Wed, Jan 17, 2024 at 11:04:52PM +0530, Sibi Sankar wrote:
-> Add devicetree binding for CPUSS Control Processor (CPUCP) mailbox
-> controller.
+On 24-01-24, 13:06, Manivannan Sadhasivam wrote:
+> On some platforms, PHY block requires PCIE_PHY_AUX_CLK to be used when the
+> PCIe link enters L1SS state. On those platforms, a dedicated
+> PCIE_PHY_AUX_CLK is available from GCC. Other than this, the PHY block
+> doesn't require any other "aux" clock, including PCIE_AUX_CLK which only
+> required by the PCIe controller.
 > 
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> ---
->  .../bindings/mailbox/qcom,cpucp-mbox.yaml     | 51 +++++++++++++++++++
->  1 file changed, 51 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
+> Historically, the DTs of the platforms requiring "aux" clock passed
+> PCIE_PHY_AUX_CLK as "aux" clock. But over the period of time, platforms
+> that do not require this dedicated "aux" clock mistakenly started passing
+> the PCIE_AUX_CLK as the "aux" clock. More recently, SA8775P platform passed
+> both "aux" (PCIE_AUX_CLK) and "phy_aux" (PCIE_PHY_AUX_CLK) clocks.
 > 
-> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml b/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
-> new file mode 100644
-> index 000000000000..2617e5555acb
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
-> @@ -0,0 +1,51 @@
-> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/mailbox/qcom,cpucp-mbox.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. CPUCP Mailbox Controller
-> +
-> +maintainers:
-> +  - Sibi Sankar <quic_sibis@qti.qualcomm.com>
-> +
-> +description:
-> +  The CPUSS Control Processor (CPUCP) mailbox controller enables communication
-> +  between AP and CPUCP by acting as a doorbell between them.
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - enum:
-> +          - qcom,x1e80100-cpucp-mbox
-> +      - const: qcom,cpucp-mbox
+> So to clean up this mess, let's remove the newly introduced "phy_aux" clock
+> and just use "aux" clock to supply PCIE_PHY_AUX_CLK for platforms that
+> require it. For the platforms that do not require a dedicated "aux" clock,
+> the clock is removed from DT.
+> 
+> While at it, let's also define "qcom,sc7280-qmp-pcie-phy" compatible for
+> SC7280 SoC which was earlier using the compatible
+> "qcom,sm8250-qmp-gen3x2-pcie-phy" as the clock requirement has changed and
+> also restructure the "clock-names" property for the affected platforms.
 
-A generic fallback implies multiple devices use the same unchanged 
-block. That seems doubtful given you have not defined any others and 
-given Konrad's comments.
+This one fails to apply for me
 
-Rob
+-- 
+~Vinod
 
