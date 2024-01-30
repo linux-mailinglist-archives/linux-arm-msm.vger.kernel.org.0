@@ -1,153 +1,268 @@
-Return-Path: <linux-arm-msm+bounces-8941-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85E3F841978
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 03:43:20 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BBE6B841AED
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 05:11:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2325BB24AC0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 02:43:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 316541F2354B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 04:11:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8170936AF0;
-	Tue, 30 Jan 2024 02:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65C6137706;
+	Tue, 30 Jan 2024 04:10:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e5MrxK81"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="I3LeLNUA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51CA7364C6;
-	Tue, 30 Jan 2024 02:43:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E74381C8
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 04:10:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706582587; cv=none; b=RZDIZOKceeDCuzcdZPYB+PulrX1LDKx3GJHikc2oDOy9A+LKvdFmWGBPy/caddlfelez6nfRix5M13brmtvkQpS48UMvXDVosy19tDwfAHZ9XRodKvJBb8ekv/f2jbi3BkCA7qLcxVFrb92CUUe/D4Bslk4s5Hr1iRSYlu4XLBI=
+	t=1706587857; cv=none; b=fJD8b24CSJyk+CrygVeNVmwV4enQZDGGSX5BuZRCBRNTcf/oGDt00u9EGomWDJA3b79PKlcpBZTQ7rNcNMTCdxjJykeG0Gwnu5iNBn3I3n4S4Fq0QD9ImmBTQPRSgncA67ph5/s2q4vFQzosCaqpll9J6S/4LgFeHZHy/ZjOkVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706582587; c=relaxed/simple;
-	bh=QlP98aSQSqBpclGKVx9/GrrG73fSHvaxlFUeCcBcyCM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ogA2ToRUjDxTq9eA43gtKKGUHwJ/f93lZWfTmINnF/3tU44fiXc24mn3/PUIZ2tGG7MqrG9qrKmp2dhofxW07xjr+5SIqHE7wD8qqRM7Nqbsk6AayQ221v92lbGs7e8vLcTJS+3QZ/3y11Zad6bADTHu7yGj5hoVLy3ZKmfOuOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e5MrxK81; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id D5EA7C43390;
-	Tue, 30 Jan 2024 02:43:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706582586;
-	bh=QlP98aSQSqBpclGKVx9/GrrG73fSHvaxlFUeCcBcyCM=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=e5MrxK81lePY5Kev89+qPYsObInOnXJTN/ByIyW5q5hQUha9pPeOjZxLTq+WJ6ENs
-	 N22i8FkszyHKOTKxk9RZjD9qv/l5lw1CbBajAWtGb6QALPgveJOtDjoeONxZXBi6e/
-	 GqMIC0C7x4MUyWhe9TZVbyiVBY9M3qp6MryGw0DWlFIOV/QQ2vuzzApFO/ZlCFd0hs
-	 XkjMoPislaeZ37/ilcEXocZ+gMDYXh/kI9Z8jzPBLeUEqrnqJc9XR39aFO4s6IXh6W
-	 cWKvMbEd31qHDQmMZ8s13Vrqqbt5ACYms1o8Wa6VrSWoN2d9BFSd9aGd35+04NU9mT
-	 5xH6cBPVJ6tLQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC8C2C47DB3;
-	Tue, 30 Jan 2024 02:43:06 +0000 (UTC)
-From: Rudraksha Gupta via B4 Relay <devnull+guptarud.gmail.com@kernel.org>
-Date: Mon, 29 Jan 2024 18:43:07 -0800
-Subject: [PATCH 2/2] ARM: dts: qcom: msm8960: expressatt: Add mXT224S
- touchscreen
+	s=arc-20240116; t=1706587857; c=relaxed/simple;
+	bh=o7FDWG+Cg78qb8kYK3K8adfWJwDttLTan/8pTsfKQQ0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=JBSRiHz9pmVKwDl9nDafc9nCloK7o954/k69Hs/d3QytOaoUZB+71KrMhIM26uOccs1MnIHFvu+nLbfEp9rk39q4F/rqnVSSL9qq3QighOw+xL8NTnE3U0tQ2hAKs/aDofSXbpLDvQlVf73EgaS6xrN3kw+EIy9wgHvYFsjGp9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=I3LeLNUA; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40U3RPsY030278;
+	Tue, 30 Jan 2024 04:10:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=G8rECMOVPo/RgV6dDI0YHyT/sDNFUDmzVHbJs27uNd0=; b=I3
+	LeLNUArIW5VJqEdoB6uDpyZJFxSZ1TxOm6LBVn5GMr3gqqtYBXybB4G2su56xCJM
+	l0oumaGljA9286/i/dB5Z6aNFjMnPT8vgZaBmOovdP+hiOLHTTDaFugqLYDBw6AT
+	N+tWn8YOTYKAhCMGB67WdQdtXsYN6XeDSglPMGjiTKhXQ3Lq9dUUIhGpAuxZx7MV
+	fG5y/eFkdLXHGzBWpoCIpccpwolc1UY7qQi0n6vsSsej1jk9xRxBQaFvjvaVk/Bx
+	quzMRtIBBI1k1rCRupoplYY7CIdh9VGnh23ENC7cxB1pGmjNSupDeDCX2HcEOKKU
+	Mor4WUm/WW4ZX9JryXsg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vxrq084m7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 30 Jan 2024 04:10:48 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40U4Alx5022475
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 30 Jan 2024 04:10:47 GMT
+Received: from [10.110.15.32] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 29 Jan
+ 2024 20:10:46 -0800
+Message-ID: <697b153b-fb8e-6b58-fc4f-92f814f86d0f@quicinc.com>
+Date: Mon, 29 Jan 2024 20:10:45 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 07/17] drm/msm/dpu: disallow widebus en in INTF_CONFIG2
+ when DP is YUV420
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Paloma Arellano <quic_parellan@quicinc.com>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <seanpaul@chromium.org>, <swboyd@chromium.org>,
+        <quic_jesszhan@quicinc.com>, <quic_khsieh@quicinc.com>,
+        <marijn.suijten@somainline.org>, <neil.armstrong@linaro.org>
+References: <20240125193834.7065-1-quic_parellan@quicinc.com>
+ <20240125193834.7065-8-quic_parellan@quicinc.com>
+ <301cdbe2-7377-4b0f-bd24-5131f8928c29@linaro.org>
+ <09a10811-ea7c-3e99-d5eb-755aac4ecf0e@quicinc.com>
+ <CAA8EJpqFcY8yBmdW8qpMiS1p3bqY2+pgXtvR0Br9-p_VAUnN+Q@mail.gmail.com>
+ <31630fe2-045d-c5f1-4019-e8a8b89928c3@quicinc.com>
+ <CAA8EJpr+tqWgj78LuPeDztQb+Tt_Zs0OKPaRsV1E-jqpRQJO6Q@mail.gmail.com>
+ <1727d3ab-900b-9c7b-2afa-a47b0bb3c713@quicinc.com>
+ <CAA8EJprhZ+AyjjUM46_qmYeOytX60ncLbFw0mC7V5bBT4MoN6w@mail.gmail.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJprhZ+AyjjUM46_qmYeOytX60ncLbFw0mC7V5bBT4MoN6w@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id:
- <20240129-expressatt_mxt224s_touchscreen-v1-2-fb8552e1c32c@gmail.com>
-References:
- <20240129-expressatt_mxt224s_touchscreen-v1-0-fb8552e1c32c@gmail.com>
-In-Reply-To:
- <20240129-expressatt_mxt224s_touchscreen-v1-0-fb8552e1c32c@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Rudraksha Gupta <guptarud@gmail.com>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1706582586; l=1620;
- i=guptarud@gmail.com; s=20240120; h=from:subject:message-id;
- bh=4Gi3ILnitkF34hh7B1r4k2VP7IMCG7Hjj/6AwpaU750=;
- b=glGc0tlN1FYtvPmVUQWslsCsjE5EMGR/UNEHeqUB2jpo5OOSQO5qq9wIE5HbwMCkwH2BzXEJs
- H7KAFnIl4ahC7MfYyk65Voe0WfqTNP70P9KSDCsySRwDT6Coc1/JoRf
-X-Developer-Key: i=guptarud@gmail.com; a=ed25519;
- pk=RGmug3GRHS4XYTXDcT2VrlTGXlEF2gY4L9/swGIU1ko=
-X-Endpoint-Received:
- by B4 Relay for guptarud@gmail.com/20240120 with auth_id=114
-X-Original-From: Rudraksha Gupta <guptarud@gmail.com>
-Reply-To: <guptarud@gmail.com>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: B85y3luciK9jbwnssTJGTsCylzdxafQD
+X-Proofpoint-GUID: B85y3luciK9jbwnssTJGTsCylzdxafQD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-29_15,2024-01-29_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ impostorscore=0 mlxscore=0 clxscore=1015 priorityscore=1501 bulkscore=0
+ adultscore=0 spamscore=0 suspectscore=0 malwarescore=0 phishscore=0
+ mlxlogscore=808 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401190000 definitions=main-2401300026
 
-From: Rudraksha Gupta <guptarud@gmail.com>
 
-Add mXT224S touchscreen
 
-Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
----
- .../dts/qcom/qcom-msm8960-samsung-expressatt.dts   | 31 +++++++++++++++++++++-
- 1 file changed, 30 insertions(+), 1 deletion(-)
+On 1/29/2024 5:43 PM, Dmitry Baryshkov wrote:
+> On Tue, 30 Jan 2024 at 03:07, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 1/29/2024 4:03 PM, Dmitry Baryshkov wrote:
+>>> On Tue, 30 Jan 2024 at 01:51, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>>>
+>>>>
+>>>>
+>>>> On 1/27/2024 9:33 PM, Dmitry Baryshkov wrote:
+>>>>> On Sun, 28 Jan 2024 at 07:16, Paloma Arellano <quic_parellan@quicinc.com> wrote:
+>>>>>>
+>>>>>>
+>>>>>> On 1/25/2024 1:26 PM, Dmitry Baryshkov wrote:
+>>>>>>> On 25/01/2024 21:38, Paloma Arellano wrote:
+>>>>>>>> INTF_CONFIG2 register cannot have widebus enabled when DP format is
+>>>>>>>> YUV420. Therefore, program the INTF to send 1 ppc.
+>>>>>>>
+>>>>>>> I think this is handled in the DP driver, where we disallow wide bus
+>>>>>>> for YUV 4:2:0 modes.
+>>>>>> Yes we do disallow wide bus for YUV420 modes, but we still need to
+>>>>>> program the INTF_CFG2_DATA_HCTL_EN. Therefore, it is necessary to add
+>>>>>> this check.
+>>>>>
+>>>>> As I wrote in my second email, I'd prefer to have one if which guards
+>>>>> HCTL_EN and another one for WIDEN
+>>>>>
+>>>> Its hard to separate out the conditions just for HCTL_EN . Its more
+>>>> about handling the various pixel per clock combinations.
+>>>>
+>>>> But, here is how I can best summarize it.
+>>>>
+>>>> Lets consider DSI and DP separately:
+>>>>
+>>>> 1) For DSI, for anything > DSI version 2.5 ( DPU version 7 ).
+>>>>
+>>>> This is same the same condition as widebus today in
+>>>> msm_dsi_host_is_wide_bus_enabled().
+>>>>
+>>>> Hence no changes needed for DSI.
+>>>
+>>> Not quite. msm_dsi_host_is_wide_bus_enabled() checks for the DSC being
+>>> enabled, while you have written that HCTL_EN should be set in all
+>>> cases on a corresponding platform.
+>>>
+>>
+>> Agreed. This is true, we should enable HCTL_EN for DSI irrespective of
+>> widebus for the versions I wrote.
+>>
+>> Basically for the non-compressed case.
+>>
+>> I will write something up to fix this for DSI. I think this can go as a
+>> bug fix.
+>>
+>> But that does not change the DP conditions OR in other words, I dont see
+>> anything wrong with this patch yet.
+>>
+>>>>
+>>>> 2) For DP, whenever widebus is enabled AND YUV420 uncompressed case
+>>>> as they are independent cases. We dont support YUV420 + DSC case.
+>>>>
+>>>> There are other cases which fall outside of this bucket but they are
+>>>> optional ones. We only follow the "required" ones.
+>>>>
+>>>> With this summary in mind, I am fine with what we have except perhaps
+>>>> better documentation above this block.
+>>>>
+>>>> When DSC over DP gets added, I am expecting no changes to this block as
+>>>> it will fall under the widebus_en case.
+>>>>
+>>>> With this information, how else would you like the check?
+>>>
+>>> What does this bit really change?
+>>>
+>>
+>> This bit basically just tells that the data sent per line is programmed
+>> with INTF_DISPLAY_DATA_HCTL like this cap is suggesting.
+>>
+>>           if (ctx->cap->features & BIT(DPU_DATA_HCTL_EN)) {
+>>                   DPU_REG_WRITE(c, INTF_CONFIG2, intf_cfg2);
+>>                   DPU_REG_WRITE(c, INTF_DISPLAY_DATA_HCTL,
+>> display_data_hctl);
+>>                   DPU_REG_WRITE(c, INTF_ACTIVE_DATA_HCTL, active_data_hctl);
+>>           }
+>>
+>> Prior to that it was programmed with INTF_DISPLAY_HCTL in the same function.
+> 
+> Can we enable it unconditionally for DPU >= 5.0?
+> 
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
-index 47e0e26ad9f0..af6cc6393d74 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
-@@ -85,6 +85,27 @@ &gsbi1_spi {
- 	status = "okay";
- };
- 
-+&gsbi3 {
-+	qcom,mode = <GSBI_PROT_I2C>;
-+	status = "okay";
-+};
+There is a corner-case that we should not enable it when compression is 
+enabled without widebus as per the docs :(
+
+For DP there will not be a case like that because compression and 
+widebus go together but for DSI, it is possible.
+
+So I found that the reset value of this register does cover all cases 
+for DPU >= 7.0 so below fix will address the DSI concern and will fix 
+the issue even for YUV420 cases such as this one for DPU >= 7.0
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c 
+b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+index 6bba531d6dc4..cbd5ebd516cd 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+@@ -168,6 +168,8 @@ static void dpu_hw_intf_setup_timing_engine(struct 
+dpu_hw_intf *ctx,
+          * video timing. It is recommended to enable it for all cases, 
+except
+          * if compression is enabled in 1 pixel per clock mode
+          */
 +
-+&gsbi3_i2c {
-+	status = "okay";
-+
-+	// Atmel mXT224S touchscreen
-+	touchscreen@4a {
-+		compatible = "atmel,maxtouch";
-+		reg = <0x4a>;
-+		interrupt-parent = <&msmgpio>;
-+		interrupts = <11 IRQ_TYPE_EDGE_FALLING>;
-+		vdda-supply = <&pm8921_lvs6>;
-+		vdd-supply = <&pm8921_l17>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&touchscreen>;
-+	};
-+};
-+
- &msmgpio {
- 	spi1_default: spi1-default-state {
- 		mosi-pins {
-@@ -123,6 +144,14 @@ gpio_keys_pin_a: gpio-keys-active-state {
- 		drive-strength = <8>;
- 		bias-disable;
- 	};
-+
-+	touchscreen: touchscreen-int-state {
-+		pins = "gpio11";
-+		function = "gpio";
-+		output-enable;
-+		bias-disable;
-+		drive-strength = <2>;
-+	};
- };
- 
- &pm8921 {
-@@ -285,7 +314,7 @@ pm8921_l16: l16 {
- 		};
- 
- 		pm8921_l17: l17 {
--			regulator-min-microvolt = <1800000>;
-+			regulator-min-microvolt = <3300000>;
- 			regulator-max-microvolt = <3300000>;
- 			bias-pull-down;
- 		};
++       intf_cfg2 = DPU_REG_READ(c, INTF_CONFIG2);
+         if (p->wide_bus_en)
+                 intf_cfg2 |= INTF_CFG2_DATABUS_WIDEN | 
+INTF_CFG2_DATA_HCTL_EN;
 
--- 
-2.43.0
 
+But, this does not still work for DPU < 7.0 such as sc7180 if we try 
+YUV420 over DP on that because its DPU version is 6.2 so we will have to 
+keep this patch for those cases.
+
+>>
+>>>>
+>>>>>>>
+>>>>>>>>
+>>>>>>>> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
+>>>>>>>> ---
+>>>>>>>>      drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 4 +++-
+>>>>>>>>      1 file changed, 3 insertions(+), 1 deletion(-)
+>>>>>>>>
+>>>>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>>>>>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>>>>>>>> index 6bba531d6dc41..bfb93f02fe7c1 100644
+>>>>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>>>>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>>>>>>>> @@ -168,7 +168,9 @@ static void
+>>>>>>>> dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *ctx,
+>>>>>>>>           * video timing. It is recommended to enable it for all cases,
+>>>>>>>> except
+>>>>>>>>           * if compression is enabled in 1 pixel per clock mode
+>>>>>>>>           */
+>>>>>>>> -    if (p->wide_bus_en)
+>>>>>>>> +    if (dp_intf && fmt->base.pixel_format == DRM_FORMAT_YUV420)
+>>>>>>>> +        intf_cfg2 |= INTF_CFG2_DATA_HCTL_EN;
+>>>>>>>> +    else if (p->wide_bus_en)
+>>>>>>>>              intf_cfg2 |= INTF_CFG2_DATABUS_WIDEN | INTF_CFG2_DATA_HCTL_EN;
+>>>>>>>>            data_width = p->width;
+>>>>>>>
+>>>>>
+>>>>>
+>>>>>
+>>>
+>>>
+>>>
+> 
+> 
+> 
 
