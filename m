@@ -1,302 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-8996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E2BB3842103
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 11:19:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D80268421A2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 11:41:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5A2B81F21045
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 10:19:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 777251F2A719
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jan 2024 10:41:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EE9960B93;
-	Tue, 30 Jan 2024 10:19:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40166664CD;
+	Tue, 30 Jan 2024 10:40:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RfEYFvKs"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RPz7Py+a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2213960B89;
-	Tue, 30 Jan 2024 10:19:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB3F66B22
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 10:40:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706609960; cv=none; b=BpwAsdgWPQnLZVaI/U1P3QvoyKh0MbrHNxFxyPMqlZepw6LfLjzdH/VyHcETTQstvof4Xk1cxadAr1R30xg+XGEI4tWS6oVXl3gTEMpCGNH0w8n1FvfTTaMOLh3ZDnNzvRKlD0jkcYJTzoYs2IoMefNN5YhEOt02Z9Ep0lu0/Bc=
+	t=1706611249; cv=none; b=iZsCrGIQpVrWJefRC4OcbDqGJSMPlHvlExC3bfjZU0hfqBVQ+1ltTEKZ8pDr+OExbB6oM5kOOBPWu+i7SBLHKRfKlaxN51LwbLsO2EbAqXNbZHmHS8Qf9A9D0t5sfZadDPjogFNvXt3nXg/YIX1K2J+SzJCiCNbV5kX50le9tSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706609960; c=relaxed/simple;
-	bh=fKB9dzpAY93VunbxxIOucvP+WBk79nghQn/sAFXmGrs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sts2qCZsWwWLiJyTG3dJXghTaNA79MfB1vjCI8KtocRB2Kys4MpSQzjEdL0nnfIabSMyg0jv6Nj4gmTSxkJcLkf47NS/7Y4IsTVQVNJuSoqxDB04YFT8g3Jk6a3GGlVqyjTJC9YJn4R7Bgl884m064rtpJ9j23fd7Vpi/0JzJNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RfEYFvKs; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-510322d5363so4044202e87.1;
-        Tue, 30 Jan 2024 02:19:17 -0800 (PST)
+	s=arc-20240116; t=1706611249; c=relaxed/simple;
+	bh=i5YiiQ7bg7wuD/RiKd60lDs/l1J+lJ1xk5N97Z7zlGU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KDYwKfMK0GQyJ2Yj/WnmpFb3RaI1vQkoFQYrRKwiC7t2d2oenFg1X0z/0xIqA2l22tJcjumul4ZtwOaxL8yRKdYntiZmCkijLIXVdE3wrWdsOcmsWvLU6LqaxdMlkTLS8Y0SYKIGb01diMeAx0/ETjvLEOzHf2vuogaLo46tWJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RPz7Py+a; arc=none smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-55eedf5a284so2892609a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 02:40:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706609956; x=1707214756; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=bqQQDhRRVdivtCR2RnVp4C+rg441BFeJmpW269ZUjvc=;
-        b=RfEYFvKshkM/tcnp3zfVB3NoSUQwE7PuNNYY5rHJP3+JpNlXPmrmLTeHS9AuhPRp3W
-         t37N7OLSrkFQoyYHwRZp7TYOLQSfyS8mEP5kLuVWWVvLqu4su6wmFC5Sxs+ph47SiHMu
-         zsJFXsr0bJgvGvz/M7UCd6e2Oq32IskW4GgZ4TmQWHOG71r7vCXae5JyJ1N+H8sgIX/5
-         ouq+CtXMK0JeYMnM3a8JQhn4PLkguNfFs3EJOS+LNrw0Kx9A+aALsmvqomup4KtcdyWQ
-         TE6WKIFGUJB0e8Nkpxdo6g4f8bsn/agIMf8hOWSZx7Py9klVf6PapcTzHcDKkwOAjFgb
-         G3Kg==
+        d=linaro.org; s=google; t=1706611245; x=1707216045; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qFLwa3UQcdOnGrCTl945Oaq6U4cRv5l6NG+wON7vkHo=;
+        b=RPz7Py+a675d8x/sdSfsRT5V2YLd3Y7akzy43Bb97vMRYiFP3x2J7CamfZJ8wOrSZ9
+         Hjh0Dz/jKYdutih6ZpPAZonnBHEmvPZ7kZOy/dsAHSAa5Jxj1OqKcPRPApyc0Ioiw1Zy
+         wiX9HeIkSjAujsydRlBIefWXqNy118szUU+rRI18G589bnATeYdp/eEedbUqlMtYweD/
+         EjfKtpGmOeF2Qr3Fsjd7eEwPF0CYUROrX99Ru1Atyz1PapsUg8WaB5af2KtHhxe1ZZt8
+         lrMT+HFa5x7X+NCEIZX5ZyWE/cEntnAfvruTv/N06YaQxdFfu3LAdJ78overRipX1XqG
+         pxMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706609956; x=1707214756;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bqQQDhRRVdivtCR2RnVp4C+rg441BFeJmpW269ZUjvc=;
-        b=LfWia+3ljYRhi3WaZtPdAWdSeZIGhnJ/j5TvQghKnBBgqMylR/ojf8dXLQMel1xG/6
-         EYNvG3G63SGpWSWXnt3N1X7NACv1j02iXNXXeRThxQW5S+ROM19FIXT1xn/2ElOqrEvW
-         vp5LsLW/PWmclktC3P0VM1r9NHX5Ndb8eGj2Q5utIAXw9atqs0AJf3XtnoLAXYFkA9xe
-         PROl5XBzTn/dW91+ujATEGH9bJDYRgPphAH2WUturPmAgMM1GrXmC2Ev2VF7ihUSoWeV
-         fw5zpQq+0qspDw1hNo58L2eQI/XMDdCR7vYBVfsBI4h+3Z5AJT4styhkhietZNs+iQFy
-         7OjQ==
-X-Gm-Message-State: AOJu0Yz/CMxBsWWW7B3hEgLDdgOV7ec3TlSmQnR1JulIiaLGZeTTjgag
-	B88SvMHHOUcnxjHqFOoeOiLty061P+9tKZe/0kcEJWovfU3Hxuz/
-X-Google-Smtp-Source: AGHT+IGkfWodCAd1V4VL3ykTegESEJ5oK9yDXZxXBUS94LBvk3lIzAz/vdRHyu2Bb1UwWde0cjKpZg==
-X-Received: by 2002:ac2:47f8:0:b0:510:153a:6bdc with SMTP id b24-20020ac247f8000000b00510153a6bdcmr4918922lfp.19.1706609955922;
-        Tue, 30 Jan 2024 02:19:15 -0800 (PST)
-Received: from mobilestation ([178.176.56.174])
-        by smtp.gmail.com with ESMTPSA id f3-20020a056512360300b005101bcd1d8esm1407264lfs.292.2024.01.30.02.19.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jan 2024 02:19:15 -0800 (PST)
-Date: Tue, 30 Jan 2024 13:19:12 +0300
-From: Serge Semin <fancer.lancer@gmail.com>
-To: Andrew Halaney <ahalaney@redhat.com>
-Cc: Suraj Jaiswal <quic_jsuraj@quicinc.com>, Vinod Koul <vkoul@kernel.org>, 
-	Bhupesh Sharma <bhupesh.sharma@linaro.org>, Andy Gross <agross@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Alexandre Torgue <alexandre.torgue@foss.st.com>, Jose Abreu <joabreu@synopsys.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, Prasad Sodagudi <psodagud@quicinc.com>, 
-	Rob Herring <robh@kernel.org>, kernel@quicinc.com
-Subject: Re: [PATCH net-next v10 3/3] net: stmmac: Add driver support for
- common safety IRQ
-Message-ID: <bavqej4yjxjyqubofpgwl2ixkvbbevr5kvtwnkx24qxh7jznjp@hdbcl4bfcpqh>
-References: <20240129121129.3581530-1-quic_jsuraj@quicinc.com>
- <20240129121129.3581530-4-quic_jsuraj@quicinc.com>
- <zfnh5lfz63zlxm6ysexlfv2xstaw4pfnqazmmhdtywxdpwihqu@dfh6wwhcziuo>
+        d=1e100.net; s=20230601; t=1706611245; x=1707216045;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qFLwa3UQcdOnGrCTl945Oaq6U4cRv5l6NG+wON7vkHo=;
+        b=MXdr7D81Oh9Cq5L53S21tXvCfm83VC6yMIR03rMYVmV8cZlCDf0r2SQ5L/lStTr/cq
+         8ImDSd/EiXaw4gO89gxVG3kLmPJaIj0Tygyk9uSQnUS2oBX1pP4wme53uDKmeT+XJZyi
+         hIJy8pFy7ss66+B6apIRlR6tCw3Q928FFBiYAds/fQkkGKQpZLNnYyznZIWLazxsgFSo
+         7r20y7G2cMV0q73L7vVGzpuXDw7YJn5ZQ5s5HFFP56tTfru2q/RUrKg1tb1eK/s4Kc2f
+         onj/Wf4Cty6XtFXIrAUg23NHLm2ItOfED7HSQqXNVwzDWI5NCjhE/Ip30mjuRp75TIUm
+         mJsA==
+X-Gm-Message-State: AOJu0Yw52Hn8pcV8Sgq/gOrSpO3qSiEHZNGQqYY/zn4aLxnEbNvI757y
+	V3jHCpIQLVnTeYWZs6J//AWdokqaFgkKBfpYW2fim/t4y6XLdIwh8kURwuF54Vs=
+X-Google-Smtp-Source: AGHT+IHCNFb7FMA8kU95tZdChdnP005nbUcHExixBUxTToV5eAyWEsQ5XA1fAj7gKoKCQsermEbU4Q==
+X-Received: by 2002:a17:906:c20c:b0:a35:78e1:2d1f with SMTP id d12-20020a170906c20c00b00a3578e12d1fmr4823022ejz.71.1706611245537;
+        Tue, 30 Jan 2024 02:40:45 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCX05fQGyKIagmkhzHeMedDVupb+uPr9ILZtFlRnpn1nsL1PXYFqHGc6Gk1/mYMItGHBDufW+3Xn1qP7uxgNqlKGSCceld+0ZfykMEsfkOXWk5szudrp3rCdHhScCExZGPK2IIDLJeS9sjyDaRUkw/QstmgYAibFRtzuxTClkoigqN42IDRvxrbLVJrcNYFQg63C6dd0p5zbQiGcgCN3mdjh17KfOm1irkJkvc2/epoWJhptdG9bMQRN5xqWGZr8i2zk2nd1vFga/gcwDXMvUrVND4JxH0HUtWSLs2aUzrOp6FwwjF33aYoHHczBq8FPM48DH0tPNNTEe7udetcIn6lPhHrteUsbpcG/iWRRWtFL4iFB0t2PKMQePJ63J0SGj2VRHGSyEH1L36NZcmC9YJbOtIVLa51z2wur9zbN6zj1J3F5A5nYhYZ5HIR5eUcOv0kLa9Lc4mTxY7nYSur97LHiwjPjnxVgyc+8K/aLpLWJ+nXW6dYkRElBkAJ6gekOaoTp1YGud26REOJ3DtadaP94I4GdfoeKGB/kg0iAEz5f2+kWeYYQPU/J3eX+DiTgNYtB7hHdpNhNAwO0Ofnm+H37wEcw2SE=
+Received: from [192.168.1.20] ([178.197.222.62])
+        by smtp.gmail.com with ESMTPSA id st14-20020a170907c08e00b00a35c5491b58sm1947720ejc.174.2024.01.30.02.40.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Jan 2024 02:40:45 -0800 (PST)
+Message-ID: <5c6dbb39-2db9-40bf-b593-9cb28f257db7@linaro.org>
+Date: Tue, 30 Jan 2024 11:40:43 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <zfnh5lfz63zlxm6ysexlfv2xstaw4pfnqazmmhdtywxdpwihqu@dfh6wwhcziuo>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] media: dt-bindings: qcom,sc7280-venus: Allow one IOMMU
+ entry
+Content-Language: en-US
+To: Luca Weiss <luca.weiss@fairphone.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring
+ <robh+dt@kernel.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240129-sc7280-venus-bindings-v1-1-20a9ba194c60@fairphone.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20240129-sc7280-venus-bindings-v1-1-20a9ba194c60@fairphone.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Andrew, Suraj
+On 29/01/2024 08:48, Luca Weiss wrote:
+> Some SC7280-based boards crash when providing the "secure_non_pixel"
+> context bank, so allow only one iommu in the bindings also.
+> 
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
 
-On Mon, Jan 29, 2024 at 10:20:18AM -0600, Andrew Halaney wrote:
-> On Mon, Jan 29, 2024 at 05:41:29PM +0530, Suraj Jaiswal wrote:
-> > Add support to listen HW safety IRQ like ECC(error
-> > correction code), DPP(data path parity), FSM(finite state
-> > machine) fault in common IRQ line.
-> > 
-> > Signed-off-by: Suraj Jaiswal <quic_jsuraj@quicinc.com>
-> > ---
-> >  drivers/net/ethernet/stmicro/stmmac/common.h  |  1 +
-> >  drivers/net/ethernet/stmicro/stmmac/stmmac.h  |  3 ++
-> >  .../net/ethernet/stmicro/stmmac/stmmac_main.c | 41 ++++++++++++++++++-
-> >  .../ethernet/stmicro/stmmac/stmmac_platform.c |  8 ++++
-> >  4 files changed, 51 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/drivers/net/ethernet/stmicro/stmmac/common.h b/drivers/net/ethernet/stmicro/stmmac/common.h
-> > index 721c1f8e892f..b9233b09b80f 100644
-> > --- a/drivers/net/ethernet/stmicro/stmmac/common.h
-> > +++ b/drivers/net/ethernet/stmicro/stmmac/common.h
-> > @@ -344,6 +344,7 @@ enum request_irq_err {
-> >  	REQ_IRQ_ERR_ALL,
-> >  	REQ_IRQ_ERR_TX,
-> >  	REQ_IRQ_ERR_RX,
-> > +	REQ_IRQ_ERR_SFTY,
-> >  	REQ_IRQ_ERR_SFTY_UE,
-> >  	REQ_IRQ_ERR_SFTY_CE,
-> >  	REQ_IRQ_ERR_LPI,
-> > diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-> > index 9f89acf31050..ca3d93851bed 100644
-> > --- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-> > +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-> > @@ -31,6 +31,7 @@ struct stmmac_resources {
-> >  	int wol_irq;
-> >  	int lpi_irq;
-> >  	int irq;
-> > +	int sfty_irq;
-> >  	int sfty_ce_irq;
-> >  	int sfty_ue_irq;
-> >  	int rx_irq[MTL_MAX_RX_QUEUES];
-> > @@ -297,6 +298,7 @@ struct stmmac_priv {
-> >  	void __iomem *ptpaddr;
-> >  	void __iomem *estaddr;
-> >  	unsigned long active_vlans[BITS_TO_LONGS(VLAN_N_VID)];
-> > +	int sfty_irq;
-> >  	int sfty_ce_irq;
-> >  	int sfty_ue_irq;
-> >  	int rx_irq[MTL_MAX_RX_QUEUES];
-> > @@ -305,6 +307,7 @@ struct stmmac_priv {
-> >  	char int_name_mac[IFNAMSIZ + 9];
-> >  	char int_name_wol[IFNAMSIZ + 9];
-> >  	char int_name_lpi[IFNAMSIZ + 9];
-> > +	char int_name_sfty[IFNAMSIZ + 10];
-> >  	char int_name_sfty_ce[IFNAMSIZ + 10];
-> >  	char int_name_sfty_ue[IFNAMSIZ + 10];
-> >  	char int_name_rx_irq[MTL_MAX_TX_QUEUES][IFNAMSIZ + 14];
-> > diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-> > index 47de466e432c..e0192a282121 100644
-> > --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-> > +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-> > @@ -3592,6 +3592,10 @@ static void stmmac_free_irq(struct net_device *dev,
-> >  		if (priv->wol_irq > 0 && priv->wol_irq != dev->irq)
-> >  			free_irq(priv->wol_irq, dev);
-> >  		fallthrough;
-> > +	case REQ_IRQ_ERR_SFTY:
-> > +		if (priv->sfty_irq > 0 && priv->sfty_irq != dev->irq)
-> > +			free_irq(priv->sfty_irq, dev);
-> > +		fallthrough;
-> >  	case REQ_IRQ_ERR_WOL:
-> >  		free_irq(dev->irq, dev);
-> >  		fallthrough;
-> > @@ -3661,6 +3665,23 @@ static int stmmac_request_irq_multi_msi(struct net_device *dev)
-> >  		}
-> >  	}
-> >  
-> > +	/* Request the common Safety Feature Correctible/Uncorrectible
-> > +	 * Error line in case of another line is used
-> > +	 */
-> > +	if (priv->sfty_irq > 0 && priv->sfty_irq != dev->irq) {
-> > +		int_name = priv->int_name_sfty;
-> > +		sprintf(int_name, "%s:%s", dev->name, "safety");
-> > +		ret = request_irq(priv->sfty_irq, stmmac_safety_interrupt,
-> > +				  0, int_name, dev);
-> > +		if (unlikely(ret < 0)) {
-> > +			netdev_err(priv->dev,
-> > +				   "%s: alloc sfty MSI %d (error: %d)\n",
-> > +				   __func__, priv->sfty_irq, ret);
-> > +			irq_err = REQ_IRQ_ERR_SFTY;
-> > +			goto irq_error;
-> > +		}
-> > +	}
-> > +
-> >  	/* Request the Safety Feature Correctible Error line in
-> >  	 * case of another line is used
-> >  	 */
-> > @@ -3798,6 +3819,21 @@ static int stmmac_request_irq_single(struct net_device *dev)
-> >  		}
-> >  	}
-> >  
-> > +	/* Request the common Safety Feature Correctible/Uncorrectible
-> > +	 * Error line in case of another line is used
-> > +	 */
-> > +	if (priv->sfty_irq > 0 && priv->sfty_irq != dev->irq) {
-> > +		ret = request_irq(priv->sfty_irq, stmmac_safety_interrupt,
-> > +				  IRQF_SHARED, dev->name, dev);
-> > +		if (unlikely(ret < 0)) {
-> > +			netdev_err(priv->dev,
-> > +				   "%s: ERROR: allocating the sfty IRQ %d (%d)\n",
-> > +				   __func__, priv->sfty_irq, ret);
-> > +			irq_err = REQ_IRQ_ERR_SFTY;
-> > +			goto irq_error;
-> > +		}
-> > +	}
-> > +
-> >  	return 0;
-> >  
-> >  irq_error:
-> > @@ -6022,8 +6058,8 @@ static irqreturn_t stmmac_interrupt(int irq, void *dev_id)
-> >  	if (test_bit(STMMAC_DOWN, &priv->state))
-> >  		return IRQ_HANDLED;
-> >  
-> > -	/* Check if a fatal error happened */
-> > -	if (stmmac_safety_feat_interrupt(priv))
-> > +	/* Check ASP error if it isn't delivered via an individual IRQ */
-> > +	if (priv->sfty_irq <= 0 && stmmac_safety_feat_interrupt(priv))
-> >  		return IRQ_HANDLED;
-> >  
-> >  	/* To handle Common interrupts */
-> > @@ -7462,6 +7498,7 @@ int stmmac_dvr_probe(struct device *device,
-> >  	priv->dev->irq = res->irq;
-> >  	priv->wol_irq = res->wol_irq;
-> >  	priv->lpi_irq = res->lpi_irq;
-> > +	priv->sfty_irq = res->sfty_irq;
-> >  	priv->sfty_ce_irq = res->sfty_ce_irq;
-> >  	priv->sfty_ue_irq = res->sfty_ue_irq;
-> >  	for (i = 0; i < MTL_MAX_RX_QUEUES; i++)
-> > diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-> > index 70eadc83ca68..ab250161fd79 100644
-> > --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-> > +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-> > @@ -743,6 +743,14 @@ int stmmac_get_platform_resources(struct platform_device *pdev,
-> >  		dev_info(&pdev->dev, "IRQ eth_lpi not found\n");
-> >  	}
-> >  
-> > +	stmmac_res->sfty_irq =
-> > +		platform_get_irq_byname_optional(pdev, "sfty");
-> > +	if (stmmac_res->sfty_irq < 0) {
-> > +		if (stmmac_res->sfty_irq == -EPROBE_DEFER)
-> > +			return -EPROBE_DEFER;
 
-> > +		dev_info(&pdev->dev, "IRQ safety IRQ not found\n");
-> 
-> Serge had this comment on v9: https://lore.kernel.org/netdev/giimpexp3qk3byb725r3ot3aund2bwmi45yrctkydatm73d5af@e36xmjf2ehvu/
-> 
->     s/IRQ safety IRQ/IRQ sfty
->     * Although I would have also converted this to just dev_dbg() since
->     * the IRQ line is optional and is present on a single platform you
->     * have.
-> 
-> 
->     With the subject and the log-message fixed feel free to add:
-> 
->     Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-> 
->     -Serge(y)
-> 
-> If you would have changed the dev_info() here it would have been
-> appropriate to add his "Reviewed-by:" tag, which makes your series more
-> likely to get merged. I assume you just misunderstood/didn't see the
-> request (I'd expect a comment somewhere about why you *don't* want to do
-> that if you did see it but decided not to do it), but in the future my
-> advice is for a minor change like this to just make it and take the
-> Reviewed-by tag on your patch!
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Right. Suraj likely has just missed that part, because having "IRQ
-safety IRQ" statement sounds clumsy and not looking alike the others
-optional IRQ info-messages, meanwhile having "IRQ sfty" instead would
-be more correct.
+Best regards,
+Krzysztof
 
-Anyway, Suraj, could you please at least fix the info-string and
-resubmit the series? With that fixed feel free to add my tag:
-
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-
-Note I am not insisting in using dev_dbg() instead of dev_info() since
-from one side the sfty IRQ line getting procedure would look alike to
-the others optional IRQs retrieved in this method, from another side
-using dbg log-level here and info-level for others IRQ wouldn't look
-coherent. So it seems reasonable to use info-level everywhere and
-convert to dbg-level at once (eventually).
-
--Serge(y)
-
-> 
-> > +	}
-> > +
-> >  	stmmac_res->addr = devm_platform_ioremap_resource(pdev, 0);
-> >  
-> >  	return PTR_ERR_OR_ZERO(stmmac_res->addr);
-> > -- 
-> > 2.25.1
-> > 
-> 
-> 
 
