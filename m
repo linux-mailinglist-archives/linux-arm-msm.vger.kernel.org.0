@@ -1,134 +1,262 @@
-Return-Path: <linux-arm-msm+bounces-9118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8EE048432A0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 02:15:53 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D8E98432DC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 02:40:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BF16F1C248D2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 01:15:52 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8A329B23927
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 01:40:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E871B1C27;
-	Wed, 31 Jan 2024 01:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7534815D0;
+	Wed, 31 Jan 2024 01:40:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ed5glmhA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oZ+NYZQJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6327C1C20;
-	Wed, 31 Jan 2024 01:15:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F9C15C9;
+	Wed, 31 Jan 2024 01:40:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706663742; cv=none; b=dF3uU8IBHHqqqyKf11+UEIrAlikNk+RlTQZDxOfvbLk+DdkhAql9cAfFDfand1auh+tcsbYYNYPQl9we6kaUG61r99E4m0yOtguP7WEO6gA8iD8d5ZOYNZBq9g5Nbtf9+XdtfHtHmv77v4jHRHFBhuyx4usfdD6ScRqg/rzLjQM=
+	t=1706665210; cv=none; b=qAfThRlGuBeFgznYN1zbH3ZtwYYCh7MgWUPk/0B2ZeRY8HLil9EkYbvsfFnIrHj1FMC3Rdj94YzpIG85/xkoVycvo6Oa8lyXQWRW7/Ci78OnDV6MUkjxY+8HnO9MMIYSOjX3WctOPbVVMDmdbIONObW4oZ20yxWtc3VGQYL4P6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706663742; c=relaxed/simple;
-	bh=/pTzJOK51v+5SYhIFOmecoVuKff4pmOxFD7hGsAarAo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=U2WZQygybQBAOrJYz00MtvGf415LE5G/4YcvgpbNyvqhyK96jFtct0kQHsbm7ohB88sRQGceqt3+BY69g21NEedbhlb8TjBqsaDiDmIDgyNdkLjXXj0crDNmumzTtPT+L/r3EDTb/OCe0cZsvMUfbxDNTNO6MSOwxpqpxSSNeM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ed5glmhA; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1d7858a469aso26581045ad.2;
-        Tue, 30 Jan 2024 17:15:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706663740; x=1707268540; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=TMI3cnWrauJ0sVrAPWjosebBGINiaEuvqhQTmdIHpwU=;
-        b=ed5glmhAauN1DdTP9WSelwo27ZmJ3DFMPnWR+X86+VV8YkHOSNjVNSR11ovk2TMCGy
-         GirQdV64Ytk5hE5+8lv09bxszn1qWPS4HJc8krbYVXOYlbPjE0krswZB39bbQ9PiiXMi
-         27hObmpnQVaLYtOEwFuKWDaW3u+rR5WwBNHsS0Qus879Pbc+9yDOyrPOgj0cnAo3keZJ
-         34XR4usdxYewBYMqGyX3QPj3bJWcAktwErWy2E2qXGIldcc4rBKfErAERP0xa4JGmT2k
-         64ZUVlrgmCCJJabMPd5QXWlES8kz95hvsoNF42crApIARaaiIijdGcfd0QOMPeHQGZrH
-         6PQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706663740; x=1707268540;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TMI3cnWrauJ0sVrAPWjosebBGINiaEuvqhQTmdIHpwU=;
-        b=asmnSjoaV1fJm1zmIk9/vGFH+dkp6YhV3XC3Zje8v8V0nanLaVW5MIGdRviZ+YHE2O
-         mr1MpIRVy4qz+1LSyyLgafhZUYgAsPuXLsD9oYCGDFlMVAPz7S8zbpxusfpJK8Etdvih
-         UpFcbAS1mwioXkrzArJwkaDeRPEiDanda01sLpUewszloHcVVl6xp5DHIWK92cP5ylAd
-         iHdq1J73XnwtEiCPwuc9SnKgPyA53dIJq/kqIuECxo11VDMJWXWRspkfbbLjS8IXE1No
-         MtWLw8o1GlUkQkN76sVuSvG/p8Cqm2NewJ36d2yzYOTbRzhCIixbqbDlwTwF9mH5OgSc
-         apSg==
-X-Gm-Message-State: AOJu0YwlWu5iRn9TAao73sogSNyiwv0OBinY91MBv8YPcKVxvVGmCKiz
-	tbnxyNM83MMz8RyVolvdSACkqun8aeE4Uc3nnYHyLdbZbCI3t/44
-X-Google-Smtp-Source: AGHT+IG8UGKG/Zt1rkUy45qpAPEJlPjYqNZszRCvj1fmkMfo62fVTpD1GY8zqyGU1X8ERHaQ08XHGA==
-X-Received: by 2002:a17:902:e805:b0:1d8:d01b:571e with SMTP id u5-20020a170902e80500b001d8d01b571emr246288plg.33.1706663740422;
-        Tue, 30 Jan 2024 17:15:40 -0800 (PST)
-Received: from localhost ([2601:1c0:5000:d5c:ae1c:de46:682a:206])
-        by smtp.gmail.com with ESMTPSA id t18-20020a170902d29200b001d8d6ec2d7fsm4866303plc.61.2024.01.30.17.15.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jan 2024 17:15:39 -0800 (PST)
-From: Rob Clark <robdclark@gmail.com>
-To: dri-devel@lists.freedesktop.org
-Cc: linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	Rob Clark <robdclark@chromium.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2] drm/msm/gem: Fix double resv lock aquire
-Date: Tue, 30 Jan 2024 17:15:37 -0800
-Message-ID: <20240131011537.31049-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1706665210; c=relaxed/simple;
+	bh=WpYP0jzdrHUb6T/QfaEdSdlq9nb9+EKazMCXoZK1ph4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=EUMJ4+XvuqkVNZbPnzLa5QXgS8GJQneyh0KsSJyUUNTFjXQ4+zsOxSPB80oZOQ1c77mSp1VsyNUu+rwBUuFduUVeahhdcewXz5Top2Zd6+W4IjNKAFNlM/ibfJGKXMiITVmJbQZ7Bqch34jHb0Wf5GBuI+ApGhMKa/x+nRHN7mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oZ+NYZQJ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40V1SSo2027506;
+	Wed, 31 Jan 2024 01:39:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=IxxNyg98K7bQxSMTb70UrF9dSLC+PuKPfhpgy44msw4=; b=oZ
+	+NYZQJHL6GBkhwLungZRTfFP/uJK21/6wqPf0U1RfQ7treG4Dj3IFJreHI8FSt3F
+	HDgXVl86qAS/mQ1LExFf3+9qPo013X83Wv3uj0JiYijh8glsGUzVKzE+alqq9D0h
+	8mYMq3fIEMObLn1XSyASry8JZpSHkuBhjobEKf5sEntwCNDp0hEsE7RjegF7IgQN
+	YuBLA7gKxPMm/2cb+nxIHp+9KhTOlLcNr6Nz+s28T96ES4v7xvsBMImAWr+tCodN
+	ecxPPLffQd9KdwNbt4TB/hIAMjX5D3n099mtIKarGcIdkFvDk6OoovnGG10b6/C+
+	XrUvmc3WnZq2j6qSmBPA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vxvve299s-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 31 Jan 2024 01:39:55 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40V1ds4f021335
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 31 Jan 2024 01:39:54 GMT
+Received: from [10.239.133.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 30 Jan
+ 2024 17:39:49 -0800
+Message-ID: <6fff5991-01ed-44ea-aa08-9f302d2465e8@quicinc.com>
+Date: Wed, 31 Jan 2024 09:39:47 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 05/10] coresight-tpda: Add support to configure CMB
+ element
+Content-Language: en-US
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mathieu Poirier
+	<mathieu.poirier@linaro.org>,
+        Alexander Shishkin
+	<alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC: Jinlong Mao <quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang
+	<quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Song Chai <quic_songchai@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <andersson@kernel.org>
+References: <1706605366-31705-1-git-send-email-quic_taozha@quicinc.com>
+ <1706605366-31705-6-git-send-email-quic_taozha@quicinc.com>
+ <6ccb98f2-2f68-45db-9941-1c7b05da84d0@arm.com>
+From: Tao Zhang <quic_taozha@quicinc.com>
+In-Reply-To: <6ccb98f2-2f68-45db-9941-1c7b05da84d0@arm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 8DeZnOGcWl6KgBxZw_9YQQ686JmNhLTj
+X-Proofpoint-ORIG-GUID: 8DeZnOGcWl6KgBxZw_9YQQ686JmNhLTj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-30_14,2024-01-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
+ suspectscore=0 priorityscore=1501 impostorscore=0 mlxscore=0
+ lowpriorityscore=0 phishscore=0 bulkscore=0 adultscore=0 malwarescore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401190000 definitions=main-2401310012
 
-From: Rob Clark <robdclark@chromium.org>
 
-Since commit 56e5abba8c3e ("dma-buf: Add unlocked variant of vmapping
-functions"), the resv lock is already held in the prime vmap path, so
-don't try to grab it again.
+On 1/30/2024 8:35 PM, Suzuki K Poulose wrote:
+> On 30/01/2024 09:02, Tao Zhang wrote:
+>> Read the CMB element size from the device tree. Set the register
+>> bit that controls the CMB element size of the corresponding port.
+>>
+>> Reviewed-by: James Clark <james.clark@arm.com>
+>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+>> ---
+>>   drivers/hwtracing/coresight/coresight-tpda.c | 123 +++++++++++--------
+>>   drivers/hwtracing/coresight/coresight-tpda.h |   6 +
+>>   2 files changed, 79 insertions(+), 50 deletions(-)
+>>
+>> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c 
+>> b/drivers/hwtracing/coresight/coresight-tpda.c
+>> index 4ac954f4bc13..fcddff3ded81 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tpda.c
+>> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
+>> @@ -18,6 +18,7 @@
+>>   #include "coresight-priv.h"
+>>   #include "coresight-tpda.h"
+>>   #include "coresight-trace-id.h"
+>> +#include "coresight-tpdm.h"
+>>     DEFINE_CORESIGHT_DEVLIST(tpda_devs, "tpda");
+>>   @@ -28,24 +29,57 @@ static bool coresight_device_is_tpdm(struct 
+>> coresight_device *csdev)
+>>               CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM);
+>>   }
+>>   +static void tpdm_clear_element_size(struct coresight_device *csdev)
+>> +{
+>> +    struct tpda_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+>> +
+>> +    drvdata->dsb_esize = 0;
+>> +    drvdata->cmb_esize = 0;
+>> +}
+>> +
+>> +static void tpda_set_element_size(struct tpda_drvdata *drvdata, u32 
+>> *val)
+>> +{
+>> +
+>
+>
+>
+>> +    if (drvdata->dsb_esize == 64)
+>> +        *val |= TPDA_Pn_CR_DSBSIZE;
+>
+> We don't seem to be clearing the fields we modify, before updating 
+> them. This may be OK in real world where the device connected to TPDA 
+> port
+> may not change. But it is always safer to clear the bits and set it.
+>
+> e.g.:
+>     *val &= ~(TPDA_Pn_CR_DSBSIZE | TPDA_Pn_CR_CMBSIZE);
+>
+>
+>
+>> +    else if (drvdata->dsb_esize == 32)
+>> +        *val &= ~TPDA_Pn_CR_DSBSIZE;
+>> +
+>> +    if (drvdata->cmb_esize == 64)
+>> +        *val |= FIELD_PREP(TPDA_Pn_CR_CMBSIZE, 0x2);
+>> +    else if (drvdata->cmb_esize == 32)
+>> +        *val |= FIELD_PREP(TPDA_Pn_CR_CMBSIZE, 0x1);
+>
+> Similarly here ^^^. I am happy to fix it up if you are OK with it 
+> (unless there are other changes that need a respin)
 
-v2: This applies to vunmap path as well
+Thank you. I would be very grateful if you could help for this.
 
-Fixes: 56e5abba8c3e ("dma-buf: Add unlocked variant of vmapping functions")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_gem_prime.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c b/drivers/gpu/drm/msm/msm_gem_prime.c
-index 5f68e31a3e4e..0915f3b68752 100644
---- a/drivers/gpu/drm/msm/msm_gem_prime.c
-+++ b/drivers/gpu/drm/msm/msm_gem_prime.c
-@@ -26,7 +26,7 @@ int msm_gem_prime_vmap(struct drm_gem_object *obj, struct iosys_map *map)
- {
- 	void *vaddr;
- 
--	vaddr = msm_gem_get_vaddr(obj);
-+	vaddr = msm_gem_get_vaddr_locked(obj);
- 	if (IS_ERR(vaddr))
- 		return PTR_ERR(vaddr);
- 	iosys_map_set_vaddr(map, vaddr);
-@@ -36,7 +36,7 @@ int msm_gem_prime_vmap(struct drm_gem_object *obj, struct iosys_map *map)
- 
- void msm_gem_prime_vunmap(struct drm_gem_object *obj, struct iosys_map *map)
- {
--	msm_gem_put_vaddr(obj);
-+	msm_gem_put_vaddr_locked(obj);
- }
- 
- struct drm_gem_object *msm_gem_prime_import_sg_table(struct drm_device *dev,
--- 
-2.43.0
+Best,
 
+Tao
+
+>
+>> +    else if (drvdata->cmb_esize == 8)
+>> +        *val &= ~TPDA_Pn_CR_CMBSIZE;
+>> +}
+>
+>> +
+>>   /*
+>> - * Read the DSB element size from the TPDM device
+>> + * Read the element size from the TPDM device. One TPDM must have at 
+>> least one of the
+>> + * element size property.
+>>    * Returns
+>> - *    The dsb element size read from the devicetree if available.
+>> - *    0 - Otherwise, with a warning once.
+>> + *    0 - The element size property is read
+>> + *    Others - Cannot read the property of the element size
+>>    */
+>> -static int tpdm_read_dsb_element_size(struct coresight_device *csdev)
+>> +static int tpdm_read_element_size(struct tpda_drvdata *drvdata,
+>> +                  struct coresight_device *csdev)
+>>   {
+>> -    int rc = 0;
+>> -    u8 size = 0;
+>> +    int rc = -EINVAL;
+>> +    struct tpdm_drvdata *tpdm_data = 
+>> dev_get_drvdata(csdev->dev.parent);
+>> +
+>> +    if (tpdm_has_dsb_dataset(tpdm_data)) {
+>> +        rc = fwnode_property_read_u8(dev_fwnode(csdev->dev.parent),
+>> +                "qcom,dsb-element-size", &drvdata->dsb_esize);
+>> +    }
+>> +    if (tpdm_has_cmb_dataset(tpdm_data)) {
+>> +        rc = fwnode_property_read_u32(dev_fwnode(csdev->dev.parent),
+>> +                "qcom,cmb-element-bits", &drvdata->cmb_esize);
+>> +    }
+>>   -    rc = fwnode_property_read_u8(dev_fwnode(csdev->dev.parent),
+>> -            "qcom,dsb-element-size", &size);
+>>       if (rc)
+>>           dev_warn_once(&csdev->dev,
+>> -            "Failed to read TPDM DSB Element size: %d\n", rc);
+>> +            "Failed to read TPDM Element size: %d\n", rc);
+>>   -    return size;
+>> +    return rc;
+>>   }
+>>     /*
+>> @@ -56,11 +90,12 @@ static int tpdm_read_dsb_element_size(struct 
+>> coresight_device *csdev)
+>>    * Parameter "inport" is used to pass in the input port number
+>>    * of TPDA, and it is set to -1 in the recursize call.
+>>    */
+>> -static int tpda_get_element_size(struct coresight_device *csdev,
+>> +static int tpda_get_element_size(struct tpda_drvdata *drvdata,
+>> +                 struct coresight_device *csdev,
+>>                    int inport)
+>>   {
+>> -    int dsb_size = -ENOENT;
+>> -    int i, size;
+>> +    int rc = 0;
+>> +    int i;
+>>       struct coresight_device *in;
+>>         for (i = 0; i < csdev->pdata->nr_inconns; i++) {
+>> @@ -69,30 +104,26 @@ static int tpda_get_element_size(struct 
+>> coresight_device *csdev,
+>>               continue;
+>>             /* Ignore the paths that do not match port */
+>> -        if (inport > 0 &&
+>> +        if (inport >= 0 &&
+>
+> That looks like a bug fix, but if you don't care about fixing this in 
+> < v6.8,  I don't mind.
+>
+>
+> Rest looks fine to me
+>
+> Suzuki
+>
 
