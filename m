@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-9183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4889684380E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 08:40:42 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3908B843813
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 08:42:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6DBBE1C226A7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 07:40:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B98341F2524A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 07:42:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6932654BD8;
-	Wed, 31 Jan 2024 07:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99B665578D;
+	Wed, 31 Jan 2024 07:41:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wyTq+ijN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HqXq/2uf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7934C53E25
-	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 07:40:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8204A53E25
+	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 07:41:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706686834; cv=none; b=BGIAxOns1/KdgE/BmVTq0Da8PAYvg/wdapWJjrF28e1OExixkVp0v+UXYtGV0sTf3bv7FxVnDrY0OWMUeP+NPS/FH0+9EO2mA4FMrmszqh6ssMQABjf/9ckkdeZ9eExg5HEUXQNJl1NPxfO2N8xWaedQp5ItoUgGHCkxMsHKI30=
+	t=1706686916; cv=none; b=pRuMIQ3z7npbECsEsPfE5xbiUOAgaQjZSSW60nJabb3spA8HrolNFNVK2LHWwGfzUReknRGlUrwqxdCDM49YKtqdg5m/5Q40yIdDtDT5M3oYvuKlSkanRGHiIp1ajbQeKClAjwQ8RYcJVrvV8sy6B3jtfWjhv3V/x9WDLGmnl20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706686834; c=relaxed/simple;
-	bh=Fk7et5LoRmj12wM/kDqH3aAquXg/E037WnSi/+YVB0U=;
+	s=arc-20240116; t=1706686916; c=relaxed/simple;
+	bh=NOyLoCawcsMObxWNelTokNi7Fz/djxsX8kp4Q9E3sTE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=G6iwH0gT5uoG3u5xVRHf2NnIH25uLlSMAIsh6r5pHF1niXBtlou7tvV15Kuhei0F6EAnHC60yvHeBdq4eHFsK5yNWlp2GrUpyq9yJQjbKFDOpoUHlzQff809nEJjodsNoY8tksf6ztL8yD2eilrXg2gzaMCq6G9ptaHUGr8uQD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wyTq+ijN; arc=none smtp.client-ip=209.85.218.46
+	 In-Reply-To:Content-Type; b=G9Pc0mG11DxbkREw0BjqaEM6ilvcWzLdVEgbO2focJu//fOjz4D54oY80Sdvl1CYRZK+R1L7MQ0hutp6hflfX/qpkDR2+hvzqu6UpS9VE6YtgvJpWmsFRttnjcrqnAVYUYp+6tTbmM7clrfcpleL+CmU2xrh9TT39wpRTlpFZ2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HqXq/2uf; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a28a6cef709so641799166b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 23:40:32 -0800 (PST)
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a357cba4a32so439869766b.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 23:41:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706686830; x=1707291630; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706686912; x=1707291712; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ISicW6vjdRK0zHC7sP+yqk9wJ8Zg4XC8YnF5r9FPgH0=;
-        b=wyTq+ijNgLF7lLzooRX4GEejwMcSs90vLWoDGsFVN3ecVn7xH9iw/tDvtzYp4d19FP
-         NLJApGQwJaKXRepYJFyZPwl22EOc5JcxcbGZYKTO6s4OCbHSQ5tSySQnnMXsJWe+Zduu
-         nmWrpUX6Sp5yvywCU0JkV+tQm6/9T6yiRgrMPfNNjG1nm00UtjPhz2bQrpOA19V6lrgn
-         xhsWWw2SJkcUkp1tpMSGnj5IMkcisRH2Kmewe/LdqRgJ8jDCdnlmLCD+z6Q8juOwdeac
-         eNyoN67t6T/li44fqSUzhDitbMlHSpOv+WaVRYFUqK7Tkf6F6wPgBVbe421402u1dh9X
-         cMiw==
+        bh=0v+Z03GSTlSfxtBgakq1a7TipNM6Rdkt1tyPtHyHcIc=;
+        b=HqXq/2ufByhHNJGfOf5YixgSDyVx7z5LCPcrLvKdABNa65bDurEA3V16t+bzz0gH3A
+         iJquoR5CvlbZtlDrczEd+ucRS16DijxGRi3Ckrkzg7QqUuwM3lm0nDrgVllSkPY64a5V
+         pX0YULbRFj5y+/y4D7l6nKDo1Zsapo+tr/kfg2DEs26cvnCmOrpGExFfJGtaa9t+7qGr
+         xG1Nt4h3Vh8SHwe4u1QoCPTlmvgp6oE9Zp3tYdYO6s87/jDiAUO5c83/43b3OojfC9JB
+         bg+OQVlsU9+k6pAA0TODBMPLuEEHfoHXePU/OJ7KJYQHU95D21Xm0L2Yb2sFa4mQSVB6
+         rpcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706686830; x=1707291630;
+        d=1e100.net; s=20230601; t=1706686912; x=1707291712;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ISicW6vjdRK0zHC7sP+yqk9wJ8Zg4XC8YnF5r9FPgH0=;
-        b=dK3aEvKhsrvXSKrxwAsMjq+Oav4xKxIhhNckKKliEBbWnwrWTxd4y3SHAaOdFk3paD
-         r1zQJg/RolJ9o5UfeZKL5kKCnP/ix+MmT7WYK03kY5ixxASaN4kawduA925y46Wg4nsS
-         1kpS4tPKW/saUQMLd7Pm4nvizrTIdaWEj4/KtwvD7q/B2O2faK3SlJloPrb9aNxAJqMv
-         glX8Ke/RGtMKHzZXl+VSvNB1w/lg0RzFOL9oEku1tPwQrFnmMSx7onzNEzcE2/vxrT5T
-         b5cAzhdau8TeGJJBrTdlgP1igIQd/9p+P0voCS31oItuQLi/4KQaa+Om6l2yyYnH/BNF
-         phBA==
-X-Gm-Message-State: AOJu0YzFmJkzDnBjjTaA9wumLRCG4jB/pSqlbnvzp14dIEzCgCCtPxKL
-	ConLu4/XQxD9Ei7cvXn6x7ISAvHqxWMjC7qKzv2fCCjlxmmLpImnVkDNzXHzbM8=
-X-Google-Smtp-Source: AGHT+IE/tD7Sd9+HJ9DRE/lUIFcjX46VypL9fLqj23NXhB7eQGC+73r+DgqroNfxJMRna2/kR+/oaw==
-X-Received: by 2002:a17:906:806:b0:a36:459:51fd with SMTP id e6-20020a170906080600b00a36045951fdmr520953ejd.69.1706686830640;
-        Tue, 30 Jan 2024 23:40:30 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCV427xW5gojV3N9cr0ycw5PgK9jft+f+uXyr/VwSPVcpiAPwJnOEjMtSDs6US9d22tqBRA/2vQZ8mDnVPFihAhREynUnfw/winZlNqxv2b2n2jQe043RLrM4MkfcPtQt/U/rAX2terlaqKZbueSJZQA5S8IpS4KI+OAkixBqeyYQCnW81QbfAYcNx8yVaRDTiIjQtCf5wEgeLFiu2fCl6ONqYVJIaJHWtQ8s4r5B8enQ5kZQ2CXCIfglKxgoo4RrWlP0sywyJqZZ2qfis00v7rVvJ5hSDprn++PU3ZQHLvOVFtCGjyDCTZTcDjuqsuVTJ6GLZE7lWDNANnQhNqGZfbKTvotbbNBwokOlK1DYqEyijdsE7cDjDfcRH8mQd03gNXl2W3k6il6ThqZ8qAdZpob+CkKpoFHmn/eGelnaZW3QxkerHnjebIOv7joo/tNMqFV6yWF+Ywtsdnh5utI3g8sTGLhET2/PlJLyauzMV5MkW13exN7t0jhRIqalbZRYaasPjYL6rNqYO235hiCoClR/AzgQyOIfipEtBoza+P5Vwj/owFSG/N/YBO4l8RlMds+pQSF2j5PP0oRbWooXfab3w0/FB+PoqQ0ahKt77Eeti+Y2PvEeL2q05iKdHpbEZJu0FFRtECapc2KKcWA6SwdlthRldiOkGM9ZZAFiOoMlZUOaCufivoxhZZoHOOsDXdQIrdCPzhqrA==
+        bh=0v+Z03GSTlSfxtBgakq1a7TipNM6Rdkt1tyPtHyHcIc=;
+        b=adLgjLgB/wwqKXR5mxvlR9o6Gc/dLpS5SyAwfFUTU8544fWSaTRMS8ow4J1qk8oXOt
+         7Kf6EsnsqpuglJlA7XRpeboUtsaAI9gqx4HA0xnZ+xj3reZ9/3lQmKtZ/s3wcbiwIxnW
+         9f9ysAHJroNzdX8bU4o0wm8wgfT8JtOjFgM683uYsRR+bvmbGqCFSmGc8EL3UUHh2VEK
+         BAPhtEsgm/hvHY4EZAK4RM59ZkdQSc2HwJF3dU1+u0yJ+kMF1y7Mj0CyWUuCiBM5R85v
+         dKg9N4T+gOT9msAAiSrbEJzd4e2XKF3cNIhwPXWwPjsaZuUt75wm1plDO7AZpuGTYG9y
+         mEGQ==
+X-Gm-Message-State: AOJu0YxDcfPrHFZAYH+PDm4c62UbKR+mbZC+kuWn4eaumtrkEdR/zYqR
+	qYpMecQtER4J0Q4CgN8oSYTX/u50XFbJY6pfD5hDSL3UHHtzLrViWTbQwSM7F58=
+X-Google-Smtp-Source: AGHT+IFIZWFwqmWAqZNOO8+QAw/aks4TW/bYHmCQzKX0cwyl8xm9ADUDSqdTBiduVBNG7thUSYhMgw==
+X-Received: by 2002:a17:906:4e8c:b0:a35:a7ba:c642 with SMTP id v12-20020a1709064e8c00b00a35a7bac642mr550927eju.51.1706686911727;
+        Tue, 30 Jan 2024 23:41:51 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCV6TZ7PDybr9+ovqIBEwqG7r5yOFwzmNW7bZmO6f0l4055zP4C7ctwj13F9RuO9xsMYUiGscTfa7cKJ2neLyIGk8YH+7Uhdy3jHPlbvJMh4hXUAKHN5fUdCBaBdRpk35J95czAtQi38J3LYcAPfOfPPznTgdweNIEFnE/cLYjXm5kOMGFO5Gq56ZYixSCovrS86XbGYMEdbk368087lff/65+VIgZMd6S1gP1qsiInE172w5VtIQ+ZqV0eKj/9bvJE3MLcbNDREuy/0oF6rzip03xiHJtS1VLMACayNpcaFnOzaQL7673yibaqCFBinmY/OIqNCyFxTvcL9vHKobRENxBQiKYNAIpy3bJuC9S3JEFXHG7cRA5GzZkMlAPjYy5OkwWj1XPlFuqzBb7Udj9CyUtz76PNUCZZL801mIrR+qbfUkZmYAk+TIt7+1af23u2bkj5vVNFdtuHKff4z6Hy8hpk10yZL3U7TqiEP/WXNSTCLQsKsLpeeYm86SGXhYj/DcZBWIyNp7gLh0X61KwWx4AWaZIu91gRMVWSOg8kK3qPKntqVKX+gGFonJeura94U6qKAm6QzglaFO4ZKa5i1AOI+99TfAZXKSvKldHAoxGDcqTOPXcP015GtHmcu65+7t6571rc+D796cy/83iH46JpJ6uIKKx7AZtzkYQEPTEifDvsCunXgSavh7DgOKH4=
 Received: from [192.168.1.20] ([178.197.222.62])
-        by smtp.gmail.com with ESMTPSA id sf5-20020a1709078a8500b00a353bfdd411sm4774695ejc.59.2024.01.30.23.40.28
+        by smtp.gmail.com with ESMTPSA id sf5-20020a1709078a8500b00a353bfdd411sm4774695ejc.59.2024.01.30.23.41.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Jan 2024 23:40:29 -0800 (PST)
-Message-ID: <12141842-cae1-46ff-b2ec-23b947aecd00@linaro.org>
-Date: Wed, 31 Jan 2024 08:40:27 +0100
+        Tue, 30 Jan 2024 23:41:51 -0800 (PST)
+Message-ID: <378befa5-d211-42c1-97fc-47c1d8bb0f95@linaro.org>
+Date: Wed, 31 Jan 2024 08:41:49 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,27 +76,25 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] dt-bindings: arm: coresight: Remove pattern match
- of ETE node name
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: Add coresight nodes for sm8450
 Content-Language: en-US
-To: Bjorn Andersson <andersson@kernel.org>,
- Mao Jinlong <quic_jinlmao@quicinc.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
- Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
+To: Mao Jinlong <quic_jinlmao@quicinc.com>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
+ <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
  Leo Yan <leo.yan@linaro.org>,
  Alexander Shishkin <alexander.shishkin@linux.intel.com>,
  Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio
- <konrad.dybcio@linaro.org>, Mathieu Poirier <mathieu.poirier@linaro.org>,
- coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
  linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
  Yuanfang Zhang <quic_yuanfang@quicinc.com>,
  Tao Zhang <quic_taozha@quicinc.com>
 References: <20240119092500.7154-1-quic_jinlmao@quicinc.com>
- <20240119092500.7154-2-quic_jinlmao@quicinc.com>
- <px3fj5e4mk3siruehhmazxnxbrleetdpb2slt64agtvbcqhts2@gmrtdonybmzd>
+ <20240119092500.7154-3-quic_jinlmao@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -142,38 +140,52 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <px3fj5e4mk3siruehhmazxnxbrleetdpb2slt64agtvbcqhts2@gmrtdonybmzd>
+In-Reply-To: <20240119092500.7154-3-quic_jinlmao@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 30/01/2024 23:17, Bjorn Andersson wrote:
-> On Fri, Jan 19, 2024 at 01:24:57AM -0800, Mao Jinlong wrote:
->> Remove pattern match of ETE node name. Use ete as the name for ete nodes.
->>
+On 19/01/2024 10:24, Mao Jinlong wrote:
+> Add coresight components on Qualcomm SM8450 Soc. The components include
+> TMC ETF/ETR, ETE, STM, TPDM, CTI.
 > 
-> Not saying that you're wrong, but...why?
-> 
-
-I don't expect any meaningful commit msgs anymore, so:
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> ---
 
 
----
+> +		funnel@13810000 {
+> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+> +
+> +			reg = <0x0 0x13810000 0x0 0x1000>;
+> +
+> +			clocks = <&aoss_qmp>;
+> +			clock-names = "apb_pclk";
+> +
+> +			in-ports {
+> +
+> +				port {
+> +					funnel_apss_in_funnel_ete: endpoint {
+> +						remote-endpoint =
+> +							<&funnel_ete_out_funnel_apss>;
+> +					};
+> +				};
+> +
+> +			};
+> +
+> +			out-ports {
+> +				port {
+> +					funnel_apss_out_funnel_in1: endpoint {
+> +						remote-endpoint =
+> +							<&funnel_in1_in_funnel_apss>;
+> +					};
+> +				};
+> +
 
-This is an automated instruction, just in case, because many review tags
-are being ignored. If you know the process, you can skip it (please do
-not feel offended by me posting it here - no bad intentions intended).
-If you do not know the process, here is a short explanation:
+You have several redundant lines, everywhere. Clean up to match coding
+style. There is no blank line between trailing }; and another trailing };.
 
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tag is "received", when
-provided in a message replied to you on the mailing list. Tools like b4
-can help here. However, there's no need to repost patches *only* to add
-the tags. The upstream maintainer will do that for tags received on the
-version they apply.
+> +			};
+> +		};
 
-https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
 
 Best regards,
 Krzysztof
