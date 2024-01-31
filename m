@@ -1,174 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-9252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9253-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60017844178
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 15:12:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 042A08441DE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 15:29:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C9A991F26EB7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 14:12:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A11201F218DC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 14:29:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73AD582863;
-	Wed, 31 Jan 2024 14:12:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="MVZOtlij"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F51F8286B;
+	Wed, 31 Jan 2024 14:29:33 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA6EE80C0F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 14:12:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.181
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C57CB80C0F;
+	Wed, 31 Jan 2024 14:29:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706710329; cv=none; b=Au6n30baNcipF324oljdww/bQTBZFXNW8eUtVeKv6PtxH2ymr64wCuYvPIdakncqVDa5lgqTk7mHzbMahaU9+AGsANKAU2Z1uPWkqmiDf6RoMjTiN2H0ziEq/eBDf7xv2+WUkJflphADxsCt2D0SjDHOmsIQjpGjUlrB8tjLztk=
+	t=1706711373; cv=none; b=rq9myz91hbkOOUPAexL/0SURx4yYB5dPUHkaZv7o28PPM15XzEUQNBZG3hNl+YMbR+Ytb3ltLFTn1kBXLIvoi3hU5V31A9j7rWJ4CqfXd5vmYbB0rGo/iBVM0rsJtjy3dRxpdudJw/zDh2H53Rqjdc+oLb2UbFL/w32uQjjJzJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706710329; c=relaxed/simple;
-	bh=fy67XFG440oNqKNoOyKdiRXwM4wMoj/X9XerGknRkFM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kRXIRXSQr78qin2WXfIYfmfX80UNG5oRlkrwEL73gmDqEym/MeL364/EVi+icMGGrwhH0ZZCVYwCPVm4M95EWkJak8c4dVeTsd5BjSI4LuVViq6drF1RAmgxf7qovoN8SFN6FtjsVLrp+lbNgotYJJmqwQNsd7y+kwrJcNNpvnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=MVZOtlij; arc=none smtp.client-ip=209.85.221.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-vk1-f181.google.com with SMTP id 71dfb90a1353d-4bdb7f016b3so1355462e0c.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 06:12:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1706710326; x=1707315126; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fy67XFG440oNqKNoOyKdiRXwM4wMoj/X9XerGknRkFM=;
-        b=MVZOtlij2AZ22kc1XCTZWLZ/d/0js7zssLKOlA24s8zen5q3lGG7G5q7IdSPnwtZSB
-         XUZj40mPwU6jNopWsW6w6H49sdsHuUMDhmgR74IkMUgNSv7HYBV9ZVEQ3OF35T9RerlZ
-         CdOy9l5esYmHNqAZWPqoK15kiImPVwzRHteH44iKwyUdF7S2mQkJCxnqEh/OFOBAiu9t
-         yiwqfwhZevpBRKmfbvqa7OX3jVZlBR3DsS18BrHg/xAxVxkHhDskboDF8iOnjECQP/hQ
-         xq/Pfaer6gknZplfImXP1Oxn31CWrSAfEy+iOFa6nQzzkCyqbZC40KN8BqmU7Un3lN9Q
-         uHBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706710326; x=1707315126;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fy67XFG440oNqKNoOyKdiRXwM4wMoj/X9XerGknRkFM=;
-        b=XLDd9SEiMHNcbbX5XpiF5Xwfxm41oVcyhHQandsM91tqGECQCKS87GpuzA6HbVkM0E
-         TjsWwVIxU7B/x+t6jnT+PFDwWUHCTaFafrCbD4LmjvJM7/7YTm/gS3zbiifNRB7xBEZ4
-         Ol2HZnpCN6f7gVo8NBHlpkHI7r2zuvkmcVhIQcK/t3xfNTIdJU2StcUueBariSd75TgI
-         Yf2SggJyt2eMPJJ+PfOcq1ytdb4HIqZuFGasyHFH9ItezKej8b4cYpxLycV1Oiir99ig
-         cTGiXef5MGOZRTN552pYnfgxcEYFZ4TjGFhPRlH1MdOqWrxMJ7rtMiPpQU4RXhJLI/hr
-         Zgcg==
-X-Gm-Message-State: AOJu0Yxy380qRa8XPfHzAPruL2/sYP7dvD9RgZn1GtQ89ML9TBEPLTfv
-	SSQU7DFZ/xu5Pm38kbTpMaQemZZrfH4Efa6QjJPOY2eblYghCVq7NKVPxnSNbatII3mVCV6b+aA
-	ndXcTxFRt5A7q/Rse78h6f3SgRnDxKNaY63f1MQ==
-X-Google-Smtp-Source: AGHT+IHw+5LJCo4zP77ngTsk1zmxdOx6fkUQPNqVAurEYXrfnmeT5FR7RaZ6Ra6HK3KzPd2ohkdgXC4v/gfXwwIUBNk=
-X-Received: by 2002:a05:6122:179c:b0:4bd:5328:b20f with SMTP id
- o28-20020a056122179c00b004bd5328b20fmr1596779vkf.14.1706710326488; Wed, 31
- Jan 2024 06:12:06 -0800 (PST)
+	s=arc-20240116; t=1706711373; c=relaxed/simple;
+	bh=Zh6sTYWQ9wDJX1zZ4Ep9vNshtgdiaKLCJBYBTnHLGt0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fZ1g5rIt4+RsuYkzbJRO/xcm75R88wslT+k+oRJWJPXc5jMDlCXUJ6dGsXyNCiV2JaYitBKm0Wi6KhGfTcOe2SVY5U27WZ87T3RndyeK1PIU0LS79GUPbsIaV0OowWL7dUcjisL6X3d5CX1XJWg7bAhE/O5Ucfbqx9pWNwKKQdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6F6E5DA7;
+	Wed, 31 Jan 2024 06:30:13 -0800 (PST)
+Received: from [10.34.100.129] (e126645.nice.arm.com [10.34.100.129])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6948D3F738;
+	Wed, 31 Jan 2024 06:29:28 -0800 (PST)
+Message-ID: <512d7296-2706-4779-b475-fbf2d208e282@arm.com>
+Date: Wed, 31 Jan 2024 15:29:21 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240129115216.96479-1-krzysztof.kozlowski@linaro.org>
- <20240129115216.96479-5-krzysztof.kozlowski@linaro.org> <CACRpkdYf4HUaV-Pjr81WjLbzy9zdAnyFWs9gPayPC6-3OjHQwA@mail.gmail.com>
- <CAMRc=Mc1SGLeUOWmKg=fvCdM+RR6FSu2QkFuR17s7L99eRMGug@mail.gmail.com>
- <CACRpkdbaxqTzwL9L02vCpMMdBYsubNP1VkNuJ8mXB_=4E3Kjaw@mail.gmail.com> <5ef64082-0b44-4bb2-bd4c-654c96f4a9bb@linaro.org>
-In-Reply-To: <5ef64082-0b44-4bb2-bd4c-654c96f4a9bb@linaro.org>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 31 Jan 2024 15:11:55 +0100
-Message-ID: <CAMRc=MfNNdJzbxsihNd94LhqzhZiL2H2-z=grEFoNmOxpua5JA@mail.gmail.com>
-Subject: Re: [PATCH v6 4/6] reset: Instantiate reset GPIO controller for
- shared reset-gpios
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Linus Walleij <linus.walleij@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Banajit Goswami <bgoswami@quicinc.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Viresh Kumar <viresh.kumar@linaro.org>, Frank Rowand <frowand.list@gmail.com>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org, 
-	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pm@vger.kernel.org, Chris Packham <chris.packham@alliedtelesis.co.nz>, 
-	Sean Anderson <sean.anderson@seco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 4/4] cpufreq: scmi: Register for limit change
+ notifications
+Content-Language: en-US
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: linux-arm-kernel@lists.infradead.org, sudeep.holla@arm.com,
+ linux-pm@vger.kernel.org, cristian.marussi@arm.com,
+ linux-kernel@vger.kernel.org, rafael@kernel.org, viresh.kumar@linaro.org,
+ quic_mdtipton@quicinc.com, lukasz.luba@arm.com,
+ linux-arm-msm@vger.kernel.org, dietmar.eggemann@arm.com,
+ morten.rasmussen@arm.com
+References: <20240117104116.2055349-1-quic_sibis@quicinc.com>
+ <20240117104116.2055349-5-quic_sibis@quicinc.com>
+From: Pierre Gondois <pierre.gondois@arm.com>
+In-Reply-To: <20240117104116.2055349-5-quic_sibis@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jan 31, 2024 at 2:32=E2=80=AFPM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 31/01/2024 14:17, Linus Walleij wrote:
-> > On Wed, Jan 31, 2024 at 10:37=E2=80=AFAM Bartosz Golaszewski <brgl@bgde=
-v.pl> wrote:
-> >
-> >> [Me]
-> >>> reset -> virtual "gpio" -> many physical gpios[0..n]
-> >>
-> >> This is a different problem: it supports many users enabling the same
-> >> GPIO (in Krzysztof's patch it's one but could be more if needed) but -
-> >> unlike the broken NONEXCLUSIVE GPIOs in GPIOLIB - it counts the number
-> >> of users and doesn't disable the GPIO for as long as there's at least
-> >> one.
-> >
-> > I don't know if the NONEXCLUSIVE stuff is broken, if you mean reference
-> > counting isn't working on them, then that is by design because they wer=
-e
-> > invented for regulators and such use cases that do their own reference
-> > counting. It's also used for hacks where people need to look up a desc =
-in
-> > a second spot, (perhaps we can fix those better).
-> >
-> > As I say in commit b0ce7b29bfcd090ddba476f45a75ec0a797b048a
-> > "This solution with a special flag is not entirely elegant and should i=
-deally
-> > be replaced by something more careful as this makes it possible for
-> > several consumers to enable/disable the same GPIO line to the left
-> > and right without any consistency."
-> >
-> > I think for regulators (which is the vast majority using it) it isn't b=
-roken
-> > because the regulator reference counting is working.
-> >
-> > So if we solve that problem for reset, we probably should put it in
-> > drivers/gpio/* somewhere so we can reuse the same solution for
-> > regulators and get rid of NONEXCLUSIVE altogether I think?
-> >
-> > The NONEXCLUSIVE stuff was prompted by converting regulators to
-> > gpio descriptors, so it was for the greater good one can say. Or the
-> > lesser evil :( my judgement can be questioned here.
->
-> I discussed the non-exclusive GPIOs with Bartosz quite a lot, who was
-> Cced since beginning of this patchset, because that was my first
-> approach, which was rejected:
->
-> https://lore.kernel.org/all/b7aeda24-d638-45b7-8e30-80d287f498f8@sirena.o=
-rg.uk/
->
-> The non-exclusive GPIO was made explicitly for regulators, so it is
-> working fine there, but it is broken everywhere else, where the drivers
-> do not handle it in sane way as regulator core does.
->
-> To make it working, either GPIO should be enable-count-aware, to which
-> Bartosz was opposing with talks with me, or the subsystem should mimic
+Hello Sibi,
 
-For the record: I'm not 100% opposed to the enable-count-awarness of
-GPIOs but don't want it to be the standard. I'm open for introducing a
-wrapper built around the core, low-level GPIO API but I've just
-dropped a big patchset addressing the access control and serialization
-issues for the GPIO consumer API and I would rather work towards
-making it at least more-or-less correct in the first place before we
-start overcomplicating it again.
+On 1/17/24 11:41, Sibi Sankar wrote:
+> Register for limit change notifications if supported with the help of
+> perf_notify_support interface and determine the throttled frequency
+> using the perf_freq_xlate to apply HW pressure.
+> 
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+> 
+> v2:
+> * Export cpufreq_update_pressure and use it directly [Lukasz]
+> 
+>   drivers/cpufreq/scmi-cpufreq.c | 42 +++++++++++++++++++++++++++++++++-
+>   1 file changed, 41 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
+> index 4ee23f4ebf4a..e0aa85764451 100644
+> --- a/drivers/cpufreq/scmi-cpufreq.c
+> +++ b/drivers/cpufreq/scmi-cpufreq.c
+> @@ -25,9 +25,13 @@ struct scmi_data {
+>   	int domain_id;
+>   	int nr_opp;
+>   	struct device *cpu_dev;
+> +	struct cpufreq_policy *policy;
+>   	cpumask_var_t opp_shared_cpus;
+> +	struct notifier_block limit_notify_nb;
+>   };
+>   
+> +const struct scmi_handle *handle;
+> +static struct scmi_device *scmi_dev;
+>   static struct scmi_protocol_handle *ph;
+>   static const struct scmi_perf_proto_ops *perf_ops;
+>   
+> @@ -144,6 +148,22 @@ scmi_get_cpu_power(struct device *cpu_dev, unsigned long *power,
+>   	return 0;
+>   }
+>   
+> +static int scmi_limit_notify_cb(struct notifier_block *nb, unsigned long event, void *data)
+> +{
+> +	unsigned long freq_hz;
+> +	struct scmi_perf_limits_report *limit_notify = data;
+> +	struct scmi_data *priv = container_of(nb, struct scmi_data, limit_notify_nb);
+> +	struct cpufreq_policy *policy = priv->policy;
+> +
+> +	if (perf_ops->perf_freq_xlate(ph, priv->domain_id, limit_notify->range_max, &freq_hz))
+> +		return NOTIFY_OK;
+> +
+> +	policy->max = freq_hz / HZ_PER_KHZ;
 
-Bartosz
+Maybe 'policy->max' should be checked. The limits received by SCMI is blindly
+trusted. This might be ok, but could also lead to some inconsistency.
 
-> regulators approach. In some way, my patchset is the second way here -
-> reset framework subsystem being aware of shared GPIO and handles the
-> enable-count, even though it is not using non-exclusive flag.
->
-> Best regards,
-> Krzysztof
->
+The scmi_cpufreq_driver's verify() callback could be used.
+
+---
+
+I think there might also be corner cases where the SCP might advertise
+the maximum boosted frequency as the max limit, but boosting might not
+be enabled on the kernel side.
+So I think this should be checked when setting 'policy->max',
+
+Regards,
+Pierre
+
+> +	cpufreq_update_pressure(policy);
+> +
+> +	return NOTIFY_OK;
+> +}
+> +
+>   static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+>   {
+>   	int ret, nr_opp, domain;
+> @@ -151,6 +171,7 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+>   	struct device *cpu_dev;
+>   	struct scmi_data *priv;
+>   	struct cpufreq_frequency_table *freq_table;
+> +	struct scmi_perf_notify_info info = {};
+>   
+>   	cpu_dev = get_cpu_device(policy->cpu);
+>   	if (!cpu_dev) {
+> @@ -250,6 +271,25 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+>   	policy->fast_switch_possible =
+>   		perf_ops->fast_switch_possible(ph, domain);
+>   
+> +	ret = perf_ops->perf_notify_support(ph, domain, &info);
+> +	if (ret)
+> +		dev_warn(cpu_dev, "failed to get supported notifications: %d\n", ret);
+> +
+> +	if (info.perf_limit_notify) {
+> +		priv->limit_notify_nb.notifier_call = scmi_limit_notify_cb;
+> +		ret = handle->notify_ops->devm_event_notifier_register(scmi_dev, SCMI_PROTOCOL_PERF,
+> +							SCMI_EVENT_PERFORMANCE_LIMITS_CHANGED,
+> +							&domain,
+> +							&priv->limit_notify_nb);
+> +		if (ret) {
+> +			dev_err(cpu_dev, "Error in registering limit change notifier for domain %d\n",
+> +				domain);
+> +			return ret;
+> +		}
+> +	}
+> +
+> +	priv->policy = policy;
+> +
+>   	return 0;
+>   
+>   out_free_opp:
+> @@ -321,8 +361,8 @@ static int scmi_cpufreq_probe(struct scmi_device *sdev)
+>   {
+>   	int ret;
+>   	struct device *dev = &sdev->dev;
+> -	const struct scmi_handle *handle;
+>   
+> +	scmi_dev = sdev;
+>   	handle = sdev->handle;
+>   
+>   	if (!handle)
 
