@@ -1,133 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-9122-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9123-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8716843307
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 02:53:13 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1BC58433CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 03:26:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3D880287AB8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 01:53:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 00C511C21609
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 02:26:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 441791865;
-	Wed, 31 Jan 2024 01:53:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DC22566B;
+	Wed, 31 Jan 2024 02:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YBai7MRf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OPPgOhnm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F57DF4F;
-	Wed, 31 Jan 2024 01:53:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87FAFBEA;
+	Wed, 31 Jan 2024 02:26:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706665988; cv=none; b=IJ+5QCZ0ZgwaS1Lfe9epcOC7pXDpK8+6D+Dt18j+zUhMr3Ypprr14ZGFkaoaB8kZ4YJdbt2Si9fEa8H2WBRt9yUxnurk5Lhm0yAm4Hc3vV8BX7txD7sDi4maJj4PVqpuwmy13ANq+MXi6f53uRpBWcmg7VQkYbCaYHiMjWYXV4M=
+	t=1706667997; cv=none; b=pc2biBnq2H0bvSlybyF4triKPPJUSpaT+PPcVYh/mddoPH3dTFqqeGZkBjuv8iCwjg1wWrXSilRCNVTg4PtDoVTH8oXRfLINEozJHJ4HWsm5j/61tt55r4lg+DDBgAh2wsTvr3JAcW1CgPtMPjI6iS+gkL7zR/INCEuyewo1pZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706665988; c=relaxed/simple;
-	bh=1p5Z7Z9TVo1PQ3bqISL9xHz1q+pUeZaefmjz13XJP8w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=cSYLF3NoShoJk02my2n97BHfmatQTou3v1cwgVkzUUOp0vynv6Volwlx/Rch/NhSR0NZoLCat9tcqF0IKDJ8e8ipS259MSZabUt8tUfEj2ev2RtxcCmxFxDEgfA8R05s7NeJmBdAx3aXfUrfqRJS40OKNJL/dkSMepO8QvjtqL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YBai7MRf; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40V0em45019320;
-	Wed, 31 Jan 2024 01:53:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=3kpgfpypCR5T+As4pLy7omFzhP8Eh3qCmLdqkM1YErI=; b=YB
-	ai7MRfwbBlMqTCW6/vR50N/3F/jAQAWeJ4zT15ZHdxv+txHHvTuWdC565v69y/Dk
-	/F1u8EItFfCSBxUAzi/WSO0UBuKcMcIXl3ldH58Qowbz67/MtNkUVAmkm//aalyF
-	KtCAK7R6pbZtyIPrQAooDdkEVGTJTPsTpW2KPCXGQtVEHaUmhxugBbWGjtd6g3mi
-	rJ+8ZZEsfvdRmGjTZ0R4CsTaQkncxZElw+dWZ1VZehxFmqDzkyz4BmbxKa1ob8nX
-	82PFtpY0yGpq1Zsj4Q7O/xsHJgD29Xwdhg/SEfnfa840ZKIjYlniCoGZGGXtXp6x
-	WRmebkJjs/CY6Yv1+sjQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vyb0cr65v-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 31 Jan 2024 01:53:02 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40V1r2hv022524
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 31 Jan 2024 01:53:02 GMT
-Received: from [10.216.5.224] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 30 Jan
- 2024 17:52:57 -0800
-Message-ID: <13703200-af1a-4776-98b2-b9a7261de2e6@quicinc.com>
-Date: Wed, 31 Jan 2024 07:22:54 +0530
+	s=arc-20240116; t=1706667997; c=relaxed/simple;
+	bh=/caAATAC3YlAgHJWcLd2PRWxBcWyFww9t7GlhCaKJgk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tXnZcpkopda94KmebXzcu3Lck8YLna62+kWPqfWl+B0dOAos/fdVUd0J4uxDPYGxUCWRJ9o4xIqpA4UAOuuen3ezsBfJFlaZHidmGYIXxyiwSqkNR5ZwIGrQEIsYYbJhR83rXQyBU9BCWU9rptxbKzeuBHMWvyrtZOGEDY1sbSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OPPgOhnm; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-40ef6f10b56so21248915e9.2;
+        Tue, 30 Jan 2024 18:26:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706667994; x=1707272794; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=X2j01IiI6zfUsJF9a2WQ/9OjdhPJsQd8hNy4wmMlPXc=;
+        b=OPPgOhnmo2o80nAd8FlW/pyMi/mbL8WkfJL8+H+uKPVm/gT/aohAviTEJRynY5Miqa
+         z0Is+8kEO1nwmKzQHszcGWK8z8GMuW0Ejjg2TAMdCVcGMnZTFP1wmuEr5q+CTmjZgwnL
+         m7N0H49lWNgNKOM7wH9KdXofK/gJguZGTQr+o3TGl3x5/2OCRUX83wVAxSZWW6PvWaGu
+         8dHg4upSlkBLaK07wEaWTRJ4SGXQyVdNYUT/VNXdP4h6dGenNEBZN9MpXqXh+p4aftIL
+         3W6apMwYFlhoT3dxupTY28EQ2uVkuZvqihVW5ha/gf+ftCIi+ZCEwEYsowgx6iTr0Pwu
+         M6iQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706667994; x=1707272794;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=X2j01IiI6zfUsJF9a2WQ/9OjdhPJsQd8hNy4wmMlPXc=;
+        b=iPQWlWShXEP7TGcznIYOHFhGYiED5iB5AZLHnMh+Oas89wfPWagWQiVWi0Z+AhJsSK
+         45HSiomDsJM82rfTvfWUoO9HnLgQW0eiMBo5QobFaMo32MhEEcn2PhDcoHCSahD9RQZX
+         p34gf2tbKEO3Dt2LS2TcIExboqjoYV0pWFmMfkALAQAbXyDCORCN0+bGJTTv/NvW9mhN
+         WEDFy+vZ/iI1o60s6sFxPbmc1AT56KjRv829NbleEqJaEyDBoGCeKJ0gRSJ2k131fM8b
+         /wpPl/wS22COs4tmWGIs2onvO2U89VNBU5vP9ojAUnNK23ixS4lRggSq8pPjFn0Pg7gs
+         ps6Q==
+X-Gm-Message-State: AOJu0YxGpJoYPNYNrAlfE0Up9suF92xA7dmxBVMhbGrTu2Nv7isRPQrI
+	75ALr5HVngdc2ZPC5IsxkTAudgydWlMxT1Ug22mP8b1fLYjLARWAZKQN0NlQ
+X-Google-Smtp-Source: AGHT+IH6wXtZiOCKa9k9rmOs0Q0DrW3c2cdodtlHXpUNhdraZpJnpHiL3I3Fm+ftJPcBqxv/nYRFYg==
+X-Received: by 2002:a05:600c:35d5:b0:40e:f557:738d with SMTP id r21-20020a05600c35d500b0040ef557738dmr177060wmq.26.1706667993713;
+        Tue, 30 Jan 2024 18:26:33 -0800 (PST)
+Received: from localhost.localdomain (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
+        by smtp.googlemail.com with ESMTPSA id f22-20020a7bc8d6000000b0040eea5dc778sm757722wml.1.2024.01.30.18.26.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Jan 2024 18:26:33 -0800 (PST)
+From: Christian Marangi <ansuelsmth@gmail.com>
+To: Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Robert Marko <robert.marko@sartura.hr>,
+	linux-arm-msm@vger.kernel.org,
+	netdev@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Christian Marangi <ansuelsmth@gmail.com>
+Subject: [net-next PATCH v3 0/2] net: mdio-ipq4019: fix wrong default MDC rate
+Date: Wed, 31 Jan 2024 03:26:02 +0100
+Message-ID: <20240131022606.1532-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v9] bus: mhi: host: Add tracing support
-Content-Language: en-US
-To: Manivannan Sadhasivam <mani@kernel.org>,
-        Steven Rostedt
-	<rostedt@goodmis.org>
-CC: Masami Hiramatsu <mhiramat@kernel.org>, <linux-kernel@vger.kernel.org>,
-        <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-trace-kernel@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
-        <quic_ramkri@quicinc.com>, <quic_nitegupt@quicinc.com>,
-        <quic_skananth@quicinc.com>, <quic_parass@quicinc.com>
-References: <20240105-ftrace_support-v9-1-a2dca64cc6ea@quicinc.com>
- <20240130081152.GH32821@thinkpad>
- <20240130092252.32801387@gandalf.local.home> <20240130182654.GD4218@thinkpad>
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20240130182654.GD4218@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: B8HBQxFko_uoW8v6Lt28E8DMKDMqa_3S
-X-Proofpoint-ORIG-GUID: B8HBQxFko_uoW8v6Lt28E8DMKDMqa_3S
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-30_14,2024-01-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
- phishscore=0 suspectscore=0 bulkscore=0 malwarescore=0 mlxlogscore=766
- mlxscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401190000 definitions=main-2401310014
+Content-Transfer-Encoding: 8bit
 
+This was a long journey to arrive and discover this problem.
 
+To not waste too much char, there is a race problem with PHY and driver
+probe. This was observed with Aquantia PHY firmware loading.
 
-On 1/30/2024 11:56 PM, Manivannan Sadhasivam wrote:
-> On Tue, Jan 30, 2024 at 09:22:52AM -0500, Steven Rostedt wrote:
->> On Tue, 30 Jan 2024 13:41:52 +0530
->> Manivannan Sadhasivam <mani@kernel.org> wrote:
->>
->>> So same trace will get printed for both mhi_channel_command_start() and
->>> mhi_channel_command_end()?
->>
->> The trace output will also include the tracepoint name. That is, it will
->> have the same content but will be preceded with:
->>
->>    mhi_channel_command_start: ...
->>    mhi_channel_command_end: ...
->>
-> 
-> Yes, but the message will be the same:
-> 
-> mhi_channel_command_start: chan%d: Updating state to:
-> mhi_channel_command_end: chan%d: Updating state to:
-> 
-> Either only one of the trace should be present or the second one should print,
-> "mhi_channel_command_end: chan%d: Updated state to:"
-> 
-> - Mani
->
-I will try to pass a string to updated for mhi_channel_command_end &
-updating for mhi_channel_command_start in my next patch.
+With some hacks the race problem was workarounded but an interesting
+thing was notice. It took more than a minute for the firmware to load
+via MDIO.
 
-- Krishna Chaitanya.
+This was strange as the same operation was done by UBoot in at max 5
+second and the same data was loaded.
+
+A similar problem was observed on a mtk board that also had an
+Aquantia PHY where the load was very slow. It was notice that the cause
+was the MDIO bus running at a very low speed and the firmware
+was missing a property (present in mtk sdk) that set the right frequency
+to the MDIO bus.
+
+It was fun to find that THE VERY SAME PROBLEM is present on IPQ in a
+different form. The MDIO apply internally a division to the feed clock
+resulting in the bus running at 390KHz instead of 6.25Mhz.
+
+Searching around the web for some documentation and some include and
+analyzing the uboot codeflow resulted in the divider being set wrongly
+at /256 instead of /16 as the value was actually never set.
+Applying the value restore the original load time for the Aquantia PHY.
+
+This series mainly handle this by adding support for the "clock-frequency"
+property.
+
+Changes v3:
+- Add Reviewed-by tag
+- Fix english grammar error in comment
+- Drop DTS patch
+Changes v2:
+- Use DIV_ROUND_UP
+- Introduce logic to chose a default value for 802.3 spec 2.5MHz
+
+Christian Marangi (2):
+  dt-bindings: net: ipq4019-mdio: document now supported clock-frequency
+  net: mdio: ipq4019: add support for clock-frequency property
+
+ .../bindings/net/qcom,ipq4019-mdio.yaml       |  15 +++
+ drivers/net/mdio/mdio-ipq4019.c               | 109 +++++++++++++++++-
+ 2 files changed, 118 insertions(+), 6 deletions(-)
+
+-- 
+2.43.0
 
 
