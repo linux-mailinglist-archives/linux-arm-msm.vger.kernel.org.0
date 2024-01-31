@@ -1,167 +1,257 @@
-Return-Path: <linux-arm-msm+bounces-9206-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B67B843A69
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 10:10:46 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 58F3C843A82
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 10:12:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8D356B2905F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 09:10:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0DE2A28AACD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 09:12:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D964F69D2B;
-	Wed, 31 Jan 2024 09:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47558664CA;
+	Wed, 31 Jan 2024 09:11:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="IpopKANJ"
+	dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b="CdTe1YQU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0116997E;
-	Wed, 31 Jan 2024 09:07:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E94C60885
+	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 09:11:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706692043; cv=none; b=Bfd3e4ROgbXAeGpGMkCUTlVSnoLzyMYq6/oNEdHVynhm/aQ22mR8jj7TQ/nJKaDrYt4a3mUFhY1LDi2PdT83qCZXsTPVQn4AD5103HC0z6ZyNoB3Qwqjwa7DL7cIzkUPZTCwdTk91X1CrutWq5GsYyCXLD662rnjmwMqr4e6TTk=
+	t=1706692272; cv=none; b=Dc8MoneAdR36icxVZwOWaE4eylxF0D2DlszH3MDYyE/YPwt9+2JoB9qHyk981eEbAwYqwkdvwXFtOWEn2+0tKzz1rusIDQqH6DJ5PKCCEnCnqz0o20XQtkwEDrJFLLqYmxNS0tIhBgWbDPVlE6ZqlP1cnNwc5+YEOX2eHa+6eSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706692043; c=relaxed/simple;
-	bh=0RuTS+kPwr4+e0G8exQO+9NVYj16oJYi6dt0lNc9JzM=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Lt2/W2fGTFX4rWxp5SEcFLDNBFyoSyNCPObPJELlg4lpTvFLgSVm0JGnEzjWxKcXvXSFQj1RTwzVAg+kReuxk1gTiGSklwHol3P6bUiaQRAeITqDWYP4GHF2hD838FPiyAHh+6m7n6z9yHxWaNQsx7BfZ0ywFNiHtQknr7BzUOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=IpopKANJ; arc=none smtp.client-ip=217.70.183.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 94A901C0003;
-	Wed, 31 Jan 2024 09:07:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1706692038;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=txVeyDCwCa0PTblW/GH4Mt4FMs2okstRsQIFGpgZpIA=;
-	b=IpopKANJvPwzP+cqcm/nV8tIJeOl95Z+pm5ZBFxwXGnXRcK3j8Pw+g5PpTHYdFLZ+S68Mp
-	Zsj2PczR2iFjVt4JmxgdVtBXXEmZpd6iYEY+KPRCxNu2fQPiuG18FsmsoFfZfWkaW1KPbB
-	G1MSsTLhcCIWapF7QsFR2x2AIjii8HyIxhHt1myJcrQtSSLsH8641MOW1xBoMgS5kgngcd
-	HpasEnyJS3TgeESvACXjoa9KiuEvYQs3iCmPPe7m0RCMy1Q343Sq2P0VW3xur3FbmOGHKH
-	v498LDl6jvgqLJTyZWKLJSC9wenFYUOzH2yWAnMS8h04WN1KqPaw/M4Qidd9Fw==
-Date: Wed, 31 Jan 2024 10:07:01 +0100
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-To: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Cc: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, "Lad,  Prabhakar"
- <prabhakar.csengg@gmail.com>, "Niklas =?UTF-8?Q?S=C3=83=C2=B6derlund?="
- <niklas.soderlund+renesas@ragnatech.se>, "Uwe =?UTF-8?Q?Kleine-K=C3=83?=
- =?UTF-8?Q?=C2=B6nig?=" <u.kleine-koenig@pengutronix.de>, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, Alexander Shishkin
- <alexander.shishkin@linux.intel.com>, Alexander Stein
- <alexander.stein@ew.tq-group.com>, Alexandre Belloni
- <alexandre.belloni@bootlin.com>, Alexandre Torgue
- <alexandre.torgue@foss.st.com>, Alexey Brodkin <abrodkin@synopsys.com>,
- Andrzej Hajda <andrzej.hajda@intel.com>, Andy Gross <agross@kernel.org>,
- Biju Das <biju.das.jz@bp.renesas.com>, Bjorn Andersson
- <andersson@kernel.org>, Claudiu Beznea <claudiu.beznea@tuxon.dev>, Daniel
- Vetter <daniel@ffwll.ch>, Dave Stevenson <dave.stevenson@raspberrypi.com>,
- David Airlie <airlied@gmail.com>, Dmitry Baryshkov
- <dmitry.baryshkov@linaro.org>, Dmitry Torokhov <dmitry.torokhov@gmail.com>,
- Emma Anholt <emma@anholt.net>, Eugen Hristev <eugen.hristev@collabora.com>,
- Florian Fainelli <florian.fainelli@broadcom.com>, Frank Rowand
- <frowand.list@gmail.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Hans Verkuil <hverkuil-cisco@xs4all.nl>, Helge Deller <deller@gmx.de>,
- Hugues Fruchet <hugues.fruchet@foss.st.com>, Jacopo Mondi
- <jacopo+renesas@jmondi.org>, Jacopo Mondi <jacopo@jmondi.org>, James Clark
- <james.clark@arm.com>, Jaroslav Kysela <perex@perex.cz>, Jonathan Hunter
- <jonathanh@nvidia.com>, Kevin Hilman <khilman@baylibre.com>, Kieran Bingham
- <kieran.bingham+renesas@ideasonboard.com>, Kieran Bingham
- <kieran.bingham@ideasonboard.com>, Konrad Dybcio
- <konrad.dybcio@linaro.org>, Krzysztof Kozlowski
- <krzysztof.kozlowski@linaro.org>, Laurent Pinchart
- <laurent.pinchart+renesas@ideasonboard.com>, Laurent Pinchart
- <laurent.pinchart@ideasonboard.com>, Liam Girdwood <lgirdwood@gmail.com>,
- Liu Ying <victor.liu@nxp.com>, Maarten Lankhorst
- <maarten.lankhorst@linux.intel.com>, Marek Vasut <marex@denx.de>, Mark
- Brown <broonie@kernel.org>, Mauro Carvalho Chehab <mchehab@kernel.org>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, Maxime Ripard
- <mripard@kernel.org>, Michael Tretter <m.tretter@pengutronix.de>, Michal
- Simek <michal.simek@amd.com>, Miguel Ojeda <ojeda@kernel.org>, Nathan
- Chancellor <nathan@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
- Nick Desaulniers <ndesaulniers@google.com>, Nicolas Ferre
- <nicolas.ferre@microchip.com>, Philipp Zabel <p.zabel@pengutronix.de>,
- Philippe Cornu <philippe.cornu@foss.st.com>, Raphael Gallais-Pou
- <raphael.gallais-pou@foss.st.com>, Rob Clark <robdclark@gmail.com>, Rob
- Herring <robh+dt@kernel.org>, Robert Foss <rfoss@kernel.org>, Russell King
- <linux@armlinux.org.uk>, Sakari Ailus <sakari.ailus@linux.intel.com>,
- Saravana Kannan <saravanak@google.com>, Sascha Hauer
- <s.hauer@pengutronix.de>, Shawn Guo <shawnguo@kernel.org>, Sowjanya
- Komatineni <skomatineni@nvidia.com>, Stefan Agner <stefan@agner.ch>, Suzuki
- K Poulose <suzuki.poulose@arm.com>, Sylwester Nawrocki
- <s.nawrocki@samsung.com>, Takashi Iwai <tiwai@suse.com>, Thierry Reding
- <thierry.reding@gmail.com>, Thomas Zimmermann <tzimmermann@suse.de>, Tim
- Harvey <tharvey@gateworks.com>, Todor Tomov <todor.too@gmail.com>, Tomi
- Valkeinen <tomi.valkeinen@ideasonboard.com>, Yannick Fertre
- <yannick.fertre@foss.st.com>, Alim Akhtar <alim.akhtar@samsung.com>, Fabio
- Estevam <festevam@gmail.com>, Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
- Jernej Skrabec <jernej.skrabec@gmail.com>, Jerome Brunet
- <jbrunet@baylibre.com>, Jessica Zhang <quic_jesszhan@quicinc.com>, Jonas
- Karlman <jonas@kwiboo.se>, Leo Yan <leo.yan@linaro.org>, Marijn Suijten
- <marijn.suijten@somainline.org>, Martin Blumenstingl
- <martin.blumenstingl@googlemail.com>, Mike Leach <mike.leach@linaro.org>,
- Sam Ravnborg <sam@ravnborg.org>, Sean Paul <sean@poorly.run>, Tom Rix
- <trix@redhat.com>, coresight@lists.linaro.org, devicetree@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- linux-amlogic@lists.infradead.org, linux-arm-kernel@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org,
- linux-media@vger.kernel.org, linux-omap@vger.kernel.org,
- linux-renesas-soc@vger.kernel.org, linux-rpi-kernel@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, linux-sound@vger.kernel.org,
- linux-staging@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com,
- linux-tegra@vger.kernel.org, llvm@lists.linux.dev
-Subject: Re: [PATCH v3 14/24] of: property: add of_graph_get_next_endpoint()
-Message-ID: <20240131100701.754a95ee@booty>
-In-Reply-To: <874jeu6qhv.wl-kuninori.morimoto.gx@renesas.com>
-References: <87o7d26qla.wl-kuninori.morimoto.gx@renesas.com>
-	<874jeu6qhv.wl-kuninori.morimoto.gx@renesas.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1706692272; c=relaxed/simple;
+	bh=NH2etRj/6qjghtCNgvl/AG6envctjUG+1+4PACKTM48=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ThEQnIi9viD2OC6whYcqiDOPWOKAspTKbNw4vsUw6FbrQr96Sy9qKYdG+PLPU7fxKnJodUICbGecp9HObDa3yIzLw/boJLDszue0e6mwDSXwlY+mX/86T/2qaz8BhcaNcQlbaUWMUzryZStLOG15fK39EcwATji43TRslxqoRag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch; spf=none smtp.mailfrom=ffwll.ch; dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b=CdTe1YQU; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ffwll.ch
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a2e633c5365so184026466b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 01:11:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google; t=1706692267; x=1707297067; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ORBEpQ5F08UVhnCzKa+jzZ+oJJNJsZKWbQ0DCuxPaWc=;
+        b=CdTe1YQUzexoGnXkejwtL73hxANu+i1V3y0cjRlzNu57zGNnwytqoKXFyowqBJs58/
+         jhYSSdcMMpB+cAE227b92rcJGVqqEes7E1xXMswBb8TVQM+ICNgArqdplfDoa2AQLNXg
+         vICo0cfxNGunjuUMuTkBSAmbr3MER2eTZHglM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706692267; x=1707297067;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ORBEpQ5F08UVhnCzKa+jzZ+oJJNJsZKWbQ0DCuxPaWc=;
+        b=rr23dhmVPeHHSmd54MbDvRQQhYkpNG5xOnnXUJpqPOACPUWn2Ll+nQVECW4/2Ugef5
+         qOL80k/2sBRf1HEnA0RiX0vPvkoLOiGDzlPmt8lOd7NV/z/2uo7h73A6+xitc3hjfKKx
+         p8gKxEfDiMEI6/KDh0sXy1ASU4VVIC/BYow+oEpXyAVobWw5OnLtgBwvwBhbK2YJzFeH
+         xpO0962vt3Cl+Qf24HGIoseuHI9zE7B7f9eVVacgZskCqMgZ2xz+qlupM32RtQpyDCAC
+         iIJOcP93EMq7nskrZHM/+N3zHUIQa/VnkUGqxqA4dbfdRrwDVOUsGubOxrC7pNTcr8Bp
+         0chQ==
+X-Gm-Message-State: AOJu0Yzp7lcO2ELs0H+tEyqGwA9daKjc/oIjzXG4PFn53aNYaixCKJqY
+	lpNEldlR7629pbXOg8ieirBl24juVE97wRsvRu3Ee+PD3KXfNvbKzW0vGBoURfU=
+X-Google-Smtp-Source: AGHT+IHHkRoncH5TZwJ2KO/1SVucsjdiD6pGPJaM5NKeKM2EzUdubU6eh2uy4dvG7OzWu32QgOh+eg==
+X-Received: by 2002:a17:906:4a52:b0:a35:b6a1:712d with SMTP id a18-20020a1709064a5200b00a35b6a1712dmr697445ejv.2.1706692266392;
+        Wed, 31 Jan 2024 01:11:06 -0800 (PST)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id j9-20020a170906254900b00a311685890csm5987876ejb.22.2024.01.31.01.11.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 31 Jan 2024 01:11:05 -0800 (PST)
+Date: Wed, 31 Jan 2024 10:11:03 +0100
+From: Daniel Vetter <daniel@ffwll.ch>
+To: Jason-JH Lin =?utf-8?B?KOael+edv+elpSk=?= <Jason-JH.Lin@mediatek.com>
+Cc: "daniel@ffwll.ch" <daniel@ffwll.ch>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"linux-mediatek@lists.infradead.org" <linux-mediatek@lists.infradead.org>,
+	"daniel.vetter@ffwll.ch" <daniel.vetter@ffwll.ch>,
+	"michel@daenzer.net" <michel@daenzer.net>,
+	"intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>,
+	"chunkuang.hu@kernel.org" <chunkuang.hu@kernel.org>,
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+	"mikita.lipski@amd.com" <mikita.lipski@amd.com>,
+	"dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
+	"tzimmermann@suse.de" <tzimmermann@suse.de>,
+	"maxime@cerno.tech" <maxime@cerno.tech>,
+	"daniel.vetter@intel.com" <daniel.vetter@intel.com>,
+	"nicholas.kazlauskas@amd.com" <nicholas.kazlauskas@amd.com>,
+	"dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+	"quic_abhinavk@quicinc.com" <quic_abhinavk@quicinc.com>,
+	Project_Global_Chrome_Upstream_Group <Project_Global_Chrome_Upstream_Group@mediatek.com>,
+	"manasi.d.navare@intel.com" <manasi.d.navare@intel.com>,
+	"lucas.demarchi@intel.com" <lucas.demarchi@intel.com>,
+	"sean@poorly.run" <sean@poorly.run>,
+	"matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
+	"dmitry.osipenko@collabora.com" <dmitry.osipenko@collabora.com>,
+	"fshao@chromium.org" <fshao@chromium.org>,
+	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+	"jani.nikula@intel.com" <jani.nikula@intel.com>,
+	"angelogioacchino.delregno@collabora.com" <angelogioacchino.delregno@collabora.com>,
+	"freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>
+Subject: Re: [PATCH] drm/atomic-helpers: remove legacy_cursor_update hacks
+Message-ID: <ZboOp7JOp5teV1Cs@phenom.ffwll.local>
+Mail-Followup-To: Jason-JH Lin =?utf-8?B?KOael+edv+elpSk=?= <Jason-JH.Lin@mediatek.com>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"linux-mediatek@lists.infradead.org" <linux-mediatek@lists.infradead.org>,
+	"michel@daenzer.net" <michel@daenzer.net>,
+	"intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>,
+	"chunkuang.hu@kernel.org" <chunkuang.hu@kernel.org>,
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+	"mikita.lipski@amd.com" <mikita.lipski@amd.com>,
+	"dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
+	"tzimmermann@suse.de" <tzimmermann@suse.de>,
+	"maxime@cerno.tech" <maxime@cerno.tech>,
+	"daniel.vetter@intel.com" <daniel.vetter@intel.com>,
+	"nicholas.kazlauskas@amd.com" <nicholas.kazlauskas@amd.com>,
+	"dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+	"quic_abhinavk@quicinc.com" <quic_abhinavk@quicinc.com>,
+	Project_Global_Chrome_Upstream_Group <Project_Global_Chrome_Upstream_Group@mediatek.com>,
+	"manasi.d.navare@intel.com" <manasi.d.navare@intel.com>,
+	"lucas.demarchi@intel.com" <lucas.demarchi@intel.com>,
+	"sean@poorly.run" <sean@poorly.run>,
+	"matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
+	"dmitry.osipenko@collabora.com" <dmitry.osipenko@collabora.com>,
+	"fshao@chromium.org" <fshao@chromium.org>,
+	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+	"jani.nikula@intel.com" <jani.nikula@intel.com>,
+	"angelogioacchino.delregno@collabora.com" <angelogioacchino.delregno@collabora.com>,
+	"freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>
+References: <20230216111214.3489223-1-daniel.vetter@ffwll.ch>
+ <20230307145613.xvhru3fpcudlpazt@houat>
+ <aac416742920953999a9ce230ac68139bf5b9790.camel@mediatek.com>
+ <ZbKlsTEvGPiGtzS3@phenom.ffwll.local>
+ <1349365de499bae53a8c868738c7270fc16813d5.camel@mediatek.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-GND-Sasl: luca.ceresoli@bootlin.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1349365de499bae53a8c868738c7270fc16813d5.camel@mediatek.com>
+X-Operating-System: Linux phenom 6.6.11-amd64 
 
-Hello Kuninori Morimoto,
-
-On Wed, 31 Jan 2024 05:06:36 +0000
-Kuninori Morimoto <kuninori.morimoto.gx@renesas.com> wrote:
-
-> To handle endpoint more intuitive, create of_graph_get_next_endpoint()
+On Wed, Jan 31, 2024 at 05:17:08AM +0000, Jason-JH Lin (林睿祥) wrote:
+> On Thu, 2024-01-25 at 19:17 +0100, Daniel Vetter wrote:
+> >  	 
+> > External email : Please do not click links or open attachments until
+> > you have verified the sender or the content.
+> >  On Tue, Jan 23, 2024 at 06:09:05AM +0000, Jason-JH Lin (林睿祥) wrote:
+> > > Hi Maxime, Daniel,
+> > > 
+> > > We encountered similar issue with mediatek SoCs.
+> > > 
+> > > We have found that in drm_atomic_helper_commit_rpm(), when
+> > disabling
+> > > the cursor plane, the old_state->legacy_cursor_update in
+> > > drm_atomic_wait_for_vblank() is set to true.
+> > > As the result, we are not actually waiting for a vlbank to wait for
+> > our
+> > > hardware to close the cursor plane. Subsequently, the execution
+> > > proceeds to drm_atomic_helper_cleanup_planes() to  free the cursor
+> > > buffer. This can lead to use-after-free issues with our hardware.
+> > > 
+> > > Could you please apply this patch to fix our problem?
+> > > Or are there any considerations for not applying this patch?
+> > 
+> > Mostly it needs someone to collect a pile of acks/tested-by and then
+> > land
+> > it.
+> > 
 > 
-> 	of_graph_get_next_endpoint(port1, NULL); // A1
-> 	of_graph_get_next_endpoint(port1, A1);   // A2
-> 	of_graph_get_next_endpoint(port1, A2);   // NULL
+> Got it. I would add tested-by tag for mediatek SoC.
+> 
+> > I'd be _very_ happy if someone else can take care of that ...
+> > 
+> > There's also the potential issue that it might slow down some of the
+> > legacy X11 use-cases that really needed a non-blocking cursor, but I
+> > think
+> > all the drivers where this matters have switched over to the async
+> > plane
+> > update stuff meanwhile. So hopefully that's good.
+> > 
+> 
+> I think all the drivers should have switched to async plane update.
+> 
+> Can we add the checking condition to see if atomic_async_update/check
+> function are implemented?
 
-The idea looks good. My only concern is about reusing the
-of_graph_get_next_endpoint() name after having removed the old, different
-function having the same name. This can be confusing in the first
-place to who is used to the old function, and also to anybody rebasing
-their patches on top of a new kernel to find their code behaving
-differently.
+Pretty sure not all have done that, so really it boils down to whether we
+break a real user's use-case. Which pretty much can only be checked by
+merging the patch (hence the requirement to get as many acks as possible
+from display drivers) and then being willing to handle any fallout that's
+reported as regressions for a specific driver.
 
-Also, as now we'd have two similar variants of this function, it would
-be good if each of them were having a name that clearly identifies in
-which way they differ from the other.
+It's a pile of work, at least when it goes south, that's why I'm looking
+for volunteers.
 
-So a better name for this function would probably be
-of_graph_get_next_port_endpoint() I guess, to clearly differentiate from
-of_graph_get_next_device_endpoint().
+Note that handling the fallout doesn't mean you have to fix that specific
+driver, the only realistic option might be to reinstate the legacy cursor
+behaviour, but as an explicit opt-in that only that specific driver
+enables.
 
-Luca
+So maybe for next round of that patch it might be good to have a 2nd patch
+which implements this fallback plan in the shared atomic modeset code?
+
+Cheers, Sima
+
+> 
+> Regards,
+> Jason-JH.Lin
+> 
+> > Cheers, Sima
+> > > 
+> > > Regards,
+> > > Jason-JH.Lin
+> > > 
+> > > On Tue, 2023-03-07 at 15:56 +0100, Maxime Ripard wrote:
+> > > > Hi,
+> > > > 
+> > > > On Thu, Feb 16, 2023 at 12:12:13PM +0100, Daniel Vetter wrote:
+> > > > > The stuff never really worked, and leads to lots of fun because
+> > it
+> > > > > out-of-order frees atomic states. Which upsets KASAN, among
+> > other
+> > > > > things.
+> > > > > 
+> > > > > For async updates we now have a more solid solution with the
+> > > > > ->atomic_async_check and ->atomic_async_commit hooks. Support
+> > for
+> > > > > that
+> > > > > for msm and vc4 landed. nouveau and i915 have their own commit
+> > > > > routines, doing something similar.
+> > > > > 
+> > > > > For everyone else it's probably better to remove the use-after-
+> > free
+> > > > > bug, and encourage folks to use the async support instead. The
+> > > > > affected drivers which register a legacy cursor plane and don't
+> > > > > either
+> > > > > use the new async stuff or their own commit routine are:
+> > amdgpu,
+> > > > > atmel, mediatek, qxl, rockchip, sti, sun4i, tegra, virtio, and
+> > > > > vmwgfx.
+> > > > > 
+> > > > > Inspired by an amdgpu bug report.
+> > > > 
+> > > > Thanks for submitting that patch. It's been in the downstream RPi
+> > > > tree
+> > > > for a while, so I'd really like it to be merged eventually :)
+> > > > 
+> > > > Acked-by: Maxime Ripard <maxime@cerno.tech>
+> > > > 
+> > > > Maxime
+> > 
 
 -- 
-Luca Ceresoli, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
 
