@@ -1,177 +1,267 @@
-Return-Path: <linux-arm-msm+bounces-9215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9216-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9CCD843BDD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 11:08:15 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C73CC843C6F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 11:26:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7E78428CB00
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 10:08:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B7958B2A1C0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 10:22:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA0C469965;
-	Wed, 31 Jan 2024 10:08:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="OdS+Tdbt"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E630678B68;
+	Wed, 31 Jan 2024 10:20:44 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from NAM02-DM3-obe.outbound.protection.outlook.com (mail-dm3nam02on2070.outbound.protection.outlook.com [40.107.95.70])
+Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3DF06996A;
-	Wed, 31 Jan 2024 10:08:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.95.70
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706695689; cv=fail; b=l516xyQ1Y1LRcVaGV7RZ+9jKp3ata2XRNd+3xQpAZfU8HFiOJ5v6JrxYgbMT4gFU7/CcthUWDgjY1ypKI4RaNYtSUqFva3w+dFjImKI05R45FLG/sT3spPnlHiN+YyRXBkIl3pLpS1df6gob2IjaswysbRTw4Lc0dxW/SiqFtIo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706695689; c=relaxed/simple;
-	bh=k8IG37cyQTC/jEjoD36G3DerA++mnCRaElSH54A8OX0=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=VLhAqtPZuUkMHzpu6tJZG4utw2QBpzgVWwGiwTcVyFDlEZd6CVTg7RVf7uJV/C3q5zmUWGjuXmvti2Sc/jHv8blemisX68H+HJJ15Xfr2oRs6UIR5j+THpKBkKGFTGJ5Nymw2k5hcds4D4wrreNXfvaIgP+6No5yAREdNEk5qNI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=OdS+Tdbt; arc=fail smtp.client-ip=40.107.95.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=g+rwMFejQQKdB7mzMk6/BOneWiEvA8mkFKY6tT0lRD/nVDc7VOFIVxcCc2Swak5+uXqqhwQHFy/uCvNct0rqeHoZZK5mKd/8uwYZDX41NIWpDlFqImsBwHASBpAIu+NBMV1ZRJ8UQ6hDKW2tbAwJ0+uXBe7g+ERmP572U90WO6v1poP648+qvf3EzyM2ayYnFzKrwF7vLFOM02lMeGnPgMDvqYCuDWgrCBcUXR85rx704x48PVTIP2hOFy9K2oO7yqi/YPidSFkUljQImGwpF/b5KtapWkAuclxfGGd3K82ug3hCLpGWQFXyDO2v8f4eeQzVcHPA7CFjGzyIpuVPDQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VxZAeKyar4lj664e5KVjs76LkhDUhulhWOJciKOLE5Y=;
- b=kT0PS8BGMsYelOay4MBqVvPo4EYUsTEHuU/JyTvjbQW6DkjQB3nnhmctjciUaI3AopqfhOpe39gbTFaZN0DaXnAjS6DjRTJwySNOUcamMC0kFQot4598b+wVLXbbYZUkDXVMdNSmnqzdYk7z5iHLyFORSwqHKoKVw+rwuEV+7k3wxtOG4FOeaJduxu0+75MDE58NNUZekrhobBBN2sQzG0o86NdX1HYHwRQuZ4v6LSGRxpqSwmOK6f50qsISdOZIWFT+1czK6+pIo1pq9oOfkXRjk6wxE4cLjKk7GPX9DGsvXpmpIASLzSrvKlKrDmE+0tc8jss+MY9ZFquBzHtU2w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VxZAeKyar4lj664e5KVjs76LkhDUhulhWOJciKOLE5Y=;
- b=OdS+TdbtakTcpJAscY2fEdSsJ2mBnACEBDu1hfyP0fZMCpQh1Ri18C1zwCPKQs0i9bVsPy5OxChYfmW9I5Mycks95iaRojYL8VRQE8hIobIfqr+BSYXJQObPuNwzpMDL7W7IhsFQQtM4ikrsd48reMdWfAOygmJHed8/RLHgrvw=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from PH7PR12MB5685.namprd12.prod.outlook.com (2603:10b6:510:13c::22)
- by SA0PR12MB4575.namprd12.prod.outlook.com (2603:10b6:806:73::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7249.22; Wed, 31 Jan
- 2024 10:08:04 +0000
-Received: from PH7PR12MB5685.namprd12.prod.outlook.com
- ([fe80::e1fb:4123:48b1:653]) by PH7PR12MB5685.namprd12.prod.outlook.com
- ([fe80::e1fb:4123:48b1:653%4]) with mapi id 15.20.7228.029; Wed, 31 Jan 2024
- 10:08:04 +0000
-Message-ID: <223ce1a9-d0ca-4922-b0a5-030be084afa3@amd.com>
-Date: Wed, 31 Jan 2024 11:07:58 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/msm/gem: Fix double resv lock aquire
-Content-Language: en-US
-To: Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
- Rob Clark <robdclark@chromium.org>, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Sumit Semwal <sumit.semwal@linaro.org>,
- open list <linux-kernel@vger.kernel.org>
-References: <20240130223533.25713-1-robdclark@gmail.com>
-From: =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-In-Reply-To: <20240130223533.25713-1-robdclark@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: AS4P189CA0066.EURP189.PROD.OUTLOOK.COM
- (2603:10a6:20b:659::14) To PH7PR12MB5685.namprd12.prod.outlook.com
- (2603:10b6:510:13c::22)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E4F762DC;
+	Wed, 31 Jan 2024 10:20:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.101
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1706696444; cv=none; b=iZ8s1PXPREu+N47QzUhNmd5UIpXUbfkhI4hqJ2uFOwQghGZYmDFrBC6JoNl9FYCq/PZAJd2gHzzDVDSuEbBYs4gvRrR3pq8KCciRMtBjfVe2qZFuD8oZ3dAJnzSvRpjAQL8ZTtzteyG02l7sGQnIdwSwvrzQrkN/CjHIVw5/MTQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1706696444; c=relaxed/simple;
+	bh=ncR9ZVIZnZgWBEFvpVMj29/3lFamrXl8RVdJlKMnu6U=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=u2/IMq7VMxtlEk07+oNCNPGoiwZnSNPAcW/8Hl0Zy1ADVwjd2pACFeGZgQjbE0fb2fVpo9bIkUTLCXv0E7QQpk+4Pyf6Y6wVLFOcATSSrlnBxcP4m4+kIsAbrMokxQ9z5RBvZ3avAdOWdILmv6vrQmE8lKywKf6lgiQW/GKd14o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=101.71.155.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
+Received: from amadeus-Vostro-3710.lan (unknown [116.25.94.16])
+	by smtp.qiye.163.com (Hmail) with ESMTPA id C9EF57E010C;
+	Wed, 31 Jan 2024 18:20:14 +0800 (CST)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Chukun Pan <amadeus@jmu.edu.cn>
+Subject: [PATCH 1/3] arm64: dts: qcom: ipq6018: separate CPU OPP tables
+Date: Wed, 31 Jan 2024 18:20:01 +0800
+Message-Id: <20240131102003.2061203-1-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR12MB5685:EE_|SA0PR12MB4575:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1079b6dd-e8d2-41ee-08b9-08dc2244838d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	675DqIxtWuEcadQbXFho/D6o/yr5r1+/U8S1kHCml9q8mmymW8Tic+fBUC5RpkhhIzOJ6xqEaD9jAdcE4364dmM1yyGeWCuYctEn8pHScosbN62NmYiZGfABW0k5t91PAhjPxuwAKOprEu1cSY7J1XJR4jdr2qox3QOYCBb3K1iIb572TcCa1f5x3+qV/cN3xX90raWeH5DHmg5rd8GeVEYLW98uBpLlUhv3m+JuySPojjNKGyLGcOEjjJxiDYRDZLENYk+Jz85lM94NUH+6G0yWkS4kkGcbqa0q7sfAJjDcqM7htd7Mt2Xh7qZ7tf8qvVUdMD8s5LcDNuNx7OTNFbWwO4+MEtIxRcKzAYBYhciWXEJNR2tY4Hjyxe7orZX3e1x/GvkQMzBv4HeD6tjKvDggS/DWPJf/BHum/eSGf08l42U1JNoy7jkczbipv4m5uHWMhg6tGJ0eUXxStSlV9PgoJmxCv8qEf1bYDYzQMUuhl7X0Ztihb2cwbDUM7BT5wDuFnXtxyklcJPpvqnfzRIW14P+F9vScSzNM40LajryuHdw/SsVqsJC5WbX7tvhkx9Uiir+08gWmJrZO/nxeOhj0Stf7d4MEdehjeyV8PHtFaWSM1eSahpqq0RZf5el6E/oCkkmuT3n0xGMprNpC/A==
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5685.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(39860400002)(136003)(376002)(366004)(396003)(346002)(230922051799003)(64100799003)(186009)(1800799012)(451199024)(316002)(6486002)(66946007)(66556008)(66476007)(54906003)(478600001)(6666004)(8936002)(6506007)(6512007)(8676002)(4326008)(5660300002)(26005)(2616005)(7416002)(66574015)(2906002)(83380400001)(31696002)(86362001)(38100700002)(41300700001)(36756003)(31686004)(45980500001)(43740500002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?VHVKVGFZaGFRWlA3WDhCN3dnak96Mjdqc1B2QTM1YnJueVZVcnNzcjlmZTZH?=
- =?utf-8?B?UkJQcVQxRUUweVN5MmNmSktjMGRMeUl5MnY5TWZmNGU1dEJ4ejdPeGc2WDNh?=
- =?utf-8?B?MnQ1QklPbVVwNWtiaHRoQVhzQkJFZG13OEtNU2JoOVBRTjJTMHZSYnI0M2Rw?=
- =?utf-8?B?dnhBcEhQc1B4bFZKRmdQVnkxcmJyVS9wRHQzR2N5eVN0YWhSVHM2eXM2NnE0?=
- =?utf-8?B?YVRHL2hrckVKWVFXdVkvV0tyOTNpaEdQYnhlbEVHM2RIYzIwbUNJcEZIN3hO?=
- =?utf-8?B?Z2xqc2ZIUkg3MkhTNFh3bEFBMktPT1REdTgrRnRRM0cyczhoYitwOW13RDVi?=
- =?utf-8?B?UEtERzFsWW1ITFBNZmVIMXYxc1Y1cUNMdFczaW1SUGVCTUUzbnI1ZytsUjVE?=
- =?utf-8?B?Z1dZUzBoaFhPbzJlRG8vQnVZL3hWb0JVQ1RrTE9JUEdZb29OdVBJT2dJYmRm?=
- =?utf-8?B?ZFcrUEptdWRHT3RVc0cvRHQwYkpucGJsbUc0NVF4UjBsWWxqYU5rVHNyMXNC?=
- =?utf-8?B?NVdpckdpclpPc2RCZTVxMTFmdlFwVUwyNnZ3aXhCRkxvZzIySGNrR2ovdFhi?=
- =?utf-8?B?Ums1V28vRmpHUUNiZ1hFUkM3VG1uRkZkNFZPZXpVdmdkKzZRYUQ1eDR5NnlZ?=
- =?utf-8?B?c3czM042UFk1RWI5STZlb1pPR1Y4RFpsZFpMSm80Z2dIZDEvQUNqZU1nQ0xv?=
- =?utf-8?B?UGRmMkVrTXcyUi9NcW1GaThvRzJPK0NDQzlkUjNGWEhWcU82NkQ1N2luT2pD?=
- =?utf-8?B?RHliWkJZTE1NdkQvVWRhUVRWa3h0NzBzWFN1K0NHL3I5bkhibmFsZGJsNEEx?=
- =?utf-8?B?VXF4SXE2Wm5HWm1POXhjNHA2ekRTTWViNGpWTjhjMFVrblZrVkdjalUvNk55?=
- =?utf-8?B?eC85OW5FWENLMmUzL2MrRm9seXd6UXlpTWU4MStDMzArZlhBall4YW9JeDBP?=
- =?utf-8?B?aHFmRTNKQ0ZlUkNzREFmZFhVbktqMUJ1RVZxdDlQLzdIM0FLaWZDR2V1UFVZ?=
- =?utf-8?B?K1dLVWFuQVVKakVqZUxIS2ZnVHhqK0NwaVIzWk0wMkhlNjF1cHBtSTIrNzdI?=
- =?utf-8?B?U0hQQ2RpUXRhbmdGeFQ1bENUempCQ0l4VlBZZUFxdldGQ1BHelFON1hVSHFW?=
- =?utf-8?B?TlMySE1WTGZkYlhGZVltbWVWcVJSQTFNcUYxenllVUMwVG55S0Z3TzcrM2s1?=
- =?utf-8?B?RHdnSmFpdjQyYW9LdVpyTUgrTGxGWnkyWXlNdzkxMUwrUmZJdW9lZyt0azJD?=
- =?utf-8?B?a0poUDVpUjdNZ1JRQlJGMUQ4K1RHZlJ4T2s3N3U5T0VLZzFDcXhkUFVRaEgz?=
- =?utf-8?B?TUMvZGFiMzFLRGdUNzNqdERScVlCMzk4SElvQ3dFTkRHS1ZhbGJZeU9GejQ0?=
- =?utf-8?B?RHU0M3IrWUpzcWMwdWxURmo1YUJ6OWdMa0VOdHlHWmRvelJ0bUgxQkFrMEQy?=
- =?utf-8?B?Q0VzN2Jqb3cyemh5cWdLdUF3TWVBQURod1VIc0VJS3g2eXpuRDUwYldTdEN1?=
- =?utf-8?B?clRHZ213QXdwOW5BWXBKd0tBNnA1NGplamgxeGRwVHI2WkhJL0tSbkpWYTZs?=
- =?utf-8?B?Vm1CSFZ2RDB0UVFJdjdwM2wvalJOSmxrbVJRZEpSRmxPd09id1d0b3NkdzBC?=
- =?utf-8?B?dmFrUjVjNnJ6RFl2VExDWlVudzRiNHJZN2IwNzRGVjA2Z2NUQlBJaUErQlFN?=
- =?utf-8?B?VVdEb1hRYWpGSDhDMVFYTFlLK1A2ZmV5ODBabk93UVFtOW55RkhYYlJxOWYv?=
- =?utf-8?B?ZGVuM3dRemF2NWJac0FHWFVMbGw4Y0VGd0lJaVFVekZtencrWDQ2a2xKSjda?=
- =?utf-8?B?RWZjVUFld2dQL3U0NXMvRjJlVkFIMW9sK29TNjZlVlYvU1RBM2Z1c3pBZmJo?=
- =?utf-8?B?aDM2WE41V01HLzJ1ajdqeGdGYlF6d25TT0JCT2hTekhSLzYvUEhFTVNPRmMw?=
- =?utf-8?B?cUZDaVJNNkxNbC9YUWRlQkprdkVWSnM5bmhjZ3NTTmlDZDZnY1VzMFhDbDNU?=
- =?utf-8?B?dTVRakV2NDRaTVZwczk5RlNyRzdVUWh6dGFoZTVlNy9QY0J2b0xlVHBpRmw2?=
- =?utf-8?B?YU9iOXF5T0l0Uk02dURVdXYxOHVMRHhmU08yUTVEMnFVUjNsM1V2Z3hCZnlI?=
- =?utf-8?Q?rUec=3D?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1079b6dd-e8d2-41ee-08b9-08dc2244838d
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5685.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Jan 2024 10:08:04.2585
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 4ydXLyJOfzdp6WV3sm+bF7CI/4ZhjkNMJDbFYDbDDxD8UQNS5PwiiMPwnElK0YKi
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR12MB4575
+Content-Transfer-Encoding: 8bit
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCHk0fVhpPHhoZHk8ZGUxDSlUTARMWGhIXJBQOD1
+	lXWRgSC1lBWUpKTVVJTlVCT1VKTVlXWRYaDxIVHRRZQVlPS0hVSkhKQkhLVUpLS1VLWQY+
+X-HM-Tid: 0a8d5f08985f03a2kunmc9ef57e010c
+X-HM-MType: 10
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6Mhw6NRw5AjMJTU9CC04eAUgI
+	HwgwFDlVSlVKTEtNTUJNT0pNS09JVTMWGhIXVRoWGh8eDgg7ERYOVR4fDlUYFUVZV1kSC1lBWUpK
+	TVVJTlVCT1VKTVlXWQgBWUFNTk5LNwY+
 
-Am 30.01.24 um 23:35 schrieb Rob Clark:
-> From: Rob Clark <robdclark@chromium.org>
->
-> Since commit 56e5abba8c3e ("dma-buf: Add unlocked variant of vmapping
-> functions"), the resv lock is already held in the prime vmap path, so
-> don't try to grab it again.
->
-> Fixes: 56e5abba8c3e ("dma-buf: Add unlocked variant of vmapping functions")
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+Some IPQ6000 SoCs do not come with PMIC (MP5496) chip,
+which causes cpufreq to be unavailable due to lack of
+cpu-supply. Separate CPU OPP tables from soc.dtsi to
+support versions with and without PMIC chip.
 
-Acked-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+---
+ arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts |  1 +
+ arch/arm64/boot/dts/qcom/ipq6018-opp.dtsi    | 74 ++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi        | 56 ---------------
+ 3 files changed, 75 insertions(+), 56 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq6018-opp.dtsi
 
-> ---
->   drivers/gpu/drm/msm/msm_gem_prime.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c b/drivers/gpu/drm/msm/msm_gem_prime.c
-> index 5f68e31a3e4e..8a27b57a5bea 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_prime.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_prime.c
-> @@ -26,7 +26,7 @@ int msm_gem_prime_vmap(struct drm_gem_object *obj, struct iosys_map *map)
->   {
->   	void *vaddr;
->   
-> -	vaddr = msm_gem_get_vaddr(obj);
-> +	vaddr = msm_gem_get_vaddr_locked(obj);
->   	if (IS_ERR(vaddr))
->   		return PTR_ERR(vaddr);
->   	iosys_map_set_vaddr(map, vaddr);
+diff --git a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+index f5f4827c0e17..06dfc2cb6b7f 100644
+--- a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
++++ b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
+@@ -8,6 +8,7 @@
+ /dts-v1/;
+ 
+ #include "ipq6018.dtsi"
++#include "ipq6018-opp.dtsi"
+ 
+ / {
+ 	model = "Qualcomm Technologies, Inc. IPQ6018/AP-CP01-C1";
+diff --git a/arch/arm64/boot/dts/qcom/ipq6018-opp.dtsi b/arch/arm64/boot/dts/qcom/ipq6018-opp.dtsi
+new file mode 100644
+index 000000000000..9c0bed2d8bf5
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/ipq6018-opp.dtsi
+@@ -0,0 +1,74 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++/*
++ * IPQ60xx with PMIC (MP5496) CPU OPP tables
++ */
++
++/ {
++	cpu_opp_table: opp-table-cpu {
++		compatible = "operating-points-v2-kryo-cpu";
++		nvmem-cells = <&cpu_speed_bin>;
++		opp-shared;
++
++		opp-864000000 {
++			opp-hz = /bits/ 64 <864000000>;
++			opp-microvolt = <725000>;
++			opp-supported-hw = <0xf>;
++			clock-latency-ns = <200000>;
++		};
++
++		opp-1056000000 {
++			opp-hz = /bits/ 64 <1056000000>;
++			opp-microvolt = <787500>;
++			opp-supported-hw = <0xf>;
++			clock-latency-ns = <200000>;
++		};
++
++		opp-1320000000 {
++			opp-hz = /bits/ 64 <1320000000>;
++			opp-microvolt = <862500>;
++			opp-supported-hw = <0x3>;
++			clock-latency-ns = <200000>;
++		};
++
++		opp-1440000000 {
++			opp-hz = /bits/ 64 <1440000000>;
++			opp-microvolt = <925000>;
++			opp-supported-hw = <0x3>;
++			clock-latency-ns = <200000>;
++		};
++
++		opp-1608000000 {
++			opp-hz = /bits/ 64 <1608000000>;
++			opp-microvolt = <987500>;
++			opp-supported-hw = <0x1>;
++			clock-latency-ns = <200000>;
++		};
++
++		opp-1800000000 {
++			opp-hz = /bits/ 64 <1800000000>;
++			opp-microvolt = <1062500>;
++			opp-supported-hw = <0x1>;
++			clock-latency-ns = <200000>;
++		};
++	};
++};
++
++&CPU0 {
++	operating-points-v2 = <&cpu_opp_table>;
++	cpu-supply = <&ipq6018_s2>;
++};
++
++&CPU1 {
++	operating-points-v2 = <&cpu_opp_table>;
++	cpu-supply = <&ipq6018_s2>;
++};
++
++&CPU2 {
++	operating-points-v2 = <&cpu_opp_table>;
++	cpu-supply = <&ipq6018_s2>;
++};
++
++&CPU3 {
++	operating-points-v2 = <&cpu_opp_table>;
++	cpu-supply = <&ipq6018_s2>;
++};
+diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+index 5e1277fea725..ea72fd5739ac 100644
+--- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+@@ -41,8 +41,6 @@ CPU0: cpu@0 {
+ 			next-level-cache = <&L2_0>;
+ 			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+ 			clock-names = "cpu";
+-			operating-points-v2 = <&cpu_opp_table>;
+-			cpu-supply = <&ipq6018_s2>;
+ 		};
+ 
+ 		CPU1: cpu@1 {
+@@ -53,8 +51,6 @@ CPU1: cpu@1 {
+ 			next-level-cache = <&L2_0>;
+ 			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+ 			clock-names = "cpu";
+-			operating-points-v2 = <&cpu_opp_table>;
+-			cpu-supply = <&ipq6018_s2>;
+ 		};
+ 
+ 		CPU2: cpu@2 {
+@@ -65,8 +61,6 @@ CPU2: cpu@2 {
+ 			next-level-cache = <&L2_0>;
+ 			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+ 			clock-names = "cpu";
+-			operating-points-v2 = <&cpu_opp_table>;
+-			cpu-supply = <&ipq6018_s2>;
+ 		};
+ 
+ 		CPU3: cpu@3 {
+@@ -77,8 +71,6 @@ CPU3: cpu@3 {
+ 			next-level-cache = <&L2_0>;
+ 			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+ 			clock-names = "cpu";
+-			operating-points-v2 = <&cpu_opp_table>;
+-			cpu-supply = <&ipq6018_s2>;
+ 		};
+ 
+ 		L2_0: l2-cache {
+@@ -95,54 +87,6 @@ scm {
+ 		};
+ 	};
+ 
+-	cpu_opp_table: opp-table-cpu {
+-		compatible = "operating-points-v2-kryo-cpu";
+-		nvmem-cells = <&cpu_speed_bin>;
+-		opp-shared;
+-
+-		opp-864000000 {
+-			opp-hz = /bits/ 64 <864000000>;
+-			opp-microvolt = <725000>;
+-			opp-supported-hw = <0xf>;
+-			clock-latency-ns = <200000>;
+-		};
+-
+-		opp-1056000000 {
+-			opp-hz = /bits/ 64 <1056000000>;
+-			opp-microvolt = <787500>;
+-			opp-supported-hw = <0xf>;
+-			clock-latency-ns = <200000>;
+-		};
+-
+-		opp-1320000000 {
+-			opp-hz = /bits/ 64 <1320000000>;
+-			opp-microvolt = <862500>;
+-			opp-supported-hw = <0x3>;
+-			clock-latency-ns = <200000>;
+-		};
+-
+-		opp-1440000000 {
+-			opp-hz = /bits/ 64 <1440000000>;
+-			opp-microvolt = <925000>;
+-			opp-supported-hw = <0x3>;
+-			clock-latency-ns = <200000>;
+-		};
+-
+-		opp-1608000000 {
+-			opp-hz = /bits/ 64 <1608000000>;
+-			opp-microvolt = <987500>;
+-			opp-supported-hw = <0x1>;
+-			clock-latency-ns = <200000>;
+-		};
+-
+-		opp-1800000000 {
+-			opp-hz = /bits/ 64 <1800000000>;
+-			opp-microvolt = <1062500>;
+-			opp-supported-hw = <0x1>;
+-			clock-latency-ns = <200000>;
+-		};
+-	};
+-
+ 	pmuv8: pmu {
+ 		compatible = "arm,cortex-a53-pmu";
+ 		interrupts = <GIC_PPI 7 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_HIGH)>;
+-- 
+2.25.1
 
 
