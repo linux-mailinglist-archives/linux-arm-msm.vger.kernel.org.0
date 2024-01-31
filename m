@@ -1,132 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-9200-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD6FD8439D1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 09:55:08 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFB77843A21
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 10:05:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DF1011C26005
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 08:55:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4B1F11F2F839
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 09:05:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73B6269D12;
-	Wed, 31 Jan 2024 08:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D06769DF0;
+	Wed, 31 Jan 2024 08:57:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iqYyOtWz"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZlZoqKvn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F388605DD;
-	Wed, 31 Jan 2024 08:46:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C958469D31
+	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 08:57:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706690818; cv=none; b=Jpmj7Rs8fzpzve2n2GCw+Ea52tp+bdFTi3lBrrwCu/fWd9a4t6MvmcqIRkilsH2fpmaIYv+hi9cvCG/Am/d5a2fLQtPrihZr3Hu3qn3JBIzqSin3v9gFs0B7+qAveUmk4IuR+GORs3GNHRmr6xyxxGDHSUcwqcDOHhnntxR4UMU=
+	t=1706691435; cv=none; b=lXcIJr0uHU7gnshl7f74PBMAmkhiAnVtk3YH5Ms08QCdPTuIa29mRchMoQszOOnQI4G5Cl7jTwWKCje6nADDpaGmNPCzzrjqI9MD96a0XPJASfg25HM3o1tIrxM4Bj9MiN8xkA3KmSwIbsS1SptyIQxJMJbsKEn8QOhmHnrl+WM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706690818; c=relaxed/simple;
-	bh=4BkvKFgglVdCeGCFuHgP4W0v2mzK44qTzIo31u8u7+c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dEpazUu1yI0zqMeFwphBwb+mNsdxaSphcSEL3JQCNs2lcD6Bx/GMxIh3JPTd6fmwmBlWPfjG8/W5ms3MTQ/zP+/PDZMb3pDBZdd9WTOQ4jXtqmm0tlM2pvHmzrTLQZk/aMYo8GdB3hwXG0Nlx5peLgIOZIY4Tjt/Bw28B9MYEYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iqYyOtWz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632E0C433C7;
-	Wed, 31 Jan 2024 08:46:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706690817;
-	bh=4BkvKFgglVdCeGCFuHgP4W0v2mzK44qTzIo31u8u7+c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=iqYyOtWzgUP5d3v0ololIBtkDRw9WWO09sd7gzCIIZgBxAVy9xat/jVBxOlXH+Ota
-	 YllfHjS+fywz95pELreHMdcRlqvYFz4jsazUgYcpK+JUOomn95jfjK2JzWKm6LhjNF
-	 Sw3frW+HAnotWiExQZFAHpvynylQmuOMLTnCWCw/JEPkwWco4Lk/KNihcL57pCHTwi
-	 yQv9czAHewVkFrRyByVCT4EgG8MlFLQF8x664CKTKg2PXEClUz0pSurPWpB9YnUqui
-	 nPxYK89diN8aDA5sgV5J6Anwow34s92tz/Dz6OAyi0s0exKKSK5qWNNnYx3HU1Fm55
-	 kJu35LRJzFDoQ==
-Date: Wed, 31 Jan 2024 14:16:45 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Viresh Kumar <viresh.kumar@linaro.org>
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
-	Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Brian Masney <bmasney@redhat.com>,
-	Georgi Djakov <djakov@kernel.org>, linux-arm-msm@vger.kernel.org,
-	vireshk@kernel.org, quic_vbadigan@quicinc.com,
-	quic_skananth@quicinc.com, quic_nitegupt@quicinc.com,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 5/6] arm64: dts: qcom: sm8450: Add opp table support
- to PCIe
-Message-ID: <20240131084645.GA3481@thinkpad>
-References: <20240112-opp_support-v6-0-77bbf7d0cc37@quicinc.com>
- <20240112-opp_support-v6-5-77bbf7d0cc37@quicinc.com>
- <20240129160420.GA27739@thinkpad>
- <20240130061111.eeo2fzaltpbh35sj@vireshk-i7>
- <20240130071449.GG32821@thinkpad>
- <20240130083619.lqbj47fl7aa5j3k5@vireshk-i7>
- <20240130094804.GD83288@thinkpad>
- <20240130095508.zgufudflizrpxqhy@vireshk-i7>
- <20240130131625.GA2554@thinkpad>
- <20240131052335.6nqpmccgr64voque@vireshk-i7>
+	s=arc-20240116; t=1706691435; c=relaxed/simple;
+	bh=i/0xGVWxmLGZ/l4MKKj0oTxK2I+o2zUxh3bsKs/n+Iw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ficzclbkRI9YKddJBQcwwVY30LbSn+pR3uETtkWnDxsTE4Nnjh+6OZGXLgvg0x6TQ85SO8dSKUJsynPnG7p0TjYii6Wt9PmA3SJ9XYiYEewbx6SByq14tQYJfk3CtoMa7XIn5npZmYM5uVT2BIeObxHYBwzbrjasq41aCxYGvtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZlZoqKvn; arc=none smtp.client-ip=209.85.219.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-dc63dfe77caso3705873276.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 00:57:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706691432; x=1707296232; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=19iyMKPgVV/OnzcKafV91f/kV0b2fJZ+DHL/skL3AYc=;
+        b=ZlZoqKvnK9OMXxhyDnAHPKZgYrPCtuhp7e1LksxIle5ypFPscvs+hduyajZzs2TsSX
+         RYtsEUu4xAzDEkY49ltoJ7lIGqG7G0rK6numdJxC4EvFci0hvUDp8tpx6A0DUs6i5KDM
+         1eKhPoxhKPrzQgdE5Sbx8fVxdd0T9zA4dLZUHYRnULQpAF0+QagNHE+FNc4uqelEK9nx
+         qA9/80W/aungYw0rIh4aDr26uyquHOWEDT/Tz8/uoZkavhvW27iFUkUhdtfJmgBhtUZi
+         pbKEekHZNNVxIWXfvAWfRHImycGZwF1ggyonJH5IRMLR/Ke0VhT6dhH4rdEjenBJ7KDm
+         gXcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706691432; x=1707296232;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=19iyMKPgVV/OnzcKafV91f/kV0b2fJZ+DHL/skL3AYc=;
+        b=UxfGch1VmaINlqizbHawiIwHEcfF+sEu5beOwgZ1ip6v92n5+F6yvjJjgsFN91xjjr
+         etck5LRpGNbXOjhJLYMmjzaDOm5Oo5bk/pCq+2oJB3aTdtrOWHKPZ6UEF0UUJ8nH1TXs
+         vWu/bPTV5ZHur+s71FcRSdsAxj7Izo2laVwPEHm1fSxVO7PKz7beH1FQdl/hxR6bNK1w
+         g2b1jZmKfAxFKeQliVTKd2rTCekTqt0e6aP7NybPFhHprIp7tQ2dYDiPv+FsaH2kmz7U
+         ipbeusaWNjo+HYti+7ELvhK/M+jweZOOOjwjh4ZWZBGMeDSHvWUBzqtlkNH1VeSVIAyz
+         bTBg==
+X-Gm-Message-State: AOJu0Yy5bV3jIFk7GC2s0gFimIThBAwtwUbB0irEQTcRf4ZB2e8LqMkw
+	2RNlaM1hVgUEPBiz8IKbFS6YFbMgT7rNwvwxiZOJFLHy5ut29gXIkzQoBPu/jAhsU1/cXTC8W/f
+	H279srCl5rZ6KK3GehIjJVWnaI9+8T/jrEzCXxg==
+X-Google-Smtp-Source: AGHT+IF+kfDZ/YF7mxYh80knn1UBEiVlr7hp7DfiTZ/EqM7NpiukfxSx7V7h2n9hbAXhnmqW7UvF5OBBTxTaOE6Q4vE=
+X-Received: by 2002:a25:7904:0:b0:dc6:7e97:ae62 with SMTP id
+ u4-20020a257904000000b00dc67e97ae62mr1105679ybc.21.1706691431753; Wed, 31 Jan
+ 2024 00:57:11 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240131052335.6nqpmccgr64voque@vireshk-i7>
+References: <20240129115216.96479-1-krzysztof.kozlowski@linaro.org> <20240129115216.96479-5-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20240129115216.96479-5-krzysztof.kozlowski@linaro.org>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Wed, 31 Jan 2024 09:57:00 +0100
+Message-ID: <CACRpkdYf4HUaV-Pjr81WjLbzy9zdAnyFWs9gPayPC6-3OjHQwA@mail.gmail.com>
+Subject: Re: [PATCH v6 4/6] reset: Instantiate reset GPIO controller for
+ shared reset-gpios
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Banajit Goswami <bgoswami@quicinc.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Viresh Kumar <viresh.kumar@linaro.org>, Frank Rowand <frowand.list@gmail.com>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org, 
+	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-pm@vger.kernel.org, Chris Packham <chris.packham@alliedtelesis.co.nz>, 
+	Sean Anderson <sean.anderson@seco.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 31, 2024 at 10:53:35AM +0530, Viresh Kumar wrote:
-> On 30-01-24, 18:46, Manivannan Sadhasivam wrote:
-> > Agree. But what I'm saying is, right now there is no DT property in the
-> > interconnect consumer nodes to specificy the bw requirements. This is all
-> > hardcoded in the respective ICC consumer drivers.
-> 
-> I thought there are a lot of users already in there..
-> 
-> $ git grep -i opp.*bps arch/arm64/boot/dts/ | wc -l
-> 864
+Hi Krzysztof,
 
-Most of the hits are from CPU nodes... For some reasons, peripheral drivers are
-sticking to hardcoded values.
+something is odd with the addresses on this patch, because neither GPIO
+maintainer is on CC nor linux-gpio@vger, and it's such a GPIO-related
+patch. We only saw it through side effects making <linux/gpio/driver.h>
+optional, as required by this patch.
 
-> 
-> > But when we use OPP to control bw, the bw requirements come from DT. This is
-> > what I see as a difference. Because, only nodes making use of OPP will specify
-> > bw in DT and other nodes making use of just ICC will not.
-> > 
-> > Maybe I'm worrying too much about these details... But it looks like
-> > inconsistency to me.
-> 
-> Right. So is there inconsistency right now ? Yes, there is.
-> 
-> The important question we need to answer is where do we want to see
-> all these drivers (specially new ones) in the future. What's the right
-> thing to do eventually ? Hardcode stuff ? Or Move it to DT ?
-> 
-> The answer is DT for me, so the code can be generic enough to be
-> reused. This is just one step in the right direction I guess.
-> Eventually the drivers must get simplified, which they are I guess.
-> 
+Please also CC Geert Uytterhoeven, the author of the GPIO aggregator.
 
-I completely agree that hardcoding the bw values is not the right thing, but was
-worried about the inconsistency. But anyway, I hope either ICC will also move
-towards DT for bw or we will convert all the drivers to use OPP in the future.
+i.e. this:
+> 2. !GPIOLIB stub:
+>    https://lore.kernel.org/all/20240125081601.118051-3-krzysztof.kozlowsk=
+i@linaro.org/
 
-Thanks for the discussion so far! It clarified.
+On Mon, Jan 29, 2024 at 12:53=E2=80=AFPM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 
-- Mani
+> Devices sharing a reset GPIO could use the reset framework for
+> coordinated handling of that shared GPIO line.  We have several cases of
+> such needs, at least for Devicetree-based platforms.
+>
+> If Devicetree-based device requests a reset line, while "resets"
+> Devicetree property is missing but there is a "reset-gpios" one,
+> instantiate a new "reset-gpio" platform device which will handle such
+> reset line.  This allows seamless handling of such shared reset-gpios
+> without need of changing Devicetree binding [1].
+>
+> To avoid creating multiple "reset-gpio" platform devices, store the
+> Devicetree "reset-gpios" GPIO specifiers used for new devices on a
+> linked list.  Later such Devicetree GPIO specifier (phandle to GPIO
+> controller, GPIO number and GPIO flags) is used to check if reset
+> controller for given GPIO was already registered.
+>
+> If two devices have conflicting "reset-gpios" property, e.g. with
+> different ACTIVE_xxx flags, this would allow to spawn two separate
+> "reset-gpio" devices, where the second would fail probing on busy GPIO
+> request.
+>
+> Link: https://lore.kernel.org/all/YXi5CUCEi7YmNxXM@robh.at.kernel.org/ [1=
+]
+> Cc: Bartosz Golaszewski <brgl@bgdev.pl>
+> Cc: Chris Packham <chris.packham@alliedtelesis.co.nz>
+> Cc: Sean Anderson <sean.anderson@seco.com>
+> Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+(...)
 
--- 
-மணிவண்ணன் சதாசிவம்
+In my naive view, this implements the following:
+
+reset -> virtual "gpio" -> many physical gpios[0..n]
+
+So if there was already a way in the kernel to map one GPIO to
+many GPIOs, the framework could just use that with a simple
+single GPIO?
+
+See the bindings in:
+Documentation/devicetree/bindings/gpio/gpio-delay.yaml
+
+This is handled by drivers/gpio/gpio-aggregator.c.
+
+This supports a 1-to-1 map: one GPIO in, one GPIO out, same offset.
+So if that is extended to support 1-to-many, this problem is solved.
+
+Proposed solution: add a single boolean property such as
+aggregate-all-gpios; to the gpio-delay node, making it provide
+one single gpio at offset 0 on the consumer side, and refuse any
+more consumers.
+
+This will also solve the problem with induced delays on
+some GPIO lines as I can see was discussed in the bindings,
+the gpio aggregator already supports that, but it would work
+fine with a delay being zero as well.
+
+This avoids all the hackery with driver stubs etc as well.
+
+Yours,
+Linus Walleij
 
