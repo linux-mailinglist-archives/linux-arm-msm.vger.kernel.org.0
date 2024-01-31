@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-9211-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9212-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 759E6843B6F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 10:50:13 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B50C843B7C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 10:53:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 29B2E28B623
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 09:50:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4050CB294A8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 09:52:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A969E69944;
-	Wed, 31 Jan 2024 09:50:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFBCD6996E;
+	Wed, 31 Jan 2024 09:52:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qvNeBmPm"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yzjLKPOU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21F46994D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 09:50:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670CD69D0F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 09:52:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706694609; cv=none; b=RAZceaA31NRTAePrIhhPYhoWzBC59GkTzkrdo/enecS+F5wfNdZLdEUIou6hAmD1Jbgi3gEPKt8pUGpHRnqzJQQCV0lxOmaK30fvbGKsASaSvstoshDSkc4iJyI3Qx+wuAHLtDRjHgC1ojXgo7lvnmV8I77Zx2z4oP88FqYYJv8=
+	t=1706694769; cv=none; b=pbP8yJJ/4L+ozLBIHV1kMwVO7IyE8THO2KGbrL3Q9oC403KelDlHGse/GsFw0rufgggzbaFpiGlpzxSJ9SHiNS49f9n4TL+zsCED+WdQ1DXqH+7gtKphYppbMq+5eAyApztkb8yy5nC65cGmMgQwCcz5xm9cXcJvOkCqKQ92e5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706694609; c=relaxed/simple;
-	bh=D2SxnRMLSR82V6Oi5/NAc91qViUnD7/+ZI0XF3o3fmM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=l9UDdba4AnePAXIX/2dLt5YNMYd+L9hy6m/LYJuG8KajnFJVrkSG/8E10xky8ImesOTyJoRPWHUHKUVUIehB8ins2vG7jQk8D2MmVe+QCFxS5sK1dizEbydro0ZtRyoSPO0CloiedDDUOAGwxDbRA0+YYYCJK7MeWPf7L3NnoGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qvNeBmPm; arc=none smtp.client-ip=209.85.208.50
+	s=arc-20240116; t=1706694769; c=relaxed/simple;
+	bh=fTIfhqGw1d/HJR+aqs5SB6WwWZFYD2zxuQWrfL/S1dw=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=RnScPQ/Lw5vKznrwOUztqih36PwEYlfezzmzCVfcyLhlMOJ8Tmvx9xgMesqkFUg7+pHQfIvEu5/I6Vpuym+xEGV6LSl9ji8cHGnUmE67BbUoln7z3rP+aGF+F/bRhv+DlqA9DZixXAujU/3izv2nsPvVOvIRUKIzdb9q9Vx+WQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yzjLKPOU; arc=none smtp.client-ip=209.85.208.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-55f0b2c79cdso4456494a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 01:50:07 -0800 (PST)
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2d057b6ddfdso21925591fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 01:52:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706694606; x=1707299406; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=STatSmLQt71RU1CUhKC1WCgSc7AlGVVE3QhLj6cY57Y=;
-        b=qvNeBmPmnhTnIKrry+CgC7gGwh0VWVVh6rIrmbQzKNlN0nZFysXAuWmXsv+/SOTj/O
-         n3BdxnWxcJ+de7IshrLGJlybY5K9DM6NqOJmh6HrnG+v3R5hmP7lROYh2WkbuyDx65cF
-         TJDQ+TXfoOnv0FqQtWrq4w4lDKaJa9h6GBtvxsSS2K+MPw/LfH2xtWdqvJjGjq02V0uL
-         waGsT4fuPdXJkHvgAz9JMz4VBSCe3iDYQn2ERqZ/1R/9WxS0bxdYch01878jEJ9RKNPr
-         slkgo1dcG0DCQqNodDgpumXEASe0EA9O195/AHIZqMjr5OTNwqkoBhIr/DMm7ucQcThn
-         /v2A==
+        d=linaro.org; s=google; t=1706694764; x=1707299564; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+         :from:content-language:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=vy9ag9vSpz3bXWFEemDbbZ5ICpPB9T59zqDCvXFR710=;
+        b=yzjLKPOUNm3mJDC3SFmHZl1dctH7oKC138Dz3reVC7HoFSUfQlGcHtGgfGNlaeLM9R
+         8fIf789R23hoo6mFHYERKNhPvxvj4nz4I+qII5qTNLjm5FvE3erdHHaT8Y6535qahWvQ
+         lacEcFKS8OgMdomLin3kISR+BBxz//VEqnxPO+DVGNDoTeJ06cJ2FpoPVv2ixzw3QM0J
+         tjRr8VpKJJnkaoFGnGN/HKqck5nS2QtAGLYD6G75Ki5glrUA5HYDgn/UIKfCpSHgxcnB
+         Udj4p7xlhoMSAmqSTxIaiFt5jWQF54cE0PzaP+3SMzMwwGMKkYzzBVUsyGK6uOUDyo2N
+         zwDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706694606; x=1707299406;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=STatSmLQt71RU1CUhKC1WCgSc7AlGVVE3QhLj6cY57Y=;
-        b=eB+GRKMy/hECoIDcrLAxobtMi5a6YXNdq4yu24bv4BI2Mf14Jzhz+J0yYEAHMkhX3o
-         gneynhfOzWrJOJSKrFUZ6yHDW9x7PW9wM/dBTG4WvDBQwIXFtDI+WaZTXFL6DllZ100O
-         qIqCEG3cYCYHzLbc4iF/IN9eloBh9jjIKMhP/pOokZmhHHo9K27e1QphasYJK4Qqj048
-         37PqTm0kD4lPHDJeIY+0OgSQZHydNGS+8QMCtI9ILuaz46LqZBRc+v9qLUAFY94K5MzE
-         XJem0w5I1AfA+SDD9WpGT2KXXtsCo92EV14uamy/UxB3fnIKo/71WA26XbEWMbJiuZ53
-         uaTA==
-X-Gm-Message-State: AOJu0YxZg4qQepEsVAD09tO0GkMuvY5gCq4xoQNtvUUdEY1IFTAtRGr+
-	D/EeWZgx2xhzL50/3htVx33njnUPbmKPlOO92WabsQ0EBicH+In6u/vG8X9HfRY=
-X-Google-Smtp-Source: AGHT+IGLFqdwp+tZWw0+FhhM8d3VY4sd1Lxq65pmRHfbtRsEAp9eMdXJqf0ADu50FMtqVcKymHSf7w==
-X-Received: by 2002:a05:6402:1215:b0:55f:7a8:fdf1 with SMTP id c21-20020a056402121500b0055f07a8fdf1mr678144edw.29.1706694605840;
-        Wed, 31 Jan 2024 01:50:05 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCXxNeFtCa4X6MxNQs01yfL2oP0GERimVq2CidH1mC7hasbzybtO+NeXHXtaDYzQgNZGWSYqKgQxKP3RQdkeB2apizbU5qSFJtUugIuNnj5H1cp2fl3px7FYRrPuty1r1D8sFXInam9jtbBFNGlfDoPi58yikNjIvnokKv9Hunork0QUaWo80UR7CrJAkhrIFhF7kCiylS3NMyEuGNGDNNf87IpyFNcS6h3zqTQqQ6OFI4gAHh0D42pF1om8n0F8GPuVwr3wV4zvKSFKLQN7Zn104EguLF0g/yvlDeTxgn+THRSovkiMA3VePSLmAbwseiwMt5avM1a9UOe7xOoZcDmWEi8tKTbsjwGojF615JKMstWof4dT2rJR3QDHnOf6ffWF6vTcYHVeEgXS9XYMpkefzvoOveC9Sv8Fiy+3kp4my/cmvXPxVy+J0miNMOXNpQvlUwmZg2d2rGyLrmmgWj11mJlpnBCBtcSf845Tga2cTq0G2PFFa41y3c7tcB6UEKhkhHZtH9n75ksZKtEOh719Z2OqK/BD7uI+TasQXh1v2/IQYOAWo/sRixGrINZ2nfXm9Tm1O1EBxZvoETug7T4BUYpxkzdivIMjlpbNpAgCORpFgiNZjHEjSJ9vt7JjtDhSPI8EXUhCwNTGRg3zbZ/u7rL42ov1GPFy1tvFHtaNcfBpY5pZ6fTV/RLdMhe6dthK/ZJL69FQL9LuT2IBfqeaxjdLoEq8pBiThEg1jSVFbYkfzJm/8CnaA6LrTqAkzQDw6PemYTFkWfTl9pICJlg9vcCZzwLvgYVxHHhNNAIDOzqS0sDBzRUgoSwl2LZnKzvHv7n2rA==
+        d=1e100.net; s=20230601; t=1706694764; x=1707299564;
+        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+         :from:content-language:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vy9ag9vSpz3bXWFEemDbbZ5ICpPB9T59zqDCvXFR710=;
+        b=jzJvM7bVQsaFr+1hb7d16pWwha6JSoaQrg5Bg2+PxIa9hXKKhEOaC4BaSB7sudIhEy
+         CkdzgfKFlTY5TkDZ++fYQjqPDDt4lOZ9m2TZq6QRT4y8vQGOWT29v3U3+4SgF3AQTr4d
+         OLWrYx9bU+4hfozCwe9UsZxZ/hjJsGRr4y7jNToQ29kTYl9JTExRcPWD/QLKEqBrBXNv
+         DAEIHYbDDL3lR2b6oQAP179LuGd7Tm3gl67ONgA1EbxnFO+GpdHjRTgIaCbHEcGtI7VL
+         Li/aklUcGHCJroE+YMNrfJNqdJGL8RSqIyH4zCi6al8Y1wzXXqxuKG2FcUfaQ025zON1
+         EqHg==
+X-Gm-Message-State: AOJu0YyFKu7bxu//lPHI3TmJ5qsAACuhdwwQxbBMnHYmCp4ACYTdzMXi
+	jiJiRIO0Of4VC/oYfQ0evytyBVjHh9hga3y8G7TwH2i6r+8x7mEiBUfC0kufIys=
+X-Google-Smtp-Source: AGHT+IG6Xu1C1j6SyDZmreNSX8+xfoVcpAMVxiflT3WbYkQ3umBoKf9MN0TWAMy06KSGoLm0U6GKsA==
+X-Received: by 2002:a2e:84cd:0:b0:2cf:2db4:cd84 with SMTP id q13-20020a2e84cd000000b002cf2db4cd84mr772150ljh.49.1706694764460;
+        Wed, 31 Jan 2024 01:52:44 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCVn6dszHl2gPrVUm94CT0J4a9x7kfsAG5Hj3PD80ZzNLeSwkoamvLdSKKTaKtRk6oSlN90EMwaN63rcgt/tJPc5cFZkCN1yV2ChH0Ujbe57KAWr2E2BgTQ2d8dz5W8p6F/2T89v+tEN8rFblqbb8aJVQ07BvyslkrD8XTmmTn4ZnaQICNStWkmmxswOuUqTyApWOFIDmrgvrWer56bdOTO14h8gY/8GJYnVO+ikOw6ggTQajutJj0oH6qYlUNWB6ZmocLNeTufdb/g+wJwpqWCogykXmnfgx3RUFPcKqXKdI/49WbaBVgm/anhAu+K5cH2iwtQj5A7BP4Muuds6wLD+gmohkhr9w6vzNHy6KJtIAVvkkXZfzMVhUSh0kkNRjB5oRltTV4w2/Qgk/8PFwtIF+YnbRSorbmzqxlmTqCl2jTKWpW8ZATL0xI/LSlNQLjy06ON752/jClZj3CCeENZRjv1vnkWskxO15uWAWiz9OvbEZhT8nx8UwUZ2XELt7wN3V489ZXnhTSdzXytxVx4pd/RXSC3Ml84zhUysoaMS0du2ncpX9fB6Fn3D2wJE+SO4EoaXYDyVjRgkb/HnBX9g9F4YfHjIPQDS+LK5nU+ccR5rNYc8TjttcZHfFn5gqHCUx/fPqekaXMt/G7jgBtYHIYly+Zoy63J53TBMZ+lBww7evLpFrdMUYIiI4pwLFcYu2L0MX8s9GtPXIpHrZgw0iILaA58qzlUSevF7S1znTdvBR/GlzgK2K8gY3jz+Q6ioTvisMTIJeKhZIShhZb5/4lJFBqmm4m+SBkQzwsYCmfMKDZeSYbcxAcBlbTasFfeBeW+9dw==
 Received: from [192.168.1.20] ([178.197.222.62])
-        by smtp.gmail.com with ESMTPSA id k7-20020aa7c047000000b0055f3edfc3desm1481087edo.20.2024.01.31.01.50.03
+        by smtp.gmail.com with ESMTPSA id di11-20020a056402318b00b0055ef0105f2fsm3426803edb.80.2024.01.31.01.52.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 31 Jan 2024 01:50:05 -0800 (PST)
-Message-ID: <6473952d-893d-4591-9bfd-dd983313bee9@linaro.org>
-Date: Wed, 31 Jan 2024 10:50:02 +0100
+        Wed, 31 Jan 2024 01:52:43 -0800 (PST)
+Message-ID: <3f906732-74b7-4219-88ee-59509bff8459@linaro.org>
+Date: Wed, 31 Jan 2024 10:52:41 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,6 +80,7 @@ User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v6 4/6] reset: Instantiate reset GPIO controller for
  shared reset-gpios
 Content-Language: en-US
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To: Linus Walleij <linus.walleij@linaro.org>,
  Bartosz Golaszewski <brgl@bgdev.pl>,
  Geert Uytterhoeven <geert+renesas@glider.be>
@@ -101,7 +103,7 @@ Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 References: <20240129115216.96479-1-krzysztof.kozlowski@linaro.org>
  <20240129115216.96479-5-krzysztof.kozlowski@linaro.org>
  <CACRpkdYf4HUaV-Pjr81WjLbzy9zdAnyFWs9gPayPC6-3OjHQwA@mail.gmail.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+ <6473952d-893d-4591-9bfd-dd983313bee9@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -146,120 +148,125 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <CACRpkdYf4HUaV-Pjr81WjLbzy9zdAnyFWs9gPayPC6-3OjHQwA@mail.gmail.com>
+In-Reply-To: <6473952d-893d-4591-9bfd-dd983313bee9@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On 31/01/2024 09:57, Linus Walleij wrote:
-> Hi Krzysztof,
-> 
-> something is odd with the addresses on this patch, because neither GPIO
-
-Nothing is odd - I use get_maintainers.pl which just don't print your
-names. I can add your addresses manually, no problem, but don't blame
-the contributor that get_maintainers.pl has a missing content-regex. If
-you want to be Cced on usage of GPIOs, you need to be sure that
-MAINTAINERS file has appropriate pattern.
-
-
-> maintainer is on CC nor linux-gpio@vger, and it's such a GPIO-related
-> patch. We only saw it through side effects making <linux/gpio/driver.h>
-> optional, as required by this patch.
-> 
-> Please also CC Geert Uytterhoeven, the author of the GPIO aggregator.
-
-
-> 
-> i.e. this:
->> 2. !GPIOLIB stub:
->>    https://lore.kernel.org/all/20240125081601.118051-3-krzysztof.kozlowski@linaro.org/
-> 
-> On Mon, Jan 29, 2024 at 12:53 PM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
-> 
->> Devices sharing a reset GPIO could use the reset framework for
->> coordinated handling of that shared GPIO line.  We have several cases of
->> such needs, at least for Devicetree-based platforms.
+On 31/01/2024 10:50, Krzysztof Kozlowski wrote:
+> On 31/01/2024 09:57, Linus Walleij wrote:
+>> Hi Krzysztof,
 >>
->> If Devicetree-based device requests a reset line, while "resets"
->> Devicetree property is missing but there is a "reset-gpios" one,
->> instantiate a new "reset-gpio" platform device which will handle such
->> reset line.  This allows seamless handling of such shared reset-gpios
->> without need of changing Devicetree binding [1].
+>> something is odd with the addresses on this patch, because neither GPIO
+> 
+> Nothing is odd - I use get_maintainers.pl which just don't print your
+> names. I can add your addresses manually, no problem, but don't blame
+> the contributor that get_maintainers.pl has a missing content-regex. If
+> you want to be Cced on usage of GPIOs, you need to be sure that
+> MAINTAINERS file has appropriate pattern.
+> 
+> 
+>> maintainer is on CC nor linux-gpio@vger, and it's such a GPIO-related
+>> patch. We only saw it through side effects making <linux/gpio/driver.h>
+>> optional, as required by this patch.
 >>
->> To avoid creating multiple "reset-gpio" platform devices, store the
->> Devicetree "reset-gpios" GPIO specifiers used for new devices on a
->> linked list.  Later such Devicetree GPIO specifier (phandle to GPIO
->> controller, GPIO number and GPIO flags) is used to check if reset
->> controller for given GPIO was already registered.
+>> Please also CC Geert Uytterhoeven, the author of the GPIO aggregator.
+> 
+> 
 >>
->> If two devices have conflicting "reset-gpios" property, e.g. with
->> different ACTIVE_xxx flags, this would allow to spawn two separate
->> "reset-gpio" devices, where the second would fail probing on busy GPIO
->> request.
+>> i.e. this:
+>>> 2. !GPIOLIB stub:
+>>>    https://lore.kernel.org/all/20240125081601.118051-3-krzysztof.kozlowski@linaro.org/
 >>
->> Link: https://lore.kernel.org/all/YXi5CUCEi7YmNxXM@robh.at.kernel.org/ [1]
->> Cc: Bartosz Golaszewski <brgl@bgdev.pl>
->> Cc: Chris Packham <chris.packham@alliedtelesis.co.nz>
->> Cc: Sean Anderson <sean.anderson@seco.com>
->> Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> (...)
+>> On Mon, Jan 29, 2024 at 12:53 PM Krzysztof Kozlowski
+>> <krzysztof.kozlowski@linaro.org> wrote:
+>>
+>>> Devices sharing a reset GPIO could use the reset framework for
+>>> coordinated handling of that shared GPIO line.  We have several cases of
+>>> such needs, at least for Devicetree-based platforms.
+>>>
+>>> If Devicetree-based device requests a reset line, while "resets"
+>>> Devicetree property is missing but there is a "reset-gpios" one,
+>>> instantiate a new "reset-gpio" platform device which will handle such
+>>> reset line.  This allows seamless handling of such shared reset-gpios
+>>> without need of changing Devicetree binding [1].
+>>>
+>>> To avoid creating multiple "reset-gpio" platform devices, store the
+>>> Devicetree "reset-gpios" GPIO specifiers used for new devices on a
+>>> linked list.  Later such Devicetree GPIO specifier (phandle to GPIO
+>>> controller, GPIO number and GPIO flags) is used to check if reset
+>>> controller for given GPIO was already registered.
+>>>
+>>> If two devices have conflicting "reset-gpios" property, e.g. with
+>>> different ACTIVE_xxx flags, this would allow to spawn two separate
+>>> "reset-gpio" devices, where the second would fail probing on busy GPIO
+>>> request.
+>>>
+>>> Link: https://lore.kernel.org/all/YXi5CUCEi7YmNxXM@robh.at.kernel.org/ [1]
+>>> Cc: Bartosz Golaszewski <brgl@bgdev.pl>
+>>> Cc: Chris Packham <chris.packham@alliedtelesis.co.nz>
+>>> Cc: Sean Anderson <sean.anderson@seco.com>
+>>> Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> (...)
+>>
+>> In my naive view, this implements the following:
+>>
+>> reset -> virtual "gpio" -> many physical gpios[0..n]
 > 
-> In my naive view, this implements the following:
+> It does not, there is no single GPIO here. There is a single reset
+> controller, though, but still multiple GPIOs in DTS.
 > 
-> reset -> virtual "gpio" -> many physical gpios[0..n]
-
-It does not, there is no single GPIO here. There is a single reset
-controller, though, but still multiple GPIOs in DTS.
-
+>>
+>> So if there was already a way in the kernel to map one GPIO to
+>> many GPIOs, the framework could just use that with a simple
+>> single GPIO?
+>>
+>> See the bindings in:
+>> Documentation/devicetree/bindings/gpio/gpio-delay.yaml
+>>
+>> This is handled by drivers/gpio/gpio-aggregator.c.
+>>
+>> This supports a 1-to-1 map: one GPIO in, one GPIO out, same offset.
+>> So if that is extended to support 1-to-many, this problem is solved.
 > 
-> So if there was already a way in the kernel to map one GPIO to
-> many GPIOs, the framework could just use that with a simple
-> single GPIO?
+> It does not match the hardware thus I don't know how to implement it in
+> DTS while keeping the requirement that we are describing hardware, not
+> OS abstractions.
 > 
-> See the bindings in:
-> Documentation/devicetree/bindings/gpio/gpio-delay.yaml
+>>
+>> Proposed solution: add a single boolean property such as
+>> aggregate-all-gpios; to the gpio-delay node, making it provide
+>> one single gpio at offset 0 on the consumer side, and refuse any
+>> more consumers.
 > 
-> This is handled by drivers/gpio/gpio-aggregator.c.
+> And how do you solve the reset requirements? The problem is not just to
+> share GPIO. The problem is to share in a way that devices operate
+> properly when they assert/deassert reset.
 > 
-> This supports a 1-to-1 map: one GPIO in, one GPIO out, same offset.
-> So if that is extended to support 1-to-many, this problem is solved.
-
-It does not match the hardware thus I don't know how to implement it in
-DTS while keeping the requirement that we are describing hardware, not
-OS abstractions.
-
+>>
+>> This will also solve the problem with induced delays on
+>> some GPIO lines as I can see was discussed in the bindings,
+>> the gpio aggregator already supports that, but it would work
+>> fine with a delay being zero as well.
+>>
+>> This avoids all the hackery with driver stubs etc as well.
 > 
-> Proposed solution: add a single boolean property such as
-> aggregate-all-gpios; to the gpio-delay node, making it provide
-> one single gpio at offset 0 on the consumer side, and refuse any
-> more consumers.
-
-And how do you solve the reset requirements? The problem is not just to
-share GPIO. The problem is to share in a way that devices operate
-properly when they assert/deassert reset.
-
 > 
-> This will also solve the problem with induced delays on
-> some GPIO lines as I can see was discussed in the bindings,
-> the gpio aggregator already supports that, but it would work
-> fine with a delay being zero as well.
+> So none of these ideas were posted in previous threads, just because you
+> were not CCed (except one thread)?
 > 
-> This avoids all the hackery with driver stubs etc as well.
+> https://lore.kernel.org/lkml/20191030120440.3699-1-peter.ujfalusi@ti.com/
+> https://lore.kernel.org/all/9eebec9b-e6fd-4a22-89ea-b434f446e061@linaro.org/
+> https://lore.kernel.org/all/20231018100055.140847-1-krzysztof.kozlowski@linaro.org/
+> https://social.treehouse.systems/@marcan/111268780311634160
+> 
 
+And here:
 
-So none of these ideas were posted in previous threads, just because you
-were not CCed (except one thread)?
-
-https://lore.kernel.org/lkml/20191030120440.3699-1-peter.ujfalusi@ti.com/
-https://lore.kernel.org/all/9eebec9b-e6fd-4a22-89ea-b434f446e061@linaro.org/
-https://lore.kernel.org/all/20231018100055.140847-1-krzysztof.kozlowski@linaro.org/
-https://social.treehouse.systems/@marcan/111268780311634160
-
-Please implement some custom lei filter, so you will get such
-notifications earlier. We keep discussing this for many months on
-various attempts and this specific attempt already reached v6.
+https://lore.kernel.org/all/CAL_JsqL3oZXJJ5_i4BRGpvWu1X8QFB7OGG=D+zLvvWb=UR1mWg@mail.gmail.com/
+which the place where this idea of using resets appeared. I agree that
+you were not CCed there, but that only means you miss lei filters or
+pattern in MAINTAINERS.
 
 Best regards,
 Krzysztof
