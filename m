@@ -1,67 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-9260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD0C484433E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 16:41:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 909418443B4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 17:09:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 89718292852
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 15:41:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1647B28FAAB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 16:09:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC5901292FD;
-	Wed, 31 Jan 2024 15:41:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FRtAQL4P"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51A1812A169;
+	Wed, 31 Jan 2024 16:08:57 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF921292DB;
-	Wed, 31 Jan 2024 15:41:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CA3884A2D;
+	Wed, 31 Jan 2024 16:08:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706715693; cv=none; b=BhdvEvTEHEdeL8qX2R9WSE6jBXGw39Bj/ARznhkK3t7S4GofSC1K1zy2JlMadE6APwxHkCLztwGBQ1pxmlg4eDcLHag8K5M55PKSMV4gCSkmNq1Gfq+TIFE9Usg5Ax7mXvKmp0oy34PI0meh0+9rW3aKa240F53B6Q2kI2XalTU=
+	t=1706717337; cv=none; b=X5dM1BfwUPAt68qWuEqD1FiHbYrL2nfMfRxS4I69E54cxNAW4Rn9KPQbVIWDQJKEXjuvUiT4YklvIO9k/MotSvn8DySKxXn2X2Os6R6gA7n3OWo7YsXVVqjnddklN8xuHrU/Hdc/3CjOE771b4BYr9z1BqHp+GxGkAN0nt0SUlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706715693; c=relaxed/simple;
-	bh=3qc1rD4OFMv152sahNdXzftZFYLPE8J6IdJzNl7A+Ds=;
+	s=arc-20240116; t=1706717337; c=relaxed/simple;
+	bh=MSYUWffMJFbDudCRxBvDmOdHQFu/qboKRVvrratEScw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=diKQ/VDm9521SCHqRkRqA6GHQJyu/2hcRpcYrkEW9gYdItby9eHFPedSvsqzn57PL5ESH32F3tIBfHCswj+6pKN7UI+sL90T0/XzXGd0OhI3BiOFztC973Xsorr3j22qtbqnH5IpYtdmDFhxyERBtxe90mlLKQcYkqDrd4a+zbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FRtAQL4P; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3173C433F1;
-	Wed, 31 Jan 2024 15:41:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706715693;
-	bh=3qc1rD4OFMv152sahNdXzftZFYLPE8J6IdJzNl7A+Ds=;
-	h=Date:From:To:List-Id:Cc:Subject:References:In-Reply-To:From;
-	b=FRtAQL4P2fhakKD2lJx59bZVG04GXx7y4JYKjGa+TfPz19YHtsNCYxdYxO2R/4cia
-	 htqqKdIcuJ4VgdOENNbO4VDzCy3QNTuAAgSNWR0F56Qf4gIDusNFeUDRn1wQCCSsc/
-	 tKrMQf3JkJYbv1lPvfRD3ECUcjr+aFr3RMdznjYszREWAJ3N31k/FJ+q3Iclhu9Qw8
-	 aFltwZXEhhgSEBRWhGF1kC4N/rsqr28rXjRUsrCQ7Ohw+gONEC5Xk/GuskxqXocWUs
-	 Gv83hNk5WwjGn0HXBvlbWsY+IJm5mWX3HntsBE07tD75eZTAmvtjDuWqvZe8Wj9MG1
-	 rYiJHBtzdJtYw==
-Date: Wed, 31 Jan 2024 09:41:30 -0600
-From: Rob Herring <robh@kernel.org>
-To: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
-Cc: catalin.marinas@arm.com, will@kernel.org, frowand.list@gmail.com,
-	vgupta@kernel.org, arnd@arndb.de, olof@lixom.net, soc@kernel.org,
-	guoren@kernel.org, monstr@monstr.eu, palmer@dabbelt.com,
-	aou@eecs.berkeley.edu, dinguyen@kernel.org, chenhuacai@kernel.org,
-	tsbogend@alpha.franken.de, jonas@southpole.se,
-	stefan.kristiansson@saunalahti.fi, shorne@gmail.com,
-	mpe@ellerman.id.au, ysato@users.sourceforge.jp, dalias@libc.org,
-	glaubitz@physik.fu-berlin.de, richard@nod.at,
-	anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net,
-	chris@zankel.net, jcmvbkbc@gmail.com,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	kernel@quicinc.com
-Subject: Re: [PATCH 14/46] sh: reserved_mem: Implement the new processing
- order for reserved memory
-Message-ID: <20240131154130.GA1336725-robh@kernel.org>
-References: <20240126235425.12233-1-quic_obabatun@quicinc.com>
- <20240126235425.12233-15-quic_obabatun@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=jKPmpMdWFsUYj57ir2GLWEN4FI1UkfgdktMjCtNaSLBv4cNlDSAFvBpeDalkF/giiHorW234mFPhvn6fYHPlu4lQhmlse7XP5DV7t71q7jFYdhGWB0DKNIDj8/8wltxiQ3xbzgP1wK9Y9jszYiWQbnw8A4UPW3UqxaWPrUeTxwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 16949DA7;
+	Wed, 31 Jan 2024 08:09:37 -0800 (PST)
+Received: from bogus (unknown [10.57.78.35])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DD4A03F762;
+	Wed, 31 Jan 2024 08:08:50 -0800 (PST)
+Date: Wed, 31 Jan 2024 16:08:48 +0000
+From: Sudeep Holla <sudeep.holla@arm.com>
+To: Pierre Gondois <pierre.gondois@arm.com>
+Cc: Sibi Sankar <quic_sibis@quicinc.com>, cristian.marussi@arm.com,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	linux-arm-kernel@lists.infradead.org, sboyd@kernel.org,
+	lukasz.luba@arm.com, dietmar.eggemann@arm.com,
+	morten.rasmussen@arm.com, viresh.kumar@linaro.org,
+	rafael@kernel.org, linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_mdtipton@quicinc.com,
+	linux-arm-msm@vger.kernel.org, nm@ti.com
+Subject: Re: [PATCH 2/3] firmware: arm_scmi: Add support for marking certain
+ frequencies as boost
+Message-ID: <20240131160848.662dhaoiov3trt4i@bogus>
+References: <20240117110443.2060704-1-quic_sibis@quicinc.com>
+ <20240117110443.2060704-3-quic_sibis@quicinc.com>
+ <e3abe1ab-064f-4a6a-a91d-fe8c91574600@arm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,58 +58,59 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240126235425.12233-15-quic_obabatun@quicinc.com>
+In-Reply-To: <e3abe1ab-064f-4a6a-a91d-fe8c91574600@arm.com>
 
-On Fri, Jan 26, 2024 at 03:53:53PM -0800, Oreoluwa Babatunde wrote:
-> Call early_fdt_scan_reserved_mem() in place of
-> early_init_fdt_scan_reserved_mem() to carry out the first stage of the
-> reserved memory processing only.
+On Wed, Jan 31, 2024 at 03:29:43PM +0100, Pierre Gondois wrote:
+> Hello Sibi,
 > 
-> The early_fdt_scan_reserved_mem() function is used to scan through the
-> DT and mark all the reserved memory regions as reserved or nomap as
-> needed, as well as allocate the memory required by the
-> dynamically-placed
-> reserved memory regions.
-> 
-> The second stage of the reserved memory processing is done by
-> fdt_init_reserved_mem(). This function is used to store the information
-> of the statically-placed reserved memory nodes in the reserved_mem
-> array as well as call the region specific initialization function on all
-> the stored reserved memory regions.
-> 
-> The call to fdt_init_reserved_mem() is placed right after
-> early_fdt_scan_reserved_mem() because memblock allocated memory should
-> already be writable at this point.
-> 
-> Signed-off-by: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
-> ---
->  arch/sh/boards/of-generic.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/sh/boards/of-generic.c b/arch/sh/boards/of-generic.c
-> index f7f3e618e85b..7bec409f077c 100644
-> --- a/arch/sh/boards/of-generic.c
-> +++ b/arch/sh/boards/of-generic.c
-> @@ -8,6 +8,7 @@
->  #include <linux/of.h>
->  #include <linux/of_clk.h>
->  #include <linux/of_fdt.h>
-> +#include <linux/of_reserved_mem.h>
->  #include <linux/clocksource.h>
->  #include <linux/irqchip.h>
->  #include <asm/machvec.h>
-> @@ -110,7 +111,8 @@ static int noopi(void)
->  static void __init sh_of_mem_reserve(void)
->  {
->  	early_init_fdt_reserve_self();
-> -	early_init_fdt_scan_reserved_mem();
-> +	early_fdt_scan_reserved_mem();
-> +	fdt_init_reserved_mem();
+> On 1/17/24 12:04, Sibi Sankar wrote:
+> > All opps above the sustained level/frequency are treated as boost, so mark
+> > them accordingly.
+> > 
+> > Suggested-by: Sudeep Holla <sudeep.holla@arm.com>
+> > Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> > ---
+> >   drivers/firmware/arm_scmi/perf.c | 11 ++++++++++-
+> >   1 file changed, 10 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
+> > index e286f04ee6e3..d3fb8c804b3d 100644
+> > --- a/drivers/firmware/arm_scmi/perf.c
+> > +++ b/drivers/firmware/arm_scmi/perf.c
+> > @@ -811,7 +811,7 @@ static int scmi_dvfs_device_opps_add(const struct scmi_protocol_handle *ph,
+> >   				     struct device *dev, u32 domain)
+> >   {
+> >   	int idx, ret;
+> > -	unsigned long freq;
+> > +	unsigned long freq, sustained_freq;
+> >   	struct dev_pm_opp_data data = {};
+> >   	struct perf_dom_info *dom;
+> > @@ -819,12 +819,21 @@ static int scmi_dvfs_device_opps_add(const struct scmi_protocol_handle *ph,
+> >   	if (IS_ERR(dom))
+> >   		return PTR_ERR(dom);
+> > +	if (!dom->level_indexing_mode)
+> > +		sustained_freq = dom->sustained_perf_level * dom->mult_factor;
+> > +	else
+> > +		sustained_freq = dom->sustained_freq_khz * dom->mult_factor;
+> > +
+> >   	for (idx = 0; idx < dom->opp_count; idx++) {
+> >   		if (!dom->level_indexing_mode)
+> >   			freq = dom->opp[idx].perf * dom->mult_factor;
+> >   		else
+> >   			freq = dom->opp[idx].indicative_freq * dom->mult_factor;
+> > +		/* All opps above the sustained level/frequency are treated as boost */
+> > +		if (sustained_freq && freq > sustained_freq)
+>
+> It seems the sustained_freq is not optional since SCMI v1.0,
+> is it necessary to check that (sustained_freq != 0) ?
+>
 
-Looking at the sh code, there's an existing problem with the order of
-init. This is called from paging_init() and is done after unflattening
-and copying the DT. That means the kernel could freely allocate memory
-for the DT in a reserved region.
+Technically correct, we don't have to. But since day 1, we checked and
+handled 0 for perf_level specifically to avoid division by zero. I am
+just worried if there are any platforms in the wild with these values as
+0. We can start without the check and add it if someone complains perhaps ?
 
-Rob
+-- 
+Regards,
+Sudeep
 
