@@ -1,55 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-9238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7CE78843E7E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 12:36:59 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A824B843EB1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 12:46:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 39A5A28D5D0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 11:36:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D59B41C23097
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 11:46:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1BCD74E3E;
-	Wed, 31 Jan 2024 11:35:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A35876023;
+	Wed, 31 Jan 2024 11:46:04 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B02F91E522;
-	Wed, 31 Jan 2024 11:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4ACB274E0D;
+	Wed, 31 Jan 2024 11:46:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706700934; cv=none; b=FHQvtnJZtGNgzIge0FRZhQA7lkIK/h/F1FJZE6BncN11Fi2ei5QF5qpH8N7oBUf4sqKEPNjxeDtYmhPA8JuYfjAyY00aqYSSgPQregX6aqqA6Bqjyr6NAFdj2Mc7S9iuSQBTOn65PWgc20NkXQtXI5mJEs1G/Iw3KAWwQTQiiHo=
+	t=1706701564; cv=none; b=Vbvq78Dqx42QDSFL6rpn+9shglxCvyRA8+eXelvaHZ7qfVYWfw/vcb3IUqFkbK0xtwVC83lRt0GJV+ijWtyANWgGb5m2WB7uVxRL0EdN3pn07mA5WxxzhMq/9nVqcgbLZ5lgkqHX+DsPvPPooplMzuJytr4DfbOSqj9Q6nYfUIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706700934; c=relaxed/simple;
-	bh=izE1H+fGsLUgCjynXXUT4yExr6tCiZIXXQ1O+xf9IZ0=;
+	s=arc-20240116; t=1706701564; c=relaxed/simple;
+	bh=YKwxxEVjTT8reMyzHc/tCez2ZRFnGM3A7kBKxL9R2ig=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lI2lLrbadew5X5ma6ey8IHxDIvEbiWjZC0M8LVL8TCcumV8uuDYKfOfbEcGSSCQSnO0xnifEj1CwW6SAJ13lCDyqP3eLrj3DLRDDX4XefGpb8Krk7wQS5qKXrjbS71BhWrAtjaucgD87N28jIZa+1UJB8F9pXg8CoxGiePfTeGM=
+	 Content-Type:Content-Disposition:In-Reply-To; b=KV0jB37YqGTwG07YsLxKICypEJ5Ry0I0z7dmfesBV7Ela7rVrcpWGgmNjjCgFzTAxq2UmG0toGIYl7xnICwjOBPDjklOodKxtDm0+iS6pTl900mfhWAj58wCbj0i2JDQJqHpHTm/d84clJfrwQvSpJxHYNEb3cGcSQE8Zb1EtjI=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A134CDA7;
-	Wed, 31 Jan 2024 03:36:15 -0800 (PST)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CF5BCDA7;
+	Wed, 31 Jan 2024 03:46:43 -0800 (PST)
 Received: from pluto (unknown [172.31.20.19])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2A8F73F762;
-	Wed, 31 Jan 2024 03:35:30 -0800 (PST)
-Date: Wed, 31 Jan 2024 11:35:27 +0000
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4AD343F762;
+	Wed, 31 Jan 2024 03:45:58 -0800 (PST)
+Date: Wed, 31 Jan 2024 11:45:47 +0000
 From: Cristian Marussi <cristian.marussi@arm.com>
-To: Sudeep Holla <sudeep.holla@arm.com>
-Cc: Sibi Sankar <quic_sibis@quicinc.com>, rafael@kernel.org,
-	viresh.kumar@linaro.org, morten.rasmussen@arm.com,
-	dietmar.eggemann@arm.com, lukasz.luba@arm.com,
-	linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_mdtipton@quicinc.com,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH V2 1/4] firmware: arm_scmi: Add perf_notify_support
- interface
-Message-ID: <ZbowcUEa3-gxqzXp@pluto>
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: sudeep.holla@arm.com, rafael@kernel.org, viresh.kumar@linaro.org,
+	morten.rasmussen@arm.com, dietmar.eggemann@arm.com,
+	lukasz.luba@arm.com, linux-arm-kernel@lists.infradead.org,
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_mdtipton@quicinc.com, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH V2 2/4] firmware: arm_scmi: Add perf_freq_xlate interface
+Message-ID: <Zboy64oByO-BlG6z@pluto>
 References: <20240117104116.2055349-1-quic_sibis@quicinc.com>
- <20240117104116.2055349-2-quic_sibis@quicinc.com>
- <ZbfJN1c9viiLhO1L@pluto>
- <ZbfhdqBBpjyf3IRI@pluto>
- <20240131112854.24euh6c6xgljsj6c@bogus>
+ <20240117104116.2055349-3-quic_sibis@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,40 +53,65 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240131112854.24euh6c6xgljsj6c@bogus>
+In-Reply-To: <20240117104116.2055349-3-quic_sibis@quicinc.com>
 
-On Wed, Jan 31, 2024 at 11:28:54AM +0000, Sudeep Holla wrote:
-> On Mon, Jan 29, 2024 at 05:33:42PM +0000, Cristian Marussi wrote:
-> > On Mon, Jan 29, 2024 at 03:50:20PM +0000, Cristian Marussi wrote:
-> > > On Wed, Jan 17, 2024 at 04:11:13PM +0530, Sibi Sankar wrote:
-> > > > Add a new perf_notify_support interface to the existing perf_ops to export
-> > > > info regarding limit/level change notification support.
-> > > > 
-> > > 
-> > > Hi Sibi,
-> > > 
-> > > as I mentioned previously, in order not to add a needless stream of SCMI
-> > > Perf accessors I posted this:
-> > > 
-> > > https://lore.kernel.org/linux-arm-kernel/20240129151002.1215333-1-cristian.marussi@arm.com/T/#u
-> > > 
-> > > to expose all the Perf domains infos via the usual info_get(), similarly
-> > > to how other SCMI protocols do already.
-> > > 
-> > > I think that reworking this series on that, you can certainly drop this patch and just
-> > > check the _notify booleans on the retrieved domain info.
-> > 
-> > Sorry, but hold on with this change, I will probably post an updated version
-> > my patch above.
-> > 
+On Wed, Jan 17, 2024 at 04:11:14PM +0530, Sibi Sankar wrote:
+> Add a new perf_freq_xlate interface to the existing perf_ops to translate
+> a given perf index to frequency.
 > 
-> As discussed in private, I would prefer to avoid exposing all the internals
-> to the users of SCMI perf. At the same time may we can do better if we can
-> check the availability of notification as part of notification enablement
-> from the SCMI driver, I need to think the details yet.
+> This can be used by the cpufreq driver and framework to determine the
+> throttled frequency from a given perf index and apply HW pressure
+> accordingly.
+> 
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+> 
+> v2:
+> * Rename opp_xlate -> freq_xlate [Viresh]
+> 
+>  drivers/firmware/arm_scmi/perf.c | 21 +++++++++++++++++++++
+>  include/linux/scmi_protocol.h    |  3 +++
+>  2 files changed, 24 insertions(+)
+> 
+> diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
+> index ae7681eda276..e286f04ee6e3 100644
+> --- a/drivers/firmware/arm_scmi/perf.c
+> +++ b/drivers/firmware/arm_scmi/perf.c
+> @@ -977,6 +977,26 @@ static int scmi_notify_support(const struct scmi_protocol_handle *ph, u32 domain
+>  	return 0;
+>  }
+>  
+> +static int scmi_perf_freq_xlate(const struct scmi_protocol_handle *ph, u32 domain,
+> +				int idx, unsigned long *freq)
+> +{
+> +	struct perf_dom_info *dom;
+> +
+> +	dom = scmi_perf_domain_lookup(ph, domain);
+> +	if (IS_ERR(dom))
+> +		return PTR_ERR(dom);
+> +
+> +	if (idx >= dom->opp_count)
+> +		return -ERANGE;
+> +
+> +	if (!dom->level_indexing_mode)
+> +		*freq = dom->opp[idx].perf * dom->mult_factor;
+> +	else
+> +		*freq = dom->opp[idx].indicative_freq * dom->mult_factor;
+> +
 
-Yes a patch is under-work to avoid exposing too much Perf info AND to
-avoid adding ad-hoc accessors like xlate, in this case.
+As said elsewhere the plan would be to change slightly the SCMI core to
+avoid the need for this patch and the previous one (while NOT exposing
+too much Perf info)...
+
+... anyway just looking at the above freq calc logic in this patch, be
+aware that as it stands it seems to me broken, since the idx you use to
+peek into the opp array comes (in the next patch) from the range_max
+carried by the notification and that can be, indeed, a perf_level OR a
+perf_index BUT it is absolutely NOT guaranteed to be an index into the
+opp[] array...so it may work in your case if you have a platform
+defining level or indexes matching the opp[] indexes BUT it is not true
+in general. (but as said, this will be handled by the core and possibly
+this patch dropped...)
 
 Thanks,
 Cristian
