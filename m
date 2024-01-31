@@ -1,112 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-9182-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBEBD843788
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 08:17:13 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4889684380E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 08:40:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7C3981F22330
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 07:17:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6DBBE1C226A7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 07:40:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38E124E1A8;
-	Wed, 31 Jan 2024 07:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6932654BD8;
+	Wed, 31 Jan 2024 07:40:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="skGgilxU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wyTq+ijN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41EF455782
-	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 07:17:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7934C53E25
+	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 07:40:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706685430; cv=none; b=qge/WrucC8a3YPbwlwWRi1/uFe7C+apohnV1e7eGSwv1JCwHwjKjizshYe3x8vsFl/LODamNN6S+dvdTnmGV+NnlAk7h8fRPlgrONLvmF0gL/ZmlPl7edGssgfXSSXHi8cpAD5bpUeTIjAulGN+xkqqHqUSHMcO2thTfAdogZmI=
+	t=1706686834; cv=none; b=BGIAxOns1/KdgE/BmVTq0Da8PAYvg/wdapWJjrF28e1OExixkVp0v+UXYtGV0sTf3bv7FxVnDrY0OWMUeP+NPS/FH0+9EO2mA4FMrmszqh6ssMQABjf/9ckkdeZ9eExg5HEUXQNJl1NPxfO2N8xWaedQp5ItoUgGHCkxMsHKI30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706685430; c=relaxed/simple;
-	bh=SBwf/LLGCzAHLu6vwrpQFfw+tJTtM2sMiItF7LdOdsk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=R/jsk06gogrlS/oWcDrfHdC2iRgp32d+egPZUbkiK9spQOSEyjqZSVJRdiD03wTshXY+lGdUmkkI5qAyLP57Xp6iJPasl+/Q3vRWuxJXW5V6p/v6x4WkBtaxUq3y0TpDPL6chJa6jAcmVGja5XqsrsrUiad9E/IOCDQC78WGnBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=skGgilxU; arc=none smtp.client-ip=209.85.219.181
+	s=arc-20240116; t=1706686834; c=relaxed/simple;
+	bh=Fk7et5LoRmj12wM/kDqH3aAquXg/E037WnSi/+YVB0U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=G6iwH0gT5uoG3u5xVRHf2NnIH25uLlSMAIsh6r5pHF1niXBtlou7tvV15Kuhei0F6EAnHC60yvHeBdq4eHFsK5yNWlp2GrUpyq9yJQjbKFDOpoUHlzQff809nEJjodsNoY8tksf6ztL8yD2eilrXg2gzaMCq6G9ptaHUGr8uQD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wyTq+ijN; arc=none smtp.client-ip=209.85.218.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-dc238cb1b17so5151903276.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 23:17:07 -0800 (PST)
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a28a6cef709so641799166b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 23:40:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706685427; x=1707290227; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=i++Ghkf0yxbfp+SFq64kOAC5DCFdLn2FGQfA07BzBKg=;
-        b=skGgilxUjyHfYPott6hjnYEwUcGIIw0iLZ79jmZDeoTwQ39TGuwMbYfSOSeR1xlylj
-         KmPNLTPoxFsJwxfzStCQBl9x0+j+gA5Yvjo3wYuxEPKriaQgq2ByUszH4EPwE35vBKzY
-         GaXKNuo/7a+G7t0FcS4oRg5A3f2GO1a/A9LAKud+MnfzVLc/FwUkfunju5D9hFFhavbq
-         ZGICYfM7Yv7s2aPLbMBG9JNBR0wTf34KCtRDGW9T+8pXqVz9FcClOQNMF6FdVbKI3KpA
-         qFQIIxUU3o45sNSE1RBBvB536zGlzscmCRlaNiu3jGFNQtxkpJSI73D0DaNVU2ivhgB3
-         Np5g==
+        d=linaro.org; s=google; t=1706686830; x=1707291630; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ISicW6vjdRK0zHC7sP+yqk9wJ8Zg4XC8YnF5r9FPgH0=;
+        b=wyTq+ijNgLF7lLzooRX4GEejwMcSs90vLWoDGsFVN3ecVn7xH9iw/tDvtzYp4d19FP
+         NLJApGQwJaKXRepYJFyZPwl22EOc5JcxcbGZYKTO6s4OCbHSQ5tSySQnnMXsJWe+Zduu
+         nmWrpUX6Sp5yvywCU0JkV+tQm6/9T6yiRgrMPfNNjG1nm00UtjPhz2bQrpOA19V6lrgn
+         xhsWWw2SJkcUkp1tpMSGnj5IMkcisRH2Kmewe/LdqRgJ8jDCdnlmLCD+z6Q8juOwdeac
+         eNyoN67t6T/li44fqSUzhDitbMlHSpOv+WaVRYFUqK7Tkf6F6wPgBVbe421402u1dh9X
+         cMiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706685427; x=1707290227;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=i++Ghkf0yxbfp+SFq64kOAC5DCFdLn2FGQfA07BzBKg=;
-        b=WMrNQClsY9uioaHwOOlKcL23P5ORDmqr2ymPjHTRgunV2x/3vdcs9t30i4gWhwgMeq
-         xAnuGC80YI1B2kStEuTLIyxSx8vdKQl11ZDZ8cLrCjmMmpz/9g20CbkU4rzzR6jFgbi8
-         hGICxoMMsmqcqpcoH9tIdSx/EtHcPbeiTgrYn+ptyQMBKeHFlLKbdXg8Ftn4GBagxvR4
-         edapDRu8ZNg3sO4P1U84Vo2wpjD8ITQazypWvC+P/KSKtjmkMvlTHpVzy4uaEWd+CtBu
-         NTZUSsOgw7K3+6k+/SZFsZOtCINTMai8y6HqNK8Fb4MGpPKShzEAhl8HAbsuqONTJtmw
-         FndQ==
-X-Gm-Message-State: AOJu0Yyd0A50CAxusrWLaLlcp3QDKE09j2asCADQRYUjxWRUJHuwjuOF
-	LTCYX3WoDaxGxCKUhQBFY2LzmSUWf8WJXoJiZpYJtzC+IrwSvbyd7ik1+eriUttbMHfh+Hw+zW9
-	1VEFnP5XLOCAF6Ucy4fGn5BzBYnd+JhKDp4KsSg==
-X-Google-Smtp-Source: AGHT+IFTNzxcPE7P1aDSv5JKuBB1enENzJJokT41i2jNc0I+1qhMXhMXCe1ePN6biXsX0bf+Ecr83unT7phgH6+21hA=
-X-Received: by 2002:a25:6b44:0:b0:dc2:2e50:dc4b with SMTP id
- o4-20020a256b44000000b00dc22e50dc4bmr894449ybm.52.1706685427161; Tue, 30 Jan
- 2024 23:17:07 -0800 (PST)
+        d=1e100.net; s=20230601; t=1706686830; x=1707291630;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ISicW6vjdRK0zHC7sP+yqk9wJ8Zg4XC8YnF5r9FPgH0=;
+        b=dK3aEvKhsrvXSKrxwAsMjq+Oav4xKxIhhNckKKliEBbWnwrWTxd4y3SHAaOdFk3paD
+         r1zQJg/RolJ9o5UfeZKL5kKCnP/ix+MmT7WYK03kY5ixxASaN4kawduA925y46Wg4nsS
+         1kpS4tPKW/saUQMLd7Pm4nvizrTIdaWEj4/KtwvD7q/B2O2faK3SlJloPrb9aNxAJqMv
+         glX8Ke/RGtMKHzZXl+VSvNB1w/lg0RzFOL9oEku1tPwQrFnmMSx7onzNEzcE2/vxrT5T
+         b5cAzhdau8TeGJJBrTdlgP1igIQd/9p+P0voCS31oItuQLi/4KQaa+Om6l2yyYnH/BNF
+         phBA==
+X-Gm-Message-State: AOJu0YzFmJkzDnBjjTaA9wumLRCG4jB/pSqlbnvzp14dIEzCgCCtPxKL
+	ConLu4/XQxD9Ei7cvXn6x7ISAvHqxWMjC7qKzv2fCCjlxmmLpImnVkDNzXHzbM8=
+X-Google-Smtp-Source: AGHT+IE/tD7Sd9+HJ9DRE/lUIFcjX46VypL9fLqj23NXhB7eQGC+73r+DgqroNfxJMRna2/kR+/oaw==
+X-Received: by 2002:a17:906:806:b0:a36:459:51fd with SMTP id e6-20020a170906080600b00a36045951fdmr520953ejd.69.1706686830640;
+        Tue, 30 Jan 2024 23:40:30 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCV427xW5gojV3N9cr0ycw5PgK9jft+f+uXyr/VwSPVcpiAPwJnOEjMtSDs6US9d22tqBRA/2vQZ8mDnVPFihAhREynUnfw/winZlNqxv2b2n2jQe043RLrM4MkfcPtQt/U/rAX2terlaqKZbueSJZQA5S8IpS4KI+OAkixBqeyYQCnW81QbfAYcNx8yVaRDTiIjQtCf5wEgeLFiu2fCl6ONqYVJIaJHWtQ8s4r5B8enQ5kZQ2CXCIfglKxgoo4RrWlP0sywyJqZZ2qfis00v7rVvJ5hSDprn++PU3ZQHLvOVFtCGjyDCTZTcDjuqsuVTJ6GLZE7lWDNANnQhNqGZfbKTvotbbNBwokOlK1DYqEyijdsE7cDjDfcRH8mQd03gNXl2W3k6il6ThqZ8qAdZpob+CkKpoFHmn/eGelnaZW3QxkerHnjebIOv7joo/tNMqFV6yWF+Ywtsdnh5utI3g8sTGLhET2/PlJLyauzMV5MkW13exN7t0jhRIqalbZRYaasPjYL6rNqYO235hiCoClR/AzgQyOIfipEtBoza+P5Vwj/owFSG/N/YBO4l8RlMds+pQSF2j5PP0oRbWooXfab3w0/FB+PoqQ0ahKt77Eeti+Y2PvEeL2q05iKdHpbEZJu0FFRtECapc2KKcWA6SwdlthRldiOkGM9ZZAFiOoMlZUOaCufivoxhZZoHOOsDXdQIrdCPzhqrA==
+Received: from [192.168.1.20] ([178.197.222.62])
+        by smtp.gmail.com with ESMTPSA id sf5-20020a1709078a8500b00a353bfdd411sm4774695ejc.59.2024.01.30.23.40.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Jan 2024 23:40:29 -0800 (PST)
+Message-ID: <12141842-cae1-46ff-b2ec-23b947aecd00@linaro.org>
+Date: Wed, 31 Jan 2024 08:40:27 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240131-ufs-phy-clock-v3-0-58a49d2f4605@linaro.org> <20240131-ufs-phy-clock-v3-2-58a49d2f4605@linaro.org>
-In-Reply-To: <20240131-ufs-phy-clock-v3-2-58a49d2f4605@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 31 Jan 2024 09:16:56 +0200
-Message-ID: <CAA8EJpqGhUiF6is9K0OeB+DW5BmTTEEvk1sEDkxV+cN5BWpNnw@mail.gmail.com>
-Subject: Re: [PATCH v3 02/17] phy: qcom-qmp-ufs: Switch to devm_clk_bulk_get_all()
- API
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-clk@vger.kernel.org, quic_cang@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/2] dt-bindings: arm: coresight: Remove pattern match
+ of ETE node name
+Content-Language: en-US
+To: Bjorn Andersson <andersson@kernel.org>,
+ Mao Jinlong <quic_jinlmao@quicinc.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
+ Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
+ Leo Yan <leo.yan@linaro.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio
+ <konrad.dybcio@linaro.org>, Mathieu Poirier <mathieu.poirier@linaro.org>,
+ coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Tao Zhang <quic_taozha@quicinc.com>
+References: <20240119092500.7154-1-quic_jinlmao@quicinc.com>
+ <20240119092500.7154-2-quic_jinlmao@quicinc.com>
+ <px3fj5e4mk3siruehhmazxnxbrleetdpb2slt64agtvbcqhts2@gmrtdonybmzd>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <px3fj5e4mk3siruehhmazxnxbrleetdpb2slt64agtvbcqhts2@gmrtdonybmzd>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, 31 Jan 2024 at 09:08, Manivannan Sadhasivam
-<manivannan.sadhasivam@linaro.org> wrote:
->
-> Device drivers should just rely on the clocks provided by the devicetree
-> and enable/disable them based on the requirement. There is no need to
-> validate the clocks provided by devicetree in the driver. That's the job
-> of DT schema.
->
-> So let's switch to devm_clk_bulk_get_all() API that just gets the clocks
-> provided by devicetree and remove hardcoded clocks info.
->
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 63 ++++-----------------------------
->  1 file changed, 7 insertions(+), 56 deletions(-)
+On 30/01/2024 23:17, Bjorn Andersson wrote:
+> On Fri, Jan 19, 2024 at 01:24:57AM -0800, Mao Jinlong wrote:
+>> Remove pattern match of ETE node name. Use ete as the name for ete nodes.
+>>
+> 
+> Not saying that you're wrong, but...why?
+> 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+I don't expect any meaningful commit msgs anymore, so:
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 
--- 
-With best wishes
-Dmitry
+---
+
+This is an automated instruction, just in case, because many review tags
+are being ignored. If you know the process, you can skip it (please do
+not feel offended by me posting it here - no bad intentions intended).
+If you do not know the process, here is a short explanation:
+
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+versions, under or above your Signed-off-by tag. Tag is "received", when
+provided in a message replied to you on the mailing list. Tools like b4
+can help here. However, there's no need to repost patches *only* to add
+the tags. The upstream maintainer will do that for tags received on the
+version they apply.
+
+https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
+
+Best regards,
+Krzysztof
+
 
