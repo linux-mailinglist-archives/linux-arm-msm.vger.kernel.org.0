@@ -1,174 +1,248 @@
-Return-Path: <linux-arm-msm+bounces-9201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFB77843A21
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 10:05:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E3F4C843A28
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 10:05:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4B1F11F2F839
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 09:05:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7128B1F2F837
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 09:05:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D06769DF0;
-	Wed, 31 Jan 2024 08:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C4FE6D1A1;
+	Wed, 31 Jan 2024 08:58:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZlZoqKvn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sjYAplxZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C958469D31
-	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 08:57:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB596657DD;
+	Wed, 31 Jan 2024 08:58:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706691435; cv=none; b=lXcIJr0uHU7gnshl7f74PBMAmkhiAnVtk3YH5Ms08QCdPTuIa29mRchMoQszOOnQI4G5Cl7jTwWKCje6nADDpaGmNPCzzrjqI9MD96a0XPJASfg25HM3o1tIrxM4Bj9MiN8xkA3KmSwIbsS1SptyIQxJMJbsKEn8QOhmHnrl+WM=
+	t=1706691530; cv=none; b=sTn9LYaJfLLX4pBBTDQvt4ehMSMxODfO05EC6zbZVZaYOmvAf6zPo9zytOpW21XLw8nal790Z9sVigjH59QAHwnyShUu0+vWghODE4XjeJPz6gWnhIVgO77MmJNRpAw5Q6SZ0ZW3WoS3NYwOtI/nDZiXm5eqS75fYHTCDmc1dUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706691435; c=relaxed/simple;
-	bh=i/0xGVWxmLGZ/l4MKKj0oTxK2I+o2zUxh3bsKs/n+Iw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ficzclbkRI9YKddJBQcwwVY30LbSn+pR3uETtkWnDxsTE4Nnjh+6OZGXLgvg0x6TQ85SO8dSKUJsynPnG7p0TjYii6Wt9PmA3SJ9XYiYEewbx6SByq14tQYJfk3CtoMa7XIn5npZmYM5uVT2BIeObxHYBwzbrjasq41aCxYGvtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZlZoqKvn; arc=none smtp.client-ip=209.85.219.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-dc63dfe77caso3705873276.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 00:57:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706691432; x=1707296232; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=19iyMKPgVV/OnzcKafV91f/kV0b2fJZ+DHL/skL3AYc=;
-        b=ZlZoqKvnK9OMXxhyDnAHPKZgYrPCtuhp7e1LksxIle5ypFPscvs+hduyajZzs2TsSX
-         RYtsEUu4xAzDEkY49ltoJ7lIGqG7G0rK6numdJxC4EvFci0hvUDp8tpx6A0DUs6i5KDM
-         1eKhPoxhKPrzQgdE5Sbx8fVxdd0T9zA4dLZUHYRnULQpAF0+QagNHE+FNc4uqelEK9nx
-         qA9/80W/aungYw0rIh4aDr26uyquHOWEDT/Tz8/uoZkavhvW27iFUkUhdtfJmgBhtUZi
-         pbKEekHZNNVxIWXfvAWfRHImycGZwF1ggyonJH5IRMLR/Ke0VhT6dhH4rdEjenBJ7KDm
-         gXcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706691432; x=1707296232;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=19iyMKPgVV/OnzcKafV91f/kV0b2fJZ+DHL/skL3AYc=;
-        b=UxfGch1VmaINlqizbHawiIwHEcfF+sEu5beOwgZ1ip6v92n5+F6yvjJjgsFN91xjjr
-         etck5LRpGNbXOjhJLYMmjzaDOm5Oo5bk/pCq+2oJB3aTdtrOWHKPZ6UEF0UUJ8nH1TXs
-         vWu/bPTV5ZHur+s71FcRSdsAxj7Izo2laVwPEHm1fSxVO7PKz7beH1FQdl/hxR6bNK1w
-         g2b1jZmKfAxFKeQliVTKd2rTCekTqt0e6aP7NybPFhHprIp7tQ2dYDiPv+FsaH2kmz7U
-         ipbeusaWNjo+HYti+7ELvhK/M+jweZOOOjwjh4ZWZBGMeDSHvWUBzqtlkNH1VeSVIAyz
-         bTBg==
-X-Gm-Message-State: AOJu0Yy5bV3jIFk7GC2s0gFimIThBAwtwUbB0irEQTcRf4ZB2e8LqMkw
-	2RNlaM1hVgUEPBiz8IKbFS6YFbMgT7rNwvwxiZOJFLHy5ut29gXIkzQoBPu/jAhsU1/cXTC8W/f
-	H279srCl5rZ6KK3GehIjJVWnaI9+8T/jrEzCXxg==
-X-Google-Smtp-Source: AGHT+IF+kfDZ/YF7mxYh80knn1UBEiVlr7hp7DfiTZ/EqM7NpiukfxSx7V7h2n9hbAXhnmqW7UvF5OBBTxTaOE6Q4vE=
-X-Received: by 2002:a25:7904:0:b0:dc6:7e97:ae62 with SMTP id
- u4-20020a257904000000b00dc67e97ae62mr1105679ybc.21.1706691431753; Wed, 31 Jan
- 2024 00:57:11 -0800 (PST)
+	s=arc-20240116; t=1706691530; c=relaxed/simple;
+	bh=UqpO+ZTsRWdC3QcNmOmOQIsAqQNQt/nfOlLpfSk+jHU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hnlDxnHMe/5ofJLL7YmlUnXjgOudZ5OQhpJuSCk40cDFfLNX5mWf5vWM2qTpOqZ8b7wNkwAU3hh00wbGYhw83/9xOZoFhWAqw9s7SmlZSB12qFmihU2tLFBc53nsOjVE6+cpk14jzlYDfqfPBee+RlUtGzksczBmUJiT13Wmpfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sjYAplxZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0084BC433C7;
+	Wed, 31 Jan 2024 08:58:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706691529;
+	bh=UqpO+ZTsRWdC3QcNmOmOQIsAqQNQt/nfOlLpfSk+jHU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=sjYAplxZycro68aVGkGnlUXGB1CpvGk9JPfk7VmwOq/Y2DF4JGEdSYdHzYEgWYB4i
+	 jxBgPnIVQD2G6jRoXgQfY7k4zcu3iUxluP4XCCLsBqUCmPFbNVSOOUH7O9vL8JfbPe
+	 gd6sx91ioayc2L5qv0E+6oC5lAlMHiYJg7rfv0CEu/TY2hyX4HE9cmUfk3aTt9gL/l
+	 BnS4/yXPOvJQOqo1IvsBbJjoBHJh2cnOxuajl7dr7pwx50MDNV19ucyqi9P2sLM4oD
+	 6Jobsi4BfgxYq3sM2lv0wWYojAOGasxupa0R5XICEUNgvgrbV6EQhD/7LjMFvX0SMG
+	 AHAG3mRZX4JaA==
+Date: Wed, 31 Jan 2024 08:58:42 +0000
+From: Lee Jones <lee@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Anjelique Melendez <quic_amelende@quicinc.com>, pavel@ucw.cz,
+	thierry.reding@gmail.com, robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+	agross@kernel.org, luca.weiss@fairphone.com,
+	konrad.dybcio@linaro.org, u.kleine-koenig@pengutronix.de,
+	quic_subbaram@quicinc.com, quic_gurus@quicinc.com,
+	linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-pwm@vger.kernel.org
+Subject: Re: [PATCH v8 3/7] soc: qcom: add QCOM PBS driver
+Message-ID: <20240131085842.GF8551@google.com>
+References: <20231221185838.28440-1-quic_amelende@quicinc.com>
+ <20231221185838.28440-4-quic_amelende@quicinc.com>
+ <ut6jbawqqdgfyoxmt76hm67rbnv67x54eho3nae2dd2szbejfb@7joy57g4i3qt>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240129115216.96479-1-krzysztof.kozlowski@linaro.org> <20240129115216.96479-5-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20240129115216.96479-5-krzysztof.kozlowski@linaro.org>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Wed, 31 Jan 2024 09:57:00 +0100
-Message-ID: <CACRpkdYf4HUaV-Pjr81WjLbzy9zdAnyFWs9gPayPC6-3OjHQwA@mail.gmail.com>
-Subject: Re: [PATCH v6 4/6] reset: Instantiate reset GPIO controller for
- shared reset-gpios
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
-	Geert Uytterhoeven <geert+renesas@glider.be>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Banajit Goswami <bgoswami@quicinc.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Viresh Kumar <viresh.kumar@linaro.org>, Frank Rowand <frowand.list@gmail.com>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org, 
-	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pm@vger.kernel.org, Chris Packham <chris.packham@alliedtelesis.co.nz>, 
-	Sean Anderson <sean.anderson@seco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ut6jbawqqdgfyoxmt76hm67rbnv67x54eho3nae2dd2szbejfb@7joy57g4i3qt>
 
-Hi Krzysztof,
+Intentional generic top-post reply.
 
-something is odd with the addresses on this patch, because neither GPIO
-maintainer is on CC nor linux-gpio@vger, and it's such a GPIO-related
-patch. We only saw it through side effects making <linux/gpio/driver.h>
-optional, as required by this patch.
+Please work quickly to resolve Bjorn's comments.
 
-Please also CC Geert Uytterhoeven, the author of the GPIO aggregator.
+I'm being hounded over a broken LEDs tree due to the missing headerfile.
 
-i.e. this:
-> 2. !GPIOLIB stub:
->    https://lore.kernel.org/all/20240125081601.118051-3-krzysztof.kozlowsk=
-i@linaro.org/
+/end
 
-On Mon, Jan 29, 2024 at 12:53=E2=80=AFPM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
+On Tue, 30 Jan 2024, Bjorn Andersson wrote:
 
-> Devices sharing a reset GPIO could use the reset framework for
-> coordinated handling of that shared GPIO line.  We have several cases of
-> such needs, at least for Devicetree-based platforms.
->
-> If Devicetree-based device requests a reset line, while "resets"
-> Devicetree property is missing but there is a "reset-gpios" one,
-> instantiate a new "reset-gpio" platform device which will handle such
-> reset line.  This allows seamless handling of such shared reset-gpios
-> without need of changing Devicetree binding [1].
->
-> To avoid creating multiple "reset-gpio" platform devices, store the
-> Devicetree "reset-gpios" GPIO specifiers used for new devices on a
-> linked list.  Later such Devicetree GPIO specifier (phandle to GPIO
-> controller, GPIO number and GPIO flags) is used to check if reset
-> controller for given GPIO was already registered.
->
-> If two devices have conflicting "reset-gpios" property, e.g. with
-> different ACTIVE_xxx flags, this would allow to spawn two separate
-> "reset-gpio" devices, where the second would fail probing on busy GPIO
-> request.
->
-> Link: https://lore.kernel.org/all/YXi5CUCEi7YmNxXM@robh.at.kernel.org/ [1=
-]
-> Cc: Bartosz Golaszewski <brgl@bgdev.pl>
-> Cc: Chris Packham <chris.packham@alliedtelesis.co.nz>
-> Cc: Sean Anderson <sean.anderson@seco.com>
-> Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-(...)
+> On Thu, Dec 21, 2023 at 10:58:33AM -0800, Anjelique Melendez wrote:
+> > diff --git a/drivers/soc/qcom/qcom-pbs.c b/drivers/soc/qcom/qcom-pbs.c
+> [..]
+> > +static int qcom_pbs_wait_for_ack(struct pbs_dev *pbs, u8 bit_pos)
+> > +{
+> > +	int ret, retries = 2000, delay = 1100;
+> 
+> retries and delay are not variable, please use defines instead.
+> 
+> > +	unsigned int val;
+> > +
+> > +	ret = regmap_read_poll_timeout(pbs->regmap,  pbs->base + PBS_CLIENT_SCRATCH2,
+> > +					val, val & BIT(bit_pos), delay, delay * retries);
+> > +
+> > +	if (ret < 0) {
+> > +		dev_err(pbs->dev, "Timeout for PBS ACK/NACK for bit %u\n", bit_pos);
+> > +		return -ETIMEDOUT;
+> > +	}
+> > +
+> > +	if (val == PBS_CLIENT_SCRATCH2_ERROR) {
+> > +		ret = regmap_write(pbs->regmap, pbs->base + PBS_CLIENT_SCRATCH2, 0);
+> > +		dev_err(pbs->dev, "NACK from PBS for bit %u\n", bit_pos);
+> > +		return -EINVAL;
+> > +	}
+> > +
+> > +	dev_dbg(pbs->dev, "PBS sequence for bit %u executed!\n", bit_pos);
+> > +	return 0;
+> > +}
+> > +
+> > +/**
+> > + * qcom_pbs_trigger_event() - Trigger the PBS RAM sequence
+> > + * @pbs: Pointer to PBS device
+> > + * @bitmap: bitmap
+> > + *
+> > + * This function is used to trigger the PBS RAM sequence to be
+> > + * executed by the client driver.
+> > + *
+> > + * The PBS trigger sequence involves
+> > + * 1. setting the PBS sequence bit in PBS_CLIENT_SCRATCH1
+> > + * 2. Initiating the SW PBS trigger
+> > + * 3. Checking the equivalent bit in PBS_CLIENT_SCRATCH2 for the
+> > + *    completion of the sequence.
+> > + * 4. If PBS_CLIENT_SCRATCH2 == 0xFF, the PBS sequence failed to execute
+> > + *
+> > + * Returns: 0 on success, < 0 on failure
+> 
+> Return: without the 's' is the appropriate form here.
+> 
+> > + */
+> > +int qcom_pbs_trigger_event(struct pbs_dev *pbs, u8 bitmap)
+> > +{
+> > +	unsigned int val;
+> > +	u16 bit_pos;
+> > +	int ret;
+> > +
+> > +	if (!bitmap) {
+> > +		dev_err(pbs->dev, "Invalid bitmap passed by client\n");
+> 
+> No one is going to spot that hidden in the kernel log, and if someone
+> sees it it does not give an indication to which client it is that's
+> broken (if there are multiple clients...)
+> 
+> Instead do:
+> 
+> 	if (WARN_ON(!bitmap))
+> 		return -EINVAL;
+> 
+> > +		return -EINVAL;
+> > +	}
+> > +
+> > +	if (IS_ERR_OR_NULL(pbs))
+> > +		return -EINVAL;
+> > +
+> > +	mutex_lock(&pbs->lock);
+> > +	ret = regmap_read(pbs->regmap, pbs->base + PBS_CLIENT_SCRATCH2, &val);
+> > +	if (ret < 0)
+> > +		goto out;
+> > +
+> > +	if (val == PBS_CLIENT_SCRATCH2_ERROR) {
+> > +		/* PBS error - clear SCRATCH2 register */
+> > +		ret = regmap_write(pbs->regmap, pbs->base + PBS_CLIENT_SCRATCH2, 0);
+> > +		if (ret < 0)
+> > +			goto out;
+> > +	}
+> > +
+> > +	for (bit_pos = 0; bit_pos < 8; bit_pos++) {
+> > +		if (!(bitmap & BIT(bit_pos)))
+> > +			continue;
+> > +
+> > +		/* Clear the PBS sequence bit position */
+> > +		ret = regmap_update_bits(pbs->regmap, pbs->base + PBS_CLIENT_SCRATCH2,
+> > +					BIT(bit_pos), 0);
+> > +		if (ret < 0)
+> > +			goto error;
+> > +
+> > +		/* Set the PBS sequence bit position */
+> > +		ret = regmap_update_bits(pbs->regmap, pbs->base + PBS_CLIENT_SCRATCH1,
+> > +					BIT(bit_pos), BIT(bit_pos));
+> > +		if (ret < 0)
+> > +			goto error;
+> > +
+> > +		/* Initiate the SW trigger */
+> > +		ret = regmap_update_bits(pbs->regmap, pbs->base + PBS_CLIENT_TRIG_CTL,
+> > +					PBS_CLIENT_SW_TRIG_BIT, PBS_CLIENT_SW_TRIG_BIT);
+> > +		if (ret < 0)
+> > +			goto error;
+> > +
+> > +		ret = qcom_pbs_wait_for_ack(pbs, bit_pos);
+> > +		if (ret < 0)
+> > +			goto error;
+> 
+> In the case that this fails, you're jumping to error, which clears all
+> of SCRATCH1, but you're leaving SCRATCH2 untouched.
+> 
+> > +
+> > +		/* Clear the PBS sequence bit position */
+> > +		ret = regmap_update_bits(pbs->regmap, pbs->base + PBS_CLIENT_SCRATCH1,
+> > +					BIT(bit_pos), 0);
+> > +		if (ret < 0)
+> > +			goto error;
+> 
+> Does it make sense to handle this error by jumping to error and trying
+> to clear it once more - while leaving SCRATCH2?
+> 
+> Perhaps you should just ignore the errors from clearing SCRATCH1 and
+> SCRATCH2? You where able to trigger the PBS and you got your ack...
+> 
+> > +
+> > +		/* Clear the PBS sequence bit position */
+> > +		ret = regmap_update_bits(pbs->regmap, pbs->base + PBS_CLIENT_SCRATCH2,
+> > +					BIT(bit_pos), 0);
+> > +		if (ret < 0)
+> > +			goto error;
+> > +	}
+> > +
+> > +error:
+> 
+> We're passing "error" in the successful case as well, please name this
+> "out_clear_scratch1" (or something) instead, to not confuse the reader.
+> 
+> > +	/* Clear all the requested bitmap */
+> > +	ret = regmap_update_bits(pbs->regmap, pbs->base + PBS_CLIENT_SCRATCH1, bitmap, 0);
+> > +
+> > +out:
+> > +	mutex_unlock(&pbs->lock);
+> > +
+> > +	return ret;
+> > +}
+> > +EXPORT_SYMBOL_GPL(qcom_pbs_trigger_event);
+> > +
+> > +/**
+> > + * get_pbs_client_device() - Get the PBS device used by client
+> > + * @dev: Client device
+> > + *
+> > + * This function is used to get the PBS device that is being
+> > + * used by the client.
+> > + *
+> > + * Returns: pbs_dev on success, ERR_PTR on failure
+> 
+> Return:
+> 
+> Regards,
+> Bjorn
 
-In my naive view, this implements the following:
-
-reset -> virtual "gpio" -> many physical gpios[0..n]
-
-So if there was already a way in the kernel to map one GPIO to
-many GPIOs, the framework could just use that with a simple
-single GPIO?
-
-See the bindings in:
-Documentation/devicetree/bindings/gpio/gpio-delay.yaml
-
-This is handled by drivers/gpio/gpio-aggregator.c.
-
-This supports a 1-to-1 map: one GPIO in, one GPIO out, same offset.
-So if that is extended to support 1-to-many, this problem is solved.
-
-Proposed solution: add a single boolean property such as
-aggregate-all-gpios; to the gpio-delay node, making it provide
-one single gpio at offset 0 on the consumer side, and refuse any
-more consumers.
-
-This will also solve the problem with induced delays on
-some GPIO lines as I can see was discussed in the bindings,
-the gpio aggregator already supports that, but it would work
-fine with a delay being zero as well.
-
-This avoids all the hackery with driver stubs etc as well.
-
-Yours,
-Linus Walleij
+-- 
+Lee Jones [李琼斯]
 
