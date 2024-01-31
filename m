@@ -1,69 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-9246-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9247-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15974843FAE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 13:51:05 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 264A9844079
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 14:24:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3366D1C28430
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 12:51:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6E2C3B2F82A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 13:18:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 348177AE7C;
-	Wed, 31 Jan 2024 12:50:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB43079DB6;
+	Wed, 31 Jan 2024 13:18:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y1MJ9Uz1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QnI8TbWG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482207AE7F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 12:50:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAA87AE47
+	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 13:18:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706705450; cv=none; b=LpFg4rUlpRQQ6MyUzWuDvdxeEbQq7hKLQfXJ1TrI8tGkwsyp4eBjGuB+JWBWq7MmCO4mEOJ/7avI1/A00cXvrxkWT2N3vVdHu8l7Lzgv8A5rptt4cq66lvh/cz/yiMxB6gomCSQbUr47YuYSQ+sKUHKAQR8IzizsRkv+BVDbo8A=
+	t=1706707088; cv=none; b=nqg6WwlM0i+bLo0wjrXSKRMQZJIvTSiBAk99pK2Nx3I3Tn0xAc65FOfOoioBmR4uphkELOsNLO3OrmhF8J4VaP6UH5wDvQKJpU4Xg+d/mXemP/LkkZjdOM/FJnkdE2QMVVnUliVnva2rALSO3Apa5cEcT9QOBbGuecOt7Vwld5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706705450; c=relaxed/simple;
-	bh=yebtIyQCYDZ5e+sLn4mg7pl47yIXsLOdVhcRWu+i57I=;
+	s=arc-20240116; t=1706707088; c=relaxed/simple;
+	bh=dr6D8tcSVVpexu92k5w3N7i9nF+7FRKOS7uUR00A6YM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rJE1FXQcJKKeaZeePJ3d6UCceusbXplU4pWIhB0qtRiganbdZK3rpJsmAiHRCgG0F3dH5l4Ic4kQW6XBJjTw1DqOAuQgnivQ+3T4A7qKGWEIWt5VJSFgdNIlDH6AmhKNhWIn6XfOrbhpjixK44ZEArTKvrK/8pZxZ+vrIq0p+OY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=y1MJ9Uz1; arc=none smtp.client-ip=209.85.128.182
+	 To:Cc:Content-Type; b=X617LQlgBbi4FDnhj+xWXtCWA3cgNQMtq8BgAro0olvih+t7jKOOjaY07Ee1Q335i5a87Om3bVRF45xr+oMrG6995bhXBnOwOdcL4avnfLowty43ZvSgvoJWpkSTPd3/Nd/r3Xm2Hpaej+jN3Mp39hcQA/xyJIvjKUKbPa4jPTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QnI8TbWG; arc=none smtp.client-ip=209.85.128.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-602d222c078so52603107b3.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 04:50:48 -0800 (PST)
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-603e086c05bso30869727b3.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 05:18:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706705447; x=1707310247; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706707086; x=1707311886; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yebtIyQCYDZ5e+sLn4mg7pl47yIXsLOdVhcRWu+i57I=;
-        b=y1MJ9Uz1MsjC/W9kArtu7ja9OR5QPxqKHE5mvsWZCNX2eNrUSRJ/QWYP0HtOWuomam
-         0X1gpJs+UpgGW46IFSYi8VWrk4GhdnV0WHf08SyRfkZQCrVXrBwrgAThk6rSvrdKDqhZ
-         pbhB6R38O0s3h1X9380CWdJsAIy7NqAYBwy9z8keTVSjq9erwFvToO6CoSgoUZ2+giXN
-         BQ9fXxJ6Ux1KVBxa8lVAKKgxERvqevyi8TsA5GPRfmi9Cy5V2pPnq0xfhjFwt7nlI6BV
-         7xj7JSfEi/g3rB/+u9M60b5C1RvMuOaYfU7Gk35DU+btf3U/k1wqpD9nPpUIxs8kyp9k
-         z+yQ==
+        bh=dr6D8tcSVVpexu92k5w3N7i9nF+7FRKOS7uUR00A6YM=;
+        b=QnI8TbWG2XKPFB9aozCWTavISGyEjEIeKvQBhFVZ5daEc2Gvbg1a+uRaA9AEr1386U
+         0xudJNvDJ30LyjyFJmsPwFu/u7Hxt8SIIBM4vL+b/JJRqFYk5NMC3lOENIkHYFOrbVxh
+         GF57jP3AFv8Xg2eMG0Hb1EPlibZ0ZyS3kqTNZHy8iuxaX7s2XpL6+15F89GUjAoDWNXD
+         MMfPk55M/V13sFxB+NHHhB3FiOQLnkaGO5GgUogGV91PZepnmTwbXwl7JBq2lwTO80KD
+         0OQe5pFIf2uRB9A6KAJL0XvN1CspSRq3q2brtC/BDwHx7OAeIrhTEdKgC5qtkeOxjk2V
+         hvFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706705447; x=1707310247;
+        d=1e100.net; s=20230601; t=1706707086; x=1707311886;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yebtIyQCYDZ5e+sLn4mg7pl47yIXsLOdVhcRWu+i57I=;
-        b=NnbaBarFRyoLJMQrz0nsy5ssZsntqY8HIiQBwMrs/Z575VUSBy8FbYMwL45YFb3UMt
-         NpeqlWY8zGot/Pv9NlciyYU6nXSrJ8/rVskhnjn6yjw3WPMOhWBnUy3zKsFHH3zWv6dB
-         7vl5GkfE2pXjVgQhueWAEd6QB5sLtWx9UUQgKsR06CAtfTSA3tyDa7zCI8K31sO5OzM8
-         /Jc9eCEPx6QQU2yScOybc/3dgXyIxi/L3o2YGC1Mhc7hFivLbr5lN+SjbxGY3lRIFAAu
-         riHo9aDiaWML1vBxJrHCQ64CrSEfPX4VDTb1CAPqR+7NFydQV++kiVCs4/pLePyzSj9h
-         ggQQ==
-X-Gm-Message-State: AOJu0YypHKRcZEoWF50gK5Li+NVekKkg7TTL4K9amxP/GWJI8QM9JGcl
-	UJsGxqiTZKyUGxLPIsUe4k6dRV88BQdD3YSqkYhaqdxGv8lXnyu3CSyON31mIt8ulV+6HrCKiK/
-	Q7NFYwLppxS68rreVs9Ea0hqTEwpU6RZPULNizw==
-X-Google-Smtp-Source: AGHT+IFRSU9w1zRrdHbJcJCYqCSrYAoOV1MiQgaqBk9Y+Gvph7b4F0E+eyUKljpNB45qUnX3uDUarVJh+rLHzPjrEnc=
-X-Received: by 2002:a25:6943:0:b0:dbd:7491:368f with SMTP id
- e64-20020a256943000000b00dbd7491368fmr1373182ybc.7.1706705447230; Wed, 31 Jan
- 2024 04:50:47 -0800 (PST)
+        bh=dr6D8tcSVVpexu92k5w3N7i9nF+7FRKOS7uUR00A6YM=;
+        b=mI84ga5/pUiGZuULjSRAPmTerD5THw4o6t/LYDI7pfKSVxA2TqovJ854I8d0lyo/P6
+         5pWl4rvrjIIfSMH5JFnt4HiPJfGp/lZNtKHaUl42c+t5sJISj/qkn9I3SykPYkGAuvZJ
+         YmI/WwOIo8tNfFuzVregbLUXMNUzV0BxGHOtY0d8+nuMG0WttJVElyCYHTG2UW8hxAgC
+         FA0r14Kkn40epOH9KzE+j3f0z5bfHGQLoe5OPRAdr1oqj8cAQzN6x77SvCH1UPrjs7lv
+         8AUCqgtYWlMUrJKM4l//R7NfJFqMcYApHYFwKGkfQ7BIeT6XW587SLkkbqcscjOvPDbH
+         X+sw==
+X-Gm-Message-State: AOJu0YxlenysYc4k8JN71RX9TJSx/3VlcviltQC+Q9uompGSGZ0srx8a
+	9Qj2flHrSiV7rh+4uiCcWXVj4V9YdELnorquruuUNt7teUV0ZM8GGnTJ+cmwIIvOeSmXBZ8V1gN
+	P4m3U0r+afUH5pTTMO6oKnDw/1gWXQYmfg6++Gg==
+X-Google-Smtp-Source: AGHT+IFVACpGX4CJfjjGDw2bakc2klq/FcD8fSXKF03+Z3ok8uxur5h6A7nnyOGYfn7248iMkpgzntKDjCWeB+kOfoE=
+X-Received: by 2002:a81:79d5:0:b0:5ff:f756:8804 with SMTP id
+ u204-20020a8179d5000000b005fff7568804mr1275150ywc.45.1706707085871; Wed, 31
+ Jan 2024 05:18:05 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,15 +72,16 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20240129115216.96479-1-krzysztof.kozlowski@linaro.org>
  <20240129115216.96479-5-krzysztof.kozlowski@linaro.org> <CACRpkdYf4HUaV-Pjr81WjLbzy9zdAnyFWs9gPayPC6-3OjHQwA@mail.gmail.com>
- <6473952d-893d-4591-9bfd-dd983313bee9@linaro.org>
-In-Reply-To: <6473952d-893d-4591-9bfd-dd983313bee9@linaro.org>
+ <CAMRc=Mc1SGLeUOWmKg=fvCdM+RR6FSu2QkFuR17s7L99eRMGug@mail.gmail.com>
+In-Reply-To: <CAMRc=Mc1SGLeUOWmKg=fvCdM+RR6FSu2QkFuR17s7L99eRMGug@mail.gmail.com>
 From: Linus Walleij <linus.walleij@linaro.org>
-Date: Wed, 31 Jan 2024 13:50:35 +0100
-Message-ID: <CACRpkdZ6GH94EdBsoB61FbEW5dV1+dRCV9O7TUFCMBBdVJBPuQ@mail.gmail.com>
+Date: Wed, 31 Jan 2024 14:17:54 +0100
+Message-ID: <CACRpkdbaxqTzwL9L02vCpMMdBYsubNP1VkNuJ8mXB_=4E3Kjaw@mail.gmail.com>
 Subject: Re: [PATCH v6 4/6] reset: Instantiate reset GPIO controller for
  shared reset-gpios
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, 
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Banajit Goswami <bgoswami@quicinc.com>, 
 	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
 	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
@@ -96,78 +97,42 @@ Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Geert Uytterhoeven <geert+renesas@glide
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 31, 2024 at 10:50=E2=80=AFAM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
+On Wed, Jan 31, 2024 at 10:37=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl=
+> wrote:
 
-> Nothing is odd - I use get_maintainers.pl which just don't print your
-> names. I can add your addresses manually, no problem, but don't blame
-> the contributor that get_maintainers.pl has a missing content-regex. If
-> you want to be Cced on usage of GPIOs, you need to be sure that
-> MAINTAINERS file has appropriate pattern.
-
-I think that is over-reliance on tooling, I think if I author a patch
-creating a struct gpio_chip it's natural to CC the GPIO maintainers,
-just by intuition. Maybe that's just me.
-
-I guess if one wants to automate maybe get_maintainers should
-CC GPIO maintainers on patches that has a + #include <linux/gpio/driver.h>
-in the patch body but it seems like stretching it to me, it's just too
-much process.
-
+> [Me]
 > > reset -> virtual "gpio" -> many physical gpios[0..n]
 >
-> It does not, there is no single GPIO here. There is a single reset
-> controller, though, but still multiple GPIOs in DTS.
+> This is a different problem: it supports many users enabling the same
+> GPIO (in Krzysztof's patch it's one but could be more if needed) but -
+> unlike the broken NONEXCLUSIVE GPIOs in GPIOLIB - it counts the number
+> of users and doesn't disable the GPIO for as long as there's at least
+> one.
 
-Aha so this is problem similar to what regulators are doing,
-where they had this problem that a single GPIO can contain a
-regulator used by many devices?
+I don't know if the NONEXCLUSIVE stuff is broken, if you mean reference
+counting isn't working on them, then that is by design because they were
+invented for regulators and such use cases that do their own reference
+counting. It's also used for hacks where people need to look up a desc in
+a second spot, (perhaps we can fix those better).
 
-There the solution is something along the line that the first
-consumer turns on the light when it arrives and the last consumer
-turns it off when it leaves, at least that is the idea.
+As I say in commit b0ce7b29bfcd090ddba476f45a75ec0a797b048a
+"This solution with a special flag is not entirely elegant and should ideal=
+ly
+be replaced by something more careful as this makes it possible for
+several consumers to enable/disable the same GPIO line to the left
+and right without any consistency."
 
-That solution isn't the pretties either :/
+I think for regulators (which is the vast majority using it) it isn't broke=
+n
+because the regulator reference counting is working.
 
-But if we find a solution for the reset controller, it appears to
-me that the pattern should be re-usable for regulators too?
+So if we solve that problem for reset, we probably should put it in
+drivers/gpio/* somewhere so we can reuse the same solution for
+regulators and get rid of NONEXCLUSIVE altogether I think?
 
-I think Bartosz says in another reply that *_NONEXCLUSIVE that
-the regulators are using is broken so if we are to invent something
-new we should make it available for everyone.
-
-> > This supports a 1-to-1 map: one GPIO in, one GPIO out, same offset.
-> > So if that is extended to support 1-to-many, this problem is solved.
->
-> It does not match the hardware thus I don't know how to implement it in
-> DTS while keeping the requirement that we are describing hardware, not
-> OS abstractions.
-
-OK fair enough I got it wrong.
-
-(the rest of comments are probably fallouts from the misunderstanding).
-
-> So none of these ideas were posted in previous threads, just because you
-> were not CCed (except one thread)?
->
-> https://lore.kernel.org/lkml/20191030120440.3699-1-peter.ujfalusi@ti.com/
-> https://lore.kernel.org/all/9eebec9b-e6fd-4a22-89ea-b434f446e061@linaro.o=
-rg/
-> https://lore.kernel.org/all/20231018100055.140847-1-krzysztof.kozlowski@l=
-inaro.org/
-> https://social.treehouse.systems/@marcan/111268780311634160
->
-> Please implement some custom lei filter, so you will get such
-> notifications earlier. We keep discussing this for many months on
-> various attempts and this specific attempt already reached v6.
-
-Yeah I should really look at lei!
-
-I just haven't had time to get into it, because it appears it appeals
-most to people who use local clients like mutt. And I use gmail
-(yeah ...) I guess I would have to change my whole workflow to
-accomodate for lei, but it may very well be the right thing to do, I
-did change everything for b4 already.
+The NONEXCLUSIVE stuff was prompted by converting regulators to
+gpio descriptors, so it was for the greater good one can say. Or the
+lesser evil :( my judgement can be questioned here.
 
 Yours,
 Linus Walleij
