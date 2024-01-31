@@ -1,136 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-9159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A491A84367E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 07:17:22 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EDB938436CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 07:30:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D6B841C21D1E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 06:17:21 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4D82EB254EF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 06:30:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E6D83E46B;
-	Wed, 31 Jan 2024 06:17:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 806C746448;
+	Wed, 31 Jan 2024 06:30:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hqeI0xKU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vZsFBO1t"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D423E479;
-	Wed, 31 Jan 2024 06:17:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00AC41775
+	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 06:30:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706681837; cv=none; b=m4kPcDjVvj7Ybx9SoRj3th9Jmsy7wHCTmOAzdKCDxEyi6nZ525pBkumG/qahZda6oGq/3yO7OnmwFO6a5hJzTZQPVqvPjfWe1CIniUlHFU2+0D+clsiUJ3Op0NjmaeSk3tlIo9YNjruolAh+vlskM5A2e+TTxh3+6es6FMGJOSE=
+	t=1706682626; cv=none; b=uHxVrB3qxnQOqU3P9ubmyJMuducunrzQJg57nnSE8UyEg1605dHwLI7SRU6OUWdlPdfG3PnaBYCQX9lAwyBqOBBxM3xJYFeVS61Oqj57QORJUOEZPFGhcNIsomED8r+DABeuHgx/BenS+E18h8AV7A0KfP3tD7hCNP1QUye3sRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706681837; c=relaxed/simple;
-	bh=6u0A0dodxOKmius8q/eiQ7I4KMI7Wv44bJDRdBK0674=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XKNqTYKTTWyTnNJzd87uJ4haD7+DRWs04XdRBkck/dFmPOoFBpOpjivUyA0TKjvzQlnx6XsBHR9eMmq7sutqrxWv4/0pp5o9L7/dBor+JVQD3Oc4BUPHrv6doXeHDu2L7xTS4BkDfDpTgiPpcabSqjpv1dVrdrwkC6h7dr/BPTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hqeI0xKU; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40V2hwRW005740;
-	Wed, 31 Jan 2024 06:16:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=yKSfpvugHf+JQ0J3LtbX8
-	a2Mm8cLaRBEPpgaXA2yC/k=; b=hqeI0xKU5L2CCU2zGqda38OUGugldQayqHHpe
-	lQ/yZHeOrXtJlL23LOq58ItjZJP3fHMluWty0EdWucP55wVV/LihyrZ6Tt1uc4ra
-	rLjtcrKzosMVhbr+gHlIj50Qqn4y3lAMYTZwXBOoNP2X6z9/NUCLaCBfT1E0BtQJ
-	FF0fGEa6aldv1DG/swXY1See8wQrSdLOC9XoJuFLQN51mF3xEHqz2kxE6W4BmbyD
-	bFD7mM7J+1tNURO7B0RFxgGiI75tg2C8i5Vi0WAe05bqyEbWf8+d3C/rlgPHLbaO
-	sW8XP9DH/eNPxd4b3bdq3h/teAQ8YOKrP+Fa29llUVLuNcRkQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vy9nk8v67-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 31 Jan 2024 06:16:51 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40V6GouX028711
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 31 Jan 2024 06:16:50 GMT
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 30 Jan 2024 22:16:47 -0800
-Date: Wed, 31 Jan 2024 11:46:44 +0530
-From: Pavan Kondeti <quic_pkondeti@quicinc.com>
-To: Guenter Roeck <linux@roeck-us.net>
-CC: Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Wim Van
- Sebroeck" <wim@linux-watchdog.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-watchdog@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Mukesh Ojha
-	<quic_mojha@quicinc.com>
-Subject: Re: [PATCH] watchdog: qcom: Start the watchdog in probe
-Message-ID: <cfaaed23-8f59-4447-af0b-b94b35ce68ba@quicinc.com>
-References: <20240131-qcom-wdt-start-probe-v1-1-bee0a86e2bba@quicinc.com>
- <1a996038-bcc7-4c0f-8f27-ca36a2eb9d3d@roeck-us.net>
+	s=arc-20240116; t=1706682626; c=relaxed/simple;
+	bh=nxlnhpTP2ZY02f0uY5iRFtCEWLbVgQJy/f7OhUQYcng=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mi+w36MeSFtIeT3tQ7TjbQPgRWb/KOzeKqZsmyYswjkRvWuM57+SGODy/ehF2aE5uz2rYjIIEc+Gn7hhgt3vefLJ1DYzJ/TancnQl6IUJpHdbyQBQ9KgsEmJdw/rQhm0jYl86YBmj14p8hwRuf9yZv2Qa8NxZ1P+lLSmcUJh6MM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vZsFBO1t; arc=none smtp.client-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-603fd31f5c2so5040357b3.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 22:30:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706682621; x=1707287421; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=XuBpfFrt6LIRFxGJEZUBYvlJzyC2OSdPPTTcyZFlpqs=;
+        b=vZsFBO1tbcX0p4bsdYubfMJfW2LmU0Q4FUJRAJXNIm9NjKsUowy2lKBJZttjRf2E7s
+         n7y4pdDx/G+wKZRElpjGreamrPgUmd4L7CAZ+sC+1Sh7ZADQsVL+nV8yW1kPrpcpU4p2
+         Kqp+NYw0HPqTkjluQSYWeHok+pWSp5CT1aEelzSJkpzdgcl2+a2UNtnfYV2MCAMWsBmn
+         6ZvVU6JYHoc1DyOQFQPDv00OYggDNIXWN8dO78rhTOjrz3ftgC0zkRz3BpaOk0s0eoT7
+         NsKjd8gufHe1y0DZk7acaYmEl104/B1PsjYP4r77Plhs4hGW8eQHzfHNynyy2zMMKAJ6
+         73Ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706682621; x=1707287421;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XuBpfFrt6LIRFxGJEZUBYvlJzyC2OSdPPTTcyZFlpqs=;
+        b=HC+cT+qXodbvoF5dTvcmGm340SSfvt5T57AVlhyxgk2G9U/Xod9H8xHRs0yv08e+iK
+         yiBRBUnaCfqG2WXLV+j8mXxdwRr1j94GV2d2T0DR2wZfZiOWx4ua3tGzQDEmkYekALNo
+         sCArwNvoV7SPVAU0eABQyIfgg62MiBJprGGGHCDwSjex2DW+icgdkK5VKpkRAgQJArY+
+         QqnXKF9PccByor0hPwu/PsuFd4fFiJWBesVmWxazY94wkoxOE8lmbMYllGR0NgLc4FZ/
+         iNArgzimO672whXJlH0X8HS0OFq6OCRufma+hdzi38nehPgj1sVBHx3cLqCNpQ/cN8FZ
+         7FmQ==
+X-Gm-Message-State: AOJu0YyIVk6j6BTfd6lI5IJE1RFBmlIKIu/i5caleEmXnfC0f5ni1qoM
+	kZ0NEfL6MiS7kTMZICZJ5/gpI4S02luL8PFtDMGyd9X1fh9lD6T6te+McrRCaUpCKCgBjZqIOU6
+	8AkCMZxYR4+9hY8pH0sJc0ZwUXBbFuJ9O5p2mew==
+X-Google-Smtp-Source: AGHT+IFCSuHGBgOcgNRm+Jyx9Rk92WC70s7Qe1r45Ekea56q3x+YWZYnfOl+X2xsR2ea9MpX12ltkU9QLuvg4lUUs5g=
+X-Received: by 2002:a81:6d16:0:b0:5ff:8152:64b with SMTP id
+ i22-20020a816d16000000b005ff8152064bmr311187ywc.15.1706682621572; Tue, 30 Jan
+ 2024 22:30:21 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <1a996038-bcc7-4c0f-8f27-ca36a2eb9d3d@roeck-us.net>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: IK2kdITIGZ0pKDu6r-2FdvMqQkk6KcDI
-X-Proofpoint-ORIG-GUID: IK2kdITIGZ0pKDu6r-2FdvMqQkk6KcDI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-31_02,2024-01-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 spamscore=0
- mlxscore=0 malwarescore=0 suspectscore=0 mlxlogscore=999 clxscore=1015
- adultscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401190000 definitions=main-2401310046
+References: <87o7d26qla.wl-kuninori.morimoto.gx@renesas.com> <87le866qke.wl-kuninori.morimoto.gx@renesas.com>
+In-Reply-To: <87le866qke.wl-kuninori.morimoto.gx@renesas.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 31 Jan 2024 08:30:10 +0200
+Message-ID: <CAA8EJpoRhS_yvJJUuC3YkWRAKT7e03k+-K=6QKfL_6TkB1XoxA@mail.gmail.com>
+Subject: Re: [PATCH v3 02/24] of: property: use unsigned int return on of_graph_get_endpoint_count()
+To: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Cc: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
+	"Lad, Prabhakar" <prabhakar.csengg@gmail.com>, 
+	=?UTF-8?Q?Niklas_S=C3=83=C2=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>, 
+	=?UTF-8?B?VXdlIEtsZWluZS1Lw4PCtm5pZw==?= <u.kleine-koenig@pengutronix.de>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
+	Alexander Stein <alexander.stein@ew.tq-group.com>, 
+	Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+	Alexandre Torgue <alexandre.torgue@foss.st.com>, Alexey Brodkin <abrodkin@synopsys.com>, 
+	Andrzej Hajda <andrzej.hajda@intel.com>, Andy Gross <agross@kernel.org>, 
+	Biju Das <biju.das.jz@bp.renesas.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>, Daniel Vetter <daniel@ffwll.ch>, 
+	Dave Stevenson <dave.stevenson@raspberrypi.com>, David Airlie <airlied@gmail.com>, 
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Emma Anholt <emma@anholt.net>, 
+	Eugen Hristev <eugen.hristev@collabora.com>, 
+	Florian Fainelli <florian.fainelli@broadcom.com>, Frank Rowand <frowand.list@gmail.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Hans Verkuil <hverkuil-cisco@xs4all.nl>, 
+	Helge Deller <deller@gmx.de>, Hugues Fruchet <hugues.fruchet@foss.st.com>, 
+	Jacopo Mondi <jacopo+renesas@jmondi.org>, Jacopo Mondi <jacopo@jmondi.org>, 
+	James Clark <james.clark@arm.com>, Jaroslav Kysela <perex@perex.cz>, 
+	Jonathan Hunter <jonathanh@nvidia.com>, Kevin Hilman <khilman@baylibre.com>, 
+	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>, 
+	Kieran Bingham <kieran.bingham@ideasonboard.com>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>, 
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Liam Girdwood <lgirdwood@gmail.com>, 
+	Liu Ying <victor.liu@nxp.com>, Luca Ceresoli <luca.ceresoli@bootlin.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Marek Vasut <marex@denx.de>, 
+	Mark Brown <broonie@kernel.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Maxime Ripard <mripard@kernel.org>, 
+	Michael Tretter <m.tretter@pengutronix.de>, Michal Simek <michal.simek@amd.com>, 
+	Miguel Ojeda <ojeda@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Nick Desaulniers <ndesaulniers@google.com>, 
+	Nicolas Ferre <nicolas.ferre@microchip.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	Philippe Cornu <philippe.cornu@foss.st.com>, 
+	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>, Rob Clark <robdclark@gmail.com>, 
+	Rob Herring <robh+dt@kernel.org>, Robert Foss <rfoss@kernel.org>, 
+	Russell King <linux@armlinux.org.uk>, Sakari Ailus <sakari.ailus@linux.intel.com>, 
+	Saravana Kannan <saravanak@google.com>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Shawn Guo <shawnguo@kernel.org>, Sowjanya Komatineni <skomatineni@nvidia.com>, 
+	Stefan Agner <stefan@agner.ch>, Suzuki K Poulose <suzuki.poulose@arm.com>, 
+	Sylwester Nawrocki <s.nawrocki@samsung.com>, Takashi Iwai <tiwai@suse.com>, 
+	Thierry Reding <thierry.reding@gmail.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Tim Harvey <tharvey@gateworks.com>, Todor Tomov <todor.too@gmail.com>, 
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, 
+	Yannick Fertre <yannick.fertre@foss.st.com>, Alim Akhtar <alim.akhtar@samsung.com>, 
+	Fabio Estevam <festevam@gmail.com>, Jacopo Mondi <jacopo.mondi@ideasonboard.com>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Jerome Brunet <jbrunet@baylibre.com>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, Jonas Karlman <jonas@kwiboo.se>, 
+	Leo Yan <leo.yan@linaro.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, Mike Leach <mike.leach@linaro.org>, 
+	Sam Ravnborg <sam@ravnborg.org>, Sean Paul <sean@poorly.run>, Tom Rix <trix@redhat.com>, 
+	coresight@lists.linaro.org, devicetree@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-amlogic@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org, 
+	linux-media@vger.kernel.org, linux-omap@vger.kernel.org, 
+	linux-renesas-soc@vger.kernel.org, linux-rpi-kernel@lists.infradead.org, 
+	linux-samsung-soc@vger.kernel.org, linux-sound@vger.kernel.org, 
+	linux-staging@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com, 
+	linux-tegra@vger.kernel.org, llvm@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Jan 30, 2024 at 10:01:15PM -0800, Guenter Roeck wrote:
-> On 1/30/24 20:15, Pavankumar Kondeti wrote:
-> > When CONFIG_WATCHDOG_HANDLE_BOOT_ENABLED is enabled, kernel can pet the
-> > watchdog until user space takes over. Make use of this feature and
-> > start the watchdog in probe.
-> > 
-> > Signed-off-by: Pavankumar Kondeti <quic_pkondeti@quicinc.com>
-> > ---
-> >   drivers/watchdog/qcom-wdt.c | 6 +++++-
-> >   1 file changed, 5 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
-> > index 9e790f0c2096..4fb5dbf5faee 100644
-> > --- a/drivers/watchdog/qcom-wdt.c
-> > +++ b/drivers/watchdog/qcom-wdt.c
-> > @@ -276,12 +276,16 @@ static int qcom_wdt_probe(struct platform_device *pdev)
-> >   	watchdog_init_timeout(&wdt->wdd, 0, dev);
-> >   	/*
-> > +	 * Kernel can pet the watchdog until user space takes over.
-> > +	 * Start the watchdog here to make use of this feature.
-> > +	
-> 
-> No, that is not what CONFIG_WATCHDOG_HANDLE_BOOT_ENABLED is about.
-> Please see its description.
-> 
-> NACK.
-> 
-Thanks for taking a look Guenter. I thought of using
-WATCHDOG_HANDLE_BOOT_ENABLED and infiniite open timeout as a hint to start
-the watchdog in probe. After seeing your NACK for this patch, I guess 
-that would also would have been rejected.
+On Wed, 31 Jan 2024 at 07:05, Kuninori Morimoto
+<kuninori.morimoto.gx@renesas.com> wrote:
+>
+> The return type and the variable of of_graph_get_endpoint_count()
+> should be unsigned. Tidyup it.
 
-Do you think we can revive this [1] to add support for watchdog pet from
-the kernel? It would be helpful in cases where the user space has no
-support for watchdog pet (say minimal ramdisk).
+'the variable'?
 
-[1]
-https://lore.kernel.org/linux-watchdog/20210924133509.3454834-1-f.suligoi@asem.it/#t
+I'd have added a few words telling that return type can be unsigned
+because there is no error reporting for this function.
+
+>
+> Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+> ---
+>  drivers/of/property.c    | 2 +-
+>  include/linux/of_graph.h | 4 ++--
+>  2 files changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/of/property.c b/drivers/of/property.c
+> index 4e879faa1710..25d73409aeee 100644
+> --- a/drivers/of/property.c
+> +++ b/drivers/of/property.c
+> @@ -817,7 +817,7 @@ EXPORT_SYMBOL(of_graph_get_remote_port);
+>   *
+>   * Return: count of endpoint of this device node
+>   */
+> -int of_graph_get_endpoint_count(const struct device_node *np)
+> +unsigned int of_graph_get_endpoint_count(const struct device_node *np)
+>  {
+>         struct device_node *endpoint;
+>         int num = 0;
+> diff --git a/include/linux/of_graph.h b/include/linux/of_graph.h
+> index 4d7756087b6b..a4bea62bfa29 100644
+> --- a/include/linux/of_graph.h
+> +++ b/include/linux/of_graph.h
+> @@ -41,7 +41,7 @@ struct of_endpoint {
+>  bool of_graph_is_present(const struct device_node *node);
+>  int of_graph_parse_endpoint(const struct device_node *node,
+>                                 struct of_endpoint *endpoint);
+> -int of_graph_get_endpoint_count(const struct device_node *np);
+> +unsigned int of_graph_get_endpoint_count(const struct device_node *np);
+>  struct device_node *of_graph_get_port_by_id(struct device_node *node, u32 id);
+>  struct device_node *of_graph_get_next_endpoint(const struct device_node *parent,
+>                                         struct device_node *previous);
+> @@ -68,7 +68,7 @@ static inline int of_graph_parse_endpoint(const struct device_node *node,
+>         return -ENOSYS;
+>  }
+>
+> -static inline int of_graph_get_endpoint_count(const struct device_node *np)
+> +static inline unsigned int of_graph_get_endpoint_count(const struct device_node *np)
+>  {
+>         return 0;
+>  }
+> --
+> 2.25.1
+>
+
+
+--
+With best wishes
+Dmitry
 
