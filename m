@@ -1,144 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-9199-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9200-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDC0C84393A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 09:40:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id AD6FD8439D1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 09:55:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2C5F81C25608
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 08:40:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DF1011C26005
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 08:55:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DC8F5D72B;
-	Wed, 31 Jan 2024 08:40:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73B6269D12;
+	Wed, 31 Jan 2024 08:46:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BGJuhUjL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iqYyOtWz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC9860885;
-	Wed, 31 Jan 2024 08:40:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F388605DD;
+	Wed, 31 Jan 2024 08:46:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706690432; cv=none; b=IGumEelsAh0omMVrr/yaf2sf6AekVNZdTRJBO8Gd0msF/uYyZzS6uV3LunRsm6+1nDWWJmnHfewNwzciyPzHdSvDI1f6eoZZmUj9SPATIv5VXqDzINUCdyafSHEhNpRZWypuZoZS1qGybe1yo7cZusDuDxqSUASSI5GMDrpaJ0w=
+	t=1706690818; cv=none; b=Jpmj7Rs8fzpzve2n2GCw+Ea52tp+bdFTi3lBrrwCu/fWd9a4t6MvmcqIRkilsH2fpmaIYv+hi9cvCG/Am/d5a2fLQtPrihZr3Hu3qn3JBIzqSin3v9gFs0B7+qAveUmk4IuR+GORs3GNHRmr6xyxxGDHSUcwqcDOHhnntxR4UMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706690432; c=relaxed/simple;
-	bh=vRFrum47agDuMfsKxoMe79Z/7FuOXXiGEk93cyE0i14=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Dkn1R5EPf71KBgxy0uRa2gktQ9vVSRn1KvUtTm8UUwx/sKygvl7falSXOFe8vVeXoMIFKVVXplo1Jy9w2MUul25XZ92F4ffXLZMt3P3DLakzbR0iZUcMVJNtV8TdfevrBmiJhmwIJJeKqdx8CMc/w5H43mkme95VxxPvmmgbe08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BGJuhUjL; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40V76vUO012185;
-	Wed, 31 Jan 2024 08:40:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=pGxUNSGAM2+sHX8XNYpFr+J6CxjXMvpl6ND2fcKYOqU=; b=BG
-	JuhUjLbNDMY1mdkJ4GIQ6NY3bwCCtyR05Pot9ENWRNTmWSCVXYVU/V7vHtqH198u
-	V9CtaXWG+kIwR/8WD7l1W+CnclimSzQdBuZmhNp0QOhgEPT0KnxUvygoN/XCPc3A
-	cZ5nx8fEZ84tDGnh/iO3xcZn8HuPpwnyi+m6IREciYEQzPxqTyo1UQmQoA+eWee3
-	rA40siBHRVXQdgI7KtHHNBCoqsqjvY67j3eulQwB2cr4wyC5Cn3j/8T4+QJ+HcYe
-	frFLV6q4eIVbBEqsxNM3M863Mlv2IEN7N+y+JUX347iHJlp5ge91l/dSa880x6xY
-	AWfsFW4NW38FsO8KGv/A==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vy6gmhqwn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 31 Jan 2024 08:40:26 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40V8eP4A028110
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 31 Jan 2024 08:40:25 GMT
-Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 31 Jan
- 2024 00:40:20 -0800
-Message-ID: <cf2ea585-0fb1-443a-a467-60f8b5d28174@quicinc.com>
-Date: Wed, 31 Jan 2024 16:40:17 +0800
+	s=arc-20240116; t=1706690818; c=relaxed/simple;
+	bh=4BkvKFgglVdCeGCFuHgP4W0v2mzK44qTzIo31u8u7+c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dEpazUu1yI0zqMeFwphBwb+mNsdxaSphcSEL3JQCNs2lcD6Bx/GMxIh3JPTd6fmwmBlWPfjG8/W5ms3MTQ/zP+/PDZMb3pDBZdd9WTOQ4jXtqmm0tlM2pvHmzrTLQZk/aMYo8GdB3hwXG0Nlx5peLgIOZIY4Tjt/Bw28B9MYEYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iqYyOtWz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632E0C433C7;
+	Wed, 31 Jan 2024 08:46:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706690817;
+	bh=4BkvKFgglVdCeGCFuHgP4W0v2mzK44qTzIo31u8u7+c=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=iqYyOtWzgUP5d3v0ololIBtkDRw9WWO09sd7gzCIIZgBxAVy9xat/jVBxOlXH+Ota
+	 YllfHjS+fywz95pELreHMdcRlqvYFz4jsazUgYcpK+JUOomn95jfjK2JzWKm6LhjNF
+	 Sw3frW+HAnotWiExQZFAHpvynylQmuOMLTnCWCw/JEPkwWco4Lk/KNihcL57pCHTwi
+	 yQv9czAHewVkFrRyByVCT4EgG8MlFLQF8x664CKTKg2PXEClUz0pSurPWpB9YnUqui
+	 nPxYK89diN8aDA5sgV5J6Anwow34s92tz/Dz6OAyi0s0exKKSK5qWNNnYx3HU1Fm55
+	 kJu35LRJzFDoQ==
+Date: Wed, 31 Jan 2024 14:16:45 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Viresh Kumar <viresh.kumar@linaro.org>
+Cc: Manivannan Sadhasivam <mani@kernel.org>,
+	Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Brian Masney <bmasney@redhat.com>,
+	Georgi Djakov <djakov@kernel.org>, linux-arm-msm@vger.kernel.org,
+	vireshk@kernel.org, quic_vbadigan@quicinc.com,
+	quic_skananth@quicinc.com, quic_nitegupt@quicinc.com,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 5/6] arm64: dts: qcom: sm8450: Add opp table support
+ to PCIe
+Message-ID: <20240131084645.GA3481@thinkpad>
+References: <20240112-opp_support-v6-0-77bbf7d0cc37@quicinc.com>
+ <20240112-opp_support-v6-5-77bbf7d0cc37@quicinc.com>
+ <20240129160420.GA27739@thinkpad>
+ <20240130061111.eeo2fzaltpbh35sj@vireshk-i7>
+ <20240130071449.GG32821@thinkpad>
+ <20240130083619.lqbj47fl7aa5j3k5@vireshk-i7>
+ <20240130094804.GD83288@thinkpad>
+ <20240130095508.zgufudflizrpxqhy@vireshk-i7>
+ <20240130131625.GA2554@thinkpad>
+ <20240131052335.6nqpmccgr64voque@vireshk-i7>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] dt-bindings: pinctrl: qcom: consolidate functions
- to match with driver
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linus.walleij@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>
-References: <20240129092512.23602-1-quic_tengfan@quicinc.com>
- <20240129092512.23602-3-quic_tengfan@quicinc.com>
- <aa870f52-d956-4c3e-82a4-980a32f5f698@linaro.org>
- <8a3866ee-d70b-419c-bde4-7bf55415402e@quicinc.com>
- <6fb7286c-8669-4f99-9bb7-3ef8dfa229c2@linaro.org>
-From: Tengfei Fan <quic_tengfan@quicinc.com>
-In-Reply-To: <6fb7286c-8669-4f99-9bb7-3ef8dfa229c2@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: bRJvpjjzF5DuQ24DXdfFyiZTryIr9is3
-X-Proofpoint-ORIG-GUID: bRJvpjjzF5DuQ24DXdfFyiZTryIr9is3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-31_03,2024-01-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- suspectscore=0 impostorscore=0 phishscore=0 mlxscore=0 malwarescore=0
- clxscore=1015 adultscore=0 lowpriorityscore=0 priorityscore=1501
- mlxlogscore=851 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401190000 definitions=main-2401310065
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240131052335.6nqpmccgr64voque@vireshk-i7>
 
-
-
-On 1/31/2024 4:34 PM, Krzysztof Kozlowski wrote:
-> On 31/01/2024 09:24, Tengfei Fan wrote:
->>
->>
->> On 1/29/2024 7:24 PM, Krzysztof Kozlowski wrote:
->>> On 29/01/2024 10:25, Tengfei Fan wrote:
->>>> Consolidate functions to match with SM4450 pinctrl driver, because
->>>> consolidate functions are being used in SM4450 pinctrl driver.
->>>
->>> It's very difficult to see what changed from the diff, so please explain
->>> brieflyl changes here.
->>>
->>> What is that "consolidate functions" that you use in the driver?
->>>
->>> Best regards,
->>> Krzysztof
->>>
->>
->> please help to comfirm that the following description as commit message
->> whether it covers your concerns:
->>
->> Pin alternative functions are consolidated(like: atest_char, phase_flag,
->> qdss_gpio etc.) in SM4450 pinctrl driver while they are still split in
->> DeviceTree binding file. SM4450 pinctrl function is broken if current
->> binding doc is followed. Update SM4450 pinctrl DeviceTree binding doc to
->> align with driver.
+On Wed, Jan 31, 2024 at 10:53:35AM +0530, Viresh Kumar wrote:
+> On 30-01-24, 18:46, Manivannan Sadhasivam wrote:
+> > Agree. But what I'm saying is, right now there is no DT property in the
+> > interconnect consumer nodes to specificy the bw requirements. This is all
+> > hardcoded in the respective ICC consumer drivers.
 > 
-> Please list the functions which are being removed and added. I usually
-> do not expect such commit msg, but this is an exception: diff is tricky
-> to parse.
+> I thought there are a lot of users already in there..
 > 
-> Best regards,
-> Krzysztof
+> $ git grep -i opp.*bps arch/arm64/boot/dts/ | wc -l
+> 864
+
+Most of the hits are from CPU nodes... For some reasons, peripheral drivers are
+sticking to hardcoded values.
+
+> 
+> > But when we use OPP to control bw, the bw requirements come from DT. This is
+> > what I see as a difference. Because, only nodes making use of OPP will specify
+> > bw in DT and other nodes making use of just ICC will not.
+> > 
+> > Maybe I'm worrying too much about these details... But it looks like
+> > inconsistency to me.
+> 
+> Right. So is there inconsistency right now ? Yes, there is.
+> 
+> The important question we need to answer is where do we want to see
+> all these drivers (specially new ones) in the future. What's the right
+> thing to do eventually ? Hardcode stuff ? Or Move it to DT ?
+> 
+> The answer is DT for me, so the code can be generic enough to be
+> reused. This is just one step in the right direction I guess.
+> Eventually the drivers must get simplified, which they are I guess.
 > 
 
-yes, I understand your concerns. I will list all the functions that need 
-to be updated.
+I completely agree that hardcoding the bw values is not the right thing, but was
+worried about the inconsistency. But anyway, I hope either ICC will also move
+towards DT for bw or we will convert all the drivers to use OPP in the future.
+
+Thanks for the discussion so far! It clarified.
+
+- Mani
 
 -- 
-Thx and BRs,
-Tengfei Fan
+மணிவண்ணன் சதாசிவம்
 
