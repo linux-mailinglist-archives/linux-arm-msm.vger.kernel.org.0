@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-9259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46484844316
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 16:32:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD0C484433E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 16:41:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 10697B2E6EE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 15:27:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 89718292852
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 15:41:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70469129A83;
-	Wed, 31 Jan 2024 15:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC5901292FD;
+	Wed, 31 Jan 2024 15:41:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IMUECFk4"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FRtAQL4P"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F531292FD;
-	Wed, 31 Jan 2024 15:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF921292DB;
+	Wed, 31 Jan 2024 15:41:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706714832; cv=none; b=WwdVRgM6Dc8uOcAjkmuq+fJDCyf97qOCw1yuO82EKcmz1npL/fuOmFQGV25ISHJ/d4pYNv7JcEUwfuVY2mlgGUYGnlJQHI4L/eamLPRodjT60oxqlSH6CxarH7czH7ufWbfJi7hgWl+apZ73e2qLIMIVvFTSGw3d4RN0CEmc+Lk=
+	t=1706715693; cv=none; b=BhdvEvTEHEdeL8qX2R9WSE6jBXGw39Bj/ARznhkK3t7S4GofSC1K1zy2JlMadE6APwxHkCLztwGBQ1pxmlg4eDcLHag8K5M55PKSMV4gCSkmNq1Gfq+TIFE9Usg5Ax7mXvKmp0oy34PI0meh0+9rW3aKa240F53B6Q2kI2XalTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706714832; c=relaxed/simple;
-	bh=19Hap+jLLwl5/KUouZC5xJUm2952vDYNgv2x4gYBsJ8=;
+	s=arc-20240116; t=1706715693; c=relaxed/simple;
+	bh=3qc1rD4OFMv152sahNdXzftZFYLPE8J6IdJzNl7A+Ds=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dxngHwLC7dWLb9OtW7Q2Syxq7C0XwtYQ4jpRGWd5tvd/wJfpe9EhLNEV8j+GmzU/e88Ltw8rArqBWVJ/4bR4I3b/Rm2oY43G8AZgYlpwWWHzCJ0D5ZX21V4xI3neh4WaNaPyGSJuuBfvLLTNPre8YxbzDg6xDnW5vl9VaHRZzkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IMUECFk4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 953FBC43141;
-	Wed, 31 Jan 2024 15:27:11 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=diKQ/VDm9521SCHqRkRqA6GHQJyu/2hcRpcYrkEW9gYdItby9eHFPedSvsqzn57PL5ESH32F3tIBfHCswj+6pKN7UI+sL90T0/XzXGd0OhI3BiOFztC973Xsorr3j22qtbqnH5IpYtdmDFhxyERBtxe90mlLKQcYkqDrd4a+zbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FRtAQL4P; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3173C433F1;
+	Wed, 31 Jan 2024 15:41:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706714831;
-	bh=19Hap+jLLwl5/KUouZC5xJUm2952vDYNgv2x4gYBsJ8=;
+	s=k20201202; t=1706715693;
+	bh=3qc1rD4OFMv152sahNdXzftZFYLPE8J6IdJzNl7A+Ds=;
 	h=Date:From:To:List-Id:Cc:Subject:References:In-Reply-To:From;
-	b=IMUECFk4IsuVJekwgnSVNtYRLCBMpnC1fVqiDc/WVEP2cs/45v0TH1d0Njhd3Wrvs
-	 DHqmKcS89rbwbgoSwgxUJZbyx6Bp0Hro0yXENdlO0/SOEiofJbJjX26Odp6VBk7CgE
-	 HuRrk4A60wHkDQQWqENmPVL3nTvjZEbq5SY6vn/EMk02MYtNwF43DeToI3BNlhZro2
-	 3R91SRBIPwho2wLYHCSUdLpinOl1lD2iM+I+SsIP9nzPUvro64J4Vewd5dDtQmMspK
-	 QJIZOQEaqUVqgufuZMEhuewAy0T8ZQBrta8JZ8RRekOzYiymyk76sVifG6A7Lw99fv
-	 BE4DrcuAXZIOg==
-Date: Wed, 31 Jan 2024 09:27:09 -0600
+	b=FRtAQL4P2fhakKD2lJx59bZVG04GXx7y4JYKjGa+TfPz19YHtsNCYxdYxO2R/4cia
+	 htqqKdIcuJ4VgdOENNbO4VDzCy3QNTuAAgSNWR0F56Qf4gIDusNFeUDRn1wQCCSsc/
+	 tKrMQf3JkJYbv1lPvfRD3ECUcjr+aFr3RMdznjYszREWAJ3N31k/FJ+q3Iclhu9Qw8
+	 aFltwZXEhhgSEBRWhGF1kC4N/rsqr28rXjRUsrCQ7Ohw+gONEC5Xk/GuskxqXocWUs
+	 Gv83hNk5WwjGn0HXBvlbWsY+IJm5mWX3HntsBE07tD75eZTAmvtjDuWqvZe8Wj9MG1
+	 rYiJHBtzdJtYw==
+Date: Wed, 31 Jan 2024 09:41:30 -0600
 From: Rob Herring <robh@kernel.org>
 To: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
 Cc: catalin.marinas@arm.com, will@kernel.org, frowand.list@gmail.com,
@@ -57,11 +57,11 @@ Cc: catalin.marinas@arm.com, will@kernel.org, frowand.list@gmail.com,
 	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
 	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
 	kernel@quicinc.com
-Subject: Re: [PATCH 07/46] Loongarch: reserved_mem: Implement the new
- processing order for reserved memory
-Message-ID: <20240131152709.GA1272666-robh@kernel.org>
+Subject: Re: [PATCH 14/46] sh: reserved_mem: Implement the new processing
+ order for reserved memory
+Message-ID: <20240131154130.GA1336725-robh@kernel.org>
 References: <20240126235425.12233-1-quic_obabatun@quicinc.com>
- <20240126235425.12233-8-quic_obabatun@quicinc.com>
+ <20240126235425.12233-15-quic_obabatun@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,9 +70,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240126235425.12233-8-quic_obabatun@quicinc.com>
+In-Reply-To: <20240126235425.12233-15-quic_obabatun@quicinc.com>
 
-On Fri, Jan 26, 2024 at 03:53:46PM -0800, Oreoluwa Babatunde wrote:
+On Fri, Jan 26, 2024 at 03:53:53PM -0800, Oreoluwa Babatunde wrote:
 > Call early_fdt_scan_reserved_mem() in place of
 > early_init_fdt_scan_reserved_mem() to carry out the first stage of the
 > reserved memory processing only.
@@ -90,37 +90,38 @@ On Fri, Jan 26, 2024 at 03:53:46PM -0800, Oreoluwa Babatunde wrote:
 > the stored reserved memory regions.
 > 
 > The call to fdt_init_reserved_mem() is placed right after
-> early_fdt_scan_reserved_mem() since memblock allocated memory should
+> early_fdt_scan_reserved_mem() because memblock allocated memory should
 > already be writable at this point.
 > 
 > Signed-off-by: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
 > ---
->  arch/loongarch/kernel/setup.c | 4 +++-
+>  arch/sh/boards/of-generic.c | 4 +++-
 >  1 file changed, 3 insertions(+), 1 deletion(-)
 > 
-> diff --git a/arch/loongarch/kernel/setup.c b/arch/loongarch/kernel/setup.c
-> index edf2bba80130..72b164d3ace0 100644
-> --- a/arch/loongarch/kernel/setup.c
-> +++ b/arch/loongarch/kernel/setup.c
-> @@ -30,6 +30,7 @@
->  #include <linux/dma-map-ops.h>
->  #include <linux/libfdt.h>
+> diff --git a/arch/sh/boards/of-generic.c b/arch/sh/boards/of-generic.c
+> index f7f3e618e85b..7bec409f077c 100644
+> --- a/arch/sh/boards/of-generic.c
+> +++ b/arch/sh/boards/of-generic.c
+> @@ -8,6 +8,7 @@
+>  #include <linux/of.h>
+>  #include <linux/of_clk.h>
 >  #include <linux/of_fdt.h>
 > +#include <linux/of_reserved_mem.h>
->  #include <linux/of_address.h>
->  #include <linux/suspend.h>
->  #include <linux/swiotlb.h>
-> @@ -390,8 +391,9 @@ static void __init arch_mem_init(char **cmdline_p)
->  
->  	check_kernel_sections_mem();
->  
+>  #include <linux/clocksource.h>
+>  #include <linux/irqchip.h>
+>  #include <asm/machvec.h>
+> @@ -110,7 +111,8 @@ static int noopi(void)
+>  static void __init sh_of_mem_reserve(void)
+>  {
+>  	early_init_fdt_reserve_self();
 > -	early_init_fdt_scan_reserved_mem();
 > +	early_fdt_scan_reserved_mem();
+> +	fdt_init_reserved_mem();
 
-Looking at the loongarch code, there's an existing problem with the 
-order of init. This is done after unflattening and copying the DT. That 
-means the kernel could freely allocate memory for the DT in a reserved 
-region.
+Looking at the sh code, there's an existing problem with the order of
+init. This is called from paging_init() and is done after unflattening
+and copying the DT. That means the kernel could freely allocate memory
+for the DT in a reserved region.
 
 Rob
 
