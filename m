@@ -1,184 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-9208-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9209-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97D88843B25
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 10:30:57 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE1EB843B40
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 10:38:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BCC2A1C22508
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 09:30:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 62C4628BFCE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 09:38:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 279DA69961;
-	Wed, 31 Jan 2024 09:30:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30B7B69977;
+	Wed, 31 Jan 2024 09:37:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TTsz9d5D"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="xBkCE3xf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3566D69953
-	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 09:30:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEAD367E98
+	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 09:37:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706693431; cv=none; b=ohDef1Ti6KYZ1jokohwGQvjG93qsn9Jg4aQ71hnwGDAScnyJC1HuocABXQROTW7XO8iDmDaYRywiKA1omW5qN8aTzwnERv3zT8odqwCDWrxK4va0BJcvJnmwruR0vVOFXplB53BNCj/ZE5zywKAYt86m4Z71nw8h2PK9e3iOOXk=
+	t=1706693865; cv=none; b=HL6/3JvSDrw1HTka4KrG2kez/IiOmpkZKs33wHj0+9VusYiQe6yyhXEZsntMMC843DY5iZzRQUL4eRnJ0MV4yEUym/yoXG7gPbNflOELZbPVxZrkANVvCH6thfvqysT9a7KsUaVCCQwTxDlG9WgV9cMNUzq8XwvIAfLlvs3AUGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706693431; c=relaxed/simple;
-	bh=bmWztwT189Wa+/DkcC1wRGU1L587x8rOhwGOBzjiDSE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r359CbPSeHzqzpfhm5T34ueu0ZuxtmM7GidHLeVbW6b3Zvpi71EETovfE+MlT/gjPuDHyKyjTAHOBOYX+bEI0ELKzNNfCReWVqPY8mwPSHVSOR1em0N7xFOghIe8lu8VLmo755DcMveGUZjtYkHDNynwzMZ4hgPYIslgYpD+kgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TTsz9d5D; arc=none smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-55c2c90c67dso5612287a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 01:30:28 -0800 (PST)
+	s=arc-20240116; t=1706693865; c=relaxed/simple;
+	bh=6g/9wBTl6BPCWec9Q4PfBb1jAfx/QsrhO21o+nVjTVw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eYL09d02N7hwzKZIgRuiRrkLd5AY+UZJ3PnwWbenCQELIcjWGsK+o0cEwxaQEckt1B4NzJV4qV970FK2zLCayrMnypSGOnfSqZBiWM3Fw0o4KoC2le0d06vmpD4YROusMbWFBXNGVxvsYepLbIZhEJFl/cIwAsafIsDtERsNOv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=xBkCE3xf; arc=none smtp.client-ip=209.85.221.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-4bdb7f016b3so1264228e0c.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 01:37:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706693427; x=1707298227; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ICDsKAS7ESjBHyOA4kXHBONHifKEPJQGSK8cycVBuy8=;
-        b=TTsz9d5DhZ2WCWzadUMzylvH+Q7QTGkE/do5OxhTMqvvKsWljwmkxM4AqW2uXoRgVu
-         QSW5t6G7w6zgV/ypOHecuiJEUgxV0NY9rLlWpBMjLS9vYeKZMwEKJSX9GM+xqaZ+oL40
-         FaL956sMXRQSMw4ToJlm0CwVWXBqJkqFa4mXGSygBcjeWrtSKZ+N05mfi96Q6gQSETKW
-         yHQPV24eGQ0MzjL4xOLf4cpczMUNevBx/frDbWzi3ocoiABKRSBivQ19t1CoCHSjolBh
-         yNKsTtSdp2RR3tTDW4mRZHOO/sssomtJvl4FVSg49KlCmfsmP+kAQdhrk1OBLLIi3x35
-         zXxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706693427; x=1707298227;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1706693861; x=1707298661; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ICDsKAS7ESjBHyOA4kXHBONHifKEPJQGSK8cycVBuy8=;
-        b=Kbh6DrjoSsgQnFRmrlgyxy/13ZNR0VYXC4EUxsF6P1DDnpc1ZewsbGFAacDFCfLIq0
-         10REsGR5ZNuLvIYVFJdLpVvOP4soMNJz29wvAIlsPv+p0qfRcthiW43ctzLFwxCqOxsD
-         UksytUaN3tcLV28zizCk2qCjxVhhEwywA7z2JM+zHCVAqz56fVC4vuW2gy0TwFIQNPYh
-         t5lcDV7jN+JqpYkp8Kj7AlB6K9MFGjHkx5dXfcvUoQLTZ4z0ydQtQdZ++APJIBHYGJu3
-         bQcPsr+vm7rtfrB5cx7md0v8KWqmDNefHlQMXLeES/7+LfZD4vL302erTOLawMRlG062
-         ojNQ==
-X-Gm-Message-State: AOJu0YzDMB3ZGHPcvfQj+F2Pm4iDGC7tR3fIGoLv3l9+UY4OJ9W3pqRN
-	hblfNOKh7BzwSjTcL7PtB2IN7TV8MnbtxRquJVRc11fe23evFQqkKbFWEcQ/Dvw=
-X-Google-Smtp-Source: AGHT+IGrVcvMI9FoMp3oRRPiCyaZkNJi+u88q8/q2mfDVcBMnWJf/RHpPtrRjkpcY5Fwi1LSRj5hsw==
-X-Received: by 2002:a17:906:e2cd:b0:a36:47fa:4b8c with SMTP id gr13-20020a170906e2cd00b00a3647fa4b8cmr772150ejb.9.1706693427367;
-        Wed, 31 Jan 2024 01:30:27 -0800 (PST)
-Received: from linaro.org ([79.115.23.25])
-        by smtp.gmail.com with ESMTPSA id hd11-20020a170907968b00b00a31906f280asm5985711ejc.193.2024.01.31.01.30.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Jan 2024 01:30:26 -0800 (PST)
-Date: Wed, 31 Jan 2024 11:30:25 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sibi Sankar <quic_sibis@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Sibi Sankar <quic_sibis@quicinc.com>
-Subject: Re: [PATCH 3/3] remoteproc: qcom_q6v5_pas: Unload lite firmware on
- ADSP
-Message-ID: <ZboTMVx7SN1BBoaz@linaro.org>
-References: <20240129-x1e80100-remoteproc-v1-0-15d21ef58a4b@linaro.org>
- <20240129-x1e80100-remoteproc-v1-3-15d21ef58a4b@linaro.org>
- <CAA8EJporoBQQtrRWL5SS4qwpmu0rF6UMpaZXQ5t-qdvoW53XOA@mail.gmail.com>
+        bh=DmHeh0AnnU8R6/8VaEZIi+vqbQkcVNAn6pqy7RHvRQI=;
+        b=xBkCE3xfgEp8qPGMcW2d28LiFylg+yIZOldTOmpHe5lUFK6l5+DI497ZIMUvKHvR3j
+         5vOhoZK9QoLFDxfTn4kYxFh/FX3o8o25S/D6Sv8wZeP18QQPnyWKphT1Bh7/ezCzu4Wr
+         s95RpLWANK4vYXBZrbepdIn0wldP0HdC2BxO0HdJ+8ZawP2n58lqMjREM5faykWBjJ45
+         EtBMY2xpQgjmRDSFw9hHxeb8YH3+3DWp7ciglNRhkeikLvefwq2ngMcoIKg2ocnq/ql2
+         RL8HFjKkqdVJR+bPWl1Add/iTs6kyaHX4qQGGvRX+gUYzPDz0BBz9JoiBd75cdYvLfG+
+         ZdBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706693861; x=1707298661;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DmHeh0AnnU8R6/8VaEZIi+vqbQkcVNAn6pqy7RHvRQI=;
+        b=AOpDfAqUNIGRhUWbpdwiytINOFNYGywp+syCs/zFpnjMEJVIBu2yngOH6bJh4pQS5F
+         wD/Yh68YsPGWc8u4BhhoD/t72e4o2OUMrnjkq2sD76PKfCVZgOje28Z2umdvRYRX4wd2
+         ZURAk6piV64d/UsrFy1M6yYU5oU1EyZ0kfThq+fiTZwsyvtBGoAVrp5nrGPiNGK2+C7e
+         73oZZxs6qiRODKDscQdmbXQGhYiWWPeceQjqZUyPFiUJbO+xHqK5+v+/C4VCGA8eKgVi
+         NtCZiefSl3O4YBn8keJ3+tSJGa+QNhEa7QWhEQf4uGfMIWaQkvgp89lHtsCDFQYCNFgm
+         3n5Q==
+X-Gm-Message-State: AOJu0YyBb3Sc+uWvR+fbbuYPrU+NDHX52qtTSuxc/E1xLqdg0ywNtJNz
+	GRx0K0kf7csq0ffrM3pmZLUZ8odIpP4Iar1c3/piA8zqqdtahq44ZSb2BH4zOFjO3gZJT6c0vW2
+	E8UWMaEWthZBj9ofWrxKyBPiKCMsp+pqXLePUaA==
+X-Google-Smtp-Source: AGHT+IGYiHwBdTOPDnoFpMk4wG2qn9o70lLB7qc/tMqoiGXQQ1hR03EibuQ3mFexsetD4ArcCOazY4KDA9aeRUgU3NE=
+X-Received: by 2002:a05:6122:4693:b0:4bf:dbbd:37aa with SMTP id
+ di19-20020a056122469300b004bfdbbd37aamr937831vkb.15.1706693860441; Wed, 31
+ Jan 2024 01:37:40 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJporoBQQtrRWL5SS4qwpmu0rF6UMpaZXQ5t-qdvoW53XOA@mail.gmail.com>
+References: <20240129115216.96479-1-krzysztof.kozlowski@linaro.org>
+ <20240129115216.96479-5-krzysztof.kozlowski@linaro.org> <CACRpkdYf4HUaV-Pjr81WjLbzy9zdAnyFWs9gPayPC6-3OjHQwA@mail.gmail.com>
+In-Reply-To: <CACRpkdYf4HUaV-Pjr81WjLbzy9zdAnyFWs9gPayPC6-3OjHQwA@mail.gmail.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Wed, 31 Jan 2024 10:37:29 +0100
+Message-ID: <CAMRc=Mc1SGLeUOWmKg=fvCdM+RR6FSu2QkFuR17s7L99eRMGug@mail.gmail.com>
+Subject: Re: [PATCH v6 4/6] reset: Instantiate reset GPIO controller for
+ shared reset-gpios
+To: Linus Walleij <linus.walleij@linaro.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Banajit Goswami <bgoswami@quicinc.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Viresh Kumar <viresh.kumar@linaro.org>, Frank Rowand <frowand.list@gmail.com>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org, 
+	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-pm@vger.kernel.org, Chris Packham <chris.packham@alliedtelesis.co.nz>, 
+	Sean Anderson <sean.anderson@seco.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 24-01-29 17:17:28, Dmitry Baryshkov wrote:
-> On Mon, 29 Jan 2024 at 15:35, Abel Vesa <abel.vesa@linaro.org> wrote:
+On Wed, Jan 31, 2024 at 9:57=E2=80=AFAM Linus Walleij <linus.walleij@linaro=
+.org> wrote:
+>
+> Hi Krzysztof,
+>
+> something is odd with the addresses on this patch, because neither GPIO
+> maintainer is on CC nor linux-gpio@vger, and it's such a GPIO-related
+> patch. We only saw it through side effects making <linux/gpio/driver.h>
+> optional, as required by this patch.
+>
+> Please also CC Geert Uytterhoeven, the author of the GPIO aggregator.
+>
+> i.e. this:
+> > 2. !GPIOLIB stub:
+> >    https://lore.kernel.org/all/20240125081601.118051-3-krzysztof.kozlow=
+ski@linaro.org/
+>
+> On Mon, Jan 29, 2024 at 12:53=E2=80=AFPM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>
+> > Devices sharing a reset GPIO could use the reset framework for
+> > coordinated handling of that shared GPIO line.  We have several cases o=
+f
+> > such needs, at least for Devicetree-based platforms.
 > >
-> > From: Sibi Sankar <quic_sibis@quicinc.com>
+> > If Devicetree-based device requests a reset line, while "resets"
+> > Devicetree property is missing but there is a "reset-gpios" one,
+> > instantiate a new "reset-gpio" platform device which will handle such
+> > reset line.  This allows seamless handling of such shared reset-gpios
+> > without need of changing Devicetree binding [1].
 > >
-> > The UEFI loads a lite variant of the ADSP firmware to support charging
-> > use cases. The kernel needs to unload and reload it with the firmware
-> > that has full feature support for audio. This patch arbitarily shutsdown
-> > the lite firmware before loading the full firmware.
+> > To avoid creating multiple "reset-gpio" platform devices, store the
+> > Devicetree "reset-gpios" GPIO specifiers used for new devices on a
+> > linked list.  Later such Devicetree GPIO specifier (phandle to GPIO
+> > controller, GPIO number and GPIO flags) is used to check if reset
+> > controller for given GPIO was already registered.
 > >
-> > Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >  drivers/remoteproc/qcom_q6v5_pas.c | 8 ++++++++
-> >  1 file changed, 8 insertions(+)
+> > If two devices have conflicting "reset-gpios" property, e.g. with
+> > different ACTIVE_xxx flags, this would allow to spawn two separate
+> > "reset-gpio" devices, where the second would fail probing on busy GPIO
+> > request.
 > >
-> > diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-> > index 083d71f80e5c..4f6940368eb4 100644
-> > --- a/drivers/remoteproc/qcom_q6v5_pas.c
-> > +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-> > @@ -39,6 +39,7 @@ struct adsp_data {
-> >         const char *dtb_firmware_name;
-> >         int pas_id;
-> >         int dtb_pas_id;
-> > +       int lite_pas_id;
-> >         unsigned int minidump_id;
-> >         bool auto_boot;
-> >         bool decrypt_shutdown;
-> > @@ -72,6 +73,7 @@ struct qcom_adsp {
-> >         const char *dtb_firmware_name;
-> >         int pas_id;
-> >         int dtb_pas_id;
-> > +       int lite_pas_id;
-> >         unsigned int minidump_id;
-> >         int crash_reason_smem;
-> >         bool decrypt_shutdown;
-> > @@ -210,6 +212,10 @@ static int adsp_load(struct rproc *rproc, const struct firmware *fw)
-> >         /* Store firmware handle to be used in adsp_start() */
-> >         adsp->firmware = fw;
-> >
-> > +       /* WIP: Shutdown the ADSP if it's running a lite version of the firmware*/
-> 
-> Why is it still marked as WIP?
+> > Link: https://lore.kernel.org/all/YXi5CUCEi7YmNxXM@robh.at.kernel.org/ =
+[1]
+> > Cc: Bartosz Golaszewski <brgl@bgdev.pl>
+> > Cc: Chris Packham <chris.packham@alliedtelesis.co.nz>
+> > Cc: Sean Anderson <sean.anderson@seco.com>
+> > Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+> > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> (...)
+>
+> In my naive view, this implements the following:
+>
+> reset -> virtual "gpio" -> many physical gpios[0..n]
 
-AFAIU, there was more to be done here w.r.t. preloaded lite version
-firmware.
+This is a different problem: it supports many users enabling the same
+GPIO (in Krzysztof's patch it's one but could be more if needed) but -
+unlike the broken NONEXCLUSIVE GPIOs in GPIOLIB - it counts the number
+of users and doesn't disable the GPIO for as long as there's at least
+one.
 
-Later, was agreed that that is not case.
+Bart
 
-So maybe I just need to drop the comment.
-
-Sibi, can you confirm?
-
-> 
-> > +       if (adsp->lite_pas_id)
-> > +               ret = qcom_scm_pas_shutdown(adsp->lite_pas_id);
-> > +
-> >         if (adsp->dtb_pas_id) {
-> >                 ret = request_firmware(&adsp->dtb_firmware, adsp->dtb_firmware_name, adsp->dev);
-> >                 if (ret) {
-> > @@ -693,6 +699,7 @@ static int adsp_probe(struct platform_device *pdev)
-> >         adsp->rproc = rproc;
-> >         adsp->minidump_id = desc->minidump_id;
-> >         adsp->pas_id = desc->pas_id;
-> > +       adsp->lite_pas_id = desc->lite_pas_id;
-> >         adsp->info_name = desc->sysmon_name;
-> >         adsp->decrypt_shutdown = desc->decrypt_shutdown;
-> >         adsp->region_assign_idx = desc->region_assign_idx;
-> > @@ -990,6 +997,7 @@ static const struct adsp_data x1e80100_adsp_resource = {
-> >         .dtb_firmware_name = "adsp_dtb.mdt",
-> >         .pas_id = 1,
-> >         .dtb_pas_id = 0x24,
-> > +       .lite_pas_id = 0x1f,
-> >         .minidump_id = 5,
-> >         .auto_boot = true,
-> >         .proxy_pd_names = (char*[]){
-> >
-> > --
-> > 2.34.1
-> >
-> >
-> 
-> 
-> -- 
-> With best wishes
-> Dmitry
+>
+> So if there was already a way in the kernel to map one GPIO to
+> many GPIOs, the framework could just use that with a simple
+> single GPIO?
+>
+> See the bindings in:
+> Documentation/devicetree/bindings/gpio/gpio-delay.yaml
+>
+> This is handled by drivers/gpio/gpio-aggregator.c.
+>
+> This supports a 1-to-1 map: one GPIO in, one GPIO out, same offset.
+> So if that is extended to support 1-to-many, this problem is solved.
+>
+> Proposed solution: add a single boolean property such as
+> aggregate-all-gpios; to the gpio-delay node, making it provide
+> one single gpio at offset 0 on the consumer side, and refuse any
+> more consumers.
+>
+> This will also solve the problem with induced delays on
+> some GPIO lines as I can see was discussed in the bindings,
+> the gpio aggregator already supports that, but it would work
+> fine with a delay being zero as well.
+>
+> This avoids all the hackery with driver stubs etc as well.
+>
+> Yours,
+> Linus Walleij
 
