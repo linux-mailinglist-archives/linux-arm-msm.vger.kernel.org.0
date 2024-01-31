@@ -1,383 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-9117-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5169384329A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 02:14:00 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8EE048432A0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 02:15:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BBB671F2736A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 01:13:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BF16F1C248D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 01:15:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D21A7FA;
-	Wed, 31 Jan 2024 01:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E871B1C27;
+	Wed, 31 Jan 2024 01:15:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CeSHTEsh"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ed5glmhA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3CA63A9;
-	Wed, 31 Jan 2024 01:13:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6327C1C20;
+	Wed, 31 Jan 2024 01:15:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706663600; cv=none; b=cuichBdVu8SsfwQMWuuyw0FfVaYGMW26Rmw9rnGw6A4GzeDG/xQNfG5YYOXDr9EfAKl0/Gul59jL7go3nzVL71cAk0OhFsVqaA3m34JH2PYRp4U0J5dlrPBspJjWWBaCdb1iXy61lNIqmvVpcBSZi0VeKHSHq3wGoHOLjqsj8hU=
+	t=1706663742; cv=none; b=dF3uU8IBHHqqqyKf11+UEIrAlikNk+RlTQZDxOfvbLk+DdkhAql9cAfFDfand1auh+tcsbYYNYPQl9we6kaUG61r99E4m0yOtguP7WEO6gA8iD8d5ZOYNZBq9g5Nbtf9+XdtfHtHmv77v4jHRHFBhuyx4usfdD6ScRqg/rzLjQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706663600; c=relaxed/simple;
-	bh=pDt8mazKrVp/+4vA3/CeN6zn0XCJVVdrTk35VUp4v3k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ndZiQ2qycUf9VyonfxL2MJKRlKSac9EtK6OziTpNh8XHalCHfZyKA0todDiQb6EniED7OKHrz0CK2xwcYWs+riC681NI8j5h20D7TZy07d/vyYCTEHLVqwImnZXsz2iMQiWwheDYvvlXp2PG7v1+GQAtVOzSPkvcjN1FP9Evpw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CeSHTEsh; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40UMAHaL018858;
-	Wed, 31 Jan 2024 01:13:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=ou3NK5dG6VETsodhB3mL/ANCm1pddOA+N5Brl54ei8w=; b=Ce
-	SHTEshqNZB6N3aAxxmmSfk2V7WeGZ8kuAvSYjjvYDi9kz6UW4z99HuhSxVHmjfD8
-	FUr90XycM5b1uWZUAURxPSHUyfYwaPWvkz3jYznQRmyegEMcWhVqC1d03HSTj2mw
-	/AI36FUxZcF+as/WiSdu6HZEsp2uqs6SCU4bDTr3c8Z2r7P1FCCYB3UFRyDiahxm
-	PEajNTHCRZ9GXhEE0GA20kaIcuu9j/PzC5Sfle4/kgVHz+ayUz74YLM/4jLDgHWB
-	AlTlQv7e/WLU8GfcwxlidSpNCD5Ncsg6Cj5ZTQCNf1FCoHBgsauO3huJcIveQ0yG
-	AjMoQFEko4j8QdoNSL3A==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vy9nk898c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 31 Jan 2024 01:13:04 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40V1D3B7008838
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 31 Jan 2024 01:13:03 GMT
-Received: from [10.239.133.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 30 Jan
- 2024 17:12:58 -0800
-Message-ID: <cc33abc8-2f5b-4f71-8503-740dc22d40cf@quicinc.com>
-Date: Wed, 31 Jan 2024 09:12:58 +0800
+	s=arc-20240116; t=1706663742; c=relaxed/simple;
+	bh=/pTzJOK51v+5SYhIFOmecoVuKff4pmOxFD7hGsAarAo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=U2WZQygybQBAOrJYz00MtvGf415LE5G/4YcvgpbNyvqhyK96jFtct0kQHsbm7ohB88sRQGceqt3+BY69g21NEedbhlb8TjBqsaDiDmIDgyNdkLjXXj0crDNmumzTtPT+L/r3EDTb/OCe0cZsvMUfbxDNTNO6MSOwxpqpxSSNeM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ed5glmhA; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1d7858a469aso26581045ad.2;
+        Tue, 30 Jan 2024 17:15:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706663740; x=1707268540; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TMI3cnWrauJ0sVrAPWjosebBGINiaEuvqhQTmdIHpwU=;
+        b=ed5glmhAauN1DdTP9WSelwo27ZmJ3DFMPnWR+X86+VV8YkHOSNjVNSR11ovk2TMCGy
+         GirQdV64Ytk5hE5+8lv09bxszn1qWPS4HJc8krbYVXOYlbPjE0krswZB39bbQ9PiiXMi
+         27hObmpnQVaLYtOEwFuKWDaW3u+rR5WwBNHsS0Qus879Pbc+9yDOyrPOgj0cnAo3keZJ
+         34XR4usdxYewBYMqGyX3QPj3bJWcAktwErWy2E2qXGIldcc4rBKfErAERP0xa4JGmT2k
+         64ZUVlrgmCCJJabMPd5QXWlES8kz95hvsoNF42crApIARaaiIijdGcfd0QOMPeHQGZrH
+         6PQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706663740; x=1707268540;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TMI3cnWrauJ0sVrAPWjosebBGINiaEuvqhQTmdIHpwU=;
+        b=asmnSjoaV1fJm1zmIk9/vGFH+dkp6YhV3XC3Zje8v8V0nanLaVW5MIGdRviZ+YHE2O
+         mr1MpIRVy4qz+1LSyyLgafhZUYgAsPuXLsD9oYCGDFlMVAPz7S8zbpxusfpJK8Etdvih
+         UpFcbAS1mwioXkrzArJwkaDeRPEiDanda01sLpUewszloHcVVl6xp5DHIWK92cP5ylAd
+         iHdq1J73XnwtEiCPwuc9SnKgPyA53dIJq/kqIuECxo11VDMJWXWRspkfbbLjS8IXE1No
+         MtWLw8o1GlUkQkN76sVuSvG/p8Cqm2NewJ36d2yzYOTbRzhCIixbqbDlwTwF9mH5OgSc
+         apSg==
+X-Gm-Message-State: AOJu0YwlWu5iRn9TAao73sogSNyiwv0OBinY91MBv8YPcKVxvVGmCKiz
+	tbnxyNM83MMz8RyVolvdSACkqun8aeE4Uc3nnYHyLdbZbCI3t/44
+X-Google-Smtp-Source: AGHT+IG8UGKG/Zt1rkUy45qpAPEJlPjYqNZszRCvj1fmkMfo62fVTpD1GY8zqyGU1X8ERHaQ08XHGA==
+X-Received: by 2002:a17:902:e805:b0:1d8:d01b:571e with SMTP id u5-20020a170902e80500b001d8d01b571emr246288plg.33.1706663740422;
+        Tue, 30 Jan 2024 17:15:40 -0800 (PST)
+Received: from localhost ([2601:1c0:5000:d5c:ae1c:de46:682a:206])
+        by smtp.gmail.com with ESMTPSA id t18-20020a170902d29200b001d8d6ec2d7fsm4866303plc.61.2024.01.30.17.15.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Jan 2024 17:15:39 -0800 (PST)
+From: Rob Clark <robdclark@gmail.com>
+To: dri-devel@lists.freedesktop.org
+Cc: linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	Rob Clark <robdclark@chromium.org>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v2] drm/msm/gem: Fix double resv lock aquire
+Date: Tue, 30 Jan 2024 17:15:37 -0800
+Message-ID: <20240131011537.31049-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 08/10] coresight-tpdm: Add timestamp control register
- support for the CMB
-Content-Language: en-US
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mathieu Poirier
-	<mathieu.poirier@linaro.org>,
-        Alexander Shishkin
-	<alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC: Jinlong Mao <quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang
-	<quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Song Chai <quic_songchai@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <andersson@kernel.org>
-References: <1706605366-31705-1-git-send-email-quic_taozha@quicinc.com>
- <1706605366-31705-9-git-send-email-quic_taozha@quicinc.com>
- <2585ee0b-a898-46f8-b242-e74c0a78f672@arm.com>
-From: Tao Zhang <quic_taozha@quicinc.com>
-In-Reply-To: <2585ee0b-a898-46f8-b242-e74c0a78f672@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: uq2fXAMq1iW1h-B1Esg2O2syvVJnr9mh
-X-Proofpoint-ORIG-GUID: uq2fXAMq1iW1h-B1Esg2O2syvVJnr9mh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-30_14,2024-01-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 spamscore=0
- mlxscore=0 malwarescore=0 suspectscore=0 mlxlogscore=999 clxscore=1015
- adultscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401190000 definitions=main-2401310009
 
+From: Rob Clark <robdclark@chromium.org>
 
-On 1/30/2024 8:42 PM, Suzuki K Poulose wrote:
-> On 30/01/2024 09:02, Tao Zhang wrote:
->> CMB_TIER register is CMB subunit timestamp insertion enable register.
->> Bit 0 is PATT_TSENAB bit. Set this bit to 1 to request a timestamp
->> following a CMB interface pattern match. Bit 1 is XTRIG_TSENAB bit.
->> Set this bit to 1 to request a timestamp following a CMB CTI timestamp
->> request. Bit 2 is TS_ALL bit. Set this bit to 1 to request timestamp
->> for all packets.
->>
->> Reviewed-by: James Clark <james.clark@arm.com>
->> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->> Signed-off-by: Jinlong Mao <quic_jinlmao@quicinc.com>
->> ---
->>   .../testing/sysfs-bus-coresight-devices-tpdm  |  35 +++++
->>   drivers/hwtracing/coresight/coresight-tpdm.c  | 121 +++++++++++++++++-
->>   drivers/hwtracing/coresight/coresight-tpdm.h  |  31 +++++
->>   3 files changed, 180 insertions(+), 7 deletions(-)
->>
->> diff --git 
->> a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm 
->> b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->> index b6cf050861ed..e8c76ce4dd15 100644
->> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->> @@ -214,3 +214,38 @@ KernelVersion    6.9
->>   Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao 
->> Zhang (QUIC) <quic_taozha@quicinc.com>
->>   Description:
->>           (RW) Set/Get the mask of the pattern for the CMB subunit TPDM.
->> +
->> +What: /sys/bus/coresight/devices/<tpdm-name>/cmb_patt/enable_ts
->> +Date:        January 2024
->> +KernelVersion    6.9
->> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang 
->> (QUIC) <quic_taozha@quicinc.com>
->> +Description:
->> +        (Write) Set the pattern timestamp of CMB tpdm. Read
->> +        the pattern timestamp of CMB tpdm.
->> +
->> +        Accepts only one of the 2 values -  0 or 1.
->> +        0 : Disable CMB pattern timestamp.
->> +        1 : Enable CMB pattern timestamp.
->> +
->> +What: /sys/bus/coresight/devices/<tpdm-name>/cmb_trig_ts
->> +Date:        January 2024
->> +KernelVersion    6.9
->> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang 
->> (QUIC) <quic_taozha@quicinc.com>
->> +Description:
->> +        (RW) Set/Get the trigger timestamp of the CMB for tpdm.
->> +
->> +        Accepts only one of the 2 values -  0 or 1.
->> +        0 : Set the CMB trigger type to false
->> +        1 : Set the CMB trigger type to true
->> +
->> +What: /sys/bus/coresight/devices/<tpdm-name>/cmb_ts_all
->> +Date:        January 2024
->> +KernelVersion    6.9
->> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang 
->> (QUIC) <quic_taozha@quicinc.com>
->> +Description:
->> +        (RW) Read or write the status of timestamp upon all interface.
->> +        Only value 0 and 1  can be written to this node. Set this 
->> node to 1 to requeset
->> +        timestamp to all trace packet.
->> +        Accepts only one of the 2 values -  0 or 1.
->> +        0 : Disable the timestamp of all trace packets.
->> +        1 : Enable the timestamp of all trace packets.
->> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c 
->> b/drivers/hwtracing/coresight/coresight-tpdm.c
->> index 07587287d9fa..22966d541230 100644
->> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
->> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
->> @@ -322,6 +322,31 @@ static void tpdm_enable_dsb(struct tpdm_drvdata 
->> *drvdata)
->>       writel_relaxed(val, drvdata->base + TPDM_DSB_CR);
->>   }
->>   +static void set_cmb_tier(struct tpdm_drvdata *drvdata)
->> +{
->> +    u32 val;
->> +
->> +    val = readl_relaxed(drvdata->base + TPDM_CMB_TIER);
->> +
->> +    /* Clear all relevant fields */
->> +    val &= ~(TPDM_CMB_TIER_PATT_TSENAB | TPDM_CMB_TIER_TS_ALL |
->> +         TPDM_CMB_TIER_XTRIG_TSENAB);
->> +
->> +    /* Set pattern timestamp type and enablement */
->> +    if (drvdata->cmb->patt_ts)
->> +        val |= TPDM_CMB_TIER_PATT_TSENAB;
->> +
->> +    /* Set trigger timestamp */
->> +    if (drvdata->cmb->trig_ts)
->> +        val |= TPDM_CMB_TIER_XTRIG_TSENAB;
->> +
->> +    /* Set all timestamp enablement*/
->> +    if (drvdata->cmb->ts_all)
->> +        val |= TPDM_CMB_TIER_TS_ALL;
->> +
->> +    writel_relaxed(val, drvdata->base + TPDM_CMB_TIER);
->> +}
->> +
->>   static void tpdm_enable_cmb(struct tpdm_drvdata *drvdata)
->>   {
->>       u32 val, i;
->> @@ -341,6 +366,8 @@ static void tpdm_enable_cmb(struct tpdm_drvdata 
->> *drvdata)
->>               drvdata->base + TPDM_CMB_XPMR(i));
->>       }
->>   +    set_cmb_tier(drvdata);
->> +
->>       val = readl_relaxed(drvdata->base + TPDM_CMB_CR);
->>       /*
->>        * Set to 0 for continuous CMB collection mode,
->> @@ -687,9 +714,18 @@ static ssize_t enable_ts_show(struct device *dev,
->>                     char *buf)
->>   {
->>       struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
->> +    struct tpdm_dataset_attribute *tpdm_attr =
->> +        container_of(attr, struct tpdm_dataset_attribute, attr);
->> +    ssize_t size = -EINVAL;
->>   -    return sysfs_emit(buf, "%u\n",
->> -             (unsigned int)drvdata->dsb->patt_ts);
->> +    if (tpdm_attr->mem == DSB_PATT)
->> +        size = sysfs_emit(buf, "%u\n",
->> +                  (unsigned int)drvdata->dsb->patt_ts);
->> +    else if (tpdm_attr->mem == CMB_PATT)
->> +        size = sysfs_emit(buf, "%u\n",
->> +                  (unsigned int)drvdata->cmb->patt_ts);
->> +
->> +    return size;
->>   }
->>     /*
->> @@ -701,17 +737,23 @@ static ssize_t enable_ts_store(struct device *dev,
->>                      size_t size)
->>   {
->>       struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
->> +    struct tpdm_dataset_attribute *tpdm_attr =
->> +        container_of(attr, struct tpdm_dataset_attribute, attr);
->>       unsigned long val;
->>         if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
->>           return -EINVAL;
->>   -    spin_lock(&drvdata->spinlock);
->> -    drvdata->dsb->patt_ts = !!val;
->> -    spin_unlock(&drvdata->spinlock);
->> +    guard(spinlock)(&drvdata->spinlock);
->> +    if (tpdm_attr->mem == DSB_PATT)
->> +        drvdata->dsb->patt_ts = !!val;
->> +    else if (tpdm_attr->mem == CMB_PATT)
->> +        drvdata->cmb->patt_ts = !!val;
->> +    else
->> +        return -EINVAL;
->> +
->>       return size;
->>   }
->> -static DEVICE_ATTR_RW(enable_ts);
->>     static ssize_t set_type_show(struct device *dev,
->>                    struct device_attribute *attr,
->> @@ -842,6 +884,68 @@ static ssize_t cmb_mode_store(struct device *dev,
->>   }
->>   static DEVICE_ATTR_RW(cmb_mode);
->>   +static ssize_t cmb_ts_all_show(struct device *dev,
->> +                   struct device_attribute *attr,
->> +                   char *buf)
->> +{
->> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
->> +
->> +    return sysfs_emit(buf, "%u\n",
->> +              (unsigned int)drvdata->cmb->ts_all);
->> +}
->> +
->> +static ssize_t cmb_ts_all_store(struct device *dev,
->> +                struct device_attribute *attr,
->> +                const char *buf,
->> +                size_t size)
->> +{
->> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
->> +    unsigned long val;
->> +
->> +    if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
->> +        return -EINVAL;
->> +
->> +    guard(spinlock)(&drvdata->spinlock);
->> +    if (val)
->> +        drvdata->cmb->ts_all = true;
->> +    else
->> +        drvdata->cmb->ts_all = false;
->> +
->> +    return size;
->> +}
->> +static DEVICE_ATTR_RW(cmb_ts_all);
->> +
->> +static ssize_t cmb_trig_ts_show(struct device *dev,
->> +                struct device_attribute *attr,
->> +                char *buf)
->> +{
->> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
->> +
->> +    return sysfs_emit(buf, "%u\n",
->> +              (unsigned int)drvdata->cmb->trig_ts);
->> +}
->> +
->> +static ssize_t cmb_trig_ts_store(struct device *dev,
->> +                 struct device_attribute *attr,
->> +                 const char *buf,
->> +                 size_t size)
->> +{
->> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
->> +    unsigned long val;
->> +
->> +    if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
->> +        return -EINVAL;
->> +
->> +    guard(spinlock)(&drvdata->spinlock);
->> +    if (val)
->> +        drvdata->cmb->trig_ts = true;
->> +    else
->> +        drvdata->cmb->trig_ts = false;
->> +
->> +    return size;
->> +}
->> +static DEVICE_ATTR_RW(cmb_trig_ts);
->> +
->>   static struct attribute *tpdm_dsb_edge_attrs[] = {
->>       &dev_attr_ctrl_idx.attr,
->>       &dev_attr_ctrl_val.attr,
->> @@ -910,7 +1014,7 @@ static struct attribute *tpdm_dsb_patt_attrs[] = {
->>       DSB_PATT_MASK_ATTR(5),
->>       DSB_PATT_MASK_ATTR(6),
->>       DSB_PATT_MASK_ATTR(7),
->> -    &dev_attr_enable_ts.attr,
->> +    DSB_PATT_ENABLE_TS,
->>       &dev_attr_set_type.attr,
->>       NULL,
->>   };
->> @@ -964,6 +1068,7 @@ static struct attribute *tpdm_cmb_patt_attrs[] = {
->>       CMB_PATT_ATTR(1),
->>       CMB_PATT_MASK_ATTR(0),
->>       CMB_PATT_MASK_ATTR(1),
->> +    CMB_PATT_ENABLE_TS,
->>       NULL,
->>   };
->>   @@ -976,6 +1081,8 @@ static struct attribute *tpdm_dsb_attrs[] = {
->>     static struct attribute *tpdm_cmb_attrs[] = {
->>       &dev_attr_cmb_mode.attr,
->> +    &dev_attr_cmb_ts_all.attr,
->> +    &dev_attr_cmb_trig_ts.attr,
->>       NULL,
->>   };
->>   diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h 
->> b/drivers/hwtracing/coresight/coresight-tpdm.h
->> index 8cb8a9b35384..725a35e5893f 100644
->> --- a/drivers/hwtracing/coresight/coresight-tpdm.h
->> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
->> @@ -11,6 +11,8 @@
->>     /* CMB Subunit Registers */
->>   #define TPDM_CMB_CR        (0xA00)
->> +/*CMB subunit timestamp insertion enable register*/
->
->     ^^ Minor nit: Same as previous patch.          ^^
+Since commit 56e5abba8c3e ("dma-buf: Add unlocked variant of vmapping
+functions"), the resv lock is already held in the prime vmap path, so
+don't try to grab it again.
 
-Sure, I will update this to the next patch series.
+v2: This applies to vunmap path as well
 
+Fixes: 56e5abba8c3e ("dma-buf: Add unlocked variant of vmapping functions")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/msm_gem_prime.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Best,
+diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c b/drivers/gpu/drm/msm/msm_gem_prime.c
+index 5f68e31a3e4e..0915f3b68752 100644
+--- a/drivers/gpu/drm/msm/msm_gem_prime.c
++++ b/drivers/gpu/drm/msm/msm_gem_prime.c
+@@ -26,7 +26,7 @@ int msm_gem_prime_vmap(struct drm_gem_object *obj, struct iosys_map *map)
+ {
+ 	void *vaddr;
+ 
+-	vaddr = msm_gem_get_vaddr(obj);
++	vaddr = msm_gem_get_vaddr_locked(obj);
+ 	if (IS_ERR(vaddr))
+ 		return PTR_ERR(vaddr);
+ 	iosys_map_set_vaddr(map, vaddr);
+@@ -36,7 +36,7 @@ int msm_gem_prime_vmap(struct drm_gem_object *obj, struct iosys_map *map)
+ 
+ void msm_gem_prime_vunmap(struct drm_gem_object *obj, struct iosys_map *map)
+ {
+-	msm_gem_put_vaddr(obj);
++	msm_gem_put_vaddr_locked(obj);
+ }
+ 
+ struct drm_gem_object *msm_gem_prime_import_sg_table(struct drm_device *dev,
+-- 
+2.43.0
 
-Tao
-
->
-> Suzuki
->
 
