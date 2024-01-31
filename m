@@ -1,167 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-9163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13AAB8436F9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 07:52:25 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 26876843718
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 08:07:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 42E821C26800
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 06:52:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 93BC51F2380F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 07:07:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C78881E899;
-	Wed, 31 Jan 2024 06:52:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 814D03DB91;
+	Wed, 31 Jan 2024 07:07:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L0thNyrU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aR8uiQIa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F403F53E25;
-	Wed, 31 Jan 2024 06:52:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34923E49C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 07:07:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706683928; cv=none; b=qPIYp6hCnX2wFmSGcAAcanAlJ1nhS9dVJkMyJKeE2WijZg51iLLCZO7TsyrEP14tBKtbg61I5Oj+On0Tl26xZl3cEuYmmEvE3aU+HbKfFyf1ygQ86Dx+mVtpPDe7TqkhMWLNoUv2cPtK3cFpYmPnVVuUkvUY0oUucL4+2ppJ3fg=
+	t=1706684872; cv=none; b=hDhziHnrAECl+Apuf/MXvLsjgw1xfXL6umRkgQbbXYaQSaBN473t/PZ929zjUMhg/oN+094LEgAqH5kyrb8PNBq0KNuC1LNbyH0L7IHY7/X+Q3FEfE6C2wrPkS4zd5b9i8VBIIru/GVR77n2HtDXm7YNydnHhPD/CmHK3zeRBJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706683928; c=relaxed/simple;
-	bh=AyL/KhP/HPP4upzed4m2SWG+KUTVwHmJxnBFBU6C+8c=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PGb9GbvtALryy86/Dszmlt7SEXig0PDygYg/6M2mTj2GvQ1jRW2nHIl2iiI96NEBwP+vZIFQlc/xaP0ohEnMBeD0Af8etsTSQ+Pr0G1numi+aNwbm6bbVuER2Dn8X9tBJgSjmkzIMepggOSP1LFFUj98xfStXFu1YzQCNNHuvkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=L0thNyrU; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40V54ljx023208;
-	Wed, 31 Jan 2024 06:51:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=CftI+Lys/8CRlMkhsd2f7
-	8hD8i/Bez1eefh+WebX7n8=; b=L0thNyrUR35qgullDQI/qlrqL1ReHvByvrVca
-	MIhACUp7+gf8jWIds9o+m27T8v4Ev89SHspy7tnN6KhXMp5JDkePiDph6XBJwnzN
-	Z0+8kJe1sR0K3HbPL7sY5OffdSecWzCjDZcRa/JHWBa4OZwfLyFONB2iaf1OLhV/
-	9buyyx7jMTpFzxgdjXOFPEybYPF38SwY88QbV8i5f8UCdsk44EH1W8a9P9sg+ecg
-	KAO1K8P1lVlC1/nufSYDzXNUZZvmIp/AFw9QH3pLsGuumvYN527pJtE7L80TA+G6
-	IBS/O8GCn1ocaSleAX6srqLg3y5B83dHh6NiGPMokMt486dXg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vyfr30a7m-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 31 Jan 2024 06:51:39 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40V6pdwp011752
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 31 Jan 2024 06:51:39 GMT
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 30 Jan 2024 22:51:35 -0800
-Date: Wed, 31 Jan 2024 12:21:33 +0530
-From: Pavan Kondeti <quic_pkondeti@quicinc.com>
-To: Guenter Roeck <linux@roeck-us.net>
-CC: Pavan Kondeti <quic_pkondeti@quicinc.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Wim Van
- Sebroeck" <wim@linux-watchdog.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-watchdog@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Mukesh Ojha
-	<quic_mojha@quicinc.com>
-Subject: Re: [PATCH] watchdog: qcom: Start the watchdog in probe
-Message-ID: <22141056-bc6b-48bf-a4af-405f747aaa29@quicinc.com>
-References: <20240131-qcom-wdt-start-probe-v1-1-bee0a86e2bba@quicinc.com>
- <1a996038-bcc7-4c0f-8f27-ca36a2eb9d3d@roeck-us.net>
- <cfaaed23-8f59-4447-af0b-b94b35ce68ba@quicinc.com>
- <a908d04b-8068-4831-87ef-44175250c226@roeck-us.net>
+	s=arc-20240116; t=1706684872; c=relaxed/simple;
+	bh=8oILixSlZ5urTs1vGCrQlsyLD+Svdi6zXRxdXJ11eVo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=lpSoKGCrRoNEUWYezbRF+D01+kC/vNf3dYqgMpOrid2LlGhKHErSOwwbqQII99MBX67G+G2CdXdmH4twIGjDZWOHI+5ra/TJ60XOkf+tTQZdOlG1cj9M9CaDbXir9a7xz5O0mFEC/aJF3mZqrvA3D/8tW0Gmsye8l04Z1Qs5J5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aR8uiQIa; arc=none smtp.client-ip=209.85.215.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-5cdbc4334edso2529164a12.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jan 2024 23:07:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706684870; x=1707289670; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dOSkO6Y4FYd8fxupP96Kte1aY7D/V2g1zrYc1jxvyPQ=;
+        b=aR8uiQIanIUMGZJPN5Sv1LcknTsmogTFKFsBH0RxXhFlPMLfMEu2PTuKwuc66hAAdd
+         y0WFp+kwoZkRTzZrEBN5u4tLNugTB3lxDxM93SsqGahJ/NjYJgh64z3ULGCPRbrus8LD
+         zONGvlwTM4O7jcltoiZ7mg0gw9XG/7VrAk4fgShW3b2zv2tqo/qaTkrc5kNh+RjivHin
+         dX2Y27qzDnOjo+GZ3jhYsaJxkV2TzIzzaQBy0LYGPmulSjrgZbwsTmFKzBCzEdlhZZrK
+         frdNu/gxKS65ra3QN42XUk+b1rQaPIzdMti0QJW8GVtVxLz7vgdv1Atu1byYN7hlIYgl
+         yIZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706684870; x=1707289670;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dOSkO6Y4FYd8fxupP96Kte1aY7D/V2g1zrYc1jxvyPQ=;
+        b=FChlR3HU0OXUbWinHBuh/ZhlESpoGJi1aNDIPGXyl+nG4YsawWWNcQkhlnZLbD16x5
+         S2OFaSK5YXnhE+dJEB9LwyJVAM8uXyFq7qsQxG46GXZGVDnY6QlHGBmCY4x4lScWiMjQ
+         sr+AreJiQPlTjjRdaKQxBBv6NI13l7a0UWdzwtvdWiuV4yrmk+0diC5j7zfsXZ75Ir5W
+         s2AUfX+U6NLoKdqQ4ysFHXdn8P1DwddgJpNmgrMgmzaVbTI6Zu2glxRu7muuPI20T0yj
+         KBDrIifgaPah3uZ5zEyH15IhYqqHRrNSD+KKdsHDLiRzz03xAJsGVWCTXgQ9zxJTCkiG
+         +MSg==
+X-Gm-Message-State: AOJu0YzGmAAXanUrCUpDw3/w40HDZ0Rs2XRV0oJXoE5sq95F69aISbJU
+	yx8hFNnx27zmfRibhSBje5Sje44Z7Czgg92mPr8viegv6sUjZlhgZcrc2wYnKg==
+X-Google-Smtp-Source: AGHT+IGq4Dd3fKbHGpJ491lSOAvBvsjx9O1WWxRttsPouRtdA4cN3NaV7/uiBsxKoB69XgDHDdyI+w==
+X-Received: by 2002:a05:6a20:9e91:b0:19c:a7c0:acd8 with SMTP id mq17-20020a056a209e9100b0019ca7c0acd8mr719947pzb.0.1706684870039;
+        Tue, 30 Jan 2024 23:07:50 -0800 (PST)
+Received: from [127.0.1.1] ([103.28.246.26])
+        by smtp.gmail.com with ESMTPSA id lp17-20020a056a003d5100b006ddd182bf1csm9087956pfb.46.2024.01.30.23.07.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Jan 2024 23:07:49 -0800 (PST)
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3 00/17] Fix Qcom UFS PHY clocks
+Date: Wed, 31 Jan 2024 12:37:23 +0530
+Message-Id: <20240131-ufs-phy-clock-v3-0-58a49d2f4605@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <a908d04b-8068-4831-87ef-44175250c226@roeck-us.net>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: tpOrUK483pRbQF9jmoYq4-F4ocrVEmaW
-X-Proofpoint-ORIG-GUID: tpOrUK483pRbQF9jmoYq4-F4ocrVEmaW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-31_02,2024-01-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- mlxlogscore=999 lowpriorityscore=0 adultscore=0 phishscore=0
- priorityscore=1501 malwarescore=0 mlxscore=0 suspectscore=0
- impostorscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2401190000 definitions=main-2401310051
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKvxuWUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyjHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDQ2ND3dK0Yt2CjErd5Jz85Gxdc0tjyyRLI1OLJONkJaCegqLUtMwKsHn
+ RsbW1AADUe1pfAAAA
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-clk@vger.kernel.org, quic_cang@quicinc.com, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Conor Dooley <conor.dooley@microchip.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3384;
+ i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
+ bh=8oILixSlZ5urTs1vGCrQlsyLD+Svdi6zXRxdXJ11eVo=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBlufG2op3Brs8QxQHR4Lma+anPdMoGprBMDMvoU
+ 04otxHtgv+JATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZbnxtgAKCRBVnxHm/pHO
+ 9WobB/9NZYXT3tglVcat/alW1W2NsBvVeeQMIiTQSkS56WqIl4UHrc0WDixCWSWuq90DVYkkzQj
+ DQR93pb3ofsHf4bPUZZv5CGNDYGZCKpMh/5OM+tGYjOElbgJKujYEIJjw50vJRw+7ZDXPKEV4be
+ sFNBIU2jj44uXi7+XSbMAvTUX9Ho3lZ2OT4jV4lQMe0cHuUiZbidlw/QOQdhHrtO9tCuZtUlCov
+ ZrxHspD4SpPtxp9deLDoG0fBe/cl8tIAIu2EYe0rxn6Mkg4HrbpK/dFVIHH3SB8XnuOGqrZuAyg
+ MjZsL5Jw2TXxRS+wnDHx6CxtVTT7I95xGozCN6KUdmV+7jlP
+X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
 
-On Tue, Jan 30, 2024 at 10:37:50PM -0800, Guenter Roeck wrote:
-> On 1/30/24 22:16, Pavan Kondeti wrote:
-> > On Tue, Jan 30, 2024 at 10:01:15PM -0800, Guenter Roeck wrote:
-> > > On 1/30/24 20:15, Pavankumar Kondeti wrote:
-> > > > When CONFIG_WATCHDOG_HANDLE_BOOT_ENABLED is enabled, kernel can pet the
-> > > > watchdog until user space takes over. Make use of this feature and
-> > > > start the watchdog in probe.
-> > > > 
-> > > > Signed-off-by: Pavankumar Kondeti <quic_pkondeti@quicinc.com>
-> > > > ---
-> > > >    drivers/watchdog/qcom-wdt.c | 6 +++++-
-> > > >    1 file changed, 5 insertions(+), 1 deletion(-)
-> > > > 
-> > > > diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
-> > > > index 9e790f0c2096..4fb5dbf5faee 100644
-> > > > --- a/drivers/watchdog/qcom-wdt.c
-> > > > +++ b/drivers/watchdog/qcom-wdt.c
-> > > > @@ -276,12 +276,16 @@ static int qcom_wdt_probe(struct platform_device *pdev)
-> > > >    	watchdog_init_timeout(&wdt->wdd, 0, dev);
-> > > >    	/*
-> > > > +	 * Kernel can pet the watchdog until user space takes over.
-> > > > +	 * Start the watchdog here to make use of this feature.
-> > > > +	
-> > > 
-> > > No, that is not what CONFIG_WATCHDOG_HANDLE_BOOT_ENABLED is about.
-> > > Please see its description.
-> > > 
-> > > NACK.
-> > > 
-> > Thanks for taking a look Guenter. I thought of using
-> > WATCHDOG_HANDLE_BOOT_ENABLED and infiniite open timeout as a hint to start
-> > the watchdog in probe. After seeing your NACK for this patch, I guess
-> > that would also would have been rejected.
-> > 
-> WATCHDOG_HANDLE_BOOT_ENABLED is not supposed to be used in drivers.
-> It is a flag for the watchdog core. Before you bring it up, stm32_iwdg.c
-> is a corner case because (presumably) the driver can not determine
-> if the watchdog is running.
-> 
-> > Do you think we can revive this [1] to add support for watchdog pet from
-> > the kernel? It would be helpful in cases where the user space has no
-> > support for watchdog pet (say minimal ramdisk).
-> > 
-> 
-> If done properly, sure. Looking at the exchange, the patch still had issues
-> which I don't think were ever resolved.
+Hi,
 
-Thanks. I will take a look at your review feedback on the series and
-address them before sending the next revision.
+This series fixes the clocks supplied to QMP PHY IPs in the Qcom SoCs. All
+of the Qcom SoCs except MSM8996 require 3 clocks for QMP UFS:
 
-> 
-> Personally I would not want to rely on this, though. It won't address situations
-> where userspace hangs but low level kernel interrupts still work. I think
-> it is mostly useful to cover the time from loading the watchdog driver
-> to starting the watchdog daemon, but even that would better be solved by
-> starting the watchdog in the ROM monitor or BIOS. A minimal watchdog daemon
-> would not consume that much memory, so I don't think "user space has no
-> support for watchdog pet (say minimal ramdisk)" would ever be a real problem.
-> Such a minimal system would probably (hopefully) be based on busybox which
-> does support a watchdog.
-> 
+* ref - 19.2MHz reference clock from RPM/RPMh
+* ref_aux - Auxiliary reference clock from GCC
+* qref - QREF clock from GCC or TCSR (TCSR since SM8550)
 
-Got it. I will find ways to start the watchdog in firmware so that we
-don't need anything special handling.
+MSM8996 only requires 'ref' and 'qref' clocks.
 
-Thanks,
-Pavan
+Hence, this series fixes the binding, DT and GCC driver to reflect the
+actual clock topology.
+
+Note that the clock topology is not based on any downstream dts sources (even
+they are not accurate). But rather based on information from Qcom internal
+documentation and brain dump from Can Guo.
+
+Testing
+=======
+
+Tested on Qualcomm RB5 development board based on SM8250 SoC. I don't
+expect this series to break other SoCs too.
+
+- Mani
+
+Changes in v3:
+
+* Added a patch for SM8650
+* Collected review tags
+* Rebased on top of next/20231123
+
+Changes in v2:
+
+* Reworded the commit message of patch 1 to justify ABI breakage
+* Collected review tags
+
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+Manivannan Sadhasivam (17):
+      dt-bindings: phy: qmp-ufs: Fix PHY clocks
+      phy: qcom-qmp-ufs: Switch to devm_clk_bulk_get_all() API
+      dt-bindings: clock: qcom: Add missing UFS QREF clocks
+      clk: qcom: gcc-sc8180x: Add missing UFS QREF clocks
+      arm64: dts: qcom: msm8996: Fix UFS PHY clocks
+      arm64: dts: qcom: msm8998: Fix UFS PHY clocks
+      arm64: dts: qcom: sdm845: Fix UFS PHY clocks
+      arm64: dts: qcom: sm6115: Fix UFS PHY clocks
+      arm64: dts: qcom: sm6125: Fix UFS PHY clocks
+      arm64: dts: qcom: sm6350: Fix UFS PHY clocks
+      arm64: dts: qcom: sm8150: Fix UFS PHY clocks
+      arm64: dts: qcom: sm8250: Fix UFS PHY clocks
+      arm64: dts: qcom: sc8180x: Fix UFS PHY clocks
+      arm64: dts: qcom: sc8280xp: Fix UFS PHY clocks
+      arm64: dts: qcom: sm8350: Fix UFS PHY clocks
+      arm64: dts: qcom: sm8550: Fix UFS PHY clocks
+      arm64: dts: qcom: sm8650: Fix UFS PHY clocks
+
+ .../bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml    | 48 ++++++++---------
+ arch/arm64/boot/dts/qcom/msm8996.dtsi              |  4 +-
+ arch/arm64/boot/dts/qcom/msm8998.dtsi              | 12 ++---
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi              |  6 ++-
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi             | 18 ++++---
+ arch/arm64/boot/dts/qcom/sdm845.dtsi               |  8 +--
+ arch/arm64/boot/dts/qcom/sm6115.dtsi               |  8 ++-
+ arch/arm64/boot/dts/qcom/sm6125.dtsi               |  8 +--
+ arch/arm64/boot/dts/qcom/sm6350.dtsi               |  8 +--
+ arch/arm64/boot/dts/qcom/sm8150.dtsi               |  8 +--
+ arch/arm64/boot/dts/qcom/sm8250.dtsi               |  8 +--
+ arch/arm64/boot/dts/qcom/sm8350.dtsi               |  8 +--
+ arch/arm64/boot/dts/qcom/sm8550.dtsi               |  9 ++--
+ arch/arm64/boot/dts/qcom/sm8650.dtsi               |  8 +--
+ drivers/clk/qcom/gcc-sc8180x.c                     | 28 ++++++++++
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c            | 63 +++-------------------
+ include/dt-bindings/clock/qcom,gcc-sc8180x.h       |  2 +
+ 17 files changed, 129 insertions(+), 125 deletions(-)
+---
+base-commit: 06f658aadff0e483ee4f807b0b46c9e5cba62bfa
+change-id: 20240131-ufs-phy-clock-7939b9258b3c
+
+Best regards,
+-- 
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
 
