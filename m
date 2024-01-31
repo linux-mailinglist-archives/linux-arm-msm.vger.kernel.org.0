@@ -1,125 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-9127-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 748AB8433E6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 03:28:52 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 110228434C3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 05:16:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B05BD1C246F2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 02:28:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 67828B22759
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 04:16:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4D2B5692;
-	Wed, 31 Jan 2024 02:28:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1833914F7A;
+	Wed, 31 Jan 2024 04:16:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TT+KBo0G"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GE+YHipP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118C1566B;
-	Wed, 31 Jan 2024 02:28:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D2C1642A;
+	Wed, 31 Jan 2024 04:16:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706668122; cv=none; b=IRBiNr9YUcx9+R/EpUMrXaAb+9eqhsfdLZ/Jv7fE2IXkwwSCImcGNrJvyisSlWQRz5oviQk+aDCvUkmqmUHSWrFx1HKgsnhU1tOnBxCmt3HpN/ubYZwBopBo4ZoNwKO46JJeOIHiTQ/wWWHgsynbTQ+UmtLGk3i3HCQSPCPo0cg=
+	t=1706674578; cv=none; b=CLt1mAeC0zrz8IEEf+/IrYyujl8JhUymBxUdck8+4r66YoroiYW3ZrGG9WVF3w7YRF+HzoT2ExqEZZietpbiRMJKFriugIYAm/uYk9i4D0xgDoLd8JeRyzQ7RF6deet2TQ2FEa6IbKfPz7WLLY+NtrcbrxCFn8if1vFg8Yc+AYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706668122; c=relaxed/simple;
-	bh=n6OVbPXMiuN3Xw32rE6Lv1b8IPhNR6i3ARKs9E3EOo0=;
-	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mkfxh7vxPjOGXLsCV9o/PPsPjhC/yV3TOutQRTgHhizfWlck4LzCDWh36lO/JSR7CQajIXLBA1GUEXnImIbVdLtZ1DzrH4pfG9b5wpinmVJqL54ZcQkC9EBOmPtVcfpDfX6RhzwuZe3YvKwGtW8aRq/j1HSsahqYPOjom2LXkFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TT+KBo0G; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-33ae3be1c37so209994f8f.0;
-        Tue, 30 Jan 2024 18:28:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706668119; x=1707272919; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=2jLTYVSeYvQnWVKXFzBhZVC+OXb8WPieh64UeYpW5+4=;
-        b=TT+KBo0GdPDVDyFHdTh+Eo5LzDk4P8K9Li8jOALpWN7eXp2qrJ6NWVScX9+30nnQlN
-         K7O85EBVYAda8zVGu6zpM7pAyGwnqOzXcCZ2Q8DZu9MJqYpWnZ7b8/6xtEg/k7A+5uWI
-         AzZsNAdF1Zudmgp3ayAtjMca/emoeB6b1VYqQ4AQyd+BWEvcC7IBUsbkIka+kPMdJqhL
-         4D9kizVKu00dRYhJ799aqsrxiNI0gJpDdTWqw/7LJrxM57trgSt/NDE1TSwnkAmX8rXh
-         5RAAKUoe67KNBz2yFH5mdYkNXI0AqpR7CHhOthgMJpIsqpbiw38sHf10UzVSzse9Qsf/
-         9Uog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706668119; x=1707272919;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2jLTYVSeYvQnWVKXFzBhZVC+OXb8WPieh64UeYpW5+4=;
-        b=jbnjfLdzGR0QSHxgNN7Hkx29vTPohOQww5qewfqocRLVFHVMB9nqVPYPW59cdVqmQS
-         rDIQrUnerl7LxFK6XSIHJAwDbTDo3JJzGyr9h4MxUThodqSMUbcOPKaoQEukfZp+aGc/
-         4lvebybSV3fdRZ0DOvhorO6vakDjkPFivGWwNENtXMBAoJhDcICNQUcxoQ48NMBsxzDB
-         E3T7MEpy1GavEn8sXtbDmrCQK0xGWa3xjtPrqPXZsCWWL/ye2/TtmHEjKQozTvVUyJES
-         qIy/XJEnJ0p7W13KK1yXru0vf5W030L0Yv4xti8SVccoL449lr2QSAjgqGMs5kQs9Sn4
-         imzg==
-X-Gm-Message-State: AOJu0Ywe28TfKI6laE7i9he1ErcOEPgLIj2EXWJ/HJTK7HDTGlFlZQgE
-	EcqIid68ZSWV9brNpfZF3g/vkgECaUlaRh3qZtBPSC6xypniJEOC
-X-Google-Smtp-Source: AGHT+IFFbw4X4rm7rTmp0mavrk3j/tNSg8iTjVba0Rn2JSBpR5IPAwOams/1ppQI4SW9Waf1Lr8PYA==
-X-Received: by 2002:a5d:4a12:0:b0:33a:f3fc:a7e3 with SMTP id m18-20020a5d4a12000000b0033af3fca7e3mr204208wrq.25.1706668118925;
-        Tue, 30 Jan 2024 18:28:38 -0800 (PST)
-Received: from Ansuel-xps. (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
-        by smtp.gmail.com with ESMTPSA id bu25-20020a056000079900b0033ae4f2edb0sm9747157wrb.37.2024.01.30.18.28.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jan 2024 18:28:38 -0800 (PST)
-Message-ID: <65b9b056.050a0220.2fde8.9be5@mx.google.com>
-X-Google-Original-Message-ID: <ZbmwUjbYpzFshDiK@Ansuel-xps.>
-Date: Wed, 31 Jan 2024 03:28:34 +0100
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: Andrew Lunn <andrew@lunn.ch>, Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Robert Marko <robert.marko@sartura.hr>,
-	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Jie Luo <quic_luoj@quicinc.com>
-Subject: Re: [net-next PATCH v2 3/3] arm64: dts: qcom: ipq8074: add
- clock-frequency to MDIO node
-References: <20240130003546.1546-1-ansuelsmth@gmail.com>
- <20240130003546.1546-4-ansuelsmth@gmail.com>
- <b1ff77bc-0833-493a-b099-884c727f0341@lunn.ch>
- <65b84983.050a0220.e1700.35fd@mx.google.com>
- <20240130174041.74341188@kernel.org>
+	s=arc-20240116; t=1706674578; c=relaxed/simple;
+	bh=7UqosF6/dQF0CDaGJw9WFy6Rab7GGyn/FKeQvoamwG0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=W2SxdBUDJ0W8NAOB9w1KN5kUWNZVIhBqR/t5WGqnMfugpt7VlM/Jv7ptFnGz5mGJ9vJrC8mBHpVNiwA5fzPNBk2kxLTr4zVb5eQu2wB8xy600rT45UPmyXZWkwkGwhuVubmf3qEElU2iRcj70OcW7d5qBf0eQ+1rL62cInTQfkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GE+YHipP; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 40V3HgV2003205;
+	Wed, 31 Jan 2024 04:15:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:date:subject:mime-version:content-type
+	:content-transfer-encoding:message-id:to:cc; s=qcppdkim1; bh=YHv
+	VC7NpPcSbURPZzsXH6yGrnE3u3gKgjl1HSqxfmvs=; b=GE+YHipPs3z6zN8Jval
+	4QievWxeUBiROefQR2p6wiMnGsAS8BPW3XjsvelQ2CTWpXVQjlkMfJavzHHlY/jX
+	4dwYaKVAzK281R0X4SO9dWoZ3g5tdyigd3ymrFjXn2LG2W2c0N2XgSe/kkAKTDjX
+	2kinkER+N4ASUhYWeguBRzCTPzVAenX9HbP/9oKHAvXX6A5170snUfk2adlWqROQ
+	QEF7lkVwmCKYESrYXFqNRhbV88KPhEV9o4TDdHdlIwrB9plR4Mi3urKCSVsyj9dV
+	jEpoK8ayfuOj/fpGa4PlfttDiRsiiIH/9Ouq3gg7Oj/WFJZtezJRqqmIuXur53tH
+	n4A==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vy9nk8kqb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 31 Jan 2024 04:15:56 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 40V4FtQD011236
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 31 Jan 2024 04:15:55 GMT
+Received: from [10.213.108.6] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 30 Jan
+ 2024 20:15:52 -0800
+From: Pavankumar Kondeti <quic_pkondeti@quicinc.com>
+Date: Wed, 31 Jan 2024 09:45:40 +0530
+Subject: [PATCH] watchdog: qcom: Start the watchdog in probe
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240130174041.74341188@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20240131-qcom-wdt-start-probe-v1-1-bee0a86e2bba@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAGzJuWUC/x3MTQ5AMBBA4avIrE3S+o+riEXpYBaUaYNE3F1j+
+ S3ee8CTMHlokweETvbstgidJjAuZpsJ2UZDprJC6VzjMboVLxvQByMBd3ED4dCQKitlaKotxHQ
+ Xmvj+t13/vh/luDHAZgAAAA==
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck <linux@roeck-us.net>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-watchdog@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Mukesh Ojha <quic_mojha@quicinc.com>,
+        Pavankumar Kondeti <quic_pkondeti@quicinc.com>
+X-Mailer: b4 0.13-dev-83828
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 9Nd7n9wQmaiUB0aaaei3Bi1dxvZV-N77
+X-Proofpoint-ORIG-GUID: 9Nd7n9wQmaiUB0aaaei3Bi1dxvZV-N77
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-30_14,2024-01-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ priorityscore=1501 impostorscore=0 lowpriorityscore=0 spamscore=0
+ mlxscore=0 malwarescore=0 suspectscore=0 mlxlogscore=993 clxscore=1011
+ adultscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401190000 definitions=main-2401310032
 
-On Tue, Jan 30, 2024 at 05:40:41PM -0800, Jakub Kicinski wrote:
-> On Tue, 30 Jan 2024 01:57:36 +0100 Christian Marangi wrote:
-> > > If we merge this via netdev, is a merge conflict likely? Any other
-> > > changes expected in this area, given the changes which might happen to
-> > > GCC soon, etc?
-> > > 
-> > > Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-> > 
-> > Honestly I don't expect much to change here in the mdio node.
-> > 
-> > If it's a problem I can submit in a separate patch in linux-msm.
-> 
-> The arch maintainers usually prefer to take the DTS patches,
-> so if there isn't anything special here we should probably
-> default to that.
+When CONFIG_WATCHDOG_HANDLE_BOOT_ENABLED is enabled, kernel can pet the
+watchdog until user space takes over. Make use of this feature and
+start the watchdog in probe.
 
-Thanks for the suggestion I sent v3 with the DTS patch dropped and I
-sent that patch separately.
+Signed-off-by: Pavankumar Kondeti <quic_pkondeti@quicinc.com>
+---
+ drivers/watchdog/qcom-wdt.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
+index 9e790f0c2096..4fb5dbf5faee 100644
+--- a/drivers/watchdog/qcom-wdt.c
++++ b/drivers/watchdog/qcom-wdt.c
+@@ -276,12 +276,16 @@ static int qcom_wdt_probe(struct platform_device *pdev)
+ 	watchdog_init_timeout(&wdt->wdd, 0, dev);
+ 
+ 	/*
++	 * Kernel can pet the watchdog until user space takes over.
++	 * Start the watchdog here to make use of this feature.
++	 *
+ 	 * If WDT is already running, call WDT start which
+ 	 * will stop the WDT, set timeouts as bootloader
+ 	 * might use different ones and set running bit
+ 	 * to inform the WDT subsystem to ping the WDT
+ 	 */
+-	if (qcom_wdt_is_running(&wdt->wdd)) {
++	if (IS_ENABLED(CONFIG_WATCHDOG_HANDLE_BOOT_ENABLED) ||
++	    qcom_wdt_is_running(&wdt->wdd)) {
+ 		qcom_wdt_start(&wdt->wdd);
+ 		set_bit(WDOG_HW_RUNNING, &wdt->wdd.status);
+ 	}
+
+---
+base-commit: 41bccc98fb7931d63d03f326a746ac4d429c1dd3
+change-id: 20240131-qcom-wdt-start-probe-b8e0560aef7d
+
+Best regards,
 -- 
-	Ansuel
+Pavankumar Kondeti <quic_pkondeti@quicinc.com>
+
 
