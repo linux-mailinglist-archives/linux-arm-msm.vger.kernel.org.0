@@ -1,168 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-9222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9223-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 002AF843DBB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 12:06:58 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A9A04843DCE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 12:09:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A9D1C290A83
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 11:06:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D9CFF1C26C2B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jan 2024 11:09:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B29279943;
-	Wed, 31 Jan 2024 11:04:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="joG4RRyh"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E98F78B45;
+	Wed, 31 Jan 2024 11:07:18 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1187BAE8
-	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 11:04:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2AD56DD18;
+	Wed, 31 Jan 2024 11:07:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706699068; cv=none; b=Mf+rO9lWvWb0YE5rM27ExkMuPiCXP8VTjoI7l6gyoiG8yvXQ1Ka8q1iPS8rPlCVN99YPdQ+c4wFkRQOlTB7hTIw1BE6sSsMkUc+CItcZp+zoHp9fhfsP6sgY+CS9icGK3e+Y4Lx94ziMV8igVsGl7ILCZMeulu/RKkd9XdfUmvc=
+	t=1706699238; cv=none; b=ixMfCGznbWU5cx7gOKIzT5QB/QsFRDuER6r6jVQYtMvLdSTt4xiDGksn4/sEvlXfwwksCO2V0kadrStNysSruXLj9MoDPr2/obvxdkNhzcdXDYXYocCQCq1dIgb8ZNQtbqol+gn86mDQBJ/0n40rwQgbi8zvnVS5z3eC2IQCB6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706699068; c=relaxed/simple;
-	bh=o/Kom3bZBaVWt7LhWRqqnq1GfgqDQALX9EwXOIxB6jo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gWcgcQyGUJwEXs+Dok4WB7EVUNOFVF9aVz8viXLRuwEitCR2uXVEVve5obkXcs8stJcHbBowGfQ4UEmpquG2/p1TK7CqsR6UlgocHJS3WQGzrKYePcvz+Ur5gIVDb04t3S9p2hJguRkwusZG53Xc+Jt+fry94wZIgnDF7tAm/bI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=joG4RRyh; arc=none smtp.client-ip=209.85.221.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-4bdc3d5512eso511028e0c.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jan 2024 03:04:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1706699065; x=1707303865; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=o2HD72KRJ6aj0nhRWc+R0OuPJi8YzqJpg5vATYXzxug=;
-        b=joG4RRyhkYtmVlHszov1Xox8vEMUQb8ETUKWjt6HhpjDFqP2olRzg4/hRz8ptLbAqE
-         69eBi3g1/Mub7xPrWsIYHluCI+nkVKTjauRW/UT5YjGl3njyqN/fxeVvm0B5vUPGjGLJ
-         2SD+uu7O3Rb8hX2N+f0WaOhfE0HNR6+9VwGbMfioRNe9JdjDxsL9cT/nW1TQz6W0qggD
-         eJBmVMDat/iQ4SkLtPLjxAXqkZ6rt4YiGWSOhjSw8IlCtaxnV0eWbPXFYefZsqyJrJ1P
-         PhBhfNdhdx5CWzdHAonQu7h/q3dw8IIQqwgZKT0+BnG3oxa37hunJ6QiJCwKah5Yua7R
-         TLtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706699065; x=1707303865;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=o2HD72KRJ6aj0nhRWc+R0OuPJi8YzqJpg5vATYXzxug=;
-        b=jCt8WlZWgzvDBgQP800SXMZGgkaoMbEUCVEUNN5MY99wRQ9EFAJf08uWbUEG6TvtCe
-         yE1HMgwPrtofTnBkMTfhqWdvrZnT44wIeAo2Yy+PZJdFe9PamdQv1AOSlc9h5P2MT8WN
-         1l2lsReIhyiFFR4AKenA2BEBAQny4OeagkOn094tpyfHam5j5WKGjOTwIvSmgGbqYBXM
-         h+SBivjcbkFOk+Z45nnrODzP5/y6bTv21OWxNeTV4eCBZGY+M/vxd6PkTRpLSkgJ6wGH
-         BQwGY4QCbeR4gszZtHMLZ9e7lI5e6q3QD32KIZwA9azx0oIhniR+XCjtzBipaGSrSkk4
-         wGSw==
-X-Gm-Message-State: AOJu0YyGIW4FGYaFdKPTiNmFYS7ghZAVZQGk3fcE8xGlhhAnYLnxtQtw
-	cPl/4ZdQ4tUc0PK31/+qiqysDMWp9euqzYF4Q3WOwU3UBxQRlI2DMIPCd8WYl+OEdJ1rEEtz5gw
-	YmLq6RUmcXUNRBgRPTj7REbfPfpQCuk79cIKTKw==
-X-Google-Smtp-Source: AGHT+IEy0t8aQ/0foP3lUPEuTTrCzJxzcZdG9B4tfmtYi+GsJo9plBZulGoXIEHFkjck4RlX43MJn/wu1f8FAMUSvqI=
-X-Received: by 2002:a05:6122:4d1c:b0:4b7:2382:b4 with SMTP id
- fi28-20020a0561224d1c00b004b7238200b4mr2151457vkb.6.1706699065586; Wed, 31
- Jan 2024 03:04:25 -0800 (PST)
+	s=arc-20240116; t=1706699238; c=relaxed/simple;
+	bh=pL2CPOsXUeiloTv29Cpcz6EVbt2wtYLhQvcoZccEnc0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GItJKyf1j0TnDvbtajqb3Gv/Zb0QyBTQiG9Sk7nB8Lm2Iuzo1tP48OliofXrt7X4nTDlyD+0JCNLM430i3F7NYJdBTUdRcDhV9D/iilR0VJpnen9ho/ToV8OawNbzxXCKPTo3UOyjoIp+ko32Sj9B3I3UpCCaRA+ZbxOgSF8Csw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CCFDFDA7;
+	Wed, 31 Jan 2024 03:07:58 -0800 (PST)
+Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A8DD13F762;
+	Wed, 31 Jan 2024 03:07:12 -0800 (PST)
+Message-ID: <77ebcfcc-c2b7-47ea-8647-065e23fe4689@arm.com>
+Date: Wed, 31 Jan 2024 11:07:11 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240117160748.37682-1-brgl@bgdev.pl> <20240117160748.37682-5-brgl@bgdev.pl>
- <2024011707-alibi-pregnancy-a64b@gregkh> <CAMRc=Mef7wxRccnfQ=EDLckpb1YN4DNLoC=AYL8v1LLJ=uFH2Q@mail.gmail.com>
- <2024011836-wok-treadmill-c517@gregkh> <d2he3ufg6m46zos4swww4t3peyq55blxhirsx37ou37rwqxmz2@5khumvic62je>
-In-Reply-To: <d2he3ufg6m46zos4swww4t3peyq55blxhirsx37ou37rwqxmz2@5khumvic62je>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 31 Jan 2024 12:04:14 +0100
-Message-ID: <CAMRc=MeXJjpJhDjyn_P-SGo4rDnEuT9kGN5jAbRcuM_c7_aDzQ@mail.gmail.com>
-Subject: Re: Re: [PATCH 4/9] PCI: create platform devices for child OF nodes
- of the port node
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Kalle Valo <kvalo@kernel.org>, 
-	"David S . Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Catalin Marinas <catalin.marinas@arm.com>, 
-	Will Deacon <will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, Heiko Stuebner <heiko@sntech.de>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Chris Morgan <macromorgan@hotmail.com>, 
-	Linus Walleij <linus.walleij@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Arnd Bergmann <arnd@arndb.de>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	=?UTF-8?B?TsOtY29sYXMgRiAuIFIgLiBBIC4gUHJhZG8=?= <nfraprado@collabora.com>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Peng Fan <peng.fan@nxp.com>, 
-	Robert Richter <rrichter@amd.com>, Dan Williams <dan.j.williams@intel.com>, 
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>, Terry Bowman <terry.bowman@amd.com>, 
-	Lukas Wunner <lukas@wunner.de>, Huacai Chen <chenhuacai@kernel.org>, Alex Elder <elder@linaro.org>, 
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>, Abel Vesa <abel.vesa@linaro.org>, 
-	linux-wireless@vger.kernel.org, netdev@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-pci@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] coresight: etm4x: Set skip_power_up in
+ etm4_init_arch_data function
+Content-Language: en-US
+To: Mao Jinlong <quic_jinlmao@quicinc.com>, Mike Leach
+ <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20240131105423.9519-1-quic_jinlmao@quicinc.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <20240131105423.9519-1-quic_jinlmao@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jan 30, 2024 at 10:54=E2=80=AFPM Bjorn Andersson <andersson@kernel.=
-org> wrote:
->
-> On Thu, Jan 18, 2024 at 12:15:27PM +0100, Greg Kroah-Hartman wrote:
-> > On Thu, Jan 18, 2024 at 11:58:50AM +0100, Bartosz Golaszewski wrote:
-> > > On Wed, Jan 17, 2024 at 5:45=E2=80=AFPM Greg Kroah-Hartman
-> > > <gregkh@linuxfoundation.org> wrote:
-> > > >
-> > > > On Wed, Jan 17, 2024 at 05:07:43PM +0100, Bartosz Golaszewski wrote=
-:
-> > > > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > > > >
-> > > > > In order to introduce PCI power-sequencing, we need to create pla=
-tform
-> > > > > devices for child nodes of the port node.
-> > > >
-> > > > Ick, why a platform device?  What is the parent of this device, a P=
-CI
-> > > > device?  If so, then this can't be a platform device, as that's not=
- what
-> > > > it is, it's something else so make it a device of that type,.
-> > > >
-> > >
-> > > Greg,
-> > >
-> > > This is literally what we agreed on at LPC. In fact: during one of th=
-e
-> > > hall track discussions I said that you typically NAK any attempts at
-> > > using the platform bus for "fake" devices but you responded that this
-> > > is what the USB on-board HUB does and while it's not pretty, this is
-> > > what we need to do.
-> >
-> > Ah, you need to remind me of these things, this changelog was pretty
-> > sparse :)
-> >
->
-> I believe I missed this part of the discussion, why does this need to be
-> a platform_device? What does the platform_bus bring that can't be
-> provided by some other bus?
->
+On 31/01/2024 10:54, Mao Jinlong wrote:
+> skip_power_up is used in etm4_init_arch_data when set lpoverride. So
+> need to set the value of it before calling using it.
 
-Does it need to be a platform_device? No, of course not. Does it make
-sense for it to be one? Yes, for two reasons:
+Fixes:5214b563588e ("coresight: etm4x: Add support for sysreg only 
+devices")
 
-1. The ATH11K WLAN module is represented on the device tree like a
-platform device, we know it's always there and it consumes regulators
-from another platform device. The fact it uses PCIe doesn't change the
-fact that it is logically a platform device.
-2. The platform bus already provides us with the entire infrastructure
-that we'd now need to duplicate (possibly adding bugs) in order to
-introduce a "power sequencing bus".
+> 
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
 
-Bart
+I will queue this.
 
-> (I'm not questioning the need for having a bus, creating devices, and
-> matching/binding them to a set of drivers)
->
-> Regards,
-> Bjorn
->
+Suzuki
 
-[snip]
+
+> ---
+>   drivers/hwtracing/coresight/coresight-etm4x-core.c | 10 +++++-----
+>   1 file changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+> index c5ea808ea662..8afc07d1dd23 100644
+> --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
+> +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+> @@ -1200,6 +1200,7 @@ static void etm4_init_arch_data(void *info)
+>   	struct etm4_init_arg *init_arg = info;
+>   	struct etmv4_drvdata *drvdata;
+>   	struct csdev_access *csa;
+> +	struct device *dev = init_arg->dev;
+>   	int i;
+>   
+>   	drvdata = dev_get_drvdata(init_arg->dev);
+> @@ -1213,6 +1214,10 @@ static void etm4_init_arch_data(void *info)
+>   	if (!etm4_init_csdev_access(drvdata, csa))
+>   		return;
+>   
+> +	if (!csa->io_mem ||
+> +	    fwnode_property_present(dev_fwnode(dev), "qcom,skip-power-up"))
+> +		drvdata->skip_power_up = true;
+> +
+>   	/* Detect the support for OS Lock before we actually use it */
+>   	etm_detect_os_lock(drvdata, csa);
+>   
+> @@ -2040,11 +2045,6 @@ static int etm4_add_coresight_dev(struct etm4_init_arg *init_arg)
+>   	if (!drvdata->arch)
+>   		return -EINVAL;
+>   
+> -	/* TRCPDCR is not accessible with system instructions. */
+> -	if (!desc.access.io_mem ||
+> -	    fwnode_property_present(dev_fwnode(dev), "qcom,skip-power-up"))
+> -		drvdata->skip_power_up = true;
+> -
+>   	major = ETM_ARCH_MAJOR_VERSION(drvdata->arch);
+>   	minor = ETM_ARCH_MINOR_VERSION(drvdata->arch);
+>   
+
 
