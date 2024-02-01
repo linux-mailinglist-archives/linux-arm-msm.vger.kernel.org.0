@@ -1,448 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-9381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9382-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B66F846091
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 20:02:17 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E14A8460B7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 20:14:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D9904282113
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 19:02:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 14A221F26F13
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 19:14:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37EED85281;
-	Thu,  1 Feb 2024 19:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE56E85627;
+	Thu,  1 Feb 2024 19:13:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iKU5UPIB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Dh9YAkSe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F5984FD0
-	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Feb 2024 19:02:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D5A85293
+	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Feb 2024 19:13:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706814133; cv=none; b=OIS13lx3rAMZydaUsggbApzMZo2QnPoWd6OYKpFIy60O350EHWx40dUwwzR11DVQTNp7X0ZDVNhN792QBlPe1i4rJiQk5hOjvgI29s3TQH2ZDjftSMVx3mVUzdqmZeIFGfSiAf84FMbDlVhz4VsFC7DOMPHHnSOs27u9zI4ENCQ=
+	t=1706814822; cv=none; b=k6zqWwoeALeAM4Tg4F/miVexebfNY1EdD3K/I7vMW3oOqs9V6oR2iVtjis/oBwInT9WNYXR6XE+iA5+3azstopf6rIiLd2HD3c9NPJY8xLlVe0/JuTq9cM6w0X2FKe/N0SXSnSrt/lQN8J96xtCJg5NEvuhck0rjb9QiUuwKPP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706814133; c=relaxed/simple;
-	bh=HnCUDVBMPMHNyvM6dDDDA+brc3aWncuDmfzg1AdQciI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Cd/wrtpRaRDLbWWqZZnJ7i6fbnIlg54U6fdZwxAvSn/caFVHRsj//oFCX6uTnAInZ1NTPZ0bO4axzzkobcb3tumJkTWN1FwKpDEo1fpsRcvs1vMhuqnVd4oKZ08LHk9CbsAta/0gBq+5LLRKs6N07VoOA+ogPriBM8t6vjCcLaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iKU5UPIB; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 411A6BRB023322;
-	Thu, 1 Feb 2024 19:02:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=ZaF2Ks1/LHmfwxTHE2otwm7b5Dzq4QaNAiOdZ6UICkE=; b=iK
-	U5UPIBi80qdSdTn3b7YrzouJzJ5stpZhj5dxftpQI3Jt9rqpQUyAe1KmcDxdBJU4
-	oHDoJmSpi/y1FdDBTmOo6ODLlyp9HfDmSist75l7HKgulRsTgCnurMCZbyHhwxda
-	KSoctP+6c1GRx/+iY0E2fsFkn+lEBM1uxiTj6hFOHQHWFXhsxBn1+EvC4Rztr2MK
-	AJHXzazTq8Peajj6xj+IIogqi5ON7rymDN2SC/AabI+WbZgm89rJ0+jJBT3NsCMQ
-	9eGIcgqSEqstRVwVPwvMSqcr348DJL4x/ZKomnNI+i81cTNyRmsH1xybfQz2gq1n
-	C4Plqe7YwBOBBZP6RmSg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w098c16x5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 01 Feb 2024 19:02:00 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 411J1xc1007754
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 1 Feb 2024 19:01:59 GMT
-Received: from [10.110.1.169] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 1 Feb
- 2024 11:01:58 -0800
-Message-ID: <63803e75-f2fd-08a6-c758-39c8a6e4aa22@quicinc.com>
-Date: Thu, 1 Feb 2024 11:01:57 -0800
+	s=arc-20240116; t=1706814822; c=relaxed/simple;
+	bh=YH86kbr1cgKMKWPB4N2wbtOfMeUg2Y/vh+5jGXYIw4E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SiYG3zHz0vNLfrn97rEwkoOTbv4eNxxjsG6un6cn4b//9WxrWj/b5skP38OpfpqGEfrQLUPEulqurW73/AHjJo3WEICcDXOaXpBEIE/nvQXsRCe/zlaXWNhFmQAc+K86G6PPaxqKkEhFkYURDe36ZLcPA4URVXoRj3NAHNwisgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Dh9YAkSe; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-55c33773c0aso1831664a12.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Feb 2024 11:13:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706814818; x=1707419618; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Rs8bFhf5my2YnmgPHwdbtk4kh1nvJgyASEQNZng+sZE=;
+        b=Dh9YAkSeQjVT10nAo0DsykBzYY1OqFnwRm75BqTqJlk98XPnFy5krR686l7ydBaSCV
+         BRPPoNvZ+bPgKXYuMieoyBxoQC4iKuIB+oE2zYDlPGE9M+l3fhCYq6UtUqWPkzXrUotD
+         /QTEQwTudaDPaws0sYsvbAkY8RL1QsR8HlZJWtvNOqVmh4JCjom0o71LU3ZZ+IKoZLqg
+         8QTzR1keIXmKEfsYD5ZtLvzKxEIIjQwEpI1w04J+eTS+2esT3gNBPpdnh1/IRxwN+033
+         6S8TFDQy6tFbZxcMaUdWrIV3ezTeADqUoe1HJWkHez1dU4rSuyBTTiTGocdlPAjCa/Ll
+         Yi9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706814818; x=1707419618;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Rs8bFhf5my2YnmgPHwdbtk4kh1nvJgyASEQNZng+sZE=;
+        b=dovnVA0bXp+1R8XHAiqpYOrBU6XQoyejcq41SsiFn5P/zOdIm37l7+a/jwPVP7Tq+4
+         Q3yvrE+wTG1OhSXPyDrJ9lkVuAp4YGcmCNcla9xiusI3XKv7Svd8qQ448NjWHo7pIg1B
+         1d114UKSKE3Dg2QES1XrQDhQc08YZtAfofbmb3LZ7AdRyjCebPE4gMQKvqtWU7Wkff3s
+         OBVvXqMwgTuVOHoMM9mt7G1DvHekU0KzmtB3p83rceKANVWs2wN8fJfo/OmV4Ai0MHNw
+         8I8SsX38ZQcLOAeXmxc+3Pqo3QgxIg5V8cFHHi34OzZR6GdekkQzKaKzrPZz1vuyxcyk
+         P5xw==
+X-Gm-Message-State: AOJu0Yw82PGy8UpWnGP7gE1yIj3p2++Xd8UNHuqMtja0z6rXO/wj88/q
+	b6kP0kR4FOvfubMP/UZwRoVO/Xu//QcPsVoBrINlDafLO1GwsmpJAofbMYfyvwk=
+X-Google-Smtp-Source: AGHT+IFH37wg9fTFzpFHD98Tr4CkdHn+eHxTd3BlVsEIFmM2D+8wwhDRim+spoFYFjlvzfGNZAEHJQ==
+X-Received: by 2002:a05:6402:696:b0:55d:35dd:4a48 with SMTP id f22-20020a056402069600b0055d35dd4a48mr4059760edy.36.1706814818106;
+        Thu, 01 Feb 2024 11:13:38 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCUImBA09Zc6s7ffIyKKncBLxUwit5T9HTfNJeTQiZ2dx4xCRlddL4PfRoyp0/4FXbeBhWX5AXfj5JyvnCaapDgt5/HYeMQ7DxXf5wNce4HPBG8yLt7j6y9E/T3myfYjzt5rAx4N8DCoxvKZoJ/ZbwZ7zoI+H+TPHwVRBKPJqTDMjN7xLXGfGcmmfB1u2GGoKy64zOWDYxK3u/XSft3HYaN3lgC8ec66KTXzCWd+x2wE/Rd/+6GEUor9EcJpwIR3Tv9JmjTN6CoS1MTysAGcauhYm0lsimtekx9MnskIUBHjf8V2Cy0OMwTr778k3ZLotQHBx0dm91qUxHhEOsSsxi9UgF/hYdfwP+ROIjI84Vuxf4/skLtCkowF/yosQfVlNj7LpRsLfS8/hIScv+gtbLhUf+TyZTip/i3fKBoDyMF3WCxEyeOSzUDzBaHulxXoNuezeA6ytocx103SYDJpeC+Mh95m0vWHh6eivpWsOyb9mrOyfIrUpdqy0XEPOA1MYXqtpoSHXYqbktSUHhohrHBLjAqNNPDrZ41qj5BCaepOUvkpxBcKxxxjrSmV2A7Dqc95c5V0ouIxTs5cybCeo1ASl5ZuufR/pCAuMluII5NfOrDxDwETtqKTn31aoWUQSLmBkSxuUZORPyD58VvB01VKUwoos6L1VhQ7crsKiYfBvobWsINJ4t1Ztpys+FUfbAPLaxukEGfirjEmhy7Kn2F2ZmvS87W87sVPS/L+023Rji+JeIHxJk0xuXnVRKfE9e+JQYjn3tzJ+O4DMKScGFhIBgYhXt1kF9IJaeni
+Received: from [192.168.159.104] (178235179129.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.129])
+        by smtp.gmail.com with ESMTPSA id z17-20020aa7d411000000b0055c97f940fcsm92944edq.81.2024.02.01.11.13.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Feb 2024 11:13:37 -0800 (PST)
+Message-ID: <dd219c40-33d5-43ff-b0da-16ccf0198bb9@linaro.org>
+Date: Thu, 1 Feb 2024 20:13:33 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 14/17] drm/msm/dpu: modify encoder programming for CDM
- over DP
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 13/15] dt-bindings: crypto: ice: document the hwkm
+ property
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Paloma Arellano <quic_parellan@quicinc.com>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <seanpaul@chromium.org>, <swboyd@chromium.org>,
-        <quic_jesszhan@quicinc.com>, <quic_khsieh@quicinc.com>,
-        <marijn.suijten@somainline.org>, <neil.armstrong@linaro.org>
-References: <20240125193834.7065-1-quic_parellan@quicinc.com>
- <20240125193834.7065-15-quic_parellan@quicinc.com>
- <52674357-2135-4784-a371-e7809b632c19@linaro.org>
- <d1679d6f-a388-2a13-2924-1e6040217c01@quicinc.com>
- <CAA8EJppPFuP4w-OAi0hDE36tjPXOHpigg1PMyzhkOTLL-q0VMQ@mail.gmail.com>
- <771094aa-b8d9-6e6e-1945-b66818fa6d88@quicinc.com>
- <CAA8EJprBjq8OvE2tfjZmxHfp3EbxKpWWv-xTym70t6ksBoTojQ@mail.gmail.com>
- <6495d524-c3eb-a3e5-cc9e-3b0b40bf7c35@quicinc.com>
- <CAA8EJpomaX8YzXNSweh_pEE1fJ+7yUJAQvLKPHLtSRAOHxva4Q@mail.gmail.com>
- <ba267a71-5dc4-ce87-6b9d-9fa501d69633@quicinc.com>
- <CAA8EJpq6g4a+5QEOrOgoTc+GepwU1fvM21Jd1gfzzR-HKqQc-g@mail.gmail.com>
- <560d9344-3f09-5d2c-e74e-760d80d057e3@quicinc.com>
- <CAA8EJpoUCGjVc4Yw74=ULa-P4AidXEAddsSkZ-4DcucK9iD6QQ@mail.gmail.com>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAA8EJpoUCGjVc4Yw74=ULa-P4AidXEAddsSkZ-4DcucK9iD6QQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Gaurav Kashyap <quic_gaurkash@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ linux-scsi@vger.kernel.org, andersson@kernel.org, ebiggers@google.com,
+ neil.armstrong@linaro.org, srinivas.kandagatla@linaro.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, robh+dt@kernel.org
+Cc: linux-kernel@vger.kernel.org, linux-mmc@vger.kernel.org,
+ kernel@quicinc.com, linux-crypto@vger.kernel.org,
+ devicetree@vger.kernel.org, quic_omprsing@quicinc.com,
+ quic_nguyenb@quicinc.com, bartosz.golaszewski@linaro.org,
+ ulf.hansson@linaro.org, jejb@linux.ibm.com, martin.petersen@oracle.com,
+ mani@kernel.org, davem@davemloft.net, herbert@gondor.apana.org.au
+References: <20240127232436.2632187-1-quic_gaurkash@quicinc.com>
+ <20240127232436.2632187-14-quic_gaurkash@quicinc.com>
+ <301be6d8-b105-4bba-a154-9caebc8013e3@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <301be6d8-b105-4bba-a154-9caebc8013e3@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: _q1lNnkqzyVafvriLdOBfudTcPT8dort
-X-Proofpoint-GUID: _q1lNnkqzyVafvriLdOBfudTcPT8dort
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-01_06,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- phishscore=0 clxscore=1015 suspectscore=0 impostorscore=0
- priorityscore=1501 mlxscore=0 adultscore=0 malwarescore=0 mlxlogscore=999
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401190000 definitions=main-2402010147
 
+On 29.01.2024 09:18, Krzysztof Kozlowski wrote:
+> On 28/01/2024 00:14, Gaurav Kashyap wrote:
+>> When Qualcomm's Inline Crypto Engine (ICE) contains Hardware
+>> Key Manager (HWKM), and the 'HWKM' mode is enabled, it
+>> supports wrapped keys. However, this also requires firmware
+>> support in Trustzone to work correctly, which may not be available
+>> on all chipsets. In the above scenario, ICE needs to support standard
+>> keys even though HWKM is integrated from a hardware perspective.
+>>
+>> Introducing this property so that Hardware wrapped key support
+>> can be enabled/disabled from software based on chipset firmware,
+>> and not just based on hardware version.
+>>
+>> Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
+>> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>>  .../bindings/crypto/qcom,inline-crypto-engine.yaml     | 10 ++++++++++
+>>  1 file changed, 10 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml b/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
+>> index 09e43157cc71..6415d7be9b73 100644
+>> --- a/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
+>> +++ b/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
+>> @@ -25,6 +25,16 @@ properties:
+>>    clocks:
+>>      maxItems: 1
+>>  
+>> +  qcom,ice-use-hwkm:
+>> +    type: boolean
+>> +    description:
+>> +      Use the supported Hardware Key Manager (HWKM) in Qualcomm ICE
+>> +      to support wrapped keys. Having this entry helps scenarios where
+>> +      the ICE hardware supports HWKM, but the Trustzone firmware does
+>> +      not have the full capability to use this HWKM and support wrapped
+> 
+> How does it help in this scenario? You enable this property, Trustzone
+> does not support it, so what happens?
+> 
+> Also, which SoCs have incomplete Trustzone support? I expect this to be
+> a quirk, thus limited to specific SoCs with issues.
 
+Can we simply evaluate the return value of the secure calls?
 
-On 1/31/2024 7:17 PM, Dmitry Baryshkov wrote:
-> On Thu, 1 Feb 2024 at 03:30, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->>
->>
->>
->> On 1/29/2024 3:44 PM, Dmitry Baryshkov wrote:
->>> On Mon, 29 Jan 2024 at 09:08, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->>>>
->>>> On 1/28/2024 10:12 PM, Dmitry Baryshkov wrote:
->>>>> On Mon, 29 Jan 2024 at 07:03, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->>>>>>
->>>>>>
->>>>>>
->>>>>> On 1/28/2024 7:42 PM, Dmitry Baryshkov wrote:
->>>>>>> On Mon, 29 Jan 2024 at 04:58, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->>>>>>>>
->>>>>>>>
->>>>>>>>
->>>>>>>> On 1/27/2024 9:55 PM, Dmitry Baryshkov wrote:
->>>>>>>>> On Sun, 28 Jan 2024 at 07:48, Paloma Arellano <quic_parellan@quicinc.com> wrote:
->>>>>>>>>>
->>>>>>>>>>
->>>>>>>>>> On 1/25/2024 1:57 PM, Dmitry Baryshkov wrote:
->>>>>>>>>>> On 25/01/2024 21:38, Paloma Arellano wrote:
->>>>>>>>>>>> Adjust the encoder format programming in the case of video mode for DP
->>>>>>>>>>>> to accommodate CDM related changes.
->>>>>>>>>>>>
->>>>>>>>>>>> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
->>>>>>>>>>>> ---
->>>>>>>>>>>>        drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 16 +++++++++
->>>>>>>>>>>>        drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h   |  8 +++++
->>>>>>>>>>>>        .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  | 35 ++++++++++++++++---
->>>>>>>>>>>>        drivers/gpu/drm/msm/dp/dp_display.c           | 12 +++++++
->>>>>>>>>>>>        drivers/gpu/drm/msm/msm_drv.h                 |  9 ++++-
->>>>>>>>>>>>        5 files changed, 75 insertions(+), 5 deletions(-)
->>>>>>>>>>>>
->>>>>>>>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>>>>>>>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>>>>>>>>>> index b0896814c1562..99ec53446ad21 100644
->>>>>>>>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>>>>>>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>>>>>>>>>> @@ -222,6 +222,22 @@ static u32 dither_matrix[DITHER_MATRIX_SZ] = {
->>>>>>>>>>>>            15, 7, 13, 5, 3, 11, 1, 9, 12, 4, 14, 6, 0, 8, 2, 10
->>>>>>>>>>>>        };
->>>>>>>>>>>>        +u32 dpu_encoder_get_drm_fmt(const struct drm_encoder *drm_enc,
->>>>>>>>>>>> const struct drm_display_mode *mode)
->>>>>>>>>>>> +{
->>>>>>>>>>>> +    const struct dpu_encoder_virt *dpu_enc;
->>>>>>>>>>>> +    const struct msm_display_info *disp_info;
->>>>>>>>>>>> +    struct msm_drm_private *priv;
->>>>>>>>>>>> +
->>>>>>>>>>>> +    dpu_enc = to_dpu_encoder_virt(drm_enc);
->>>>>>>>>>>> +    disp_info = &dpu_enc->disp_info;
->>>>>>>>>>>> +    priv = drm_enc->dev->dev_private;
->>>>>>>>>>>> +
->>>>>>>>>>>> +    if (disp_info->intf_type == INTF_DP &&
->>>>>>>>>>>> + msm_dp_is_yuv_420_enabled(priv->dp[disp_info->h_tile_instance[0]],
->>>>>>>>>>>> mode))
->>>>>>>>>>>
->>>>>>>>>>> This should not require interacting with DP. If we got here, we must
->>>>>>>>>>> be sure that 4:2:0 is supported and can be configured.
->>>>>>>>>> Ack. Will drop this function and only check for if the mode is YUV420.
->>>>>>>>>>>
->>>>>>>>>>>> +        return DRM_FORMAT_YUV420;
->>>>>>>>>>>> +
->>>>>>>>>>>> +    return DRM_FORMAT_RGB888;
->>>>>>>>>>>> +}
->>>>>>>>>>>>          bool dpu_encoder_is_widebus_enabled(const struct drm_encoder
->>>>>>>>>>>> *drm_enc)
->>>>>>>>>>>>        {
->>>>>>>>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->>>>>>>>>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->>>>>>>>>>>> index 7b4afa71f1f96..62255d0aa4487 100644
->>>>>>>>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->>>>>>>>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->>>>>>>>>>>> @@ -162,6 +162,14 @@ int dpu_encoder_get_vsync_count(struct
->>>>>>>>>>>> drm_encoder *drm_enc);
->>>>>>>>>>>>         */
->>>>>>>>>>>>        bool dpu_encoder_is_widebus_enabled(const struct drm_encoder
->>>>>>>>>>>> *drm_enc);
->>>>>>>>>>>>        +/**
->>>>>>>>>>>> + * dpu_encoder_get_drm_fmt - return DRM fourcc format
->>>>>>>>>>>> + * @drm_enc:    Pointer to previously created drm encoder structure
->>>>>>>>>>>> + * @mode:    Corresponding drm_display_mode for dpu encoder
->>>>>>>>>>>> + */
->>>>>>>>>>>> +u32 dpu_encoder_get_drm_fmt(const struct drm_encoder *drm_enc,
->>>>>>>>>>>> +                const struct drm_display_mode *mode);
->>>>>>>>>>>> +
->>>>>>>>>>>>        /**
->>>>>>>>>>>>         * dpu_encoder_get_crc_values_cnt - get number of physical encoders
->>>>>>>>>>>> contained
->>>>>>>>>>>>         *    in virtual encoder that can collect CRC values
->>>>>>>>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
->>>>>>>>>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
->>>>>>>>>>>> index e284bf448bdda..a1dde0ff35dc8 100644
->>>>>>>>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
->>>>>>>>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
->>>>>>>>>>>> @@ -234,6 +234,7 @@ static void
->>>>>>>>>>>> dpu_encoder_phys_vid_setup_timing_engine(
->>>>>>>>>>>>        {
->>>>>>>>>>>>            struct drm_display_mode mode;
->>>>>>>>>>>>            struct dpu_hw_intf_timing_params timing_params = { 0 };
->>>>>>>>>>>> +    struct dpu_hw_cdm *hw_cdm;
->>>>>>>>>>>>            const struct dpu_format *fmt = NULL;
->>>>>>>>>>>>            u32 fmt_fourcc = DRM_FORMAT_RGB888;
->>>>>>>>>>>>            unsigned long lock_flags;
->>>>>>>>>>>> @@ -254,17 +255,26 @@ static void
->>>>>>>>>>>> dpu_encoder_phys_vid_setup_timing_engine(
->>>>>>>>>>>>            DPU_DEBUG_VIDENC(phys_enc, "enabling mode:\n");
->>>>>>>>>>>>            drm_mode_debug_printmodeline(&mode);
->>>>>>>>>>>>        -    if (phys_enc->split_role != ENC_ROLE_SOLO) {
->>>>>>>>>>>> +    hw_cdm = phys_enc->hw_cdm;
->>>>>>>>>>>> +    if (hw_cdm) {
->>>>>>>>>>>> +        intf_cfg.cdm = hw_cdm->idx;
->>>>>>>>>>>> +        fmt_fourcc = dpu_encoder_get_drm_fmt(phys_enc->parent, &mode);
->>>>>>>>>>>> +    }
->>>>>>>>>>>> +
->>>>>>>>>>>> +    if (phys_enc->split_role != ENC_ROLE_SOLO ||
->>>>>>>>>>>> +        dpu_encoder_get_drm_fmt(phys_enc->parent, &mode) ==
->>>>>>>>>>>> DRM_FORMAT_YUV420) {
->>>>>>>>>>>>                mode.hdisplay >>= 1;
->>>>>>>>>>>>                mode.htotal >>= 1;
->>>>>>>>>>>>                mode.hsync_start >>= 1;
->>>>>>>>>>>>                mode.hsync_end >>= 1;
->>>>>>>>>>>> +        mode.hskew >>= 1;
->>>>>>>>>>>
->>>>>>>>>>> Separate patch.
->>>>>>>>>> Ack.
->>>>>>>>>>>
->>>>>>>>>>>>                  DPU_DEBUG_VIDENC(phys_enc,
->>>>>>>>>>>> -            "split_role %d, halve horizontal %d %d %d %d\n",
->>>>>>>>>>>> +            "split_role %d, halve horizontal %d %d %d %d %d\n",
->>>>>>>>>>>>                    phys_enc->split_role,
->>>>>>>>>>>>                    mode.hdisplay, mode.htotal,
->>>>>>>>>>>> -            mode.hsync_start, mode.hsync_end);
->>>>>>>>>>>> +            mode.hsync_start, mode.hsync_end,
->>>>>>>>>>>> +            mode.hskew);
->>>>>>>>>>>>            }
->>>>>>>>>>>>              drm_mode_to_intf_timing_params(phys_enc, &mode, &timing_params);
->>>>>>>>>>>> @@ -412,8 +422,15 @@ static int dpu_encoder_phys_vid_control_vblank_irq(
->>>>>>>>>>>>        static void dpu_encoder_phys_vid_enable(struct dpu_encoder_phys
->>>>>>>>>>>> *phys_enc)
->>>>>>>>>>>>        {
->>>>>>>>>>>>            struct dpu_hw_ctl *ctl;
->>>>>>>>>>>> +    struct dpu_hw_cdm *hw_cdm;
->>>>>>>>>>>> +    const struct dpu_format *fmt = NULL;
->>>>>>>>>>>> +    u32 fmt_fourcc = DRM_FORMAT_RGB888;
->>>>>>>>>>>>              ctl = phys_enc->hw_ctl;
->>>>>>>>>>>> +    hw_cdm = phys_enc->hw_cdm;
->>>>>>>>>>>> +    if (hw_cdm)
->>>>>>>>>>>> +        fmt_fourcc = dpu_encoder_get_drm_fmt(phys_enc->parent,
->>>>>>>>>>>> &phys_enc->cached_mode);
->>>>>>>>>>>> +    fmt = dpu_get_dpu_format(fmt_fourcc);
->>>>>>>>>>>>              DPU_DEBUG_VIDENC(phys_enc, "\n");
->>>>>>>>>>>>        @@ -422,6 +439,8 @@ static void dpu_encoder_phys_vid_enable(struct
->>>>>>>>>>>> dpu_encoder_phys *phys_enc)
->>>>>>>>>>>>              dpu_encoder_helper_split_config(phys_enc,
->>>>>>>>>>>> phys_enc->hw_intf->idx);
->>>>>>>>>>>>        +    dpu_encoder_helper_phys_setup_cdm(phys_enc, fmt,
->>>>>>>>>>>> CDM_CDWN_OUTPUT_HDMI);
->>>>>>>>>>>
->>>>>>>>>>> If there is no CDM, why do we need to call this?
->>>>>>>>>> Inside of dpu_encoder_helper_phys_setup_cdm(), there's a check to see if
->>>>>>>>>> there is a hw_cdm. If there is not, then it immediately exits the function.
->>>>>>>>>>>
->>>>>>>>>>>> +
->>>>>>>>>>>>            dpu_encoder_phys_vid_setup_timing_engine(phys_enc);
->>>>>>>>>>>>              /*
->>>>>>>>>>>> @@ -437,7 +456,15 @@ static void dpu_encoder_phys_vid_enable(struct
->>>>>>>>>>>> dpu_encoder_phys *phys_enc)
->>>>>>>>>>>>            if (ctl->ops.update_pending_flush_merge_3d &&
->>>>>>>>>>>> phys_enc->hw_pp->merge_3d)
->>>>>>>>>>>>                ctl->ops.update_pending_flush_merge_3d(ctl,
->>>>>>>>>>>> phys_enc->hw_pp->merge_3d->idx);
->>>>>>>>>>>>        -    if (ctl->ops.update_pending_flush_periph &&
->>>>>>>>>>>> phys_enc->hw_intf->cap->type == INTF_DP)
->>>>>>>>>>>> +    if (ctl->ops.update_pending_flush_cdm && phys_enc->hw_cdm)
->>>>>>>>>>>> +        ctl->ops.update_pending_flush_cdm(ctl, hw_cdm->idx);
->>>>>>>>>>>> +
->>>>>>>>>>>> +    /*
->>>>>>>>>>>> +     * Peripheral flush must be updated whenever flushing SDP
->>>>>>>>>>>> packets is needed.
->>>>>>>>>>>> +     * SDP packets are required for any YUV format (YUV420, YUV422,
->>>>>>>>>>>> YUV444).
->>>>>>>>>>>> +     */
->>>>>>>>>>>> +    if (ctl->ops.update_pending_flush_periph &&
->>>>>>>>>>>> phys_enc->hw_intf->cap->type == INTF_DP &&
->>>>>>>>>>>> +        phys_enc->hw_cdm)
->>>>>>>>>>>>                ctl->ops.update_pending_flush_periph(ctl,
->>>>>>>>>>>> phys_enc->hw_intf->idx);
->>>>>>>>>>>
->>>>>>>>>>> Should there be a flush if we are switching from YUV 420 to RGB mode?
->>>>>>>>>> We only need to flush for the sdp packet, but for msa we do not need to
->>>>>>>>>> flush.
->>>>>>>>>
->>>>>>>>> What about having SDP with RGB as colorimetry? In other words, if
->>>>>>>>> there is a decision point, this one looks incorrect.
->>>>>>>>>
->>>>>>>>
->>>>>>>> There are two ways to do it:
->>>>>>>>
->>>>>>>> 1) Use SDP for both RGB and YUV as that supports both. If we implement
->>>>>>>> this policy, then what you are asking for is correct that we will need
->>>>>>>> SDP even to switch back to RGB. But to implement this we will also need
->>>>>>>> to have some sort of state management in the encoder layer about what is
->>>>>>>> the current encoder fmt Vs what is the prev fmt and then trigger
->>>>>>>> peripheral flush only during transitions from RGB to YUV and vice-versa
->>>>>>>>
->>>>>>>> 2) Use SDP only for YUV because MSA does not support YUV formats and use
->>>>>>>> MSA for RGB
->>>>>>>>
->>>>>>>> We decided to implement (2) and there is no significant impact of
->>>>>>>> switching between MSA and SDPs but state management becomes easier.
->>>>>>>
->>>>>>> Yes. However as you wrote, there might be other usecases concerning
->>>>>>> SDP. Having this in mind, it sounds like the driver should decide
->>>>>>> whether to flush peripheral at a different place (when the SDP
->>>>>>> infoframe is being updated?). And the dpu_encoder_phys_vid_enable()
->>>>>>> should use this previous decision. Maybe this should be a part of
->>>>>>> msm_dp_ API, something like msm_dp_needs_peripheral_flush()?
->>>>>>>
->>>>>>
->>>>>> Correct. The decision to flush peripheral or not certainly comes from
->>>>>> the peripheral itself . In this case its DP.
->>>>>>
->>>>>> I think perhaps the usage of hw_cdm here makes it hard to understand
->>>>>> that but the idea behind this was that in the change "drm/msm/dpu:
->>>>>> reserve CDM blocks for DP if mode is YUV420 ", hw_cdm is assigned only
->>>>>> if msm_dp_is_yuv_420_enabled() returns true.
->>>>>
->>>>> Yes.
->>>>>
->>>>>>
->>>>>> So in some sense, the API you are asking for is already
->>>>>> msm_dp_is_yuv_420_enabled() but we can rename that to
->>>>>> msm_dp_needs_periph_flush().
->>>>>
->>>>> No. This leaks details. We might need peripheral flush for other
->>>>> reasons. So this decision should be made inside the DP driver.
->>>>> BTW, is there a need to flush-peripheral each time the INTF gets
->>>>> enabled? When some bits of configuration were updated (like SDP
->>>>> infoframe or CDM config)?
->>>>>
->>>>
->>>> Not really leaking any details. Interface decides when DPU's flush bit
->>>> needs to be invoked. All the conditions needing the flush can be
->>>> absorbed within msm_dp_needs_periph_flush() which will be within DP
->>>> driver. So I dont see any issue with that.
->>>
->>> As long as we have two distinct functions: msm_dp_needs_periph_flush()
->>> and msm_dp_is_yuv420_enabled(), it's fine with me.
->>>
->>
->> I am okay with it being distinct but in this series and till DP DSC is
->> posted, we have only YUV420 SDP use-case for peripheral flush.
->>
->> So are you okay with the fact that the code will look something like
->>
->> bool msm_dp_needs_periph_flush() {
->>          return msm_dp_is_yuv420_enabled();
->> }
-> 
-> Yes. The reason is that if at some point conditions for periph flush
-> get changed, you won't have to change the API between DPU and DP
-> drivers.
-> 
-
-Ack, I am okay with this.
-
->>
->>>>
->>>> The peripheral flush needs to be invoked whenever SDP/PPS packets need
->>>> to be sent out at the very least. Those are the two main use-cases so far.
->>>>
->>>> Not necessarily each time the INTF is enabled.
->>>>
->>>> But ....
->>>>
->>>> For PPS, we would typically enable DSC from the first frame itself and
->>>> we dont support dynamically turning DSC ON/OFF so its a fair assumption
->>>> that we need to the peripheral flush for DSC only during enable.
->>>>
->>>> For SDP, so today we enforce a modeset when we switch from a case of
->>>> needing cdm / not needing cdm and vice-versa. So even this use-case
->>>> should be accompanied by a disable()/enable().
->>>
->>> My point was that there might be other changes to the SDP infoframe.
->>>
->>>>
->>>> So are you suggesting that we unconditionally just do peripheral_flush
->>>> from enable()?
->>>>
->>>> I need to do some checking but maybe ....
->>>
->>> This might be an option too. I don't know what delays / issues it can cause.
->>>
->>
->> I will check this if the other option we discussed above does not work
->> for you.
->>
->>>>
->>>>>>
->>>>>> The issue here is the phys layer cannot call msm_dp_is_yuv_420_enabled()
->>>>>> so its kind of round-about by checking hw_cdm.
->>>>>
->>>>> Which maybe means that I should finish phys / encoder rework.
->>>>>
->>>>
->>>> Ugh no. Not another rework just for this.
->>>
->>> It is pending for the CTL flush story.
->>>
->>>>
->>>>>>
->>>>>> The check is not entirely wrong because for DP, we need hw_cdm for all
->>>>>> YUV formats and not just 420 but the relationship is maybe not clear but
->>>>>> I thought the comment above that would help a bit:
->>>>>>
->>>>>> /*
->>>>>>             * Peripheral flush must be updated whenever flushing SDP packets is
->>>>>> needed.
->>>>>>             * SDP packets are required for any YUV format (YUV420, YUV422, YUV444).
->>>>>>             */
->>>>>>
->>>>>> The only other way I can think of is maybe we need to introduce a new
->>>>>> phys variable called phys_enc->needs_update_periph_flush and we can set
->>>>>> that in dpu_encoder.c as that can call msm_dp_needs_periph_flush().
->>>>>>
->>>>>> What do you think of this way?
->>>>>
->>>>> Let me understand first the requirements for peripheral flush (see the
->>>>> questions above).
-> 
-> 
-> 
+Konrad
 
