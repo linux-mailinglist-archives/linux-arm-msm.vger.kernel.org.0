@@ -1,68 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-9426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B014A846355
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 23:18:45 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 271F1846365
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 23:25:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DE2BB1C24DFD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 22:18:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D317F28E85E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 22:25:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CE323FE23;
-	Thu,  1 Feb 2024 22:18:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AB583FE48;
+	Thu,  1 Feb 2024 22:25:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PSjkloBh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xxpg1ylp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1480A3D3BC;
-	Thu,  1 Feb 2024 22:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509083FE24;
+	Thu,  1 Feb 2024 22:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706825919; cv=none; b=JtBJV/njwMR565kVgNCmdq0EFquM3kcB2zjmegnByIMpzxUU6F73FC3tIRqZ6Ogpaoh2QAe6EhqvXP3022mz6Iss6QoQfq55xbd5PxNdyPYKlZi1DZWJVGzfDK6FIKufzwJ0GSwAR5oHeB/AtTzS3JHzFuK7yk3y4T8RVXEpnPk=
+	t=1706826319; cv=none; b=nQ8rvRE08UL9uWmMkI7E9zaiXr+OoqV68yROFihFaUIi4WhGudKpXcHLje5j1u4lJDhsG4XjQ04e4ygmpa1aB6D9Li/gOlKw0kd6g7MpCioWvShj1V/4RMXn/7KUus3CeYc/O497oNVJhi8rW7NbZxSa2vjSU/9jUZZK777b6gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706825919; c=relaxed/simple;
-	bh=Z9TgWie7YtgminwtE1RQnQvs7QaguyVm5XFk23DKB/k=;
+	s=arc-20240116; t=1706826319; c=relaxed/simple;
+	bh=Hj4d6tN880SUXjND3akJlhPUopmSpfbUPijmcRAWHYE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CHaC5cdRknts0gOP9h9c+pM0SVeFJQlWqRtvhs5+xpWG6hvEZTlsnxIOkGkcsdWNUfxE7oiHBnM/BT27JT26W4q+Tk4Dzg7WXBk8QAfP47F0swSeS9dhNvOd7+urgC96YVKBzbkW9apc0lLQw74U1a7fXVnT18LV/tlxAuccXDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PSjkloBh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F0C4C433B1;
-	Thu,  1 Feb 2024 22:18:38 +0000 (UTC)
+	 To:Cc:Content-Type; b=soJ0Jz8T2BwJRtF8P6HKOaeReYXE4XrmnoBtl30zxeJYdHX+z9AR53NMY80DBAq2X2QLODcM0cf/9Nqp/hN3dD0WwTQTCisq3P1RO1uyFqY7FC9yOsVLTYrMx2lTOhq6FN8OUI7WxnUlPK1qom55weM/46fnNsK0i2Bryl2OEYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xxpg1ylp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A150FC433F1;
+	Thu,  1 Feb 2024 22:25:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706825918;
-	bh=Z9TgWie7YtgminwtE1RQnQvs7QaguyVm5XFk23DKB/k=;
+	s=k20201202; t=1706826318;
+	bh=Hj4d6tN880SUXjND3akJlhPUopmSpfbUPijmcRAWHYE=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=PSjkloBhZZM5akBe3/QG1foc9zj4RKsnA/d+vvX5VeXMeN7ItAzAkUbCEfGGLPOK0
-	 4D6eqqK3CaAlvn0wdzqZIBF5mu05SXLXn6Ao1/zN4I2m3+wN7qLqmJnusSEo3W/Eox
-	 stTPLCdN2CkdxexOTQja5+l2+sWP/WhyvMuEqJz/SxiM8NLU02ueGN0smD8YsWMZgb
-	 U5phZraJpISvmNXCS18B2LnNLOxxj++ULSp+nqN+gIXuQlSI5tExzvbZEfnh8EkKKC
-	 VwjZb3vxkrgsAFA+Qu+wHrY6o36e+0tIDnjq5c4Zduw4Ojc7kbdIq4fTaiqtl6cfEA
-	 4ISfV4hP7d7LQ==
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-51032058f17so1752451e87.3;
-        Thu, 01 Feb 2024 14:18:38 -0800 (PST)
-X-Gm-Message-State: AOJu0YxiRvE5/xE1VvJXSr1hK1Qrnb/W6ybcpqJlTIE5TAoxH5DyccoG
-	iJsiNl6wHxaXaDOBqPXIPxX//WKqwwUGx36SHnzefZk9KgGhGxGPj9tUI6yC1OLddfVGI+qPyPz
-	qQ8VGnb372KsneXjinPpYEHtmCQ==
-X-Google-Smtp-Source: AGHT+IFo8Hgkp4E9JaVZd7NvXDQ6NzE7A6q7dh+4rpUrgLAaizZQtSJrrCMWBPjJ3KvcXFi8lfBzxbHQ7bxFDm5HUkM=
-X-Received: by 2002:a05:6512:3b0:b0:511:21e4:5a69 with SMTP id
- v16-20020a05651203b000b0051121e45a69mr2802815lfp.40.1706825916680; Thu, 01
- Feb 2024 14:18:36 -0800 (PST)
+	b=Xxpg1ylppvjDGiJJEtcytqf1u4ejPPuK5J07pbr3BADGVTo/qTSyRQZcN5kJwQoHj
+	 1B6JRsIR2+4dbuvaw//cRSwMIg/pmizdahVxp5I4twMy/hVBPvVyJdJvHwD9vyv+5/
+	 SuAnGViWMHubN1I1cB6nqJOaD+Y/Su2BhyyMBKSxod0Kfr9jmzGE8DL20g32vXh/Ul
+	 IDAWKX+cJ+n8hX+b38tPR+t4zXXlmNNsRHIBXnd0KFc6xQv2EwYGYhAIpNEv1oRZ7K
+	 h4A3PAfdTjsK9r2TM7FFqNgdiubue8JZmUihY0wrSf7ziXh9cjeIas8+oRjkrhwmWs
+	 pLEABPoFrUacg==
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-510322d5363so2289940e87.1;
+        Thu, 01 Feb 2024 14:25:18 -0800 (PST)
+X-Gm-Message-State: AOJu0YyRyamhkZjXYwBfckJuvlRuMMyMd48H0MoKmMVbmiqmDhgNyuuy
+	SqhVehVmKhYIdon/jPrcPXGz9PY8biIleTS+MQu36Ied3S5noDnEi9Mur6RuEkd5QivC9gmsZLr
+	TRs5VS1pu25FtqlLIFrlfxUhCew==
+X-Google-Smtp-Source: AGHT+IGC041DLcAtPTvGVodFo3zQTW46kSgTDcCXUZXpug1NyyDWiMZCMKTeZC7ZZ9y013U1fjsI3yyBvKhZeLZD3M4=
+X-Received: by 2002:a05:6512:25e:b0:511:33ca:ac47 with SMTP id
+ b30-20020a056512025e00b0051133caac47mr533077lfo.9.1706826316861; Thu, 01 Feb
+ 2024 14:25:16 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240201155532.49707-1-brgl@bgdev.pl> <20240201155532.49707-2-brgl@bgdev.pl>
-In-Reply-To: <20240201155532.49707-2-brgl@bgdev.pl>
+References: <20240201155532.49707-1-brgl@bgdev.pl> <20240201155532.49707-4-brgl@bgdev.pl>
+In-Reply-To: <20240201155532.49707-4-brgl@bgdev.pl>
 From: Rob Herring <robh@kernel.org>
-Date: Thu, 1 Feb 2024 16:18:24 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqKq8AngeC7ohsbYB0w70uALD+PX-df53cswTDUY-Rrdgw@mail.gmail.com>
-Message-ID: <CAL_JsqKq8AngeC7ohsbYB0w70uALD+PX-df53cswTDUY-Rrdgw@mail.gmail.com>
-Subject: Re: [RFC 1/9] of: provide a cleanup helper for OF nodes
+Date: Thu, 1 Feb 2024 16:25:04 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqJ6E9aBd4QMOJ62HuRSiR8BMtrS3tBUDBhPcb1iCGeyfQ@mail.gmail.com>
+Message-ID: <CAL_JsqJ6E9aBd4QMOJ62HuRSiR8BMtrS3tBUDBhPcb1iCGeyfQ@mail.gmail.com>
+Subject: Re: [RFC 3/9] power: sequencing: new subsystem
 To: Bartosz Golaszewski <brgl@bgdev.pl>
 Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
@@ -83,11 +83,42 @@ wrote:
 >
 > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 >
-> Allow to use __free() to automatically put references to OF nodes.
+> Implement the power sequencing subsystem allowing devices to share
+> complex powering-up and down procedures. It's split into the consumer
+> and provider parts but does not implement any new DT bindings so that
+> the actual power sequencing is never revealed in the DT representation.
+>
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Jonathan has already been working on this[1].
+> +++ b/drivers/power/sequencing/Kconfig
+> @@ -0,0 +1,12 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+
+
+> diff --git a/drivers/power/sequencing/Makefile b/drivers/power/sequencing=
+/Makefile
+> new file mode 100644
+> index 000000000000..dcdf8c0c159e
+> --- /dev/null
+> +++ b/drivers/power/sequencing/Makefile
+> @@ -0,0 +1,4 @@
+> +# SPDX-License-Identifier: GPL-2.0
+
+GPL-2.0-only to be consistent.
+
+> +
+> +obj-$(CONFIG_POWER_SEQUENCING)         +=3D pwrseq-core.o
+> +pwrseq-core-y                          :=3D core.o
+> diff --git a/drivers/power/sequencing/core.c b/drivers/power/sequencing/c=
+ore.c
+> new file mode 100644
+> index 000000000000..f035caed0e4e
+> --- /dev/null
+> +++ b/drivers/power/sequencing/core.c
+> @@ -0,0 +1,482 @@
+> +// SPDX-License-Identifier: GPL-2.0-or-later
+
+Why the deviation from the kernel's default license?
 
 Rob
-
-[1] https://lore.kernel.org/all/20240128160542.178315-1-jic23@kernel.org/
 
