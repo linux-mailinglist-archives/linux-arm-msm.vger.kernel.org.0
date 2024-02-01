@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-9435-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CD388464B4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 00:56:01 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3FAD28464B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 00:55:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C5BB41F24C90
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 23:56:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 62C8D1C21420
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 23:55:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A32847F59;
-	Thu,  1 Feb 2024 23:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D017482D1;
+	Thu,  1 Feb 2024 23:55:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UIkIUID9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xzT0Xm6z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C3747F62
-	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Feb 2024 23:55:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44131481C3
+	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Feb 2024 23:55:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706831722; cv=none; b=okkSk011kcZvZ658HlkQnBad59F+5PR4YUg2S4JsOAQ7YcbMN/WSYPOq0ivjZUzJoFCWi+xHsbM6Xnhh9JpJKEIyZBluIvHiLYegEeFMzS3jsaUfYdbq9IydzolUVIXTHiXgOABhyjvRaeqGR+1tZJmeM3plnq3qmEzk18usjnY=
+	t=1706831722; cv=none; b=pgguUWkIfIyNL+gqzy/GDPF25hUhg/J9mJjY3tk7PLp67q7rzUvVTsR08TkK6eVKfPLCFft4SpkZsisLbGXqcfDaC0c63oP3LCPdXS0AnLYhmhtuHCu60qvwLjoitz3vQ5iJeZTbGpKl0cmWSPNT6vqm8+LHvyWvJrBRQbySixo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706831722; c=relaxed/simple;
-	bh=0eZHbojO1p7nGaE0OniBB2PkwucXMA/5bAUgl3QPkm0=;
+	bh=83gYrzQudk78eyKHtCcC6T6p4vOvmjk2orjuBLLUm0A=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=lyHVXB7z3KmDUu3AbNuYzdV088permv5LZ22GaprmWqnETnC6R7VuXczHeNa1qtFLV7a964uyc4xp7nhSaph8lL7j1MpZYzdlnBRs+uF8/dRlkD3efkQNUBXPdUFqisdzEh3rte4gaOREcPu3yQ+OvMBkpC4ObuKLvN2aLL06g4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UIkIUID9; arc=none smtp.client-ip=209.85.167.48
+	 In-Reply-To:To:Cc; b=UFwdrb2xKMrEOrvqR8Da7r+uz8Ilv4dxtmPOCpF1uZ7x61sF0RqTsiWrEfvS+EQpXRz35MjRUozBULHLkoyayStcfdY51GcoaN711MMPQnrS7BBEMWUMjOxSW8gpZ/WnmNzj4o5qM/fYjoY1fhVVOHBAX4dXXphekHuQnTAd+eo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xzT0Xm6z; arc=none smtp.client-ip=209.85.167.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5112a04c7acso2459174e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Feb 2024 15:55:19 -0800 (PST)
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-511206d1c89so1960685e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Feb 2024 15:55:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1706831718; x=1707436518; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=VcC+rtSSEgtdVhSmUmFq1LOn8tehp7Chpbw5WuxF47o=;
-        b=UIkIUID9ZgR/zjFaDefSC3GpWx+F61PlrD741B5eJOpkm8WcgzChaaE8YQGs6qKMfX
-         1WC730Oea0EE2skLP7Kl1sDrQ1przAxrk5MmCooV90EBCGT5x14b+BYNTIHKLF8xWxi2
-         8ea26/YLLiF/xJu117QGUNMDhNTpohY/6XG+gppezUslTImX1lEpWLncOGWGHRlaOtEM
-         pRrSHinpZTDR5Ly2OHhSHBr1m6+YFy8jVw/34scuiCzNv1TJbHsod4Wag5GukwymIYrY
-         DL3yq/CRnT5T8WvDOAkP1D9UKArYdJGtWYC/1Slv5SXZiJu5GaajJcZvZBLDReEzQJ1z
-         WHog==
+        bh=woT6Fq4hECPiCieMSUBXYBSHMFciLNE7+9YNtI+agvk=;
+        b=xzT0Xm6zAwCz0zLCgaxs5Dz2QKJCKZRUEr3pCLfz2JBvT9JscdTgBVMIocDvCw9BCf
+         E1wfFglMqgxpskeEhrxaRFt5Xp912GFGiihwGuShK7JTc1M8omwkVN7NGIdvxSJpb2e3
+         ZCWEuAzZXSiQq67oZ930rAWv0jL6l0qKsXc/DZXF5zsAVwQhITDpNHziQPB7PFdmRP9Q
+         fc9UtAOInWFYb8Ph9x0SQH1NuOmC7au9ax1EseB0/Z49jLD4nLCwKXL6UvOAPlU4jGeK
+         W/VER3sF+ZnyEMlAdZVjSIpezgs7BYUeDxT59GxnoR/wrkx3NLxshzfVHvCDFpHDYiF6
+         HIxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1706831718; x=1707436518;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=VcC+rtSSEgtdVhSmUmFq1LOn8tehp7Chpbw5WuxF47o=;
-        b=WdVbL0WCo2VWCaDbAUVKXuCKEC7nEKBR5BWLb08wSd2/69b2Sr4g3CZ224cHSFDJiR
-         muczStal+vXT9bhUbxAusdXXC5+SpQ9yOUW4CdxmFxoSNa337sR0zvwIqrcru4RF8kD5
-         BPLiCAN4Xxsbx9Dgj7SIya/Ia0niWMJxKXWh9f2/Pg3KgwJ1XAAd+ZySDjHvKfFGjPyo
-         W3nDYcYnB0f+g/PS993xkgjg08JnWaXsc4qenDHSIfGhwdK8ZfikHEY9qgEx1vuy0IoL
-         wKJsC9RolKLA9EYe7v5sthyYkLqIboC4bOu3DCZLCL5TXug0Av6Rx61jhZMxwyRnExqi
-         eOGA==
-X-Gm-Message-State: AOJu0YxruvvGoEFPkIImF5BauWn0aapaCB9DNmPItYUAfSe0Bq2A+IJp
-	qP5M/I4K4JoFax4QqWRdTZr2+BFVD7C2zHxvHlFCrUF2ZfKtn9a0JEhE2WBhBJ0=
-X-Google-Smtp-Source: AGHT+IHosEMcqBUHTEZpasXS5xEmUDDxFLXtMaQSRid+DdCROCxyQx0gIn3ND1WVMzEcvoHI19hCLg==
-X-Received: by 2002:a05:6512:3b08:b0:511:199a:750f with SMTP id f8-20020a0565123b0800b00511199a750fmr309925lfv.20.1706831717757;
-        Thu, 01 Feb 2024 15:55:17 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCUyhPNcZBBNkM8lUH9gYSPG4u8g5Fg/noap3FWz7iN0UGLb25RZVuaPdBUASpnGE382ruX/r3y4GstVtGCP0uK225HprzE+M4BEzniLQh3PrxPv9Zhum6kzTTLaTbTBtqD28Ny1RIkSP7wL3dysyz1CmQhcqk7llaNWbBBEd95MrVFcPp/eLizpVxpToARdKQSMOCGH16zdK/Yi/wOd/dDCXu648I/hxQQr9ISPAzHqDRU+y5pfZ8IXQKZKqbLJMv3Ep2DK9+6uB0dX4gfg9iCZJycD/YbYglOFeFGngTIPqfmDFVHFFLUnM281we+F6cxujAXjgPPgh8yt6fDoxBDOLAQ0eNJZp3Ipt8FrQ/L/9glLM3kBTgb0U1BPFTMM2pra3anS5Uzn/nWoL8bBhHuW3+4FomX0jgIS0Rs9wZ7bkx6MiVU4
+        bh=woT6Fq4hECPiCieMSUBXYBSHMFciLNE7+9YNtI+agvk=;
+        b=rdFYXJzTzkufMVqolXsmnQdWKt9jnWXJq4p7kzfctYAQd/7TTeeR+PNpSziVCa6C3G
+         /rZ3/2IiDqyPfA44D7Ya0LB1cXtSCL+lUkcx9Mstss9dFQA7R8BVzhYhhZOX2pkslQyw
+         i0c3ZC04c7KUj4c0BTACC05xg7gUbmu9vBHyTfe+bGD749p+4G+jAP19wo/GIcdVwhue
+         DFCxmpbGf3DCxFjP3Hlr4b8kialyoXz4RcOkogNYi+0xmmI3MQ+B/K508OM/ie+oETHd
+         5q1LPH1bGF99T2LA6yWwLannuF8LaF9BtugvYyE1VlQFAD9bQhpsYqhswtJZdtI6Yl10
+         KrhA==
+X-Gm-Message-State: AOJu0YzKO5873kjRd8mRMgSzGaDVHPFmv4aTVruZJyFsi3HfABf4QTlu
+	mvC15xG2RX2Wh5FpVpXb2aQG7OXMxXYC2OLcH/HiyRYE+KHILY8sCTQ/OpgAWok=
+X-Google-Smtp-Source: AGHT+IEin6/Zmwt0mBfhfuvMkurbWVOl/u7f/0ITHpW0VBOltCVTbjTeO/aHnIlOgt2rsVLn/2bBkQ==
+X-Received: by 2002:ac2:43b3:0:b0:50e:5a25:efbf with SMTP id t19-20020ac243b3000000b0050e5a25efbfmr242714lfl.42.1706831718409;
+        Thu, 01 Feb 2024 15:55:18 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCUIsC5rkplcN4XV46vNbaQqRHz+NYYD0sAR4cWas699qkz64W55dnCFWidYN2OdcdzUx6H4uysL1Wz514KvXaoOKzWDiUNGVjKRbxU+tSbn7iA+NhqwCU9SgZ/vxPHEjf3C/WDmfkAxwbvEVL/sThGJ19ms/T2i2pB4kmBWttSDhMWfgkI98qp/6AIlxq8IbG6H5JZU+JotJqVfpGm1FiErt+tXzWuYooL5izApkZX998W65dc7i1Fyq7bM3L8V/pnwvMa2ZgpOlDavixAho3iRLwaRukObPFEouYW5m06KdyImbOMp5zI75bOTjvFAcxZ3RYQs1Et+bKQXPg4ZBial6ntt8bgPQxdjfiiGZsPb2FGCF6N2tYBheUvlUvzgLU55iuwGCJ5OvYJgoJHJT9fje7gsJhBGsh3DEEqKxxW4X0R+FnzJ
 Received: from umbar.lan ([192.130.178.91])
         by smtp.gmail.com with ESMTPSA id u13-20020ac24c2d000000b0050eacc0c80bsm106754lfq.131.2024.02.01.15.55.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Feb 2024 15:55:17 -0800 (PST)
+        Thu, 01 Feb 2024 15:55:18 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 02 Feb 2024 01:55:10 +0200
-Subject: [PATCH v2 3/4] arm64: dts: qcom: pm4125: define USB-C related
- blocks
+Date: Fri, 02 Feb 2024 01:55:11 +0200
+Subject: [PATCH v2 4/4] arm64: dts: qcom: qrb2210-rb1: enable USB-C port
+ handling
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240202-pm4125-typec-v2-3-12771d85700d@linaro.org>
+Message-Id: <20240202-pm4125-typec-v2-4-12771d85700d@linaro.org>
 References: <20240202-pm4125-typec-v2-0-12771d85700d@linaro.org>
 In-Reply-To: <20240202-pm4125-typec-v2-0-12771d85700d@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -93,69 +93,176 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-usb@vger.kernel.org
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1689;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3368;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=0eZHbojO1p7nGaE0OniBB2PkwucXMA/5bAUgl3QPkm0=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlvC9iKGZjFsfuMGqWB2oNcRMw/WkLp5ZhSIzgT
- skDDeSlVhiJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZbwvYgAKCRCLPIo+Aiko
- 1bFDB/0SbgKczUzZE8o1xzUk+p7UoADgw5wM6fDuKjjTlQN+ZvYFAElxegPGJWXu/JzH+uGzdcA
- r+vvKOpk7hfyiLscCtSom5KdM/hKdBVvoZ02Fu2netXFaoEy9+TzyQ79fqvXtOH2qNZuvtCpCUF
- vwGlJuVxqNhAEnvstTqKj5n9FesrKwS3Ty/zvqVpgLIGunmDgb9fx4jpDiEy5XRmDLR5hRSF6mT
- 4B3EhPDnkNa70C6WG6sVEE6Tj8ueDYIIwtLU8sP47TPHXZSN0oLefaofXZhoF9GIY8TQTBcu/OH
- wKIqiyi3dOMBPh7LiURd8RRLXGDsym/IKqE8MLk3rG+P9vRQ
+ bh=83gYrzQudk78eyKHtCcC6T6p4vOvmjk2orjuBLLUm0A=;
+ b=owGbwMvMwMXYbdNlx6SpcZXxtFoSQ+oe/aSLhhon9yy4wdbJybmtPbe7I2zbPFsGDuvYdcfmx
+ vwUnsLYyWjMwsDIxSArpsjiU9AyNWZTctiHHVPrYQaxMoFMYeDiFICJ2Mqx/xXkUOe7tIupTnhO
+ 5OdCpoXTJ505k7SpSvpxXNymqSf3ZDUyrQvaL1N6da2B/LRZrF+qv2QXVyWEvvJmu7Lyas2VhEd
+ r3C6u9Si8Gyf/il3d8qkM75zYjtMlbFnv5h8O8qmfsLxUtP2v4eHlP7w21Ft4RFfpcqaaXQw8KC
+ p4P239P5dbfF1nW7Z/dLUpX/D5oKL4A/kXl5R/p7nr32uyirII175gcb1t2cobLtWbt++4cFPTk
+ uGpb5sGk0BDk+fz4Bfz1eTDW7zZ97B8dQu2b/7dXKghz1Zi8PxWfPzNJpPHb7gy/FfnNfi31Mop
+ 2jKUWC6yjr0/d+LU5Mnf9dlNwgr1NHXK2uT7z9uacWUCAA==
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Define VBUS regulator and the Type-C handling block as present on the
-Quacomm PM4125 PMIC.
+Plug in USB-C related bits and pieces to enable USB role switching and
+USB-C orientation handling for the Qualcomm RB1 board.
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/pm4125.dtsi | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ arch/arm64/boot/dts/qcom/qcm2290.dtsi    | 42 ++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qrb2210-rb1.dts | 60 +++++++++++++++++++++++++++-----
+ 2 files changed, 94 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/pm4125.dtsi b/arch/arm64/boot/dts/qcom/pm4125.dtsi
-index d886a9e4b091..cf8c822e80ce 100644
---- a/arch/arm64/boot/dts/qcom/pm4125.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm4125.dtsi
-@@ -36,6 +36,36 @@ pm4125_resin: resin {
+diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+index 0911fb08ed63..6e9a92556423 100644
+--- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+@@ -689,8 +689,29 @@ usb_qmpphy: phy@1615000 {
+ 			clock-output-names = "usb3_phy_pipe_clk_src";
+ 
+ 			#phy-cells = <0>;
++			orientation-switch;
+ 
+ 			status = "disabled";
++
++			ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@0 {
++					reg = <0>;
++
++					usb_qmpphy_out: endpoint {
++					};
++				};
++
++				port@1 {
++					reg = <1>;
++
++					usb_qmpphy_usb_ss_in: endpoint {
++						remote-endpoint = <&usb_dwc3_ss>;
++					};
++				};
++			};
+ 		};
+ 
+ 		system_noc: interconnect@1880000 {
+@@ -1373,6 +1394,27 @@ usb_dwc3: usb@4e00000 {
+ 				snps,usb3_lpm_capable;
+ 				maximum-speed = "super-speed";
+ 				dr_mode = "otg";
++				usb-role-switch;
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++
++						usb_dwc3_hs: endpoint {
++						};
++					};
++
++					port@1 {
++						reg = <1>;
++
++						usb_dwc3_ss: endpoint {
++							remote-endpoint = <&usb_qmpphy_usb_ss_in>;
++						};
++					};
++				};
  			};
  		};
  
-+		pm4125_vbus: usb-vbus-regulator@1100 {
-+			compatible = "qcom,pm4125-vbus-reg", "qcom,pm8150b-vbus-reg";
-+			reg = <0x1100>;
-+			status = "disabled";
+diff --git a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
+index 64b2ab286279..00fcc01326ff 100644
+--- a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
++++ b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
+@@ -244,6 +244,46 @@ &pm4125_resin {
+ 	status = "okay";
+ };
+ 
++&pm4125_typec {
++	status = "okay";
++
++	connector {
++		compatible = "usb-c-connector";
++
++		power-role = "dual";
++		data-role = "dual";
++		self-powered;
++
++		typec-power-opmode = "default";
++		pd-disable;
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++				pm4125_hs_in: endpoint {
++					remote-endpoint = <&usb_dwc3_hs>;
++				};
++			};
++
++			port@1 {
++				reg = <1>;
++				pm4125_ss_in: endpoint {
++					remote-endpoint = <&usb_qmpphy_out>;
++				};
++			};
 +		};
++	};
++};
 +
-+		pm4125_typec: typec@1500 {
-+			compatible = "qcom,pm4125-typec", "qcom,pmi632-typec";
-+			reg = <0x1500>;
-+			interrupts = <0x0 0x15 0x00 IRQ_TYPE_EDGE_RISING>,
-+				     <0x0 0x15 0x01 IRQ_TYPE_EDGE_BOTH>,
-+				     <0x0 0x15 0x02 IRQ_TYPE_EDGE_RISING>,
-+				     <0x0 0x15 0x03 IRQ_TYPE_EDGE_BOTH>,
-+				     <0x0 0x15 0x04 IRQ_TYPE_EDGE_RISING>,
-+				     <0x0 0x15 0x05 IRQ_TYPE_EDGE_RISING>,
-+				     <0x0 0x15 0x06 IRQ_TYPE_EDGE_BOTH>,
-+				     <0x0 0x15 0x07 IRQ_TYPE_EDGE_RISING>;
-+			interrupt-names = "or-rid-detect-change",
-+					  "vpd-detect",
-+					  "cc-state-change",
-+					  "vconn-oc",
-+					  "vbus-change",
-+					  "attach-detach",
-+					  "legacy-cable-detect",
-+					  "try-snk-src-detect";
-+			vdd-vbus-supply = <&pm4125_vbus>;
++&pm4125_vbus {
++	regulator-min-microamp = <500000>;
++	regulator-max-microamp = <500000>;
++	status = "okay";
++};
 +
-+			status = "disabled";
-+		};
+ &qupv3_id_0 {
+ 	status = "okay";
+ };
+@@ -517,14 +557,8 @@ &usb {
+ 	status = "okay";
+ };
+ 
+-&usb_qmpphy {
+-	vdda-phy-supply = <&pm4125_l12>;
+-	vdda-pll-supply = <&pm4125_l13>;
+-	status = "okay";
+-};
+-
+-&usb_dwc3 {
+-	dr_mode = "host";
++&usb_dwc3_hs {
++	remote-endpoint = <&pm4125_hs_in>;
+ };
+ 
+ &usb_hsphy {
+@@ -534,6 +568,16 @@ &usb_hsphy {
+ 	status = "okay";
+ };
+ 
++&usb_qmpphy {
++	vdda-phy-supply = <&pm4125_l12>;
++	vdda-pll-supply = <&pm4125_l13>;
++	status = "okay";
++};
 +
- 		rtc@6000 {
- 			compatible = "qcom,pm8941-rtc";
- 			reg = <0x6000>, <0x6100>;
++&usb_qmpphy_out {
++	remote-endpoint = <&pm4125_ss_in>;
++};
++
+ &wifi {
+ 	vdd-0.8-cx-mx-supply = <&pm4125_l7>;
+ 	vdd-1.8-xo-supply = <&pm4125_l13>;
 
 -- 
 2.39.2
