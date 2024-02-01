@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-9298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9299-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C78BA8452E4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 09:39:50 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED0B7845394
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 10:16:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3C4C71F23CF6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 08:39:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A3D78288A45
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 09:16:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9662D15A4B1;
-	Thu,  1 Feb 2024 08:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8831159571;
+	Thu,  1 Feb 2024 09:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gRcwzlAL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Vv9JpJmz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AAB715A495
-	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Feb 2024 08:39:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCAEC15AAD1
+	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Feb 2024 09:16:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706776784; cv=none; b=ZNwrbN0r1cKTaX9JYPxk2pLHMCzoGzr6vxE8/yzIb6wpJPRqeYqwgjJDARn3mEVfwFn2IxNlZbDLHKaDLXIUBkQc1fd9rvj/ZKgoifqLfYx5BLgi2SRUPZCJgZFVRmQZpZmNNCjB3Z1M85rkKDpW53chXfDNOrdaBSFYCUO5fgU=
+	t=1706778986; cv=none; b=QLDnGXB6IMXhdcGgVdY/LzwHrukHW8I8ipyIEHLp2t4Dnnj0QhSzQS2/bLccxparYnTyQ8PDQpNC+JNoYQjLg5HaDbf9co9i1y2Z82yvPRSdOhmpjxgIAX5MMibeeQkheEcr7Sey/w3T14MvQVLI9tostq67nj8q9UZE+WM0+/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706776784; c=relaxed/simple;
-	bh=xintUEzQ8uM7chXI5krxWTSVIW10j1fGNmwxGlIfins=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=JSIXQrQCG7Kt/0u+/C41ek7QtFfFb14I350bCXF8iHeFPxIKFC0/N9BE9kKNNsDG/EMBhAHg22QmhdoMdXa9TniBolEaN++7Rx0SkAatCNS1EQNpiakTGecpT37CUU1gPhKscCd1cmAf1fJhjeNDyYDCq75gbm8W5xQpwkSCnlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gRcwzlAL; arc=none smtp.client-ip=209.85.218.43
+	s=arc-20240116; t=1706778986; c=relaxed/simple;
+	bh=5OTikD6CuPK8gKbmtuehnyPLyBNME4taPsrO/Ys9BZw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=l3j4cWMur6yH3cArSZkESS0ZhrCA7/y54DYORoSgRFdQduXcyv+BtEOSrM0X5q1pcYlEJdKkSMXgIfT+1clyw6JsBC3lI9YwZaCrIByy5QYPBbyfd3UFHVZUjxWdy49UIalkM3Nz8BmSpEF/4jAv3Gd/lm8jYvN4ZCPuJ+geNo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Vv9JpJmz; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a26ed1e05c7so84984866b.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Feb 2024 00:39:42 -0800 (PST)
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-40fb3b5893eso5987985e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Feb 2024 01:16:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706776780; x=1707381580; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706778983; x=1707383783; darn=vger.kernel.org;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=/LUOnsZoWQv3AKUXusOG3iHBw6xyGVqBDQ81NDvZ0PQ=;
-        b=gRcwzlALQTDKWGRxX7lcMCgtRjl5Gt3jtWpC3McX77NNkcb31cqy4PZql4+kOAcwNX
-         B1fpAMZVrw2Q1+TNZXF4dSngW4CS6br7APJXhOISxz8MKbnWo7w2vi23vMswNX0EZeAP
-         Ann+LLFN15BTJ3WQ1KvZ19LlM3XQm26iBJ7MHfsUlIOY6usLQeqp3en6ddjNQeJ/i7u1
-         f6qsAn424H+GbfnJsz7rzruBcIFCU0+JRvkl8Oh49MUvGXNemd9PDu94rLJ5vSG8ppmj
-         zLtCCbCyyOckLIHSmPZVU6v5t3c0FioExiCGthoeECpYtAoY8CuaFNrWcL1rCNTOGfkY
-         SP2Q==
+        bh=KbM4ttdeCgtUREmJp18n91Tmg8C/A3C0WQ15eddMLUo=;
+        b=Vv9JpJmzJP1omTVYowGKo1ODBhAScLvPJS0qKC/n3KwtJbVbHhJ+KU0fDWWpTG/LjM
+         vWOMnLf7skdNm/D2ewMU6J6gVaqz0IiXOA8tLgA0WsMLbLDjLRLhcee3mo4wd1AIHEZ4
+         Dw0eGXK013V0v/f/XOSVpDQkCrUT75aK2IYBrBew5dmgNqvoxJdIXkt+BgrDr5yUp+gQ
+         bBkwUnPnWLqDP5yUBYiVHhHN8hxaRq+DOr2TWeMFGrCEjVBjkj07sUj+EizrskiTkEJ5
+         DJi8VZbgYRxu1nHF1tO9oo3QbsFAdk+3uA6eDTN6v3x9w7ppuUcldK8cljFqFKQkGjj9
+         00KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706776780; x=1707381580;
+        d=1e100.net; s=20230601; t=1706778983; x=1707383783;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=/LUOnsZoWQv3AKUXusOG3iHBw6xyGVqBDQ81NDvZ0PQ=;
-        b=DLSLNzzf9s0q7bz2i5JEqdPDuCEesm+8nHRJrwc8WiSwl6x/uV85f2/UL0IAIqNUq2
-         6Bb8u3xdj0mBTBYukYUPlO/GnXJtY3LJVQavnLmFRXHsdccL6jYv/yFojkQ14qi0nB8H
-         nCv6POzUGcVZaVtqjmqikLJ30EfIM9gUmFkbYIe7Guru6zBzdY/ixcmBsocd2zuyu6kg
-         F00cM6C7eLCXvfIvV64nrbU3dCNLjxr3l0GFW6U58K5JQnlJhOkIblPxJEiCb4nSZHnk
-         8t0LRrIPx0XB5UlED4777Sl3ZqxFI4EJyh9/4W8xbKm/SI7SNNZU3JqGqXIOOuANC+l+
-         q7YA==
-X-Gm-Message-State: AOJu0YxT/iCYQVwIJYCvrF6c4svWxJPzYiqx88fB/0dbmT9TWJQkQr6y
-	bndWdcLkfdzfdgria8KtoL12kHbwMhIc0yx/mT1p0Zgpzn2OCYePeBGeJs52cAI=
-X-Google-Smtp-Source: AGHT+IHumu1PNcZ4qBTo97y4VlBNSZUTcGGVqMQ2/51E+ymKFjhoQwTPdGjfzhiOmljtMExeRWOrLA==
-X-Received: by 2002:a17:906:cecc:b0:a36:5b1c:fb4b with SMTP id si12-20020a170906cecc00b00a365b1cfb4bmr1133063ejb.13.1706776780568;
-        Thu, 01 Feb 2024 00:39:40 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCUpbreCLyRwzBpbin+TdP1i+rgU+9hVeCHVIQRogtpJALHH6GZadYRsacPcihVu6He4BxHV6Pw4GYH/B0luu88AfQRS/vH0MdgvyCDbSKms0GR1Ep9J1jCk5RunHcAS1eJtHncGRwbfFftIlYlhthH8ZQ+UT49nDf9cjWYuKavShk/+TLbMKt2F2JHbTRpHYXCfRU4wMJdbiIANqZHrXe4f5j1uve7QxCXWiW5HCnVtzdGwXBZH/ElNkpQn9aRJOKFBOfdid/CVAEjvwqwbKRJQzo2XcDdMK/ZAZcgr7u66tsCLVuOSqNF0yDr+g5IILCeUCv4R4wzb1L29rPs=
-Received: from [127.0.1.1] ([79.115.23.25])
-        by smtp.gmail.com with ESMTPSA id s7-20020a17090699c700b00a36c60180aesm253691ejn.60.2024.02.01.00.39.39
+        bh=KbM4ttdeCgtUREmJp18n91Tmg8C/A3C0WQ15eddMLUo=;
+        b=LEBpWXN5/x0acdHgndsdLb7ZH2Qw0h9oMzO86vUcyVMOynZCcaSAy0zglCQBQ0ygwI
+         HHzO1cLsm//y+IbDDfTK0GWxfFvGKj4SnPe90ZKFUW1HkNOyl2E+p8HvvzsZY+Gmh2B0
+         lBKc8Mp9Fu3ziJAZUsN3v/tluZuHQ+FYBrgzsBmie1BJAEZKNA1u7HN2Pr7CKKOMldT5
+         yEzwRqPxf2fHvzJhdtC5t9mubmWBSy6HPa3qh8r23V1or11Se/9YSialJF+iTVtejdfc
+         bPzx1THfFps+JWT4H8DUGRVl9wcKtw7fSm3nNZC6uo8aGCsnI5as4/7Fk4RlC0s+JkAB
+         afIg==
+X-Gm-Message-State: AOJu0YzrSsPqQSgHsx/mjqj7J+Ea8d+OWev5eXqxfpKQ17NZlzeSdb9Z
+	8HRCcz2d0ICbQnZFijifcYYSzpPd4QaowhXJBsLjdNtDoeYTxXyOEQSIoNDs3f4=
+X-Google-Smtp-Source: AGHT+IEEpYejzM4XUH+oYeUuGYpKcB2ZFEYwFkYNkUdFuHQItoqzDMOptLCRHJrPVhpiBEVsDktmPA==
+X-Received: by 2002:a05:600c:4589:b0:40e:8fe8:a173 with SMTP id r9-20020a05600c458900b0040e8fe8a173mr1325416wmo.4.1706778983084;
+        Thu, 01 Feb 2024 01:16:23 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCUmfmXqD2prUNRuX6FAeUYPHkAeC6zyJoArufPykTwgy3U/UhlaCKbnerO0KDJnPiwoBU1tZlexnGgTm2DrczyYvLOB22hQSlBRUVSzxBJhdiL60S1/q7/H1Anqpz1rGx1mTROPcEX0CVZsH1kpj5RzIV5gvW25hsWvuk0/+Aag06gdN7BEEYHGmitcpVLG8T4y64nS71g0lkO7Q+T7B8shrpIn/BMyiC+QJZgBO32VFJ60bowcEDh7RDvJ01xOVGICJ6poi5uWi2gpIhVnSo+oGy12vxOVjd9e0O/Va6FRB6WH
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id jn22-20020a05600c6b1600b0040ef63a162dsm3804881wmb.26.2024.02.01.01.16.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Feb 2024 00:39:40 -0800 (PST)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Thu, 01 Feb 2024 10:39:33 +0200
-Subject: [PATCH v4] phy: qualcomm: eusb2-repeater: Rework init to drop
- redundant zero-out loop
+        Thu, 01 Feb 2024 01:16:22 -0800 (PST)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Date: Thu, 01 Feb 2024 10:16:21 +0100
+Subject: [PATCH] arm64: dts: qcom: sm8550-hdk: correct WCD9385 route and
+ port mapping
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,331 +77,101 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240201-phy-qcom-eusb2-repeater-fixes-v4-1-cf18c8cef6d7@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAMRYu2UC/43Nyw6CMBCF4VcxXTtmesFaV76HccFlkCZKscVGQ
- nh3CyuMC13+Z5JvRhbIWwrsuBmZp2iDdW0Ktd2wssnbK4GtUjOBQiFHBV0zwKN0d6BnKAR46ij
- vyUNtXxSgNAI55xKlKFkyOk/LIRHnS+rGht75YXkX+bz+K0cOCKh0oYt9cZBSnm62zb3bOX9lM
- x3Fmst+cSJxWmeVOZCuasy+OLnihPnFSeBg8j2nWiqDFX1w0zS9AYI9yoFpAQAA
+Message-Id: <20240201-topic-sm8550-hdk8550-audio-fix-v1-1-aa526c9c91d5@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAGRhu2UC/x2NSwqAMAwFryJZG0iLxc9VxIXaVINopVURxLtbX
+ A0zi/ceiByEIzTZA4EvieK3JCrPYJz7bWIUmxw06YI0KTz8LiPGtTKGcLbLz/604tHJjaasXVU
+ 6RfVgII3sgVP+D9rufT8c3LoocAAAAA==
 To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>
-Cc: Elliot Berman <quic_eberman@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
- linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=10624; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=xintUEzQ8uM7chXI5krxWTSVIW10j1fGNmwxGlIfins=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlu1jGQEjJF6LQvhZJxo9atbLwNVYbuxO1/OEn+
- itaQqh0CZ6JAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZbtYxgAKCRAbX0TJAJUV
- VuyFEACHhi61T52YNsLXfVwydXS8A42aXEGj4POrs3OMgRFB1+noMlBMGLZhX+zH7pTub6Y/p2w
- IO+Ok7UAy/bpaW84pRijwq4wWIyEBNf2aFjglqqpnuGeo3LBPzVdks7VH23PiId3yY4eG3NqNKd
- Y/UBO6qdQU0NL/GXB2QG5kGQowztHcYL+j70ciVgXV1Gp+SSc/24PTK88WlJAkFDvcTB5F3IPd9
- FWj5h5cgHjdAXyNLHCdjrIzSS1aBsYdKfHdR5UKVLYjZEDZbR3H5ypUZbkPpADaaDG3omuBWeRv
- HAjNpXynQpNHE23li8Pco4kVDINaPkdnpNI2HShAmtoPUbjnFZMtSSwXdu0oTa8zqPI30tjagAy
- orCj66fKIsV5geWKfWdgp5+YUDKHAOb9k8gTwxtgJgajR5d70UOa79jgdAUrzLs4jovV5tSERx1
- w+k8wQDwf9YW/lxyzDa82Nn8Qj4zUkgi55UHWVJVWX7LrII4U1PMegNLi0dpKRrFz1zODkL18jK
- Y2EoV75bvxbYV6I7Q+c8EoNO1GII4DWf4Y32129XqoQLlc/Abm1KKrMqWs2qUKnLTu8HUFtnayg
- SKuwsMayu4a3x01gBFJ1QQUuM5eeWIDYp8KZ/KlKM3OjlaBQcR4J73Aqpz1xGH3jBQ45zvUP7R4
- QS8rVSwil9r/dDA==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2412;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=5OTikD6CuPK8gKbmtuehnyPLyBNME4taPsrO/Ys9BZw=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlu2FlCJhAxbNR2uAtR8CkZIlAdrUez9GIT5QqknIe
+ /uuaoH+JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZbthZQAKCRB33NvayMhJ0QpnD/
+ 97YNRMRsDuqWFFHIz8Lw+AOQfhCgq+nfmWUK3MHVgglsO5sfPPrJR2tJBZO9tX8bP8XQAO6mkq+xam
+ 416fGhEWupmRj+RQ5rfjq1evhr6FxsknBgBJ5V1vhd/sEp035VZLHOLEw6fk9KUQhOZlT79w8jeeHC
+ 3yCN042jDKri2l5k8ygP4PiFNGBV8o4lgsIOh9TSkId/yWdJeuFox9Ac0+T1w5bVDQZG326Tu8fEgA
+ fVCpE0NTyKei2Tf++dH8oEquNYrX25oWCAWFNJBT358d4DRwFTl36wUB3JIIsF9fFqgqAxdYmR0ho2
+ JIw0db134DfBIMTVOqUQ108WMY2GWyn1UCKGaZ4Oj0KDQWgHhTCxxQvdM+dj1tpMHZlmKH8iOUQaxk
+ T2suGKdgFaZVU5iOmrHsESuAeIwE3qhCKlLWuLyH33B+wZMjtE7pj+KCrJgZ24eihewWNlKNo6wSfe
+ tg1jHVuPttr5cGd6czIqIkPhOi225VWOsDXaLutIsu3pNxXjldIT3cQPsxqe/aveNzhYTb3SFfQ+pn
+ 7MnIYuxnt4fiUcqS3yV2Ow3l8OrzT0cC/jbpS9J9C50mKhtCVXJWP2WFZG03kw0XKASvDpIB1QSFSM
+ +Hx0XmlxOp7kD2jz1th8xWs67P5ZsnJZf2zRyetzmYEb0FwaaEGteOOtFxjA==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-Instead of incrementing the base of the global reg fields, which renders
-the second instance of the repeater broken due to wrong offsets, use
-regmap with base and offset. As for zeroing out the rest of the tuning
-regs, avoid looping though the table and just use the table as is,
-as it is already zero initialized.
+Starting from SM8550, the TX ADC input soundwire port is offset by 1,
+and uses the new SWR_INPUTx input ports, so replace the legacy
+SWR_ADCx routes for SWR_INPUT0 & SWR_INPUT1 following the correct
+TX Soundwire port mapping.
 
-Fixes: 99a517a582fc ("phy: qualcomm: phy-qcom-eusb2-repeater: Zero out untouched tuning regs")
-Tested-by: Elliot Berman <quic_eberman@quicinc.com> # sm8650-qrd
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Add some comments on the routing for clarity.
+
+Fixes: b5e25ded2721 ("arm64: dts: qcom: sm8550: add support for the SM8550-HDK board")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
-Changes in v4:
-- Added Elliot's T-b tag
-- Re-worded commit message
-- Link to v3: https://lore.kernel.org/r/20240129-phy-qcom-eusb2-repeater-fixes-v3-1-9a61ef3490de@linaro.org
+ arch/arm64/boot/dts/qcom/sm8550-hdk.dts | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
-Changes in v3:
-- Reworked so that it uses base + reg-index.
-- Link to v2: https://lore.kernel.org/r/20240105-phy-qcom-eusb2-repeater-fixes-v2-0-775d98e7df05@linaro.org
-
-Changes in v2:
-- The regfields is being dropped from the repeater init, but it's done
-  in the second patch in order to not break bisectability, as it is
-  still needed by the zero-out loop.
-- Added Konrad's R-b tag to the first patch. Did not add Elliot's T-b
-  tag as the second patch has been reworked massively.
-- The zero-out loop is dropped now by holding a copy of the init_tlb in
-  the container struct. This led to dropping the cfg from the container
-  struct (see second patch commit message for more details).
-- Link to v1: https://lore.kernel.org/r/20240104-phy-qcom-eusb2-repeater-fixes-v1-0-047b7b6b8333@linaro.org
----
- drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c | 166 +++++++++----------------
- 1 file changed, 62 insertions(+), 104 deletions(-)
-
-diff --git a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-index a623f092b11f..a43e20abb10d 100644
---- a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-+++ b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-@@ -37,56 +37,28 @@
- #define EUSB2_TUNE_EUSB_EQU		0x5A
- #define EUSB2_TUNE_EUSB_HS_COMP_CUR	0x5B
+diff --git a/arch/arm64/boot/dts/qcom/sm8550-hdk.dts b/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
+index 87276c39c589..12d60a0ee095 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
++++ b/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
+@@ -211,9 +211,9 @@ sound {
+ 				"AMIC1", "MIC BIAS1",
+ 				"AMIC2", "MIC BIAS2",
+ 				"AMIC5", "MIC BIAS4",
+-				"TX SWR_ADC0", "ADC1_OUTPUT",
+-				"TX SWR_ADC1", "ADC2_OUTPUT",
+-				"TX SWR_ADC3", "ADC4_OUTPUT";
++				"TX SWR_INPUT0", "ADC1_OUTPUT",
++				"TX SWR_INPUT1", "ADC2_OUTPUT",
++				"TX SWR_INPUT1", "ADC4_OUTPUT";
  
--#define QCOM_EUSB2_REPEATER_INIT_CFG(r, v)	\
--	{					\
--		.reg = r,			\
--		.val = v,			\
--	}
--
--enum reg_fields {
--	F_TUNE_EUSB_HS_COMP_CUR,
--	F_TUNE_EUSB_EQU,
--	F_TUNE_EUSB_SLEW,
--	F_TUNE_USB2_HS_COMP_CUR,
--	F_TUNE_USB2_PREEM,
--	F_TUNE_USB2_EQU,
--	F_TUNE_USB2_SLEW,
--	F_TUNE_SQUELCH_U,
--	F_TUNE_HSDISC,
--	F_TUNE_RES_FSDIF,
--	F_TUNE_IUSB2,
--	F_TUNE_USB2_CROSSOVER,
--	F_NUM_TUNE_FIELDS,
--
--	F_FORCE_VAL_5 = F_NUM_TUNE_FIELDS,
--	F_FORCE_EN_5,
--
--	F_EN_CTL1,
--
--	F_RPTR_STATUS,
--	F_NUM_FIELDS,
--};
--
--static struct reg_field eusb2_repeater_tune_reg_fields[F_NUM_FIELDS] = {
--	[F_TUNE_EUSB_HS_COMP_CUR] = REG_FIELD(EUSB2_TUNE_EUSB_HS_COMP_CUR, 0, 1),
--	[F_TUNE_EUSB_EQU] = REG_FIELD(EUSB2_TUNE_EUSB_EQU, 0, 1),
--	[F_TUNE_EUSB_SLEW] = REG_FIELD(EUSB2_TUNE_EUSB_SLEW, 0, 1),
--	[F_TUNE_USB2_HS_COMP_CUR] = REG_FIELD(EUSB2_TUNE_USB2_HS_COMP_CUR, 0, 1),
--	[F_TUNE_USB2_PREEM] = REG_FIELD(EUSB2_TUNE_USB2_PREEM, 0, 2),
--	[F_TUNE_USB2_EQU] = REG_FIELD(EUSB2_TUNE_USB2_EQU, 0, 1),
--	[F_TUNE_USB2_SLEW] = REG_FIELD(EUSB2_TUNE_USB2_SLEW, 0, 1),
--	[F_TUNE_SQUELCH_U] = REG_FIELD(EUSB2_TUNE_SQUELCH_U, 0, 2),
--	[F_TUNE_HSDISC] = REG_FIELD(EUSB2_TUNE_HSDISC, 0, 2),
--	[F_TUNE_RES_FSDIF] = REG_FIELD(EUSB2_TUNE_RES_FSDIF, 0, 2),
--	[F_TUNE_IUSB2] = REG_FIELD(EUSB2_TUNE_IUSB2, 0, 3),
--	[F_TUNE_USB2_CROSSOVER] = REG_FIELD(EUSB2_TUNE_USB2_CROSSOVER, 0, 2),
--
--	[F_FORCE_VAL_5] = REG_FIELD(EUSB2_FORCE_VAL_5, 0, 7),
--	[F_FORCE_EN_5] = REG_FIELD(EUSB2_FORCE_EN_5, 0, 7),
--
--	[F_EN_CTL1] = REG_FIELD(EUSB2_EN_CTL1, 0, 7),
--
--	[F_RPTR_STATUS] = REG_FIELD(EUSB2_RPTR_STATUS, 0, 7),
-+enum eusb2_reg_layout {
-+	TUNE_EUSB_HS_COMP_CUR,
-+	TUNE_EUSB_EQU,
-+	TUNE_EUSB_SLEW,
-+	TUNE_USB2_HS_COMP_CUR,
-+	TUNE_USB2_PREEM,
-+	TUNE_USB2_EQU,
-+	TUNE_USB2_SLEW,
-+	TUNE_SQUELCH_U,
-+	TUNE_HSDISC,
-+	TUNE_RES_FSDIF,
-+	TUNE_IUSB2,
-+	TUNE_USB2_CROSSOVER,
-+	NUM_TUNE_FIELDS,
-+
-+	FORCE_VAL_5 = NUM_TUNE_FIELDS,
-+	FORCE_EN_5,
-+
-+	EN_CTL1,
-+
-+	RPTR_STATUS,
-+	LAYOUT_SIZE,
+ 		wcd-playback-dai-link {
+ 			link-name = "WCD Playback";
+@@ -1139,6 +1139,13 @@ wcd_rx: codec@0,4 {
+ 		compatible = "sdw20217010d00";
+ 		reg = <0 4>;
+ 
++		/*
++		 * WCD9385 RX Port 1 (HPH_L/R)      <=> SWR1 Port 1 (HPH_L/R)
++		 * WCD9385 RX Port 2 (CLSH)         <=> SWR1 Port 2 (CLSH)
++		 * WCD9385 RX Port 3 (COMP_L/R)     <=> SWR1 Port 3 (COMP_L/R)
++		 * WCD9385 RX Port 4 (LO)           <=> SWR1 Port 4 (LO)
++		 * WCD9385 RX Port 5 (DSD_L/R)      <=> SWR1 Port 5 (DSD_L/R)
++		 */
+ 		qcom,rx-port-mapping = <1 2 3 4 5>;
+ 	};
+ };
+@@ -1151,7 +1158,13 @@ wcd_tx: codec@0,3 {
+ 		compatible = "sdw20217010d00";
+ 		reg = <0 3>;
+ 
+-		qcom,tx-port-mapping = <1 1 2 3>;
++		/*
++		 * WCD9385 TX Port 1 (ADC1,2)             <=> SWR2 Port 2 (TX SWR_INPUT 0,1,2,3)
++		 * WCD9385 TX Port 2 (ADC3,4)             <=> SWR2 Port 2 (TX SWR_INPUT 0,1,2,3)
++		 * WCD9385 TX Port 3 (DMIC0,1,2,3 & MBHC) <=> SWR2 Port 3 (TX SWR_INPUT 4,5,6,7)
++		 * WCD9385 TX Port 4 (DMIC4,5,6,7)        <=> SWR2 Port 4 (TX SWR_INPUT 8,9,10,11)
++		 */
++		qcom,tx-port-mapping = <2 2 3 4>;
+ 	};
  };
  
- struct eusb2_repeater_cfg {
-@@ -98,10 +70,11 @@ struct eusb2_repeater_cfg {
- 
- struct eusb2_repeater {
- 	struct device *dev;
--	struct regmap_field *regs[F_NUM_FIELDS];
-+	struct regmap *regmap;
- 	struct phy *phy;
- 	struct regulator_bulk_data *vregs;
- 	const struct eusb2_repeater_cfg *cfg;
-+	u32 base;
- 	enum phy_mode mode;
- };
- 
-@@ -109,10 +82,10 @@ static const char * const pm8550b_vreg_l[] = {
- 	"vdd18", "vdd3",
- };
- 
--static const u32 pm8550b_init_tbl[F_NUM_TUNE_FIELDS] = {
--	[F_TUNE_IUSB2] = 0x8,
--	[F_TUNE_SQUELCH_U] = 0x3,
--	[F_TUNE_USB2_PREEM] = 0x5,
-+static const u32 pm8550b_init_tbl[NUM_TUNE_FIELDS] = {
-+	[TUNE_IUSB2] = 0x8,
-+	[TUNE_SQUELCH_U] = 0x3,
-+	[TUNE_USB2_PREEM] = 0x5,
- };
- 
- static const struct eusb2_repeater_cfg pm8550b_eusb2_cfg = {
-@@ -140,47 +113,42 @@ static int eusb2_repeater_init_vregs(struct eusb2_repeater *rptr)
- 
- static int eusb2_repeater_init(struct phy *phy)
- {
--	struct reg_field *regfields = eusb2_repeater_tune_reg_fields;
- 	struct eusb2_repeater *rptr = phy_get_drvdata(phy);
- 	struct device_node *np = rptr->dev->of_node;
--	u32 init_tbl[F_NUM_TUNE_FIELDS] = { 0 };
--	u8 override;
-+	struct regmap *regmap = rptr->regmap;
-+	const u32 *init_tbl = rptr->cfg->init_tbl;
-+	u8 tune_usb2_preem = init_tbl[TUNE_USB2_PREEM];
-+	u8 tune_hsdisc = init_tbl[TUNE_HSDISC];
-+	u8 tune_iusb2 = init_tbl[TUNE_IUSB2];
-+	u32 base = rptr->base;
- 	u32 val;
- 	int ret;
--	int i;
-+
-+	of_property_read_u8(np, "qcom,tune-usb2-amplitude", &tune_iusb2);
-+	of_property_read_u8(np, "qcom,tune-usb2-disc-thres", &tune_hsdisc);
-+	of_property_read_u8(np, "qcom,tune-usb2-preem", &tune_usb2_preem);
- 
- 	ret = regulator_bulk_enable(rptr->cfg->num_vregs, rptr->vregs);
- 	if (ret)
- 		return ret;
- 
--	regmap_field_update_bits(rptr->regs[F_EN_CTL1], EUSB2_RPTR_EN, EUSB2_RPTR_EN);
-+	regmap_write(regmap, base + EUSB2_EN_CTL1, EUSB2_RPTR_EN);
- 
--	for (i = 0; i < F_NUM_TUNE_FIELDS; i++) {
--		if (init_tbl[i]) {
--			regmap_field_update_bits(rptr->regs[i], init_tbl[i], init_tbl[i]);
--		} else {
--			/* Write 0 if there's no value set */
--			u32 mask = GENMASK(regfields[i].msb, regfields[i].lsb);
--
--			regmap_field_update_bits(rptr->regs[i], mask, 0);
--		}
--	}
--	memcpy(init_tbl, rptr->cfg->init_tbl, sizeof(init_tbl));
-+	regmap_write(regmap, base + EUSB2_TUNE_EUSB_HS_COMP_CUR, init_tbl[TUNE_EUSB_HS_COMP_CUR]);
-+	regmap_write(regmap, base + EUSB2_TUNE_EUSB_EQU, init_tbl[TUNE_EUSB_EQU]);
-+	regmap_write(regmap, base + EUSB2_TUNE_EUSB_SLEW, init_tbl[TUNE_EUSB_SLEW]);
-+	regmap_write(regmap, base + EUSB2_TUNE_USB2_HS_COMP_CUR, init_tbl[TUNE_USB2_HS_COMP_CUR]);
-+	regmap_write(regmap, base + EUSB2_TUNE_USB2_EQU, init_tbl[TUNE_USB2_EQU]);
-+	regmap_write(regmap, base + EUSB2_TUNE_USB2_SLEW, init_tbl[TUNE_USB2_SLEW]);
-+	regmap_write(regmap, base + EUSB2_TUNE_SQUELCH_U, init_tbl[TUNE_SQUELCH_U]);
-+	regmap_write(regmap, base + EUSB2_TUNE_RES_FSDIF, init_tbl[TUNE_RES_FSDIF]);
-+	regmap_write(regmap, base + EUSB2_TUNE_USB2_CROSSOVER, init_tbl[TUNE_USB2_CROSSOVER]);
- 
--	if (!of_property_read_u8(np, "qcom,tune-usb2-amplitude", &override))
--		init_tbl[F_TUNE_IUSB2] = override;
-+	regmap_write(regmap, base + EUSB2_TUNE_USB2_PREEM, tune_usb2_preem);
-+	regmap_write(regmap, base + EUSB2_TUNE_HSDISC, tune_hsdisc);
-+	regmap_write(regmap, base + EUSB2_TUNE_IUSB2, tune_iusb2);
- 
--	if (!of_property_read_u8(np, "qcom,tune-usb2-disc-thres", &override))
--		init_tbl[F_TUNE_HSDISC] = override;
--
--	if (!of_property_read_u8(np, "qcom,tune-usb2-preem", &override))
--		init_tbl[F_TUNE_USB2_PREEM] = override;
--
--	for (i = 0; i < F_NUM_TUNE_FIELDS; i++)
--		regmap_field_update_bits(rptr->regs[i], init_tbl[i], init_tbl[i]);
--
--	ret = regmap_field_read_poll_timeout(rptr->regs[F_RPTR_STATUS],
--					     val, val & RPTR_OK, 10, 5);
-+	ret = regmap_read_poll_timeout(regmap, base + EUSB2_RPTR_STATUS, val, val & RPTR_OK, 10, 5);
- 	if (ret)
- 		dev_err(rptr->dev, "initialization timed-out\n");
- 
-@@ -191,6 +159,8 @@ static int eusb2_repeater_set_mode(struct phy *phy,
- 				   enum phy_mode mode, int submode)
- {
- 	struct eusb2_repeater *rptr = phy_get_drvdata(phy);
-+	struct regmap *regmap = rptr->regmap;
-+	u32 base = rptr->base;
- 
- 	switch (mode) {
- 	case PHY_MODE_USB_HOST:
-@@ -199,10 +169,8 @@ static int eusb2_repeater_set_mode(struct phy *phy,
- 		 * per eUSB 1.2 Spec. Below implement software workaround until
- 		 * PHY and controller is fixing seen observation.
- 		 */
--		regmap_field_update_bits(rptr->regs[F_FORCE_EN_5],
--					 F_CLK_19P2M_EN, F_CLK_19P2M_EN);
--		regmap_field_update_bits(rptr->regs[F_FORCE_VAL_5],
--					 V_CLK_19P2M_EN, V_CLK_19P2M_EN);
-+		regmap_write(regmap, base + EUSB2_FORCE_EN_5, F_CLK_19P2M_EN);
-+		regmap_write(regmap, base + EUSB2_FORCE_VAL_5, V_CLK_19P2M_EN);
- 		break;
- 	case PHY_MODE_USB_DEVICE:
- 		/*
-@@ -211,10 +179,8 @@ static int eusb2_repeater_set_mode(struct phy *phy,
- 		 * repeater doesn't clear previous value due to shared
- 		 * regulators (say host <-> device mode switch).
- 		 */
--		regmap_field_update_bits(rptr->regs[F_FORCE_EN_5],
--					 F_CLK_19P2M_EN, 0);
--		regmap_field_update_bits(rptr->regs[F_FORCE_VAL_5],
--					 V_CLK_19P2M_EN, 0);
-+		regmap_write(regmap, base + EUSB2_FORCE_EN_5, 0);
-+		regmap_write(regmap, base + EUSB2_FORCE_VAL_5, 0);
- 		break;
- 	default:
- 		return -EINVAL;
-@@ -243,9 +209,8 @@ static int eusb2_repeater_probe(struct platform_device *pdev)
- 	struct device *dev = &pdev->dev;
- 	struct phy_provider *phy_provider;
- 	struct device_node *np = dev->of_node;
--	struct regmap *regmap;
--	int i, ret;
- 	u32 res;
-+	int ret;
- 
- 	rptr = devm_kzalloc(dev, sizeof(*rptr), GFP_KERNEL);
- 	if (!rptr)
-@@ -258,22 +223,15 @@ static int eusb2_repeater_probe(struct platform_device *pdev)
- 	if (!rptr->cfg)
- 		return -EINVAL;
- 
--	regmap = dev_get_regmap(dev->parent, NULL);
--	if (!regmap)
-+	rptr->regmap = dev_get_regmap(dev->parent, NULL);
-+	if (!rptr->regmap)
- 		return -ENODEV;
- 
- 	ret = of_property_read_u32(np, "reg", &res);
- 	if (ret < 0)
- 		return ret;
- 
--	for (i = 0; i < F_NUM_FIELDS; i++)
--		eusb2_repeater_tune_reg_fields[i].reg += res;
--
--	ret = devm_regmap_field_bulk_alloc(dev, regmap, rptr->regs,
--					   eusb2_repeater_tune_reg_fields,
--					   F_NUM_FIELDS);
--	if (ret)
--		return ret;
-+	rptr->base = res;
- 
- 	ret = eusb2_repeater_init_vregs(rptr);
- 	if (ret < 0) {
 
 ---
-base-commit: 596764183be8ebb13352b281a442a1f1151c9b06
-change-id: 20240104-phy-qcom-eusb2-repeater-fixes-c9201113032c
+base-commit: 51b70ff55ed88edd19b080a524063446bcc34b62
+change-id: 20240201-topic-sm8550-hdk8550-audio-fix-579f87f109b5
 
 Best regards,
 -- 
-Abel Vesa <abel.vesa@linaro.org>
+Neil Armstrong <neil.armstrong@linaro.org>
 
 
