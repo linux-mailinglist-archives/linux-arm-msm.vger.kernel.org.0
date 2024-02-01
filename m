@@ -1,98 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-9424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87DFA846302
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 22:55:03 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 671DF84631F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 23:08:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 279991F2531F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 21:55:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DFCA828E7A0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 22:08:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8977246537;
-	Thu,  1 Feb 2024 21:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C9823FB07;
+	Thu,  1 Feb 2024 22:08:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="erXDY+/B"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="arNLs2Vi"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 555EA4644C;
-	Thu,  1 Feb 2024 21:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF833F8D9;
+	Thu,  1 Feb 2024 22:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706824442; cv=none; b=npG02KNltm4VCj5gp5VHGc3EpUp7CHwwbcOdQ4kZsLe/2mxgMMoR9N+OaXhTtC6VM0mB97xYM0NZqoQyAIwsoocOQxPpJp1pXjsYGl7miFFGwFKFywzyJQwkutFl1bT/e4rWuTK9PIweSOVIh/CXVLCmi5Ee670UpPZfka07iKQ=
+	t=1706825288; cv=none; b=a3t3yCynnPFyFu1Hej/zbfs/UFWc/jeApu6QIUPke3Wu8OZRQuJ4F9tzXW9l0yqZuLWLiTJraDqnqg6t8LaDoTDZ8fd+5/j0VXMQV34vsSQfTEPkNuMGs8Lb9ftJfb0rb0Il1217tOzL+vu+iv20ymbrjml0QOUuTwPsGF9G7sM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706824442; c=relaxed/simple;
-	bh=6HuV3IIZv6Gf48oHjnacch7E8ba8dfFz7iHDkHJ9gJI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZDrDJnAghmbXdTZy87VGZsgzTk9aoUhzyZ25GUHDJXviFznUjL7m/f2B59iCCwB2tkTBR+ZwBdvLD1ozCw/DwEp7BPZsTYjcJsBF25BHyitbdU4JYEK82MjvWOunmYiXgiZo5CO86zD82H0l+MJ6h9UKaRS682tZbKi4U2J1Iq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=erXDY+/B; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B46DFC43390;
-	Thu,  1 Feb 2024 21:54:00 +0000 (UTC)
+	s=arc-20240116; t=1706825288; c=relaxed/simple;
+	bh=hQhyDtZvF8uLG9TardzvTE09AI07Z4RnP2sRVzETQc4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fLpzj2XAh2XAFUogOi4oo8/ZU5CHG4g7rqnaZB350w1cv4KG1o9V0QI2oFx8AotulElo7IXKJKKtvqDXGKgVrvXjs6E7gj/bS65d7v1SwG5Ke/JCH7TlyBzs397kxWLvHSyaxCXLAW7MkKtddlLaqejiB/AaG1cVl0EUUSWxZt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=arNLs2Vi; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8901C433C7;
+	Thu,  1 Feb 2024 22:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706824442;
-	bh=6HuV3IIZv6Gf48oHjnacch7E8ba8dfFz7iHDkHJ9gJI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=erXDY+/Bb93G2WJSSqUUkhCiY/ubBVOs8IA8L4TUx2CHlO8Syb1DeHTebG66YUdxO
-	 REQb3miA8wyyztzLNnF3q144P+9BMBH8lRYVC++miKROrpJvwcWPorNv3/KJVcHEbr
-	 jPrZ3QwKqG1bD56dj6pc9x7udg0/kLuZguSBjM07O5z7ywb3L88N6hi/33ynFulnDo
-	 HXWz0mEGnd73ychg51zppt/MfQhq9Z5fph5Ew01A6ZnmaoJN5Tc9kjnsBUO1Kzl/2+
-	 YPvDOywCGK5b0qS+GqxKEu8itj3BabKtNmblp+EhuEkMNOjJOHW23GImV+bl96zth/
-	 SxhrparPbyZWg==
+	s=k20201202; t=1706825288;
+	bh=hQhyDtZvF8uLG9TardzvTE09AI07Z4RnP2sRVzETQc4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=arNLs2Vi/LqVcmpe22RClErs4NOHdZtfpgtEu6tqLDJ6aBWXExjw+w5PSctCil97W
+	 XalDQETiQW2gYN8Gk1iWByfzaaOblw7ZjJOUumjFX9qdx2fvzX4gytiqteGz2yd6nL
+	 RTig1cXNadD8a4yrv24NqBy+X6vX0FFL1jJzcMYHq+k/hOHvbq6DMWTHFJ5rHhib/f
+	 4Cr+AXp3iRpV5Ue8Z4jdsBcg5a7NPvRPDA1D7km08Kmh4rRzMIeOpNDmfE5Ww5Y3mg
+	 40PVZjC1YGXrB2iipwfJil94w6KexlOZjChUFjgEvK37Rkjd8AEOQvMZ3Md0VdfXtm
+	 nuFMZ1lBWrbYg==
+Date: Thu, 1 Feb 2024 16:08:05 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: Re: (subset) [PATCH v4 0/8] arm64: dts: qcom: sa8295p: Enable GPU
-Date: Thu,  1 Feb 2024 15:53:51 -0600
-Message-ID: <170682442869.248329.14691453184149397609.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240125-sa8295p-gpu-v4-0-7011c2a63037@quicinc.com>
-References: <20240125-sa8295p-gpu-v4-0-7011c2a63037@quicinc.com>
+To: Johan Hovold <johan@kernel.org>
+Cc: Bjorn Andersson <quic_bjorande@quicinc.com>, 
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>, Jiri Kosina <jikos@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Johan Hovold <johan+linaro@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@somainline.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Rob Herring <robh@kernel.org>
+Subject: Re: Re: [PATCH v4 1/3] dt-bindings: HID: i2c-hid: Document
+ reset-related properties
+Message-ID: <luzkdel2hshufku2gjgbsvfhxkmpg5eo6ekythuawaiz6kibvs@lsajkktmetkv>
+References: <20240131-x13s-touchscreen-v4-0-39c0f9925d3c@quicinc.com>
+ <20240131-x13s-touchscreen-v4-1-39c0f9925d3c@quicinc.com>
+ <Zbts-9tRDPcXbhYi@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zbts-9tRDPcXbhYi@hovoldconsulting.com>
 
-
-On Thu, 25 Jan 2024 13:05:06 -0800, Bjorn Andersson wrote:
-> Due to the different PMIC configuration found in the SA8295P platform,
-> compared to SC8280XP, the VDD_GFX pads are supplied by an dedicated
-> MAX20411 LDO.
+On Thu, Feb 01, 2024 at 11:05:47AM +0100, Johan Hovold wrote:
+> On Wed, Jan 31, 2024 at 07:07:26PM -0800, Bjorn Andersson wrote:
+> > Some I2C HID devices has a reset pin and requires that some specified
+> > time elapses after this reset pin is deasserted, before communication
+> > with the device is attempted.
+> > 
+> > The Linux implementation is looking for these in the "reset-gpios" and
+> > "post-reset-deassert-delay-ms" properties already, so use these property
+> > names.
+> > 
+> > Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+> > Acked-by: Rob Herring <robh@kernel.org>
+> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> > ---
+> >  Documentation/devicetree/bindings/input/hid-over-i2c.yaml | 6 ++++++
+> >  1 file changed, 6 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/input/hid-over-i2c.yaml b/Documentation/devicetree/bindings/input/hid-over-i2c.yaml
+> > index 138caad96a29..f07ff4cb3d26 100644
+> > --- a/Documentation/devicetree/bindings/input/hid-over-i2c.yaml
+> > +++ b/Documentation/devicetree/bindings/input/hid-over-i2c.yaml
+> > @@ -50,6 +50,12 @@ properties:
+> >      description: Time required by the device after enabling its regulators
+> >        or powering it on, before it is ready for communication.
+> >  
+> > +  post-reset-deassert-delay-ms:
+> > +    description: Time required by the device after reset has been deasserted,
+> > +      before it is ready for communication.
 > 
-> Support for expressing the regulator supply is added to the binding, the
-> support for enabling the parent supply for GX is added, the missing
-> gfx.lvl power-domain is dropped, and the DeviceTree is wired up to
-> enable the GPU in this configuration.
+> I know that Rob reluctantly acked this, but re-reading the commit
+> message for the commit that added support for the reset gpio to the
+> driver, and added a comment about this not having been added to the
+> devicetree binding, it becomes obvious that the latter was done on
+> purpose and that we probably should not be adding the
+> 'post-reset-deassert-delay-ms' property after all:
 > 
-> [...]
+> 	For now the new "post-reset-deassert-delay-ms" property is only
+> 	used on x86/ACPI (non devicetree) devs. IOW it is not used in
+> 	actual devicetree files and the same goes for the reset GPIO.
+> 	The devicetree-bindings maintainers have requested properties
+> 	like these to not be added to the devicetree-bindings, so the
+> 	new property + GPIO are deliberately not added to the existing
+> 	devicetree-bindings.
+> 
+> 	2be404486c05 ("HID: i2c-hid-of: Add reset GPIO support to i2c-hid-of")
+> 
+> So perhaps we should just do this properly and add a new compatible
+> property for X13s touchscreen which can be used to determine these
+> delays (e.g. for cases where some default values are insufficient).
+> 
 
-Applied, thanks!
+So we should add a new binding, with a device-specific compatible and
+add a reset-gpios only for that (and not the generic hid-over-i2c
+binding), and then in the i2c-hid driver encode the two delays?
 
-[8/8] arm64: defconfig: Enable MAX20411 regulator driver
-      commit: 42945eb663d88471a0c394d9f466401b1a8d791f
+I can try to rewrite these patches, if you can provide me with a
+compatible.
 
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+Regards,
+Bjorn
 
