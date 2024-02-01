@@ -1,70 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-9339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0CC4C845C46
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 16:57:33 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6AEB7845C2F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 16:55:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D790BB2F10A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 15:55:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 893A41C25A6E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 15:55:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55CBC626BD;
-	Thu,  1 Feb 2024 15:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74BA9626C6;
+	Thu,  1 Feb 2024 15:55:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="g23ux0eh"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="F5YiyoUQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69DA662175
-	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Feb 2024 15:55:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD84D626B2
+	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Feb 2024 15:55:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706802944; cv=none; b=pp0UAKMNwhw+UVWIPQZ7FndTCzLbRRGDNu6mesAkYCEiLhUWbsvmMpqN9G8WU/IWc2vDUQKQmJdKVul0bmgeKxThO1sFxKbFsYKT2yHr2QvMLXkS1gQMtbyR5Rr1L19jcfj4AyrWAEnPjXl4OIgV/hrYAfW+zgGtMW7mNT4KQaE=
+	t=1706802945; cv=none; b=D+HUYuOF2q/khNQZFCv2DGLoegptya3wMTBoU3cSXbfcIVF8F/F70FvbrJ4YdoRKtK9d5piugrpv8dtjr+nIOtpz+sIXk52oulHmq0gWPZMP025dOSYvhpS1/dU/IDfQ1axpUzsSvrlzAY0KpHBcxNjYeMdgAEjELeLCxVLP9n0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706802944; c=relaxed/simple;
-	bh=8NQkfhoBr9JLEjdzguP3BSv+GdLe2ubyahcNgiZHmhI=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=NgfqV8DKk0oHLF1opRhE8Ycjnj77weEcwR0ADamwPAY76oEZ6i+pGrbrlbB4GPJ8MFzZF8ooGHjrNE805dIuwjYA0kcXuOMbtkdPFP9hU7dzlxXxNXLvr5qt5g6OJT0lOm1o7Tdc1f4h3wZiH/ssD8cknr5LTHWGzLkJumeGduk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=g23ux0eh; arc=none smtp.client-ip=209.85.128.42
+	s=arc-20240116; t=1706802945; c=relaxed/simple;
+	bh=Ne8FaYyFdYXd0+/nwcZOOibQRd96MjLCW87e/NW56iw=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=ElqNY43KsJ5zTJs6Pt01EmSnU+GQNHw7jeUMIo41CC3DGUvsdMi/pFN5Mp0s4B0PGkR8b4EQgtxNP5u4PH/TBXn2vAZ2Zjppcprz3zcgT+Yt91nOXcELhiY5yOQnbR8n0UcURyISEy8Sad2WVCIPqdD7fLakTUzYQA2FQNl8CmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=F5YiyoUQ; arc=none smtp.client-ip=209.85.167.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-40fc22e53f1so4247285e9.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Feb 2024 07:55:42 -0800 (PST)
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-51025cafb51so1722244e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Feb 2024 07:55:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1706802940; x=1707407740; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=p5qM+DhIAVGaoaijHTK5tqpB0tA35c17btuMlycQtGc=;
-        b=g23ux0ehqQ3jhpUM7Aoh7LowdIwQmU3hC3UAQEWi9c28otfoKaOEeQpYug+I8NCm7p
-         moSCcaZ2fjGIQi1uRTHtcPpJvpXbeC0c1l7QPiE/LuUCRphZfxIcWI7ce/MA0/Dsxj9J
-         RhBvZa1CO/Huiv0CqamMzxG324xrCewglExsP03TvtAaj65mKUrL73brw7BMFn051W3+
-         pMivJIrRLRvh9rd1hqdQMM78VII9iWTl7gJMdB/MLkx52l4VR20LqDxb0bI0VVgR87N0
-         Tsar8SHjRoNaGJOR6VM8YHp1u4lc4oOKhVhEN376B2qmmUM7DqrbjBlaD6exCkFHlQLX
-         V32Q==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1706802942; x=1707407742; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VCf5neYMqxadjaO4J9s6ucwyXDUQTnbQajZUESpjeQY=;
+        b=F5YiyoUQ4LpEOSuwn6LB/HtF/4p39epgnm8sKeleBEhmcdjFQORpdhD5Mm1b2p/qOL
+         lNkog+mNetWQUBsRUq2lL+Wq4AAIRDD9D1XV9SvC6V3mSXmcetOXnWu6uGu13UHdjMxD
+         gZhHnmyX1wNTlfdGUL7gnEQIjavJdFh8q16PGwfpTtzGIQ0zH/vTF+BWYo+ix+PXiOiA
+         ZEwZoz88OmHe/tG1121+EBTQzhKcqXUNIVnE90Kmj21Hf0xnU1eJeCQoeji0VG0SOAQ2
+         Epf7azEh/Rh/Cqtht76lxDviRzZhRsLahahoOwE4XGEa91FpHv6Tb5irklpfn/RUWtZY
+         DMgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706802940; x=1707407740;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=p5qM+DhIAVGaoaijHTK5tqpB0tA35c17btuMlycQtGc=;
-        b=GBufDt/dKNBzC8vO+KtHmbGJ9TDDcmcUegR79HyJYNof0US6d+Y5OVWVJFlFIP1LXl
-         enToxvAjIbE+mh1TUKmW6jUlM5HOpI0Eop1Gw39NLQJ7c2lvNh210upHD2KDHVta6Wqh
-         NZYWxixD1VCsuXRMzr2grtH2vDIvgquHqZK7GrMPZSOqG+Q5XakeHyVX19SHu9Id1VQq
-         QGrtuNuSQGaOlvqbxr4fk3COfB4y5L6IJejTRK9bYe7QsWuuhn6uc051iTQRgAr1+ArC
-         HZUglYpem0HSR4Y2mkZvqMdgZ2hwIxoCLjajQM5XwRMG1sC9BHrhnrFSCth8dHUSUa3O
-         x8vA==
-X-Gm-Message-State: AOJu0Yx9CpIzo32Y6BoAUVcPCIJvK8ZfWw8tTlLnjXLnu+pNG9+UcCBU
-	hTs2PcaGA101/zJLQWN8hHVrJRfiHgrdY3ppd8QIyKHB3LmlpVefqX/nWdJPuUM=
-X-Google-Smtp-Source: AGHT+IFUiCpUoqg+Hwif5qU4KpnW7NZcqtWoeDcKn/KB/alf1F0byzO6udrYL9tJwF2Feal1AG/4Xw==
-X-Received: by 2002:a05:600c:4f10:b0:40e:d316:8cb8 with SMTP id l16-20020a05600c4f1000b0040ed3168cb8mr4140755wmq.27.1706802940496;
-        Thu, 01 Feb 2024 07:55:40 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCVZxNUxx4gS4K/kceUjJUevqGmQHTw1rJd6vIRpSv5lJrrJWkuLS1S1vdwD178Lv9W1djE9nJ0mkX0T3sNbVXCgfdKc0btL6jtLQHESt7VMVokV9jyDqC8y7LQMa31bMvmDhErdtqm3lXA5l8dDZp8HowT6kBThwT6ZgoBlacs/C6A69DhvW585i2UVNZ1R80UcdWg3xd8Z4qMcb7gE64scAaJ9DUlv8jYf6dizAmSJTcRcA3Tohmh20wLpYr7LD746bpC4EpeFWPt+sbaWr3kXFF1SKCmEQP7Z667O81fhKoq5f3XZAXS5Bkc9kl8NVR0JiYceI/AFy/UhUHVwRW+DTLqsxCrRK5oApKL92oNofGjI7z8/h4uWIASjhJiT2edMonOuW6gp+prhYpw+RDE1vcyb/3JN0iVNShG/AF3wpRB7N2ufwk4jYZzOgVRZmB0PxNZxyXR4keCYP9GZhCmjInkjKZebYWaSzoFgJb99JQZX9K2cFcndmRHA8PfykOLuCBjf1Agw0FctTgGsIHvLrhjQViX3kvY7ykS16JmD+wPCLFiwXxc0J7Ww7cFnSy4GHJ44mwjDW/ggOa64w6vLhpw9VMkMKaPgcTHjyoEPp2melvRPnIXn391eluQlJ85yin6QOAmfvyFU+Jxftql2KTYuxS4O6t86irppvG/Jzoe7ZZK5AS9mXttMXJhEXORuzg0ta3HQ
+        d=1e100.net; s=20230601; t=1706802942; x=1707407742;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VCf5neYMqxadjaO4J9s6ucwyXDUQTnbQajZUESpjeQY=;
+        b=eOggi/MjGhbdpWe+P6LBT5mr93APX2GQ2B8UQ8xD9+QtROd+oSXi6Z6h7OIE35122X
+         TkPn4EuBS1rOWIfMx7FkkQJC1MlHK1xbvb7+y4Qy+57FnUsZhXD2YrkJWFVkYUwFlxup
+         GgwTrVCouYGx7tXC+W6CiH64rsN4BY6liQ03QcaySKlGm6twdpWgmGQrizJHEpt0Yltj
+         ELI8TrdlflQWtqo+T8+FH/P19IaKsnJ0UjIh1N6v+FecNNtkMLK0zxcwi4qFN1c9x4hs
+         z6LkeAMybspPe9sgGU0+SdPvuUWjFJe0j4I4HujWpipMZkHSbtuhBEuDaljJFSD2iumX
+         Af1Q==
+X-Gm-Message-State: AOJu0YwushPcQDqL24juJumQ5bpsAccUZNCkXiLHpXE7OEeQwDYBtOPp
+	2SfflFf5F0wdozDmxFEOJ8jzhYgppWHLXyIQNeBR3B+8dzsdUsGHIombzyKlgT8=
+X-Google-Smtp-Source: AGHT+IHkrn+Zj3y1432zmCh6KEhYhszwNLXkoBCTb2I+poJA3NCw+EWCILXaf1b/15MhTWnBC6A3Ag==
+X-Received: by 2002:ac2:4d10:0:b0:511:1dff:f605 with SMTP id r16-20020ac24d10000000b005111dfff605mr1981785lfi.46.1706802941684;
+        Thu, 01 Feb 2024 07:55:41 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCVF+2wdShjm6OQ5Wtjr1zIFeaiuVtcAzxXa+wf/JoOMr1kUfk2Tzmj9xzmNSLmnZ5tTi3zErj9tT6F/4UHmgYHK4NDC4c6mCjI0MkhI+HTmlEcNuCV3LVgfo+05AtZMS0sCTIQ5Cs+h9f4+aqt2E1E33ErUq7puh3AW4Ezyoh1gecPEJvl6ONF6zsa7XXcopCHcdI4tCGfWNXv//bihN4LQA189xCmb9aZZTVOPVh8Z2ra+AR9GZIz9SDf96WxpEaz3W0ylZET2Eux5p/O7PgK6UJK4zP+CovmN8UuLL9oUinr4vlj+V5ABtH4iLiJtBDzQnRqwLB6hTt7fXuNt7DjHBefIu2uzrGGP8SzhunR+s7F+pLsepU8uFSil0bcTXXaesrIuTNFrOaeHPq5BDuquDTLUl21KithIGmHmhJYd5KUC5Rfj4YqWqDmIefsc5mEcIsH3uqxt3cMnw4RdaWIrbuuI9xHIZVofhD5KFasGiVclTbyFNDBNmLRX7lkPd8DUwQVrNgbcrJE0sQ/ZYX0wUi9uB5KSM58LnnwFThhoq/aq9JXPDTNSQBBiWfVNn1QutlP3JNqunH+T40nqNurCIqCvWePIjTD9OY1dNlUeoAjvli7wGIwoTpWf+EsvK6aXHGfIvAsuTnEG0R/HQgQTHKptTe67rV92Vof4Xm0dxjJyxPfFQyO8hy5uX/14Ib02fUI/PKeC
 Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:dd01:5dec:43e3:b607])
-        by smtp.gmail.com with ESMTPSA id ce2-20020a5d5e02000000b0033af4848124sm9650318wrb.109.2024.02.01.07.55.39
+        by smtp.gmail.com with ESMTPSA id ce2-20020a5d5e02000000b0033af4848124sm9650318wrb.109.2024.02.01.07.55.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Feb 2024 07:55:40 -0800 (PST)
+        Thu, 01 Feb 2024 07:55:41 -0800 (PST)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -88,10 +90,12 @@ Cc: linux-arm-msm@vger.kernel.org,
 	linux-bluetooth@vger.kernel.org,
 	linux-pci@vger.kernel.org,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [RFC 0/9] power: sequencing: implement the subsystem and add first users
-Date: Thu,  1 Feb 2024 16:55:23 +0100
-Message-Id: <20240201155532.49707-1-brgl@bgdev.pl>
+Subject: [RFC 1/9] of: provide a cleanup helper for OF nodes
+Date: Thu,  1 Feb 2024 16:55:24 +0100
+Message-Id: <20240201155532.49707-2-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20240201155532.49707-1-brgl@bgdev.pl>
+References: <20240201155532.49707-1-brgl@bgdev.pl>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -102,83 +106,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-I'd like to preface the cover letter by saying right away that this
-series is not complete. It's an RFC that presents my approach and is sent
-to the list for discussion. There are no DT bindings nor docs in
-Documentation/ yet. Please review it as an RFC and not an upstreambound
-series. If the approach is accepted as correct, I'll add missing bits.
+Allow to use __free() to automatically put references to OF nodes.
 
-The RFC[1] presenting my proposed device-tree representation of the
-QCA6391 package present on the RB5 board - while not really officially
-accepted - was not outright rejected which is a good sign.
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+---
+ include/linux/of.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-This series incorporates it and builds a proposed power sequencing
-subsystem together with the first dedicated driver around it. Then it
-adds first two users: the Bluetooth and WLAN modules of the QCA6391.
-
-The Bluetooth part is pretty straightforward. The WLAN however is a PCIe
-device and as such needs to be powered-up *before* it's detected on the
-PCI bus. To that end, we modify the PCI core to instantiate platform
-devices for existing DT child nodes of the PCIe ports. For those nodes
-for which a power-sequencing driver exists, we bind it and let it probe.
-The driver then triggers a rescan of the PCI bus with the aim of
-detecting the now powered-on device. The device will consume the same DT
-node as the platform, power-sequencing device. We use device links to
-make the latter become the parent of the former.
-
-The main advantage of the above approach (both for PCI as well as
-generic power sequencers) is that we don't introduce significant changes
-in DT bindings and don't introduce new properties. We merely define new
-resources.
-
-[1] https://lore.kernel.org/all/CAMRc=MckG32DQv7b1AQL-mbnYdx4fsdYWtLwCyXc5Ma7EeSAKw@mail.gmail.com/T/#md5dc62007d12f6833d4e51658b14e0493954ba68
-
-Bartosz Golaszewski (9):
-  of: provide a cleanup helper for OF nodes
-  arm64: dts: qcom: qrb5165-rb5: model the PMU of the QCA6391
-  power: sequencing: new subsystem
-  power: pwrseq: add a driver for the QCA6390 PMU module
-  Bluetooth: qca: use the power sequencer for QCA6390
-  PCI: create platform devices for child OF nodes of the port node
-  PCI: hold the rescan mutex when scanning for the first time
-  PCI/pwrctl: add PCI power control core code
-  PCI/pwrctl: add a PCI power control driver for power sequenced devices
-
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts  | 128 +++++-
- arch/arm64/boot/dts/qcom/sm8250.dtsi      |  10 +
- drivers/bluetooth/hci_qca.c               |  30 ++
- drivers/pci/Kconfig                       |   1 +
- drivers/pci/Makefile                      |   1 +
- drivers/pci/bus.c                         |   9 +-
- drivers/pci/probe.c                       |   2 +
- drivers/pci/pwrctl/Kconfig                |  17 +
- drivers/pci/pwrctl/Makefile               |   4 +
- drivers/pci/pwrctl/core.c                 |  82 ++++
- drivers/pci/pwrctl/pci-pwrctl-pwrseq.c    |  83 ++++
- drivers/pci/remove.c                      |   2 +
- drivers/power/Kconfig                     |   1 +
- drivers/power/Makefile                    |   1 +
- drivers/power/sequencing/Kconfig          |  28 ++
- drivers/power/sequencing/Makefile         |   6 +
- drivers/power/sequencing/core.c           | 482 ++++++++++++++++++++++
- drivers/power/sequencing/pwrseq-qca6390.c | 232 +++++++++++
- include/linux/of.h                        |   4 +
- include/linux/pci-pwrctl.h                |  24 ++
- include/linux/pwrseq/consumer.h           |  53 +++
- include/linux/pwrseq/provider.h           |  41 ++
- 22 files changed, 1229 insertions(+), 12 deletions(-)
- create mode 100644 drivers/pci/pwrctl/Kconfig
- create mode 100644 drivers/pci/pwrctl/Makefile
- create mode 100644 drivers/pci/pwrctl/core.c
- create mode 100644 drivers/pci/pwrctl/pci-pwrctl-pwrseq.c
- create mode 100644 drivers/power/sequencing/Kconfig
- create mode 100644 drivers/power/sequencing/Makefile
- create mode 100644 drivers/power/sequencing/core.c
- create mode 100644 drivers/power/sequencing/pwrseq-qca6390.c
- create mode 100644 include/linux/pci-pwrctl.h
- create mode 100644 include/linux/pwrseq/consumer.h
- create mode 100644 include/linux/pwrseq/provider.h
-
+diff --git a/include/linux/of.h b/include/linux/of.h
+index 331e05918f11..5462ed47f25b 100644
+--- a/include/linux/of.h
++++ b/include/linux/of.h
+@@ -11,6 +11,8 @@
+  * Updates for SPARC64 by David S. Miller
+  * Derived from PowerPC and Sparc prom.h files by Stephen Rothwell, IBM Corp.
+  */
++
++#include <linux/cleanup.h>
+ #include <linux/types.h>
+ #include <linux/bitops.h>
+ #include <linux/errno.h>
+@@ -887,6 +889,8 @@ static inline const void *of_device_get_match_data(const struct device *dev)
+ #define of_match_node(_matches, _node)	NULL
+ #endif /* CONFIG_OF */
+ 
++DEFINE_FREE(of_node, struct device_node *, if (_T) of_node_put(_T))
++
+ /* Default string compare functions, Allow arch asm/prom.h to override */
+ #if !defined(of_compat_cmp)
+ #define of_compat_cmp(s1, s2, l)	strcasecmp((s1), (s2))
 -- 
 2.40.1
 
