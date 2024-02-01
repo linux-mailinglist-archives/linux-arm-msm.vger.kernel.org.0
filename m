@@ -1,189 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-9328-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82F6F845AE8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 16:07:33 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 013BF845B1E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 16:18:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2518028643F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 15:07:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 677B51F223CC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 15:18:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81FE462148;
-	Thu,  1 Feb 2024 15:07:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F46C6215A;
+	Thu,  1 Feb 2024 15:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="mFjzsx5Z"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XcqiC5DE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ua1-f52.google.com (mail-ua1-f52.google.com [209.85.222.52])
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7FD9626C1
-	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Feb 2024 15:07:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6745B5F48C;
+	Thu,  1 Feb 2024 15:18:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706800022; cv=none; b=b1vxcYYSqEcS86cJS2Tr/wmASObtmeU0NTAv/azsZlxbw0YVHDdcZOXjs4fFXazEZtYnoLZMhA6VpkLXDohCeT7KDZgnrNxFI71S3Nw1IvUytDbFPkgHRO/aiUlpAIfys/4fdtlyG3sC5XfRQ46oUcPbCmgOiC2d8Cp6vJrzT9Y=
+	t=1706800696; cv=none; b=LNbWeVonHRQz9baQob6DbYHvs3eDtyr1DZMCtOX3munDpPhJoSOnhmV0TPdfchVTbrLXVpqbYTI2U9QjvmT7z0uUoEzRHCirAsyYW6w9idO8bfg3bTPp7+QFNF3tGU3h2sHtbLeLz6KEi5Pthhnx/YiM6QttVgrohzW7mjrBlwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706800022; c=relaxed/simple;
-	bh=0S4hj/l+E8fsE2seDVwsBMXhR7T3oEgasUj3VCasABU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ptJ5123fqxOXCDH5qHK/CRPiiKhGtsdAnx++nrQqcMWztu5jlT9P06JR61/pym8dWsdwxadDRr4p++9BE8+uHm/IhIacOmvZRmdGemm3BCiTu/0iWwLHp2U5ER1etMV53yPP9zC8FGVXM5UB0+TK25OngfdLg2tuG4c8xfvSMSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=mFjzsx5Z; arc=none smtp.client-ip=209.85.222.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-ua1-f52.google.com with SMTP id a1e0cc1a2514c-7ce55932330so481675241.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Feb 2024 07:07:00 -0800 (PST)
+	s=arc-20240116; t=1706800696; c=relaxed/simple;
+	bh=p2zjvsecwqsbWVxX3y98V4aEVEIewA84Nqu+biKQYbQ=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=O5L7mY0gsZkkDHYEDoG+7M9fd7Ls1QSEr8en0cFoLs+plf19JZXqONaumIkAMfh2m96fzgkBBjkZH4vE5cu/wm9AO5PVgvz0zQquY47Ub1gKI4Y1yLmCD1rPAaMQh6bsxO+vpEdjl4TWKfvpbrdkFYYDuWLYsu0cFvPuLU1pttE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XcqiC5DE; arc=none smtp.client-ip=209.85.208.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2cf588c4dbcso13768371fa.1;
+        Thu, 01 Feb 2024 07:18:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1706800019; x=1707404819; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pi8CL4e6ck2HTzkpX3NWKGudKljP6kgJIpvXQoGWMOY=;
-        b=mFjzsx5ZgxHudLKcLanxLprPq0zmzRqkABqO66ISPmCfBYNYVvx6cnKjlVjI20kuR6
-         OldRh+6izDGy3wqF3NTLdZ+soDWUeSAFbdbYEvGaUGR6pKuypJZ4bikvyToSJtCILL46
-         Ndm3waRKAAUkJI6uunaQOJs5sea1DD1w7BRzuehwcoS4nhPgUukSgu3sAowUTNjUAQ/t
-         6XfULaZsTvjMtdeCP/V9xUpF2jVifV9oBV66jx5EqTlZMH5Js+MjotzU3w+G+UlD6POS
-         TcdHDS9ScnWTX1V7BGgDlUE79qhhysayrxTYPLDekaxaW3XnETTsU9lbURSGoxB3i4Kr
-         fMFw==
+        d=gmail.com; s=20230601; t=1706800692; x=1707405492; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FgF7oqxYUKcEdySx4Ly0ihobldR/JZonk5s5GnUnAk8=;
+        b=XcqiC5DEWtWD86+McEu4fimnsuqqKqhDizsw4Y5bEtZNhURMK2fKyUPJwytpah89EE
+         PkEC+aNlsRlA3RJBTxNODPhTYYoEe0ZlH7PXWlnXRiCnusCXswPZdl2FGliMjWGj0PZ1
+         z3z+QPHPN06J8I0uZXgxCKaeyUqhfoiFdITf5nYhNGPJZVPwvLdOi3a8fy5IJy30Y+9V
+         JWZ5FPBSOf+04U47KvE3rayn3q5JY6h3uoQEVQKbnWNx1Xlzdew3L3oV+djv3MqohtDN
+         F7TW0Ga4sU7WodKsF3RjYfiCNZIzAYlYnKpZFnWw+F716uPOGg2yNZIZAVg4z0vDGsnJ
+         /SDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706800019; x=1707404819;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pi8CL4e6ck2HTzkpX3NWKGudKljP6kgJIpvXQoGWMOY=;
-        b=KbEt/PfuCHXf4Jh6B5CNFlYmXBjo1fyIC3lObcV326Yo5KPPpVLfwahTcCHiT08Y4l
-         rt62Lnnzs1soVfMwFyUjOL1mJIzQ0hhXAUvp6GMgqAdQMWjAJjOytcLyoGOX9UsJatt4
-         4qUJMcUQzALq2nNi6Q+ogtfbHp5OLJZyC2Fs2q9ZtD3YouU1sJs3pbKyRtJTqKjRsErr
-         kwb2ek1Jm/PpRk3omjzUq+iTB6J2m84nbndji0IX/SZxW7CaH+blcTpz6q2T4kfjPgKo
-         wKQT4BLuJeQwYZjmUqHoIP+VgQlBhOd35ucBUkpX41qpcoQYCHDRSlwN4esW6L3FY7ej
-         NX0w==
-X-Gm-Message-State: AOJu0YxX7nD08Up9iZGnMApBpsEc3wqIpLdBDvK02q18VtxXiiyk62XP
-	DrYLSrGdiH+oYrwPeOFOtM+Qr6FlEcZsG9TDVnVwaLQ0Wft5rYekAzYykO5pdTu30cZNK3bt/mZ
-	eZSCnlJeYUpaV0x66EXh8ohbQThfrUtb3U+kHxA==
-X-Google-Smtp-Source: AGHT+IEG5q+Ht07Sn9fefoBaUopYmurwwnmOpHyEtbhdBigl1iJ2zdTN4V4J9cZ4y2zMj9AA5AY9J15gI6CDwoltmeQ=
-X-Received: by 2002:a05:6122:449a:b0:4bd:32c9:acb with SMTP id
- cz26-20020a056122449a00b004bd32c90acbmr2413468vkb.7.1706800019494; Thu, 01
- Feb 2024 07:06:59 -0800 (PST)
+        d=1e100.net; s=20230601; t=1706800692; x=1707405492;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FgF7oqxYUKcEdySx4Ly0ihobldR/JZonk5s5GnUnAk8=;
+        b=UFAsbWUZbc9idDakVjtE3/1Qs4Qdvw74IPY5Jl+7VVWf2xFc/gkZ6D2TKVhp8dmAVy
+         qjTdawxc+aT39f6qZisC+ePSgZ7C7qFp9JKm85i5bi4qnDbhF34Gdph3lvwIbSNgrJG/
+         +pBLkEn2SHBEjuERNX2xFpQo9ifFh0D7LLjYPoHARRiXawgPYShuAVTXRt9Gy5f/TlE/
+         xJbsikVHJJZKoFd3zRTVP/6VsaERa3nLtfNw+w1pf/bDZ00nB8f3SUODdmM4gYz2DwTb
+         WEpsKLJ76IqWKt+8VO+cIup7I17yNXM7l/WXgflw5F0YxQeuygtGeHfy5cdvvhh8RLgl
+         fSpA==
+X-Gm-Message-State: AOJu0Yx86ahwwcrJaOUEN9oTgOIRpanejVhcvk8Jn2t4ccPMLuE4tBf9
+	6t1os94RCQBl3xPYuOiU+6vFkFAgFkLuV0hIKICc4D2BkWAHpihN
+X-Google-Smtp-Source: AGHT+IHuKMs0rC8AkpcPGwT8fMwy0LIUxBFrs+y8Uu3OWZxqcjMrsHYxgkW2zzSGkZzhoMhHHUqREA==
+X-Received: by 2002:a05:651c:b1e:b0:2d0:6c48:8777 with SMTP id b30-20020a05651c0b1e00b002d06c488777mr3912995ljr.27.1706800691924;
+        Thu, 01 Feb 2024 07:18:11 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCXzHo/BMpbXlwq2Bb7Cq+XwG1cIAz96p6MJ56TRJ5l2LjvHtzPfIaCA7tT8fifrSavCHK6bOlKnwPnbrP7SXuOe1FtMAxEcTbQbNoq88YOMiDQODa3fSTnMxfEpmhpYRnYHEm0oShZxcSPqGKsjclh4E64Vow3kHQzTmrlNCljJMOHGWoCV3ZHcUcqEGQ2asyqUqgAV3ZVkELRNVlYlKvU6M65psnvm3FyFsO6FdKJEu59pbjMUJu/6XrYkgDym53tUdACQBmjBlAmCfYac8eF0O5GCcBwGLsKeFJsYIeBxryBeADJfJSC3Yyr3wP8OShbN/BNFmzFNBb81LdbqsHdD4T+Bo3ZdvZvcgvh+fzTSHIZWvg0tloVKz0ClBTv+682coao6Nbf2vwUyPrMe7Nh4krQcIRc0PBEU8sbdY63jpZY3l0iCIoKM/oxZY4384VWAdBZ/TwugAjouULZZ0SZUu6DOuYD9T+E+TXVGaxuzt2n0asEw/XmKR5WYRAPAPhKVkHH3cVTJNTHrtMFcneq84ySf8dPrurkahyNHVva8udsz+YbOCEHVZ4C4GUH5NcjUyFjOnCUgALMpyeVXB4lXTRmvtmbv/aywtnJ3N37sb2PabspxhpXb
+Received: from localhost.localdomain (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
+        by smtp.googlemail.com with ESMTPSA id z9-20020a2e3509000000b002cdf37ee19dsm2437978ljz.7.2024.02.01.07.18.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Feb 2024 07:18:11 -0800 (PST)
+From: Christian Marangi <ansuelsmth@gmail.com>
+To: "David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Frank Rowand <frowand.list@gmail.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Robert Marko <robert.marko@sartura.hr>,
+	netdev@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [net-next PATCH v5 0/9] net: phy: Introduce PHY Package concept
+Date: Thu,  1 Feb 2024 16:17:26 +0100
+Message-ID: <20240201151747.7524-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240122102157.22761-1-brgl@bgdev.pl>
-In-Reply-To: <20240122102157.22761-1-brgl@bgdev.pl>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Thu, 1 Feb 2024 16:06:47 +0100
-Message-ID: <CAMRc=MfURBi=5frjL2EB0M-bzoiXU-5do+gtWDKqK9fp48HvXA@mail.gmail.com>
-Subject: Re: [RESEND PATCH v6 00/12] arm64: qcom: add and enable SHM Bridge support
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Elliot Berman <quic_eberman@quicinc.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	Guru Das Srinagesh <quic_gurus@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>, 
-	Maximilian Luz <luzmaximilian@gmail.com>, Alex Elder <elder@linaro.org>, 
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>, Catalin Marinas <catalin.marinas@arm.com>, 
-	Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, kernel@quicinc.com, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jan 22, 2024 at 11:22=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl=
-> wrote:
->
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->
-> Resending after the merge window. I dropped the first patch which was a
-> fix and was picked up last release cycle.
->
-> We've established the need for using separate secured memory pools for
-> SCM and QSEECOM as well as the upcoming scminvoke driver.
->
-> It's also become clear that in order to be future-proof, the new
-> allocator must be an abstraction layer of a higher level as the SHM
-> Bridge will not be the only memory protection mechanism that we'll see
-> upstream. Hence the rename to TrustZone Memory rather than SCM Memory
-> allocator.
->
-> Also to that end: the new allocator is its own module now and provides a
-> Kconfig choice menu for selecting the mode of operation (currently
-> default and SHM Bridge).
->
-> Tested on sm8550 and sa8775p with the Inline Crypto Engine and
-> remoteproc.
->
-> v5 -> v6:
-> Fixed two issues reported by autobuilders:
-> - add a fix for memory leaks in the qseecom driver as the first patch for
->   easier backporting to the v6.6.y branch
-> - explicitly cast the bus address stored in a variable of type dma_addr_t
->   to phys_addr_t expected by the genpool API
->
-> v4 -> v5:
-> - fix the return value from qcom_tzmem_init() if SHM Bridge is not suppor=
-ted
-> - remove a comment that's no longer useful
-> - collect tags
->
-> v3 -> v4:
-> - include linux/sizes.h for SZ_X macros
-> - use dedicated RCU APIs to dereference radix tree slots
-> - fix kerneldocs
-> - fix the comment in patch 14/15: it's the hypervisor, not the TrustZone
->   that creates the SHM bridge
->
-> v2 -> v3:
-> - restore pool management and use separate pools for different users
-> - don't use the new allocator in qcom_scm_pas_init_image() as the
->   TrustZone will create an SHM bridge for us here
-> - rewrite the entire series again for most part
->
-> v1 -> v2:
-> - too many changes to list, it's a complete rewrite as explained above
->
-> Bartosz Golaszewski (12):
->   firmware: qcom: add a dedicated TrustZone buffer allocator
->   firmware: qcom: scm: enable the TZ mem allocator
->   firmware: qcom: scm: smc: switch to using the SCM allocator
->   firmware: qcom: scm: make qcom_scm_assign_mem() use the TZ allocator
->   firmware: qcom: scm: make qcom_scm_ice_set_key() use the TZ allocator
->   firmware: qcom: scm: make qcom_scm_lmh_dcvsh() use the TZ allocator
->   firmware: qcom: scm: make qcom_scm_qseecom_app_get_id() use the TZ
->     allocator
->   firmware: qcom: qseecom: convert to using the TZ allocator
->   firmware: qcom: scm: add support for SHM bridge operations
->   firmware: qcom: tzmem: enable SHM Bridge support
->   firmware: qcom: scm: clarify the comment in qcom_scm_pas_init_image()
->   arm64: defconfig: enable SHM Bridge support for the TZ memory
->     allocator
->
->  MAINTAINERS                                   |   8 +
->  arch/arm64/configs/defconfig                  |   1 +
->  drivers/firmware/qcom/Kconfig                 |  30 ++
->  drivers/firmware/qcom/Makefile                |   1 +
->  .../firmware/qcom/qcom_qseecom_uefisecapp.c   | 281 +++++---------
->  drivers/firmware/qcom/qcom_scm-smc.c          |  30 +-
->  drivers/firmware/qcom/qcom_scm.c              | 179 +++++----
->  drivers/firmware/qcom/qcom_scm.h              |   6 +
->  drivers/firmware/qcom/qcom_tzmem.c            | 365 ++++++++++++++++++
->  drivers/firmware/qcom/qcom_tzmem.h            |  13 +
->  include/linux/firmware/qcom/qcom_qseecom.h    |   4 +-
->  include/linux/firmware/qcom/qcom_scm.h        |   6 +
->  include/linux/firmware/qcom/qcom_tzmem.h      |  28 ++
->  13 files changed, 684 insertions(+), 268 deletions(-)
->  create mode 100644 drivers/firmware/qcom/qcom_tzmem.c
->  create mode 100644 drivers/firmware/qcom/qcom_tzmem.h
->  create mode 100644 include/linux/firmware/qcom/qcom_tzmem.h
->
-> --
-> 2.40.1
->
+Idea of this big series is to introduce the concept of PHY package in DT
+and give PHY drivers a way to derive the base address from DT.
 
-Bjorn,
+The concept of PHY package is nothing new and is already a thing in the
+kernel with the API phy_package_join/leave/read/write.
 
-I tested it on db410c as well so let me gently ping you about picking
-it up into your tree.
+What is currently lacking is describing this in DT and better reference
+a base address to calculate offset from.
 
-Bartosz
+In the scenario of a PHY package where multiple address are used and
+there isn't a way to get the base address of the PHY package from some
+regs, getting the information from DT is the only way.
+
+A possible example to this problem is this:
+
+        ethernet-phy-package@0 {
+            compatible = "qcom,qca807x-package";
+            #address-cells = <1>;
+            #size-cells = <0>;
+
+            reg = <0>;
+            qcom,package-mode = "qsgmii";
+
+            ethernet-phy@1 {
+              reg = <1>;
+            };
+
+            phy4: ethernet-phy@4 {
+              reg = <4>;
+            };
+        };
+
+The mdio parse functions are changed to address for this additional
+special node, the function is changed to simply detect this node and
+search also in this. (we match the node name to be "ethernet-phy-package")
+
+PHY driver can then use introduced helper of_phy_package_join to join the
+PHY to the PHY package and derive the base address from DT.
+
+
+The base addr + offset implementation adds additional complexity to
+the code but I think will make DT reviwers happier since the absolute
+reg implementation might make things confusing with having double reg
+in the DTS. I'm open to any alternative implementation and also to
+revert this to the absolute implementation.
+
+
+Changes v5:
+- Rebase on top of net-next
+- Change implementation to base addr + offset in subnode
+- Adapt to all the changes and cleanup done to at803x
+Changes v4:
+- Rework DT implementation
+- Drop of autojoin support and rework to simple helper
+- Rework PHY driver to the new implementation
+- Add compatible for qca807x package
+- Further cleanup patches
+Changes v3:
+- Add back compatible implementation
+- Detach patch that can be handled separately (phy_package_mmd, 
+  phy_package extended)
+- Rework code to new simplified implementation with base addr + offset
+- Improve documentation with additional info and description
+Changes v2:
+- Drop compatible "ethernet-phy-package", use node name prefix matching
+  instead
+- Improve DT example
+- Add reg for ethernet-phy-package
+- Drop phy-mode for ethernet-phy-package
+- Drop patch for generalization of phy-mode
+- Drop global-phy property (handle internally to the PHY driver)
+- Rework OF phy package code and PHY driver to handle base address
+- Fix missing of_node_put
+- Add some missing docs for added variables in struct
+- Move some define from dt-bindings include to PHY driver
+- Handle qsgmii validation in PHY driver
+- Fix wrong include for gpiolib
+- Drop reduntant version.h include
+
+Christian Marangi (7):
+  dt-bindings: net: document ethernet PHY package nodes
+  net: phy: add support for scanning PHY in PHY packages nodes
+  net: phy: add devm/of_phy_package_join helper
+  net: phy: qcom: move more function to shared library
+  dt-bindings: net: Document Qcom QCA807x PHY package
+  net: phy: qcom: generalize some qca808x LED functions
+  net: phy: qca807x: add support for configurable LED
+
+Robert Marko (2):
+  dt-bindings: net: add QCA807x PHY defines
+  net: phy: qcom: add support for QCA807x PHY Family
+
+ .../bindings/net/ethernet-phy-package.yaml    |  55 ++
+ .../devicetree/bindings/net/qcom,qca807x.yaml | 142 +++
+ drivers/net/mdio/of_mdio.c                    |  75 +-
+ drivers/net/phy/mdio_bus.c                    |  44 +-
+ drivers/net/phy/phy_device.c                  |  84 ++
+ drivers/net/phy/qcom/Kconfig                  |   8 +
+ drivers/net/phy/qcom/Makefile                 |   1 +
+ drivers/net/phy/qcom/at803x.c                 |  35 -
+ drivers/net/phy/qcom/qca807x.c                | 832 ++++++++++++++++++
+ drivers/net/phy/qcom/qca808x.c                | 311 +------
+ drivers/net/phy/qcom/qcom-phy-lib.c           | 247 ++++++
+ drivers/net/phy/qcom/qcom.h                   | 123 +++
+ include/dt-bindings/net/qcom-qca807x.h        |  30 +
+ include/linux/of_mdio.h                       |  26 +
+ include/linux/phy.h                           |   6 +
+ 15 files changed, 1648 insertions(+), 371 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/net/ethernet-phy-package.yaml
+ create mode 100644 Documentation/devicetree/bindings/net/qcom,qca807x.yaml
+ create mode 100644 drivers/net/phy/qcom/qca807x.c
+ create mode 100644 include/dt-bindings/net/qcom-qca807x.h
+
+-- 
+2.43.0
+
 
