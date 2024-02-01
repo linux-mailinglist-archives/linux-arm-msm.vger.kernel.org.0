@@ -1,175 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-9359-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9BCF845E56
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 18:20:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 94718845F15
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 19:01:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DEA041C217C0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 17:20:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2429E292007
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 18:01:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44CE61649AB;
-	Thu,  1 Feb 2024 17:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E451184FC1;
+	Thu,  1 Feb 2024 18:01:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ddc1zRwV"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="swQ2TjJ1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fllv0015.ext.ti.com (fllv0015.ext.ti.com [198.47.19.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE601649A1;
-	Thu,  1 Feb 2024 17:20:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3022084FB3;
+	Thu,  1 Feb 2024 18:01:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.47.19.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706808018; cv=none; b=R9rzeVvflmfI+9chjOJKU2/S/cvSeRjfbRIwA4YCe7FUxpDPR33j+8C2f/YEX+fknia0AMWM6aVlPoX/ykUNW3q1wQPMBrb/6JnvfkI9/NdhDpB1QL7ezHzAQe4mz0egPRkuF5hrWIMQClkZApj1eNa5QXo7Fygv16OysJ4vzPg=
+	t=1706810486; cv=none; b=anF8+RmgvSJEXBZAQ7HKTxHEaCd3/EThK6hA1FTwDyX4nfUjqp2CN+B+pWeahUeFPPRnUQQRLLDZlLwJEpVkNPO+xPh7QMTtsgE7N6pMe9NaJr2HOcCLHGXVo7178t9X6+fYodIpP8U0uNXCu2eXb7BW3OPVIz0XDiirmnh5lmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706808018; c=relaxed/simple;
-	bh=LH/WmLmxZ5NddiycIskFKogm1M0vOHxW+Kgj+afN768=;
-	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BVsDEYrxSoHcqXIO+u+WZR8UOJnaYsWGTboO34UCjdDR+IJfExvtIuJyHaQP75TE3+b0OUJil2F1oT/jKiaaY92Re3ga3jnw+VHExcAd9+8QzkF3cjhq54j9jXY5c0hqVDB+QUuACcOfN5Pzt1jYC/Hi/1SF0ZMMZ8yECoRAStk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ddc1zRwV; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-33b17fd046fso476322f8f.1;
-        Thu, 01 Feb 2024 09:20:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706808014; x=1707412814; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=0AZcHUGcaVEghSUh9pVwwvnRjfi5Kbw3FRUGFJNp33k=;
-        b=Ddc1zRwVkPrFKw7piHv22PMo9/bCXLZtMQiJnsERU5NFE6M/DOiMugbbAjc5VenWUQ
-         fSBS8uWmZDKfx+cNSfOAeVOsqFJaoCF4x7m0G8vLc1K9N6DPI1qOd6qx2yIXtYZ9mASW
-         wwn6AnkIu2nWohjPs+yam9a3MKjcOakT/i9vyqaGuEUbXr5us9t3wIDGk6GfIHwdlp7Q
-         vexxqohOFlL6Oj2NBAVSxJzg6WmFrsQT+HMGZyX0W0g3NvWxzUVbgiweaO9pCspShNAy
-         /ppXxvg96S7ZgLsRVFK3P2ip4aHoC6CwSWPNuJY6PG4Aea4Gp5NeBhm+JfJnB43l0qFD
-         T2aQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706808014; x=1707412814;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0AZcHUGcaVEghSUh9pVwwvnRjfi5Kbw3FRUGFJNp33k=;
-        b=aNPnGGXvOiJB9Ft50Bz+OizQhGmjxojHhJOYranZD9VctdFQuLIRmXfOHJMY64E7sW
-         /aq96OQid6qpUqbSMsdwL4hLU78KTEMrY5muXrJHAR0msMQlD2xmgBaUoxw7V6o6V4qu
-         xYRInWscgBfqw8NLv7ExSqz/PeYJLlzUWI2yY2yReZEAWnuDhgJy8WWI0M/k/vejGWYC
-         SiOzipPXnikdP9fpp1WsTGGNQ3v8sOiuzkcDd/6XUTPANro+Lg3Z2kabGbiqPnTHkmA8
-         kpqPq2C210Cn1MX1otQMJTRzCN4Ve8rwWfxamxPmplvzOO6azwxxuQbUYzMT1pz/2iOn
-         8Yng==
-X-Gm-Message-State: AOJu0YxebYH/Td5bWt4Qoz9YEpjUZWlbP+prUbqvNPpC8fGs27xm/exW
-	nuS+YIbx20cHgW+1/4iRAZUHIiHndQMbCEX+bizK36lpTO8qwStn
-X-Google-Smtp-Source: AGHT+IFN1KFpDh1vr3wtQw4Rq4JRxS6JjigiP3HSep4uIBf6R15MxBW8NBhFRaWoh+4CexLAnmTucA==
-X-Received: by 2002:a5d:58ee:0:b0:33b:1d07:e5d with SMTP id f14-20020a5d58ee000000b0033b1d070e5dmr67618wrd.13.1706808014309;
-        Thu, 01 Feb 2024 09:20:14 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCXiMptxujpw0Uavr69kijioTH/QpH4oeYK5ZXjekdKcnmWbK224KFYbhKIOukjBf2usPaSBCPAXm7B34kxcBsO3gJdqgHF1RBs+mcvhrZNItaP7n9zf4KzdtiNjZ+CN4IQ/Q0O3jfPxHn8pF7748J6n4uHzLpHg9mAMN73EyNUwEAFiHB2mS5FYfW/BhxywyCEhB648dcAZmyvgeW2gzLB2iiXHkHm9HgppgHuYn7S+ZSTargk9uSr/AsZQzqyR164bla+fXOsH1QVI9aMdEeymDDCsEl+qztlYabRJLUoQRJB+fGyQfw2/f1RjuGMpUAwfgU2+3dKK9LYEF8VURqTGQSkF6czZei5W5N/zDX7ibwg2y7QvP0qCIYu5/SneZqnqUVdzpfSGSy5YF9Bc4zkojdAIUYxRrMp1YbwBtnCmsmu9SrQi2etiZaNT6LSHm78CiMTc5RX2gl9A8HKeQvYvCtTR7AHKbz/aGo9wjMdp9GBP4I+sQcZPo1wm7sXTAzwh+Sp2E3NiTzXdJ6jrVO7c2iGbPHtZu5CXB1CWvv9tJk/nxSrGZpDwNOIlbv9/xJVwA7yEfMOkAPdHcYVeRY1aV+jQ7aaABg==
-Received: from Ansuel-xps. (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
-        by smtp.gmail.com with ESMTPSA id bu16-20020a056000079000b0033b0797cc14sm4263915wrb.51.2024.02.01.09.20.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Feb 2024 09:20:14 -0800 (PST)
-Message-ID: <65bbd2ce.050a0220.5ff09.69d5@mx.google.com>
-X-Google-Original-Message-ID: <ZbvSyo_-1iTc4pD1@Ansuel-xps.>
-Date: Thu, 1 Feb 2024 18:20:10 +0100
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: Antoine Tenart <atenart@kernel.org>
-Cc: Andrew Lunn <andrew@lunn.ch>, Bjorn Andersson <andersson@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Frank Rowand <frowand.list@gmail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh+dt@kernel.org>,
-	Robert Marko <robert.marko@sartura.hr>,
-	Russell King <linux@armlinux.org.uk>, devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org
-Subject: Re: [net-next PATCH v5 2/9] net: phy: add support for scanning PHY
- in PHY packages nodes
-References: <20240201151747.7524-1-ansuelsmth@gmail.com>
- <20240201151747.7524-3-ansuelsmth@gmail.com>
- <170680473689.4979.1991415008659281513@kwain>
+	s=arc-20240116; t=1706810486; c=relaxed/simple;
+	bh=fOkFOHa374/LO9IaXA3l/fKl43nv9S1ZgQc0wBQpkcg=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ajlnWZ+lXNE8sjUOCV/gAZU43iwixtj9ORZhTmfkWBk9VIMGG99uVgkOev61wg9ETI+K4ksutg6LXSOnnNWnUNP88iSHDAb20W4F6mrXQ25rHJodBuuVsLO3ogOcKOYPG/G3LAfRUkKfQ/IJEJabTgWs7VoxlZpLcJ+m7eVxhNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=swQ2TjJ1; arc=none smtp.client-ip=198.47.19.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
+Received: from fllv0034.itg.ti.com ([10.64.40.246])
+	by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 411I13Ro049520;
+	Thu, 1 Feb 2024 12:01:03 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+	s=ti-com-17Q1; t=1706810463;
+	bh=F62P9tp+eb7Ee4fh8Chen/6wW2u3qcpN9ys5GlRy8Xs=;
+	h=From:To:CC:Subject:Date;
+	b=swQ2TjJ1hhA0pJzR/Zxn6yfEVD3zp5aUl9+2D/q0jUTdZV4J5b51Oe9k2xJewBsCS
+	 /4+4C9dkWyG+z/pztyx1wGd6cQfiyS8M3y20k+jNfY2A68FoAZ3twB2BSOsUct9zJK
+	 OksPIH7oj2E0FSeNH11tCorzpB/PdHnI5CZPpjRY=
+Received: from DFLE109.ent.ti.com (dfle109.ent.ti.com [10.64.6.30])
+	by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 411I13d7120298
+	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+	Thu, 1 Feb 2024 12:01:03 -0600
+Received: from DFLE108.ent.ti.com (10.64.6.29) by DFLE109.ent.ti.com
+ (10.64.6.30) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Thu, 1
+ Feb 2024 12:01:03 -0600
+Received: from lelvsmtp5.itg.ti.com (10.180.75.250) by DFLE108.ent.ti.com
+ (10.64.6.29) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
+ Frontend Transport; Thu, 1 Feb 2024 12:01:03 -0600
+Received: from lelvsmtp6.itg.ti.com ([10.249.42.149])
+	by lelvsmtp5.itg.ti.com (8.15.2/8.15.2) with ESMTP id 411I12Ge117221;
+	Thu, 1 Feb 2024 12:01:02 -0600
+From: Andrew Davis <afd@ti.com>
+To: Sebastian Reichel <sre@kernel.org>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>,
+        Cristian Ciocaltea
+	<cristian.ciocaltea@gmail.com>,
+        Florian Fainelli
+	<florian.fainelli@broadcom.com>,
+        Ray Jui <rjui@broadcom.com>, Scott Branden
+	<sbranden@broadcom.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad
+ Dybcio <konrad.dybcio@linaro.org>,
+        Sean Wang <sean.wang@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno
+	<angelogioacchino.delregno@collabora.com>
+CC: <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-actions@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-mediatek@lists.infradead.org>, Andrew Davis <afd@ti.com>
+Subject: [PATCH 00/18] Remove pm_power_off use in drivers/power/reset
+Date: Thu, 1 Feb 2024 12:00:44 -0600
+Message-ID: <20240201180102.70395-1-afd@ti.com>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <170680473689.4979.1991415008659281513@kwain>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 
-On Thu, Feb 01, 2024 at 05:25:36PM +0100, Antoine Tenart wrote:
-> Quoting Christian Marangi (2024-02-01 16:17:28)
-> > 
-> > +static int __of_mdiobus_parse_phys(struct mii_bus *mdio, struct device_node *np,
-> > +                                  int base_addr, bool *scanphys)
-> > +{
-> > +       struct device_node *child;
-> > +       int addr, rc = 0;
-> > +
-> > +       /* Loop over the child nodes and register a phy_device for each phy */
-> > +       for_each_available_child_of_node(np, child) {
-> > +               if (of_node_name_eq(child, "ethernet-phy-package")) {
-> > +                       rc = of_property_read_u32(child, "reg", &addr);
-> > +                       if (rc)
-> > +                               goto exit;
-> 
-> This means a PHY package node w/o a reg property will prevent all other
-> PHYs in the same parent node to be found?
->
+Hello all,
 
-Since this is something new, would it be a problem to make it mandatory
-to define a reg? (And return error if we find something? Or print a
-warn?)
+Use of pm_power_off is considered legacy and should be replaced with
+register_sys_off*(). Same for register_restart_handler(). Do this
+for the drivers/power/reset subsystem for all trivial cases.
 
-> > +
-> > +                       rc = __of_mdiobus_parse_phys(mdio, child, addr, scanphys);
-> 
-> You might want to save passing scanphys down, PHYs w/o a reg property in
-> a PHY package won't be "auto scanned" later.
-> 
+Thanks,
+Andrew
 
-I might be confused by this, but isn't this already done? (passing
-scanphys in each recursive call so we can set it to true if needed?)
+Andrew Davis (18):
+  power: reset: atc260x-poweroff: Use
+    devm_register_sys_off_handler(RESTART)
+  power: reset: atc260x-poweroff: Use
+    devm_register_sys_off_handler(POWER_OFF)
+  power: reset: xgene-reboot: Use devm_register_sys_off_handler(RESTART)
+  power: reset: tps65086-restart: Use
+    devm_register_sys_off_handler(RESTART)
+  power: reset: tps65086-restart: Remove unneeded device data struct
+  power: reset: brcm-kona-reset: Use
+    devm_register_sys_off_handler(RESTART)
+  power: reset: axxia-reset: Use devm_register_sys_off_handler(RESTART)
+  power: reset: rmobile-reset: Use devm_platform_ioremap_resource()
+    helper
+  power: reset: rmobile-reset: Use
+    devm_register_sys_off_handler(RESTART)
+  power: reset: mt6323-poweroff: Use
+    devm_register_sys_off_handler(POWER_OFF)
+  power: reset: msm-poweroff: Use
+    devm_register_sys_off_handler(POWER_OFF)
+  power: reset: msm-poweroff: Use devm_register_sys_off_handler(RESTART)
+  power: reset: regulator-poweroff: Use
+    devm_register_sys_off_handler(POWER_OFF)
+  power: reset: as3722-poweroff: Use
+    devm_register_sys_off_handler(POWER_OFF)
+  power: reset: gemini-poweroff: Use
+    devm_register_sys_off_handler(POWER_OFF)
+  power: reset: restart-poweroff: Use
+    devm_register_sys_off_handler(POWER_OFF)
+  power: reset: syscon-poweroff: Move device data into a struct
+  power: reset: syscon-poweroff: Use
+    devm_register_sys_off_handler(POWER_OFF)
 
-Also I think the scanphys should be skipped for the PHY package
-(assuming we make reg mandatory, it would be an error condition and
-should not be handled?)
-
-> > diff --git a/drivers/net/phy/mdio_bus.c b/drivers/net/phy/mdio_bus.c
-> > index afbad1ad8683..7737d0101d7b 100644
-> > --- a/drivers/net/phy/mdio_bus.c
-> > +++ b/drivers/net/phy/mdio_bus.c
-> > @@ -459,20 +459,33 @@ EXPORT_SYMBOL(of_mdio_find_bus);
-> >   * found, set the of_node pointer for the mdio device. This allows
-> >   * auto-probed phy devices to be supplied with information passed in
-> >   * via DT.
-> > + * If a PHY package is found, PHY is searched also there.
-> >   */
-> > -static void of_mdiobus_link_mdiodev(struct mii_bus *bus,
-> > -                                   struct mdio_device *mdiodev)
-> > +static int of_mdiobus_find_phy(struct device *dev, struct mdio_device *mdiodev,
-> > +                              struct device_node *np, int base_addr)
-> >  {
-> > -       struct device *dev = &mdiodev->dev;
-> >         struct device_node *child;
-> >  
-> > -       if (dev->of_node || !bus->dev.of_node)
-> > -               return;
-> > +       for_each_available_child_of_node(np, child) {
-> > +               int addr, ret;
-> >  
-> > -       for_each_available_child_of_node(bus->dev.of_node, child) {
-> > -               int addr;
-> > +               if (of_node_name_eq(child, "ethernet-phy-package")) {
-> > +                       ret = of_property_read_u32(child, "reg", &addr);
-> > +                       if (ret)
-> > +                               return ret;
-> 
-> of_node_put
+ drivers/power/reset/as3722-poweroff.c    | 30 ++++-------
+ drivers/power/reset/atc260x-poweroff.c   | 55 ++++++++------------
+ drivers/power/reset/axxia-reset.c        | 16 +++---
+ drivers/power/reset/brcm-kona-reset.c    | 18 +++----
+ drivers/power/reset/gemini-poweroff.c    | 16 +++---
+ drivers/power/reset/msm-poweroff.c       | 25 ++++-----
+ drivers/power/reset/mt6323-poweroff.c    | 28 +++++-----
+ drivers/power/reset/regulator-poweroff.c | 36 +++++--------
+ drivers/power/reset/restart-poweroff.c   | 25 +++------
+ drivers/power/reset/rmobile-reset.c      | 38 +++++---------
+ drivers/power/reset/syscon-poweroff.c    | 66 ++++++++++++------------
+ drivers/power/reset/tps65086-restart.c   | 58 ++++-----------------
+ drivers/power/reset/xgene-reboot.c       | 13 ++---
+ 13 files changed, 158 insertions(+), 266 deletions(-)
 
 -- 
-	Ansuel
+2.39.2
+
 
