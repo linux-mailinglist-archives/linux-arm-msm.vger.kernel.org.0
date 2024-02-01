@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-9326-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9327-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A56C6845A7C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 15:45:27 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D92BF845A9F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 15:50:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CA4831C223C8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 14:45:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 596881F2B0DB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 14:50:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01A465F472;
-	Thu,  1 Feb 2024 14:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BE026214F;
+	Thu,  1 Feb 2024 14:50:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UEH1QWEi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pH/GuvyY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314E55F46A
-	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Feb 2024 14:45:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3AC05F49B
+	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Feb 2024 14:50:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706798724; cv=none; b=t9J9zn4qC5idJ9rmhGHT7L0pcbLo2nyM1tdJBI/MlumdHEV/fzXXeaoKJEmLVdL/9k11ivtEQRE1qCDe0bTM/xTQGrn9apOs5/kncUBrRyVi1/Lp7YA7fKT4dftcTjxgM7mGX8SY1pGwM5jSdN/p1k36hgZh0eavojySnMq7VFo=
+	t=1706799019; cv=none; b=H+Gc5nJVPSaaeEJBhiPGRL1ICyzG6nw3oNNSoM/5mo7M7BEk+s6fi3XbeF0dMHMJYYsr4FXhhmGSmM1rB4fndV2LJ9z8Ji7nKl7jV4N2Xwr/yfca3luECgwfR99gBpLjTWYaBVFAy6heh0XrULF6bOrbxJMoiG2ekXzAIgoeLBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706798724; c=relaxed/simple;
-	bh=g28Uh0jEGcZw1jbRzd3E+2nC216DW2FMQTibILMYzNI=;
+	s=arc-20240116; t=1706799019; c=relaxed/simple;
+	bh=aw19DufwEeqP4LhGjvEITfZan1Zo5IuofANyrA5Rwek=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZfdQTIijIrhYHsIY2Onf6+Yuc4tk+t9Ji3rTuVX0F0VkQbZjLhQoTcm61ATH8kA4qrUhVNdRZ4oPKrLlutC7abBwnTxN9M5t0usofvo8VMI/apcxTPUCeuAr7wb8dlxZs40Js1KMi63i9vu7CR8D1lD+UbyrV5DuaiYTqoIFL4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UEH1QWEi; arc=none smtp.client-ip=209.85.218.45
+	 In-Reply-To:Content-Type; b=iKaC/mpDYTSAQluvQfB+6cD8pZFG3O8d5ECHOgh2+sJVbZ4TWgHS95aIbLFdR3zlmNT5OJHuxnefD6/0g/l14LaNG6acAgqZXQjEqZjHwR31jnMHL+bIQUkvV83nridBazMmp1aKwd3zB2K8+VTAEsDC8T+q+zO6Kf1pmU42/Kk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pH/GuvyY; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a3651c87ebbso136072566b.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Feb 2024 06:45:22 -0800 (PST)
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-55eed368b0bso1840004a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Feb 2024 06:50:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706798721; x=1707403521; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=emBBEOIhMF1O2hGGxGh+HkrTeoWxjLOYDw2I2/VoJkU=;
-        b=UEH1QWEiOaTyvl9ngqYMoCBIYNijdWlGw7STHgUI6kVOHP7BKiGPcBUVkoinhRoKeZ
-         lZKVzysnFje27nCQ46l7Tn6/mxzqub3pRYXtjFVPnjo759OgoMC6LY/tm2A3bYhjXRCB
-         /mUrq0eKS534zZBM80RmojkuLgZBRQ4AR7m7dNbO79u0NFWR+dmouYABxvuRy1Y2gdR+
-         ZEG3OlzJ6HyMzC4flVIPmQ933kxvtyCDoh8D/IpYFOrmCUamEBQniW9V9ML0VCJcqRpQ
-         li0qOG9DI4ZgluVXI9UyKZbAyjlcf84xxA7hQ9DqoETDu2zDbfhbuJr2VJJA75464HB2
-         mVaA==
+        d=linaro.org; s=google; t=1706799016; x=1707403816; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mJFlqe+JTUxhYaqLp60MKDwf52Cd95FjNB3ZIkwo2Eg=;
+        b=pH/GuvyYZVvRCJRpyFjWSU7BuFbynQ2jhp0PtmA3+BTXELstsMX7KVHf+KdO0lNkPq
+         RRmLDGSypwKF0SCCoC1UYfWwQHbSIvjGICD2S2vVJik1yTRqzHlztwsBZqUsf9jGfPAz
+         LZQJOE9gDFKmnIWuYf9VEhzJNl+sqUzDlrSGmJXJPvVf/NXXzgUFRznDUeW6Yi8KYoWU
+         d5hdeZnq5rQv2LMay2ijSmpA6caAAzWlDgQ6ZsaNlyfji0mLop0P2epVjkSeTDH2uS70
+         TIj2/uP5S0wac+9tcLF4iydc++BZOIIQWKSDv31m88C4I3Q/Lbe1vZttH1pwJDz7Z8ZY
+         GQ9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706798721; x=1707403521;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=emBBEOIhMF1O2hGGxGh+HkrTeoWxjLOYDw2I2/VoJkU=;
-        b=Ms8uIUBQceaYPyG1C2HFhBd3OEnnJnmDeZJOzLHWQwsXUgzJhttCIcSOLoju0zKaJG
-         IKatFb5J252lnMqN/BAxv8wlswQ+eUsRVo59Qqbg5/GyyeyBcfvzWU0yu+I2BTdqSYXW
-         AeouxGa0iSsIMHxLK/o7iyqAM2ceP+xpFjiVF5MWHw4VAwQ+exOMhMVAyazhq6iWpVc7
-         3BgKyCA2QR9k9sOGUWaKKXFfZbpkb6zyTNoX6Nyd+v35EG/00D1jzLN1Ml8HooOxa5M3
-         6FgetU83Hc/xctdhCeLcNOC32UVyUbPGaFLRge/Wd39R6ys8ZTo0OVtESuUjUqRJ51rJ
-         /+9A==
-X-Gm-Message-State: AOJu0YzqOMF32MLtbqpEC+MHikrw23DLRcuN6k9AiY8SbLj5nNdQpJsX
-	uMuhhKYD1b7aFSl6OVNDINsdc/H3fj1vg6q91pjAR7cGiTUappPEvc1CTCQbIQ8=
-X-Google-Smtp-Source: AGHT+IFeiHTp3Fuz7wGLQZ4zS4Zvyu5bQGeQK1nbyADucc/rYuDqxeNfv/vTAVPG4XaqEunLGNirUA==
-X-Received: by 2002:a17:906:8315:b0:a2e:93d6:3680 with SMTP id j21-20020a170906831500b00a2e93d63680mr1934018ejx.43.1706798721404;
-        Thu, 01 Feb 2024 06:45:21 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCXeJzG0tsIH89YgeMZULH19Hzp5v5mM27kxBeCtFb4kukzeRP13p874DcpHhU+xT9boslD2j1H/T05C0OTf2OTHaMTqVAoEZHoY3wL583AQrXHPAVYXec/JSo5TPDfEmKpYz3T1p8uTNlXGiwV96g33tMDvyARHkjZL6x5PCkuhEOBL2v0suO5I9P8cvdjzaYGSeNK50eE1Z1HujCbGChDbjSzQm8/kT7KWi5SPzuKRLUeti4F5PzUtGZ4O2yLnhPCLqD4MMHQ1GQk+IPjJuuAkEMXoUcXoVYkbdx7ZUt1gNKOfZw4oichrbTsmcJIa+6sPHRvwsh/DVLH9IrhrnwRPzv7oQWoricpCli5lb3Fx73vdteC+kxTEYGr/rZ8mtQJgAzGv7gIAllu39yGoHGng20i1YL67mcRxn4KtogMb3MDk1Cq/xvLJbqvpRMUBxZvBWSzMn9AU9KUTWLjvgM2TuL8KXIvgzwkIzCl2zEsGSMELLRESpDm2LMgNmg88QaKtonMc5B1sfNztf3LK8WBxJWYMt7LEzejBlhApQtkW2aeORkOZM/FhAM6DFe3fng13c3L94HjZhXjr8O5pvC1OVUL/WKZrNGM8KmvlAtPWXLih4IPY2PZpq0XKZeG/ZzwPc238nPyv/abTQNGoHHvFrmj+lob2A7gm7gfqxmAhk9WJIr1+
+        d=1e100.net; s=20230601; t=1706799016; x=1707403816;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mJFlqe+JTUxhYaqLp60MKDwf52Cd95FjNB3ZIkwo2Eg=;
+        b=v9XJjTHTOfc3hDnQoLd4/YClGbSGmcg/AEY1gI2+LwRAwL5PEtfokF68IyNWEnm24N
+         Lzgm9TvFMy/KlnhodvD3Xn8Ppp5bHSxUw2GYF2cmhc8GJbYhXiWJDIZnzC2sgiJueVZ1
+         keVvB6xw5niCEyLHGkIXncebxMEqYVXwfZYh2DlZxYX1f69l4an/zSbAqBJSmzKLlwXi
+         eTSYSAelzauiuace98Keh/UFFAbdeliG/jUjdxDTF6GQLJL10skA83QVINPR3FsybV/v
+         vwhFyaRb94Hf/p7Ca8y4UulA4SFSPaPaHMAoo2XRYi2NHLcQSfEjSOVNatXSSp3ysOmE
+         sGIA==
+X-Gm-Message-State: AOJu0Yx5hZWh33lxQoPmWzuNmdKQcDJJCxBBWvop579C9DP6xnj320+c
+	DSn9W0QxCkqKygobOBQ9WKQtl4RucwsinAT0ohr7bVjPwUx4f1t3wLRdep+YCU0=
+X-Google-Smtp-Source: AGHT+IGT1Gu76xltGpzaJLSSM9wtLptDLRyhJVDnh2IAovJ054mN15U0Erd0knyS4BlHkht0punXzA==
+X-Received: by 2002:a50:c359:0:b0:55f:ca00:f0ab with SMTP id q25-20020a50c359000000b0055fca00f0abmr1059883edb.18.1706799015769;
+        Thu, 01 Feb 2024 06:50:15 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCV/25pHTacFl82Fyrea7lnsGghHX0O0XW3L7s+e+3yPqNQ1MEMMWHXJmn8T+70eVf4o0Sp29ZHnu9pe9erZGAlXeIZUWlhCx9wMsjjriaUOzXM0EzbbHIpAjQqlzMVyczMYvQ==
 Received: from [192.168.159.104] (178235179129.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.129])
-        by smtp.gmail.com with ESMTPSA id ci11-20020a170906c34b00b00a2f181266f6sm7372628ejb.148.2024.02.01.06.45.18
+        by smtp.gmail.com with ESMTPSA id g13-20020aa7c84d000000b0055c1433be60sm7040424edt.50.2024.02.01.06.50.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Feb 2024 06:45:20 -0800 (PST)
-Message-ID: <610d5d7c-ec8d-42f1-81a2-1376b8a1a43f@linaro.org>
-Date: Thu, 1 Feb 2024 15:45:17 +0100
+        Thu, 01 Feb 2024 06:50:15 -0800 (PST)
+Message-ID: <5d7a3b97-d840-4863-91a0-32c1d8e7532f@linaro.org>
+Date: Thu, 1 Feb 2024 15:50:13 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,32 +76,12 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 5/6] arm64: dts: qcom: sm8450: Add opp table support to
- PCIe
-To: Viresh Kumar <viresh.kumar@linaro.org>,
- Manivannan Sadhasivam <mani@kernel.org>
-Cc: Krishna chaitanya chundru <quic_krichai@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
- Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Johan Hovold <johan+linaro@kernel.org>, Brian Masney <bmasney@redhat.com>,
- Georgi Djakov <djakov@kernel.org>, linux-arm-msm@vger.kernel.org,
- vireshk@kernel.org, quic_vbadigan@quicinc.com, quic_skananth@quicinc.com,
- quic_nitegupt@quicinc.com, linux-pci@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240112-opp_support-v6-0-77bbf7d0cc37@quicinc.com>
- <20240112-opp_support-v6-5-77bbf7d0cc37@quicinc.com>
- <20240129160420.GA27739@thinkpad>
- <20240130061111.eeo2fzaltpbh35sj@vireshk-i7>
- <20240130071449.GG32821@thinkpad>
- <20240130083619.lqbj47fl7aa5j3k5@vireshk-i7>
- <20240130094804.GD83288@thinkpad>
- <20240130095508.zgufudflizrpxqhy@vireshk-i7> <20240130131625.GA2554@thinkpad>
- <20240131052335.6nqpmccgr64voque@vireshk-i7>
+Subject: Re: [PATCH] soc: qcom: mdt_loader: Add Upperbounds check for program
+ header access
 Content-Language: en-US
+To: Auditya Bhattaram <quic_audityab@quicinc.com>, andersson@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240131094253.20384-1-quic_audityab@quicinc.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -139,45 +118,19 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240131052335.6nqpmccgr64voque@vireshk-i7>
+In-Reply-To: <20240131094253.20384-1-quic_audityab@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 31.01.2024 06:23, Viresh Kumar wrote:
-> On 30-01-24, 18:46, Manivannan Sadhasivam wrote:
->> Agree. But what I'm saying is, right now there is no DT property in the
->> interconnect consumer nodes to specificy the bw requirements. This is all
->> hardcoded in the respective ICC consumer drivers.
+On 31.01.2024 10:42, Auditya Bhattaram wrote:
+> hash_index is evaluated by looping phdrs till QCOM_MDT_TYPE_HASH
+> is found. Add an upperbound check to phdrs to access within elf size.
 > 
-> I thought there are a lot of users already in there..
-> 
-> $ git grep -i opp.*bps arch/arm64/boot/dts/ | wc -l
-> 864
-> 
->> But when we use OPP to control bw, the bw requirements come from DT. This is
->> what I see as a difference. Because, only nodes making use of OPP will specify
->> bw in DT and other nodes making use of just ICC will not.
->>
->> Maybe I'm worrying too much about these details... But it looks like
->> inconsistency to me.
-> 
-> Right. So is there inconsistency right now ? Yes, there is.
-> 
-> The important question we need to answer is where do we want to see
-> all these drivers (specially new ones) in the future. What's the right
-> thing to do eventually ? Hardcode stuff ? Or Move it to DT ?
-> 
-> The answer is DT for me, so the code can be generic enough to be
-> reused. This is just one step in the right direction I guess.
-> Eventually the drivers must get simplified, which they are I guess.
+> Signed-off-by: Auditya Bhattaram <quic_audityab@quicinc.com>
+> ---
 
-I'm lukewarm on this.
-
-A *lot* of hardware has more complex requirements than "x MBps at y MHz",
-especially when performance counters come into the picture for dynamic
-bw management.
-
-OPP tables can't really handle this properly.
+Could you print an error when this happens? There's a lot of EINVALs
+in the MDT loader codepaths, but you never know which one fired..
 
 Konrad
 
