@@ -1,159 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-9319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9320-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 925DE8457D8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 13:33:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 615BC845801
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 13:45:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 47734290C46
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 12:33:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 18DE928782D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 12:45:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36A7D5337C;
-	Thu,  1 Feb 2024 12:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23EA68664B;
+	Thu,  1 Feb 2024 12:45:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="czaYRD7d"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="SKNaEL62"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7568E53363;
-	Thu,  1 Feb 2024 12:27:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877F61A27A
+	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Feb 2024 12:45:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706790452; cv=none; b=bBF8dDCqxqbJALAR6ayyZFiQL1+YGOJaOH6YHuOyCloYfRopaWLLVNiOluDbE8msQVWmc3xMdI0ra7JYWXjppETEBpVV1wb3MxybxzKZlTiYPCk2FxWdFpmaOIbjIbYul02XKYY51cfjTC87e6T3wP3wVsT8BASu6eRjud0/S2c=
+	t=1706791526; cv=none; b=gaRidR0dY9ENvcHjIVAobJxhWDLcciiYUJuswtyrMkcZcIUeIa7zRzcukA1VqjAz9tYs6PCJbg6TarBjcB6y90YDayQwPpiLynz8Qr5bQjwYqNDvOp674AoUhhnbl17gA5KrXsfgNuMQLEI5C7+Hi0kERzdVJukRiceLx+P/qyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706790452; c=relaxed/simple;
-	bh=GvJ6UC3m5Gt80ckKHHc5Z0iPYxmYUNv9YAO1yLrwBxw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=To2AzdAIkR90yORc58rrcxKc20dNzmOHDrEUZylhv7a2RBG0QI/bdrfEQIm25FBtRAPWzvOmxAO1qmTTz7Wd4ApbUbEWpDASAefEkJ3ydwORShC6bJRmRVbPuE5IYs+CVFCByIIGeEjhgr4SIPQAlTXpk2GkIx+WROkPDI36GjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=czaYRD7d; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 411CFMkc018597;
-	Thu, 1 Feb 2024 12:27:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=nphFBV7jRUlL4pJWoJtaUA6/hmMdEE8mLfbOdZWsKFc=; b=cz
-	aYRD7deBYz2VhGa2ex43+TdjHvXEoiRJC2xMMukDGN+QPbiG+YUk9EzKY2oBIy41
-	5CeOEkb/euIqWP/6K0T+M19M8YRp5a1y0creMmKtPMyj1B49jd7u8FfxUDyYB2kn
-	ix4Oa2eSR564weWbWGUD9FzagEMpa01tXKPQgTGoWPN0k4GepNVQIRx30aQJ+FRU
-	/l3SP5TdPM+2xd5QO9nmOpYr9DNjMS5hbhpGlzA4DpVbxCvZPMvBgIKy96CyO9dU
-	+rvsL9xTUlbyLj4gLVr1l9PbilSX5meVy+IQzZLx6GGfxWcPMCq4LMYNO8q3rHPz
-	du12aBWHjrshB5G/nj0Q==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w0b4y00tf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 01 Feb 2024 12:27:26 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 411CRQm1006554
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 1 Feb 2024 12:27:26 GMT
-Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 1 Feb
- 2024 04:27:20 -0800
-Message-ID: <a163702b-40f9-4082-a4d1-d89de645a651@quicinc.com>
-Date: Thu, 1 Feb 2024 20:27:17 +0800
+	s=arc-20240116; t=1706791526; c=relaxed/simple;
+	bh=tdOBXoUmAzKU7wLxQfgf5fCWVvxqg5Mp9JZ58GckJSM=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=sID5AiLxBjtcjp01ZLqJxIlT0TmTFMMLYjKY6CgyKuS/ZEhOmTIhwXHKXGeLUWawvTj71B6SW7vKskQe1+HCHCU3FHkcrdZffWm0qz5Q0atejUJi/57Wx00UffdHMe49Q3oun2XyAbzsp7N0NSH/X0WCMUvbRh+gw2f9wp0dbls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=SKNaEL62; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1706791523;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=acPDh/wobuUhSXX77WSQvrESvNs+PiaIDyxvT1VTP4c=;
+	b=SKNaEL626dksDPOMMmQel5pb6ErQXV1M6MrPXA7j38Vpq9il7GdAjC75SP0P3nvZcDK8d9
+	jmugkmwQ4DVvNnrCDmIukFW6zwkVy23NG8C1YgNgcsmvWOxZIDyIRxtyr8J9BXwA/baurE
+	3mh0Kqk5X+a+2ck9IYiuZuFj1mSoLZU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-338-txPJNh3nNG2vm422Hl3QQA-1; Thu, 01 Feb 2024 07:45:21 -0500
+X-MC-Unique: txPJNh3nNG2vm422Hl3QQA-1
+Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-40e4303fceaso1477535e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Feb 2024 04:45:21 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706791520; x=1707396320;
+        h=mime-version:user-agent:content-transfer-encoding:autocrypt
+         :references:in-reply-to:date:cc:to:from:subject:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=acPDh/wobuUhSXX77WSQvrESvNs+PiaIDyxvT1VTP4c=;
+        b=lT0vZNQOgIIsTHqMkXaMFBA/s7nbAfjCsDJCUXzZjXYSWRZRn9DRvaAZKGwuz8stIj
+         fSLZDfRHPIYrOZH95PD5w6kDMfdjMEqfWvk+Amswq3Qs/mr75hgCcQ7GhE9PV/i2Qw7R
+         LjsOMFD1+SOCiFnNADKW8eLTn04nICKCZMganSYPZHt0kmQHXtgFFzalddPINTbfDmHI
+         Se4jt5ao9iTC0NJkH5K5CbXU1ZmYWvWNeGeDfNY/C5KnDCoYpBVDEJJBYazj6IIBSG8W
+         ooQv2zrbm3VHBHY+tjAG7V960S0MoVeo/UNp0LpzA+K6wSqU2Zw4wPx92lL9ewvUFEu+
+         9+Ng==
+X-Gm-Message-State: AOJu0YzcUyOOfsLlNU7tPsiADRlcehHZ1cfNIMVbHrVDiLEULH2CINhH
+	HCb8iUWfueghoz10mxIWOLIHVBwiGIQIVhPSTvhjScQ5xK6Y0TY1tzrTLDw5Asq0VaZ3j2uORDE
+	XTyTy1Rs//xAPzkF6qn6LLgbFL6I99VxKGtZkW2IMyLH4L4xkpJJOX/IVgbbgSok=
+X-Received: by 2002:a05:6000:1106:b0:33a:fc78:55a2 with SMTP id z6-20020a056000110600b0033afc7855a2mr1830630wrw.0.1706791520615;
+        Thu, 01 Feb 2024 04:45:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEjhTK8WPfbdA2cvIjxzj7/UOMM2QJ6/f+BTSl5lnLwBOeDsjdeqEAWpK18vQCBhLpcKpK6oA==
+X-Received: by 2002:a05:6000:1106:b0:33a:fc78:55a2 with SMTP id z6-20020a056000110600b0033afc7855a2mr1830605wrw.0.1706791520247;
+        Thu, 01 Feb 2024 04:45:20 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCVXIA1J7l80ZK8x6u3KBU3NL2TK5eMSur61/T+3zoMVOF/2+SZcOQ16GXV6jC+Zw9JzSUddKz6UGgYW9ZITSbRk3d/vG6HezYxR2wtP1aAQ7SILnAXkb8dhB/NGcuq32BxcqPOqrxjMh0egFe1XXS0G1TIEo2AGpMXFVz7gjKjrm1seyrtilfR5MPpuWhPtp+Os4gViN+PObg+wmzJZccHHxIduJvVl8qe4ytj1iQSEHBAeFQIgF639fcEhEWl5Kyy6PkKb5OqaU+ZsbIf+aDLZmuXTfNSK1R0OgTpDu5nlAKSGsMxZEwORiRGT3Xkk3g7cmy0ZSpZEOmChVwy/5FaehD2Pcs3Udl07UjfUQShjSYOoCLx+8FuDLd8UkqCjERewdsB4qj3Qu2CRX6CQSblMOChSLT3azWzpAcCvY3C9zXvKroHxGdWXBYjW7s+bGu2kMwg6e9Xyxax/8+pE4fiwZVEQdWwMB+bmZPQmHOtjCyOAy20L1WCFynIqaD2/Zc+CChOzdkiKA0jSNvtOnsuajf8qqCdqNo55UagR/oUh
+Received: from gerbillo.redhat.com (146-241-238-90.dyn.eolo.it. [146.241.238.90])
+        by smtp.gmail.com with ESMTPSA id e13-20020a5d4e8d000000b0033b08b9cd9dsm3184901wru.79.2024.02.01.04.45.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Feb 2024 04:45:19 -0800 (PST)
+Message-ID: <6fa06fbcc77fadbf87c63df66838fd98c07ff14a.camel@redhat.com>
+Subject: Re: [PATCH net-next v3] net: stmmac: dwmac-qcom-ethqos: Add support
+ for 2.5G SGMII
+From: Paolo Abeni <pabeni@redhat.com>
+To: Sneh Shah <quic_snehshah@quicinc.com>, Vinod Koul <vkoul@kernel.org>, 
+ Bhupesh Sharma <bhupesh.sharma@linaro.org>, Alexandre Torgue
+ <alexandre.torgue@foss.st.com>, Jose Abreu <joabreu@synopsys.com>, "David
+ S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub
+ Kicinski <kuba@kernel.org>, Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ netdev@vger.kernel.org,  linux-arm-msm@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com, 
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Cc: kernel@quicinc.com, Andrew Halaney <ahalaney@redhat.com>
+Date: Thu, 01 Feb 2024 13:45:18 +0100
+In-Reply-To: <20240130111234.1244-1-quic_snehshah@quicinc.com>
+References: <20240130111234.1244-1-quic_snehshah@quicinc.com>
+Autocrypt: addr=pabeni@redhat.com; prefer-encrypt=mutual; keydata=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
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.50.3 (3.50.3-1.fc39) 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/6] arm64: dts: qcom: aim300: add AIM300 AIoT
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <dmitry.baryshkov@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
-        Qiang Yu
-	<quic_qianyu@quicinc.com>,
-        Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-References: <20240119100621.11788-1-quic_tengfan@quicinc.com>
- <20240119100621.11788-7-quic_tengfan@quicinc.com>
- <d3ef45cf-2de8-4f5b-8857-62d1996f3f58@linaro.org>
- <842bf6ad-46e1-43d8-86be-79ab0f49710b@quicinc.com>
- <c17dafd2-db89-4fe2-8e98-2a031f7237c2@quicinc.com>
- <b28904a6-c1ef-44b5-96ca-313a9a2a3f8b@quicinc.com>
- <3e3cbc36-2f3f-4295-9325-90757f0d77ce@linaro.org>
- <012bb387-2472-4bcb-ba87-3bf75dd88d64@quicinc.com>
- <5c6fec5f-79ed-4c93-b337-68a2c25d8a44@linaro.org>
-From: Tengfei Fan <quic_tengfan@quicinc.com>
-In-Reply-To: <5c6fec5f-79ed-4c93-b337-68a2c25d8a44@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: UnX-wVQ6ezZSGJuR7TVmZyFlQ2-Ay2sB
-X-Proofpoint-GUID: UnX-wVQ6ezZSGJuR7TVmZyFlQ2-Ay2sB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-01_01,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
- bulkscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
- lowpriorityscore=0 spamscore=0 adultscore=0 phishscore=0 mlxscore=0
- mlxlogscore=547 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401190000 definitions=main-2402010099
+
+On Tue, 2024-01-30 at 16:42 +0530, Sneh Shah wrote:
+> @@ -608,17 +609,38 @@ static int ethqos_configure_sgmii(struct qcom_ethqo=
+s *ethqos)
+>  {
+>  	int val;
+> =20
+> +	struct platform_device *pdev =3D ethqos->pdev;
+> +	struct net_device *dev =3D platform_get_drvdata(pdev);
+> +	struct stmmac_priv *priv =3D netdev_priv(dev);
+>  	val =3D readl(ethqos->mac_base + MAC_CTRL_REG);
+
+I'm unsure why checkpatch did not catch the above, but you need to
+remove the empty line in-between the local variables declaration and
+you must insert an empty line between the last definition and the first
+statement.
+
+Please also reorder the variables to respect the reverse x-mas tree
+order, something alike:
+
+	struct net_device *dev =3D platform_get_drvdata(ethqos->pdev);
+	struct stmmac_priv *priv =3D netdev_priv(dev);
+	int val;
+
+	val =3D readl(ethqos->mac_base + MAC_CTRL_REG);
+
+...
+
+Cheers,
+
+Paolo
 
 
-
-On 2/1/2024 8:20 PM, Krzysztof Kozlowski wrote:
-> On 01/02/2024 13:16, Tengfei Fan wrote:
->>
->>
->> On 2/1/2024 8:03 PM, Krzysztof Kozlowski wrote:
->>> On 01/02/2024 12:49, Tengfei Fan wrote:
->>>>>>> This should be probably TX SWR_INPUT1.
->>>>>>>
->>>>>>> Best regards,
->>>>>>> Krzysztof
->>>>>>>
->>>>>>
->>>>>> I will double check this with related team and I will update this.
->>>>>>
->>>>>
->>>>> I will apply "TX SWR_INPUT1" on audio-routing node in the next patch
->>>>> series.
->>>>>
->>>>
->>>> This patch series has been sent for nearly two weeks. do you think it is
->>>> better to modify the patch series acording to the current comments and
->>>> submit a new patch series, or continue to wait for your review comments
->>>> on the current path series?
->>>
->>> Hi,
->>>
->>> Whom do you ask?
->>>
->>> Best regards,
->>> Krzysztof
->>>
->>
->> Sorry Krzysztof, can you give sone guidance on whether I should update
->> patch and submit a new patch series, or do you need time to review
->> current patch series?
-> 
-> Up to you, I do not plan to provide more reviews on this. I just
-> commented about this thing here, because I was doing similar work for QRD.
-> 
-> Best regards,
-> Krzysztof
-> 
-
-Thank youfor clarification.
-
-Next I will update patches according to the current comments and submit 
-a new path series.
-
--- 
-Thx and BRs,
-Tengfei Fan
 
