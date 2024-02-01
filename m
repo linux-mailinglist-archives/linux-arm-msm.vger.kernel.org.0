@@ -1,88 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-9428-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9429-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C65FD84646B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 00:28:13 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A6012846471
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 00:30:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 12B13B22910
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 23:28:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5ECB52832B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 23:30:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B48E847A7A;
-	Thu,  1 Feb 2024 23:28:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FB4647F4D;
+	Thu,  1 Feb 2024 23:30:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JmIuxBzX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HONf3GSl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED4E47F41;
-	Thu,  1 Feb 2024 23:28:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C219547F45
+	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Feb 2024 23:30:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706830086; cv=none; b=AN3EX97xTvbstw5B9L+jmHT+OsG60FEdXL9u9bpuh9Mu37N9eEVYgr2m9GSn6OzQRUyA9kj9+WRkRdb8QawqOaXNmACg/+yp8HFjc2hN0OZG4zmqQtt3arBBSvg5AYyDdZ0fvCaOMKUAyJy8NFfM2/kI19DkN8Nz6LKd6Nmg7cc=
+	t=1706830204; cv=none; b=OBpNKI5P7Kp3UpysV82USxhO71I7wiiJcHnAF2EZfGvA8aFrgMkLq4AR+4TxBL5yPkCqM9Rq1q+rKWOJwLxlZ/v3NilSE8gitxbq4hZ8NXHhinszqMKP7C3KHYmPjp+d20iJKA2x7roSIWc4cIVq3w/aDocr2QHb/hQAk8h0ub8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706830086; c=relaxed/simple;
-	bh=payIiLg6forS04gjbDZWmNc0lv97aB/Ofx+IK/zqWkc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZDi/kPvOTmrxLY7Tq97netlFrawEgFy46oGLhcrhjqgBUD3TopLfgvF++3sgVYaQbgKIVF72Twdq8ZGE4D4OlpkVKmfn9eO8bwC9e4kelCvQPX4jNBgGFT/PJ6Fo1pcgXesrPjPY5s9EDg3H+0D288Vm3hLdMRtJPLLsoWumljU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JmIuxBzX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5612EC433C7;
-	Thu,  1 Feb 2024 23:28:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706830085;
-	bh=payIiLg6forS04gjbDZWmNc0lv97aB/Ofx+IK/zqWkc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JmIuxBzXFfJXUsgjJHiKUMHSqs2oGZ7MYZ4z0exkCOS0neM+zfxX+Iu/VPnTWc5B+
-	 puzE3QZ+G5iQn9+BmSUgonVnmgDr2qT7HQcUSAjzLgRRM26nOoNGMdSTV93B5ejHmI
-	 Zi3n7yX8iWX1x6cUkD1afB0Y+95Aechn4NePLcbGWHI7PPigXLHriRkkEgbmisGPhI
-	 HyOdQXlQy4xysoxWWmxwzyjmra70zEYyC9sSx62Izs7bGX4fDirCndntUI78Cbw8D6
-	 XOorupF4qVV6WoSnmpNSLBsXBtzM4g5PlMcMsXs9kCEjD7jy46Gj/x2zp784nUzZA9
-	 2DBL9vsjn3qDA==
-Date: Thu, 1 Feb 2024 17:28:02 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Lee Jones <lee@kernel.org>
-Cc: Anjelique Melendez <quic_amelende@quicinc.com>, pavel@ucw.cz, 
-	thierry.reding@gmail.com, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, 
-	conor+dt@kernel.org, agross@kernel.org, luca.weiss@fairphone.com, 
-	konrad.dybcio@linaro.org, u.kleine-koenig@pengutronix.de, quic_subbaram@quicinc.com, 
-	quic_gurus@quicinc.com, linux-leds@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org
-Subject: Re: Re: [PATCH v8 3/7] soc: qcom: add QCOM PBS driver
-Message-ID: <kfs2nkkrwsa2enz67vfb5nenv2obzuomekqjdzaksldd75lows@3mcfd2r55fc3>
-References: <20231221185838.28440-1-quic_amelende@quicinc.com>
- <20231221185838.28440-4-quic_amelende@quicinc.com>
- <ut6jbawqqdgfyoxmt76hm67rbnv67x54eho3nae2dd2szbejfb@7joy57g4i3qt>
- <20240131085842.GF8551@google.com>
+	s=arc-20240116; t=1706830204; c=relaxed/simple;
+	bh=2TJfqGHi00+5CKxG6QZ75dI/x7CtfwJIsax8vgnwxNs=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=hc2kcn8DSCzZRj1pOGnpfnwlr+9oJBq+jTNte3AJ8q95/VkGkW4IVfHU2PA/2xpIIKu3tWI+vO0eQbi1PzxZOlcyYUkJ1nMuoaTI8iEG2t9Rh0sBpvd6c90dLLQBdYMUx7n0s6KWU24rjirHOqz41+BFUVKKow3UaLB1bdiRXG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HONf3GSl; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a3122b70439so213562266b.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Feb 2024 15:30:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706830201; x=1707435001; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FXMblYmC4slzOCLWs3RZINjmATRqfssIJI9Ew8tuxhw=;
+        b=HONf3GSlImL3po74VlPPITZ/15uV9tiG1AInsrrNx9ctWNI96IFpxSwmylOId1fAoV
+         Uvqf/yv5WsbayFA8RcQtqMKr6/RyDaHAcCeQAT/pJpLjmOwAN9jd3CO3QGy5ZFaq+yI7
+         BSsb8SbTAlYpNQFoanMb0bHjrIlKh6DtcCj7W1gfeb5NOhjZJNawwgIH+iANdnlPKO1f
+         uxLbUdcWut3QstZARyQPw7o8VxE2+7G5N6rJ5hjwsEs7wSpYFXZ2coBVpeIQmWdeoB5A
+         C/dwnAjqNBel7pMBLyP+NiM/BHY7sMShsb4HJkSLZ8NA1Gr6jh7U/GEG9mOPbRfhvBn3
+         9QGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706830201; x=1707435001;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FXMblYmC4slzOCLWs3RZINjmATRqfssIJI9Ew8tuxhw=;
+        b=ZAwS8rRU1y4LF6s+8xO7KoiFCZDofHytyWBx+DxvxC6pY6HaI2nxm1ufn8xmON18xq
+         D1/QRFtfcFoySLw5cJaTaZZlEE76Yd05kiPgTM840nKadSK3AD/shm6ukwOKgFqzFsNJ
+         ku2U5OTLa5vFRdA8O5LbNtCYtshMgrfg8f+TIZR0MKN2UrcSGoFXKWhi4XW9BkElSRBq
+         qotoVlZiTT0qMovTgroRvVNxXDeRLsUm4IwgMW33oLI7FKzUiRrYjSKbTr1rpiC3dexC
+         Tm9yWx03FDX2UhTarBJV9FcdvmSO96dH77YPmFvoMd/YD+AhosLdKNxrCuanuZ70o2AE
+         VyMw==
+X-Gm-Message-State: AOJu0YyX5ZqXFX2uWc6JlAHqTuebv4cmyqRDxI6NmPPKD07Qj5A/f6ED
+	eINfQer3CpiNpLVOTL4k2uh+KQYLq6NdEFzoL8c8zPHSXZL/3TCEkSQNkPNcNWc=
+X-Google-Smtp-Source: AGHT+IE89rlzUafniVKJfARK/V5pVdq65WMFyi8lOZgPeeysq2H22grqzfjW7XLLUlAXcUQiN1fKEA==
+X-Received: by 2002:a17:906:27d6:b0:a31:117b:8b54 with SMTP id k22-20020a17090627d600b00a31117b8b54mr4527546ejc.15.1706830200983;
+        Thu, 01 Feb 2024 15:30:00 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCXb9lKqDpG6XH8w6XN/ks3W3HfVaFxFFqHPmBmq+ZMwpGBsRgecwrP5Pz9ATr5mmg+lYKmS+skUipZD1hk1ipQQSz8Ycw0Ol8ZwAfPE1YEXcsK1ZT1Ad+437RMpgPhDAVa8pNqzanYVorKyeUeEXZC5mCNsV20FAmLhfTOkeudI+xfuZFMK1k6Mf7UHRUK8ETEUiXUGKSX4yon5AK7VaoRGcTIYaCbHQAxOJpbIgGfufuxnzdDGYyyLe/0YnT93IDyIppP0vEhgDqzoUE4MCpdXok3opI1MwNRl4ntBfysZOM3bNejv9TPIviU=
+Received: from [10.167.154.1] (178235179129.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.129])
+        by smtp.gmail.com with ESMTPSA id gs15-20020a1709072d0f00b00a36f3250a9asm255100ejc.224.2024.02.01.15.29.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Feb 2024 15:30:00 -0800 (PST)
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Date: Fri, 02 Feb 2024 00:29:58 +0100
+Subject: [PATCH] arm64: dts: qcom: sm6115: Fix missing interconnect-names
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240131085842.GF8551@google.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240202-topic-6115_i2c-v1-1-ecfe06f5f2ef@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAHUpvGUC/x2NUQqDMBAFryL77YIJsVWvIqUkm21dkCiJLYJ4d
+ xd/HsyDYQ4onIULDNUBmf9SZEkKpq6AJp++jBKVwTbWNTq4LasQPoxp32IJ6dmF2MXeOudBpeA
+ LY8g+0aRa+s2znmvmj+x3ZXyd5wXIe1K0dQAAAA==
+To: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1706830199; l=1227;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=2TJfqGHi00+5CKxG6QZ75dI/x7CtfwJIsax8vgnwxNs=;
+ b=y8jedLXIup1y5cGsyvOZK7BNl21WKJQbm/EiYXVlnKmuyYBTiUeNflw7a33HpoY3T/PGV/37f
+ jW8I76PWzrHA4AlS2Fk86OWC6KwWpO0PiO8Pav2c8YxtFTVNF84bIAd
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-On Wed, Jan 31, 2024 at 08:58:42AM +0000, Lee Jones wrote:
-> Intentional generic top-post reply.
-> 
-> Please work quickly to resolve Bjorn's comments.
-> 
-> I'm being hounded over a broken LEDs tree due to the missing headerfile.
-> 
+Commit b3eaa47395b9 ("arm64: dts: qcom: sm6115: Hook up interconnects")
+did indeed hook up interconnects, but apparently not interconnect-names
+on I2C1, making it return -EINVAL due to an error getting icc paths..
 
-I've merged the updated patches into the qcom tree.
+Fix it!
 
-I presume though that you'd like to have this build issue resolved in
-your tree as well. Please feel free to pull the branch:
+Fixes: b3eaa47395b9 ("arm64: dts: qcom: sm6115: Hook up interconnects")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm6115.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-20240201204421.16992-2-quic_amelende@quicinc.com (5b2dd77be1d85ac3a8be3749f5605bf0830e2998)
+diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+index e71cbdef7784..eb93d1d57fb4 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+@@ -1305,6 +1305,9 @@ &clk_virt SLAVE_QUP_CORE_0 RPM_ALWAYS_TAG>,
+ 						 &config_noc SLAVE_QUP_0 RPM_ALWAYS_TAG>,
+ 						<&system_noc MASTER_QUP_0 RPM_ALWAYS_TAG
+ 						 &bimc SLAVE_EBI_CH0 RPM_ALWAYS_TAG>;
++				interconnect-names = "qup-core",
++						     "qup-config",
++						     "qup-memory";
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+ 				status = "disabled";
 
-from https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git
+---
+base-commit: 51b70ff55ed88edd19b080a524063446bcc34b62
+change-id: 20240202-topic-6115_i2c-c78bd8d9244a
 
-Regards,
-Bjorn
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
 
