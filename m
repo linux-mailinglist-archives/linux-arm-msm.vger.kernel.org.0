@@ -1,130 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-9304-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9305-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 079428454D0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 11:05:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C11FE8454F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 11:13:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 90F8629156D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 10:05:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 70D7728DAAC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 10:13:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B05615A498;
-	Thu,  1 Feb 2024 10:05:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65C3915AABD;
+	Thu,  1 Feb 2024 10:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bHRqrwND"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XmORwHa9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 471994D9F4;
-	Thu,  1 Feb 2024 10:05:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC564D9E3;
+	Thu,  1 Feb 2024 10:13:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706781946; cv=none; b=HnMksamZ1CRCqDpDzDQXBgNxu8yGj9fWM9zwvbP8Eo1aJeVp5SYIIuRQb5wgLPYU8vYdHOQrvMdn+GmDl9jm81Llo5gdZtesNAIi6QI17CLE9wHGbTn5b9+ZXMEU6l4qaFaJGWhHI903zO77tYotfvtfAPZjJa3lH70Vq/CSFIE=
+	t=1706782418; cv=none; b=foSyJDtTKN+/B4qbaMQqkHAnAZYckgrd16WfTD5q3I3ZUYoOKNuCDAt6C1nQ6m9/nrBtu6xV+RHK7qJsG3nxt9m8+EBoX6Wx3VkaQOtTtZV3fonJOKIoRPPmBUlp7eJeqDWf3gqm0AlMiRJdePuSQjVl1vM0HwofDBI/RTjLBAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706781946; c=relaxed/simple;
-	bh=OCNyn/+xthVB/CqbVTIbZppBhTX2tBQqtngKgAF+EVU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AOf1hpwJ053AzfOCEPH9HpI4l4JXGqec/QttNkcmDt1p2/N+/As/EpOHE5cfDxcQ+co63NjrR/MUzuZNErEp1IM/3vNzciUi7K9erqfUNLGXzgGuHD7RawJEwv5maFOTVkCXUIDQhZFbFxpwlRM3E5GgHTuh7wXl8svggf/KM8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bHRqrwND; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF129C43390;
-	Thu,  1 Feb 2024 10:05:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706781945;
-	bh=OCNyn/+xthVB/CqbVTIbZppBhTX2tBQqtngKgAF+EVU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bHRqrwNDCBUSpevdR2oKRzmtqXY9LZ2Vt8YhL/C46k/Aittq0sbfuP7a4DJPlD9ib
-	 Sw+UYpgXUOwQty/m4/V8pLakfQPwCdTiOUEBtqLeVVITg4p0dkgz+fyRCRoJWg8ekE
-	 cT7PjUWI/BAmuP+1LMcYY3l5oWeNOdWyDYQVW5lFSuBHcsRdWSyzM2tUo/VQn2pn+/
-	 VpVGqyAsDRDm+t2d18ZXTCFyg9oQGxHLxOhJoOtiPAmNj9ZW9OxJbEGW15j+EN6ap0
-	 uBIgtieGe6HDPKDDHHeyGsTUnyIgSIPnoDOTncfC2EO7YhnfGQ9YRA6PINUg8zoomP
-	 J9wgwubT3oFOg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rVTx5-000000006DY-09wo;
-	Thu, 01 Feb 2024 11:05:47 +0100
-Date: Thu, 1 Feb 2024 11:05:47 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-	Jiri Kosina <jikos@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v4 1/3] dt-bindings: HID: i2c-hid: Document reset-related
- properties
-Message-ID: <Zbts-9tRDPcXbhYi@hovoldconsulting.com>
-References: <20240131-x13s-touchscreen-v4-0-39c0f9925d3c@quicinc.com>
- <20240131-x13s-touchscreen-v4-1-39c0f9925d3c@quicinc.com>
+	s=arc-20240116; t=1706782418; c=relaxed/simple;
+	bh=t6r3dOD2sw+3vBsEhZO6nySPDH9t5Kcnd6SxmAS56WQ=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=uHdhEOcg/DZWZ3WC79bcCSTt0OrmicOQjnGduPSdGQbyKJaIZakyMc3LLnHK9Ivlan/2vQzjbgeyljYbwHDuk23U96jD2P/Qdy3zduVXtYlrt/1RtJDDsBgczES/4ZLdr+wGZVFO77+GoRfp3K8Owen/cMmBMUw8SHxW8I+fnJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XmORwHa9; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4114SAeO011112;
+	Thu, 1 Feb 2024 10:13:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=M/36BzqapNq4
+	h0smSpIUMa7Hl5sStqeGMFw5QZt0zcA=; b=XmORwHa9AAFNy5WmbBX9qhsQ/4on
+	13HP5g1iXvSEhL6CJkJiucZZwXazJDWqxb5O1eBEAjxT7pwECJjOvASy164gCyHi
+	ZTzuvOR4YlCvNuz0cuJrIphr53zwNeKNrIMYFKeS99asXNwGJGPc8lGZqlb/sFsV
+	gGk7TgHJgL7PM+hI/7I8O2oE3DNVQYh4C5gfdpG6jw2TBtTIDhmHT0CzcBQggcO7
+	Y2sPulEdkKT9q0ep7Sx76qK/3CDiytZWrKJw60/57Vm9FNUU/VPfrFqlvaxm79+3
+	iGhBtyLjrjWChbei7/hivRgl7n3f9/pV7eqOv11J8jzhmkw/q+l86D3Ewg==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vypaq2vd0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 01 Feb 2024 10:13:32 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 411ADT1T005428;
+	Thu, 1 Feb 2024 10:13:29 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3vvtwm0bgb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Thu, 01 Feb 2024 10:13:29 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 411ADSs1005423;
+	Thu, 1 Feb 2024 10:13:28 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-vdadhani-hyd.qualcomm.com [10.213.106.28])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 411ADSRT005422;
+	Thu, 01 Feb 2024 10:13:28 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 4047106)
+	id 37D8A5001CE; Thu,  1 Feb 2024 15:43:27 +0530 (+0530)
+From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+To: andersson@kernel.org, konrad.dybcio@linaro.org, andi.shyti@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org, vkoul@kernel.org,
+        quic_bjorande@quicinc.com, manivannan.sadhasivam@linaro.org,
+        bryan.odonoghue@linaro.org
+Cc: quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
+        Viken Dadhaniya <quic_vdadhani@quicinc.com>
+Subject: [V3] i2c: i2c-qcom-geni: Correct I2C TRE sequence
+Date: Thu,  1 Feb 2024 15:43:23 +0530
+Message-Id: <20240201101323.13676-1-quic_vdadhani@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: iLsouOwDgyAhcRBvATVKnQtN6Gu9wWlT
+X-Proofpoint-GUID: iLsouOwDgyAhcRBvATVKnQtN6Gu9wWlT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-31_10,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1011
+ lowpriorityscore=0 priorityscore=1501 mlxscore=0 suspectscore=0
+ malwarescore=0 spamscore=0 mlxlogscore=999 phishscore=0 bulkscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401190000 definitions=main-2402010082
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240131-x13s-touchscreen-v4-1-39c0f9925d3c@quicinc.com>
 
-On Wed, Jan 31, 2024 at 07:07:26PM -0800, Bjorn Andersson wrote:
-> Some I2C HID devices has a reset pin and requires that some specified
-> time elapses after this reset pin is deasserted, before communication
-> with the device is attempted.
-> 
-> The Linux implementation is looking for these in the "reset-gpios" and
-> "post-reset-deassert-delay-ms" properties already, so use these property
-> names.
-> 
-> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-> Acked-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/input/hid-over-i2c.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/input/hid-over-i2c.yaml b/Documentation/devicetree/bindings/input/hid-over-i2c.yaml
-> index 138caad96a29..f07ff4cb3d26 100644
-> --- a/Documentation/devicetree/bindings/input/hid-over-i2c.yaml
-> +++ b/Documentation/devicetree/bindings/input/hid-over-i2c.yaml
-> @@ -50,6 +50,12 @@ properties:
->      description: Time required by the device after enabling its regulators
->        or powering it on, before it is ready for communication.
->  
-> +  post-reset-deassert-delay-ms:
-> +    description: Time required by the device after reset has been deasserted,
-> +      before it is ready for communication.
+For i2c read operation in GSI mode, we are getting timeout
+due to malformed TRE basically incorrect TRE sequence
+in gpi(drivers/dma/qcom/gpi.c) driver.
 
-I know that Rob reluctantly acked this, but re-reading the commit
-message for the commit that added support for the reset gpio to the
-driver, and added a comment about this not having been added to the
-devicetree binding, it becomes obvious that the latter was done on
-purpose and that we probably should not be adding the
-'post-reset-deassert-delay-ms' property after all:
+TRE stands for Transfer Ring Element - which is basically an element with
+size of 4 words. It contains all information like slave address,
+clk divider, dma address value data size etc).
 
-	For now the new "post-reset-deassert-delay-ms" property is only
-	used on x86/ACPI (non devicetree) devs. IOW it is not used in
-	actual devicetree files and the same goes for the reset GPIO.
-	The devicetree-bindings maintainers have requested properties
-	like these to not be added to the devicetree-bindings, so the
-	new property + GPIO are deliberately not added to the existing
-	devicetree-bindings.
+Mainly we have 3 TREs(Config, GO and DMA tre).
+- CONFIG TRE : consists of internal register configuration which is
+               required before start of the transfer.
+- DMA TRE :    contains DDR/Memory address, called as DMA descriptor.
+- GO TRE :     contains Transfer directions, slave ID, Delay flags, Length
+               of the transfer.
 
-	2be404486c05 ("HID: i2c-hid-of: Add reset GPIO support to i2c-hid-of")
+Driver calls GPI driver API to config each TRE depending on the protocol.
+If we see GPI driver, for RX operation we are configuring DMA tre and
+for TX operation we are configuring GO tre.
 
-So perhaps we should just do this properly and add a new compatible
-property for X13s touchscreen which can be used to determine these
-delays (e.g. for cases where some default values are insufficient).
+For read operation tre sequence will be as below which is not aligned
+to hardware programming guide.
 
-Johan
+- CONFIG tre
+- DMA tre
+- GO tre
+
+As per Qualcomm's internal Hardware Programming Guide, we should configure
+TREs in below sequence for any RX only transfer.
+
+- CONFIG tre
+- GO tre
+- DMA tre
+
+In summary, for RX only transfers, we are reordering DMA and GO TREs.
+Tested covering i2c read/write transfer on QCM6490 RB3 board.
+
+Fixes: d8703554f4de ("i2c: qcom-geni: Add support for GPI DMA")
+Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+---
+v2 -> v3:
+- Update commit log to explain change in simple way.
+- Correct fix tag format.
+
+v1 -> v2:
+- Remove redundant check.
+- update commit log.
+- add fix tag.
+---
+---
+ drivers/i2c/busses/i2c-qcom-geni.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index 0d2e7171e3a6..da94df466e83 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -613,20 +613,20 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
+ 
+ 		peripheral.addr = msgs[i].addr;
+ 
++		ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
++				    &tx_addr, &tx_buf, I2C_WRITE, gi2c->tx_c);
++		if (ret)
++			goto err;
++
+ 		if (msgs[i].flags & I2C_M_RD) {
+ 			ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
+ 					    &rx_addr, &rx_buf, I2C_READ, gi2c->rx_c);
+ 			if (ret)
+ 				goto err;
+-		}
+-
+-		ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
+-				    &tx_addr, &tx_buf, I2C_WRITE, gi2c->tx_c);
+-		if (ret)
+-			goto err;
+ 
+-		if (msgs[i].flags & I2C_M_RD)
+ 			dma_async_issue_pending(gi2c->rx_c);
++		}
++
+ 		dma_async_issue_pending(gi2c->tx_c);
+ 
+ 		timeout = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
+
 
