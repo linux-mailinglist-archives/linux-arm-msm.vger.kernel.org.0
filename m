@@ -1,131 +1,93 @@
-Return-Path: <linux-arm-msm+bounces-9425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 671DF84631F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 23:08:14 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B014A846355
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 23:18:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DFCA828E7A0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 22:08:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DE2BB1C24DFD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 22:18:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C9823FB07;
-	Thu,  1 Feb 2024 22:08:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CE323FE23;
+	Thu,  1 Feb 2024 22:18:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="arNLs2Vi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PSjkloBh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF833F8D9;
-	Thu,  1 Feb 2024 22:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1480A3D3BC;
+	Thu,  1 Feb 2024 22:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706825288; cv=none; b=a3t3yCynnPFyFu1Hej/zbfs/UFWc/jeApu6QIUPke3Wu8OZRQuJ4F9tzXW9l0yqZuLWLiTJraDqnqg6t8LaDoTDZ8fd+5/j0VXMQV34vsSQfTEPkNuMGs8Lb9ftJfb0rb0Il1217tOzL+vu+iv20ymbrjml0QOUuTwPsGF9G7sM=
+	t=1706825919; cv=none; b=JtBJV/njwMR565kVgNCmdq0EFquM3kcB2zjmegnByIMpzxUU6F73FC3tIRqZ6Ogpaoh2QAe6EhqvXP3022mz6Iss6QoQfq55xbd5PxNdyPYKlZi1DZWJVGzfDK6FIKufzwJ0GSwAR5oHeB/AtTzS3JHzFuK7yk3y4T8RVXEpnPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706825288; c=relaxed/simple;
-	bh=hQhyDtZvF8uLG9TardzvTE09AI07Z4RnP2sRVzETQc4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fLpzj2XAh2XAFUogOi4oo8/ZU5CHG4g7rqnaZB350w1cv4KG1o9V0QI2oFx8AotulElo7IXKJKKtvqDXGKgVrvXjs6E7gj/bS65d7v1SwG5Ke/JCH7TlyBzs397kxWLvHSyaxCXLAW7MkKtddlLaqejiB/AaG1cVl0EUUSWxZt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=arNLs2Vi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8901C433C7;
-	Thu,  1 Feb 2024 22:08:06 +0000 (UTC)
+	s=arc-20240116; t=1706825919; c=relaxed/simple;
+	bh=Z9TgWie7YtgminwtE1RQnQvs7QaguyVm5XFk23DKB/k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CHaC5cdRknts0gOP9h9c+pM0SVeFJQlWqRtvhs5+xpWG6hvEZTlsnxIOkGkcsdWNUfxE7oiHBnM/BT27JT26W4q+Tk4Dzg7WXBk8QAfP47F0swSeS9dhNvOd7+urgC96YVKBzbkW9apc0lLQw74U1a7fXVnT18LV/tlxAuccXDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PSjkloBh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F0C4C433B1;
+	Thu,  1 Feb 2024 22:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706825288;
-	bh=hQhyDtZvF8uLG9TardzvTE09AI07Z4RnP2sRVzETQc4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=arNLs2Vi/LqVcmpe22RClErs4NOHdZtfpgtEu6tqLDJ6aBWXExjw+w5PSctCil97W
-	 XalDQETiQW2gYN8Gk1iWByfzaaOblw7ZjJOUumjFX9qdx2fvzX4gytiqteGz2yd6nL
-	 RTig1cXNadD8a4yrv24NqBy+X6vX0FFL1jJzcMYHq+k/hOHvbq6DMWTHFJ5rHhib/f
-	 4Cr+AXp3iRpV5Ue8Z4jdsBcg5a7NPvRPDA1D7km08Kmh4rRzMIeOpNDmfE5Ww5Y3mg
-	 40PVZjC1YGXrB2iipwfJil94w6KexlOZjChUFjgEvK37Rkjd8AEOQvMZ3Md0VdfXtm
-	 nuFMZ1lBWrbYg==
-Date: Thu, 1 Feb 2024 16:08:05 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: Bjorn Andersson <quic_bjorande@quicinc.com>, 
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>, Jiri Kosina <jikos@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Johan Hovold <johan+linaro@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@somainline.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Rob Herring <robh@kernel.org>
-Subject: Re: Re: [PATCH v4 1/3] dt-bindings: HID: i2c-hid: Document
- reset-related properties
-Message-ID: <luzkdel2hshufku2gjgbsvfhxkmpg5eo6ekythuawaiz6kibvs@lsajkktmetkv>
-References: <20240131-x13s-touchscreen-v4-0-39c0f9925d3c@quicinc.com>
- <20240131-x13s-touchscreen-v4-1-39c0f9925d3c@quicinc.com>
- <Zbts-9tRDPcXbhYi@hovoldconsulting.com>
+	s=k20201202; t=1706825918;
+	bh=Z9TgWie7YtgminwtE1RQnQvs7QaguyVm5XFk23DKB/k=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=PSjkloBhZZM5akBe3/QG1foc9zj4RKsnA/d+vvX5VeXMeN7ItAzAkUbCEfGGLPOK0
+	 4D6eqqK3CaAlvn0wdzqZIBF5mu05SXLXn6Ao1/zN4I2m3+wN7qLqmJnusSEo3W/Eox
+	 stTPLCdN2CkdxexOTQja5+l2+sWP/WhyvMuEqJz/SxiM8NLU02ueGN0smD8YsWMZgb
+	 U5phZraJpISvmNXCS18B2LnNLOxxj++ULSp+nqN+gIXuQlSI5tExzvbZEfnh8EkKKC
+	 VwjZb3vxkrgsAFA+Qu+wHrY6o36e+0tIDnjq5c4Zduw4Ojc7kbdIq4fTaiqtl6cfEA
+	 4ISfV4hP7d7LQ==
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-51032058f17so1752451e87.3;
+        Thu, 01 Feb 2024 14:18:38 -0800 (PST)
+X-Gm-Message-State: AOJu0YxiRvE5/xE1VvJXSr1hK1Qrnb/W6ybcpqJlTIE5TAoxH5DyccoG
+	iJsiNl6wHxaXaDOBqPXIPxX//WKqwwUGx36SHnzefZk9KgGhGxGPj9tUI6yC1OLddfVGI+qPyPz
+	qQ8VGnb372KsneXjinPpYEHtmCQ==
+X-Google-Smtp-Source: AGHT+IFo8Hgkp4E9JaVZd7NvXDQ6NzE7A6q7dh+4rpUrgLAaizZQtSJrrCMWBPjJ3KvcXFi8lfBzxbHQ7bxFDm5HUkM=
+X-Received: by 2002:a05:6512:3b0:b0:511:21e4:5a69 with SMTP id
+ v16-20020a05651203b000b0051121e45a69mr2802815lfp.40.1706825916680; Thu, 01
+ Feb 2024 14:18:36 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zbts-9tRDPcXbhYi@hovoldconsulting.com>
+References: <20240201155532.49707-1-brgl@bgdev.pl> <20240201155532.49707-2-brgl@bgdev.pl>
+In-Reply-To: <20240201155532.49707-2-brgl@bgdev.pl>
+From: Rob Herring <robh@kernel.org>
+Date: Thu, 1 Feb 2024 16:18:24 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqKq8AngeC7ohsbYB0w70uALD+PX-df53cswTDUY-Rrdgw@mail.gmail.com>
+Message-ID: <CAL_JsqKq8AngeC7ohsbYB0w70uALD+PX-df53cswTDUY-Rrdgw@mail.gmail.com>
+Subject: Re: [RFC 1/9] of: provide a cleanup helper for OF nodes
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Alex Elder <elder@linaro.org>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Arnd Bergmann <arnd@arndb.de>, 
+	Abel Vesa <abel.vesa@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>, Lukas Wunner <lukas@wunner.de>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	linux-pci@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Feb 01, 2024 at 11:05:47AM +0100, Johan Hovold wrote:
-> On Wed, Jan 31, 2024 at 07:07:26PM -0800, Bjorn Andersson wrote:
-> > Some I2C HID devices has a reset pin and requires that some specified
-> > time elapses after this reset pin is deasserted, before communication
-> > with the device is attempted.
-> > 
-> > The Linux implementation is looking for these in the "reset-gpios" and
-> > "post-reset-deassert-delay-ms" properties already, so use these property
-> > names.
-> > 
-> > Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-> > Acked-by: Rob Herring <robh@kernel.org>
-> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> > ---
-> >  Documentation/devicetree/bindings/input/hid-over-i2c.yaml | 6 ++++++
-> >  1 file changed, 6 insertions(+)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/input/hid-over-i2c.yaml b/Documentation/devicetree/bindings/input/hid-over-i2c.yaml
-> > index 138caad96a29..f07ff4cb3d26 100644
-> > --- a/Documentation/devicetree/bindings/input/hid-over-i2c.yaml
-> > +++ b/Documentation/devicetree/bindings/input/hid-over-i2c.yaml
-> > @@ -50,6 +50,12 @@ properties:
-> >      description: Time required by the device after enabling its regulators
-> >        or powering it on, before it is ready for communication.
-> >  
-> > +  post-reset-deassert-delay-ms:
-> > +    description: Time required by the device after reset has been deasserted,
-> > +      before it is ready for communication.
-> 
-> I know that Rob reluctantly acked this, but re-reading the commit
-> message for the commit that added support for the reset gpio to the
-> driver, and added a comment about this not having been added to the
-> devicetree binding, it becomes obvious that the latter was done on
-> purpose and that we probably should not be adding the
-> 'post-reset-deassert-delay-ms' property after all:
-> 
-> 	For now the new "post-reset-deassert-delay-ms" property is only
-> 	used on x86/ACPI (non devicetree) devs. IOW it is not used in
-> 	actual devicetree files and the same goes for the reset GPIO.
-> 	The devicetree-bindings maintainers have requested properties
-> 	like these to not be added to the devicetree-bindings, so the
-> 	new property + GPIO are deliberately not added to the existing
-> 	devicetree-bindings.
-> 
-> 	2be404486c05 ("HID: i2c-hid-of: Add reset GPIO support to i2c-hid-of")
-> 
-> So perhaps we should just do this properly and add a new compatible
-> property for X13s touchscreen which can be used to determine these
-> delays (e.g. for cases where some default values are insufficient).
-> 
+On Thu, Feb 1, 2024 at 9:55=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl> =
+wrote:
+>
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
+> Allow to use __free() to automatically put references to OF nodes.
 
-So we should add a new binding, with a device-specific compatible and
-add a reset-gpios only for that (and not the generic hid-over-i2c
-binding), and then in the i2c-hid driver encode the two delays?
+Jonathan has already been working on this[1].
 
-I can try to rewrite these patches, if you can provide me with a
-compatible.
+Rob
 
-Regards,
-Bjorn
+[1] https://lore.kernel.org/all/20240128160542.178315-1-jic23@kernel.org/
 
