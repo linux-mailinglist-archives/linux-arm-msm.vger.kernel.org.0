@@ -1,153 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-9303-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9304-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 729928454AC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 11:00:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 079428454D0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 11:05:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 107E91F2B4AF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 10:00:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 90F8629156D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 10:05:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7CE8157E8C;
-	Thu,  1 Feb 2024 10:00:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B05615A498;
+	Thu,  1 Feb 2024 10:05:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fLfpZRTS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bHRqrwND"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C4F4DA19;
-	Thu,  1 Feb 2024 09:59:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 471994D9F4;
+	Thu,  1 Feb 2024 10:05:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706781601; cv=none; b=uFYN02pONOp6wWMkwYSkuNz96LjpN7+6LMNEdoWGtbw7SYcuW6MWep/jBECB3Nvkv4K9FXnWEwBTaldHEcNpsY0iiIUQSpjw1yK5HFuCw1IBPgJ2Zp1qOrGzM5erWG2YXI5xF6fa7aEl3hFOzHVmbDZoMSEnS1TqxHuzhye86jA=
+	t=1706781946; cv=none; b=HnMksamZ1CRCqDpDzDQXBgNxu8yGj9fWM9zwvbP8Eo1aJeVp5SYIIuRQb5wgLPYU8vYdHOQrvMdn+GmDl9jm81Llo5gdZtesNAIi6QI17CLE9wHGbTn5b9+ZXMEU6l4qaFaJGWhHI903zO77tYotfvtfAPZjJa3lH70Vq/CSFIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706781601; c=relaxed/simple;
-	bh=MMcoYgAB2ObHPsGOhaFR/VarWNf9nlQOm0soMsGMKs0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=XdD+lV++i1lpMkx39t1DdhTWNQsi7rV7YoF9U9yxSr/beGzH1EUzhjI76aA4VMv6Ty96YyV8q8PuNVqB68FMYhQ1diORksEjni8bjS+rYmf0hHwIbjrRQoQlhNxwzTX0FjzPk6EMlZVHIxYf1ntitqo5YMEGdhokQhwOCjU/bGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fLfpZRTS; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4116Q4P3017276;
-	Thu, 1 Feb 2024 09:55:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=d/00M8Lg8HizPWB0AUqNUF9SIyclE0Lad3IoN8XDVEY=; b=fL
-	fpZRTSoiXw2uIGpnIRe1xrtx2fZGfrooXtvm1yD9YAm12k14EyNuDsxtgzdD3Ptb
-	okIQek/5Eo2UPr2oY8mRYZqY9oT0KfDoSzE+/T4XC4jUqrKcWo0uS+kDyeJ79jAr
-	05rNnuEJpVYzvUJM4Qc03dxWP9MgLY4n9tPQVnpyQO9QCi6cAz7cBv5ppgwPjeBN
-	KtaYJZyeN/L3eWwI8MpG1oquGRYfJ7JqWXHpfQ3mntjc551rwgrLmyKipTbSF16v
-	y0/vdS8u1ap4I7xdXP8ABA3AAn/jjkZlCuFGgXo6XXvL/AT7TAes8bIAGabZvl9C
-	WoXhbOrVm2vKPuhF6ZjA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w0619gkma-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 01 Feb 2024 09:55:31 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4119tU2P003675
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 1 Feb 2024 09:55:30 GMT
-Received: from [10.218.47.181] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 1 Feb
- 2024 01:55:20 -0800
-Message-ID: <a0bcca80-e91b-4b97-a548-b53ea2fe4cb5@quicinc.com>
-Date: Thu, 1 Feb 2024 15:25:16 +0530
+	s=arc-20240116; t=1706781946; c=relaxed/simple;
+	bh=OCNyn/+xthVB/CqbVTIbZppBhTX2tBQqtngKgAF+EVU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AOf1hpwJ053AzfOCEPH9HpI4l4JXGqec/QttNkcmDt1p2/N+/As/EpOHE5cfDxcQ+co63NjrR/MUzuZNErEp1IM/3vNzciUi7K9erqfUNLGXzgGuHD7RawJEwv5maFOTVkCXUIDQhZFbFxpwlRM3E5GgHTuh7wXl8svggf/KM8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bHRqrwND; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF129C43390;
+	Thu,  1 Feb 2024 10:05:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706781945;
+	bh=OCNyn/+xthVB/CqbVTIbZppBhTX2tBQqtngKgAF+EVU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bHRqrwNDCBUSpevdR2oKRzmtqXY9LZ2Vt8YhL/C46k/Aittq0sbfuP7a4DJPlD9ib
+	 Sw+UYpgXUOwQty/m4/V8pLakfQPwCdTiOUEBtqLeVVITg4p0dkgz+fyRCRoJWg8ekE
+	 cT7PjUWI/BAmuP+1LMcYY3l5oWeNOdWyDYQVW5lFSuBHcsRdWSyzM2tUo/VQn2pn+/
+	 VpVGqyAsDRDm+t2d18ZXTCFyg9oQGxHLxOhJoOtiPAmNj9ZW9OxJbEGW15j+EN6ap0
+	 uBIgtieGe6HDPKDDHHeyGsTUnyIgSIPnoDOTncfC2EO7YhnfGQ9YRA6PINUg8zoomP
+	 J9wgwubT3oFOg==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rVTx5-000000006DY-09wo;
+	Thu, 01 Feb 2024 11:05:47 +0100
+Date: Thu, 1 Feb 2024 11:05:47 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Jiri Kosina <jikos@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@somainline.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v4 1/3] dt-bindings: HID: i2c-hid: Document reset-related
+ properties
+Message-ID: <Zbts-9tRDPcXbhYi@hovoldconsulting.com>
+References: <20240131-x13s-touchscreen-v4-0-39c0f9925d3c@quicinc.com>
+ <20240131-x13s-touchscreen-v4-1-39c0f9925d3c@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 15/15] arm64: dts: qcom: sm8550: add hwkm support to
- ufs ice
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Gaurav Kashyap
-	<quic_gaurkash@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <andersson@kernel.org>, <ebiggers@google.com>,
-        <neil.armstrong@linaro.org>, <srinivas.kandagatla@linaro.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <robh+dt@kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-mmc@vger.kernel.org>, <kernel@quicinc.com>,
-        <linux-crypto@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_nguyenb@quicinc.com>, <bartosz.golaszewski@linaro.org>,
-        <konrad.dybcio@linaro.org>, <ulf.hansson@linaro.org>,
-        <jejb@linux.ibm.com>, <martin.petersen@oracle.com>, <mani@kernel.org>,
-        <davem@davemloft.net>, <herbert@gondor.apana.org.au>
-References: <20240127232436.2632187-1-quic_gaurkash@quicinc.com>
- <20240127232436.2632187-16-quic_gaurkash@quicinc.com>
- <CAA8EJpr5fLYR1v64-DtjOigkUy3579tx_gwHpFWr9k0GyGajGw@mail.gmail.com>
-Content-Language: en-US
-From: Om Prakash Singh <quic_omprsing@quicinc.com>
-In-Reply-To: <CAA8EJpr5fLYR1v64-DtjOigkUy3579tx_gwHpFWr9k0GyGajGw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: iH40zl2IaJawsG1TZcdGaShFIfYH7kZ-
-X-Proofpoint-ORIG-GUID: iH40zl2IaJawsG1TZcdGaShFIfYH7kZ-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-31_10,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 clxscore=1011 priorityscore=1501 phishscore=0
- impostorscore=0 bulkscore=0 mlxlogscore=643 malwarescore=0 spamscore=0
- adultscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401190000 definitions=main-2402010079
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240131-x13s-touchscreen-v4-1-39c0f9925d3c@quicinc.com>
 
-
-
-On 1/28/2024 6:31 AM, Dmitry Baryshkov wrote:
-> On Sun, 28 Jan 2024 at 01:28, Gaurav Kashyap <quic_gaurkash@quicinc.com> wrote:
->>
->> The Inline Crypto Engine (ICE) for UFS/EMMC supports the
->> Hardware Key Manager (HWKM) to securely manage storage
->> keys. Enable using this hardware on sm8550.
->>
->> This requires two changes:
->> 1. Register size increase: HWKM is an additional piece of hardware
->>     sitting alongside ICE, and extends the old ICE's register space.
->> 2. Explicitly tell the ICE driver to use HWKM with ICE so that
->>     wrapped keys are used in sm8550.
->>
->> NOTE: Although wrapped keys cannot be independently generated and
->> tested on this platform using generate, prepare and import key calls,
->> there are non-kernel paths to create wrapped keys, and still use the
->> kernel to program them into ICE. Hence, enabling wrapped key support
->> on sm8550 too.
->>
->> Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sm8550.dtsi | 3 ++-
->>   1 file changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
->> index ee1ba5a8c8fc..b5b41d0a544c 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
->> @@ -1977,7 +1977,8 @@ ufs_mem_hc: ufs@1d84000 {
->>                  ice: crypto@1d88000 {
->>                          compatible = "qcom,sm8550-inline-crypto-engine",
->>                                       "qcom,inline-crypto-engine";
->> -                       reg = <0 0x01d88000 0 0x8000>;
->> +                       reg = <0 0x01d88000 0 0x10000>;
+On Wed, Jan 31, 2024 at 07:07:26PM -0800, Bjorn Andersson wrote:
+> Some I2C HID devices has a reset pin and requires that some specified
+> time elapses after this reset pin is deasserted, before communication
+> with the device is attempted.
 > 
-> Does the driver fail gracefully with the old DT size? At least it
-> should not crash.
-When adding  qcom,ice-use-hwkm property, DT size needs to be updated.
-Without any DT change, there will be know issue.
+> The Linux implementation is looking for these in the "reset-gpios" and
+> "post-reset-deassert-delay-ms" properties already, so use these property
+> names.
+> 
+> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+> Acked-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/input/hid-over-i2c.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/input/hid-over-i2c.yaml b/Documentation/devicetree/bindings/input/hid-over-i2c.yaml
+> index 138caad96a29..f07ff4cb3d26 100644
+> --- a/Documentation/devicetree/bindings/input/hid-over-i2c.yaml
+> +++ b/Documentation/devicetree/bindings/input/hid-over-i2c.yaml
+> @@ -50,6 +50,12 @@ properties:
+>      description: Time required by the device after enabling its regulators
+>        or powering it on, before it is ready for communication.
+>  
+> +  post-reset-deassert-delay-ms:
+> +    description: Time required by the device after reset has been deasserted,
+> +      before it is ready for communication.
 
-> 
->> +                       qcom,ice-use-hwkm;
->>                          clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-> 
+I know that Rob reluctantly acked this, but re-reading the commit
+message for the commit that added support for the reset gpio to the
+driver, and added a comment about this not having been added to the
+devicetree binding, it becomes obvious that the latter was done on
+purpose and that we probably should not be adding the
+'post-reset-deassert-delay-ms' property after all:
+
+	For now the new "post-reset-deassert-delay-ms" property is only
+	used on x86/ACPI (non devicetree) devs. IOW it is not used in
+	actual devicetree files and the same goes for the reset GPIO.
+	The devicetree-bindings maintainers have requested properties
+	like these to not be added to the devicetree-bindings, so the
+	new property + GPIO are deliberately not added to the existing
+	devicetree-bindings.
+
+	2be404486c05 ("HID: i2c-hid-of: Add reset GPIO support to i2c-hid-of")
+
+So perhaps we should just do this properly and add a new compatible
+property for X13s touchscreen which can be used to determine these
+delays (e.g. for cases where some default values are insufficient).
+
+Johan
 
