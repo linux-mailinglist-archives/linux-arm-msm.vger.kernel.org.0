@@ -1,61 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-9422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A06358462FB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 22:54:36 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 196CC8462FE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 22:54:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D2FAB1C2383A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 21:54:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AF116B278F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 21:54:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF70C4122D;
-	Thu,  1 Feb 2024 21:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF2F845BF6;
+	Thu,  1 Feb 2024 21:54:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k2usIAUu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fAlKm5uw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F984120F;
-	Thu,  1 Feb 2024 21:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF4645016;
+	Thu,  1 Feb 2024 21:54:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706824439; cv=none; b=IrW2nbOQbqFkYfYU9JxjBbtP4L4bXSKn7pc+k1GhIb/6nule1TX8ymc60pqxQ/WdPl81+LUUOLg/lRqtKl2l0DkHg6/+e8s0a9r4xpzxQ1iCQfCWj0/5thCQKOsIWwzpN7cyiiEOT8WY2iyDpPnmA0w3R/qnSY5Ahd3QWSlHBEw=
+	t=1706824440; cv=none; b=naZFSPsl27DUX/s+wiK1N3/kW2+o9zx4KwlaT5RFfNLlG5q2Gmvd3lIu8/J7lJaAu334HUnx+l3LytjN0riKFJBv+N5dWlXx4cKkRkUATjc4eqPZkwsE0upAO5FJmbNNx8I+IVxoCLvX+UGlC1Si2uZnDIlz5Cn1RNAZeNqGxXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706824439; c=relaxed/simple;
-	bh=/5hsI/aieNefVFKENq+yf/xRdfw3lwpSgjpPZyHNB1w=;
+	s=arc-20240116; t=1706824440; c=relaxed/simple;
+	bh=UCVnGGP6dgSIA1bb1c3Zby+Z9IKSgvYCCBuMXuk74NY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kWykb82qZhtwflaiR2dB1MeLa9q+STB2ckGI+IoIYLJQu1rExE0xHmpWJQNEbBt5evD74nkCEV4FSU7orLGJpbV+ubHXLLsQsyQbmnRkZeIJbWHqucgz6GocrG5VrO2agpqRtS9phwiV6jFmTxmfwqfxLFgVlnpgNogT6g+PBTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k2usIAUu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74E64C43390;
-	Thu,  1 Feb 2024 21:53:58 +0000 (UTC)
+	 MIME-Version:Content-Type; b=k8RVoH4FbXdXxjbEQ1ZdOCre0SKQEPo/HFMdHqk9YAZM2sZAx8TMrL+rcHpXdGeCaiF2LtY8V+at5ybWOvWm1LaGD2EymTKMu+Udp74N4bO1jhE6Osd8PDOcgX4FMKuhtJYNroYdPohZwW/eEMHdDsSfIF118TlfHT1maxEZkpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fAlKm5uw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ACCEC43394;
+	Thu,  1 Feb 2024 21:53:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706824439;
-	bh=/5hsI/aieNefVFKENq+yf/xRdfw3lwpSgjpPZyHNB1w=;
+	s=k20201202; t=1706824440;
+	bh=UCVnGGP6dgSIA1bb1c3Zby+Z9IKSgvYCCBuMXuk74NY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k2usIAUuNXEJghy41WbjkZpyIQH3tF8lRikk9ZsfFOHAuNfnPz0xrYZlOfN9SGAF7
-	 cPBXi+bzCKLAoxdhJ0Efv5mdCp9za8TH962eKU+vpZ9I8s47bNkSs/PX26ZziXfILv
-	 F+uSiYBP+PXSxVIfFtP49VkKe3sKXLij0sBcQ1DxVMy5ghdk2xnwTHwQ1AEnMJ6+WK
-	 AMRx2w+0uBPkyvQ2hpCADr44N21ZvzXQjI8ggVWV3ZPSudUUgwq0c+TkGclDkjoa5y
-	 j+zEJIByaIRuIpSX3ak+RL2HuA3AsCmCZOWW0dgb5kFkeu6YlXNgF4YobRPAokCsoI
-	 PQNAsqWd2nZLA==
+	b=fAlKm5uwXM0goNtWqUUDx8JPMIEPb0crscbi5pwT/zMXrVzhfefxZ67WuruRJztVo
+	 p5GbWbT6W3l+bpIF2ChXGaVTARPY1D1BT9Shs0MfB+PHEfwFyaatBxZ14eBCi2YXlN
+	 NYHG+G12Gs0Z+SPs+rjCTG1QdySg0hRYhUsAeUNLogJBPA5HndLmLygt2G/ELIkwS/
+	 ZErIlilQAGcp/2Hsz2eZXlu+C6HGRVSSOUDRogbXMCFi/JQGjSc8tdEBgecuGjn/KV
+	 JPodJ2HXGjN167xvwrCqJxzp+YcVQqkj0jKmF0Zj1PVQa2gtUAVYeMYyoVaYpwGFFm
+	 kGdcoKWqpaKVg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+To: ~postmarketos/upstreaming@lists.sr.ht,
+	phone-devel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Rob Herring <robh+dt@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Rudraksha Gupta <guptarud@gmail.com>
+	Luca Weiss <luca@z3ntu.xyz>
 Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] ARM: dts: qcom: msm8960: expressatt: Add gpio-keys
-Date: Thu,  1 Feb 2024 15:53:49 -0600
-Message-ID: <170682442872.248329.11924880934017435944.b4-ty@kernel.org>
+Subject: Re: [PATCH] ARM: dts: qcom: apq8026-lg-lenok: Add vibrator support
+Date: Thu,  1 Feb 2024 15:53:50 -0600
+Message-ID: <170682442873.248329.16640760772830725680.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240120-expressatt-gpio-keys-v1-1-4da7e37440b1@gmail.com>
-References: <20240120-expressatt-gpio-keys-v1-1-4da7e37440b1@gmail.com>
+In-Reply-To: <20240121-lenok-vibrator-v1-1-d4703ff92021@z3ntu.xyz>
+References: <20240121-lenok-vibrator-v1-1-d4703ff92021@z3ntu.xyz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,15 +68,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Sat, 20 Jan 2024 00:45:23 -0800, Rudraksha Gupta wrote:
-> Adds volume up, volume down, and home keys to expressatt
+On Sun, 21 Jan 2024 11:09:57 +0100, Luca Weiss wrote:
+> This device has a vibrator attached to the CAMSS_GP0_CLK, use clk-pwm
+> and pwm-vibrator to make the vibrator work.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] ARM: dts: qcom: msm8960: expressatt: Add gpio-keys
-      commit: 8d90980509f25fecc7ff085e1723e4d8dede4ade
+[1/1] ARM: dts: qcom: apq8026-lg-lenok: Add vibrator support
+      commit: 4d679e3c29e3609962de43edddd51c8c1abda34e
 
 Best regards,
 -- 
