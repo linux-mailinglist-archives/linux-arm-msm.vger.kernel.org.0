@@ -1,270 +1,268 @@
-Return-Path: <linux-arm-msm+bounces-9278-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9279-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32182844EE5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 02:56:45 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 41CCB844F03
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 03:12:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 574471C20974
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 01:56:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 635121C226E4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 02:12:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CB76EAF5;
-	Thu,  1 Feb 2024 01:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA6B910A32;
+	Thu,  1 Feb 2024 02:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="D24HnX1q"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="T0D0+NJu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7CCEACC
-	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Feb 2024 01:56:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C111A27C;
+	Thu,  1 Feb 2024 02:12:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706752601; cv=none; b=RZ+dfyo0cSvdrYuHdizSwQkxsjZWC3Yn2wX9TbXTXKM4KWWnnWfFyK4K60OtZrWfeKd3nR2xy0pMQXHCe44V2+HTQwhgkADod5xaXz4sufI5yIH6rnkfR/wbXdjcoZ85/87X71mlHr/hgcUk44faHucHdjXnKDHG4Uc7vUf3jeA=
+	t=1706753532; cv=none; b=cxsD2UGpzdC+PUUjk7Wdl3NedriJudvxy8pQfmetwa/iRF9VATbCuaR+iITXbekLpN6KSFOzbymfLQ10HcXTU2WUMmIbXcxXxcSKKDeeDcbiUTwPZc2rs8dOSQ7cnaTloHtrQ1X4ly2BNAEKrR9fZV2kLPjzA51kUtEHcMSnJyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706752601; c=relaxed/simple;
-	bh=PeR8iry20/wdWRp6gIkvLoDvuzKjX1odT6u2a5E+kI4=;
+	s=arc-20240116; t=1706753532; c=relaxed/simple;
+	bh=GEHSgsu0BZcuUy9oj10MDz3Ju71xKXpFfee68XOSut4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Lfh3aQhSFT9g6jI/aiGUKTLJE6H6EgKBEAlxYKytT9g6ROu7/5wVwlY6kBe4Y/yNqaZm3cFfd6yBVYBnj1vzBbgMdNcaFmgyWj7dQ8dRsQOQJAHOHmhGOHJMGmyFeoD7/0mOYv28s9sCq7zy4Rwrslc2xMFOBRZrc8cyytblRMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=D24HnX1q; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=UQeZELXIR8TBfSD5YqZksRnT6q9AwAErKRWJhP17edwHoPg1tTKgYI1yDXpO9nPvsZ4nUcKy9oCPanOrAWLyyDeWy7eGX8U5SFP1BaQlGNcC6e4PV8DFoms8XLjloqe6hZkN8jbR4QPUQqISCorBWRQ0lueRa6cIT7F635SkxwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=T0D0+NJu; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4110wEXi017049;
-	Thu, 1 Feb 2024 01:56:31 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 411020og008375;
+	Thu, 1 Feb 2024 02:11:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=6toFNjYtDkRzazZHuxNPiuSBPGge0csmhQ2WT8ZDN8w=; b=D2
-	4HnX1qrcwvRWsd21W/OJfdGrFi6WABUpEd/mSsr//TopSHxAxrjBr42bMbPud0l1
-	WTqvH0yIqJ6vlGeVZjkcyttvodMJ8aZW6AId/ExjJu9A0S8RCK0UVj3HqWwAbuhz
-	xAhEx+bajKmj4mArJvwyiq44iN/kUqBvG4KSWwE8PgdbH0VHs0Fuk6K+O5D8A8n5
-	0Mkp11Y070WEH5ectAexy8F16LBmDKDAE9lbiNpUBJT6uoIdhH9lKXBQPTcCXDYL
-	GaZ1QITfOJw6pMQg9Yzr7VgzHOIa1yBrq5Be4rLO4c1A5SvoPiD/qJI62f52k2ca
-	fcWinqAy8Gccl8M0P6IA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3vyqvehmqm-1
+	qcppdkim1; bh=RWnYYJY5eR7CWR2cSLbZQZuLEMhedY0ZNp51BM7vOHg=; b=T0
+	D0+NJul2CGun8Z+yt/tA6Z30WlPQoo6obHCjD7VinRSBDDS0CLcE7faWiQ8/8e7g
+	oduejLaT9isUGmXW40W2RVX+55/eYBHgG1FY+cc0UIR5aLH/3aDDa6uzVmgnqYJ2
+	CZHcNFZ06oddzZBTSRVSqMA0mEFTR/wqSBu3p/qJhrHsi3l2J9fRuNAtEdTmDd1S
+	SYPm0iTzxX4ANxJxINlFjkg2EyXdZBzYYnJ3FapnAhlBH4NSguXpsFGPIwVYHKmu
+	pkXjhipaWgS6MJiZEHuzzU35X23JtA3kETtxLn3gt+3WSKjqoLzsE/0tmwyuO6qA
+	67vy67925RDdJJ28DmVA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w00dc06wk-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 01 Feb 2024 01:56:31 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4111uUgJ025116
+	Thu, 01 Feb 2024 02:11:38 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4112BbuJ018472
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 1 Feb 2024 01:56:30 GMT
-Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+	Thu, 1 Feb 2024 02:11:37 GMT
+Received: from [10.110.47.187] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 31 Jan
- 2024 17:56:29 -0800
-Message-ID: <6fd0cc09-a1c4-123e-966d-111d44263286@quicinc.com>
-Date: Wed, 31 Jan 2024 17:56:29 -0800
+ 2024 18:11:36 -0800
+Message-ID: <775b6010-0d9f-eb6f-2402-325bfba73094@quicinc.com>
+Date: Wed, 31 Jan 2024 18:11:36 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 11/17] drm/msm/dp: add VSC SDP support for YUV420 over DP
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v12 04/41] usb: host: xhci-mem: Cleanup pending secondary
+ event ring events
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Paloma Arellano
-	<quic_parellan@quicinc.com>
-CC: <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <seanpaul@chromium.org>, <swboyd@chromium.org>,
-        <quic_jesszhan@quicinc.com>, <quic_khsieh@quicinc.com>,
-        <marijn.suijten@somainline.org>, <neil.armstrong@linaro.org>
-References: <20240125193834.7065-1-quic_parellan@quicinc.com>
- <20240125193834.7065-12-quic_parellan@quicinc.com>
- <d94434ec-00fd-489f-98f2-8c811522ff82@linaro.org>
- <11c6fdbe-f85a-088d-92df-abd8405c966b@quicinc.com>
- <CAA8EJprPziRHhxVK9mAdQZNEeon9q95ZMKSBhs-s95O-7W10NA@mail.gmail.com>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAA8EJprPziRHhxVK9mAdQZNEeon9q95ZMKSBhs-s95O-7W10NA@mail.gmail.com>
+To: Mathias Nyman <mathias.nyman@linux.intel.com>,
+        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
+        <gregkh@linuxfoundation.org>, <lgirdwood@gmail.com>,
+        <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <konrad.dybcio@linaro.org>, <Thinh.Nguyen@synopsys.com>,
+        <broonie@kernel.org>, <bgoswami@quicinc.com>, <tiwai@suse.com>,
+        <robh+dt@kernel.org>, <agross@kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>,
+        "Neronin, Niklas" <niklas.neronin@intel.com>
+References: <20240102214549.22498-1-quic_wcheng@quicinc.com>
+ <20240102214549.22498-5-quic_wcheng@quicinc.com>
+ <734591a1-50b4-6dc7-0b93-077355ec12e4@linux.intel.com>
+ <7b2ec96b-b72f-c848-7c35-36e61a4072ac@quicinc.com>
+ <b254f73b-a1bc-3dd4-f485-a3acf556835d@quicinc.com>
+ <2178e799-2068-7443-59b2-310dfdd1ddee@linux.intel.com>
+ <ae64ce69-dc1b-1534-7950-0a35c4a56f58@quicinc.com>
+ <ff0bff8b-f26a-87bd-9762-9f2af98abcca@quicinc.com>
+ <44a3d4db-7759-dd93-782a-1efbebfdb22c@linux.intel.com>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <44a3d4db-7759-dd93-782a-1efbebfdb22c@linux.intel.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: hGqkDJlsi80YMVKp2RxtfRaCp-dhNty_
-X-Proofpoint-GUID: hGqkDJlsi80YMVKp2RxtfRaCp-dhNty_
+X-Proofpoint-ORIG-GUID: wfVeILWC3-aNJKK-XfQL6Zc9ABL1hHzi
+X-Proofpoint-GUID: wfVeILWC3-aNJKK-XfQL6Zc9ABL1hHzi
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-01-31_10,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- priorityscore=1501 clxscore=1015 phishscore=0 impostorscore=0
- lowpriorityscore=0 malwarescore=0 suspectscore=0 mlxscore=0
- mlxlogscore=999 bulkscore=0 spamscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.19.0-2401190000
- definitions=main-2402010013
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1011
+ phishscore=0 lowpriorityscore=0 mlxscore=0 bulkscore=0 priorityscore=1501
+ impostorscore=0 suspectscore=0 mlxlogscore=999 malwarescore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2401190000
+ definitions=main-2402010015
 
+Hi Mathias,
 
-
-On 1/27/2024 9:39 PM, Dmitry Baryshkov wrote:
-> On Sun, 28 Jan 2024 at 07:34, Paloma Arellano <quic_parellan@quicinc.com> wrote:
+On 1/29/2024 7:44 AM, Mathias Nyman wrote:
+> On 26.1.2024 23.13, Wesley Cheng wrote:
+>> Hi Mathias,
 >>
+>> On 1/16/2024 12:24 PM, Wesley Cheng wrote:
+>>> Hi Mathias,
+>>>
+>>> On 1/15/2024 6:01 AM, Mathias Nyman wrote:
+>>>> On 10.1.2024 1.42, Wesley Cheng wrote:
+>>>>> Hi Mathias,
+>>>>>
+>>>>> On 1/8/2024 12:51 PM, Wesley Cheng wrote:
+>>>>>> Hi Mathias,
+>>>>>>
+>>>>>> On 1/4/2024 6:48 AM, Mathias Nyman wrote:
+>>>>>>> On 2.1.2024 23.45, Wesley Cheng wrote:
+>>>>>>>> As part of xHCI bus suspend, the XHCI is halted.  However, if 
+>>>>>>>> there are
+>>>>>>>> pending events in the secondary event ring, it is observed that 
+>>>>>>>> the xHCI
+>>>>>>>> controller stops responding to further commands upon host or device
+>>>>>>>> initiated bus resume.  Iterate through all pending events and 
+>>>>>>>> update the
+>>>>>>>> dequeue pointer to the beginning of the event ring.
+>>>>>>>>
+>>>>>>>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+>>>>>>> ...
+>>>>>>>> +/*
+>>>>>>>> + * Move the event ring dequeue pointer to skip events kept in 
+>>>>>>>> the secondary
+>>>>>>>> + * event ring.  This is used to ensure that pending events in 
+>>>>>>>> the ring are
+>>>>>>>> + * acknowledged, so the XHCI HCD can properly enter 
+>>>>>>>> suspend/resume. The
+>>>>>>>> + * secondary ring is typically maintained by an external 
+>>>>>>>> component.
+>>>>>>>> + */
+>>>>>>>> +void xhci_skip_sec_intr_events(struct xhci_hcd *xhci,
+>>>>>>>> +    struct xhci_ring *ring,    struct xhci_interrupter *ir)
+>>>>>>>> +{
+>>>>>>>> +    union xhci_trb *erdp_trb, *current_trb;
+>>>>>>>> +    u64 erdp_reg;
+>>>>>>>> +    u32 iman_reg;
+>>>>>>>> +    dma_addr_t deq;
+>>>>>>>> +
+>>>>>>>> +    /* disable irq, ack pending interrupt and ack all pending 
+>>>>>>>> events */
+>>>>>>>> +    xhci_disable_interrupter(ir);
+>>>>>>>> +    iman_reg = readl_relaxed(&ir->ir_set->irq_pending);
+>>>>>>>> +    if (iman_reg & IMAN_IP)
+>>>>>>>> +        writel_relaxed(iman_reg, &ir->ir_set->irq_pending);
+>>>>>>>> +
+>>>>>>>> +    /* last acked event trb is in erdp reg  */
+>>>>>>>> +    erdp_reg = xhci_read_64(xhci, &ir->ir_set->erst_dequeue);
+>>>>>>>> +    deq = (dma_addr_t)(erdp_reg & ERST_PTR_MASK);
+>>>>>>>> +    if (!deq) {
+>>>>>>>> +        xhci_err(xhci, "event ring handling not required\n");
+>>>>>>>> +        return;
+>>>>>>>> +    }
+>>>>>>>> +
+>>>>>>>> +    erdp_trb = current_trb = ir->event_ring->dequeue;
+>>>>>>>> +    /* read cycle state of the last acked trb to find out CCS */
+>>>>>>>> +    ring->cycle_state = 
+>>>>>>>> le32_to_cpu(current_trb->event_cmd.flags) & TRB_CYCLE;
+>>>>>>>> +
+>>>>>>>> +    while (1) {
+>>>>>>>> +        inc_deq(xhci, ir->event_ring);
+>>>>>>>> +        erdp_trb = ir->event_ring->dequeue;
+>>>>>>>> +        /* cycle state transition */
+>>>>>>>> +        if ((le32_to_cpu(erdp_trb->event_cmd.flags) & 
+>>>>>>>> TRB_CYCLE) !=
+>>>>>>>> +            ring->cycle_state)
+>>>>>>>> +            break;
+>>>>>>>> +    }
+>>>>>>>> +
+>>>>>>>> +    xhci_update_erst_dequeue(xhci, ir, current_trb, true);
+>>>>>>>> +}
+>>>>>>>
+>>>>>>> Code above is very similar to the existing event ring processing 
+>>>>>>> parts of xhci_irq()
+>>>>>>> and xhci_handle_event()
+>>>>>>>
+>>>>>>> I'll see if I can refactor the existing event ring processing, 
+>>>>>>> decouple it from
+>>>>>>> event handling so that it could be used by primary and secondary 
+>>>>>>> interrupters with
+>>>>>>> handlers, and this case where we just want to clear the event ring.
+>>>>>>>
+>>>>>>
+>>>>>> Thanks, that makes sense.  Will take a look as well.
+>>>>>>
+>>>>>
+>>>>> How about something like the below?  Tested this on my set up and 
+>>>>> everything looks to be working fine.  Had to add another param to 
+>>>>> struct xhci_interrupters to tell the XHCI interrupt handler to say 
+>>>>> if that particular interrupter wants to skip_events (handling).  
+>>>>> This way, its something that the class driver utilizing the 
+>>>>> interrupter will have to tell XHCI sideband.  It would allow the 
+>>>>> user to determine if they want to use the interrupter to actually 
+>>>>> handle events or not on the proc running Linux.
+>>>>>
+>>>>
+>>>> Yes, I have something similar.
+>>>> I'll share it soon, just need to
+>>>> clean it up a bit fist.
+>>>>
+>>>
+>>> Sure, no worries.  Will test it when its available.  Thanks!
+>>>
 >>
->> On 1/25/2024 1:48 PM, Dmitry Baryshkov wrote:
->>> On 25/01/2024 21:38, Paloma Arellano wrote:
->>>> Add support to pack and send the VSC SDP packet for DP. This therefore
->>>> allows the transmision of format information to the sinks which is
->>>> needed for YUV420 support over DP.
->>>>
->>>> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
->>>> ---
->>>>    drivers/gpu/drm/msm/dp/dp_catalog.c | 147 ++++++++++++++++++++++++++++
->>>>    drivers/gpu/drm/msm/dp/dp_catalog.h |   4 +
->>>>    drivers/gpu/drm/msm/dp/dp_ctrl.c    |   4 +
->>>>    drivers/gpu/drm/msm/dp/dp_panel.c   |  47 +++++++++
->>>>    drivers/gpu/drm/msm/dp/dp_reg.h     |   3 +
->>>>    5 files changed, 205 insertions(+)
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c
->>>> b/drivers/gpu/drm/msm/dp/dp_catalog.c
->>>> index c025786170ba5..7e4c68be23e56 100644
->>>> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
->>>> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
->>>> @@ -29,6 +29,9 @@
->>>>      #define DP_INTF_CONFIG_DATABUS_WIDEN     BIT(4)
->>>>    +#define DP_GENERIC0_6_YUV_8_BPC        BIT(0)
->>>> +#define DP_GENERIC0_6_YUV_10_BPC    BIT(1)
->>>> +
->>>>    #define DP_INTERRUPT_STATUS1 \
->>>>        (DP_INTR_AUX_XFER_DONE| \
->>>>        DP_INTR_WRONG_ADDR | DP_INTR_TIMEOUT | \
->>>> @@ -907,6 +910,150 @@ int dp_catalog_panel_timing_cfg(struct
->>>> dp_catalog *dp_catalog)
->>>>        return 0;
->>>>    }
->>>>    +static void dp_catalog_panel_setup_vsc_sdp(struct dp_catalog
->>>> *dp_catalog)
->>>> +{
->>>> +    struct dp_catalog_private *catalog;
->>>> +    u32 header, parity, data;
->>>> +    u8 bpc, off = 0;
->>>> +    u8 buf[SZ_128];
->>>> +
->>>> +    if (!dp_catalog) {
->>>> +        pr_err("invalid input\n");
->>>> +        return;
->>>> +    }
->>>> +
->>>> +    catalog = container_of(dp_catalog, struct dp_catalog_private,
->>>> dp_catalog);
->>>> +
->>>> +    /* HEADER BYTE 1 */
->>>> +    header = dp_catalog->sdp.sdp_header.HB1;
->>>> +    parity = dp_catalog_calculate_parity(header);
->>>> +    data   = ((header << HEADER_BYTE_1_BIT) | (parity <<
->>>> PARITY_BYTE_1_BIT));
->>>> +    dp_write_link(catalog, MMSS_DP_GENERIC0_0, data);
->>>> +    memcpy(buf + off, &data, sizeof(data));
->>>> +    off += sizeof(data);
->>>> +
->>>> +    /* HEADER BYTE 2 */
->>>> +    header = dp_catalog->sdp.sdp_header.HB2;
->>>> +    parity = dp_catalog_calculate_parity(header);
->>>> +    data   = ((header << HEADER_BYTE_2_BIT) | (parity <<
->>>> PARITY_BYTE_2_BIT));
->>>> +    dp_write_link(catalog, MMSS_DP_GENERIC0_1, data);
->>>> +
->>>> +    /* HEADER BYTE 3 */
->>>> +    header = dp_catalog->sdp.sdp_header.HB3;
->>>> +    parity = dp_catalog_calculate_parity(header);
->>>> +    data   = ((header << HEADER_BYTE_3_BIT) | (parity <<
->>>> PARITY_BYTE_3_BIT));
->>>> +    data |= dp_read_link(catalog, MMSS_DP_GENERIC0_1);
->>>> +    dp_write_link(catalog, MMSS_DP_GENERIC0_1, data);
->>>> +    memcpy(buf + off, &data, sizeof(data));
->>>> +    off += sizeof(data);
->>>
->>> This seems to be common with the dp_audio code. Please extract this
->>> header writing too.
->> These are two different sdp's. audio and vsc, are different with
->> different registers being written to and different amount of registers
->> being set. Can you please clarify since in audio we only need 3
->> registers to write to, and in vsc we need 10.
+>> Was just wondering if you had the time to clean up the changes?  If 
+>> not, maybe you can provide a patch with whatever you have, and I can 
+>> try my best to clean it up to your liking?  Thanks!
 > 
-> Bitmagic with the header is the same. Then the rest of the data is
-> written one dword per register, if I'm not mistaken.
+> Sure, got stuck fixing other issues.
+>
+
+No worries, tested the code briefly as is and it is working, with some 
+minor modifications.
+
+> Code is not yet cleaned up, commit messages are not ready etc, but 
+> current work is in
+> a fix_eventhandling branch:
 > 
-
-We can generalize the MMSS_DP_GENERIC0 register writing by breaking it 
-up to two things:
-
-1) Add a function vsc_sdp_pack() similar to hdmi_avi_infoframe_pack_only()
-
-2) dp_catalog_write_generic_pkt() which will just write the packed 
-buffer byte-by-byte to these MMSS_DP_GENERIC0_xxx register
-
-But audio seems a bit different. We use DP_AUDIO_STREAM_0/1.
-More importantly, it uses this sdp_map and writes each header one by one 
-with dp_catalog_audio_set_header().
-
-Not sure if that entirely fits with this pack and then write model.
-
-It can be simplified. But I dont think this effort is needed for this 
-series.
-
-So I would prefer to generalize audio SDP programming separately.
-
->>>
->>>> +
->>>> +    data = 0;
->>>> +    dp_write_link(catalog, MMSS_DP_GENERIC0_2, data);
->>>> +    memcpy(buf + off, &data, sizeof(data));
->>>> +    off += sizeof(data);
->>>
->>> Generally this is not how these functions are expected to be written.
->>> Please take a look at drivers/video/hdmi.c. It should be split into:
->>> - generic function that packs the C structure into a flat byte buffer,
->>> - driver-specific function that formats and writes the buffer to the
->>> hardware.
->>>
->>>> +    dp_write_link(catalog, MMSS_DP_GENERIC0_3, data);
->>>> +    memcpy(buf + off, &data, sizeof(data));
->>>> +    off += sizeof(data);
->>>> +
->>>> +    dp_write_link(catalog, MMSS_DP_GENERIC0_4, data);
->>>> +    memcpy(buf + off, &data, sizeof(data));
->>>> +    off += sizeof(data);
->>>> +
->>>> +    dp_write_link(catalog, MMSS_DP_GENERIC0_5, data);
->>>> +    memcpy(buf + off, &data, sizeof(data));
->>>> +    off += sizeof(data);
->>>> +
->>>> +    switch (dp_catalog->vsc_sdp_data.bpc) {
->>>> +    case 10:
->>>> +        bpc = DP_GENERIC0_6_YUV_10_BPC;
->>>> +        break;
->>>> +    case 8:
->>>> +    default:
->>>> +        bpc = DP_GENERIC0_6_YUV_8_BPC;
->>>> +        break;
->>>> +    }
->>>> +
->>>> +    /* VSC SDP payload as per table 2-117 of DP 1.4 specification */
->>>> +    data = (dp_catalog->vsc_sdp_data.colorimetry & 0xF) |
->>>> +           ((dp_catalog->vsc_sdp_data.pixelformat & 0xF) << 4) |
->>>> +           (bpc << 8) |
->>>> +           ((dp_catalog->vsc_sdp_data.dynamic_range & 0x1) << 15) |
->>>> +           ((dp_catalog->vsc_sdp_data.content_type & 0x7) << 16);
->>>> +
->>>> +    dp_write_link(catalog, MMSS_DP_GENERIC0_6, data);
->>>> +    memcpy(buf + off, &data, sizeof(data));
->>>> +    off += sizeof(data);
->>>> +
->>>> +    data = 0;
->>>> +    dp_write_link(catalog, MMSS_DP_GENERIC0_7, data);
->>>> +    memcpy(buf + off, &data, sizeof(data));
->>>> +    off += sizeof(data);
->>>> +
->>>> +    dp_write_link(catalog, MMSS_DP_GENERIC0_8, data);
->>>> +    memcpy(buf + off, &data, sizeof(data));
->>>> +    off += sizeof(data);
+> git://git.kernel.org/pub/scm/linux/kernel/git/mnyman/xhci.git  
+> fix_eventhandling
+> https://git.kernel.org/pub/scm/linux/kernel/git/mnyman/xhci.git/log/?h=fix_eventhandling 
 > 
 > 
+> I was in the middle of figuring out when and where the ip_autoclear and 
+> interrupt
+> moderation values should be set for secondary interrupters
+> 
+
+I set these currently when the client driver requests for the 
+interrupter, ie xhci_sideband_create_interrupter().  If the client 
+driver wants to actually have the secondary interrupter events handled 
+by the OS then I added a path to call xhci_enable_interrupter() to 
+enable that IRQ line.  Likewise, based on XHCI spec Figure 4-22, the 
+IMAN interrupt enable (IE) bit controls basically when IMOD and IP 
+autoclear mechanisms would come into the picture, so I placed these 
+configurations before we set the IE bit.
+
+For the most part, if we offload event ring handling to another 
+processor, then IMOD and IE settings would be irrelevant IMO.
+
+The only pitfall with this is that it gets a bit cumbersome (although 
+flexible) for the client driver to know what these arguments actually do 
+within the XHCI layer.  Working through your changes and will push 
+something soon.  Thanks again for sharing the changes!
+
+Thanks
+Wesley Cheng
 
